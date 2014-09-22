@@ -144,7 +144,8 @@ class ConfigController extends AdminController {
 
         /* 清除缓存 */
         clear_all_files();
-        ectouch_cloud('record', ECTOUCH_AUTH_KEY);
+        $site_info = site_info();
+        $this->cloud->data($site_info)->act('post.record');
         $this->message(L('save_success'), url('index'));
     }
 

@@ -103,7 +103,6 @@ class IndexController extends AdminController
             $empower = '<a href="' . $url . '" class="text-danger">未授权</a>';
         }
         $this->assign('empower', $empower);
-        
         $this->display('welcome');
     }
     

@@ -125,7 +125,8 @@ class IndexController extends Controller {
 		define('ECTOUCH_AUTH_KEY', '".$appid."');";
         @file_put_contents($config_file, $content);
         @fopen($this->lockFile, 'w');
-        ectouch_cloud('record', $appid);
+        $site_info = site_info($appid);
+        $this->cloud->data($site_info)->act('post.install');
         //生成二维码
         $mobile_url = __URL__; //二维码内容
         $errorCorrectionLevel = 'L'; // 纠错级别：L、M、Q、H 

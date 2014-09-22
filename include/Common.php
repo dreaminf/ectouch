@@ -1350,11 +1350,11 @@ function write_static_cache($cache_name, $caches) {
 }
 
 /**
- * 云端数据，用于后续在线更新
+ * 站点数据
  * @param string $act
  * @param string $appid
  */
-function ectouch_cloud($act = 'install', $appid = ''){
+function site_info($appid = ECTOUCH_AUTH_KEY){
     $shop_config = model('Base')->load_config();
     $shop_country = model('RegionBase')->get_region_name($shop_config[shop_country]);
     $shop_province = model('RegionBase')->get_region_name($shop_config[shop_province]);
@@ -1362,7 +1362,7 @@ function ectouch_cloud($act = 'install', $appid = ''){
     $conn = mysql_connect(C('DB_HOST'), C('DB_USER'), C('DB_PWD'));
     $mysql_ver = (!$conn) ? '未知':mysql_get_server_info($conn);
     $data = array(
-        'appid'    =>  $appid,
+        'appid'    => $appid,
         'domain'   =>  __HOST__,
         'url'      =>  __URL__,
         'shop_name'=>  $shop_config['shop_name'],
@@ -1386,8 +1386,7 @@ function ectouch_cloud($act = 'install', $appid = ''){
         'mysql_ver'=>  $mysql_ver,
         'charset'  =>  'utf-8'
     );
-    $url = "http://ectouch.cn/api/".$act.".html";
-    Http::doPost($url,$data);
+    return $data;
 }
 
 /**
