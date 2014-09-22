@@ -41,6 +41,15 @@
       </ul>
     </dd>
   </dl>
+  <dl>
+    <dt class="menu_title">微信通营销</dt>
+    <dd>
+      <ul>
+      <li><a href="{url('wechat/index')}" target="mainFrame">我的公众号</a></li>
+      <li><a href="{url('wechat/append')}" target="mainFrame">新增公众号</a></li>
+      </ul>
+    </dd>
+  </dl>
 </div>
 <div id="admin_switchbar"><a href="javascript:toggleMenu();" style="position:fixed; top:50%;"><img src="__ASSETS__/images/arrow_left.gif" width="10" height="30" id="img" /></a></div>
 <div id="admin_contont">

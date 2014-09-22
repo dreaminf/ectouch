@@ -206,9 +206,9 @@ class zjd extends PluginWechatController
             $id = I('get.id');
             $rs = model('Base')->model->table('wechat_prize')
                 ->field('winner')
-                ->where('openid = "'.session('openid').'" and id = ' . $id)
+                ->where('openid = "' . session('openid') . '" and id = ' . $id)
                 ->getOne();
-            if(!empty($rs)){
+            if (! empty($rs)) {
                 show_message('已经领取', '', '', 'error');
             }
             $file = ROOT_PATH . 'plugins/wechat/' . $this->plugin_name . '/view/user_info.php';
@@ -271,39 +271,54 @@ class zjd extends PluginWechatController
             if (! empty($prize)) {
                 $arr = array();
                 $prize_name = array();
+                // 默认公众号信息
+                $wxid = model('Base')->model->table('wechat')
+                    ->field('id')
+                    ->where('default_wx = 1')
+                    ->getOne();
                 foreach ($prize as $key => $val) {
-                    $arr[$val['prize_level']] = $val['prize_prob'];
-                    $prize_name[$val['prize_level']] = $val['prize_name'];
+                    // 删除数量不足的奖品
+                    $count = model('Base')->model->table('wechat_prize')
+                        ->where('prize_name = "' . $val['prize_name'] . '" and wechat_id = '.$wxid)
+                        ->count();
+                    if ($count >= $val['prize_count']) {
+                        unset($prize[$key]);
+                    } else {
+                        $arr[$val['prize_level']] = $val['prize_prob'];
+                        $prize_name[$val['prize_level']] = $val['prize_name'];
+                    }
                 }
-            }
-            $lastarr = end($prize);
-            // 获取中奖项
-            $level = $this->get_rand($arr);
-            // 0为未中奖,1为中奖
-            if ($level == $lastarr['prize_level']) {
-                $rs['status'] = 0;
-                $data['prize_type'] = 0;
-            } else {
-                $rs['status'] = 1;
-                $data['prize_type'] = 1;
-            }
-            $rs['msg'] = $prize_name[$level];
-            $rs['num'] = $config['prize_num'] - $num;
-            // 抽奖记录
-            $data['openid'] = $openid;
-            $data['prize_name'] = $prize_name[$level];
-            $data['dateline'] = time();
-            $data['activity_type'] = $this->plugin_name;
-            $id = model('Base')->model->table('wechat_prize')
-                ->data($data)
-                ->insert();
-            if ($level != $lastarr['prize_level']) {
-                // 获奖链接
-                $rs['link'] = url('wechat/plugin_action', array(
-                    'name' => $this->plugin_name,
-                    'id' => $id
-                ));
-                $rs['link'] = str_replace('&amp;', '&', $rs['link']);
+                // 最后一个奖项
+                $lastarr = end($prize);
+                // 获取中奖项
+                $level = $this->get_rand($arr);
+                // 0为未中奖,1为中奖
+                if ($level == $lastarr['prize_level']) {
+                    $rs['status'] = 0;
+                    $data['prize_type'] = 0;
+                } else {
+                    $rs['status'] = 1;
+                    $data['prize_type'] = 1;
+                }
+                $rs['msg'] = $prize_name[$level];
+                $rs['num'] = $config['prize_num'] - $num;
+                // 抽奖记录
+                $data['wechat_id'] = $wxid;
+                $data['openid'] = $openid;
+                $data['prize_name'] = $prize_name[$level];
+                $data['dateline'] = time();
+                $data['activity_type'] = $this->plugin_name;
+                $id = model('Base')->model->table('wechat_prize')
+                    ->data($data)
+                    ->insert();
+                if ($level != $lastarr['prize_level']) {
+                    // 获奖链接
+                    $rs['link'] = url('wechat/plugin_action', array(
+                        'name' => $this->plugin_name,
+                        'id' => $id
+                    ));
+                    $rs['link'] = str_replace('&amp;', '&', $rs['link']);
+                }
             }
             
             echo json_encode($rs);

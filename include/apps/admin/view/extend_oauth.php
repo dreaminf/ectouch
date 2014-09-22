@@ -10,13 +10,15 @@
 			        <th class="text-center">规则名称</th>
 			        <th class="text-center">回调地址</th>
 			        <th class="text-center">推送量</th>
+			        <th class="text-center">状态</th>
 			        <th class="text-center">操作</th>
 			    </tr>
 			    {if $list}
                 <tr>
                     <td class="text-center">{$list['name']}</td>
                     <td class="text-center">{$list['config']['redirect_uri']}</td>
-                    <td class="text-center">{$list['config']['count']}</td>
+                    <td class="text-center">{if $list['config']['count']}{$list['config']['count']}{else}0{/if}</td>
+                    <td class="text-center">{if $list['enable']}开启{else}关闭{/if}</td>
                     <td class="text-center"><a href="{url('oauth_edit')}" class="btn btn-primary" data-toggle="modal" data-target=".bs-edit-modal-lg">编辑</a><a href="javascript:if(confirm('{$lang['confirm_delete']}')){window.location.href='url('oauth_del')'}" class="btn btn-default">删除</a></td>
                 </tr>
                 {/if}

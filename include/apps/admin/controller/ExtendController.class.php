@@ -172,13 +172,13 @@ class ExtendController extends AdminController
     public function oauth()
     {
         $list = $this->model->table('wechat_extend')
-            ->field('name, config')
+            ->field('name, config, enable')
             ->where('type = "oauth" and enable = 1')
             ->find();
-        if ($list) {
+        if (!empty($list['config'])) {
             $list['config'] = unserialize($list['config']);
         }
-        
+
         $this->assign('list', $list);
         $this->display();
     }
@@ -190,7 +190,8 @@ class ExtendController extends AdminController
     {
         if (IS_POST) {
             $data['name'] = I('post.name');
-            $config = I('post.data');
+            $data['enable'] = I('post.enable');
+            $config = I('post.config');
             if (empty($data['name'])) {
                 $this->message('请填写规则名称', NULL, 'error');
             }
@@ -206,7 +207,7 @@ class ExtendController extends AdminController
             $this->message('编辑成功', url('oauth'));
         }
         $rs = $this->model->table('wechat_extend')
-            ->field('name, config')
+            ->field('name, config, enable')
             ->where('type = "oauth"')
             ->find();
         if ($rs) {

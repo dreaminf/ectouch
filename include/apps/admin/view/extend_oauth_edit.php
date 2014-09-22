@@ -14,14 +14,26 @@
         <tr>
           <td width="200">回调地址:</td>
           <td><div class="col-md-6">
-              <input type="text" name="data[redirect_uri]" class="form-control input-sm" value="{$rs['config']['redirect_uri']}" />
+              <input type="text" name="config[redirect_uri]" class="form-control input-sm" value="{$rs['config']['redirect_uri']}" />
+            </div></td>
+        </tr>
+        <tr>
+          <td width="200">开启:</td>
+          <td><div class="col-md-6">
+              <div  class="btn-group" data-toggle="buttons">
+					<label class="btn btn-primary {if $rs['enable']}active{/if}">
+						<input type="radio" name="enable" value="1" {if $rs['enable']}checked{/if}> 开启
+					</label>
+					<label class="btn btn-primary {if empty($rs['enable'])}active{/if}">
+						<input type="radio" name="enable" value="0" {if empty($rs['enable'])}checked{/if}> 关闭
+					</label>
+				</div>
             </div></td>
         </tr>
           <td width="200"></td>
           <td><div class="col-md-4">
-                <input type="hidden" name="data[enable]" value="{$rs['config']['enable']}" />
-                <input type="hidden" name="data[count]" value="{$rs['config']['count']}" />
-                <input type="hidden" name="data[contents]" value="{$rs['config']['contents']}" />
+                <input type="hidden" name="config[count]" value="{if $rs['config']['count']}{$rs['config']['count']}{else}0{/if}" />
+                <input type="hidden" name="config[contents]" value="{$rs['config']['contents']}" />
 				<input type="submit" value="{$lang['button_submit']}" class="btn btn-primary" />
               	<input type="reset" value="{$lang['button_reset']}" class="btn btn-default" />
             </div></td>
