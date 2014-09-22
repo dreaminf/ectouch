@@ -38,8 +38,8 @@
   <dt><a href="{$brand_goods.url}">{$brand_goods.goods_name}</a></dt>
   <dd class="jj"></dd>
   <dd class="price">{$lang.price}:<b><!--{if $brand_goods.promote_price}-->{$brand_goods.promote_price}<!--{else}-->{$brand_goods.shop_price}<!--{/if}--></b> <em>{$brand_goods.market_price}</em> 
-    <!--{if $goods.promotion} --> 
-    <!-- {foreach from=$goods.promotion item=promotion} --> 
+    <!--{if $brand_goods.promotion} --> 
+    <!-- {foreach from=$brand_goods.promotion item=promotion} --> 
     <!--{if $promotion.type == 'group_buy'}--><i class="tg">{$lang.group_buy_act}</i> 
     <!--{elseif $promotion.act_type == 0}--> <i class="mz"> {$lang.favourable_mz}</i> 
     <!--{elseif $promotion.act_type == 1}--> <i class="mj"> {$lang.favourable_mj}</i> 
