@@ -144,24 +144,26 @@ class zjd extends PluginWechatController
     {
         // 插件配置
         $config = $this->get_config($this->plugin_name);
-        if(!empty($config)){
+        if (! empty($config)) {
             $num = count($config['prize']);
-            foreach($config['prize'] as $key=>$val){
-                //删除最后一项未中奖
-                if($key == ($num-1)){
+            foreach ($config['prize'] as $key => $val) {
+                // 删除最后一项未中奖
+                if ($key == ($num - 1)) {
                     unset($config['prize'][$key]);
                 }
             }
         }
-
+        
         $starttime = strtotime($config['starttime']);
         $endtime = strtotime($config['endtime']);
-        //用户抽奖剩余的次数
+        // 用户抽奖剩余的次数
         $openid = session('openid');
-        $count = model('Base')->model->table('wechat_prize')->where('openid = "'.$openid.'" and dateline between "'.$starttime.'" and "'.$endtime.'"')->count();
+        $count = model('Base')->model->table('wechat_prize')
+            ->where('openid = "' . $openid . '" and dateline between "' . $starttime . '" and "' . $endtime . '"')
+            ->count();
         $config['prize_num'] = $config['prize_num'] - $count;
-        //中奖记录
-        $sql = 'SELECT u.nickname, p.prize_name, p.id FROM '.model('Base')->model->pre.'wechat_prize p LEFT JOIN '.model('Base')->model->pre.'wechat_user u ON p.openid = u.openid where p.openid = "'.$openid.'" and dateline between "'.$starttime.'" and "'.$endtime.'" and p.prize_type = 1 ORDER BY dateline desc';
+        // 中奖记录
+        $sql = 'SELECT u.nickname, p.prize_name, p.id FROM ' . model('Base')->model->pre . 'wechat_prize p LEFT JOIN ' . model('Base')->model->pre . 'wechat_user u ON p.openid = u.openid where p.openid = "' . $openid . '" and dateline between "' . $starttime . '" and "' . $endtime . '" and p.prize_type = 1 ORDER BY dateline desc';
         $list = model('Base')->model->query($sql);
         
         $file = ROOT_PATH . 'plugins/wechat/' . $this->plugin_name . '/view/index.php';
@@ -175,132 +177,140 @@ class zjd extends PluginWechatController
      */
     public function action()
     {
-        if(IS_POST){
+        // 信息提交
+        if (IS_POST) {
+            $id = I('post.id');
             $data = I('post.data');
-            $winner = serialize($data);
-            exit;
+            if (empty($id)) {
+                show_message('请选择中奖的奖品', '', '', 'error');
+            }
+            if (empty($data['phone'])) {
+                show_message('请填写手机号', '', '', 'error');
+            }
+            if (empty($data['address'])) {
+                show_message('请填写详细地址', '', '', 'error');
+            }
+            $winner['winner'] = serialize($data);
+            
+            model('Base')->model->table('wechat_prize')
+                ->data($winner)
+                ->where('id = ' . $id)
+                ->update();
+            show_message('资料提交成功，请等待发放奖品', '继续砸金蛋', url('wechat/plugin_show', array(
+                'name' => 'zjd'
+            )));
+            exit();
         }
-        //获奖用户资料填写页面
-        if(IS_GET && !IS_AJAX){
+        // 获奖用户资料填写页面
+        if (! empty($_GET['id']) && ! IS_AJAX) {
             $id = I('get.id');
+            $rs = model('Base')->model->table('wechat_prize')
+                ->field('winner')
+                ->where('openid = "'.session('openid').'" and id = ' . $id)
+                ->getOne();
+            if(!empty($rs)){
+                show_message('已经领取', '', '', 'error');
+            }
             $file = ROOT_PATH . 'plugins/wechat/' . $this->plugin_name . '/view/user_info.php';
             if (file_exists($file)) {
                 require_once ($file);
-            } 
-            exit;
+            }
+            exit();
         }
-        //抽奖操作
-        if(IS_GET && IS_AJAX){
+        // 抽奖操作
+        if (IS_GET && IS_AJAX) {
             $rs = array();
-            //登录
+            // 未登录
             $openid = session('openid');
-            if(empty($openid)){
-                $rs['msg'] = 0;
-                $rs['yes'] = '请先登录';
+            if (empty($openid)) {
+                $rs['status'] = 2;
+                $rs['msg'] = '请先登录';
                 echo json_encode($rs);
-                exit;
-            } 
+                exit();
+            }
             
             // 插件配置
             $config = $this->get_config($this->plugin_name);
-            //活动过期
+            // 活动过期
             $starttime = strtotime($config['starttime']);
             $endtime = strtotime($config['endtime']);
-            if(time() < $starttime){
-                $rs['msg'] = 2;
-                $rs['yes'] = '活动未开始';
+            if (time() < $starttime) {
+                $rs['status'] = 2;
+                $rs['msg'] = '活动未开始';
                 echo json_encode($rs);
-                exit;
+                exit();
             }
-            if(time() > $endtime){
-                $rs['msg'] = 2;
-                $rs['yes'] = '活动已结束';
+            if (time() > $endtime) {
+                $rs['status'] = 2;
+                $rs['msg'] = '活动已结束';
                 echo json_encode($rs);
-                exit;
+                exit();
             }
-            //超过次数
-            if(!empty($openid)){
-                $num = model('Base')->model->table('wechat_prize')->where('openid = "'.$openid.'" and dateline between "'.$starttime.'" and "'.$endtime.'"')->count();
-                if($num <= 0){
+            // 超过次数
+            if (! empty($openid)) {
+                $num = model('Base')->model->table('wechat_prize')
+                    ->where('openid = "' . $openid . '" and dateline between "' . $starttime . '" and "' . $endtime . '"')
+                    ->count();
+                if ($num <= 0) {
                     $num = 1;
-                }
-                else{
+                } else {
                     $num = $num + 1;
                 }
-            }
-            else{
+            } else {
                 $num = 1;
             }
             
-            if($num > $config['prize_num']){
-                $rs['msg'] = 2;
-                $rs['yes'] = '你已经用光了抽奖次数';
+            if ($num > $config['prize_num']) {
+                $rs['status'] = 2;
+                $rs['msg'] = '你已经用光了抽奖次数';
                 echo json_encode($rs);
-                exit;
+                exit();
             }
             
             $prize = $config['prize'];
-            if(!empty($prize)){
+            if (! empty($prize)) {
                 $arr = array();
                 $prize_name = array();
-                foreach($prize as $key=>$val){
+                foreach ($prize as $key => $val) {
                     $arr[$val['prize_level']] = $val['prize_prob'];
                     $prize_name[$val['prize_level']] = $val['prize_name'];
                 }
             }
             $lastarr = end($prize);
-            //获取中奖项
+            // 获取中奖项
             $level = $this->get_rand($arr);
-            //0为未中奖,1为中奖
-            if($level == $lastarr['prize_level']){
-                $rs['msg'] = 0;
+            // 0为未中奖,1为中奖
+            if ($level == $lastarr['prize_level']) {
+                $rs['status'] = 0;
                 $data['prize_type'] = 0;
-            }
-            else{
-                $rs['msg'] = 1;
+            } else {
+                $rs['status'] = 1;
                 $data['prize_type'] = 1;
             }
-            $rs['yes'] = $prize_name[$level];
+            $rs['msg'] = $prize_name[$level];
             $rs['num'] = $config['prize_num'] - $num;
-            //抽奖记录
+            // 抽奖记录
             $data['openid'] = $openid;
             $data['prize_name'] = $prize_name[$level];
             $data['dateline'] = time();
-            $id = model('Base')->model->table('wechat_prize')->data($data)->insert();
-            if($level != $lastarr['prize_level']){
-                //获奖链接
-                $rs['link'] = url('wechat/plugin_action', array('name'=>$this->plugin_name, 'id'=>$id));
+            $data['activity_type'] = $this->plugin_name;
+            $id = model('Base')->model->table('wechat_prize')
+                ->data($data)
+                ->insert();
+            if ($level != $lastarr['prize_level']) {
+                // 获奖链接
+                $rs['link'] = url('wechat/plugin_action', array(
+                    'name' => $this->plugin_name,
+                    'id' => $id
+                ));
+                $rs['link'] = str_replace('&amp;', '&', $rs['link']);
             }
             
             echo json_encode($rs);
-            exit;
+            exit();
         }
     }
-    
-    /**
-     * 中奖概率计算
-     * @param unknown $proArr
-     * @return Ambigous <string, unknown>
-     */
-    function get_rand($proArr)
-    {
-        $result = '';
-        // 概率数组的总概率精度
-        $proSum = array_sum($proArr);
-        // 概率数组循环
-        foreach ($proArr as $key => $proCur) {
-            $randNum = mt_rand(1, $proSum);
-            if ($randNum <= $proCur) {
-                $result = $key;
-                break;
-            } else {
-                $proSum -= $proCur;
-            }
-        }
-        unset($proArr);
-        return $result;
-    }
-    
+
     /**
      * 获取插件配置信息
      *

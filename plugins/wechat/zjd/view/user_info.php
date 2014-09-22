@@ -15,7 +15,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">获奖用户资料填写</div>
 			<div class="panel-body">
-			<form action="<?php echo __HOST__.url('wechat/plugin_action', array('name'=>'zjd'));?>" method="post" class="form-horizontal validforms" role="form">
+			<form action="<?php echo url('wechat/plugin_action', array('name'=>'zjd'));?>" method="post" class="form-horizontal validforms" role="form">
 				<div class="form-group">
 				    <label class="col-sm-2 control-label">姓名</label>
 				    <div class="col-sm-10">

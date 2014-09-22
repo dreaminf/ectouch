@@ -50,7 +50,7 @@
                 if(!empty($list)){
                     foreach($list as $key=>$val){
                 ?>
-                    <p><?php echo $val['nickname'];?> 获得奖品 ：<?php echo $val['prize_name'];?><a href="<?php echo url('wechat/plugin_action', array('name'=>'zjd', 'id'=>$val['id']));?>">领取</a></p>
+                    <p><?php echo $val['nickname'];?> 获得奖品 ：<?php echo $val['prize_name'];?></p>
                 <?php
                     }
                 }
@@ -145,19 +145,19 @@
             var url = '<?php echo url('wechat/plugin_action', array('name'=>'zjd'))?>';
             $.get(url,{}, function(data){
             	$("#mask").show();
-                if(data.msg == 1){
-                	$("#content").html(data.yes);
+                if(data.status == 1){
+                	$("#content").html(data.msg);
                     $(".num").html(data.num);
                     $("#link").attr("href", data.link);
                 	$("#dialog").attr("class",'yes').show();
                 }
-                else if(data.msg == 0){
-                	$("#content").html(data.yes);
+                else if(data.status == 0){
+                	$("#content").html(data.msg);
                     $(".num").html(data.num);
                 	$("#dialog").attr("class",'no').show();
                 }
-                else if(data.msg == 2){
-                	$("#content").html(data.yes);
+                else if(data.status == 2){
+                	$("#content").html(data.msg);
                 	$("#dialog").attr("class",'no').show();
                 }
             	

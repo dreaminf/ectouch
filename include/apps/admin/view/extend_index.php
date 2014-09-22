@@ -28,7 +28,7 @@
                         {else}
                         <a href="{url('edit', array('ks'=>$val['command']))}" class="btn btn-primary">安装</a>
                         {/if}
-                        {if $val['enable'] == 1 && $val['config']['haslist'] == 1}<a href="{url('winner_list')}" class="btn btn-default">查看记录</a>{/if}
+                        {if $val['enable'] == 1 && $val['config']['haslist'] == 1}<a href="{url('winner_list', array('ks'=>$val['command']))}" class="btn btn-default">查看记录</a>{/if}
                     </td>
                 </tr>
                 {/loop}

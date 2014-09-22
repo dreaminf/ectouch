@@ -27,7 +27,7 @@ class ExtendController extends AdminController
     }
 
     /**
-     * 功能变量列表
+     * 功能扩展
      */
     public function index()
     {
@@ -62,7 +62,7 @@ class ExtendController extends AdminController
     }
 
     /**
-     * 功能变量安装/编辑
+     * 功能扩展安装/编辑
      */
     public function edit()
     {
@@ -144,7 +144,7 @@ class ExtendController extends AdminController
 
 
     /**
-     * 功能变量卸载
+     * 功能扩展卸载
      */
     public function uninstall()
     {
@@ -216,9 +216,70 @@ class ExtendController extends AdminController
         $this->assign('rs', $rs);
         $this->display();
     }
+    
+    /**
+     * 获取中奖记录
+     */
+    public function winner_list(){
+        $ks = I('get.ks');
+        if(empty($ks)){
+            $this->message('请选择插件', NULL, 'error');
+        }
+        $sql = 'SELECT p.id, p.prize_name, p.issue_status, p.winner, p.dateline, u.nickname FROM '.$this->model->pre.'wechat_prize p LEFT JOIN '.$this->model->pre.'wechat_user u ON p.openid = u.openid WHERE p.activity_type = "'.$ks.'" and p.prize_type = 1 ORDER BY dateline desc';
+        $list = $this->model->query($sql);
+        if(empty($list)){
+            $list = array();
+        }
+        foreach($list as $key=>$val){
+            $list[$key]['winner'] = unserialize($val['winner']);
+        }
+
+        $this->assign('list', $list);
+        $this->display();
+        
+    }
+    
+    /**
+     * 发放奖品
+     */
+    public function winner_issue(){
+        $id = I('get.id');
+        $cancel = I('get.cancel');
+        if(empty($id)){
+            $this->message('请选择中奖记录', NULL, 'error');
+        }
+        if(!empty($cancel)){
+            $data['issue_status'] = 0;
+            $this->model->table('wechat_prize')->data($data)->where('id = '.$id)->update();
+            
+            $this->message('取消成功');
+        }
+        else{
+            $data['issue_status'] = 1;
+            $this->model->table('wechat_prize')->data($data)->where('id = '.$id)->update();
+            
+            $this->message('发放成功');
+        }
+        
+    }
+    
+    /**
+     * 删除记录
+     */
+    public function winner_del(){
+        $id = I('get.id');
+        if(empty($id)){
+            $this->message('请选择中奖记录', NULL, 'error');
+        }
+        $this->model->table('wechat_prize')->where('id = '.$id)->delete();
+        
+        $this->message('删除成功');
+    }
+    
+    
 
     /**
-     * 获取微信插件及配置
+     * 获取插件配置
      *
      * @return multitype:
      */
