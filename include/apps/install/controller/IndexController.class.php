@@ -71,7 +71,7 @@ class IndexController extends Controller {
             $sql = "ALTER TABLE `".$dbPrefix."order_info` ADD COLUMN `mobile_order`  int(1) UNSIGNED NOT NULL DEFAULT 0 AFTER `discount`,ADD COLUMN `mobile_pay`  int(1) UNSIGNED NOT NULL DEFAULT 0 AFTER `mobile_order`;";
             $this->update_install_sql($sql);
         }
-        $dbData = APP_PATH . APP_NAME . '/install.sql';
+        $dbData = ROOT_PATH . 'data/install.sql';
         $sqlData = Install::mysql($dbData, 'ecs_', $dbPrefix);
         if (!model('Install')->runSql($configDb, $sqlData)) {
             $this->msg('数据导入失败，请检查后手动删除数据库重新安装！', false);
@@ -83,7 +83,7 @@ class IndexController extends Controller {
 	
     //更新安装sql文件
     private function update_install_sql($growing = ''){
-        $fp = fopen(BASE_PATH . 'apps/install/install.sql', "a");
+        $fp = fopen(ROOT_PATH . 'data/install.sql', "a");
         flock($fp, LOCK_EX);
         fwrite($fp, "\n\r".$growing);
         flock($fp, LOCK_UN);
