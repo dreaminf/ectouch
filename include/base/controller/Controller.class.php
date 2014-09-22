@@ -12,6 +12,10 @@
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
  */
+
+/* 访问控制 */
+defined('IN_ECTOUCH') or die('Deny Access');
+
 class Controller {
 
     protected $model = NULL; // 数据库模型

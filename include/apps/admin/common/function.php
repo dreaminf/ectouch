@@ -8,9 +8,8 @@
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
 
-if (!defined('IN_ECTOUCH')) {
-    die('Deny Access');
-}
+/* 访问控制 */
+defined('IN_ECTOUCH') or die('Deny Access');
 
 /* * ********************************************************
  * 管理中心公用函数库

@@ -16,7 +16,7 @@
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
-class IndexController extends BaseController {
+class IndexController extends Controller {
 
     /**
      * 构造函数
@@ -100,14 +100,13 @@ class IndexController extends BaseController {
         require $config_file;
         
         $content = "<?php\n
-		define('APPNAME', ".APPNAME.");
-		define('VERSION', ".VERSION.");
-		define('RELEASE', ".RELEASE.");
+		define('APPNAME', '".APPNAME."');
+		define('VERSION', '".VERSION."');
+		define('RELEASE', '".RELEASE."');
 		define('ECTOUCH_AUTH_KEY', '".$appid."');";
         @file_put_contents($config_file, $content);
-        
+        /**
         $shop_config = model('Base')->load_config();
-        
         $shop_country = model('RegionBase')->get_region_name($shop_config[shop_country]);
         $shop_province = model('RegionBase')->get_region_name($shop_config[shop_province]);
         $shop_city = model('RegionBase')->get_region_name($shop_config[shop_city]);
@@ -139,22 +138,22 @@ class IndexController extends BaseController {
         );
         $url = "http://ectouch.cn/api/install.html";
         http::doPost($url,$data);
-        
+        */
         @fopen($this->lockFile, 'w');
         //生成二维码
         $mobile_url = __URL__; //二维码内容
         $errorCorrectionLevel = 'L'; // 纠错级别：L、M、Q、H 
         $matrixPointSize = 7; // 点的大小：1到10
         $mobile_qr = 'data/assets/' . APP_NAME . '/' . $errorCorrectionLevel . $matrixPointSize . '.png';
-        Qrcode::png($mobile_url, ROOT_PATH . $mobile_qr, $errorCorrectionLevel, $matrixPointSize, 2);
+        QRcode::png($mobile_url, ROOT_PATH . $mobile_qr, $errorCorrectionLevel, $matrixPointSize, 2);
         //二维码路径赋值
         $this->assign('mobile_qr', $mobile_url . '/' . $mobile_qr);
         $this->display('success');
         if (C('run_after_del')) {
             del_dir(BASE_PATH . 'apps/' . APP_NAME);
-            // if (is_dir('data/assets/' . APP_NAME)) {
-            //del_dir('data/assets/' . APP_NAME);
-            // }
+            if (is_dir('data/assets/' . APP_NAME)) {
+                del_dir('data/assets/' . APP_NAME);
+            }
         }
     }
 

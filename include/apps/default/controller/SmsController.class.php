@@ -12,6 +12,8 @@
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
  */
+
+/* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
 class SmsController extends CommonController {

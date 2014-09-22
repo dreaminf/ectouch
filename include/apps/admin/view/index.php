@@ -33,28 +33,11 @@
         <li><a href="{url('category/index')}" target="mainFrame">分类图标</a></li>
         <li><a href="{url('brand/index')}" target="mainFrame">品牌管理</a></li>
         <li><a href="{url('payment/index')}" target="mainFrame">支付方式</a></li>
-        <li><a href="{url('advert/index')}" target="mainFrame">广告管理</a></li>
+        <li style="display:none"><a href="{url('advert/index')}" target="mainFrame">广告管理</a></li>
         <li><a href="{url('favourable/index')}" target="mainFrame">优惠活动</a></li>
         <li><a href="{url('groupbuy/index')}" target="mainFrame">团购活动</a></li>
         <li><a href="{url('articlecat/index')}" target="mainFrame">文章分类</a></li>
         <li><a href="{url('authorization/index')}" target="mainFrame">授权管理</a></li>
-      </ul>
-    </dd>
-  </dl>
-  <dl>
-    <dt class="menu_title">微信通营销</dt>
-    <dd>
-      <ul>
-		  <li><a href="{url('wechat/index')}" target="mainFrame">我的公众号</a></li>
-		  <li><a href="{url('wechat/append')}" target="mainFrame">新增公众号</a></li>
-      </ul>
-    </dd>
-  </dl>
-  <dl>
-    <dt class="menu_title">帮助文档</dt>
-    <dd>
-      <ul>
-		  <li><a href="{url('wechat/help')}" target="mainFrame">帮助文档</a></li>
       </ul>
     </dd>
   </dl>

@@ -12,6 +12,10 @@
  * Licensed ( http://www.ectouch.cn/d ocs/license.txt )
  * ----------------------------------------------------------------------------
  */
+
+/* 访问控制 */
+defined('IN_ECTOUCH') or die('Deny Access');
+
 abstract class PluginWechatController
 {
     private $layout = 'wechat_layout';
