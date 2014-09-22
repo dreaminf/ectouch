@@ -35,7 +35,13 @@ class InstallModel extends BaseModel {
         return true;
     }
 
-    //获取字段
+    /**
+     * 获取字段
+     * @param unknown $data
+     * @param string $_table
+     * @param string $_column
+     * @return boolean
+     */
     public function get_column($data, $_table = '', $_column = '') {
         $model = new EcModel($data);
         $sql = "describe `" . $_table . "` `" . $_column . "`";

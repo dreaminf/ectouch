@@ -127,7 +127,7 @@ class Http {
             $post_string = json_encode($post_data);
         }
         else if(is_array($post_data)){
-            $post_string = http_build_query($post_data);
+            $post_string = http_build_query($post_data, '', '&');
         }else {
         	$post_string = $post_data;
         }  
