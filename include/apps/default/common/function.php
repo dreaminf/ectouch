@@ -1331,3 +1331,9 @@ function exchange_points($uid, $fromcredits, $tocredits, $toappid, $netamount) {
     }
 }
 
+/**
+ * 返回购物车中的商品数量
+ */
+function insert_cart_info_number(){
+    return model('Flow')->insert_cart_info_number();
+}

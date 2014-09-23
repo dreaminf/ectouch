@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+{if $auto_redirect}
+<meta http-equiv="refresh" content="3;URL={$message.back_url}" />
+{/if}
+<title>{$page_title} 触屏版</title>
+<link href="__TPL__/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
+<link href="__TPL__/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="__TPL__/ectouch.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js" ></script> 
+<script type="text/javascript" src="__PUBLIC__/js/jquery.json.js" ></script> 
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/js/jquery.more.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/utils.js" ></script>
+<script type="text/javascript" src="__TPL__/js/TouchSlide.js"></script>
+<script type="text/javascript" src="__TPL__/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="__TPL__/js/ectouch.js"></script>
+</head>
+
+<body>

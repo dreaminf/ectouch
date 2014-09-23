@@ -22,6 +22,10 @@ class IndexController extends CommonController {
      * 首页信息
      */
     public function index() {
+        $this->assign('best_goods',model('index')->goods_list('best',3));
+        $this->assign('new_goods',model('index')->goods_list('goods',3));
+        $this->assign('hot_goods',model('index')->goods_list('hot',3));
+        
         // 自定义导航栏
         $navigator = model('Common')->get_navigator();
         $this->assign('navigator', $navigator['middle']);
