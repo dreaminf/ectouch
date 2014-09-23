@@ -111,7 +111,7 @@ class WechatController extends CommonController
         if (empty($rs)) {
             // 用户注册
             $domain = get_top_domain();
-            if (model('User')->register($info['openid'], 'ecmoban', $time . rand(100, 999) . '@'.$domain) !== false) {
+            if (model('User')->register($info['openid'], 'ecmoban', $time . rand(100, 999) . '@' . $domain) !== false) {
                 $new_user_name = 'wx' . $_SESSION['user_id'];
                 $data['user_name'] = $new_user_name;
                 $data['email'] = $new_user_name . $domain;
@@ -333,17 +333,17 @@ class WechatController extends CommonController
     public function get_function($fromusername, $keywords)
     {
         $return = false;
-        $ks = '';
         $rs = $this->model->table('wechat_extend')
             ->field('name, command, config')
-            ->where('command like "%' . $keywords . '%" and enable = 1')
+            ->where('keywords like "%' . $keywords . '%" and enable = 1')
             ->order('id asc')
             ->find();
         $file = ROOT_PATH . 'plugins/wechat/' . $rs['command'] . '/' . $rs['command'] . '.class.php';
         if (file_exists($file)) {
             require_once ($file);
             $wechat = new $rs['command']();
-            $data = $wechat->show();
+            $data = $wechat->show($fromusername, $rs);
+            logResult(var_export($data, true));
             if (! empty($data)) {
                 $this->weObj->news($data)->reply();
                 // 积分赠送
@@ -380,7 +380,7 @@ class WechatController extends CommonController
         // OAuth配置信息
         $oauth = model('Base')->model->table('wechat_extend')
             ->field('config')
-            ->where('type = "oauth"')
+            ->where('type = "oauth" and enable = 1')
             ->getOne();
         if ($oauth) {
             $oauth = unserialize($oauth);
@@ -388,7 +388,7 @@ class WechatController extends CommonController
         // 默认公众号信息
         $wxinfo = model('Base')->model->table('wechat')
             ->field('id, token, appid, appsecret')
-            ->where('default_wx = 1')
+            ->where('default_wx = 1 and status = 1')
             ->find();
         if ($oauth && $wxinfo) {
             $config['token'] = $wxinfo['token'];
@@ -488,17 +488,17 @@ class WechatController extends CommonController
         // 推送量
         $oauth = model('Base')->model->table('wechat_extend')
             ->field('config')
-            ->where('type = "oauth"')
+            ->where('type = "oauth" and enable = 1')
             ->getOne();
         if ($oauth) {
             $oauth = unserialize($oauth);
+            $oauth['count'] = $oauth['count'] + 1;
+            $config['config'] = serialize($oauth);
+            model('Base')->model->table('wechat_extend')
+                ->data($config)
+                ->where('type = "oauth" and enable = 1')
+                ->update();
         }
-        $oauth['count'] = $oauth['count'] + 1;
-        $config['config'] = serialize($oauth);
-        model('Base')->model->table('wechat_extend')
-            ->data($config)
-            ->where('type = "oauth"')
-            ->update();
         
         session('openid', $userinfo['openid']);
         ECTouch::user()->set_session($new_user_name);
@@ -534,11 +534,11 @@ class WechatController extends CommonController
             $wechat->html_show();
         }
     }
-    
+
     /**
      * 插件处理方法
      *
-     * @param string $plugin
+     * @param string $plugin            
      */
     public function plugin_action()
     {
@@ -548,7 +548,7 @@ class WechatController extends CommonController
             include_once ($file);
             $wechat = new $plugin();
             $wechat->action();
-        }            
+        }
     }
 
     /**
@@ -559,11 +559,13 @@ class WechatController extends CommonController
      */
     private function get_config($orgid)
     {
-        $where['orgid'] = $orgid;
         $config = $this->model->table('wechat')
             ->field('token, appid, appsecret')
-            ->where($where)
+            ->where('orgid = "'.$orgid.'" and status = 1')
             ->find();
+        if(empty($config)){
+            $config = array();
+        }
         return $config;
     }
 }

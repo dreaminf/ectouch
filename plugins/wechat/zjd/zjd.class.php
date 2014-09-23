@@ -84,7 +84,7 @@ class zjd extends PluginWechatController
     /**
      * 获取数据
      */
-    public function show()
+    public function show($fromusername, $info)
     {
         $articles = array();
         // 插件配置
@@ -115,12 +115,9 @@ class zjd extends PluginWechatController
     public function give_point($fromusername, $info)
     {
         if (! empty($info)) {
-            $info['config'] = unserialize($info['config']);
-            // 配置信息重组
+            // 配置信息
             $config = array();
-            foreach ($info['config'] as $key => $val) {
-                $config[$val['name']] = $val['value'];
-            }
+            $config = unserialize($info['config']);
             // 开启积分赠送
             if (isset($config['point_status']) && $config['point_status'] == 1) {
                 $where = 'openid = "' . $fromusername . '" and keywords = "' . $info['keywords'] . '" and createtime > (UNIX_TIMESTAMP(NOW())- ' . $config['point_interval'] . ')';
@@ -279,7 +276,7 @@ class zjd extends PluginWechatController
                 foreach ($prize as $key => $val) {
                     // 删除数量不足的奖品
                     $count = model('Base')->model->table('wechat_prize')
-                        ->where('prize_name = "' . $val['prize_name'] . '" and wechat_id = '.$wxid)
+                        ->where('prize_name = "' . $val['prize_name'] . '" and wechat_id = ' . $wxid)
                         ->count();
                     if ($count >= $val['prize_count']) {
                         unset($prize[$key]);

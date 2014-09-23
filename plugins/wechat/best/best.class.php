@@ -33,7 +33,7 @@ class best extends PluginWechatController
 
     /**
      * 构造方法
-     * 
+     *
      * @param unknown $cfg            
      */
     public function __construct($cfg = array())
@@ -54,14 +54,14 @@ class best extends PluginWechatController
     /**
      * 获取数据
      */
-    public function show()
+    public function show($fromusername, $info)
     {
         $articles = array();
         $data = model('base')->model->table('goods')
             ->field('goods_id, goods_name, goods_img')
             ->where('is_best = 1')
             ->order('click_count desc, last_update desc')
-            ->limit(6)
+            ->limit(4)
             ->select();
         if (! empty($data)) {
             foreach ($data as $key => $val) {
@@ -82,19 +82,16 @@ class best extends PluginWechatController
 
     /**
      * 积分赠送
-     * 
+     *
      * @param unknown $fromusername            
      * @param unknown $info            
      */
     public function give_point($fromusername, $info)
     {
         if (! empty($info)) {
-            $info['config'] = unserialize($info['config']);
-            // 配置信息重组
+            // 配置信息
             $config = array();
-            foreach ($info['config'] as $key => $val) {
-                $config[$val['name']] = $val['value'];
-            }
+            $config = unserialize($info['config']);
             // 开启积分赠送
             if (isset($config['point_status']) && $config['point_status'] == 1) {
                 $where = 'openid = "' . $fromusername . '" and keywords = "' . $info['keywords'] . '" and createtime > (UNIX_TIMESTAMP(NOW())- ' . $config['point_interval'] . ')';

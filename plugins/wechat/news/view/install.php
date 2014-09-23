@@ -1,13 +1,3 @@
-<link rel="stylesheet" href="/ECTouch/uploads/data/common/colorbox/colorbox.css" />
-<link rel="stylesheet" type="text/css" href="/ECTouch/uploads/data/assets/admin/css/jquery.datetimepicker.css" />
-<style>
-.article{border:1px solid #ddd;padding:5px 5px 0 5px;}
-.cover{height:160px; position:relative;margin-bottom:5px;overflow:hidden;}
-.article .cover img{width:100%; height:auto;}
-.article span{height:40px; line-height:40px; display:block; z-index:5; position:absolute;width:100%;bottom:0px; color:#FFF; padding:0 10px; background-color:rgba(0,0,0,0.6)}
-.article_list{padding:5px;border:1px solid #ddd;border-top:0;overflow:hidden;}
-.thumbnail{padding:0;}
-</style>
 <form action="{url('edit')}" method="post" class="form-horizontal" role="form">
 <table class="table table-hover ectouch-table">
     <tr>
@@ -86,24 +76,3 @@
     </tr>
 </table>
 </form>
-<script src="__PUBLIC__/colorbox/jquery.colorbox-min.js"></script>
-<script src="__ASSETS__/js/jquery.datetimepicker.js"></script>
-<script type="text/javascript">
-    //iframe显示
-    $(".iframe").colorbox({iframe:true, width:"60%", height:"60%"});
-    //日历显示
-    $("#starttime, #endtime").datetimepicker({
-    	lang:'ch',
-    	format:'Y-m-d',
-    	timepicker:false    
-    });
-    //添加奖项
-    function addprize(obj){
-    	var html = '<tr><td class="text-center"><a href="javascript:;" class="glyphicon glyphicon-minus" onClick="delprize(this)"></a></td><td class="text-center"><input type="text" name="cfg_value[prize_num][]" class="form-control" placeholder="例如：一等奖"></td><td class="text-center"><input type="text" name="cfg_value[prize_name][]" class="form-control" placeholder="例如：法拉利跑车"></td><td class="text-center"><input type="text" name="cfg_value[prize_count][]" class="form-control" placeholder="例如：3"></td><td class="text-center"><input type="text" name="cfg_value[prize_prob][]"  class="form-control" placeholder="例如：1%"></td></tr>';
-        $(obj).parent().parent().parent().append(html);
-    }
-    //删除奖项
-    function delprize(obj){
-        $(obj).parent().parent().remove();
-    }
-</script>

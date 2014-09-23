@@ -5,9 +5,9 @@
  * ============================================================================
  * Copyright (c) 2012-2014 http://ectouch.cn All rights reserved.
  * ----------------------------------------------------------------------------
- * 文件名称：hot.php
+ * 文件名称：sign.class.php
  * ----------------------------------------------------------------------------
- * 功能描述：微信通-热卖商品
+ * 功能描述：微信通-签到送积分
  * ----------------------------------------------------------------------------
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
@@ -24,7 +24,7 @@ if (! defined('IN_ECTOUCH')) {
  * @author wanglu
  *        
  */
-class hot extends PluginWechatController
+class sign extends PluginWechatController
 {
     // 插件名称
     protected $plugin_name = '';
@@ -57,25 +57,28 @@ class hot extends PluginWechatController
     public function show($fromusername, $info)
     {
         $articles = array();
-        $data = model('base')->model->table('goods')
-            ->field('goods_id, goods_name, goods_img')
-            ->where('is_hot = 1')
-            ->order('click_count desc, last_update desc')
-            ->limit(4)
-            ->select();
-        if (! empty($data)) {
-            foreach ($data as $key => $val) {
-                // 不是远程图片
-                if (! preg_match('/(http:|https:)/is', $val['goods_img'])) {
-                    $articles[$key]['PicUrl'] = __URL__ . '/' . $val['goods_img'];
-                } else {
-                    $articles[$key]['PicUrl'] = $val['goods_img'];
-                }
-                $articles[$key]['Title'] = $val['goods_name'];
-                $articles[$key]['Url'] = __HOST__ . url('goods/index', array(
-                    'id' => $val['goods_id']
-                ));
+        // 配置信息
+        $config = array();
+        $config = unserialize($info['config']);
+        if (isset($config['point_status']) && $config['point_status'] == 1) {
+            // 签到次数
+            $where = 'openid = "' . $fromusername . '" and keywords = "' . $info['keywords'] . '" and createtime > (UNIX_TIMESTAMP(NOW())- ' . $config['point_interval'] . ')';
+            $num = model('Base')->model->table('wechat_point')
+                ->field('createtime')
+                ->where($where)
+                ->order('createtime desc')
+                ->count();
+            // 当前时间减去时间间隔得到的历史时间之后赠送的次数
+            if ($num < $config['point_num']) {
+                $articles[0]['Title'] = '签到提示';
+                $articles[0]['Description'] = '签到成功';
+            } else {
+                $articles[0]['Title'] = '签到提示';
+                $articles[0]['Description'] = '签到次数已用完';
             }
+        } else {
+            $articles[0]['Title'] = '签到提示';
+            $articles[0]['Description'] = '未启用签到送积分';
         }
         return $articles;
     }

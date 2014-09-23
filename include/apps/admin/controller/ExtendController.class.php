@@ -137,8 +137,6 @@ class ExtendController extends AdminController
             }
             $obj = new $this->plugin_name($config);
             $obj->install();
-            $obj->action();
-            
         }
     }
 
