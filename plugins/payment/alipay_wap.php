@@ -161,7 +161,7 @@ class alipay_wap
         $sign = substr($sign, 0, - 1) . $payment['alipay_key'];
         
         /* 生成支付按钮 */
-        $button = '<div style="text-align:center"><input type="button" onclick="window.open(\'' . $gateway . $param . '&sign=' . md5($sign) . '\')" value="'.l('pay_button') . '" class="c-btn3" /></div>';
+        $button = '<div><input type="button" class="btn btn-info ect-btn-info ect-colorf" onclick="window.open(\'' . $gateway . $param . '&sign=' . md5($sign) . '\')" value="'.l('pay_button') . '" class="c-btn3" /></div>';
         return $button;
     }
 

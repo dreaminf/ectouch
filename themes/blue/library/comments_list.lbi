@@ -3,9 +3,9 @@
 <!-- {foreach from=$comments item=comment} -->
 
 <li>
-  <h4 class="title"><!-- {if $comment.username} -->{$comment.username|escape:html}<!-- {else} -->{$lang.anonymous}<!-- {/if} --><span class="pull-right"><img src="__TPL__/images/stars{$comment.rank}.png" class="star" alt="{$comment.comment_rank}" /></span></h4>
   <p>{$comment.content}</p>
-  <p><span class="pull-left">{$lang.username}：<!--{if $smarty.session.user_name}-->{$smarty.session.user_name}<!--{else}-->{$lang.anonymous}<!--{/if}--></span><span class="pull-right">{$comment.add_time}</span></p>
+  <p>{$lang.comment_rank}：<span><img src="__TPL__/images/stars{$comment.rank}.png" class="star" alt="{$comment.comment_rank}" /></span></p>
+  <p><span class="pull-left">{$lang.username}：：<!--{if $comment.username}-->{$comment.username|escape:html}<!--{else}-->{$lang.anonymous}<!--{/if}--></span><span class="pull-right">{$comment.add_time}</span></p>
 </li>
 <!-- {/foreach} --> 
 <!-- {/if} --> 
