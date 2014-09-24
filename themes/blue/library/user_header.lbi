@@ -10,9 +10,6 @@
 <link rel="stylesheet" href="__TPL__/css/ectouch.css">
 <link rel="stylesheet" href="__TPL__/css/user.css">
 <link rel="stylesheet" href="__TPL__/css/photoswipe.css">
-<!--[if IE 7]>
-  <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
-  <![endif]-->
 </head>
 
 <body>
