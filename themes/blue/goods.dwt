@@ -148,12 +148,13 @@
 </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
+<script type="text/javascript" src="__TPL__/js/lefttime.js"></script> 
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function(){Code.photoSwipe('a', '#Gallery');}, false);
 
 
 /*倒计时*/
-var goods_id = 18476;
+var goods_id = {$goods_id};
 var goodsattr_style = 1;
 var gmt_end_time = 0;
 var day = "天";
@@ -161,9 +162,8 @@ var hour = "小时";
 var minute = "分钟";
 var second = "秒";
 var end = "结束";
-var goodsId = 18476;
-var now_time = 1410386368;
-
+var goodsId = {$goods_id};
+var now_time = {$now_time};
 
 onload = function(){
   changePrice(2);
@@ -181,18 +181,30 @@ function back_goods_number(){
 function changePrice(type)
 {
   var qty = document.forms['ECS_FORMBUY'].elements['number'].value;
-  if(type == 1){qty--;}
-  if(type == 3){qty++;}
-  if(qty <=0 ){qty=1;}
-  if(!/^[0-9]*$/.test(qty)){qty = document.getElementById('back_number').value;}
+  if(type == 1){qty--; }
+  if(type == 3){qty++; }
+  if(qty <=0 ){ qty=1; }
+  if(!/^[0-9]*$/.test(qty)){ qty = document.getElementById('back_number').value; }
   document.getElementById('goods_number').value = qty;
   var attr = getSelectedAttributes(document.forms['ECS_FORMBUY']);
-  $.get('{:url("price")}', {'id':goodsId,'attr':attr,'number':qty}, function(data){
+  $.get('{:url("goods/price")}', {'id':goodsId,'attr':attr,'number':qty}, function(data){
     changePriceResponse(data);
   }, 'json');
 }
 
 
+/**
+ * 接收返回的信息
+ */
+function changePriceResponse(res){
+  if (res.err_msg.length > 0){
+    alert(res.err_msg);
+  } else {
+    if (document.getElementById('ECS_GOODS_AMOUNT'))
+      document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result;
+  }
+}
+<!-- {/literal} -->
 /**
  * 接收返回的信息
  */
