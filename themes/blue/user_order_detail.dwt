@@ -24,7 +24,7 @@
     </p>
     
     <!-- {if $order.invoice_no}-->
-    <p> <a href="{:url('user/order_tracking', array('order_id'=>$this->_var['order']['order_id']))}" class="c-btn3">{$lang.order_tracking}</a> </p>
+    <p> <a href="{:url('user/order_tracking', array('order_id'=>$this->_var['order']['order_id']))}" type="button" class="btn btn-info ect-btn-info ect-colorf">{$lang.order_tracking}</a> </p>
     <!--{/if}--> 
   </div>
   <div class="ect-pro-list">

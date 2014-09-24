@@ -99,7 +99,7 @@ h4.title{font-size:1.2em; line-height:1.3em; display:block; height:2.4em; overfl
 .ect-pro-list ul li a{display:inline-block; float:left;}
 .ect-pro-list ul li img{width:7em; height:7em;}
 .ect-pro-list ul li dl{margin-left:7.4em;}
-.ect-pro-list ul li dl dd{margin-top:0.6em; font-size:0.9em; overflow:hidden;}
+.ect-pro-list ul li dl dd{margin-top:0.4em; font-size:0.9em; overflow:hidden;}
 .ect-pro-list ul li dl dd.dd-price small{font-size:0.9em;}
 .ect-pro-list ul li dl dd.dd-num span{margin-right:0.3em; color:#888;}
 /*导航*/
@@ -157,8 +157,8 @@ select{-webkit-appearance:none; border:0; color:#555; padding-left:0; border:1px
 .two-btn .btn:nth-child(2){margin-left:0.6em;}
 /*输入框样式*/
 .input-text{position:relative; font-size:1.1em;}
-.input-text b{display:block; float:left; width:5em;}
-.input-text span{ position: absolute; left: 5.2em; right: 0em; }
+.input-text b{display:block; float:left; width:6m;}
+.input-text span{ position: absolute; left: 6.2em; right: 0em; }
 .input-text input[type=text],.input-text textarea,.input-text input[type=password]{border:none; width:100%; padding:0;}
 .input-text textarea{width:100%; margin-top:0.6em; height:6em;}
 /*带验证码*/
@@ -240,12 +240,12 @@ transform: rotate(45deg);}
 ==================*/
 .flow-price{background:#f7f7f7;}
 .wrap.input-group{border:1px solid #e3e3e3; width:10em;}
-.wrap .input-group-addon{width:2.5em; font-size:1em; line-height:2.5em; padding:0; border-radius:0; border:none;}
-.wrap .form-contro{height:2.5em; text-align:center; padding:0 0.4em; width:100%; background:none; border:none; border-radius:0; box-shadow:inset 0 0 0;}
+.wrap .input-group-addon{width:2.3em; font-size:1em; line-height:2.3em; padding:0; border-radius:0; border:none;}
+.wrap .form-contro{height:2.3em; text-align:center; padding:0 0.4em; width:100%; background:none; border:none; border-radius:0; box-shadow:inset 0 0 0;}
 .wrap p.bg-warning a{display:block; width:100%; padding:0.8em 0;}
 .flow-num-del{clear:both; margin-top:0.6em; overflow:hidden; height:auto;}
-.flow-del{width:5em; border:1px #e3e3e3 solid;}
-.flow-del a{width:100%; height:2.5em; line-height:2.5em; background:#eee;}
+.flow-del{float:left; border:1px #e3e3e3 solid;}
+.flow-del a{padding:0 0.6em; height:2.3em; line-height:2.3em; background:#eee;}
 /*结算按钮*/
 .flow-jiesuan {background:#eee; padding:0.8em;}
 /*相关产品*/
@@ -286,11 +286,11 @@ transform: rotate(45deg);}
 /*商品详情*/
 .goods-info .tab-info *{width:100%}
 /*评论*/
-.goods-info .tab-msg ul.msg li{border-bottom:1px dotted #e3e3e3;}
+.goods-info .tab-msg ul.msg li{border-bottom:1px dotted #e3e3e3; padding:0.4em 0;}
 .goods-info .tab-msg ul.msg li:last-child{border-bottom:1px solid #e3e3e3;}
 .goods-info ul.comment-radio li{border-bottom:none !important; margin-right:0.4em;}
 .goods-info .tab-msg h4.title{margin-bottom:0.1em; height:auto;}
-.goods-info .tab-msg p{color:#666}
+.goods-info .tab-msg p{color:#666; padding:0.2em 0;}
 .goods-info .tab-msg p span{color:#888;}
 .goods-info .tab-msg ul.pager{margin:1em 0; margin-bottom:0.4em}
 .goods-info .tab-msg ul.pager li{ padding:0.2em 0.6em; border-radius:4px;}

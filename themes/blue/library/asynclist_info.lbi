@@ -148,12 +148,15 @@
 
 <!-- 产品配件 start--> 
 <!--{if $fittings}--> 
-<a href="{$fittings.url}"><img class="B_blue" src="{$fittings.goods_thumb}">
+<a href="{$fittings.url}"  class="pull-left"><img src="{$fittings.goods_thumb}"></a>
 <dl>
-  <dt>{$fittings.goods_name}</dt>
-  <dd class="f-list-p">{$lang.fittings_price}：<font class="f1">{$fittings.fittings_price}</font></dd>
+<dt>
+    <h4 class="title"><a href="{$fittings.url}">{$fittings.goods_name}</a></h4>
+  </dt>
+  <dd>{$lang.fittings_price}<font class="ect-colory">{$fittings.fittings_price}</font></dd>
+  <dd><div class="flow-del text-center"><a onclick="addToCart_quick({$fittings.goods_id})" href="javascript:;">加入购物车</a></div></dd>
 </dl>
-</a><span class="f-list-add"><a onclick="addToCart_quick({$fittings.goods_id})" href="javascript:;">加入购物车</a></span> 
+
 <!-- {/if}--> 
 <!-- 产品配件end--> 
 
