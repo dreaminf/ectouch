@@ -1417,6 +1417,7 @@ class UserController extends CommonController {
 
             $this->assign('uid', $uid);
             $this->assign('code', $code);
+			$this->assign('title', L('reset_password'));
             $this->display('user_reset_password.dwt');
         } else {
             // 验证码相关设置

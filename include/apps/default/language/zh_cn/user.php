@@ -385,6 +385,7 @@ $_LANG['back_retry_answer'] = '返回重试';
 $_LANG['no_mobile'] = '请输入手机号码';
 $_LANG['no_emaill'] = '请输入电子邮箱';
 $_LANG['no_code'] = '请输入验证码';
+$_LANG['code'] = '验证码';
 $_LANG['no_password'] = '请输入登录密码';
 $_LANG['get_code'] = '获取验证码';
 
@@ -454,7 +455,7 @@ $_LANG['register_success'] = '用户名 %s 注册成功';
 
 $_LANG['passwd_question'] = '密码提示问题';
 $_LANG['sel_question'] = '请选择密码提示问题';
-$_LANG['passwd_answer'] = '密码问题答案';
+$_LANG['passwd_answer'] = '问题答案';
 $_LANG['passwd_balnk'] = '密码中不能包含空格';
 
 /* 用户中心默认页面 */
