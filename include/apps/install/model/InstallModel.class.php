@@ -42,14 +42,14 @@ class InstallModel extends BaseModel {
      * @param string $_column
      * @return boolean
      */
-    public function get_column($data, $_table = '', $_column = '') {
+    public function get_column($data, $_table = '', $_column = ''){
         $model = new EcModel($data);
         $sql = "describe `" . $_table . "` `" . $_column . "`";
         $resource = $model->query($sql);
         $result = mysql_fetch_array($resource);
-        if (is_array($result)) {
+        if(is_array($result)){
             return true;
-        } else {
+        }else{
             return false;
         }
     }

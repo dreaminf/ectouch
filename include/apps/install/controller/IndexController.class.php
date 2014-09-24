@@ -83,13 +83,12 @@ class IndexController extends Controller {
         if (empty($dbPrefix)) {
             $dbPrefix = 'ecs_';
         }
-        //更新安装sql文件
-        if (!model('Install')->get_column($configDb, $dbPrefix . 'order_info', 'mobile_pay')) {
-            $sql = "ALTER TABLE `".$dbPrefix."order_info` ADD COLUMN `mobile_order`  int(1) UNSIGNED NOT NULL DEFAULT 0 AFTER `discount`,ADD COLUMN `mobile_pay`  int(1) UNSIGNED NOT NULL DEFAULT 0 AFTER `mobile_order`;";
-            $this->update_install_sql($sql);
-        }
         $dbData = ROOT_PATH . 'data/install.sql';
         $sqlData = Install::mysql($dbData, 'ecs_', $dbPrefix);
+        //更新安装sql文件
+        if (!model('Install')->get_column($configDb, $dbPrefix . 'order_info', 'ectouch_pay')) {
+            $sqlData[] = "ALTER TABLE `".$dbPrefix."order_info` ADD COLUMN `ectouch_order` int(1) UNSIGNED NOT NULL DEFAULT 0,ADD COLUMN `ectouch_pay` int(1) UNSIGNED NOT NULL DEFAULT 0 AFTER `discount`;";
+        }
         if (!model('Install')->runSql($configDb, $sqlData)) {
             $this->msg('数据导入失败，请检查后手动删除数据库重新安装！', false);
         }
@@ -99,22 +98,9 @@ class IndexController extends Controller {
     }
 	
     /**
-     * 更新安装sql文件
-     * @param string $growing
-     */
-    private function update_install_sql($growing = ''){
-        $fp = @fopen(ROOT_PATH . 'data/install.sql', "a");
-        flock($fp, LOCK_EX);
-        fwrite($fp, "\n\r".$growing);
-        flock($fp, LOCK_UN);
-        fclose($fp);
-    }
-	
-    /**
      * 安装成功
      */
     public function success() {
-
         $appid = $this->appid();
         $config_file = './data/version.php';
         require $config_file;
