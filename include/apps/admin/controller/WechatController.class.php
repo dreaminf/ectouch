@@ -743,10 +743,12 @@ class WechatController extends AdminController
             $this->message(L('select_please') . L('qrcode'), NULL, 'error');
         }
         $rs = $this->model->table('wechat_qrcode')
-            ->field('type, scene_id, expire_seconds, qrcode_url')
+            ->field('type, scene_id, expire_seconds, qrcode_url, status')
             ->where('id = ' . $id)
             ->find();
-        
+        if(empty($rs['status'])){
+            $this->message('二维码已禁用，请重新启用！', NULL, 'error');
+        }
         if (empty($rs['qrcode_url'])) {
             // 获取二维码ticket
             $ticket = $this->weObj->getQRCode($rs['scene_id'], $rs['type'], $rs['expire_seconds']);
@@ -886,6 +888,7 @@ class WechatController extends AdminController
         if (IS_POST) {
             $id = I('post.id');
             $article_id = I('post.article');
+            $data['sort'] = I('post.sort');
             if (is_array($article_id)) {
                 $data['article_id'] = implode(',', $article_id);
                 $data['wechat_id'] = $this->wechat_id;
@@ -910,13 +913,13 @@ class WechatController extends AdminController
         }
         $id = I('get.id');
         if (! empty($id)) {
-            $article_id = $this->model->table('wechat_media')
-                ->field('article_id')
+            $rs = $this->model->table('wechat_media')
+                ->field('article_id, sort')
                 ->where('id = ' . $id)
-                ->getOne();
-            if (! empty($article_id)) {
+                ->find();
+            if (! empty($rs['article_id'])) {
                 $articles = array();
-                $art = explode(',', $article_id);
+                $art = explode(',', $rs['article_id']);
                 foreach ($art as $key => $val) {
                     $articles[] = $this->model->table('wechat_media')
                         ->field('id, title, file, add_time')
@@ -928,9 +931,9 @@ class WechatController extends AdminController
         }
         // 图文信息
         $article = $this->model->table('wechat_media')
-            ->field('id, title')
+            ->field('id, title, file, content, add_time')
             ->where('wechat_id = ' . $this->wechat_id . ' and type = "news" and article_id is NULL')
-            ->order('id, add_time desc')
+            ->order('sort asc, add_time desc')
             ->select();
         
         $this->assign('article', $article);
@@ -1485,7 +1488,7 @@ class WechatController extends AdminController
                 $article = $this->model->table('wechat_media')
                     ->field('id, title, file, link, content, add_time')
                     ->where('id in (' . $id . ')')
-                    ->order('id, add_time desc')
+                    ->order('sort asc, add_time desc')
                     ->select();
                 foreach ($article as $key => $val) {
                     $article[$key]['add_time'] = date('Y年m月d日', $val['add_time']);

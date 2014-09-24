@@ -12,38 +12,38 @@
             <span class="help-block">3.群发图文消息的标题上限为64个字节,群发内容字数上限为1200个字符、或600个汉字。</span>
             <span class="help-block">4.在返回成功时，意味着群发任务提交成功，并不意味着此时群发已经结束，所以，仍有可能在后续的发送过程中出现异常情况导致用户未收到消息，如消息有时会进行审核、服务器不稳定等。此外，群发任务一般需要较长的时间才能全部发送完毕，请耐心等待。</span>
         </div>
-      	<form action="{url('mass_message')}" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
-            <table id="general-table" class="table table-hover table-bordered table-striped">  
-            <tr>
-                <td width="200">选择分组:</td>
-                <td><div class="col-md-2">
-                    <select name="group_id" class="form-control input-sm">
-                        {loop $groups $val}
-                        <option value="{$val['group_id']}">{$val['name']}</option>
-                        {/loop}
-                    </select>
-                  </div></td>
-              </tr>
-              <tr>
-                <td width="200">图文信息:</td>
-                <td><div class="col-md-4">
-                    <a class="btn btn-primary" data-toggle="modal" data-target=".bs-edit-modal-lg">选择图文信息</a>
-                    <span class="help-block">一个图文消息支持1到10条图文，多于10条会发送失败</span>
-                  </div></td>
-              </tr>
-              <tr>
-                <td width="200"></td>
-                <td><div class="col-md-3 ajax-data"></div></td>
-              </tr>
-              <tr>
-                <td width="200"></td>
-                <td><div class="col-md-4">
-      				<input type="submit" value="{$lang['button_submit']}" class="btn btn-primary" />
-                    <input type="reset" value="{$lang['button_reset']}" class="btn btn-default" />
-                  </div></td>
-              </tr>
-              </table>
-      	</form>
+        <table id="general-table" class="table table-hover table-bordered table-striped">
+        <form action="{url('mass_message')}" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">  
+        <tr>
+            <td width="200">选择分组:</td>
+            <td><div class="col-md-2">
+                <select name="group_id" class="form-control input-sm">
+                    {loop $groups $val}
+                    <option value="{$val['group_id']}">{$val['name']}</option>
+                    {/loop}
+                </select>
+              </div></td>
+          </tr>
+          <tr>
+            <td width="200">图文信息:</td>
+            <td><div class="col-md-4">
+                <a class="btn btn-primary" data-toggle="modal" data-target=".bs-edit-modal-lg">选择图文信息</a>
+                <span class="help-block">一个图文消息支持1到10条图文，多于10条会发送失败</span>
+              </div></td>
+          </tr>
+          <tr>
+            <td width="200"></td>
+            <td><div class="col-md-3 ajax-data"></div></td>
+          </tr>
+          <tr>
+            <td width="200"></td>
+            <td><div class="col-md-4">
+  				<input type="submit" value="{$lang['button_submit']}" class="btn btn-primary" />
+                <input type="reset" value="{$lang['button_reset']}" class="btn btn-default" />
+              </div></td>
+          </tr>
+          </form>
+          </table>
       </div>
     </div>
   </div>

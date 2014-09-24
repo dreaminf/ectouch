@@ -8,8 +8,9 @@
 	  <div class="col-md-10 col-sm-10 col-lg-11" style="padding-right:0;">
 		<div class="panel panel-default">
 			<div class="panel-heading">{$lang['menu']}</div>
-			<form action="{url('menu')}" method="post" class="form-horizontal" role="form">
+			
 			<table class="table table-hover table-striped table-bordered">
+			<form action="{url('menu')}" method="post" class="form-horizontal" role="form">
 				<tr class="active">
 					<th class="text-center">{$lang['menu_name']}</th>
 					<th class="text-center">{$lang['menu_keyword']}</th>
@@ -46,8 +47,8 @@
 		          	<a href="{url('sys_menu')}" class="btn btn-primary">{$lang['menu_create']}</a>
 		          </td>
 		        </tr>
+		    </form>
 			</table>
-			</form>
 		</div>
 	  </div>
 	</div>

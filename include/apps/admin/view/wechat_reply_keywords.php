@@ -84,14 +84,17 @@
                     </div>
                     <ul class="list-group view hidden">
                         <li class="list-group-item">
-                            <b>关键词：</b>
-                            {loop $val['rule_keywords'] $v}
-                                <span class="label label-default">{$v['rule_keywords']}</span>
-                            {/loop}
+                        <div class="row">
+                            <div class="col-xs-1 col-md-1"><b>关键词：</b></div>
+                            <div class="col-xs-6 col-md-3 borderno">
+                                {loop $val['rule_keywords'] $v}
+                                    <span class="label label-default">{$v['rule_keywords']}</span>
+                                {/loop}
+                            </div>
                         </li>
                         <li class="list-group-item">
                         <div class="row">
-                            <div class="col-md-1"><b>回复内容：</b></div>
+                            <div class="col-xs-1 col-md-1"><b>回复内容：</b></div>
                             <div class="col-xs-6 col-md-3 thunbnail borderno">
                             {if $val['medias']}<!-- 多图文 -->
                                 {loop $val['medias'] $k $v}
@@ -133,8 +136,9 @@
                         <a href="javascript:;" class="btn btn-primary edit">编辑</a>
                         <a href="javascript:if(confirm('{$lang['confirm_delete']}')){window.location.href='{url('reply_del', array('id'=>$val['id']))}'};" class="btn btn-default">删除</a>
                     </div>
-                    <form action="{url('rule_edit')}" method="post" class="form-horizontal hidden" role="form">
-                      <table id="general-table" class="table table-hover table-bordered table-striped">
+                    
+                      <table id="general-table" class="table table-hover table-bordered table-striped hidden">
+                      <form action="{url('rule_edit')}" method="post" class="form-horizontal" role="form">
                        <tr>
                           <td width="200">规则名称:</td>
                           <td><div class="col-md-6">
@@ -211,8 +215,9 @@
                               	<input type="reset" value="{$lang['button_reset']}" class="btn btn-default" />
                             </div></td>
                         </tr>
+                        </form>
                         </table>
-                	</form>
+                	
                 </div>
                 {/loop}
             </div>
@@ -260,7 +265,7 @@ $(function(){
     });
     //修改规则显示
     $(".edit").click(function(){
-        var obj = $(this).parent().siblings("form");
+        var obj = $(this).parent().siblings("table");
     	if(obj.hasClass("hidden")){
         	obj.removeClass("hidden");
 		}

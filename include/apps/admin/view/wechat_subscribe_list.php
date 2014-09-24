@@ -3,25 +3,22 @@
 	<div class="row" style="margin:0">
 	  <div class="col-md-2 col-sm-2 col-lg-1" style="padding-right:0;">{include file="wechat_left_menu"}</div>
 	  <div class="col-md-10 col-sm-10 col-lg-11" style="padding-right:0;">
-		<form class="navbar-form navbar-right" role="search" action="{url('subscribe_search')}" method="post">
-			<div class="form-group">	
-				<input type="text" class="form-control" placeholder="{$lang['sub_search']}" name="keywords" />	
-			</div>
-			<input name="Submit" class="btn btn-primary" type="submit" value="{$lang['button_search']}">
-		</form>
-		<form action="{url('subscribe_move')}" method="post">
-		<div class="well well-sm" style="margin-bottom:0;">{$lang['group_move']}
-		  	<select name="group_id" style="padding:5px;">
-		  		{loop $group_list $k $v}
-		  		<option value="{$v['group_id']}">{$v['name']}</option>
-		  		{/loop}
-		  	</select>
-		  	<input type="submit" class="btn btn-primary" value="{$lang['sub_move']}" />
-		  	 	 	
-		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">{$lang['sub_title']}</div>
-			<div class="col-lg-10" style="padding:0;">
+			<form class="navbar-form navbar-right" role="search" action="{url('subscribe_search')}" method="post">
+				<input type="text" class="form-control" placeholder="{$lang['sub_search']}" name="keywords" />	
+			    <input name="Submit" class="btn btn-primary" type="submit" value="{$lang['button_search']}">
+    		</form>
+    		<form action="{url('subscribe_move')}" method="post" class="form-inline" role="form">
+    		<div class="well well-sm borderno form-group" style="background-color:#fff;">{$lang['group_move']}
+    		  	<select name="group_id" style="padding:5px;" class="form-control">
+    		  		{loop $group_list $k $v}
+    		  		<option value="{$v['group_id']}">{$v['name']}</option>
+    		  		{/loop}
+    		  	</select>
+    		  	<input type="submit" class="btn btn-primary" value="{$lang['sub_move']}" />
+    		</div>
+			<div class="panel panel-default col-sm-10 col-md-10" style="padding:0;">
     			<table class="table table-hover table-bordered table-striped">
     				<tr>
     					<th class="text-center"><input type="checkbox" id="check_box" /></th>
@@ -55,28 +52,24 @@
     			</table>
 			</div>
 			</form>
-			<div class="col-lg-2">
-                <div class="container-fluid" style="padding:0;">
-                	<div class="row" style="margin:0">
-                		<div class="panel panel-default">
-                			<div class="panel-heading" style="overflow: hidden;">{$lang['group_title']}
-                    			 <div class="pull-right ectouch-mb5">   
-                            		<a href="{url('wechat/sys_groups')}" class="btn btn-primary">{$lang['group_update']}</a>
-                            		<a href="{url('wechat/groups_edit')}" class="btn btn-primary" data-toggle="modal" data-target=".bs-edit-modal-lg">{$lang['add']}</a>
-                            	</div>
-                			</div>
-                		<table class="table table-hover table-bordered table-striped">
-                			{loop $group_list $key $val}
-                			<tr>
-                				<td align="center"><a href="{url('subscribe_search', array('group_id'=>$val['group_id']))}">{$val['name']} <span class="badge">{$val['count']}</span></a></td>
-                				<td align="center">{if $val['group_id'] != 0  && $val['group_id'] != 1 && $val['group_id'] != 2}<a href="{url('wechat/groups_edit', array('id'=>$val['id']))}" class="btn btn-primary" data-toggle="modal" data-target=".bs-edit-modal-lg">{$lang['edit']}</a>{/if}</td>
-                			</tr>
-                			{/loop}
-                		</table> 
-                		</div>
-                	</div>
-                </div>
-			</div>
+			<div class="col-sm-2 col-md-2" style="padding-right:0;">
+        		<div class="panel panel-default">
+        			<div class="panel-heading" style="overflow: hidden;">{$lang['group_title']}
+            			 <div class="pull-right ectouch-mb5">   
+                    		<a href="{url('wechat/sys_groups')}" class="btn btn-primary">{$lang['group_update']}</a>
+                    		<a href="{url('wechat/groups_edit')}" class="btn btn-primary" data-toggle="modal" data-target=".bs-edit-modal-lg">{$lang['add']}</a>
+                    	</div>
+        			</div>
+        		<table class="table table-hover table-bordered table-striped">
+        			{loop $group_list $key $val}
+        			<tr>
+        				<td align="center"><a href="{url('subscribe_search', array('group_id'=>$val['group_id']))}">{$val['name']} <span class="badge">{$val['count']}</span></a></td>
+        				<td align="center">{if $val['group_id'] != 0  && $val['group_id'] != 1 && $val['group_id'] != 2}<a href="{url('wechat/groups_edit', array('id'=>$val['id']))}" class="btn btn-primary" data-toggle="modal" data-target=".bs-edit-modal-lg">{$lang['edit']}</a>{/if}</td>
+        			</tr>
+        			{/loop}
+        		</table> 
+        		</div>
+        	</div>
 		</div>
 		{include file="pageview"}
 		<script type="text/javascript">
