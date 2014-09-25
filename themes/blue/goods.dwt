@@ -43,20 +43,20 @@
       <p class="ect-border-top ect-margin-tb"> 
         <!-- {foreach from=$promotion item=item key=key} 优惠活动--> 
         <!-- {if $item.type eq "snatch"} --> 
-        <a title="{$lang.snatch}"><i class="label tbqb">夺</i> [{$lang.snatch}]<i class="pull-right fa fa-angle-right"></i></a> 
+        <!--<a title="{$lang.snatch}"><i class="label tbqb">夺</i> [{$lang.snatch}]<i class="pull-right fa fa-angle-right"></i></a>-->
         <!-- {elseif $item.type eq "group_buy"} --> 
-        <a href="{$item.url}" title="{$lang.group_buy}"><i class="label tuan">团购</i> [{$lang.group_buy}]<i class="pull-right fa fa-angle-right"></i></a> 
+        <a href="{$item.url}" title="{$lang.group_buy}"><i class="label tuan">{$lang.group_buy_act}</i> [{$lang.group_buy}]<i class="pull-right fa fa-angle-right"></i></a> 
         <!-- {elseif $item.type eq "auction"} --> 
-        <a title="{$lang.auction}"><i class="label pm">拍卖</i> [{$lang.auction}]<i class="pull-right fa fa-angle-right"></i></a> 
+        <!--<a title="{$lang.auction}"><i class="label pm">拍卖</i> [{$lang.auction}]<i class="pull-right fa fa-angle-right"></i></a> -->
         <!-- {elseif $item.type eq "favourable"} --> 
         
         <a href="{$item.url}" title="{$lang.$item.type} {$item.act_name}{$item.time}"> 
         <!--{if $item.act_type eq 0}--> 
-        <i class="label mz">满赠</i> 
+        <i class="label mz">{$lang.favourable_mz}</i> 
         <!--{elseif $item.act_type eq 1}--> 
-        <i class="label mj">满减</i> 
+        <i class="label mj">{$lang.favourable_mj}</i> 
         <!--{elseif $item.act_type eq 2}--> 
-        <i class="label zk">折</i> 
+        <i class="label zk">{$lang.favourable_zk}</i> 
         <!--{/if}-->{$item.act_name} <i class="pull-right fa fa-angle-right"></i></a> 
         <!-- {/if} --> 
         <!-- {/foreach} --> 

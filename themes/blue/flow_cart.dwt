@@ -6,7 +6,7 @@
     </nav>
   </div>
   <!-- {if $goods_list } -->
-  <p class="flow-price ect-padding-lr ect-padding-tb"> 共<b id="total_number">{$total.total_number}</b>{$lang.total_number}，{$lang.goods_price}：<b class="ect-colory" id="goods_subtotal">{$total.goods_price}</b> </p>
+  <p class="flow-price ect-padding-lr ect-padding-tb"> {$total.total_number}<b id="total_number">{$total.total_number}</b>{$lang.total_number}，{$lang.goods_price}：<b class="ect-colory" id="goods_subtotal">{$total.goods_price}</b> </p>
   <section class="ect-pro-list flow-pic ect-border-bottom0">
     <ul>
       <!-- {foreach from=$goods_list item=goods key=k} -->
@@ -52,17 +52,17 @@
   </section>
   <!-- {if $fittings_list} -->
      <div class="two-btn flow-jiesuan ect-padding-tb ect-padding-lr text-center">
-   		<a class="btn btn-info" type="button" href="{:url('flow/goods_fittings')}">商品相关配件</a>
-        <a class="btn btn-info ect-bg-colory" type="button"  href="{:url('flow/checkout')}">立即结算</a>
+   		<a class="btn btn-info" type="button" href="{:url('flow/goods_fittings')}">{$lang.goods_fittings}</a>
+        <a class="btn btn-info ect-bg-colory" type="button"  href="{:url('flow/checkout')}">{$lang.check_out}</a>
 	</div>
   <!-- {else} -->
   	<div class="flow-jiesuan ect-padding-lr ect-padding-tb">
-  	<a href="{:url('flow/checkout')}" type="button" class="btn btn-info ect-btn-info">立即结算</a>
+  	<a href="{:url('flow/checkout')}" type="button" class="btn btn-info ect-btn-info">{$lang.check_out}</a>
   </div>
   <!-- {/if} -->
   <!-- {if $linked_goods} 关联商品-->
   <section class="ect-pro-list flow-rel-pro flow-pic">
-    <h4 class="ect-margin-lr ect-margin-tb"><strong>相关商品：</strong></h4>
+    <h4 class="ect-margin-lr ect-margin-tb"><strong>{$lang.releate_goods}：</strong></h4>
     <ul>
       <!--{foreach from=$linked_goods item=releated_goods_data}-->
       <li>
