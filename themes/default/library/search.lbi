@@ -5,7 +5,7 @@
   <div class="ect-padding-lr">
      <form action="{:url('category/index')}<!-- {if $id} -->&id={$id}<!-- {/if} -->"  method="post" id="searchForm" name="searchForm">
       <div class="input-search"> <span>
-        <input name="keywords" type="search" placeholder="请输入要搜索的关键词" id="keywordBox">
+        <input name="keywords" type="search" placeholder="{$lang.no_keywords}" id="keywordBox">
         </span>
         <button type="submit" value="{$lang.search}" onclick="return check('keywordBox')"><i class="glyphicon glyphicon-search"></i></button>
       </div>

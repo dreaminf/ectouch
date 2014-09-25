@@ -42,23 +42,23 @@
       <ul class="comment-radio ect-radio ect-margin-tb ect-margin-bottom0">
         <li>
           <input name="comment_rank" type="radio" value="5" checked="checked" id="comment_rank5" />
-          <label for="comment_rank5"><i></i>非常好</label>
+          <label for="comment_rank5"><i></i>{$lang.five_stars}</label>
         </li>
         <li>
           <input name="comment_rank" type="radio" value="4" id="comment_rank4"/>
-          <label for="comment_rank4"><i></i>很好</label>
+          <label for="comment_rank4"><i></i>{$lang.four_stars}</label>
         </li>
         <li>
           <input name="comment_rank" type="radio" value="3" id="comment_rank3"/>
-          <label for="comment_rank3"><i></i>一般</label>
+          <label for="comment_rank3"><i></i>{$lang.three_stars}</label>
         </li>
         <li>
           <input name="comment_rank" type="radio" value="2" id="comment_rank2"/>
-          <label for="comment_rank2"><i></i>不行</label>
+          <label for="comment_rank2"><i></i>{$lang.two_stars}</label>
         </li>
         <li>
           <input name="comment_rank" type="radio" value="1" id="comment_rank1"/>
-          <label for="comment_rank1"><i></i>很差</label>
+          <label for="comment_rank1"><i></i>{$lang.one_stars}</label>
         </li>
       </ul>
       <p class="ect-padding-tb">
@@ -76,7 +76,7 @@
         </p>
 		<!-- {/if} -->
       <p class="ect-padding-tb">
-        <input type="submit" class="btn btn-info ect-btn-info" value="提交评论"/>
+        <input type="submit" class="btn btn-info ect-btn-info" value="{$comment_type}"/>
       </p>
     </div>
   </form>

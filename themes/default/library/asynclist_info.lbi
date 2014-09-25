@@ -125,11 +125,11 @@
 <!--{if $orders}--><a href="{:url('user/order_detail')}&order_id={$orders.order_id}"><img src="{$orders.img}" class="pull-left" />
           <dl>
             <dt>
-              <h4 class="title">订单编号：{$orders.order_sn}</h4>
+              <h4 class="title">{$lang.order_number}：{$orders.order_sn}</h4>
             </dt>
-           <dd>订单状态：{$orders.order_status}</dd>
-           <dd>订单价格：<span class="ect-color">{$orders.order_status}</span></dd>
-           <dd>订单日期：{$orders.order_time}</dd>
+           <dd>{$lang.order_status}：{$orders.order_status}</dd>
+           <dd>{$lang.order_total_fee}：<span class="ect-color">{$orders.order_status}</span></dd>
+           <dd>{$lang.order_addtime}：{$orders.order_time}</dd>
           </dl>
            <i class="pull-right fa fa-angle-right"></i> 
             </a>  
@@ -154,7 +154,7 @@
     <h4 class="title"><a href="{$fittings.url}">{$fittings.goods_name}</a></h4>
   </dt>
   <dd>{$lang.fittings_price}<font class="ect-colory">{$fittings.fittings_price}</font></dd>
-  <dd><div class="flow-del text-center"><a onclick="addToCart_quick({$fittings.goods_id})" href="javascript:;">加入购物车</a></div></dd>
+  <dd><div class="flow-del text-center"><a onclick="addToCart_quick({$fittings.goods_id})" href="javascript:;">{$lang.btn_add_to_cart}</a></div></dd>
 </dl>
 
 <!-- {/if}--> 
@@ -163,7 +163,7 @@
 <!-- 信息列表 start--> 
 <!--{if $msg}-->
 	<p>
-    <a style="color:#1CA2E1; float:right; font-weight:normal;" onclick="if (!confirm('你确实要彻底删除这条留言吗？')) return false;" href="{$msg.url}">删除</a>{$msg.msg_type}：{$msg.msg_title} - {$msg.msg_time}
+    <a style="color:#1CA2E1; float:right; font-weight:normal;" onclick="if (!confirm('{$lang.confirm_remove_msg}？')) return false;" href="{$msg.url}">{$lang.drop}</a>{$msg.msg_type}：{$msg.msg_title} - {$msg.msg_time}
     </p>
   <p style="color:#999;"> {$msg.msg_content} </p>
    <!--{if $msg.re_msg_content}-->
