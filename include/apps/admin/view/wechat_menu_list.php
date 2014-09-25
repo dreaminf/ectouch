@@ -1,6 +1,6 @@
 {include file="pageheader"}
 <div class="row" style="margin:0">
-	<div class="pull-right ectouch-mb5"><a href="{url('menu_edit')}" class="btn btn-primary" data-toggle="modal" data-target=".bs-edit-modal-lg">{$lang['menu_add']}</a></div>
+	<div class="pull-right ectouch-mb5"><a href="{url('menu_edit')}" class="btn btn-primary fancybox fancybox.iframe">{$lang['menu_add']}</a></div>
 </div>
 <div class="container-fluid" style="padding:0">
 	<div class="row" style="margin:0">
@@ -25,7 +25,7 @@
 					<td class="text-center">{$val['url']}</td>
 					<td class="text-center">{$val['sort']}</td>
 					<td class="text-center">
-						<a href="{url('menu_edit', array('id'=>$val['id']))}" class="btn btn-primary" data-toggle="modal" data-target=".bs-edit-modal-lg">{$lang['edit']}</a>
+						<a href="{url('menu_edit', array('id'=>$val['id']))}" class="btn btn-primary fancybox fancybox.iframe">{$lang['edit']}</a>
 						<a href="javascript:if(confirm('{$lang['confirm_delete']}')){window.location.href='{url('menu_del', array('id'=>$val['id']))}'};" class="btn btn-default">{$lang['drop']}</a>
 					</td>
 				</tr>
@@ -36,7 +36,7 @@
 					<td class="text-center">{$v['url']}</td>
 					<td class="text-center">{$v['sort']}</td>
 					<td class="text-center">
-						<a href="{url('menu_edit', array('id'=>$v['id']))}" class="btn btn-primary" data-toggle="modal" data-target=".bs-edit-modal-lg">{$lang['edit']}</a>
+						<a href="{url('menu_edit', array('id'=>$v['id']))}" class="btn btn-primary fancybox fancybox.iframe">{$lang['edit']}</a>
 						<a href="javascript:if(confirm('{$lang['confirm_delete']}')){window.location.href='{url('menu_del', array('id'=>$v['id']))}'};" class="btn btn-default">{$lang['drop']}</a>
 					</td>
 				</tr>
@@ -52,10 +52,5 @@
 		</div>
 	  </div>
 	</div>
-</div>
-<div class="modal fade bs-edit-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content"></div>
-  </div>
 </div>
 {include file="pagefooter"}

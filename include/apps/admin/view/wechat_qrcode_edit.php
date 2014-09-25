@@ -1,10 +1,9 @@
-<div class="modal-header">
-	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	<h4 class="modal-title" id="myModalLabel">{$lang['add'].$lang['qrcode']}</h4>
-</div>
-<div class="modal-body">
-	<form action="{url('qrcode_edit')}" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
-      <table id="general-table" class="table table-hover table-bordered table-striped">
+{include file="wechat_header"}
+<div class="panel panel-default" style="margin:0;">
+<div class="panel-heading">{$lang['add'].$lang['qrcode']}</div>
+<div class="panel-body">
+	<form action="{url('qrcode_edit')}" method="post" class="form-horizontal" role="form">
+      <table id="general-table" class="table table-hover ectouch-table">
        <tr>
           <td width="200">{$lang['qrcode_type']}:</td>
           <td><div class="col-md-4">
@@ -63,11 +62,5 @@
         </table>
 	</form>
 </div>
-<script type="text/javascript">
-$(function(){
-	//模态框被隐藏之后清除数据
-	$(".bs-edit-modal-lg").on("hidden.bs.modal", function() {
-	    $(this).removeData("bs.modal");
-	});
-})
-</script>
+</div>
+{include file="pagefooter"}

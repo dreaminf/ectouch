@@ -1,47 +1,15 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{$lang['cp_home']}</title>
-<link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
-<script src="__PUBLIC__/artDialog/jquery.artDialog.js?skin=aero"></script>
-<script src="__PUBLIC__/artDialog/plugins/iframeTools.js"></script>
-<script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
-<script src="__ASSETS__/js/common.js"></script>
-<!--[if lt IE 9]>
-<script src="__PUBLIC__/bootstrap/js/html5shiv.min.js"></script>
-<script src="__PUBLIC__/bootstrap/js/respond.min.js"></script>
-<![endif]-->
+{include file="wechat_header"}
 <style type="text/css">
-body {padding:5px; font-size:12px; margin-bottom:0px; font-family:'微软雅黑'}
-.ectouch-table {margin:0;}
-.ectouch-table tr:first-child td {border-top:none;}
-.ectouch-line {line-height: 1.8;}
-.ectouch-mb5, .breadcrumb {margin-bottom:5px}
-.ectouch-fs16 {font-size:16px}
-.ectouch-fs18 {font-size:18px}
-.btn-primary {background-color:#1b9ad5}
-.panel-title {font-size:14px}
-.pagination {margin-top:0}
-.pagination .glyphicon {top:0}
-.ectouch-mb{margin-bottom:5px;}
-.clear{clear:both;}
-.borderno{border:0;}
 .article{border:1px solid #ddd;padding:5px 5px 0 5px;}
-.cover{h+eight:160px; position:relative;margin-bottom:5px;overflow:hidden;}
+.cover{height:160px; position:relative;margin-bottom:5px;overflow:hidden;}
 .article .cover img{width:100%; height:auto;}
 .article span{height:40px; line-height:40px; display:block; z-index:5; position:absolute;width:100%;bottom:0px; color:#FFF; padding:0 10px; background-color:rgba(0,0,0,0.6)}
 .article_list{padding:5px;border:1px solid #ddd;border-top:0;overflow:hidden;}
 .radio label{width:100%;position:relative;padding:0;}
 .radio .news_mask{position:absolute;left:0;top:0;background-color:#000;opacity:0.5;width:100%;height:100%;z-index:10;}
 </style>
-</head>
-
-<body>
-<div class="panel panel-default">
+<div class="panel panel-default" style="margin:0;">
+<div class="panel-heading">素材选择</div>
     {if $type == 'news'}
     <div class="panel-body">
     <div class="col-md-4 col-sm-4 col-md-offset-2 col-sm-offset-2">
@@ -147,8 +115,10 @@ body {padding:5px; font-size:12px; margin-bottom:0px; font-family:'微软雅黑'
     {/if}
     <div class="panel-footer">
         {include file="pageview"}
-		<input type="submit" value="{$lang['button_submit']}" class="btn btn-primary" name="file_submit" />
-      	<input type="reset" value="{$lang['button_reset']}" class="btn btn-default" name="reset" onClick="window.parent.$('.iframe').colorbox.close();"  />
+        <div class="form-group" style="margin:20px 0;">
+		  <input type="submit" value="{$lang['button_submit']}" class="btn btn-primary closebox" name="file_submit" />
+      	 <input type="reset" value="{$lang['button_reset']}" class="btn btn-default" name="reset" />
+       </div>
     </div>
 </div>
 <script type="text/javascript">
@@ -169,7 +139,7 @@ $(function(){
 	    else if(type == 'news'){
 		    var no_list = obj.attr("no_list");
 	        var html = obj.siblings("div").html();
-	        if(no_list){
+	        if(no_list == 1){
 	        	html += '<input type="hidden" name="cfg_value[media_id]" value="'+id+'">';
 		    }
 	        else{
@@ -177,10 +147,15 @@ $(function(){
 		    }
 	        window.parent.$(".content").html(html);
 		}
-	    else{
+	    else if(type == 'image'){
 		    window.parent.$(".content").html("<input type='hidden' name='media_id' value='"+id+"'><img src='"+file+"' class='img-rounded' />");
 		}
-	    window.parent.$(".iframe").colorbox.close();
+
+		if(id != undefined){
+		  window.parent.$(".content").removeClass("hidden").siblings("div").addClass("hidden");
+		  window.parent.$("input[name=content_type]").val("media");
+		  window.parent.$.fancybox.close();
+		}
 	});
 	$("input[name=id]").click(function(){
 	    if($(this).is(":checked")){

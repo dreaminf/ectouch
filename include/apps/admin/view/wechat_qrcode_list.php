@@ -1,7 +1,7 @@
 {include file="pageheader"}
 <div class="row" style="margin:0">
 	<div class="pull-right ectouch-mb5">
-		<a href="{url('qrcode_edit')}" class="btn btn-primary"  data-toggle="modal" data-target=".bs-edit-modal-lg">{$lang['add'].$lang['qrcode']}</a>
+		<a href="{url('qrcode_edit')}" class="btn btn-primary fancybox fancybox.iframe">{$lang['add'].$lang['qrcode']}</a>
 	</div>
 </div>
 <div class="container-fluid" style="padding:0">
@@ -27,7 +27,7 @@
 						<td align="center">{$val['function']}</td>
 						<td align="center">{$val['sort']}</td>
 						<td align="center" width="20%">
-							<a href="{url('qrcode_get', array('id'=>$val['id']))}" class="btn btn-primary" data-toggle="modal" data-target=".bs-edit-modal-lg">{$lang['qrcode_get']}</a>
+							<a href="{url('qrcode_get', array('id'=>$val['id']))}" class="btn btn-primary fancybox fancybox.iframe">{$lang['qrcode_get']}</a>
 							{if $val['status'] == 1}
 							<a href="{url('qrcode_edit', array('id'=>$val['id'], 'status'=>0))}" class="btn btn-danger">{$lang['disabled']}</a>
 							{else}
@@ -42,10 +42,5 @@
 			{include file="pageview"}
 		</div>
 	</div>
-</div>
-<div class="modal fade bs-edit-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content"></div>
-  </div>
 </div>
 {include file="pagefooter"}

@@ -1,10 +1,9 @@
-<div class="modal-header">
-	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	<h4 class="modal-title" id="myModalLabel">{$lang['menu_edit']}</h4>
-</div>
-<div class="modal-body">
+{include file="wechat_header"}
+<div class="panel panel-default" style="margin:0;">
+    <div class="panel-heading">{$lang['menu_edit']}</div>
+    <div class="panel-body">
 	<form action="{url('wechat/menu_edit')}" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
-      <table id="general-table" class="table table-hover table-bordered table-striped">
+      <table id="general-table" class="table table-hover ectouch-table">
        <tr>
           <td width="200">{$lang['menu_parent']}:</td>
           <td><div class="col-md-4">
@@ -26,10 +25,10 @@
           <td width="200">{$lang['menu_type']}:</td>
           <td><div class="col-md-10">
           		<div class="btn-group" data-toggle="buttons">
-	              	<label class="btn btn-primary {if $info['type'] == 'click' || empty($info['type'])}active{/if} click">
+	              	<label class="btn btn-primary {if $info['type'] == 'click' || empty($info['type'])}active{/if} clicktype">
 					  <input type="radio" name="data[type]" value="click" {if $info['type'] == 'click' || empty($info['type'])}checked{/if} />{$lang['menu_click']}
 					</label>
-					<label class="btn btn-primary {if $info['type'] == 'view'}active{/if} click">
+					<label class="btn btn-primary {if $info['type'] == 'view'}active{/if} clicktype">
 					  <input type="radio" name="data[type]" value="view" {if $info['type'] == 'view'}checked{/if} />{$lang['menu_view']}
 					</label>
 				</div>
@@ -41,7 +40,7 @@
               <input type="text" name="data[key]" class="form-control" value="{$info['key']}" />
             </div></td>
         </tr>
-        <tr id="view" {if $info['type'] == 'click'}class="hidden"{/if}>
+        <tr id="view" {if $info['type'] == 'click' || empty($info)}class="hidden"{/if}>
           <td width="200">{$lang['menu_url']}:</td>
           <td><div class="col-md-10">
               <input type="text" name="data[url]" class="form-control" value="{$info['url']}" />
@@ -63,7 +62,7 @@
         </tr>
         <tr>
           <td width="200">{$lang['sort_order']}:</td>
-          <td><div class="col-md-10">
+          <td><div class="col-md-2">
               <input type="text" name="data[sort]" class="form-control" value="{$info['sort']}" />
             </div></td>
         </tr>
@@ -78,10 +77,12 @@
         </table>
 	</form>
 </div>
+</div>
 <script type="text/javascript">
 $(function(){
-	$(".click").click(function(){
+	$(".clicktype").click(function(){
 		var val = $(this).find("input[type=radio]").val();
+		
 		if('click' == val && $("#click").hasClass("hidden")){
 			$("#view").hide().addClass("hidden");
 			$("#click").show().removeClass("hidden");
@@ -91,9 +92,6 @@ $(function(){
 			$("#view").show().removeClass("hidden");
 		}
 	});
-	//模态框被隐藏之后清除数据
-	$(".bs-edit-modal-lg").on("hidden.bs.modal", function() {
-	    $(this).removeData("bs.modal");
-	});
 })
 </script>
+{include file="pagefooter"}

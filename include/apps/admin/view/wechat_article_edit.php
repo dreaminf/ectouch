@@ -7,13 +7,6 @@
         <div class="panel-heading">图文回复添加</div>
         <form action="{url('article_edit')}" method="post" enctype="multipart/form-data" role="form">
         <table id="general-table" class="table table-hover ectouch-table">
-          <tr>
-            <td width="200">关键词:</td>
-            <td><div class="col-md-4">
-                <input type='text' name='data[keywords]' value="{$article['keywords']}" class="form-control input-sm" />
-                <span class="help-block">多个关键词请用半角逗号","格开：例如：ECTouch,ecmoban,模版堂</span>
-              </div></td>
-          </tr>
          <tr>
             <td width="200">标题:</td>
             <td><div class="col-md-4">
@@ -34,7 +27,7 @@
                 <span class="help-block">大图片建议尺寸：900像素 * 500像素</span>
                 </div>
                 <div clas="col-md-1">
-                <a href="javascript:;" class="glyphicon glyphicon-picture ectouch-fs16"  data-toggle="modal" data-target=".bs-edit-modal-lg" title="预览"></a>
+                <a href="#inline" class="glyphicon glyphicon-picture ectouch-fs16 fancybox" title="预览"></a>
               </div></td>
           </tr>
           <tr>
@@ -87,27 +80,14 @@
     </div>
   </div>
 </div>
-<div class="modal fade bs-edit-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        </div>
-      <div class="modal-body">
-        <img src="{$article['file']}" class="img-responsive" />
-      </div>
-    </div>
+<div class="panel panel-default" style="display: none;" id="inline">
+  <div class="panel-body">
+     <img src="{$article['file']}" class="img-responsive" />
   </div>
 </div>
 <script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
 <script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.all.min.js"></script>
 <script type="text/javascript">
 var ue = UE.getEditor('container');
-$(function(){
-	//模态框被隐藏之后清除数据
-	$(".bs-edit-modal-lg").on("hidden.bs.modal", function() {
-	    $(this).removeData("bs.modal");
-	});
-})
 </script>
 {include file="pagefooter"}

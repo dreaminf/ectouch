@@ -1,6 +1,4 @@
 {include file="pageheader"}
-<link rel="stylesheet" href="__PUBLIC__/colorbox/colorbox.css" />
-<script src="__PUBLIC__/colorbox/jquery.colorbox-min.js"></script>
 <style>
 .article{border:1px solid #ddd;padding:5px 5px 0 5px;}
 .cover{height:160px; position:relative;margin-bottom:5px;overflow:hidden;}
@@ -28,7 +26,7 @@
                 </div>
                 <div class="form-group hidden rule_form">
         			<form action="{url('rule_edit')}" method="post" class="form-horizontal" role="form">
-                      <table id="general-table" class="table table-hover table-bordered table-striped">
+                      <table id="general-table" class="table table-hover ectouch-table">
                        <tr>
                           <td width="200">规则名称:</td>
                           <td><div class="col-md-6">
@@ -51,10 +49,10 @@
                                      <div class="panel-heading">
                                       <ul class="nav nav-pills" role="tablist">
                                         <li role="presentation"><a href="javascript:;" class="glyphicon glyphicon-pencil ectouch-fs18" title="文字" type="text"></a></li>
-                                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'image'))}" class="glyphicon glyphicon-picture ectouch-fs18 iframe" title="图片" type="image"></a></li>
-                                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'voice'))}" class="glyphicon glyphicon-volume-up ectouch-fs18 iframe"  title="语音" type="voice"></a></li>
-                                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'video'))}" class="glyphicon glyphicon-film ectouch-fs18 iframe"  title="视频" type="video"></a></li>
-                                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'news'))}" class="glyphicon glyphicon-list-alt ectouch-fs18 iframe"  title="图文消息" type="news"></a></li>
+                                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'image'))}" class="glyphicon glyphicon-picture ectouch-fs18 fancybox fancybox.iframe" title="图片" type="image"></a></li>
+                                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'voice'))}" class="glyphicon glyphicon-volume-up ectouch-fs18 fancybox fancybox.iframe"  title="语音" type="voice"></a></li>
+                                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'video'))}" class="glyphicon glyphicon-film ectouch-fs18 fancybox fancybox.iframe"  title="视频" type="video"></a></li>
+                                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'news'))}" class="glyphicon glyphicon-list-alt ectouch-fs18 fancybox fancybox.iframe"  title="图文消息" type="news"></a></li>
                                       </ul>
                                       </div>
                                       <div class="panel-body" style="padding:0;">
@@ -136,9 +134,8 @@
                         <a href="javascript:;" class="btn btn-primary edit">编辑</a>
                         <a href="javascript:if(confirm('{$lang['confirm_delete']}')){window.location.href='{url('reply_del', array('id'=>$val['id']))}'};" class="btn btn-default">删除</a>
                     </div>
-                    
-                      <table id="general-table" class="table table-hover table-bordered table-striped hidden">
-                      <form action="{url('rule_edit')}" method="post" class="form-horizontal" role="form">
+                    <form action="{url('rule_edit')}" method="post" class="form-horizontal hidden" role="form">
+                      <table id="general-table" class="table table-hover ectouch-table">
                        <tr>
                           <td width="200">规则名称:</td>
                           <td><div class="col-md-6">
@@ -161,10 +158,10 @@
                                      <div class="panel-heading">
                                       <ul class="nav nav-pills" role="tablist">
                                         <li role="presentation"><a href="javascript:;" class="glyphicon glyphicon-pencil ectouch-fs18" title="文字" type="text"></a></li>
-                                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'image'))}" class="glyphicon glyphicon-picture ectouch-fs18 iframe" title="图片" type="image"></a></li>
-                                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'voice'))}" class="glyphicon glyphicon-volume-up ectouch-fs18 iframe"  title="语音" type="voice"></a></li>
-                                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'video'))}" class="glyphicon glyphicon-film ectouch-fs18 iframe"  title="视频" type="video"></a></li>
-                                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'news'))}" class="glyphicon glyphicon-list-alt ectouch-fs18 iframe"  title="图文消息" type="news"></a></li>
+                                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'image'))}" class="glyphicon glyphicon-picture ectouch-fs18 fancybox fancybox.iframe" title="图片" type="image"></a></li>
+                                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'voice'))}" class="glyphicon glyphicon-volume-up ectouch-fs18 fancybox fancybox.iframe"  title="语音" type="voice"></a></li>
+                                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'video'))}" class="glyphicon glyphicon-film ectouch-fs18 fancybox fancybox.iframe"  title="视频" type="video"></a></li>
+                                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'news'))}" class="glyphicon glyphicon-list-alt ectouch-fs18 fancybox fancybox.iframe"  title="图文消息" type="news"></a></li>
                                       </ul>
                                       </div>
                                       <div class="panel-body" style="padding:0;">
@@ -215,9 +212,8 @@
                               	<input type="reset" value="{$lang['button_reset']}" class="btn btn-default" />
                             </div></td>
                         </tr>
-                        </form>
                         </table>
-                	
+                	</form>
                 </div>
                 {/loop}
             </div>
@@ -245,11 +241,6 @@ $(function(){
             tab.find(".text").removeClass("hidden");
             $("input[name=content_type]").val("text");
         }
-        else{
-        	tab.find(".text").addClass("hidden");
-            tab.find(".content").removeClass("hidden");
-            $("input[name=content_type]").val(type);
-        }
     });
     //规则显示
     $(".rule_title").click(function(){
@@ -265,7 +256,7 @@ $(function(){
     });
     //修改规则显示
     $(".edit").click(function(){
-        var obj = $(this).parent().siblings("table");
+        var obj = $(this).parent().siblings("form");
     	if(obj.hasClass("hidden")){
         	obj.removeClass("hidden");
 		}
@@ -273,7 +264,6 @@ $(function(){
 			obj.addClass("hidden");
 		}
     });
-    $(".iframe").colorbox({iframe:true, width:"60%", height:"60%"});
 })
 </script>
 {include file="pagefooter"}

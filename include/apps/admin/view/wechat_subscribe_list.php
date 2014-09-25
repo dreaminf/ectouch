@@ -57,14 +57,14 @@
         			<div class="panel-heading" style="overflow: hidden;">{$lang['group_title']}
             			 <div class="pull-right ectouch-mb5">   
                     		<a href="{url('wechat/sys_groups')}" class="btn btn-primary">{$lang['group_update']}</a>
-                    		<a href="{url('wechat/groups_edit')}" class="btn btn-primary" data-toggle="modal" data-target=".bs-edit-modal-lg">{$lang['add']}</a>
+                    		<a href="{url('wechat/groups_edit')}" class="btn btn-primary fancybox fancybox.iframe">{$lang['add']}</a>
                     	</div>
         			</div>
         		<table class="table table-hover table-bordered table-striped">
         			{loop $group_list $key $val}
         			<tr>
         				<td align="center"><a href="{url('subscribe_search', array('group_id'=>$val['group_id']))}">{$val['name']} <span class="badge">{$val['count']}</span></a></td>
-        				<td align="center">{if $val['group_id'] != 0  && $val['group_id'] != 1 && $val['group_id'] != 2}<a href="{url('wechat/groups_edit', array('id'=>$val['id']))}" class="btn btn-primary" data-toggle="modal" data-target=".bs-edit-modal-lg">{$lang['edit']}</a>{/if}</td>
+        				<td align="center">{if $val['group_id'] != 0  && $val['group_id'] != 1 && $val['group_id'] != 2}<a href="{url('wechat/groups_edit', array('id'=>$val['id']))}" class="btn btn-primary fancybox fancybox.iframe" >{$lang['edit']}</a>{/if}</td>
         			</tr>
         			{/loop}
         		</table> 
@@ -81,10 +81,5 @@
 		</script>
 	</div>
  </div>
-</div>
-<div class="modal fade bs-edit-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content"></div>
-  </div>
 </div>
 {include file="pagefooter"}

@@ -29,7 +29,7 @@
                         <div class="bg-info">
                             <ul class="nav nav-pills nav-justified" role="tablist">
                             <li role="presentation"><a href="{url('download', array('id'=>$v['id']))}" title="下载" class="ectouch-fs18"><span class="glyphicon glyphicon-download-alt"></span></a></li>
-                            <li role="presentation"><a href="{url('media_edit', array('id'=>$v['id']))}" title="编辑" class="ectouch-fs18" data-toggle="modal" data-target=".bs-edit-modal-lg"><span class="glyphicon glyphicon-pencil"></span></a></li>
+                            <li role="presentation"><a href="{url('media_edit', array('id'=>$v['id']))}" title="编辑" class="ectouch-fs18 fancybox fancybox.iframe"><span class="glyphicon glyphicon-pencil"></span></a></li>
                             <li role="presentation"><a href="javascript:if(confirm('{$lang['confirm_delete']}')){window.location.href='{url('media_del', array('id'=>$v['id']))}'};" title="删除" class="ectouch-fs18"><span class="glyphicon glyphicon-trash"></span></a></li>
                             </ul>
                         </div>
@@ -41,11 +41,6 @@
 		{include file="pageview"}
 	  </div>
 	</div>
-</div>
-<div class="modal fade bs-edit-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content"></div>
-  </div>
 </div>
 <script type="text/javascript">
 $(function(){

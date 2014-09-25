@@ -40,20 +40,27 @@ class WechatController extends AdminController
         $this->assign('list', $list);
         $this->display();
     }
-    
-    public function set_default(){
-    	$id = I('get.id');
-    	if(empty($id)){
-    		$this->message('请选择公众号', NULL, 'error');
-    	}
-    	//取消默认
-    	$data['default_wx'] = 0;
-    	$this->model->table('wechat')->data($data)->where('1')->update();
-    	//设置默认
-    	$data1['default_wx'] = 1;
-    	$this->model->table('wechat')->data($data1)->where('id = '.$id)->update();
-    	
-    	$this->message('设置成功', url('index'));
+
+    public function set_default()
+    {
+        $id = I('get.id');
+        if (empty($id)) {
+            $this->message('请选择公众号', NULL, 'error');
+        }
+        // 取消默认
+        $data['default_wx'] = 0;
+        $this->model->table('wechat')
+            ->data($data)
+            ->where('1')
+            ->update();
+        // 设置默认
+        $data1['default_wx'] = 1;
+        $this->model->table('wechat')
+            ->data($data1)
+            ->where('id = ' . $id)
+            ->update();
+        
+        $this->message('设置成功', url('index'));
     }
 
     /**
@@ -613,14 +620,14 @@ class WechatController extends AdminController
             $id = I('post.id', 0, 'intval');
             $group_id = I('post.group_id');
             if (empty($name)) {
-                $this->message(L('group_name') . L('empty'), NULL, 'error');
+                exit(json_encode(array('status'=>0, 'msg'=>L('group_name') . L('empty'))));
             }
             $data['name'] = $name;
             if (! empty($id)) {
                 // 微信端更新
                 $rs = $this->weObj->updateGroup($group_id, $name);
                 if (empty($rs)) {
-                    $this->message(L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg, NULL, 'error');
+                    exit(json_encode(array('status'=>0, 'msg'=>L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg)));
                 }
                 // 数据更新
                 $where['id'] = $id;
@@ -632,7 +639,7 @@ class WechatController extends AdminController
                 // 微信端新增
                 $rs = $this->weObj->createGroup($name);
                 if (empty($rs)) {
-                    $this->message(L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg, NULL, 'error');
+                    exit(json_encode(array('status'=>0, 'msg'=>L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg)));
                 }
                 // 数据新增
                 $data['wechat_id'] = $this->wechat_id;
@@ -640,9 +647,7 @@ class WechatController extends AdminController
                     ->data($data)
                     ->insert();
             }
-            $this->message(L('edit') . L('success'), url('groups_list', array(
-                'wechat' => $this->wechat_id
-            )));
+            exit(json_encode(array('status'=>1)));
         }
         $id = I('get.id', 0, 'intval');
         $group = array();
@@ -746,7 +751,7 @@ class WechatController extends AdminController
             ->field('type, scene_id, expire_seconds, qrcode_url, status')
             ->where('id = ' . $id)
             ->find();
-        if(empty($rs['status'])){
+        if (empty($rs['status'])) {
             $this->message('二维码已禁用，请重新启用！', NULL, 'error');
         }
         if (empty($rs['qrcode_url'])) {
@@ -852,18 +857,19 @@ class WechatController extends AdminController
             
             $data['wechat_id'] = $this->wechat_id;
             $data['type'] = 'news';
-            $data['add_time'] = time();
             
             if (! empty($id)) {
                 // 删除图片
                 if ($pic_path != $data['file']) {
                     @unlink(ROOT_PATH . $pic_path);
                 }
+                $data['edit_time'] = time();
                 $this->model->table('wechat_media')
                     ->data($data)
                     ->where('id = ' . $id)
                     ->update();
             } else {
+                $data['add_time'] = time();
                 $this->model->table('wechat_media')
                     ->data($data)
                     ->insert();
@@ -893,14 +899,15 @@ class WechatController extends AdminController
                 $data['article_id'] = implode(',', $article_id);
                 $data['wechat_id'] = $this->wechat_id;
                 $data['type'] = 'news';
-                $data['add_time'] = time();
                 
                 if (! empty($id)) {
+                    $data['edit_time'] = time();
                     $this->model->table('wechat_media')
                         ->data($data)
                         ->where('id = ' . $id)
                         ->update();
                 } else {
+                    $data['add_time'] = time();
                     $this->model->table('wechat_media')
                         ->data($data)
                         ->insert();
@@ -928,16 +935,39 @@ class WechatController extends AdminController
                 }
                 $this->assign('articles', $articles);
             }
+            $this->assign('sort', $rs['sort']);
         }
+        
+        $this->assign('id', $id);
+        $this->display();
+    }
+
+    /**
+     * 单图文列表供多图文选择
+     */
+    public function articles_list()
+    {
+        // 分页
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('articles_list', $filter), 4);
+        $total = $this->model->table('wechat_media')
+            ->where('wechat_id = ' . $this->wechat_id . ' and type = "news" and article_id is NULL')
+            ->count();
         // 图文信息
         $article = $this->model->table('wechat_media')
             ->field('id, title, file, content, add_time')
             ->where('wechat_id = ' . $this->wechat_id . ' and type = "news" and article_id is NULL')
+            ->limit($offset)
             ->order('sort asc, add_time desc')
             ->select();
+        if (! empty($article)) {
+            foreach ($article as $k => $v) {
+                $article[$k]['content'] = strip_tags(html_out($v['content']));
+            }
+        }
         
+        $this->assign('page', $this->pageShow($total));
         $this->assign('article', $article);
-        $this->assign('id', $id);
         $this->display();
     }
 
@@ -1138,14 +1168,15 @@ class WechatController extends AdminController
                 $this->message('请填写标题', NULL, 'error');
             }
             $data['type'] = 'video';
-            $data['add_time'] = time();
             $data['wechat_id'] = $this->wechat_id;
             if (! empty($id)) {
+                $data['edit_time'] = time();
                 $this->model->table('wechat_media')
                     ->data($data)
                     ->where('id = ' . $id)
                     ->update();
             } else {
+                $data['add_time'] = time();
                 $this->model->table('wechat_media')
                     ->data($data)
                     ->insert();
@@ -1211,14 +1242,21 @@ class WechatController extends AdminController
                 '请输入名称'
             ));
             if ($rs !== true) {
-                $this->message($rs, NULL, 'error');
+                exit(json_encode(array(
+                    'status' => 0,
+                    'error' => $rs
+                )));
             }
-            $this->model->table('wechat_media')
-                ->data('file_name = "' . $pic_name . '"')
+            $data['file_name'] = $pic_name;
+            $data['edit_time'] = time();
+            $num = $this->model->table('wechat_media')
+                ->data($data)
                 ->where('id = ' . $id)
                 ->update();
-            $url = $_SERVER['HTTP_REFERER'];
-            $this->redirect($url);
+            
+            exit(json_encode(array(
+                'status' => $num
+            )));
         }
         $id = I('get.id');
         $pic = $this->model->table('wechat_media')
@@ -1287,11 +1325,14 @@ class WechatController extends AdminController
         // 分页
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('mass_list', $filter), 10);
-        $total = $this->model->table('wechat_mass_history')->where('wechat_id = '.$this->wechat_id)->count();
+        $total = $this->model->table('wechat_mass_history')
+            ->where('wechat_id = ' . $this->wechat_id)
+            ->count();
         $this->assign('page', $this->pageShow($total));
         
         $list = $this->model->table('wechat_mass_history')
-            ->field('id, media_id, type, status, send_time, totalcount, sentcount, errorcount')->where('wechat_id = '.$this->wechat_id)
+            ->field('id, media_id, type, status, send_time, totalcount, sentcount, errorcount')
+            ->where('wechat_id = ' . $this->wechat_id)
             ->order('send_time desc')
             ->limit($offset)
             ->select();
@@ -1553,13 +1594,12 @@ class WechatController extends AdminController
                     ->select();
             } elseif ('news' == $type) {
                 $offset = $this->pageLimit(url('auto_reply', $filter), 6);
-                //只显示单图文
+                // 只显示单图文
                 $no_list = I('get.no_list', 0, 'intval');
                 $this->assign('no_list', $no_list);
-                if(!empty($no_list)){
+                if (! empty($no_list)) {
                     $where = 'wechat_id = ' . $this->wechat_id . ' and type="news" and article_id is NULL';
-                }
-                else{
+                } else {
                     $where = 'wechat_id = ' . $this->wechat_id . ' and type="news"';
                 }
                 $list = $this->model->table('wechat_media')
@@ -1616,12 +1656,12 @@ class WechatController extends AdminController
             if (is_array($data) && (! empty($data['media_id']) || ! empty($data['content']))) {
                 $id = $this->model->table('wechat_reply')
                     ->field('id')
-                    ->where('type = "' . $data['type'] . '" and wechat_id ='.$this->wechat_id)
+                    ->where('type = "' . $data['type'] . '" and wechat_id =' . $this->wechat_id)
                     ->getOne();
                 if (! empty($id)) {
                     $this->model->table('wechat_reply')
                         ->data($data)
-                        ->where('type = "' . $data['type'] . '" and wechat_id ='.$this->wechat_id)
+                        ->where('type = "' . $data['type'] . '" and wechat_id =' . $this->wechat_id)
                         ->update();
                 } else {
                     $data['wechat_id'] = $this->wechat_id;
@@ -1636,7 +1676,7 @@ class WechatController extends AdminController
         }
         // 自动回复数据
         $subscribe = $this->model->table('wechat_reply')
-            ->where('type = "subscribe" and wechat_id ='.$this->wechat_id)
+            ->where('type = "subscribe" and wechat_id =' . $this->wechat_id)
             ->find();
         if (! empty($subscribe['media_id'])) {
             $subscribe['media'] = $this->model->table('wechat_media')
@@ -1666,12 +1706,12 @@ class WechatController extends AdminController
             if (is_array($data) && (! empty($data['media_id']) || ! empty($data['content']))) {
                 $id = $this->model->table('wechat_reply')
                     ->field('id')
-                    ->where('type = "' . $data['type'] . '" and wechat_id ='.$this->wechat_id)
+                    ->where('type = "' . $data['type'] . '" and wechat_id =' . $this->wechat_id)
                     ->getOne();
                 if (! empty($id)) {
                     $this->model->table('wechat_reply')
                         ->data($data)
-                        ->where('type = "' . $data['type'] . '" and wechat_id ='.$this->wechat_id)
+                        ->where('type = "' . $data['type'] . '" and wechat_id =' . $this->wechat_id)
                         ->update();
                 } else {
                     $data['wechat_id'] = $this->wechat_id;
@@ -1686,7 +1726,7 @@ class WechatController extends AdminController
         }
         // 自动回复数据
         $msg = $this->model->table('wechat_reply')
-            ->where('type = "msg" and wechat_id ='.$this->wechat_id)
+            ->where('type = "msg" and wechat_id =' . $this->wechat_id)
             ->find();
         if (! empty($msg['media_id'])) {
             $msg['media'] = $this->model->table('wechat_media')
@@ -1705,7 +1745,7 @@ class WechatController extends AdminController
     {
         $list = $this->model->table('wechat_reply')
             ->field('id, rule_name, content, media_id, reply_type')
-            ->where('type = "keywords" and wechat_id ='.$this->wechat_id)
+            ->where('type = "keywords" and wechat_id =' . $this->wechat_id)
             ->order('add_time desc')
             ->select();
         foreach ((array) $list as $key => $val) {
