@@ -6,7 +6,7 @@
     </nav>
   </div>
   <!-- {if $goods_list } -->
-  <p class="flow-price ect-padding-lr ect-padding-tb"> {$total.total_number}<b id="total_number">{$total.total_number}</b>{$lang.total_number}，{$lang.goods_price}：<b class="ect-colory" id="goods_subtotal">{$total.goods_price}</b> </p>
+  <p class="flow-price ect-padding-lr ect-padding-tb"> {$lang.total}<b id="total_number">{$total.total_number}</b>{$lang.total_number}，{$lang.goods_price}：<b class="ect-colory" id="goods_subtotal">{$total.goods_price}</b> </p>
   <section class="ect-pro-list flow-pic ect-border-bottom0">
     <ul>
       <!-- {foreach from=$goods_list item=goods key=k} -->
