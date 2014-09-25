@@ -28,7 +28,6 @@
     <!--{/foreach}--> 
 		</div>
            <p class="ect-margin-tb text-center">{$order_submit_back}</p>
-           <p class="ect-margin-tb text-center"><a href="{:url('user/order_detail',array('order_id'=>$this->_var['order']['order_id']))}" >{$order_submit_back}</a></p>
   </section>
   <section class="ect-padding-lr ect-padding-tb ect-margin-tb">
   	<a type="button" class="btn btn-info ect-btn-info ect-colorf">{$lang.change_payment}</a>
