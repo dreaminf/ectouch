@@ -364,7 +364,7 @@ class UserController extends CommonController {
                 }
             }
         } else {
-            $order['handler'] = '<span>' . L('os.' . $order['order_status']) . '</span>';
+            $order['handler'] = '<span class="btn btn-success ect-colorf">' . L('os.' . $order['order_status']) . '</span>';
         }
         if ($order === false) {
             ECTouch::err()->show(L('back_home_lnk'), './');
