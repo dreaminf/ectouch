@@ -1269,6 +1269,50 @@ function deleteRepeat($array) {
  * ******************************************************** */
 
 /**
+ * 通过判断is_feed 向UCenter提交Feed
+ *
+ * @access public
+ * @param  integer $value_id  $order_id or $comment_id
+ * @param  interger $feed_type BUY_GOODS or COMMENT_GOODS
+ *
+ * @return void
+ */
+function add_feed($id, $feed_type)
+{
+    $feed = array();
+    if ($feed_type == BUY_GOODS)
+    {
+        if (empty($id))
+        {
+            return;
+        }
+        $id = intval($id);
+        $order_res = ECTouch::db()->getAll("SELECT g.goods_id, g.goods_name, g.goods_sn, g.goods_desc, g.goods_thumb, o.goods_price FROM " . ECTouch::ecs()->table('order_goods') . " AS o, " . ECTouch::ecs()->table('goods') . " AS g WHERE o.order_id='{$id}' AND o.goods_id=g.goods_id");
+        foreach($order_res as $goods_data)
+        {
+            if(!empty($goods_data['goods_thumb']))
+            {
+                $url = __URL__ . $goods_data['goods_thumb'];
+            }
+            else
+            {
+                $url = __URL__ . C('no_picture');
+            }
+            $link = __URL__ . "goods.php?id=" . $goods_data["goods_id"];
+
+            $feed['icon'] = "goods";
+            $feed['title_template'] = '<b>{username} ' . L('feed_user_buy') . ' {goods_name}</b>';
+            $feed['title_data'] = array('username'=> $_SESSION['user_name'], 'goods_name'=> $goods_data['goods_name']);
+            $feed['body_template'] = '{goods_name}  ' . L('feed_goods_price') . ':{goods_price}  ' . L('feed_goods_desc') . ':{goods_desc}';
+            $feed['body_data'] = array('goods_name'=>$goods_data['goods_name'], 'goods_price'=>$goods_data['goods_price'], 'goods_desc'=>sub_str(strip_tags($goods_data['goods_desc']), 150, true));
+            $feed['images'][] = array('url'=> $url, 'link'=> $link);
+            uc_call("uc_feed_add", array($feed['icon'], $_SESSION['user_id'], $_SESSION['user_name'], $feed['title_template'], $feed['title_data'], $feed ['body_template'], $feed['body_data'], '', '', $feed['images']));
+        }
+    }
+    return;
+}
+
+/**
  * 获得商品tag所关联的其他应用的列表
  *
  * @param   array       $attr
