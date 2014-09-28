@@ -1215,7 +1215,7 @@ function send_pwd_email($uid, $user_name, $email, $code) {
  * @param   string  $code   支付方式代码
  */
 function return_url($code) {
-    return __HOST__ . url('respond/index', array('code' => $code)); //ECTouch::ecs()->url() . 'respond.php?code=' . $code;
+    return __HOST__ . '/respond.php?code=' . $code;
 }
 
 /* * ********************************************************
@@ -1331,9 +1331,3 @@ function exchange_points($uid, $fromcredits, $tocredits, $toappid, $netamount) {
     }
 }
 
-/**
- * 返回购物车中的商品数量
- */
-function insert_cart_info_number(){
-    return model('Flow')->insert_cart_info_number();
-}
