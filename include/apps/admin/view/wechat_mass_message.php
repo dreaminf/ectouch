@@ -21,8 +21,8 @@
             <span class="help-block">3.群发图文消息的标题上限为64个字节,群发内容字数上限为1200个字符、或600个汉字。</span>
             <span class="help-block">4.在返回成功时，意味着群发任务提交成功，并不意味着此时群发已经结束，所以，仍有可能在后续的发送过程中出现异常情况导致用户未收到消息，如消息有时会进行审核、服务器不稳定等。此外，群发任务一般需要较长的时间才能全部发送完毕，请耐心等待。</span>
         </div>
-        <table id="general-table" class="table table-hover table-bordered table-striped">
-        <form action="{url('mass_message')}" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">  
+        <form action="{url('mass_message')}" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
+        <table id="general-table" class="table table-hover ectouch-table">
         <tr>
             <td width="200">选择分组:</td>
             <td><div class="col-md-2">
@@ -51,8 +51,8 @@
                 <input type="reset" value="{$lang['button_reset']}" class="btn btn-default" />
               </div></td>
           </tr>
-          </form>
           </table>
+          </form>
       </div>
     </div>
   </div>

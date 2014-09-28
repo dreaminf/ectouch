@@ -22,6 +22,8 @@ class WechatController extends CommonController
 
     private $orgid = '';
 
+    private $wechat_id = '';
+
     /**
      * 构造函数
      */
@@ -32,9 +34,14 @@ class WechatController extends CommonController
         // 获取公众号配置
         $this->orgid = I('get.orgid');
         if (! empty($this->orgid)) {
-            $config = $this->get_config($this->orgid);
+            $wxinfo = $this->get_config($this->orgid);
+            
+            $config['token'] = $wxinfo['token'];
+            $config['appid'] = $wxinfo['appid'];
+            $config['appsecret'] = $wxinfo['appsecret'];
             $this->weObj = new Wechat($config);
             $this->weObj->valid();
+            $this->wechat_id = $wxinfo['id'];
         }
     }
 
@@ -127,14 +134,10 @@ class WechatController extends CommonController
             }
             $info['ecs_uid'] = $_SESSION['user_id'];
             // 获取用户所在分组ID
-            $group_id = $this->weObj->getUserGroupId($info['openid']);
-            $info['group_id'] = $group_id['group_id'];
+            $info['group_id'] = $this->weObj->getUserGroup($info['openid']);
             // 获取被关注公众号信息
-            $where1['orgid'] = $this->orgid;
-            $info['wechat_id'] = $this->model->table('wechat')
-                ->field('id')
-                ->where($where1)
-                ->getOne();
+            $info['wechat_id'] = $this->wechat_id;
+            
             $this->model->table('wechat_user')
                 ->data($info)
                 ->insert();
@@ -158,11 +161,10 @@ class WechatController extends CommonController
         // 未关注
         $where['openid'] = $openid;
         $rs = $this->model->table('wechat_user')
-            ->field('openid')
             ->where($where)
-            ->getOne();
+            ->count();
         // 修改关注状态
-        if (! empty($rs)) {
+        if ($rs > 0) {
             $data['subscribe'] = 0;
             $this->model->table('wechat_user')
                 ->data($data)
@@ -180,7 +182,7 @@ class WechatController extends CommonController
     {
         $replyInfo = $this->model->table('wechat_reply')
             ->field('content, media_id')
-            ->where('type = "' . $type . '"')
+            ->where('type = "' . $type . '" and wechat_id = ' . $this->wechat_id)
             ->find();
         if (! empty($replyInfo)) {
             if (! empty($replyInfo['media_id'])) {
@@ -238,7 +240,7 @@ class WechatController extends CommonController
     private function keywords_reply($keywords)
     {
         $endrs = false;
-        $sql = 'SELECT r.content, r.media_id, r.reply_type FROM ' . $this->model->pre . 'wechat_reply r LEFT JOIN ' . $this->model->pre . 'wechat_rule_keywords k ON r.id = k.rid WHERE k.rule_keywords = "' . $keywords . '" order by r.add_time desc LIMIT 1';
+        $sql = 'SELECT r.content, r.media_id, r.reply_type FROM ' . $this->model->pre . 'wechat_reply r LEFT JOIN ' . $this->model->pre . 'wechat_rule_keywords k ON r.id = k.rid WHERE k.rule_keywords = "' . $keywords . '" and r.wechat_id = ' . $this->wechat_id . ' order by r.add_time desc LIMIT 1';
         $result = $this->model->query($sql);
         if (! empty($result)) {
             // 素材回复
@@ -325,17 +327,17 @@ class WechatController extends CommonController
 
     /**
      * 功能变量查询
-     *
+     * 
+     * @param unknown $tousername            
      * @param unknown $fromusername            
      * @param unknown $keywords            
      * @return boolean
      */
     public function get_function($fromusername, $keywords)
     {
-        $return = false;
         $rs = $this->model->table('wechat_extend')
             ->field('name, command, config')
-            ->where('keywords like "%' . $keywords . '%" and enable = 1')
+            ->where('keywords like "%' . $keywords . '%" and enable = 1 and wechat_id = ' . $this->wechat_id)
             ->order('id asc')
             ->find();
         $file = ROOT_PATH . 'plugins/wechat/' . $rs['command'] . '/' . $rs['command'] . '.class.php';
@@ -343,7 +345,6 @@ class WechatController extends CommonController
             require_once ($file);
             $wechat = new $rs['command']();
             $data = $wechat->show($fromusername, $rs);
-            logResult(var_export($data, true));
             if (! empty($data)) {
                 $this->weObj->news($data)->reply();
                 // 积分赠送
@@ -377,20 +378,12 @@ class WechatController extends CommonController
      */
     static function do_oauth()
     {
-        // OAuth配置信息
-        $oauth = model('Base')->model->table('wechat_extend')
-            ->field('config')
-            ->where('type = "oauth" and enable = 1')
-            ->getOne();
-        if ($oauth) {
-            $oauth = unserialize($oauth);
-        }
         // 默认公众号信息
         $wxinfo = model('Base')->model->table('wechat')
-            ->field('id, token, appid, appsecret')
+            ->field('id, token, appid, appsecret, oauth_redirecturi')
             ->where('default_wx = 1 and status = 1')
             ->find();
-        if ($oauth && $wxinfo) {
+        if (! empty($wxinfo)) {
             $config['token'] = $wxinfo['token'];
             $config['appid'] = $wxinfo['appid'];
             $config['appsecret'] = $wxinfo['appsecret'];
@@ -399,8 +392,7 @@ class WechatController extends CommonController
             $weObj = new Wechat($config);
             // 微信浏览器浏览
             if (self::is_wechat_browser() && $_SESSION['user_id'] === 0) {
-                $redirect_uri = $oauth['redirect_uri'];
-                $url = $weObj->getOauthRedirect($redirect_uri, 1);
+                $url = $weObj->getOauthRedirect($wxinfo['oauth_redirecturi'], 1);
                 if (isset($_GET['code']) && $_GET['code'] != 'authdeny') {
                     $token = $weObj->getOauthAccessToken();
                     if ($token) {
@@ -459,14 +451,11 @@ class WechatController extends CommonController
             $data1['subscribe_time'] = $time;
             $data1['ecs_uid'] = $_SESSION['user_id'];
             // 获取用户所在分组ID
-            $openid_array = array(
-                'openid' => $userinfo['openid']
-            );
-            $group_id = $weObj->getUserGroupId($openid_array);
-            if (empty($group_id)) {
+            $group_id = $weObj->getUserGroup($userinfo['openid']);
+            if ($group_id === false) {
                 die($weObj->errCode . ':' . $weObj->errMsg);
             }
-            $data1['group_id'] = $group_id['groupid'];
+            $data1['group_id'] = $group_id;
             
             model('Base')->model->table('wechat_user')
                 ->data($data1)
@@ -486,19 +475,10 @@ class WechatController extends CommonController
                 ->getOne();
         }
         // 推送量
-        $oauth = model('Base')->model->table('wechat_extend')
-            ->field('config')
-            ->where('type = "oauth" and enable = 1')
-            ->getOne();
-        if ($oauth) {
-            $oauth = unserialize($oauth);
-            $oauth['count'] = $oauth['count'] + 1;
-            $config['config'] = serialize($oauth);
-            model('Base')->model->table('wechat_extend')
-                ->data($config)
-                ->where('type = "oauth" and enable = 1')
-                ->update();
-        }
+        model('Base')->model->table('wechat')
+            ->data('oauth_count = oauth_count + 1')
+            ->where('default_wx = 1 and status = 1')
+            ->update();
         
         session('openid', $userinfo['openid']);
         ECTouch::user()->set_session($new_user_name);
@@ -560,10 +540,10 @@ class WechatController extends CommonController
     private function get_config($orgid)
     {
         $config = $this->model->table('wechat')
-            ->field('token, appid, appsecret')
-            ->where('orgid = "'.$orgid.'" and status = 1')
+            ->field('id, token, appid, appsecret')
+            ->where('orgid = "' . $orgid . '" and status = 1')
             ->find();
-        if(empty($config)){
+        if (empty($config)) {
             $config = array();
         }
         return $config;

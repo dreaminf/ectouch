@@ -64,6 +64,27 @@
 			</td>
 		</tr>
 		<tr>
+			<td>微信OAuth名称</td>
+			<td><div class="col-sm-4">
+				<input type="text" name="data[oauth_name]" class="form-control" value="{$data['oauth_name']}"> 
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>微信OAuth回调地址</td>
+			<td><div class="col-sm-4">
+				<input type="text" name="data[oauth_redirecturi]" class="form-control" value="{$data['oauth_redirecturi']}"> 
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>微信OAuth推送量</td>
+			<td><div class="col-sm-4">
+				<input type="text" name="data[oauth_count]" class="form-control" value="{$data['oauth_count']}" readonly> 
+				</div>
+			</td>
+		</tr>
+		<tr>
 			<td>{$lang['sort_order']}</td>
 			<td><div class="col-sm-4">
 				<input type="text" name="data[sort]" value="10" class="form-control" value="{$data['sort']}">

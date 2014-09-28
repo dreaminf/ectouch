@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="__PUBLIC__/colorbox/colorbox.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
 <link rel="stylesheet" type="text/css" href="__ASSETS__/css/jquery.datetimepicker.css" />
 <style>
 .article{border:1px solid #ddd;padding:5px 5px 0 5px;}
@@ -8,7 +8,7 @@
 .article_list{padding:5px;border:1px solid #ddd;border-top:0;overflow:hidden;}
 .thumbnail{padding:0;}
 </style>
-<form action="{url('edit')}" method="post" class="form-horizontal" role="form">
+<form action="{url('edit', array('ks'=>'zjd'))}" method="post" class="form-horizontal" role="form">
 <table class="table table-hover ectouch-table">
     <tr>
         <td width="200">功能名称</td>
@@ -107,7 +107,6 @@
         <td>
             <div class="col-md-6 col-sm-6">
                 <div class="form-group">
-                
                 <table class="table ectouch-table">
                     <tr>
                         <th class="text-center" width="10%"><a href="javascript:;" class="glyphicon glyphicon-plus" onClick="addprize(this)"></a></th>
@@ -140,34 +139,14 @@
         </td>
     </tr>
     <tr>
-        <td width="200">URL</td>
-        <td>
-            <div class="col-md-4 col-sm-4">
-                <input type="text" name="cfg_value[plugin_url]" class="form-control" value="__HOST__{url('default/wechat/plugin_show', array('name'=>'zjd'))}" readonly />
-                <p class="help-block">请复制该URL填写在素材中原始路径</p>
-           </div>
-        </td>
-    </tr>
-    <tr>
         <td width="200">素材信息</td>
         <td>
-            <div class="col-md-4 col-sm-4">
-                <!-- 选择素材 -->
-                <p><a href="{url('wechat/auto_reply', array('type'=>'news', 'no_list'=> 1))}" class="btn btn-primary iframe">选择素材</a></p>
-                <div class="content thumbnail borderno">
-                    <input type="hidden" name="cfg_value[media_id]" value="{$config['config']['media_id']}">
-                    {if $config['config']['media']}
-                    <div class="article">
-                        <h4>{$config['config']['media']['title']}</h4>
-                        <p>{date('Y年m月d日', $config['config']['media']['add_time'])}</p>
-                        <div class="cover"><img src="{$config['config']['media']['file']}" /></div>
-                        <p>{$config['config']['media']['content']}</p>
-                    </div>
-                    {/if}
-                </div>                                                  
-           </div>
+            <div class="col-md-2 col-sm-2">
+                <input type="text" name="cfg_value[media_id]" class="form-control" value="{$config['config']['media_id']}" readonly />
+                <span class="help-block">对应素材管理中的素材id</span>
+          </div>
         </td>
-    </tr>                                             
+    </tr>                                              
     <tr>
         <td></td>
         <td>
@@ -185,11 +164,18 @@
     </tr>
 </table>
 </form>
-<script src="__PUBLIC__/colorbox/jquery.colorbox-min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/fancybox/jquery.fancybox.js?v=2.1.5"></script>
 <script src="__ASSETS__/js/jquery.datetimepicker.js"></script>
 <script type="text/javascript">
     //iframe显示
-    $(".iframe").colorbox({iframe:true, width:"60%", height:"60%"});
+    $(function(){
+    	//弹出框
+    	$(".fancybox").fancybox({
+    		title : '',
+    		closeBtn : false,
+    		width : '60%'
+    	});
+    })
     //日历显示
     $("#starttime, #endtime").datetimepicker({
     	lang:'ch',

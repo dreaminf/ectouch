@@ -2,7 +2,7 @@
 <div class="panel panel-default" style="margin:0;">
 <div class="panel-heading">{$lang['add'].$lang['qrcode']}</div>
 <div class="panel-body">
-	<form action="{url('qrcode_edit')}" method="post" class="form-horizontal" role="form">
+	<form action="{url('qrcode_edit')}" method="post" class="form-horizontal" role="form" onSubmit="return false;">
       <table id="general-table" class="table table-hover ectouch-table">
        <tr>
           <td width="200">{$lang['qrcode_type']}:</td>
@@ -63,4 +63,20 @@
 	</form>
 </div>
 </div>
+<script type="text/javascript">
+$(function(){
+	$(".form-horizontal").submit(function(){
+	    var ajax_data = $(this).serialize();
+	    $.post("{url('qrcode_edit')}", ajax_data, function(data){
+	        if(data.status > 0){
+	            window.parent.location.reload();
+			}
+	        else{
+	            alert(data.msg);
+	            return false;
+		    }
+	    }, 'json');
+	});
+})
+</script>
 {include file="pagefooter"}

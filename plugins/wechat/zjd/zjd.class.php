@@ -50,18 +50,6 @@ class zjd extends PluginWechatController
     {
         // 编辑
         if (! empty($this->cfg['handler']) && is_array($this->cfg['config'])) {
-            // 素材
-            if (! empty($this->cfg['config']['media_id'])) {
-                $media = model('Base')->model->table('wechat_media')
-                    ->field('id, title, file, file_name, type, content, add_time, article_id')
-                    ->where('id = ' . $this->cfg['config']['media_id'])
-                    ->find();
-                // 单图文
-                if (empty($media['article_id'])) {
-                    $media['content'] = strip_tags(html_out($media['content']));
-                    $this->cfg['config']['media'] = $media;
-                }
-            }
             // url处理
             if (! empty($this->cfg['config']['plugin_url'])) {
                 $this->cfg['config']['plugin_url'] = html_out($this->cfg['config']['plugin_url']);
@@ -347,9 +335,9 @@ class zjd extends PluginWechatController
                 // 素材
                 if (! empty($config['media_id'])) {
                     $media = model('Base')->model->table('wechat_media')
-                        ->field('id, title, file, file_name, type, content, add_time, article_id, link')
-                        ->where('id = ' . $config['media_id'])
-                        ->find();
+                    ->field('id, title, file, file_name, type, content, add_time, article_id, link')
+                    ->where('id = ' . $config['media_id'])
+                    ->find();
                     // 单图文
                     if (empty($media['article_id'])) {
                         $media['content'] = strip_tags(html_out($media['content']));

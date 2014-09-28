@@ -2,7 +2,7 @@
 <div class="panel panel-default" style="margin:0;">
     <div class="panel-heading">{$lang['menu_edit']}</div>
     <div class="panel-body">
-	<form action="{url('wechat/menu_edit')}" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
+	<form action="{url('wechat/menu_edit')}" method="post" class="form-horizontal" role="form" onSubmit="return false;">
       <table id="general-table" class="table table-hover ectouch-table">
        <tr>
           <td width="200">{$lang['menu_parent']}:</td>
@@ -91,6 +91,14 @@ $(function(){
 			$("#click").hide().addClass("hidden");
 			$("#view").show().removeClass("hidden");
 		}
+	});
+	$(".form-horizontal").submit(function(){
+	    var ajax_data = $(this).serialize();
+	    $.post("{url('wechat/menu_edit')}", ajax_data, function(data){
+	        if(data.status > 0){
+	            window.parent.location.reload();
+			}
+	    }, 'json');
 	});
 })
 </script>

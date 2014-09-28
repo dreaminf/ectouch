@@ -77,7 +77,6 @@ $(function(){
     uploader.on( 'uploadProgress', function( file, percentage ) {
         var $li = $( '#'+file.id ),
             $percent = $li.find('.progress .progress-bar');
-    
         // 避免重复创建
         if ( !$percent.length ) {
             $percent = $('<div class="progress progress-striped active">' +
@@ -87,7 +86,6 @@ $(function(){
         }
     
         $li.find('p.state').text('上传中');
-    
         $percent.css( 'width', percentage * 100 + '%' );
     }); 
     uploader.on( 'uploadSuccess', function( file ) {

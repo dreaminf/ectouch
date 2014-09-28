@@ -64,8 +64,29 @@
 			</td>
 		</tr>
 		<tr>
-			<td>{$lang['sort_order']}</td>
+			<td>微信OAuth名称</td>
 			<td><div class="col-sm-4">
+				<input type="text" name="data[oauth_name]" class="form-control"> 
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>微信OAuth回调地址</td>
+			<td><div class="col-sm-4">
+				<input type="text" name="data[oauth_redirecturi]" class="form-control"> 
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>微信OAuth推送量</td>
+			<td><div class="col-sm-4">
+				<input type="text" name="data[oauth_count]" class="form-control" readonly> 
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>{$lang['sort_order']}</td>
+			<td><div class="col-sm-2">
 				<input type="text" name="data[sort]" value="10" class="form-control">
 				</div></td>
 		</tr>

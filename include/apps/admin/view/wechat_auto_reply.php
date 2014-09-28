@@ -117,7 +117,6 @@
         {include file="pageview"}
         <div class="form-group" style="margin:20px 0;">
 		  <input type="submit" value="{$lang['button_submit']}" class="btn btn-primary closebox" name="file_submit" />
-      	 <input type="reset" value="{$lang['button_reset']}" class="btn btn-default" name="reset" />
        </div>
     </div>
 </div>

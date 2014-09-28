@@ -27,13 +27,13 @@
 						<td align="center">{$val['function']}</td>
 						<td align="center">{$val['sort']}</td>
 						<td align="center" width="20%">
-							<a href="{url('qrcode_get', array('id'=>$val['id']))}" class="btn btn-primary fancybox fancybox.iframe">{$lang['qrcode_get']}</a>
+							<a href="{url('qrcode_get', array('id'=>$val['id']))}" class="btn btn-primary fancybox fancybox.iframe getqr">{$lang['qrcode_get']}</a>
 							{if $val['status'] == 1}
 							<a href="{url('qrcode_edit', array('id'=>$val['id'], 'status'=>0))}" class="btn btn-danger">{$lang['disabled']}</a>
 							{else}
 							<a href="{url('qrcode_edit', array('id'=>$val['id'], 'status'=>1))}" class="btn btn-success">{$lang['enabled']}</a>
 							{/if}
-							<a href="javascript:if(confirm('{$lang['confirm_delete']}')){window.location.href='{url('qrcode_del', array('id'=>$val['id']))}'}" class="btn btn-primary">{$lang['drop']}</a>
+							<a href="javascript:if(confirm('{$lang['confirm_delete']}')){window.location.href='{url('qrcode_del', array('id'=>$val['id']))}'};" class="btn btn-primary">{$lang['drop']}</a>
 						</td>
 					</tr>
 					{/loop}
@@ -43,4 +43,18 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+$(function(){
+	$(".getqr").click(function(){
+		var url = $(this).attr("href");
+	    $.get(url, '', function(data){
+	        if(data.status <= 0 ){
+		        window.parent.$.fancybox.close();
+	            alert(data.msg);
+	            return false;
+		    }
+		}, 'json');
+	});
+})
+</script>
 {include file="pagefooter"}

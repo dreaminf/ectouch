@@ -30,7 +30,8 @@ $(function(){
 		    	window.parent.location.reload();
 			}
 		    else{
-			    alert(data.error);
+			    alert(data.msg);
+			    return false;
 			}
 		}, 'json');
 	});
