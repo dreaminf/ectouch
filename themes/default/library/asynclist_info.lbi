@@ -67,7 +67,7 @@
 <dl>
      <h4 class="title"><a href="{$act_goods.url}">{$act_goods.name}</a></h4>
   </dt>
-  <dd><span class="pull-left"><strong>{$lang.price}：<b class="ect-colory"><!--{if $act_goods.promote_price}-->{$act_goods.promote_price}<!--{else}-->{$act_goods.shop_price}<!--{/if}--></b></strong><small class="ect-margin-lr"><del>{$act_goods.market_price}}</del></small></span>
+  <dd><span class="pull-left"><strong>{$lang.price}：<b class="ect-colory"><!--{if $act_goods.promote_price}-->{$act_goods.promote_price}<!--{else}-->{$act_goods.shop_price}<!--{/if}--></b></strong><small class="ect-margin-lr"><del>{$act_goods.market_price}</del></small></span>
   <span class="ect-pro-price"> 
    <!--{if $act_goods.promotion} --> 
     <!-- {foreach from=$act_goods.promotion item=promotion} --> 
