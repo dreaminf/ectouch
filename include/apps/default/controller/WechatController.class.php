@@ -507,7 +507,7 @@ class WechatController extends CommonController
     public function plugin_show()
     {
         $plugin = I('get.name');
-        $file = ROOT_PATH . 'plugins/wechat/' . $plugin . '/' . $plugin . '.class.php';
+        $file = ADDONS_PATH . 'wechat/' . $plugin . '/' . $plugin . '.class.php';
         if (file_exists($file)) {
             include_once ($file);
             $wechat = new $plugin();
@@ -523,7 +523,7 @@ class WechatController extends CommonController
     public function plugin_action()
     {
         $plugin = I('get.name');
-        $file = ROOT_PATH . 'plugins/wechat/' . $plugin . '/' . $plugin . '.class.php';
+        $file = ADDONS_PATH . 'wechat/' . $plugin . '/' . $plugin . '.class.php';
         if (file_exists($file)) {
             include_once ($file);
             $wechat = new $plugin();
