@@ -16,7 +16,7 @@
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
-abstract class PluginWechatController extends CommonController
+abstract class PluginWechatController
 {
     protected $layout = 'wechat_layout';
     protected $_data = array();
@@ -79,6 +79,8 @@ abstract class PluginWechatController extends CommonController
     {
         $view = new EcTemplate(C('TPL'));
         $this->_data['config'] = $config;
+        $this->_data['lang'] = L();
+        $this->_data['ur_here'] = '功能扩展';
         //插件视图目录
         $view->config['TPL_TEMPLATE_PATH'] = ADDONS_PATH . 'wechat/'.$this->plugin_name.'/view/';
         $view->assign($this->_data);
