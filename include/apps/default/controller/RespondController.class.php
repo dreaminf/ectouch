@@ -16,30 +16,41 @@
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
-class RespondController extends CommonController {
+class RespondController extends CommonController
+{
 
-    protected $data;
+    protected $data = '';
 
-    public function __construct() {
-        $this->data = '';
-        //todo
+    protected $code = '';
+
+    public function __construct()
+    {
+        $this->code = I('get.code');
+        $this->data = $_POST;
     }
-
-    //发送
-    public function index() {
-        
-        if(isset($this->data['notify_data'])){
-          $this->notify($this->data);
-        }else{
-          $This->sync($this->data)
+    
+    // 发送
+    public function index()
+    {
+        $file = ADDONS_PATH . 'payment/' . $this->code . '.php';
+        if (file_exists($file)) {
+            require_once ($file);
+            $payObj = new $this->code();
+            if (isset($this->data['notify_data'])) {
+                $this->notify($this->data);
+            } else {
+                $This->sync($this->data);
+            }
         }
     }
-    
-    protected function sync($data = array()){
-        $this->display('respond');
+
+    protected function sync($data = array())
+    {
+        $payObj->sync($data);
     }
-    
-    protected function notify($data = array()){
-    
+
+    protected function notify($data = array())
+    {
+        $payObj->sync($data);
     }
 }

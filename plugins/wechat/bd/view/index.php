@@ -15,11 +15,17 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">会员绑定</div>
 			<div class="panel-body">
-			<form action="<?php echo url('wechat/plugin_action', array('name'=>'zjd'));?>" method="post" class="form-horizontal validforms" role="form">
+			<form action="<?php echo url('wechat/plugin_action', array('name'=>'bd'));?>" method="post" class="form-horizontal validforms" role="form">
 				<div class="form-group">
 				    <label class="col-sm-2 control-label">用户名</label>
 				    <div class="col-sm-10">
 				      <input type="text" class="form-control" placeholder="用户名" name="data[username]" datatype="*" />
+				    </div>
+			  	</div>
+			  	<div class="form-group">
+				    <label class="col-sm-2 control-label">密码</label>
+				    <div class="col-sm-10">
+				      <input type="password" class="form-control" placeholder="密码" name="data[password]" datatype="*6-16" />
 				    </div>
 			  	</div>
 			  	<div class="form-group">

@@ -180,12 +180,12 @@ class WechatController extends AdminController
             $data['wechat_id'] = $this->wechat_id;
             if ('click' == $data['type']) {
                 if (empty($data['key'])) {
-                    $this->message(L('menu_keyword') . L('empty'), NULL, 'error');
+                    exit(json_encode(array('status'=>0, 'msg'=>L('menu_keyword') . L('empty'))));
                 }
                 $data['url'] = '';
             } else {
                 if (empty($data['url'])) {
-                    $this->message(L('menu_url') . L('empty'), NULL, 'error');
+                    exit(json_encode(array('status'=>0, 'msg'=>L('menu_url') . L('empty'))));
                 }
                 $data['key'] = '';
             }

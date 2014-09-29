@@ -33,7 +33,8 @@ class bd extends PluginWechatController
 
     /**
      * 构造方法
-     * @param unknown $cfg
+     *
+     * @param unknown $cfg            
      */
     public function __construct($cfg = array())
     {
@@ -52,18 +53,20 @@ class bd extends PluginWechatController
 
     /**
      * 获取数据
+     *
      * @see PluginWechatController::show()
      */
     public function show($fromusername, $info)
     {
         $articles = array();
+        $media = array();
         $config = unserialize($info['config']);
         // 素材
         if (! empty($config['media_id'])) {
             $media = model('Base')->model->table('wechat_media')
-            ->field('id, title, file, file_name, type, content, add_time, article_id, link')
-            ->where('id = ' . $config['media_id'])
-            ->find();
+                ->field('id, title, file, file_name, type, content, add_time, article_id, link')
+                ->where('id = ' . $config['media_id'])
+                ->find();
             // 单图文
             if (empty($media['article_id'])) {
                 $media['content'] = strip_tags(html_out($media['content']));
@@ -71,7 +74,7 @@ class bd extends PluginWechatController
         }
         if (! empty($media)) {
             // 数据
-            $articles[0]['Title'] = $config['media']['title'];
+            $articles[0]['Title'] = $media['title'];
             $articles[0]['Description'] = $media['content'];
             // 不是远程图片
             if (! preg_match('/(http:|https:)/is', $media['file'])) {
@@ -111,12 +114,13 @@ class bd extends PluginWechatController
             }
         }
     }
-    
+
     /**
      * 页面显示
      */
-    public function html_show(){
-        $file = ROOT_PATH . 'plugins/wechat/' . $this->plugin_name . '/view/index.php';
+    public function html_show()
+    {
+        $file = ADDONS_PATH . 'wechat/' . $this->plugin_name . '/view/index.php';
         if (file_exists($file)) {
             require_once ($file);
         }
@@ -126,5 +130,32 @@ class bd extends PluginWechatController
      * 行为操作
      */
     public function action()
-    {}
+    {
+        if (IS_POST) {
+            $data = I('post.data');
+            $rs = Check::rule(array(
+                Check::must($data['username']),
+                '用户名不能为空'
+            ), array(
+                Check::must($data['password']),
+                '请输入密码'
+            ));
+            if ($rs !== true) {
+                show_message($rs, '会员绑定', url('wechat/plugin_show', array(
+                    'name' => $this->plugin_name
+                )));
+            }
+            if (ECTouch::$user->login($data['username'], $data['password'], '')) {
+                //绑定
+                model('Base')->model->table('wechat_user')->data('ecs_uid = '.session('user_id'))->where('openid = "'.session('openid').'"')->update();
+                model('User')->update_user_info();
+                model('User')->recalculate_price();
+                show_message('绑定成功', '返回首页', url('index/index'));
+            } else {
+                show_message('用户名或密码错误', '会员绑定', url('wechat/plugin_show', array(
+                    'name' => $this->plugin_name
+                )));
+            }
+        }
+    }
 }

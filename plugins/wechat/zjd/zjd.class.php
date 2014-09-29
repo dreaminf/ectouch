@@ -182,7 +182,7 @@ class zjd extends PluginWechatController
                 ->where('id = ' . $id)
                 ->update();
             show_message('资料提交成功，请等待发放奖品', '继续砸金蛋', url('wechat/plugin_show', array(
-                'name' => 'zjd'
+                'name' => $this->plugin_name
             )));
             exit();
         }

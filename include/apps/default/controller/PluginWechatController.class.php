@@ -16,15 +16,15 @@
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
-abstract class PluginWechatController
+abstract class PluginWechatController extends CommonController
 {
-    private $layout = 'wechat_layout';
-    private $_data = array();
+    protected $layout = 'wechat_layout';
+    protected $_data = array();
 
     /**
      * 数据显示返回
      */
-    abstract protected function show();
+    abstract protected function show($fromusername, $info);
 
     /**
      * 积分赠送

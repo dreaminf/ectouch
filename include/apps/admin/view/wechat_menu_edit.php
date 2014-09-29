@@ -98,6 +98,10 @@ $(function(){
 	        if(data.status > 0){
 	            window.parent.location.reload();
 			}
+	        else{
+	            alert(data.msg);
+	            return false;
+		    }
 	    }, 'json');
 	});
 })
