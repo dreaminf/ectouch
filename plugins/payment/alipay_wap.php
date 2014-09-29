@@ -90,22 +90,21 @@ class alipay_wap
         }
         
         $gateway = 'http://wappaygw.alipay.com/service/rest.htm?';
-        
         // 请求业务数据
-        $req_data = '<direct_trade_create_req>' . '<subject>' . $order['order_sn'] . '</subject>' . '<out_trade_no>' . $order['order_sn'] . 'O' . $order['log_id'] . '</out_trade_no>' . '<total_fee>' . $order['order_amount'] . '</total_fee>' . '<seller_account_name>' . $payment['alipay_account'] . '</seller_account_name>' . '<call_back_url>' . return_url(basename(__FILE__, '.php')) . '</call_back_url>' . '<notify_url>' . $this->return_alipay_wap_url() . '</notify_url>' . '<out_user>' . $order['consignee'] . '</out_user>' . '<merchant_url>' . __URL__ . '</merchant_url>' . '<pay_expire>3600</pay_expire>' . '</direct_trade_create_req>';
+        $req_data = '<direct_trade_create_req>' . '<subject>' . $order['order_sn'] . '</subject>' . '<out_trade_no>' . $order['order_sn'] . 'O' . $order['log_id'] . '</out_trade_no>' . '<total_fee>' . $order['order_amount'] . '</total_fee>' . '<seller_account_name>' . $payment['alipay_account'] . '</seller_account_name>' . '<call_back_url>' . return_url(basename(__FILE__, '.php')) . '</call_back_url>' . '<notify_url>' . return_url(basename(__FILE__, '.php'), 1) . '</notify_url>' . '<out_user>' . $order['consignee'] . '</out_user>' . '<merchant_url>' . __URL__ . '</merchant_url>' . '<pay_expire>3600</pay_expire>' . '</direct_trade_create_req>';
         $parameter = array(
             'service' => 'alipay.wap.trade.create.direct', // 接口名称
             'format' => 'xml', // 请求参数格式
             'v' => '2.0', // 接口版本号
             'partner' => $payment['alipay_partner'], // 合作者身份ID
-            'req_id' => date('Ymdhis') . rand(1000, 9999), // 请求号，唯一
+            'req_id' => $order['order_sn'] . $order['log_id'], // 请求号，唯一
             'sec_id' => 'MD5', // 签名方式
             'req_data' => $req_data, // 请求业务数据
             "_input_charset" => $charset
         );
+        
         ksort($parameter);
         reset($parameter);
-        
         $param = '';
         $sign = '';
         
@@ -121,7 +120,7 @@ class alipay_wap
         $result = Http::doPost($gateway, $param . '&sign=' . md5($sign));
         $result = urldecode($result); // URL转码
         $result_array = explode('&', $result); // 根据 & 符号拆分
-                                               // 重构数组
+        // 重构数组
         $new_result_array = $temp_item = array();
         if (is_array($result_array)) {
             foreach ($result_array as $vo) {
@@ -129,7 +128,6 @@ class alipay_wap
                 $new_result_array[$temp_item[0]] = $temp_item[1];
             }
         }
-        
         $xml = simplexml_load_string($new_result_array['res_data']);
         $request_token = (array) $xml->request_token;
         // 请求交易接口
@@ -146,7 +144,6 @@ class alipay_wap
         
         ksort($parameter);
         reset($parameter);
-        
         $param = '';
         $sign = '';
         
@@ -164,56 +161,53 @@ class alipay_wap
     }
 
     /**
-     * 同步响应操作
-     * @param unknown $data
+     * 手机支付宝同步响应操作
+     * 
      * @return boolean
      */
-    function sync($data = array())
+    public function callback($code = '')
     {
-        if (! empty($_POST)) {
-            foreach ($_POST as $key => $data) {
-                $_GET[$key] = $data;
-            }
-        }
-        
-        $payment = model('Payment')->get_payment($_GET['code']);
-        
-        $out_trade_no = explode('O', $_GET['out_trade_no']);
-        $order_sn = $out_trade_no[1];
-        
-        /* 检查数字签名是否正确 */
-        ksort($_GET);
-        reset($_GET);
-        
-        $sign = '';
-        foreach ($_GET as $key => $val) {
-            if ($key != 'sign' && $key != 'sign_type' && $key != 'code') {
-                $sign .= "$key=$val&";
-            }
-        }
-        
-        $sign = substr($sign, 0, - 1) . $payment['alipay_key'];
-        if (md5($sign) != $_GET['sign']) {
-            return false;
-        }
-        
-        if ($_GET['result'] == 'success') {
-            /* 改变订单状态，统一使用异步通知 */
-            // model('Payment')->order_paid($order_sn, 2);
-            return true;
-        } else {
-            return false;
-        }
-    }
+		if (! empty($_GET)) {
+			$out_trade_no = explode('O', $_GET['out_trade_no']);
+			$log_id = $out_trade_no[1];
+			$payment = model('Payment')->get_payment($code);
+
+			/* 检查数字签名是否正确 */
+			ksort($_GET);
+			reset($_GET);
+			
+			$sign = '';
+			foreach ($_GET as $key => $val) {
+				if ($key != 'sign' && $key != 'sign_type' && $key != 'code') {
+					$sign .= "$key=$val&";
+				}
+			}
+			$sign = substr($sign, 0, - 1) . $payment['alipay_key'];
+			if (md5($sign) != $_GET['sign']) {
+				return false;
+			}
+			
+			if ($_GET['result'] == 'success') {
+				/* 改变订单状态 */
+				model('Payment')->order_paid($log_id, 2);
+				return true;
+			} else {
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
 
     /**
-     * 异步通知操作
-     * @param unknown $data
+     * 手机支付宝异步通知
+     * 
+     * @return string
      */
-    function notify($data = array())
+    public function notify($code = '')
     {
-        $payment = model('Payment')->get_payment($_GET['code']);
         if (! empty($_POST)) {
+			$payment = model('Payment')->get_payment($code);
             // 支付宝系统通知待签名数据构造规则比较特殊，为固定顺序。
             $parameter['service'] = $_POST['service'];
             $parameter['v'] = $_POST['v'];
@@ -230,19 +224,15 @@ class alipay_wap
                 exit("fail");
             }
             // 解析notify_data
-            $notify_data = (array) simplexml_load_string($parameter['notify_data']);
-            // 商户订单号
-            $out_trade_no = $notify_data['out_trade_no'];
-            // 支付宝交易号
-            $trade_no = $notify_data['trade_no'];
+            $data = (array) simplexml_load_string($parameter['notify_data']);
             // 交易状态
-            $trade_status = $notify_data['trade_status'];
-            // 获取log_id
-            $out_trade_no = explode('O', $out_trade_no);
-            $order_sn = $out_trade_no[1]; // 订单号log_id
+            $trade_status = $data['trade_status'];
+            // 获取支付订单号log_id
+            $out_trade_no = explode('O', $data['out_trade_no']);
+            $log_id = $out_trade_no[1]; // 订单号log_id
             if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
                 /* 改变订单状态 */
-                model('Payment')->order_paid($order_sn, 2);
+                model('Payment')->order_paid($log_id, 2);
                 echo "success";
             } else {
                 echo "fail";
@@ -251,16 +241,4 @@ class alipay_wap
             echo "fail";
         }
     }
-
-    /**
-     * 取得返回信息地址
-     * 
-     * @return string
-     */
-    function return_alipay_wap_url()
-    {
-        return __URL__ . '/plugins/payment/notify/alipay_wap.php';
-    }
 }
-
-?>

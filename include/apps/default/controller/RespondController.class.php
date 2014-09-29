@@ -19,38 +19,44 @@ defined('IN_ECTOUCH') or die('Deny Access');
 class RespondController extends CommonController
 {
 
-    protected $data = '';
-
-    protected $code = '';
+    private $data;
 
     public function __construct()
     {
-        $this->code = I('get.code');
-        $this->data = $_POST;
-    }
-    
+        parent::__construct();
+        // 获取参数
+        $code = I('get.code');
+        $this->data = unserialize(base64_decode($code));
+	}
+
     // 发送
     public function index()
     {
-        $file = ADDONS_PATH . 'payment/' . $this->code . '.php';
-        if (file_exists($file)) {
-            require_once ($file);
-            $payObj = new $this->code();
-            if (isset($this->data['notify_data'])) {
-                $this->notify($this->data);
+        /* 判断是否启用 */
+        $condition['pay_code'] = $this->data['code'];
+        $condition['enabled'] = 1;
+        $enabled = $this->model->table('touch_payment')->where($condition)->count();
+        if ($enabled == 0) {
+            $msg = L('pay_disabled');
+        } else {
+            $plugin_file = ADDONS_PATH.'payment/' . $this->data['code'] . '.php';
+            /* 检查插件文件是否存在，如果存在则验证支付是否成功，否则则返回失败信息 */
+            if (file_exists($plugin_file)) {
+                /* 根据支付方式代码创建支付类的对象并调用其响应操作方法 */
+                include_once($plugin_file);
+                $payobj = new $this->data['code']();
+                /* 处理异步请求 */
+                if($this->data['type'] == 1){
+                    @$payobj->notify($this->data['code']);
+                }
+                $msg = (@$payobj->callback($this->data['code'])) ? L('pay_success') : L('pay_fail');
             } else {
-                $This->sync($this->data);
+                $msg = L('pay_not_exist');
             }
         }
-    }
-
-    protected function sync($data = array())
-    {
-        $payObj->sync($data);
-    }
-
-    protected function notify($data = array())
-    {
-        $payObj->sync($data);
+        //显示页面
+        $this->assign('message', $msg);
+        $this->assign('shop_url', __URL__);
+        $this->display('respond.dwt');
     }
 }

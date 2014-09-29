@@ -15,7 +15,6 @@
 
 /* 访问控制 */
 define('IN_ECTOUCH', true);
-define('DEFAULT_APP', 'default');
-define('DEFAULT_CONTROLLER', 'Respond');
+define('CONTROLLER_NAME', 'Respond');
 /* 加载核心文件 */
 require ('include/EcTouch.php');
