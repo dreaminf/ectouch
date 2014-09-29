@@ -1,7 +1,7 @@
 <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
 <section class="user-order-detail" style="border-top:none;">
   <div class="user-order">
-    <p>{$lang.order_status}：<span>{$order.order_status} {$order.pay_status} {$order.shipping_time}</span></p>
+    <p>{$lang.order_status}：<span>{$order.order_status} {$order.pay_status} {$order.shipping_status}</span></p>
     <p>{$lang.order_number}：<span>{$order.order_sn}</span></p>
     <p>{$lang.order_money}：<span>{$order.formated_total_fee}</span></p>
     <p>{$lang.order_addtime}：<span>{$order.formated_add_time}</span></p>

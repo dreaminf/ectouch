@@ -30,6 +30,7 @@ $(function(){
 			}
 		    else{
 			    alert(data.error);
+			    return false;
 			}
 		}, 'json');
 	});
