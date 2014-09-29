@@ -145,7 +145,23 @@ class bd extends PluginWechatController
                     'name' => $this->plugin_name
                 )));
             }
-            if (ECTouch::$user->login($data['username'], $data['password'], '')) {
+            //会员信息
+            $user = init_users();
+            if (empty($_SESSION['user_id'])) {
+                if ($user->get_cookie()) {
+                    // 如果会员已经登录并且还没有获得会员的帐户余额、积分以及优惠券
+                    if ($_SESSION['user_id'] > 0 && ! isset($_SESSION['user_money'])) {
+                        model('User')->update_user_info();
+                    }
+                } else {
+                    $_SESSION['user_id'] = 0;
+                    $_SESSION['user_name'] = '';
+                    $_SESSION['email'] = '';
+                    $_SESSION['user_rank'] = 0;
+                    $_SESSION['discount'] = 1.00;
+                }
+            }
+            if ($user->login($data['username'], $data['password'], '')) {
                 //绑定
                 model('Base')->model->table('wechat_user')->data('ecs_uid = '.session('user_id'))->where('openid = "'.session('openid').'"')->update();
                 model('User')->update_user_info();
