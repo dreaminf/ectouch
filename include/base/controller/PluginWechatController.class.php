@@ -92,6 +92,30 @@ abstract class PluginWechatController
         return $view->display($tpl);
     }
     
+    /**
+     * 中奖概率计算
+     *
+     * @param unknown $proArr
+     * @return Ambigous <string, unknown>
+     */
+    function get_rand($proArr)
+    {
+        $result = '';
+        // 概率数组的总概率精度
+        $proSum = array_sum($proArr);
+        // 概率数组循环
+        foreach ($proArr as $key => $proCur) {
+            $randNum = mt_rand(1, $proSum);
+            if ($randNum <= $proCur) {
+                $result = $key;
+                break;
+            } else {
+                $proSum -= $proCur;
+            }
+        }
+        unset($proArr);
+        return $result;
+    }
     
     public function __get($name) {
         return isset($this->_data [$name]) ? $this->_data [$name] : NULL;

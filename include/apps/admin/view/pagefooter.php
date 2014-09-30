@@ -14,7 +14,6 @@ $(function(){
 	$(".fancybox").fancybox({
 		width		: '60%',
 		height		: '60%',
-		autoSize	: false,
 		closeBtn	: false
 	});
 })
