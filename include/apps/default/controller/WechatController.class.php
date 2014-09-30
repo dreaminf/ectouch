@@ -392,7 +392,14 @@ class WechatController extends CommonController
             $weObj = new Wechat($config);
             // 微信浏览器浏览
             if (self::is_wechat_browser() && $_SESSION['user_id'] === 0) {
-                $url = $weObj->getOauthRedirect($wxinfo['oauth_redirecturi'], 1);
+                if(isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])){
+                    $redirecturi = __HOST__ . $_SERVER['REQUEST_URI'];
+                }
+                else{
+                    $redirecturi = $wxinfo['oauth_redirecturi'];
+                }
+                
+                $url = $weObj->getOauthRedirect($redirecturi, 1);
                 if (isset($_GET['code']) && $_GET['code'] != 'authdeny') {
                     $token = $weObj->getOauthAccessToken();
                     if ($token) {
