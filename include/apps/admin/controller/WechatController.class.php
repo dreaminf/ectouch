@@ -280,7 +280,7 @@ class WechatController extends AdminController
                 if ('click' == $val['type']) {
                     $menu_list['button'][$key]['key'] = $val['key'];
                 } else {
-                    $menu_list['button'][$key]['url'] = $val['url'];
+                    $menu_list['button'][$key]['url'] = html_out($val['url']);
                 }
             } else {
                 $menu_list['button'][$key]['name'] = $val['name'];
@@ -290,7 +290,7 @@ class WechatController extends AdminController
                     if ('click' == $v['type']) {
                         $menu_list['button'][$key]['sub_button'][$k]['key'] = $v['key'];
                     } else {
-                        $menu_list['button'][$key]['sub_button'][$k]['url'] = $v['url'];
+                        $menu_list['button'][$key]['sub_button'][$k]['url'] = html_out($v['url']);
                     }
                 }
             }

@@ -87,6 +87,9 @@ class WechatController extends CommonController
                 // 点击菜单
                 $keywords = $wedata['EventKey'];
             }
+            elseif('VIEW' == $wedata['Event']){
+                $this->redirect($wedata['EventKey']);
+            }
         } else {
             $this->msg_reply('msg');
         }
