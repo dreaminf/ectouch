@@ -84,7 +84,7 @@ class zjd extends PluginWechatController
             $articles[0]['Description'] = $config['media']['content'];
             // 不是远程图片
             if (! preg_match('/(http:|https:)/is', $config['media']['file'])) {
-                $articles[0]['PicUrl'] = __URL__ . '/' . $config['media']['file'];
+                $articles[0]['PicUrl'] =  __URL__ . '/' . $config['media']['file'];
             } else {
                 $articles[0]['PicUrl'] = $config['media']['file'];
             }

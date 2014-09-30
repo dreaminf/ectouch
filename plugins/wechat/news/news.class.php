@@ -67,7 +67,7 @@ class news extends PluginWechatController
             foreach ($data as $key => $val) {
                 // 不是远程图片
                 if (! preg_match('/(http:|https:)/is', $val['goods_img'])) {
-                    $articles[$key]['PicUrl'] = __URL__ . '/' . $val['goods_img'];
+                    $articles[$key]['PicUrl'] = get_image_path('', $val['goods_img']);
                 } else {
                     $articles[$key]['PicUrl'] = $val['goods_img'];
                 }
