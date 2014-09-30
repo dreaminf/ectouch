@@ -45,7 +45,7 @@
     					<td class="text-center">{date('Y-m-d H:i:s', $val['subscribe_time'])}</td>
     					<td class="text-center">
     						<a href="{url('custom_message_list', array('uid'=>$val['uid']))}" class="btn btn-lg" title="{$lang['custom_message_list']}"><span class="glyphicon glyphicon-eye-open"> </span></a>
-    						<a href="{url('send_custom_message', array('uid'=>$val['uid']))}" class="btn btn-lg" title="{$lang['send_custom_message']}" data-toggle="modal" data-target=".bs-edit-modal-lg"><span class="glyphicon glyphicon-comment"> </span></a>
+    						<a href="{url('send_custom_message', array('uid'=>$val['uid']))}" class="btn btn-lg fancybox fancybox.iframe" title="{$lang['send_custom_message']}"><span class="glyphicon glyphicon-comment"> </span></a>
     					</td>
     				</tr>
     				{/loop}

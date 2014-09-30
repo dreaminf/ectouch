@@ -493,7 +493,7 @@ class WechatController extends AdminController
                 L('message_content') . L('empty')
             ));
             if ($rs !== true) {
-                $this->message($rs, NULL, 'error');
+                exit(json_encode(array('status'=>0, 'msg'=>$rs)));
             }
             $data['send_time'] = time();
             // 微信端发送消息
@@ -506,15 +506,14 @@ class WechatController extends AdminController
             );
             $rs = $this->weObj->sendCustomMessage($msg);
             if (empty($rs)) {
-                $this->message(L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg, NULL, 'error');
+                exit(json_encode(array('status'=>0, 'msg'=>L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg)));
             }
             // 添加数据
             $this->model->table('wechat_custom_message')
                 ->data($data)
                 ->insert();
-            $this->message(L('send_custom_message') . L('success'), url('custom_message_list', array(
-                'uid' => $data['uid']
-            )));
+            
+            exit(json_encode(array('status'=>1)));
         }
         $uid = I('get.uid');
         $info = $this->model->table('wechat_user')
