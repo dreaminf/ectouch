@@ -163,7 +163,7 @@ class bd extends PluginWechatController
             }
             if ($user->login($data['username'], $data['password'], '')) {
                 //绑定
-                model('Base')->model->table('wechat_user')->data('ecs_uid = '.session('user_id'))->where('openid = "'.session('openid').'"')->update();
+                model('Base')->model->table('wechat_user')->data('ect_uid = '.session('user_id'))->where('openid = "'.session('openid').'"')->update();
                 model('User')->update_user_info();
                 model('User')->recalculate_price();
                 show_message('绑定成功', '返回首页', url('index/index'));

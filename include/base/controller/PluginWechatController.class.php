@@ -43,7 +43,7 @@ abstract class PluginWechatController
     {
         $time = time();
         $user_id = model('Base')->model->table('wechat_user')
-            ->field('ecs_uid')
+            ->field('ect_uid')
             ->where('openid = "' . $fromusername . '"')
             ->getOne();
         // 增加积分

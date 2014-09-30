@@ -132,7 +132,7 @@ class WechatController extends CommonController
                 echo '';
                 exit();
             }
-            $info['ecs_uid'] = $_SESSION['user_id'];
+            $info['ect_uid'] = $_SESSION['user_id'];
             // 获取用户所在分组ID
             $info['group_id'] = $this->weObj->getUserGroup($info['openid']);
             // 获取被关注公众号信息
@@ -365,7 +365,7 @@ class WechatController extends CommonController
     {
         $u_row = model('base')->model->table('wechat_user')
             ->field('nickname, headimgurl')
-            ->where('ecs_uid = ' . $user_id)
+            ->where('ect_uid = ' . $user_id)
             ->find();
         if (empty($u_row)) {
             $u_row = array();
@@ -449,7 +449,7 @@ class WechatController extends CommonController
             $data1['language'] = $userinfo['country'];
             $data1['headimgurl'] = $userinfo['headimgurl'];
             $data1['subscribe_time'] = $time;
-            $data1['ecs_uid'] = $_SESSION['user_id'];
+            $data1['ect_uid'] = $_SESSION['user_id'];
             // 获取用户所在分组ID
             $group_id = $weObj->getUserGroup($userinfo['openid']);
             if ($group_id === false) {
@@ -466,7 +466,7 @@ class WechatController extends CommonController
                 ->where('openid = "' . $userinfo['openid'] . '"')
                 ->update();
             $uid = model('Base')->model->table('wechat_user')
-                ->field('ecs_uid')
+                ->field('ect_uid')
                 ->where('openid = "' . $userinfo['openid'] . '"')
                 ->getOne();
             $new_user_name = model('Base')->model->table('users')
