@@ -59,7 +59,7 @@ class news extends PluginWechatController
         $articles = array();
         $data = model('base')->model->table('goods')
             ->field('goods_id, goods_name, goods_img')
-            ->where('is_new = 1')
+            ->where('is_new = 1 and is_on_sale = 1 and is_delete = 0')
             ->order('click_count desc, last_update desc')
             ->limit(4)
             ->select();
