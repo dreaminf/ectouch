@@ -32,7 +32,4 @@
        <p class="ect-margin-tb text-center">{$pay_online}</p>
        <p class="ect-margin-tb text-center">{$order_submit_back}</p>
   </section>
-  <section class="ect-padding-lr ect-padding-tb ect-margin-tb">
-  	<a type="button" class="btn btn-info ect-btn-info ect-colorf">{$lang.change_payment}</a>
-  </section>
 </div>
