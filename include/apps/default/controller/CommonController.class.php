@@ -30,8 +30,11 @@ class CommonController extends BaseController
         parent::__construct();
         $this->ecshop_init();
         // 微信oauth处理
-        if(method_exists('WechatController', 'do_oauth')){
-            call_user_func(array('WechatController', 'do_oauth'));
+        if (method_exists('WechatController', 'do_oauth')) {
+            call_user_func(array(
+                'WechatController',
+                'do_oauth'
+            ));
         }
         /* 语言包 */
         $this->assign('lang', L());
@@ -152,6 +155,12 @@ class CommonController extends BaseController
         }
         // 模板替换
         defined('__TPL__') or define('__TPL__', __ROOT__ . '/themes/' . C('template'));
+        $stylename = C('stylename');
+        if (! empty($stylename)) {
+            $this->assign('ectouch_css_path', __ROOT__ . '/themes/' . C('template') . '/css/ectouch_' . C('stylename') . '.css');
+        } else {
+            $this->assign('ectouch_css_path', __ROOT__ . '/themes/' . C('template') . '/css/ectouch.css');
+        }
     }
 }
 
