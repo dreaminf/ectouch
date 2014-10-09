@@ -13,11 +13,11 @@
  * ----------------------------------------------------------------------------
  */
 
-if (! defined('IN_ECTOUCH')) {
-    die('Hacking attempt');
-}
-defined('BASE_PATH') or define('BASE_PATH', dirname(__FILE__) . '/../include/');
+/* 访问控制 */
+defined('IN_ECTOUCH') or die('Deny Access');
+
 defined('ROOT_PATH') or define('ROOT_PATH', realpath(dirname(__FILE__) . '/../') . '/');
+defined('BASE_PATH') or define('BASE_PATH', ROOT_PATH . 'include/');
 /* 加载默认配置 */
 require (BASE_PATH . 'EcConfig.class.php');
 /* 加载默认配置 */
@@ -46,5 +46,3 @@ C('CFG', $_CFG);
 $user = init_users();
 
 header('Content-type: text/html; charset=' . EC_CHARSET);
-
-?>

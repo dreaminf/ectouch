@@ -12,8 +12,6 @@
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
  */
-
-
 define('UC_CLIENT_VERSION', '1.6.0'); // note UCenter 版本标识
 define('UC_CLIENT_RELEASE', '20110501');
 
@@ -140,8 +138,8 @@ class uc_note
         }
         $this->db->query("UPDATE {pre}users SET user_name='$usernamenew' WHERE user_id='$uid'");
         $this->db->query("UPDATE {pre}affiliate_log SET user_name='$usernamenew' WHERE user_name='$usernameold'");
-        $this->db->query("UPDATE  {pre}comment SET user_name='$usernamenew' WHERE user_name='$usernameold'");
-        $this->db->query("UPDATE  {pre}feedback SET user_name='$usernamenew' WHERE user_name='$usernameold'");
+        $this->db->query("UPDATE {pre}comment SET user_name='$usernamenew' WHERE user_name='$usernameold'");
+        $this->db->query("UPDATE {pre}feedback SET user_name='$usernamenew' WHERE user_name='$usernameold'");
         clear_cache_files();
         return API_RETURN_SUCCEED;
     }
@@ -200,7 +198,7 @@ class uc_note
         if (! API_UPDATEBADWORDS) {
             return API_RETURN_FORBIDDEN;
         }
-        $cachefile = $this->appdir . './plugins/uc_client/data/cache/badwords.php';
+        $cachefile = $this->appdir . 'plugins/uc_client/data/cache/badwords.php';
         $fp = fopen($cachefile, 'w');
         $data = array();
         if (is_array($post)) {
@@ -221,7 +219,7 @@ class uc_note
         if (! API_UPDATEHOSTS) {
             return API_RETURN_FORBIDDEN;
         }
-        $cachefile = $this->appdir . './plugins/uc_client/data/cache/hosts.php';
+        $cachefile = $this->appdir . 'plugins/uc_client/data/cache/hosts.php';
         $fp = fopen($cachefile, 'w');
         $s = "<?php\r\n";
         $s .= '$_CACHE[\'hosts\'] = ' . var_export($post, TRUE) . ";\r\n";
@@ -237,7 +235,7 @@ class uc_note
         }
         $UC_API = $post['UC_API'];
         
-        $cachefile = $this->appdir . './plugins/uc_client/data/cache/apps.php';
+        $cachefile = $this->appdir . 'plugins/uc_client/data/cache/apps.php';
         $fp = fopen($cachefile, 'w');
         $s = "<?php\r\n";
         $s .= '$_CACHE[\'apps\'] = ' . var_export($post, TRUE) . ";\r\n";
@@ -252,7 +250,7 @@ class uc_note
         if (! API_UPDATECLIENT) {
             return API_RETURN_FORBIDDEN;
         }
-        $cachefile = $this->appdir . './plugins/uc_client/data/cache/settings.php';
+        $cachefile = $this->appdir . 'plugins/uc_client/data/cache/settings.php';
         $fp = fopen($cachefile, 'w');
         $s = "<?php\r\n";
         $s .= '$_CACHE[\'settings\'] = ' . var_export($post, TRUE) . ";\r\n";
