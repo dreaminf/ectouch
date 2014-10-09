@@ -415,11 +415,6 @@ class AdvertController extends AdminController {
         $this->message(L('drop_ad_succeed'), url('index'));
     }
 
-
-/*================================================*/
-//  FUNCTION
-/*================================================*/
-
     /**
      * 返回广告位列表
      * @return array
