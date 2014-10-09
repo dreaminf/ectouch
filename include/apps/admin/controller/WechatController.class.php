@@ -803,7 +803,7 @@ class WechatController extends AdminController
                         ->find();
                 }
             }
-            $list[$key]['content'] = strip_tags(html_out($val['content']));
+            $list[$key]['content'] = msubstr(strip_tags(html_out($val['content'])), 100);
         }
         
         $this->assign('page', $this->pageShow($total));

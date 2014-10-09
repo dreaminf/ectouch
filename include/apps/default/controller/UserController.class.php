@@ -1178,7 +1178,8 @@ class UserController extends CommonController {
             // 邮箱注册处理
             if (0 == $enabled_sms) {
                 // 数据处理
-                $username = $email = isset($_POST['email']) ? in($_POST['email']) : '';
+                $username = isset($_POST['username']) ? in($_POST['username']) : '';
+                $email = isset($_POST['email']) ? in($_POST['email']) : '';
                 $password = isset($_POST['password']) ? in($_POST['password']) : '';
                 $other = array();
 
@@ -1246,7 +1247,7 @@ class UserController extends CommonController {
             if (model('Users')->register($username, $password, $email, $other) !== false) {
                 // 判断是否需要自动发送注册邮件
                 if (C('member_email_validate') && C('send_verify_email')) {
-                    model('Users')->send_regiter_hash($_SESSION['user_id']);
+                    model('User')->send_regiter_hash($_SESSION['user_id']);
                 }
                 $ucdata = empty(self::$user->ucdata) ? "" : self::$user->ucdata;
                 show_message(sprintf(L('register_success'), $username . $ucdata), array(
