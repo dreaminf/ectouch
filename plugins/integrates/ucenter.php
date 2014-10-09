@@ -40,12 +40,11 @@ require_once (ROOT_PATH . 'plugins/integrates/integrate.php');
  */
 class ucenter extends integrate
 {
-    
 
     /**
      * 构造函数
      *
-     * @param unknown $cfg 
+     * @param unknown $cfg            
      */
     function __construct($cfg)
     {
@@ -91,8 +90,8 @@ class ucenter extends integrate
      * 用户登录函数
      *
      * @access public
-     * @param string $username 
-     * @param string $password 
+     * @param string $username            
+     * @param string $password            
      *
      * @return void
      */
@@ -157,7 +156,7 @@ class ucenter extends integrate
      * 用户退出
      *
      * @access public
-     * @param 
+     * @param            
      *
      *
      *
@@ -224,8 +223,8 @@ class ucenter extends integrate
      *
      * @access public
      * @param string $username
-     * 用户名
-     * 
+     *            用户名
+     *            
      * @return int
      */
     function check_user($username, $password = null)
@@ -245,8 +244,8 @@ class ucenter extends integrate
      *
      * @access public
      * @param string $email
-     * 邮箱
-     * 
+     *            邮箱
+     *            
      * @return blob
      */
     function check_email($email)
@@ -289,35 +288,46 @@ class ucenter extends integrate
             $flag = true;
         }
         
-        if (! empty($cfg['email'])) {
-            $ucresult = uc_call("uc_user_edit", array(
-                $cfg['username'],
-                '',
-                '',
-                $cfg['email'],
-                1
-            ));
-            if ($ucresult > 0) {
-                $flag = true;
-            } elseif ($ucresult == - 4) {
-                // echo 'Email 格式有误';
-                $this->error = ERR_INVALID_EMAIL;
-                
-                return false;
-            } elseif ($ucresult == - 5) {
-                // echo 'Email 不允许注册';
-                $this->error = ERR_INVALID_EMAIL;
-                
-                return false;
-            } elseif ($ucresult == - 6) {
-                // echo '该 Email 已经被注册';
+        // 判断 email 是否进行修改
+        $data = uc_call("uc_get_user", $username);
+        list ($uid, $username, $email) = $data;
+        if ($cfg['email'] != $email) {
+            if ($this->check_email($cfg['email'])) {
                 $this->error = ERR_EMAIL_EXISTS;
-                
                 return false;
-            } elseif ($ucresult < 0) {
-                return false;
+            } else {
+                if (! empty($cfg['email'])) {
+                    $ucresult = uc_call("uc_user_edit", array(
+                        $cfg['username'],
+                        '',
+                        '',
+                        $cfg['email'],
+                        1
+                    ));
+                    if ($ucresult > 0) {
+                        $flag = true;
+                    } elseif ($ucresult == - 4) {
+                        // echo 'Email 格式有误';
+                        $this->error = ERR_INVALID_EMAIL;
+                        
+                        return false;
+                    } elseif ($ucresult == - 5) {
+                        // echo 'Email 不允许注册';
+                        $this->error = ERR_INVALID_EMAIL;
+                        
+                        return false;
+                    } elseif ($ucresult == - 6) {
+                        // echo '该 Email 已经被注册';
+                        $this->error = ERR_EMAIL_EXISTS;
+                        
+                        return false;
+                    } elseif ($ucresult < 0) {
+                        return false;
+                    }
+                }
             }
         }
+        
         if (! empty($cfg['old_password']) && ! empty($cfg['password']) && $forget_pwd == 0) {
             $ucresult = uc_call("uc_user_edit", array(
                 $real_username,
@@ -351,7 +361,7 @@ class ucenter extends integrate
      * 获取指定用户的信息
      *
      * @access public
-     * @param 
+     * @param            
      *
      *
      *
@@ -370,7 +380,7 @@ class ucenter extends integrate
      * 检查cookie是正确，返回用户名
      *
      * @access public
-     * @param 
+     * @param            
      *
      *
      *
@@ -385,7 +395,7 @@ class ucenter extends integrate
      * 根据登录状态设置cookie
      *
      * @access public
-     * @param 
+     * @param            
      *
      *
      *
@@ -410,7 +420,7 @@ class ucenter extends integrate
      * 设置cookie
      *
      * @access public
-     * @param 
+     * @param            
      *
      *
      *
@@ -442,7 +452,7 @@ class ucenter extends integrate
      * 设置指定用户SESSION
      *
      * @access public
-     * @param 
+     * @param            
      *
      *
      *
@@ -469,7 +479,7 @@ class ucenter extends integrate
      * 获取指定用户的信息
      *
      * @access public
-     * @param 
+     * @param            
      *
      *
      *
@@ -492,7 +502,7 @@ class ucenter extends integrate
      * 删除用户
      *
      * @access public
-     * @param 
+     * @param            
      *
      *
      *
@@ -513,8 +523,8 @@ class ucenter extends integrate
         $sql = "SELECT user_id FROM " . model('Base')->model->pre . "users  WHERE ";
         $sql .= (is_array($post_id)) ? db_create_in($post_id, 'user_name') : "user_name='" . $post_id . "' LIMIT 1";
         $array = model('Base')->model->query($sql);
-        foreach ($array as $key=>$val){
-                    $col[] = $val[0];
+        foreach ($array as $key => $val) {
+            $col[] = $val[0];
         }
         
         if ($col) {
@@ -526,7 +536,7 @@ class ucenter extends integrate
             $sql = "SELECT order_id FROM " . model('Base')->model->pre . "order_info  WHERE " . db_create_in($col, 'user_id');
             model('Base')->model->query($sql);
             $array = model('Base')->model->query($sql);
-            foreach ($array as $key=>$val){
+            foreach ($array as $key => $val) {
                 $col_order_id[] = $val[0];
             }
             
@@ -574,7 +584,7 @@ class ucenter extends integrate
      * 获取论坛有效积分及单位
      *
      * @access public
-     * @param 
+     * @param            
      *
      *
      *
@@ -584,12 +594,15 @@ class ucenter extends integrate
     {
         return 'ucenter';
     }
+
     /**
      * 返回getOne的数据
-     * @param unknown $array
+     *
+     * @param unknown $array            
      * @return mixed
      */
-    function getOne($array){
+    function getOne($array)
+    {
         $array = reset($array);
         return $array[0];
     }
