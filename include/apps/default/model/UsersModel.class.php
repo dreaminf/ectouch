@@ -16,7 +16,7 @@
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
-class UserModel extends BaseModel {
+class UsersModel extends BaseModel {
 
     protected $table = 'users';
 
