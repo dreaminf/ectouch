@@ -121,7 +121,7 @@ class WechatController extends CommonController
         if (empty($rs)) {
             // 用户注册
             $domain = get_top_domain();
-            if (model('User')->register($info['openid'], 'ecmoban', $time . rand(100, 999) . '@' . $domain) !== false) {
+            if (model('Users')->register($info['openid'], 'ecmoban', $time . rand(100, 999) . '@' . $domain) !== false) {
                 $new_user_name = 'wx' . $_SESSION['user_id'];
                 $data['user_name'] = $new_user_name;
                 $data['email'] = $new_user_name . $domain;
@@ -435,7 +435,7 @@ class WechatController extends CommonController
         if (empty($ret)) {
             // 会员注册
             $domain = get_top_domain();
-            if (model('User')->register($userinfo['openid'], 'ecmoban', $time . rand(100, 999) . '@' . $domain) !== false) {
+            if (model('Users')->register($userinfo['openid'], 'ecmoban', $time . rand(100, 999) . '@' . $domain) !== false) {
                 $new_user_name = 'wx' . $_SESSION['user_id'];
                 $data['user_name'] = $new_user_name;
                 $data['email'] = $new_user_name . '@' . $domain;
@@ -493,7 +493,7 @@ class WechatController extends CommonController
         session('openid', $userinfo['openid']);
         ECTouch::user()->set_session($new_user_name);
         ECTouch::user()->set_cookie($new_user_name);
-        model('User')->update_user_info();
+        model('Users')->update_user_info();
     }
 
     /**

@@ -151,7 +151,7 @@ class bd extends PluginWechatController
                 if ($user->get_cookie()) {
                     // 如果会员已经登录并且还没有获得会员的帐户余额、积分以及优惠券
                     if ($_SESSION['user_id'] > 0 && ! isset($_SESSION['user_money'])) {
-                        model('User')->update_user_info();
+                        model('Users')->update_user_info();
                     }
                 } else {
                     $_SESSION['user_id'] = 0;
@@ -164,8 +164,8 @@ class bd extends PluginWechatController
             if ($user->login($data['username'], $data['password'], '')) {
                 //绑定
                 model('Base')->model->table('wechat_user')->data('ect_uid = '.session('user_id'))->where('openid = "'.session('openid').'"')->update();
-                model('User')->update_user_info();
-                model('User')->recalculate_price();
+                model('Users')->update_user_info();
+                model('Users')->recalculate_price();
                 show_message('绑定成功', '返回首页', url('index/index'));
             } else {
                 show_message('用户名或密码错误', '会员绑定', url('wechat/plugin_show', array(

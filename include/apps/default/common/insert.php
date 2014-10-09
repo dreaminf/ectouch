@@ -191,7 +191,7 @@ function insert_member_info() {
     ECTouch::view()->caching = false;
 
     if ($_SESSION['user_id'] > 0) {
-        ECTouch::view()->assign('user_info', model('User')->get_user_info());
+        ECTouch::view()->assign('user_info', model('Users')->get_user_info());
     } else {
         if (!empty($_COOKIE['ECS']['username'])) {
             ECTouch::view()->assign('ecs_username', stripslashes($_COOKIE['ECS']['username']));

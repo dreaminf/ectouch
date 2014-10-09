@@ -105,7 +105,7 @@ class CommonController extends BaseController
             if (self::$user->get_cookie()) {
                 // 如果会员已经登录并且还没有获得会员的帐户余额、积分以及优惠券
                 if ($_SESSION['user_id'] > 0 && ! isset($_SESSION['user_money'])) {
-                    model('User')->update_user_info();
+                    model('Users')->update_user_info();
                 }
             } else {
                 $_SESSION['user_id'] = 0;
@@ -138,7 +138,7 @@ class CommonController extends BaseController
             if ($row) {
                 $_SESSION['user_id'] = $row['user_id'];
                 $_SESSION['user_name'] = $row['user_name'];
-                model('User')->update_user_info();
+                model('Users')->update_user_info();
             } else {
                 // 没有找到这个记录
                 $time = time() - 3600;
