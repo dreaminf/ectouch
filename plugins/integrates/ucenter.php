@@ -289,7 +289,10 @@ class ucenter extends integrate
         }
         
         // 判断 email 是否进行修改
-        $data = uc_call("uc_get_user", $username);
+       $data = uc_call("uc_get_user", array(
+            $cfg['username'],
+            '0'
+        ));
         list ($uid, $username, $email) = $data;
         if ($cfg['email'] != $email) {
             if ($this->check_email($cfg['email'])) {
