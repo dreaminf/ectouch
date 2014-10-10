@@ -370,7 +370,7 @@ class UserController extends CommonController
                             'order_id' => $order['order_id']
                         )) . "\">" . L('pay_money') . "</a>";
                     } else {
-                        @$order['handler'] = "<a class=\"btn btn-info ect-colorf\" href=\"javascript:void(0);\">" . L('view_order') . "</a>";
+                        //@$order['handler'] = "<a class=\"btn btn-info ect-colorf\" href=\"javascript:void(0);\">" . L('view_order') . "</a>";
                     }
                 }
             } else {
