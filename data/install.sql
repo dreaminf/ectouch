@@ -85,7 +85,7 @@ DROP TABLE IF EXISTS `ecs_touch_article_cat`;
 
 CREATE TABLE IF NOT EXISTS `ecs_touch_article_cat` (
   `cat_id` smallint(8) NOT NULL,
-  `is_mobile` tinyint(2) NOT NULL
+  `is_mobile` tinyint(2) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章扩展表';
 
 --
