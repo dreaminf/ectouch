@@ -294,12 +294,11 @@ class ucenter extends integrate
             '0'
         ));
         list ($uid, $username, $email) = $data;
-        if ($cfg['email'] != $email) {
+        if ($cfg['email'] != $email  && !empty($cfg['email'])) {
             if ($this->check_email($cfg['email'])) {
                 $this->error = ERR_EMAIL_EXISTS;
                 return false;
             } else {
-                if (! empty($cfg['email'])) {
                     $ucresult = uc_call("uc_user_edit", array(
                         $cfg['username'],
                         '',
@@ -327,7 +326,6 @@ class ucenter extends integrate
                     } elseif ($ucresult < 0) {
                         return false;
                     }
-                }
             }
         }
         
