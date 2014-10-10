@@ -1201,6 +1201,9 @@ class UserController extends CommonController {
                 if (strlen($username) < 3) {
                     show_message(L('passport_js.username_shorter'));
                 }
+                if (strlen($username) > 15) {
+                    show_message(L('passport_js.username_longer'));
+                }
 
                 if (strlen($password) < 6) {
                     show_message(L('passport_js.password_shorter'));
