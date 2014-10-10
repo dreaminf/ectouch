@@ -389,6 +389,7 @@ class IndexController extends AdminController
                 $this->message($result['msg'], NULL, 'error');
             }
         } else {
+            $this->assign('ur_here', L('empower'));
             $this->display();
         }
     }
