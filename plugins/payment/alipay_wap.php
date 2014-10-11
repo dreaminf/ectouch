@@ -165,12 +165,12 @@ class alipay_wap
      * 
      * @return boolean
      */
-    public function callback($code = '')
+    public function callback($data)
     {
 		if (! empty($_GET)) {
 			$out_trade_no = explode('O', $_GET['out_trade_no']);
 			$log_id = $out_trade_no[1];
-			$payment = model('Payment')->get_payment($code);
+			$payment = model('Payment')->get_payment($data['code']);
 
 			/* 检查数字签名是否正确 */
 			ksort($_GET);
@@ -204,10 +204,10 @@ class alipay_wap
      * 
      * @return string
      */
-    public function notify($code = '')
+    public function notify($data)
     {
         if (! empty($_POST)) {
-			$payment = model('Payment')->get_payment($code);
+			$payment = model('Payment')->get_payment($data['code']);
             // 支付宝系统通知待签名数据构造规则比较特殊，为固定顺序。
             $parameter['service'] = $_POST['service'];
             $parameter['v'] = $_POST['v'];
