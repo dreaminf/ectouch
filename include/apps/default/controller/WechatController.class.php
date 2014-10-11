@@ -429,7 +429,7 @@ class WechatController extends CommonController
     {
         $time = time();
         $ret = model('Base')->model->table('wechat_user')
-            ->field('openid')
+            ->field('openid, ect_uid')
             ->where('openid = "' . $userinfo['openid'] . '"')
             ->getOne();
         if (empty($ret)) {
@@ -475,13 +475,9 @@ class WechatController extends CommonController
                 ->data('subscribe = 1')
                 ->where('openid = "' . $userinfo['openid'] . '"')
                 ->update();
-            $uid = model('Base')->model->table('wechat_user')
-                ->field('ect_uid')
-                ->where('openid = "' . $userinfo['openid'] . '"')
-                ->getOne();
             $new_user_name = model('Base')->model->table('users')
                 ->field('user_name')
-                ->where('user_id = ' . $uid)
+                ->where('user_id = "'.$ret['ect_uid'].'"')
                 ->getOne();
         }
         // 推送量
