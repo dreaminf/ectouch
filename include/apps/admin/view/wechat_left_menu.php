@@ -9,7 +9,7 @@
 	<a class="list-group-item {if $action == 'article' || $action == 'picture' || $action == 'voice' || $action == 'video'}active{/if}" href="{url('wechat/article')}">素材管理</a>
 	{if $type == 2}
 	<a class="list-group-item {if $action == 'qrcode_list'}active{/if}" href="{url('wechat/qrcode_list')}">渠道二维码<br></a>
+	{/if}
 	<a class="list-group-item disabled"><span class="glyphicon glyphicon-plus"></span> 扩展</a>
 	<a class="list-group-item {if $controller == 'Extend'}active{/if}" href="{url('extend/index')}">功能扩展</a>
-	{/if}
 </div>

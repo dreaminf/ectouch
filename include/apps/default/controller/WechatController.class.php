@@ -383,10 +383,10 @@ class WechatController extends CommonController
     {
         // 默认公众号信息
         $wxinfo = model('Base')->model->table('wechat')
-            ->field('id, token, appid, appsecret, oauth_redirecturi')
+            ->field('id, token, appid, appsecret, oauth_redirecturi, type')
             ->where('default_wx = 1 and status = 1')
             ->find();
-        if (! empty($wxinfo)) {
+        if (! empty($wxinfo) && $wxinfo['type'] == 2) {
             $config['token'] = $wxinfo['token'];
             $config['appid'] = $wxinfo['appid'];
             $config['appsecret'] = $wxinfo['appsecret'];

@@ -33,14 +33,16 @@ class WechatController extends AdminController
      */
     public function index()
     {
-        $list = $this->model->table('wechat')->order('sort asc, id asc')->select();
+        $list = $this->model->table('wechat')
+            ->order('sort asc, id asc')
+            ->select();
         $l = sprintf(L('wechat_register'), '<a href=' . url('append') . '>');
         
         $this->assign('wechat_register', $l);
         $this->assign('list', $list);
         $this->display();
     }
-    
+
     /**
      * 设置公众号为默认
      */
@@ -89,7 +91,9 @@ class WechatController extends AdminController
                 $this->message($result, NULL, 'error');
             }
             // 更新数据
-            $this->model->table('wechat')->data($data)->insert();
+            $this->model->table('wechat')
+                ->data($data)
+                ->insert();
             $this->redirect(url('wechat/index'));
         }
         $this->display();
@@ -118,11 +122,16 @@ class WechatController extends AdminController
                 $this->message($result, NULL, 'error');
             }
             // 更新数据
-            $this->model->table('wechat')->data($data)->where($condition)->update();
+            $this->model->table('wechat')
+                ->data($data)
+                ->where($condition)
+                ->update();
             $this->redirect(url('wechat/index'));
         }
         $condition['id'] = intval($_GET['id']);
-        $data = $this->model->table('wechat')->where($condition)->find();
+        $data = $this->model->table('wechat')
+            ->where($condition)
+            ->find();
         
         $this->assign('data', $data);
         $this->display();
@@ -134,7 +143,9 @@ class WechatController extends AdminController
     public function delete()
     {
         $condition['id'] = intval($_GET['id']);
-        $this->model->table('wechat')->where($condition)->delete();
+        $this->model->table('wechat')
+            ->where($condition)
+            ->delete();
         $this->redirect(url('wechat/index'));
     }
 
@@ -180,12 +191,18 @@ class WechatController extends AdminController
             $data['wechat_id'] = $this->wechat_id;
             if ('click' == $data['type']) {
                 if (empty($data['key'])) {
-                    exit(json_encode(array('status'=>0, 'msg'=>L('menu_keyword') . L('empty'))));
+                    exit(json_encode(array(
+                        'status' => 0,
+                        'msg' => L('menu_keyword') . L('empty')
+                    )));
                 }
                 $data['url'] = '';
             } else {
                 if (empty($data['url'])) {
-                    exit(json_encode(array('status'=>0, 'msg'=>L('menu_url') . L('empty'))));
+                    exit(json_encode(array(
+                        'status' => 0,
+                        'msg' => L('menu_url') . L('empty')
+                    )));
                 }
                 $data['key'] = '';
             }
@@ -202,7 +219,10 @@ class WechatController extends AdminController
                     ->insert();
             }
             
-            exit(json_encode(array('status'=>1, 'msg'=>L('attradd_succed'))));
+            exit(json_encode(array(
+                'status' => 1,
+                'msg' => L('attradd_succed')
+            )));
         }
         $id = I('get.id');
         $info = array();
@@ -254,7 +274,7 @@ class WechatController extends AdminController
             ->where('status = 1 and wechat_id = ' . $this->wechat_id)
             ->order('id')
             ->select();
-        if(empty($list)){
+        if (empty($list)) {
             $this->message('请至少添加一个自定义菜单', NULL, 'error');
         }
         $data = array();
@@ -493,7 +513,10 @@ class WechatController extends AdminController
                 L('message_content') . L('empty')
             ));
             if ($rs !== true) {
-                exit(json_encode(array('status'=>0, 'msg'=>$rs)));
+                exit(json_encode(array(
+                    'status' => 0,
+                    'msg' => $rs
+                )));
             }
             $data['send_time'] = time();
             // 微信端发送消息
@@ -506,14 +529,19 @@ class WechatController extends AdminController
             );
             $rs = $this->weObj->sendCustomMessage($msg);
             if (empty($rs)) {
-                exit(json_encode(array('status'=>0, 'msg'=>L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg)));
+                exit(json_encode(array(
+                    'status' => 0,
+                    'msg' => L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg
+                )));
             }
             // 添加数据
             $this->model->table('wechat_custom_message')
                 ->data($data)
                 ->insert();
             
-            exit(json_encode(array('status'=>1)));
+            exit(json_encode(array(
+                'status' => 1
+            )));
         }
         $uid = I('get.uid');
         $info = $this->model->table('wechat_user')
@@ -615,14 +643,20 @@ class WechatController extends AdminController
             $id = I('post.id', 0, 'intval');
             $group_id = I('post.group_id');
             if (empty($name)) {
-                exit(json_encode(array('status'=>0, 'msg'=>L('group_name') . L('empty'))));
+                exit(json_encode(array(
+                    'status' => 0,
+                    'msg' => L('group_name') . L('empty')
+                )));
             }
             $data['name'] = $name;
             if (! empty($id)) {
                 // 微信端更新
                 $rs = $this->weObj->updateGroup($group_id, $name);
                 if (empty($rs)) {
-                    exit(json_encode(array('status'=>0, 'msg'=>L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg)));
+                    exit(json_encode(array(
+                        'status' => 0,
+                        'msg' => L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg
+                    )));
                 }
                 // 数据更新
                 $where['id'] = $id;
@@ -634,7 +668,10 @@ class WechatController extends AdminController
                 // 微信端新增
                 $rs = $this->weObj->createGroup($name);
                 if (empty($rs)) {
-                    exit(json_encode(array('status'=>0, 'msg'=>L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg)));
+                    exit(json_encode(array(
+                        'status' => 0,
+                        'msg' => L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg
+                    )));
                 }
                 // 数据新增
                 $data['wechat_id'] = $this->wechat_id;
@@ -642,7 +679,9 @@ class WechatController extends AdminController
                     ->data($data)
                     ->insert();
             }
-            exit(json_encode(array('status'=>1)));
+            exit(json_encode(array(
+                'status' => 1
+            )));
         }
         $id = I('get.id', 0, 'intval');
         $group = array();
@@ -698,13 +737,18 @@ class WechatController extends AdminController
                 L('qrcode_scene_value') . L('empty')
             ));
             if ($result !== true) {
-                exit(json_encode(array('status'=>0, 'msg'=>$result)));
+                exit(json_encode(array(
+                    'status' => 0,
+                    'msg' => $result
+                )));
             }
             
             $this->model->table('wechat_qrcode')
                 ->data($data)
                 ->insert();
-            exit(json_encode(array('status'=>1)));
+            exit(json_encode(array(
+                'status' => 1
+            )));
         }
         $id = I('get.id', 0, 'intval');
         if (! empty($id)) {
@@ -740,20 +784,29 @@ class WechatController extends AdminController
     {
         $id = I('get.id', 0, 'intval');
         if (empty($id)) {
-            exit(json_encode(array('status'=>0, 'msg'=>L('select_please') . L('qrcode'))));
+            exit(json_encode(array(
+                'status' => 0,
+                'msg' => L('select_please') . L('qrcode')
+            )));
         }
         $rs = $this->model->table('wechat_qrcode')
             ->field('type, scene_id, expire_seconds, qrcode_url, status')
             ->where('id = ' . $id)
             ->find();
         if (empty($rs['status'])) {
-            exit(json_encode(array('status'=>0, 'msg'=>'二维码已禁用，请重新启用！')));
+            exit(json_encode(array(
+                'status' => 0,
+                'msg' => '二维码已禁用，请重新启用！'
+            )));
         }
         if (empty($rs['qrcode_url'])) {
             // 获取二维码ticket
             $ticket = $this->weObj->getQRCode($rs['scene_id'], $rs['type'], $rs['expire_seconds']);
             if (empty($ticket)) {
-                exit(json_encode(array('status'=>0, 'msg'=>L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg)));
+                exit(json_encode(array(
+                    'status' => 0,
+                    'msg' => L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg
+                )));
             }
             $data['ticket'] = $ticket['ticket'];
             $data['expire_seconds'] = $ticket['expire_seconds'];
@@ -1416,8 +1469,8 @@ class WechatController extends AdminController
                 $article[0]['show_cover_pic'] = $article_info['is_show'];
             }
             $article_list = array(
-                        'articles' => $article
-                    );
+                'articles' => $article
+            );
             // 图文消息上传
             $rs1 = $this->weObj->uploadArticles($article_list);
             if (empty($rs1)) {
@@ -1448,7 +1501,7 @@ class WechatController extends AdminController
             $id = $this->model->table('wechat_mass_history')
                 ->data($msg_data)
                 ->insert();
-
+            
             $this->message('群发任务已启动，不过一般需要较长的时间才能全部发送完毕，请耐心等待', url('mass_message'));
         }
         // 分组信息
@@ -1916,6 +1969,18 @@ class WechatController extends AdminController
                 
                 $this->assign('type', $wechat['type']);
             }
+        }
+    }
+    
+    // 导入用户
+    public function tolead()
+    {
+        //微彩虹微信用户
+        $sql = 'SELECT w.subscribe, w.wxid, w.nickname, w.sex, w.city, w.country, w.province, w.language, w.headimgurl, w.subscribe_time, u.user_id FROM '.$this->model->pre.'wxch_user w LEFT JOIN '.$this->model->pre.'users u ON w.wxid = u.wxid WHERE w.wxid is not null ORDER BY w.dateline desc';
+        $wxch_users = $this->model->query($sql);
+        dump($wxch_users);
+        foreach($wxch_users as $key=>$val){
+
         }
     }
 }
