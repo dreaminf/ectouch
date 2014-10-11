@@ -1704,7 +1704,7 @@ function formated_weight($weight) {
 function uc_call($func, $params = null) {
     restore_error_handler();
     if (!function_exists($func)) {
-        include_once(ADDONS_PATH . 'uc_client/client.php');
+        include_once(ROOT_PATH . 'plugins/uc_client/client.php');
     }
 
     $res = call_user_func_array($func, $params);
@@ -1747,8 +1747,8 @@ function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods',
  * @return type
  */
 function get_banner_path($img) {
-    $url = empty($img) ? C('no_picture') : $img;
-    $base_url = substr(__ROOT__, -1) == '/' ? __ROOT__ : __ROOT__ . '/';
+    $url = empty($img) ? str_replace('../', '../../', C('no_picture')) : $img;
+    $base_url = substr(__URL__, -1) == '/' ? __URL__ : __URL__ . '/';
     $url = strtolower(substr($url, 0, '4')) == 'http' ? $url : $base_url . $url;
     return $url;
 }
