@@ -57,7 +57,6 @@
 				<select name="data[type]" class="form-control">
 					<option value="1">{$lang['wechat_type1']}</option>
 					<option value="2">{$lang['wechat_type2']}</option>
-					<option value="3">{$lang['wechat_type3']}</option>
 				</select>
 				</div>
 				<p class="help-block">{$lang['wechat_help5']}</p>

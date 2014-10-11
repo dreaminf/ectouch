@@ -1900,14 +1900,21 @@ class WechatController extends AdminController
             if (! empty($this->wechat_id)) {
                 // 公众号配置信息
                 $where['id'] = $this->wechat_id;
-                $config = $this->model->table('wechat')
-                    ->field('token, appid, appsecret')
+                $wechat = $this->model->table('wechat')
+                    ->field('token, appid, appsecret, type')
                     ->where($where)
                     ->find();
-                if (empty($config)) {
-                    $config = array();
+                if (empty($wechat)) {
+                    $wechat = array();
                 }
+                $config = array();
+                $config['token'] = $wechat['token'];
+                $config['appid'] = $wechat['appid'];
+                $config['appsecret'] = $wechat['appsecret'];
+                
                 $this->weObj = new Wechat($config);
+                
+                $this->assign('type', $wechat['type']);
             }
         }
     }

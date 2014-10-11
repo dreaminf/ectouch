@@ -57,7 +57,6 @@
 				<select name="data[type]" class="form-control">
 					<option value="1" {if $data['type']==1} selected{/if}>{$lang['wechat_type1']}</option>
 					<option value="2" {if $data['type']==2} selected{/if}>{$lang['wechat_type2']}</option>
-					<option value="3" {if $data['type']==3} selected{/if}>{$lang['wechat_type3']}</option>
 				</select>
 				</div>
 				<p class="help-block">{$lang['wechat_help5']}</p>
