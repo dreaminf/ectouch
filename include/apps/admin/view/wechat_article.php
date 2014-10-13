@@ -16,7 +16,7 @@
 			     <a href="{url('article_edit')}" class="btn btn-primary pull-right">图文添加</a>
 			</div>
 			<style>
-			.article{border:1px solid #ddd;padding:5px 5px 0 5px;}
+			.article{border:1px solid #ddd;padding:5px 5px 0 5px;height: 290px;overflow: hidden;}
 			.cover{height:160px; position:relative;margin-bottom:5px;overflow:hidden;}
 			.article .cover img{width:100%; height:auto;}
 			.article span{height:40px; line-height:40px; display:block; z-index:5; position:absolute;width:100%;bottom:0px; color:#FFF; padding:0 10px; background-color:rgba(0,0,0,0.6)}
