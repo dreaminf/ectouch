@@ -59,8 +59,8 @@ class best extends PluginWechatController
         $articles = array();
         $data = model('base')->model->table('goods')
             ->field('goods_id, goods_name, goods_img')
-            ->where('is_best = 1 and is_on_sale = 1 and is_delete = 0')
-            ->order('click_count desc, last_update desc')
+            ->where('is_best = 1 and is_on_sale = 1 and is_delete = 0 and last_update > (UNIX_TIMESTAMP(NOW()) - 3600*24*30)')
+            ->order('last_update desc')
             ->limit(4)
             ->select();
         if (! empty($data)) {

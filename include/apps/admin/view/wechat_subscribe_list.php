@@ -18,30 +18,22 @@
     		  	</select>
     		  	<input type="submit" class="btn btn-primary" value="{$lang['sub_move']}" />
     		</div>
-			<div class="panel panel-default col-sm-10 col-md-10" style="padding:0;">
+			<div class="panel panel-default col-sm-8 col-md-9 col-lg-10" style="padding:0;">
     			<table class="table table-hover table-bordered table-striped">
     				<tr>
     					<th class="text-center"><input type="checkbox" id="check_box" /></th>
-    					<th class="text-center">{$lang['num_order']}</th>
     					<th class="text-center">{$lang['sub_headimg']}</th>
     					<th class="text-center">{$lang['sub_nickname']}</th>
-    					<th class="text-center">{$lang['sub_group']}</th>
-    					<th class="text-center">{$lang['sub_sex']}</th>
     					<th class="text-center">{$lang['sub_province']}</th>
-    					<th class="text-center">{$lang['sub_city']}</th>
     					<th class="text-center">{$lang['sub_time']}</th>
-    					<th class="text-center">{$lang['handler']}</th>
+    					<th class="text-center" width="10%">{$lang['handler']}</th>
     				</tr>
     				{loop $list $key $val}
     				<tr>
     					<td class="text-center"><input type="checkbox" name="id[]" value="{$val['openid']}" class="checks"></td>
-    					<td class="text-center">{php echo $key+1;}</td>
     					<td class="text-center">{if $val['headimgurl']}<a href="{$val['headimgurl']}" target="_blank"><img src="{$val['headimgurl']}" width="50" alt="{$val['nickname']}" />{/if}</td>
-    					<td class="text-center">{$val['nickname']}</td>
-    					<td class="text-center">{$val['name']}</td>
-    					<td class="text-center">{if $val['sex'] == 1}男{elseif $val['sex'] == 0}女{else}{/if}</td>
-    					<td class="text-center">{$val['province']}</td>
-    					<td class="text-center">{$val['city']}</td>
+    					<td class="text-center">{$val['nickname']}({if $val['sex'] == 1}男{elseif $val['sex'] == 0}女{else}{/if})<br />{$val['name']}</td>
+    					<td class="text-center">{$val['province']} - {$val['city']}</td>
     					<td class="text-center">{date('Y-m-d H:i:s', $val['subscribe_time'])}</td>
     					<td class="text-center">
     						<a href="{url('custom_message_list', array('uid'=>$val['uid']))}" class="btn btn-lg" title="{$lang['custom_message_list']}"><span class="glyphicon glyphicon-eye-open"> </span></a>
@@ -52,10 +44,10 @@
     			</table>
 			</div>
 			</form>
-			<div class="col-sm-2 col-md-2" style="padding-right:0;">
+			<div class="col-sm-4 col-md-3 col-lg-2" style="padding-right:0;">
         		<div class="panel panel-default">
-        			<div class="panel-heading" style="overflow: hidden;">{$lang['group_title']}
-            			 <div class="pull-right ectouch-mb5">   
+        			<div class="panel-heading" style="overflow: hidden;">
+            			 <div class="ectouch-mb5">   
                     		<a href="{url('wechat/sys_groups')}" class="btn btn-primary">{$lang['group_update']}</a>
                     		<a href="{url('wechat/groups_edit')}" class="btn btn-primary fancybox fancybox.iframe">{$lang['add']}</a>
                     	</div>

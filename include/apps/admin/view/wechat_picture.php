@@ -22,9 +22,9 @@
     			</form>
     			<div class="row" style="margin:0;">
     			{loop $list $v}
-                    <div class="col-xs-4 col-md-2 thumbnail" style="margin-right:10px;">
+                    <div class="col-xs-4 col-md-2 col-lg-2 thumbnail" style="margin-right:10px;">
                         <img alt="{$v['file_name']}" src="{$v['file']}" class="img-rounded" style="height:220px" />
-                        <p class="text-muted">{$v['file_name']}</p>
+                        <p class="text-muted" style="word-wrap:break-word;word-break:normal;">{$v['file_name']}</p>
                         <p class="text-muted">{$v['size']}</p>
                         <div class="bg-info">
                             <ul class="nav nav-pills nav-justified" role="tablist">

@@ -3,12 +3,12 @@
 	<div class="panel-heading">{$lang['wechat_num']}</div>
 	<table border="0" cellpadding="0" cellspacing="0"  class="table table-bordered table-striped table-hover">
 		<tr class="active">
-			<th class="text-center">{$lang['wechat_name']}</th>
-			<th class="text-center">{$lang['wechat_type']}</th>
-			<th class="text-center">{$lang['wechat_add_time']}</th>
-			<th class="text-center">{$lang['wechat_status']}</th>
-			<th class="text-center">{$lang['sort_order']}</th>
-			<th class="text-center">{$lang['handler']}</th>
+			<th class="text-center" width="15%">{$lang['wechat_name']}</th>
+			<th class="text-center" width="15%">{$lang['wechat_type']}</th>
+			<th class="text-center" width="15%">{$lang['wechat_add_time']}</th>
+			<th class="text-center" width="10%">{$lang['wechat_status']}</th>
+			<th class="text-center" width="10%">{$lang['sort_order']}</th>
+			<th class="text-center" width="35%">{$lang['handler']}</th>
 		</tr>
 		{loop $list $key $vo}
 		<tr>
