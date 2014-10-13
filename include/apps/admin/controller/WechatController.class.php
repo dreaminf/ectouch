@@ -272,7 +272,7 @@ class WechatController extends AdminController
     {
         $list = $this->model->table('wechat_menu')
             ->where('status = 1 and wechat_id = ' . $this->wechat_id)
-            ->order('id')
+            ->order('sort asc')
             ->select();
         if (empty($list)) {
             $this->message('请至少添加一个自定义菜单', NULL, 'error');
