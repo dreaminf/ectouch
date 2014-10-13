@@ -128,13 +128,15 @@ class zjd extends PluginWechatController
     public function html_show()
     {
         // 插件配置
-        $config = $this->get_config($this->plugin_name);
+    $config = $this->get_config($this->plugin_name);
         if (! empty($config)) {
             $num = count($config['prize']);
-            foreach ($config['prize'] as $key => $val) {
-                // 删除最后一项未中奖
-                if ($key == ($num - 1)) {
-                    unset($config['prize'][$key]);
+            if($num > 0){
+                foreach ($config['prize'] as $key => $val) {
+                    // 删除最后一项未中奖
+                    if ($key == ($num - 1)) {
+                        unset($config['prize'][$key]);
+                    }
                 }
             }
         }
