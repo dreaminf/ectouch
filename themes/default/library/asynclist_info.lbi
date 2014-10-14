@@ -128,7 +128,7 @@
               <h4 class="title">{$lang.order_number}：{$orders.order_sn}</h4>
             </dt>
            <dd>{$lang.order_status}：{$orders.order_status}</dd>
-           <dd>{$lang.order_total_fee}：<span class="ect-color">{$orders.order_status}</span></dd>
+           <dd>{$lang.order_total_fee}：<span class="ect-color">{$orders.total_fee}</span></dd>
            <dd>{$lang.order_addtime}：{$orders.order_time}</dd>
           </dl>
            <i class="pull-right fa fa-angle-right"></i> 
