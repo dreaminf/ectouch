@@ -358,17 +358,6 @@ class FlowModel extends BaseModel {
         return integral_of_value($val);
     }
 
-    /**
-     * 调用购物车商品数目
-     */
-    function insert_cart_info_number() {
-        $sql = 'SELECT SUM(goods_number) AS number FROM ' . $this->pre .
-                "cart WHERE session_id = '" . SESS_ID . "' AND rec_type = '" . CART_GENERAL_GOODS . "'";
-        $res = $this->row($sql);
-        $number = $res['number'];
-        return intval($number);
-    }
-
     // 增加销量统计
     function add_touch_goods($flow_type, $extension_code) {
         /* 统计时间段 */
