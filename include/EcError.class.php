@@ -184,7 +184,6 @@ if (($this->errorCode > 0) && ($this->errorCode != 404) && C('DEBUG')) {
 		</div>
 		<div class="text">
                     <p>错误级别: ' . $this->errorLevel . '</p>
-                    <p>Trace信息: <br>' . $this->trace . '</p>
 		</div>
 	</div>
     </div>';
@@ -192,7 +191,7 @@ if (($this->errorCode > 0) && ($this->errorCode != 404) && C('DEBUG')) {
 echo '
 </div>
 <div class="copyright">
-<p><a title="官方网站" href="http://www.ectouch.cn">ECTouch</a><sup>'.VERSION.'</sup></p>
+<p><a title="官方网站" href="http://www.ectouch.cn">ECTouch</a><sup>'.VERSION.'_'.RELEASE.'</sup></p>
 <p style="text-align:right">[ 商创网络科技 专注移动电商 ]</p>
 </div>
 </body>

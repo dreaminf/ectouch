@@ -483,47 +483,7 @@ function del_dir($dir) {
  * 路由解析
  */
 function urlRoute() {
-    $rewrite = C('REWRITE');
-    if (!empty($rewrite) && C('URL_REWRITE_ON')) {
-        if (($pos = strpos($_SERVER['REQUEST_URI'], '?')) !== false) {
-            parse_str(substr($_SERVER['REQUEST_URI'], $pos + 1), $_GET);
-        }
-        foreach ($rewrite as $rule => $mapper) {
-            $rule = ltrim($rule, "./\\");
-            if (false === stripos($rule, 'http://')) {
-                $rule = $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/\\') . '/' . $rule;
-            }
-            $rule = '/' . str_ireplace(array('\\\\', 'http://', '-', '/', '<', '>', '.'), array('', '', '\-', '\/', '(?<', ">[a-z0-9_%\/\-]+)", '\.'), $rule) . '/i';
-
-            if (preg_match($rule, $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], $matches)) {
-                foreach ($matches as $matchkey => $matchval) {
-                    if (('m' === $matchkey)) {
-                        $mapper = str_ireplace('<m>', $matchval, $mapper);
-                    } else if ('c' === $matchkey) {
-                        $mapper = str_ireplace('<c>', $matchval, $mapper);
-                    } else if ('a' === $matchkey) {
-                        $mapper = str_ireplace('<a>', $matchval, $mapper);
-                    } else {
-                        if (!is_int($matchkey))
-                            $_GET[$matchkey] = $matchval;
-                    }
-                }
-                $_REQUEST['r'] = $mapper;
-                break;
-            }
-        }
-    } else {
-        $_REQUEST['r'] = trim($_GET['m']) . '/' . trim($_GET['c']) . '/' . trim($_GET['a']);
-    }
-    $route_arr = isset($_REQUEST['r']) ? explode("/", $_REQUEST['r']) : array();
-    $app_name = empty($route_arr[0]) ? DEFAULT_APP : $route_arr[0];
-    $controller_name = empty($route_arr[1]) ? DEFAULT_CONTROLLER : $route_arr[1];
-    $action_name = empty($route_arr[2]) ? DEFAULT_ACTION : $route_arr[2];
-    $_REQUEST['r'] = $app_name . '/' . $controller_name . '/' . $action_name;
-    $controller_name = ucfirst($controller_name); // 控制器的首字母大写
-    defined('APP_NAME') or define('APP_NAME', $app_name);
-    defined('CONTROLLER_NAME') or define('CONTROLLER_NAME', $controller_name);
-    defined('ACTION_NAME') or define('ACTION_NAME', $action_name);
+    Dispatcher::dispatch(); // URL调度
 }
 
 /**
@@ -735,20 +695,53 @@ function autoload($className) {
 }
 
 /**
- * 应用配置
- * @param unknown $app
- * @return Ambigous <multitype:, NULL>
+ * 加载动态扩展文件
+ * @var string $path 文件路径
+ * @return void
  */
-function appConfig($app) {
-    static $appConfig = array();
-    if (!isset($appConfig[$app])) {
-        if (is_file(APP_PATH . $app . '/config.php')) {
-            $appConfig[$app] = require (APP_PATH . $app . '/config.php');
-        } else {
-            $appConfig[$app] = array();
+function load_ext_file($path) {
+    // 加载自定义外部文件
+    if($files = C('LOAD_EXT_FILE')) {
+        $files      =  explode(',',$files);
+        foreach ($files as $file){
+            $file   = $path.'common/'.$file.'.php';
+            if(is_file($file)) include $file;
         }
     }
-    return $appConfig[$app];
+    // 加载自定义的动态配置文件
+    if($configs = C('LOAD_EXT_CONFIG')) {
+        if(is_string($configs)) $configs =  explode(',',$configs);
+        foreach ($configs as $key=>$config){
+            $file   = $path.'conf/'.$config.'.php';
+            if(is_file($file)) {
+                is_numeric($key)?C(load_config($file)):C($key,load_config($file));
+            }
+        }
+    }
+}
+
+/**
+ * 加载配置文件 支持格式转换 仅支持一级配置
+ * @param string $file 配置文件名
+ * @param string $parse 配置解析方法 有些格式需要用户自己解析
+ * @return array
+ */
+function load_config($file,$parse=CONF_PARSE){
+    $ext  = pathinfo($file,PATHINFO_EXTENSION);
+    switch($ext){
+        case 'php':
+            return include $file;
+        case 'xml': 
+            return (array)simplexml_load_file($file);
+        case 'json':
+            return json_decode(file_get_contents($file), true);
+        default:
+            if(function_exists($parse)){
+                return $parse($file);
+            }else{
+                E('Nonsupport:'.$ext);
+            }
+    }
 }
 
 /**
@@ -1540,9 +1533,6 @@ function halt($error)
             $e['message'] = $error;
             $e['file'] = $trace[0]['file'];
             $e['line'] = $trace[0]['line'];
-            ob_start();
-            debug_print_backtrace();
-            $e['trace'] = ob_get_clean();
         } else {
             $e = $error;
         }

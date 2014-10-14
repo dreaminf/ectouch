@@ -25,7 +25,7 @@ defined('DEFAULT_APP') or define('DEFAULT_APP', 'default');
 defined('DEFAULT_CONTROLLER') or define('DEFAULT_CONTROLLER', 'Index');
 defined('DEFAULT_ACTION') or define('DEFAULT_ACTION', 'index');
 
-/* 加载常用函数 */
+/* 系统函数 */
 require(BASE_PATH . 'Common.php');
 /* 默认配置 */
 C(load_file(BASE_PATH . 'Convention.php'));
@@ -44,24 +44,22 @@ register_shutdown_function('fatalError');
 if (DEBUG) {
     ini_set("display_errors", 1);
     error_reporting(E_ALL ^ E_NOTICE); // 除了notice提示，其他类型的错误都报告
+	debug(); // system 运行时间，占用内存开始计算
 } else {
     ini_set("display_errors", 0);
     error_reporting(0); // 把错误报告，全部屏蔽
 }
 
+/* 自动注册类文件 */
+spl_autoload_register('autoload');
 /* 网址路由解析 */
 urlRoute();
-/* 设置APP_NAME */
-C('_APP_NAME', APP_NAME);
-/* 加载APP配置 */
-C(appConfig(APP_NAME));
 
 try {
     /* 常规URL */
     defined('__HOST__') or define('__HOST__', get_domain());
     defined('__ROOT__') or define('__ROOT__', rtrim(dirname($_SERVER["SCRIPT_NAME"]), '\\/'));
     defined('__URL__') or define('__URL__', __HOST__ . __ROOT__);
-	defined('__APP__') or define('__APP__', (C('URL_MODEL') == 2) ? __ROOT__:__ROOT__ . '/' . basename($_SERVER["SCRIPT_NAME"]));
 	defined('__ADDONS__') or define('__ADDONS__', __ROOT__ . '/plugins');
     defined('__PUBLIC__') or define('__PUBLIC__', __ROOT__ . '/data/common');
     defined('__ASSETS__') or define('__ASSETS__', __ROOT__ . '/data/assets/' . APP_NAME);
@@ -70,10 +68,6 @@ try {
         header("Location: " . url('install/index/index'));
         exit();
     }
-    /* system 运行时间，占用内存开始计算 */
-    debug();
-    /* 自动注册类文件 */
-    spl_autoload_register('autoload');
     /* 控制器和方法 */
     $controller = CONTROLLER_NAME . 'Controller';
     $action = ACTION_NAME;

@@ -94,10 +94,6 @@ class BaseController extends Controller {
             require(APP_PATH . C('_APP_NAME') . '/language/' . C('LANG') . '/' . strtolower(CONTROLLER_NAME) . '.php');
         }
         L($_LANG); //语言包赋值
-        //加载模块函数
-        if (file_exists(APP_PATH . C('_APP_NAME') . '/common/function.php')) {
-            require(APP_PATH . C('_APP_NAME') . '/common/function.php');
-        }
         if (file_exists(APP_PATH . C('_APP_NAME') . '/common/insert.php')) {
             require(APP_PATH . C('_APP_NAME') . '/common/insert.php');
         }
