@@ -57,10 +57,6 @@ C('_APP_NAME', APP_NAME);
 C(appConfig(APP_NAME));
 
 try {
-    if (! file_exists(ROOT_PATH . 'data/install.lock') && APP_NAME !== 'install') {
-        header("Location: " . url('install/index/index'));
-        exit();
-    }
     /* 常规URL */
     defined('__HOST__') or define('__HOST__', get_domain());
     defined('__ROOT__') or define('__ROOT__', rtrim(dirname($_SERVER["SCRIPT_NAME"]), '\\/'));
@@ -69,6 +65,11 @@ try {
 	defined('__ADDONS__') or define('__ADDONS__', __ROOT__ . '/plugins');
     defined('__PUBLIC__') or define('__PUBLIC__', __ROOT__ . '/data/common');
     defined('__ASSETS__') or define('__ASSETS__', __ROOT__ . '/data/assets/' . APP_NAME);
+    /* 安装检测 */
+    if (! file_exists(ROOT_PATH . 'data/install.lock') && APP_NAME !== 'install') {
+        header("Location: " . url('install/index/index'));
+        exit();
+    }
     /* system 运行时间，占用内存开始计算 */
     debug();
     /* 自动注册类文件 */
