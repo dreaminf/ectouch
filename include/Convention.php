@@ -23,7 +23,7 @@ return array(
 		/* 日志和错误调试配置 */
 		'DEBUG' => true, // 是否开启调试模式，true开启，false关闭
 		'LOG_ON' => false, // 是否开启出错信息保存到文件，true开启，false不开启
-		'LOG_PATH' => './data/log/', // 出错信息存放的目录，出错信息以天为单位存放，一般不需要修改
+		'LOG_PATH' => ROOT_PATH . 'data/cache/log/', // 出错信息存放的目录，出错信息以天为单位存放，一般不需要修改
 		'ERROR_URL' => '', // 出错信息重定向页面，为空采用默认的出错页面，一般不需要修改
 		/* 网址配置 */
 		'URL_REWRITE_ON' => false, // 是否开启重写，true开启重写,false关闭重写
@@ -47,7 +47,7 @@ return array(
 		'MODEL_SUFFIX' => 'Model.class.php', // 模型后缀，一般不需要修改
 		/* 静态页面缓存 */
 		'HTML_CACHE_ON' => false, // 是否开启静态页面缓存，true开启.false关闭
-		'HTML_CACHE_PATH' => './data/cache/html_cache/', // 静态页面缓存目录，一般不需要修改
+		'HTML_CACHE_PATH' => ROOT_PATH . 'data/cache/html_cache/', // 静态页面缓存目录，一般不需要修改
 		/* 静态页面缓存规则 array('模块名'=>array('方法名'=>缓存时间,)) 缓存时间,单位：秒 */
 		'HTML_CACHE_RULE' => array(
             'default' => array('index' => array('index' => 1000))
@@ -78,7 +78,7 @@ return array(
 		'DB_CACHE_TYPE' => 'FileCache', // 缓存类型，FileCache或Memcache或SaeMemcache
 		'DB_CACHE_TIME' => 600, // 缓存时间,0不缓存，-1永久缓存,单位：秒
 		/* 文件缓存配置 */
-		'DB_CACHE_PATH' => './data/cache/db_cache/', // 数据库查询内容缓存目录，地址相对于入口文件，一般不需要修改
+		'DB_CACHE_PATH' => ROOT_PATH . 'data/cache/db_cache/', // 数据库查询内容缓存目录，地址相对于入口文件，一般不需要修改
 		'DB_CACHE_CHECK' => false, // 是否对缓存进行校验，一般不需要修改
 		'DB_CACHE_FILE' => 'cachedata', // 缓存的数据文件名
 		'DB_CACHE_SIZE' => '15M', // 预设的缓存大小，最小为10M，最大为1G
@@ -96,12 +96,12 @@ return array(
 	),
 	/* 模板配置 */
 	'TPL' => array(
-		'TPL_TEMPLATE_PATH' => './template/', // 模板目录，一般不需要修改
-		'TPL_TEMPLATE_SUFFIX' => '.html', // 模板后缀，一般不需要修改
+		'TPL_TEMPLATE_PATH' => BASE_PATH, // 模板目录，一般不需要修改
+		'TPL_TEMPLATE_SUFFIX' => '.php', // 模板后缀，一般不需要修改
 		'TPL_CACHE_ON' => false, // 是否开启模板缓存，true开启,false不开启
 		'TPL_CACHE_TYPE' => '', // 数据缓存类型，为空或Memcache或SaeMemcache，其中为空为普通文件缓存
 		/* 普通文件缓存 */
-		'TPL_CACHE_PATH' => './data/cache/tpl_cache/', // 模板缓存目录，一般不需要修改
+		'TPL_CACHE_PATH' => ROOT_PATH . 'data/cache/tpl_cache/', // 模板缓存目录，一般不需要修改
 		'TPL_CACHE_SUFFIX' => '.php', // 模板缓存后缀,一般不需要修改
 		/* memcache配置 */
 		'MEM_SERVER' => array(
