@@ -49,8 +49,8 @@ $(function(){
 		var url = $(this).attr("href");
 	    $.get(url, '', function(data){
 	        if(data.status <= 0 ){
-		        window.parent.$.fancybox.close();
-	            alert(data.msg);
+	        	$.fancybox.close();
+	        	alert(data.msg);
 	            return false;
 		    }
 		}, 'json');

@@ -63,8 +63,14 @@ class WechatController extends CommonController
                 if (! empty($info)) {
                     $this->subscribe($info);
                 }
-                // 关注时回复信息
-                $this->msg_reply('subscribe');
+                //用户未关注时二维码扫描
+                if(isset($wedata['EventKey']) && isset($wedata['Ticket'])){
+                    $keywords = $wedata['EventKey'];
+                }
+                else{
+                    // 关注时回复信息
+                    $this->msg_reply('subscribe');
+                }
             } elseif ('unsubscribe' == $wedata['Event']) {
                 // 取消关注
                 $this->unsubscribe($wedata['FromUserName']);
@@ -89,6 +95,9 @@ class WechatController extends CommonController
             }
             elseif('VIEW' == $wedata['Event']){
                 $this->redirect($wedata['EventKey']);
+            }
+            elseif('SCAN' == $wedata['Event']){
+                $keywords = $wedata['EventKey'];
             }
         } else {
             $this->msg_reply('msg');
