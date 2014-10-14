@@ -25,18 +25,18 @@ defined('DEFAULT_APP') or define('DEFAULT_APP', 'default');
 defined('DEFAULT_CONTROLLER') or define('DEFAULT_CONTROLLER', 'Index');
 defined('DEFAULT_ACTION') or define('DEFAULT_ACTION', 'index');
 
-/* 加载默认配置 */
-require (BASE_PATH . 'EcConfig.class.php');
-/* 加载默认配置 */
-require (BASE_PATH . 'Common.php');
-/* 加载常规配置 */
+/* 加载常用函数 */
+require(BASE_PATH . 'Common.php');
+/* 默认配置 */
 C(load_file(BASE_PATH . 'Convention.php'));
+/* 数据库配置 */
+C('DB', load_file(ROOT_PATH . 'data/config.php'));
 /* 设置时区 */
-date_default_timezone_set(EcConfig::get('TIMEZONE'));
-/* 合并配置 */
-EcConfig::set('APP', array_merge(EcConfig::get('APP'), C('APP')));
+date_default_timezone_set(C('TIMEZONE'));
 /* 调试配置 */
-defined('DEBUG') or define('DEBUG', EcConfig::get('DEBUG'));
+defined('DEBUG') or define('DEBUG', C('DEBUG'));
+/* 版本信息 */
+load_file(ROOT_PATH . 'data/version.php');
 /* 错误和异常处理 */
 register_shutdown_function('fatalError');
 
@@ -65,7 +65,8 @@ try {
     defined('__HOST__') or define('__HOST__', get_domain());
     defined('__ROOT__') or define('__ROOT__', rtrim(dirname($_SERVER["SCRIPT_NAME"]), '\\/'));
     defined('__URL__') or define('__URL__', __HOST__ . __ROOT__);
-    defined('__ADDONS__') or define('__ADDONS__', __ROOT__ . '/plugins');
+	defined('__APP__') or define('__APP__', (C('URL_MODEL') == 2) ? __ROOT__:__ROOT__ . '/' . basename($_SERVER["SCRIPT_NAME"]));
+	defined('__ADDONS__') or define('__ADDONS__', __ROOT__ . '/plugins');
     defined('__PUBLIC__') or define('__PUBLIC__', __ROOT__ . '/data/common');
     defined('__ASSETS__') or define('__ASSETS__', __ROOT__ . '/data/assets/' . APP_NAME);
     /* system 运行时间，占用内存开始计算 */
