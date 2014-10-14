@@ -27,6 +27,9 @@
     <p> <a href="{:url('user/order_tracking', array('order_id'=>$this->_var['order']['order_id']))}" type="button" class="btn btn-info ect-btn-info ect-colorf">{$lang.order_tracking}</a> </p>
     <!--{/if}--> 
   </div>
+  {if $order.order_amount gt 0}
+	<section class="ect-padding-lr ect-padding-tb ect-margin-tb ect-margin-bottom0">{$order.pay_online}</section>
+  {/if}
   <div class="ect-pro-list">
     <ul>
       <!-- {foreach from=$goods_list item=goods} -->
@@ -117,8 +120,7 @@
     <li>{$lang.select_payment}：<b>{$order.pay_name}</b></li>
     <li>{$lang.order_amount}：<b class="ect-colory">{$order.formated_order_amount}</b></li>
   </ul>
-</section> {if $order.order_amount gt 0}
-<section class="ect-padding-lr ect-padding-tb ect-margin-tb ect-margin-bottom0">{$order.pay_online}</section>{/if} 
+</section>  
 <section class="order-detail-info ect-margin-tb ect-margin-bottom0 user-bottom0">
   <ul>
    <!-- {if $order.shipping_id > 0} -->
