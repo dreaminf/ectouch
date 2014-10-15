@@ -122,7 +122,7 @@
 <!-- 文章列表end--> 
 
 <!-- 用户订单 start--> 
-<!--{if $orders}--><a href="{:url('user/order_detail')}&order_id={$orders.order_id}"><img src="{$orders.img}" class="pull-left" />
+<!--{if $orders}--><a href="{:url('user/order_detail', array('order_id'=>$this->_var['orders']['order_id']))}"><img src="{$orders.img}" class="pull-left" />
           <dl>
             <dt>
               <h4 class="title">{$lang.order_number}：{$orders.order_sn}</h4>
