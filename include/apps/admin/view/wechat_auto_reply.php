@@ -152,7 +152,7 @@ $(function(){
 
 		if(id != undefined){
 		  window.parent.$(".content").removeClass("hidden").siblings("div").addClass("hidden");
-		  window.parent.$("input[name=content_type]").val("media");
+		  window.parent.$("input[name=content_type]").val(type);
 		  window.parent.$.fancybox.close();
 		}
 	});

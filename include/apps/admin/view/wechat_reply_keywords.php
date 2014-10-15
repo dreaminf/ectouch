@@ -239,7 +239,7 @@ $(function(){
         if(type == "text"){
     	    tab.find(".content").addClass("hidden");
             tab.find(".text").removeClass("hidden");
-            $("input[name=content_type]").val("text");
+            $("input[name=content_type]").val(type);
         }
     });
     //规则显示

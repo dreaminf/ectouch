@@ -21,9 +21,9 @@
                       <div class="panel-heading">
                       <ul class="nav nav-pills" role="tablist">
                         <li role="presentation"><a href="javascript:;" class="glyphicon glyphicon-pencil ectouch-fs18" title="文字"></a></li>
-                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'image'))}" class="glyphicon glyphicon-picture ectouch-fs18 fancybox fancybox.iframe" title="图片" "></a></li>
-                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'voice'))}" class="glyphicon glyphicon-volume-up ectouch-fs18 fancybox fancybox.iframe"  title="语音" "></a></li>
-                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'video'))}" class="glyphicon glyphicon-film ectouch-fs18 fancybox fancybox.iframe"  title="视频" "></a></li>
+                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'image'))}" class="glyphicon glyphicon-picture ectouch-fs18 fancybox fancybox.iframe" title="图片"></a></li>
+                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'voice'))}" class="glyphicon glyphicon-volume-up ectouch-fs18 fancybox fancybox.iframe"  title="语音"></a></li>
+                        <li role="presentation"><a href="{url('auto_reply', array('type'=>'video'))}" class="glyphicon glyphicon-film ectouch-fs18 fancybox fancybox.iframe"  title="视频"></a></li>
                       </ul>
                       </div>
                       <div class="panel-body" style="padding:0;">
