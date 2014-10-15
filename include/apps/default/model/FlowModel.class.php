@@ -378,7 +378,6 @@ class FlowModel extends BaseModel {
         $sql = 'select goods_id from ' . $this->pre . 'cart where  session_id = "' . SESS_ID . '" AND rec_type = "' . $flow_type . '"';
         $arrGoodsid = $this->query($sql);
         foreach ($arrGoodsid as $goodsid) {
-            if (C('stock_dec_time') == 1) {
                 /* 查询该商品销量 */
                 $sql = 'SELECT IFNULL(SUM(g.goods_number), 0) ' .
                         'as count FROM ' . $this->pre . 'order_info AS o, ' .
@@ -395,7 +394,6 @@ class FlowModel extends BaseModel {
                     $sql = 'update ' . $this->pre . 'touch_goods AS a set a.sales_volume = ' . $sales_count . " WHERE goods_id=" . $goodsid['goods_id'];
                     $this->query($sql);
                 }
-            }
             if ($flow_type == CART_GROUP_BUY_GOODS) {
                 /* 查询该商品销量 */
                 $sql = 'SELECT IFNULL(SUM(g.goods_number), 0) ' .
