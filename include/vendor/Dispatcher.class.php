@@ -59,6 +59,7 @@ class Dispatcher {
         }
 
         // URL常量
+        define('_PHP_FILE_', rtrim($_SERVER['SCRIPT_NAME'],'/'));
         define('__SELF__',strip_tags($_SERVER[C('URL_REQUEST_URI')]));
 
         // 获取模块名称
