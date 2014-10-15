@@ -188,7 +188,7 @@ function insert_ads($arr) {
 
     ECTouch::view()->caching = $need_cache;
 
-    return $val;
+    return html_entity_decode($val);
 }
 
 /**
