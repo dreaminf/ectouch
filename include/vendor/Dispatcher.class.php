@@ -63,7 +63,7 @@ class Dispatcher {
         define('__SELF__',strip_tags($_SERVER[C('URL_REQUEST_URI')]));
 
         // 获取模块名称
-        define('APP_NAME', defined('BIND_MODULE')? BIND_MODULE : self::getModule($varModule));
+        define('APP_NAME', defined('BIND_MODULE')? strtolower(BIND_MODULE) : self::getModule($varModule));
         C('_APP_NAME', APP_NAME);
 		
         // 检测模块是否存在
@@ -222,7 +222,7 @@ class Dispatcher {
                 return   '';
             }
         }
-        return strip_tags(ucfirst($module));
+        return strip_tags(strtolower($module));
     }
 
 }
