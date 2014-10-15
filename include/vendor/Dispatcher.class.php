@@ -130,7 +130,8 @@ class Dispatcher {
                 // URL参数按顺序绑定变量
                 $var = $paths;
             }else{
-                preg_replace_callback('/(\w+)\/([^\/]+)/', function($match) use(&$var){$var[$match[1]]=strip_tags($match[2]);}, implode('/',$paths));
+                //preg_replace_callback('/(\w+)\/([^\/]+)/', function($match) use(&$var){$var[$match[1]]=strip_tags($match[2]);}, implode('/',$paths));
+                preg_replace_callback('/(\w+)\/([^\/]+)/', create_function('$match', '$var[$match[1]]=strip_tags($match[2]);'), implode('/',$paths));
             }
             $_GET = array_merge($var,$_GET);
         }
