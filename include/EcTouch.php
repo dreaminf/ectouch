@@ -64,7 +64,7 @@ try {
     defined('__PUBLIC__') or define('__PUBLIC__', __ROOT__ . '/data/common');
     defined('__ASSETS__') or define('__ASSETS__', __ROOT__ . '/data/assets/' . APP_NAME);
     /* 安装检测 */
-    if (! file_exists(ROOT_PATH . 'data/install.lock') && APP_NAME !== 'install') {
+    if (! file_exists(ROOT_PATH . 'data/install.lock') && APP_NAME !== 'Install') {
         header("Location: " . url('install/index/index'));
         exit();
     }
