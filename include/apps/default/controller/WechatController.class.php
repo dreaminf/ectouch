@@ -63,11 +63,10 @@ class WechatController extends CommonController
                 if (! empty($info)) {
                     $this->subscribe($info);
                 }
-                //用户未关注时二维码扫描
-                if(isset($wedata['EventKey']) && isset($wedata['Ticket'])){
+                // 用户未关注时二维码扫描
+                if (isset($wedata['EventKey']) && isset($wedata['Ticket'])) {
                     $keywords = $wedata['EventKey'];
-                }
-                else{
+                } else {
                     // 关注时回复信息
                     $this->msg_reply('subscribe');
                 }
@@ -92,11 +91,9 @@ class WechatController extends CommonController
                  */
                 // 点击菜单
                 $keywords = $wedata['EventKey'];
-            }
-            elseif('VIEW' == $wedata['Event']){
+            } elseif ('VIEW' == $wedata['Event']) {
                 $this->redirect($wedata['EventKey']);
-            }
-            elseif('SCAN' == $wedata['Event']){
+            } elseif ('SCAN' == $wedata['Event']) {
                 $keywords = $wedata['EventKey'];
             }
         } else {
@@ -339,7 +336,7 @@ class WechatController extends CommonController
 
     /**
      * 功能变量查询
-     * 
+     *
      * @param unknown $tousername            
      * @param unknown $fromusername            
      * @param unknown $keywords            
@@ -406,24 +403,29 @@ class WechatController extends CommonController
             $weObj = new Wechat($config);
             // 微信浏览器浏览
             if (self::is_wechat_browser() && $_SESSION['user_id'] === 0) {
-                if(isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])){
-                    $redirecturi = __HOST__ . $_SERVER['REQUEST_URI'];
+                if (! isset($_SESSION['redirect_url'])) {
+                    $_SESSION['redirect_url'] = __HOST__ . $_SERVER['REQUEST_URI'];
                 }
-                else{
-                    $redirecturi = $wxinfo['oauth_redirecturi'];
-                }
+                $url = $weObj->getOauthRedirect($wxinfo['oauth_redirecturi'], 1);
                 
-                $url = $weObj->getOauthRedirect($redirecturi, 1);
                 if (isset($_GET['code']) && $_GET['code'] != 'authdeny') {
                     $token = $weObj->getOauthAccessToken();
                     if ($token) {
                         $userinfo = $weObj->getOauthUserinfo($token['access_token'], $token['openid']);
                         self::update_weixin_user($userinfo, $wxinfo['id'], $weObj);
+                        if (! empty($_SESSION['redirect_url'])) {
+                            $redirect_url = $_SESSION['redirect_url'];
+                            unset($_SESSION['redirect_url']);
+                            header('Location:' . $redirect_url, true, 302);
+                            exit();
+                        }
                     } else {
                         header('Location:' . $url, true, 302);
+                        exit();
                     }
                 } else {
                     header('Location:' . $url, true, 302);
+                    exit();
                 }
             }
         }
@@ -488,7 +490,7 @@ class WechatController extends CommonController
                 ->update();
             $new_user_name = model('Base')->model->table('users')
                 ->field('user_name')
-                ->where('user_id = "'.$ret['ect_uid'].'"')
+                ->where('user_id = "' . $ret['ect_uid'] . '"')
                 ->getOne();
         }
         // 推送量
