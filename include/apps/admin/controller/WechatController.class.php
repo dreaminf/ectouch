@@ -1971,26 +1971,4 @@ class WechatController extends AdminController
             }
         }
     }
-    
-    // 导入用户
-    public function tolead()
-    {
-        //默认公众号
-        $wechat_id = $this->model->table('wechat')->field('id')->where('default_wx = 1 and status = 1')->getOne();
-        //微彩虹微信用户
-        $sql = 'SELECT subscribe, wxid FROM wxch_user WHERE 1 ORDER BY dateline desc';
-        $wxch_users = $this->model->query($sql);
-        foreach($wxch_users as $key=>$val){
-            if($val['wxid']){
-                $uid = $this->model->table('users')->field('user_id')->where('wxid = "'.$val['wxid'].'"')->getOne();
-                //插入wechat_user    
-                $data['openid'] = $val['wxid'];
-                $data['subscribe'] = $val['subscribe'];
-                $data['wechat_id'] = $wechat_id;
-                $data['ect_uid'] = $uid;
-                $this->model->table('wechat_user')->data($data)->insert();
-            }
-        }
-        echo 'success';
-    }
 }
