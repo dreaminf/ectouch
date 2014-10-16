@@ -34,7 +34,7 @@
   </div>
   <!-- {/if} --> 
   </div>
-    <footer class="logo"><img src="__TPL__/images/logo.png" width="176" height="60"></footer>
+    <footer class="logo"><img src="__TPL__/images/copyright.png" width="176" height="60"></footer>
 </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 </body></html>

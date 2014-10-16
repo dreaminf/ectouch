@@ -29,7 +29,7 @@
       <a href="javascript:;" class="get_more"></a> 
 	</ul>
 </div>
-<footer class="logo"><img src="__TPL__/images/logo.png" width="176" height="60"></footer>
+<footer class="logo"><img src="__TPL__/images/copyright.png" width="176" height="60"></footer>
  <!-- {if $category > 0} -->
 </form>
 <!-- {/if} -->
