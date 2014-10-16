@@ -80,9 +80,7 @@ class BaseController extends Controller {
         //创建错误处理对象
         self::$err = new EcsError('message.dwt');
         //载入系统参数
-        $load_config = model('Base')->load_config();
-        C('CFG', $load_config);
-        C('URL_HTTP_HOST', $load_config['shop_url']);
+        C('CFG', model('Base')->load_config());
     }
 
     //载入函数、语言文件

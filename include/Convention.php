@@ -31,7 +31,6 @@ return array(
 		'URL_ACTION_DEPR' => '-', // 操作分隔符，一般不需要修改
 		'URL_PARAM_DEPR' => '-', // 参数分隔符，一般不需要修改
 		'URL_HTML_SUFFIX' => 'html', // 伪静态后缀设置，例如 html ，一般不需要修改
-		'URL_HTTP_HOST' => '', // 设置网址域名
 		/* 模块配置 */
 		'MULTI_MODULE' => true, // 是否允许多模块 如果为false 则必须设置 DEFAULT_APP
 		'CONTROLLER_LEVEL' =>  1,
