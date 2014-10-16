@@ -350,12 +350,10 @@ class WechatController extends CommonController
             ->order('id asc')
             ->find();
         $file = ROOT_PATH . 'plugins/wechat/' . $rs['command'] . '/' . $rs['command'] . '.class.php';
-        logResult($file);
         if (file_exists($file)) {
             require_once ($file);
             $wechat = new $rs['command']();
             $data = $wechat->show($fromusername, $rs);
-            logResult(var_export($data, true));
             if (! empty($data)) {
                 $this->weObj->news($data)->reply();
                 // 积分赠送
