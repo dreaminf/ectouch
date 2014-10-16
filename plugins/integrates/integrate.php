@@ -90,7 +90,7 @@ class integrate
         if (empty($cfg['db_host'])) {
             $this->db_name = $db_config['DB_NAME'];
             $this->prefix = $db_config['DB_PREFIX'];
-            if (class_exists('ECTOUCH')){
+            if (class_exists('ECTouch')){
                 $this->db = & ECTouch::db();
             }else{
                 $this->db = $GLOBALS['db'];
@@ -497,10 +497,6 @@ class integrate
      *
      * @access public
      * @param            
-     *
-     *
-     *
-     *
      * @return void
      */
     function set_cookie($username = '', $remember = null)
@@ -529,10 +525,6 @@ class integrate
      *
      * @access public
      * @param            
-     *
-     *
-     *
-     *
      * @return void
      */
     function set_session($username = '')

@@ -12,7 +12,7 @@
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
  */
-define('IN_ECTOUCH',true); // note UCenter 版本标识
+define('IN_ECTOUCH',true);
 define('UC_CLIENT_VERSION', '1.6.0'); // note UCenter 版本标识
 define('UC_CLIENT_RELEASE', '20110501');
 
