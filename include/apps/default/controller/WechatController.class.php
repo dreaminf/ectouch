@@ -40,7 +40,7 @@ class WechatController extends CommonController
             $config['appid'] = $wxinfo['appid'];
             $config['appsecret'] = $wxinfo['appsecret'];
             $this->weObj = new Wechat($config);
-            //$this->weObj->valid();
+            $this->weObj->valid();
             $this->wechat_id = $wxinfo['id'];
         }
     }
