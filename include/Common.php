@@ -599,7 +599,7 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
     }
 
     if(C('URL_MODEL') == 0) { // 普通模式URL转换
-        $url        =   __APP__.'?'.C('VAR_MODULE')."={$module}&".http_build_query(array_reverse($var), '', '&');
+        $url        =   __APP__.'?'.$varModule."={$module}&".http_build_query(array_reverse($var), '', '&');
         if($urlCase){
             $url    =   strtolower($url);
         }        
