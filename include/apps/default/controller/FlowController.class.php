@@ -225,7 +225,7 @@ class FlowController extends CommonController {
         $cart_confirm = C('cart_confirm');
         $result ['confirm_type'] = !empty($cart_confirm) ? C('cart_confirm') : 2;
         // 返回购物车商品总数量
-        $result ['cart_number'] = insert_cart_info_number();
+        $result ['cart_number'] = model('Flow')->insert_cart_info_number();
         die(json_encode($result));
     }
 
@@ -427,7 +427,7 @@ class FlowController extends CommonController {
         }
 
         // 取得购物流程设置
-        $this->assign('config', C());
+        $this->assign('config', C('CFG'));
         // 取得订单信息
         $order = model('Order')->flow_order_info();
         $this->assign('order', $order);
@@ -446,6 +446,11 @@ class FlowController extends CommonController {
         $this->assign('total', $total);
         $this->assign('shopping_money', sprintf(L('shopping_money'), $total ['formated_goods_price']));
         $this->assign('market_price_desc', sprintf(L('than_market_price'), $total ['formated_market_price'], $total ['formated_saving'], $total ['save_rate']));
+		
+		/* 取得可以得到的积分和红包 */
+        $this->assign('total_integral', model('Order')->cart_amount(false, $flow_type) - $total ['bonus'] - $total ['integral_money']);
+        $this->assign('total_bonus', price_format(model('Order')->get_total_bonus(), false));
+
 
         /* 取得配送列表 */
         $region = array(
