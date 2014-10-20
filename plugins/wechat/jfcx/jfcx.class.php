@@ -59,10 +59,10 @@ class jfcx extends PluginWechatController
         $articles = array();
         $uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where('openid = "'.$fromusername.'"')->getOne();
         if(!empty($uid)){
-            $data = model('Base')->model->table('users')->field('pay_points, user_money')->where('user_id = '.$uid)->find();
+            $data = model('Base')->model->table('users')->field('rank_points, pay_points, user_money')->where('user_id = '.$uid)->find();
             if (! empty($data)) {
                 $articles[0]['Title'] = '积分查询';
-                $articles[0]['Description'] = '余额：'.price_format($data['user_money'], false)."\r\n".'积分：'.$data['pay_points'].'分';
+                $articles[0]['Description'] = '余额：'.price_format($data['user_money'], false)."\r\n".'等级积分：'.$data['rank_points'].'分'."\r\n".'消费积分：'.$data['pay_points'];
             }
         }
         return $articles;

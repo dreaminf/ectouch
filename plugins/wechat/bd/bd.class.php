@@ -120,9 +120,15 @@ class bd extends PluginWechatController
      */
     public function html_show()
     {
-        $file = ADDONS_PATH . 'wechat/' . $this->plugin_name . '/view/index.php';
-        if (file_exists($file)) {
-            require_once ($file);
+        $openid = session('openid');
+        if(isset($_SESSION['openid']) && !empty($_SESSION['openid'])){
+            $file = ADDONS_PATH . 'wechat/' . $this->plugin_name . '/view/index.php';
+            if (file_exists($file)) {
+                require_once ($file);
+            }
+        }
+        else{
+            show_message('您未登陆，不能进行绑定操作！', '首页', url('index/index'));
         }
     }
 
@@ -144,6 +150,10 @@ class bd extends PluginWechatController
                 show_message($rs, '会员绑定', url('wechat/plugin_show', array(
                     'name' => $this->plugin_name
                 )));
+            }
+            if(!isset($_SESSION['openid'])){
+
+                show_message('您未登陆，不能进行绑定操作！', '首页', url('index/index'));
             }
             //会员信息
             $user = init_users();
