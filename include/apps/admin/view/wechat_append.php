@@ -55,6 +55,7 @@
 			<td>{$lang['wechat_type']}</td>
 			<td><div class="col-sm-2">
 				<select name="data[type]" class="form-control">
+					<option value="0">未认证的公众号</option>
 					<option value="1">{$lang['wechat_type1']}</option>
 					<option value="2">{$lang['wechat_type2']}</option>
 				</select>
