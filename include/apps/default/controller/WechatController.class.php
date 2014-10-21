@@ -400,23 +400,29 @@ class WechatController extends CommonController
             $weObj = new Wechat($config);
             // 微信浏览器浏览
             if (self::is_wechat_browser() && $_SESSION['user_id'] === 0) {
-                if (isset($_SERVER['REQUEST_URI']) && ! empty($_SERVER['REQUEST_URI'])) {
-                    $redirecturi = __HOST__ . $_SERVER['REQUEST_URI'];
-                } else {
-                    $redirecturi = $wxinfo['oauth_redirecturi'];
-                }
+				if (! isset($_SESSION['redirect_url'])) {
+					$_SESSION['redirect_url'] = __HOST__ . $_SERVER['REQUEST_URI'];
+				}
                 
-                $url = $weObj->getOauthRedirect($redirecturi, 1);
+                $url = $weObj->getOauthRedirect($wxinfo['oauth_redirecturi'], 1);
                 if (isset($_GET['code']) && $_GET['code'] != 'authdeny') {
                     $token = $weObj->getOauthAccessToken();
                     if ($token) {
                         $userinfo = $weObj->getOauthUserinfo($token['access_token'], $token['openid']);
                         self::update_weixin_user($userinfo, $wxinfo['id'], $weObj);
+						if (! empty($_SESSION['redirect_url'])) {
+							$redirect_url = $_SESSION['redirect_url'];
+							unset($_SESSION['redirect_url']);
+							header('Location:' . $redirect_url, true, 302);
+							exit;
+						}
                     } else {
                         header('Location:' . $url, true, 302);
+						exit;
                     }
                 } else {
                     header('Location:' . $url, true, 302);
+					exit;
                 }
             }
         }
