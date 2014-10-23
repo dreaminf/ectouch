@@ -74,21 +74,23 @@ class zjd extends PluginWechatController
      */
     public function show($fromusername, $info)
     {
-        $articles = array();
+        $articles = array('type'=>'text', 'content'=>'未启用砸金蛋');
         // 插件配置
         $config = $this->get_config($this->plugin_name);
         // 页面信息
         if (isset($config['media']) && ! empty($config['media'])) {
+            $articles = array();
             // 数据
-            $articles[0]['Title'] = $config['media']['title'];
-            $articles[0]['Description'] = $config['media']['content'];
+            $articles['type'] = 'news';
+            $articles['content'][0]['Title'] = $config['media']['title'];
+            $articles['content'][0]['Description'] = $config['media']['content'];
             // 不是远程图片
             if (! preg_match('/(http:|https:)/is', $config['media']['file'])) {
-                $articles[0]['PicUrl'] =  __URL__ . '/' . $config['media']['file'];
+                $articles['content'][0]['PicUrl'] =  __URL__ . '/' . $config['media']['file'];
             } else {
-                $articles[0]['PicUrl'] = $config['media']['file'];
+                $articles['content'][0]['PicUrl'] = $config['media']['file'];
             }
-            $articles[0]['Url'] = html_out($config['media']['link']);
+            $articles['content'][0]['Url'] = html_out($config['media']['link']);
         }
         
         return $articles;

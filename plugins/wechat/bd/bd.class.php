@@ -58,7 +58,7 @@ class bd extends PluginWechatController
      */
     public function show($fromusername, $info)
     {
-        $articles = array();
+        $articles = array('type'=>'text', 'content'=>'暂时不能绑定');
         $media = array();
         $config = unserialize($info['config']);
         // 素材
@@ -73,16 +73,18 @@ class bd extends PluginWechatController
             }
         }
         if (! empty($media)) {
+            $articles = array();
             // 数据
-            $articles[0]['Title'] = $media['title'];
-            $articles[0]['Description'] = $media['content'];
+            $articles['type'] = 'news';
+            $articles['content'][0]['Title'] = $media['title'];
+            $articles['content'][0]['Description'] = $media['content'];
             // 不是远程图片
             if (! preg_match('/(http:|https:)/is', $media['file'])) {
-                $articles[0]['PicUrl'] = __URL__ . '/' . $media['file'];
+                $articles['content'][0]['PicUrl'] = __URL__ . '/' . $media['file'];
             } else {
-                $articles[0]['PicUrl'] = $media['file'];
+                $articles['content'][0]['PicUrl'] = $media['file'];
             }
-            $articles[0]['Url'] = html_out($media['link']);
+            $articles['content'][0]['Url'] = html_out($media['link']);
         }
         return $articles;
     }

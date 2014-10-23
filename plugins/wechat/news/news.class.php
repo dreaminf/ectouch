@@ -56,7 +56,7 @@ class news extends PluginWechatController
      */
     public function show($fromusername, $info)
     {
-        $articles = array();
+        $articles = array('type'=>'text', 'content'=>'暂无新品');
         $data = model('base')->model->table('goods')
             ->field('goods_id, goods_name, goods_img')
             ->where('is_new = 1 and is_on_sale = 1 and is_delete = 0 and last_update > (UNIX_TIMESTAMP(NOW()) - 3600*24*30)')
@@ -64,15 +64,17 @@ class news extends PluginWechatController
             ->limit(4)
             ->select();
         if (! empty($data)) {
+            $articles = array();
+            $articles['type'] = 'news';
             foreach ($data as $key => $val) {
                 // 不是远程图片
                 if (! preg_match('/(http:|https:)/is', $val['goods_img'])) {
-                    $articles[$key]['PicUrl'] = get_image_path('', $val['goods_img']);
+                    $articles['content'][$key]['PicUrl'] = get_image_path('', $val['goods_img']);
                 } else {
-                    $articles[$key]['PicUrl'] = $val['goods_img'];
+                    $articles['content'][$key]['PicUrl'] = $val['goods_img'];
                 }
-                $articles[$key]['Title'] = $val['goods_name'];
-                $articles[$key]['Url'] = __HOST__ . url('goods/index', array(
+                $articles['content'][$key]['Title'] = $val['goods_name'];
+                $articles['content'][$key]['Url'] = __HOST__ . url('goods/index', array(
                     'id' => $val['goods_id']
                 ));
             }

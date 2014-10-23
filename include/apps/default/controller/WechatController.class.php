@@ -373,7 +373,13 @@ class WechatController extends CommonController
             $wechat = new $rs['command']();
             $data = $wechat->show($fromusername, $rs);
             if (! empty($data)) {
-                $this->weObj->news($data)->reply();
+                //数据回复类型
+                if($data['type'] == 'text'){
+                    $this->weObj->text($data['content'])->reply();
+                }
+                elseif($data['type'] == 'news'){
+                    $this->weObj->news($data['content'])->reply();
+                }
                 // 积分赠送
                 $wechat->give_point($fromusername, $rs);
                 $return = true;
@@ -471,7 +477,7 @@ class WechatController extends CommonController
             if (model('Users')->register($username, 'ecmoban', $username . '@' . $domain) !== false) {
                 $data['user_rank'] = 99;
                 
-                $this->model->table('users')
+                model('Base')->model->table('users')
                     ->data($data)
                     ->where('user_name = "' . $username . '"')
                     ->update();

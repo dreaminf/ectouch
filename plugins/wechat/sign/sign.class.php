@@ -56,7 +56,7 @@ class sign extends PluginWechatController
      */
     public function show($fromusername, $info)
     {
-        $articles = array();
+        $articles = array('type'=>'text', 'content'=>'签到失败');
         // 配置信息
         $config = array();
         $config = unserialize($info['config']);
@@ -70,15 +70,12 @@ class sign extends PluginWechatController
                 ->count();
             // 当前时间减去时间间隔得到的历史时间之后赠送的次数
             if ($num < $config['point_num']) {
-                $articles[0]['Title'] = '签到提示';
-                $articles[0]['Description'] = '签到成功';
+                $articles['content'] = '签到成功';
             } else {
-                $articles[0]['Title'] = '签到提示';
-                $articles[0]['Description'] = '签到次数已用完';
+                $articles['content'] = '签到次数已用完';
             }
         } else {
-            $articles[0]['Title'] = '签到提示';
-            $articles[0]['Description'] = '未启用签到送积分';
+            $articles['content'] = '未启用签到送积分';
         }
         return $articles;
     }
