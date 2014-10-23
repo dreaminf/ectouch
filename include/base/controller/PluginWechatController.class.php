@@ -81,6 +81,13 @@ abstract class PluginWechatController
         $this->_data['config'] = $config;
         $this->_data['lang'] = L();
         $this->_data['ur_here'] = '功能扩展';
+        //公众号类型
+        $where['id'] = session('wechat_id');
+        $type = model('Base')->model->table('wechat')
+        ->field('type')
+        ->where($where)
+        ->getOne();
+        $this->_data['type'] = $type;
         //插件视图目录
         $view->config['TPL_TEMPLATE_PATH'] = ADDONS_PATH . 'wechat/'.$this->plugin_name.'/view/';
         $view->assign($this->_data);

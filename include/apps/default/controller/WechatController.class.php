@@ -388,9 +388,9 @@ class WechatController extends CommonController
      * @param unknown $user_id            
      * @return multitype:
      */
-    public static function get_avatar($user_id)
+    static function get_avatar($user_id)
     {
-        $u_row = model('base')->model->table('wechat_user')
+        $u_row = model('Base')->model->table('wechat_user')
             ->field('nickname, headimgurl')
             ->where('ect_uid = ' . $user_id)
             ->find();
