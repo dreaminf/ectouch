@@ -46,13 +46,21 @@
     </dd>
   </dl>
   <dl>
+    <dt class="menu_title">广告促销</dt>
+    <dd>
+      <ul>
+        <li><a href="{url('favourable/index')}" target="mainFrame">优惠活动</a></li>
+        <li><a href="{url('groupbuy/index')}" target="mainFrame">团购活动</a></li>
+        <li><a href="{url('advert/index')}" target="mainFrame">广告管理</a></li>
+      </ul>
+    </dd>
+  </dl>
+  <dl>
     <dt class="menu_title">其他设置</dt>
     <dd>
       <ul>
         <li><a href="{url('navigator/index')}" target="mainFrame">菜单管理</a></li>
-        <li><a href="{url('favourable/index')}" target="mainFrame">优惠活动</a></li>
-        <li><a href="{url('groupbuy/index')}" target="mainFrame">团购活动</a></li>
-        <li><a href="{url('advert/index')}" target="mainFrame">广告管理</a></li>
+        <li><a href="{url('upgrade/index')}" target="mainFrame">在线升级</a></li>
       </ul>
     </dd>
   </dl>
