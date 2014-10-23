@@ -249,7 +249,7 @@ class CategoryController extends CommonController {
             $this->assign('filter_attr_list', $all_attr_list);
             // 扩展商品查询条件
             if (!empty($filter_attr)) {
-                $ext_sql = "SELECT DISTINCT(b.goods_id) as distinct FROM " . $this->model->pre . "goods_attr AS a, " . $this->model->pre . "goods_attr AS b " . "WHERE ";
+                $ext_sql = "SELECT DISTINCT(b.goods_id) FROM " . $this->model->pre . "goods_attr AS a, " . $this->model->pre . "goods_attr AS b " . "WHERE ";
                 $ext_group_goods = array();
                 // 查出符合所有筛选属性条件的商品id
                 foreach ($filter_attr as $k => $v) {
@@ -257,7 +257,7 @@ class CategoryController extends CommonController {
                         $sql = $ext_sql . "b.attr_value = a.attr_value AND b.attr_id = " . $cat_filter_attr[$k] . " AND a.goods_attr_id = " . $v;
                         $res = $this->model->query($sql);
                         foreach ($res as $value) {
-                            $ext_group_goods[] = $value['distinct'];
+                            $ext_group_goods[] = $value['goods_id'];
                         }
                         $this->ext .= ' AND ' . db_create_in($ext_group_goods, 'g.goods_id');
                     }
