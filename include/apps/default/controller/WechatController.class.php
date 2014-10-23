@@ -60,9 +60,15 @@ class WechatController extends CommonController
             if ('subscribe' == $wedata['Event']) {
                 // 关注
                 $this->subscribe($wedata['FromUserName']);
-                // 关注时回复信息
-                $this->msg_reply('subscribe');
-                exit();
+                //用户扫描带参数二维码(未关注)
+                if(isset($wedata['EventKey']) && !empty($wedata['EventKey'])){
+                    $keywords = $wedata['EventKey'];   
+                }
+                else{
+                    // 关注时回复信息
+                    $this->msg_reply('subscribe');
+                    exit;
+                }
             } elseif ('unsubscribe' == $wedata['Event']) {
                 // 取消关注
                 $this->unsubscribe($wedata['FromUserName']);
@@ -88,6 +94,9 @@ class WechatController extends CommonController
                 $keywords = $wedata['EventKey'];
             } elseif ('VIEW' == $wedata['Event']) {
                 $this->redirect($wedata['EventKey']);
+            }
+            elseif('SCAN' == $wedata['Event']){
+                $keywords = $wedata['EventKey'];
             }
         } else {
             $this->msg_reply('msg');
@@ -128,14 +137,24 @@ class WechatController extends CommonController
         if (empty($rs)) {
             // 用户注册
             $domain = get_top_domain();
-            $username = time () . rand(100, 999);
-            if (model('Users')->register($username, 'ecmoban',  $username. '@' . $domain) !== false) {     
+            $username = time() . rand(100, 999);
+            if (model('Users')->register($username, 'ecmoban', $username . '@' . $domain) !== false) {
                 $data['user_rank'] = 99;
                 
                 $this->model->table('users')
                     ->data($data)
                     ->where('user_name = "' . $username . '"')
                     ->update();
+                
+                // 微信端发送消息
+                $msg = array(
+                    'touser' => $openid,
+                    'msgtype' => 'text',
+                    'text' => array(
+                        'content' => '用户名：'.$username."\r\n".'密码：ecmoban'
+                    )
+                );
+                $rs = $this->weObj->sendCustomMessage($msg);
             } else {
                 die('');
             }
@@ -400,29 +419,27 @@ class WechatController extends CommonController
             $weObj = new Wechat($config);
             // 微信浏览器浏览
             if (self::is_wechat_browser() && $_SESSION['user_id'] === 0) {
-				if (! isset($_SESSION['redirect_url'])) {
-					$_SESSION['redirect_url'] = __HOST__ . $_SERVER['REQUEST_URI'];
-				}
-                
-                $url = $weObj->getOauthRedirect($wxinfo['oauth_redirecturi'], 1);
+                if (isset($_SERVER['REQUEST_URI']) && ! empty($_SERVER['REQUEST_URI']) && ! isset($_GET['state'])) {
+                    $redirect_url = urlencode(base64_encode(__HOST__ . $_SERVER['REQUEST_URI']));
+                }
+                $url = $weObj->getOauthRedirect($wxinfo['oauth_redirecturi'], $redirect_url);
                 if (isset($_GET['code']) && $_GET['code'] != 'authdeny') {
                     $token = $weObj->getOauthAccessToken();
                     if ($token) {
                         $userinfo = $weObj->getOauthUserinfo($token['access_token'], $token['openid']);
                         self::update_weixin_user($userinfo, $wxinfo['id'], $weObj);
-						if (! empty($_SESSION['redirect_url'])) {
-							$redirect_url = $_SESSION['redirect_url'];
-							unset($_SESSION['redirect_url']);
-							header('Location:' . $redirect_url, true, 302);
-							exit;
-						}
+                        if (! empty($_GET['state'])) {
+                            $redirect_url = base64_decode(urldecode($_GET['state']));
+                            header('Location:' . $redirect_url, true, 302);
+                            exit();
+                        }
                     } else {
                         header('Location:' . $url, true, 302);
-						exit;
+                        exit();
                     }
                 } else {
                     header('Location:' . $url, true, 302);
-					exit;
+                    exit();
                 }
             }
         }
@@ -441,19 +458,22 @@ class WechatController extends CommonController
         $ret = model('Base')->model->table('wechat_user')
             ->field('openid, ect_uid')
             ->where('openid = "' . $userinfo['openid'] . '"')
-            ->getOne();
+            ->find();
         if (empty($ret)) {
+            // 获取用户所在分组ID
+            $group_id = $weObj->getUserGroup($userinfo['openid']);
+            if ($group_id === false) {
+                die($weObj->errCode . ':' . $weObj->errMsg);
+            }
             // 会员注册
             $domain = get_top_domain();
-            if (model('Users')->register($userinfo['openid'], 'ecmoban', $time . rand(100, 999) . '@' . $domain) !== false) {
-                $new_user_name = 'wx' . $_SESSION['user_id'];
-                $data['user_name'] = $new_user_name;
-                $data['email'] = $new_user_name . '@' . $domain;
+            $username = time() . rand(100, 999);
+            if (model('Users')->register($username, 'ecmoban', $username . '@' . $domain) !== false) {
                 $data['user_rank'] = 99;
                 
-                model('Base')->model->table('users')
+                $this->model->table('users')
                     ->data($data)
-                    ->where('user_name = "' . $userinfo['openid'] . '"')
+                    ->where('user_name = "' . $username . '"')
                     ->update();
             } else {
                 die('授权失败，如重试一次还未解决问题请联系管理员');
@@ -470,11 +490,6 @@ class WechatController extends CommonController
             $data1['headimgurl'] = $userinfo['headimgurl'];
             $data1['subscribe_time'] = $time;
             $data1['ect_uid'] = $_SESSION['user_id'];
-            // 获取用户所在分组ID
-            $group_id = $weObj->getUserGroup($userinfo['openid']);
-            if ($group_id === false) {
-                die($weObj->errCode . ':' . $weObj->errMsg);
-            }
             $data1['group_id'] = $group_id;
             
             model('Base')->model->table('wechat_user')
