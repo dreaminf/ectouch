@@ -3,7 +3,7 @@
 <div class="row" style="margin:0">
   <div class="ectouch-mb5">
   	<a href="{url('index')}" class="btn btn-info">{$lang['upgrade']}</a>
-    <a href="javascript:void(0);" class="btn btn-success">{$lang['checkfile']}</a>
+    <a href="{url('checkfile')}" class="btn btn-success">{$lang['checkfile']}</a>
   </div>
 </div>
 
