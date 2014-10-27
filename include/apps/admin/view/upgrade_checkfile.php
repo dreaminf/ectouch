@@ -28,7 +28,6 @@
     <th>{$lang['modifyedfile']}</th>
     <th>{$lang['lastmodifytime']}</th>
     <th>{$lang['filesize']}</th>
-    <th>{$lang['operation']}</th>
   </tr>
 <?php
 	foreach($diff as $k=>$v) {
@@ -37,7 +36,6 @@
 	<td><?php echo base64_decode($k)?></td>
 	<td><?php echo date("Y-m-d H:i:s", filemtime(base64_decode($k)))?></td>
 	<td><?php echo byte_format(filesize(base64_decode($k)))?></td>
-	<td><a href="javascript:void(0)" onclick="view('<?php echo base64_decode($k)?>')">{$lang['view']}</a> <a href="<?php echo APP_PATH,base64_decode($k);?>" target="_blank">{$lang['access']}</a></td>
   </tr>
 <?php
 	}
@@ -51,7 +49,6 @@
     <th>{$lang['unknowfile']}</th>
     <th>{$lang['lastmodifytime']}</th>
     <th>{$lang['filesize']}</th>
-    <th>{$lang['operation']}</th>
   </tr>
 <?php
 	foreach($unknowfile as $k=>$v) {
@@ -60,7 +57,6 @@
 	<td><?php echo base64_decode($v)?></td>
 	<td><?php echo date("Y-m-d H:i:s", filectime(base64_decode($v)))?></td>
 	<td><?php echo byte_format(filesize(base64_decode($v)))?></td>
-	<td><a href="javascript:void(0)" onclick="view('<?php echo base64_decode($v)?>')">{$lang['view']}</a> <a href="<?php echo APP_PATH,base64_decode($v);?>" target="_blank">{$lang['access']}</a></td>
   </tr>
 <?php
 	}
@@ -84,14 +80,5 @@
 ?>
 </table>
 <?php }?>
-
-<script type="text/javascript">
-<!--
-function view(url) {
-	window.top.art.dialog({id:'edit'}).close();
-	window.top.art.dialog({title:'{$lang["view_code"]}',id:'edit',iframe:'{url("public_view", array("url"=>'+ url +'))}',width:'700',height:'500'});
-}
-//-->
-</script>
 
 {include file="pagefooter"}
