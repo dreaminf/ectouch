@@ -12,8 +12,8 @@
 <table class="table table-hover ectouch-table" style="border:1px #ddd solid; margin-bottom:10px;">
   <tr class="active">
       <th>{$lang['modifyedfile']}</th>
-      <th>{$lang['lostfile']}</th>
-      <th>{$lang['unknowfile']}</th>
+      <th width="33%">{$lang['lostfile']}</th>
+      <th width="33%">{$lang['unknowfile']}</th>
   </tr>
   <tr>
       <td><?php echo count($diff);?></td>
@@ -26,8 +26,8 @@
 <table class="table table-hover ectouch-table" style="border:1px #ddd solid; margin-bottom:10px;">
   <tr class="warning">
     <th>{$lang['modifyedfile']}</th>
-    <th>{$lang['lastmodifytime']}</th>
-    <th>{$lang['filesize']}</th>
+    <th width="20%">{$lang['lastmodifytime']}</th>
+    <th width="15%">{$lang['filesize']}</th>
   </tr>
 <?php
 	foreach($diff as $k=>$v) {
@@ -47,8 +47,8 @@
 <table class="table table-hover ectouch-table" style="border:1px #ddd solid; margin-bottom:10px;">
   <tr class="info">
     <th>{$lang['unknowfile']}</th>
-    <th>{$lang['lastmodifytime']}</th>
-    <th>{$lang['filesize']}</th>
+    <th width="20%">{$lang['lastmodifytime']}</th>
+    <th width="15%">{$lang['filesize']}</th>
   </tr>
 <?php
 	foreach($unknowfile as $k=>$v) {
