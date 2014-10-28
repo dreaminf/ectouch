@@ -4,7 +4,7 @@
     <div class="col-md-2 col-sm-2 col-lg-1" style="padding-right:0;">{include file="wechat_left_menu"}</div>
     <div class="col-md-10 col-sm-10 col-lg-11" style="padding-right:0;">
       <div class="panel panel-default">
-        <div class="panel-heading"><a href="{url('mass_message')}" class="btn btn-default">群发信息</a><a href="{url('mass_list')}" class="btn btn-primary">发送记录</a></div>
+        <div class="panel-heading"><a href="{url('mass_message')}" class="btn btn-default">群发信息</a><a href="{url('mass_list')}" class="btn btn-primary" style="margin-left: 5px;">发送记录</a></div>
         <div class="panel-body bg-danger">
             请注意，只有已经发送成功的消息才能删除删除消息只是将消息的图文详情页失效，已经收到的用户，还是能在其本地看到消息卡片。 另外，删除群发消息只能删除图文消息和视频消息，其他类型的消息一经发送，无法删除。 
         </div>

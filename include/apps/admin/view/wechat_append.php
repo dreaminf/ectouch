@@ -92,7 +92,7 @@
 		</tr>
 		<tr>
 			<td>{$lang['wechat_status']}</td>
-			<td><div class="col-sm-2">
+			<td><div class="col-sm-3">
 				<div  class="btn-group" data-toggle="buttons">
 					<label class="btn btn-primary active">
 						<input type="radio" name="data[status]" value="1" checked> {$lang['wechat_open']}

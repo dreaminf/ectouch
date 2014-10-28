@@ -13,7 +13,7 @@
     <div class="col-md-2 col-sm-2 col-lg-1" style="padding-right:0;">{include file="wechat_left_menu"}</div>
     <div class="col-md-10 col-sm-10 col-lg-11" style="padding-right:0;">
       <div class="panel panel-default">
-        <div class="panel-heading"><a href="{url('mass_message')}" class="btn btn-primary">群发信息</a><a href="{url('mass_list')}" class="btn btn-default">发送记录</a></div>
+        <div class="panel-heading"><a href="{url('mass_message')}" class="btn btn-primary">群发信息</a><a href="{url('mass_list')}" class="btn btn-default" style="margin-left: 5px;">发送记录</a></div>
         <div class="panel-body bg-danger">
             请注意：
             <span class="help-block">1.该接口暂时仅提供给已微信认证的服务号</span>
