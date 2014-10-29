@@ -13,7 +13,7 @@
 		{loop $list $key $vo}
 		<tr>
 			<td class="text-center">{$vo['name']}</td>
-			<td class="text-center">{if $vo['type'] == 1}{$lang['wechat_type1']}{elseif $vo['type'] == 2}{$lang['wechat_type2']}{/if}</td>
+			<td class="text-center">{if $vo['type'] == 0}{$lang['wechat_type0']}{elseif $vo['type'] == 1}{$lang['wechat_type1']}{elseif $vo['type'] == 2}{$lang['wechat_type2']}{/if}</td>
 			<td class="text-center">{date('Y-m-d H:i:s', $vo['time'])}</td>
 			<td class="text-center">{if $vo['status'] == 1}{$lang['wechat_open']}{else}{$lang['wechat_close']}{/if}</td>
 			<td class="text-center">{$vo['sort']}</td>
