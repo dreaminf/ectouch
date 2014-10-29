@@ -499,7 +499,7 @@ class WechatController extends CommonController
                 die($weObj->errCode . ':' . $weObj->errMsg);
             }
             // 设置的用户注册信息
-            $register = $this->model->table('wechat_setting')
+            $register = model('Base')->model->table('wechat_setting')
                 ->field('config')
                 ->where('status = 1 and keywords = "register_remind"')
                 ->find();
