@@ -144,10 +144,10 @@
                 <td>
                   <div class="col-sm-4 col-md-4 col-lg-4">
                     <label class="radio-inline">
-                      <input type="radio" name="data[status]" value="1" {if $send_remind['status'] == 1}checked{/if} />开启
+                      <input type="radio" name="data[status]" value="1" {if $register_remind['status'] == 1}checked{/if} />开启
                     </label>
                     <label class="radio-inline">
-                      <input type="radio" name="data[status]" value="0" {if $send_remind['status'] == 0}checked{/if} />关闭
+                      <input type="radio" name="data[status]" value="0" {if $register_remind['status'] == 0}checked{/if} />关闭
                     </label>
                   </div>
                 </td>

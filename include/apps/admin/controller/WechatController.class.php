@@ -1687,12 +1687,12 @@ class WechatController extends AdminController
     {
         if (IS_POST) {
             $content_type = I('post.content_type');
-            if ($content_type == 'media') {
-                $data['media_id'] = I('post.media_id');
-                $data['content'] = '';
-            } else {
+            if ($content_type == 'text') {
                 $data['content'] = I('post.content');
                 $data['media_id'] = 0;
+            } else {
+                $data['media_id'] = I('post.media_id');
+                $data['content'] = '';
             }
             $data['type'] = 'subscribe';
             if (is_array($data) && (! empty($data['media_id']) || ! empty($data['content']))) {
@@ -1737,12 +1737,12 @@ class WechatController extends AdminController
     {
         if (IS_POST) {
             $content_type = I('post.content_type');
-            if ($content_type == 'media') {
-                $data['media_id'] = I('post.media_id');
-                $data['content'] = '';
-            } else {
+            if ($content_type == 'text') {
                 $data['content'] = I('post.content');
                 $data['media_id'] = 0;
+            } else {
+                $data['media_id'] = I('post.media_id');
+                $data['content'] = '';
             }
             $data['type'] = 'msg';
             if (is_array($data) && (! empty($data['media_id']) || ! empty($data['content']))) {
