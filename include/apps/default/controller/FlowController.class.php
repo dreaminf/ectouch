@@ -1260,6 +1260,12 @@ class FlowController extends CommonController {
             $msg = $order ['pay_status'] == PS_UNPAYED ? L('order_placed_sms') : L('order_placed_sms') . '[' . L('sms_paid') . ']';
             $sms->send(C('sms_shop_mobile'), sprintf($msg, $order ['consignee'], $order ['mobile']), '', 13, 1);
         }
+		
+		/* 如果需要，微信通知 by wanglu */
+        $order_url = __HOST__ . url('user/order_detail', array('order_id'=>$order ['order_id']));
+        $order_url = urlencode(base64_encode($order_url));
+        send_wechat_message('order_remind', '', $order['order_sn'].' 订单已生成', $order_url);
+		
         /* 如果订单金额为0 处理虚拟卡 */
         if ($order ['order_amount'] <= 0) {
             $sql = "SELECT goods_id, goods_name, goods_number AS num FROM " . $this->model->pre . "cart WHERE is_real = 0 AND extension_code = 'virtual_card'" . " AND session_id = '" . SESS_ID . "' AND rec_type = '$flow_type'";

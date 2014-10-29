@@ -60,14 +60,13 @@ class WechatController extends CommonController
             if ('subscribe' == $wedata['Event']) {
                 // 关注
                 $this->subscribe($wedata['FromUserName']);
-                //用户扫描带参数二维码(未关注)
-                if(isset($wedata['EventKey']) && !empty($wedata['EventKey'])){
-                    $keywords = $wedata['EventKey'];   
-                }
-                else{
+                // 用户扫描带参数二维码(未关注)
+                if (isset($wedata['EventKey']) && ! empty($wedata['EventKey'])) {
+                    $keywords = $wedata['EventKey'];
+                } else {
                     // 关注时回复信息
                     $this->msg_reply('subscribe');
-                    exit;
+                    exit();
                 }
             } elseif ('unsubscribe' == $wedata['Event']) {
                 // 取消关注
@@ -94,8 +93,7 @@ class WechatController extends CommonController
                 $keywords = $wedata['EventKey'];
             } elseif ('VIEW' == $wedata['Event']) {
                 $this->redirect($wedata['EventKey']);
-            }
-            elseif('SCAN' == $wedata['Event']){
+            } elseif ('SCAN' == $wedata['Event']) {
                 $keywords = $wedata['EventKey'];
             }
         } else {
@@ -135,26 +133,47 @@ class WechatController extends CommonController
             ->find();
         // 未关注
         if (empty($rs)) {
+            // 设置的用户注册信息
+            $register = $this->model->table('wechat_setting')
+                ->field('config')
+                ->where('status = 1 and keywords = "register_remind"')
+                ->find();
+            if (! empty($register)) {
+                $reg_config = unserialize($register['config']);
+                $username = $reg_config['user_pre'] . mt_rand(100, 999);
+                // 密码随机数
+                $rs = array();
+                $arr = range(0, 9);
+                $reg_config['pwd_rand'] = $reg_config['pwd_rand'] ? $reg_config['pwd_rand'] : 5;
+                for ($i = 0; $i < $reg_config['pwd_rand']; $i ++) {
+                    $rs[] = array_rand($arr);
+                }
+                $pwd_rand = implode('', $rs);
+                // 密码
+                $password = $reg_config['pwd_pre'] . $pwd_rand;
+                // 通知模版
+                $template = str_replace(array(
+                    '[$username]',
+                    '[$password]'
+                ), array(
+                    $username,
+                    $password
+                ), $reg_config['template']);
+            } else {
+                $username = 'wx_' . mt_rand(100, 999);
+                $password = 'ecmoban' . mt_rand(100, 999);
+                // 通知模版
+                $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
+            }
             // 用户注册
             $domain = get_top_domain();
-            $username = time() . rand(100, 999);
-            if (model('Users')->register($username, 'ecmoban', $username . '@' . $domain) !== false) {
+            if (model('Users')->register($username, $password, $username . '@' . $domain) !== false) {
                 $data['user_rank'] = 99;
                 
                 $this->model->table('users')
                     ->data($data)
                     ->where('user_name = "' . $username . '"')
                     ->update();
-                
-                // 微信端发送消息
-                $msg = array(
-                    'touser' => $openid,
-                    'msgtype' => 'text',
-                    'text' => array(
-                        'content' => '用户名：'.$username."\r\n".'密码：ecmoban'
-                    )
-                );
-                $rs = $this->weObj->sendCustomMessage($msg);
             } else {
                 die('');
             }
@@ -169,6 +188,15 @@ class WechatController extends CommonController
             $this->model->table('wechat_user')
                 ->data($info)
                 ->insert();
+            // 微信端发送消息
+            $msg = array(
+                'touser' => $openid,
+                'msgtype' => 'text',
+                'text' => array(
+                    'content' => $template
+                )
+            );
+            $this->weObj->sendCustomMessage($msg);
         } else {
             $info['subscribe'] = 1;
             $this->model->table('wechat_user')
@@ -373,11 +401,10 @@ class WechatController extends CommonController
             $wechat = new $rs['command']();
             $data = $wechat->show($fromusername, $rs);
             if (! empty($data)) {
-                //数据回复类型
-                if($data['type'] == 'text'){
+                // 数据回复类型
+                if ($data['type'] == 'text') {
                     $this->weObj->text($data['content'])->reply();
-                }
-                elseif($data['type'] == 'news'){
+                } elseif ($data['type'] == 'news') {
                     $this->weObj->news($data['content'])->reply();
                 }
                 // 积分赠送
@@ -425,17 +452,17 @@ class WechatController extends CommonController
             $weObj = new Wechat($config);
             // 微信浏览器浏览
             if (self::is_wechat_browser() && $_SESSION['user_id'] === 0) {
-                if (isset($_SERVER['REQUEST_URI']) && ! empty($_SERVER['REQUEST_URI']) && ! isset($_GET['state'])) {
-                    $redirect_url = urlencode(base64_encode(__HOST__ . $_SERVER['REQUEST_URI']));
+                if (! isset($_SESSION['redirect_url'])) {
+                    session('redirect_url', __HOST__ . $_SERVER['REQUEST_URI']);
                 }
-                $url = $weObj->getOauthRedirect($wxinfo['oauth_redirecturi'], $redirect_url);
+                $url = $weObj->getOauthRedirect($wxinfo['oauth_redirecturi'], 1);
                 if (isset($_GET['code']) && $_GET['code'] != 'authdeny') {
                     $token = $weObj->getOauthAccessToken();
                     if ($token) {
                         $userinfo = $weObj->getOauthUserinfo($token['access_token'], $token['openid']);
                         self::update_weixin_user($userinfo, $wxinfo['id'], $weObj);
-                        if (! empty($_GET['state'])) {
-                            $redirect_url = base64_decode(urldecode($_GET['state']));
+                        if (! empty($_SESSION['redirect_url'])) {
+                            $redirect_url = session('redirect_url');
                             header('Location:' . $redirect_url, true, 302);
                             exit();
                         }
@@ -471,10 +498,41 @@ class WechatController extends CommonController
             if ($group_id === false) {
                 die($weObj->errCode . ':' . $weObj->errMsg);
             }
+            // 设置的用户注册信息
+            $register = $this->model->table('wechat_setting')
+                ->field('config')
+                ->where('status = 1 and keywords = "register_remind"')
+                ->find();
+            if (! empty($register)) {
+                $reg_config = unserialize($register['config']);
+                $username = $reg_config['user_pre'] . mt_rand(100, 999);
+                // 密码随机数
+                $rs = array();
+                $arr = range(0, 9);
+                $reg_config['pwd_rand'] = $reg_config['pwd_rand'] ? $reg_config['pwd_rand'] : 3;
+                for ($i = 0; $i < $reg_config['pwd_rand']; $i ++) {
+                    $rs[] = array_rand($arr);
+                }
+                $pwd_rand = implode('', $rs);
+                // 密码
+                $password = $reg_config['pwd_pre'] . $pwd_rand;
+                // 通知模版
+                $template = str_replace(array(
+                    '[$username]',
+                    '[$password]'
+                ), array(
+                    $username,
+                    $password
+                ), $reg_config['template']);
+            } else {
+                $username = 'wx_' . mt_rand(100, 999);
+                $password = 'ecmoban' . mt_rand(100, 999);
+                // 通知模版
+                $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
+            }
             // 会员注册
             $domain = get_top_domain();
-            $username = time() . rand(100, 999);
-            if (model('Users')->register($username, 'ecmoban', $username . '@' . $domain) !== false) {
+            if (model('Users')->register($username, $password, $username . '@' . $domain) !== false) {
                 $data['user_rank'] = 99;
                 
                 model('Base')->model->table('users')
@@ -501,6 +559,15 @@ class WechatController extends CommonController
             model('Base')->model->table('wechat_user')
                 ->data($data1)
                 ->insert();
+            // 微信端发送消息
+            $msg = array(
+                'touser' => $userinfo['openid'],
+                'msgtype' => 'text',
+                'text' => array(
+                    'content' => $template
+                )
+            );
+            $weObj->sendCustomMessage($msg);
         } else {
             model('Base')->model->table('wechat_user')
                 ->data('subscribe = 1')

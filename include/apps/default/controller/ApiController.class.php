@@ -8,7 +8,7 @@
  * 文件名称：ApiController.class.php
  * ----------------------------------------------------------------------------
  * 功能描述：ECTouch接口控制器
- * 调用说明：url('api/index', array('openid'=>$openid, 'title'=>$title, 'msg'=>$msg));
+ * 调用说明：url('api/index', array('openid'=>$openid, 'title'=>$title, 'msg'=>$msg, 'url'=>$url));
  * ----------------------------------------------------------------------------
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
@@ -37,6 +37,7 @@ class ApiController extends CommonController
         $this->openid = I('get.openid');
         $this->title = I('get.title');
         $this->msg = I('get.msg');
+		$this->url = I('get.url');
     }
 
     /**
@@ -47,6 +48,7 @@ class ApiController extends CommonController
         // 公众号信息
         $sql = 'SELECT w.token, w.appid, w.appsecret FROM ' . $this->model->pre . 'wechat w LEFT JOIN ' . $this->model->pre . 'wechat_user u ON w.id = u.wechat_id WHERE u.openid = "' . $this->openid . '" and w.status = 1 ORDER BY w.sort asc, w.time desc LIMIT 1';
         $wechat = $this->model->query($sql);
+		$return = false;
         if (! empty($wechat)) {
             $config['token'] = $wechat[0]['token'];
             $config['appid'] = $wechat[0]['appid'];
@@ -62,17 +64,20 @@ class ApiController extends CommonController
                         'articles' => array(
                             array(
                                 'title' => $this->title,
-                                'description' => $this->msg
+                                'description' => $this->msg,
+								'url' => $this->url
                             )
                         )
                     )
                 );
                 $rs = $this->weObj->sendCustomMessage($send_msg);
+				$return = $rs ? true : false;
                 // 发送失败
                 /*
                  * if(empty($rs)){ }
                  */
             }
         }
+		return $rs;
     }
 }

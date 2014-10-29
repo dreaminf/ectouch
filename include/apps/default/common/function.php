@@ -1458,3 +1458,26 @@ function exchange_points($uid, $fromcredits, $tocredits, $toappid, $netamount) {
     }
 }
 
+/**
+ * 微信提醒
+ *
+ * @param  $type 提醒类型
+ * @param  $title 提醒标题
+ * @param  $msg 提醒内容
+ * @param  $url 页面链接 base64_decode(urldecode($url));
+ *
+ */
+function send_wechat_message($type = '', $titile = '', $msg = '', $url = ''){
+    /* 如果需要，微信通知 wanglu */
+    if(!empty($type)){
+        $remind_title = $this->model->table('wechat_setting')->field('title')->where('status = 1 and keywords = "'.$type.'"')->getOne();
+        $remind_title = $title ? $title : $remind_title;
+        $openid = $this->model->table('wechat_user')->field('openid')->where('ect_uid = '.$_SESSION['user_id'])->getOne();
+        if(!empty($remind_title) && !empty($openid)){
+            $url = base64_decode(urldecode($url));
+            $dourl = __HOST__ . url('api/index', array('openid'=>$openid, 'title'=>$remind_title, 'msg'=>$msg, 'url'=>$url));
+            Http::doGet($dourl);
+        }
+    }
+}
+
