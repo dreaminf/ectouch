@@ -38,6 +38,7 @@ class ApiController extends CommonController
         $this->title = I('get.title');
         $this->msg = I('get.msg');
 		$this->url = I('get.url');
+		$this->url = $this->url ? base64_decode(urldecode($this->url)) : '';
     }
 
     /**
