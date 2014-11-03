@@ -548,9 +548,7 @@ class WechatController extends CommonController
         if (empty($ret)) {
             // 获取用户所在分组ID
             $group_id = $weObj->getUserGroup($userinfo['openid']);
-            if ($group_id === false) {
-                die($weObj->errCode . ':' . $weObj->errMsg);
-            }
+            $group_id = $group_id ? $group_id : 0;
             // 设置的用户注册信息
             $register = model('Base')->model->table('wechat_setting')
                 ->field('config')
