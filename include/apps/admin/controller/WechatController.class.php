@@ -1920,30 +1920,34 @@ class WechatController extends AdminController
     public function remind()
     {
         if (IS_POST) {
-            $keywords = I('post.keywords');
+            $command = I('post.command');
             $data = I('post.data');
             $config = I('post.config');
-            $info = Check::rule(array(Check::must($keywords), '关键词不正确'));
+            $info = Check::rule(array(
+                Check::must($command),
+                '关键词不正确'
+            ));
             if ($info !== true) {
                 $this->message($info, NULL, 'error');
             }
-            $num = $this->model->table('wechat_setting')
-                ->where('keywords = "' . $keywords . '"')
+            $data['wechat_id'] = $this->wechat_id;
+            $num = $this->model->table('wechat_extend')
+                ->where('command = "' . $keywords . '"')
                 ->count();
             if ($num > 0) {
                 if (! empty($config)) {
                     $data['config'] = serialize($config);
                 }
-                $this->model->table('wechat_setting')
+                $this->model->table('wechat_extend')
                     ->data($data)
-                    ->where('keywords = "' . $keywords . '"')
+                    ->where('command = "' . $keywords . '"')
                     ->update();
             } else {
-                $data['keywords'] = $keywords;
+                $data['command'] = $command;
                 if (! empty($config)) {
                     $data['config'] = serialize($config);
                 }
-                $this->model->table('wechat_setting')
+                $this->model->table('wechat_extend')
                     ->data($data)
                     ->insert();
             }
@@ -1951,30 +1955,30 @@ class WechatController extends AdminController
             $this->redirect($_SERVER['HTTP_REFERER']);
         }
         
-        $order_remind = $this->model->table('wechat_setting')
-            ->field('title, status, config')
-            ->where('keywords = "order_remind"')
+        $order_remind = $this->model->table('wechat_extend')
+            ->field('name, enable, config')
+            ->where('command = "order_remind"')
             ->find();
         if ($order_remind['config']) {
             $order_remind['config'] = unserialize($order_remind['config']);
         }
-        $pay_remind = $this->model->table('wechat_setting')
-            ->field('title, status, config')
-            ->where('keywords = "pay_remind"')
+        $pay_remind = $this->model->table('wechat_extend')
+            ->field('name, enable, config')
+            ->where('command = "pay_remind"')
             ->find();
         if ($pay_remind['config']) {
             $pay_remind['config'] = unserialize($pay_remind['config']);
         }
-        $send_remind = $this->model->table('wechat_setting')
-            ->field('title, status, config')
-            ->where('keywords = "send_remind"')
+        $send_remind = $this->model->table('wechat_extend')
+            ->field('name, enable, config')
+            ->where('command = "send_remind"')
             ->find();
         if ($send_remind['config']) {
             $send_remind['config'] = unserialize($send_remind['config']);
         }
-        $register_remind = $this->model->table('wechat_setting')
-            ->field('title, status, config')
-            ->where('keywords = "register_remind"')
+        $register_remind = $this->model->table('wechat_extend')
+            ->field('name, enable, config')
+            ->where('command = "register_remind"')
             ->find();
         if ($register_remind['config']) {
             $register_remind['config'] = unserialize($register_remind['config']);

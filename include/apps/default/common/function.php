@@ -1470,7 +1470,7 @@ function exchange_points($uid, $fromcredits, $tocredits, $toappid, $netamount) {
 function send_wechat_message($type = '', $titile = '', $msg = '', $url = ''){
     /* 如果需要，微信通知 wanglu */
     if(!empty($type)){
-        $remind_title = model('Base')->model->table('wechat_setting')->field('title')->where('status = 1 and keywords = "'.$type.'"')->getOne();
+        $remind_title = model('Base')->model->table('wechat_extend')->field('name')->where('enable = 1 and command = "'.$type.'"')->getOne();
         $remind_title = $title ? $title : $remind_title;
         $openid = model('Base')->model->table('wechat_user')->field('openid')->where('ect_uid = '.$_SESSION['user_id'])->getOne();
         if(!empty($remind_title) && !empty($openid)){

@@ -4,7 +4,7 @@
 	  <div class="col-md-2 col-sm-2 col-lg-1" style="padding-right:0;">{include file="wechat_left_menu"}</div>
 	  <div class="col-md-10 col-sm-10 col-lg-11" style="padding-right:0;">
 		<div class="panel panel-default">
-			<div class="panel-heading">提醒</div>
+			<div class="panel-heading">提醒设置</div>
 			<div class="panel-body">
 			     <ul class="nav nav-tabs" role="tablist">
               <li class="active"><a href="#order_remind" role="tab" data-toggle="tab">订单提醒</a></li>
@@ -20,16 +20,16 @@
             <form action="{url('remind')}" method="post" class="form-horizontal" role="form">
               <div class="form-group">
                 <label class="col-sm-1 col-md-1 col-lg-1 control-label">标题</label>
-                <div class="col-sm-4 col-md-4 col-lg-4"><input type="text" class="form-control" placeholder="请输入标题" name="data[title]" value="{$order_remind['title']}"></div>
+                <div class="col-sm-4 col-md-4 col-lg-4"><input type="text" class="form-control" placeholder="请输入标题" name="data[name]" value="{$order_remind['name']}"></div>
               </div>
               <div class="form-group">
                 <label class="col-sm-1 col-md-1 col-lg-1 control-label">提醒设置</label>
                 <div class="col-sm-4 col-md-4 col-lg-4">
                   <label class="radio-inline">
-                    <input type="radio" name="data[status]" value="1" {if $order_remind['status'] == 1}checked{/if} />开启
+                    <input type="radio" name="data[enable]" value="1" {if $order_remind['enable'] == 1}checked{/if} />开启
                   </label>
                   <label class="radio-inline">
-                    <input type="radio" name="data[status]" value="0" {if $order_remind['status'] == 0}checked{/if} />关闭
+                    <input type="radio" name="data[enable]" value="0" {if $order_remind['enable'] == 0}checked{/if} />关闭
                   </label>
                 </div>
               </div>
@@ -40,7 +40,7 @@
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-1">
-                  <input type="hidden" name="keywords" value="order_remind" />
+                  <input type="hidden" name="command" value="order_remind" />
                   <input type="submit" value="确认" class="btn btn-primary" />
                   <input type="reset" value="重置" class="btn btn-default" />
                 </div>
@@ -51,16 +51,16 @@
             <form action="{url('remind')}" method="post" class="form-horizontal" role="form">
               <div class="form-group">
                 <label class="col-sm-1 col-md-1 col-lg-1 control-label">标题</label>
-                <div class="col-sm-4 col-md-4 col-lg-4"><input type="text" class="form-control" placeholder="请输入标题" name="data[title]" value="{$pay_remind['title']}"></div>
+                <div class="col-sm-4 col-md-4 col-lg-4"><input type="text" class="form-control" placeholder="请输入标题" name="data[name]" value="{$pay_remind['name']}"></div>
               </div>
               <div class="form-group">
                 <label class="col-sm-1 col-md-1 col-lg-1 control-label">提醒设置</label>
                 <div class="col-sm-4 col-md-4 col-lg-4">
                   <label class="radio-inline">
-                    <input type="radio" name="data[status]" value="1" {if $pay_remind['status'] == 1}checked{/if} />开启
+                    <input type="radio" name="data[enable]" value="1" {if $pay_remind['enable'] == 1}checked{/if} />开启
                   </label>
                   <label class="radio-inline">
-                    <input type="radio" name="data[status]" value="0" {if $pay_remind['status'] == 0}checked{/if} />关闭
+                    <input type="radio" name="data[enable]" value="0" {if $pay_remind['enable'] == 0}checked{/if} />关闭
                   </label>
                 </div>
               </div>
@@ -71,7 +71,7 @@
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-1">
-                  <input type="hidden" name="keywords" value="pay_remind" />
+                  <input type="hidden" name="command" value="pay_remind" />
                   <input type="submit" value="确认" class="btn btn-primary" />
                   <input type="reset" value="重置" class="btn btn-default" />
                 </div>
@@ -82,16 +82,16 @@
             <form action="{url('remind')}" method="post" class="form-horizontal" role="form">
               <div class="form-group">
                 <label class="col-sm-1 col-md-1 col-lg-1 control-label">标题</label>
-                <div class="col-sm-4 col-md-4 col-lg-4"><input type="text" class="form-control" placeholder="请输入标题" name="data[title]" value="{$send_remind['title']}"></div>
+                <div class="col-sm-4 col-md-4 col-lg-4"><input type="text" class="form-control" placeholder="请输入标题" name="data[name]" value="{$send_remind['name']}"></div>
               </div>
               <div class="form-group">
                 <label class="col-sm-1 col-md-1 col-lg-1 control-label">提醒设置</label>
                 <div class="col-sm-4 col-md-4 col-lg-4">
                   <label class="radio-inline">
-                    <input type="radio" name="data[status]" value="1" {if $send_remind['status'] == 1}checked{/if} />开启
+                    <input type="radio" name="data[enable]" value="1" {if $send_remind['enable'] == 1}checked{/if} />开启
                   </label>
                   <label class="radio-inline">
-                    <input type="radio" name="data[status]" value="0" {if $send_remind['status'] == 0}checked{/if} />关闭
+                    <input type="radio" name="data[enable]" value="0" {if $send_remind['enable'] == 0}checked{/if} />关闭
                   </label>
                 </div>
               </div>
@@ -102,7 +102,7 @@
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-1">
-                  <input type="hidden" name="keywords" value="send_remind" />
+                  <input type="hidden" name="command" value="send_remind" />
                   <input type="submit" value="确认" class="btn btn-primary" />
                   <input type="reset" value="重置" class="btn btn-default" />
                 </div>
@@ -144,10 +144,10 @@
                 <td>
                   <div class="col-sm-4 col-md-4 col-lg-4">
                     <label class="radio-inline">
-                      <input type="radio" name="data[status]" value="1" {if $register_remind['status'] == 1}checked{/if} />开启
+                      <input type="radio" name="data[enable]" value="1" {if $register_remind['enable'] == 1}checked{/if} />开启
                     </label>
                     <label class="radio-inline">
-                      <input type="radio" name="data[status]" value="0" {if $register_remind['status'] == 0}checked{/if} />关闭
+                      <input type="radio" name="data[enable]" value="0" {if $register_remind['enable'] == 0}checked{/if} />关闭
                     </label>
                   </div>
                 </td>
@@ -165,7 +165,7 @@
                 <td class="col-sm-1 col-md-1 col-lg-1"></td>
                 <td>
                   <div class="col-sm-4 col-md-4 col-lg-4">
-                    <input type="hidden" name="keywords" value="register_remind" />
+                    <input type="hidden" name="command" value="register_remind" />
                     <input type="submit" value="确认" class="btn btn-primary" />
                     <input type="reset" value="重置" class="btn btn-default" />
                   </div>

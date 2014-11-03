@@ -130,9 +130,9 @@ class WechatController extends CommonController
         // 未关注
         if (empty($rs)) {
             // 设置的用户注册信息
-            $register = $this->model->table('wechat_setting')
+            $register = $this->model->table('wechat_extend')
                 ->field('config')
-                ->where('status = 1 and keywords = "register_remind"')
+                ->where('enable = 1 and command = "register_remind"')
                 ->find();
             if (! empty($register)) {
                 $reg_config = unserialize($register['config']);
