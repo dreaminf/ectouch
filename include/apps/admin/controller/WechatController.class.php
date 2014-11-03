@@ -506,7 +506,7 @@ class WechatController extends AdminController
             $data = I('post.data');
             $openid = I('post.openid');
             $rs = Check::rule(array(
-                Check::must($data['uid']),
+                Check::must($openid),
                 L('select_openid')
             ), array(
                 Check::must($data['msg']),
@@ -544,9 +544,11 @@ class WechatController extends AdminController
             )));
         }
         $uid = I('get.uid');
+        $openid = I('get.openid');
+        $openid = $openid ? $where['openid'] = $openid : $where['uid'] = $uid;
         $info = $this->model->table('wechat_user')
             ->field('uid, nickname, openid')
-            ->where('uid = ' . $uid)
+            ->where($where)
             ->find();
         
         $this->assign('info', $info);

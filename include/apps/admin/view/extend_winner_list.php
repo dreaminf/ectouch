@@ -21,7 +21,10 @@
                     <td class="text-center">{if $val['issue_status']}已发放{else}未发放{/if}</td>
                     <td class="text-center">{if is_array($val['winner'])}{$val['winner']['name']}<br />{$val['winner']['phone']}<br />{$val['winner']['address']}{/if}</td>
                     <td class="text-center">{date('Y-m-d H:i:s',$val['dateline'])}</td>
-                    <td class="text-center">{if $val['issue_status']}<a href="{url('winner_issue', array('id'=>$val['id'], 'cancel'=>1))}" class="btn btn-primary">取消发放</a>{else}<a href="{url('winner_issue', array('id'=>$val['id']))}" class="btn btn-primary">立即发放</a>{/if}<a href="javascript:if(confirm('{$lang['confirm_delete']}'))window.location.href='{url('winner_del', array('id'=>$val['id']))};';" class="btn btn-default">删除</a></td>
+                    <td class="text-center">
+                        {if $val['issue_status']}<a href="{url('winner_issue', array('id'=>$val['id'], 'cancel'=>1))}" class="btn btn-primary">取消发放</a>{else}<a href="{url('winner_issue', array('id'=>$val['id']))}" class="btn btn-primary">立即发放</a>{/if}
+                        <a href="{url('wechat/send_custom_message', array('openid'=>$val['openid']))}" class="btn  btn-info fancybox fancybox.iframe">通知用户</a>
+                        <a href="javascript:if(confirm('{$lang['confirm_delete']}'))window.location.href='{url('winner_del', array('id'=>$val['id']))};';" class="btn btn-default">删除</a></td>
                 </tr>
                 {/loop}
 			</table>

@@ -247,7 +247,7 @@ class ExtendController extends AdminController
         if(empty($ks)){
             $this->message('请选择插件', NULL, 'error');
         }
-        $sql = 'SELECT p.id, p.prize_name, p.issue_status, p.winner, p.dateline, u.nickname FROM '.$this->model->pre.'wechat_prize p LEFT JOIN '.$this->model->pre.'wechat_user u ON p.openid = u.openid WHERE p.activity_type = "'.$ks.'" and p.prize_type = 1 ORDER BY dateline desc';
+        $sql = 'SELECT p.id, p.prize_name, p.issue_status, p.winner, p.dateline, p.openid, u.nickname FROM '.$this->model->pre.'wechat_prize p LEFT JOIN '.$this->model->pre.'wechat_user u ON p.openid = u.openid WHERE p.activity_type = "'.$ks.'" and p.prize_type = 1 ORDER BY dateline desc';
         $list = $this->model->query($sql);
         if(empty($list)){
             $list = array();
