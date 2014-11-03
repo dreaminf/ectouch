@@ -98,11 +98,18 @@ class WechatController extends CommonController
         }
         // 回复
         if (! empty($keywords)) {
-            $rs = $this->get_function($wedata['FromUserName'], $keywords);
+            // 多客服
+            $rs = $this->customer_service($wedata['FromUserName'], $keywords);
             if (empty($rs)) {
-                $rs1 = $this->keywords_reply($keywords);
+                // 功能插件
+                $rs1 = $this->get_function($wedata['FromUserName'], $keywords);
                 if (empty($rs1)) {
-                    $this->msg_reply('msg');
+                    // 关键词回复
+                    $rs2 = $this->keywords_reply($keywords);
+                    if (empty($rs2)) {
+                        // 消息自动回复
+                        $this->msg_reply('msg');
+                    }
                 }
             }
         }
@@ -187,10 +194,10 @@ class WechatController extends CommonController
             
             // 关注时回复信息
             $this->msg_reply('subscribe');
-            //红包信息
+            // 红包信息
             $content = $this->send_message($openid, 'bonus', $this->weObj, 1);
             $bonus_msg = '';
-            if(!empty($content)){
+            if (! empty($content)) {
                 $bonus_msg = $content['content'];
             }
             // 微信端发送消息
@@ -198,7 +205,7 @@ class WechatController extends CommonController
                 'touser' => $openid,
                 'msgtype' => 'text',
                 'text' => array(
-                    'content' => $template."\r\n".$bonus_msg
+                    'content' => $template . "\r\n" . $bonus_msg
                 )
             );
             $this->weObj->sendCustomMessage($msg);
@@ -238,7 +245,7 @@ class WechatController extends CommonController
     /**
      * 被动关注，消息回复
      *
-     * @param string $type
+     * @param string $type            
      * @param string $return            
      */
     private function msg_reply($type, $return = 0)
@@ -292,7 +299,7 @@ class WechatController extends CommonController
                 $this->weObj->text($replyInfo['content'])->reply();
             }
         }
-        if($return){
+        if ($return) {
             return true;
         }
     }
@@ -432,8 +439,8 @@ class WechatController extends CommonController
      *
      * @param unknown $tousername            
      * @param unknown $fromusername            
-     * @param unknown $keywords
-     * @param unknown $weObj
+     * @param unknown $keywords            
+     * @param unknown $weObj            
      * @param unknown $return            
      * @return boolean
      */
@@ -451,19 +458,61 @@ class WechatController extends CommonController
             $wechat = new $rs['command']();
             $data = $wechat->show($fromusername, $rs);
             if (! empty($data)) {
-                if($return){
+                if ($return) {
                     // 积分赠送
                     $wechat->give_point($fromusername, $rs);
                     $result = $data;
-                }
-                else{
+                } else {
                     $weObj->sendCustomMessage($data['content']);
                     // 积分赠送
                     $wechat->give_point($fromusername, $rs);
                     $result = true;
                 }
-                
             }
+        }
+        return $result;
+    }
+
+    /**
+     * 多客服
+     *
+     * @param unknown $fromusername            
+     * @param unknown $keywords            
+     */
+    public function customer_service($fromusername, $keywords)
+    {
+        $result = false;
+        if ($keywords == 'service' || (isset($_SESSION['customer_service']) && $_SESSION['customer_service'] == 'service')) {
+            $rs = $this->model->table('wechat_extend')
+                ->field('config')
+                ->where('command = "' . $keywords . '" and enable = 1 and wechat_id = ' . $this->wechat_id)
+                ->getOne();
+            if (! empty($rs)) {
+                $config = unserialize($rs);
+                // 转发客服消息
+                $this->weObj->transfer_customer_service($config['customer'])->reply();
+                $msg = array(
+                    'touser' => $fromusername,
+                    'msgtype' => 'text',
+                    'text' => array(
+                        'content' => '欢迎进入多客服系统，输入ko#service退出客服系统'
+                    )
+                );
+                $this->weObj->sendCustomMessage($msg);
+                session('customer_service', 'service');
+                $result = true;
+            }
+        } elseif ($keywords == 'ko#service' && isset($_SESSION['customer_service'])) {
+            $msg = array(
+                'touser' => $fromusername,
+                'msgtype' => 'text',
+                'text' => array(
+                    'content' => '您已退出多客服系统'
+                )
+            );
+            $this->weObj->sendCustomMessage($msg);
+            unset($_SESSION['customer_service']);
+            $result = true;
         }
         return $result;
     }
