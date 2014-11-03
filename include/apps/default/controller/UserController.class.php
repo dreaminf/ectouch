@@ -1319,7 +1319,7 @@ class UserController extends CommonController
             if ($id > 0) {
                 $this->model->table('users')->data('is_validated = 1')->where('user_id = '.$id)->update();
                 $row = $this->model->table('users')->field('user_name, email')->where('user_id = '.$id)->find();
-                show_message(sprintf(L('validate_ok'), $row['user_name'], $row['email']), L('profile_lnk'), url('user'));
+                show_message(sprintf(L('validate_ok'), $row['user_name'], $row['email']), L('profile_lnk'), url('index'));
             }
         }
         show_message(L('validate_fail'));
