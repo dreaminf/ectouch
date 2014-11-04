@@ -482,27 +482,38 @@ class WechatController extends CommonController
     public function customer_service($fromusername, $keywords)
     {
         $result = false;
-        if ($keywords == 'service' || (isset($_SESSION['customer_service']) && $_SESSION['customer_service'] == 'service')) {
+        // 是否处在多客服流程
+        $bein_kefu = $this->model->table('wechat_user')
+            ->field('bein_kefu')
+            ->where('openid = "' . $fromusername . '"')
+            ->getOne();
+        if ($keywords == 'kefu' || ! empty($bein_kefu)) {
             $rs = $this->model->table('wechat_extend')
                 ->field('config')
-                ->where('command = "' . $keywords . '" and enable = 1 and wechat_id = ' . $this->wechat_id)
+                ->where('command = "kefu" and enable = 1 and wechat_id = ' . $this->wechat_id)
                 ->getOne();
             if (! empty($rs)) {
                 $config = unserialize($rs);
-                // 转发客服消息
-                $this->weObj->transfer_customer_service($config['customer'])->reply();
-                $msg = array(
-                    'touser' => $fromusername,
-                    'msgtype' => 'text',
-                    'text' => array(
-                        'content' => '欢迎进入多客服系统，输入ko#service退出客服系统'
-                    )
-                );
-                $this->weObj->sendCustomMessage($msg);
-                session('customer_service', 'service');
+                if (empty($bein_kefu)) {
+                    $msg = array(
+                        'touser' => $fromusername,
+                        'msgtype' => 'text',
+                        'text' => array(
+                            'content' => '欢迎进入多客服系统，输入ko#kefu退出客服系统'
+                        )
+                    );
+                    $this->weObj->sendCustomMessage($msg);
+                    $this->model->table('wechat_user')
+                        ->data('bein_kefu = 1')
+                        ->where('openid = "' . $fromusername . '"')
+                        ->update();
+                } else {
+                    // 转发客服消息
+                    $this->weObj->transfer_customer_service($config['customer'])->reply();
+                }
                 $result = true;
             }
-        } elseif ($keywords == 'ko#service' && isset($_SESSION['customer_service'])) {
+        } elseif ($keywords == 'ko#kefu' && isset($_SESSION['customer_service'])) {
             $msg = array(
                 'touser' => $fromusername,
                 'msgtype' => 'text',
@@ -511,7 +522,10 @@ class WechatController extends CommonController
                 )
             );
             $this->weObj->sendCustomMessage($msg);
-            unset($_SESSION['customer_service']);
+            $this->model->table('wechat_user')
+                ->data('bein_kefu = 0')
+                ->where('openid = "' . $fromusername . '"')
+                ->update();
             $result = true;
         }
         return $result;
