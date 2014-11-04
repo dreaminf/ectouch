@@ -16,9 +16,11 @@
 	{/if}
 	<a class="list-group-item disabled"><span class="glyphicon glyphicon-plus"></span> 扩展</a>
 	<a class="list-group-item {if $controller == 'Extend'}active{/if}" href="{url('extend/index')}">功能扩展</a>
-
+    
+    {if $type == 2}
 	<a class="list-group-item disabled"><span class="glyphicon glyphicon-cog"></span> 其他</a>
 	<a class="list-group-item {if $action == 'remind'}active{/if}" href="{url('wechat/remind')}">提醒设置</a>
 	<a class="list-group-item {if $action == 'customer_service'}active{/if}" href="{url('wechat/customer_service')}">多客服设置</a>
 	<a class="list-group-item {if $action == 'share'}active{/if}" href="{url('wechat/share')}">扫码引荐</a>
+	{/if}
 </div>
