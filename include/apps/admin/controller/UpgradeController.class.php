@@ -157,6 +157,7 @@ class UpgradeController extends AdminController
             // 读取接口
             $ectouch_md5 = Http::doGet($this->_upgrademd5 . RELEASE . '_' . $this->patch_charset . ".php");
             $ectouch_md5_arr = json_decode($ectouch_md5, 1);
+            $ectouch_md5_arr = empty($ectouch_md5_arr) ? array():$ectouch_md5_arr;
             // 计算数组差集
             $diff = array_diff($ectouch_md5_arr, $this->md5_arr);
             // 丢失文件列表
