@@ -20,6 +20,11 @@
 .user-nav .ect-row-nav li i.fa-shield { color: #f9c73a }
 .user-nav .ect-row-nav li i.fa-share-alt { color: #5babe6; }
 .user-nav .ect-row-nav li i.fa-share-alt:before { font-size: 3em; }
+.user-nav .ect-row-nav li i.glyphicon-tags{color:#F93;}
+.user-nav .ect-row-nav li i.glyphicon-thumbs-up{color:#f26c5f}
+.user-nav .ect-row-nav li i.glyphicon-gift{color:#f9c73a;}
+.user-nav .ect-row-nav li i.glyphicon-link{color:#5babe6;}
+
 /*订单列表*/
 .user-order { border-top: none; padding: 0.6em 0; }
 .user-order span { color: #222 }
@@ -114,4 +119,8 @@ table.u-table:last-child td { border-bottom: none; }
 .ect-booking-list.ect-pro-list i{color: #999; vertical-align: -0.1em;}
 /*缺货登记*/
 .ect-booking-list h4.title strong{margin:0 0.6em; font-weight:normal;}
-/*我的红包*/
+/*tab查看更多*/
+.user-tab a.more{width: 100%;
+text-align: center;
+display: block;
+padding-top: 0.5em !important;}
