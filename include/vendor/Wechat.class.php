@@ -93,7 +93,7 @@ class Wechat
 	const PAY_ORDERQUERY = 'https://api.weixin.qq.com/pay/orderquery?';
 	const CUSTOM_SERVICE_GET_RECORD = '/customservice/getrecord?';
 	const CUSTOM_SERVICE_GET_KFLIST = '/customservice/getkflist?';
-	const CUSTOM_SERVICE_GET_ONLINEKFLIST = '/customservice/getkflist?';
+	const CUSTOM_SERVICE_GET_ONLINEKFLIST = '/customservice/getonlinekflist?';
 	const SEMANTIC_API_URL= 'https://api.weixin.qq.com/semantic/semproxy/search?';
 	
 	private $token;
@@ -1890,7 +1890,7 @@ class Wechat
 			'CreateTime'=>time(),
 			'MsgType'=>'transfer_customer_service',
 		);
-		if (!$customer_account) {
+		if (!empty($customer_account)) {
 			$msg['TransInfo'] = array('KfAccount'=>$customer_account);
 		}
 		$this->Message($msg);

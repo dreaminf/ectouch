@@ -508,8 +508,19 @@ class WechatController extends CommonController
                         ->where('openid = "' . $fromusername . '"')
                         ->update();
                 } else {
+                    // 在线客服列表
+                    $online_list = $this->weObj->getCustomServiceOnlineKFlist();
+                    if ($online_list['kf_online_list']) {
+                        foreach ($online_list['kf_online_list'] as $key => $val) {
+                            if ($config['customer'] == $val['kf_account'] && $val['status'] > 0 && $val['accepted_case'] < $val['auto_accept']) {
+                                $customer = $config['customer'];
+                            } else {
+                                $customer = '';
+                            }
+                        }
+                    }
                     // 转发客服消息
-                    $this->weObj->transfer_customer_service($config['customer'])->reply();
+                    $this->weObj->transfer_customer_service($customer)->reply();
                 }
                 $result = true;
             }
