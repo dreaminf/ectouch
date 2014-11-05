@@ -487,7 +487,7 @@ class WechatController extends CommonController
             ->field('bein_kefu')
             ->where('openid = "' . $fromusername . '"')
             ->getOne();
-        if ($keywords == 'kefu' || ! empty($bein_kefu)) {
+        if ($keywords == 'kefu' || (! empty($bein_kefu) && $keywords != 'ko#kefu')) {
             $rs = $this->model->table('wechat_extend')
                 ->field('config')
                 ->where('command = "kefu" and enable = 1 and wechat_id = ' . $this->wechat_id)
@@ -513,7 +513,7 @@ class WechatController extends CommonController
                 }
                 $result = true;
             }
-        } elseif ($keywords == 'ko#kefu' && isset($_SESSION['customer_service'])) {
+        } elseif ($keywords == 'ko#kefu' && ! empty($bein_kefu)) {
             $msg = array(
                 'touser' => $fromusername,
                 'msgtype' => 'text',
