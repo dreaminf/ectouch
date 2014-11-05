@@ -63,10 +63,6 @@ class WechatController extends CommonController
                 // 用户扫描带参数二维码(未关注)
                 if (isset($wedata['EventKey']) && ! empty($wedata['EventKey'])) {
                     $keywords = $wedata['EventKey'];
-                } else {
-                    // 关注时回复信息
-                    $this->msg_reply('subscribe');
-                    exit();
                 }
             } elseif ('unsubscribe' == $wedata['Event']) {
                 // 取消关注
@@ -102,11 +98,18 @@ class WechatController extends CommonController
         }
         // 回复
         if (! empty($keywords)) {
-            $rs = $this->get_function($wedata['FromUserName'], $keywords);
+            // 多客服
+            $rs = $this->customer_service($wedata['FromUserName'], $keywords);
             if (empty($rs)) {
-                $rs1 = $this->keywords_reply($keywords);
+                // 功能插件
+                $rs1 = $this->get_function($wedata['FromUserName'], $keywords);
                 if (empty($rs1)) {
-                    $this->msg_reply('msg');
+                    // 关键词回复
+                    $rs2 = $this->keywords_reply($keywords);
+                    if (empty($rs2)) {
+                        // 消息自动回复
+                        $this->msg_reply('msg');
+                    }
                 }
             }
         }
@@ -134,9 +137,9 @@ class WechatController extends CommonController
         // 未关注
         if (empty($rs)) {
             // 设置的用户注册信息
-            $register = $this->model->table('wechat_setting')
+            $register = $this->model->table('wechat_extend')
                 ->field('config')
-                ->where('status = 1 and keywords = "register_remind"')
+                ->where('enable = 1 and command = "register_remind"')
                 ->find();
             if (! empty($register)) {
                 $reg_config = unserialize($register['config']);
@@ -188,12 +191,21 @@ class WechatController extends CommonController
             $this->model->table('wechat_user')
                 ->data($info)
                 ->insert();
+            
+            // 关注时回复信息
+            $this->msg_reply('subscribe');
+            // 红包信息
+            $content = $this->send_message($openid, 'bonus', $this->weObj, 1);
+            $bonus_msg = '';
+            if (! empty($content)) {
+                $bonus_msg = $content['content'];
+            }
             // 微信端发送消息
             $msg = array(
                 'touser' => $openid,
                 'msgtype' => 'text',
                 'text' => array(
-                    'content' => $template
+                    'content' => $template . "\r\n" . $bonus_msg
                 )
             );
             $this->weObj->sendCustomMessage($msg);
@@ -203,6 +215,8 @@ class WechatController extends CommonController
                 ->data($info)
                 ->where($where)
                 ->update();
+            // 关注时回复信息
+            $this->msg_reply('subscribe');
         }
     }
 
@@ -232,8 +246,9 @@ class WechatController extends CommonController
      * 被动关注，消息回复
      *
      * @param string $type            
+     * @param string $return            
      */
-    private function msg_reply($type)
+    private function msg_reply($type, $return = 0)
     {
         $replyInfo = $this->model->table('wechat_reply')
             ->field('content, media_id')
@@ -283,6 +298,9 @@ class WechatController extends CommonController
                 $replyInfo['content'] = strip_tags($replyInfo['content']);
                 $this->weObj->text($replyInfo['content'])->reply();
             }
+        }
+        if ($return) {
+            return true;
         }
     }
 
@@ -390,6 +408,7 @@ class WechatController extends CommonController
      */
     public function get_function($fromusername, $keywords)
     {
+        $return = false;
         $rs = $this->model->table('wechat_extend')
             ->field('name, command, config')
             ->where('keywords like "%' . $keywords . '%" and enable = 1 and wechat_id = ' . $this->wechat_id)
@@ -413,6 +432,103 @@ class WechatController extends CommonController
             }
         }
         return $return;
+    }
+
+    /**
+     * 主动发送信息
+     *
+     * @param unknown $tousername            
+     * @param unknown $fromusername            
+     * @param unknown $keywords            
+     * @param unknown $weObj            
+     * @param unknown $return            
+     * @return boolean
+     */
+    public function send_message($fromusername, $keywords, $weObj, $return = 0)
+    {
+        $result = false;
+        $rs = $this->model->table('wechat_extend')
+            ->field('name, command, config')
+            ->where('keywords like "%' . $keywords . '%" and enable = 1 and wechat_id = ' . $this->wechat_id)
+            ->order('id asc')
+            ->find();
+        $file = ROOT_PATH . 'plugins/wechat/' . $rs['command'] . '/' . $rs['command'] . '.class.php';
+        if (file_exists($file)) {
+            require_once ($file);
+            $wechat = new $rs['command']();
+            $data = $wechat->show($fromusername, $rs);
+            if (! empty($data)) {
+                if ($return) {
+                    // 积分赠送
+                    $wechat->give_point($fromusername, $rs);
+                    $result = $data;
+                } else {
+                    $weObj->sendCustomMessage($data['content']);
+                    // 积分赠送
+                    $wechat->give_point($fromusername, $rs);
+                    $result = true;
+                }
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * 多客服
+     *
+     * @param unknown $fromusername            
+     * @param unknown $keywords            
+     */
+    public function customer_service($fromusername, $keywords)
+    {
+        $result = false;
+        // 是否处在多客服流程
+        $bein_kefu = $this->model->table('wechat_user')
+            ->field('bein_kefu')
+            ->where('openid = "' . $fromusername . '"')
+            ->getOne();
+        if ($keywords == 'kefu' || (! empty($bein_kefu) && $keywords != 'ko#kefu')) {
+            $rs = $this->model->table('wechat_extend')
+                ->field('config')
+                ->where('command = "kefu" and enable = 1 and wechat_id = ' . $this->wechat_id)
+                ->getOne();
+            if (! empty($rs)) {
+                $config = unserialize($rs);
+                if (empty($bein_kefu)) {
+                    $msg = array(
+                        'touser' => $fromusername,
+                        'msgtype' => 'text',
+                        'text' => array(
+                            'content' => '欢迎进入多客服系统，输入ko#kefu退出客服系统'
+                        )
+                    );
+                    $this->weObj->sendCustomMessage($msg);
+                    $this->model->table('wechat_user')
+                        ->data('bein_kefu = 1')
+                        ->where('openid = "' . $fromusername . '"')
+                        ->update();
+                } else {
+                    // 转发客服消息
+                    $this->weObj->transfer_customer_service($config['customer'])->reply();
+                }
+                $result = true;
+            }
+        } elseif ($keywords == 'ko#kefu' && ! empty($bein_kefu)) {
+            $msg = array(
+                'touser' => $fromusername,
+                'msgtype' => 'text',
+                'text' => array(
+                    'content' => '您已退出多客服系统'
+                )
+            );
+            $this->weObj->sendCustomMessage($msg);
+            $this->model->table('wechat_user')
+                ->data('bein_kefu = 0')
+                ->where('openid = "' . $fromusername . '"')
+                ->update();
+            $result = true;
+        }
+        return $result;
     }
 
     /**
@@ -495,9 +611,7 @@ class WechatController extends CommonController
         if (empty($ret)) {
             // 获取用户所在分组ID
             $group_id = $weObj->getUserGroup($userinfo['openid']);
-            if ($group_id === false) {
-                die($weObj->errCode . ':' . $weObj->errMsg);
-            }
+            $group_id = $group_id ? $group_id : 0;
             // 设置的用户注册信息
             $register = model('Base')->model->table('wechat_setting')
                 ->field('config')

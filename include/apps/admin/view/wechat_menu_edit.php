@@ -44,7 +44,6 @@
           <td width="200">{$lang['menu_url']}:</td>
           <td><div class="col-md-10">
               <input type="text" name="data[url]" class="form-control" value="{$info['url']}" />
-              <span class="help-block">{$lang['menu_help1']}</span>
             </div></td>
         </tr>
         <tr>

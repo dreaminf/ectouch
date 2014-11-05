@@ -90,9 +90,9 @@ class integrate
         if (empty($cfg['db_host'])) {
             $this->db_name = $db_config['DB_NAME'];
             $this->prefix = $db_config['DB_PREFIX'];
-            if (class_exists('ECTouch')){
+            if (class_exists('ECTouch')) {
                 $this->db = & ECTouch::db();
-            }else{
+            } else {
                 $this->db = $GLOBALS['db'];
             }
         } else {
@@ -360,6 +360,35 @@ class integrate
         
         $this->db->query($sql);
     }
+    
+    /**
+     * 用户绑定时同步用户数据
+     * @param unknown $old_uid
+     * @param unknown $new_uid
+     */
+    function sync_user($old_uid, $new_uid)
+    {
+        if (!empty($old_uid) && !empty($new_uid)) {
+            $sql = "UPDATE " . ECTouch::ecs()->table('users') . " SET parent_id = ".$new_uid." WHERE parent_id = " . $old_uid; // 将用户的下级的parent_id 改为新绑定的用户
+            ECTouch::db()->query($sql);
+            /* 更改用户订单 */
+            $sql = "UPDATE " . ECTouch::ecs()->table('order_info') . " SET user_id = ".$new_uid." WHERE user_id = ".$old_uid;
+            ECTouch::db()->query($sql);
+            
+            $sql = "UPDATE " . ECTouch::ecs()->table('booking_goods') . " SET user_id = ".$new_uid." WHERE user_id = ".$old_uid; // 更改用户
+            ECTouch::db()->query($sql);
+            $sql = "UPDATE " . ECTouch::ecs()->table('collect_goods') . " SET user_id = ".$new_uid." WHERE user_id = ".$old_uid; // 更改会员收藏商品
+            ECTouch::db()->query($sql);
+            $sql = "UPDATE " . ECTouch::ecs()->table('feedback') . " SET user_id = ".$new_uid." WHERE user_id = ".$old_uid; // 更改用户留言
+            ECTouch::db()->query($sql);
+            $sql = "UPDATE " . ECTouch::ecs()->table('user_address') . " SET user_id = ".$new_uid." WHERE user_id = ".$old_uid; // 更改用户地址
+            ECTouch::db()->query($sql);
+            $sql = "UPDATE " . ECTouch::ecs()->table('tag') . " SET user_id = ".$new_uid." WHERE user_id = ".$old_uid; // 更改用户标记
+            ECTouch::db()->query($sql);
+            $sql = "UPDATE " . ECTouch::ecs()->table('account_log') . " SET user_id = ".$new_uid." WHERE user_id = ".$old_uid; // 更改用户日志
+            ECTouch::db()->query($sql);
+        }
+    }
 
     /**
      * 获取指定用户的信息
@@ -497,6 +526,7 @@ class integrate
      *
      * @access public
      * @param            
+     *
      * @return void
      */
     function set_cookie($username = '', $remember = null)
@@ -525,6 +555,7 @@ class integrate
      *
      * @access public
      * @param            
+     *
      * @return void
      */
     function set_session($username = '')

@@ -506,7 +506,7 @@ class WechatController extends AdminController
             $data = I('post.data');
             $openid = I('post.openid');
             $rs = Check::rule(array(
-                Check::must($data['uid']),
+                Check::must($openid),
                 L('select_openid')
             ), array(
                 Check::must($data['msg']),
@@ -544,9 +544,11 @@ class WechatController extends AdminController
             )));
         }
         $uid = I('get.uid');
+        $openid = I('get.openid');
+        $openid = $openid ? $where['openid'] = $openid : $where['uid'] = $uid;
         $info = $this->model->table('wechat_user')
             ->field('uid, nickname, openid')
-            ->where('uid = ' . $uid)
+            ->where($where)
             ->find();
         
         $this->assign('info', $info);
@@ -1687,12 +1689,12 @@ class WechatController extends AdminController
     {
         if (IS_POST) {
             $content_type = I('post.content_type');
-            if ($content_type == 'media') {
-                $data['media_id'] = I('post.media_id');
-                $data['content'] = '';
-            } else {
+            if ($content_type == 'text') {
                 $data['content'] = I('post.content');
                 $data['media_id'] = 0;
+            } else {
+                $data['media_id'] = I('post.media_id');
+                $data['content'] = '';
             }
             $data['type'] = 'subscribe';
             if (is_array($data) && (! empty($data['media_id']) || ! empty($data['content']))) {
@@ -1737,12 +1739,12 @@ class WechatController extends AdminController
     {
         if (IS_POST) {
             $content_type = I('post.content_type');
-            if ($content_type == 'media') {
-                $data['media_id'] = I('post.media_id');
-                $data['content'] = '';
-            } else {
+            if ($content_type == 'text') {
                 $data['content'] = I('post.content');
                 $data['media_id'] = 0;
+            } else {
+                $data['media_id'] = I('post.media_id');
+                $data['content'] = '';
             }
             $data['type'] = 'msg';
             if (is_array($data) && (! empty($data['media_id']) || ! empty($data['content']))) {
@@ -1920,30 +1922,31 @@ class WechatController extends AdminController
     public function remind()
     {
         if (IS_POST) {
-            $keywords = I('post.keywords');
+            $command = I('post.command');
             $data = I('post.data');
             $config = I('post.config');
-            $info = Check::rule(array(Check::must($keywords), '关键词不正确'));
+            $info = Check::rule(array(
+                Check::must($command),
+                '关键词不正确'
+            ));
             if ($info !== true) {
                 $this->message($info, NULL, 'error');
             }
-            $num = $this->model->table('wechat_setting')
-                ->where('keywords = "' . $keywords . '"')
+            if (! empty($config)) {
+                $data['config'] = serialize($config);
+            }
+            $data['wechat_id'] = $this->wechat_id;
+            $num = $this->model->table('wechat_extend')
+                ->where('command = "' . $command . '" and wechat_id = ' . $this->wechat_id)
                 ->count();
             if ($num > 0) {
-                if (! empty($config)) {
-                    $data['config'] = serialize($config);
-                }
-                $this->model->table('wechat_setting')
+                $this->model->table('wechat_extend')
                     ->data($data)
-                    ->where('keywords = "' . $keywords . '"')
+                    ->where('command = "' . $command . '" and wechat_id = ' . $this->wechat_id)
                     ->update();
             } else {
-                $data['keywords'] = $keywords;
-                if (! empty($config)) {
-                    $data['config'] = serialize($config);
-                }
-                $this->model->table('wechat_setting')
+                $data['command'] = $command;
+                $this->model->table('wechat_extend')
                     ->data($data)
                     ->insert();
             }
@@ -1951,30 +1954,30 @@ class WechatController extends AdminController
             $this->redirect($_SERVER['HTTP_REFERER']);
         }
         
-        $order_remind = $this->model->table('wechat_setting')
-            ->field('title, status, config')
-            ->where('keywords = "order_remind"')
+        $order_remind = $this->model->table('wechat_extend')
+            ->field('name, enable, config')
+            ->where('command = "order_remind" and wechat_id = ' . $this->wechat_id)
             ->find();
         if ($order_remind['config']) {
             $order_remind['config'] = unserialize($order_remind['config']);
         }
-        $pay_remind = $this->model->table('wechat_setting')
-            ->field('title, status, config')
-            ->where('keywords = "pay_remind"')
+        $pay_remind = $this->model->table('wechat_extend')
+            ->field('name, enable, config')
+            ->where('command = "pay_remind" and wechat_id = ' . $this->wechat_id)
             ->find();
         if ($pay_remind['config']) {
             $pay_remind['config'] = unserialize($pay_remind['config']);
         }
-        $send_remind = $this->model->table('wechat_setting')
-            ->field('title, status, config')
-            ->where('keywords = "send_remind"')
+        $send_remind = $this->model->table('wechat_extend')
+            ->field('name, enable, config')
+            ->where('command = "send_remind" and wechat_id = ' . $this->wechat_id)
             ->find();
         if ($send_remind['config']) {
             $send_remind['config'] = unserialize($send_remind['config']);
         }
-        $register_remind = $this->model->table('wechat_setting')
-            ->field('title, status, config')
-            ->where('keywords = "register_remind"')
+        $register_remind = $this->model->table('wechat_extend')
+            ->field('name, enable, config')
+            ->where('command = "register_remind" and wechat_id = ' . $this->wechat_id)
             ->find();
         if ($register_remind['config']) {
             $register_remind['config'] = unserialize($register_remind['config']);
@@ -1983,6 +1986,55 @@ class WechatController extends AdminController
         $this->assign('pay_remind', $pay_remind);
         $this->assign('send_remind', $send_remind);
         $this->assign('register_remind', $register_remind);
+        $this->display();
+    }
+
+    /**
+     * 多客服设置
+     */
+    public function customer_service()
+    {
+        if (IS_POST) {
+            $command = I('post.command');
+            $data = I('post.data');
+            $config = I('post.config');
+            $info = Check::rule(array(
+                Check::must($command),
+                '关键词不正确'
+            ));
+            if ($info !== true) {
+                $this->message($info, NULL, 'error');
+            }
+            $data['wechat_id'] = $this->wechat_id;
+            if (! empty($config)) {
+                $data['config'] = serialize($config);
+            }
+            $num = $this->model->table('wechat_extend')
+                ->where('command = "' . $command . '" and wechat_id = ' . $this->wechat_id)
+                ->count();
+            if ($num > 0) {
+                $this->model->table('wechat_extend')
+                    ->data($data)
+                    ->where('command = "' . $command . '" and wechat_id = ' . $this->wechat_id)
+                    ->update();
+            } else {
+                $data['command'] = $command;
+                $this->model->table('wechat_extend')
+                    ->data($data)
+                    ->insert();
+            }
+            
+            $this->redirect($_SERVER['HTTP_REFERER']);
+        }
+        
+        $customer_service = $this->model->table('wechat_extend')
+            ->field('name, enable, config')
+            ->where('command = "customer_service" and wechat_id = ' . $this->wechat_id)
+            ->find();
+        if ($customer_service['config']) {
+            $customer_service['config'] = unserialize($customer_service['config']);
+        }
+        $this->assign('customer_service', $customer_service);
         $this->display();
     }
 

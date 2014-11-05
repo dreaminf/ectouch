@@ -360,7 +360,7 @@ class UserController extends CommonController
                             'order_id' => $order['order_id']
                         )) . "\">" . L('pay_money') . "</a>";
                     } else {
-                        //@$order['handler'] = "<a class=\"btn btn-info ect-colorf\" href=\"javascript:void(0);\">" . L('view_order') . "</a>";
+                        // @$order['handler'] = "<a class=\"btn btn-info ect-colorf\" href=\"javascript:void(0);\">" . L('view_order') . "</a>";
                     }
                 }
             } else {
@@ -1307,6 +1307,23 @@ class UserController extends CommonController
         $this->assign('back_act', $this->back_act);
         $this->display('user_register.dwt');
     }
+    
+    /**
+     * 邮件验证
+     */
+    public function validate_email()
+    {
+        $hash = I('get.hash');
+        if ($hash) {
+            $id = model('Users')->register_hash('decode', $hash);
+            if ($id > 0) {
+                $this->model->table('users')->data('is_validated = 1')->where('user_id = '.$id)->update();
+                $row = $this->model->table('users')->field('user_name, email')->where('user_id = '.$id)->find();
+                show_message(sprintf(L('validate_ok'), $row['user_name'], $row['email']), L('profile_lnk'), url('index'));
+            }
+        }
+        show_message(L('validate_fail'));
+    }
 
     /**
      * 第三方登录
@@ -1697,18 +1714,19 @@ class UserController extends CommonController
             exit();
         }
     }
-    
+
     /**
      * 更新商品销量
      */
-    private function update_touch_goods($order){
+    private function update_touch_goods($order)
+    {
         $sql = 'select pay_status from ' . $this->model->pre . 'order_info where  order_id = "' . $order . '"';
         $pay_status = $this->model->query($sql);
         $pay_status = $pay_status[0];
-        if ($pay_status == 2){
+        if ($pay_status == 2) {
             /* 统计时间段 */
             $period = C('top10_time');
-            //近一个月（30天）
+            // 近一个月（30天）
             if ($period == 1) { // 一年
                 $ext = " AND o.add_time > '" . local_strtotime('-1 years') . "'";
             } elseif ($period == 2) { // 半年
@@ -1722,31 +1740,25 @@ class UserController extends CommonController
             }
             $sql = 'select goods_id from ' . $this->model->pre . 'order_info where  order_id = "' . $order . '"';
             $arrGoodsid = $this->model->query($sql);
-    
+            
             $sql = 'select extension_code from ' . $this->model->pre . 'order_info where  order_id = "' . $order . '"';
             $extension_code = $this->model->query($sql);
-    
-            if ($extension_code == ''){
-                foreach ($arrGoodsid as $key=>$val){
+            
+            if ($extension_code == '') {
+                foreach ($arrGoodsid as $key => $val) {
                     /* 查询该商品销量 */
-                    $sql = 'SELECT IFNULL(SUM(g.goods_number), 0) ' .
-                        'as count FROM ' . $this->pre . 'order_info AS o, ' .
-                        $this->pre . 'order_goods AS g ' .
-                        "WHERE o.order_id = g.order_id " .
-                        "  AND g.goods_id = '" . $val['goods_id'] . "' AND o.pay_status = '2' " . $ext;
+                    $sql = 'SELECT IFNULL(SUM(g.goods_number), 0) ' . 'as count FROM ' . $this->pre . 'order_info AS o, ' . $this->pre . 'order_goods AS g ' . "WHERE o.order_id = g.order_id " . "  AND g.goods_id = '" . $val['goods_id'] . "' AND o.pay_status = '2' " . $ext;
                     $res = $this->model->query($sql);
                     $sales_count = $res[0]['count'];
-    
+                    
                     $nCount = $this->query('select COUNT(*) from ' . $this->model->pre . 'touch_goods where  goods_id = "' . $val['goods_id'] . '"');
                     if ($nCount[0]['COUNT(*)'] == 0) {
                         $this->model->query("INSERT INTO " . $this->model->pre . "touch_goods (`goods_id` ,`sales_volume` ) VALUES ( '" . $val['goods_id'] . "' , '0')");
                     }
                     $sql = 'update ' . $this->model->pre . 'touch_goods AS a set a.sales_volume = ' . $sales_count . " WHERE goods_id=" . $val['goods_id'];
                     $this->model->query($sql);
-    
                 }
             }
-             
         }
     }
 }

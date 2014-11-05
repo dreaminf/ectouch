@@ -156,6 +156,7 @@ $_LANG['sort_popularity'] = '人气';
 $_LANG['sort_price'] = '价格';
 $_LANG['like_num'] = '人喜欢';
 $_LANG['scan_num'] = '次浏览';
+$_LANG['button_submit'] = '确定';
 
 
 /* 商品比较JS语言项 */

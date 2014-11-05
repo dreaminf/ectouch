@@ -29,7 +29,7 @@ class CommentModel extends BaseModel {
      */
     function assign_comment($id, $type, $page = 1) {
         /* 取得评论列表 */
-        $count = $this->row('SELECT COUNT(*) as count FROM ' . $this->pre .
+        $res = $this->row('SELECT COUNT(*) as count FROM ' . $this->pre .
                 "comment WHERE id_value = '$id' AND comment_type = '$type' AND status = 1 AND parent_id = 0");
         $count = $res['count'];
         $size = C('comments_number') > 0 ? C('comments_number') : 5;

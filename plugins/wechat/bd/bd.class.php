@@ -154,7 +154,6 @@ class bd extends PluginWechatController
                 )));
             }
             if(!isset($_SESSION['openid'])){
-
                 show_message('您未登陆，不能进行绑定操作！', '首页', url('index/index'));
             }
             //会员信息
@@ -173,11 +172,14 @@ class bd extends PluginWechatController
                     $_SESSION['discount'] = 1.00;
                 }
             }
+            $old_uid = session('user_id');
             if ($user->login($data['username'], $data['password'], '')) {
                 //绑定
                 model('Base')->model->table('wechat_user')->data('ect_uid = '.session('user_id'))->where('openid = "'.session('openid').'"')->update();
                 model('Users')->update_user_info();
                 model('Users')->recalculate_price();
+                //同步用户数据
+                $user->sync_user($old_uid, $_SESSION['user_id']);
                 show_message('绑定成功', '返回首页', url('index/index'));
             } else {
                 show_message('用户名或密码错误', '会员绑定', url('wechat/plugin_show', array(
