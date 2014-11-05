@@ -295,7 +295,7 @@ class WechatController extends CommonController
                 $this->weObj->reply($replyData);
             } else {
                 // 文本回复
-                $replyInfo['content'] = strip_tags($replyInfo['content']);
+                $replyInfo['content'] = html_out($replyInfo['content']);
                 $this->weObj->text($replyInfo['content'])->reply();
             }
         }
@@ -390,7 +390,7 @@ class WechatController extends CommonController
                 }
             } else {
                 // 文本回复
-                $result[0]['content'] = strip_tags($result[0]['content']);
+                $result[0]['content'] = html_out($result[0]['content']);
                 $this->weObj->text($result[0]['content'])->reply();
                 $endrs = true;
             }
