@@ -157,7 +157,7 @@ $_LANG['sort_price'] = '价格';
 $_LANG['like_num'] = '人喜欢';
 $_LANG['scan_num'] = '次浏览';
 $_LANG['button_submit'] = '确定';
-
+$_LANG['clear_filter'] = '清空';
 
 /* 商品比较JS语言项 */
 $_LANG['compare_js']['button_compare'] = '比较选定商品';
@@ -540,7 +540,7 @@ $_LANG['brand_category'] = '分类浏览：';
 $_LANG['all_category'] = '所有分类';
 
 /* 商品分类页 */
-$_LANG['goods_filter'] = '商品筛选';
+$_LANG['goods_filter'] = '筛选';
 
 /* cls_image类的语言项 */
 $_LANG['directory_readonly'] = '目录 % 不存在或不可写';

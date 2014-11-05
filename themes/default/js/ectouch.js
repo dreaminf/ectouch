@@ -59,19 +59,32 @@ function openMune() {
     } else {
         $(".ect-nav").show();
     }
-}/**
+}
+/**
+ * 清空筛选
+ * @returns {undefined}
+ */
+$(".touchweb_mod_Filter .btn .clear").click(function() {
+    $(".touchweb-com_listType .range").text("全部");
+    $(".touchweb-com_listType input").each(function() {
+       // $(this)[0].checked = false;
+       if($(this).attr('class') != 'cat'){ 
+           $(this).val("");
+       }
+    });
+});
+/**
  * jquery Begin
  * @returns {undefined}
  */
-
 $(function() {
-   $('.touchweb-com_listType li').click(function() {
+    $('.touchweb-com_listType li').click(function() {
         $(this).addClass('av-selected').siblings('li').removeClass('av-selected');
         var temp = $(this).find('a').attr('name');
         var vl = $(this).find('a').attr('value');
         $(this).parent('ul').removeClass("show");
         $(this).parent().prev().find(".icon-right_arrow").removeClass("down");
-        $(this).parent().prev().find(".range").text(temp);
+        $(this).parent().prev().find(".range").text(temp).addClass('visited');
         //价格筛选
         if (vl.indexOf('|') > 0) {
             var val_array = vl.split('|');
@@ -159,8 +172,6 @@ $(function() {
     $('#selected8').click(function() {
         $('#surplus').slideToggle("fast");
     });
-
-
     /**选择积分**/
 
     $('#selected9').click(function() {

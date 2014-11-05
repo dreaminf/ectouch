@@ -1,6 +1,6 @@
 <div class="ect-wrapper text-center">
   <form method="GET" class="sort" name="listform">
-    <div> <a class="{if $sort == 'goods_id' && $order == 'DESC'}ect-colory{/if}" href="{:url('category/index#goods_list',array('id'=>$this->_var['id'],'display'=>$this->_var['display'],'brand'=>$this->_var['brand_id'],'price_min'=>$this->_var['price_min'],'price_max'=>$this->_var['price_max'],'filter_attr'=>$this->_var['filter_attr'], 'sort'=>'goods_id', 'order'=> 'DESC', 'keywords'=>$this->_var['keywords']))}">{$lang.sort_default}</a> <a class="{if $sort =='sales_volume' && $order == 'DESC'}ect-colory select{elseif $sort =='sales_volume' && $order == 'ASC'}ect-colory{/if}" href="{:url('category/index#goods_list',array('id'=>$this->_var['id'],'display'=>$this->_var['display'],'brand'=>$this->_var['brand_id'],'price_min'=>$this->_var['price_min'],'price_max'=>$this->_var['price_max'],'filter_attr'=>$this->_var['filter_attr'], 'sort'=>'sales_volume', 'order'=> ($this->_var['sort']=='sales_volume' && $this->_var['order']=='ASC')?'DESC':'ASC', 'keywords'=>$this->_var['keywords']))}">{$lang.sort_sales} <i class="glyphicon glyphicon-arrow-up"></i></a> <a class="{if $sort =='click_count' && $order == 'DESC'}ect-colory select{elseif $sort =='click_count' && $order == 'ASC'}ect-colory{/if}" href="{:url('category/index#goods_list',array('id'=>$this->_var['id'],'display'=>$this->_var['display'],'brand'=>$this->_var['brand_id'],'price_min'=>$this->_var['price_min'],'price_max'=>$this->_var['price_max'],'filter_attr'=>$this->_var['filter_attr'], 'sort'=>'click_count', 'order'=> ($this->_var['sort']=='click_count' && $this->_var['order']=='ASC')?'DESC':'ASC', 'keywords'=>$this->_var['keywords']))}">{$lang.sort_popularity} <i class="glyphicon glyphicon-arrow-up"></i></a> <a class="{if $sort =='shop_price' && $order == 'DESC'}ect-colory select{elseif $sort =='shop_price' && $order == 'ASC'}ect-colory{/if}" href="{:url('category/index#goods_list',array('id'=>$this->_var['id'],'display'=>$this->_var['display'],'brand'=>$this->_var['brand_id'],'price_min'=>$this->_var['price_min'],'price_max'=>$this->_var['price_max'],'filter_attr'=>$this->_var['filter_attr'], 'sort'=>'shop_price', 'order'=> ($this->_var['sort']=='shop_price' && $this->_var['order']=='ASC')?'DESC':'ASC', 'keywords'=>$this->_var['keywords']))}">{$lang.sort_price}<i class="glyphicon glyphicon-arrow-up"></i></a> <a class="category-list"><i class="ect-icon ect-icon2 ect-icon-cate3"></i>筛选</a> </div>
+    <div> <a class="{if $sort == 'goods_id' && $order == 'DESC'}ect-colory{/if}" href="{:url('category/index#goods_list',array('id'=>$this->_var['id'],'display'=>$this->_var['display'],'brand'=>$this->_var['brand_id'],'price_min'=>$this->_var['price_min'],'price_max'=>$this->_var['price_max'],'filter_attr'=>$this->_var['filter_attr'], 'sort'=>'goods_id', 'order'=> 'DESC', 'keywords'=>$this->_var['keywords']))}">{$lang.sort_default}</a> <a class="{if $sort =='sales_volume' && $order == 'DESC'}ect-colory select{elseif $sort =='sales_volume' && $order == 'ASC'}ect-colory{/if}" href="{:url('category/index#goods_list',array('id'=>$this->_var['id'],'display'=>$this->_var['display'],'brand'=>$this->_var['brand_id'],'price_min'=>$this->_var['price_min'],'price_max'=>$this->_var['price_max'],'filter_attr'=>$this->_var['filter_attr'], 'sort'=>'sales_volume', 'order'=> ($this->_var['sort']=='sales_volume' && $this->_var['order']=='ASC')?'DESC':'ASC', 'keywords'=>$this->_var['keywords']))}">{$lang.sort_sales} <i class="glyphicon glyphicon-arrow-up"></i></a> <a class="{if $sort =='click_count' && $order == 'DESC'}ect-colory select{elseif $sort =='click_count' && $order == 'ASC'}ect-colory{/if}" href="{:url('category/index#goods_list',array('id'=>$this->_var['id'],'display'=>$this->_var['display'],'brand'=>$this->_var['brand_id'],'price_min'=>$this->_var['price_min'],'price_max'=>$this->_var['price_max'],'filter_attr'=>$this->_var['filter_attr'], 'sort'=>'click_count', 'order'=> ($this->_var['sort']=='click_count' && $this->_var['order']=='ASC')?'DESC':'ASC', 'keywords'=>$this->_var['keywords']))}">{$lang.sort_popularity} <i class="glyphicon glyphicon-arrow-up"></i></a> <a class="{if $sort =='shop_price' && $order == 'DESC'}ect-colory select{elseif $sort =='shop_price' && $order == 'ASC'}ect-colory{/if}" href="{:url('category/index#goods_list',array('id'=>$this->_var['id'],'display'=>$this->_var['display'],'brand'=>$this->_var['brand_id'],'price_min'=>$this->_var['price_min'],'price_max'=>$this->_var['price_max'],'filter_attr'=>$this->_var['filter_attr'], 'sort'=>'shop_price', 'order'=> ($this->_var['sort']=='shop_price' && $this->_var['order']=='ASC')?'DESC':'ASC', 'keywords'=>$this->_var['keywords']))}">{$lang.sort_price}<i class="glyphicon glyphicon-arrow-up"></i></a> <a class="category-list"><i class="ect-icon ect-icon2 ect-icon-cate3"></i>{$lang.goods_filter}</a> </div>
     <div class="category-list-show"> 
       <!--{foreach from=$category item=cat name=no}--> 
       <a href="{$cat.url}" class="col-md-3 col-xs-3"><span>{if $cat.cat_id}{$cat.name|escape:html}{else}{$cat.name|escape:html}{/if}</span></a> 
@@ -28,55 +28,69 @@
 
 <!--筛选开始-->
 <form class="hold-height" method="post" id="form" action="{:url('category/index')}">
-<div id="goFilter">
-<div class="touchweb_mod_Filter">
-  <div class="touchweb-com_headerFilter"> <a class="left" href="javascript:;" data-data-pc="-1">取消</a>
-    <h1 class="title">筛选</h1>
-    <a class="right" href="javascript:document.getElementById('form').submit()">确定</a> </div>
-  <div class="scrollContent">
-    <div data-tpa="H5_SEARCH_FILTER" class="touchweb-com_listType"> 
-    
-    <a href="javascript:;" id="filter_cate" data-url="touchweb_mod_Category" class="title" selectid="31085"> 分类 <span class="range visited"> 全部 </span> <em class="icon-right_arrow"></em> </a>
-      <ul>
-        <!--{foreach from=$category item=cat name=no}-->
-        <li class="av-selected"><a href="javascript:;" id="cate_{$cat.id}" value="{$cat.id}"  name="{$cat.name|escape:html}" class="childTitle">{$cat.name|escape:html}</a></li>
-        <!--{/foreach}-->
-      </ul>
-      <input type="hidden" name="id" value="{$id}"/>
-
-      <a href="javascript:;" id="filter_brand" data-url="touchweb_mod_Brand" class="title"> 品牌 <span class="range">全部</span> <em class="icon-right_arrow"></em> </a>
-      <ul>
-        <!--{foreach from=$brands item=brand name=brands}-->
-        <li class="av-selected"><a href="javascript:;" id="brand_{$cat.brand_id}" value="{$brand.brand_id}"  name="{$brand.brand_name|escape:html}" class="childTitle">{$brand.brand_name|escape:html}</a></li>
-        <!--{/foreach}-->
-      </ul>
-      <input type="hidden" name="brand" value="{$brand_id}" />
-      
-      <a href="javascript:;" id="filter_price" data-url="attr_price" class="title"> 价格 <span class="range">全部</span> <em class="icon-right_arrow"></em> </a>
-      <ul>
+  <div id="goFilter">
+  <div class="touchweb_mod_Filter">
+    <div class="touchweb-com_headerFilter"> <a class="left" href="javascript:;" data-data-pc="-1">{$lang.is_cancel}</a>
+      <h1 class="title">{$lang.goods_filter}</h1>
+      <a class="right" href="javascript:document.getElementById('form').submit()">{$lang.button_submit}</a> </div>
+    <div class="scrollContent">
+      <div data-tpa="H5_SEARCH_FILTER" class="touchweb-com_listType">
+        <input type="hidden" name="id" class="cat" value="{$id}"/>
+        <a href="javascript:;" id="filter_brand" data-url="touchweb_mod_Brand" class="title"> {$lang.brand} <span class="range"> 
+        <!--{foreach from=$brands item=brand name=brand}--> 
+        <!--{if $brand.brand_id == $brand_id}--> 
+        {$brand.brand_name} 
+        <!--{/if}--> 
+        <!--{/foreach}--> 
+        </span> <em class="icon-right_arrow"></em> </a>
+        <ul>
+          <!--{foreach from=$brands item=brand name=brands}-->
+          <li class="av-selected"><a href="javascript:;" id="brand_{$brand.brand_id}" value="{$brand.brand_id}"  name="{$brand.brand_name|escape:html}" class="childTitle">{$brand.brand_name|escape:html}</a></li>
+          <!--{/foreach}-->
+        </ul>
+        <input type="hidden" name="brand" value="{$brand_id}" />
+        <a href="javascript:;" id="filter_price" data-url="attr_price" class="title"> {$lang.sort_price} 
+        <span class="range">
         <!--{foreach from=$price_grade item=grade name=grade}-->
-        <li class="av-selected"><a href="javascript:;" id="grade_{$grade.sn}" value="{$grade.start}|{$grade.end}" name="{$grade.price_range}" class="childTitle">{$grade.price_range}</a></li>
+            <!--{if $grade.start == $price_min && $grade.end == $price_max }--> 
+            {$grade.price_range}
+            <!--{/if}--> 
         <!--{/foreach}-->
-      </ul>
-      <input type="hidden" name="price_min" value="{$price_min}" />
-      <input type="hidden" name="price_max" value="{$price_max}" />
-      
-      <!--{foreach from=$filter_attr_list item=filter name=filter}--> 
-      <a href="javascript:;" name="{$filter.filter_attr_name}" id="filter_attr_25544" data-tcd="ATTRIBUTE.25544" data-tcs="SEARCH.0" data-url="attr_25544" class="title">{$filter.filter_attr_name}<span class="range">全部</span> <em class="icon-right_arrow"></em> </a>
-      <ul>
+        </span> 
+        <em class="icon-right_arrow"></em> </a>
+        <ul>
+          <!--{foreach from=$price_grade item=grade name=grade}-->
+          <li class="av-selected"><a href="javascript:;" id="grade_{$grade.sn}" value="{$grade.start}|{$grade.end}" name="{$grade.price_range}" class="childTitle">{$grade.price_range}</a></li>
+          <!--{/foreach}-->
+        </ul>
+        <input type="hidden" name="price_min" value="{$price_min}" />
+        <input type="hidden" name="price_max" value="{$price_max}" />
+        
+        <!--{foreach from=$filter_attr_list item=filter name=filter}--> 
+        <a href="javascript:;" name="{$filter.filter_attr_name}" id="filter_attr_25544" data-tcd="ATTRIBUTE.25544" data-tcs="SEARCH.0" data-url="attr_25544" class="title">{$filter.filter_attr_name}
+        <span class="range">
         <!--{foreach from=$filter.attr_list item=attr name=attr}-->
-        <li class="filter_attr"><a href="javascript:;" id="brand_{$attr.attr_id}" value="{$attr.attr_id}"  name="{$attr.attr_value|escape:html}">{$attr.attr_value|escape:html}</a></li>
+         <!--{if $attr.selected}--> 
+            {$attr.attr_value}
+            <!--{/if}--> 
         <!--{/foreach}-->
-      </ul>
-      <!--{/foreach}--> 
-      <input type="hidden" name="filter_attr" value="{$filter_attr}"/>
-    </div>
-    <div class="btn">
-      <button class="clear">清空筛选</button>
-      <input type="submit" class="sure" name="sub" value="{$lang.button_submit}"/>
+        </span> 
+        <em class="icon-right_arrow"></em> </a>
+        <ul class="filter" data="{$smarty.foreach.filter.index}">
+          <!--{foreach from=$filter.attr_list item=attr name=attr}-->
+          <li class="filter_attr{if $attr.selected} av-selected{/if}" ><a href="javascript:;" id="brand_{$attr.attr_id}" value="{$attr.attr_id}"  name="{$attr.attr_value|escape:html}">{$attr.attr_value|escape:html}</a></li>
+          <!--{/foreach}-->
+        </ul>
+        <!--{/foreach}-->
+        <input type="hidden" name="filter_attr" value="{$filter_attr}"/>
+      </div>
+      <div class="btn">
+        <input type="reset" class="clear"  value="{$lang.clear_filter}"/>
+        <!--<button class="clear" onClick="javasrcript:clear_Filter()">清空筛选</button>-->
+        <input type="submit" class="sure" name="sub" value="{$lang.button_submit}"/>
+      </div>
     </div>
   </div>
-</div> 
 </form>
 <!--筛选结束--> 
 
