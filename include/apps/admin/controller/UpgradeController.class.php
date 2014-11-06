@@ -22,9 +22,9 @@ class UpgradeController extends AdminController
     private $md5_arr = array();
     private $_filearr = array('admin', 'api', 'include', 'plugins', '');
     // md5验证地址
-    private $_upgrademd5 = 'http://ectouch.cn/upgrademd5/';
+    private $_upgrademd5 = 'http://www.ectouch.cn/upgrademd5/';
     // 补丁地址
-    private $_patchurl = 'http://ectouch.cn/upgrade/1.0/patch/';
+    private $_patchurl = 'http://download.ectouch.cn/upgrade/1.0/patch/';
 
     /**
      * 构造函数
