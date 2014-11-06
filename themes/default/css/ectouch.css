@@ -453,12 +453,12 @@ a.flow-del{padding:0 0.6em; height:2.3em; line-height:2.3em; background:#eee;}
 /*========================
         文章分类
 ================*/
-.nav { margin-top: 10px; border-top: 1px solid #ccc; }
-.nav:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
-.nav li { list-style: none; float: left; width: 50%; box-sizing: border-box; border-bottom: 1px solid #ccc; }
-.nav li:nth-of-type(2n+1) { border-right: 1px solid #ccc; }
-.nav li a { display: block; padding: 10px; text-decoration: none; }
-.nav li a:after { float: right; content: ">"; color: #666; }
+.article-list .nav { margin-top: 10px; border-top: 1px solid #ccc; }
+.article-list .nav:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
+.article-list .nav li { list-style: none; float: left; width: 50%; box-sizing: border-box; border-bottom: 1px solid #ccc; }
+.article-list .nav li:nth-of-type(2n+1) { border-right: 1px solid #ccc; }
+.article-list .nav li a { display: block; padding: 10px; text-decoration: none; }
+.article-list .nav li a:after { float: right; content: ">"; color: #666; }
 /*========================
         文章列表
 ================*/

@@ -29,12 +29,10 @@
             <button type="button" class="btn btn-xs btn-info">Info</button>
            </td>
         </tr>
-         {if $help_open}
         <tr>
         	<td>&nbsp;</td>
         	<td><div class="alert alert-info" role="alert" style="padding:5px 15px;margin:0 15px;">{$lang['notice_keywords']}</div></td>	
         </tr>
-        {/if}
         <tr>
           <td>{$lang['cat_desc']}</td>
           <td><div class="col-md-4"><textarea  name="data[cat_desc]" cols="60" rows="4">{$cat['cat_desc']}</textarea></div></td>
