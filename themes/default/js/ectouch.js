@@ -64,15 +64,14 @@ function openMune() {
  * 清空筛选
  * @returns {undefined}
  */
-$(".touchweb_mod_Filter .btn .clear").click(function() {
-    $(".touchweb-com_listType .range").text("全部");
-    $(".touchweb-com_listType input").each(function() {
-       // $(this)[0].checked = false;
-       if($(this).attr('class') != 'cat'){ 
-           $(this).val("");
-       }
-    });
-});
+//$(".touchweb_mod_Filter .btn .clear").click(function() {
+//    $(".touchweb-com_listType .range").text("全部");
+//    $(".touchweb-com_listType input").each(function() {
+//       if($(this).attr('class') != 'cat'){ 
+//           $(this).val("");
+//       }
+//    });
+//});
 /**
  * jquery Begin
  * @returns {undefined}
