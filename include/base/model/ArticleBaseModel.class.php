@@ -17,7 +17,7 @@ defined('IN_ECTOUCH') or die('Deny Access');
 
 class ArticleBaseModel extends BaseModel {
 
-    protected $table = 'article';
+    protected $table = 'touch_article';
 
     /**
      * 获得文章分类下的文章列表
@@ -41,7 +41,7 @@ class ArticleBaseModel extends BaseModel {
             $condition .= ' AND title like \'%' . $requirement . '%\'';
         }
         $limit = ($page - 1) * $size . ',' . $size;
-        $list = $this->select($condition, 'article_id, title, author, add_time, file_url, open_type', 'article_type DESC, article_id DESC', $limit);
+        $list = $this->select($condition, 'article_id, title, author, add_time, file_url, open_type', ' article_id DESC', $limit);
 
         $i = 1;
         $arr = array();
