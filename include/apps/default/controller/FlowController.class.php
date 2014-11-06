@@ -12,7 +12,6 @@
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
  */
-
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
@@ -31,11 +30,13 @@ class FlowController extends CommonController {
         $cart_goods = model('Order')->get_cart_goods();
         $this->assign('goods_list', $cart_goods ['goods_list']);
         $this->assign('total', $cart_goods ['total']);
-
-        // 相关产品
-        $linked_goods = model('Goods')->get_linked_goods($cart_goods ['goods_list']);
-        $this->assign('linked_goods', $linked_goods);
-
+        
+        if ($cart_goods['goods_list']) {
+            // 相关产品
+            $linked_goods = model('Goods')->get_linked_goods($cart_goods ['goods_list']);
+            $this->assign('linked_goods', $linked_goods);
+        }
+        
         // 购物车的描述的格式化
         $this->assign('shopping_money', sprintf(L('shopping_money'), $cart_goods ['total'] ['goods_price']));
         $this->assign('market_price_desc', sprintf(L('than_market_price'), $cart_goods ['total'] ['market_price'], $cart_goods ['total'] ['saving'], $cart_goods ['total'] ['save_rate']));
@@ -446,8 +447,8 @@ class FlowController extends CommonController {
         $this->assign('total', $total);
         $this->assign('shopping_money', sprintf(L('shopping_money'), $total ['formated_goods_price']));
         $this->assign('market_price_desc', sprintf(L('than_market_price'), $total ['formated_market_price'], $total ['formated_saving'], $total ['save_rate']));
-		
-		/* 取得可以得到的积分和红包 */
+
+        /* 取得可以得到的积分和红包 */
         $this->assign('total_integral', model('Order')->cart_amount(false, $flow_type) - $total ['bonus'] - $total ['integral_money']);
         $this->assign('total_bonus', price_format(model('Order')->get_total_bonus(), false));
 
@@ -1260,12 +1261,12 @@ class FlowController extends CommonController {
             $msg = $order ['pay_status'] == PS_UNPAYED ? L('order_placed_sms') : L('order_placed_sms') . '[' . L('sms_paid') . ']';
             $sms->send(C('sms_shop_mobile'), sprintf($msg, $order ['consignee'], $order ['mobile']), '', 13, 1);
         }
-		
-		/* 如果需要，微信通知 by wanglu */
-        $order_url = __HOST__ . url('user/order_detail', array('order_id'=>$order ['order_id']));
+
+        /* 如果需要，微信通知 by wanglu */
+        $order_url = __HOST__ . url('user/order_detail', array('order_id' => $order ['order_id']));
         $order_url = urlencode(base64_encode($order_url));
-        send_wechat_message('order_remind', '', $order['order_sn'].' 订单已生成', $order_url);
-		
+        send_wechat_message('order_remind', '', $order['order_sn'] . ' 订单已生成', $order_url);
+
         /* 如果订单金额为0 处理虚拟卡 */
         if ($order ['order_amount'] <= 0) {
             $sql = "SELECT goods_id, goods_name, goods_number AS num FROM " . $this->model->pre . "cart WHERE is_real = 0 AND extension_code = 'virtual_card'" . " AND session_id = '" . SESS_ID . "' AND rec_type = '$flow_type'";
