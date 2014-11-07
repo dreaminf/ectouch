@@ -25,6 +25,8 @@
   </div>
   <!--商品属性介绍-->
   <div class="goods-info ect-padding-tb">
+  	<!--商品描述-->
+    <section class="ect-margin-tb ect-margin-lr info"> <a href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">商品描述</span></a> <span class="icon-arr"></span> </section>
     <section class="ect-margin-tb ect-margin-lr goods-title">
       <h4 class="title pull-left">{$goods.goods_style_name}</h4>
       <span class="pull-right text-center <!--{if $sc eq 1}-->ect-colory<!--{/if}--> ect-padding-lr" onClick="collect({$goods.goods_id})" id='ECS_COLLECT'> <i class="fa <!--{if $sc eq 1}-->fa-heart<!--{else}-->fa-heart-o<!--{/if}-->"></i><br>
@@ -43,11 +45,11 @@
       <p class="ect-border-top ect-margin-tb"> 
         <!-- {foreach from=$promotion item=item key=key} 优惠活动--> 
         <!-- {if $item.type eq "snatch"} --> 
-        <!--<a title="{$lang.snatch}"><i class="label tbqb">夺</i> [{$lang.snatch}]<i class="pull-right fa fa-angle-right"></i></a>-->
+        <!--<a title="{$lang.snatch}"><i class="label tbqb">夺</i> [{$lang.snatch}]<i class="pull-right fa fa-angle-right"></i></a>--> 
         <!-- {elseif $item.type eq "group_buy"} --> 
         <a href="{$item.url}" title="{$lang.group_buy}"><i class="label tuan">{$lang.group_buy_act}</i> [{$lang.group_buy}]<i class="pull-right fa fa-angle-right"></i></a> 
         <!-- {elseif $item.type eq "auction"} --> 
-        <!--<a title="{$lang.auction}"><i class="label pm">拍卖</i> [{$lang.auction}]<i class="pull-right fa fa-angle-right"></i></a> -->
+        <!--<a title="{$lang.auction}"><i class="label pm">拍卖</i> [{$lang.auction}]<i class="pull-right fa fa-angle-right"></i></a> --> 
         <!-- {elseif $item.type eq "favourable"} --> 
         
         <a href="{$item.url}" title="{$lang.$item.type} {$item.act_name}{$item.time}"> 
@@ -63,6 +65,10 @@
       </p>
     </section>
     <!-- {/if} -->
+    <!--商品评价-->
+    <section class="ect-margin-tb ect-margin-lr comment"> 
+    <a href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">商品评价</span></a> <span class="icon-arr"></span> </section>
+    
     <form action="javascript:addToCart({$goods.goods_id})" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY" >
       <section class="ect-padding-lr ect-padding-tb goods-option">
         <div class="goods-optionc"> 
@@ -107,9 +113,9 @@
       </section>
       <div class="ect-padding-lr ect-padding-tb goods-submit">
         <div><a type="botton" class="btn btn-info ect-btn-info ect-colorf" href="javascript:addToCart_quick({$goods.goods_id})">{$lang.buy_now}</a></div>
-       </div>
-      <section class="user-tab ect-border-bottom0"> 
-      <div id="is-nav-tabs" style="height:3.15em; display:none;"></div>
+      </div>
+      <section class="user-tab ect-border-bottom0" style="display:none;">
+        <div id="is-nav-tabs" style="height:3.15em; display:none;"></div>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs text-center">
           <li class="col-xs-4 active"><a href="#one" role="tab" data-toggle="tab">{$lang.goods_brief}</a></li>
@@ -144,10 +150,10 @@
         </div>
       </section>
     </form>
-  </div><footer class="logo"><img src="__TPL__/images/copyright.png" width="176" height="60"></footer>
+  </div>
+  <footer class="logo"><img src="__TPL__/images/copyright.png" width="176" height="60"></footer>
 </div>
-<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
-<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
+<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
 <script type="text/javascript" src="__TPL__/js/lefttime.js"></script> 
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function(){Code.photoSwipe('a', '#Gallery');}, false);

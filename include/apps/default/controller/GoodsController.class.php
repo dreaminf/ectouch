@@ -12,7 +12,6 @@
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
  */
-
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
@@ -130,6 +129,43 @@ class GoodsController extends CommonController {
         $this->assign('ur_here', $page_info['ur_here']);
         $this->assign('page_title', $page_info['title']);
         $this->display('goods.dwt');
+    }
+
+    /**
+     * 商品信息 
+     */
+    public function info() {
+        /* 获得商品的信息 */
+        $goods = model('Goods')->get_goods_info($this->goods_id);
+        $this->assign('goods', $goods);
+        $properties = model('Goods')->get_goods_properties($this->goods_id);  // 获得商品的规格和属性
+        $this->assign('properties', $properties['pro']);                      // 商品属性
+        $this->assign('specification', $properties['spe']);                   // 商品规格
+        $this->assign('title', L('detail_intro'));
+        $this->display('goods_info.dwt');
+    }
+
+    /**
+     * 商品评论
+     */
+    public function comment_list() {
+        $cmt = new stdClass();
+        $cmt->id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
+        $cmt->type = !empty($_GET['type']) ? intval($_GET['type']) : 0;
+        $cmt->page = isset($_GET['page']) && intval($_GET['page']) > 0 ? intval($_GET['page']) : 1;
+        $this->assign('comment_info', model('Comment')->get_comment_info($cmt->id, $cmt->type));
+        $this->assign('id', $cmt->id);
+        $this->assign('type', $cmt->type);
+        $this->assign('username', $_SESSION['user_name']);
+        $this->assign('email', $_SESSION['email']);
+        /* 验证码相关设置 */
+        if ((intval(C('captcha')) & CAPTCHA_COMMENT) && gd_version() > 0) {
+            $this->assign('enabled_captcha', 1);
+            $this->assign('rand', mt_rand());
+        }
+        $result['message'] = C('comment_check') ? L('cmt_submit_wait') : L('cmt_submit_done');
+        $this->assign('title', L('goods_comment'));
+        $this->display('goods_comment_list.dwt');
     }
 
     /**

@@ -74,7 +74,7 @@ function insert_history() {
  */
 function insert_cart_info_number() {
     $sql = 'SELECT SUM(goods_number) AS number FROM ' . ECTouch::ecs()->table('cart') .
-    " WHERE session_id = '" . SESS_ID . "' AND rec_type = '" . CART_GENERAL_GOODS . "'";
+            " WHERE session_id = '" . SESS_ID . "' AND rec_type = '" . CART_GENERAL_GOODS . "'";
     $res = ECTouch::db()->GetRow($sql);
     $number = $res['number'];
     return intval($number);
@@ -151,7 +151,7 @@ function insert_ads($arr) {
             case 0: // 图片广告
                 $src = (strpos($row['ad_code'], 'http://') === false && strpos($row['ad_code'], 'https://') === false) ?
                         __URL__ . "/$row[ad_code]" : $row['ad_code'];
-                $ads[] = "<a href='".url('default/affiche/index', array('ad_id'=>$row['ad_id'], 'uri'=>urlencode($row["ad_link"]) ))."' 
+                $ads[] = "<a href='" . url('default/affiche/index', array('ad_id' => $row['ad_id'], 'uri' => urlencode($row["ad_link"]))) . "' 
                 target='_blank'><img src='$src' width='" . $row['ad_width'] . "' height='$row[ad_height]'
                 border='0' /></a>";
                 break;
@@ -173,7 +173,7 @@ function insert_ads($arr) {
                 $ads[] = $row['ad_code'];
                 break;
             case 3: // TEXT
-                $ads[] = "<a href='".url('default/affiche/index', array('ad_id'=>$row['ad_id'], 'uri'=>urlencode($row["ad_link"]) ))."'
+                $ads[] = "<a href='" . url('default/affiche/index', array('ad_id' => $row['ad_id'], 'uri' => urlencode($row["ad_link"]))) . "'
                 target='_blank'>" . htmlspecialchars($row['ad_code']) . '</a>';
                 break;
         }
@@ -242,11 +242,22 @@ function insert_comments($arr) {
     ECTouch::view()->assign('email', $_SESSION['email']);
     ECTouch::view()->assign('comment_type', $arr['type']);
     ECTouch::view()->assign('id', $arr['id']);
+    //全部评论
     $cmt = model('Comment')->assign_comment($arr['id'], $arr['type']);
-    ECTouch::view()->assign('comments', $cmt['comments']);
+    ECTouch::view()->assign('comment_list', $cmt['comments']);
     ECTouch::view()->assign('pager', $cmt['pager']);
-
-
+    //好评
+    $cmt_fav = model('Comment')->assign_comment($arr['id'], $arr['type'], '1');
+    ECTouch::view()->assign('comment_fav', $cmt_fav['comments']);
+    ECTouch::view()->assign('pager_fav', $cmt_fav['pager']);
+    //中评
+    $cmt_med = model('Comment')->assign_comment($arr['id'], $arr['type'], '2');
+    ECTouch::view()->assign('comment_med', $cmt_med['comments']);
+    ECTouch::view()->assign('pager_med', $cmt_med['pager']);
+    //差评
+    $cmt_bad = model('Comment')->assign_comment($arr['id'], $arr['type'], '3');
+    ECTouch::view()->assign('comment_bad', $cmt_bad['comments']);
+    ECTouch::view()->assign('pager_bad', $cmt_bad['pager']);
     $val = ECTouch::view()->fetch('library/comments_list.lbi');
 
     ECTouch::view()->caching = $need_cache;
