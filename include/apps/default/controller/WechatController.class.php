@@ -624,9 +624,9 @@ class WechatController extends CommonController
             $group_id = $weObj->getUserGroup($userinfo['openid']);
             $group_id = $group_id ? $group_id : 0;
             // 设置的用户注册信息
-            $register = model('Base')->model->table('wechat_setting')
+            $register = model('Base')->model->table('wechat_extend')
                 ->field('config')
-                ->where('status = 1 and keywords = "register_remind"')
+                ->where('enable = 1 and command = "register_remind"')
                 ->find();
             if (! empty($register)) {
                 $reg_config = unserialize($register['config']);
