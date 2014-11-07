@@ -22,9 +22,13 @@
             <i class="fa fa-angle-down ect-transition05"></i>
         </div>
         <div class="ect-category-child">
-        	<!--{foreach from=$cat.cat_id item=child name=no1}-->
+        	{if $cat.cat_id}
+			<!--{foreach from=$cat.cat_id item=child name=no1}-->
             <a href="{$child.url}">{$child.name|escape:html}</a>
             <!--{/foreach}--> 
+			{else}
+			<a href="{$cat.url}">{$lang.all_goods}</a>
+			{/if}
         </div>
       </li>
       <!--{/foreach}-->
