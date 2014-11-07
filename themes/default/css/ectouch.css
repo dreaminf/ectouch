@@ -129,7 +129,7 @@ footer.logo img{width:8em; height:auto; display:block; margin:0.8em auto;}
 /*tab*/
 .user-tab{background:#FFF; border-bottom:1px solid #e3e3e3;}
 .user-tab-fixed .nav-tabs{position: fixed; top: 0px; z-index:10;}
-.user-tab .nav{background:#fff; width:100%; max-width:640px; /*border-top:1px solid #e3e3e3; */height:3.15em;}
+.user-tab .nav{background:#fff; width:100%; max-width:640px; border-top:1px solid #e3e3e3; height:3.15em;}
 .user-tab ul li{border-right:1px solid #e3e3e3; padding:0;}
 .user-tab ul li:last-child{border-right:none;}
 .user-tab ul li>a:link,.user-tab li>a:hover{border:none; background:none; padding:0.8em 0;}
@@ -224,24 +224,23 @@ select{-webkit-appearance:none; border:0; color:#555; padding-left:0; border:1px
 /*==================
         商品分类筛选
 ==============*/
-.touchweb_mod_Filter.show {transform: translate3d(0, 0, 0);  -webkit-transform: translate3d(0, 0, 0);transition: all 0.5s ease 0s; -webkit-transition: all 0.5s ease 0s;}
-.touchweb_mod_Filter, .touchweb_mod_Category, .touchweb_mod_Brand {background-color: #f5f5f5;box-sizing: border-box;display: flex;flex-direction: column;height: 100%;position: fixed;right: 0;top: 0;transform: translate3d(100%, 0, 0); -webkit-transform: translate3d(100%, 0, 0);transition: all 0.5s ease 0s; -webkit-transition: all 0.5s ease 0s;width: 100%;z-index: 999;}
-.touchweb-com_headerFilter {background-color: #fff;border-bottom: 1px solid #e5e5e5;display: flex;height: 49px;left: 0;line-height: 2.8rem;padding: 10px 0.6rem;;position:relative;top: 0;width: 100%;}
+.touchweb_mod_Filter.show {transform: translate3d(0px, 0px, 0px);transition: all 0.5s ease 0s;}
+.touchweb_mod_Filter, .touchweb_mod_Category, .touchweb_mod_Brand {background-color: #f5f5f5;box-sizing: border-box;display: flex;flex-direction: column;height: 100%;padding-top: 50px;position: fixed;right: 0;top: 0;transform: translate3d(100%, 0px, 0px);transition: all 0.5s ease 0s;width: 100%;z-index: 999;}
+.touchweb-com_headerFilter {background-color: #fff;border-bottom: 1px solid #e5e5e5;display: flex;height: 49px;left: 0;line-height: 2.8rem;padding: 10px 0;position: absolute;top: 0;width: 100%;}
 .touchweb-com_headerFilter .left {color: #999;display: block;font-size: 14px;padding: 0 10px;}
-.touchweb-com_headerFilter .title {color: #000;font-size: 17px;text-align: center;font-weight: bolder; line-height: 2.8rem; position: absolute; left:3em; right: 3em; }
-.touchweb-com_headerFilter .title span{width:100; display: block;}
-.touchweb-com_headerFilter .right {color: #e87e04;display: block;font-size: 14px;padding: 0 10px; position: absolute; right: 0rem;}
+.touchweb-com_headerFilter .title {color: #000;flex: 1 1 0;font-size: 17px;text-align: center;width: 100%;font-weight: bolder; line-height: 2.8rem;}
+.touchweb-com_headerFilter .right {color: #ff3c3c;display: block;font-size: 14px;padding: 0 10px;}
 .touchweb_mod_Filter .scrollContent {height: 100%;overflow: auto;padding-bottom: 20px;width: 100%;}
 .touchweb-com_listType {background-color: #fff;border-bottom: 1px solid #e5e5e5;border-top: 1px solid #e5e5e5;margin-top: 20px;}
 .touchweb-com_listType a.title {left: 0;position: relative;top: 0;z-index: 2;}
 .touchweb-com_listType a {border-bottom: 1px solid #e5e5e5;color: #333;display: block;font-size: 14px;height: 43px;line-height: 43px;}
-.touchweb-com_listType a .range.visited {color: #e87e04;}
+.touchweb-com_listType a .range.visited {color: #f00;}
 .touchweb-com_listType a .range {color: #666;font-size: 12px;height: 100%;position: absolute;right: 30px;top: 0;z-index: 3;}
 .touchweb-com_listType a .icon-right_arrow {color: #a7a7a7;font-size: 24px;position: absolute;right: 0;top: 10px;z-index: 3; width: 2.5rem; height:2.5rem;display: inline-block; background-image:url(../images/ico_11.png); background-repeat: no-repeat; background-size:1.5rem;background-position: 0rem 0.5rem;}
 .touchweb-com_listType a .icon-right_arrow.down{ background:url(../images/ico_12.png) no-repeat 0rem 0.5rem ; background-size: 1.5rem; }
-.touchweb_mod_Filter .btn1 {display: flex;height: 35px;margin-top: 20px;padding: 0 20px 50px;}
-.touchweb_mod_Filter .btn1 .clear {background-color: #dedede;border: 1px solid #bababa;border-radius: 5px;box-sizing: border-box;color: #333;cursor: pointer;display: block;font-size: 14px;height: 35px;line-height: 3rem;text-align: center;width: 100%; float:left; }
-.touchweb_mod_Filter .btn1 .sure {background-color: #5babe6;border: 1px solid #5babe6;border-radius: 5px;box-sizing: border-box;color: #fff;cursor: pointer;display: block;font-size: 14px;height: 35px;line-height: 3rem;text-align: center;width: 100%;}
+.touchweb_mod_Filter .btn {display: flex;height: 35px;margin-top: 20px;padding: 0 20px 50px;}
+.touchweb_mod_Filter .btn .clear {background-color: #dedede;border: 1px solid #bababa;border-radius: 5px;box-sizing: border-box;color: #333;cursor: pointer;display: block;font-size: 14px;height: 35px;line-height: 3rem;text-align: center;width: 30%;}
+.touchweb_mod_Filter .btn .sure {background-color: #ff3c3c;border: 1px solid #e90f0f;border-radius: 5px;box-sizing: border-box;color: #fff;cursor: pointer;display: block;flex: 1 1 0;font-size: 14px;height: 35px;line-height: 3rem;margin-left: 10px;text-align: center;width: 100%;}
 .touchweb_mod_PriceFilter {background-color: #f5f5f5;box-sizing: border-box;display: flex;flex-direction: column;height: 100%;padding-top: 50px;position: fixed;right: 0;top: 0;transform: translate3d(100%, 0px, 0px);transition: all 0.5s ease 0s;width: 100%;z-index: 999;}
 .touchweb-com_listType ul {background-color: #f5f5f5;border-bottom: medium none;overflow: hidden;padding-left: 20px;transition: all 0.5s ease 0s; height: 0px;}
 .touchweb-com_listType ul li {border-bottom: 1px solid #e5e5e5;}
@@ -285,7 +284,7 @@ select{-webkit-appearance:none; border:0; color:#555; padding-left:0; border:1px
 .wrap .form-contro{height:2.3em; text-align:center; padding:0 0.4em; width:100%; background:none; border:none; border-radius:0; box-shadow:inset 0 0 0;}
 .wrap p.bg-warning a{display:block; width:100%; padding:0.8em 0;}
 .flow-num-del{clear:both; margin-top:0.6em; overflow:hidden; height:auto;}
-.flow-del{float:left; border:1px #e3e3e3 solid; display:block;margin-right:0.5em;}
+.flow-del{float:left; border:1px #e3e3e3 solid; display:block;margin-right:0.5em;background: #eee;padding: 0.4em;}
 a.flow-del{padding:0 0.6em; height:2.3em; line-height:2.3em; background:#eee;}
 /*结算按钮*/
 .flow-jiesuan {background:#eee; padding:0.8em;}
@@ -304,10 +303,6 @@ a.flow-del{padding:0 0.6em; height:2.3em; line-height:2.3em; background:#eee;}
 .goods-info section.goods-title h4{position:absolute; right:3em; left:0em;}
 .goods-info section.goods-title span{font-size:1em; border-left:1px solid #e3e3e3;}
 .goods-info section.goods-title span i.fa{font-size:1.5em;}
-.goods-info section.info {border-bottom: 1px solid #e3e3e3; position: relative;}
-.goods-info section.info a {display: block;padding: 0px 30px 12px 0;}
-.goods-info section.comment {border-top: 1px solid #e3e3e3;}
-.goods-info section.comment a {display: block;padding: 13px 30px 5px 0;}
 /*促销活动*/
 .goods-info section.goods-promotion {border-top:1px #e3e3e3 solid;}
 .goods-info section.goods-promotion h5{font-size:1.1em; margin:0.3em 0;}
@@ -454,16 +449,6 @@ a.flow-del{padding:0 0.6em; height:2.3em; line-height:2.3em; background:#eee;}
 .bran_list ul li img{width:100%; height:auto;}
 .bran_list ul li span{position:absolute; color:#fff; bottom:0; font-size:1.1em; z-index:10; width:100%; left:0; text-align:right; padding:0.6em; background:rgba(0,0,0,0.4)}
 .bran_list ul li .a-name{background:#FFF; padding:0.6em; font-size:1.2em;}
-
-/*========================
-        文章分类
-================*/
-.article-list .nav { margin-top: 10px; border-top: 1px solid #ccc; }
-.article-list .nav:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
-.article-list .nav li { list-style: none; float: left; width: 50%; box-sizing: border-box; border-bottom: 1px solid #ccc; }
-.article-list .nav li:nth-of-type(2n+1) { border-right: 1px solid #ccc; }
-.article-list .nav li a { display: block; padding: 10px; text-decoration: none; }
-.article-list .nav li a:after { float: right; content: ">"; color: #666; }
 /*========================
         文章列表
 ================*/

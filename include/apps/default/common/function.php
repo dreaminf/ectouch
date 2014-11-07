@@ -761,7 +761,8 @@ function show_message($content, $links = '', $hrefs = '', $type = 'info', $auto_
     if (is_null(ECTouch::view()->get_template_vars('helps'))) {
         ECTouch::view()->assign('helps', model('Article')->get_shop_help()); // 网店帮助
     }
-
+    
+    ECTouch::view()->assign('title', L('tips_message'));
     ECTouch::view()->assign('auto_redirect', $auto_redirect);
     ECTouch::view()->assign('message', $msg);
     ECTouch::view()->display('message.dwt');

@@ -25,6 +25,8 @@ class EcModel {
     public $config = array(); //配置
     protected $options = array(); // 查询表达式参数	
     public $queryTime = ''; // sql运行时间
+    public $queryCount = 0; // sql运行次数
+    public $queryLog   = array();
 
     /**
      * 构造函数
@@ -92,6 +94,10 @@ class EcModel {
             return false;
         $sql = str_replace('{pre}', $this->pre, $sql); //表前缀替换
         $this->sql = $sql;
+        if ($this->queryCount++ <= 99)
+        {
+            $this->queryLog[] = $sql;
+        }
         if ($this->queryTime == '') {
             if (PHP_VERSION >= '5.0.0') {
                 $this->queryTime = microtime(true);

@@ -1290,7 +1290,8 @@ class UsersModel extends BaseModel {
                     $row['status'] = L('not_use');
                 }
             } else {
-                $row['status'] = '<a href="user.php?act=order_detail&order_id=' . $row['order_id'] . '" >' . L('had_use') . '</a>';
+                $url = url('user/order_detail', array('order_id'=>$row['order_id']));
+                $row['status'] = '<a href="'.$url.'" >' . L('had_use') . '</a>';
             }
 
             $row['use_startdate'] = local_date(C('date_format'), $row['use_start_date']);
