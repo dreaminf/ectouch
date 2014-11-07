@@ -186,16 +186,18 @@ class wxpay
                         ->data('openid = "' . $postdata['openid'] . '", transid = "' . $postdata['transaction_id'] . '"')
                         ->where('log_id = ' . $order_sn)
                         ->update();
-                    /* 如果需要，微信通知 wanglu */
-                    $order_id = model('Base')->model->table('order_info')
-                        ->field('order_id')
-                        ->where('order_sn = "' . $out_trade_no[0] . '"')
-                        ->getOne();
-                    $order_url = __HOST__ . url('user/order_detail', array(
-                        'order_id' => $order_id
-                    ));
-                    $order_url = urlencode(base64_encode($order_url));
-                    send_wechat_message('pay_remind', '', $out_trade_no[0] . ' 订单已支付', $order_url);
+                    if(method_exists('WechatController', 'do_oauth')){
+                        /* 如果需要，微信通知 wanglu */
+                        $order_id = model('Base')->model->table('order_info')
+                            ->field('order_id')
+                            ->where('order_sn = "' . $out_trade_no[0] . '"')
+                            ->getOne();
+                        $order_url = __HOST__ . url('user/order_detail', array(
+                            'order_id' => $order_id
+                        ));
+                        $order_url = urlencode(base64_encode($order_url));
+                        send_wechat_message('pay_remind', '', $out_trade_no[0] . ' 订单已支付', $order_url);
+                    }
                 }
                 $returndata['return_code'] = 'SUCCESS';
             } else {
