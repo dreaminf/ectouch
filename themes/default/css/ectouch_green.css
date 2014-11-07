@@ -340,6 +340,10 @@ select{-webkit-appearance:none; border:0; color:#555; padding-left:0; border:1px
 .goods-submit div a{width:100%;}
 .goods-submit i{font-size:3em; color:#888;}
 .goods-submit.goods-submit-fixed{width:100%; max-width:640px; position:fixed; bottom:0px; z-index:1}
+/*更多*/
+.goods-more-a{margin:0.6em 0; margin-bottom:0;}
+.goods-more-a a{display:block; border-top:1px solid #e3e3e3;}
+.goods-more-a a i{color:#bbb;}
 /*提交评论FROM表单*/
 .submit-comments{background:#FFF; overflow:hidden;}
 .submit-comments h4{font-size:1.2em; margin-top:0.8em;}

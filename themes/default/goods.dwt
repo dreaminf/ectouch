@@ -26,7 +26,7 @@
   <!--商品属性介绍-->
   <div class="goods-info ect-padding-tb">
   	<!--商品描述-->
-    <section class="ect-margin-tb ect-margin-lr info"> <a href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">商品描述</span></a> <span class="icon-arr"></span> </section>
+    <section class="ect-margin-tb ect-margin-lr info"><span class="icon-arr"></span> </section>
     <section class="ect-margin-tb ect-margin-lr goods-title">
       <h4 class="title pull-left">{$goods.goods_style_name}</h4>
       <span class="pull-right text-center <!--{if $sc eq 1}-->ect-colory<!--{/if}--> ect-padding-lr" onClick="collect({$goods.goods_id})" id='ECS_COLLECT'> <i class="fa <!--{if $sc eq 1}-->fa-heart<!--{else}-->fa-heart-o<!--{/if}-->"></i><br>
@@ -67,7 +67,7 @@
     <!-- {/if} -->
     <!--商品评价-->
     <section class="ect-margin-tb ect-margin-lr comment"> 
-    <a href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">商品评价</span></a> <span class="icon-arr"></span> </section>
+    <span class="icon-arr"></span> </section>
     
     <form action="javascript:addToCart({$goods.goods_id})" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY" >
       <section class="ect-padding-lr ect-padding-tb goods-option">
@@ -110,6 +110,10 @@
           <input type="text" class="form-contro form-num" readonly value="{$goods.goods_number} "/>
           <!-- {/if} --> 
         </div>
+      </section>
+     <section class="goods-more-a">
+     <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">商品描述</span> <i class="pull-right fa fa-chevron-right"></i></a> 
+    <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">商品评价</span> <i class="pull-right fa fa-chevron-right"></i></a> 
       </section>
       <div class="ect-padding-lr ect-padding-tb goods-submit">
         <div><a type="botton" class="btn btn-info ect-btn-info ect-colorf" href="javascript:addToCart_quick({$goods.goods_id})">{$lang.buy_now}</a></div>

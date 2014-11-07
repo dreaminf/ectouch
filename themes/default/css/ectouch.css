@@ -355,6 +355,10 @@ a.flow-del{padding:0 0.6em; height:2.3em; line-height:2.3em; background:#eee;}
 .submit-comments p.code img{width:6.5em; height:2.8em;}
 .commentsBody{background:#fff; padding-bottom:3em;}
 .comment-radio{overflow:hidden; font-size:1.1em;}
+/*更多*/
+.goods-more-a{margin:0.6em 0; margin-bottom:0;}
+.goods-more-a a{display:block; border-top:1px solid #e3e3e3;}
+.goods-more-a a i{color:#bbb;}
 /*=======================
         订单确认页面
 =================*/
