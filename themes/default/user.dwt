@@ -147,7 +147,7 @@
             var obj = $(this);
             var url = obj.attr("href");
             $.get(url, '', function(data){
-                if(1 == data){
+                if(1 == data.status){
                     if(obj.hasClass("history_clear")){
                         obj.closest(".ect-pro-list").html("<p class='text-center  ect-margin-tb ect-padding-tb'>暂无浏览记录，点击<a href={:url('category/index')} class='ect-color ect-margin-lr' style='font-size:1.3em;'>进入</a>浏览商品</p>");
                         obj.parent().siblings("ul").remove();
@@ -162,7 +162,7 @@
                 else{
                     alert("删除失败");
                 }
-            });
+            }, 'json');
             return false;
    		});
     })

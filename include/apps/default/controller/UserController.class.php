@@ -1229,10 +1229,9 @@ class UserController extends CommonController
     public function delete_collection()
     {
         // ajax请求
-        if (IS_AJAX) {
+        if (IS_AJAX && IS_GET) {
             $rs = 0;
             $rec_id = I('get.rec_id', 0);
-            
             if ($rec_id > 0) {
                 $where['user_id'] = $this->user_id;
                 $where['rec_id'] = $rec_id;
@@ -1241,9 +1240,21 @@ class UserController extends CommonController
                     ->delete();
                 $rs = 1;
             }
-            echo $rs;
-        } else {
-            $this->redirect(url('index'));
+            echo json_encode(array('status'=>$rs));
+        }
+		elseif(!IS_AJAX && IS_GET){
+			$rec_id = I('get.rec_id', 0);
+            if ($rec_id > 0) {
+                $where['user_id'] = $this->user_id;
+                $where['rec_id'] = $rec_id;
+                $this->model->table('collect_goods')
+                    ->where($where)
+                    ->delete();
+            }
+			$this->redirect(url('collection_list'));
+		}
+		else {
+            echo json_encode(array('status'=>0));
         }
     }
 	
@@ -1294,7 +1305,7 @@ class UserController extends CommonController
     public function delete_comment()
     {
         // ajax请求
-        if (IS_AJAX) {
+        if (IS_AJAX && IS_GET) {
             $rs = 0;
             $id = I('get.id', 0);
             if ($id > 0) {
@@ -1305,9 +1316,21 @@ class UserController extends CommonController
                     ->delete();
                 $rs = 1;
             }
-            echo $rs;
-        } else {
-            $this->redirect(url('index'));
+            echo json_encode(array('status'=>$rs));
+        }
+		elseif(IS_GET && !IS_AJAX){
+			$id = I('get.id', 0);
+            if ($id > 0) {
+                $where['user_id'] = $this->user_id;
+                $where['comment_id'] = $id;
+                $this->model->table('comment')
+                    ->where($where)
+                    ->delete();
+            }
+			$this->redirect(url('comment_list'));
+		}
+		else {
+            echo json_encode(array('status'=>0));
         }
     }
 
@@ -1878,11 +1901,11 @@ class UserController extends CommonController
     public function clear_history()
     {
         // ajax请求
-        if (IS_AJAX) {
+        if (IS_AJAX && IS_AJAX) {
             setcookie('ECS[history]', '', 1);
-            echo 1;
+            echo json_encode(array('status'=>1));
         } else {
-            $this->redirect(url('index'));
+            echo json_encode(array('status'=>0));
         }
     }
 
