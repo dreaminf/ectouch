@@ -60,7 +60,7 @@ class ArticleController extends AdminController {
         /* 模板赋值 */
         $this->assign('cat_select', model('ArticleBase')->article_cat_list(0));
         $this->assign('ur_here', L('article_add'));
-        $this->assign('action_link', array('text' => L('06_goods_brand_list'), 'href' => url('index')));
+        $this->assign('action_link', array('text' => L('03_article_list'), 'href' => url('index')));
         $this->display();
     }
 

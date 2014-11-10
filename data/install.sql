@@ -83,9 +83,40 @@ INSERT INTO `ecs_touch_ad_position` (`position_id`, `position_name`, `ad_width`,
 DROP TABLE IF EXISTS `ecs_touch_article_cat`;
 
 CREATE TABLE IF NOT EXISTS `ecs_touch_article_cat` (
-  `cat_id` smallint(8) NOT NULL,
-  `is_mobile` tinyint(2) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章扩展表';
+  `cat_id` smallint(5) NOT NULL AUTO_INCREMENT,
+  `cat_name` varchar(255) NOT NULL DEFAULT '',
+  `keywords` varchar(255) NOT NULL DEFAULT '',
+  `cat_desc` varchar(255) NOT NULL DEFAULT '',
+  `sort_order` tinyint(3) unsigned NOT NULL DEFAULT '50',
+  `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`cat_id`),
+  KEY `sort_order` (`sort_order`),
+  KEY `parent_id` (`parent_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+
+--
+-- 表的结构 `ecs_touch_article`
+--
+
+DROP TABLE IF EXISTS `ecs_touch_article`;
+
+CREATE TABLE IF NOT EXISTS `ecs_touch_article` (
+  `article_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `cat_id` smallint(5) NOT NULL DEFAULT '0',
+  `title` varchar(150) NOT NULL DEFAULT '',
+  `content` longtext NOT NULL,
+  `author` varchar(30) NOT NULL DEFAULT '',
+  `author_email` varchar(60) NOT NULL DEFAULT '',
+  `keywords` varchar(255) NOT NULL DEFAULT '',
+  `is_open` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `add_time` int(10) unsigned NOT NULL DEFAULT '0',
+  `file_url` varchar(255) NOT NULL DEFAULT '',
+  `open_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `link` varchar(255) NOT NULL DEFAULT '',
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`article_id`),
+  KEY `cat_id` (`cat_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=51 ;
 
 --
 -- 表的结构 `ecs_touch_brand`
@@ -277,41 +308,3 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_user_info` (
   `user_id` int(10) NOT NULL,
   `aite_id` varchar(200) NOT NULL COMMENT '标识'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户信息';
-
---
--- 表的结构 `ecs_touch_article_cat`
---
-
-CREATE TABLE IF NOT EXISTS `ecs_touch_article_cat` (
-  `cat_id` smallint(5) NOT NULL AUTO_INCREMENT,
-  `cat_name` varchar(255) NOT NULL DEFAULT '',
-  `keywords` varchar(255) NOT NULL DEFAULT '',
-  `cat_desc` varchar(255) NOT NULL DEFAULT '',
-  `sort_order` tinyint(3) unsigned NOT NULL DEFAULT '50',
-  `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`cat_id`),
-  KEY `sort_order` (`sort_order`),
-  KEY `parent_id` (`parent_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
-
---
--- 表的结构 `ecs_touch_article`
---
-
-CREATE TABLE IF NOT EXISTS `ecs_touch_article` (
-  `article_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `cat_id` smallint(5) NOT NULL DEFAULT '0',
-  `title` varchar(150) NOT NULL DEFAULT '',
-  `content` longtext NOT NULL,
-  `author` varchar(30) NOT NULL DEFAULT '',
-  `author_email` varchar(60) NOT NULL DEFAULT '',
-  `keywords` varchar(255) NOT NULL DEFAULT '',
-  `is_open` tinyint(1) unsigned NOT NULL DEFAULT '1',
-  `add_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `file_url` varchar(255) NOT NULL DEFAULT '',
-  `open_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `link` varchar(255) NOT NULL DEFAULT '',
-  `description` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`article_id`),
-  KEY `cat_id` (`cat_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=51 ;
