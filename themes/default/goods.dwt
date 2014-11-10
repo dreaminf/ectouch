@@ -112,8 +112,8 @@
         </div>
       </section>
      <section class="goods-more-a">
-     <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">商品描述</span> <i class="pull-right fa fa-chevron-right"></i></a> 
-    <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">商品评价</span> <span class="pull-right"><span class="ect-color">20</span>人评价 <span class="ect-color">20%</span>好评 <i class="fa fa-chevron-right"></i></span></a> 
+     <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_brief}</span> <i class="pull-right fa fa-chevron-right"></i></a> 
+    <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_comment}</span> <span class="pull-right"><span class="ect-color">{$comments.count}</span>{$lang.comment_num} <span class="ect-color">{$comments.favorable}%</span>{$lang.favorable_comment} <i class="fa fa-chevron-right"></i></span></a> 
       </section>
       <div class="ect-padding-lr ect-padding-tb goods-submit">
         <div><a type="botton" class="btn btn-info ect-btn-info ect-colorf" href="javascript:addToCart_quick({$goods.goods_id})">{$lang.buy_now}</a></div>

@@ -56,8 +56,9 @@ class GoodsController extends CommonController {
                     $goods ['bonus_money'] = price_format($goods ['bonus_money']);
                 }
             }
-            $goods ['comment_count'] = model('Goods')->get_record_count($this->goods_id);
+            $comments = model('Comment')->get_comment_info($this->goods_id,0);
             $this->assign('goods', $goods);
+            $this->assign('comments', $comments);
             $this->assign('goods_id', $goods ['goods_id']);
             $this->assign('promote_end_time', $goods ['gmt_end_time']);
             // 获得商品的规格和属性

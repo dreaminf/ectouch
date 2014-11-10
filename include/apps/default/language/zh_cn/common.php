@@ -379,6 +379,7 @@ $_LANG['submit_comment'] = '提交评论';
 $_LANG['button_reset'] = '重置表单';
 $_LANG['goods_comment'] = '商品评论';
 $_LANG['article_comment'] = '文章评论';
+$_LANG['comment_num'] = '人评价';
 
 /* 支付确认部分 */
 $_LANG['pay_status'] = '支付状态';
