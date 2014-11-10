@@ -24,9 +24,8 @@
     </div>
   </div>
   <!--商品属性介绍-->
-  <div class="goods-info ect-padding-tb">
-  	<!--商品描述-->
-    <section class="ect-margin-tb ect-margin-lr info"><span class="icon-arr"></span> </section>
+  <div class="goods-info ect-padding-tb"> 
+    <!--商品描述-->
     <section class="ect-margin-tb ect-margin-lr goods-title">
       <h4 class="title pull-left">{$goods.goods_style_name}</h4>
       <span class="pull-right text-center <!--{if $sc eq 1}-->ect-colory<!--{/if}--> ect-padding-lr" onClick="collect({$goods.goods_id})" id='ECS_COLLECT'> <i class="fa <!--{if $sc eq 1}-->fa-heart<!--{else}-->fa-heart-o<!--{/if}-->"></i><br>
@@ -64,10 +63,8 @@
         <!-- {/foreach} --> 
       </p>
     </section>
-    <!-- {/if} -->
+    <!-- {/if} --> 
     <!--商品评价-->
-    <section class="ect-margin-tb ect-margin-lr comment"> 
-    <span class="icon-arr"></span> </section>
     
     <form action="javascript:addToCart({$goods.goods_id})" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY" >
       <section class="ect-padding-lr ect-padding-tb goods-option">
@@ -111,10 +108,7 @@
           <!-- {/if} --> 
         </div>
       </section>
-     <section class="goods-more-a">
-     <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_brief}</span> <i class="pull-right fa fa-chevron-right"></i></a> 
-    <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_comment}</span> <span class="pull-right"><span class="ect-color">{$comments.count}</span>{$lang.comment_num} <span class="ect-color">{$comments.favorable}%</span>{$lang.favorable_comment} <i class="fa fa-chevron-right"></i></span></a> 
-      </section>
+      <section class="goods-more-a"> <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_brief}</span> <i class="pull-right fa fa-chevron-right"></i></a> <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_comment}</span> <span class="pull-right"><span class="ect-color">{$comments.count}</span>{$lang.comment_num} <span class="ect-color">{$comments.favorable}%</span>{$lang.favorable_comment} <i class="fa fa-chevron-right"></i></span></a> </section>
       <div class="ect-padding-lr ect-padding-tb goods-submit">
         <div><a type="botton" class="btn btn-info ect-btn-info ect-colorf" href="javascript:addToCart_quick({$goods.goods_id})">{$lang.buy_now}</a></div>
       </div>
@@ -154,6 +148,42 @@
         </div>
       </section>
     </form>
+  </div>
+  <div class="goods-related ect-padding-lr ect-padding-tb">
+    <p><strong>相关商品：</strong></p>
+    <!-- 本例主要代码 Start ================================ -->
+    <div id="picScroll" class="picScroll">
+      <div class="hd">
+        <ul>
+        </ul>
+      </div>
+      <div class="bd">
+        <ul>
+          <li><a href="#"><img _src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" /></a>
+          	<p class="ect-color">￥360</p>
+            <p class="text-left">呵呵呵呵呵呵呵哈哈哈哈哈哈哈哈哈喜喜喜喜喜喜ix</p>
+          </li>
+          <li><a href="#"><img _src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" /></a>
+          <p class="ect-color">￥360</p>
+            <p class="text-left">呵呵呵呵呵呵呵哈哈哈哈哈哈哈哈哈喜喜喜喜喜喜ix</p></li>
+          <li><a href="#"><img _src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" /></a>
+          <p class="ect-color">￥360</p>
+            <p class="text-left">呵呵呵呵呵呵呵哈哈哈哈哈哈哈哈哈喜喜喜喜喜喜ix</p></li>
+        </ul>
+        <ul>
+          <li><a href="#"><img _src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" /></a></li>
+          <li><a href="#"><img _src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" /></a></li>
+          <li><a href="#"><img _src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" /></a></li>
+        </ul>
+        <ul>
+          <li><a href="#"><img _src="http://d6.yihaodianimg.com/N06/M02/46/D5/CgQIzlQRDsqATvmuAAOcH9GogQM16300_160x160.jpg" src="http://d6.yihaodianimg.com/N06/M02/46/D5/CgQIzlQRDsqATvmuAAOcH9GogQM16300_160x160.jpg" /></a></li>
+          <li><a href="#"><img _src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" /></a></li>
+          <li><a href="#"><img _src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" /></a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- 本例主要代码 End ================================ --> 
   </div>
   <footer class="logo"><img src="__TPL__/images/copyright.png" width="176" height="60"></footer>
 </div>
@@ -243,5 +273,14 @@ function func_scroll(){//定义一个事件效果置
 window.onscroll = function () {
 	 func_scroll();
 }
-</script>
+</script> 
+<script type="text/javascript">
+				TouchSlide({ 
+					slideCell:"#picScroll",
+					titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+					autoPage:"true", //自动分页
+					pnLoop:"false", // 前后按钮不循环
+					switchLoad:"_src" //切换加载，真实图片路径为"_src" 
+				});
+			</script>
 </body></html>

@@ -19,20 +19,7 @@
             <!--{/if}-->
             <!--{/foreach}--></h5>
             </div>
-            <i class="fa fa-angle-down ect-transition05"></i>
-        </div>
-        <div class="ect-category-child">
-        	{if $cat.cat_id}
-			<!--{foreach from=$cat.cat_id item=child name=no1}-->
-                {if $child.cat_id}
-                <a href="{:url('category/all',array('id' =>$this->_var['cat']['id']))}">{$child.name|escape:html}</a>
-                {else}
-                <a href="{$cat.url}">{$child.name|escape:html}</a>
-                {/if}
-            <!--{/foreach}--> 
-			{else}
-			<a href="{$cat.url}">{$lang.all_goods}</a>
-			{/if}
+            <i class="fa fa-angle-right ect-transition05"></i>
         </div>
       </li>
       <!--{/foreach}-->

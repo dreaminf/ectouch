@@ -4,7 +4,7 @@
 <span>{$title}</span>
  <a href="javascript:openSearch();" class="pull-right ect-icon ect-icon1 ect-icon-search1"></a>
 </header>
-<div class="panel panel-default ect-category-all ect-border-radius0">
+<div class="panel panel-default ect-category-all ect-border-radius0" >
     <ul>
      <!--{foreach from=$category item=cat name=no}-->
      <li>
