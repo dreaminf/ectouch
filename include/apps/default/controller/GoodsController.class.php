@@ -42,7 +42,7 @@ class GoodsController extends CommonController {
                 $goods ['goods_brand_url'] = url('brand/index', array('id' => $goods ['brand_id']));
             }
             $shop_price = $goods ['shop_price'];
-            $linked_goods = model('Goods')->get_related_goods($this->goods_id);
+            $linked_goods = model('Goods')->get_related_goods($this->goods_id); 
             $goods ['goods_style_name'] = add_style($goods ['goods_name'], $goods ['goods_name_style']);
 
             // 购买该商品可以得到多少钱的红包

@@ -31,7 +31,7 @@
       <span class="pull-right text-center <!--{if $sc eq 1}-->ect-colory<!--{/if}--> ect-padding-lr" onClick="collect({$goods.goods_id})" id='ECS_COLLECT'> <i class="fa <!--{if $sc eq 1}-->fa-heart<!--{else}-->fa-heart-o<!--{/if}-->"></i><br>
       {$lang.btn_collect} </span> </section>
     <section class="ect-margin-tb ect-margin-lr ">
-      <p><span class="pull-left">{$lang.amount}：<b class="ect-colory" id="ECS_GOODS_AMOUNT"></b></span><span class="pull-right">{$lang.sort_sales}：{$sales_count} 件</span></p>
+      <p><span class="pull-left">{$lang.amount}：<b class="ect-colory" id="ECS_GOODS_AMOUNT"></b></span><span class="pull-right">{$lang.sort_sales}：{$sales_count} {$lang.piece}</span></p>
       <p><!--{if $goods.is_promote and $goods.gmt_end_time } 促销-->{$lang.promote_price}<!--{else}-->{$lang.shop_price}<!--{/if}--><!--{if $goods.is_promote and $goods.gmt_end_time } 促销--> 
         {$goods.promote_price} 
         <!--{else}--> 
@@ -40,7 +40,7 @@
     </section>
     <!-- {if $promotion} 优惠活动 -->
     <section class="ect-margin-tb ect-margin-bottom0 ect-padding-tb goods-promotion ect-padding-lr ">
-      <h5><b>本商品正在进行：</b></h5>
+      <h5><b>{$lang.activity}：</b></h5>
       <p class="ect-border-top ect-margin-tb"> 
         <!-- {foreach from=$promotion item=item key=key} 优惠活动--> 
         <!-- {if $item.type eq "snatch"} --> 
@@ -159,26 +159,19 @@
       </div>
       <div class="bd">
         <ul>
-          <li><a href="#"><img _src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" /></a>
-          	<p class="ect-color">￥360</p>
-            <p class="text-left">呵呵呵呵呵呵呵哈哈哈哈哈哈哈哈哈喜喜喜喜喜喜ix</p>
+          <!--{foreach from=$related_goods item=goods name=goods}-->
+          <li><a href="{$goods.url}"><img _src="{$goods.goods_thumb}" src="{$goods.goods_thumb}" /></a>
+            <p class="ect-color"> 
+              <!--{if $goods.promote_price}--> 
+              {$goods.formated_promote_price}
+              <!--{else}--> 
+              {$goods.shop_price}
+              <!--{/if}--> 
+            </p>
+            <p class="text-left">{$goods.short_name}</p>
           </li>
-          <li><a href="#"><img _src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" /></a>
-          <p class="ect-color">￥360</p>
-            <p class="text-left">呵呵呵呵呵呵呵哈哈哈哈哈哈哈哈哈喜喜喜喜喜喜ix</p></li>
-          <li><a href="#"><img _src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" /></a>
-          <p class="ect-color">￥360</p>
-            <p class="text-left">呵呵呵呵呵呵呵哈哈哈哈哈哈哈哈哈喜喜喜喜喜喜ix</p></li>
-        </ul>
-        <ul>
-          <li><a href="#"><img _src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" /></a></li>
-          <li><a href="#"><img _src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" /></a></li>
-          <li><a href="#"><img _src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" /></a></li>
-        </ul>
-        <ul>
-          <li><a href="#"><img _src="http://d6.yihaodianimg.com/N06/M02/46/D5/CgQIzlQRDsqATvmuAAOcH9GogQM16300_160x160.jpg" src="http://d6.yihaodianimg.com/N06/M02/46/D5/CgQIzlQRDsqATvmuAAOcH9GogQM16300_160x160.jpg" /></a></li>
-          <li><a href="#"><img _src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" /></a></li>
-          <li><a href="#"><img _src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" src="http://d11.yihaodianimg.com/t1/2012/03/23/4954367_320x320.jpg" /></a></li>
+          <!--{if $smarty.foreach.goods.iteration%3 eq 0}--></ul><ul><!--{/if}-->
+          <!--{/foreach}-->
         </ul>
       </div>
     </div>
