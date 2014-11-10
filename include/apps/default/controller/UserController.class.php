@@ -1197,7 +1197,7 @@ class UserController extends CommonController
                     ->delete();
                 if (! $rs) {
                     $result['error'] = 1;
-                    $result['message'] = ECTouch::db()->errorMsg();
+                    $result['message'] = M()->errorMsg();
                     die(json_encode($result));
                 } else {
                     $result['error'] = 0;
@@ -1212,7 +1212,7 @@ class UserController extends CommonController
                     ->data($data)
                     ->insert() === false) {
                     $result['error'] = 1;
-                    $result['message'] = ECTouch::db()->errorMsg();
+                    $result['message'] = M()->errorMsg();
                     die(json_encode($result));
                 } else {
                     $result['error'] = 0;

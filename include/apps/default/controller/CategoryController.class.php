@@ -184,8 +184,7 @@ class CategoryController extends CommonController {
         $this->children = get_children($this->cat_id);
         /* 赋值固定内容 */
         if ($this->brand > 0) {
-            $sql = "SELECT brand_name FROM " . $this->model->pre . 'brand' . " WHERE brand_id = '$this->brand'";
-            $brand_name = ECTOUCH::db()->getOne($sql);
+            $brand_name = model('Base')->model->table('brand')->field('brand_name')->where("brand_id = '$this->brand'")->getOne();
         } else {
             $brand_name = '';
         }
@@ -228,7 +227,7 @@ class CategoryController extends CommonController {
             $sql = "SELECT min(g.shop_price) AS min, max(g.shop_price) as max " . " FROM " . $this->model->pre . 'goods' . " AS g " . " WHERE ($this->children OR " . model('Goods')->get_extension_goods($this->children) . ') AND g.is_delete = 0 AND g.is_on_sale = 1 AND g.is_alone_sale = 1  ';
             // 获得当前分类下商品价格的最大值、最小值
 
-            $row = ECTOUCH::db()->getRow($sql);
+            $row = M()->getRow($sql);
 
             // 取得价格分级最小单位级数，比如，千元商品最小以100为级数
             $price_grade = 0.0001;

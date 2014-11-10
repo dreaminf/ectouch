@@ -1207,10 +1207,10 @@ class FlowController extends CommonController {
             $order ['order_sn'] = get_order_sn(); // 获取新订单号
             $new_order = model('Common')->filter_field('order_info', $order);
             $this->model->table('order_info')->data($new_order)->insert();
-            $error_no = ECTouch::db()->errno();
+            $error_no = M()->errno();
 
             if ($error_no > 0 && $error_no != 1062) {
-                die(ECTouch::db()->errorMsg());
+                die(M()->errorMsg());
             }
         } while ($error_no == 1062); // 如果是订单号重复则重新提交数据
         $new_order_id = mysql_insert_id();

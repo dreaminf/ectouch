@@ -506,7 +506,7 @@ class UsersModel extends BaseModel {
                 if ($result) {
                     return true;
                 } else {
-                    return ECTouch::db()->errorMsg();
+                    return M()->errorMsg();
                 }
             } else {
                 if ($row['user_id'] == $user_id) {
@@ -677,7 +677,7 @@ class UsersModel extends BaseModel {
 
             return true;
         } else {
-            die(ECTouch::db()->errorMsg());
+            die(M()->errorMsg());
         }
     }
 
@@ -719,7 +719,7 @@ class UsersModel extends BaseModel {
 
                 return true;
             } else {
-                die(ECTouch::db()->errorMsg());
+                die(M()->errorMsg());
             }
         }
     }
