@@ -122,7 +122,7 @@ class CategoryController extends CommonController {
             }
             $this->assign('keywords', $keywords);
         } elseif ($this->cat_id == 0) {
-            ecs_header("Location: " . url('category/all') . "\n");
+            ecs_header("Location: " . url('category/top_all') . "\n");
         }
     }
 
@@ -417,6 +417,30 @@ class CategoryController extends CommonController {
             }
         }
     }
+    /**
+     * 获取分类信息
+     * 获取顶级分类
+     */
+    public function top_all() {
+        $cat_id = I('get.id');
+        /* 页面的缓存ID */
+        $cache_id = sprintf('%X', crc32($_SERVER['REQUEST_URI'] . C('lang')));
+        if (!ECTouch::view()->is_cached('category_all.dwt', $cache_id)) {
+            // 获得请求的分类 ID
+            if ($cat_id > 0) {
+                $category = model('CategoryBase')->get_child_tree($cat_id);
+            } else {
+                $category = model('CategoryBase')->get_categories_tree();
+            }
+            $this->assign('title', L('catalog'));
+            $this->assign('category', $category);
+            /* 页面标题 */
+            $page_info = get_page_title($cat_id);
+            $this->assign('ur_here', $page_info['ur_here']);
+            $this->assign('page_title', ($cat_id > 0) ? $page_info['title'] : L('catalog') . '_' . $page_info['title']);
+        }
+        $this->display('category_top_all.dwt', $cache_id);
+    }
 
     /**
      * 获取分类信息
@@ -431,7 +455,8 @@ class CategoryController extends CommonController {
             if ($cat_id > 0) {
                 $category = model('CategoryBase')->get_child_tree($cat_id);
             } else {
-                $category = model('CategoryBase')->get_categories_tree();
+                //顶级分类
+                ecs_header("Location: " . url('category/top_all') . "\n");
             }
             $this->assign('title', L('catalog'));
             $this->assign('category', $category);

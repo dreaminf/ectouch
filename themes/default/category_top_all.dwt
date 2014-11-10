@@ -8,7 +8,8 @@
     <ul>
      <!--{foreach from=$category item=cat name=no}-->
      <li>
-     	<div class="media panel-body"> 
+     	<div class="media panel-body">
+            <img class="pull-left" src="{$cat.cat_image}">
             <div class="pull-left ect-category-right">
                 <h3>{$cat.name|escape:html}</h3>
                 <h5> <!--{foreach from=$cat.cat_id item=child name=no1}-->
@@ -23,7 +24,11 @@
         <div class="ect-category-child">
         	{if $cat.cat_id}
 			<!--{foreach from=$cat.cat_id item=child name=no1}-->
-            <a href="{$child.url}">{$child.name|escape:html}</a>
+                {if $child.cat_id}
+                <a href="{:url('category/all',array('id' =>$this->_var['cat']['id']))}">{$child.name|escape:html}</a>
+                {else}
+                <a href="{$cat.url}">{$child.name|escape:html}</a>
+                {/if}
             <!--{/foreach}--> 
 			{else}
 			<a href="{$cat.url}">{$lang.all_goods}</a>

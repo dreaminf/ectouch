@@ -90,6 +90,6 @@
   <!--{else}-->
   <div class="flow-no-pro"> <img src="__TPL__/images/gwc.png">
     <p class="text-center">{$lang.empty_shopping}</p>
-    <a type="button" href="{:url('category/all')}" class="btn btn-info ect-btn-info">{$lang.go_shopping}</a> </div>
+    <a type="button" href="{:url('category/top_all')}" class="btn btn-info ect-btn-info">{$lang.go_shopping}</a> </div>
   <!-- {/if} --> 
 </div>

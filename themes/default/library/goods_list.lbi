@@ -5,7 +5,7 @@
       <!--{foreach from=$category item=cat name=no}--> 
       <a href="{$cat.url}" class="col-md-3 col-xs-3"><span>{if $cat.cat_id}{$cat.name|escape:html}{else}{$cat.name|escape:html}{/if}</span></a> 
       <!--{/foreach}--> 
-      <a href="{:url('category/all')}" class="col-md-3 col-xs-3 ect-colory"><span>更多</span></a> </div>
+      <a href="{:url('category/top_all')}" class="col-md-3 col-xs-3 ect-colory"><span>更多</span></a> </div>
     <input type="hidden" name="category" value="{$category}" />
     <input type="hidden" name="display" value="{$pager.display}" id="display" />
     <input type="hidden" name="brand" value="{$brand_id}" />

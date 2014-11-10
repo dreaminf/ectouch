@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_nav` (
 --
 
 INSERT INTO `ecs_touch_nav` (`id`, `ctype`, `cid`, `name`, `ifshow`, `vieworder`, `opennew`, `url`, `pic`, `type`) VALUES
-(1, '', 0, '全部分类', 1, 0, 0, 'index.php?c=category&amp;a=all', 'data/attached/nav/c78d6a6b9b1ef0f58760c1c26fcd1ed3.png', 'middle'),
+(1, '', 0, '全部分类', 1, 0, 0, 'index.php?c=category&amp;a=top_all', 'data/attached/nav/c78d6a6b9b1ef0f58760c1c26fcd1ed3.png', 'middle'),
 (2, '', 0, '我的订单', 1, 0, 0, 'index.php?m=default&amp;c=user&amp;a=order_list', 'data/attached/nav/fa2f3f5df8dfa7ca5740515d47d2381d.png', 'middle'),
 (3, '', 0, '最新团购', 1, 0, 0, 'index.php?m=default&amp;c=groupbuy', 'data/attached/nav/0c71ca825682cad7222266a7e7cd052a.png', 'middle'),
 (4, '', 0, '促销活动', 1, 0, 0, 'index.php?m=default&amp;c=activity', 'data/attached/nav/ca0a1b9798403546b2b3b9ccdc7a3fcc.png', 'middle'),
