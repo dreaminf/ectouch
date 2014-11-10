@@ -78,7 +78,7 @@ class ArticlecatController extends AdminController {
         $select = '';
         $selected = $cat['parent_id'];
         foreach ($options as $var) {
-            if ($var['cat_id'] == $_REQUEST['id']) {
+            if ($var['cat_id'] == $id) {
                 continue;
             }
             $select .= '<option value="' . $var['cat_id'] . '" ';

@@ -36,7 +36,7 @@
               <td><div class="col-md-4">
                   <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-primary btn-sm active">
-                      <input type="radio" name="data[is_open]" value="1">
+                      <input type="radio" name="data[is_open]" value="1" checked>
                       {$lang['isopen']}</label>
                     <label class="btn btn-primary btn-sm">
                       <input type="radio" name="data[is_open]" value="0">
