@@ -213,7 +213,7 @@ select{-webkit-appearance:none; border:0; color:#555; padding-left:0; border:1px
 .ect-category-all ul li{border-bottom:1px solid #e3e3e3;}
 .ect-category-all ul li .panel-body{padding:0.8em;}
 .ect-category-all ul li .media{position:relative;}
-.ect-category-all ul li .media i.fa-angle-down{position:absolute; right:0.5em; font-size:2em; top:50%; margin-top:-0.48em; color:#aaa;}
+.ect-category-all ul li .media i{position:absolute; right:0.5em; font-size:2em; top:50%; margin-top:-0.48em; color:#aaa;}
 .ect-category-all ul li .ect-category-child{background:#f5f5f5; padding:0 0.8em; display:none;}
 .ect-category-all ul li .ect-category-child a{display:block; padding:1em 0; border-bottom:1px solid #d6d6d6;}
 .ect-category-all ul li .ect-category-child a:last-child{border-bottom:none;}
@@ -358,6 +358,15 @@ select{-webkit-appearance:none; border:0; color:#555; padding-left:0; border:1px
 .goods-more-a{margin:0.6em 0; margin-bottom:0;}
 .goods-more-a a{display:block; border-top:1px solid #e3e3e3;}
 .goods-more-a a i{color:#bbb;}
+/*相关商品*/
+.goods-related { border-top: 1px solid #e3e3e3; background: #fff; }
+.picScroll { margin: 10px auto; text-align: center; }
+.picScroll .bd ul { width: 100%; float: left;}
+.picScroll .bd li { width: 33%; float: left; font-size: 14px; text-align: center; padding:10px;}
+.picScroll .bd li p{text-overflow:ellipsis; overflow:hidden; white-space:nowrap; font-size:1em;}
+.picScroll .bd li a { -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 取消链接高亮 */ }
+.picScroll .bd li img { max-width: 100%;height: auto; background: url(images/loading.gif) #fff center center no-repeat; }
+.picScroll .hd { display: none; }
 /*=======================
         订单确认页面
 =================*/
