@@ -150,7 +150,7 @@
     </form>
   </div>
   <div class="goods-related ect-padding-lr ect-padding-tb">
-    <p><strong>相关商品：</strong></p>
+    <p><strong>{$lang.releate_goods}：</strong></p>
     <!-- 本例主要代码 Start ================================ -->
     <div id="picScroll" class="picScroll">
       <div class="hd">

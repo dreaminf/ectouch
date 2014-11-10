@@ -39,7 +39,7 @@ class CommentModel extends BaseModel {
         }
         /* 取得评论列表 */
         $res = $this->row('SELECT COUNT(*) as count FROM ' . $this->pre .
-                "comment WHERE id_value = '$id' AND comment_type = '$type' AND status = 1 AND parent_id = 0".$rank_info);
+                "comment WHERE id_value = '$id' AND comment_type = '$type' AND status = 1 AND parent_id = 0" . $rank_info);
         $count = $res['count'];
         $size = C('comments_number') > 0 ? C('comments_number') : 5;
         $page_count = ($count > 0) ? intval(ceil($count / $size)) : 1;
@@ -159,6 +159,10 @@ class CommentModel extends BaseModel {
             if ($bad) {
                 $info['bad'] = round(($bad / $info['count']) * 100); //差评
             }
+        } else {
+            $info['favorable'] = 100;
+            $info['medium'] = 100;
+            $info['bad'] = 100;
         }
         return $info;
     }
