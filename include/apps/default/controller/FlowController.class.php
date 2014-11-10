@@ -1049,14 +1049,14 @@ class FlowController extends CommonController {
         /* 检查红包是否存在 */
         if ($order ['bonus_id'] > 0) {
             $bonus = model('Order')->bonus_info($order ['bonus_id']);
-            if (empty($bonus) || $bonus ['user_id'] != $user_id || $bonus ['order_id'] > 0 || $bonus ['min_goods_amount'] > cart_amount(true, $flow_type)) {
+            if (empty($bonus) || $bonus ['user_id'] != $user_id || $bonus ['order_id'] > 0 || $bonus ['min_goods_amount'] > model('Order')->cart_amount(true, $flow_type)) {
                 $order ['bonus_id'] = 0;
             }
         } elseif (isset($_POST ['bonus_sn'])) {
             $bonus_sn = trim($_POST ['bonus_sn']);
             $bonus = model('Order')->bonus_info(0, $bonus_sn);
             $now = gmtime();
-            if (empty($bonus) || $bonus ['user_id'] > 0 || $bonus ['order_id'] > 0 || $bonus ['min_goods_amount'] > cart_amount(true, $flow_type) || $now > $bonus ['use_end_date']) {
+            if (empty($bonus) || $bonus ['user_id'] > 0 || $bonus ['order_id'] > 0 || $bonus ['min_goods_amount'] > model('Order')->cart_amount(true, $flow_type) || $now > $bonus ['use_end_date']) {
                 
             } else {
                 if ($user_id > 0) {
