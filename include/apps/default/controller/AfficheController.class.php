@@ -18,6 +18,11 @@ defined('IN_ECTOUCH') or die('Deny Access');
 
 class AfficheController extends CommonController {
     public function __construct(){
-        $this->redirect(__URL__);
+        $uri = I('get.uri');
+        if(empty($uri)){
+            $this->redirect(__URL__);
+        }else{
+            $this->redirect($uri);
+        }
     }
 }
