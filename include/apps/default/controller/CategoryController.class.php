@@ -55,8 +55,12 @@ class CategoryController extends CommonController {
         $this->assign('id', $this->cat_id);
         // 获取分类
         $this->assign('category', model('CategoryBase')->get_top_category());
-        $this->assign('nCount', model('Category')->category_get_count($this->children, $this->brand, $this->ext, $this->keywords));
+        $count = model('Category')->category_get_count($this->children, $this->brand, $this->ext, $this->keywords); 
 
+        $goodslist = $this->category_get_goods();
+        $this->assign('goods_list', $goodslist);
+        $this->pageLimit(url('index', array('page'=>'page','id'=>$this->cat_id)), $this->size); 
+        $this->assign('page', $this->pageShow($count));
         /* 页面标题 */
         $page_info = get_page_title($this->cat_id);
         $this->assign('ur_here', $page_info['ur_here']);
@@ -137,6 +141,7 @@ class CategoryController extends CommonController {
         // 获得分类的相关信息
         $cat = model('Category')->get_cat_info($this->cat_id);
         $this->keywords();
+        $this->assign('show_asynclist', C('show_asynclist'));
         // 初始化分页信息
         $page_size = C('page_size');
         $brand = I('request.brand');
