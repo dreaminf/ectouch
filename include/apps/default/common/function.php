@@ -853,7 +853,8 @@ function time2gmt($time) {
  * @return void
  * @author xuanyan
  * */
-function set_affiliate() {
+function set_affiliate($u = '') {
+    $_GET['u'] = empty($u) ?  $_GET['u'] : $u;
     $config = unserialize(C('affiliate'));
     if (!empty($_GET['u']) && $config['on'] == 1) {
         if (!empty($config['config']['expire'])) {
@@ -1466,16 +1467,19 @@ function exchange_points($uid, $fromcredits, $tocredits, $toappid, $netamount) {
  * @param  $title 提醒标题
  * @param  $msg 提醒内容
  * @param  $url 页面链接 base64_decode(urldecode($url));
+ * @param  $order_id 订单id 
  *
  */
-function send_wechat_message($type = '', $titile = '', $msg = '', $url = ''){
+function send_wechat_message($type = '', $title = '', $msg = '', $url = '', $order_id = ''){
     /* 如果需要，微信通知 wanglu */
     if(!empty($type)){
-        $remind_title = M()->table('wechat_extend')->field('name')->where('enable = 1 and command = "'.$type.'"')->getOne();
-        $remind_title = $title ? $title : $remind_title;
+        $remind = M()->table('wechat_extend')->field('name, config')->where('enable = 1 and command = "'.$type.'"')->find();
+        $config = unserialize($remind['config']);
+        $title = $remind['name'] ? $remind['name'] : $title;
+        $msg = $config['template'] ? str_replace('[$order_id]', $order_id, $config['template']) : $msg;
         $openid = M()->table('wechat_user')->field('openid')->where('ect_uid = '.$_SESSION['user_id'])->getOne();
-        if(!empty($remind_title) && !empty($openid)){
-            $dourl = __HOST__ . url('api/index', array('openid'=>$openid, 'title'=>$remind_title, 'msg'=>$msg, 'url'=>$url));
+        if(!empty($title) && !empty($openid)){
+            $dourl = __HOST__ . url('api/index', array('openid'=>$openid, 'title'=>$title, 'msg'=>$msg, 'url'=>$url));
             Http::doGet($dourl);
         }
     }

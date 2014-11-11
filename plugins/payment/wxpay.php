@@ -196,7 +196,7 @@ class wxpay
                             'order_id' => $order_id
                         ));
                         $order_url = urlencode(base64_encode($order_url));
-                        send_wechat_message('pay_remind', '', $out_trade_no[0] . ' 订单已支付', $order_url);
+                        send_wechat_message('pay_remind', '', $out_trade_no[0] . ' 订单已支付', $order_url, $out_trade_no[0]);
                     }
                 }
                 $returndata['return_code'] = 'SUCCESS';
