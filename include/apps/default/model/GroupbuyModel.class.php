@@ -105,4 +105,18 @@ class GroupbuyModel extends BaseModel {
         return $gb_list;
     }
 
+    /**
+     * 取得团购活动总数
+     * @return type
+     */
+    function group_buy_count() {
+        $now = gmtime();
+        $sql = "SELECT COUNT(*) as count " .
+                "FROM " . $this->pre .
+                "goods_activity WHERE act_type = '" . GAT_GROUP_BUY . "' " .
+                "AND start_time <= '$now' AND is_finished < 3";
+        $res = $this->row($sql);
+        return $res['count'];
+    }
+
 }
