@@ -25,9 +25,9 @@ class IndexController extends CommonController {
         // 自定义导航栏
         $navigator = model('Common')->get_navigator();
         $this->assign('navigator', $navigator['middle']);
-        $this->assign('best_goods', model('Index')->goods_list('best',3));
-        $this->assign('new_goods', model('Index')->goods_list('new',3));
-        $this->assign('hot_goods', model('Index')->goods_list('hot',3));
+        $this->assign('best_goods', model('Index')->goods_list('best',C('page_size')));
+        $this->assign('new_goods', model('Index')->goods_list('new',C('page_size')));
+        $this->assign('hot_goods', model('Index')->goods_list('hot',C('page_size')));
         $this->display('index.dwt');
     }
 
