@@ -12,7 +12,6 @@
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
  */
-
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
@@ -71,19 +70,18 @@ class GroupbuyModel extends BaseModel {
                 }
             }
             //添加当前价格字段为列表排序
-            $this->table = 'touch_goods_activity';
             $sql = 'SELECT count(*) as count FROM ' . $this->pre . "touch_goods_activity WHERE  `act_id` = '" . $group_buy['act_id'] . "'";
             $res = $this->row($sql);
             if ($res['count']) {
-                $sql = 'UPDATE ' . $this->pre . 'touch_goods_activity set cur_price = ' . $cur_price . ' WHERE act_id = ' . $group_buy['act_id'];
+                $this->table = 'touch_goods_activity';
                 $data['cur_price'] = $cur_price;
                 $condition['act_id'] = $group_buy['act_id'];
                 $this->update($condition, $data);
-            }
-            else{
-                $data['act_id'] = $group_buy['act_id'];
-                $data['cur_price'] = $cur_price;
-                $this->insert($data);
+            } else {
+                $this->table = 'touch_goods_activity';
+                $data1['act_id'] = $group_buy['act_id'];
+                $data1['cur_price'] = $cur_price;
+                $this->insert($data1);
             }
 
             $group_buy['cur_price'] = price_format($cur_price);
