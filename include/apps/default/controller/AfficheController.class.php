@@ -118,14 +118,14 @@ class AfficheController extends CommonController {
                     $sql = "INSERT INTO " . $this->model->pre . "touch_adsense (from_ad, referer, clicks) VALUES ('" . $ad_id . "', '" . $site_name . "', '1')";
                 }
                 $this->model->query($sql);
-                $ad_info = $this->model->table('ad')->field('*')->where('ad_id =' . $ad_id)->find();
+                $ad_info = $this->model->table('touch_ad')->field('*')->where('ad_id =' . $ad_id)->find();
                 /* 跳转到广告的链接页面 */
                 if (!empty($ad_info['ad_link'])) {
                     $uri = (strpos($ad_info['ad_link'], 'http://') === false && strpos($ad_info['ad_link'], 'https://') === false ) ? __URL__ . urldecode($ad_info['ad_link']) : urldecode($ad_info['ad_link']);
                 } else {
                     $uri = __URL__;
-                }
-                $this->redirect($uri);
+                }  
+               $this->redirect($uri);
                 exit;
             }
         }
