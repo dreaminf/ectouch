@@ -76,6 +76,19 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_ad_position` (
 INSERT INTO `ecs_touch_ad_position` (`position_id`, `position_name`, `ad_width`, `ad_height`, `position_desc`, `position_style`) VALUES
 (1, '首页Banner广告位', 360, 168, '', '<ul>\r\n{foreach from=$ads item=ad}\r\n  <li>{$ad}</li>\r\n{/foreach}\r\n</ul>\r\n');
 
+
+--
+-- 表的结构 `ecs_touch_adsense`
+--
+DROP TABLE IF EXISTS `ecs_touch_adsense`;
+
+CREATE TABLE IF NOT EXISTS `ecs_touch_adsense` (
+  `from_ad` smallint(5) NOT NULL DEFAULT '0',
+  `referer` varchar(255) NOT NULL DEFAULT '',
+  `clicks` int(10) unsigned NOT NULL DEFAULT '0',
+  KEY `from_ad` (`from_ad`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 --
 -- 表的结构 `ecs_touch_article_cat`
 --
