@@ -44,6 +44,19 @@ class CategoryController extends CommonController {
      */
     public function index() {
         $this->parameter();
+        if( I('get.id', 0)==0){
+            $arg = array(
+                'id' => $this->cat_id,
+                'brand_id' => $this->brand,
+                'price_max' => $this->price_max,
+                'price_min' => $this->price_min,
+                'filter_attr' => $this->filter_attr_str,
+                'page' => $this->page,
+            );
+            
+            $url = url('Category/index',$arg);
+            $this->redirect($url);
+        }
         $this->assign('brand_id', $this->brand);
         $this->assign('price_max', $this->price_max);
         $this->assign('price_min', $this->price_min);
