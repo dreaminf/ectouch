@@ -85,7 +85,6 @@ class GroupbuyModel extends BaseModel {
                 $data['cur_price'] = $cur_price;
                 $this->insert($data);
             }
-            $this->query($sql);
 
             $group_buy['cur_price'] = price_format($cur_price);
             $group_buy['spare_discount'] = round($cur_price / $group_buy['market_price'] * 10, 2);
