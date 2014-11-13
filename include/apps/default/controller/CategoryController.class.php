@@ -44,7 +44,7 @@ class CategoryController extends CommonController {
      */
     public function index() {
         $this->parameter();
-        if( I('get.id', 0)==0){
+        if (I('get.id', 0) == 0) {
             $arg = array(
                 'id' => $this->cat_id,
                 'brand' => $this->brand,
@@ -53,8 +53,8 @@ class CategoryController extends CommonController {
                 'filter_attr' => $this->filter_attr_str,
                 'page' => $this->page,
             );
-            
-            $url = url('Category/index',$arg);
+
+            $url = url('Category/index', $arg);
             $this->redirect($url);
         }
         $this->assign('brand_id', $this->brand);
@@ -68,11 +68,11 @@ class CategoryController extends CommonController {
         $this->assign('id', $this->cat_id);
         // 获取分类
         $this->assign('category', model('CategoryBase')->get_top_category());
-        $count = model('Category')->category_get_count($this->children, $this->brand, $this->ext, $this->keywords); 
+        $count = model('Category')->category_get_count($this->children, $this->brand, $this->ext, $this->keywords);
 
         $goodslist = $this->category_get_goods();
         $this->assign('goods_list', $goodslist);
-        $this->pageLimit(url('index', array('page'=>'page','id'=>$this->cat_id)), $this->size); 
+        $this->pageLimit(url('index', array('page' => 'page', 'id' => $this->cat_id)), $this->size);
         $this->assign('page', $this->pageShow($count));
         /* 页面标题 */
         $page_info = get_page_title($this->cat_id);
@@ -568,6 +568,8 @@ class CategoryController extends CommonController {
                 $arr[$row['goods_id']]['mysc'] = $rs;
             }
             $arr[$row['goods_id']]['promotion'] = model('GoodsBase')->get_promotion_show($row['goods_id']);
+            $arr[$row['goods_id']]['comment_count'] = model('Comment')->get_goods_comment($row['goods_id'], 0);  //商品总评论数量 
+            $arr[$row['goods_id']]['favorable_count'] = model('Comment')->favorable_comment($row['goods_id'], 0);  //获得商品好评数量  
         }
         return $arr;
     }
