@@ -47,7 +47,7 @@ class CategoryController extends CommonController {
         if( I('get.id', 0)==0){
             $arg = array(
                 'id' => $this->cat_id,
-                'brand_id' => $this->brand,
+                'brand' => $this->brand,
                 'price_max' => $this->price_max,
                 'price_min' => $this->price_min,
                 'filter_attr' => $this->filter_attr_str,
