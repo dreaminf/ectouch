@@ -12,7 +12,6 @@
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
  */
-
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
@@ -25,9 +24,14 @@ class IndexController extends CommonController {
         // 自定义导航栏
         $navigator = model('Common')->get_navigator();
         $this->assign('navigator', $navigator['middle']);
-        $this->assign('best_goods', model('Index')->goods_list('best',C('page_size')));
-        $this->assign('new_goods', model('Index')->goods_list('new',C('page_size')));
-        $this->assign('hot_goods', model('Index')->goods_list('hot',C('page_size')));
+        $this->assign('best_goods', model('Index')->goods_list('best', C('page_size')));
+        $this->assign('new_goods', model('Index')->goods_list('new', C('page_size')));
+        $this->assign('hot_goods', model('Index')->goods_list('hot', C('page_size')));
+        //首页推荐分类
+        $cat_rec = model('Index')->get_recommend_res();
+        $this->assign('cat_best', $cat_rec[1]);
+        $this->assign('cat_new', $cat_rec[2]);
+        $this->assign('cat_hot', $cat_rec[3]);
         $this->display('index.dwt');
     }
 
