@@ -354,6 +354,7 @@ class FlowController extends CommonController {
             $your_discount = sprintf('', $favour_name, price_format($discount ['discount']));
             $result ['total_desc'] = $cart_goods ['total'] ['goods_price'];
             $result ['total_number'] = $cart_goods ['total'] ['total_number'];
+            $result['market_total'] =  $cart_goods['total']['market_price'];//市场价格
             die(json_encode($result));
         } else {
             $result ['error'] = 100;
