@@ -42,6 +42,11 @@ class ExchangeController extends CommonController {
         $this->assign('size', $this->size);
         $this->assign('sort', $this->sort);
         $this->assign('order', $this->order);
+        $goods_list = model('Exchange')->exchange_get_goods($this->children, $this->integral_min, $this->integral_max, $this->ext, $this->size, $this->page, $this->sort, $this->order);
+        $count = model('Exchange')->get_exchange_goods_count($this->children, $this->integral_min, $this->integral_max);
+        $this->pageLimit(url('index', array('page' => 'page')), $this->size);
+        $this->assign('goods_list', $goods_list);
+        $this->assign('page', $this->pageShow($count));
         $this->display('exchange_list.dwt');
     }
 
@@ -233,6 +238,7 @@ class ExchangeController extends CommonController {
         // 如果分类ID为0，则返回总分类页
         $page_size = C('page_size');
         $this->size = intval($page_size) > 0 ? intval($page_size) : 10;
+        $this->page = I('request.page') ? intval(I('request.page')): 1;
         $this->ext = '';
         $this->cat_id = I('request.cat_id');
         $this->integral_max = I('request.integral_max');
