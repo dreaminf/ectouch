@@ -162,6 +162,7 @@ class CategoryController extends CommonController {
         $price_min = I('request.price_min');
         $filter_attr = I('request.filter_attr');
         $this->size = intval($page_size) > 0 ? intval($page_size) : 10;
+        $this->page = I('request.page') > 0 ? intval(I('request.page')) : 1;
         $this->brand = $brand > 0 ? $brand : 0;
         $this->price_max = $price_max > 0 ? $price_max : 0;
         $this->price_min = $price_min > 0 ? $price_min : 0;
