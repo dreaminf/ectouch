@@ -12,7 +12,6 @@
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
  */
-
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
@@ -73,15 +72,22 @@ class BrandController extends CommonController {
         $brand_id = I('request.id');
         $brand_info = model('BrandBase')->get_brand_info($brand_id);
         if (empty($brand_info)) {
-            ecs_header("Location: ./\n");
+            $this->redirect(url('index'));
             exit();
         }
+        $cat = I('request.cat') ? intval(I('request.cat')): 0;
         $this->assign('page', $this->page);
         $this->assign('size', $this->size);
         $this->assign('sort', $this->sort);
         $this->assign('order', $this->order);
         $this->assign('brand_id', $brand_id);
-        $this->display('brand_goods_list.dwt', $cache_id);
+        $this->assign('cat', $cat);
+        $goods_list = model('Brand')->brand_get_goods($brand_id, '', $this->sort, $this->order, $this->size, $this->page);
+        $this->assign('goods_list', $goods_list);
+        $count = model('Brand')->goods_count_by_brand($brand_id, $this->cat);
+        $this->pageLimit(url('goods_list', array('page' => 'page')), $this->size);
+        $this->assign('page', $this->pageShow($count));
+        $this->display('brand_goods_list.dwt');
     }
 
     /**
