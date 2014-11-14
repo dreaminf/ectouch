@@ -12,7 +12,6 @@
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
  */
-
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
@@ -76,6 +75,26 @@ class ActivityController extends CommonController {
         $this->assign('size', $this->size);
         $this->assign('sort', $this->sort);
         $this->assign('order', $this->order);
+        if (!$id) {
+            $this->redirect(url('index'));
+        }
+        $res = $this->model->table('favourable_activity')->field()->where("act_id = '$id'")->order('sort_order ASC')->find();
+        $list = array();
+
+        if ($res['act_range'] != FAR_ALL && !empty($res['act_range_ext'])) {
+            if ($res['act_range'] == FAR_CATEGORY) {
+                $this->children = " cat_id " . db_create_in(get_children_cat($res['act_range_ext']));
+            } elseif ($res['act_range'] == FAR_BRAND) {
+                $this->brand = "g.brand_id " . db_create_in($res['act_range_ext']);
+            } else {
+                $this->goods = " AND g.goods_id " . db_create_in($res['act_range_ext']);
+            }
+        }
+        $count = model('Category')->category_get_count($this->children, $this->brand, $this->ext, $this->keywords);
+        $this->pageLimit(url('goods_list', array('page' => 'page', 'id' => $this->cat_id)), $this->size);
+        $this->assign('page', $this->pageShow($count));
+        $goods_list = model('Activity')->category_get_goods($this->children, $this->brand, $this->goods, $this->price_min, $this->price_max, $this->ext, $this->size, $this->page, $this->sort, $this->order);
+        $this->assign('goods_list', $goods_list);
         $this->display('activity_goods_list.dwt');
     }
 
@@ -86,8 +105,7 @@ class ActivityController extends CommonController {
         $this->parameter();
         $id = intval(I('request.id'));
         if (!$id) {
-            $url = url('activity/index');
-            ecs_header("Location: $url\n");
+            $this->redirect(url('index'));
         }
         $res = $this->model->table('favourable_activity')->field()->where("act_id = '$id'")->order('sort_order ASC')->find();
         $list = array();
@@ -123,11 +141,13 @@ class ActivityController extends CommonController {
         // 如果分类ID为0，则返回总分类页
         $page_size = C('page_size');
         $this->size = intval($page_size) > 0 ? intval($page_size) : 10;
+        $this->page = I('request.page')? intval(I('request.page')) : 1;
         /* 排序、显示方式以及类型 */
         $default_display_type = C('show_order_type') == '0' ? 'list' : (C('show_order_type') == '1' ? 'grid' : 'album');
         $default_sort_order_method = C('sort_order_method') == '0' ? 'DESC' : 'ASC';
         $default_sort_order_type = C('sort_order_type') == '0' ? 'goods_id' : (C('sort_order_type') == '1' ? 'shop_price' : 'last_update');
 
+        $this->assign('show_asynclist', C('show_asynclist'));
         $this->sort = (isset($_REQUEST['sort']) && in_array(trim(strtolower($_REQUEST['sort'])), array(
                     'goods_id',
                     'shop_price',

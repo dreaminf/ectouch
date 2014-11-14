@@ -49,7 +49,3 @@
 </div>
 {include file='library/page.lbi '}
 <!--{/if} --> 
-
-<!-- {if $category > 0} -->
-</form>
-<!-- {/if} -->
