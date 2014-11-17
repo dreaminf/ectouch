@@ -70,6 +70,8 @@ class sign extends PluginWechatController
                 ->count();
             // 当前时间减去时间间隔得到的历史时间之后赠送的次数
             if ($num < $config['point_num']) {
+                // 积分赠送
+                $this->give_point($fromusername, $info);
                 $articles['content'] = '签到成功';
             } else {
                 $articles['content'] = '签到次数已用完';

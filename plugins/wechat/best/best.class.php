@@ -78,6 +78,8 @@ class best extends PluginWechatController
                     'id' => $val['goods_id']
                 ));
             }
+            // 积分赠送
+            $this->give_point($fromusername, $info);
         }
         return $articles;
     }

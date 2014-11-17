@@ -5,9 +5,9 @@
  * ============================================================================
  * Copyright (c) 2012-2014 http://ectouch.cn All rights reserved.
  * ----------------------------------------------------------------------------
- * 文件名称：news.php
+ * 文件名称：jfcx.class.php
  * ----------------------------------------------------------------------------
- * 功能描述：微信通-精品查询
+ * 功能描述：微信通-积分查询
  * ----------------------------------------------------------------------------
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
@@ -62,6 +62,8 @@ class jfcx extends PluginWechatController
             $data = model('Base')->model->table('users')->field('rank_points, pay_points, user_money')->where('user_id = '.$uid)->find();
             if (! empty($data)) {
                 $articles['content'] = '余额：'.price_format($data['user_money'], false)."\r\n".'等级积分：'.$data['rank_points']."\r\n".'消费积分：'.$data['pay_points'];
+                // 积分赠送
+                $this->give_point($fromusername, $info);
             }
         }
         return $articles;

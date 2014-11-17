@@ -79,6 +79,8 @@ class bonus extends PluginWechatController
                     model('Base')->model->table('user_bonus')->data($data)->insert();
 
                     $articles['content'] = '感谢您的关注，赠送您一个红包';
+                    // 积分赠送
+                    $this->give_point($fromusername, $info);
                 }
             }
         }

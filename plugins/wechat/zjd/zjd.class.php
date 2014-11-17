@@ -91,6 +91,8 @@ class zjd extends PluginWechatController
                 $articles['content'][0]['PicUrl'] = $config['media']['file'];
             }
             $articles['content'][0]['Url'] = html_out($config['media']['link']);
+            // 积分赠送
+            $this->give_point($fromusername, $info);
         }
         
         return $articles;

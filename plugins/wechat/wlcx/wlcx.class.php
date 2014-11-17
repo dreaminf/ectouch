@@ -71,6 +71,8 @@ class wlcx extends PluginWechatController
                     $articles['content'][0]['Url'] = __HOST__ . url('user/order_tracking', array('order_id'=>$order['order_id']));
                 }
             }
+            // 积分赠送
+            $this->give_point($fromusername, $info);
         }
         return $articles;
     }

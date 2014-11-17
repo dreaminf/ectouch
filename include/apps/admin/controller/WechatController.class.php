@@ -708,11 +708,11 @@ class WechatController extends AdminController
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('qrcode_list', $filter), 10);
         $total = $this->model->table('wechat_qrcode')
-            ->where('wechat_id = ' . $this->wechat_id)
+            ->where('username is null and wechat_id = ' . $this->wechat_id)
             ->order('sort asc')
             ->count();
         $list = $this->model->table('wechat_qrcode')
-            ->where('wechat_id = ' . $this->wechat_id)
+            ->where('username is null and wechat_id = ' . $this->wechat_id)
             ->order('sort asc')
             ->limit($offset)
             ->select();
@@ -721,6 +721,7 @@ class WechatController extends AdminController
         $this->assign('list', $list);
         $this->display();
     }
+    
 
     /**
      * 编辑二维码
@@ -744,6 +745,10 @@ class WechatController extends AdminController
                     'msg' => $result
                 )));
             }
+            $rs = $this->model->table('wechat_qrcode')->where('scene_id = '.$data['scene_id'])->count();
+            if($rs > 0){
+                exit(json_encode(array('status'=>0, 'msg'=>L('qrcode_scene_limit'))));
+            }
             
             $this->model->table('wechat_qrcode')
                 ->data($data)
@@ -763,6 +768,83 @@ class WechatController extends AdminController
         }
         $this->display();
     }
+    
+    /**
+     * 扫码引荐
+     */
+    public function share_list()
+    {
+        // 分页
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('share_list', $filter), 10);
+        $total = $this->model->table('wechat_qrcode')
+        ->where('username is not null and wechat_id = ' . $this->wechat_id)
+        ->order('sort asc')
+        ->count();
+        //数据
+        $list = $this->model->table('wechat_qrcode')
+        ->where('username is not null and wechat_id = ' . $this->wechat_id)
+        ->order('sort asc')
+        ->limit($offset)
+        ->select();
+        //成交量
+        if($list){
+            foreach($list as $key=>$val){
+                $list[$key]['share_account'] = $this->model->table('affiliate_log')->field('sum(money)')->where('user_id = '.$val['scene_id'])->getOne();
+            }
+        }
+    
+        $this->assign('page', $this->pageShow($total));
+        $this->assign('list', $list);
+        $this->display();
+    }
+    
+    /**
+     * 编辑二维码
+     */
+    public function share_edit()
+    {
+        if (IS_POST) {
+            $data = I('post.data');
+            $data['wechat_id'] = $this->wechat_id;
+            // 验证数据
+            $result = Check::rule(array(
+                Check::must($data['username']),
+                L('share_name') . L('empty')
+            ), array(
+                Check::must($data['scene_id']),
+                L('share_userid') . L('empty')
+            ), array(
+                Check::must($data['function']),
+                L('qrcode_function') . L('empty')
+            ));
+            if ($result !== true) {
+                exit(json_encode(array(
+                    'status' => 0,
+                    'msg' => $result
+                )));
+            }
+            $rs = $this->model->table('wechat_qrcode')->where('scene_id = '.$data['scene_id'])->count();
+            if($rs > 0){
+                exit(json_encode(array('status'=>0, 'msg'=>L('qrcode_scene_limit'))));
+            }
+            
+            if(empty($data['expire_seconds'])){
+                $data['type'] = 1;
+            }
+            else{
+                $data['type'] = 0;
+            }
+            $this->model->table('wechat_qrcode')
+            ->data($data)
+            ->insert();
+            exit(json_encode(array(
+                'status' => 1
+            )));
+        }
+        $this->display();
+    }
+    
 
     /**
      * 删除二维码

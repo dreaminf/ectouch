@@ -58,12 +58,22 @@ class WechatController extends CommonController
             $keywords = $wedata['Content'];
         } elseif ($type == Wechat::MSGTYPE_EVENT) {
             if ('subscribe' == $wedata['Event']) {
-                // 关注
-                $this->subscribe($wedata['FromUserName']);
                 // 用户扫描带参数二维码(未关注)
                 if (isset($wedata['EventKey']) && ! empty($wedata['EventKey'])) {
-                    $keywords = $wedata['EventKey'];
+                    $scene_id = $this->weObj->getRevSceneId();
+                    set_affiliate($scene_id);
+                    $flag = true;
+                    // 关注
+                    $this->subscribe($wedata['FromUserName'], $scene_id);
+                }  
+                else{
+                    // 关注
+                    $this->subscribe($wedata['FromUserName']);
+                    // 关注时回复信息
+                    $this->msg_reply('subscribe');
+                    exit;
                 }
+                
             } elseif ('unsubscribe' == $wedata['Event']) {
                 // 取消关注
                 $this->unsubscribe($wedata['FromUserName']);
@@ -82,19 +92,27 @@ class WechatController extends CommonController
                     ->update();
                 exit();
             } elseif ('CLICK' == $wedata['Event']) {
-                /*
-                 * $wedata = array( 'ToUserName' => 'gh_1ca465561479', 'FromUserName' => 'oWbbLt4fDrg78mvacsfpvi9Juo4I', 'CreateTime' => '1408944652', 'MsgType' => 'event', 'Event' => 'CLICK', 'EventKey' => 'ffff' );
-                 */
                 // 点击菜单
                 $keywords = $wedata['EventKey'];
             } elseif ('VIEW' == $wedata['Event']) {
                 $this->redirect($wedata['EventKey']);
             } elseif ('SCAN' == $wedata['Event']) {
-                $keywords = $wedata['EventKey'];
+                $scene_id = $this->weObj->getRevSceneId();
             }
         } else {
             $this->msg_reply('msg');
             exit();
+        }
+        //扫描二维码
+        if(!empty($scene_id)){
+            $qrcode_fun = $this->model->table('wechat_qrcode')->field('function')->where('scene_id = "'.$scene_id.'"')->getOne();
+            //扫码引荐
+            if(!empty($qrcode_fun) && isset($flag)){
+                $this->model->table('users')->data('parent_id = '.$scene_id)->where('user_id = '.$_SESSION['user_id'])->update();
+                //增加扫描量
+                $this->model->table('wechat_qrcode')->data('scan_num = scan_num + 1')->where('scene_id = "'.$scene_id.'"')->update();
+            }
+            $keywords = $qrcode_fun;
         }
         // 回复
         if (! empty($keywords)) {
@@ -120,7 +138,7 @@ class WechatController extends CommonController
      *
      * @param array $info            
      */
-    private function subscribe($openid = '')
+    private function subscribe($openid = '', $scene_id = '')
     {
         // 用户信息
         $info = $this->weObj->getUserInfo($openid);
@@ -131,7 +149,7 @@ class WechatController extends CommonController
         // 查找用户是否存在
         $where['openid'] = $openid;
         $rs = $this->model->table('wechat_user')
-            ->field('uid, subscribe')
+            ->field('ect_uid, subscribe')
             ->where($where)
             ->find();
         // 未关注
@@ -192,8 +210,6 @@ class WechatController extends CommonController
                 ->data($info)
                 ->insert();
             
-            // 关注时回复信息
-            $this->msg_reply('subscribe');
             // 红包信息
             $content = $this->send_message($openid, 'bonus', $this->weObj, 1);
             $bonus_msg = '';
@@ -215,8 +231,10 @@ class WechatController extends CommonController
                 ->data($info)
                 ->where($where)
                 ->update();
-            // 关注时回复信息
-            $this->msg_reply('subscribe');
+            if(!empty($scene_id)){
+                //扫码引荐
+                $this->model->table('users')->data('parent_id = '.$scene_id)->where('user_id = '.$rs['ect_uid'])->update();
+            }
         }
     }
 
@@ -426,8 +444,6 @@ class WechatController extends CommonController
                 } elseif ($data['type'] == 'news') {
                     $this->weObj->news($data['content'])->reply();
                 }
-                // 积分赠送
-                $wechat->give_point($fromusername, $rs);
                 $return = true;
             }
         }

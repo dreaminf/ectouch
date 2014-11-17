@@ -86,6 +86,8 @@ class ddcx extends PluginWechatController
                 $articles['content'][0]['Title'] = '订单号：'.$order['order_sn'];
                 $articles['content'][0]['Description'] = '商品信息：'. $goods ."\r\n". '总金额：'. $order['total_fee'] ."\r\n". '支付状态：'. $order['order_status'] . $order['pay_status'] . $order['shipping_status'] ."\r\n". '快递公司：'. $order['shipping_name'] ."\r\n". '物流单号：' . $order['invoice_no'];
                 $articles['content'][0]['Url'] = __HOST__ . url('user/order_detail', array('order_id'=>$order['order_id']));
+                // 积分赠送
+                $this->give_point($fromusername, $info);
             }
         }
         return $articles;

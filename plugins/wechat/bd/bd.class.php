@@ -85,6 +85,8 @@ class bd extends PluginWechatController
                 $articles['content'][0]['PicUrl'] = $media['file'];
             }
             $articles['content'][0]['Url'] = html_out($media['link']);
+            // 积分赠送
+            $this->give_point($fromusername, $info);
         }
         return $articles;
     }
