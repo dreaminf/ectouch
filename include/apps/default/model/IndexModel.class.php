@@ -134,7 +134,7 @@ class IndexModel extends CommonModel {
         if (!empty($cat_recommend_res)) {
             $cat_rec_array = array();
             foreach ($cat_recommend_res as $cat_recommend_data) {
-                $cat_rec[$cat_recommend_data['recommend_type']][] = array('cat_id' => $cat_recommend_data['cat_id'], 'cat_name' => $cat_recommend_data['cat_name']);
+                $cat_rec[$cat_recommend_data['recommend_type']][] = array('cat_id' => $cat_recommend_data['cat_id'], 'cat_name' => $cat_recommend_data['cat_name'], 'url' => url('category/index', array('id' => $cat_recommend_data['cat_id'])));
             }
             return $cat_rec;
         }
