@@ -85,7 +85,7 @@ class GroupbuyModel extends BaseModel {
             }
 
             $group_buy['cur_price'] = price_format($cur_price);
-            $group_buy['spare_discount'] = round($cur_price / $group_buy['market_price'] * 10, 2);
+            $group_buy['spare_discount'] = $group_buy['market_price'] != 0 ? round($cur_price / $group_buy['market_price'] * 10, 2):0;
             $group_buy['spare_price'] = price_format($group_buy['market_price'] - $cur_price); //增加优惠金额 by carson add 20140606
             $group_buy['market_price'] = price_format($group_buy['market_price']); //增加市场价 by carson add 20140606
             //$stat = group_buy_stat($group_buy['act_id'], $ext_info['deposit']);
