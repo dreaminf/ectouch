@@ -475,13 +475,9 @@ class WechatController extends CommonController
             $data = $wechat->show($fromusername, $rs);
             if (! empty($data)) {
                 if ($return) {
-                    // 积分赠送
-                    $wechat->give_point($fromusername, $rs);
                     $result = $data;
                 } else {
                     $weObj->sendCustomMessage($data['content']);
-                    // 积分赠送
-                    $wechat->give_point($fromusername, $rs);
                     $result = true;
                 }
             }

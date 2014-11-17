@@ -858,7 +858,8 @@ class WechatController extends AdminController
         $this->model->table('wechat_qrcode')
             ->where('id = ' . $id)
             ->delete();
-        $this->message(L('qrcode') . L('drop') . L('success'), url('qrcode_list'));
+        $url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : url('qrcode_list');
+        $this->message(L('qrcode') . L('drop') . L('success'), $url);
     }
 
     /**
