@@ -126,7 +126,6 @@ class ExchangeModel extends BaseModel {
             $row['goods_thumb'] = get_image_path($goods_id, $row['goods_thumb'], true);
             $row['original_img'] = get_image_path($goods_id, $row['original_img'], true);
             $row['goods_brand_url'] = build_uri('brand/goods_list', array('id' => $row['brand_id']));
-            ;
             return $row;
         } else {
             return false;
