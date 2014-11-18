@@ -134,7 +134,7 @@ class IndexModel extends CommonModel {
         if (!empty($cat_recommend_res)) {
             $cat_rec_array = array();
             foreach ($cat_recommend_res as $cat_recommend_data) {
-                $cat_rec[$cat_recommend_data['recommend_type']][] = array('cat_id' => $cat_recommend_data['cat_id'], 'cat_name' => $cat_recommend_data['cat_name'], 'url' => url('category/index', array('id' => $cat_recommend_data['cat_id'])));
+                $cat_rec[$cat_recommend_data['recommend_type']][] = array('cat_id' => $cat_recommend_data['cat_id'], 'cat_name' => $cat_recommend_data['cat_name'], 'url' => url('category/index', array('id' => $cat_recommend_data['cat_id'])), 'cat_id' => model('Category')->get_parent_id_tree($cat_recommend_data['cat_id']), 'goods_list' => model('Category')->assign_cat_goods($cat_recommend_data['cat_id'],3));
             }
             return $cat_rec;
         }
