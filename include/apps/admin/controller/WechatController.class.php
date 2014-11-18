@@ -74,7 +74,7 @@ class WechatController extends AdminController
     public function append()
     {
         if (IS_POST) {
-            $data = I('post.data');
+            $data = I('post.data', '', 'trim,htmlspecialchars');
             $data['time'] = time();
             // 验证数据
             $result = Check::rule(array(
@@ -106,7 +106,7 @@ class WechatController extends AdminController
     {
         if (IS_POST) {
             $condition['id'] = intval($_POST['id']);
-            $data = I('post.data');
+            $data = I('post.data', '', 'trim,htmlspecialchars');
             // 验证数据
             $result = Check::rule(array(
                 Check::must($data['name']),

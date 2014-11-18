@@ -118,7 +118,7 @@
                   <div class="col-sm-4 col-md-4 col-lg-4">
                     <input name="config[user_pre]" placeholder="用户名前缀" value="{$register_remind['config']['user_pre']}" class="form-control"  />
                   </div>
-                  <span class="help-block">wx_随机3位数 生成：wx_113。默认为wx_。</span>
+                  <span class="help-block">wx_ + 时间戳 + 随机2位数 生成：wx_141636330110。不能超过3位，默认截取前3位，如果为空默认为wx_。</span>
                 </td>
               </tr>
               <tr>
