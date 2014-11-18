@@ -241,7 +241,7 @@ class CategoryModel extends BaseModel {
                 if ($row['is_show']) {
                     $three_c_arr[$row['cat_id']]['id'] = $row['cat_id'];
                     $three_c_arr[$row['cat_id']]['name'] = $row['cat_name'];
-                    $three_c_arr[$row['cat_id']]['url'] = build_uri('category', array('cid' => $row['cat_id']), $row['cat_name']);
+                    $three_c_arr[$row['cat_id']]['url'] = build_uri('category/index', array('id' => $row['cat_id']), $row['cat_name']);
                 }
             }
         }
