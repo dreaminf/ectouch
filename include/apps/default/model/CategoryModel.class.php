@@ -295,21 +295,8 @@ class CategoryModel extends BaseModel {
             $goods[$idx]['shop_price'] = price_format($row['shop_price']);
             $goods[$idx]['thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
             $goods[$idx]['goods_img'] = get_image_path($row['goods_id'], $row['goods_img']);
-            $goods[$idx]['url'] = build_uri('goods', array('gid' => $row['goods_id']), $row['goods_name']);
+            $goods[$idx]['url'] = build_uri('goods/index', array('id' => $row['goods_id']), $row['goods_name']);
         }
-
-//        if ($from == 'web') {
-//            $GLOBALS['smarty']->assign('cat_goods_' . $cat_id, $goods);
-//        } elseif ($from == 'wap') {
-//            $cat['goods'] = $goods;
-//        }
-
-        /* 分类信息 */
-//        $sql = 'SELECT cat_name FROM ' . $GLOBALS['ecs']->table('category') . " WHERE cat_id = '$cat_id'";
-//        $cat['name'] = $GLOBALS['db']->getOne($sql);
-//        $cat['url'] = build_uri('category', array('cid' => $cat_id), $cat['name']);
-//        $cat['id'] = $cat_id;
-
         return $goods;
     }
 
