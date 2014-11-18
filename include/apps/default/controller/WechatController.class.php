@@ -61,7 +61,6 @@ class WechatController extends CommonController
                 // 用户扫描带参数二维码(未关注)
                 if (isset($wedata['EventKey']) && ! empty($wedata['EventKey'])) {
                     $scene_id = $this->weObj->getRevSceneId();
-                    set_affiliate($scene_id);
                     $flag = true;
                     // 关注
                     $this->subscribe($wedata['FromUserName'], $scene_id);
@@ -108,7 +107,6 @@ class WechatController extends CommonController
             $qrcode_fun = $this->model->table('wechat_qrcode')->field('function')->where('scene_id = "'.$scene_id.'"')->getOne();
             //扫码引荐
             if(!empty($qrcode_fun) && isset($flag)){
-                $this->model->table('users')->data('parent_id = '.$scene_id)->where('user_id = '.$_SESSION['user_id'])->update();
                 //增加扫描量
                 $this->model->table('wechat_qrcode')->data('scan_num = scan_num + 1')->where('scene_id = "'.$scene_id.'"')->update();
             }
@@ -138,7 +136,7 @@ class WechatController extends CommonController
      *
      * @param array $info            
      */
-    private function subscribe($openid = '', $scene_id = '')
+    private function subscribe($openid = '', $scene_id = 0)
     {
         // 用户信息
         $info = $this->weObj->getUserInfo($openid);
@@ -161,7 +159,7 @@ class WechatController extends CommonController
                 ->find();
             if (! empty($register)) {
                 $reg_config = unserialize($register['config']);
-                $username = $reg_config['user_pre'] . mt_rand(100, 999);
+                $username = msubstr($reg_config['user_pre'], 3, 0, 'utf-8', false) . time().mt_rand(1, 99);
                 // 密码随机数
                 $rs = array();
                 $arr = range(0, 9);
@@ -181,14 +179,14 @@ class WechatController extends CommonController
                     $password
                 ), $reg_config['template']);
             } else {
-                $username = 'wx_' . mt_rand(100, 999);
+                $username = 'wx_' . time().mt_rand(1, 99);
                 $password = 'ecmoban' . mt_rand(100, 999);
                 // 通知模版
                 $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
             }
             // 用户注册
             $domain = get_top_domain();
-            if (model('Users')->register($username, $password, $username . '@' . $domain) !== false) {
+            if (model('Users')->register($username, $password, $username . '@' . $domain, array('parent_id'=>$scene_id)) !== false) {
                 $data['user_rank'] = 99;
                 
                 $this->model->table('users')
@@ -231,10 +229,6 @@ class WechatController extends CommonController
                 ->data($info)
                 ->where($where)
                 ->update();
-            if(!empty($scene_id)){
-                //扫码引荐
-                $this->model->table('users')->data('parent_id = '.$scene_id)->where('user_id = '.$rs['ect_uid'])->update();
-            }
         }
     }
 
@@ -642,7 +636,7 @@ class WechatController extends CommonController
                 ->find();
             if (! empty($register)) {
                 $reg_config = unserialize($register['config']);
-                $username = $reg_config['user_pre'] . mt_rand(100, 999);
+                $username = msubstr($reg_config['user_pre'], 3, 0, 'utf-8', false) . time().mt_rand(1, 99);
                 // 密码随机数
                 $rs = array();
                 $arr = range(0, 9);
@@ -662,7 +656,7 @@ class WechatController extends CommonController
                     $password
                 ), $reg_config['template']);
             } else {
-                $username = 'wx_' . mt_rand(100, 999);
+                $username = 'wx_' . time().mt_rand(1, 99);
                 $password = 'ecmoban' . mt_rand(100, 999);
                 // 通知模版
                 $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;

@@ -790,7 +790,7 @@ class WechatController extends AdminController
         //成交量
         if($list){
             foreach($list as $key=>$val){
-                $list[$key]['share_account'] = $this->model->table('affiliate_log')->field('sum(money)')->where('user_id = '.$val['scene_id'])->getOne();
+                $list[$key]['share_account'] = $this->model->table('affiliate_log')->field('sum(money)')->where('separate_type = 0 and user_id = '.$val['scene_id'])->getOne();
             }
         }
     

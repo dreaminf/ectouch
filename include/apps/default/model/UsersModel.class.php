@@ -1725,6 +1725,29 @@ class UsersModel extends BaseModel {
                 setcookie('ecshop_affiliate_uid', '', 1);
             }
         }
+        elseif($_SESSION['user_id'] !== 0){
+            //推荐 by ecmoban
+            $reg_info = $this->model->table('users')->field('reg_time, parent_id')->where('user_id = '.$_SESSION['user_id'])->find();
+            //推荐信息
+            $config = unserialize(C('affiliate'));
+            if (!empty($config['config']['expire'])) {
+                if ($config['config']['expire_unit'] == 'hour') {
+                    $c = 1;
+                } elseif ($config['config']['expire_unit'] == 'day') {
+                    $c = 24;
+                } elseif ($config['config']['expire_unit'] == 'week') {
+                    $c = 24 * 7;
+                } else {
+                    $c = 1;
+                }
+                //有效时间
+                $eff_time = 3600 * $config['config']['expire'] * $c;
+                //有效时间内
+                if(gmtime() - $reg_info['reg_time'] <= $eff_time){
+                    return $reg_info['parent_id'];
+                }
+            }
+        }
 
         return 0;
     }
