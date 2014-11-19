@@ -85,7 +85,7 @@ class BrandController extends CommonController {
         $goods_list = model('Brand')->brand_get_goods($brand_id, '', $this->sort, $this->order, $this->size, $this->page);
         $this->assign('goods_list', $goods_list);
         $count = model('Brand')->goods_count_by_brand($brand_id, $this->cat);
-        $this->pageLimit(url('goods_list', array('page' => 'page')), $this->size);
+        $this->pageLimit(url('goods_list', array('id' => $brand_id)), $this->size);
         $this->assign('page', $this->pageShow($count));
         $this->display('brand_goods_list.dwt');
     }
