@@ -138,97 +138,99 @@ class WechatController extends CommonController
      */
     private function subscribe($openid = '', $scene_id = 0)
     {
-        // 用户信息
-        $info = $this->weObj->getUserInfo($openid);
-        if (empty($info)) {
-            $info = array();
-        }
-        
-        // 查找用户是否存在
-        $where['openid'] = $openid;
-        $rs = $this->model->table('wechat_user')
-            ->field('ect_uid, subscribe')
-            ->where($where)
-            ->find();
-        // 未关注
-        if (empty($rs)) {
-            // 设置的用户注册信息
-            $register = $this->model->table('wechat_extend')
-                ->field('config')
-                ->where('enable = 1 and command = "register_remind"')
-                ->find();
-            if (! empty($register)) {
-                $reg_config = unserialize($register['config']);
-                $username = msubstr($reg_config['user_pre'], 3, 0, 'utf-8', false) . time().mt_rand(1, 99);
-                // 密码随机数
-                $rs = array();
-                $arr = range(0, 9);
-                $reg_config['pwd_rand'] = $reg_config['pwd_rand'] ? $reg_config['pwd_rand'] : 5;
-                for ($i = 0; $i < $reg_config['pwd_rand']; $i ++) {
-                    $rs[] = array_rand($arr);
-                }
-                $pwd_rand = implode('', $rs);
-                // 密码
-                $password = $reg_config['pwd_pre'] . $pwd_rand;
-                // 通知模版
-                $template = str_replace(array(
-                    '[$username]',
-                    '[$password]'
-                ), array(
-                    $username,
-                    $password
-                ), $reg_config['template']);
-            } else {
-                $username = 'wx_' . time().mt_rand(1, 99);
-                $password = 'ecmoban' . mt_rand(100, 999);
-                // 通知模版
-                $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
+        if(!empty($openid)){
+            // 用户信息
+            $info = $this->weObj->getUserInfo($openid);
+            if (empty($info)) {
+                $info = array();
             }
-            // 用户注册
-            $domain = get_top_domain();
-            if (model('Users')->register($username, $password, $username . '@' . $domain, array('parent_id'=>$scene_id)) !== false) {
-                $data['user_rank'] = 99;
-                
-                $this->model->table('users')
-                    ->data($data)
-                    ->where('user_name = "' . $username . '"')
-                    ->update();
-            } else {
-                die('');
-            }
-            $info['ect_uid'] = $_SESSION['user_id'];
-            // 获取用户所在分组ID
-            $group_id = $this->weObj->getUserGroup($openid);
-            $info['group_id'] = $group_id ? $group_id : '';
-            // 获取被关注公众号信息
-            $info['wechat_id'] = $this->wechat_id;
-            $info['subscribe'] = 1;
-            $info['openid'] = $openid;
-            $this->model->table('wechat_user')
-                ->data($info)
-                ->insert();
             
-            // 红包信息
-            $content = $this->send_message($openid, 'bonus', $this->weObj, 1);
-            $bonus_msg = '';
-            if (! empty($content)) {
-                $bonus_msg = $content['content'];
-            }
-            // 微信端发送消息
-            $msg = array(
-                'touser' => $openid,
-                'msgtype' => 'text',
-                'text' => array(
-                    'content' => $template . "\r\n" . $bonus_msg
-                )
-            );
-            $this->weObj->sendCustomMessage($msg);
-        } else {
-            $info['subscribe'] = 1;
-            $this->model->table('wechat_user')
-                ->data($info)
+            // 查找用户是否存在
+            $where['openid'] = $openid;
+            $rs = $this->model->table('wechat_user')
+                ->field('ect_uid, subscribe')
                 ->where($where)
-                ->update();
+                ->find();
+            // 未关注
+            if (empty($rs)) {
+                // 设置的用户注册信息
+                $register = $this->model->table('wechat_extend')
+                    ->field('config')
+                    ->where('enable = 1 and command = "register_remind"')
+                    ->find();
+                if (! empty($register)) {
+                    $reg_config = unserialize($register['config']);
+                    $username = msubstr($reg_config['user_pre'], 3, 0, 'utf-8', false) . time().mt_rand(1, 99);
+                    // 密码随机数
+                    $rs = array();
+                    $arr = range(0, 9);
+                    $reg_config['pwd_rand'] = $reg_config['pwd_rand'] ? $reg_config['pwd_rand'] : 5;
+                    for ($i = 0; $i < $reg_config['pwd_rand']; $i ++) {
+                        $rs[] = array_rand($arr);
+                    }
+                    $pwd_rand = implode('', $rs);
+                    // 密码
+                    $password = $reg_config['pwd_pre'] . $pwd_rand;
+                    // 通知模版
+                    $template = str_replace(array(
+                        '[$username]',
+                        '[$password]'
+                    ), array(
+                        $username,
+                        $password
+                    ), $reg_config['template']);
+                } else {
+                    $username = 'wx_' . time().mt_rand(1, 99);
+                    $password = 'ecmoban' . mt_rand(100, 999);
+                    // 通知模版
+                    $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
+                }
+                // 用户注册
+                $domain = get_top_domain();
+                if (model('Users')->register($username, $password, $username . '@' . $domain, array('parent_id'=>$scene_id)) !== false) {
+                    $data['user_rank'] = 99;
+                    
+                    $this->model->table('users')
+                        ->data($data)
+                        ->where('user_name = "' . $username . '"')
+                        ->update();
+                } else {
+                    die('');
+                }
+                $info['ect_uid'] = $_SESSION['user_id'];
+                // 获取用户所在分组ID
+                $group_id = $this->weObj->getUserGroup($openid);
+                $info['group_id'] = $group_id ? $group_id : '';
+                // 获取被关注公众号信息
+                $info['wechat_id'] = $this->wechat_id;
+                $info['subscribe'] = 1;
+                $info['openid'] = $openid;
+                $this->model->table('wechat_user')
+                    ->data($info)
+                    ->insert();
+                
+                // 红包信息
+                $content = $this->send_message($openid, 'bonus', $this->weObj, 1);
+                $bonus_msg = '';
+                if (! empty($content)) {
+                    $bonus_msg = $content['content'];
+                }
+                // 微信端发送消息
+                $msg = array(
+                    'touser' => $openid,
+                    'msgtype' => 'text',
+                    'text' => array(
+                        'content' => $template . "\r\n" . $bonus_msg
+                    )
+                );
+                $this->weObj->sendCustomMessage($msg);
+            } else {
+                $info['subscribe'] = 1;
+                $this->model->table('wechat_user')
+                    ->data($info)
+                    ->where($where)
+                    ->update();
+            }
         }
     }
 
