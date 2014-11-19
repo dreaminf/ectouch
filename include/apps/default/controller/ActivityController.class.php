@@ -85,12 +85,12 @@ class ActivityController extends CommonController {
             if ($res['act_range'] == FAR_CATEGORY) {
                 $this->children = " cat_id " . db_create_in(get_children_cat($res['act_range_ext']));
             } elseif ($res['act_range'] == FAR_BRAND) {
-                $this->brand = "g.brand_id " . db_create_in($res['act_range_ext']);
+                $this->brand = " g.brand_id " . db_create_in($res['act_range_ext']);
             } else {
-                $this->goods = " AND g.goods_id " . db_create_in($res['act_range_ext']);
+                $this->goods = " g.goods_id " . db_create_in($res['act_range_ext']);
             }
         }
-        $count = model('Category')->category_get_count($this->children, $this->brand, $this->ext, $this->keywords);
+        $count = model('Activity')->category_get_count($this->children, $this->brand, $this->goods,$this->price_min, $this->price_max,$this->ext, $this->keywords);
         $this->pageLimit(url('goods_list', array('page' => 'page', 'id' => $this->cat_id)), $this->size);
         $this->assign('page', $this->pageShow($count));
         $goods_list = model('Activity')->category_get_goods($this->children, $this->brand, $this->goods, $this->price_min, $this->price_max, $this->ext, $this->size, $this->page, $this->sort, $this->order);

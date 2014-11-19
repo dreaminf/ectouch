@@ -12,7 +12,6 @@
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
  */
-
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
@@ -40,6 +39,34 @@ class ActivityModel extends BaseModel {
         return $arr;
     }
 
+    function category_get_count($children, $brand, $goods, $min, $max, $ext, $keywords) {
+
+        $display = $GLOBALS['display'];
+        $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
+        if ($keywords != '') {
+            $where .= " AND (( 1 " . $keywords . " ) ) ";
+        }
+        if ($children) {
+            $where .= " AND ($children OR " . model('Goods')->get_extension_goods($children) . ')';
+        }
+        if ($brand) {
+            $where .= " AND $brand ";
+        }
+        if ($goods) {
+            $where .= " AND $goods";
+        }
+        if ($min > 0) {
+            $where .= " AND g.shop_price >= $min ";
+        }
+        if ($max > 0) {
+            $where .= " AND g.shop_price <= $max ";
+        }
+        //echo $where;
+        $sql = 'SELECT COUNT(*) as count FROM ' . $this->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' . ' LEFT JOIN ' . $this->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " . "WHERE $where $ext ";
+        $res = $this->row($sql);
+        return $res['count'];
+    }
+
     /**
      * 获得分类下的商品
      * @param unknown $children
@@ -57,9 +84,12 @@ class ActivityModel extends BaseModel {
     function category_get_goods($children, $brand, $goods, $min, $max, $ext, $size, $page, $sort, $order) {
         $display = $GLOBALS['display'];
         $children = $children ? 'AND (' . $children . ' OR ' . Model('Goods')->get_extension_goods($children) . ')' : '';
-        $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 " . $children . " AND g.is_delete = 0 " . $goods;
+        $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 " . $children . " AND g.is_delete = 0 ";
         if ($brand) {
             $where .= " AND $brand ";
+        }
+        if ($goods) {
+            $where .= " AND $goods ";
         }
         if ($min > 0) {
             $where .= " AND g.shop_price >= $min ";
@@ -69,7 +99,7 @@ class ActivityModel extends BaseModel {
         }
         /* 获得商品列表 */
         $start = ($page - 1) * $size;
-        $sort = $sort =='sales_volume'? 'xl.sales_volume': $sort;
+        $sort = $sort == 'sales_volume' ? 'xl.sales_volume' : $sort;
         $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, " . 'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img ' . 'FROM ' . $this->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' . 'LEFT JOIN ' . $this->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " . "WHERE $where $ext ORDER BY $sort $order LIMIT $start , $size";
         $res = $this->query($sql);
         $arr = array();
