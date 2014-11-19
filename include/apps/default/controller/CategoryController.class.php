@@ -72,7 +72,7 @@ class CategoryController extends CommonController {
 
         $goodslist = $this->category_get_goods();
         $this->assign('goods_list', $goodslist);
-        $this->pageLimit(url('index', array('page' => 'page','id' => $this->cat_id,'brand' => $this->brand,'price_max' => $this->price_max,'price_min' => $this->price_min,'filter_attr' => $this->filter_attr_str)), $this->size);  
+        $this->pageLimit(url('index', array('id' => $this->cat_id,'brand' => $this->brand,'price_max' => $this->price_max,'price_min' => $this->price_min,'filter_attr' => $this->filter_attr_str)), $this->size);  
         $this->assign('page', $this->pageShow($count));
         
         /* 页面标题 */
