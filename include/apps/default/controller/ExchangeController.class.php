@@ -44,7 +44,7 @@ class ExchangeController extends CommonController {
         $this->assign('order', $this->order);
         $goods_list = model('Exchange')->exchange_get_goods($this->children, $this->integral_min, $this->integral_max, $this->ext, $this->size, $this->page, $this->sort, $this->order);
         $count = model('Exchange')->get_exchange_goods_count($this->children, $this->integral_min, $this->integral_max);
-        $this->pageLimit(url('index', array('page' => 'page')), $this->size);
+        $this->pageLimit(url('index'), $this->size);
         $this->assign('goods_list', $goods_list);
         $this->assign('page', $this->pageShow($count));
         $this->display('exchange_list.dwt');
