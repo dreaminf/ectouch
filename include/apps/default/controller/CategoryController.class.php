@@ -44,7 +44,7 @@ class CategoryController extends CommonController {
      */
     public function index() {
         $this->parameter();
-        if (I('get.id', 0) == 0) {
+        if (I('get.id', 0) == 0 && CONTROLLER_NAME == 'category') {
             $arg = array(
                 'id' => $this->cat_id,
                 'brand' => $this->brand,
@@ -68,12 +68,13 @@ class CategoryController extends CommonController {
         $this->assign('id', $this->cat_id);
         // 获取分类
         $this->assign('category', model('CategoryBase')->get_top_category());
-        $count = model('Category')->category_get_count($this->children, $this->brand, $this->ext, $this->keywords);
+        $count = model('Category')->category_get_count($this->children, $this->brand, $this->price_min, $this->price_max, $this->ext);
 
         $goodslist = $this->category_get_goods();
         $this->assign('goods_list', $goodslist);
-        $this->pageLimit(url('index', array('page' => 'page', 'id' => $this->cat_id)), $this->size);
+        $this->pageLimit(url('index', array('page' => 'page','id' => $this->cat_id,'brand' => $this->brand,'price_max' => $this->price_max,'price_min' => $this->price_min,'filter_attr' => $this->filter_attr_str)), $this->size);  
         $this->assign('page', $this->pageShow($count));
+        
         /* 页面标题 */
         $page_info = get_page_title($this->cat_id);
         $this->assign('ur_here', $page_info['ur_here']);
