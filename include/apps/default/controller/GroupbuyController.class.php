@@ -44,7 +44,7 @@ class GroupbuyController extends CommonController {
         $gb_list = model('Groupbuy')->group_buy_list($this->size, $this->page, $this->sort, $this->order);
         $this->assign('gb_list', $gb_list);
         $count = model('Groupbuy')->group_buy_count();
-        $this->pageLimit(url('index', array('page' => 'page')), $this->size);
+        $this->pageLimit(url('index'), $this->size);
         $this->assign('page', $this->pageShow($count)); 
         /* 显示模板 */
         $this->display('group_buy_list.dwt');
