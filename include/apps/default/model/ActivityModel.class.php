@@ -39,13 +39,10 @@ class ActivityModel extends BaseModel {
         return $arr;
     }
 
-    function category_get_count($children, $brand, $goods, $min, $max, $ext, $keywords) {
+    function category_get_count($children, $brand, $goods, $min, $max, $ext) {
 
         $display = $GLOBALS['display'];
         $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
-        if ($keywords != '') {
-            $where .= " AND (( 1 " . $keywords . " ) ) ";
-        }
         if ($children) {
             $where .= " AND ($children OR " . model('Goods')->get_extension_goods($children) . ')';
         }
