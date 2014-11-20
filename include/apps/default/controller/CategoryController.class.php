@@ -72,13 +72,20 @@ class CategoryController extends CommonController {
 
         $goodslist = $this->category_get_goods();
         $this->assign('goods_list', $goodslist);
-        $this->pageLimit(url('index', array('id' => $this->cat_id,'brand' => $this->brand,'price_max' => $this->price_max,'price_min' => $this->price_min,'filter_attr' => $this->filter_attr_str)), $this->size);  
+        $this->pageLimit(url('index', array('id' => $this->cat_id, 'brand' => $this->brand, 'price_max' => $this->price_max, 'price_min' => $this->price_min, 'filter_attr' => $this->filter_attr_str)), $this->size);
         $this->assign('page', $this->pageShow($count));
-        
+
         /* 页面标题 */
         $page_info = get_page_title($this->cat_id);
         $this->assign('ur_here', $page_info['ur_here']);
         $this->assign('page_title', $page_info['title']);
+        $cat = model('Category')->get_cat_info($this->cat_id);  // 获得分类的相关信息
+        if (!empty($cat['keywords'])) {
+            if (!empty($cat['keywords'])) {
+                $this->assign('keywords_list', explode(' ', $cat['keywords']));
+            }
+        }
+        $this->assign('categories', model('CategoryBase')->get_categories_tree($this->cat_id));
 
         $this->display('category.dwt');
     }
