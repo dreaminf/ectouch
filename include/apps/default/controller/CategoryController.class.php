@@ -154,7 +154,7 @@ class CategoryController extends CommonController {
     /**
      * 处理参数便于搜索商品信息
      */
-    public function parameter() {
+    private function parameter() {
         // 如果分类ID为0，则返回总分类页
         if (empty($this->cat_id)) {
             $this->cat_id = 0;

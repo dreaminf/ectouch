@@ -118,7 +118,7 @@ class BrandController extends CommonController {
     /**
      * 处理参数便于搜索商品信息
      */
-    public function parameter() {
+    private function parameter() {
         // 初始化分页信息
         $page_size = C('page_size');
         $brand = I('request.brand');
