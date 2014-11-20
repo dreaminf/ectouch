@@ -73,7 +73,7 @@ class CategoryController extends CommonController {
         $goodslist = $this->category_get_goods();
         $this->assign('goods_list', $goodslist);
         $this->pageLimit(url('index', array('id' => $this->cat_id, 'brand' => $this->brand, 'price_max' => $this->price_max, 'price_min' => $this->price_min, 'filter_attr' => $this->filter_attr_str)), $this->size);
-        $this->assign('page', $this->pageShow($count));
+        $this->assign('pager', $this->pageShow($count));
 
         /* 页面标题 */
         $page_info = get_page_title($this->cat_id);
@@ -201,13 +201,8 @@ class CategoryController extends CommonController {
                     'grid',
                     'album'
                 ))) ? trim($_REQUEST['display']) : (isset($_COOKIE['ECS']['display']) ? $_COOKIE['ECS']['display'] : $default_display_type);
-        $display = in_array($display, array(
-                    'list',
-                    'grid',
-                    'album'
-                )) ? $display : 'album';
         setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
-
+        $this->assign('display', $display);
         $this->children = get_children($this->cat_id);
         /* 赋值固定内容 */
         if ($this->brand > 0) {

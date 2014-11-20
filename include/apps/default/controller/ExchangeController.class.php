@@ -46,7 +46,7 @@ class ExchangeController extends CommonController {
         $count = model('Exchange')->get_exchange_goods_count($this->children, $this->integral_min, $this->integral_max);
         $this->pageLimit(url('index'), $this->size);
         $this->assign('goods_list', $goods_list);
-        $this->assign('page', $this->pageShow($count));
+        $this->assign('pager', $this->pageShow($count));
         $this->display('exchange_list.dwt');
     }
 
@@ -264,11 +264,6 @@ class ExchangeController extends CommonController {
                     'grid',
                     'album'
                 ))) ? trim($_REQUEST ['display']) : (isset($_COOKIE ['ECS'] ['display']) ? $_COOKIE ['ECS'] ['display'] : $default_display_type);
-        $display = in_array($display, array(
-                    'list',
-                    'grid',
-                    'album'
-                )) ? $display : 'album';
         setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
         $this->children = get_children($this->cat_id);
     }

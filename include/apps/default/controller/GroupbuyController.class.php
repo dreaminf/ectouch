@@ -45,7 +45,7 @@ class GroupbuyController extends CommonController {
         $this->assign('gb_list', $gb_list);
         $count = model('Groupbuy')->group_buy_count();
         $this->pageLimit(url('index'), $this->size);
-        $this->assign('page', $this->pageShow($count)); 
+        $this->assign('pager', $this->pageShow($count)); 
         /* 显示模板 */
         $this->display('group_buy_list.dwt');
     }
@@ -274,11 +274,6 @@ class GroupbuyController extends CommonController {
                     'grid',
                     'album'
                 ))) ? trim($_REQUEST ['display']) : (isset($_COOKIE ['ECS'] ['display']) ? $_COOKIE ['ECS'] ['display'] : $default_display_type);
-        $display = in_array($display, array(
-                    'list',
-                    'grid',
-                    'album'
-                )) ? $display : 'album';
         setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
     }
 

@@ -86,7 +86,7 @@ class BrandController extends CommonController {
         $this->assign('goods_list', $goods_list);
         $count = model('Brand')->goods_count_by_brand($brand_id, $this->cat);
         $this->pageLimit(url('goods_list', array('id' => $brand_id)), $this->size);
-        $this->assign('page', $this->pageShow($count));
+        $this->assign('pager', $this->pageShow($count));
         $this->display('brand_goods_list.dwt');
     }
 
@@ -147,11 +147,6 @@ class BrandController extends CommonController {
                     'grid',
                     'album'
                 ))) ? trim($_REQUEST['display']) : (isset($_COOKIE['ECS']['display']) ? $_COOKIE['ECS']['display'] : $default_display_type);
-        $display = in_array($display, array(
-                    'list',
-                    'grid',
-                    'album'
-                )) ? $display : 'album';
         setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
     }
 

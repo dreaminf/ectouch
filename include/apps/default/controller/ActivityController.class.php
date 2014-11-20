@@ -92,7 +92,7 @@ class ActivityController extends CommonController {
         }
         $count = model('Activity')->category_get_count($this->children, $this->brand, $this->goods,$this->price_min, $this->price_max,$this->ext);
         $this->pageLimit(url('goods_list', array('id' => $id )), $this->size);
-        $this->assign('page', $this->pageShow($count));
+        $this->assign('pager', $this->pageShow($count));
         $goods_list = model('Activity')->category_get_goods($this->children, $this->brand, $this->goods, $this->price_min, $this->price_max, $this->ext, $this->size, $this->page, $this->sort, $this->order);
         $this->assign('goods_list', $goods_list);
         $this->display('activity_goods_list.dwt');
