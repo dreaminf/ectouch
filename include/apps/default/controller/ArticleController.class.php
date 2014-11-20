@@ -12,7 +12,6 @@
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
  */
-
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
@@ -46,6 +45,11 @@ class ArticleController extends CommonController {
         $this->parameter();
         $this->assign('keywords', $this->keywords);
         $this->assign('id', $this->cat_id);
+        $artciles_list = model('ArticleBase')->get_cat_articles($this->cat_id, $this->page, $this->size, $this->keywords);
+        $count = model('ArticleBase')->get_article_count($this->cat_id, $this->keywords);
+        $this->pageLimit(url('art_list', array('id' => $this->cat_id)), $this->size);
+        $this->assign('pager', $this->pageShow($count));
+        $this->assign('artciles_list', $artciles_list);
         $this->display('article_list.dwt');
     }
 
@@ -85,8 +89,9 @@ class ArticleController extends CommonController {
      */
     private function parameter() {
         // 如果分类ID为0，则返回总分类页
-        $page_size = C('page_size');
+        $page_size = C('article_page_size');
         $this->size = intval($page_size) > 0 ? intval($page_size) : 10;
+        $this->page = I('request.page') ? intval(I('request.page')) : 1;
         $this->cat_id = intval(I('request.id'));
         $this->keywords = I('request.keywords');
         /* 排序、显示方式以及类型 */
