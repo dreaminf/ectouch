@@ -164,11 +164,7 @@ class ActivityController extends CommonController {
                     'grid',
                     'album'
                 ))) ? trim($_REQUEST['display']) : (isset($_COOKIE['ECS']['display']) ? $_COOKIE['ECS']['display'] : $default_display_type);
-        $display = in_array($display, array(
-                    'list',
-                    'grid',
-                    'album'
-                )) ? $display : 'album';
+        $this->assign('display', $display);
         setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
     }
 

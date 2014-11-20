@@ -201,8 +201,8 @@ class CategoryController extends CommonController {
                     'grid',
                     'album'
                 ))) ? trim($_REQUEST['display']) : (isset($_COOKIE['ECS']['display']) ? $_COOKIE['ECS']['display'] : $default_display_type);
-        setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
         $this->assign('display', $display);
+        setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
         $this->children = get_children($this->cat_id);
         /* 赋值固定内容 */
         if ($this->brand > 0) {
