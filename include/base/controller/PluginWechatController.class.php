@@ -68,7 +68,7 @@ abstract class PluginWechatController
         // 从表记录
         $data1['log_id'] = $log_id;
         $data1['openid'] = $fromusername;
-        $data1['keywords'] = $info['keywords'];
+        $data1['keywords'] = $info['command'];
         $data1['createtime'] = $time;
         $log_id = model('Base')->model->table('wechat_point')
             ->data($data1)

@@ -62,7 +62,7 @@ class sign extends PluginWechatController
         $config = unserialize($info['config']);
         if (isset($config['point_status']) && $config['point_status'] == 1) {
             // 签到次数
-            $where = 'openid = "' . $fromusername . '" and keywords = "' . $info['keywords'] . '" and createtime > (UNIX_TIMESTAMP(NOW())- ' . $config['point_interval'] . ')';
+            $where = 'openid = "' . $fromusername . '" and keywords = "' . $info['command'] . '" and createtime > (UNIX_TIMESTAMP(NOW())- ' . $config['point_interval'] . ')';
             $num = model('Base')->model->table('wechat_point')
                 ->field('createtime')
                 ->where($where)
@@ -96,7 +96,7 @@ class sign extends PluginWechatController
             $config = unserialize($info['config']);
             // 开启积分赠送
             if (isset($config['point_status']) && $config['point_status'] == 1) {
-                $where = 'openid = "' . $fromusername . '" and keywords = "' . $info['keywords'] . '" and createtime > (UNIX_TIMESTAMP(NOW())- ' . $config['point_interval'] . ')';
+                $where = 'openid = "' . $fromusername . '" and keywords = "' . $info['command'] . '" and createtime > (UNIX_TIMESTAMP(NOW())- ' . $config['point_interval'] . ')';
                 $num = model('Base')->model->table('wechat_point')
                     ->field('createtime')
                     ->where($where)
