@@ -75,7 +75,7 @@ class BrandController extends CommonController {
             $this->redirect(url('index'));
             exit();
         }
-        $cat = I('request.cat') ? intval(I('request.cat')): 0;
+        $cat = I('request.cat') ? intval(I('request.cat')) : 0;
         $this->assign('page', $this->page);
         $this->assign('size', $this->size);
         $this->assign('sort', $this->sort);
@@ -124,11 +124,12 @@ class BrandController extends CommonController {
         $brand = I('request.brand');
         $this->size = intval($page_size) > 0 ? intval($page_size) : 10;
         $this->brand = $brand > 0 ? $brand : 0;
+        $this->page = I('request.page') ? intval(I('request.page')) : 1;
         /* 排序、显示方式以及类型 */
         $default_display_type = C('show_order_type') == '0' ? 'list' : (C('show_order_type') == '1' ? 'grid' : 'album');
         $default_sort_order_method = C('sort_order_method') == '0' ? 'DESC' : 'ASC';
         $default_sort_order_type = C('sort_order_type') == '0' ? 'goods_id' : (C('sort_order_type') == '1' ? 'shop_price' : 'last_update');
-        
+
         $this->assign('show_asynclist', C('show_asynclist'));
         $this->sort = (isset($_REQUEST['sort']) && in_array(trim(strtolower($_REQUEST['sort'])), array(
                     'goods_id',
