@@ -931,9 +931,9 @@ class UserController extends CommonController {
             } else {
                 $rt = array();
             }
-            $page = $this->pageShow($count);
+            $pager = $this->pageShow($count);
 
-            $this->assign('page', $page);
+            $this->assign('pager', $pager);
             $this->assign('affiliate_type', $share['config']['separate_by']);
             $this->assign('logdb', $rt);
         } else {
@@ -1017,7 +1017,7 @@ class UserController extends CommonController {
         $bonus = model('Users')->get_user_bouns_list($this->user_id, $offset_page[1], $offset_page[0]);
 
         $this->assign('title', L('label_bonus'));
-        $this->assign('page', $this->pageShow($count));
+        $this->assign('pager', $this->pageShow($count));
         $this->assign('bonus', $bonus);
         $this->display('user_bonus.dwt');
     }
@@ -1039,7 +1039,7 @@ class UserController extends CommonController {
         $booking_list = model('ClipsBase')->get_booking_list($this->user_id, $offset_page[1], $offset_page[0]);
 
         $this->assign('title', L('label_booking'));
-        $this->assign('page', $this->pageShow($count[0]['num']));
+        $this->assign('pager', $this->pageShow($count[0]['num']));
         $this->assign('booking_list', $booking_list);
         $this->display('user_booking_list.dwt');
     }
@@ -1128,7 +1128,7 @@ class UserController extends CommonController {
         $collection_list = model('ClipsBase')->get_collection_goods($this->user_id, $offset_page[1], $offset_page[0]);
 
         $this->assign('title', L('label_collection'));
-        $this->assign('page', $this->pageShow($count));
+        $this->assign('pager', $this->pageShow($count));
         $this->assign('collection_list', $collection_list);
         $this->display('user_collection_list.dwt');
     }
@@ -1252,7 +1252,7 @@ class UserController extends CommonController {
         $comment_list = model('ClipsBase')->get_comment_list($this->user_id, $offset_page[1], $offset_page[0]);
 
         $this->assign('title', L('label_comment'));
-        $this->assign('page', $this->pageShow($count));
+        $this->assign('pager', $this->pageShow($count));
         $this->assign('comment_list', $comment_list);
         $this->display('user_comment_list.dwt');
     }
