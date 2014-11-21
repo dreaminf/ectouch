@@ -1247,7 +1247,7 @@ class UserController extends CommonController {
         // 分页
         $count = $this->model->table('comment')->where('parent_id = 0 and user_id = ' . $this->user_id)->count();
         $filter['page'] = '{page}';
-        $offset = $this->pageLimit(url('booking_list', $filter), 5);
+        $offset = $this->pageLimit(url('comment_list', $filter), 5);
         $offset_page = explode(',', $offset);
         $comment_list = model('ClipsBase')->get_comment_list($this->user_id, $offset_page[1], $offset_page[0]);
 
