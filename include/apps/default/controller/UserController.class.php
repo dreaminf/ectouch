@@ -269,8 +269,16 @@ class UserController extends CommonController {
      * 获取全部订单
      */
     public function order_list() {
-        $this->assign('pay', 1);
+        $pay = 1;
+        $count = $this->model->table('order_info')->where('user_id = ' . $this->user_id)->count();
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('order_list', $filter), 5);
+        $offset_page = explode(',', $offset);
+        $orders = model('Users')->get_user_orders($this->user_id, $pay, $offset_page[1], $offset_page[0]);
+        $this->assign('pay', $pay);
         $this->assign('title', L('order_list_lnk'));
+        $this->assign('pager', $this->pageShow($count));
+        $this->assign('orders', $orders);
         $this->display('user_order_list.dwt');
     }
 

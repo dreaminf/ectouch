@@ -583,6 +583,7 @@ class UsersModel extends BaseModel {
                 'order_status' => $value['order_status'],
                 'shipping_id' => $value['shipping_id'],
                 'total_fee' => price_format($value['total_fee'], false),
+                'url' => url('user/order_detail', array('order_id' => $value['order_id'])),
                 'handler' => $value['handler']);
         }
         return $arr;
