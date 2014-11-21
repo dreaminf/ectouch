@@ -1,15 +1,10 @@
 {include file="pageheader"}
-<div class="row" style="margin:0">
-	<div class="pull-right ectouch-mb5">
-		<a href="{url('share_edit')}" class="btn btn-primary fancybox fancybox.iframe">{$lang['add'].$lang['qrcode']}</a>
-	</div>
-</div>
 <div class="container-fluid" style="padding:0">
 	<div class="row" style="margin:0">
 	  <div class="col-md-2 col-sm-2 col-lg-1" style="padding-right:0;">{include file="wechat_left_menu"}</div>
 	  <div class="col-md-10 col-sm-10 col-lg-11"  style="padding-right:0;">
 		<div class="panel panel-default">
-			<div class="panel-heading">{$lang['share']}</div>
+			<div class="panel-heading" style="overflow:hidden;">{$lang['share']} <a href="{url('share_edit')}" class="btn btn-primary fancybox fancybox.iframe pull-right">{$lang['add'].$lang['qrcode']}</a></div>
 				<table class="table table-hover table-bordered table-striped">
 					<tr>
 						<th style="text-align:center" width="15%">{$lang['share_name']}</th>
