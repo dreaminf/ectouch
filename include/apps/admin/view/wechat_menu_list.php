@@ -5,8 +5,9 @@
     <div class="col-md-10 col-sm-10 col-lg-11" style="padding-right:0;">
       <div class="panel panel-default">
         <div class="panel-heading" style="overflow:hidden;">{$lang['menu']} <a href="{url('menu_edit')}" class="btn btn-primary fancybox fancybox.iframe pull-right">{$lang['menu_add']}</a></div>
-        <table class="table table-hover table-bordered">
-          <form action="{url('menu')}" method="post" class="form-horizontal" role="form">
+        <div class="panel-body">
+        <form action="{url('menu')}" method="post" class="form-horizontal" role="form">
+        <table class="table table-hover ectouch-table">
             <tr class="active">
               <th class="text-center">{$lang['menu_name']}</th>
               <th class="text-center">{$lang['menu_keyword']}</th>
@@ -35,8 +36,9 @@
             <tr>
               <td colspan="5" class="text-center"><a href="{url('sys_menu')}" class="btn btn-primary">{$lang['menu_create']}</a></td>
             </tr>
-          </form>
         </table>
+        </form>
+        </div>
       </div>
     </div>
   </div>
