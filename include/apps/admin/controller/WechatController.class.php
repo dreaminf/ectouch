@@ -212,8 +212,9 @@ class WechatController extends AdminController
                     ->data($data)
                     ->where('id = ' . $id)
                     ->update();
-            }             // 添加
+            }             
             else {
+                // 添加
                 $this->model->table('wechat_menu')
                     ->data($data)
                     ->insert();
@@ -2127,7 +2128,6 @@ class WechatController extends AdminController
     private function get_config()
     {
         $without = array(
-            'index',
             'append',
             'modify',
             'delete',
@@ -2165,7 +2165,6 @@ class WechatController extends AdminController
                 $config['appsecret'] = $wechat['appsecret'];
                 
                 $this->weObj = new Wechat($config);
-                
                 $this->assign('type', $wechat['type']);
             }
         }

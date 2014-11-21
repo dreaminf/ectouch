@@ -18,7 +18,7 @@
 			<td class="text-center">{if $vo['status'] == 1}{$lang['wechat_open']}{else}{$lang['wechat_close']}{/if}</td>
 			<td class="text-center">{$vo['sort']}</td>
 			<td class="text-center" width="20%">
-				<a href="{url('wechat/mass_message', array('wechat_id'=> $vo['id']))}" class="btn btn-primary">{$lang['wechat_manage']}</a>
+				<a href="{if $type == 2}{url('wechat/mass_message', array('wechat_id'=> $vo['id']))}{else}{url('wechat/reply_subscribe', array('wechat_id'=> $vo['id']))}{/if}" class="btn btn-primary">{$lang['wechat_manage']}</a>
 				<a href="{url('wechat/modify', array('id'=> $vo['id']))}" class="btn btn-primary">{$lang['edit']}</a>
 				<a href="javascript:if(confirm('{$lang[drop_confirm]}')){window.location.href = '{url('wechat/delete', array('id'=> $vo['id']))}'}" class="btn btn-default">{$lang['drop']}</a>
 				{if $vo['default_wx'] == 1}
