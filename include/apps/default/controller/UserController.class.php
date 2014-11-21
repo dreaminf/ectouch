@@ -1123,7 +1123,7 @@ class UserController extends CommonController {
         // 分页
         $count = $this->model->table('collect_goods')->where('user_id = ' . $this->user_id)->order('add_time desc')->count();
         $filter['page'] = '{page}';
-        $offset = $this->pageLimit(url('booking_list', $filter), 5);
+        $offset = $this->pageLimit(url('collection_list', $filter), 5);
         $offset_page = explode(',', $offset);
         $collection_list = model('ClipsBase')->get_collection_goods($this->user_id, $offset_page[1], $offset_page[0]);
 
