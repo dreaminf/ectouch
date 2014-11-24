@@ -36,6 +36,16 @@ class WechatController extends AdminController
         $list = $this->model->table('wechat')
             ->order('sort asc, id asc')
             ->select();
+        if($list){
+            foreach($list as $key=>$val){
+                if($val['type'] == 2){
+                    $list[$key]['manage_url'] = url('mass_message', array('wechat_id'=>$val['id']));
+                }
+                else{
+                    $list[$key]['manage_url'] = url('reply_subscribe', array('wechat_id'=>$val['id']));
+                }
+            }
+        }
         $l = sprintf(L('wechat_register'), '<a href=' . url('append') . '>');
         
         $this->assign('wechat_register', $l);
@@ -2128,6 +2138,7 @@ class WechatController extends AdminController
     private function get_config()
     {
         $without = array(
+            'index',
             'append',
             'modify',
             'delete',
