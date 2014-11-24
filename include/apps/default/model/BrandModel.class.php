@@ -116,7 +116,7 @@ class BrandModel extends BaseModel {
      */
     function goods_count_by_brand($brand_id, $cate = 0) {
         $sql = 'SELECT COUNT(*) as count FROM ' . $this->pre . 'goods AS g ' .
-                "WHERE brand_id = '$brand_id' AND g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 and g.is_display=1 ";
+                "WHERE brand_id = '$brand_id' AND g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 ";
 
         if ($cate > 0) {
             $sql .= " AND " . get_children($cate);

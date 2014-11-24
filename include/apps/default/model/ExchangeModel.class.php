@@ -140,7 +140,7 @@ class ExchangeModel extends BaseModel {
      * @return  integer
      */
     function get_exchange_goods_count($children, $min = 0, $max = 0, $ext = '') {
-        $where = "eg.is_exchange = 1 and g.is_display=1 AND g.is_delete = 0 AND ($children OR " . model('Goods')->get_extension_goods($children) . ')';
+        $where = "eg.is_exchange = 1 AND g.is_delete = 0 AND ($children OR " . model('Goods')->get_extension_goods($children) . ')';
 
 
         if ($min > 0) {
@@ -153,9 +153,9 @@ class ExchangeModel extends BaseModel {
 
         $sql = 'SELECT COUNT(*) as count FROM ' . $this->pre . 'exchange_goods AS eg, ' .
                 $this->pre . "goods AS g WHERE eg.goods_id = g.goods_id AND $where $ext";
-
+        
         /* 返回商品总数 */
-        $res = $this->row($sql);
+        $res = $this->row($sql); 
         return $res['count'];
     }
 
