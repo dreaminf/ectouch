@@ -404,6 +404,8 @@ a.flow-del { padding: 0 0.6em; height: 2.3em; line-height: 2.3em; background: #e
 .gw-con .gwc-fl .gwc-fl-con input:checked+label:before { content: "\0020"; background: #e87e04; position: absolute; height: 0.7em; width: 0.7em; right: 0px; bottom: 0px; z-index: 0; }
 .goods-option-con input:checked+label:before { content: "\0020"; width: 0.5em; height: 0.3em; box-sizing: border-box; z-index: 10; bottom: 0.3em; position: absolute; right: 0.04em; border-bottom: 1px #fff solid; border-left: 1px #fff solid; /*旋转45度*/ -webkit-transform: rotate(-45deg); -moz-transform: rotate(-45deg); -ms-transform: rotate(-45deg); -o-transform: rotate(-45deg); transform: rotate(-45deg); z-index: 1; }
 .goods-num { overflow: hidden; }
+.bnt_sub {background: none repeat scroll 0 0 #5babe6;border: medium none;padding: 0.5em 0; color: #fff; margin-left: 1em; width:5.5em;
+border: 1px solid transparent;border-radius: 4px;cursor: pointer;display: inline-block;font-size: 14px;font-weight: 400;line-height: 1.42857;}
 /*商品详情*/
 .goods-info .tab-info * { width: 100%; height: auto }
 /*评论*/
