@@ -26,7 +26,7 @@
           </div>
           <div class="form-group">
             <div class="col-sm-offset-1">
-              <input type="hidden" name="command" value="customer_service" />
+              <input type="hidden" name="command" value="kefu" />
               <input type="submit" value="确认" class="btn btn-primary" />
               <input type="reset" value="重置" class="btn btn-default" />
             </div>
