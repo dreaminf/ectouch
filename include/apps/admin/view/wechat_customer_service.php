@@ -22,7 +22,7 @@
           <div class="form-group">
             <label class="col-sm-1 col-md-1 col-lg-1 control-label">转到客服</label>
             <div class="col-sm-4 col-md-4 col-lg-4"><input type="text" class="form-control" placeholder="请输入客服" name="config[customer]" value="{$customer_service['config']['customer']}"></div>
-            <span class="help-block">微信端输入service进入多客服系统，输入ko#service退出客服系统</span>
+            <span class="help-block">微信端输入kefu进入多客服系统，输入ko#kefu退出客服系统</span>
           </div>
           <div class="form-group">
             <div class="col-sm-offset-1">
