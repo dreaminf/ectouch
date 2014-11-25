@@ -43,7 +43,7 @@ class AuctionController extends CommonController {
         /* 如果没有缓存，生成缓存 */
         if ($count > 0) {
             /* 取得当前页的拍卖活动 */
-            $auction_list = model('Auction')->auction_list($this->size, $this->page);
+            $auction_list = model('Auction')->auction_list($this->size, $this->page, $this->sort, $this->order);
             $this->assign('auction_list', $auction_list);
             /* 设置分页链接 */
             $this->pageLimit(url('index', array('sort' => $this->sort, 'order' => $this->order)), $this->size);
@@ -68,10 +68,9 @@ class AuctionController extends CommonController {
         $this->assign('show_asynclist', C('show_asynclist'));
         $this->sort = (isset($_REQUEST['sort']) && in_array(trim(strtolower($_REQUEST['sort'])), array(
                     'goods_id',
-                    'shop_price',
-                    'last_update',
-                    'sales_volume',
-                    'click_count'
+                    'sales_count',
+                    'click_num',
+                    'cur_price'
                 ))) ? trim($_REQUEST['sort']) : $default_sort_order_type; // 增加按人气、按销量排序 by wang
         $this->order = (isset($_REQUEST['order']) && in_array(trim(strtoupper($_REQUEST['order'])), array(
                     'ASC',

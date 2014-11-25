@@ -37,19 +37,20 @@ class AuctionModel extends BaseModel {
      * @param   int     $page   当前页
      * @return  array
      */
-    function auction_list($size, $page) {
+    function auction_list($size, $page, $sort, $order) {
         $auction_list = array();
         $auction_list['finished'] = $auction_list['finished'] = array();
 
         $now = gmtime();
         $start = ($page - 1) * $size;
+        $sort = $sort != 'goods_id' ? 't.' . $sort : $sort;
         $sql = "SELECT a.*,t.act_banner ,t.sales_count ,t.click_num ,  IFNULL(g.goods_thumb, '') AS goods_thumb " .
                 "FROM " . $this->pre . "goods_activity AS a " .
                 "LEFT JOIN " . $this->pre . "goods AS g ON a.goods_id = g.goods_id " .
                 "LEFT JOIN " . $this->pre . "touch_goods_activity AS t ON a.act_id = t.act_id " .
                 "LEFT JOIN " . $this->pre . "touch_goods as tg ON g.goods_id = tg.goods_id " .
                 "WHERE a.act_type = '" . GAT_AUCTION . "' " .
-                "AND a.start_time <= '$now' AND a.end_time >= '$now' AND a.is_finished < 2 ORDER BY a.act_id DESC LIMIT $start ,$size ";
+                "AND a.start_time <= '$now' AND a.end_time >= '$now' AND a.is_finished < 2 ORDER BY $sort $order LIMIT $start ,$size ";
         $res = $this->query($sql);
 
         foreach ($res as $row) {
