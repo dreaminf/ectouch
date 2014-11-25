@@ -32,6 +32,14 @@ class IndexController extends CommonController {
         $this->assign('cat_best', $cat_rec[1]);
         $this->assign('cat_new', $cat_rec[2]);
         $this->assign('cat_hot', $cat_rec[3]);
+        // 促销活动
+        $this->assign('promotion_info', model('GoodsBase')->get_promotion_info());
+        // 团购商品
+        $this->assign('group_buy_goods', model('Groupbuy')->group_buy_list(C('page_size'),1,'goods_id','ASC'));
+        // 获取分类
+        $this->assign('categories', model('CategoryBase')->get_categories_tree());
+        // 获取品牌
+        $this->assign('brand_list', model('Brand')->get_brands($app = 'brand', C('page_size'), 1));
         $this->display('index.dwt');
     }
 
