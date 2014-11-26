@@ -447,7 +447,6 @@ select{-webkit-appearance:none; border:0; color:#555; padding-left:0; border:1px
         团购详情页
 ===============*/
 .good-info-table{border:1px solid #ddd; margin-top:0.6em;}
-.good-info-table ul li{border-top:1px solid #ddd;}
 .good-info-table ul li h4{font-size:1.2em;}
 .good-info-table ul li h4,.good-info-table ul li span{border-right:1px solid #ddd; padding:0.5em; box-sizing:border-box;}
 .good-info-table ul li h4:last-child,.good-info-table ul li span:last-child{border-right:none;}
