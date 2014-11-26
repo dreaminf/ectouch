@@ -352,7 +352,7 @@ class AuctionController extends CommonController {
         $_SESSION['extension_id'] = $id;
 
         /* 进入收货人页面 */
-        $this->redirect(url('flow/consignee\n'));
+        $this->redirect(url('flow/consignee'));
         exit;
     }
 

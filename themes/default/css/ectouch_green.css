@@ -35,7 +35,7 @@ del{color:#bbb;}
 .ect-bg{background:#1bae5d !important; color:#fff !important; height:auto; overflow:hidden;}
 .ect-color{color:#1bae5d !important;}/*绿色*/
 .ect-colory{color:#1bae5d !important;}/*黄色*/
-.ect-bg-colory{background:#fca41c !important}/*背景黄色*/
+.ect-bg-colory{background:#1bae5d !important}
 .ect-colorf{color:#fff !important;}/*白色*/
 .ect-bg-colorf{background:#fff;}/*背景白色*/
 .ect-color999{color:#777 !important;}/*灰色*/
@@ -161,8 +161,8 @@ footer.logo img{width:8em; height:auto; display:block; margin:0.8em auto;}
 .form-select i.fa{display:block; display:inline-block; position:absolute; top:50%; margin-top:-0.65em; right:0.6em; z-index:1; color:#aaa;}
 select{-webkit-appearance:none; border:0; color:#555; padding-left:0; border:1px solid #e3e3e3; border-radius:5px; padding:0.2em 0.4em; padding-right:1.2em; font-size:1.1em;}
 /*按钮*/
-.btn-info{border:none; background:#1bae5d; padding:0.5em 0; font-size:1.3em;}
-.btn-info:hover{background:#1bae5d;}
+.btn-info{border:none; background:#aaa; padding:0.5em 0; font-size:1.3em;}
+.btn-info:hover{background:#aaa;}
 .two-btn{display: -webkit-box;display: -moz-box;display: -ms-box;display: box; }
 .two-btn .btn{-webkit-box-flex: 1;-moz-box-flex: 1;-ms-box-flex: 1;box-flex: 1; display:block; width:100%;}
 .two-btn .btn:nth-child(2){margin-left:0.6em;}

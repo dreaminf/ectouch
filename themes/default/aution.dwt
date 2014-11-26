@@ -48,12 +48,8 @@
       <h5><b>{$lang.au_under_way}</b></h5>
       <h5><span id="leftTime">{$lang.please_waiting}</span></h5>
     </section>
-    <!-- {/if} -->
     <form name="theForm" action="{:url('auction/bid')}" method="post">
-      <section class="ect-padding-lr ect-padding-tb goods-option"> 
-        <!-- {if $auction.status_no eq 0} 未开始 --> 
-        <!--未开始--> 
-        <!-- {elseif $auction.status_no eq 1} 进行中 -->
+      <section class="ect-padding-lr ect-padding-tb goods-option">
         <div class="goods-num"> <span class="pull-left">{$lang.au_i_want_bid}：</span>
           <div class="input-group pull-left wrap">
             <input type="text" class="form-contro form-num"  name="price"  id="price"/>
@@ -61,18 +57,20 @@
           <input name="bid" type="submit" class="bnt_sub" id="bid" value="{$lang.button_bid}" style="vertical-align:middle;" />
           <input name="id" type="hidden" value="{$auction.act_id}" />
         </div>
-        <!-- {else} 已结束 --> 
-        <!-- {if $auction.is_winner} --> 
-        <span class="f_red">{$lang.au_is_winner}</span><br />
-        <input name="buy" type="submit" class="bnt_sub" value="{$lang.button_buy}" />
-        <input name="id" type="hidden" value="{$auction.act_id}" />
-        <!-- {else} --> 
-        {$lang.au_finished} 
-        <!-- {/if} --> 
-        <!-- {/if} --> 
       </section>
-      <section class="goods-more-a"> <a class="ect-padding-lr ect-padding-tb" href="{:url('Auction/record' , array('id' => $this->_var['auction']['act_id']))}"><span class="Text">{$lang.activity_intro}</span> <i class="pull-right fa fa-chevron-right"></i></a> <a class="ect-padding-lr ect-padding-tb" href="{:url('Auction/record' , array('id' => $this->_var['auction']['act_id']))}"><span class="Text">{$lang.bid_record}</span> <i class="pull-right fa fa-chevron-right"></i></a> </section>
     </form>
+    <!-- {else} 已结束 -->
+    <form name="theForm" action="{:url('auction/buy')}" method="post">
+      <!-- {if $auction.is_winner} --> 
+      <span class="f_red">{$lang.au_is_winner}</span><br />
+      <input name="buy" type="submit" class="bnt_sub" value="{$lang.button_buy}" />
+      <input name="id" type="hidden" value="{$auction.act_id}" />
+      <!-- {else} --> 
+      {$lang.au_finished} 
+      <!-- {/if} -->
+    </form>
+    <!-- {/if} -->
+    <section class="goods-more-a"> <a class="ect-padding-lr ect-padding-tb" href="{:url('Auction/record' , array('id' => $this->_var['auction']['act_id']))}"><span class="Text">{$lang.activity_intro}</span> <i class="pull-right fa fa-chevron-right"></i></a> <a class="ect-padding-lr ect-padding-tb" href="{:url('Auction/record' , array('id' => $this->_var['auction']['act_id']))}"><span class="Text">{$lang.bid_record}</span> <i class="pull-right fa fa-chevron-right"></i></a> </section>
   </div>
   <div class="goods-related ect-padding-lr ect-padding-tb"> {$auction.act_desc|escape:html|nl2br} </div>
   <footer class="logo"><a href="http://www.ectouch.cn" title="ECTouch官网" target="_blank"><img src="__TPL__/images/copyright.png" width="176" height="60"></a></footer>
