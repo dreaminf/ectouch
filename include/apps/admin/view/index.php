@@ -59,6 +59,7 @@
       <ul>
         <li><a href="{url('favourable/index')}" target="mainFrame">优惠活动</a></li>
         <li><a href="{url('groupbuy/index')}" target="mainFrame">团购活动</a></li>
+        <li><a href="{url('auction/index')}" target="mainFrame">拍卖活动</a></li>
         <li><a href="{url('advert/index')}" target="mainFrame">广告管理</a></li>
       </ul>
     </dd>

@@ -86,7 +86,7 @@ class GroupbuyController extends AdminController {
                 $data2['act_banner'] = substr($result['message']['act_banner']['savepath'], 2) . $result['message']['act_banner']['savename'];
                 $this->model->table('touch_goods_activity')->data($data2)->where('act_id=' . $id)->update();
             }
-            $this->message(sprintf(L('brandedit_succed'), $data['brand_name']), url('index'));
+            $this->message(sprintf(L('edit_success'), $data['brand_name']), url('index'));
         }
 
         $info = $this->model->table('goods_activity')->field('act_id,act_name')->where(array('act_id' => $id))->find();
