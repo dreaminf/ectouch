@@ -710,6 +710,9 @@ class WechatController extends CommonController
                 ->field('user_name')
                 ->where('user_id = "' . $ret['ect_uid'] . '"')
                 ->getOne();
+            ECTouch::user()->set_session($new_user_name);
+            ECTouch::user()->set_cookie($new_user_name);
+            model('Users')->update_user_info();
         }
         // 推送量
         model('Base')->model->table('wechat')
@@ -718,9 +721,6 @@ class WechatController extends CommonController
             ->update();
         
         session('openid', $userinfo['openid']);
-        ECTouch::user()->set_session($new_user_name);
-        ECTouch::user()->set_cookie($new_user_name);
-        model('Users')->update_user_info();
     }
 
     /**
