@@ -54,7 +54,7 @@ class AuctionModel extends BaseModel {
                 "WHERE a.act_type = '" . GAT_AUCTION . "' " .
                 "AND a.start_time <= '$now' AND a.end_time >= '$now' AND a.is_finished < 2 ORDER BY $sort $order LIMIT $start ,$size ";
         $res = $this->query($sql);
-
+        
         foreach ($res as $row) {
             $ext_info = unserialize($row['ext_info']);
             $auction = array_merge($row, $ext_info);
@@ -74,9 +74,21 @@ class AuctionModel extends BaseModel {
             } else {
                 $auction_list['finished'][] = $auction;
             }
+            //增加扩展表判断
+            $sql = 'SELECT count(*) as count FROM ' . $this->pre . "touch_goods_activity WHERE  `act_id` = '" . $auction['act_id'] . "'";
+            $res = $this->row($sql);
+            if ($res['count']) {
+                $this->table = 'touch_goods_activity';
+                $data['cur_price'] = $auction['start_price'];
+                $condition['act_id'] = $auction['act_id'];
+                $this->update($condition, $data);
+            } else {
+                $this->table = 'touch_goods_activity';
+                $data1['act_id'] = $auction['act_id'];
+                $data1['cur_price'] = $auction['start_price'];
+                $this->insert($data1);
+            }
         }
-
-
         $auction_list = @array_merge($auction_list['under_way'], $auction_list['finished']);
         return $auction_list;
     }
