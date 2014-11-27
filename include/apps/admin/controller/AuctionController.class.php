@@ -59,7 +59,6 @@ class AuctionController extends AdminController {
         $touch_info = $this->model->table('touch_goods_activity')->field('act_banner')->where(array('act_id' => $id))->find();
         $info['act_banner'] = $touch_info['act_banner'];
         /* 模板赋值 */
-        print_r($info);
         $this->assign('info', $info);
         $this->assign('ur_here', L('articlecat_edit'));
         $this->display();
