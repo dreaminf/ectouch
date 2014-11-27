@@ -12,7 +12,6 @@
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
  */
-
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
@@ -84,7 +83,12 @@ class GroupbuyController extends AdminController {
                 }
                 /* 生成banner链接 */
                 $data2['act_banner'] = substr($result['message']['act_banner']['savepath'], 2) . $result['message']['act_banner']['savename'];
-                $this->model->table('touch_goods_activity')->data($data2)->where('act_id=' . $id)->update();
+                if ($this->model->table('touch_goods_activity')->where('act_id=' . $id)->count()) {
+                    $this->model->table('touch_goods_activity')->data($data2)->where('act_id=' . $id)->update();
+                } else {
+                    $data2['act_id'] = $id;
+                    $this->model->table('touch_goods_activity')->data($data2)->insert();
+                }
             }
             $this->message(sprintf(L('edit_success'), $data['brand_name']), url('index'));
         }
