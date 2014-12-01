@@ -1626,7 +1626,7 @@ class UserController extends CommonController {
                     show_message(L('sms_code_error'), L('back_page_up'), url('get_password_phone'), 'error');
                 }
 
-                if ($password != $_SESSION['sms_mobile_code']) {
+                if ($mobile_code != $_SESSION['sms_mobile_code']) {
                     show_message(L('mobile_code_error'), L('back_page_up'), url('get_password_phone'), 'error');
                 }
 
