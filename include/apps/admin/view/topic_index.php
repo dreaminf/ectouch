@@ -14,7 +14,7 @@
     <td class="text-center">{$vo['title']}</td>
     <td class="text-center">{$vo['start_time']}</td>
     <td class="text-center">{$vo['end_time']}</td>
-    <td class="text-center"><a href="{url('edit', array('id'=>$vo['topic_id']))}">{$lang['edit']}</a></td>
+    <td class="text-center"><a href="{url('edit', array('id'=>$vo['topic_id']))}">{$lang['edit']}</a> | <a href="{url('del', array('id'=>$vo['topic_id']))}">{$lang['remove']}</a></td>
   </tr>
   {/loop}
 </table>

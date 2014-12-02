@@ -242,6 +242,45 @@ class TopicController extends AdminController {
     }
 
     /**
+     * 删除专题
+     */
+    public function del() {
+        $id = I('id');
+        if (!$id) {
+            $this->redirect(url('index'));
+        }
+        /* 删除该品牌的图标 */
+        $topic = $this->model->table('touch_topic')->field('*')->where('topic_id = ' . $id)->find();
+
+        $topic_img = $topic['topic_img'];
+        $title_pic = $topic['title_pic'];
+        $intro = html_out($topic['intro']);
+        //删除编辑器中的附件
+        $match = array();
+        preg_match_all("/(src|href)\=\"\/(.*?)\"/i", $brand_content, $match);
+        if (is_array($match[2])) {
+            foreach ($match[2] as $vo) {
+                $index = strpos($vo, 'data/');
+                @unlink(ROOT_PATH . substr($vo, $index));
+            }
+        }
+        //删除logo
+        if (!empty($topic_img)) {
+            $index = strpos($topic_img, 'data/');
+            @unlink(ROOT_PATH . substr($topic_img, $index));
+        }
+        //删除分类图标
+        if (!empty($title_pic)) {
+            $index = strpos($title_pic, 'data/');
+            @unlink(ROOT_PATH . substr($title_pic, $index));
+        }
+        //删除品牌
+        $this->model->table('touch_topic')->where(array('topic_id' => $id))->delete();
+        clear_all_files();
+        $this->message(L('succed'), url('index'));
+    }
+
+    /**
      * 获取专题列表
      * @access  public
      * @return void
