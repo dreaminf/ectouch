@@ -12,7 +12,6 @@
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
  */
-
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
@@ -35,6 +34,22 @@ class BrandBaseModel extends BaseModel {
         $res['brand_banner'] = get_banner_path($res ['brand_banner']);
 
         return $res;
+    }
+
+    /**
+     * 取得品牌列表
+     * @return array 品牌列表 id => name
+     */
+    function get_brand_list() {
+        $sql = 'SELECT brand_id, brand_name FROM ' . $this->pre . 'brand ORDER BY sort_order';
+        $res = $this->query($sql);
+
+        $brand_list = array();
+        foreach ($res AS $row) {
+            $brand_list[$row['brand_id']] = addslashes($row['brand_name']);
+        }
+
+        return $brand_list;
     }
 
 }
