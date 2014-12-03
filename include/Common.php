@@ -956,7 +956,8 @@ function load_file($file) {
  * @return void
  */
 function E($msg, $code = 0) {
-    throw new Exception($msg, $code);
+    //throw new Exception($msg, $code);
+    exit($msg);
 }
 
 /**
