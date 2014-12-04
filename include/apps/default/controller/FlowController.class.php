@@ -1701,7 +1701,6 @@ class FlowController extends CommonController {
             }
 
             $result['content'] = ECTouch::$view->fetch('library/order_total.lbi');
-            ;
         }
 
         die(json_encode($result));
