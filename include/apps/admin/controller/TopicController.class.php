@@ -194,7 +194,7 @@ class TopicController extends AdminController {
                     /* 取互联网图片至本地 */
                     $data['title_pic'] = get_url_image(I('post.title_url'));
                 } else {
-                    sys_msg($_LANG['web_url_no']);
+                    sys_msg(L('web_url_no'));
                 }
             }
             unset($target);
