@@ -398,7 +398,8 @@ class FlowController extends CommonController {
         //  检查用户是否已经登录 如果用户已经登录了则检查是否有默认的收货地址 如果没有登录则跳转到登录和注册页面
         if (empty($_SESSION ['direct_shopping']) && $_SESSION ['user_id'] == 0) {
             /* 用户没有登录且没有选定匿名购物，转向到登录页面 */
-            ecs_header("Location: " . url('user/login') . "\n");
+            $this->redirect(url('user/login',array('step'=>'flow')));
+            exit;
         }
         // 获取收货人信息
         $consignee = model('Order')->get_consignee($_SESSION ['user_id']);

@@ -1393,7 +1393,8 @@ class UserController extends CommonController {
             $this->assign('enabled_captcha', 1);
             $this->assign('rand', mt_rand());
         }
-
+        $this->assign('step', I('get.step'));
+        $this->assign('anonymous_buy', C('anonymous_buy'));
         $this->assign('title', L('login'));
         $this->assign('back_act', $this->back_act);
         $this->display('user_login.dwt');

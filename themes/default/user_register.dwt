@@ -76,7 +76,7 @@
           <input name="act" type="hidden" value="act_register" />
           <input name="enabled_sms" type="hidden" value="0" />
           <input type="hidden" name="back_act" value="{$back_act}" />
-          <button href="flow_consignee.html" name="Submit" type="submit" class="btn btn-info ect-btn-info ect-colorf">{$lang.next}</button>
+          <button href="flow_consignee.html" name="Submit" type="submit" class="btn btn-info ect-btn-info ect-colorf ect-bg">{$lang.next}</button>
         </div>
       </form>
     </div>
