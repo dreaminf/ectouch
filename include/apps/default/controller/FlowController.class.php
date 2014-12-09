@@ -1688,7 +1688,7 @@ class FlowController extends CommonController {
                 $order['bonus_id'] = intval($_GET['bonus']);
             } else {
                 $order['bonus_id'] = 0;
-                $result['error'] = $_LANG['invalid_bonus'];
+                $result['error'] = L('invalid_bonus');
             }
 
             /* 计算订单的费用 */

@@ -210,29 +210,29 @@ class AuctionController extends CommonController {
             }
 
             if ($bid_price < $min_price) {
-                show_message(sprintf($_LANG['au_your_lowest_price'], price_format($min_price, false)), '', '', 'error');
+                show_message(sprintf(L('au_your_lowest_price'), price_format($min_price, false)), '', '', 'error');
             }
         }
 
         /* 检查联系两次拍卖人是否相同 */
         if ($auction['last_bid']['bid_user'] == $user_id && $bid_price != $auction['end_price']) {
-            show_message($_LANG['au_bid_repeat_user'], '', '', 'error');
+            show_message(L('au_bid_repeat_user'), '', '', 'error');
         }
 
         /* 是否需要保证金 */
         if ($auction['deposit'] > 0) {
             /* 可用资金够吗 */
             if ($user['user_money'] < $auction['deposit']) {
-                show_message($_LANG['au_user_money_short'], '', '', 'error');
+                show_message(L('au_user_money_short'), '', '', 'error');
             }
 
             /* 如果不是第一个出价，解冻上一个用户的保证金 */
             if ($auction['bid_user_count'] > 0) {
-                model('ClipsBase')->log_account_change($auction['last_bid']['bid_user'], $auction['deposit'], (-1) * $auction['deposit'], 0, 0, sprintf($_LANG['au_unfreeze_deposit'], $auction['act_name']));
+                model('ClipsBase')->log_account_change($auction['last_bid']['bid_user'], $auction['deposit'], (-1) * $auction['deposit'], 0, 0, sprintf(L('au_unfreeze_deposit'), $auction['act_name']));
             }
 
             /* 冻结当前用户的保证金 */
-            model('ClipsBase')->log_account_change($user_id, (-1) * $auction['deposit'], $auction['deposit'], 0, 0, sprintf($_LANG['au_freeze_deposit'], $auction['act_name']));
+            model('ClipsBase')->log_account_change($user_id, (-1) * $auction['deposit'], $auction['deposit'], 0, 0, sprintf(L('au_freeze_deposit'), $auction['act_name']));
         }
 
         /* 插入出价记录 */
