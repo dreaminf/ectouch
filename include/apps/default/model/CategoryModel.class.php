@@ -47,14 +47,30 @@ class CategoryModel extends BaseModel {
      * @param string $children 
      * @param unknown $brand 
      */
-    function category_get_count($children, $brand, $min, $max, $ext) {
-        $display = $GLOBALS['display'];
+    function category_get_count($children,$brand, $type, $min, $max, $ext) {
         $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 AND ($children OR " . model('Goods')->get_extension_goods($children) . ')';
-        if ($keywords != '') {
-            $where .= " AND (( 1 " . $keywords . " ) ) ";
-        }
         if ($brand > 0) {
             $where .= " AND g.brand_id=$brand ";
+        }
+        if($type){
+            switch ($type)
+            {
+                case 'best':
+                    $where .= ' AND g.is_best = 1';
+                    break;
+                case 'new':
+                    $where .= ' AND g.is_new = 1';
+                    break;
+                case 'hot':
+                    $where .= ' AND g.is_hot = 1';
+                    break;
+                case 'promotion':
+                    $time    = gmtime();
+                    $where .= " AND g.promote_price > 0 AND g.promote_start_date <= '$time' AND g.promote_end_date >= '$time'";
+                    break;
+                default:
+                    $where .= '';
+            }
         }
         if($min > 0) {
             $where .= " AND g.shop_price >= $min ";
