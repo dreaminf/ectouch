@@ -10,6 +10,7 @@
       <li class="active"><a href="#general" role="tab" data-toggle="tab">{$lang['tab_general']}</a></li>
       <li><a href="#goods" role="tab" data-toggle="tab">{$lang['tab_goods']}</a></li>
       <li><a href="#desc" role="tab" data-toggle="tab">{$lang['tab_desc']}</a></li>
+      <li><a href="#advanced" role="tab" data-toggle="tab">{$lang['tab_advanced']}</a></li>
     </ul>
     <form action="{url('edit')}" method="post" name="theForm" enctype="multipart/form-data" class="form-horizontal" role="form">
       <div class="tab-content">
@@ -58,7 +59,7 @@
               <tr>
                 <td width="200">{$lang['lable_from_web']}</td>
                 <td><div class="col-md-4">
-                    <input type='text' name='url' maxlength="20"  class="form-control input-sm" />
+                    <input type='text' name='url'  class="form-control input-sm" />
                   </div></td>
               </tr>
             </tbody>
@@ -132,62 +133,13 @@
               <td width="100%"><div class="col-md-9" ><i class="glyphicon glyphicon-search"></i>
                   <select name="cat_id2">
                     <option value="0">{$lang['all_category']}</option>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
                     {$cat_list}
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
                   </select>
                   <select name="brand_id2">
                     <option value="0">{$lang['all_brand']}</option>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                      
                     {loop $brand_list $key $posit}
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
                     <option value="{$key}">{$posit}</option>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
                     {/loop}  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
                   </select>
                   <input type="text" name="keyword2"/>
                   <input name="button" type="button" class="button" onclick="searchGoods('cat_id2', 'brand_id2', 'keyword2')" value="{$lang['button_search']}" />
@@ -232,6 +184,21 @@
             </tr>
           </table>
           <input type="hidden" name="id" value="{$info['act_id']}" />
+        </div>
+        <div class="tab-pane" id="advanced">
+          <table width="90%" class="table table-hover ectouch-table">
+            <tr>
+              <td width="200">{$lang['template_file']}</td>
+              <td><div class="col-md-4">
+                  <select name="topic_template_file" class="form-control input-sm"> 
+                    {loop $template_list $key $tmp}
+                    <option value="{$tmp}" {if $tmp ==$topic['template']}selected="true"{/if}>{$tmp}</option>
+                    {/loop}  
+                  </select>
+                  <div class="row"><div style="padding-top:10px;display: block;" class="col-md-12"> {$lang['notice_template_file']}</div></div>
+                </div></td>
+            </tr>
+          </table>
         </div>
       </div>
       <div class="button-div">

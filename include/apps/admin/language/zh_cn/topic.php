@@ -26,7 +26,7 @@ $_LANG['publish_to_ads'] = '发布到广告';
 
 /* 提示信息 */
 $_LANG['succed'] = '操作成功!';
-$_LANG['notice_template_file'] = '填写当前专题的模板文件名,模板文件应上传到当前商城模板目录下,不填写将调用默认模板。';
+$_LANG['notice_template_file'] = '选择当前专题的模板文件名,模板文件应上传到当前商城模板目录下,自定义模版名称以topc_开头。';
 $_LANG['notice_css'] = '填写当前专题的CSS样式代码,不填写将调用模板默认CSS文件';
 $_LANG['js_languages']['topic_name_empty'] = '请输入专题名称!';
 $_LANG['js_languages']['start_time_empty'] = '请选择专题开始时间!';

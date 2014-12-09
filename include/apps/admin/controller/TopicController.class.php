@@ -17,17 +17,6 @@ defined('IN_ECTOUCH') or die('Deny Access');
 
 class TopicController extends AdminController {
 
-    private $topic_style_color = array(
-        '0' => '008080',
-        '1' => '008000',
-        '2' => 'ffa500',
-        '3' => 'ff0000',
-        '4' => 'ffff00',
-        '5' => '9acd32',
-        '6' => 'ffd700'
-    );
-    private $allow_suffix = array('gif', 'jpg', 'png', 'jpeg', 'bmp', 'swf');
-
     /**
      * 专题管理列表
      */
@@ -105,7 +94,7 @@ class TopicController extends AdminController {
                     /* 取互联网图片至本地 */
                     $data['title_pic'] = get_url_image(I('post.title_url'));
                 } else {
-                    sys_msg($_LANG['web_url_no']);
+                    sys_msg(L('web_url_no'));
                 }
             }
             unset($target);
@@ -118,7 +107,7 @@ class TopicController extends AdminController {
             $tmp_data = $json->decode($_POST['topic_data']);
             $data['data'] = serialize($tmp_data);
             $data['intro'] = I('post.topic_intro');
-
+            $data['template'] = I('post.topic_template_file') ? I('post.topic_template_file') : '';
             $this->model->table('touch_topic')->data($data)->insert();
             $this->message(L('succed'), url('index'));
         }
@@ -126,6 +115,7 @@ class TopicController extends AdminController {
         $this->assign('topic', $topic);
         $this->assign('cat_list', cat_list(0, 1));
         $this->assign('brand_list', model('BrandBase')->get_brand_list());
+        $this->assign('template_list', $this->get_topic_temp_list());
         $this->assign('ur_here', L('09_topic'));
         $this->display();
     }
@@ -198,9 +188,9 @@ class TopicController extends AdminController {
                 }
             }
             unset($target);
-            $data['title'] = I('request.topic_name');
+            $data['title'] = I('post.topic_name');
             $title_pic = empty($data['title_pic']) ? I('post.title_img_url') : $data['title_pic'];
-
+            $data['template'] = I('post.topic_template_file') ? I('post.topic_template_file') : '';
             $data['start_time'] = local_strtotime(I('post.start_time'));
             $data['end_time'] = local_strtotime(I('post.end_time'));
             $json = new EcsJson;
@@ -211,7 +201,6 @@ class TopicController extends AdminController {
             $this->message(L('succed'), url('index'));
         }
         /* 模板赋值 */
-
         $topic = $this->model->table('touch_topic')->field('*')->where('topic_id =' . $id)->find();
         $topic['start_time'] = local_date('Y-m-d', $topic['start_time']);
         $topic['end_time'] = local_date('Y-m-d', $topic['end_time']);
@@ -233,10 +222,10 @@ class TopicController extends AdminController {
         } else {
             $topic['topic_type'] = '';
         }
-        //print_r($topic );
         $this->assign('topic', $topic);
         $this->assign('cat_list', cat_list(0, 1));
         $this->assign('brand_list', model('BrandBase')->get_brand_list());
+        $this->assign('template_list', $this->get_topic_temp_list());
         $this->assign('ur_here', L('09_topic'));
         $this->display();
     }
@@ -334,6 +323,22 @@ class TopicController extends AdminController {
                 'text' => $val['goods_name']);
         }
         make_json_result($opt);
+    }
+
+    /**
+     * 查找主题模版
+     * @return array
+     */
+    private function get_topic_temp_list() {
+        $tmp_dir = ROOT_PATH . 'themes/' . C('template'); // 模板所在路径
+        $dir = @opendir($tmp_dir);
+        $tmp[] = 'topic.dwt';
+        while (false !== ($file = @readdir($dir))) {
+            if (preg_match("/^topic_(.*?)\.dwt/", $file)) {
+                $tmp[] = $file;
+            }
+        }
+        return $tmp;
     }
 
 }

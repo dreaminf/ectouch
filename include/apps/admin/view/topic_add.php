@@ -10,6 +10,7 @@
       <li class="active"><a href="#general" role="tab" data-toggle="tab">{$lang['tab_general']}</a></li>
       <li><a href="#goods" role="tab" data-toggle="tab">{$lang['tab_goods']}</a></li>
       <li><a href="#desc" role="tab" data-toggle="tab">{$lang['tab_desc']}</a></li>
+      <li><a href="#advanced" role="tab" data-toggle="tab">{$lang['tab_advanced']}</a></li>
     </ul>
     <form action="{url('add')}" method="post" name="theForm" enctype="multipart/form-data" class="form-horizontal" role="form">
       <div class="tab-content">
@@ -174,11 +175,26 @@
           </table>
           <input type="hidden" name="id" value="{$info['act_id']}" />
         </div>
+        <div class="tab-pane" id="advanced">
+          <table width="90%" class="table table-hover ectouch-table">
+            <tr>
+              <td width="200">{$lang['template_file']}</td>
+              <td><div class="col-md-4">
+                  <select name="topic_template_file" class="form-control input-sm"> 
+                    {loop $template_list $key $tmp}
+                    <option value="{$tmp}">{$tmp}</option>
+                    {/loop}  
+                  </select>
+                  <div class="row"><div style="padding-top:10px;display: block;" class="col-md-12"> {$lang['notice_template_file']}</div></div>
+                </div></td>
+            </tr>
+          </table>
+        </div>
       </div>
       <div class="button-div">
         <input  name="act" type="hidden" value="{$form_action}" />
         <input  name="topic_data" type="hidden" id="topic_data" value='' />
-        <input type="submit" value="{$lang['button_submit']}" class="btn btn-primary" />
+        <input type="submit" value="{$lang['button_submit']}" class="btn btn-primary" onclick="return checkForm()"/>
         <input type="reset" value="{$lang['button_reset']}" class="btn btn-default" />
       </div>
     </form>
