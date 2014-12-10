@@ -132,7 +132,7 @@ class zjd extends PluginWechatController
     public function html_show()
     {
         // 插件配置
-    $config = $this->get_config($this->plugin_name);
+        $config = $this->get_config($this->plugin_name);
         if (! empty($config)) {
             $num = count($config['prize']);
             if($num > 0){
@@ -152,9 +152,9 @@ class zjd extends PluginWechatController
         $count = model('Base')->model->table('wechat_prize')
             ->where('openid = "' . $openid . '" and dateline between "' . $starttime . '" and "' . $endtime . '"')
             ->count();
-        $config['prize_num'] = $config['prize_num'] - $count;
+        $config['prize_num'] = ($config['prize_num'] - $count) < 0 ? 0 : $config['prize_num'] - $count;
         // 中奖记录
-        $sql = 'SELECT u.nickname, p.prize_name, p.id FROM ' . model('Base')->model->pre . 'wechat_prize p LEFT JOIN ' . model('Base')->model->pre . 'wechat_user u ON p.openid = u.openid where p.openid = "' . $openid . '" and dateline between "' . $starttime . '" and "' . $endtime . '" and p.prize_type = 1 ORDER BY dateline desc';
+        $sql = 'SELECT u.nickname, p.prize_name, p.id FROM ' . model('Base')->model->pre . 'wechat_prize p LEFT JOIN ' . model('Base')->model->pre . 'wechat_user u ON p.openid = u.openid where dateline between "' . $starttime . '" and "' . $endtime . '" and p.prize_type = 1 ORDER BY dateline desc limit 10';
         $list = model('Base')->model->query($sql);
         
         $file = ROOT_PATH . 'plugins/wechat/' . $this->plugin_name . '/view/index.php';

@@ -2099,7 +2099,7 @@ class WechatController extends AdminController
             if ($info !== true) {
                 $this->message($info, NULL, 'error');
             }
-            $data['wechat_id'] = $this->wechat_id;
+            
             if (! empty($config)) {
                 $data['config'] = serialize($config);
             }
@@ -2112,6 +2112,7 @@ class WechatController extends AdminController
                     ->where('command = "' . $command . '" and wechat_id = ' . $this->wechat_id)
                     ->update();
             } else {
+                $data['wechat_id'] = $this->wechat_id;
                 $data['command'] = $command;
                 $this->model->table('wechat_extend')
                     ->data($data)
@@ -2123,7 +2124,7 @@ class WechatController extends AdminController
         
         $customer_service = $this->model->table('wechat_extend')
             ->field('name, enable, config')
-            ->where('command = "customer_service" and wechat_id = ' . $this->wechat_id)
+            ->where('command = "kefu" and wechat_id = ' . $this->wechat_id)
             ->find();
         if ($customer_service['config']) {
             $customer_service['config'] = unserialize($customer_service['config']);
