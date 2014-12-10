@@ -69,7 +69,7 @@ class CategoryController extends CommonController {
         $this->assign('id', $this->cat_id);
         // 获取分类
         $this->assign('category', model('CategoryBase')->get_top_category());
-        $count = model('Category')->category_get_count($this->children, $this->brand,$this->type, $this->price_min, $this->price_max, $this->ext);
+        $count = model('Category')->category_get_count($this->children, $this->brand, $this->type, $this->price_min, $this->price_max, $this->ext);
 
         $goodslist = $this->category_get_goods();
         $this->assign('goods_list', $goodslist);
@@ -147,8 +147,6 @@ class CategoryController extends CommonController {
                 $this->tag = 'OR g.goods_id ' . db_create_in($this->tag);
             }
             $this->assign('keywords', $keywords);
-        } elseif ($this->cat_id == 0) {
-            ecs_header("Location: " . url('category/top_all') . "\n");
         }
     }
 
@@ -185,7 +183,7 @@ class CategoryController extends CommonController {
         $default_display_type = C('show_order_type') == '0' ? 'list' : (C('show_order_type') == '1' ? 'grid' : 'album');
         $default_sort_order_method = C('sort_order_method') == '0' ? 'DESC' : 'ASC';
         $default_sort_order_type = C('sort_order_type') == '0' ? 'goods_id' : (C('sort_order_type') == '1' ? 'shop_price' : 'last_update');
-        $this->type=(isset($_REQUEST['type']) && in_array(trim(strtolower($_REQUEST['type'])),array('best','hot','new','promotion')))? trim(strtolower($_REQUEST['type'])) :'ww';
+        $this->type = (isset($_REQUEST['type']) && in_array(trim(strtolower($_REQUEST['type'])), array('best', 'hot', 'new', 'promotion'))) ? trim(strtolower($_REQUEST['type'])) : 'ww';
         $this->sort = (isset($_REQUEST['sort']) && in_array(trim(strtolower($_REQUEST['sort'])), array(
                     'goods_id',
                     'shop_price',
@@ -501,9 +499,8 @@ class CategoryController extends CommonController {
         } else {
             $where.=" AND ($this->children OR " . model('Goods')->get_extension_goods($this->children) . ') ';
         }
-        if($this->type){
-            switch ($this->type)
-            {
+        if ($this->type) {
+            switch ($this->type) {
                 case 'best':
                     $where .= ' AND g.is_best = 1';
                     break;
@@ -514,7 +511,7 @@ class CategoryController extends CommonController {
                     $where .= ' AND g.is_hot = 1';
                     break;
                 case 'promotion':
-                    $time    = gmtime();
+                    $time = gmtime();
                     $where .= " AND g.promote_price > 0 AND g.promote_start_date <= '$time' AND g.promote_end_date >= '$time'";
                     break;
                 default:
