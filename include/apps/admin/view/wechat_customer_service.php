@@ -25,6 +25,11 @@
             <span class="help-block">微信端输入kefu进入多客服系统，输入ko#kefu退出客服系统</span>
           </div>
           <div class="form-group">
+            <label class="col-sm-1 col-md-1 col-lg-1 control-label">会话自动关闭时间</label>
+            <div class="col-sm-2 col-md-2 col-lg-2"><input type="text" class="form-control" placeholder="会话有效时间" name="config[valid_time]" value="{$customer_service['config']['valid_time']}"></div>
+            <span class="help-block">单位：分钟。如果会话有效时间内没有交流，会话会自动失效。如果要联系客服请重新进入。</span>
+          </div>
+          <div class="form-group">
             <div class="col-sm-offset-1">
               <input type="hidden" name="command" value="kefu" />
               <input type="submit" value="确认" class="btn btn-primary" />
