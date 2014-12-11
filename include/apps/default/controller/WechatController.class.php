@@ -181,7 +181,7 @@ class WechatController extends CommonController
                     ), $reg_config['template']);
                 } else {
                     $username = 'wx_' . time().mt_rand(1, 99);
-                    $password = 'ecmoban' . mt_rand(100, 999);
+                    $password = 'ecmoban';
                     // 通知模版
                     $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
                 }
@@ -659,7 +659,7 @@ class WechatController extends CommonController
                 ), $reg_config['template']);
             } else {
                 $username = 'wx_' . time().mt_rand(1, 99);
-                $password = 'ecmoban' . mt_rand(100, 999);
+                $password = 'ecmoban';
                 // 通知模版
                 $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
             }
