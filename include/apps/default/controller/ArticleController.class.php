@@ -81,7 +81,7 @@ class ArticleController extends CommonController {
         $article_id = intval(I('get.aid'));
         $article = model('Article')->get_article_info($article_id);
         $this->assign('article', $article);
-        $this->display('article_info.dwt', $cache_id);
+        $this->display('article_info.dwt');
     }
 
     /**
@@ -98,7 +98,7 @@ class ArticleController extends CommonController {
         $default_display_type = C('show_order_type') == '0' ? 'list' : (C('show_order_type') == '1' ? 'grid' : 'album');
         $default_sort_order_method = C('sort_order_method') == '0' ? 'DESC' : 'ASC';
         $default_sort_order_type = C('sort_order_type') == '0' ? 'goods_id' : (C('sort_order_type') == '1' ? 'shop_price' : 'last_update');
-        setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
+        setcookie('ECS[display]', '', gmtime() + 86400 * 7);
     }
 
 }
