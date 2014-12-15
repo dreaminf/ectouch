@@ -71,7 +71,7 @@ class AuctionController extends CommonController {
         }
 
         /* 缓存id：语言，拍卖活动id，状态，如果是进行中，还要最后出价的时间（如果有的话） */
-        $cache_id = $_CFG['lang'] . '-' . $id . '-' . $auction['status_no'];
+        $cache_id = C('lang') . '-' . $id . '-' . $auction['status_no'];
         if ($auction['status_no'] == UNDER_WAY) {
             if (isset($auction['last_bid'])) {
                 $cache_id = $cache_id . '-' . $auction['last_bid']['bid_time'];

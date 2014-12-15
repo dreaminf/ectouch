@@ -686,7 +686,7 @@ class FlowController extends CommonController {
                         show_message(L('invalid_captcha'));
                     }
                 }
-                if ($user->login($username, $password, isset($remember))) {
+                if (self::$user->login($username, $password, isset($remember))) {
                     model('Users')->update_user_info(); // 更新用户信息
                     model('Users')->recalculate_price(); // 重新计算购物车中的商品价格
 

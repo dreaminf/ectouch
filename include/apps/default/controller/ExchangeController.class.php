@@ -146,7 +146,7 @@ class ExchangeController extends CommonController {
             exit;
         }
         /* 查询：检查兑换商品是否有库存 */
-        if ($goods['goods_number'] == 0 && $_CFG['use_storage'] == 1) {
+        if ($goods['goods_number'] == 0 && C('use_storage') == 1) {
             show_message(L('eg_error_number'), array(L('back_up_page')), array($back_act), 'error');
         }
         /* 查询：检查兑换商品是否是取消 */
@@ -180,7 +180,7 @@ class ExchangeController extends CommonController {
         }
 
         //查询：商品存在规格 是货品 检查该货品库存
-        if ((!empty($specs)) && ($product_info['product_number'] == 0) && ($_CFG['use_storage'] == 1)) {
+        if ((!empty($specs)) && ($product_info['product_number'] == 0) && (C('use_storage') == 1)) {
             show_message(L('eg_error_number'), array(L('back_up_page')), array($back_act), 'error');
         }
 
