@@ -509,8 +509,8 @@ class GoodsBaseModel extends BaseModel {
         $idx = 0;
         foreach ($res as $key => $value) {
 
-            $res[$idx][bid_time] = local_date(C('time_format'), $row['bid_time']);
-            $res[$idx][formated_bid_price] = price_format($row['bid_price'], false);
+            $res[$idx][bid_time] = local_date(C('time_format'), $value['bid_time']);
+            $res[$idx][formated_bid_price] = price_format($value['bid_price'], false);
             $idx++;
         }
         return $res;
