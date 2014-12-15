@@ -24,7 +24,7 @@ class TopicController extends AdminController {
         /* 模板赋值 */
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('index', $filter), 12);
-        $total = $this->model->table('goods_activity')->where($condition)->count();
+        $total = $this->model->table('goods_activity')->where()->count();
         $list = $this->get_topic_list($offset);
         $this->assign('page', $this->pageShow($total));
         $this->assign('topic_list', $list);
