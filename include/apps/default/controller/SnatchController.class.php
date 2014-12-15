@@ -15,16 +15,14 @@
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
-class SnatchController extends CommonController
-{
+class SnatchController extends CommonController {
 
     protected $id;
 
     /**
      * 构造函数
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
         $this->id = isset($_REQUEST ['id']) ? intval($_REQUEST ['id']) : model('Snatch')->get_last_snatch();
     }
@@ -32,20 +30,17 @@ class SnatchController extends CommonController
     /**
      * 夺宝骑兵列表
      */
-    public function index()
-    {
+    public function index() {
         $this->assign('goods_list', model('Snatch')->get_snatch_list());     //所有有效的夺宝奇兵列表
         $this->assign('show_asynclist', C('show_asynclist'));
         $this->assign('tile', L('snatch_list'));
         $this->display('snatch_list.dwt');
-
     }
 
     /**
      * 夺宝奇兵详情
      */
-    public function info()
-    {
+    public function info() {
         $goods = model('Snatch')->get_snatch($this->id);
         if ($goods) {
             if ($goods['is_end']) {
@@ -87,8 +82,7 @@ class SnatchController extends CommonController
     /**
      * 最新出价列表
      */
-    public function new_price_list()
-    {
+    public function new_price_list() {
         $id = I('get.id');
         $this->assign('price_list', model('Snatch')->get_price_list($id));
         $this->display('library/snatch_price.lbi');
@@ -98,8 +92,7 @@ class SnatchController extends CommonController
     /**
      * 用户出价处理
      */
-    public function bid()
-    {
+    public function bid() {
         $json = new EcsJson;
         $result = array('error' => 0, 'content' => '');
 
@@ -172,8 +165,7 @@ class SnatchController extends CommonController
     /**
      * 购买商品
      */
-    public function buy()
-    {
+    public function buy() {
         if (empty($this->id)) {
             $this->redirect(url('Snatch/info', array('id' => $this->id)));
             exit;
@@ -215,10 +207,10 @@ class SnatchController extends CommonController
 
             $attr_list = array();
             $sql = "SELECT a.attr_name, g.attr_value " .
-                "FROM " . $this->model->pre . "goods_attr AS g, " .
-                $this->model->pre . "attribute AS a " .
-                "WHERE g.attr_id = a.attr_id " .
-                "AND g.goods_attr_id " . db_create_in($goods_attr_id);
+                    "FROM " . $this->model->pre . "goods_attr AS g, " .
+                    $this->model->pre . "attribute AS a " .
+                    "WHERE g.attr_id = a.attr_id " .
+                    "AND g.goods_attr_id " . db_create_in($goods_attr_id);
             $res = $this->model->query($sql);
             foreach ($res as $row) {
                 $attr_list[] = $row['attr_name'] . ': ' . $row['attr_value'];
@@ -260,4 +252,5 @@ class SnatchController extends CommonController
         $this->redirect(url('flow/consignee'));
         exit;
     }
+
 }
