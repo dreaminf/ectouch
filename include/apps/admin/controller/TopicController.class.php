@@ -246,7 +246,7 @@ class TopicController extends AdminController {
         $intro = html_out($topic['intro']);
         //删除编辑器中的附件
         $match = array();
-        preg_match_all("/(src|href)\=\"\/(.*?)\"/i", $brand_content, $match);
+        preg_match_all("/(src|href)\=\"\/(.*?)\"/i", $intro, $match);
         if (is_array($match[2])) {
             foreach ($match[2] as $vo) {
                 $index = strpos($vo, 'data/');

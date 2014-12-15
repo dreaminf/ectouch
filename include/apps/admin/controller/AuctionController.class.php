@@ -53,7 +53,7 @@ class AuctionController extends AdminController {
                     $this->model->table('touch_goods_activity')->data($data2)->insert();
                 }
             }
-            $this->message(sprintf(L('edit_auction_ok'), $data['brand_name']), url('index'));
+            $this->message(sprintf(L('edit_auction_ok'), $data2['act_banner']), url('index'));
         }
         $info = $this->model->table('goods_activity')->field('act_id,act_name')->where(array('act_id' => $id))->find();
         $touch_info = $this->model->table('touch_goods_activity')->field('act_banner')->where(array('act_id' => $id))->find();

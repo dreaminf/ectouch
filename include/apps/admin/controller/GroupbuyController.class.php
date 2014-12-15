@@ -90,7 +90,7 @@ class GroupbuyController extends AdminController {
                     $this->model->table('touch_goods_activity')->data($data2)->insert();
                 }
             }
-            $this->message(sprintf(L('edit_success'), $data['brand_name']), url('index'));
+            $this->message(L('edit_success'), url('index'));
         }
 
         $info = $this->model->table('goods_activity')->field('act_id,act_name')->where(array('act_id' => $id))->find();
