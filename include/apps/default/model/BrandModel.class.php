@@ -101,7 +101,7 @@ class BrandModel extends BaseModel {
             $arr[$row['brand_id']]['brand_logo'] = get_banner_path($row['brand_logo']);
             $arr[$row['brand_id']]['brand_banner'] = get_banner_path($row['brand_banner']);
             $arr[$row['brand_id']]['goods_num'] = model('Brand')->goods_count_by_brand($row['brand_id']);
-            $arr[$row['brand_id']]['brand_desc'] = htmlspecialchars($val['brand_desc'], ENT_QUOTES);
+            $arr[$row['brand_id']]['brand_desc'] = htmlspecialchars($row['brand_desc'], ENT_QUOTES);
         }
         return $arr;
     }
