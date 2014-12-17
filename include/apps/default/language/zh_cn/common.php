@@ -721,6 +721,7 @@ $_LANG['other_info'] = '其它信息';
 $_LANG['user_balance'] = '会员余额';
 $_LANG['wholesale_goods_cart'] = '批发商品购物车';
 $_LANG['wholesale_goods_list'] = '批发商品列表';
+$_LANG['wholesale_goods_info'] = '批发商品';
 $_LANG['bid_record'] = '出价记录';
 $_LANG['shipping_method'] = '配送方式';
 $_LANG['payment_method'] = '支付方式';
