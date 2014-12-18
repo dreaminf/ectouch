@@ -171,6 +171,31 @@
 <!-- {/if}--> 
 <!-- 信息列表end--> 
 
+<!-- 拍卖列表 start--> 
+<!--{if $auction}--> 
+<a href="{$auction.url}"><img src="{$auction.act_banner}" alt="{$auction.goods_name}"></a>
+<dl>
+  <dt>
+    <h4 class="title"><a href="{$auction.url}">{$auction.goods_name}</a></h4>
+  </dt>
+  <dd class="dd-num"> <span class="pull-left"> {$lang.act_status}： 
+    <!-- {if $auction.status_no eq 0} --> 
+    {$lang.au_pre_start}<br>
+    <!-- {elseif $auction.status_no eq 1} --> 
+    {$lang.au_under_way_1}<br>
+    <!-- {else} --> 
+    {$lang.au_finished}<br>
+    <!-- {/if} --> 
+    </span> </dd>
+  <dd class="dd-num"> <span class="pull-left"><strong>{$lang.au_start_price}：<b class="ect-colory">{$auction.formated_start_price}</b></strong> </span> </dd>
+  <dd class="dd-num"> <span class="pull-left"> 
+    <!-- {if $auction.end_price gt 0} --> 
+    <strong>{$lang.au_end_price}：<b class="ect-colory">{$auction.formated_end_price}</b></strong> 
+    <!-- {/if} --></span> </dd>
+</dl>
+<!-- {/if}--> 
+<!-- 拍卖列表end--> 
+
 <!-- 批发列表 start--> 
 <!--{if $wholesale}--> 
 <a href="{$wholesale.goods_url}"><img src="{$wholesale.goods_thumb}" alt="{$wholesale.name}"></a>

@@ -51,7 +51,25 @@ class AuctionController extends CommonController {
         }
         $this->display('auction_list.dwt');
     }
-
+    /**
+     * 怕卖活动异步加载列表
+     */
+    public function asynclist(){
+        $this->parameter();
+        $asyn_last = intval(I('post.last')) + 1;
+        $this->size = I('post.amount');
+        $this->page = ($asyn_last > 0) ? ceil($asyn_last / $this->size) : 1;
+        
+        $list = model('Auction')->auction_list($this->size, $this->page, $this->sort, $this->order);
+        foreach ($list as $key => $auction) {
+            $this->assign('auction', $auction);
+            $sayList [] = array(
+                'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
+            );
+        }
+        die(json_encode($sayList));
+        exit();
+    }
     /**
      * 拍卖 详情
      */
