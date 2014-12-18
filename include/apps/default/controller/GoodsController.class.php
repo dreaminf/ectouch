@@ -123,7 +123,6 @@ class GoodsController extends CommonController {
         $this->assign('cfg', C('CFG'));
         // 促销信息
         $this->assign('promotion', model('GoodsBase')->get_promotion_info($this->goods_id));
-        $this->assign('promotion_info', model('GoodsBase')->get_promotion_info());
         $this->assign('title', L('goods_detail'));
         /* 页面标题 */
         $page_info = get_page_title($goods['cat_id'], $goods['goods_name']);

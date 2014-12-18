@@ -116,14 +116,14 @@ class ActivityController extends CommonController {
             } elseif ($res['act_range'] == FAR_BRAND) {
                 $this->brand = "g.brand_id " . db_create_in($res['act_range_ext']);
             } else {
-                $this->goods = " AND g.goods_id " . db_create_in($res['act_range_ext']);
+                $this->goods = "g.goods_id " . db_create_in($res['act_range_ext']);
             }
         }
         $this->assign('id', $id);
         $asyn_last = intval(I('post.last')) + 1;
         $this->size = I('post.amount');
         $this->page = ($asyn_last > 0) ? ceil($asyn_last / $this->size) : 1;
-        $goodslist = model('Activity')->category_get_goods($this->children, $this->brand, $this->goods, $this->price_min, $this->price_max, $this->ext, $this->size, $this->page, $this->sort, $this->order);
+        $goodslist = model('Activity')->category_get_goods($this->children, $this->brand, $this->goods, $this->size, $this->page, $this->sort, $this->order);
         foreach ($goodslist as $key => $value) {
             $this->assign('act_goods', $value);
             $sayList [] = array(

@@ -12,7 +12,6 @@
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
  */
-
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
@@ -57,7 +56,7 @@ class GoodsBaseModel extends BaseModel {
 
                     case GAT_AUCTION: //拍卖
                         $auction[$data['act_id']]['act_name'] = $data['act_name'];
-                        $auction[$data['act_id']]['url'] = url('auction/index', array('auid' => $data['act_id']));
+                        $auction[$data['act_id']]['url'] = url('auction/info', array('id' => $data['act_id']));
                         $auction[$data['act_id']]['time'] = sprintf(L('promotion_time'), local_date('Y-m-d', $data['start_time']), local_date('Y-m-d', $data['end_time']));
                         $auction[$data['act_id']]['sort'] = $data['start_time'];
                         $auction[$data['act_id']]['type'] = 'auction';

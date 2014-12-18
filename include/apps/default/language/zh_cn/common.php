@@ -149,6 +149,8 @@ $_LANG['favourable_mz'] = "赠";
 $_LANG['favourable_mj'] = "减";
 $_LANG['favourable_zk'] = "折";
 $_LANG['group_buy_act'] = "团";
+$_LANG['snatch_act'] = "夺";
+$_LANG['auction_act'] = "拍卖";
 
 /* 分类展示页  */
 $_LANG['sort_default'] = '默认';
