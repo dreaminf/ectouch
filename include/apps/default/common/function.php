@@ -1354,9 +1354,27 @@ function send_pwd_email($uid, $user_name, $email, $code) {
  */
 function return_url($code = '', $params = array()) {
     $params['code'] = $code;
-    $data = serialize($params);
-    $base64 = base64_encode($data);
+    $base64 = urlsafe_b64encode(serialize($params));
     return __URL__ . '/respond.php?code=' . $base64;
+}
+
+//url base64编码
+function urlsafe_b64encode($string)
+{
+    $data = base64_encode($string);
+    $data = str_replace(array('+', '/', '='), array('-', '_', ''), $data);
+    return $data;
+}
+
+//url base64解码
+function urlsafe_b64decode($string)
+{
+    $data = str_replace(array('-', '_'), array('+', '/'), $string);
+    $mod4 = strlen($data) % 4;
+    if ($mod4) {
+        $data .= substr('====', $mod4);
+    }
+    return base64_decode($data);
 }
 
 /* * ********************************************************

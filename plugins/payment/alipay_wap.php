@@ -102,7 +102,6 @@ class alipay_wap
             'req_data' => $req_data, // 请求业务数据
             "_input_charset" => $charset
         );
-        
         ksort($parameter);
         reset($parameter);
         $param = '';
@@ -240,12 +239,12 @@ class alipay_wap
                     $order_url = urlencode(base64_encode($order_url));
                     send_wechat_message('pay_remind', '', $out_trade_no[0].' 订单已支付', $order_url, $out_trade_no[0]);
                 }
-                echo "success";
+                exit("success");
             } else {
-                echo "fail";
+                exit("fail");
             }
         } else {
-            echo "fail";
+            exit("fail");
         }
     }
 }
