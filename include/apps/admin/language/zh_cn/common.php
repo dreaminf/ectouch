@@ -14,8 +14,8 @@
  */
 global $_LANG;
 
-$_LANG['app_name'] = 'ECSHOP';
-$_LANG['cp_home'] = 'ECSHOP 管理中心';
+$_LANG['app_name'] = 'ECTouch';
+$_LANG['cp_home'] = '管理中心';
 $_LANG['copyright'] = '上海商创网络科技有限公司. All Rights Reserved.';
 $_LANG['query_info'] = '共执行 %d 个查询，用时 %s 秒';
 $_LANG['memory_info'] = '，内存占用 %0.3f MB';
