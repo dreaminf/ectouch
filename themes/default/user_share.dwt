@@ -68,7 +68,7 @@
 		common : {
 			bdText : '{$shopdesc}',
 			bdUrl : '{$shopurl}',
-			bdPic : '{$shopurl_qr}'
+			bdPic : "{$domain}{:url('user/create_qrcode', array('value'=>$this->_var['shopurl']))}"
 		},
 		share : [{
 			"bdSize" : 32

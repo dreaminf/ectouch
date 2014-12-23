@@ -985,21 +985,29 @@ class UserController extends CommonController {
 
             $this->assign('goods', $goods);
         }
-        $shoprul = __URL__ . '/?u=' . $this->user_id;
-        // 二维码
-        // 纠错级别：L、M、Q、H
-        $errorCorrectionLevel = 'L';
-        // 点的大小：1到10
-        $matrixPointSize = 4;
-        $filename = 'data/attached/image/' . $errorCorrectionLevel . $matrixPointSize .$this->user_id . '.png';
-        QRcode::png($shoprul, $filename, $errorCorrectionLevel, $matrixPointSize, 2);
+        $shopurl = __URL__ . '/?u=' . $this->user_id;
         
-        $this->assign('shopurl_qr', __URL__ . '/' . $filename);
-        $this->assign('shopurl', $shoprul);
+        $this->assign('shopurl', $shopurl);
+        $this->assign('domain', __HOST__);
         $this->assign('shopdesc', C('shop_desc'));
         $this->assign('title', L('label_share'));
         $this->assign('share', $share);
         $this->display('user_share.dwt');
+    }
+    
+    /**
+     * 生成二维码
+     */
+    public function create_qrcode(){
+        $value = I('get.value');
+        if($value){
+            // 二维码
+            // 纠错级别：L、M、Q、H
+            $errorCorrectionLevel = 'L';
+            // 点的大小：1到10
+            $matrixPointSize = 4;
+            QRcode::png($value, false, $errorCorrectionLevel, $matrixPointSize, 2);
+        }
     }
 
     /**
