@@ -71,8 +71,7 @@ class WechatController extends CommonController
                     // 关注时回复信息
                     $this->msg_reply('subscribe');
                     exit;
-                }
-                
+                }                
             } elseif ('unsubscribe' == $wedata['Event']) {
                 // 取消关注
                 $this->unsubscribe($wedata['FromUserName']);
@@ -114,6 +113,8 @@ class WechatController extends CommonController
         }
         // 回复
         if (! empty($keywords)) {
+			//记录用户操作信息
+			$this->record_msg($wedata['FromUserName'], $keywords);
             // 多客服
             $rs = $this->customer_service($wedata['FromUserName'], $keywords);
             if (empty($rs)) {
@@ -224,6 +225,8 @@ class WechatController extends CommonController
                     )
                 );
                 $this->weObj->sendCustomMessage($msg);
+				//记录用户操作信息
+				$this->record_msg($openid, $template . $bonus_msg, 1);
             } else {
                 $info['subscribe'] = 1;
                 $this->model->table('wechat_user')
@@ -307,14 +310,15 @@ class WechatController extends CommonController
                     );
                 }
                 $this->weObj->reply($replyData);
+				//记录用户操作信息
+				$this->record_msg($this->weObj->getRev()->getRevTo(), '图文信息', 1);
             } else {
                 // 文本回复
                 $replyInfo['content'] = html_out($replyInfo['content']);
                 $this->weObj->text($replyInfo['content'])->reply();
+				//记录用户操作信息
+				$this->record_msg($this->weObj->getRev()->getRevTo(), $replyInfo['content'], 1);
             }
-        }
-        if ($return) {
-            return true;
         }
     }
 
@@ -400,12 +404,16 @@ class WechatController extends CommonController
                     }
                     // 回复
                     $this->weObj->news($articles)->reply();
+					//记录用户操作信息
+					$this->record_msg($this->weObj->getRev()->getRevTo(), '图文信息', 1);
                     $endrs = true;
                 }
             } else {
                 // 文本回复
                 $result[0]['content'] = html_out($result[0]['content']);
                 $this->weObj->text($result[0]['content'])->reply();
+				//记录用户操作信息
+				$this->record_msg($this->weObj->getRev()->getRevTo(), $result[0]['content'], 1);
                 $endrs = true;
             }
         }
@@ -437,8 +445,12 @@ class WechatController extends CommonController
                 // 数据回复类型
                 if ($data['type'] == 'text') {
                     $this->weObj->text($data['content'])->reply();
+					//记录用户操作信息
+					$this->record_msg($fromusername, $data['content'], 1);
                 } elseif ($data['type'] == 'news') {
                     $this->weObj->news($data['content'])->reply();
+					//记录用户操作信息
+					$this->record_msg($fromusername, '图文消息', 1);
                 }
                 $return = true;
             }
@@ -515,6 +527,8 @@ class WechatController extends CommonController
                         ->data('bein_kefu = 1')
                         ->where('openid = "' . $fromusername . '"')
                         ->update();
+					//记录用户操作信息
+					$this->record_msg($fromusername, $msg['text']['content'], 1);
                 } else {
                     // 在线客服列表
                     $online_list = $this->weObj->getCustomServiceOnlineKFlist();
@@ -545,6 +559,8 @@ class WechatController extends CommonController
                 ->data('bein_kefu = 0')
                 ->where('openid = "' . $fromusername . '"')
                 ->update();
+			//记录用户操作信息
+			$this->record_msg($fromusername, $msg['text']['content'], 1);
             $result = true;
         }
         return $result;
@@ -722,6 +738,25 @@ class WechatController extends CommonController
         
         session('openid', $userinfo['openid']);
     }
+	
+	/**
+     * 记录用户操作信息
+     */
+	 public function record_msg($fromusername, $keywords, $iswechat = 0){
+		$uid = $this->model->table('wechat_user')->field('uid')->where(array('openid'=>$fromusername))->getOne();
+		if($uid){
+			$data['uid'] = $uid;
+			$data['msg'] = $keywords;
+			$data['send_time'] = time();
+			//是公众号回复
+			if($iswechat){
+				$data['iswechat'] = 1;
+			}
+			$this->model->table('wechat_custom_message')
+                ->data($data)
+                ->insert();
+		}
+	 }
 
     /**
      * 检查是否是微信浏览器访问

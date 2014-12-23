@@ -530,6 +530,7 @@ class WechatController extends AdminController
                 )));
             }
             $data['send_time'] = time();
+			$data['iswechat'] = 1;
             // 微信端发送消息
             $msg = array(
                 'touser' => $openid,
@@ -587,9 +588,9 @@ class WechatController extends AdminController
             ->order('send_time desc')
             ->count();
         $list = $this->model->table('wechat_custom_message')
-            ->field('msg, send_time')
+            ->field('msg, send_time, iswechat')
             ->where('uid = ' . $uid)
-            ->order('send_time desc')
+            ->order('send_time desc, id desc')
             ->select();
         
         $this->assign('page', $this->pageShow($total));

@@ -7,11 +7,17 @@
       <div class="panel-heading">{$lang['custom_message_list']}  ---  {$nickname}</div>
       <table class="table table-hover table-bordered table-striped">
         <tr>
+		<th class="text-center">交互用户</td>
           <th class="text-center">{$lang['message_content']}</td>
           <th class="text-center"  width="20%">{$lang['message_time']}</td>
         </tr>
         {loop $list $key $val}
         <tr>
+		{if $val['iswechat']}
+		  <td class="text-center">官方</td>
+		{else}
+		  <td class="text-center">{$nickname}</td>
+		{/if}
           <td class="text-center">{$val['msg']}</td>
           <td class="text-center">{date('Y-m-d H:i:s', $val['send_time'])}</td>
         </tr>
