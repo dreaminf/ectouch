@@ -59,6 +59,9 @@ class bd extends PluginWechatController
     public function show($fromusername, $info)
     {
         $articles = array('type'=>'text', 'content'=>'暂时不能绑定');
+        //微信用户是否已绑定
+        $ect_uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where(array('openid'=>$fromusername))->getOne();
+
         $media = array();
         $config = unserialize($info['config']);
         // 素材
@@ -124,7 +127,6 @@ class bd extends PluginWechatController
      */
     public function html_show()
     {
-        $openid = session('openid');
         if(isset($_SESSION['openid']) && !empty($_SESSION['openid'])){
             $file = ADDONS_PATH . 'wechat/' . $this->plugin_name . '/view/index.php';
             if (file_exists($file)) {

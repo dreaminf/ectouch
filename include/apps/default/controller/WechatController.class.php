@@ -602,7 +602,8 @@ class WechatController extends CommonController
             // 微信通验证
             $weObj = new Wechat($config);
             // 微信浏览器浏览
-            if (self::is_wechat_browser() && $_SESSION['user_id'] === 0) {
+			$flag = I('get.flag');
+            if (self::is_wechat_browser() && $_SESSION['user_id'] === 0 && $flag == 'oauth') {
                 if (! isset($_SESSION['redirect_url'])) {
                     session('redirect_url', __HOST__ . $_SERVER['REQUEST_URI']);
                 }
