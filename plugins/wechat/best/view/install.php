@@ -26,7 +26,7 @@
                         <input type="radio" name="cfg_value[point_status]" {if $config['config']['point_status']}checked{/if} value="1" />开启
                     </label>
                     <label class="btn btn-primary {if empty($config['config']['point_status'])}active{/if}">
-                        <input type="radio" name="cfg_value[cfg_value[point_status]]" {if $config['config']['point_status']}checked{/if} value="0" />关闭
+                        <input type="radio" name="cfg_value[point_status]" {if empty($config['config']['point_status'])}checked{/if} value="0" />关闭
                     </label>
                 </div>
            </div>
