@@ -445,12 +445,12 @@ class WechatController extends CommonController
                 // 数据回复类型
                 if ($data['type'] == 'text') {
                     $this->weObj->text($data['content'])->reply();
-					//记录用户操作信息
-					$this->record_msg($fromusername, $data['content'], 1);
+                    //记录用户操作信息
+                    $this->record_msg($fromusername, $data['content'], 1);
                 } elseif ($data['type'] == 'news') {
                     $this->weObj->news($data['content'])->reply();
-					//记录用户操作信息
-					$this->record_msg($fromusername, '图文消息', 1);
+                    //记录用户操作信息
+                    $this->record_msg($fromusername, '图文消息', 1);
                 }
                 $return = true;
             }
@@ -705,6 +705,7 @@ class WechatController extends CommonController
             $data1['subscribe_time'] = $time;
             $data1['ect_uid'] = $_SESSION['user_id'];
             $data1['group_id'] = $group_id;
+            $data1['unionid'] = $userinfo['unionid'];
             
             model('Base')->model->table('wechat_user')
                 ->data($data1)
@@ -719,8 +720,11 @@ class WechatController extends CommonController
             );
             $weObj->sendCustomMessage($msg);
         } else {
+            //开放平台有privilege字段,公众平台没有
+            unset($userinfo['privilege']);
+            $userinfo['subscribe'] = 1;
             model('Base')->model->table('wechat_user')
-                ->data('subscribe = 1')
+                ->data($userinfo)
                 ->where('openid = "' . $userinfo['openid'] . '"')
                 ->update();
             $new_user_name = model('Base')->model->table('users')
