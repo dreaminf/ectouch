@@ -121,7 +121,12 @@
                         <td class="text-center"><input type="text" name="cfg_value[prize_level][]" class="form-control" placeholder="例如：一等奖" value="{$v['prize_level']}"></td>
                         <td class="text-center"><input type="text" name="cfg_value[prize_name][]" class="form-control" placeholder="例如：法拉利跑车" value="{$v['prize_name']}"></td>
                         <td class="text-center"><input type="text" name="cfg_value[prize_count][]" class="form-control" placeholder="例如：3" value="{$v['prize_count']}"></td>
-                        <td class="text-center"><input type="text" name="cfg_value[prize_prob][]"  class="form-control" placeholder="例如：1%" value="{$v['prize_prob']}"></td>
+                        <td class="text-center">
+                            <div class="input-group">
+                                <input type="text" name="cfg_value[prize_prob][]"  class="form-control" placeholder="例如：1%" value="{$v['prize_prob']}">
+                                <span class="input-group-addon">%</span>
+                            </div>
+                        </td>
                    </tr>
                    {/loop}
             </table>
@@ -184,7 +189,7 @@
     });
     //添加奖项
     function addprize(obj){
-    	var html = '<tr><td class="text-center"><a href="javascript:;" class="glyphicon glyphicon-minus" onClick="delprize(this)"></a></td><td class="text-center"><input type="text" name="cfg_value[prize_level][]" class="form-control" placeholder="例如：一等奖"></td><td class="text-center"><input type="text" name="cfg_value[prize_name][]" class="form-control" placeholder="例如：法拉利跑车"></td><td class="text-center"><input type="text" name="cfg_value[prize_count][]" class="form-control" placeholder="例如：3"></td><td class="text-center"><input type="text" name="cfg_value[prize_prob][]"  class="form-control" placeholder="例如：1%"></td></tr>';
+    	var html = '<tr><td class="text-center"><a href="javascript:;" class="glyphicon glyphicon-minus" onClick="delprize(this)"></a></td><td class="text-center"><input type="text" name="cfg_value[prize_level][]" class="form-control" placeholder="例如：一等奖"></td><td class="text-center"><input type="text" name="cfg_value[prize_name][]" class="form-control" placeholder="例如：法拉利跑车"></td><td class="text-center"><input type="text" name="cfg_value[prize_count][]" class="form-control" placeholder="例如：3"></td><td class="text-center"><div class="input-group"><input type="text" name="cfg_value[prize_prob][]"  class="form-control" placeholder="例如：1"><span class="input-group-addon">%</span></div></td></tr>';
         $(obj).parent().parent().parent().append(html);
     }
     //删除奖项

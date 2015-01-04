@@ -60,7 +60,6 @@ class bonus extends PluginWechatController
     public function show($fromusername, $info)
     {
         $articles = array('type'=>'text', 'content'=>'');
-        $uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where('openid = "'.$fromusername.'"')->getOne();
         if(!empty($info)){
             // 配置信息
             $config = array();
@@ -68,8 +67,8 @@ class bonus extends PluginWechatController
             //开启红包赠送
             if(isset($config['bonus_status']) && $config['bonus_status'] == 1){
                 //用户第一次关注赠送红包并且设置了赠送的红包
-                $num = model('Base')->model->table('wechat_user')->where('openid = "'.$fromusername.'"')->count();
-                if($num <= 0 && !empty($config['bonus'])){
+                $uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where('openid = "'.$fromusername.'"')->getOne();
+                if(!empty($uid) && !empty($config['bonus'])){
                     $data['bonus_type_id'] = $config['bonus'];
                     $data['bonus_sn'] = 0;
                     $data['user_id'] = $uid;
