@@ -71,7 +71,8 @@ class EcsSmtp {
 
             return $obj;
         } else {
-            if (!empty($GLOBALS['_CFG']['smtp_ssl'])) {
+            $smtp_ssl = C('smtp_ssl');
+            if (!empty($smtp_ssl)) {
                 $this->host = "ssl://" . $this->host;
             }
             $this->connection = @fsockopen($this->host, $this->port, $errno, $errstr, $this->timeout);

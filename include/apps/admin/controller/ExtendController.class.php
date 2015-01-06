@@ -107,7 +107,7 @@ class ExtendController extends AdminController
                 if(file_exists($sql_file)){
                     //添加素材
                     $sql = file_get_contents($sql_file);
-                    $sql = str_replace(array('ecs_wechat_media', '(0', 'http://', 'view/images'), array($this->model->pre.'wechat_media', '('.session('wechat_id'), __HOST__.url('default/wechat/plugin_show', array('name'=>$this->plugin_name)), 'plugins/'. $this->plugin_type . '/' . $this->plugin_name.'/view/images'), $sql);
+                    $sql = str_replace(array('ecs_wechat_media', '(0', 'http://', 'view/images'), array($this->model->pre.'wechat_media', '('.session('wechat_id'), __HOST__.url('default/wechat/plugin_show', array('name'=>$this->plugin_name, 'flag'=>'oauth')), 'plugins/'. $this->plugin_type . '/' . $this->plugin_name.'/view/images'), $sql);
                     $this->model->query($sql);
                     //获取素材id
                     $cfg_value['media_id'] = $this->model->table('wechat_media')->field('id')->where('command = "'.$this->plugin_name.'"')->getOne();
