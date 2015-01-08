@@ -270,7 +270,7 @@ class zjd extends PluginWechatController
                 foreach ($prize as $key => $val) {
                     // 删除数量不足的奖品
                     $count = model('Base')->model->table('wechat_prize')
-                        ->where('prize_name = "' . $val['prize_name'] . '" and wechat_id = ' . $wxid)
+                        ->where('prize_name = "' . $val['prize_name'] . '" and activity_type = "'.$this->plugin_name.'" and wechat_id = ' . $wxid)
                         ->count();
                     if ($count >= $val['prize_count']) {
                         unset($prize[$key]);
@@ -292,7 +292,7 @@ class zjd extends PluginWechatController
                     $data['prize_type'] = 1;
                 }
                 $rs['msg'] = $prize_name[$level];
-                $rs['num'] = $config['prize_num'] - $num;
+                $rs['num'] = $config['prize_num'] - $num > 0 ? $config['prize_num'] - $num : 0;
                 // 抽奖记录
                 $data['wechat_id'] = $wxid;
                 $data['openid'] = $openid;
@@ -302,7 +302,7 @@ class zjd extends PluginWechatController
                 $id = model('Base')->model->table('wechat_prize')
                     ->data($data)
                     ->insert();
-                if ($level != $lastarr['prize_level']) {
+                if ($level != $lastarr['prize_level'] && !empty($id)) {
                     // 获奖链接
                     $rs['link'] = url('wechat/plugin_action', array(
                         'name' => $this->plugin_name,

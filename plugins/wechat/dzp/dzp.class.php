@@ -226,18 +226,14 @@ class dzp extends PluginWechatController
                 exit();
             }
             // 超过次数
-            if (! empty($openid)) {
-                $num = model('Base')->model->table('wechat_prize')
-                    ->where('openid = "' . $openid . '" and dateline between "' . $starttime . '" and "' . $endtime . '"')
-                    ->count();
-                if ($num <= 0) {
-                    $num = 1;
-                } else {
-                    $num = $num + 1;
-                }
-            } else {
-                $num = $config['prize_num'] + 1;
-            }
+			$num = model('Base')->model->table('wechat_prize')
+				->where('openid = "' . $openid . '" and dateline between "' . $starttime . '" and "' . $endtime . '"')
+				->count();
+			if ($num <= 0) {
+				$num = 1;
+			} else {
+				$num = $num + 1;
+			}
             
             if ($num > $config['prize_num']) {
                 $rs['status'] = 2;
@@ -259,7 +255,7 @@ class dzp extends PluginWechatController
                 foreach ($prize as $key => $val) {
                     // 删除数量不足的奖品
                     $count = model('Base')->model->table('wechat_prize')
-                        ->where('prize_name = "' . $val['prize_name'] . '" and wechat_id = ' . $wxid)
+                        ->where('prize_name = "' . $val['prize_name'] . '" and activity_type = "'.$this->plugin_name.'" and wechat_id = ' . $wxid)
                         ->count();
                     if ($count >= $val['prize_count']) {
                         unset($prize[$key]);
@@ -290,7 +286,7 @@ class dzp extends PluginWechatController
                 }
                 
                 
-                $rs['num'] = $config['prize_num'] - $num;
+                $rs['num'] = $config['prize_num'] - $num > 0 ? $config['prize_num'] - $num : 0;
                 // 抽奖记录
                 $data['wechat_id'] = $wxid;
                 $data['openid'] = $openid;
@@ -298,7 +294,7 @@ class dzp extends PluginWechatController
                 $data['dateline'] = time();
                 $data['activity_type'] = $this->plugin_name;
                 $id = model('Base')->model->table('wechat_prize')->data($data)->insert();
-                if ($level != $lastarr['prize_level']) {
+                if ($level != 'not' && !empty($id)) {
                     // 获奖链接
                     $rs['link'] = url('wechat/plugin_action', array(
                         'name' => $this->plugin_name,

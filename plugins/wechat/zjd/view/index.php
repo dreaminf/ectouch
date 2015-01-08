@@ -167,9 +167,6 @@
                 	$("#content").html(data.msg);
                 	$("#dialog").attr("class",'no').show();
                 }
-            	
-                
-                
             }, 'json');
         }
     });
