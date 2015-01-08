@@ -55,6 +55,27 @@
             <div><?php echo $config['description'];?></div>
         </div>
     </div>
+    <div class="info-box">
+        <div class="info-box-inner">
+            <h4>中奖记录</h4>
+            <div>
+                <?php
+                    if(!empty($list)){
+                        foreach($list as $key=>$val){
+                ?>
+                        <p><?php echo $val['nickname'];?> 获得奖品 ：<?php echo $val['prize_name'];?></p>
+                <?php
+                        }
+                    }
+                    else{
+                ?>
+                    <p>暂无获奖记录</p>
+                <?php
+                    }
+                ?>
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript" src="<?php echo __PUBLIC__;?>/js/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo __ADDONS__;?>/wechat/dzp/view/js/jQueryRotate.2.2.js"></script>
