@@ -59,7 +59,7 @@ class WechatController extends CommonController
         } elseif ($type == Wechat::MSGTYPE_EVENT) {
             if ('subscribe' == $wedata['Event']) {
                 // 用户扫描带参数二维码(未关注)
-                if (isset($wedata['EventKey']) && ! empty($wedata['EventKey'])) {
+                if (isset($wedata['Ticket']) && ! empty($wedata['Ticket'])) {
                     $scene_id = $this->weObj->getRevSceneId();
                     $flag = true;
                     // 关注
@@ -501,13 +501,25 @@ class WechatController extends CommonController
      */
     public function customer_service($fromusername, $keywords)
     {
-        $result = false;
+    	$result = false;
+    	//是否超时
+    	$timeout = false;
+        //查找用户
+        $uid = $this->model->table('wechat_user')->field('uid')->where(array('openid'=>$fromusername))->getOne();
+        if($uid){
+            $time_list = $this->model->table('wechat_custom_message')->field('send_time')->where(array('uid'=>$uid))->order('send_time desc')->limit(2)->select();
+            if($time_list[0]['send_time'] - $time_list[1]['send_time'] > 3600 * 2){
+            	$timeout = true;
+            }
+
+        }
+        
         // 是否处在多客服流程
         $bein_kefu = $this->model->table('wechat_user')
             ->field('bein_kefu')
             ->where('openid = "' . $fromusername . '"')
             ->getOne();
-        if ($keywords == 'kefu' || (! empty($bein_kefu) && $keywords != 'ko#kefu')) {
+        if ($keywords == 'kefu' || (! empty($bein_kefu) && $keywords != 'ko#kefu') || !$timeout) {
             $rs = $this->model->table('wechat_extend')
                 ->field('config')
                 ->where('command = "kefu" and enable = 1 and wechat_id = ' . $this->wechat_id)
@@ -546,7 +558,7 @@ class WechatController extends CommonController
                 }
                 $result = true;
             }
-        } elseif ($keywords == 'ko#kefu' && ! empty($bein_kefu)) {
+        } elseif ($timeout || ($keywords == 'ko#kefu' && ! empty($bein_kefu))) {
             $msg = array(
                 'touser' => $fromusername,
                 'msgtype' => 'text',
