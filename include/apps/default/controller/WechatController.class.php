@@ -154,51 +154,66 @@ class WechatController extends CommonController
                 ->find();
             // 未关注
             if (empty($rs)) {
-                // 设置的用户注册信息
-                $register = $this->model->table('wechat_extend')
-                    ->field('config')
-                    ->where('enable = 1 and command = "register_remind"')
-                    ->find();
-                if (! empty($register)) {
-                    $reg_config = unserialize($register['config']);
-                    $username = msubstr($reg_config['user_pre'], 3, 0, 'utf-8', false) . time().mt_rand(1, 99);
-                    // 密码随机数
-                    $rs = array();
-                    $arr = range(0, 9);
-                    $reg_config['pwd_rand'] = $reg_config['pwd_rand'] ? $reg_config['pwd_rand'] : 5;
-                    for ($i = 0; $i < $reg_config['pwd_rand']; $i ++) {
-                        $rs[] = array_rand($arr);
+                $ect_uid = 0;
+                //查看公众号是否绑定
+                if($info['unionid']){
+                    $ect_uid = $this->model->table('wechat_user')->field('ect_uid')->where(array('unionid'=>$info['unionid']))->getOne();
+                }
+                //用户未绑定
+                if(empty($ect_uid)){
+                    // 设置的用户注册信息
+                    $register = $this->model->table('wechat_extend')
+                        ->field('config')
+                        ->where('enable = 1 and command = "register_remind"')
+                        ->find();
+                    if (! empty($register)) {
+                        $reg_config = unserialize($register['config']);
+                        $username = msubstr($reg_config['user_pre'], 3, 0, 'utf-8', false) . time().mt_rand(1, 99);
+                        // 密码随机数
+                        $rs = array();
+                        $arr = range(0, 9);
+                        $reg_config['pwd_rand'] = $reg_config['pwd_rand'] ? $reg_config['pwd_rand'] : 5;
+                        for ($i = 0; $i < $reg_config['pwd_rand']; $i ++) {
+                            $rs[] = array_rand($arr);
+                        }
+                        $pwd_rand = implode('', $rs);
+                        // 密码
+                        $password = $reg_config['pwd_pre'] . $pwd_rand;
+                        // 通知模版
+                        $template = str_replace(array(
+                            '[$username]',
+                            '[$password]'
+                        ), array(
+                            $username,
+                            $password
+                        ), $reg_config['template']);
+                    } else {
+                        $username = 'wx_' . time().mt_rand(1, 99);
+                        $password = 'ecmoban';
+                        // 通知模版
+                        $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
                     }
-                    $pwd_rand = implode('', $rs);
-                    // 密码
-                    $password = $reg_config['pwd_pre'] . $pwd_rand;
-                    // 通知模版
-                    $template = str_replace(array(
-                        '[$username]',
-                        '[$password]'
-                    ), array(
-                        $username,
-                        $password
-                    ), $reg_config['template']);
-                } else {
-                    $username = 'wx_' . time().mt_rand(1, 99);
-                    $password = 'ecmoban';
-                    // 通知模版
-                    $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
+                    // 用户注册
+                    $domain = get_top_domain();
+                    if (model('Users')->register($username, $password, $username . '@' . $domain, array('parent_id'=>$scene_id)) !== false) {
+                        $data['user_rank'] = 99;
+                        
+                        $this->model->table('users')
+                            ->data($data)
+                            ->where('user_name = "' . $username . '"')
+                            ->update();
+                    } else {
+                        die('');
+                    }
+                    $info['ect_uid'] = $_SESSION['user_id'];
                 }
-                // 用户注册
-                $domain = get_top_domain();
-                if (model('Users')->register($username, $password, $username . '@' . $domain, array('parent_id'=>$scene_id)) !== false) {
-                    $data['user_rank'] = 99;
-                    
-                    $this->model->table('users')
-                        ->data($data)
-                        ->where('user_name = "' . $username . '"')
-                        ->update();
-                } else {
-                    die('');
+                else{
+                    //微信用户已绑定
+                    $username = model('Base')->model->table('users')->field('user_name')->where(array('user_id'=>$ect_uid))->getOne();
+                    $template = '您已拥有帐号，用户名为'.$username;
+                    $info['ect_uid'] = $ect_uid;
                 }
-                $info['ect_uid'] = $_SESSION['user_id'];
+                
                 // 获取用户所在分组ID
                 $group_id = $this->weObj->getUserGroup($openid);
                 $info['group_id'] = $group_id ? $group_id : '';
@@ -660,50 +675,68 @@ class WechatController extends CommonController
             // 获取用户所在分组ID
             $group_id = $weObj->getUserGroup($userinfo['openid']);
             $group_id = $group_id ? $group_id : 0;
-            // 设置的用户注册信息
-            $register = model('Base')->model->table('wechat_extend')
-                ->field('config')
-                ->where('enable = 1 and command = "register_remind"')
-                ->find();
-            if (! empty($register)) {
-                $reg_config = unserialize($register['config']);
-                $username = msubstr($reg_config['user_pre'], 3, 0, 'utf-8', false) . time().mt_rand(1, 99);
-                // 密码随机数
-                $rs = array();
-                $arr = range(0, 9);
-                $reg_config['pwd_rand'] = $reg_config['pwd_rand'] ? $reg_config['pwd_rand'] : 3;
-                for ($i = 0; $i < $reg_config['pwd_rand']; $i ++) {
-                    $rs[] = array_rand($arr);
+            //微信用户绑定会员id
+            $ect_uid = 0;
+            //查看公众号是否绑定
+            if($userinfo['unionid']){
+                $ect_uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where(array('unionid'=>$userinfo['unionid']))->getOne();
+            }
+
+            //未绑定
+            if(empty($ect_uid)){
+                // 设置的用户注册信息
+                $register = model('Base')->model->table('wechat_extend')
+                    ->field('config')
+                    ->where('enable = 1 and command = "register_remind"')
+                    ->find();
+                if (! empty($register)) {
+                    $reg_config = unserialize($register['config']);
+                    $username = msubstr($reg_config['user_pre'], 3, 0, 'utf-8', false) . time().mt_rand(1, 99);
+                    // 密码随机数
+                    $rs = array();
+                    $arr = range(0, 9);
+                    $reg_config['pwd_rand'] = $reg_config['pwd_rand'] ? $reg_config['pwd_rand'] : 3;
+                    for ($i = 0; $i < $reg_config['pwd_rand']; $i ++) {
+                        $rs[] = array_rand($arr);
+                    }
+                    $pwd_rand = implode('', $rs);
+                    // 密码
+                    $password = $reg_config['pwd_pre'] . $pwd_rand;
+                    // 通知模版
+                    $template = str_replace(array(
+                        '[$username]',
+                        '[$password]'
+                    ), array(
+                        $username,
+                        $password
+                    ), $reg_config['template']);
+                } else {
+                    $username = 'wx_' . time().mt_rand(1, 99);
+                    $password = 'ecmoban';
+                    // 通知模版
+                    $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
                 }
-                $pwd_rand = implode('', $rs);
-                // 密码
-                $password = $reg_config['pwd_pre'] . $pwd_rand;
-                // 通知模版
-                $template = str_replace(array(
-                    '[$username]',
-                    '[$password]'
-                ), array(
-                    $username,
-                    $password
-                ), $reg_config['template']);
-            } else {
-                $username = 'wx_' . time().mt_rand(1, 99);
-                $password = 'ecmoban';
-                // 通知模版
-                $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
+                // 会员注册
+                $domain = get_top_domain();
+                if (model('Users')->register($username, $password, $username . '@' . $domain) !== false) {
+                    $data['user_rank'] = 99;
+                    
+                    model('Base')->model->table('users')
+                        ->data($data)
+                        ->where('user_name = "' . $username . '"')
+                        ->update();
+                } else {
+                    die('授权失败，如重试一次还未解决问题请联系管理员');
+                }
+                $data1['ect_uid'] = $_SESSION['user_id'];
             }
-            // 会员注册
-            $domain = get_top_domain();
-            if (model('Users')->register($username, $password, $username . '@' . $domain) !== false) {
-                $data['user_rank'] = 99;
-                
-                model('Base')->model->table('users')
-                    ->data($data)
-                    ->where('user_name = "' . $username . '"')
-                    ->update();
-            } else {
-                die('授权失败，如重试一次还未解决问题请联系管理员');
+            else{
+                //已绑定
+                $username = model('Base')->model->table('users')->field('user_name')->where(array('user_id'=>$ect_uid))->getOne();
+                $template = '您已拥有帐号，用户名为'.$username;
+                $data1['ect_uid'] = $ect_uid;
             }
+            
             $data1['wechat_id'] = $wechat_id;
             $data1['subscribe'] = 1;
             $data1['openid'] = $userinfo['openid'];
@@ -715,7 +748,6 @@ class WechatController extends CommonController
             $data1['language'] = $userinfo['country'];
             $data1['headimgurl'] = $userinfo['headimgurl'];
             $data1['subscribe_time'] = $time;
-            $data1['ect_uid'] = $_SESSION['user_id'];
             $data1['group_id'] = $group_id;
             $data1['unionid'] = $userinfo['unionid'];
             
