@@ -62,11 +62,14 @@ class ArticleController extends CommonController {
         $this->size = I('post.amount');
         $this->page = ($asyn_last > 0) ? ceil($asyn_last / $this->size) : 1;
         $list = model('ArticleBase')->get_cat_articles($this->cat_id, $this->page, $this->size, $this->keywords);
+        $id = ($this->page - 1) * $this->size + 1;
         foreach ($list as $key => $value) {
+            $this->assign('id', $id);
             $this->assign('article', $value);
             $sayList [] = array(
                 'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
             );
+            $id++;
         }
         die(json_encode($sayList));
         exit();
