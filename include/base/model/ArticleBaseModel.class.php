@@ -298,7 +298,7 @@ class ArticleBaseModel extends BaseModel {
 
     /* 获得文章列表 */
 
-    function get_articleslist() {
+    function get_articleslist($offset) {
         $result = get_filter();
         if ($result === false) {
             $filter = array();
