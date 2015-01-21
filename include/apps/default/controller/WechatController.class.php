@@ -113,8 +113,8 @@ class WechatController extends CommonController
         }
         // 回复
         if (! empty($keywords)) {
-			//记录用户操作信息
-			$this->record_msg($wedata['FromUserName'], $keywords);
+            //记录用户操作信息
+            $this->record_msg($wedata['FromUserName'], $keywords);
             // 多客服
             $rs = $this->customer_service($wedata['FromUserName'], $keywords);
             if (empty($rs)) {
@@ -240,8 +240,8 @@ class WechatController extends CommonController
                     )
                 );
                 $this->weObj->sendCustomMessage($msg);
-				//记录用户操作信息
-				$this->record_msg($openid, $template . $bonus_msg, 1);
+                //记录用户操作信息
+                $this->record_msg($openid, $template . $bonus_msg, 1);
             } else {
                 $info['subscribe'] = 1;
                 $this->model->table('wechat_user')
@@ -325,14 +325,14 @@ class WechatController extends CommonController
                     );
                 }
                 $this->weObj->reply($replyData);
-				//记录用户操作信息
-				$this->record_msg($this->weObj->getRev()->getRevTo(), '图文信息', 1);
+                //记录用户操作信息
+                $this->record_msg($this->weObj->getRev()->getRevTo(), '图文信息', 1);
             } else {
                 // 文本回复
                 $replyInfo['content'] = html_out($replyInfo['content']);
                 $this->weObj->text($replyInfo['content'])->reply();
-				//记录用户操作信息
-				$this->record_msg($this->weObj->getRev()->getRevTo(), $replyInfo['content'], 1);
+                //记录用户操作信息
+                $this->record_msg($this->weObj->getRev()->getRevTo(), $replyInfo['content'], 1);
             }
         }
     }
@@ -419,16 +419,16 @@ class WechatController extends CommonController
                     }
                     // 回复
                     $this->weObj->news($articles)->reply();
-					//记录用户操作信息
-					$this->record_msg($this->weObj->getRev()->getRevTo(), '图文信息', 1);
+                    //记录用户操作信息
+                    $this->record_msg($this->weObj->getRev()->getRevTo(), '图文信息', 1);
                     $endrs = true;
                 }
             } else {
                 // 文本回复
                 $result[0]['content'] = html_out($result[0]['content']);
                 $this->weObj->text($result[0]['content'])->reply();
-				//记录用户操作信息
-				$this->record_msg($this->weObj->getRev()->getRevTo(), $result[0]['content'], 1);
+                //记录用户操作信息
+                $this->record_msg($this->weObj->getRev()->getRevTo(), $result[0]['content'], 1);
                 $endrs = true;
             }
         }
@@ -516,80 +516,84 @@ class WechatController extends CommonController
      */
     public function customer_service($fromusername, $keywords)
     {
-    	$result = false;
-    	//是否超时
-    	$timeout = false;
+        $result = false;
+        //是否超时
+        $timeout = false;
         //查找用户
         $uid = $this->model->table('wechat_user')->field('uid')->where(array('openid'=>$fromusername))->getOne();
         if($uid){
             $time_list = $this->model->table('wechat_custom_message')->field('send_time')->where(array('uid'=>$uid))->order('send_time desc')->limit(2)->select();
+            logResult(var_export($time_list, true));
             if($time_list[0]['send_time'] - $time_list[1]['send_time'] > 3600 * 2){
-            	$timeout = true;
+                $timeout = true;
             }
 
         }
         
         // 是否处在多客服流程
-        $bein_kefu = $this->model->table('wechat_user')
-            ->field('bein_kefu')
+        $kefu = $this->model->table('wechat_user')
+            ->field('openid, bein_kefu')
             ->where('openid = "' . $fromusername . '"')
-            ->getOne();
-        if ($keywords == 'kefu' || (! empty($bein_kefu) && $keywords != 'ko#kefu') || !$timeout) {
-            $rs = $this->model->table('wechat_extend')
-                ->field('config')
-                ->where('command = "kefu" and enable = 1 and wechat_id = ' . $this->wechat_id)
-                ->getOne();
-            if (! empty($rs)) {
-                $config = unserialize($rs);
-                if (empty($bein_kefu)) {
-                    $msg = array(
-                        'touser' => $fromusername,
-                        'msgtype' => 'text',
-                        'text' => array(
-                            'content' => '欢迎进入多客服系统，输入ko#kefu退出客服系统'
-                        )
-                    );
-                    $this->weObj->sendCustomMessage($msg);
-                    $this->model->table('wechat_user')
-                        ->data('bein_kefu = 1')
-                        ->where('openid = "' . $fromusername . '"')
-                        ->update();
-					//记录用户操作信息
-					$this->record_msg($fromusername, $msg['text']['content'], 1);
-                } else {
-                    // 在线客服列表
-                    $online_list = $this->weObj->getCustomServiceOnlineKFlist();
-                    if ($online_list['kf_online_list']) {
-                        foreach ($online_list['kf_online_list'] as $key => $val) {
-                            if ($config['customer'] == $val['kf_account'] && $val['status'] > 0 && $val['accepted_case'] < $val['auto_accept']) {
-                                $customer = $config['customer'];
-                            } else {
-                                $customer = '';
+            ->find();
+        if($kefu){
+            if ($keywords == 'kefu' || (! empty($kefu['bein_kefu']) && !$timeout)) {
+                $rs = $this->model->table('wechat_extend')
+                    ->field('config')
+                    ->where('command = "kefu" and enable = 1 and wechat_id = ' . $this->wechat_id)
+                    ->getOne();
+                if (! empty($rs)) {
+                    $config = unserialize($rs);
+                    if (empty($kefu['bein_kefu'])) {
+                        $msg = array(
+                            'touser' => $fromusername,
+                            'msgtype' => 'text',
+                            'text' => array(
+                                'content' => '欢迎进入多客服系统'
+                            )
+                        );
+                        $this->weObj->sendCustomMessage($msg);
+                        $this->model->table('wechat_user')
+                            ->data('bein_kefu = 1')
+                            ->where('openid = "' . $fromusername . '"')
+                            ->update();
+                        //记录用户操作信息
+                        $this->record_msg($fromusername, $msg['text']['content'], 1);
+                    } else {
+                        // 在线客服列表
+                        $online_list = $this->weObj->getCustomServiceOnlineKFlist();
+                        if ($online_list['kf_online_list']) {
+                            foreach ($online_list['kf_online_list'] as $key => $val) {
+                                if ($config['customer'] == $val['kf_account'] && $val['status'] > 0 && $val['accepted_case'] < $val['auto_accept']) {
+                                    $customer = $config['customer'];
+                                } else {
+                                    $customer = '';
+                                }
                             }
                         }
+                        // 转发客服消息
+                        $this->weObj->transfer_customer_service($customer)->reply();
                     }
-                    // 转发客服消息
-                    $this->weObj->transfer_customer_service($customer)->reply();
+                    $result = true;
                 }
+            } elseif (! empty($kefu['bein_kefu']) && $timeout) {
+                $msg = array(
+                    'touser' => $fromusername,
+                    'msgtype' => 'text',
+                    'text' => array(
+                        'content' => '您已退出多客服系统'
+                    )
+                );
+                $this->weObj->sendCustomMessage($msg);
+                $this->model->table('wechat_user')
+                    ->data('bein_kefu = 0')
+                    ->where('openid = "' . $fromusername . '"')
+                    ->update();
+                //记录用户操作信息
+                $this->record_msg($fromusername, $msg['text']['content'], 1);
                 $result = true;
             }
-        } elseif ($timeout || ($keywords == 'ko#kefu' && ! empty($bein_kefu))) {
-            $msg = array(
-                'touser' => $fromusername,
-                'msgtype' => 'text',
-                'text' => array(
-                    'content' => '您已退出多客服系统'
-                )
-            );
-            $this->weObj->sendCustomMessage($msg);
-            $this->model->table('wechat_user')
-                ->data('bein_kefu = 0')
-                ->where('openid = "' . $fromusername . '"')
-                ->update();
-			//记录用户操作信息
-			$this->record_msg($fromusername, $msg['text']['content'], 1);
-            $result = true;
         }
+        
         return $result;
     }
 
@@ -629,7 +633,7 @@ class WechatController extends CommonController
             // 微信通验证
             $weObj = new Wechat($config);
             // 微信浏览器浏览
-			$flag = I('get.flag');
+            $flag = I('get.flag');
             if (self::is_wechat_browser() && $_SESSION['user_id'] === 0 && $flag == 'oauth') {
                 if (! isset($_SESSION['redirect_url'])) {
                     session('redirect_url', __HOST__ . $_SERVER['REQUEST_URI']);
@@ -787,25 +791,25 @@ class WechatController extends CommonController
         
         session('openid', $userinfo['openid']);
     }
-	
-	/**
+    
+    /**
      * 记录用户操作信息
      */
-	 public function record_msg($fromusername, $keywords, $iswechat = 0){
-		$uid = $this->model->table('wechat_user')->field('uid')->where(array('openid'=>$fromusername))->getOne();
-		if($uid){
-			$data['uid'] = $uid;
-			$data['msg'] = $keywords;
-			$data['send_time'] = time();
-			//是公众号回复
-			if($iswechat){
-				$data['iswechat'] = 1;
-			}
-			$this->model->table('wechat_custom_message')
+     public function record_msg($fromusername, $keywords, $iswechat = 0){
+        $uid = $this->model->table('wechat_user')->field('uid')->where(array('openid'=>$fromusername))->getOne();
+        if($uid){
+            $data['uid'] = $uid;
+            $data['msg'] = $keywords;
+            $data['send_time'] = time();
+            //是公众号回复
+            if($iswechat){
+                $data['iswechat'] = 1;
+            }
+            $this->model->table('wechat_custom_message')
                 ->data($data)
                 ->insert();
-		}
-	 }
+        }
+     }
 
     /**
      * 检查是否是微信浏览器访问
