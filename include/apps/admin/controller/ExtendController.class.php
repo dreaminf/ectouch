@@ -86,13 +86,32 @@ class ExtendController extends AdminController
             // 数据库是否存在该数据
             $rs = $this->model->table('wechat_extend')
                 ->field('name, config, enable')
-                ->where('command = "' . $data['command'] . '" and enable = 1 and wechat_id = ' . session('wechat_id'))
+                ->where('command = "' . $data['command'] . '" and wechat_id = ' . session('wechat_id'))
                 ->find();
             if (! empty($rs)) {
                 // 已安装
-                if (empty($handler)) {
+                if (empty($handler) && !empty($rs['enable'])) {
                     $this->message('插件已安装', NULL, 'error');
                 } else {
+	                //缺少素材
+	                if(empty($cfg_value['media_id'])){
+	                	$media_id = $this->model->table('wechat_media')->field('id')->where('command = "'.$this->plugin_name.'"')->getOne();
+	                	if($media_id){
+	                		$cfg_value['media_id'] = $media_id;
+	                	}
+	                	else{
+							//安装sql(暂时只提供素材数据表)
+			                $sql_file = ADDONS_PATH . $this->plugin_type . '/' . $this->plugin_name . '/install.sql';
+			                if(file_exists($sql_file)){
+			                    //添加素材
+			                    $sql = file_get_contents($sql_file);
+			                    $sql = str_replace(array('ecs_wechat_media', '(0', 'http://', 'view/images'), array($this->model->pre.'wechat_media', '('.session('wechat_id'), __HOST__.url('default/wechat/plugin_show', array('name'=>$this->plugin_name, 'flag'=>'oauth')), 'plugins/'. $this->plugin_type . '/' . $this->plugin_name.'/view/images'), $sql);
+			                    $this->model->query($sql);
+			                    //获取素材id
+			                    $cfg_value['media_id'] = $this->model->table('wechat_media')->field('id')->where('command = "'.$this->plugin_name.'"')->getOne();
+			                }
+	                	}
+	                }
                     $data['config'] = serialize($cfg_value);
                     $data['enable'] = 1;
                     $this->model->table('wechat_extend')
@@ -124,7 +143,7 @@ class ExtendController extends AdminController
         if (! empty($handler)) {
             // 获取配置信息
             $info = $this->model->table('wechat_extend')
-                ->field('name, keywords, command, config, enable')
+                ->field('name, keywords, command, config, enable, author, website')
                 ->where('command = "' . $this->plugin_name . '" and enable = 1 and wechat_id = ' . session('wechat_id'))
                 ->find();
             // 修改页面显示
