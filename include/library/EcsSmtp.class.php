@@ -63,7 +63,7 @@ class EcsSmtp {
 
     function connect($params = array()) {
         if (!isset($this->status)) {
-            $obj = new smtp($params);
+            $obj = new EcsSmtp($params);
 
             if ($obj->connect()) {
                 $obj->status = SMTP_STATUS_CONNECTED;
