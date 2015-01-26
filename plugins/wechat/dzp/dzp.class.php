@@ -227,7 +227,7 @@ class dzp extends PluginWechatController
             }
             // 超过次数
 			$num = model('Base')->model->table('wechat_prize')
-				->where('openid = "' . $openid . '" and dateline between "' . $starttime . '" and "' . $endtime . '"')
+				->where('openid = "' . $openid . '" and activity_type = "'.$this->plugin_name.'" and dateline between "' . $starttime . '" and "' . $endtime . '"')
 				->count();
 			if ($num <= 0) {
 				$num = 1;
