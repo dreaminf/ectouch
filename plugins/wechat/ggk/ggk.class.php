@@ -138,7 +138,7 @@ class ggk extends PluginWechatController
         // 用户抽奖剩余的次数
         $openid = session('openid');
         $count = model('Base')->model->table('wechat_prize')
-            ->where('openid = "' . $openid . '" and dateline between "' . $starttime . '" and "' . $endtime . '"')
+            ->where('openid = "' . $openid . '"  and activity_type = "'.$this->plugin_name.'" and dateline between "' . $starttime . '" and "' . $endtime . '"')
             ->count();
         $config['prize_num'] = ($config['prize_num'] - $count) < 0 ? 0 : $config['prize_num'] - $count;
         // 中奖记录
