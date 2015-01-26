@@ -350,7 +350,7 @@ class WechatController extends AdminController
             ->order('subscribe_time desc')
             ->count();
         $this->assign('page', $this->pageShow($total));
-        $sql = 'SELECT u.*, g.name FROM ' . $this->model->pre . 'wechat_user u LEFT JOIN ' . $this->model->pre . 'wechat_user_group g ON u.group_id = g.group_id where u.subscribe = 1 and u.wechat_id = ' . $this->wechat_id . ' group by u.uid order by u.subscribe_time desc limit ' . $offset;
+        $sql = 'SELECT u.*, g.name, us.user_name FROM ' . $this->model->pre . 'wechat_user u LEFT JOIN ' . $this->model->pre . 'wechat_user_group g ON u.group_id = g.group_id LEFT JOIN '.$this->model->pre.'users us ON us.user_id = u.ect_uid where u.subscribe = 1 and u.wechat_id = ' . $this->wechat_id . ' group by u.uid order by u.subscribe_time desc limit ' . $offset;
         $list = $this->model->query($sql);
         if (empty($list)) {
             $list = array();
@@ -395,7 +395,7 @@ class WechatController extends AdminController
             ->order('uid, subscribe_time desc')
             ->count();
         $this->assign('page', $this->pageShow($total));
-        $sql1 = 'SELECT u.*, g.name FROM ' . $this->model->pre . 'wechat_user u LEFT JOIN ' . $this->model->pre . 'wechat_user_group g ON u.group_id = g.group_id where u.subscribe = 1 and u.wechat_id = ' . $this->wechat_id . $where . ' group by u.uid order by u.subscribe_time desc limit ' . $offset;
+        $sql1 = 'SELECT u.*, g.name, us.user_name FROM ' . $this->model->pre . 'wechat_user u LEFT JOIN ' . $this->model->pre . 'wechat_user_group g ON u.group_id = g.group_id LEFT JOIN '.$this->model->pre.'users us ON us.user_id = u.ect_uid where u.subscribe = 1 and u.wechat_id = ' . $this->wechat_id . $where . ' group by u.uid order by u.subscribe_time desc limit ' . $offset;
         $list = $this->model->query($sql1);
         
         // 分组

@@ -26,6 +26,7 @@
     					<th class="text-center">{$lang['sub_nickname']}</th>
     					<th class="text-center">{$lang['sub_province']}</th>
     					<th class="text-center">{$lang['sub_time']}</th>
+						<th class="text-center">{$lang['sub_binduser']}</th>
     					<th class="text-center" width="10%">{$lang['handler']}</th>
     				</tr>
     				{loop $list $key $val}
@@ -35,6 +36,7 @@
     					<td class="text-center">{$val['nickname']}({if $val['sex'] == 1}男{elseif $val['sex'] == 0}女{else}{/if})<br />{$val['name']}</td>
     					<td class="text-center">{$val['province']} - {$val['city']}</td>
     					<td class="text-center">{date('Y-m-d H:i:s', $val['subscribe_time'])}</td>
+						<td class="text-center">{if $val['user_name']}{$val['user_name']}{else}暂未绑定{/if}</td>
     					<td class="text-center">
     						<a href="{url('custom_message_list', array('uid'=>$val['uid']))}" class="btn btn-lg" title="{$lang['custom_message_list']}"><span class="glyphicon glyphicon-eye-open"> </span></a>
     						<a href="{url('send_custom_message', array('uid'=>$val['uid']))}" class="btn btn-lg fancybox fancybox.iframe" title="{$lang['send_custom_message']}"><span class="glyphicon glyphicon-comment"> </span></a>

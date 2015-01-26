@@ -68,6 +68,7 @@ $_LANG['message_time'] = '发送时间';
 $_LANG['button_send'] = '发送';
 $_LANG['select_openid'] = '请选择微信用户';
 $_LANG['sub_help1'] = '只有48小时内给公众号发送过信息的粉丝才能接收到信息';
+$_LANG['sub_binduser'] = '绑定用户';
 //分组
 $_LANG['group_sys'] = '同步分组信息';
 $_LANG['group_title'] = '分组管理';

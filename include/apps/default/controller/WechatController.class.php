@@ -516,6 +516,8 @@ class WechatController extends CommonController
      */
     public function customer_service($fromusername, $keywords)
     {
+        /*$kfevent = $this->weObj->getRevKFClose();
+        logResult(var_export($kfevent, true));*/
         $result = false;
         //是否超时
         $timeout = false;
@@ -523,7 +525,6 @@ class WechatController extends CommonController
         $uid = $this->model->table('wechat_user')->field('uid')->where(array('openid'=>$fromusername))->getOne();
         if($uid){
             $time_list = $this->model->table('wechat_custom_message')->field('send_time')->where(array('uid'=>$uid))->order('send_time desc')->limit(2)->select();
-            logResult(var_export($time_list, true));
             if($time_list[0]['send_time'] - $time_list[1]['send_time'] > 3600 * 2){
                 $timeout = true;
             }
