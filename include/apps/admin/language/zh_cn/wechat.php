@@ -122,4 +122,5 @@ $_LANG['share_account'] = '现金分成';
 $_LANG['scan_num'] = '扫描量';
 $_LANG['expire_seconds'] = '有效时间';
 $_LANG['share_help'] = '不填则为无限制';
-$_LANG['no_limit'] = '无限制';
+$_LANG['interactive_user'] = '交互用户';
+$_LANG['official'] = '官方';
