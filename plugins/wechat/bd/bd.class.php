@@ -59,9 +59,6 @@ class bd extends PluginWechatController
     public function show($fromusername, $info)
     {
         $articles = array('type'=>'text', 'content'=>'暂时不能绑定');
-        //微信用户是否已绑定
-        $ect_uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where(array('openid'=>$fromusername))->getOne();
-
         $media = array();
         $config = unserialize($info['config']);
         // 素材
@@ -76,20 +73,29 @@ class bd extends PluginWechatController
             }
         }
         if (! empty($media)) {
-            $articles = array();
-            // 数据
-            $articles['type'] = 'news';
-            $articles['content'][0]['Title'] = $media['title'];
-            $articles['content'][0]['Description'] = $media['content'];
-            // 不是远程图片
-            if (! preg_match('/(http:|https:)/is', $media['file'])) {
-                $articles['content'][0]['PicUrl'] = __URL__ . '/' . $media['file'];
-            } else {
-                $articles['content'][0]['PicUrl'] = $media['file'];
+            //微信用户是否已绑定
+            $sql = 'SELECT u.user_name FROM '.model('Base')->model->pre.'wechat_user w LEFT JOIN '.model('Base')->model->pre.'users u ON w.ect_uid = u.user_id where w.openid = "'.$fromusername.'"';
+            $user_name = model('Base')->model->query($sql);
+            if($user_name){
+                $articles['content'] = '您已绑定过用户:'.$user_name[0]['user_name'].'。重新绑定请点击<a href="'.html_out($media['link']).'">重新绑定</a>';
             }
-            $articles['content'][0]['Url'] = html_out($media['link']);
+            else{
+                $articles = array();
+                // 数据
+                $articles['type'] = 'news';
+                $articles['content'][0]['Title'] = $media['title'];
+                $articles['content'][0]['Description'] = $media['content'];
+                // 不是远程图片
+                if (! preg_match('/(http:|https:)/is', $media['file'])) {
+                    $articles['content'][0]['PicUrl'] = __URL__ . '/' . $media['file'];
+                } else {
+                    $articles['content'][0]['PicUrl'] = $media['file'];
+                }
+                $articles['content'][0]['Url'] = html_out($media['link']);
+            }
             // 积分赠送
             $this->give_point($fromusername, $info);
+            
         }
         return $articles;
     }
