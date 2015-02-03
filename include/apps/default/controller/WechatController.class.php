@@ -53,6 +53,7 @@ class WechatController extends CommonController
         // 事件类型
         $type = $this->weObj->getRev()->getRevType();
         $wedata = $this->weObj->getRev()->getRevData();
+        logResult(var_export($wedata, true));
         $keywords = '';
         if ($type == Wechat::MSGTYPE_TEXT) {
             $keywords = $wedata['Content'];
@@ -156,7 +157,7 @@ class WechatController extends CommonController
             if (empty($rs)) {
                 $ect_uid = 0;
                 //查看公众号是否绑定
-                if($info['unionid']){
+                if(isset($info['unionid'])){
                     $ect_uid = $this->model->table('wechat_user')->field('ect_uid')->where(array('unionid'=>$info['unionid']))->getOne();
                 }
                 //用户未绑定
@@ -231,17 +232,23 @@ class WechatController extends CommonController
                 if (! empty($content)) {
                     $bonus_msg = $content['content'];
                 }
-                // 微信端发送消息
-                $msg = array(
-                    'touser' => $openid,
-                    'msgtype' => 'text',
-                    'text' => array(
-                        'content' => $template . "\r\n" . $bonus_msg
-                    )
-                );
-                $this->weObj->sendCustomMessage($msg);
-                //记录用户操作信息
-                $this->record_msg($openid, $template . $bonus_msg, 1);
+                if(!empty($template) || !empty($bonus_msg)){
+                    // 微信端发送消息
+                    $msg = array(
+                        'touser' => $openid,
+                        'msgtype' => 'text',
+                        'text' => array(
+                            'content' => $template . "\r\n" . $bonus_msg
+                        )
+                    );
+                    if($msg['content']){
+
+                    }
+                    $this->weObj->sendCustomMessage($msg);
+
+                    //记录用户操作信息
+                    $this->record_msg($openid, $template . $bonus_msg, 1);
+                }
             } else {
                 $info['subscribe'] = 1;
                 $this->model->table('wechat_user')
@@ -533,66 +540,44 @@ class WechatController extends CommonController
         
         // 是否处在多客服流程
         $kefu = $this->model->table('wechat_user')
-            ->field('openid, bein_kefu')
+            ->field('openid')
             ->where('openid = "' . $fromusername . '"')
-            ->find();
+            ->getOne();
         if($kefu){
-            if ($keywords == 'kefu' || (! empty($kefu['bein_kefu']) && !$timeout && $keywords != 'ko#kefu')) {
+            if ($keywords == 'kefu') {
                 $rs = $this->model->table('wechat_extend')
                     ->field('config')
                     ->where('command = "kefu" and enable = 1 and wechat_id = ' . $this->wechat_id)
                     ->getOne();
                 if (! empty($rs)) {
                     $config = unserialize($rs);
-                    if (empty($kefu['bein_kefu'])) {
-                        $msg = array(
-                            'touser' => $fromusername,
-                            'msgtype' => 'text',
-                            'text' => array(
-                                'content' => '欢迎进入多客服系统'
-                            )
-                        );
-                        $this->weObj->sendCustomMessage($msg);
-                        $this->model->table('wechat_user')
-                            ->data('bein_kefu = 1')
-                            ->where('openid = "' . $fromusername . '"')
-                            ->update();
-                        //记录用户操作信息
-                        $this->record_msg($fromusername, $msg['text']['content'], 1);
-                    } else {
-                        // 在线客服列表
-                        $online_list = $this->weObj->getCustomServiceOnlineKFlist();
-                        if ($online_list['kf_online_list']) {
-                            foreach ($online_list['kf_online_list'] as $key => $val) {
-                                if ($config['customer'] == $val['kf_account'] && $val['status'] > 0 && $val['accepted_case'] < $val['auto_accept']) {
-                                    $customer = $config['customer'];
-                                } else {
-                                    $customer = '';
-                                }
+                    $msg = array(
+                        'touser' => $fromusername,
+                        'msgtype' => 'text',
+                        'text' => array(
+                            'content' => '欢迎进入多客服系统'
+                        )
+                    );
+                    $this->weObj->sendCustomMessage($msg);
+                    //记录用户操作信息
+                    $this->record_msg($fromusername, $msg['text']['content'], 1);
+
+                    // 在线客服列表
+                    $online_list = $this->weObj->getCustomServiceOnlineKFlist();
+                    if ($online_list['kf_online_list']) {
+                        foreach ($online_list['kf_online_list'] as $key => $val) {
+                            if ($config['customer'] == $val['kf_account'] && $val['status'] > 0 && $val['accepted_case'] < $val['auto_accept']) {
+                                $customer = $config['customer'];
+                            } else {
+                                $customer = '';
                             }
                         }
-                        // 转发客服消息
-                        $this->weObj->transfer_customer_service($customer)->reply();
                     }
+                    // 转发客服消息
+                    $this->weObj->transfer_customer_service($customer)->reply();
                     $result = true;
                 }
-            } elseif (! empty($kefu['bein_kefu']) && ($timeout || $keywords == 'ko#kefu')) {
-                $msg = array(
-                    'touser' => $fromusername,
-                    'msgtype' => 'text',
-                    'text' => array(
-                        'content' => '您已退出多客服系统'
-                    )
-                );
-                $this->weObj->sendCustomMessage($msg);
-                $this->model->table('wechat_user')
-                    ->data('bein_kefu = 0')
-                    ->where('openid = "' . $fromusername . '"')
-                    ->update();
-                //记录用户操作信息
-                $this->record_msg($fromusername, $msg['text']['content'], 1);
-                $result = true;
-            }
+            } 
         }
         
         return $result;

@@ -93,6 +93,7 @@ class Wechat
 	const GROUP_CREATE_URL='/groups/create?';
 	const GROUP_UPDATE_URL='/groups/update?';
 	const GROUP_MEMBER_UPDATE_URL='/groups/members/update?';
+	const GROUP_MEMBER_BATCHUPDATE_URL='/groups/members/batchupdate?';
 	const CUSTOM_SEND_URL='/message/custom/send?';
 	const MEDIA_UPLOADNEWS_URL = '/media/uploadnews?';
 	const MASS_SEND_URL = '/message/mass/send?';
@@ -1721,17 +1722,18 @@ class Wechat
 
 	/**
 	 * 创建二维码ticket
-	 * @param int $scene_id 自定义追踪id
-	 * @param int $type 0:临时二维码；1:永久二维码(此时expire参数无效)
+	 * @param int|string $scene_id 自定义追踪id,临时二维码只能用数值型
+	 * @param int $type 0:临时二维码；1:永久二维码(此时expire参数无效)；2:永久二维码(此时expire参数无效)
 	 * @param int $expire 临时二维码有效期，最大为1800秒
 	 * @return array('ticket'=>'qrcode字串','expire_seconds'=>1800,'url'=>'二维码图片解析后的地址')
 	 */
 	public function getQRCode($scene_id,$type=0,$expire=1800){
 		if (!$this->access_token && !$this->checkAuth()) return false;
+		$type = ($type && is_string($scene_id))?2:$type;
 		$data = array(
-			'action_name'=>$type?"QR_LIMIT_SCENE":"QR_SCENE",
+			'action_name'=>$type?($type == 2?"QR_LIMIT_STR_SCENE":"QR_LIMIT_SCENE"):"QR_SCENE",
 			'expire_seconds'=>$expire,
-			'action_info'=>array('scene'=>array('scene_id'=>$scene_id))
+			'action_info'=>array('scene'=>($type == 2?array('scene_str'=>$scene_id):array('scene_id'=>$scene_id)))
 		);
 		if ($type == 1) {
 			unset($data['expire_seconds']);
@@ -1800,7 +1802,7 @@ class Wechat
             'begin_date'=>$begin_date,
             'end_date'=>$end_date?$end_date:$begin_date
 	    );
-	    $result = $this->http_post(self::API_URL_PREFIX.self::$DATACUBE_URL_ARR[$type][$subtype].'access_token='.$this->access_token,self::json_encode($data));
+	    $result = $this->http_post(self::API_BASE_URL_PREFIX.self::$DATACUBE_URL_ARR[$type][$subtype].'access_token='.$this->access_token,self::json_encode($data));
 	    if ($result)
 	    {
 	        $json = json_decode($result,true);
@@ -1988,6 +1990,32 @@ class Wechat
 				'to_groupid'=>$groupid
 		);
 		$result = $this->http_post(self::API_URL_PREFIX.self::GROUP_MEMBER_UPDATE_URL.'access_token='.$this->access_token,self::json_encode($data));
+		if ($result)
+		{
+			$json = json_decode($result,true);
+			if (!$json || !empty($json['errcode'])) {
+				$this->errCode = $json['errcode'];
+				$this->errMsg = $json['errmsg'];
+				return false;
+			}
+			return $json;
+		}
+		return false;
+	}
+
+	/**
+	 * 批量移动用户分组
+	 * @param int $groupid 分组id
+	 * @param string $openid_list 用户openid数组,一次不能超过50个
+	 * @return boolean|array
+	 */
+	public function batchUpdateGroupMembers($groupid,$openid_list){
+		if (!$this->access_token && !$this->checkAuth()) return false;
+		$data = array(
+				'openid_list'=>$openid_list,
+				'to_groupid'=>$groupid
+		);
+		$result = $this->http_post(self::API_URL_PREFIX.self::GROUP_MEMBER_BATCHUPDATE_URL.'access_token='.$this->access_token,self::json_encode($data));
 		if ($result)
 		{
 			$json = json_decode($result,true);
@@ -2831,7 +2859,7 @@ class Wechat
      * 自定义 code（use_custom_code 为 true）的优惠券，在 code 被核销时，必须调用此接口。
      *
      * @param string $code 要消耗的序列号
-     * @param string $code_id 要消耗序列号所述的 card_id，创建卡券时use_custom_code 填写 true 时必填。
+     * @param string $card_id 要消耗序列号所述的 card_id，创建卡券时use_custom_code 填写 true 时必填。
      * @return boolean|array
      * {
      *  "errcode":0,
@@ -2957,14 +2985,14 @@ class Wechat
      * 为确保转赠后的安全性，微信允许自定义code的商户对已下发的code进行更改。
      * 注：为避免用户疑惑，建议仅在发生转赠行为后（发生转赠后，微信会通过事件推送的方式告知商户被转赠的卡券code）对用户的code进行更改。
      * @param string $code      卡券的 code 编码
-     * @param string $code_id   卡券 ID
+     * @param string $card_id   卡券 ID
      * @param string $new_code  新的卡券 code 编码
      * @return boolean
      */
-    public function updateCardCode($code,$code_id,$new_code) {
+    public function updateCardCode($code,$card_id,$new_code) {
         $data = array(
             'code' => $code,
-            'code' => $code_id,
+            'card_id' => $card_id,
             'new_code' => $new_code,
         );
         if (!$this->access_token && !$this->checkAuth()) return false;
@@ -2985,15 +3013,15 @@ class Wechat
      * 设置卡券失效
      * 设置卡券失效的操作不可逆
      * @param string $code 需要设置为失效的 code
-     * @param string $code 自定义 code 的卡券必填。非自定义 code 的卡券不填。
+     * @param string $card_id 自定义 code 的卡券必填。非自定义 code 的卡券不填。
      * @return boolean
      */
-    public function unavailableCardCode($code,$code_id='') {
+    public function unavailableCardCode($code,$card_id='') {
         $data = array(
             'code' => $code,
         );
-        if ($code_id)
-            $data['code_id'] = $code_id;
+        if ($card_id)
+            $data['card_id'] = $card_id;
         if (!$this->access_token && !$this->checkAuth()) return false;
         $result = $this->http_post(self::API_BASE_URL_PREFIX . self::CARD_CODE_UNAVAILABLE . 'access_token=' . $this->access_token, self::json_encode($data));
         if ($result) {
