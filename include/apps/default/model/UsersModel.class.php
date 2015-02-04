@@ -1770,10 +1770,8 @@ class UsersModel extends BaseModel {
      * @return type 
      */
     function get_one_user($aite_id) {
-        $sql = 'SELECT count(*) as count FROM ' . $this->pre . 'touch_user_info t LEFT JOIN ' . $this->pre .
-                'users u ON t.user_id = u.user_id  WHERE t.aite_id = "' . $aite_id . '" ';
-        $res = $this->row($sql);
-        return $res['count'];
+        $sql = 'SELECT user_name FROM ' . $this->pre . 'users WHERE aite_id = "' . $aite_id . '" ';
+        return $this->row($sql);
     }
 
     /**
