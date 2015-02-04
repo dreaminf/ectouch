@@ -1782,18 +1782,16 @@ class UsersModel extends BaseModel {
      * @return boolean
      */
     function third_reg($info) {
-        $this->table = 'users';
-        $data['user_name'] = $info['user_name'];
-        $data['sex'] = $info['sex'];
-        $data['reg_time'] = gmtime();
-        $data['user_rank'] = $info['rank_id'];
-        $data['email'] = $info['email'];
-        $data['is_validated'] = 1;
-        if ($this->insert($data)) {
-            $id = mysql_insert_id();
-
+        $username = $info['user_name'];
+        $password = time();
+        $email = $info['email'];
+        if ($this->register($username, $password, $email) !== false) {
+            $uid = $_SESSION['user_id'];
+            $sql = "update " . $this->pre . "users set aite_id='".$info['aite_id']."' where user_id='$uid'";
+            $this->query($sql);
+            // 更新附表
             $this->table = "touch_user_info";
-            $touch_data['user_id'] = $id;
+            $touch_data['user_id'] = $uid;
             $touch_data['aite_id'] = $info['aite_id'];
             $this->insert($touch_data);
             return true;
