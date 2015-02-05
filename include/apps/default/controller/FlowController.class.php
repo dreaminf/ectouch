@@ -21,6 +21,7 @@ class FlowController extends CommonController {
      * 购物车列表
      */
     public function index() {
+		$_SESSION['flow_type'] = CART_GENERAL_GOODS;
         /* 如果是一步购物，跳到结算中心 */
         if (C('one_step_buy') == '1') {
             ecs_header("Location: " . url('flow/checkout') . "\n");
