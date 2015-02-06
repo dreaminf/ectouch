@@ -898,7 +898,7 @@ class WechatController extends AdminController
         }
         if (empty($rs['qrcode_url'])) {
             // 获取二维码ticket
-            $ticket = $this->weObj->getQRCode($rs['scene_id'], $rs['type'], $rs['expire_seconds']);
+            $ticket = $this->weObj->getQRCode((int)$rs['scene_id'], $rs['type'], $rs['expire_seconds']);
             if (empty($ticket)) {
                 exit(json_encode(array(
                     'status' => 0,
