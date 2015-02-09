@@ -1737,7 +1737,7 @@ function exception_handler($errno, $errstr, $errfile, $errline) {
 function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods', $del = false) {
     $url = empty($image) ? C('no_picture') : $image;
     $base_url = substr(C('SHOP_URL'), -1) == '/' ? C('SHOP_URL') : C('SHOP_URL') . '/';
-    $url = strtolower(substr($url, 0, '4')) == 'http' ? $url : $base_url . $url;
+    $url = strtolower(substr($url, 0, '4')) == 'http' ? $url : (empty($image)? $url: $base_url . $url);
     return $url;
 }
 
