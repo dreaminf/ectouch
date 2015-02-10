@@ -1402,14 +1402,6 @@ class UserController extends CommonController {
             $this->assign('enabled_captcha', 1);
             $this->assign('rand', mt_rand());
         }
-		//微信浏览器显示授权登录
-		if(class_exists('WechatController')){
-            if (method_exists('WechatController', 'is_wechat_browser')) {
-                if(WechatController::is_wechat_browser()){
-					$this->assign('oauth_url', url('user/index', array('flag'=>'oauth')));
-				}
-            }
-        }
 		
         $this->assign('step', I('get.step'));
         $this->assign('anonymous_buy', C('anonymous_buy'));

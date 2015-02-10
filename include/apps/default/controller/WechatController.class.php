@@ -608,7 +608,7 @@ class WechatController extends CommonController
     {
         // 默认公众号信息
         $wxinfo = model('Base')->model->table('wechat')
-            ->field('id, token, appid, appsecret, oauth_redirecturi, type')
+            ->field('id, token, appid, appsecret, oauth_redirecturi, type, oauth_status')
             ->where('default_wx = 1 and status = 1')
             ->find();
         if (! empty($wxinfo) && $wxinfo['type'] == 2) {
@@ -620,7 +620,7 @@ class WechatController extends CommonController
             $weObj = new Wechat($config);
             // 微信浏览器浏览
             $flag = I('get.flag');
-            if (self::is_wechat_browser() && $_SESSION['user_id'] === 0 && $flag == 'oauth') {
+            if (self::is_wechat_browser() && $_SESSION['user_id'] === 0 && !empty($wxinfo['oauth_status'])) {
                 if (! isset($_SESSION['redirect_url'])) {
                     session('redirect_url', __HOST__ . $_SERVER['REQUEST_URI']);
                 }

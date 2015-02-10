@@ -33,9 +33,6 @@
   </div>
   </form>
   <p class="ect-padding-lr ect-margin-tb text-right ect-margin-bottom0" style="clear:both">
-  <!-- {if $oauth_url} -->
-	<a href="{$oauth_url}">微信授权登录</a> 
-  <!-- {/if} -->
 	<a href="{:url('user/get_password_phone')}">{$lang.forgot_password}</a>  
 	<a href="{:url('user/register')}">{$lang.free_registered}</a>
   </p>

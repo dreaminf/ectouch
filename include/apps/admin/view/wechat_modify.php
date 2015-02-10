@@ -64,6 +64,21 @@
 			</td>
 		</tr>
 		<tr>
+			<td>开启授权登录</td>
+			<td><div class="col-sm-2 col-lg-2 col-md-2">
+				<div  class="btn-group" data-toggle="buttons">
+					<label class="btn btn-primary {if $data['oauth_status']==1}active{/if}">
+						<input type="radio" name="data[oauth_status]" value="1" {if $data['oauth_status']==1}checked{/if}> {$lang['wechat_open']}
+					</label>
+					<label class="btn btn-primary {if $data['oauth_status']==0}active{/if}">
+						<input type="radio" name="data[oauth_status]" value="0" {if $data['oauth_status']==0}checked{/if}> {$lang['wechat_close']}
+					</label>
+				</div>
+				</div>
+				<p class="help-block">开启之后，微商城会自动进行授权登录，否则不进行授权登录，只提供普通微商城功能。默认开启。</p>
+			</td>
+		</tr>
+		<tr>
 			<td>微信OAuth名称</td>
 			<td><div class="col-sm-4">
 				<input type="text" name="data[oauth_name]" class="form-control" value="{$data['oauth_name']}"> 
