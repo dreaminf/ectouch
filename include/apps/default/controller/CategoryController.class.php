@@ -95,6 +95,7 @@ class CategoryController extends CommonController {
      */
     public function asynclist() {
         $this->parameter();
+		$this->assign('show_marketprice', C('show_marketprice'));
         $asyn_last = intval(I('post.last')) + 1;
         $this->size = I('post.amount');
         $this->page = ($asyn_last > 0) ? ceil($asyn_last / $this->size) : 1;
