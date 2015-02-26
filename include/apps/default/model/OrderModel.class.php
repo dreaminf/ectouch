@@ -54,10 +54,9 @@ class OrderModel extends BaseModel {
      * @return  array   配送方式数组
      */
     function available_payment_list($support_cod, $cod_fee = 0, $is_online = false) {
-        $condition = (is_wechat_browser()) ? " AND pay_code <> 'alipay_wap'":'';
         $sql = 'SELECT pay_id, pay_code, pay_name, pay_fee, pay_desc, pay_config, is_cod' .
                 ' FROM ' . $this->pre .
-                'touch_payment WHERE enabled = 1 '.$condition;
+                'touch_payment WHERE enabled = 1 ';
         if (!$support_cod) {
             $sql .= 'AND is_cod = 0 '; // 如果不支持货到付款
         }
