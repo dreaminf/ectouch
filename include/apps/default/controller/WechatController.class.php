@@ -359,7 +359,7 @@ class WechatController extends CommonController
             // 素材回复
             if (! empty($result[0]['media_id'])) {
                 $mediaInfo = $this->model->table('wechat_media')
-                    ->field('title, content, file, type, file_name, article_id, link')
+                    ->field('id, title, content, file, type, file_name, article_id, link')
                     ->where('id = ' . $result[0]['media_id'])
                     ->find();
                 
@@ -409,20 +409,20 @@ class WechatController extends CommonController
                         $artids = explode(',', $mediaInfo['article_id']);
                         foreach ($artids as $key => $val) {
                             $artinfo = $this->model->table('wechat_media')
-                                ->field('title, file, content, link')
+                                ->field('id, title, file, content, link')
                                 ->where('id = ' . $val)
                                 ->find();
                             $artinfo['content'] = strip_tags(html_out($artinfo['content']));
                             $articles[$key]['Title'] = $artinfo['title'];
                             $articles[$key]['Description'] = $artinfo['content'];
                             $articles[$key]['PicUrl'] = __URL__ . '/' . $artinfo['file'];
-                            $articles[$key]['Url'] = $artinfo['link'];
+                            $articles[$key]['Url'] = empty($artinfo['link']) ? __HOST__ . url('article/wechat_news_info', array('id'=>$artinfo['id'])) : $artinfo['link'];
                         }
                     } else {
                         $articles[0]['Title'] = $mediaInfo['title'];
                         $articles[0]['Description'] = strip_tags(html_out($mediaInfo['content']));
                         $articles[0]['PicUrl'] = __URL__ . '/' . $mediaInfo['file'];
-                        $articles[0]['Url'] = $mediaInfo['link'];
+                        $articles[0]['Url'] = empty($mediaInfo['link']) ? __HOST__ . url('article/wechat_news_info', array('id'=>$mediaInfo['id'])) : $mediaInfo['link'];
                     }
                     // 回复
                     $this->weObj->news($articles)->reply();
