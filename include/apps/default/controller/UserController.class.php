@@ -1134,8 +1134,8 @@ class UserController extends CommonController {
             $goods_attr = join(chr(13) . chr(10), $attr_list);
         }
         $this->assign('goods_attr', $goods_attr);
-        $this->assign('info', model('ClipsBase')->get_goodsinfo($goods_id));
-        $this->display('user_add_booing.dwt');
+        $this->assign('goods', model('ClipsBase')->get_goodsinfo($goods_id));
+        $this->display('user_add_booking.dwt');
     }
 
     /**
@@ -1532,6 +1532,10 @@ class UserController extends CommonController {
 
         $this->assign('title', L('register'));
         $this->assign('back_act', $this->back_act);
+        
+        /* 是否关闭注册 */
+        $this->assign('shop_reg_closed', C('shop_reg_closed'));
+        
         $this->display('user_register.dwt');
     }
 
