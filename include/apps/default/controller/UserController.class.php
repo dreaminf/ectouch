@@ -1428,7 +1428,7 @@ class UserController extends CommonController {
                 $other = array();
 
                 // 验证码检查
-                if (intval(C('captcha')) > 0) {
+                if (intval(C('captcha')) & CAPTCHA_REGISTER) {
                     if (empty($_POST['captcha'])) {
                         show_message(L('invalid_captcha'), L('sign_up'), url('register'), 'error');
                     }
@@ -1517,7 +1517,7 @@ class UserController extends CommonController {
         }
 
         // 验证码相关设置
-        if (intval(C('captcha')) > 0) {
+        if (intval(C('captcha')) & CAPTCHA_REGISTER) {
             $this->assign('enabled_captcha', 1);
             $this->assign('rand', mt_rand());
         }
