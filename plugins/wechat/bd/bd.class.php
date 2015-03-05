@@ -184,6 +184,13 @@ class bd extends PluginWechatController
             }
             $old_uid = session('user_id');
             if ($user->login($data['username'], $data['password'], '')) {
+                $old_pid = model('Base')->model->table('users')->field('parent_id')->where(array('user_id'=>$old_uid))->getOne();
+                $new_pid = model('Base')->model->table('users')->field('parent_id')->where(array('user_id'=>$_SESSION['user_id']))->getOne();
+                if($old_pid != $new_pid){
+                    show_message('绑定失败！为了便于同步数据，绑定的帐号必须属于同一账户推荐注册。', '会员绑定', url('wechat/plugin_show', array(
+                    'name' => $this->plugin_name
+                )));
+                }
                 //绑定
                 model('Base')->model->table('wechat_user')->data('ect_uid = '.session('user_id'))->where('openid = "'.session('openid').'"')->update();
                 model('Users')->update_user_info();
