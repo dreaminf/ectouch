@@ -93,7 +93,7 @@ $(function(){
     });
     
     uploader.on( 'uploadAccept', function(object, ret) {
-        if(ret.file_name){
+        if(ret.file_name && ret.errcode == 0){
             $("#file").val(ret.file);
             $("#file_name").val(ret.file_name);
             $("#size").val(ret.size);

@@ -1359,10 +1359,12 @@ class WechatController extends AdminController
             }
             $result = $this->ectouchUpload('file', 'video');
             if ($result['error'] > 0) {
-                $rs['errcode'] = 1;
-                echo false;
+                $data['errcode'] = 1;
+                $data['errmsg'] = $result['message'];
+                echo json_encode($data);
                 exit();
             }
+            $data['errcode'] = 0;
             $data['file'] = substr($result['message']['file']['savepath'], 2) . $result['message']['file']['savename'];
             $data['file_name'] = $result['message']['file']['name'];
             $data['size'] = $result['message']['file']['size'];
