@@ -237,15 +237,20 @@ class WechatController extends AdminController
         }
         $id = I('get.id');
         $info = array();
+        // 顶级菜单
+    	$top_menu = $this->model->table('wechat_menu')
+        	->where('pid = 0 and wechat_id = ' . $this->wechat_id)
+        	->select();
         if (! empty($id)) {
             $info = $this->model->table('wechat_menu')
                 ->where('id = ' . $id)
                 ->find();
+            // 顶级菜单
+        	$top_menu = $this->model->table('wechat_menu')
+            	->where('id <> '.$id.' and pid = 0 and wechat_id = ' . $this->wechat_id)
+            	->select();
         }
-        // 顶级菜单
-        $top_menu = $this->model->table('wechat_menu')
-            ->where('pid = 0 and wechat_id = ' . $this->wechat_id)
-            ->select();
+        
         $this->assign('top_menu', $top_menu);
         $this->assign('info', $info);
         $this->display();
