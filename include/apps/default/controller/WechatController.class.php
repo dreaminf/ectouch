@@ -242,9 +242,9 @@ class WechatController extends CommonController
                         )
                     );
                     if($msg['content']){
-
+                      $this->weObj->sendCustomMessage($msg);
                     }
-                    $this->weObj->sendCustomMessage($msg);
+                    
 
                     //记录用户操作信息
                     $this->record_msg($openid, $template . $bonus_msg, 1);
