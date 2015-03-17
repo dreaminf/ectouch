@@ -192,7 +192,13 @@ class bd extends PluginWechatController
                 )));
                 }
                 //绑定
-                model('Base')->model->table('wechat_user')->data('ect_uid = '.session('user_id'))->where('openid = "'.session('openid').'"')->update();
+                $unionid = model('Base')->model->table('wechat_user')->field('unionid')->where('openid = "'.session('openid').'"')->getOne();
+                if($unionid){
+                  model('Base')->model->table('wechat_user')->data('ect_uid = '.session('user_id'))->where('unionid = "'.$unionid.'"')->update();
+                }
+                else{
+                  model('Base')->model->table('wechat_user')->data('ect_uid = '.session('user_id'))->where('openid = "'.session('openid').'"')->update();
+                }
                 model('Users')->update_user_info();
                 model('Users')->recalculate_price();
                 //同步用户数据

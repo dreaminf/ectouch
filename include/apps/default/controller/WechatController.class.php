@@ -53,7 +53,7 @@ class WechatController extends CommonController
         // 事件类型
         $type = $this->weObj->getRev()->getRevType();
         $wedata = $this->weObj->getRev()->getRevData();
-        logResult(var_export($wedata, true));
+        //logResult(var_export($wedata, true));
         $keywords = '';
         if ($type == Wechat::MSGTYPE_TEXT) {
             $keywords = $wedata['Content'];
@@ -858,5 +858,37 @@ class WechatController extends CommonController
             $config = array();
         }
         return $config;
+    }
+
+    /**
+     * 获取access_token的接口
+     * @return [type] [description]
+     */
+    public function check_auth(){
+    	$appid = I('get.appid');
+    	$appsecret = I('get.appsecret');
+    	if(empty($appid) || empty($appsecret)){
+    		echo json_encode(array('errmsg'=>'信息不完整，请提供完整信息', 'errcode'=>1));	
+    		exit;
+    	}
+    	$config = $this->model->table('wechat')
+            ->field('token, appid, appsecret')
+            ->where('appid = "' . $appid . '" and appsecret = "'.$appsecret.'" and status = 1')
+            ->find();
+        if(empty($config)){
+        	echo json_encode(array('errmsg'=>'信息错误，请检查提供的信息', 'errcode'=>1));
+        	exit;	
+        }
+
+        $obj = new Wechat($config);
+        $access_token = $obj->checkAuth();
+        if($access_token){
+          echo json_encode(array('access_token'=>$access_token, 'errcode'=>0));
+          exit;	
+        }
+        else{
+          echo json_encode(array('errmsg'=>$obj->errmsg, 'errcode'=>$obj->errcode));	
+          exit;
+        }
     }
 }

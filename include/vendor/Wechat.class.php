@@ -1112,7 +1112,16 @@ class Wechat
 	 */
 	protected function setCache($cachename,$value,$expired){
 		//TODO: set cache implementation
-		return false;
+		$cache_dir = ROOT_PATH . 'data/cache/filecache/';
+		if(!is_dir($cache_dir)){
+			@mkdir($cache_dir, 0755, true);
+		}
+		$file = $cache_dir . $cachename . '.cache';
+		$data = array(
+			'value' => $value,
+			'expired' => time() + $expired
+		);
+		return file_put_contents( $file, serialize($data) ) ? true : false;
 	}
 
 	/**
@@ -1122,7 +1131,19 @@ class Wechat
 	 */
 	protected function getCache($cachename){
 		//TODO: get cache implementation
-		return false;
+		$cache_dir = ROOT_PATH . 'data/cache/filecache/';
+		$file = $cache_dir . $cachename . '.cache';
+		if(!is_file($file)){
+			return false;	
+		}
+		
+		$content = file_get_contents($file);
+		$data = unserialize($content);
+		if (!is_array($data) || !isset($data['value']) || (!empty($data['value']) && $data['expired']<time())) {
+            @unlink($file);
+            return false;
+        }
+        return $data['value'];
 	}
 
 	/**
@@ -1132,7 +1153,12 @@ class Wechat
 	 */
 	protected function removeCache($cachename){
 		//TODO: remove cache implementation
-		return false;
+		$cache_dir = ROOT_PATH . 'data/cache/filecache/';
+		$file = $cache_dir . $cachename . '.cache';
+		if(is_file($file)){
+			@unlink($file);
+		}
+		return true;
 	}
 
 	/**
