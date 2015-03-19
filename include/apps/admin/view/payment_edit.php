@@ -13,16 +13,13 @@
             </div>
           </td>
         </tr>
-        
-        {if $pay['pay_code'] == 'bank'}
         <tr>
-          <td>支付方式描述</td>
+          <td>{$lang['payment_desc']}:</td>
           <td><div class="col-md-4">
-              <textarea name="data[pay_desc]" class="form-control" rows="3">{$pay['pay_desc']}</textarea>
+              <textarea  name="data[pay_desc]" class="form-control input-sm" rows="3" >{$pay['pay_desc']}</textarea>
             </div>
-         </td>
+          </td>
         </tr>
-        {else}
         {loop $pay['pay_config'] $key $vo}
         <tr>
           <td>{$vo['label']}</td>
@@ -68,7 +65,6 @@
         </tr>
         {/if}
         {/loop}
-        {/if}
         <tr>
           <td width="200">{$lang['pay_fee']}</td>
           <td><div class="col-md-4">

@@ -668,7 +668,12 @@ class UserController extends CommonController {
         $order['order_status'] = L('os.' . $order['order_status']);
         $order['pay_status'] = L('ps.' . $order['pay_status']);
         $order['shipping_status'] = L('ss.' . $order['shipping_status']);
-
+        // 如果是银行汇款或货到付款 则显示支付描述
+        $payment = model('Order')->payment_info($order ['pay_id']);
+        if ($payment['pay_code'] == 'bank' || $payment['pay_code'] == 'balance'){
+            $this->assign('pay_desc',$payment['pay_desc']);
+        }
+		
         $this->assign('title', L('order_detail'));
         $this->assign('order', $order);
         $this->assign('goods_list', $goods_list);
@@ -1396,6 +1401,7 @@ class UserController extends CommonController {
         }
         $this->assign('goods_attr', $goods_attr);
         $this->assign('goods', model('ClipsBase')->get_goodsinfo($goods_id));
+	$this->assign('title', L('label_booking'));
         $this->display('user_add_booking.dwt');
     }
 
