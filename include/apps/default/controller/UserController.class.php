@@ -229,30 +229,18 @@ class UserController extends CommonController {
         if (empty($surplus_amount)) {
             $surplus_amount = 0;
         }
-
-        // 获取余额记录
-        $account_log = array();
+        $size = I(C('page_size'), 5);
+        $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
         $where = 'user_id = ' . $this->user_id . ' AND user_money <> 0';
-        $res = $this->model->table('account_log')
-                ->where($where)
-                ->order('log_id DESC')
-                ->select();
-        if (empty($res)) {
-            $res = array();
-        }
-        foreach ($res as $k => $v) {
-            $res[$k]['change_time'] = local_date(C('date_format'), $v['change_time']);
-            $res[$k]['type'] = $v['user_money'] > 0 ? L('account_inc') : L('account_dec');
-            $res[$k]['user_money'] = price_format(abs($v['user_money']), false);
-            $res[$k]['frozen_money'] = price_format(abs($v['frozen_money']), false);
-            $res[$k]['rank_points'] = abs($v['rank_points']);
-            $res[$k]['pay_points'] = abs($v['pay_points']);
-            $res[$k]['short_change_desc'] = sub_str($v['change_desc'], 60);
-            $res[$k]['amount'] = $v['user_money'];
-        }
+        $count = $this->model->table('account_log')->field('COUNT(*)')->where($where)->getOne();
+        $this->pageLimit(url('user/account_detail'), $size);
+        $this->assign('pager', $this->pageShow($count));
+        
+        $account_detail = model('Users')->get_account_detail($this->user_id, $size, ($page-1)*$size);
+        
         $this->assign('title', L('label_user_surplus'));
         $this->assign('surplus_amount', price_format($surplus_amount, false));
-        $this->assign('account_log', $res);
+        $this->assign('account_log', $account_detail);
         $this->display('user_account_detail.dwt');
     }
     
@@ -262,7 +250,7 @@ class UserController extends CommonController {
      */
     public function  account_log(){
     
-        $size = 5;
+        $size = I(C('page_size'), 5);
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
         $count = $this->model->table('user_account')->field('COUNT(*)')->where("user_id = $this->user_id AND process_type ". db_create_in(array(SURPLUS_SAVE, SURPLUS_RETURN)))->getOne();
         $this->pageLimit(url('user/account_log'), $size);

@@ -15,8 +15,9 @@
         </li>
 <!--{/foreach}-->
     </ul>
-    <p class="pull-right count">{$lang.current_surplus}<b class="ect-colory">{$surplus_amount}</b></p>
+    <p class="pull-right count" style="background-color: bisque;">{$lang.current_surplus}<b class="ect-colory">{$surplus_amount}</b></p>
   </div>
+   {include file='library/page.lbi '}
 </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
