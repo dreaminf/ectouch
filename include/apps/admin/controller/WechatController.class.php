@@ -587,6 +587,7 @@ class WechatController extends AdminController
             ->getOne();
         // 分页
         $filter['page'] = '{page}';
+        $filter['uid'] = $uid;
         $offset = $this->pageLimit(url('custom_message_list', $filter), 10);
         $total = $this->model->table('wechat_custom_message')
             ->where('uid = ' . $uid)
@@ -595,7 +596,7 @@ class WechatController extends AdminController
         $list = $this->model->table('wechat_custom_message')
             ->field('msg, send_time, iswechat')
             ->where('uid = ' . $uid)
-            ->order('send_time desc, id desc')
+            ->order('send_time desc, id desc')->limit($offset)
             ->select();
         
         $this->assign('page', $this->pageShow($total));
