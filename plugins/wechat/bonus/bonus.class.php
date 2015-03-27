@@ -69,17 +69,23 @@ class bonus extends PluginWechatController
                 //用户第一次关注赠送红包并且设置了赠送的红包
                 $uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where('openid = "'.$fromusername.'"')->getOne();
                 if(!empty($uid) && !empty($config['bonus'])){
-                    $data['bonus_type_id'] = $config['bonus'];
-                    $data['bonus_sn'] = 0;
-                    $data['user_id'] = $uid;
-                    $data['used_time'] = 0;
-                    $data['order_id'] = 0;
-                    $data['emailed'] = 0;
-                    model('Base')->model->table('user_bonus')->data($data)->insert();
+                    $bonus_num = model('Base')->model->table('user_bonus')->where('user_id = "'.$uid.'"')->count();
+                    if($bonus_num > 0){
+                        $articles['content'] = '红包已经赠送过了，不要重复领取哦！';
+                    }
+                    else{
+                      $data['bonus_type_id'] = $config['bonus'];
+                      $data['bonus_sn'] = 0;
+                      $data['user_id'] = $uid;
+                      $data['used_time'] = 0;
+                      $data['order_id'] = 0;
+                      $data['emailed'] = 0;
+                      model('Base')->model->table('user_bonus')->data($data)->insert();
 
-                    $articles['content'] = '感谢您的关注，赠送您一个红包';
-                    // 积分赠送
-                    $this->give_point($fromusername, $info);
+                      $articles['content'] = '感谢您的关注，赠送您一个红包';
+                      // 积分赠送
+                      $this->give_point($fromusername, $info);
+                    }
                 }
             }
         }
