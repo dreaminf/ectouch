@@ -514,7 +514,7 @@ class UserController extends CommonController {
 		$this->assign('show_asynclist', C('show_asynclist'));
         $count = $this->model->table('order_info')->where('user_id = ' . $this->user_id)->count();
         $filter['page'] = '{page}';
-        $offset = $this->pageLimit(url('order_list', $filter), $size);
+        $offset = $this->pageLimit(url('not_pay_order_list', $filter), $size);
         $offset_page = explode(',', $offset);
         $orders = model('Users')->get_user_orders($this->user_id, $pay, $offset_page[1], $offset_page[0]);
         $this->assign('pay', $pay);
