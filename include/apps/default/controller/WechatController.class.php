@@ -460,7 +460,7 @@ class WechatController extends CommonController
             ->find();
 
         /*if($rs){
-            $key = explode(',', $rs);
+            $key = explode(',', $rs['keywords']);
             if(!in_array($keywords, $key)){
                 return $return;
             }

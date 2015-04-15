@@ -294,6 +294,14 @@ class dzp extends PluginWechatController
                 $data['dateline'] = time();
                 $data['activity_type'] = $this->plugin_name;
                 $id = model('Base')->model->table('wechat_prize')->data($data)->insert();
+                //参与人数增加
+                $extend_cfg = model('Base')->model->table('wechat_extend')->where(array('wechat_id'=>$wxid, 'command'=>$this->plugin_name, 'enable'=>1))->field('config')->getOne();
+                if($extend_cfg){
+                    $cfg_new = unserialize($extend_cfg);
+                }
+                $cfg_new['people_num'] = $cfg_new['people_num'] + 1;
+                $cfg['config'] = serialize($cfg_new);
+                model('Base')->model->table('wechat_extend')->where(array('wechat_id'=>$wxid, 'command'=>$this->plugin_name, 'enable'=>1))->data($cfg)->update();
                 if ($level != 'not' && !empty($id)) {
                     // 获奖链接
                     $rs['link'] = url('wechat/plugin_action', array(

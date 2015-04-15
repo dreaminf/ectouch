@@ -1521,9 +1521,11 @@ class WechatController extends AdminController
     public function mass_message()
     {
         if (IS_POST) {
-            $group_id = I('post.group_id');
+            $group_id = I('post.group_id', '', 'intval');
             $media_id = I('post.media_id');
-            
+            if((empty($group_id) && $group !== 0) || empty($media_id)){
+              $this->message('请选择用户分组或者选择要发送的信息', NULL, 'error');
+            }
             $article = array();
             $article_info = $this->model->table('wechat_media')
                 ->field('id, title, author, file, is_show, digest, content, link, type, article_id')
