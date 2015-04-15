@@ -557,6 +557,15 @@ class FlowController extends CommonController {
                         }
                     }
                 }
+
+                //微信外的浏览器去除微信支付
+                if(class_exists('WechatController')){
+		            if (method_exists('WechatController', 'is_wechat_browser')) {
+		                if(!WechatController::is_wechat_browser() && $payment['pay_code'] == 'wxpay'){
+		                    unset($payment_list [$key]);
+		                }
+		            }
+		        }
             }
         }
         $this->assign('payment_list', $payment_list);
