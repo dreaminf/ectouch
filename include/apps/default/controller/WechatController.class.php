@@ -627,19 +627,42 @@ class WechatController extends CommonController
             // 微信通验证
             $weObj = new Wechat($config);
             // 微信浏览器浏览
-            $flag = I('get.flag');
             if (self::is_wechat_browser() && $_SESSION['user_id'] === 0 && !empty($wxinfo['oauth_status'])) {
                 if (! isset($_SESSION['redirect_url'])) {
                     session('redirect_url', __HOST__ . $_SERVER['REQUEST_URI']);
                 }
-                $url = $weObj->getOauthRedirect($wxinfo['oauth_redirecturi'], 1);
+                //预留充外部访问并跳转到指定链接带上openid参数接口，链接形式http://www.xxx.com/mobile/?c=wechat&a=do_oauth&isout=1&returnurl=xxx
+                $state = '';
+                if(!isset($_GET['state'])){
+                    if(isset($_GET['isout']) && !empty($_GET['isout'])){
+                        $state = isset($_GET['returnurl']) && !empty($_GET['returnurl']) ? $_GET['returnurl'] : urlencode(__URL__);
+                    }
+                    else{
+                        $state = urlencode( __HOST__ . $_SERVER['REQUEST_URI']);    
+                    }
+                }
+                $url = $weObj->getOauthRedirect($wxinfo['oauth_redirecturi'], $state);
                 if (isset($_GET['code']) && $_GET['code'] != 'authdeny') {
                     $token = $weObj->getOauthAccessToken();
                     if ($token) {
                         $userinfo = $weObj->getOauthUserinfo($token['access_token'], $token['openid']);
                         self::update_weixin_user($userinfo, $wxinfo['id'], $weObj);
-                        if (! empty($_SESSION['redirect_url'])) {
+                        /*if (! empty($_SESSION['redirect_url'])) {
                             $redirect_url = session('redirect_url');
+                            header('Location:' . $redirect_url, true, 302);
+                            exit();
+                        }*/
+                        if(isset($_GET['state']) && !empty($_GET['state'])){
+                            $redirect_url = urldecode($_GET['state']);
+                            //外部访问
+                            if(!strpos($redirect_url, __HOST__)){
+                                if(strpos($redirect_url, '&')){
+                                    $redirect_url = $redirect_url.'&openid='.$userinfo['openid'];
+                                }
+                                else{
+                                    $redirect_url = $redirect_url.'?openid='.$userinfo['openid'];
+                                }
+                            }
                             header('Location:' . $redirect_url, true, 302);
                             exit();
                         }
@@ -651,6 +674,17 @@ class WechatController extends CommonController
                     header('Location:' . $url, true, 302);
                     exit();
                 }
+            }
+            elseif(isset($_GET['isout']) && isset($_GET['returnurl']) && $_SESSION['openid']){
+                $redirect_url = urldecode($_GET['returnurl']);
+                if(strpos($redirect_url, '&')){
+                    $redirect_url = $redirect_url.'&openid='.$_SESSION['openid'];
+                }
+                else{
+                    $redirect_url = $redirect_url.'?openid='.$_SESSION['openid'];
+                }
+                header('Location:' . $redirect_url, true, 302);
+                exit();
             }
         }
     }
