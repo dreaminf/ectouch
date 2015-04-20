@@ -73,18 +73,26 @@ class bd extends PluginWechatController
             }
         }
         if (! empty($media)) {
-            $articles = array();
-            // 数据
-            $articles['type'] = 'news';
-            $articles['content'][0]['Title'] = $media['title'];
-            $articles['content'][0]['Description'] = $media['content'];
-            // 不是远程图片
-            if (! preg_match('/(http:|https:)/is', $media['file'])) {
-                $articles['content'][0]['PicUrl'] = __URL__ . '/' . $media['file'];
-            } else {
-                $articles['content'][0]['PicUrl'] = $media['file'];
+            //微信用户是否已绑定
+            $sql = 'SELECT u.user_name FROM '.model('Base')->model->pre.'wechat_user w LEFT JOIN '.model('Base')->model->pre.'users u ON w.ect_uid = u.user_id where w.openid = "'.$fromusername.'"';
+            $user_name = model('Base')->model->query($sql);
+            if($user_name){
+                $articles['content'] = '您已绑定过用户:'.$user_name[0]['user_name'].'。重新绑定请点击<a href="'.html_out($media['link']).'">重新绑定</a>';
             }
-            $articles['content'][0]['Url'] = html_out($media['link']);
+            else{
+                $articles = array();
+                // 数据
+                $articles['type'] = 'news';
+                $articles['content'][0]['Title'] = $media['title'];
+                $articles['content'][0]['Description'] = $media['content'];
+                // 不是远程图片
+                if (! preg_match('/(http:|https:)/is', $media['file'])) {
+                    $articles['content'][0]['PicUrl'] = __URL__ . '/' . $media['file'];
+                } else {
+                    $articles['content'][0]['PicUrl'] = $media['file'];
+                }
+                $articles['content'][0]['Url'] = html_out($media['link']);
+            }
             // 积分赠送
             $this->give_point($fromusername, $info);
             
@@ -176,6 +184,13 @@ class bd extends PluginWechatController
             }
             $old_uid = session('user_id');
             if ($user->login($data['username'], $data['password'], '')) {
+                $old_pid = model('Base')->model->table('users')->field('parent_id')->where(array('user_id'=>$old_uid))->getOne();
+                $new_pid = model('Base')->model->table('users')->field('parent_id')->where(array('user_id'=>$_SESSION['user_id']))->getOne();
+                if($old_pid != $new_pid){
+                    show_message('绑定失败！为了便于同步数据，绑定的帐号必须属于同一账户推荐注册。', '会员绑定', url('wechat/plugin_show', array(
+                    'name' => $this->plugin_name
+                )));
+                }
                 //绑定
                 $unionid = model('Base')->model->table('wechat_user')->field('unionid')->where('openid = "'.session('openid').'"')->getOne();
                 if($unionid){
@@ -186,6 +201,8 @@ class bd extends PluginWechatController
                 }
                 model('Users')->update_user_info();
                 model('Users')->recalculate_price();
+                //同步用户数据
+                $user->sync_user($old_uid, $_SESSION['user_id']);
                 show_message('绑定成功', '返回首页', url('index/index'));
             } else {
                 show_message('用户名或密码错误', '会员绑定', url('wechat/plugin_show', array(

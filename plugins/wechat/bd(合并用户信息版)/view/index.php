@@ -15,7 +15,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">会员绑定</div>
 			<div class="panel-body">
-			<form action="<?php echo url('wechat/plugin_action', array('name'=>'bd'));?>" method="post" class="form-horizontal validforms" role="form" onsubmit="if(!confirm('您确认要进行绑定操作吗'))return false;">
+			<form action="<?php echo url('wechat/plugin_action', array('name'=>'bd'));?>" method="post" class="form-horizontal validforms" role="form">
 				<div class="form-group">
 				    <label class="col-sm-2 control-label">用户名</label>
 				    <div class="col-sm-10">
