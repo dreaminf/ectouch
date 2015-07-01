@@ -842,7 +842,7 @@ class WechatController extends AdminController
                     'msg' => $result
                 )));
             }
-            $rs = $this->model->table('wechat_qrcode')->where('scene_id = '.$data['scene_id'])->count();
+            $rs = $this->model->table('wechat_qrcode')->where(array('scene_id'=>$data['scene_id'], 'wechat_id'=>$this->wechat_id))->count();
             if($rs > 0){
                 exit(json_encode(array('status'=>0, 'msg'=>L('qrcode_scene_limit'))));
             }
