@@ -1910,8 +1910,7 @@ class UserController extends CommonController {
                     $userinfo = $res->get_user_info($openid);
                     // 处理数据
                     $userinfo['aite_id'] = $type . '_' . $openid; // 添加登录标示
-                    $userinfo['user_name'] = str_replace("'", "", empty($userinfo['name']) ? $userinfo['nickname'] : $userinfo['name']);
-                    if (model('Users')->get_one_user($userinfo['aite_id'])) {
+                    if ($userinfo['user_name'] = model('Users')->get_one_user($userinfo['aite_id'])) {
                         // 已有记录
                         self::$user->set_session($userinfo['user_name']);
                         self::$user->set_cookie($userinfo['user_name']);
@@ -1920,17 +1919,19 @@ class UserController extends CommonController {
                         $jump_url = empty($this->back_act) ? url('index') : $this->back_act;
                         $this->redirect($jump_url);
                     }
-                    // 无记录
-                    if (model('Users')->check_user_name($userinfo['user_name'])) { // 重名处理
-                        $userinfo['user_name'] = $userinfo['user_name'] . '_' . $type . (rand(10000, 99999));
+                    $userinfo['user_name'] = trim($res->get_user_name($userinfo));
+                    $userinfo['user_name'] = preg_replace('/\'\/^\\s*$|^c:\\\\con\\\\con$|[%,\\*\\"\\s\\t\\<\\>\\&\'\\\\]/', '', $userinfo['user_name']);
+                    if (self::$user->check_user($userinfo['user_name'])) {
+                        $userinfo['user_name'] = $userinfo['user_name'] . rand(1000, 9999); // 重名处理
                     }
-                    $userinfo['email'] = empty($userinfo['email']) ? get_pinyin($userinfo['user_name']) . '@' . get_top_domain() : $userinfo['email'];
+                    $userinfo['email'] = empty($userinfo['email']) ? substr($openid, -6) . '@' . get_top_domain() : $userinfo['email'];
                     // 插入数据库
                     model('Users')->third_reg($userinfo);
                     self::$user->set_session($userinfo['user_name']);
                     self::$user->set_cookie($userinfo['user_name']);
                     model('Users')->update_user_info();
                     model('Users')->recalculate_price();
+
                     $jump_url = empty($this->back_act) ? url('index') : $this->back_act;
                     $this->redirect($jump_url);
                 }

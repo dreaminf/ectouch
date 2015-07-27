@@ -1770,8 +1770,15 @@ class UsersModel extends BaseModel {
      * @return type 
      */
     function get_one_user($aite_id) {
-        $sql = 'SELECT user_name FROM ' . $this->pre . 'users WHERE aite_id = "' . $aite_id . '" ';
-        return $this->row($sql);
+        $sql = 'SELECT u.user_name FROM ' . $this->pre . 'users u LEFT JOIN ' . $this->pre .
+                'touch_user_info t ON t.user_id = u.user_id WHERE t.aite_id = "' . $aite_id . '" ';
+        $res = $this->row($sql);
+        if (!$res) {
+            //touch没有记录查询pc
+            $sql = 'SELECT user_name FROM ' . $this->pre . 'users  WHERE aite_id = "' . $aite_id . '" ';
+            $res = $this->row($sql);
+        }
+        return $res['user_name'];
     }
 
     /**
@@ -1785,7 +1792,7 @@ class UsersModel extends BaseModel {
         $email = $info['email'];
         if ($this->register($username, $password, $email) !== false) {
             $uid = $_SESSION['user_id'];
-            $sql = "update " . $this->pre . "users set aite_id='".$info['aite_id']."' where user_id='$uid'";
+            $sql = "update " . $this->pre . "users set aite_id='" . $info['aite_id'] . "' where user_id='$uid'";
             $this->query($sql);
             // 更新附表
             $this->table = "touch_user_info";
