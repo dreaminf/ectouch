@@ -99,6 +99,7 @@ class AdminController extends BaseController {
         setcookie('ECTOUCHCP[ADMIN_PWD]', '', 1);
         $_SESSION[APP_NAME . '_USERINFO'] = NULL;
         if (!empty($url)) {
+            $_SESSION['safe_route'] = true;
             $this->redirect($url);
         }
         return true;
@@ -108,7 +109,7 @@ class AdminController extends BaseController {
     protected function ectouchUpload($key = '', $upload_dir = 'images', $thumb = false, $width = 220, $height = 220) {
         $upload = new UploadFile();
         //设置上传文件大小
-        $upload->maxSize = 1024 * 1024 * 2; //最大2M
+        $upload->maxSize = 1024 * 1024 * 5; //最大10M,但最佳5M以内。
         //设置上传文件类型
         $upload->allowExts = explode(',', 'jpg,jpeg,gif,png,bmp,mp3,amr,mp4');
         //生成缩略图
