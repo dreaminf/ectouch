@@ -37,7 +37,9 @@ class IndexController extends Controller {
             $error = '系统不支持session，无法进行安装！<br>';
         }
         $dir_list = array(
-            'data/'
+            'data',
+            'data/config.php',
+            'themes',
         );
         foreach($dir_list as $dir)
         {
@@ -109,6 +111,22 @@ class IndexController extends Controller {
         $sqlData[] = "UPDATE `".$dbPrefix."touch_shop_config` SET `value` = '".str_replace('/mobile', '', __URL__)."' where `code`='shop_url';";
         if (!model('Install')->runSql($configDb, $sqlData)) {
             $this->msg('数据导入失败，请检查后手动删除数据库重新安装！', false);
+        }
+        // 导入执行微信通sql文件
+        $db_wechat = ROOT_PATH . 'data/wechat.sql';
+        if(file_exists($db_wechat)){
+            $sql_wechat = Install::mysql($db_wechat, 'ecs_', $dbPrefix);
+            if (!model('Install')->runSql($configDb, $sql_wechat)) {
+                $this->msg('数据导入失败，请检查后手动删除数据库重新安装！', false);
+            }
+        }
+        // 导入执行单独模板包sql文件
+        $db_import = ROOT_PATH . 'data/import.sql';
+        if(file_exists($db_import)){
+            $sql_import = Install::mysql($db_import, 'ecs_', $dbPrefix);
+            if (!model('Install')->runSql($configDb, $sql_import)) {
+                $this->msg('数据导入失败，请检查后手动删除数据库重新安装！', false);
+            }
         }
         model('Install')->filter_column($configDb, 'touch_shop_config'); //配置shop_config
         $this->set_config($configDb);
