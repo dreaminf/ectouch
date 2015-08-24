@@ -82,7 +82,7 @@ class SaleController extends CommonController {
             $data['cat_id'] = $cat_id;
             $where['user_id'] = $_SESSION['user_id'];
             $this->model->table('drp_shop')->data($data)->where($where)->update();
-            redirect(url('sale/my_goods'));
+            show_message(L('success'),'分销中心',url('sale/index'));
         }
         $cat_id = $this->model->table('drp_shop')->field("cat_id")->where(array("user_id"=>$_SESSION['user_id']))->getOne();
         $catArr = explode(',',$cat_id);
@@ -217,9 +217,7 @@ class SaleController extends CommonController {
      * 朋友圈推广
      */
     public function share(){
-        //call_user_func(array('Wechat', 'rec_qrcode'), $_SESSION['user_name'],$_SESSION['user_id']);
-        $mobile_qr = __TPL__.'/images/ectouch.png';
-        $this->assign('mobile_qr',$mobile_qr);
+        $this->assign('mobile_qr', call_user_func(array('WechatController', 'rec_qrcode'), session('user_name'),session('user_id')));
         $this->assign('title',L('share'));
         $this->display('sale_share.dwt');
     }

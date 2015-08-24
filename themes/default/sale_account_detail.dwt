@@ -5,7 +5,7 @@
               </div>
               <div class="mx_nav">
                   <ul>
-                        <li class="mx_nav1"><a href="wdyj.html"><span class="bdda2_content" >本店佣金</span></a></li>
+                        <li class="mx_nav1"><a href="{:url('sale/my_commission')}"><span class="bdda2_content" >本店佣金</span></a></li>
                         <li class="mx_nav2"><a href="{:url('sale/account_raply')}">提现记录</a></li>
                   </ul>
           </div>

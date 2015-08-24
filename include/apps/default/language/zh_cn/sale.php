@@ -62,5 +62,6 @@ $_LANG['my_user_list1'] = '我的一级会员';
 $_LANG['my_user_list2'] = '我的二级会员';
 $_LANG['my_user_list3'] = '我的三级会员';
 $_LANG['no_info'] = '暂无信息';
+$_LANG['success'] = '修改成功';
 
 ?>

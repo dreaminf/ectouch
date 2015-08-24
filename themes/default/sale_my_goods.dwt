@@ -28,7 +28,7 @@
 			<!-- {/foreach} -->           
 				
 			</div>
-            <div class="t-a-center"><input type="submit" value="{:L('next_step')}" class="set-4-submit"></div>
+            <div class="t-a-center"><input type="submit" value="{:L('submit')}" class="set-4-submit"></div>
 			</form>
 			<div class="dpxq_border"></div> 
     </div>
