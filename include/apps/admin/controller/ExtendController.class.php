@@ -18,6 +18,7 @@ class ExtendController extends AdminController
     public $plugin_type = 'wechat';
 
     public $plugin_name = '';
+    public $wechat_type = '';
 
     public function __construct()
     {
@@ -26,11 +27,11 @@ class ExtendController extends AdminController
         $this->assign('controller', CONTROLLER_NAME);
         //公众号类型
         $where['id'] = session('wechat_id');
-        $type = $this->model->table('wechat')
+        $this->wechat_type = $this->model->table('wechat')
         ->field('type')
         ->where($where)
         ->getOne();
-        $this->assign('type', $type);
+        $this->assign('type', $this->wechat_type);
     }
 
     /**
@@ -61,6 +62,11 @@ class ExtendController extends AdminController
                     $modules[$k]['keywords'] = $kw[$ks]['keywords'];
                     $modules[$k]['config'] = $kw[$ks]['config'];
                     $modules[$k]['enable'] = $kw[$ks]['enable'];
+                }
+                if($this->wechat_type == 0 || $this->wechat_type == 1){
+                    if($modules[$k]['command'] == 'bd'  || $modules[$k]['command'] == 'bonus' || $modules[$k]['command'] == 'ddcx' || $modules[$k]['command'] == 'jfcx' || $modules[$k]['command'] == 'sign' || $modules[$k]['command'] == 'wlcx'  || $modules[$k]['command'] == 'zjd' || $modules[$k]['command'] == 'dzp' || $modules[$k]['command'] == 'ggk'){
+                        unset($modules[$k]);
+                    }
                 }
             }
         }

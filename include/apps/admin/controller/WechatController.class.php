@@ -388,11 +388,12 @@ class WechatController extends AdminController
         }
         if (isset($_GET['group_id']) && $group_id >= 0) {
             $where = ' and u.group_id = ' . $group_id;
-            $where1 = 'wechat_id = "' . $this->wechat_id . '" and group_id = ' . $group_id;
+            $where1 = 'wechat_id = "' . $this->wechat_id . '" and subscribe = 1 and group_id = ' . $group_id;
         }
         
         // 分页
         $filter['page'] = '{page}';
+        $filter['group_id'] = !empty($group_id) ? $group_id : 0;
         $filter['k'] = $keywords;
         $offset = $this->pageLimit(url('subscribe_search', $filter), 10);
         $total = $this->model->table('wechat_user')
@@ -548,7 +549,8 @@ class WechatController extends AdminController
             if (empty($rs)) {
                 exit(json_encode(array(
                     'status' => 0,
-                    'msg' => L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg
+                    // 'msg' => L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg
+                    'msg' => '只有48小时内给公众号发送过信息的粉丝才能接收到信息'
                 )));
             }
             // 添加数据
@@ -588,7 +590,7 @@ class WechatController extends AdminController
         // 分页
         $filter['page'] = '{page}';
         $filter['uid'] = $uid;
-        $offset = $this->pageLimit(url('custom_message_list', $filter), 10);
+        $offset = $this->pageLimit(url('custom_message_list', $filter), 20);
         $total = $this->model->table('wechat_custom_message')
             ->where('uid = ' . $uid)
             ->order('send_time desc')
@@ -842,7 +844,7 @@ class WechatController extends AdminController
                     'msg' => $result
                 )));
             }
-            $rs = $this->model->table('wechat_qrcode')->where(array('scene_id'=>$data['scene_id'], 'wechat_id'=>$this->wechat_id))->count();
+            $rs = $this->model->table('wechat_qrcode')->where('scene_id = '.$data['scene_id'])->count();
             if($rs > 0){
                 exit(json_encode(array('status'=>0, 'msg'=>L('qrcode_scene_limit'))));
             }
@@ -1526,6 +1528,7 @@ class WechatController extends AdminController
             if((empty($group_id) && $group !== 0) || empty($media_id)){
               $this->message('请选择用户分组或者选择要发送的信息', NULL, 'error');
             }
+            
             $article = array();
             $article_info = $this->model->table('wechat_media')
                 ->field('id, title, author, file, is_show, digest, content, link, type, article_id')
