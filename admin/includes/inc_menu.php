@@ -146,8 +146,8 @@ $modules['10_menu_tools']['captcha_manage']             = 'captcha_manage.php?ac
 //$modules['10_menu_tools']['fckfile_manage']             = 'fckfile_manage.php?act=list';
 
 // 微分销
-$modules['11_menu_rec']['affiliate']                     = 'affiliate.php?act=list';
-$modules['11_menu_rec']['affiliate_ck']                  = 'affiliate_ck.php?act=list';
+//$modules['11_menu_rec']['affiliate']                     = 'affiliate.php?act=list';
+//$modules['11_menu_rec']['affiliate_ck']                  = 'affiliate_ck.php?act=list';
 
 // 微信通
 $modules['12_menu_wechat']['01_wechat_config'] = '../index.php?m=admin&c=wechat';
