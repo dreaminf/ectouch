@@ -19,10 +19,10 @@ if (! defined('IN_ECTOUCH')) {
 }
 
 $_LANG['wxpay'] = '微信支付';
-$_LANG['wxpay_desc'] = '微信支付，是基于客户端提供的服务功能。同时向商户提供销售经营分析、账户和资金管理的功能支持。用户通过扫描二维码、微信内打开商品页面购买等多种方式调起微信支付模块完成支付。';
-$_LANG['wxpay_appid'] = '微信公众号AppId';
-$_LANG['wxpay_appsecret'] = '微信公众号AppSecret';
-$_LANG['wxpay_key'] = '商户支付密钥Key';
-$_LANG['wxpay_mchid'] = '受理商ID(微信支付商户号)';
-$_LANG['wxpay_signtype'] = '签名方式';
-$_LANG['wxpay_button'] = '立即用微信支付';
+$_LANG['wxpay_desc'] = '微信支付，是基於客戶端提供的服務功能。同時向商戶提供銷售經營分析、帳戶和資金管理的功能支持。用戶通過掃描二維碼、微信內打開頁面購買等多種方式調用微信支付模塊完成支付。';
+$_LANG['wxpay_appid'] = '微信公眾號AppId';
+$_LANG['wxpay_appsecret'] = '微信公眾號AppSecret';
+$_LANG['wxpay_key'] = '商戶支付密鑰Key';
+$_LANG['wxpay_mchid'] = '受理商ID';
+$_LANG['wxpay_signtype'] = '簽名方式';
+$_LANG['wxpay_button'] = '立即使用微信支付';
