@@ -1,8 +1,24 @@
-<div class="ect-margin-tb ect-pro-list ect-margin-bottom0" style="border-bottom:none;" >
-  <ul id="J_ItemList">
-  	<li class="single_item">
-    </li>
-     <a href="javascript:;" style="text-align:center" class="get_more"></a>
-  </ul>
- </div>
-  
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <!--{if $hot_goods}-->
+  <div class="index-fine"> 
+    <!--热销商品-->
+    <div class="index-fine-title">
+      <h3>{$lang.hot_goods}热销商品</h3>
+    </div>
+    <ul>
+     <!--{foreach from=$hot_goods item=hotgoods name=hot_goods}-->
+      <li class="{if $smarty.foreach.hot_goods.index %2==0}fl{else}fr{/if}"><a href="{$hotgoods.url}"><img src="{$hotgoods.thumb}" alt="{$hotgoods.short_name}" /><span>{$hotgoods.short_name}</span></a>
+      <p class="fl">
+           <!-- {if $hotgoods.promote_price neq ""} --> 
+            {$hotgoods.promote_price}
+            <!-- {else}-->
+            {$hotgoods.shop_price}
+            <!--{/if}-->
+        </p>
+        <del>{$hotgoods.market_price}</del>
+      </li>
+      <!--{/foreach}-->
+    </ul>
+  </div>
+  <div class="clearfix"> </div>
+  <!--{/if}-->

@@ -28,6 +28,8 @@
       <!--{/foreach}-->
     </ul>
   </nav>
+  <!-- #BeginLibraryItem "/library/recommend_best.lbi" --><!-- #EndLibraryItem -->
+  <!-- #BeginLibraryItem "/library/recommend_new.lbi" --><!-- #EndLibraryItem -->
   <!-- #BeginLibraryItem "/library/recommend_hot.lbi" --><!-- #EndLibraryItem -->
   <footer>
     <nav class="ect-nav"><!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --></nav>
@@ -36,7 +38,5 @@
 </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
-<script type="text/javascript">
-get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}" , '__TPL__/images/loader.gif');
-</script>
-</body></html>
+</body>
+</html>

@@ -1,5 +1,6 @@
-
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 <script type="text/javascript" src="__PUBLIC__/js/region.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/shopping_flow.js"></script>
 <script type="text/javascript">
           region.isAdmin = false;
           {foreach from=$lang.flow_js item=item key=key}
