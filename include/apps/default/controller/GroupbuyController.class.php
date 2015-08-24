@@ -41,6 +41,7 @@ class GroupbuyController extends CommonController {
         $this->assign('size', $this->size);
         $this->assign('sort', $this->sort);
         $this->assign('order', $this->order);
+        $this->sort = 'b.act_id';
         $gb_list = model('Groupbuy')->group_buy_list($this->size, $this->page, $this->sort, $this->order);
         $this->assign('gb_list', $gb_list);
         $count = model('Groupbuy')->group_buy_count();
@@ -58,6 +59,7 @@ class GroupbuyController extends CommonController {
         $this->parameter();
         $asyn_last = intval(I('post.last')) + 1;
         $this->size = I('post.amount');
+        $this->sort = 'b.act_id';
         $this->page = ($asyn_last > 0) ? ceil($asyn_last / $this->size) : 1;
         $gb_list = model('Groupbuy')->group_buy_list($this->size, $this->page, $this->sort, $this->order);
         foreach ($gb_list as $key => $value) {
@@ -97,7 +99,7 @@ class GroupbuyController extends CommonController {
             ecs_header("Location: ./\n");
             exit;
         }
-        $goods['url'] = build_uri('goods', array('gid' => $goods_id), $goods['goods_name']);
+        $goods['url'] = url('Goods/index', array('id' => $goods_id));
         $this->assign('gb_goods', $goods);
 
         /* 取得商品的规格 */

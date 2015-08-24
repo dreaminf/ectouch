@@ -27,6 +27,8 @@ class IndexController extends CommonController {
         $this->assign('best_goods', model('Index')->goods_list('best', C('page_size')));
         $this->assign('new_goods', model('Index')->goods_list('new', C('page_size')));
         $this->assign('hot_goods', model('Index')->goods_list('hot', C('page_size')));
+        // 调用促销商品
+        $this->assign('promotion_goods', model('Index')->goods_list('promotion', C('page_size')));
         //首页推荐分类
         $cat_rec = model('Index')->get_recommend_res();
         $this->assign('cat_best', $cat_rec[1]);
@@ -40,6 +42,8 @@ class IndexController extends CommonController {
         $this->assign('categories', model('CategoryBase')->get_categories_tree());
         // 获取品牌
         $this->assign('brand_list', model('Brand')->get_brands($app = 'brand', C('page_size'), 1));
+        // 分类下的文章
+        $this->assign('cat_articles', model('Article')->assign_articles(1,5)); // 1 是文章分类id ,5 是文章显示数量
         $this->display('index.dwt');
     }
 

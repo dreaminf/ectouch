@@ -509,16 +509,16 @@ class UserController extends CommonController {
      * 获取未付款订单
      */
     public function not_pay_order_list() {
-        $pay = 1;
-		$size = I(C('page_size'), 10);
-		$this->assign('show_asynclist', C('show_asynclist'));
+        $pay = 0;
+        $size = I(C('page_size'), 10);
+        $this->assign('show_asynclist', C('show_asynclist'));
         $count = $this->model->table('order_info')->where('user_id = ' . $this->user_id)->count();
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('not_pay_order_list', $filter), $size);
         $offset_page = explode(',', $offset);
         $orders = model('Users')->get_user_orders($this->user_id, $pay, $offset_page[1], $offset_page[0]);
         $this->assign('pay', $pay);
-        $this->assign('title', L('order_list_lnk'));
+        $this->assign('title', L('not_pay_list'));
         $this->assign('pager', $this->pageShow($count));
         $this->assign('orders_list', $orders);
         $this->display('user_order_list.dwt');
@@ -529,15 +529,16 @@ class UserController extends CommonController {
      */
     public function order_list() {
         $pay = 1;
+        $size = I(C('page_size'), 10);
         $count = $this->model->table('order_info')->where('user_id = ' . $this->user_id)->count();
         $filter['page'] = '{page}';
-        $offset = $this->pageLimit(url('order_list', $filter), 5);
+        $offset = $this->pageLimit(url('order_list', $filter), $size);
         $offset_page = explode(',', $offset);
         $orders = model('Users')->get_user_orders($this->user_id, $pay, $offset_page[1], $offset_page[0]);
         $this->assign('pay', $pay);
         $this->assign('title', L('order_list_lnk'));
         $this->assign('pager', $this->pageShow($count));
-        $this->assign('orders', $orders);
+        $this->assign('orders_list', $orders);
         $this->display('user_order_list.dwt');
     }
 
@@ -599,8 +600,8 @@ class UserController extends CommonController {
             $order['handler'] = "<a class=\"btn btn-info ect-colorf\" href=\"" . url('user/cancel_order', array(
                         'order_id' => $order['order_id']
                     )) . "\" onclick=\"if (!confirm('" . L('confirm_cancel') . "')) return false;\">" . L('cancel') . "</a>";
-        } else
-        if ($order['order_status'] == OS_SPLITED) {
+        }
+        elseif ($order['order_status'] == OS_SPLITED) {
             /* 对配送状态的处理 */
             if ($order['shipping_status'] == SS_SHIPPED) {
                 @$order['handler'] = "<a class=\"btn btn-info ect-colorf\" href=\"" . url('user/affirm_received', array(
@@ -653,6 +654,14 @@ class UserController extends CommonController {
             // 过滤掉当前支付方式和余额支付方式
             if (is_array($payment_list)) {
                 foreach ($payment_list as $key => $payment) {
+                    // 如果不是微信浏览器访问并且不是微信会员 则不显示微信支付
+                    if ($payment ['pay_code'] == 'wxpay' && !is_wechat_browser() && empty($_SESSION['openid'])) {
+                        unset($payment_list [$key]);
+                    }
+                    // 兼容过滤ecjia支付方式
+                    if (substr($payment['pay_code'], 0 , 4) == 'pay_') {
+                        unset($payment_list[$key]);
+                    }               
                     if ($payment['pay_id'] == $order['pay_id'] || $payment['pay_code'] == 'balance') {
                         unset($payment_list[$key]);
                     }
@@ -662,15 +671,20 @@ class UserController extends CommonController {
         }
         $order['pay_desc'] = html_out($order['pay_desc']);
 
+        // 如果是银行汇款或货到付款 则显示支付描述
+        $payment = model('Order')->payment_info($order ['pay_id']);
+        if ($payment['pay_code'] == 'bank' || $payment['pay_code'] == 'cod'){
+            $this->assign('pay_desc',$payment['pay_desc']);
+        }
+        // 如果是微信支付 不允许再使用余额修改订单价格后支付
+        if($payment['pay_code'] == 'wxpay'){
+            $this->assign('allow_edit_surplus', 0);
+        }
+
         // 订单 支付 配送 状态语言项
         $order['order_status'] = L('os.' . $order['order_status']);
         $order['pay_status'] = L('ps.' . $order['pay_status']);
         $order['shipping_status'] = L('ss.' . $order['shipping_status']);
-        // 如果是银行汇款或货到付款 则显示支付描述
-        $payment = model('Order')->payment_info($order ['pay_id']);
-        if ($payment['pay_code'] == 'bank' || $payment['pay_code'] == 'balance'){
-            $this->assign('pay_desc',$payment['pay_desc']);
-        }
 		
         $this->assign('title', L('order_detail'));
         $this->assign('order', $order);
@@ -992,7 +1006,7 @@ class UserController extends CommonController {
         // 获得用户对应收货人信息
         $consignee = model('Users')->get_consignee_list($_SESSION['user_id'], $id);
 
-        $province_list = model('RegionBase')->get_regions(1, 1);
+        $province_list = model('RegionBase')->get_regions(1, $consignee['country']);
         $city_list = model('RegionBase')->get_regions(2, $consignee['province']);
         $district_list = model('RegionBase')->get_regions(3, $consignee['city']);
 
@@ -1132,7 +1146,7 @@ class UserController extends CommonController {
             );
 
             if (model('ClipsBase')->add_message($message)) {
-                $data['msg_id'] = mysql_insert_id();
+                $data['msg_id'] = M()->insert_id();
                 $this->model->table('touch_feedback')
                         ->data($data)
                         ->insert();
@@ -1331,7 +1345,7 @@ class UserController extends CommonController {
         $sql = "SELECT COUNT(*) as num " .
                 "FROM " . $this->model->pre . "booking_goods AS bg, " .
                 $this->model->pre . "goods AS g " .
-                "WHERE bg.goods_id = g.goods_id AND user_id = '$this->user_id'";
+                "WHERE bg.goods_id = g.goods_id AND bg.user_id = '$this->user_id'";
         $count = $this->model->query($sql);
         // 分页
         $filter['page'] = '{page}';
@@ -1691,6 +1705,8 @@ class UserController extends CommonController {
                 $email = isset($_POST['email']) ? in($_POST['email']) : '';
                 $password = isset($_POST['password']) ? in($_POST['password']) : '';
                 $other = array();
+                $sel_question = isset($_POST['sel_question']) ? in($_POST['sel_question']) : '';
+                $passwd_answer = isset($_POST['passwd_answer']) ? in($_POST['passwd_answer']) : '';
 
                 // 验证码检查
                 if (intval(C('captcha')) & CAPTCHA_REGISTER) {
@@ -1742,10 +1758,7 @@ class UserController extends CommonController {
 
                 // 验证手机号重复
                 $where['mobile_phone'] = $username;
-                $user_id = $this->model->table('users')
-                        ->field('user_id')
-                        ->where($where)
-                        ->getOne();
+                $user_id = $this->model->table('users')->field('user_id')->where($where)->getOne();
                 if ($user_id) {
                     show_message(L('msg_mobile_exists'), L('register_back'), url('register'), 'error');
                 }
@@ -1756,22 +1769,7 @@ class UserController extends CommonController {
                 ECTouch::err()->show(L('sign_up'), url('register'));
             }
             
-            /*把新注册用户的扩展信息插入数据库*/
-            $sql = 'SELECT id,is_need,reg_field_name FROM ' . M()->pre . 'reg_fields' . ' WHERE display = 1 ORDER BY dis_order, id';   //读出所有自定义扩展字段的id
-            $fields_arr = M()->query($sql);
-            $extend_field_str = '';    //生成扩展字段的内容字符串
-            foreach ($fields_arr AS $val)
-            {
-                $extend_field_index = 'extend_field' . $val['id'];
-                if(empty($_POST[$extend_field_index]))
-                {
-                    if ($val['is_need']==1){
-                        show_message($val['reg_field_name'].L('can_not_empty'), L('register_back'), url('register'), 'error');
-                    }
-                }
-            }
             if (model('Users')->register($username, $password, $email, $other) !== false) {
-                
                 /*把新注册用户的扩展信息插入数据库*/
                 $sql = 'SELECT id,is_need,reg_field_name FROM ' . M()->pre . 'reg_fields' . ' WHERE  display = 1 ORDER BY dis_order, id';   //读出所有自定义扩展字段的id
                 $fields_arr = M()->query($sql);
@@ -1784,10 +1782,6 @@ class UserController extends CommonController {
                     {
                         $temp_field_content = strlen($_POST[$extend_field_index]) > 100 ? mb_substr($_POST[$extend_field_index], 0, 99) : $_POST[$extend_field_index];
                         $extend_field_str .= " ('" . $_SESSION['user_id'] . "', '" . $val['id'] . "', '" . $temp_field_content . "'),";
-                    }else {
-                        if ($val['is_need']==1){
-                            show_message($val['reg_field_name'].L('can_not_empty'), L('register_back'), url('register'), 'error');
-                        }
                     }
                 }
                 $extend_field_str = substr($extend_field_str, 0, -1);
@@ -1810,13 +1804,7 @@ class UserController extends CommonController {
                     model('Users')->send_regiter_hash($_SESSION['user_id']);
                 }
                 $ucdata = empty(self::$user->ucdata) ? "" : self::$user->ucdata;
-                show_message(sprintf(L('register_success'), $username . $ucdata), array(
-                    L('back_up_page'),
-                    L('profile_lnk')
-                        ), array(
-                    $this->back_act,
-                    url('index')
-                        ), 'info');
+                show_message(sprintf(L('register_success'), $username . $ucdata), array(L('back_up_page'), L('profile_lnk')), array($this->back_act,url('index')), 'info');
             } else {
                 ECTouch::err()->show(L('sign_up'), url('register'));
             }
@@ -1833,6 +1821,9 @@ class UserController extends CommonController {
         }
         $this->assign('extend_info_list', $extend_info_list);
 
+         // 密码提示问题
+        $this->assign('password_question', L('passwd_questions'));
+        
         // 注册页面显示
 
         if (empty($this->back_act) && isset($GLOBALS['_SERVER']['HTTP_REFERER'])) {
@@ -1931,7 +1922,6 @@ class UserController extends CommonController {
                     self::$user->set_cookie($userinfo['user_name']);
                     model('Users')->update_user_info();
                     model('Users')->recalculate_price();
-
                     $jump_url = empty($this->back_act) ? url('index') : $this->back_act;
                     $this->redirect($jump_url);
                 }
@@ -1941,7 +1931,7 @@ class UserController extends CommonController {
                         )), 'error');
             }
         } else {
-            // 开始授权登录
+            // 开始授权登录  
             $url = $obj->act_login($info, $url);
             ecs_header("Location: " . $url . "\n");
             exit();
@@ -2305,5 +2295,4 @@ class UserController extends CommonController {
             }
         }
     }
-
 }

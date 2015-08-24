@@ -33,7 +33,7 @@ class SnatchController extends CommonController {
     public function index() {
         $this->assign('goods_list', model('Snatch')->get_snatch_list());     //所有有效的夺宝奇兵列表
         $this->assign('show_asynclist', C('show_asynclist'));
-        $this->assign('tile', L('snatch_list'));
+        $this->assign('title', L('snatch_list'));
         $this->display('snatch_list.dwt');
     }
 

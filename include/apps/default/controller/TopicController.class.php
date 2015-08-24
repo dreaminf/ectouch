@@ -32,6 +32,11 @@ class TopicController extends CommonController {
      */
     public function index() {
         $topic = $this->model->table('touch_topic')->field('*')->where('topic_id =' . $this->id)->find();
+        if(empty($topic))
+        {
+            /* 如果没有找到任何记录则跳回到首页 */
+            $this->redirect(url('index/index'));
+        }
         $topic['intro'] = html_out($topic['intro']);
         $topic['data'] = addcslashes($topic['data'], "'");
         $tmp = @unserialize($topic["data"]);
@@ -73,7 +78,7 @@ class TopicController extends CommonController {
                 $row['shop_price'] = '';
             }
 
-            $row['url'] = build_uri('goods/index', array('id' => $row['goods_id']), $row['goods_name']);
+            $row['url'] = url('goods/index', array('id' => $row['goods_id']));
             $row['goods_style_name'] = add_style($row['goods_name'], $row['goods_name_style']);
             $row['short_name'] = C('goods_name_length') > 0 ? sub_str($row['goods_name'], C('goods_name_length')) : $row['goods_name'];
             $row['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);

@@ -47,6 +47,7 @@ class CategoryController extends CommonController {
         if (I('get.id', 0) == 0 && CONTROLLER_NAME == 'category') {
             $arg = array(
                 'id' => $this->cat_id,
+                'type' => $this->type,
                 'brand' => $this->brand,
                 'price_max' => $this->price_max,
                 'price_min' => $this->price_min,
@@ -66,12 +67,13 @@ class CategoryController extends CommonController {
         $this->assign('sort', $this->sort);
         $this->assign('order', $this->order);
         $this->assign('id', $this->cat_id);
+        $this->assign('type', $this->type);
         // 获取分类
         $this->assign('category', model('CategoryBase')->get_top_category());
         $count = model('Category')->category_get_count($this->children, $this->brand, $this->type, $this->price_min, $this->price_max, $this->ext,$this->keywords);
         $goodslist = $this->category_get_goods();
         $this->assign('goods_list', $goodslist);
-        $this->pageLimit(url('index', array('id' => $this->cat_id, 'brand' => $this->brand, 'price_max' => $this->price_max, 'price_min' => $this->price_min, 'filter_attr' => $this->filter_attr_str, 'sort' => $this->sort, 'order' => $this->order,'keywords'=>I('request.keywords'))), $this->size);
+        $this->pageLimit(url('index', array('id' => $this->cat_id, 'brand' => $this->brand,'type' => $this->type, 'price_max' => $this->price_max, 'price_min' => $this->price_min, 'filter_attr' => $this->filter_attr_str, 'sort' => $this->sort, 'order' => $this->order,'keywords'=>I('request.keywords'))), $this->size);
         $this->assign('pager', $this->pageShow($count));
         /* 页面标题 */
         $page_info = get_page_title($this->cat_id);
@@ -79,10 +81,12 @@ class CategoryController extends CommonController {
         $this->assign('page_title', $page_info['title']);
         $cat = model('Category')->get_cat_info($this->cat_id);  // 获得分类的相关信息
         if (!empty($cat['keywords'])) {
-            if (!empty($cat['keywords'])) {
-                $this->assign('keywords_list', explode(' ', $cat['keywords']));
-            }
+            $this->assign('meat_keywords',htmlspecialchars($cat['keywords']));
         }
+        if (!empty($cat['cat_desc'])) {
+            $this->assign('meta_description',htmlspecialchars($cat['cat_desc']));
+        }
+
         $this->assign('categories', model('CategoryBase')->get_categories_tree($this->cat_id));
 		$this->assign('show_marketprice', C('show_marketprice'));
         $this->display('category.dwt');
@@ -168,11 +172,13 @@ class CategoryController extends CommonController {
         $filter_attr = I('request.filter_attr');
         $this->size = intval($page_size) > 0 ? intval($page_size) : 10;
         $this->page = I('request.page') > 0 ? intval(I('request.page')) : 1;
+        $this->type = I('request.type');
         $this->brand = $brand > 0 ? $brand : 0;
         $this->price_max = $price_max > 0 ? $price_max : 0;
         $this->price_min = $price_min > 0 ? $price_min : 0;
-        $this->filter_attr_str = $filter_attr > 0 ? $filter_attr : '0';
-
+        // $this->filter_attr_str = $filter_attr > 0 ? $filter_attr : '0';
+        $this->filter_attr_str = !empty($filter_attr) ? $filter_attr : 0 ; //by hnllyrp 
+        
         $this->filter_attr_str = trim(urldecode($this->filter_attr_str));
         $this->filter_attr_str = preg_match('/^[\d\.]+$/', $this->filter_attr_str) ? $this->filter_attr_str : '';
         $filter_attr = empty($this->filter_attr_str) ? '' : explode('.', $this->filter_attr_str);
@@ -443,7 +449,7 @@ class CategoryController extends CommonController {
     public function top_all() {
         /* 页面的缓存ID */
         $cache_id = sprintf('%X', crc32($_SERVER['REQUEST_URI'] . C('lang')));
-        if (!ECTouch::view()->is_cached('category_all.dwt', $cache_id)) {
+        if (!ECTouch::view()->is_cached('category_top_all.dwt', $cache_id)) {
             $category = model('CategoryBase')->get_categories_tree();
             $this->assign('title', L('catalog'));
             $this->assign('category', $category);

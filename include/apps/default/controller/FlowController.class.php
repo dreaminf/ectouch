@@ -478,8 +478,9 @@ class FlowController extends CommonController {
         $condition = "`session_id` = '" . SESS_ID . "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0";
         $shipping_count = $this->model->table('cart')->field('count(*)')->where($condition)->getOne();
         foreach ($shipping_list as $key => $val) {
+
             $shipping_cfg = unserialize_config($val ['configure']);
-            $shipping_fee = ($shipping_count == 0 and $cart_weight_price ['free_shipping'] == 1) ? 0 : shipping_fee($val ['shipping_code'], unserialize($val ['configure']), $cart_weight_price ['weight'], $cart_weight_price ['amount'], $cart_weight_price ['number']);
+            $shipping_fee = ($shipping_count == 0 and $cart_weight_price ['free_shipping'] == 1) ? 0 : shipping_fee($val['shipping_code'], unserialize($val ['configure']), $cart_weight_price ['weight'], $cart_weight_price ['amount'], $cart_weight_price ['number']);
 
             $shipping_list [$key] ['format_shipping_fee'] = price_format($shipping_fee, false);
             $shipping_list [$key] ['shipping_fee'] = $shipping_fee;
@@ -490,6 +491,10 @@ class FlowController extends CommonController {
             if ($val ['shipping_id'] == $order ['shipping_id']) {
                 $insure_disabled = ($val ['insure'] == 0);
                 $cod_disabled = ($val ['support_cod'] == 0);
+            }
+	        // 兼容过滤ecjia配送方式
+            if (substr($val['shipping_code'], 0 , 5) == 'ship_') {
+                unset($shipping_list[$key]);
             }
         }
 
@@ -542,6 +547,7 @@ class FlowController extends CommonController {
                 if ($payment ['is_cod'] == '1') {
                     $payment_list [$key] ['format_pay_fee'] = '<span id="ECS_CODFEE">' . $payment ['format_pay_fee'] . '</span>';
                 }
+
                 /* 如果有易宝神州行支付 如果订单金额大于300 则不显示 */
                 if ($payment ['pay_code'] == 'yeepayszx' && $total ['amount'] > 300) {
                     unset($payment_list [$key]);
@@ -557,15 +563,14 @@ class FlowController extends CommonController {
                         }
                     }
                 }
-
-                //微信外的浏览器去除微信支付
-                if(class_exists('WechatController')){
-		            if (method_exists('WechatController', 'is_wechat_browser')) {
-		                if(!WechatController::is_wechat_browser() && $payment['pay_code'] == 'wxpay'){
-		                    unset($payment_list [$key]);
-		                }
-		            }
-		        }
+                // 如果不是微信浏览器访问并且不是微信会员 则不显示微信支付
+                if ($payment ['pay_code'] == 'wxpay' && !is_wechat_browser() && empty($_SESSION['openid'])) {
+                    unset($payment_list [$key]);
+                }
+                // 兼容过滤ecjia支付方式
+                if (substr($payment['pay_code'], 0 , 4) == 'pay_') {
+                    unset($payment_list[$key]);
+                }
             }
         }
         $this->assign('payment_list', $payment_list);
@@ -798,14 +803,14 @@ class FlowController extends CommonController {
             $city_list = array();
             $district_list = array();
             foreach ($consignee_list as $region_id => $consignee) {
-                $consignee ['country'] = isset($consignee ['country']) ? intval($consignee ['country']) : 0;
+                $consignee ['country'] = isset($consignee ['country']) ? intval($consignee ['country']) : 1;
                 $consignee ['province'] = isset($consignee ['province']) ? intval($consignee ['province']) : 0;
                 $consignee ['city'] = isset($consignee ['city']) ? intval($consignee ['city']) : 0;
 
                 $city_list [$region_id] = model('RegionBase')->get_regions(2, $consignee ['province']);
                 $district_list [$region_id] = model('RegionBase')->get_regions(3, $consignee ['city']);
             }
-            $this->assign('province_list', model('RegionBase')->get_regions(1, 1));
+            $this->assign('province_list', model('RegionBase')->get_regions(1, $consignee ['country']));
             $this->assign('city_list', $city_list);
             $this->assign('district_list', $district_list);
 
@@ -1229,7 +1234,7 @@ class FlowController extends CommonController {
                 die(M()->errorMsg());
             }
         } while ($error_no == 1062); // 如果是订单号重复则重新提交数据
-        $new_order_id = mysql_insert_id();
+        $new_order_id = M()->insert_id();
         $order ['order_id'] = $new_order_id;
 
         /* 插入订单商品 */
@@ -1352,7 +1357,13 @@ class FlowController extends CommonController {
         if (!empty($order ['shipping_name'])) {
             $order ['shipping_name'] = trim(stripcslashes($order ['shipping_name']));
         }
-
+        // 如果是银行汇款或货到付款 则显示支付描述
+        if ($payment['pay_code'] == 'bank' || $payment['pay_code'] == 'cod'){
+            if (empty($order ['pay_name'])) {
+                $order ['pay_name'] = trim(stripcslashes($payment ['pay_name']));
+            }
+            $this->assign('pay_desc',$order['pay_desc']);
+        }
         // 货到付款不显示
         if ($payment ['pay_code'] != 'balance') {
             /* 生成订单后，修改支付，配送方式 */
@@ -1381,20 +1392,21 @@ class FlowController extends CommonController {
                             }
                         }
                     }
+                    // 如果不是微信浏览器访问并且不是微信会员 则不显示微信支付
+                    if ($payment ['pay_code'] == 'wxpay' && !is_wechat_browser() && empty($_SESSION['openid'])) {
+                        unset($payment_list [$key]);
+                    }
+                    // 兼容过滤ecjia支付方式
+                    if (substr($payment['pay_code'], 0 , 4) == 'pay_') {
+                        unset($payment_list[$key]);
+                    }
                 }
             }
             $this->assign('payment_list', $payment_list);
             $this->assign('pay_code', 'no_balance');
         }
-        
-        // 如果是银行汇款或货到付款 则显示支付描述
-        
-        if ($payment['pay_code'] == 'bank' || $payment['pay_code'] == 'balance'){
-            if (!empty($order ['pay_name'])) {
-                $order ['pay_name'] = trim(stripcslashes($payment ['pay_name']));
-            }
-            $this->assign('pay_desc',$payment['pay_desc']);
-        }
+
+
         
         /* 订单信息 */
         $this->assign('order', $order);
