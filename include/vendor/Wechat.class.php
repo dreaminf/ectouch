@@ -1112,7 +1112,7 @@ class Wechat
 	 */
 	protected function setCache($cachename,$value,$expired){
 		//TODO: set cache implementation
-		$cache_dir = ROOT_PATH . 'data/cache/filecache/';
+		$cache_dir = ROOT_PATH . 'data/attached/filecache/';
 		if(!is_dir($cache_dir)){
 			@mkdir($cache_dir, 0755, true);
 		}
@@ -1131,7 +1131,7 @@ class Wechat
 	 */
 	protected function getCache($cachename){
 		//TODO: get cache implementation
-		$cache_dir = ROOT_PATH . 'data/cache/filecache/';
+		$cache_dir = ROOT_PATH . 'data/attached/filecache/';
 		$file = $cache_dir . $cachename . '.cache';
 		if(!is_file($file)){
 			return false;	
@@ -1153,7 +1153,7 @@ class Wechat
 	 */
 	protected function removeCache($cachename){
 		//TODO: remove cache implementation
-		$cache_dir = ROOT_PATH . 'data/cache/filecache/';
+		$cache_dir = ROOT_PATH . 'data/attached/filecache/';
 		$file = $cache_dir . $cachename . '.cache';
 		if(is_file($file)){
 			@unlink($file);
