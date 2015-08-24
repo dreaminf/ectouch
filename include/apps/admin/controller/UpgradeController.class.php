@@ -36,7 +36,7 @@ class UpgradeController extends AdminController
         parent::__construct();
         $this->patch_charset = str_replace('-', '', EC_CHARSET);
         $this->upgrade_path_base = $this->_patchurl . $this->patch_charset . '/';
-        defined('CACHE_PATH') or define('CACHE_PATH', ROOT_PATH.'data/cache/');
+        defined('CACHE_PATH') or define('CACHE_PATH', ROOT_PATH.'data/attached/');
     }
 
     /**
