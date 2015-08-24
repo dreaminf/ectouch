@@ -1,16 +1,16 @@
 {include file="pageheader"}
 <div class="container-fluid" style="padding:0">
-	<div class="row" style="margin:0">
-	  <div class="col-md-2 col-sm-2 col-lg-1" style="padding-right:0;">{include file="wechat_left_menu"}</div>
-	  <div class="col-md-10 col-sm-10 col-lg-11" style="padding-right:0;">
-		<div class="panel panel-default">
-			<div class="panel-heading">多客服设置</div>
+  <div class="row" style="margin:0">
+    <div class="col-md-2 col-sm-2 col-lg-1" style="padding-right:0;">{include file="wechat_left_menu"}</div>
+    <div class="col-md-10 col-sm-10 col-lg-11" style="padding-right:0;">
+    <div class="panel panel-default">
+      <div class="panel-heading">多客服设置</div>
       <div class="panel-body bg-info">
-            <span class="help-block">   微信端输入kefu进入多客服系统，当会话超过2小时客服没有关闭时，微信端输入任何信息都会自动退出客服系统；或者当客服关闭会话后，微信端输入ko#kefu退出客服系统。
+            <span class="help-block">   微信端输入kefu进入多客服系统，当会话超过2小时客服没有关闭时，微信端输入任何信息都会自动退出客服系统；或者当客服关闭会话后，微信端输入ko#kefu退出客服系统。详细可见官方说明文档http://dkf.qq.com/faq-1_1.html。
             </span>
         </div>
-			
-			<div class="panel-body">
+      
+      <div class="panel-body">
         <form action="{url('customer_service')}" method="post" class="form-horizontal" role="form">
           <div class="form-group">
             <label class="col-sm-1 col-md-1 col-lg-1 control-label">状态</label>
@@ -25,7 +25,8 @@
           </div>
           <div class="form-group">
             <label class="col-sm-1 col-md-1 col-lg-1 control-label">转到客服</label>
-            <div class="col-sm-4 col-md-4 col-lg-4"><input type="text" class="form-control" placeholder="请输入客服" name="config[customer]" value="{$customer_service['config']['customer']}"></div>
+            <div class="col-sm-4 col-md-4 col-lg-4"><input type="text" class="form-control" placeholder="请输入客服" name="config[customer]" value="{$customer_service['config']['customer']}">
+            <span class="help-block">只有一个接待客服时可输入客服工号，一般不用填写，当有用户进入多客服时，会自动转接在线客服。</span></div>
           </div>
           <!-- <div class="form-group">
             <label class="col-sm-1 col-md-1 col-lg-1 control-label">会话自动关闭时间</label>
@@ -41,8 +42,8 @@
           </div>
         </form>
       </div>
-		</div>
-		</div>
-	</div>
+    </div>
+    </div>
+  </div>
 </div>
 {include file="pagefooter"}

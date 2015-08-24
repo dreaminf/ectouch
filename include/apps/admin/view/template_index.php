@@ -3,7 +3,7 @@
 <!-- start templates list -->
 <div class="list-div">
   <table width="100%" cellpadding="3" cellspacing="1" class="table table-bordered table-striped table-hover">
-  <tr><th>当前选择模板</th></tr>
+  <tr><th>{$lang['current_template']}</th></tr>
   <tr><td>
     <table>
       <tr>
@@ -22,7 +22,7 @@
         </td></tr>
     </table>
   </td></tr>
-  <tr><th>可用模板</th></tr>
+  <tr><th>{$lang['available_templates']}</th></tr>
   <tr><td>
   {loop $available_templates $key $template}
   <div style="display:-moz-inline-stack;display:inline-block;vertical-align:top;zoom:1;*display:inline;">

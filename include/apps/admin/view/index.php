@@ -44,10 +44,19 @@
     </dd>
   </dl>
   <dl>
-    <dt class="menu_title">模板插件</dt>
+    <dt class="menu_title">模板管理</dt>
     <dd>
       <ul>
-        <li><a href="{url('template/index')}" target="mainFrame">模板设置</a></li>
+        <li><a href="{url('template/index')}" target="mainFrame">模板选择</a></li>
+        <li><a href="{url('template/library')}" target="mainFrame">库项目管理</a></li>
+        <li><a href="{url('Languages/index')}" target="mainFrame">语言项编辑</a></li>
+      </ul>
+    </dd>
+  </dl>
+  <dl>
+    <dt class="menu_title">系统插件</dt>
+    <dd>
+      <ul>
         <li><a href="{url('payment/index')}" target="mainFrame">支付方式</a></li>
         <li><a href="{url('authorization/index')}" target="mainFrame">快捷登录</a></li>
       </ul>
@@ -79,7 +88,6 @@
     <dd>
       <ul>
       <li><a href="{url('wechat/index')}" target="mainFrame">我的公众号</a></li>
-      <li><a href="{url('wechat/append')}" target="mainFrame">新增公众号</a></li>
       </ul>
     </dd>
   </dl>

@@ -77,6 +77,13 @@
           </td>
         </tr>
         <tr>
+          <td width="200">{$lang['sort_order']}</td>
+          <td><div class="col-md-1">
+              <input type="text" name="data[pay_order]" maxlength="20" class="form-control input-sm" value="{if $pay['pay_order']}{$pay['pay_order']}{else}0{/if}" />
+            </div>
+          </td>
+        </tr>
+        <tr>
           <td width="200">{$lang['payment_is_cod']}</td>
           <td><div class="col-md-4">
               {if $pay['is_cod'] == "1"}{$lang['yes']}{else}{$lang['no']}{/if}
