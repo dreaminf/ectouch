@@ -16,18 +16,20 @@
                 {loop $modules $val}
                 <tr>
                     <td class="text-center">{$val['name']}</td>
-                    <td class="text-center">{$val['command']}</td>
                     <td class="text-center">{$val['keywords']}</td>
+                    <td class="text-center">{$val['command']}</td>
                     <td class="text-center">{$val['author']}</td>
                     <td class="text-center">{$val['website']}</td>
                     <td class="text-center">
                         {if isset($val['enable']) && !empty($val['enable'])}
-                        <a href="{url('edit', array('ks'=>$val['command'], 'handler'=>'edit'))}" class="btn btn-primary">编辑</a>
-                        <a href="javascript:if(confirm('{$lang['confirm_uninstall']}')){window.location.href='{url('uninstall', array('ks'=>$val['command']))}'};" class="btn btn-default">卸载</a>
+                        <a href="{url('function_edit', array('ks'=>$val['keywords']))}" class="btn btn-primary">编辑</a>
+                        <a href="javascript:if(confirm('{$lang['confirm_uninstall']}')){window.location.href='{url('function_uninstall', array('ks'=>$val['keywords']))}'};" class="btn btn-default">卸载</a>
                         {else}
-                        <a href="{url('edit', array('ks'=>$val['command']))}" class="btn btn-primary">安装</a>
+                        <a href="{url('function_install', array('ks'=>$val['keywords']))}" class="btn btn-primary">安装</a>
                         {/if}
-                        {if $val['enable'] == 1 && $val['config']['haslist'] == 1}<a href="{url('winner_list', array('ks'=>$val['command']))}" class="btn btn-default">查看记录</a>{/if}
+                        {loop $val['config'] $v}
+                        {if $val['enable'] == 1 && $v['name'] == 'haslist' && $v['value'] == 1}<a href="{url('winner_list')}" class="btn btn-default">查看记录</a>{/if}
+                        {/loop}
                     </td>
                 </tr>
                 {/loop}

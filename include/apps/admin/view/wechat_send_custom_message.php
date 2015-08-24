@@ -41,7 +41,7 @@ $(function(){
 		    	window.parent.location.reload();
 			}
 		    else{
-			    alert(data.msg);
+			    alert(data.error);
 			    return false;
 			}
 		}, 'json');

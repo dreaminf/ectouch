@@ -1,8 +1,7 @@
 {include file="pageheader"}
 <div class="container-fluid" style="padding:0">
   <div class="row" style="margin:0">
-    <div class="col-md-2 col-sm-2 col-lg-1" style="padding-right:0;">{include file="wechat_left_menu"}</div>
-    <div class="col-md-10 col-sm-10 col-lg-11" style="padding-right:0;">
+    <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
       <div class="panel panel-default">
         <div class="panel-heading"><a href="{url('mass_message')}" class="btn btn-default">群发信息</a><a href="{url('mass_list')}" class="btn btn-primary" style="margin-left: 5px;">发送记录</a></div>
         <div class="panel-body bg-danger">

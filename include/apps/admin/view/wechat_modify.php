@@ -1,5 +1,9 @@
 {include file="pageheader"}
-<div class="panel panel-default">
+
+<div class="container-fluid" style="padding:0">
+  <div class="row" style="margin:0">
+    <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
+      <div class="panel panel-default">
 	<div class="panel-heading">{$lang['edit'].$lang['wechat_num']}</div>
 	<table border="0" cellpadding="0" cellspacing="0" class="table table-hover table-bordered table-striped">
 		<form method="post" action="{url('wechat/modify')}" class="form-horizontal" role="form">
@@ -19,22 +23,14 @@
 			<p class="help-block">{$lang['wechat_help2']}</p>
 			</td>
 		</tr>
-		<tr>
+		<!-- <tr>
 			<td>{$lang['wechat_number']}</td>
 			<td><div class="col-sm-4">
 				<input type="text" name="data[weixin]" class="form-control" value="{$data['weixin']}"> 
 				</div>
 				<p class="help-block">{$lang['wechat_help1']}</p>
 				</td>
-		</tr>
-		<tr>
-			<td>{$lang['token']}</td>
-			<td><div class="col-sm-4">
-				<input type="text" name="data[token]" class="form-control" value="{$data['token']}">
-				</div>
-				<p class="help-block">{$lang['wechat_help3']}</p>
-				</td>
-		</tr>
+		</tr> -->
 		<tr>
 			<td>{$lang['appid']}</td>
 			<td><div class="col-sm-4">
@@ -52,6 +48,14 @@
 				</td>
 		</tr>
 		<tr>
+			<td>{$lang['token']}</td>
+			<td><div class="col-sm-4">
+				<input type="text" name="data[token]" class="form-control" value="{$data['token']}">
+				</div>
+				<p class="help-block">{$lang['wechat_help3']}</p>
+				</td>
+		</tr>
+		<!-- <tr>
 			<td>{$lang['wechat_type']}</td>
 			<td><div class="col-sm-2">
 				<select name="data[type]" class="form-control">
@@ -62,10 +66,10 @@
 				</div>
 				<p class="help-block">{$lang['wechat_help5']}</p>
 			</td>
-		</tr>
+		</tr> -->
 		<tr>
-			<td>开启授权登录</td>
-			<td><div class="col-sm-2 col-lg-2 col-md-2">
+			<td>自动登录</td>
+			<td><div class="col-sm-4 col-lg-2 col-md-3">
 				<div  class="btn-group" data-toggle="buttons">
 					<label class="btn btn-primary {if $data['oauth_status']==1}active{/if}">
 						<input type="radio" name="data[oauth_status]" value="1" {if $data['oauth_status']==1}checked{/if}> {$lang['wechat_open']}
@@ -75,10 +79,10 @@
 					</label>
 				</div>
 				</div>
-				<p class="help-block">开启之后，微商城会自动进行授权登录，否则不进行授权登录，只提供普通微商城功能。默认开启。</p>
+				<p class="help-block">开启之后，微商城会自动进行授权登录。</p>
 			</td>
 		</tr>
-		<tr>
+		<!-- <tr>
 			<td>微信OAuth名称</td>
 			<td><div class="col-sm-4">
 				<input type="text" name="data[oauth_name]" class="form-control" value="{$data['oauth_name']}"> 
@@ -117,7 +121,16 @@
 					</label>
 				</div>
 			</div></td>
+		</tr> -->
+		{if $data['orgid']}
+		<tr>
+			<td>接口地址</td>
+			<td><div class="col-sm-4">
+				<span class="label label-success">__URL__/index.php?c=wechat&orgid={$data['orgid']}</span>
+				</div>
+			</td>
 		</tr>
+		{/if}
 		<tr>
 			<td></td>
 			<td><div class="col-sm-4">
@@ -125,6 +138,11 @@
 				<input type="submit" name="submit" value="{$lang['button_save']}" class="btn btn-primary" />
 				</div></td>
 		</tr>
+		<input type="hidden" name="data[type]" value="2">
 		</form>
 	</table>
+      </div>
+    </div>
+  </div>
+</div>
 {include file="pagefooter"}

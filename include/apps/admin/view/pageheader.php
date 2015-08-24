@@ -8,7 +8,6 @@
 <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="__PUBLIC__/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
 <script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
-<script src="__PUBLIC__/js/jquery.json.js" type="text/javascript"></script>
 <script type="text/javascript" src="__PUBLIC__/fancybox/jquery.fancybox.js?v=2.1.5"></script>
 <script src="__PUBLIC__/artDialog/jquery.artDialog.js?skin=aero"></script>
 <script src="__PUBLIC__/artDialog/plugins/iframeTools.js"></script>
@@ -34,18 +33,10 @@ body {padding:5px; font-size:12px; margin-bottom:0px; font-family:'微软雅黑'
 .clear{clear:both;}
 .borderno{border:0;}
 </style>
-<script language="JavaScript">
-<!--
-// 这里把JS用到的所有语言都赋值到这里
-{loop $lang[js_languages] $key $item}
-var {$key} = "{$item}";
-{/loop}
-//-->
-</script>
 </head>
 
 <body>
-<ol class="breadcrumb">
+<ol class="breadcrumb" style="display:none;">
   <li class="glyphicon glyphicon-home"></li>
   <li><a href="{url('index/welcome')}">{$lang['cp_home']}</a></li>
   {if $ur_here}
@@ -53,7 +44,7 @@ var {$key} = "{$item}";
   {/if}
 </ol>
 {if $action_link}
-<div class="row" style="margin:0">
+<div class="row" style="margin:0; display:None;">
 	<div class="pull-right ectouch-mb5"><a href="{$action_link['href']}" class="btn btn-primary">{$action_link['text']}</a></div>
 </div>
 {/if}

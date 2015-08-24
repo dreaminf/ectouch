@@ -150,7 +150,7 @@ $modules['11_menu_rec']['affiliate']                     = 'affiliate.php?act=li
 $modules['11_menu_rec']['affiliate_ck']                  = 'affiliate_ck.php?act=list';
 
 // 微信通
-$modules['12_menu_wechat']['01_wechat_config'] = '../index.php?m=admin&c=wechat&a=modify';
+$modules['12_menu_wechat']['01_wechat_config'] = '../index.php?m=admin&c=wechat';
 $modules['12_menu_wechat']['02_wechat_masssend'] = '../index.php?m=admin&c=wechat&a=mass_message';
 $modules['12_menu_wechat']['03_wechat_autoreply'] = '../index.php?m=admin&c=wechat&a=reply_subscribe';
 $modules['12_menu_wechat']['04_wechat_selfmenu'] = '../index.php?m=admin&c=wechat&a=menu_list';

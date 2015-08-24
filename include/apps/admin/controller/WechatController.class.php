@@ -22,10 +22,24 @@ class WechatController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        // 获取配置信息
-        $this->get_config();
         $this->assign('ur_here', L('wechat'));
         $this->assign('action', ACTION_NAME);
+        // 默认微信公众号
+		$this->wechat_id = 1;
+        // 查找公众号
+        $mpInfo = $this->model->table('wechat')->where('id = '. $this->wechat_id)->find();
+        if(empty($mpInfo)){
+            $data = array(
+                'id' => $this->wechat_id,
+                'time' => time(),
+				'status' => 1,
+				'default_wx' => 1
+            );
+            $this->model->table('wechat')->data($data)->insert();
+            $this->redirect(url('modify'));
+        }
+        // 获取配置信息
+        $this->get_config();
     }
 
     /**
@@ -33,6 +47,8 @@ class WechatController extends AdminController
      */
     public function index()
     {
+        $this->redirect(url('modify'));
+        /*
         $list = $this->model->table('wechat')
             ->order('sort asc, id asc')
             ->select();
@@ -51,11 +67,13 @@ class WechatController extends AdminController
         $this->assign('wechat_register', $l);
         $this->assign('list', $list);
         $this->display();
+        */
     }
 
     /**
      * 设置公众号为默认
      */
+    /*
     public function set_default()
     {
         $id = I('get.id');
@@ -77,12 +95,15 @@ class WechatController extends AdminController
         
         $this->redirect(url('index'));
     }
+    */
 
     /**
      * 新增公众号
      */
     public function append()
     {
+        $this->redirect(url('index'));
+        /*
         if (IS_POST) {
             $data = I('post.data', '', 'trim,htmlspecialchars');
             $data['time'] = time();
@@ -107,6 +128,7 @@ class WechatController extends AdminController
             $this->redirect(url('wechat/index'));
         }
         $this->display();
+        */
     }
 
     /**
@@ -115,7 +137,7 @@ class WechatController extends AdminController
     public function modify()
     {
         if (IS_POST) {
-            $condition['id'] = intval($_POST['id']);
+            $condition['id'] = $this->wechat_id;
             $data = I('post.data', '', 'trim,htmlspecialchars');
             // 验证数据
             $result = Check::rule(array(
@@ -138,7 +160,7 @@ class WechatController extends AdminController
                 ->update();
             $this->redirect(url('wechat/index'));
         }
-        $condition['id'] = intval($_GET['id']);
+        $condition['id'] = $this->wechat_id;
         $data = $this->model->table('wechat')
             ->where($condition)
             ->find();
@@ -150,6 +172,7 @@ class WechatController extends AdminController
     /**
      * 删除公众号
      */
+    /*
     public function delete()
     {
         $condition['id'] = intval($_GET['id']);
@@ -158,6 +181,7 @@ class WechatController extends AdminController
             ->delete();
         $this->redirect(url('wechat/index'));
     }
+    */
 
     /**
      * 公众号菜单
@@ -388,7 +412,7 @@ class WechatController extends AdminController
         }
         if (isset($_GET['group_id']) && $group_id >= 0) {
             $where = ' and u.group_id = ' . $group_id;
-            $where1 = 'wechat_id = "' . $this->wechat_id . '" and subscribe = 1 and group_id = ' . $group_id;
+            $where1 = 'wechat_id = "' . $this->wechat_id . '" and group_id = ' . $group_id;
         }
         
         // 分页
@@ -549,8 +573,7 @@ class WechatController extends AdminController
             if (empty($rs)) {
                 exit(json_encode(array(
                     'status' => 0,
-                    // 'msg' => L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg
-                    'msg' => '只有48小时内给公众号发送过信息的粉丝才能接收到信息'
+                    'msg' => L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg
                 )));
             }
             // 添加数据
@@ -2160,7 +2183,7 @@ class WechatController extends AdminController
             'set_default'
         );
         if (! in_array(ACTION_NAME, $without)) {
-            $id = I('get.wechat_id', 0, 'intval');
+            $id = $this->wechat_id; //I('get.wechat_id', 0, 'intval');
             if (! empty($id)) {
                 session('wechat_id', $id);
             } else {
