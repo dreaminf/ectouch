@@ -42,6 +42,10 @@ class AdminController extends BaseController {
             return true;
         }
 
+        if(intval($_SESSION['admin_id']) > 0){
+            return true;
+        }
+
         //没有登录,则跳转到登录页面
         if (!$this->isLogin()) {
             $this->redirect(url('admin/index/login'));
