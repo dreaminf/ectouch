@@ -21,6 +21,7 @@ class AdminController extends BaseController {
     public function __construct() {
         parent::__construct();
         if (!isset($_SESSION)) {
+            /* 初始化session */
             session_start();
         }
         $this->checkLogin();
@@ -30,7 +31,8 @@ class AdminController extends BaseController {
     protected function checkLogin() {
         //验证来路是否合法
         if (!isset($_SESSION['safe_route'])) {
-            $this->redirect('index.php');
+            // $this->redirect('index.php');
+            $this->redirect(url('admin/index/login'));
         }
         //不需要登录验证的页面
         $without = array(
