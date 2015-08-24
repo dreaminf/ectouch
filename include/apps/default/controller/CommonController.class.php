@@ -91,8 +91,8 @@ class CommonController extends BaseController
         self::$view = new EcsTemplate();
         self::$view->cache_lifetime = C('cache_time');
         self::$view->template_dir = ROOT_PATH . 'themes/' . C('template');
-        self::$view->cache_dir = ROOT_PATH . 'data/cache/caches';
-        self::$view->compile_dir = ROOT_PATH . 'data/cache/compiled';
+        self::$view->cache_dir = ROOT_PATH . 'data/attached/caches';
+        self::$view->compile_dir = ROOT_PATH . 'data/attached/compiled';
         
         if ((DEBUG_MODE & 2) == 2) {
             self::$view->direct_output = true;
@@ -161,9 +161,9 @@ class CommonController extends BaseController
         defined('__TPL__') or define('__TPL__', __ROOT__ . '/themes/' . C('template'));
         $stylename = C('stylename');
         if (! empty($stylename)) {
-            $this->assign('ectouch_css_path', __ROOT__ . '/themes/' . C('template') . '/css/ectouch_' . C('stylename') . '.css');
+            $this->assign('ecs_css_path', __ROOT__ . '/themes/' . C('template') . '/css/style_' . C('stylename') . '.css');
         } else {
-            $this->assign('ectouch_css_path', __ROOT__ . '/themes/' . C('template') . '/css/ectouch.css');
+            $this->assign('ecs_css_path', __ROOT__ . '/themes/' . C('template') . '/css/style.css');
         }
     }
 }
