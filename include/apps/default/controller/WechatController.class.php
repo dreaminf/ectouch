@@ -119,7 +119,7 @@ class WechatController extends CommonController
             $this->record_msg($wedata['FromUserName'], $keywords);
             // 多客服
             $rs = $this->customer_service($wedata['FromUserName'], $keywords);
-            if (empty($rs) && $keywords != 'kefu') {
+            if (empty($rs)) {
                 // 功能插件
                 $rs1 = $this->get_function($wedata['FromUserName'], $keywords);
                 if (empty($rs1)) {
@@ -128,7 +128,7 @@ class WechatController extends CommonController
                     if (empty($rs2)) {
                         //推荐商品
                         $rs_rec = $this->recommend_goods($wedata['FromUserName'], $keywords);
-                        if(empty($rs_rec)){
+                        if($rs_rec){
                             // 消息自动回复
                             $this->msg_reply('msg');    
                         }
@@ -170,7 +170,7 @@ class WechatController extends CommonController
                     // 设置的用户注册信息
                     $register = $this->model->table('wechat_extend')
                         ->field('config')
-                        ->where('enable = 1 and command = "register_remind" and wechat_id = ' . $this->wechat_id)
+                        ->where('enable = 1 and command = "register_remind" and wechat_id = '.$this->wechat_id)
                         ->find();
                     if (! empty($register)) {
                         $reg_config = unserialize($register['config']);
@@ -200,18 +200,14 @@ class WechatController extends CommonController
                         $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
                     }
                     // 用户注册
-                    $scene_id = empty($scene_id) ? 0 : $scene_id;
-                    $scene_user_id = $this->model->table("users")->field('user_id')->where(array('user_id'=>$scene_id))->getOne();
-                    $scene_user_id = empty($scene_user_id) ? 0 : $scene_user_id;
                     $domain = get_top_domain();
-                    if (model('Users')->register($username, $password, $username . '@' . $domain, array('parent_id'=>$scene_user_id)) !== false) {
+                    if (model('Users')->register($username, $password, $username . '@' . $domain, array('parent_id'=>$scene_id)) !== false) {
                         $datas['user_rank'] = 99;
                         
                         $this->model->table('users')
                             ->data($datas)
                             ->where('user_name = "' . $username . '"')
                             ->update();
-                        model('Users')->update_user_info();
                     } else {
                         die('');
                     }
@@ -690,34 +686,32 @@ class WechatController extends CommonController
             $config['token'] = $wxinfo['token'];
             $config['appid'] = $wxinfo['appid'];
             $config['appsecret'] = $wxinfo['appsecret'];
-            
+
             // 微信通验证
             $weObj = new Wechat($config);
             // 微信浏览器浏览
-
-            if (self::is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid'])) && !empty($wxinfo['oauth_status'])) {
-                if (! isset($_SESSION['redirect_url'])) {
-                    session('redirect_url', __HOST__ . $_SERVER['REQUEST_URI']);
-                }
-                $url = $weObj->getOauthRedirect($wxinfo['oauth_redirecturi'], 1);
-                if (isset($_GET['code']) && !empty($_GET['code'])) {
+            if (self::is_wechat_browser() && $_SESSION['user_id'] === 0 && empty($_SESSION['openid'])) {
+                $_SESSION['wechat_user'] = array();
+                if(isset($_GET['code']) && !empty($_GET['code'])){
                     $token = $weObj->getOauthAccessToken();
-                    if ($token) {
-                        $userinfo = $weObj->getOauthUserinfo($token['access_token'], $token['openid']);
-                        self::update_weixin_user($userinfo, $wxinfo['id'], $weObj);
-                        if (! empty($_SESSION['redirect_url'])) {
-                            $redirect_url = session('redirect_url');
-                            header('Location:' . $redirect_url, true, 302);
-                            exit();
-                        }
-                    } else {
-                        header('Location:' . $url, true, 302);
-                        exit();
-                    }
-                } else {
-                    header('Location:' . $url, true, 302);
-                    exit();
+                    $_SESSION['wechat_user'] = $weObj->getUserInfo($token['openid']); //用户数据
                 }
+
+                if(empty($_SESSION['wechat_user'])){
+                    $_SESSION['redirect_url'] = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+                    $auth = $weObj->getOauthRedirect($_SESSION['redirect_url'], '1', 'snsapi_base');
+                    header('location: '. $auth);
+                    exit();
+                }                
+            }
+
+            $flag = I('get.flag');
+            if (!empty($wxinfo['oauth_status']) || $flag == 'oauth') {
+                self::update_weixin_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj);
+                header('Location:' . $_SESSION['redirect_url'], true, 302);
+                exit();
+            }else{
+                $_SESSION['openid'] = $_SESSION['wechat_user']['openid'];
             }
         }
     }
@@ -752,7 +746,7 @@ class WechatController extends CommonController
                 // 设置的用户注册信息
                 $register = model('Base')->model->table('wechat_extend')
                     ->field('config')
-                    ->where('enable = 1 and command = "register_remind" and wechat_id = '.$wechat_id)
+                    ->where('enable = 1 and command = "register_remind" and wechat_id = '.$this->wechat_id)
                     ->find();
                 if (! empty($register)) {
                     $reg_config = unserialize($register['config']);
@@ -790,7 +784,6 @@ class WechatController extends CommonController
                         ->data($data)
                         ->where('user_name = "' . $username . '"')
                         ->update();
-                    model('Users')->update_user_info();
                 } else {
                     die('授权失败，如重试一次还未解决问题请联系管理员');
                 }
@@ -831,8 +824,8 @@ class WechatController extends CommonController
             $weObj->sendCustomMessage($msg);
         } else {
             //开放平台有privilege字段,公众平台没有
-			$userinfo['group_id'] = isset($userinfo['groupid']) ? $userinfo['groupid'] : $weObj->getUserGroup($userinfo['openid']);
-			unset($userinfo['groupid']);
+            $userinfo['group_id'] = isset($userinfo['groupid']) ? $userinfo['groupid'] : $weObj->getUserGroup($userinfo['openid']);
+            unset($userinfo['groupid']);
             unset($userinfo['privilege']);
             $userinfo['subscribe'] = 1;
             model('Base')->model->table('wechat_user')
@@ -943,34 +936,34 @@ class WechatController extends CommonController
      * @return [type] [description]
      */
     public function check_auth(){
-    	$appid = I('get.appid');
-    	$appsecret = I('get.appsecret');
-    	if(empty($appid) || empty($appsecret)){
-    		echo json_encode(array('errmsg'=>'信息不完整，请提供完整信息', 'errcode'=>1));	
-    		exit;
-    	}
-    	$config = $this->model->table('wechat')
+        $appid = I('get.appid');
+        $appsecret = I('get.appsecret');
+        if(empty($appid) || empty($appsecret)){
+            echo json_encode(array('errmsg'=>'信息不完整，请提供完整信息', 'errcode'=>1));   
+            exit;
+        }
+        $config = $this->model->table('wechat')
             ->field('token, appid, appsecret')
             ->where('appid = "' . $appid . '" and appsecret = "'.$appsecret.'" and status = 1')
             ->find();
         if(empty($config)){
-        	echo json_encode(array('errmsg'=>'信息错误，请检查提供的信息', 'errcode'=>1));
-        	exit;	
+            echo json_encode(array('errmsg'=>'信息错误，请检查提供的信息', 'errcode'=>1));
+            exit;   
         }
 
         $obj = new Wechat($config);
         $access_token = $obj->checkAuth();
         if($access_token){
           echo json_encode(array('access_token'=>$access_token, 'errcode'=>0));
-          exit;	
+          exit; 
         }
         else{
-          echo json_encode(array('errmsg'=>$obj->errmsg, 'errcode'=>$obj->errcode));	
+          echo json_encode(array('errmsg'=>$obj->errmsg, 'errcode'=>$obj->errcode));    
           exit;
         }
     }
-	
-	/**
+
+    /**
      * 推荐分成二维码
      * @param  string  $user_name [description]
      * @param  integer $user_id   [description]
