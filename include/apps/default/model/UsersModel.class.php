@@ -102,7 +102,7 @@ class UsersModel extends BaseModel {
      *
      * @return  bool         $bool
      */
-    function register($username, $password, $email, $other = array(), $rand) {
+    function register($username, $password, $email, $other = array()) {
         /* 检查注册是否关闭 */
         $shop_reg_closed = C('shop_reg_closed');
         if (!empty($shop_reg_closed)) {
@@ -446,6 +446,7 @@ class UsersModel extends BaseModel {
         $info['mobile_phone'] = $infos['mobile_phone'];
         $info['passwd_question'] = $infos['passwd_question'];
         $info['passwd_answer'] = $infos['passwd_answer'];
+        $info['user_rank'] = $infos['user_rank'];
 
         return $info;
     }
@@ -585,6 +586,7 @@ class UsersModel extends BaseModel {
                 'shipping_id' => $value['shipping_id'],
                 'total_fee' => price_format($value['total_fee'], false),
                 'url' => url('user/order_detail', array('order_id' => $value['order_id'])),
+                'goods_count' => model('Users')->get_order_goods_count($value['order_id']),
                 'handler' => $value['handler']);
         }
         return $arr;
@@ -747,7 +749,7 @@ class UsersModel extends BaseModel {
             /* 添加地址 */
             $this->table = 'user_address';
             $res = $this->insert($consignee);
-            $consignee['address_id'] = mysql_insert_id();
+            $consignee['address_id'] = M()->insert_id();
         }
 
         if ($default) {
@@ -801,7 +803,7 @@ class UsersModel extends BaseModel {
         } else {
             /* 插入一条新记录 */
             $this->insert($address);
-            $address_id = mysql_insert_id();
+            $address_id = M()->insert_id();
         }
 
         if (isset($address['defalut']) && $address['default'] > 0 && isset($address['user_id'])) {
@@ -923,7 +925,7 @@ class UsersModel extends BaseModel {
             $payment_info = Model('Order')->payment_info($order['pay_id']);
 
             //无效支付方式
-            if ($payment_info === false) {
+            if ($payment_info === false || substr($payment_info['pay_code'], 0 , 4) == 'pay_') {
                 $order['pay_online'] = '';
             } else {
                 //取得支付信息，生成支付代码
@@ -1773,7 +1775,7 @@ class UsersModel extends BaseModel {
         $sql = 'SELECT u.user_name FROM ' . $this->pre . 'users u LEFT JOIN ' . $this->pre .
                 'touch_user_info t ON t.user_id = u.user_id WHERE t.aite_id = "' . $aite_id . '" ';
         $res = $this->row($sql);
-        if (!$res) {
+        if(!$res){
             //touch没有记录查询pc
             $sql = 'SELECT user_name FROM ' . $this->pre . 'users  WHERE aite_id = "' . $aite_id . '" ';
             $res = $this->row($sql);
@@ -1797,6 +1799,7 @@ class UsersModel extends BaseModel {
             // 更新附表
             $this->table = "touch_user_info";
             $touch_data['user_id'] = $uid;
+            //$touch_data['user_id'] = $_SESSION['user_id'];
             $touch_data['aite_id'] = $info['aite_id'];
             $this->insert($touch_data);
             return true;
@@ -1814,6 +1817,21 @@ class UsersModel extends BaseModel {
         $this->table = 'users';
         $condition['user_name'] = $user_name;
         return $this->count($condition);
+    }
+	
+	 /**
+     * 获取订单商品数量
+     * @return type
+     */
+    function get_order_goods_count($order_id) {
+    
+        $sql = "SELECT  COUNT(*) as count " .
+            "FROM " . $this->pre . "order_goods AS o " .
+            "LEFT JOIN " . $this->pre . "products AS p ON o.product_id = p.product_id " .
+            "LEFT JOIN " . $this->pre . "goods AS g ON o.goods_id = g.goods_id " .
+            "WHERE o.order_id = '$order_id' ";
+        $res = $this->row($sql);
+        return $res['count'];
     }
     
     /**

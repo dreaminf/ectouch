@@ -40,7 +40,7 @@ class ExchangeModel extends BaseModel {
         /* 获得商品列表 */
         $start = ($page - 1) * $size;
         $sort = $sort == 'sales_volume' ? 'xl.sales_volume' : $sort;
-        $sql = 'SELECT g.goods_id, g.goods_name, g.market_price, g.goods_name_style, eg.exchange_integral, ' .
+        $sql = 'SELECT g.goods_id, g.goods_name, g.market_price, g.goods_name_style,g.click_count, eg.exchange_integral, ' .
                 'g.goods_type, g.goods_brief, g.goods_thumb , g.goods_img, eg.is_hot ' .
                 'FROM ' . $this->pre . 'exchange_goods AS eg LEFT JOIN  ' . $this->pre . 'goods AS g ' .
                 'ON  eg.goods_id = g.goods_id ' . ' LEFT JOIN ' . $this->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' .
@@ -50,19 +50,20 @@ class ExchangeModel extends BaseModel {
         foreach ($res as $row) {
             $arr[$row['goods_id']]['goods_id'] = $row['goods_id'];
             if ($display == 'grid') {
-                $arr[$row['goods_id']]['goods_name'] = $GLOBALS['_CFG']['goods_name_length'] > 0 ? sub_str($row['goods_name'], $GLOBALS['_CFG']['goods_name_length']) : $row['goods_name'];
+                $arr[$row['goods_id']]['goods_name'] = C('goods_name_length') > 0 ? sub_str($row['goods_name'], C('goods_name_length')) : $row['goods_name'];
             } else {
                 $arr[$row['goods_id']]['goods_name'] = $row['goods_name'];
             }
             $arr[$row['goods_id']]['name'] = $row['goods_name'];
             $arr[$row['goods_id']]['goods_brief'] = $row['goods_brief'];
             $arr[$row['goods_id']]['goods_style_name'] = add_style($row['goods_name'], $row['goods_name_style']);
-            $arr[$row['goods_id']] ['market_price'] = price_format($row ['market_price']);
+            //$arr[$row['goods_id']]['market_price'] = price_format($row ['market_price']);
             $arr[$row['goods_id']]['exchange_integral'] = $row['exchange_integral'];
+            $arr[$row['goods_id']]['click_count'] = $row['click_count'];
             $arr[$row['goods_id']]['type'] = $row['goods_type'];
             $arr[$row['goods_id']]['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
             $arr[$row['goods_id']]['goods_img'] = get_image_path($row['goods_id'], $row['goods_img']);
-            $arr[$row['goods_id']]['url'] = build_uri('exchange_goods', array('gid' => $row['goods_id']), $row['goods_name']);
+            $arr[$row['goods_id']]['url'] = url('exchange_goods', array('gid' => $row['goods_id']));
             $arr[$row['goods_id']]['sc'] = model('GoodsBase')->get_goods_collect($row['goods_id']);
             $arr[$row['goods_id']]['mysc'] = 0;
             // 检查是否已经存在于用户的收藏夹
@@ -115,17 +116,18 @@ class ExchangeModel extends BaseModel {
 
             /* 修正重量显示 */
             $row['goods_weight'] = (intval($row['goods_weight']) > 0) ?
-                    $row['goods_weight'] . $GLOBALS['_LANG']['kilogram'] :
-                    ($row['goods_weight'] * 1000) . $GLOBALS['_LANG']['gram'];
+                    $row['goods_weight'] . L('kilogram') :
+                    ($row['goods_weight'] * 1000) . L('gram');
 
             /* 修正上架时间显示 */
-            $row['add_time'] = local_date($GLOBALS['_CFG']['date_format'], $row['add_time']);
+            $date_format = C('date_format');
+            $row['add_time'] = local_date($date_format, $row['add_time']);
 
             /* 修正商品图片 */
             $row['goods_img'] = get_image_path($goods_id, $row['goods_img']);
             $row['goods_thumb'] = get_image_path($goods_id, $row['goods_thumb'], true);
             $row['original_img'] = get_image_path($goods_id, $row['original_img'], true);
-            $row['goods_brand_url'] = build_uri('brand/goods_list', array('id' => $row['brand_id']));
+            $row['goods_brand_url'] = url('brand/goods_list', array('id' => $row['brand_id']));
             return $row;
         } else {
             return false;

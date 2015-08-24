@@ -27,12 +27,12 @@ class ArticleModel extends BaseModel {
      * @return  array
      */
     function assign_articles($id, $num) {
-        $sql = 'SELECT cat_name FROM ' . $this->pre . "article_cat WHERE cat_id = '" . $id . "'";
+        $sql = 'SELECT cat_name FROM ' . $this->pre . "touch_article_cat WHERE cat_id = '" . $id . "'";
 
         $cat['id'] = $id;
         $res = $this->row($sql);
         $cat['name'] = $res['cat_name'];
-        $cat['url'] = build_uri('article_cat', array('acid' => $id), $cat['name']);
+        $cat['url'] = url('article/art_list', array('id' => $id));
 
         $articles['cat'] = $cat;
         $articles['arr'] = model('ArticleBase')->get_cat_articles($id, 1, $num);
@@ -56,14 +56,12 @@ class ArticleModel extends BaseModel {
 
         $arr = array();
         foreach ($res AS $key => $row) {
-            $arr[$row['cat_id']]['cat_id'] = build_uri('article_cat', array('acid' => $row['cat_id']), $row['cat_name']);
+            $arr[$row['cat_id']]['cat_id'] = url('article/index', array('id' => $row['cat_id']));
             $arr[$row['cat_id']]['cat_name'] = $row['cat_name'];
             $arr[$row['cat_id']]['article'][$key]['article_id'] = $row['article_id'];
             $arr[$row['cat_id']]['article'][$key]['title'] = $row['title'];
-            $arr[$row['cat_id']]['article'][$key]['short_title'] = C('article_title_length') > 0 ?
-                    sub_str($row['title'], C('article_title_length')) : $row['title'];
-            $arr[$row['cat_id']]['article'][$key]['url'] = $row['open_type'] != 1 ?
-                    build_uri('article', array('aid' => $row['article_id']), $row['title']) : trim($row['file_url']);
+            $arr[$row['cat_id']]['article'][$key]['short_title'] = C('article_title_length') > 0 ? sub_str($row['title'], C('article_title_length')) : $row['title'];
+            $arr[$row['cat_id']]['article'][$key]['url'] = $row['open_type'] != 1 ? url('article/info', array('aid' => $row['article_id'])) : trim($row['file_url']);
         }
 
         return $arr;
@@ -156,13 +154,11 @@ class ArticleModel extends BaseModel {
             $cat_arr[$row['cat_id']]['name'] = $row['cat_name'];
 
             $cat_arr[$row['cat_id']]['children'][$row['child_id']]['url'] = url('article/art_list', array('acid' => $row ['cat_id']));
-            //$cat_arr[$row['cat_id']]['url'] = build_uri('article_cat', array('acid' => $row['cat_id']), $row['cat_name']);
             if ($row['child_id'] != NULL) {
 
                 $cat_arr[$row['cat_id']]['children'][$row['child_id']]['id'] = $row['child_id'];
                 $cat_arr[$row['cat_id']]['children'][$row['child_id']]['name'] = $row['child_name'];
                 $cat_arr[$row['cat_id']]['children'][$row['child_id']]['url'] = url('article/art_list', array('acid' => $row ['child_id']));
-                // $cat_arr[$row['cat_id']]['children'][$row['child_id']]['url'] = build_uri('article_cat', array('acid' => $row['child_id']), $row['child_name']);
             }
         }
 

@@ -117,7 +117,7 @@ class ActivityModel extends BaseModel {
 
             $arr[$row['goods_id']]['goods_id'] = $row['goods_id'];
             if ($display == 'grid') {
-                $arr[$row['goods_id']]['goods_name'] = $GLOBALS['_CFG']['goods_name_length'] > 0 ? sub_str($row['goods_name'], $GLOBALS['_CFG']['goods_name_length']) : $row['goods_name'];
+                $arr[$row['goods_id']]['goods_name'] = C('goods_name_length') > 0 ? sub_str($row['goods_name'], C('goods_name_length')) : $row['goods_name'];
             } else {
                 $arr[$row['goods_id']]['goods_name'] = $row['goods_name'];
             }
@@ -165,6 +165,16 @@ class ActivityModel extends BaseModel {
         $sql = "select sum(goods_number) as sum from " . $this->pre . "order_goods AS g ," . $this->pre . "order_info AS o WHERE o.order_id=g.order_id and g.goods_id = " . $goods_id . " and o.pay_status=2 and o.add_time >= " . $last_month . " and o.add_time <= " . $now_time . " group by g.goods_id";
         $res = $this->row($sql);
         return intval($res['sum']);
+    }
+	
+	    /**
+     * 获取优惠活动的信息和活动 数量
+     */
+    function get_activity_count() {
+        $sql = 'SELECT COUNT(*) as count FROM ' . $this->pre . 'favourable_activity f LEFT JOIN ' . $this->pre . 'touch_activity a on a.act_id = f.act_id ';
+        $res = $this->row($sql);
+        $count = $res['count'] ? $res['count'] : 0;
+        return $count;
     }
 
 }
