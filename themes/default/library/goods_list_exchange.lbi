@@ -24,15 +24,18 @@
 <!--{else}-->
 <div class="ect-margin-tb ect-pro-list ect-margin-bottom0 ect-border-bottom0">
   <ul id="J_ItemList">
-    <!--{foreach name=goods_list from=$goods_list item=groupbuy}-->
-    <li class="single_item"> <a href="{$groupbuy.url}"><img src="{$groupbuy.goods_thumb}" alt="{$groupbuy.goods_name}"></a>
+    <!--{foreach name=goods_list from=$goods_list item=exchange}-->
+    <li class="single_item"> 
+    <a href="{$exchange.url}"><img src="{$exchange.goods_thumb}" alt="{$exchange.goods_name}"></a>
       <dl>
         <dt>
-          <h4 class="title"><a href="{$groupbuy.url}">{$groupbuy.goods_name}</a></h4>
+          <h4 class="title"><a href="{$exchange.url}">{$exchange.goods_name}</a></h4>
         </dt>
-        <dd class="dd-price"><span class="pull-left"><strong>{$lang.price}：<b class="ect-colory">{$groupbuy.cur_price}</b></strong><small class="ect-margin-lr"><del>{$groupbuy.market_price}</del></small></span><span class="ect-pro-price"> <i class="label zk">{$groupbuy.spare_discount}{$lang.favourable_zk}</i> </span></dd>
-        <dd class="dd-num"><span class="pull-left"><i class="fa fa-eye"></i> {$groupbuy.click_num}{$lang.scan_num}</span><span class="pull-right">{$lang.sort_sales}：{$groupbuy.sales_count}{$lang.piece}</span> </dd>
-        <dd style="display:none"> {$groupbuy.spare_price}</dd>
+        <dd><span class="pull-left"><strong><b class="ect-colory">{$exchange.exchange_integral}积分</b></strong></span> </dd>
+        <dd>
+          <span class="pull-left"><i class="fa fa-eye"></i> {$exchange.click_count}{$lang.scan_num}</span> 
+          <span class="pull-right {if $goods.mysc!= 0}ect-colory{/if}"><i class="fa {if $goods.mysc!= 0}fa-heart{else}fa-heart-o{/if}"></i> {$exchange.sc}{$lang.like_num}</span>
+        </dd>
       </dl>
     </li>
     <!--{/foreach}-->

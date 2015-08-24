@@ -1,0 +1,17 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+{if $cat_articles}
+<style>
+.index-article {border-top: solid 1px #e3e3e3;background: #fff;}
+.index-article h3 {font-size: 14px;height: 40px;line-height: 40px;border-bottom: solid 1px #eee;margin-left: 10px;padding-right: 10px;}
+.index-article ul li {height: 40px;line-height: 40px;border-bottom: solid 1px #eee;padding-right: 10px;margin-left: 10px;overflow: hidden;}
+</style>
+<div class="blank2"></div>
+<div class="index-article">
+<h3>{$cat_articles.cat.name}<a href="{$cat_articles.cat.url}"  style="float:right;font-size:14px;">更多&gt;&gt;</a></h3>
+    <ul class="article_list">
+      <!--{foreach from=$cat_articles.arr item=article_item}-->
+      <li><a href="{$article_item.url}" title="{$article_item.title|escape:html}">{$article_item.short_title}</a></li>
+      <!--{/foreach}-->
+    </ul>
+</div>
+{/if}

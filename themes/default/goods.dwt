@@ -33,10 +33,20 @@
     <section class="ect-margin-tb ect-margin-lr ">
       <p><span class="pull-left">{$lang.amount}：<b class="ect-colory" id="ECS_GOODS_AMOUNT"></b></span><span class="pull-right">{$lang.sort_sales}：{$sales_count} {$lang.piece}</span></p>
       <p><!--{if $goods.is_promote and $goods.gmt_end_time } 促销-->{$lang.promote_price}<!--{else}-->{$lang.shop_price}<!--{/if}--><!--{if $goods.is_promote and $goods.gmt_end_time } 促销--> 
-        {$goods.promote_price} 
+        {$goods.promote_price}  
         <!--{else}--> 
         {$goods.shop_price_formated} 
-        <!--{/if}--> <small> <del><!-- {if $cfg.show_marketprice} 市场价格-->{$goods.market_price} <!-- {/if} --></del></small></p>
+        <!--{/if}--> <small> <del><!-- {if $cfg.show_marketprice} 市场价格-->{$goods.market_price} <!-- {/if} --></del></small>
+	  </p>
+    <p>
+        <!-- {foreach from=$rank_prices item=rank_price key=key} 会员等级对应的价格-->
+        <!-- {if $key eq $smarty.session.user_rank} -->
+        <li>{$rank_price.rank_name}：<font class="shop" id="ECS_RANKPRICE_{$key}">{$rank_price.price}</font></li>
+        <!-- {/if} -->
+        <!--{/foreach}-->
+    </p>
+	  <p><!--{if $goods.is_promote and $goods.gmt_end_time } 促销--><strong id="leftTime" class="price">{$lang.please_waiting}</strong><!--{/if}--></p>
+		 
     </section>
     <!-- {if $promotion} 优惠活动 -->
     <section class="ect-margin-tb ect-margin-bottom0 ect-padding-tb goods-promotion ect-padding-lr ">
@@ -63,7 +73,24 @@
       </p>
     </section>
     <!-- {/if} --> 
-    <!--商品评价-->
+
+    <!--{if $volume_price_list } -->
+    <section class="ect-margin-tb ect-margin-bottom0 ect-padding-tb goods-promotion ect-padding-lr ">
+     <h5><b>{$lang.volume_price}：</b></h5>
+     <table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#dddddd">
+      <tr>
+        <td align="center" bgcolor="#FFFFFF"><strong>{$lang.number_to}</strong></td>
+        <td align="center" bgcolor="#FFFFFF"><strong>{$lang.preferences_price}</strong></td>
+      </tr>
+      <!-- {foreach from=$volume_price_list item=price_list key=price_key} -->
+      <tr>
+      <td align="center" bgcolor="#FFFFFF" class="shop">{$price_list.number}</td>
+      <td align="center" bgcolor="#FFFFFF" class="shop">{$price_list.format_price}</td>
+      </tr>
+      <!-- {/foreach} -->
+     </table>
+    </section>
+    <!--{/if}-->
     
     <form action="javascript:addToCart({$goods.goods_id})" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY" >
       <section class="ect-padding-lr ect-padding-tb goods-option">
@@ -189,16 +216,16 @@ document.addEventListener('DOMContentLoaded', function(){Code.photoSwipe('a', '#
 
 
 /*倒计时*/
-var goods_id = {$goods_id};
+var goods_id = {$goods.goods_id};
 var goodsattr_style = 1;
-var gmt_end_time = 0;
-var day = "天";
-var hour = "小时";
-var minute = "分钟";
-var second = "秒";
-var end = "结束";
 var goodsId = {$goods_id};
+
+var gmt_end_time = "{$goods.gmt_end_time|default:0}";
+{foreach from=$lang.goods_js item=item key=key}
+var {$key} = "{$item}";
+{/foreach}
 var now_time = {$now_time};
+
 var use_how_oos = {:C('use_how_oos')};
 onload = function(){
   changePrice(2);
@@ -208,7 +235,7 @@ onload = function(){
 }
 function back_goods_number(){
  var goods_number = document.getElementById('goods_number').value;
-  document.getElementById('back_number').value = goods_number;
+  document.getElementById('goods_number').value = goods_number;
 }
 /**
  * 点选可选属性或改变数量时修改商品价格的函数
@@ -219,8 +246,8 @@ function changePrice(type)
   if(type == 1){qty--; }
   if(type == 3){qty++; }
   if(qty <=0 ){ qty=1; }
-  if(!/^[0-9]*$/.test(qty)){ qty = document.getElementById('back_number').value; }
-  document.getElementById('goods_number').value = qty;
+  if(!/^[0-9]*$/.test(qty)){ qty = document.getElementById('goods_number').value; }
+  document.getElementById('goods_number').value = parseInt(qty);
   var attr = getSelectedAttributes(document.forms['ECS_FORMBUY']);
   $.get('{:url("goods/price")}', {'id':goodsId,'attr':attr,'number':qty}, function(data){
     changePriceResponse(data);
@@ -228,18 +255,6 @@ function changePrice(type)
 }
 
 
-/**
- * 接收返回的信息
- */
-function changePriceResponse(res){
-  if (res.err_msg.length > 0){
-    alert(res.err_msg);
-  } else {
-    if (document.getElementById('ECS_GOODS_AMOUNT'))
-      document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result;
-  }
-}
-<!-- {/literal} -->
 /**
  * 接收返回的信息
  */

@@ -1,6 +1,6 @@
+<!-- {if $pager} -->
 <ul class="pager ect-margin-lr ect-page">
-	  <li class="pull-left"><a href="{$pager.page_prev|default:#}">上一页</a></li>
-	  <!-- {if $pager.page_number} -->
+	  <li class="pull-left"><a href="{$pager.page_prev|default:#}">{$lang.page_prev}</a></li>
 	  <li class="form-select">
 		<i class="fa fa-sort-desc"></i>
 	    <select name="sel_question" onChange="window.location.href=this.value;">
@@ -9,6 +9,6 @@
 			<!-- {/foreach} -->
 		</select>
 	  </li>
-	  <!-- {/if} -->
-	  <li class="pull-right"><a href="{$pager.page_next|default:#}">下一页</a></li>
-</ul> 
+	  <li class="pull-right"><a href="{$pager.page_next|default:#}">{$lang.page_next}</a></li>
+</ul>
+<!-- {/if} --> 

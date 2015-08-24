@@ -64,10 +64,10 @@
             </tr>
           </table>
           <br />
-          <!-- {/foreach} --> 
+          <!-- {/foreach} -->
         </div>
       </section>
-      <section class="goods-more-a"> <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_brief}</span> <span class="pull-right"><i class="fa fa-chevron-right"></i></span></a> <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_comment}</span> <span class="pull-right"><span class="ect-color">{$comments.count}</span>{$lang.comment_num} <span class="ect-color">{$comments.favorable}%</span>{$lang.favorable_comment} <i class="fa fa-chevron-right"></i></span></a> </section>
+      <section class="goods-more-a"> <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['id']))}"><span class="Text">{$lang.goods_brief}</span> <span class="pull-right"><i class="fa fa-chevron-right"></i></span></a> <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['id']))}"><span class="Text">{$lang.goods_comment}</span> <span class="pull-right"><span class="ect-color">{$comments.count}</span>{$lang.comment_num} <span class="ect-color">{$comments.favorable}%</span>{$lang.favorable_comment} <i class="fa fa-chevron-right"></i></span></a> </section>
       <div class="ect-padding-lr ect-padding-tb goods-submit">
         <div>
           <input type="hidden" name="act_id" value="" />

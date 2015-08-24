@@ -12,11 +12,11 @@
     </div>
     <div class="bd">
       <ul id="Gallery">
-       <li><a href="#"><img alt="{$goods.goods_name}" src="{$goods.original_img}"/></a></li>
+       <li><a href="#"><img src="{$goods.goods_img}" alt="{$goods.goods_name}" /></a></li>
         <!--{if $pictures}--> 
         <!-- {foreach from=$pictures item=picture name=no}--> 
         <!-- {if $smarty.foreach.no.iteration > 1}  -->
-        <li><a href="#"><img alt="{$goods.goods_name}" src="{$picture.img_url}"/></a></li>
+        <li><a href="#"><img src="{$picture.img_url}" alt="{$picture.img_desc}" /></a></li>
         <!-- {/if}--> 
         <!--{/foreach}--> 
         <!--{/if}-->

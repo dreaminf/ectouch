@@ -18,7 +18,7 @@
         <select name="country" id="selCountries_{$sn}" onchange="region.changed(this, 1, 'selProvinces_{$sn}')">
           <option value="0">{$lang.please_select}{$name_of_region[0]}</option>
           <!-- {foreach from=$country_list item=country} -->
-          <option value="{$country.region_id}"{if $country.region_id eq '1'} selected{/if}>{$country.region_name}</option>
+          <option value="{$country.region_id}" {if $consignee.country eq $country.region_id} selected{/if}>{$country.region_name}</option>
           <!-- {/foreach} -->
         </select>
       </div>
