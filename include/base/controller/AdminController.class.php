@@ -20,10 +20,12 @@ class AdminController extends BaseController {
 
     public function __construct() {
         parent::__construct();
-        if (!isset($_SESSION)) {
-            /* 初始化session */
-            session_start();
-        }
+        // if (!isset($_SESSION)) {
+        //     // session_start();
+        // }
+        require BASE_PATH .'classes/session.php';
+        $sess = new session(self::$db, self::$ecs->table('sessions'), self::$ecs->table('sessions_data'), 'ECSCP_ID');
+
         $this->checkLogin();
         $this->assign('lang', L());
     }
@@ -32,7 +34,6 @@ class AdminController extends BaseController {
         //验证来路是否合法
         if (!isset($_SESSION['safe_route'])) {
             // $this->redirect('index.php');
-            $this->redirect(url('admin/index/login'));
         }
         //不需要登录验证的页面
         $without = array(
@@ -44,13 +45,13 @@ class AdminController extends BaseController {
             return true;
         }
 
-        if(intval($_SESSION['admin_id']) > 0){
+        if (intval($_SESSION['admin_id']) > 0) {
             return true;
         }
 
         //没有登录,则跳转到登录页面
         if (!$this->isLogin()) {
-            $this->redirect(url('admin/index/login'));
+            // $this->redirect(url('admin/index/login'));
         }
         return true;
     }
