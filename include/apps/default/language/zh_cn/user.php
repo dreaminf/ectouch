@@ -428,6 +428,8 @@ $_LANG['msg_email_blank'] = '邮件地址不能为空';
 $_LANG['msg_email_registered'] = '邮箱已存在,请重新输入';
 $_LANG['msg_email_format'] = '邮件地址不合法';
 
+$_LANG['sms_signin_register'] = '提示：手机号注册, 验证码即是登录密码, 请妥善保存！';  //by yang
+
 $_LANG['login_success'] = '登录成功';
 $_LANG['confirm_login'] = '确认登录';
 $_LANG['profile_lnk'] = '查看我的个人信息';
