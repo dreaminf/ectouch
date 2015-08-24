@@ -14,7 +14,7 @@ class EcsMysql {
     var $queryTime = '';
     var $queryLog = array();
     var $max_cache_time = 300; // 最大的缓存时间，以秒为单位
-    var $cache_data_dir = 'data/cache/query_caches/';
+    var $cache_data_dir = 'data/attached/query_caches/';
     var $root_path = '';
     var $error_message = array();
     var $platform = '';
