@@ -138,7 +138,7 @@ function build_urhere($arr, $type = 'category') {
                 break;
         }
 
-        $str .= ' <code>&gt;</code> <a href="' . build_uri($type, $args) . '">' . htmlspecialchars($val['cat_name']) . '</a>';
+        $str .= ' <code>&gt;</code> <a href="' . url($type, $args) . '">' . htmlspecialchars($val['cat_name']) . '</a>';
     }
 
     return $str;
@@ -219,10 +219,10 @@ function assign_pager($app, $cat, $record_count, $size, $sort, $order, $page = 1
             $pager['page_next'] = $url_format . $page_next;
             $pager['page_last'] = $url_format . $page_count;
         } else {
-            $pager['page_first'] = build_uri($app, array_merge($uri_args, array('page' => 1)));
-            $pager['page_prev'] = build_uri($app, array_merge($uri_args, array('page' => $page_prev)));
-            $pager['page_next'] = build_uri($app, array_merge($uri_args, array('page' => $page_next)));
-            $pager['page_last'] = build_uri($app, array_merge($uri_args, array('page' => $page_count)));
+            $pager['page_first'] = url($app, array_merge($uri_args, array('page' => 1)));
+            $pager['page_prev'] = url($app, array_merge($uri_args, array('page' => $page_prev)));
+            $pager['page_next'] = url($app, array_merge($uri_args, array('page' => $page_next)));
+            $pager['page_last'] = url($app, array_merge($uri_args, array('page' => $page_count)));
         }
         $pager['array'] = array();
 
@@ -261,14 +261,14 @@ function assign_pager($app, $cat, $record_count, $size, $sort, $order, $page = 1
                 $pager['page_number'][$i] = $url_format . $i;
             }
         } else {
-            $pager['page_first'] = ($page - $_offset > 1 && $_pagenum < $page_count) ? build_uri($app, array_merge($uri_args, array('page' => 1))) : '';
-            $pager['page_prev'] = ($page > 1) ? build_uri($app, array_merge($uri_args, array('page' => $page_prev))) : '';
-            $pager['page_next'] = ($page < $page_count) ? build_uri($app, array_merge($uri_args, array('page' => $page_next))) : '';
-            $pager['page_last'] = ($_to < $page_count) ? build_uri($app, array_merge($uri_args, array('page' => $page_count))) : '';
+            $pager['page_first'] = ($page - $_offset > 1 && $_pagenum < $page_count) ? url($app, array_merge($uri_args, array('page' => 1))) : '';
+            $pager['page_prev'] = ($page > 1) ? url($app, array_merge($uri_args, array('page' => $page_prev))) : '';
+            $pager['page_next'] = ($page < $page_count) ? url($app, array_merge($uri_args, array('page' => $page_next))) : '';
+            $pager['page_last'] = ($_to < $page_count) ? url($app, array_merge($uri_args, array('page' => $page_count))) : '';
             $pager['page_kbd'] = ($_pagenum < $page_count) ? true : false;
             $pager['page_number'] = array();
             for ($i = $_from; $i <= $_to; ++$i) {
-                $pager['page_number'][$i] = build_uri($app, array_merge($uri_args, array('page' => $i)));
+                $pager['page_number'][$i] = url($app, array_merge($uri_args, array('page' => $i)));
             }
         }
     }
@@ -1557,9 +1557,14 @@ function send_wechat_message($type = '', $title = '', $msg = '', $url = '', $ord
         $config = unserialize($remind['config']);
         $title = $remind['name'] ? $remind['name'] : $title;
         $msg = $config['template'] ? str_replace('[$order_id]', $order_id, $config['template']) : $msg;
-        $openid = M()->table('wechat_user')->field('openid')->where('ect_uid = ' . $_SESSION['user_id'])->getOne();
+        $sql = "SELECT p.openid FROM ".M()->pre."pay_log p LEFT JOIN ".M()->pre."order_info o ON p.order_id = o.order_id WHERE o.order_sn = '$order_id'";
+        $rs = M()->query($sql);
+        $openid = $rs[0]['openid'];
+        if(empty($openid)){
+            $openid = M()->table('wechat_user')->field('openid')->where('ect_uid = ' . $_SESSION['user_id'])->getOne();
+        }
         if (!empty($title) && !empty($openid)) {
-            $dourl = __HOST__ . url('api/index', array('openid' => $openid, 'title' => $title, 'msg' => $msg, 'url' => $url));
+            $dourl = __HOST__ . '/mobile/index.php?c=api&'. http_build_query(array('openid' => $openid, 'title' => $title, 'msg' => $msg, 'url' => $url), '', '&');
             Http::doGet($dourl);
         }
     }
@@ -1586,11 +1591,11 @@ function get_goods_count($goods_id)
     } elseif ($period == 4) {// 一个月
         $ext = " AND o . add_time > '" . local_strtotime(' - 1 months') . "'";
     }
-    /* 查询该商品销量 */
+  /* 查询该商品销量 */
     $sql = 'SELECT IFNULL(SUM(g.goods_number), 0) as count ' .
         'FROM '. M()->pre .'order_info AS o, '. M()->pre .'order_goods AS g ' .
         "WHERE o . order_id = g . order_id " .
-        " AND o . order_status = '" . OS_CONFIRMED . "'" .
+        " AND o . order_status " . db_create_in(array(OS_CONFIRMED, OS_SPLITED)) .
         " AND o . shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)) .
         " AND o . pay_status " . db_create_in(array(PS_PAYED, PS_PAYING)) .
         " AND g . goods_id = '$goods_id'";
