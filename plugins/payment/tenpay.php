@@ -71,14 +71,15 @@ class tenpay
      */
     function get_code($order, $payment)
     {
-        $gateway = 'https://wap.tenpay.com/cgi-bin/wappayv2.0/wappay_init.cgi';
+        $init_url = 'https://wap.tenpay.com/cgi-bin/wappayv2.0/wappay_init.cgi';
+        $gateway = 'https://wap.tenpay.com/cgi-bin/wappayv2.0/wappay_gate.cgi';
         // 初始化
         $data = array(
             'ver' => '2.0', // 必填 版本号,ver 默认值是 1.0。目前版本 ver 取值应为 2.0
             'charset' => 1, // 可选 1 UTF-8, 2 GB2312, 默认为 1 UTF-8
             'bank_type' => 0, // 必填 银行类型:财付通支付填 0;目前只能为 0
             'desc' => $order['order_sn'], // 必填 商品描述,32 个字符以内
-            'purchaser_id' => '', // 可选 用户(买方)的财付通帐户(QQ 或 EMAIL)。若商户没有传该参数则在财付通支付页面;买家需要输入其财付通帐户。
+            //'purchaser_id' => '', // 可选 用户(买方)的财付通帐户(QQ 或 EMAIL)。若商户没有传该参数则在财付通支付页面;买家需要输入其财付通帐户。
             'bargainor_id' => $payment['bargainor_id'], // 必填 商户号,由财付通统一分配的 10 位正整数(120XXXXXXX)号
             'sp_billno' => $order['order_sn'] . 'O' . $order['log_id'], // 必填 商户系统内部的定单号,32 个字符内、可包含字母
             'total_fee' => $order['order_amount'] * 100, // 必填 总金额,以分为单位,不允许包含任何字母、符号
@@ -103,7 +104,7 @@ class tenpay
         $sign .= 'key=' . $payment['tenpay_key'];
         $data['sign'] = strtoupper(md5($sign));
         // 交易初始化
-        $result = Http::doPost($gateway, $data);
+        $result = Http::doPost($init_url, $data);
         $xml = (array)simplexml_load_string($result);
         if (isset($xml['err_info'])) {
             return '<div style="color:red; text-align: center">错误信息：'.$xml['err_info'].'</div>';

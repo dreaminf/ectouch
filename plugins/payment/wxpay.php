@@ -121,7 +121,7 @@ class wxpay
         )) . '"}});}function callpay(){if (typeof WeixinJSBridge == "undefined"){if( document.addEventListener ){document.addEventListener("WeixinJSBridgeReady", jsApiCall, false);}else if (document.attachEvent){document.attachEvent("WeixinJSBridgeReady", jsApiCall);document.attachEvent("onWeixinJSBridgeReady", jsApiCall);}}else{jsApiCall();}}
             </script>';
         
-        $button = '<div style="text-align:center"><button class="btn btn-primary" type="button" onclick="callpay()">微信安全支付</button></div>' . $js;
+        $button = '<div style="text-align:center"><button class="btn-info ect-btn-info" style="background-color:#44b549;" type="button" onclick="callpay()">微信安全支付</button></div>' . $js;
         
         return $button;
     }
@@ -195,6 +195,7 @@ class wxpay
                         $order_url = __HOST__ . url('user/order_detail', array(
                             'order_id' => $order_id
                         ));
+                        $order_url = str_replace('notify_wap_wxpay', 'mobile/index', $order_url);
                         $order_url = urlencode(base64_encode($order_url));
                         send_wechat_message('pay_remind', '', $out_trade_no[0] . ' 订单已支付', $order_url, $out_trade_no[0]);
                     }
@@ -295,7 +296,7 @@ class wxpay
         // 初始化curl
         $ch = curl_init();
         // 设置超时
-        curl_setopt($ch, CURLOP_TIMEOUT, $second);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $second);
         // 这里设置代理，如果有的话
         // curl_setopt($ch,CURLOPT_PROXY, '8.8.8.8');
         // curl_setopt($ch,CURLOPT_PROXYPORT, 8080);
@@ -311,7 +312,6 @@ class wxpay
         curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
         // 运行curl
         $data = curl_exec($ch);
-        curl_close($ch);
         // 返回结果
         if ($data) {
             curl_close($ch);
