@@ -454,4 +454,14 @@ $_LANG['cfg_range']['sms_signin']['1'] = '发短信';
 $_LANG['cfg_range']['sms_signin']['0'] = '不发短信';
 $_LANG['cfg_name']['sms_ecmoban_user'] = '短信接口用户名';
 $_LANG['cfg_name']['sms_ecmoban_password'] = '短信接口密码';
-?>
+
+// 分销start by WS
+$_LANG['cfg_name']['sale'] = '分销';
+$_LANG['cfg_range']['sale']['0'] = '关闭';
+$_LANG['cfg_range']['sale']['1'] = '开启';
+$_LANG['cfg_name']['sale_ms'] = '分销模式';  // 客户申请分销模式
+$_LANG['cfg_range']['sale_ms']['1'] = '无需审核'; // 点击我要分销直接成为分销商
+$_LANG['cfg_range']['sale_ms']['2'] = '需要审核'; // 点击我要分销申请，后台管理同意
+$_LANG['cfg_range']['sale_ms']['3'] = '购物即可分销'; // 随意购买一个商品即可成为分销商
+$_LANG['cfg_range']['sale_ms']['4'] = '购买分销';    // 购买成为分销商
+$_LANG['cfg_name']['sale_money'] = '购买分销价格(元)';  // 购买成为分销商的费用

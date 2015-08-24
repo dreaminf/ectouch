@@ -717,4 +717,8 @@ $_LANG['passwd_questions']['favorite_equipe'] = '我最喜欢的运动队？';
 
 $_LANG['can_not_empty'] = '不能为空';
 
-?>
+$_LANG['apply_sale_wait'] = '您的申请已提交，请等待管理员同意';
+$_LANG['label_fenxiao2'] = '我的分销';
+$_LANG['label_fenxiao'] = '我要分销';
+$_LANG['apply_sale_wait2'] = '已提交申请,请等待审核';
+$_LANG['apply_sale_wait3'] = '购买任意一件商品后自动成为分销商';

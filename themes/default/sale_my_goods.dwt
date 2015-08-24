@@ -1,0 +1,37 @@
+<!-- #BeginLibraryItem "/library/sale_header.lbi" --><!-- #EndLibraryItem -->
+<div id="box">   		  
+          	  <div class="header">
+                 <div class="yjfd_content10">
+                 <a href="{:url('sale/index')}"><i class="iconfont icon-jiantou"></i></a><span class="tltle">{$title}</span>                 
+              </div>     
+              </div>
+             
+            
+            <form action="{:url('sale/my_goods')}" method="post">
+			<div class="dpgl_list">                                 
+				<span class="dpgl_list2">选择分销商品</span>
+			</div>           
+			<div class="set3_lista">    
+				<i class="iconfont icon-lvse icon-duihao"></i>                             
+				<span class="set3_list2a">全选</span>
+			</div>
+			
+			<div class="sp_box" >
+			<!--{foreach from=$category item=li}-->
+				<div class="{if $li.is_select eq 1}sp_box2{else}sp_box1{/if}" class="clear" id="cate_{$li.cat_id}" onClick="select_cate('{$li.cat_id}')">
+					<input type="checkbox" name="cate[]" value="{$li.cat_id}" id="input_{$li.cat_id}" class="display-none" {if $li.is_select eq 1}checked="checked"{/if} />
+					<span class="sp_title {if $li.is_select eq 1}font-color-fff{/if}">{$li.cat_name}</span>
+					<span class="sp_content {if $li.is_select eq 1}font-color-fff{/if}" >本店销售佣金：6.00%</span>
+					<span class="sp_content {if $li.is_select eq 1}font-color-fff{/if}">一级分店佣金：3.00%</span>
+					<span class="sp_content {if $li.is_select eq 1}font-color-fff{/if}">二级分店佣金：3.00%</span>
+				</div> 
+			<!-- {/foreach} -->           
+				
+			</div>
+            <div class="t-a-center"><input type="submit" value="{:L('next_step')}" class="set-4-submit"></div>
+			</form>
+			<div class="dpxq_border"></div> 
+    </div>
+</body>
+</html>
+</html>

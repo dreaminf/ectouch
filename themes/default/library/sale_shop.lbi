@@ -1,0 +1,47 @@
+<!-- {if $mobile_qr} -->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js" ></script> 
+
+<div class="shop">
+	<div>
+		<div class="pull-left shop-img"><img src="{if $user_info.headimgurl}{$user_info.headimgurl}{else}__PUBLIC__/images/get_avatar.png{/if}"></div>
+		<div class="pull-left shop-title">
+			<h4>{$info.sale_name}</h4>
+			<span>{:C('shop_name')}</span>
+		</div>
+		<div class="pull-right shop-rgt-img">
+			<ul>
+				<li class="sc-click"><img src="__TPL__/images/sale/iconfont-shoucang.png"><span>收藏本店</span></li>
+				<li class="ewm-click"><img src="__TPL__/images/sale/iconfont-erweima.png"><span>二 维 码</span></li>
+			</ul>
+		</div>
+	</div>
+	
+</div>
+<div id="shop_sc" class="shop-sc hide">
+		<div class="shop-sc-img"><img src="__TPL__/images/sale/shop_sc.png" /></div>
+		<div class="shop-sc-bg"></div>
+</div>
+<div id="shop-ew" class="shop-ew hide">
+		<div class="shop-ew-img"><img src="{$mobile_qr}" /></div>
+		<div class="shop-ew-bg"></div>
+	</div>
+<link rel="stylesheet" href="__TPL__/css/sale/sale_shop.css"> 
+
+
+<script>
+	$(".ewm-click").click(function(){
+		$(".shop-ew").removeClass("hide");
+	});
+	$(".shop-ew-bg").click(function(){
+		$(".shop-ew").addClass("hide");
+	});
+	$(".sc-click").click(function(){
+		$(".shop-sc").removeClass("hide");
+	});
+	$(".shop-sc-bg,#shop_sc").click(function(){
+		$(".shop-sc").addClass("hide");
+	});
+</script>
+
+<!-- {/if} -->
+
