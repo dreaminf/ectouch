@@ -253,6 +253,7 @@ class zjd extends PluginWechatController
             
             if ($num > $config['prize_num']) {
                 $rs['status'] = 2;
+                $rs['num'] = 0;
                 $rs['msg'] = '你已经用光了抽奖次数';
                 echo json_encode($rs);
                 exit();

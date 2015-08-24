@@ -93,8 +93,17 @@
 						height: 40,
 						color: "#a9a9a7",  //覆盖的刮刮层的颜色
 						scratchDown: function(e, percent) {
+							e.preventDefault();
 							$(this.canvas).css('margin-right', $(this.canvas).css('margin-right') == "0px" ? "1px" : "0px");
-							if(percent > 23){
+						},
+						scratchMove: function(e, percent){
+							e.preventDefault();
+							$(this.canvas).css('margin-right', $(this.canvas).css('margin-right') == "0px" ? "1px" : "0px");
+						},
+						scratchUp: function(e, percent){
+							e.preventDefault();
+							$(this.canvas).css('margin-right', $(this.canvas).css('margin-right') == "0px" ? "1px" : "0px");
+							if(percent >= 1.5){
 								$("#scratchpad").wScratchPad('clear');
 								$.getJSON('<?php echo url('wechat/plugin_action', array('name'=>'ggk'))?>', {act:'do', prize_type:result.prize_type, prize_name:result.msg, prize_level:result.level}, function(data){
 									if(result.num >= 0){

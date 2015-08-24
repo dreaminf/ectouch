@@ -174,23 +174,41 @@ class bd extends PluginWechatController
                     $_SESSION['discount'] = 1.00;
                 }
             }
-            $old_uid = session('user_id');
+            $old_uid = $_SESSION['user_id'];
             if ($user->login($data['username'], $data['password'], '')) {
                 //绑定
-                $unionid = model('Base')->model->table('wechat_user')->field('unionid')->where('openid = "'.session('openid').'"')->getOne();
+                $unionid = model('Base')->model->table('wechat_user')->field('unionid')->where('openid = "'.$_SESSION['openid'].'"')->getOne();
                 if($unionid){
-                  model('Base')->model->table('wechat_user')->data('ect_uid = '.session('user_id'))->where('unionid = "'.$unionid.'"')->update();
+                  model('Base')->model->table('wechat_user')->data('ect_uid = '.$_SESSION['user_id'])->where('unionid = "'.$unionid.'"')->update();
                 }
                 else{
-                  model('Base')->model->table('wechat_user')->data('ect_uid = '.session('user_id'))->where('openid = "'.session('openid').'"')->update();
+                  model('Base')->model->table('wechat_user')->data('ect_uid = '.$_SESSION['user_id'])->where('openid = "'.$_SESSION['openid'].'"')->update();
                 }
                 model('Users')->update_user_info();
                 model('Users')->recalculate_price();
-                show_message('绑定成功', '返回首页', url('index/index'));
+                show_message('您的帐号:'.$data['username'].'已绑定成功', '返回首页', url('index/index'));
             } else {
-                show_message('用户名或密码错误', '会员绑定', url('wechat/plugin_show', array(
-                    'name' => $this->plugin_name
-                )));
+                if($user->add_user($data['username'], $data['password'], time().'@qq.com', '0','0', time())){
+                    if($user->login($data['username'], $data['password'], '')){
+                        model('Users')->update_user_info();
+                        model('Users')->recalculate_price();
+                        //绑定
+                        $unionid = model('Base')->model->table('wechat_user')->field('unionid')->where('openid = "'.$_SESSION['openid'].'"')->getOne();
+                        if($unionid){
+                          model('Base')->model->table('wechat_user')->data('ect_uid = '.$_SESSION['user_id'])->where('unionid = "'.$unionid.'"')->update();
+                        }
+                        else{
+                          model('Base')->model->table('wechat_user')->data('ect_uid = '.$_SESSION['user_id'])->where('openid = "'.$_SESSION['openid'].'"')->update();
+                        }
+                        show_message('您的新帐号:'.$data['username'].'注册并绑定成功', '返回首页', url('index/index'));
+                    }
+                    else{
+                        show_message('登陆失败，请用已注册会员进行重新绑定', '返回会员绑定', url('wechat/plugin_show', array('name' => $this->plugin_name)));
+                    }
+                    
+                }else{
+                    show_message('注册失败！会员名或已存在', '返回会员绑定', url('wechat/plugin_show', array('name' => $this->plugin_name)));
+                }
             }
         }
     }

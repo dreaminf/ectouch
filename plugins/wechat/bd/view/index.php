@@ -9,11 +9,11 @@
 	<script src="<?php echo __PUBLIC__;?>/js/validform.js"></script>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: 1.6rem;">
 	<div class="row">
 	<div class="col-sm-12 col-md-12">
 		<div class="panel panel-default">
-			<div class="panel-heading">会员绑定</div>
+			<div class="panel-heading">绑定/注册</div>
 			<div class="panel-body">
 			<form action="<?php echo url('wechat/plugin_action', array('name'=>'bd'));?>" method="post" class="form-horizontal validforms" role="form" onsubmit="if(!confirm('您确认要进行绑定操作吗'))return false;">
 				<div class="form-group">
@@ -34,6 +34,11 @@
 						<input type="reset" class="btn btn-default" value="重置" />
 				    </div>
 				 </div>
+				<div class="form-group">
+					<p class="col-sm-12 control-label">1、如果您是老用户请输入帐号进行绑定。</p>
+					<p class="col-sm-12 control-label">2、新用户输入用户名和密码进行注册并绑定。</p>
+					<p class="col-sm-12 control-label">3、绑定后的帐号可以登录到其他终端。</p>
+				</div>
 			</form>
 			</div>
 		</div>

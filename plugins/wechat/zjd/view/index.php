@@ -165,6 +165,7 @@
                 }
                 else if(data.status == 2){
                 	$("#content").html(data.msg);
+                    $(".num").html(data.num);
                 	$("#dialog").attr("class",'no').show();
                 }
             }, 'json');
