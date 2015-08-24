@@ -66,22 +66,15 @@ class BaseModel extends Model {
      * @return  array
      */
     public function load_config() {
-        $data = read_static_cache('touch_shop_config');
+        $data = read_static_cache('shop_config');
         if ($data === false) {
-            $sql = 'SELECT code, value FROM ' . $this->pre . 'touch_shop_config WHERE parent_id > 0';
-            $res = $this->query($sql);
-            $arr1 = array();
-            foreach ($res AS $row) {
-                $arr1[$row['code']] = $row['value'];
-            }
 
             $sql = 'SELECT code, value FROM ' . $this->pre . 'shop_config WHERE parent_id > 0';
             $res = $this->query($sql);
-            $arr2 = array();
+            $arr = array();
             foreach ($res AS $row) {
-                $arr2[$row['code']] = $row['value'];
+                $arr[$row['code']] = $row['value'];
             }
-            $arr = array_merge($arr2, $arr1);
 
             /* 对数值型设置处理 */
             $arr['watermark_alpha'] = intval($arr['watermark_alpha']);
@@ -132,7 +125,7 @@ class BaseModel extends Model {
                 $arr['integrate_code'] = 'ecshop'; // 默认的会员整合插件为 ecshop
             }
 			
-            write_static_cache('touch_shop_config', $arr);
+            write_static_cache('shop_config', $arr);
         } else {
             $arr = $data;
         }
