@@ -289,7 +289,7 @@ INSERT INTO `ecs_touch_payment` ( `pay_id`, `pay_code`, `pay_name`, `pay_fee`, `
 --
 -- 表的结构 `ecs_touch_shop_config`
 --
-
+/*
 DROP TABLE IF EXISTS `ecs_touch_shop_config`;
 
 CREATE TABLE IF NOT EXISTS `ecs_touch_shop_config` (
@@ -312,9 +312,10 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_shop_config` (
 
 INSERT INTO `ecs_touch_shop_config` SELECT * FROM `ecs_shop_config`;
 
-INSERT INTO `ecs_touch_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (1, 'shop_url', 'text', '', '', '', 1);
+-- INSERT INTO `ecs_touch_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (1, 'shop_url', 'text', '', '', '', 1);
 
-INSERT INTO `ecs_touch_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (1, 'show_asynclist', 'select', '1,0', '', '0', 1);
+-- INSERT INTO `ecs_touch_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (1, 'show_asynclist', 'select', '1,0', '', '0', 1);
+*/
 -- ----------------------------
 -- 增加短信接口配置项
 -- ----------------------------
@@ -324,7 +325,6 @@ DELETE FROM ecs_touch_shop_config where code = 'sms_signin';
 INSERT INTO `ecs_touch_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (8, 'sms_ecmoban_user', 'text', '', '', '', 0);
 INSERT INTO `ecs_touch_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (8, 'sms_ecmoban_password', 'password', '', '', '', 0);
 INSERT INTO `ecs_touch_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (8, 'sms_signin', 'select', '1,0', '', '0', 1);
-
 --
 -- 表的结构 `ecs_touch_user`
 --
