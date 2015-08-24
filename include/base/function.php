@@ -1271,7 +1271,7 @@ function cat_list($cat_id = 0, $selected = 0, $re_type = true, $level = 0, $is_s
         return $select;
     } else {
         foreach ($options AS $key => $value) {
-            $options[$key]['url'] = build_uri('category/index', array('id' => $value['cat_id']));
+            $options[$key]['url'] = url('category/index', array('id' => $value['cat_id']));
         }
 
         return $options;
@@ -1458,6 +1458,7 @@ function price_format($price, $change_price = true) {
     if ($price === '') {
         $price = 0;
     }
+    $price = 0 + $price;//添加这一行，转换成数值
     if ($change_price && defined('ECS_ADMIN') === false) {
         switch (C('price_format')) {
             case 0:
@@ -1738,9 +1739,14 @@ function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods',
     $url = C('no_picture');
     if(!empty($image)){
       $base_url = substr(C('SHOP_URL'), -1) == '/' ? C('SHOP_URL') : C('SHOP_URL') . '/';
-      $url = strtolower(substr($image, 0, '4')) == 'http' ? $image : $base_url . $image;
+      if(strtolower(substr($image, 0, 4)) == 'http'){
+          $url = $image;
+      }else if(strtolower(substr($image, 0, 13)) == 'data/attached'){
+          $url = __ROOT__ . '/' . $image;
+      }else{
+          $url = $base_url . $image;
+      }
     }
-   
     return $url;
 }
 
@@ -2204,28 +2210,26 @@ function get_template_info($template_name, $template_style = '') {
     $info['stylename'] = $template_style;
 
     if ($template_style == '') {
-        foreach ($ext AS $val) {
+        foreach ($ext as $val) {
             if (file_exists(ROOT_PATH . 'themes/' . $template_name . "/images/screenshot.$val")) {
-                $info['screenshot'] = ROOT_PATH . 'themes/' . $template_name . "/images/screenshot.$val";
-
+                $info['screenshot'] = __URL__ . '/themes/' . $template_name . "/images/screenshot.$val";
                 break;
             }
         }
     } else {
-        foreach ($ext AS $val) {
+        foreach ($ext as $val) {
             if (file_exists(ROOT_PATH . 'themes/' . $template_name . "/images/screenshot_$template_style.$val")) {
-                $info['screenshot'] = ROOT_PATH . 'themes/' . $template_name . "/images/screenshot_$template_style.$val";
-
+                $info['screenshot'] = __URL__ . '/themes/' . $template_name . "/images/screenshot_$template_style.$val";
                 break;
             }
         }
     }
 
-    $css_path = ROOT_PATH . 'themes/' . $template_name . '/style.css';
+    $css_path = ROOT_PATH . 'themes/' . $template_name . '/css/ectouch.css';
     if ($template_style != '') {
-        $css_path = ROOT_PATH . 'themes/' . $template_name . "/style_$template_style.css";
+        $css_path = ROOT_PATH . 'themes/' . $template_name . "/css/ectouch_$template_style.css";
     }
-    if (file_exists($css_path) && !empty($template_name)) {
+    if (file_exists($css_path) && ! empty($template_name)) {
         $arr = array_slice(file($css_path), 0, 10);
 
         $template_name = explode(': ', $arr[1]);
@@ -2236,7 +2240,6 @@ function get_template_info($template_name, $template_style = '') {
         $author_uri = explode(': ', $arr[6]);
         $logo_filename = explode(': ', $arr[7]);
         $template_type = explode(': ', $arr[8]);
-
 
         $info['name'] = isset($template_name[1]) ? trim($template_name[1]) : '';
         $info['uri'] = isset($template_uri[1]) ? trim($template_uri[1]) : '';
@@ -2270,7 +2273,7 @@ function get_template_info($template_name, $template_style = '') {
 function get_template_region($tmp_name, $tmp_file, $lib = true) {
     global $dyna_libs;
 
-    $file = '../themes/' . $tmp_name . '/' . $tmp_file;
+    $file = ROOT_PATH . 'themes/' . $tmp_name . '/' . $tmp_file;
 
     /* 将模版文件的内容读入内存 */
     $content = file_get_contents($file);
@@ -2357,7 +2360,7 @@ function get_editable_libs($curr_template, $curr_page_libs) {
     $vals = array();
     $edit_libs = array();
 
-    if ($xml_content = @file_get_contents(ROOT_PATH . 'themes/' . $_CFG['template'] . '/libs.xml')) {
+    if ($xml_content = @file_get_contents(ROOT_PATH . 'themes/' . C('template') . '/libs.xml')) {
         $p = xml_parser_create();                                                   //把xml解析到数组
         xml_parse_into_struct($p, $xml_content, $vals, $index);
         xml_parser_free($p);
