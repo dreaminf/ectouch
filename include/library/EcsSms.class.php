@@ -153,12 +153,12 @@ class EcsSms {
 
     // 检测手机号码是否正确
     function is_moblie($moblie) {
-        return preg_match("/^0?1((3|8)[0-9]|5[0-35-9]|4[57])\d{8}$/", $moblie);
+        return preg_match("/^0?1((3|7|8)[0-9]|5[0-35-9]|4[57])\d{8}$/", $moblie);
     }
 
     //打印日志
     function logResult($word = '') {
-        $fp = fopen(ROOT_PATH . "/smserrlog.txt", "a");
+        $fp = fopen(ROOT_PATH . "data/smserrlog.txt", "a");
         flock($fp, LOCK_EX);
         fwrite($fp, "执行日期：" . strftime("%Y%m%d%H%M%S", time()) . "\n" . $word . "\n");
         flock($fp, LOCK_UN);
