@@ -41,7 +41,7 @@ if (isset($set_modules) && $set_modules == TRUE) {
     $modules[$i]['email'] = 'zhulin@ecmoban.com';
 
     // 申请网址
-    $modules[$i]['website'] = 'http://open.qq.com';
+    $modules[$i]['website'] = 'http://connect.qq.com';
 
     // 版本号
     $modules[$i]['version'] = '1.0';
