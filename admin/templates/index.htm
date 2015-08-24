@@ -101,7 +101,7 @@ function openItem(args){
 		$('#crumbs').html('<span>'+$('#nav_'+nav+' > span').html()+'</span><span class="arrow">&nbsp;</span><span>'+$('#item_'+nav+'_'+module).html()+'</span>');
 	}
 	// src = 'index.php?m='+module+'&a='+action;
-	$('#workspace').attr('src', action);
+	$('#workspace').attr('src', action.replace('amp;', ''));
 
 }
 
