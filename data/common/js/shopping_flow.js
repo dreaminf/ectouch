@@ -606,6 +606,10 @@ var ECS_INTEGRAL = '';
       }
     }
   }
+  //避免重复提交
+  $("input[name='submit']").attr("disabled",true);
+  setTimeout(function (){$("input[name='submit']").attr("disabled",false);},5000);
+  
   frm.action = frm.action + '&step=done';
   //frm.action = frm.action + '?step=done';
   return true;
@@ -618,6 +622,13 @@ function checkConsignee(frm)
 {
   var msg = new Array();
   var err = false;
+  
+  if (frm.elements['country'] && frm.elements['country'].value == 0 && frm.elements['country'].length > 1)
+  {
+    err = true;
+    msg.push(country_not_null);
+  }
+
 
   if (frm.elements['province'] && frm.elements['province'].value == 0 && frm.elements['province'].length > 1)
   {
