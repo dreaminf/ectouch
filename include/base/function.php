@@ -1506,7 +1506,7 @@ function clear_tpl_files($is_cache = true, $ext = '') {
     if (isset($GLOBALS['shop_id']) && $GLOBALS['shop_id'] > 0) {
         $tmp_dir = DATA_DIR;
     } else {
-        $tmp_dir = 'temp';
+        $tmp_dir = 'data/attached';
     }
     if ($is_cache) {
         $cache_dir = ROOT_PATH . $tmp_dir . '/caches/';
@@ -1532,7 +1532,7 @@ function clear_tpl_files($is_cache = true, $ext = '') {
         }
 
         while ($file = readdir($folder)) {
-            if ($file == '.' || $file == '..' || $file == 'index.htm' || $file == 'index.html') {
+            if ($file == '.' || $file == '..' || $file == 'index.htm' || $file == 'index.html' || $file == '.gitignore') {
                 continue;
             }
             if (is_file($dir . $file)) {
@@ -1590,8 +1590,17 @@ function clear_cache_files($ext = '') {
  * @return  void
  */
 function clear_all_files($ext = '') {
-    del_dir(ROOT_PATH . 'data/cache');
-    @mkdir(ROOT_PATH . 'data/cache', 0777);
+    $dirs = array(
+        'caches',
+        'compiled',
+        'static_caches',
+        'query_caches',
+        'filecache',
+    );
+    foreach ($dirs as $key => $value) {
+        del_dir(ROOT_PATH . 'data/attached/'.$value);
+        @mkdir(ROOT_PATH . 'data/attached/'.$value, 0777);
+    }
 }
 
 /**
