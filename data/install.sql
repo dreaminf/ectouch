@@ -286,45 +286,16 @@ INSERT INTO `ecs_touch_payment` ( `pay_id`, `pay_code`, `pay_name`, `pay_fee`, `
 INSERT INTO `ecs_touch_payment` ( `pay_id`, `pay_code`, `pay_name`, `pay_fee`, `pay_desc`, `pay_order`, `pay_config`, `enabled`, `is_cod`, `is_online` ) VALUES  ('2', 'bank', '银行汇款/转帐', '0', '银行名称\n收款人信息：全称 ××× ；帐号或地址 ××× ；开户行 ×××。\n注意事项：办理电汇时，请在电汇单“汇款用途”一栏处注明您的订单号。', '0', 'a:0:{}', '1', '0', '0');
 INSERT INTO `ecs_touch_payment` ( `pay_id`, `pay_code`, `pay_name`, `pay_fee`, `pay_desc`, `pay_order`, `pay_config`, `enabled`, `is_cod`, `is_online` ) VALUES  ('3', 'cod', '货到付款', '0', '开通城市：×××\n货到付款区域：×××', '0', 'a:0:{}', '1', '1', '0');
 
---
--- 表的结构 `ecs_touch_shop_config`
---
-/*
-DROP TABLE IF EXISTS `ecs_touch_shop_config`;
-
-CREATE TABLE IF NOT EXISTS `ecs_touch_shop_config` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `code` varchar(30) NOT NULL DEFAULT '',
-  `type` varchar(10) NOT NULL DEFAULT '',
-  `store_range` varchar(255) NOT NULL DEFAULT '',
-  `store_dir` varchar(255) NOT NULL DEFAULT '',
-  `value` text NOT NULL,
-  `sort_order` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `code` (`code`),
-  KEY `parent_id` (`parent_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
---
--- 转存表中的数据 `ecs_touch_shop_config`
---
-
-INSERT INTO `ecs_touch_shop_config` SELECT * FROM `ecs_shop_config`;
-
--- INSERT INTO `ecs_touch_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (1, 'shop_url', 'text', '', '', '', 1);
-
--- INSERT INTO `ecs_touch_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (1, 'show_asynclist', 'select', '1,0', '', '0', 1);
-*/
 -- ----------------------------
 -- 增加短信接口配置项
 -- ----------------------------
-DELETE FROM ecs_touch_shop_config where code = 'sms_ecmoban_user';
-DELETE FROM ecs_touch_shop_config where code = 'sms_ecmoban_password';
-DELETE FROM ecs_touch_shop_config where code = 'sms_signin';
-INSERT INTO `ecs_touch_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (8, 'sms_ecmoban_user', 'text', '', '', '', 0);
-INSERT INTO `ecs_touch_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (8, 'sms_ecmoban_password', 'password', '', '', '', 0);
-INSERT INTO `ecs_touch_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (8, 'sms_signin', 'select', '1,0', '', '0', 1);
+DELETE FROM ecs_shop_config where code = 'sms_ecmoban_user';
+DELETE FROM ecs_shop_config where code = 'sms_ecmoban_password';
+DELETE FROM ecs_shop_config where code = 'sms_signin';
+INSERT INTO `ecs_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (8, 'sms_ecmoban_user', 'text', '', '', '', 0);
+INSERT INTO `ecs_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (8, 'sms_ecmoban_password', 'password', '', '', '', 0);
+INSERT INTO `ecs_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (8, 'sms_signin', 'select', '1,0', '', '0', 1);
+
 --
 -- 表的结构 `ecs_touch_user`
 --
