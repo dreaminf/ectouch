@@ -249,26 +249,29 @@ class UserController extends CommonController {
      *  会员充值和提现申请记录 
      */
     public function  account_log(){
-    
-        $size = I(C('page_size'), 5);
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
-        $count = $this->model->table('user_account')->field('COUNT(*)')->where("user_id = $this->user_id AND process_type ". db_create_in(array(SURPLUS_SAVE, SURPLUS_RETURN)))->getOne();
-        $this->pageLimit(url('user/account_log'), $size);
-        $this->assign('pager', $this->pageShow($count));    
-    
+
+        /* 获取记录条数 */
+        $record_count = $this->model->table('user_account')->field('COUNT(*)')->where("user_id = $this->user_id AND process_type ". db_create_in(array(SURPLUS_SAVE, SURPLUS_RETURN)))->getOne();
+
+        //分页函数
+        $pager = get_pager('index.php', array('c' => 'user'), $record_count, $page);
+
         //获取剩余余额
         $surplus_amount = model('ClipsBase')->get_user_surplus($this->user_id);
         if (empty($surplus_amount))
         {
             $surplus_amount = 0;
         }
+
         //获取余额记录
-        $account_log = model('ClipsBase')->get_account_log($this->user_id, $size, ($page-1)*$size);
-    
+        $account_log = get_account_log($this->user_id, $pager['size'], $pager['start']);
+
         //模板赋值
+        $this->assign('title', L('label_user_surplus'));
         $this->assign('surplus_amount', price_format($surplus_amount, false));
         $this->assign('account_log',    $account_log);
-        $this->assign('title', L('label_user_surplus'));
+        $this->assign('pager',          $pager);
         $this->display('user_account_log.dwt');
     }
     
