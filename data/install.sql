@@ -321,3 +321,32 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_user_info` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户信息';
 
 
+-- ----------------------------
+-- Table structure for `ecs_drp_config`
+-- ----------------------------
+DROP TABLE IF EXISTS `ecs_drp_config`;
+CREATE TABLE `ecs_drp_config` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `centent` text COMMENT '分销申请 温馨提示',
+  `keyword` varchar(20) DEFAULT NULL COMMENT '区分文章的key',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ecs_drp_config
+-- ----------------------------
+INSERT INTO `ecs_drp_config` VALUES ('1', '温馨提示', 'apply');
+INSERT INTO `ecs_drp_config` VALUES ('2', '新手必读', 'novice');
+
+-- ----------------------------
+-- Table structure for `ecs_drp_profit`
+-- ----------------------------
+DROP TABLE IF EXISTS `ecs_drp_profit`;
+CREATE TABLE `ecs_drp_profit` (
+  `profit_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '分类利润id',
+  `cate_id` int(10) DEFAULT NULL COMMENT '商品分类',
+  `profit1` float(20,2) DEFAULT '0.00' COMMENT '分销利润1级',
+  `profit2` float(20,2) DEFAULT '0.00' COMMENT '分销利润2级',
+  `profit3` float(20,2) DEFAULT '0.00' COMMENT '分销利润3级',
+  PRIMARY KEY (`profit_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
