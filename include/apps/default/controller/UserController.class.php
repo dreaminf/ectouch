@@ -265,7 +265,7 @@ class UserController extends CommonController {
         }
 
         //获取余额记录
-        $account_log = get_account_log($this->user_id, $pager['size'], $pager['start']);
+        $account_log = model('ClipsBase')->get_account_log($this->user_id, $pager['size'], $pager['start']);
 
         //模板赋值
         $this->assign('title', L('label_user_surplus'));
