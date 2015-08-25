@@ -1,0 +1,28 @@
+{if $full_page}
+<!-- $Id: users_list.htm 15617 2009-02-18 05:18:00Z sunxiaodong $ -->
+{include file="pageheader.htm"}
+{insert_scripts files="../js/utils.js,listtable.js"}
+
+<form method="POST" action="" name="listForm">
+
+<!-- start users list -->
+<div class="list-div" id="listDiv">
+{/if}
+
+<table cellpadding="4" cellspacing="1">
+    <tr>
+        <td style="width:40%;">{$lang.apply_wxts}</td>
+        <td style="width:60%;"><textarea name="data[centent]">{$info.centent}</textarea></td>
+    </tr>
+    <tr>
+        <td><input type="hidden" value="{$keyword}" name="keyword"></td>
+        <td><input type="submit" value="{$lang.submit}" class="button" /></td>
+    </tr>
+</table>
+{if $full_page}
+</div>
+<!-- end users list -->
+</form>
+{/literal}
+{include file="pagefooter.htm"}
+{/if}

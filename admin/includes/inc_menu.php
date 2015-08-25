@@ -148,6 +148,9 @@ $modules['10_menu_tools']['captcha_manage']             = 'captcha_manage.php?ac
 // 微分销
 //$modules['11_menu_rec']['affiliate']                     = 'affiliate.php?act=list';
 //$modules['11_menu_rec']['affiliate_ck']                  = 'affiliate_ck.php?act=list';
+$modules['11_menu_rec']['drp']                      = 'drp.php?act=list';
+$modules['11_menu_rec']['apply']                    = 'drp.php?act=apply';
+$modules['11_menu_rec']['novice']                   = 'drp.php?act=novice';
 
 // 微信通
 $modules['12_menu_wechat']['01_wechat_config'] = '../index.php?m=admin&c=wechat';

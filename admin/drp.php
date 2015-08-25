@@ -23,21 +23,118 @@ $config = get_affiliate();
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'list')
 {
+    /* 获取分类列表 */
+    $cate_list = $db->getAll("SELECT c.cat_name, c.cat_id, p.profit_id, p.cate_id, p.profit1, p.profit2, p.profit3 FROM " . $ecs->table("category") . "as c left join " . $ecs->table('drp_profit') . " as p on c.cat_id=p.cate_id WHERE parent_id= 0 and is_show = 1");
+
+    foreach($cate_list as $key=>$val){
+        $cate_list[$key]['profit1'] = $val['profit1'] > 0 ? $val['profit1'] : 0;
+        $cate_list[$key]['profit2'] = $val['profit2'] > 0 ? $val['profit2'] : 0;
+        $cate_list[$key]['profit3'] = $val['profit3'] > 0 ? $val['profit3'] : 0;
+    }
+    $smarty->assign('list', $cate_list);
     assign_query_info();
     if (empty($_REQUEST['is_ajax']))
     {
         $smarty->assign('full_page', 1);
     }
-
-    $smarty->assign('ur_here', $_LANG['affiliate']);
-    $smarty->assign('config', $config);
-    $smarty->display('affiliate.htm');
+    $smarty->assign('ur_here', $_LANG['drp_profit']);
+    $smarty->display('drp_cate_list.htm');
 }
-elseif ($_REQUEST['act'] == 'query')
+
+/*------------------------------------------------------ */
+//-- 设置分销利润
+/*------------------------------------------------------ */
+if ($_REQUEST['act'] == 'edit')
 {
-    $smarty->assign('ur_here', $_LANG['affiliate']);
-    $smarty->assign('config', $config);
-    make_json_result($smarty->fetch('affiliate.htm'), '', null);
+    if($_POST){
+        $cate_id = $_POST['cate_id'] ? $_POST['cate_id'] : 0;
+        if($cate_id == 0){
+            ecs_header("Location: drp.php?act=list\n");
+            exit;
+        }
+        $data = $_POST['data'];
+        foreach($data as $key=>$val){
+            if(!is_numeric($val) || $val < 0 || $val > 100){
+                $data[$key] = 0;
+            }
+        }
+        if($db->getRow("SELECT profit_id FROM" . $ecs->table('drp_profit') . " WHERE  cate_id=$cate_id")){
+            $db->autoExecute($ecs->table('drp_profit'), $data, 'UPDATE', "cate_id = '$cate_id'");
+        }else{
+            $data['cate_id'] = $cate_id;
+            $db->autoExecute($ecs->table('drp_profit'), $data, 'INSERT');
+        }
+        ecs_header("Location: drp.php?act=list\n");
+        exit;
+    }
+    $id = $_GET['id'] ? $_GET['id'] : 0;
+    if($id == 0){
+        ecs_header("Location: drp.php?act=list\n");
+        exit;
+    }
+    /* 获取分类列表 */
+    $cate_list = $db->getRow("SELECT c.cat_name, c.cat_id, p.profit_id, p.cate_id, p.profit1, p.profit2, p.profit3 FROM " . $ecs->table("category") . "as c left join " . $ecs->table('drp_profit') . " as p on c.cat_id=p.cate_id WHERE parent_id= 0 and is_show = 1 and cat_id=$id");
+
+
+    $cate_list['profit1'] = $cate_list['profit1'] > 0 ? $cate_list['profit1'] : 0;
+    $cate_list['profit2'] = $cate_list['profit2'] > 0 ? $cate_list['profit2'] : 0;
+    $cate_list['profit3'] = $cate_list['profit3'] > 0 ? $cate_list['profit3'] : 0;
+
+    $smarty->assign('list', $cate_list);
+    assign_query_info();
+    if (empty($_REQUEST['is_ajax']))
+    {
+        $smarty->assign('full_page', 1);
+    }
+    $smarty->assign('ur_here', $_LANG['drp_profit']);
+    $smarty->display('drp_cate_edit.htm');
+}
+
+
+/*------------------------------------------------------ */
+//-- 申请分销温馨提示
+/*------------------------------------------------------ */
+if ($_REQUEST['act'] == 'apply')
+{
+    if($_POST){
+        $data = $_POST['data'];
+        $db->autoExecute($ecs->table('drp_config'), $data, 'UPDATE', "keyword = 'apply'");
+        ecs_header("Location: drp.php?act=apply\n");
+        exit;
+    }
+    $info = $db->getRow("SELECT * FROM " . $ecs->table("drp_config") . " WHERE keyword ='apply'");
+    $smarty->assign('info', $info);
+    assign_query_info();
+    if (empty($_REQUEST['is_ajax']))
+    {
+        $smarty->assign('full_page', 1);
+    }
+    $smarty->assign('keyword', 'apply');
+    $smarty->assign('ur_here', $_LANG['drp_profit']);
+    $smarty->display('drp_apply.htm');
+}
+
+/*------------------------------------------------------ */
+//-- 新手必读
+/*------------------------------------------------------ */
+if ($_REQUEST['act'] == 'novice')
+{
+    if($_POST){
+        $data = $_POST['data'];
+        $db->autoExecute($ecs->table('drp_config'), $data, 'UPDATE', "keyword = 'novice'");
+        ecs_header("Location: drp.php?act=novice\n");
+        exit;
+    }
+    $info = $db->getRow("SELECT * FROM " . $ecs->table("drp_config") . " WHERE keyword ='novice'");
+    $smarty->assign('info', $info);
+    assign_query_info();
+    if (empty($_REQUEST['is_ajax']))
+    {
+        $smarty->assign('full_page', 1);
+    }
+    $smarty->assign('keyword', 'novice');
+    $smarty->assign('ur_here', $_LANG['drp_profit']);
+    $smarty->display('drp_novice.htm');
 }
 /*------------------------------------------------------ */
 //-- 增加下线分配方案

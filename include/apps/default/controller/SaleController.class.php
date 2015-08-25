@@ -52,13 +52,13 @@ class SaleController extends CommonController {
         $this->assign('sale',$sale);
 
         // 账户余额
-        $sale_money = model("sale")->saleMoney();
+        $sale_money = model('Sale')->saleMoney();
         $this->assign('sale_money',$sale_money);
         // 佣金总额
-        $sale_money = model("sale")->saleMoney();
+        $sale_money = model('Sale')->saleMoney();
         $this->assign('sale_money',$sale_money ? $sale_money : '0.00');
         // 今日收入
-        $sale_money_today = model("sale")->saleMoney_today();
+        $sale_money_today = model('Sale')->saleMoney_today();
         $this->assign('sale_money_today',$sale_money_today ? $sale_money_today : '0.00');
 
         $this->assign('title', L('sale'));
@@ -108,7 +108,7 @@ class SaleController extends CommonController {
      */
     public function account_detail() {
         // 获取剩余余额
-        $surplus_amount = model('sale')->saleMoney($this->user_id);
+        $surplus_amount = model('Sale')->saleMoney($this->user_id);
         if (empty($surplus_amount)) {
             $surplus_amount = 0;
         }
@@ -117,7 +117,7 @@ class SaleController extends CommonController {
         $where = 'user_id = ' . $this->user_id . ' AND user_money <> 0 ';
         $sql = "select COUNT(*) as count from {pre}sale_log where $where";
         $count = $this->model->getOne($sql);
-        $account_detail = model('sale')->get_sale_log($this->user_id, $size, ($page-1)*$size);
+        $account_detail = model('Sale')->get_sale_log($this->user_id, $size, ($page-1)*$size);
         $this->assign('title', L('add_surplus_log'));
         $this->assign('surplus_amount', price_format($surplus_amount, false));
         $this->assign('account_log', $account_detail);
@@ -129,7 +129,7 @@ class SaleController extends CommonController {
      */
     public function account_raply(){
         // 获取剩余余额
-        $surplus_amount = model('sale')->saleMoney($this->user_id);
+        $surplus_amount = model('Sale')->saleMoney($this->user_id);
         if (empty($surplus_amount)) {
             $surplus_amount = 0;
         }
@@ -161,14 +161,14 @@ class SaleController extends CommonController {
             'amount'       => $amount
         );
         /* 判断是否有足够的余额的进行退款的操作 */
-        $sur_amount =  model('sale')->saleMoney($this->user_id);
+        $sur_amount =  model('Sale')->saleMoney($this->user_id);
         if ($amount > $sur_amount)
         {
             show_message('佣金金额不足', L('back_page_up'), '', 'info');
         }
         //插入会员账目明细
         $surplus['payment'] = '';
-        $surplus['rec_id']  =  model('sale')->insert_user_account($surplus, $amount);
+        $surplus['rec_id']  =  model('Sale')->insert_user_account($surplus, $amount);
 
         /* 如果成功提交 */
         if ($surplus['rec_id'] > 0)
@@ -207,7 +207,7 @@ class SaleController extends CommonController {
      * 我的佣金
      */
     public function my_commission(){
-        $saleMoney =  model('sale')->saleMoney();
+        $saleMoney =  model('Sale')->saleMoney();
         $this->assign('saleMoney',$saleMoney);
         $this->assign('title','我的佣金');
         $this->display('sale_my_commission.dwt');
@@ -248,7 +248,7 @@ class SaleController extends CommonController {
         $size = I(C('page_size'), 20);
         $sql = "select count(*) as count from {pre}order_info where $where";
         $count = $this->model->getOne($sql);
-        $orders = model('sale')->get_sale_orders($where , 10 , 0 ,$user_id);
+        $orders = model('Sale')->get_sale_orders($where , 10 , 0 ,$user_id);
         $this->assign('orders_list', $orders);
         $this->assign('title', L('order_list'));
         $this->display('sale_order_list.dwt');
@@ -340,7 +340,7 @@ class SaleController extends CommonController {
     public function my_shop_info(){
 
         // 总销售额
-        $money = model('sale')->get_sale_money_total();
+        $money = model('Sale')->get_sale_money_total();
         $this->assign('money', $money ? $money : '0.00');
         // 一级分店数
         $sql = "select count(*) count from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id = ".$_SESSION['user_id'] ." and apply_sale = 1";
@@ -366,7 +366,7 @@ class SaleController extends CommonController {
      */
     public function my_shop_list(){
         $key = I('key') ? I('key') : '1';
-        $list = model('sale')->get_shop_list($key);
+        $list = model('Sale')->get_shop_list($key);
         $this->assign('list', $list);
         $this->assign('title', L('my_shop_list'.$key));
         $this->display('sale_my_shop_list.dwt');
@@ -483,7 +483,7 @@ class SaleController extends CommonController {
     public function user_list()
     {
         $key = I('key') ? I('key') : 'wfk';
-        $info = model('sale')->get_sale_info($key);
+        $info = model('Sale')->get_sale_info($key);
         $this->assign('info',$info);
         $this->assign('title',L('user_list_'.$key));
         $this->display('sale_user_list.dwt');
@@ -494,7 +494,7 @@ class SaleController extends CommonController {
      */
     public function my_user_list(){
         $key = I('key') ? I('key') : '1';
-        $list = model('sale')->get_user_list($key);
+        $list = model('Sale')->get_user_list($key);
         $this->assign('list',$list);
         $this->assign('title',L('my_user_list'.$key));
         $this->display('sale_my_user_list.dwt');
