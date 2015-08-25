@@ -18,7 +18,7 @@ defined('IN_ECTOUCH') or die('Deny Access');
 
 if (version_compare(PHP_VERSION, '5.2.0', '<')) die('require PHP > 5.2.0 !');
 defined('BASE_PATH') or define('BASE_PATH', dirname(__FILE__) . '/');
-defined('ROOT_PATH') or define('ROOT_PATH', realpath(dirname(__FILE__) . '/../') . '/');
+defined('ROOT_PATH') or define('ROOT_PATH', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/');
 defined('APP_PATH') or define('APP_PATH', BASE_PATH . 'apps/');
 defined('ADDONS_PATH') or define('ADDONS_PATH', ROOT_PATH . 'plugins/');
 defined('DEFAULT_APP') or define('DEFAULT_APP', 'default');
