@@ -21,9 +21,9 @@
 				<div class="{if $li.is_select eq 1}sp_box2{else}sp_box1{/if}" class="clear" id="cate_{$li.cat_id}" onClick="select_cate('{$li.cat_id}')">
 					<input type="checkbox" name="cate[]" value="{$li.cat_id}" id="input_{$li.cat_id}" class="display-none" {if $li.is_select eq 1}checked="checked"{/if} />
 					<span class="sp_title {if $li.is_select eq 1}font-color-fff{/if}">{$li.cat_name}</span>
-					<span class="sp_content {if $li.is_select eq 1}font-color-fff{/if}" >本店销售佣金：6.00%</span>
-					<span class="sp_content {if $li.is_select eq 1}font-color-fff{/if}">一级分店佣金：3.00%</span>
-					<span class="sp_content {if $li.is_select eq 1}font-color-fff{/if}">二级分店佣金：3.00%</span>
+					<span class="sp_content {if $li.is_select eq 1}font-color-fff{/if}">本店销售佣金：{$li.profit1}%</span>
+					<span class="sp_content {if $li.is_select eq 1}font-color-fff{/if}">一级分店佣金：{$li.profit2}%</span>
+					<span class="sp_content {if $li.is_select eq 1}font-color-fff{/if}">二级分店佣金：{$li.profit3}%</span>
 				</div> 
 			<!-- {/foreach} -->           
 				

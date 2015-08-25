@@ -23,7 +23,7 @@
             <div class="set2_content">
                    <div class="dpgl_list">                                 
                            <span class="set3_list2">温馨提示</span><i class="iconfont icon-huangse icon-hao" onClick="close_class('set2_content')"></i><br>
-                           <span class="set3_list3">提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容</span>
+                           <span class="set3_list3">{$wxts}</span>
                            
                    </div>
             </div> 
@@ -41,9 +41,9 @@
 				<div class="sp_box1" class="clear" id="cate_{$li.cat_id}" onClick="select_cate('{$li.cat_id}')">
 					<input type="checkbox" name="cate[]" value="{$li.cat_id}" id="input_{$li.cat_id}" class="display-none"/>
 					<span class="sp_title">{$li.cat_name}</span>
-					<span class="sp_content font-color-7a">本店销售佣金：6.00%</span>
-					<span class="sp_content font-color-7a">一级分店佣金：3.00%</span>
-					<span class="sp_content font-color-7a">二级分店佣金：3.00%</span>
+					<span class="sp_content font-color-7a">本店销售佣金：{$li.profit1}%</span>
+					<span class="sp_content font-color-7a">一级分店佣金：{$li.profit2}%</span>
+					<span class="sp_content font-color-7a">二级分店佣金：{$li.profit3}%</span>
 				</div> 
 			<!-- {/foreach} -->           
 				

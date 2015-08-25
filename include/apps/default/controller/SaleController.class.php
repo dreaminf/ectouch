@@ -92,6 +92,12 @@ class SaleController extends CommonController {
         $category = $this->model->table('category')->field("cat_id,cat_name")->where(array("parent_id"=>0))->select();
         if($category){
             foreach($category as $key=>$val){
+                $category[$key]['profit1'] = $this->model->table('drp_profit')->field("profit1")->where(array("cate_id"=>$val['cat_id']))->getOne();
+                $category[$key]['profit1'] = $category[$key]['profit1'] ? $category[$key]['profit1'] : 0;
+                $category[$key]['profit2'] = $this->model->table('drp_profit')->field("profit2")->where(array("cate_id"=>$val['cat_id']))->getOne();
+                $category[$key]['profit2'] = $category[$key]['profit2'] ? $category[$key]['profit2'] : 0;
+                $category[$key]['profit3'] = $this->model->table('drp_profit')->field("profit3")->where(array("cate_id"=>$val['cat_id']))->getOne();
+                $category[$key]['profit3'] = $category[$key]['profit3'] ? $category[$key]['profit3'] : 0;
                 if(in_array($val['cat_id'],$catArr)){
                     $category[$key]['is_select'] = 1;
                 }
@@ -424,7 +430,20 @@ class SaleController extends CommonController {
             $this->model->table('drp_shop')->data($data)->where($where)->update();
             redirect(url('sale/sale_set_end'));
         }
+        $apply = $this->model->table('drp_config')->field("centent")->where(array("keyword"=>'apply'))->getOne();
+        $this->assign('apply',$apply);
         $category = $this->model->table('category')->field("cat_id,cat_name")->where(array("parent_id"=>0))->select();
+        if($category){
+            foreach($category as $key=>$val){
+                $category[$key]['profit1'] = $this->model->table('drp_profit')->field("profit1")->where(array("cate_id"=>$val['cat_id']))->getOne();
+                $category[$key]['profit1'] = $category[$key]['profit1'] ? $category[$key]['profit1'] : 0;
+                $category[$key]['profit2'] = $this->model->table('drp_profit')->field("profit2")->where(array("cate_id"=>$val['cat_id']))->getOne();
+                $category[$key]['profit2'] = $category[$key]['profit2'] ? $category[$key]['profit2'] : 0;
+                $category[$key]['profit3'] = $this->model->table('drp_profit')->field("profit3")->where(array("cate_id"=>$val['cat_id']))->getOne();
+                $category[$key]['profit3'] = $category[$key]['profit3'] ? $category[$key]['profit3'] : 0;
+            }
+        }
+
         $this->assign('category',$category);
         $this->assign('title',L('sale_set_category'));
         $this->display('sale_set_category.dwt');
@@ -449,6 +468,8 @@ class SaleController extends CommonController {
         $where['user_id'] = $_SESSION['user_id'];
         $this->model->table('users')->data($data)->where($where)->update();
 
+        $novice = $this->model->table('drp_config')->field("centent")->where(array("keyword"=>'novice'))->getOne();
+        $this->assign('novice',$novice);
         // 设置分销商店铺地址
         $this->assign('sale_url',$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?sale_id='.$_SESSION['user_id']);
         $this->assign('title',L('sale_set_category'));
