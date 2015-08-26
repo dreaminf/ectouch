@@ -20,6 +20,7 @@ class SaleController extends CommonController {
     protected $user_id;
     protected $action;
     protected $back_act = '';
+	private $sale = null;
 
     /**
      * 构造函数
@@ -37,7 +38,13 @@ class SaleController extends CommonController {
         assign_template();
         $this->assign('action', $this->action);
         $this->assign('info', $info);
-
+		// 获取店铺信息
+        $this->sale = $this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->find();
+		
+		$without = array('sale_set', 'sale_set_category', 'sale_set_end');
+		if(!$this->sale && !in_array($this->action, $without)){
+          redirect(url('sale/sale_set'));
+        }
     }
 
 
@@ -45,11 +52,6 @@ class SaleController extends CommonController {
      * 会员中心欢迎页
      */
     public function index() {
-        // 获取店铺信息
-        $sale = $this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->find();
-        if(!$sale){
-            redirect(url('sale/sale_set'));
-        }
         $apply_time = $this->model->table('users')->where(array('user_id'=>$_SESSION['user_id']))->field('apply_time')->find();
         $sale['time'] = date('Y-m-d H:i:s',$apply_time['apply_time']);
         $this->assign('sale',$sale);
