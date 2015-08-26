@@ -698,7 +698,8 @@ class WechatController extends CommonController
 
                 if(empty($_SESSION['wechat_user'])){
                     $_SESSION['redirect_url'] = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-                    $auth = $weObj->getOauthRedirect($_SESSION['redirect_url'], '1', 'snsapi_base');
+                    //$auth = $weObj->getOauthRedirect($_SESSION['redirect_url'], '1', 'snsapi_base');
+                    $auth = $weObj->getOauthRedirect($_SESSION['redirect_url'], '1');
                     header('location: '. $auth);
                     exit();
                 }
