@@ -23,32 +23,32 @@
 			<!-- {foreach from=$extend_info_list item=field} -->
 			<!-- {if $field.id eq 6} -->
 			<li>
-        <div class="form-select"> <i class="fa fa-sort"></i>
-          <select name="sel_question">
-            <option value='0'>{$lang.sel_question}</option>
-            
-            {html_options options=$passwd_questions selected=$field.passwd_question}
-          
-          </select>
-        </div>
-      </li>
-      <li>
-        <div class="input-text"><b class="pull-left">{$lang.passwd_answer}:</b> <span>
-          <input placeholder="{$lang.passwd_answer}" name="passwd_answer" type="text" value="{$profile.passwd_answer}" />
-          </span></div>
-      </li>
+				<div class="input-text"><b>{$lang.passwd_question}：</b>
+				<span>
+					<select name='sel_question'>
+						<option value='0'>{$lang.sel_question}</option>
+						{html_options options=$passwd_questions}
+					</select>
+                </span></div>
+			</li>
+			<li <!-- {if $field.is_need} -->id="passwd_quesetion"<!--{/if}-->>
+				<div class="input-text"><b>{$lang.passwd_answer}：</b>
+				<span>
+					<input name="passwd_answer" type="text" size="25" class="inputBg" maxlengt='20'/><!-- {if $field.is_need} --><font style="color:#FF0000;float:right"> *</font><!-- {/if} -->
+                </span></div>
+			</li>
 			<!-- {else} -->
 			<li <!-- {if $field.is_need} -->id="extend_field{$field.id}i"<!--{/if}-->>
 				<div class="input-text"><b>{$field.reg_field_name}：</b>
 				<span>
-					<input name="extend_field{$field.id}" type="text" size="25" class="inputBg"  {if $field.is_need} style="width:85%;"{/if} /><!-- {if $field.is_need} --><font style="color:#FF0000;float:right"> *</font><!-- {/if} -->
+					<input name="extend_field{$field.id}" type="text" size="25" class="inputBg" /><!-- {if $field.is_need} --><font style="color:#FF0000;float:right"> *</font><!-- {/if} -->
                 </span></div>
 			</li>
 			<!-- {/if} -->
 			<!-- {/foreach} -->
             <li>
               <div class="input-text code"><b>{$lang.code}：</b><span>
-                <input placeholder="{$lang.no_code}" name="mobile_code" id="mobile_code" type="text" >
+                <input placeholder="{$lang.no_code}" name="mobile_code" id="mobile_code" type="text">
                 </span> <a class="pull-right ect-bg" id="zphone" name="sendsms" onClick="sendSms();" type="botton">{$lang.get_code}</a></div>
             </li>
           </ul>
@@ -93,26 +93,25 @@
 			<!-- {foreach from=$extend_info_list item=field} -->
 			<!-- {if $field.id eq 6} -->
 			<li>
-        <div class="form-select"> <i class="fa fa-sort"></i>
-          
-		  <select name='sel_question'>
-		  	<option value='0'>{$lang.sel_question}</option>
-                  {foreach from=$password_question key=key item=question}
-   					 <option value="{$key}">{$question}</option>
-                  {/foreach}
-                </select>
-        </div>
-      </li>
-      <li>
-        <div class="input-text"><b class="pull-left">{$lang.passwd_answer}:</b> <span>
-          <input placeholder="{$lang.passwd_answer}" name="passwd_answer" type="text" value="{$profile.passwd_answer}" />
-          </span></div>
-      </li>
+				<div class="input-text"><b>{$lang.passwd_question}：</b>
+				<span>
+					<select name='sel_question'>
+						<option value='0'>{$lang.sel_question}</option>
+						{html_options options=$passwd_questions}
+					</select>
+                </span></div>
+			</li>
+			<li>
+				<div class="input-text"><b>{$lang.passwd_answer}：</b>
+				<span>
+					<input name="passwd_answer" type="text" size="25" class="inputBg" maxlengt='20'/><!-- {if $field.is_need} --><font style="color:#FF0000;float:right"> *</font><!-- {/if} -->
+                </span></div>
+			</li>
 			<!-- {else} -->
 			<li>
 				<div class="input-text"><b>{$field.reg_field_name}：</b>
 				<span>
-					<input name="extend_field{$field.id}" type="text" size="25" class="inputBg" {if $field.is_need} style="width:85%;"{/if} /><!-- {if $field.is_need} --><font style="color:#FF0000;float:right"> *</font><!-- {/if} -->
+					<input name="extend_field{$field.id}" type="text" size="25" class="inputBg" /><!-- {if $field.is_need} --><font style="color:#FF0000;float:right"> *</font><!-- {/if} -->
                 </span></div>
 			</li>
 			<!-- {/if} -->
@@ -155,17 +154,8 @@ function clickText(){
 	}else{
 		var pwd_text = $("#password_text").val();
        	$("#password_text").hide();
-       	$("#password1").val(pwd_text).show();
+       	$("#password1").val(pwd_text).show();;;		
 		$(".input-text .glyphicon-eye-open").removeClass("glyphicon-eye-close");			
-	}
-}
-function blurText(){
-	if($("#password_text").is(":hidden")&&$("#password1").is(":visible")&&!$(".input-text .glyphicon-eye-open").hasClass("glyphicon-eye-close")){
-	  	var pwd = $("#password1").val();
-       	$("#password_text").val(pwd);
-	}else{
-		var pwd_text = $("#password_text").val();
-       	$("#password1").val(pwd_text);		
 	}
 }
 </script>
