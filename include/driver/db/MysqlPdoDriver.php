@@ -3,13 +3,14 @@
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
-class EcMysqli {
+class MysqlPdoDriver {
 
     private $_writeLink = NULL; //主
     private $_readLink = NULL; //从
     private $_replication = false; //标志是否支持主从
     private $dbConfig = array();
     public $sql = "";
+    protected $affectedRows = -1;
 
     public function __construct($dbConfig = array()) {
         $this->dbConfig = $dbConfig;
@@ -19,41 +20,45 @@ class EcMysqli {
 
     //执行sql查询	
     public function query($sql, $params = array()) {
-        foreach ($params as $k => $v) {
-            $sql = str_replace(':' . $k, $this->escape($v), $sql);
+        echo $this->sql = $sql;
+        $sth = $this->_bindParam($sql, $params, $this->_getReadLink());
+        $sth->execute();
+        var_dump($sth->fetch(PDO::FETCH_ASSOC));
+        $errorinfo = $sth->errorInfo();
+        if ($errorinfo[2] != '') {
+            $this->error('MySQL Query Error', $errorinfo[2], $errorinfo[1]);
+        } else {
+            return $sth;
         }
-        $this->sql = $sql;
-        if ($query = $this->_getReadLink()->query($sql))
-            return $query;
-        else
-            $this->error('MySQL Query Error', $this->_getReadLink()->error, $this->_getReadLink()->errno);
     }
 
     //执行sql命令
     public function execute($sql, $params = array()) {
-        foreach ($params as $k => $v) {
-            $sql = str_replace(':' . $k, $this->escape($v), $sql);
-        }
         $this->sql = $sql;
-        if ($query = $this->_getWriteLink()->query($sql))
-            return $query;
-        else
-            $this->error('MySQL Query Error', $this->_getWriteLink()->error, $this->_getWriteLink()->errno);
+        $sth = $this->_bindParam($sql, $params, $this->_getWriteLink());
+        $sth->execute();
+        $errorinfo = $sth->errorInfo();
+        if ($errorinfo[2] != '') {
+            $this->error('MySQL Query Error', $errorinfo[2], $errorinfo[1]);
+        } else {
+            $this->affectedRows = $sth->rowCount();
+            return $sth;
+        }
     }
 
     //从结果集中取得一行作为关联数组，或数字数组，或二者兼有 
-    public function fetchArray($query, $result_type = MYSQLI_ASSOC) {
-        return $this->unEscape($query->fetch_array($result_type));
+    public function fetchArray($sth, $result_type = PDO::FETCH_ASSOC) {
+        return $this->unEscape($sth->fetch($result_type));
     }
 
     //取得前一次 MySQL 操作所影响的记录行数
     public function affectedRows() {
-        return $this->_getWriteLink()->affected_rows;
+        return $this->affectedRows;
     }
 
     //获取上一次插入的id
     public function lastId() {
-        return $this->_getWriteLink()->insert_id;
+        return $this->_getWriteLink()->lastInsertId();
     }
 
     //获取表结构
@@ -78,20 +83,26 @@ class EcMysqli {
     //数据过滤
     public function escape($value) {
         if (isset($this->_readLink)) {
-            $mysqli = $this->_readLink;
+            $link = $this->_readLink;
         } elseif (isset($this->_writeLink)) {
-            $mysqli = $this->_writeLink;
+            $link = $this->_writeLink;
         } else {
-            $mysqli = $this->_getReadLink();
+            $link = $this->_getReadLink();
         }
 
         if (is_array($value)) {
             return array_map(array($this, 'escape'), $value);
         } else {
+            if (is_null($value))
+                return 'null';
+            if (is_bool($value))
+                return $value ? 1 : 0;
+            if (is_int($value))
+                return (int) $value;
             if (get_magic_quotes_gpc()) {
                 $value = stripslashes($value);
             }
-            return "'" . $mysqli->real_escape_string($value) . "'";
+            return $link->quote($value);
         }
     }
 
@@ -217,27 +228,43 @@ class EcMysqli {
         }
 
         foreach ($db_all as $db) {
-            $mysqli = @new mysqli($db['DB_HOST'], $db['DB_USER'], $db['DB_PWD'], $db['DB_NAME'], $db['DB_PORT']);
-            if ($mysqli->connect_errno == 0) {
+            $dsn = 'mysql:host=' . $db['DB_HOST'] . ';port=' . $db['DB_PORT'] . ';dbname=' . $db['DB_NAME'];
+            $isError = false;
+            try {
+                $pdo = new PDO($dsn, $db['DB_USER'], $db['DB_PWD']);
+            } catch (PDOException $e) {
+                $isError = true;
+            }
+
+            if (false == $isError) {
                 break;
             }
         }
 
-        if ($mysqli->connect_errno) {
-            $this->error('无法连接到数据库服务器', $mysqli->connect_error, $mysqli->connect_errno);
+        if ($isError && isset($e)) {
+            $this->error('无法连接到数据库服务器', $e->errorInfo(), $e->errorCode());
         }
+
         //设置编码
-        $mysqli->query("SET NAMES {$db['DB_CHARSET']}");
-        return $mysqli;
+        $pdo->query("SET NAMES {$db['DB_CHARSET']}");
+        return $pdo;
+    }
+
+    private function _bindParam($sql, $params, $link) {
+        $sth = $link->prepare($sql);
+        foreach ($params as $k => $v) {
+            $sth->bindParam(":" . $k, $this->escape($v));
+        }
+        return $sth;
     }
 
     //关闭数据库
     public function __destruct() {
         if ($this->_writeLink) {
-            $this->_writeLink->close();
+            $this->_writeLink = NULL;
         }
         if ($this->_readLink) {
-            $this->_readLink->close();
+            $this->_readLink = NULL;
         }
     }
 

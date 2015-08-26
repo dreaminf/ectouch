@@ -3,7 +3,7 @@
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
-class EcMysql {
+class MysqlDriver {
 
     private $_writeLink = NULL; //主
     private $_readLink = NULL; //从
