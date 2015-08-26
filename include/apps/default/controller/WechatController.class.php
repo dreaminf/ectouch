@@ -694,11 +694,13 @@ class WechatController extends CommonController
                 if(isset($_GET['code']) && !empty($_GET['code'])){
                     $token = $weObj->getOauthAccessToken();
                     $_SESSION['wechat_user'] = $weObj->getUserInfo($token['openid']); //用户数据
+					
+					dump($_SESSION['wechat_user']);exit;
                 }
 
                 if(empty($_SESSION['wechat_user'])){
                     $_SESSION['redirect_url'] = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-                    $auth = $weObj->getOauthRedirect($_SESSION['redirect_url'], '1', 'snsapi_base');exit($auth);
+                    $auth = $weObj->getOauthRedirect($_SESSION['redirect_url'], '1', 'snsapi_base');
                     header('location: '. $auth);
                     exit();
                 }
