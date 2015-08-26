@@ -40,7 +40,10 @@
   	{$lang.third_login}
   	<p>
     	<a href="{:url('user/third_login',array('type'=>'qq'))}"><img src="__TPL__/images/qq.png"></a>
-        <a href="{:url('user/third_login',array('type'=>'sina'))}"><img src="__TPL__/images/weibo.png"></a>
+    	<a href="{:url('user/third_login',array('type'=>'sina'))}"><img src="__TPL__/images/weibo.png"></a>
+    	<!-- {if $oauth_url} -->
+      <a href="{$oauth_url}"><img src="__TPL__/images/wechat.png"></a>
+    	<!-- {/if} -->
     </p>
   </div>
   </div>
