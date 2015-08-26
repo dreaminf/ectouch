@@ -698,7 +698,8 @@ class WechatController extends CommonController
 
                 if(empty($_SESSION['wechat_user'])){
                     $_SESSION['redirect_url'] = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-                    $auth = $weObj->getOauthRedirect($_SESSION['redirect_url'], '1', 'snsapi_base');
+                    //$auth = $weObj->getOauthRedirect($_SESSION['redirect_url'], '1', 'snsapi_base');
+                    $auth = $weObj->getOauthRedirect($_SESSION['redirect_url'], '1');
                     header('location: '. $auth);
                     exit();
                 }
@@ -743,7 +744,7 @@ class WechatController extends CommonController
                 // 设置的用户注册信息
                 $register = model('Base')->model->table('wechat_extend')
                     ->field('config')
-                    ->where('enable = 1 and command = "register_remind" and wechat_id = '.$this->wechat_id)
+                    ->where('enable = 1 and command = "register_remind" and wechat_id = '.$wechat_id)
                     ->find();
                 if (! empty($register)) {
                     $reg_config = unserialize($register['config']);
