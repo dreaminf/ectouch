@@ -5,8 +5,8 @@
               </div>
               <div class="mx_nav">
                   <ul>
-                        <li class="mx_nav1"><a href="{:url('sale/my_commission')}"><span class="bdda2_content" >本店佣金</span></a></li>
-                        <li class="mx_nav2"><a href="{:url('sale/account_raply')}">提现记录</a></li>
+                        <li class="mx_nav1"><a href="{:url('sale/account_detail')}"><span {if $key neq 'tx'}class="bdda2_content"{/if} >佣金明细</span></a></li>
+                        <li class="mx_nav2"><a href="{:url('sale/account_detail',array('key'=>'tx'))}"><span {if $key eq 'tx'}class="bdda2_content"{/if}>提现记录</span></a></li>
                   </ul>
           </div>
 

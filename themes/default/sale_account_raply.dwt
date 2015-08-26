@@ -11,7 +11,7 @@
             </div>
 			<div class="dpxq_border"></div>
 			<div class="dpgl_list">                                 
-                   <span class="dpgl_list2" style="    line-height: 6.5rem;">卡号</span><textarea  rows="3" name="user_note" placeholder="提款备注" class="raply" ></textarea>
+                   <span  class="dpgl_list2" style="    line-height: 6.5rem;">提现备注</span><textarea  rows="3" name="user_note" placeholder="请填写卡号或其它信息，方便商家打款" class="raply" ></textarea>
             </div>
 			<div class="dpxq_border"></div>
 			<div class="t-a-center"><input type="submit" value="{:L('next_step')}" class="set-4-submit"></div>
@@ -20,9 +20,9 @@
 	</form>
 	<style>
 		.raply{
-			    height: 1.75rem;
+			    height: 5rem;
 				font-size: 1.25rem;
-				width: 50%;
+				width: 80%;
 				border: none;
 				margin-left: 1rem;
 		}
