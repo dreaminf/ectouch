@@ -212,13 +212,14 @@ class SaleModel extends BaseModel {
         foreach ($res as $key => $value) {
             $value['shipping_status'] = ($value['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $value['shipping_status'];
             $value['order_status'] = L('os.' . $value['order_status']) . ',' . L('ps.' . $value['pay_status']) . ',' . L('ss.' . $value['shipping_status']);
-            $goods_list = order_goods($value['order_id']);
+            $goods_list = model('Order')->order_goods($value['order_id']);
             foreach ($goods_list as $key => $val) {
                 $goods_list[$key]['market_price'] = price_format($val['market_price'], false);
                 $goods_list[$key]['goods_price'] = price_format($val['goods_price'], false);
                 $goods_list[$key]['subtotal'] = price_format($val['subtotal'], false);
-                $goods_list[$key]['tags'] = get_tags($val['goods_id']);
+                $goods_list[$key]['tags'] = model('ClipsBase')->get_tags($val['goods_id']);
                 $goods_list[$key]['goods_thumb'] = get_image_path($value['order_id'], $val['goods_thumb']);
+                $goods_list[$key]['goods_number'] = $val['goods_number'];
             }
             $arr[] = array('order_id' => $value['order_id'],
                 'order_sn' => $value['order_sn'],
@@ -228,7 +229,6 @@ class SaleModel extends BaseModel {
                 'shipping_id' => $value['shipping_id'],
                 'total_fee' => price_format($value['total_fee'], false),
                 'url' => url('user/order_detail', array('order_id' => $value['order_id'])),
-                'goods_count' => get_order_goods_count($value['order_id']),
                 'is_separate' => $value['is_separate'] > 0 ? "<span style='font-weight:bold'>已分成</span>" : "<span style='color:red;font-weight:bold'>未分成</span>",
                 'goods'=>$goods_list,
             );
@@ -420,9 +420,8 @@ class SaleModel extends BaseModel {
                     if(M()->getOne($sql) > 0){
                         unset($user_list[$key]);
                     }else{
-                        $info = get_user_default($val['user_id']);
-                        $user_list[$key]['user_name'] = $info['username'];
-                        $user_list[$key]['time'] = M()->table('users')->field('time')->where("user_id = ".$val['user_id'])->getOne();
+                        $info = $this->get_drp($val['user_id']);
+                        $user_list[$key] = $info;
                     }
                 }
             }
@@ -433,9 +432,8 @@ class SaleModel extends BaseModel {
             $user_list =  M()->query($sql);
             if($user_list){
                 foreach($user_list as $key=>$val){
-                    $info = get_user_default($val['user_id']);
-                    $user_list[$key]['user_name'] = $info['username'];
-                    $user_list[$key]['time'] = M()->table('users')->field('time')->where("user_id = ".$val['user_id'])->getOne();
+                    $info = $this->get_drp($val['user_id']);
+                    $user_list[$key] = $info;
                 }
             }
             $res['count'] = count($user_list);
@@ -450,7 +448,11 @@ class SaleModel extends BaseModel {
             $user_list =  M()->query($sql);
             if($user_list){
                 foreach($user_list as $key=>$val){
-                    $user_list[$key] = $this->get_drp($val['user_id']);
+                    if(M()->table('order_info')->where('user_id='.$val['user_id'])->count()){
+                        unset($user_list[$key]);
+                    }else{
+                        $user_list[$key] = $this->get_drp($val['user_id']);
+                    }
                 }
             }
             $res['count'] = count($user_list);
@@ -542,10 +544,9 @@ class SaleModel extends BaseModel {
      */
     public function get_drp($user_id) {
 
-        $sql = "SELECT pay_points, user_money, credit_line, last_login, is_validated FROM " . $this->pre . "users WHERE user_id = '$user_id'";
+        $sql = "SELECT pay_points, user_money, credit_line, last_login, is_validated,user_name FROM " . $this->pre . "users WHERE user_id = '$user_id'";
         $row = $this->row($sql);
         $info = array();
-        $info['username'] = stripslashes($_SESSION['user_name']);
         //新增获取用户头像，昵称
         $u_row = '';
         if(class_exists('WechatController')){
@@ -554,13 +555,12 @@ class SaleModel extends BaseModel {
             }
         }
         if ($u_row) {
-            $info['nickname'] = $u_row['nickname'];
+            $info['username'] = $u_row['nickname'];
             $info['headimgurl'] = $u_row['headimgurl'];
         } else {
-            $info['nickname'] = $info['username'];
+            $info['username'] = $row['user_name'];
             $info['headimgurl'] = __PUBLIC__ . '/images/get_avatar.png';
         }
-
         $sql = "SELECT * FROM " . $this->pre . "drp_shop WHERE user_id = '$user_id'";
         $row = $this->row($sql);
         $info['shop_name'] = $row['shop_name'];

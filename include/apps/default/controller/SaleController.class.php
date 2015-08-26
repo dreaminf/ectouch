@@ -247,7 +247,17 @@ class SaleController extends CommonController {
      * 店铺二维码
      */
     public function store(){
-        $this->assign('mobile_qr', call_user_func(array('WechatController', 'rec_qrcode'), session('user_name'),session('user_id')));
+        $mobile_qr = './data/attached/drp/drp_'.$_SESSION['user_id'].'.png';
+        if(!file_exists($drp_info['mobile_qr'])){
+            // 二维码
+            $url = $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$_SESSION['user_id'];
+            // 纠错级别：L、M、Q、H
+            $errorCorrectionLevel = 'L';
+            // 点的大小：1到10
+            $matrixPointSize = 8;
+            QRcode::png($url, $mobile_qr, $errorCorrectionLevel, $matrixPointSize, 2);
+        }
+        $this->assign('mobile_qr', $mobile_qr);
         $this->assign('title',L('store'));
         $this->display('sale_store.dwt');
     }
@@ -259,6 +269,7 @@ class SaleController extends CommonController {
         $sql = "select count(*) as count from {pre}order_info where $where";
         $count = $this->model->getOne($sql);
         $orders = model('Sale')->get_sale_orders($where , 10 , 0 ,$user_id);
+
         $this->assign('orders_list', $orders);
         $this->assign('title', L('order_list'));
         $this->display('sale_order_list.dwt');

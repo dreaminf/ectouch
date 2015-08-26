@@ -1206,20 +1206,7 @@ class FlowController extends CommonController {
             $order ['extension_id'] = $_SESSION ['extension_id'];
         }
 
-        $affiliate = unserialize(C('affiliate'));
-        if (isset($affiliate ['on']) && $affiliate ['on'] == 1 && $affiliate ['config'] ['separate_by'] == 1) {
-            // 推荐订单分成
-            $parent_id = model('Users')->get_affiliate();
-            if ($user_id == $parent_id) {
-                $parent_id = 0;
-            }
-        } elseif (isset($affiliate ['on']) && $affiliate ['on'] == 1 && $affiliate ['config'] ['separate_by'] == 0) {
-            // 推荐注册分成
-            $parent_id = 0;
-        } else {
-            // 分成功能关闭
-            $parent_id = 0;
-        }
+        $parent_id = M()->table('users')->field('parent_id')->where("user_id=".$_SESSION['user_id'])->getOne();
         $order ['parent_id'] = $parent_id;
 
         /* 插入订单表 */
