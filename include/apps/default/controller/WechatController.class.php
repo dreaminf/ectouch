@@ -702,7 +702,7 @@ class WechatController extends CommonController
                 }
             }
             echo $_SESSION['redirect_url'];
-dump($_SESSION['wechat_user']);exit;
+dump($wxinfo);exit;
             $flag = I('get.flag');
             if (!empty($wxinfo['oauth_status']) || $flag == 'oauth') {
                 self::update_weixin_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj);
