@@ -26,6 +26,7 @@ class IndexController extends CommonController {
             //分销店铺
             $drp_info = model('Sale')->get_drp($drp_id);
             if($drp_info['open'] == 1){
+                $_SESSION['parent_id'] = $drp_id;
                 $drp_info['mobile_qr'] = './data/attached/drp/drp_'.$drp_id.'.png';
                 if(!file_exists($drp_info['mobile_qr'])){
                     // 二维码

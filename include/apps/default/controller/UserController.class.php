@@ -1776,7 +1776,7 @@ class UserController extends CommonController {
             } else {
                 ECTouch::err()->show(L('sign_up'), url('register'));
             }
-            
+            $other['parent_id'] = $_SESSION['parent_id'] ? $_SESSION['parent_id'] : 0;
             if (model('Users')->register($username, $password, $email, $other) !== false) {
                 /*把新注册用户的扩展信息插入数据库*/
                 $sql = 'SELECT id,is_need,reg_field_name FROM ' . M()->pre . 'reg_fields' . ' WHERE  display = 1 ORDER BY dis_order, id';   //读出所有自定义扩展字段的id
