@@ -693,7 +693,7 @@ class WechatController extends CommonController
 				
                 if(isset($_GET['code']) && !empty($_GET['code'])){
                     $token = $weObj->getOauthAccessToken();
-                    $_SESSION['wechat_user'] = $weObj->getUserInfo($token['openid']); //用户数据
+                    $_SESSION['wechat_user'] = $weObj->getOauthUserinfo($token['access_token'], $token['openid']); //用户数据
                 }
 
                 if(empty($_SESSION['wechat_user'])){
