@@ -204,17 +204,19 @@ class SaleModel extends BaseModel {
     function get_sale_orders($where, $num = 10, $start = 0 ,$user_id) {
         /* 取得订单列表 */
         $arr = array();
-        $sql = "SELECT order_id, order_sn, shipping_id, order_status, shipping_status, pay_status, add_time, is_separate, " .
+        $sql = "SELECT order_id, order_sn, user_id, shipping_id, order_status, shipping_status, pay_status, add_time, is_separate, " .
             "(goods_amount + shipping_fee + insure_fee + pay_fee + pack_fee + card_fee + tax - discount) AS total_fee " .
             " FROM {pre}order_info " .
             " WHERE  " . $where . " ORDER BY add_time DESC LIMIT $start , $num";
         $res = M()->query($sql);
         foreach ($res as $key => $value) {
+
             $value['shipping_status'] = ($value['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $value['shipping_status'];
             $value['order_status'] = L('os.' . $value['order_status']) . ',' . L('ps.' . $value['pay_status']) . ',' . L('ss.' . $value['shipping_status']);
             $goods_list = model('Order')->order_goods($value['order_id']);
             foreach ($goods_list as $key => $val) {
                 $goods_list[$key]['market_price'] = price_format($val['market_price'], false);
+                $goods_list[$key]['price'] = $val['goods_price'];
                 $goods_list[$key]['goods_price'] = price_format($val['goods_price'], false);
                 $goods_list[$key]['subtotal'] = price_format($val['subtotal'], false);
                 $goods_list[$key]['tags'] = model('ClipsBase')->get_tags($val['goods_id']);
@@ -222,6 +224,7 @@ class SaleModel extends BaseModel {
                 $goods_list[$key]['goods_number'] = $val['goods_number'];
             }
             $arr[] = array('order_id' => $value['order_id'],
+                'user_name' => M()->table('users')->field('user_name')->where("user_id=".$value[user_id])->getOne(),
                 'order_sn' => $value['order_sn'],
                 'img' => get_image_path(0, model('Order')->get_order_thumb($value['order_id'])),
                 'order_time' => local_date(C('time_format'), $value['add_time']),
@@ -580,5 +583,28 @@ class SaleModel extends BaseModel {
         return $info;
     }
 
+    /**
+     * 获取佣金比例
+     * @param $goods_id
+     */
+    public function get_drp_profit($goods_id=0){
+        if($goods_id == 0 ){
+            return false;
+        }
+        $id = M()->table('goods')->field('cat_id')->where("goods_id=$goods_id")->getOne();
+        $id = $this->get_goods_cat($id);
+        $profit1 = M()->table('drp_profit')->field('profit1')->where('cate_id='.$id)->getOne();
+        return $profit1 ? $profit1 : 0;
+    }
+
+    public function get_goods_cat($id){
+        $parent_id = M()->table('category')->field('parent_id')->where("cat_id=$id")->getOne();
+        if($parent_id==0){
+            return $id;
+        }else{
+            $id = $this->get_goods_cat($parent_id);
+            return $id;
+        }
+    }
 
 }

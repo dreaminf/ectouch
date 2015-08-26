@@ -269,7 +269,16 @@ class SaleController extends CommonController {
         $sql = "select count(*) as count from {pre}order_info where $where";
         $count = $this->model->getOne($sql);
         $orders = model('Sale')->get_sale_orders($where , 10 , 0 ,$user_id);
+        if($orders){
+            foreach($orders as $key=>$val){
+                foreach($val['goods'] as $k=>$v){
+                    $orders[$key]['goods'][$k]['profit'] = model('Sale')->get_drp_profit($v['goods_id']);
+                    $orders[$key]['goods'][$k]['profit_money'] =$v['price']*$orders[$key]['goods'][$k]['profit'] /100;
+                    $orders[$key]['sum']+=$orders[$key]['goods'][$k]['profit_money'];
+                }
 
+            }
+        }
         $this->assign('orders_list', $orders);
         $this->assign('title', L('order_list'));
         $this->display('sale_order_list.dwt');

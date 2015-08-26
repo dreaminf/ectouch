@@ -22,14 +22,15 @@
                     </div>
                      <div class="bdda2_content1">
                          <span class="bdda_nav1">{$goods_info.goods_name}</span><br>
-                         <span class="bdda_nav1">价格：</span><span class="bdda_nav2">{$goods_info.market_price}</span>&nbsp;&nbsp;<span class="bdda_nav">数量：</span><span class="bdda_nav2">{$goods_info.goods_number}</span><br>
-                         <span class="bdda_nav1">佣金比率:</span> <span class="bdda_nav2">15.00% </span>&nbsp;&nbsp;
+                         <span class="bdda_nav1">价格：</span><span class="bdda_nav2">{$goods_info.goods_price}</span>&nbsp;&nbsp;<span class="bdda_nav">数量：</span><span class="bdda_nav2">{$goods_info.goods_number}</span><br>
+                         <span class="bdda_nav1">佣金比率:</span> <span class="bdda_nav2">{$goods_info.profit}% </span>&nbsp;&nbsp;
+                         <span class="bdda_nav1">佣金金额:</span> <span class="bdda_nav2">{$goods_info.profit_money}元 </span>&nbsp;&nbsp;
                          <span class="bdda_nav2">{$item.fencheng}</span></span>
                      </div>
                     </div>
                 <div class="bdda2_border"></div>
                 <!--{/foreach}-->
-              <div class="bdda_content2"><span class="bdda2_list4">买家：ECTouch</span></a><br><span class="bdda2_list3">未付款</span><span class="bdda2_content10">合计：200元</span></div><br>
+              <div class="bdda_content2"><span class="bdda2_list4">买家：{$item.user_name}</span></a><br><span class="bdda2_list3">{$item.is_separate}</span><span class="bdda2_content10">合计：{$item.sum}元</span></div><br>
           	  <div class="dpxq_border" ></div>
             </div>
 			<!--{/foreach}-->     
