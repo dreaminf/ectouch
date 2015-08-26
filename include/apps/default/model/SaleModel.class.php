@@ -526,5 +526,41 @@ class SaleModel extends BaseModel {
         }
     }
 
+    /**
+     * 获取用户中心默认页面所需的数据
+     * @access  public
+     * @param   int         $user_id            用户ID
+     * @return  array       $info               默认页面所需资料数组
+     */
+    public function get_drp($user_id) {
+
+        $sql = "SELECT pay_points, user_money, credit_line, last_login, is_validated FROM " . $this->pre . "users WHERE user_id = '$user_id'";
+        $row = $this->row($sql);
+        $info = array();
+        $info['username'] = stripslashes($_SESSION['user_name']);
+        //新增获取用户头像，昵称
+        $u_row = '';
+        if(class_exists('WechatController')){
+            if (method_exists('WechatController', 'get_avatar')) {
+                $u_row = call_user_func(array('WechatController', 'get_avatar'), $user_id);
+            }
+        }
+        if ($u_row) {
+            $info['nickname'] = $u_row['nickname'];
+            $info['headimgurl'] = $u_row['headimgurl'];
+        } else {
+            $info['nickname'] = $info['username'];
+            $info['headimgurl'] = __PUBLIC__ . '/images/get_avatar.png';
+        }
+
+        $sql = "SELECT * FROM " . $this->pre . "drp_shop WHERE user_id = '$user_id'";
+        $row = $this->row($sql);
+        $info['shop_name'] = $row['shop_name'];
+        $info['real_name'] = $row['real_name'];
+        $info['open'] = $row['open'];
+
+        return $info;
+    }
+
 
 }

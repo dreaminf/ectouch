@@ -8,7 +8,7 @@
             <div style="margin:2rem;text-align:center;">
                 <div>
                     <p><img src="{$info.headimgurl}" style="width:6rem;"></p>
-                    <p style="font-size: 2rem;height: 3rem;line-height: 3rem;">我是{$info.user_name}</p>
+                    <p style="font-size: 2rem;height: 3rem;line-height: 3rem;">我是{$info.username}</p>
                     <p style="font-size: 2rem;height: 3rem;line-height: 3rem;">我为自己代言</p>
 
                 </div>

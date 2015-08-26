@@ -384,9 +384,7 @@ class SaleController extends CommonController {
      * 微店设置
      */
     public function sale_set(){
-        $_SESSION['user_id'];
-        $count = $this->model->table('drp_shop')->where(array('user_id'=>$_SESSION['user_id']))->field("count(*)")->getOne();
-        if($count > 0){
+        if($this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id'],"open"=>1))->count() > 0){
             redirect(url('sale/index'));
         }
         if (IS_POST){
@@ -415,6 +413,9 @@ class SaleController extends CommonController {
      * 设置分销商品的分类
      */
     public function sale_set_category(){
+        if($this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id'],"open"=>1))->count() > 0){
+            redirect(url('sale/index'));
+        }
         if(IS_POST){
             $cateArr = I('cate');
             $cat_id = '';
@@ -454,7 +455,7 @@ class SaleController extends CommonController {
      */
     public function sale_set_end(){
         if($this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id'],"open"=>1))->count() > 0){
-            // redirect(url('sale/index'));
+             redirect(url('sale/index'));
         }
         // 设置为分销商
         $data['open'] = 1;
@@ -471,7 +472,7 @@ class SaleController extends CommonController {
         $novice = $this->model->table('drp_config')->field("centent")->where(array("keyword"=>'novice'))->getOne();
         $this->assign('novice',$novice);
         // 设置分销商店铺地址
-        $this->assign('sale_url',$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?sale_id='.$_SESSION['user_id']);
+        $this->assign('sale_url',$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$_SESSION['user_id']);
         $this->assign('title',L('sale_set_category'));
         $this->display('sale_set_end.dwt');
     }
