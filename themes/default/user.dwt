@@ -29,7 +29,7 @@
     </li>
     </a> <a href="{:url('user/profile')}">
     <li class="col-sm-3 col-xs-3"><i class="fa fa-user"></i>
-      <p class="text-center">{$lang.profile}</p>
+      <p class="text-center">{$lang.user_center}</p>
     </li>
     </a> <a href="{:url('user/edit_password')}">
     <li class="col-sm-3 col-xs-3"><i class="fa fa-shield"></i>
@@ -59,22 +59,6 @@
       <p class="text-center">{$lang.label_booking}</p>
     </li>
     </a>
-	<!--  {if $is_close eq 0} -->
-		<!-- {if $user_rank eq 255} -->
-			<a href="{:url('sale/index')}">
-			<li class="col-sm-3 col-xs-3"><i class="glyphicon glyphicon-link"></i>
-			  <p class="text-center">{$lang.sale_center}</p>
-			</li>
-			</a>
-		<!--  {else}  -->
-			<a href="{:url('user/apply_sale')}">
-			<li class="col-sm-3 col-xs-3"><i class="glyphicon glyphicon-link"></i>
-			  <p class="text-center">{$lang.sale_apply}</p>
-			</li>
-			</a>
-		<!--  {/if}  -->
-	<!--  {/if}  -->	
-	
   </ul>
 </section>
 <section class="user-tab ect-margin-tb ect-margin-bottom0"> 
