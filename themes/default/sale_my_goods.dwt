@@ -11,15 +11,15 @@
 			<div class="dpgl_list">                                 
 				<span class="dpgl_list2">选择分销商品</span>
 			</div>           
-			<div class="set3_lista">    
-				<i class="iconfont icon-lvse icon-duihao"></i>                             
-				<span class="set3_list2a">全选</span>
+			<div class="set3_lista ect-radio">
+                <input  type="checkbox" id="checkAll" onClick="check_all()"/>
+                <label for="checkAll"  >全选<i></i></label>
 			</div>
 			
 			<div class="sp_box" >
 			<!--{foreach from=$category item=li}-->
-				<div class="{if $li.is_select eq 1}sp_box2{else}sp_box1{/if}" class="clear" id="cate_{$li.cat_id}" onClick="select_cate('{$li.cat_id}')">
-					<input type="checkbox" name="cate[]" value="{$li.cat_id}" id="input_{$li.cat_id}" class="display-none" {if $li.is_select eq 1}checked="checked"{/if} />
+				<div class="{if $li.is_select eq 1}sp_box2{else}sp_box1{/if} clear check" id="cate_{$li.cat_id}" onClick="select_cate('{$li.cat_id}')">
+					<input type="checkbox" name="cate[]" value="{$li.cat_id}" id="input_{$li.cat_id}" class="elecheck display-none" {if $li.is_select eq 1}checked="checked"{/if} />
 					<span class="sp_title {if $li.is_select eq 1}font-color-fff{/if}">{$li.cat_name}</span>
 					<span class="sp_content {if $li.is_select eq 1}font-color-fff{/if}">本店销售佣金：{$li.profit1}%</span>
 					<span class="sp_content {if $li.is_select eq 1}font-color-fff{/if}">一级分店佣金：{$li.profit2}%</span>
@@ -32,6 +32,24 @@
 			</form>
 			<div class="dpxq_border"></div> 
     </div>
+       <script>
+       function check_all(){
+           if($("#checkAll").is(":checked")==true){
+               $(".elecheck").attr("checked",'true');
+               $(".check").removeClass("sp_box1").addClass("sp_box2");
+               $(".check"+" span").removeClass("font-color-7a").addClass("font-color-fff");
+
+           }else{
+               $(".elecheck").removeAttr("checked");
+               $(".check").removeClass("sp_box2").addClass("sp_box1");
+               $(".check"+" span").removeClass("font-color-fff").addClass("font-color-7a7a7a");
+
+           }
+
+
+
+//           $(".cate[]").check(true);
+       }
+       </script>
 </body>
-</html>
 </html>

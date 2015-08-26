@@ -926,7 +926,7 @@ margin-top:1.3rem;
 	margin-top:1rem;
 	}
 .sp_box{ width:96%;height:17.375rem;}		
-.sp_box1,.sp_box2{ float:left;  width:44%;height:16rem;margin:0.7rem;}
+.sp_box1,.sp_box2{ float:left;  width:44%;height:16rem;margin:0.7rem;background-color: #e3e3e3}
 
 
 
@@ -950,7 +950,23 @@ margin-top:1.3rem;
 
 
 
+.set-4-input{height:2.75rem; font-size:1.25rem; width:100%; }
+.set-4-submit{margin-top: 1.5rem;background-color: #41a28e;height: 4.125rem;width: 90%;border:none;color:#FFF;font-weight:bold;font-size: 1.5rem;}
+.t-a-center{text-align:center;}
+.font-color-fff{color:#FFF;}
+.font-color-7a{color:#7a7a7a;}
+.display-none{display: none;}
+.img-circle{border-radius: 50%;}
 
+
+/*单选按钮样式,复选按钮样式*/
+.ect-radio input[type=radio],.ect-checkbox input[type=checkbox],.ect-radio input[type=checkbox],.ect-checkbox input[type=radio]{display:none}
+.ect-radio label,.ect-checkbox label{margin-bottom:0;}
+.ect-radio label i,.ect-checkbox label i{width:1.2rem; height:1.2rem; margin-right:0.3rem; display:block; float:left; margin-top:0.1rem; border-radius:100%; background:rgba(255,255,255,0); border:2px solid #bbb;}
+.ect-checkbox label i{ border-radius:4px !important;}
+.ect-radio input:checked+label i,.ect-checkbox input:checked+label i{color:#F00; background:url(../../images/radio.png) center center #41A28E no-repeat; background-size:80%; border:2px #41A28E solid}
+.ect-radio input:disabled+label i,.ect-checkbox input:disabled+label i{background:#fff; border:2px solid #e8e8e8;}
+.ect-radio input.disabled:disabled+label i,.ect-checkbox input.disabled:disabled+label i{background:url(../../images/radio.png) center center #e8e8e8 no-repeat; border:none; background-size:80%;}
 
 
 

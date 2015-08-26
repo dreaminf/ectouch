@@ -9,9 +9,13 @@ function select_cate(id){
         $("#cate_"+id).removeClass("sp_box1").addClass("sp_box2");
         $("#cate_"+id+" span").removeClass("font-color-7a").addClass("font-color-fff");
     }else{
+
         $("#input_"+id).removeAttr("checked");
         $("#cate_"+id).removeClass("sp_box2").addClass("sp_box1");
         $("#cate_"+id+" span").removeClass("font-color-fff").addClass("font-color-7a7a7a");
+        if($("#checkAll").is(":checked")==true){
+            $("#checkAll").attr("checked",false);
+        }
     }
 
 }

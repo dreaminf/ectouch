@@ -378,13 +378,11 @@ class SaleController extends CommonController {
         $this->assign('shop_count', $shop_count ? $shop_count : 0);
 
         // 我的会员数
-        $sql = "select count(*) count from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id = ".$_SESSION['user_id'];
-        $user_count = $this->model->getOne($sql);
+        $user_count = M()->table('users')->where("parent_id=".$_SESSION['user_id'])->count();
         $this->assign('user_count', $user_count ? $user_count : 0);
 
         // 店铺订单数
-        $sql = "select count(*) count from {pre}order_info  WHERE parent_id = ".$_SESSION['user_id'];
-        $order_count = $this->model->getOne($sql);
+        $order_count = M()->table('order_info')->where("parent_id=".$_SESSION['user_id'])->count();;
         $this->assign('order_count', $order_count ? $order_count : 0);
 
         $this->assign('title', L('my_shop_info'));
