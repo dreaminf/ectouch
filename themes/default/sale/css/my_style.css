@@ -957,7 +957,11 @@ textarea, input {
     text-align: center;
     display: block;
     line-height: 4.125rem;
-    color: #FFF;
+    background-color: #41A28E;
+margin-left: 2rem;
+width: 90%;
+margin-top: 2rem;
+color: #fff;
 }
 
 
