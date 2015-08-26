@@ -693,6 +693,7 @@ class WechatController extends CommonController
                     $token = $weObj->getOauthAccessToken();
                     $_SESSION['wechat_user'] = $weObj->getUserInfo($token['openid']); //用户数据
                 }
+				return false;
 
                 if(empty($_SESSION['wechat_user'])){
                     $_SESSION['redirect_url'] = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
@@ -700,16 +701,16 @@ class WechatController extends CommonController
                     header('location: '. $auth);
                     exit();
                 }
-				return false;
-				$flag = I('get.flag');
-				if ($wxinfo['oauth_status'] == '1' || $flag == 'oauth') {
-					self::update_weixin_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj);
-					header('Location:' . $_SESSION['redirect_url'], true, 302);
-					exit();
-				}else{
-					$_SESSION['openid'] = $_SESSION['wechat_user']['openid'];
-				}
             }
+
+			$flag = I('get.flag');
+			if (is_wechat_browser() && $wxinfo['oauth_status'] == '1' || $flag == 'oauth') {
+				self::update_weixin_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj);
+				header('Location:' . $_SESSION['redirect_url'], true, 302);
+				exit();
+			}else{
+				$_SESSION['openid'] = $_SESSION['wechat_user']['openid'];
+			}
         }
     }
 
