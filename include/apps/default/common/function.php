@@ -8,8 +8,8 @@ defined('IN_ECTOUCH') or die('Deny Access');
  */
 function is_wechat_browser()
 {
-    $user_agent = $_SERVER['HTTP_USER_AGENT'];
-    if (strpos($user_agent, 'MicroMessenger') === false) {
+    $user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+    if (strpos($user_agent, 'micromessenger') === false) {
         return false;
     } else {
         return true;

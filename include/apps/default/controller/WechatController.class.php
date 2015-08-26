@@ -686,14 +686,15 @@ class WechatController extends CommonController
 
             // 微信通验证
             $weObj = new Wechat($config);
-            // 微信浏览器浏览
-            if (is_wechat_browser() && $_SESSION['user_id'] === 0 && empty($_SESSION['openid'])) {
-                $_SESSION['wechat_user'] = array();
+			$_SESSION['wechat_user'] = (isset($_SESSION['wechat_user']) && !empty($_SESSION['wechat_user'])) ? $_SESSION['wechat_user'] : array();
+            
+			// 微信浏览器浏览
+            if (is_wechat_browser() && $_SESSION['user_id'] === 0 && empty($_SESSION['wechat_user'])) {
+				
                 if(isset($_GET['code']) && !empty($_GET['code'])){
                     $token = $weObj->getOauthAccessToken();
                     $_SESSION['wechat_user'] = $weObj->getUserInfo($token['openid']); //用户数据
                 }
-				return false;
 
                 if(empty($_SESSION['wechat_user'])){
                     $_SESSION['redirect_url'] = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
@@ -702,14 +703,12 @@ class WechatController extends CommonController
                     exit();
                 }
             }
-
+			
 			$flag = I('get.flag');
-			if (is_wechat_browser() && $wxinfo['oauth_status'] == '1' || $flag == 'oauth') {
+			if (is_wechat_browser() && ($wxinfo['oauth_status'] == '1' || $flag == 'oauth')) {
 				self::update_weixin_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj);
 				header('Location:' . $_SESSION['redirect_url'], true, 302);
 				exit();
-			}else{
-				$_SESSION['openid'] = $_SESSION['wechat_user']['openid'];
 			}
         }
     }
