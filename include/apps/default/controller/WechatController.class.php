@@ -677,12 +677,8 @@ class WechatController extends CommonController
      */
     static function do_oauth()
     {
-		return false;
         // 默认公众号信息
-        $wxinfo = model('Base')->model->table('wechat')
-            ->field('id, token, appid, appsecret, oauth_redirecturi, type, oauth_status')
-            ->where('default_wx = 1 and status = 1')
-            ->find();
+        $wxinfo = model('Base')->model->table('wechat')->field('id, token, appid, appsecret, oauth_redirecturi, type, oauth_status')->find();
         if (! empty($wxinfo) && $wxinfo['type'] == 2) {
             $config['token'] = $wxinfo['token'];
             $config['appid'] = $wxinfo['appid'];
@@ -691,7 +687,7 @@ class WechatController extends CommonController
             // 微信通验证
             $weObj = new Wechat($config);
             // 微信浏览器浏览
-            if (self::is_wechat_browser() && $_SESSION['user_id'] === 0 && empty($_SESSION['openid'])) {
+            if (is_wechat_browser() && $_SESSION['user_id'] === 0 && empty($_SESSION['openid'])) {
                 $_SESSION['wechat_user'] = array();
                 if(isset($_GET['code']) && !empty($_GET['code'])){
                     $token = $weObj->getOauthAccessToken();
@@ -703,7 +699,7 @@ class WechatController extends CommonController
                     $auth = $weObj->getOauthRedirect($_SESSION['redirect_url'], '1', 'snsapi_base');
                     header('location: '. $auth);
                     exit();
-                }                
+                }
             }
 
             $flag = I('get.flag');
