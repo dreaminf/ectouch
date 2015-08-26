@@ -700,7 +700,7 @@ class WechatController extends CommonController
                     header('location: '. $auth);
                     exit();
                 }
-				
+				return false;
 				$flag = I('get.flag');
 				if ($wxinfo['oauth_status'] == '1' || $flag == 'oauth') {
 					self::update_weixin_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj);
