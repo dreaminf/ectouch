@@ -694,8 +694,6 @@ class WechatController extends CommonController
                 if(isset($_GET['code']) && !empty($_GET['code'])){
                     $token = $weObj->getOauthAccessToken();
                     $_SESSION['wechat_user'] = $weObj->getUserInfo($token['openid']); //用户数据
-					
-					dump($_SESSION['wechat_user']);exit('abc');
                 }
 
                 if(empty($_SESSION['wechat_user'])){
@@ -707,7 +705,7 @@ class WechatController extends CommonController
             }
 			
 			$flag = I('get.flag');
-			if (is_wechat_browser() && ($wxinfo['oauth_status'] == '1' || $flag == 'oauth')) {
+			if (!empty($_SESSION['wechat_user']) && ($wxinfo['oauth_status'] == '1' || $flag == 'oauth')) {
 				self::update_weixin_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj);
 				header('Location:' . $_SESSION['redirect_url'], true, 302);
 				exit();
