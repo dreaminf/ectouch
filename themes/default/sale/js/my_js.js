@@ -21,3 +21,34 @@ function select_cate(id){
 function close_class(id){
     $("."+id).hide();
 }
+
+/**
+ * 申请开店
+ * @returns {Boolean}
+ */
+function submit_saleSet() {
+
+    var shop_name	=	$("#shop_name").val();
+    var real_name	=	$("#real_name").val();
+    var shop_mobile	=	$("#shop_mobile").val();
+    var msg			=	'';
+    regPartton		=	/1[3-8]+\d{9}/;
+	if(!shop_mobile || shop_mobile==null){
+		msg += "手机号码不能为空！\n";
+	}else if(!regPartton.test(shop_mobile) || shop_mobile.length != 11){
+		msg += "手机号码格式不正确！\n";
+	}
+    if(!shop_name || shop_name==null){
+        msg += "店铺名称不能为空！\n";
+    }
+    if(!real_name || real_name==null){
+        msg += "真实姓名不能为空！\n";
+    }
+    if (msg.length > 0) {
+        alert(msg);
+        return false;
+    }else{
+        $("#formSub").submit();
+        return true;
+    }
+}

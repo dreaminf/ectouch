@@ -47,6 +47,9 @@ class SaleController extends CommonController {
     public function index() {
         // 获取店铺信息
         $sale = $this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->find();
+        if(!$sale){
+            redirect(url('sale/sale_set'));
+        }
         $apply_time = $this->model->table('users')->where(array('user_id'=>$_SESSION['user_id']))->field('apply_time')->find();
         $sale['time'] = date('Y-m-d H:i:s',$apply_time['apply_time']);
         $this->assign('sale',$sale);
@@ -398,6 +401,7 @@ class SaleController extends CommonController {
             if (empty($data['shop_mobile'])){
                 show_message(L('shop_mobile_empty'));
             }
+            $data['shop_name'] = C('SHOP_NAME').$data['shop_name'];
             $data['user_id'] = $_SESSION['user_id'];
             if($this->model->table('drp_shop')->data($data)->insert()){
                 redirect(url('sale/sale_set_category'));
@@ -413,7 +417,7 @@ class SaleController extends CommonController {
      * 设置分销商品的分类
      */
     public function sale_set_category(){
-        if($this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id'],"open"=>1))->count() > 0){
+        if($this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id'],"open"=>1,'cat_id'=>''))->count() > 0){
             redirect(url('sale/index'));
         }
         if(IS_POST){
@@ -454,9 +458,6 @@ class SaleController extends CommonController {
      *  设置完成
      */
     public function sale_set_end(){
-        if($this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id'],"open"=>1))->count() > 0){
-             redirect(url('sale/index'));
-        }
         // 设置为分销商
         $data['open'] = 1;
         $where['user_id'] = $_SESSION['user_id'];

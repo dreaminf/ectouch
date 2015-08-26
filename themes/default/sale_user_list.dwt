@@ -7,7 +7,7 @@
 		</div>       
 		<!--{foreach from=$info.list item=li}-->	       
 		<div class="dpgl_list">                                 
-			<a href=""><span class="dpgl_list2">{$li.user_name}</span><br>
+			<a href=""><span class="dpgl_list2">{$li.username}</span><br>
 			<span class="yjfd_list">{$li.time}</span>                   
 			<i class="iconfont icon-huise icon-jiantou1"></i></a>
 		</div>

@@ -124,7 +124,8 @@ class SaleModel extends BaseModel {
      */
     function saleMoney($uid=0) {
         $uid = $uid > 0 ? $uid : $_SESSION['user_id'];
-        return M()->getOne("select sum(user_money) from {pre}drp_log where user_id = ".$uid);
+        $money = M()->getOne("select sum(user_money) from {pre}drp_log where user_id = ".$uid);
+        return $money ? $money : 0;
 
     }
 
@@ -447,6 +448,13 @@ class SaleModel extends BaseModel {
         }elseif($key == 'fk'){
             $sql = "SELECT user_id FROM {pre}users   where parent_id = " . $_SESSION['user_id'] . " GROUP BY user_id";
             $user_list =  M()->query($sql);
+            if($user_list){
+                foreach($user_list as $key=>$val){
+                    $user_list[$key] = $this->get_drp($val['user_id']);
+                }
+            }
+            $res['count'] = count($user_list);
+            $res['list'] = $user_list;
         }else{
             return false;
         }
@@ -557,7 +565,17 @@ class SaleModel extends BaseModel {
         $row = $this->row($sql);
         $info['shop_name'] = $row['shop_name'];
         $info['real_name'] = $row['real_name'];
-        $info['open'] = $row['open'];
+        $info['open']      = $row['open'];
+        $info['user_id']   = $user_id;
+
+        //如果$_SESSION中时间无效说明用户是第一次登录。取当前登录时间。
+        $last_time = !isset($_SESSION['last_time']) ? $row['last_login'] : $_SESSION['last_time'];
+
+        if ($last_time == 0) {
+            $_SESSION['last_time'] = $last_time = gmtime();
+        }
+
+        $info['time'] = local_date(C('time_format'), $last_time);
 
         return $info;
     }
