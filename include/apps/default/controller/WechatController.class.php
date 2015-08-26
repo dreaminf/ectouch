@@ -677,6 +677,7 @@ class WechatController extends CommonController
      */
     static function do_oauth()
     {
+		return false;
         // 默认公众号信息
         $wxinfo = model('Base')->model->table('wechat')
             ->field('id, token, appid, appsecret, oauth_redirecturi, type, oauth_status')
