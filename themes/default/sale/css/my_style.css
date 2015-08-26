@@ -951,3 +951,17 @@ textarea, input {
   border-left:0px;border-top:0px;border-right:0px;border-bottom:1px;
 }
 
+
+.set-4-submit{
+    color: #fff;
+    padding-left: 0;
+    text-align: center;
+    width: 60%;    
+    line-height: 4rem;
+    font-size: 1.8rem;
+    border:none;
+    border-radius: 5px;
+    font-family: 'MicroSoft YaHei';
+    background-color: #41A28E;
+}
+
