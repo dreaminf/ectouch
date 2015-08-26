@@ -1,7 +1,7 @@
 <!-- #BeginLibraryItem "/library/sale_header.lbi" --><!-- #EndLibraryItem -->
 <div id="box">
   <div class="header">
-    <div class="yjfd_content10"> <a href="{:url('index/index')}"><i class="iconfont icon-jiantou"></i></a><span class="tltle">店铺详情</span><a href="set.html" style="display:none;"> <span class="wdyj_content11">添加微店</span></a> </div>
+    <div class="yjfd_content10"> <a href="index.html"><i class="iconfont icon-jiantou"></i></a><span class="tltle">店铺详情</span><a href="set.html" style="display:none;"> <span class="wdyj_content11">添加微店</span></a> </div>
   </div>
   <div class="content">
     <div class="content1">
@@ -61,7 +61,7 @@
     </div>
     <div class="dpxq_border"></div>
     <div class="dpgl_list" id="dpg1_list1">
-     <i class="iconfont icon-jinbichongzhi"></i><a href="javascript:;" mce_href="#"><span class="dpgl_list2">我的名片</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
+     <i class="iconfont icon-mingpian"></i><a href="javascript:;" mce_href="#"><span class="dpgl_list2">我的名片</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
       <ul class="index_nav" style="display:none;"> 
         <li class="index_nav1"><a href="{:url('sale/share')}"><span class="index_list1">朋友圈推广</span></a></li>
         <li class="index_nav1"><a href="{:url('sale/spread')}" ><span class="index_list1">推广二维码</span></a></li>
