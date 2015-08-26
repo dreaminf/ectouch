@@ -1,7 +1,7 @@
 <!-- #BeginLibraryItem "/library/sale_header.lbi" --><!-- #EndLibraryItem -->
 <div id="box">
   <div class="header">
-    <div class="yjfd_content10"> <a href="{:url('sale/my_shop_info')}"><i class="iconfont icon-jiantou"></i></a><span class="tltle">{$title}</span><a href="fx.html"><i class="iconfont icon-fenxiang"></i></a> </div>
+    <div class="yjfd_content10"> <a href="{:url('sale/my_shop_info')}"><i class="iconfont icon-jiantou"></i></a><span class="tltle">{$title}</span></div>
   </div>
   <!-- {if $list} -->
   <!--{foreach from=$list item=li}-->
