@@ -2,7 +2,7 @@
 		<div id="box">   		  
 			<div class="header">
 				<div class="yjfd_content10">
-				<a href="{:url('sale/index')}"><i class="iconfont icon-jiantou"></i></a><span class="tltle">提现</span>                 
+				<a href="{:url('sale/index')}"><i class="iconfont icon-jiantou"></i></a><span class="tltle">{$title}</span>
 				</div>                  
 			</div>  
 		<img src="{$mobile_qr}" style="width:80%;"/>

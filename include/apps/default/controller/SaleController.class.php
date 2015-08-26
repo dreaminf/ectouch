@@ -116,6 +116,7 @@ class SaleController extends CommonController {
      * 佣金管理
      */
     public function account_detail() {
+        $this->assign('key',I('key'));
         // 获取剩余余额
         $surplus_amount = model('Sale')->saleMoney($this->user_id);
         if (empty($surplus_amount)) {
