@@ -685,13 +685,13 @@ margin-top:2rem;
 	color:#424242;}	
 .set4_box{width:90%;height:1rem;margin-top:1.5rem;
 }	
-.set4_box1{width:90%;height:2rem;
+.set4_box1{width:90%;height:3.2rem;overflow: hidden;
 
 margin-top:1.3rem;
 }	
 .set4_nav,.set4_nav1{height:2.9rem; float:left; border:1px solid #CCC;line-height:2.2rem;}
-.set4_nav{width:25%; background-color:#eeeeee;}
-.set4_nav1{width:73%;}
+.set4_nav{width:40%; background-color:#eeeeee;}
+.set4_nav1{width:58%;}
 .set4_list{font-size:1.25rem;margin-left:1.3rem;line-height:2.9rem;}
 .set4_list1{font-size:1.3rem;color:#666;margin-left:1rem;line-height:2.9rem;}
 .set4_box2{border:1px solid #CCC;height:2.9rem;width:90%;margin-top:-0.6rem;}
