@@ -35,6 +35,46 @@ class CommonController extends BaseController
                 call_user_func(array('WechatController', 'do_oauth'));
             }
         }
+
+
+        $wxinfo = model('Base')->model->table('wechat')->field('id, token, appid, appsecret, oauth_redirecturi, type, oauth_status')->find();
+        
+        $sharetitle = "ectouch-title";
+        $sharedesc  = "ectouch-title";
+        $imgUrl     = 'http://'.$_SERVER['HTTP_HOST'].'/data/common/images/get_avatar.png';
+        $appid  = $wxinfo['appid'];
+        $secret = $wxinfo['appsecret'];
+        if (!session('access_token') || !session('ticket') ){
+            $json = Http::doGet("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$secret");
+            $client_credential = json_decode($json);
+            $access_token = $client_credential->access_token;
+            session('access_token',$access_token);
+
+            $json = Http::doGet("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=".$access_token."&type=jsapi");
+            $jsapi = json_decode($json);
+            $ticket = $jsapi->ticket;
+            session('ticket',$ticket);
+        }
+        $noncestr = 'ectouch';
+        $jsapi_ticket = session('ticket');
+        $timestamp = gmtime();
+        $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $str = "jsapi_ticket=$jsapi_ticket"
+            ."&noncestr=$noncestr"
+            ."&timestamp=$timestamp"
+            ."&url=$url";
+        $signature = sha1($str);
+        self::$view->assign('appid',$appid);
+        self::$view->assign('noncestr',$noncestr);
+        self::$view->assign('jsapi_ticket',$jsapi_ticket);
+        self::$view->assign('timestamp',$timestamp);
+        self::$view->assign('url',$url);
+        self::$view->assign('signature',$signature);
+        self::$view->assign('imgUrl',$imgUrl);
+
+        self::$view->assign('sharetitle',$sharetitle);
+        self::$view->assign('sharedesc',$sharedesc);
+
         /* 语言包 */
         $this->assign('lang', L());
         /* 页面标题 */
