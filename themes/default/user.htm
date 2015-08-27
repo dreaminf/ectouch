@@ -12,26 +12,28 @@
 	<body>
 		<div class="member-main">
 			<div class="member-photo">
-				<div class="member-photo-left fl">
+				<div class="member-photo-left fl" onclick="window.location = '{:url('user/collect')}'">
 					<i class="iconfont">&#xe62e;</i>
 					<p>0</p><span>收藏</span>
 				</div>
-				<div class="member-photo-right fr">
+				<div class="member-photo-right fr" onclick="window.location = '{:url('user/msg_list')}'">
 					<i class="iconfont">&#xe62d;</i>
 					<p>0</p><span>消息</span>
 				</div>
 				<div class="member-photo-img">
-					<a href="javascript:void(0)"><img src="__TPL__/images/member-photo-img2.jpeg" alt="" /></a>
+					<a href="{:url('user/profile')}"><img src="{$info.avatar}" /></a>
 				</div>
 				<div class="member-photo-name">
 					<p>{$info.username}</p><span>{$rank_name}</span>
 				</div>
 				<div class="member-photo-address">
-					<a href="member-address.htm"><span>账户管理、收货地址 </span><i class="iconfont">&#xe60c;</i></a>
+					<a href="{:url('user/profile')}"><span>账户管理、收货地址 </span><i class="iconfont">&#xe60c;</i></a>
 				</div>
 			</div>
 			<div class="member-order">
-				<div class="member-order-title"><i class="iconfont fl member-order-title-i">&#xe61b; </i><span>我的订单</span><i class="iconfont fr member-order-i">&#xe60c;</i></div>
+				<div class="member-order-title" onclick="window.location = '{:url('user/order_list')}'">
+					<i class="iconfont fl member-order-title-i">&#xe61b; </i><span>我的订单</span><i class="iconfont fr member-order-i">&#xe60c;</i>
+				</div>
 				<ul class="member-order-list">
 					<li class="fl" id="payment">
 						<span class="member-order-list-num">1</span>
@@ -52,7 +54,9 @@
 				</ul>
 			</div>
 			<div class="member-purse">
-				<div class="member-purse-title" onclick="window.location = '{:url('user/account_detail')}';"><i class="iconfont fl member-purse-title-i">&#xe61b; </i><span>我的钱包</span><i class="iconfont fr member-order-i">&#xe60c;</i></div>
+				<div class="member-purse-title" onclick="window.location = '{:url('user/account_detail')}';">
+					<i class="iconfont fl member-purse-title-i">&#xe61b; </i><span>我的钱包</span><i class="iconfont fr member-order-i">&#xe60c;</i>
+				</div>
 				<ul class="member-purse-list">
 					<li class="fl"><span>{$info.integral}</span>
 						<p>余额</p>
@@ -75,12 +79,12 @@
 						<p class="fl">我的分享</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
 				</ul>
 			</div>
+			<!--{if $history}-->
 			<div class="member-record">
 				<div class="member-record-title">
 					<i class="iconfont fl member-record-title-i">&#xe624;</i>
-					<p class="fl">{$lang.clear_history}</p><i class="iconfont fr member-order-i">&#xe60c;</i>
+					<p class="fl">{$lang.user_history}</p><i class="iconfont fr member-order-i">&#xe60c;</i>
 				</div>
-				<!--{if $history}-->
 				<div class="member-record-silde">
 					<div class="member-record-silde-div">
 						<ul class="fl">
@@ -94,8 +98,8 @@
 						</ul>
 					</div>
 				</div>
-				<!--{/if}-->
 			</div>
+			<!--{/if}-->
 		</div>
 		<footer class="member-footer">
 			<ul>
