@@ -4,7 +4,7 @@
     <div class="yjfd_content10"> <a href="{:url('sale/index')}"><i class="iconfont icon-jiantou"></i></a><span class="tltle">{$title}</span> </div>
   </div>
         <div class="set-new-box">
-            <img src="images/kd.png"/>
+            <img src="__TPL__/sale/images/kd.png"/>
        </div>      
      <div class="dpxq_border"></div>
 	 <form action="{:url('sale/sale_set')}" method="post" id="formSub">
