@@ -3329,7 +3329,7 @@ html.active {
   background-size: cover;
   position: relative;
   overflow: hidden;
-  background: url(../img/member-photo-img.jpg) no-repeat center;
+  background: url(../images/member-photo-img.jpg) no-repeat center;
   padding: 1.875rem 16% 1.875rem 16%; }
 
 .member-photo-img {
@@ -3582,7 +3582,7 @@ html.active {
   -o-background-size: cover;
   background-size: cover;
   padding: 0 2%;
-  background: url(../img/login-img.png) no-repeat center;
+  background: url(../images/login-img.png) no-repeat center;
   overflow: hidden; }
   .login-body a {
     color: #FFF; }
