@@ -3,20 +3,9 @@
   <div class="header">
     <div class="yjfd_content10"> <a href="{:url('sale/index')}"><i class="iconfont icon-jiantou"></i></a><span class="tltle">{$title}</span> </div>
   </div>
-       <div class="set4_nava">
-             <div class="set4_nava1">设置微店信息</div>
-             <div class="set4_nava2">设置微店信息</div>
-             <div class="set4_nava3">完成</div>
-       </div> 
-       <div class="set4_navb">
-             <div class="set4_navb1"><div class="set4_navc1" ><span class="set4_xuhao1">1</span></div></div>
-             <div class="set4_navb2"><div class="set4_navc2" ><span class="set4_xuhao2">2</span></div></div>
-             <div class="set4_navb3"><div class="set4_navc3"><span class="set4_xuhao3">3</span></div></div>
-       </div>        
-     <div class="set4_bordere"></div><br>
-     
-     <div class="set4_borderem"></div></div>
-     <br>
+        <div class="set-new-box">
+            <img src="images/kd.png"/>
+       </div>      
      <div class="dpxq_border"></div>
 	 <form action="{:url('sale/sale_set')}" method="post" id="formSub">
         <div class="set4_box"> <span class="set4_contentm">店铺名称:</span><span class="set4_content2">&nbsp;例：{:C('SHOP_NAME')}001微店</span> </div>
