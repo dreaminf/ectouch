@@ -36,12 +36,17 @@ class CommonController extends BaseController
             }
         }
 
-
+        if($_GET['drp_id'] > 0){
+            $drp_info = model('Sale')->get_drp($_GET['drp_id']);
+            if($drp_info['open'] == 1){
+                $_SESSION['drp_shop_name'] = $drp_info['shop_name'];
+            }
+        }
         $wxinfo = model('Base')->model->table('wechat')->field('id, token, appid, appsecret, oauth_redirecturi, type, oauth_status')->find();
         
-        $sharetitle = "ectouch-title";
-        $sharedesc  = "ectouch-desc";
-        $imgUrl     = 'http://shop.ectouch.cn/dev/data/common/images/get_avatar.png';
+        $sharetitle = "欢迎光临".C('shop_name').$_SESSION['drp_shop_name'];
+        $sharedesc  = C('shop_desc');
+        $imgUrl     = C('shop_url').__TPL__.'/images/logo.gif';
         $appid  = $wxinfo['appid'];
         $secret = $wxinfo['appsecret'];
         if (!session('access_token') || !session('ticket') ){
@@ -68,6 +73,8 @@ class CommonController extends BaseController
         self::$view->assign('noncestr',$noncestr);
         self::$view->assign('jsapi_ticket',$jsapi_ticket);
         self::$view->assign('timestamp',$timestamp);
+        $id = $_SESSION['drp_id'] ? $_SESSION['drp_id'] : $_SESSION['user_id'];
+        $url = strstr($url,'drp_id') ? $url : strstr($url,'?') ? $url.'&drp_id='.$id : $url.'?drp_id'.$id;
         self::$view->assign('url',$url);
         self::$view->assign('signature',$signature);
         self::$view->assign('imgUrl',$imgUrl);
