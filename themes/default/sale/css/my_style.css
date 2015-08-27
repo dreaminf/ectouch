@@ -253,6 +253,7 @@ div{
 	width:8.5625rem;
 	margin-top: -1rem;
 	-webkit-border-radius: 10rem; 
+	overflow: hidden;
 	}
 .index_image2{
 	height:8.5625rem;
