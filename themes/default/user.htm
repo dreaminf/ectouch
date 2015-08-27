@@ -24,7 +24,7 @@
 					<a href="javascript:void(0)"><img src="__TPL__/images/member-photo-img2.jpeg" alt="" /></a>
 				</div>
 				<div class="member-photo-name">
-					<p>wanganlin</p><span>超级会有</span>
+					<p>{$info.username}</p><span>{$rank_name}</span>
 				</div>
 				<div class="member-photo-address">
 					<a href="member-address.htm"><span>账户管理、收货地址 </span><i class="iconfont">&#xe60c;</i></a>
@@ -35,26 +35,26 @@
 				<ul class="member-order-list">
 					<li class="fl" id="payment">
 						<span class="member-order-list-num">1</span>
-						<a href="order.htm#/order2"><i class="iconfont">&#xe61d; </i><span>待付款</span></a>
+						<a href="{:url('user/not_pay_order_list')}"><i class="iconfont">&#xe61d; </i><span>待付款</span></a>
 					</li>
 					<li class="fl" id="goods">
 						<span class="member-order-list-num">1</span>
-						<a href="order.htm#/order0"><i class="iconfont">&#xe61c; </i><span>待收货</span></a>
+						<a href="{:url('user/order_list')}"><i class="iconfont">&#xe61c; </i><span>待收货</span></a>
 					</li>
 					<li class="fl" id="comment">
 						<span class="member-order-list-num">1</span>
-						<a href="order.htm#/order1"><i class="iconfont">&#xe619; </i><span>待评价</span></a>
+						<a href="{:url('user/order_list')}"><i class="iconfont">&#xe619; </i><span>待评价</span></a>
 					</li>
-					<!--<li class="fl" id="repick">
-						<span class="member-order-list-num" ng-show="res.repick">{{res.repick}}</span>
+					<li class="fl" id="repick">
+						<span class="member-order-list-num">0</span>
 						<a href="member-serve1.htm"><i class="iconfont">&#xe61f; </i><span>返修/退货</span></a>
-					</li>-->
+					</li>
 				</ul>
 			</div>
 			<div class="member-purse">
-				<div class="member-purse-title"><i class="iconfont fl member-purse-title-i">&#xe61b; </i><span>我的钱包</span><i class="iconfont fr member-order-i">&#xe60c;</i></div>
+				<div class="member-purse-title" onclick="window.location = '{:url('user/account_detail')}';"><i class="iconfont fl member-purse-title-i">&#xe61b; </i><span>我的钱包</span><i class="iconfont fr member-order-i">&#xe60c;</i></div>
 				<ul class="member-purse-list">
-					<li class="fl"><span>1111</span>
+					<li class="fl"><span>{$info.integral}</span>
 						<p>余额</p>
 					</li>
 					<li class="fl"><span>1111</span>
@@ -69,40 +69,43 @@
 			</div>
 			<div class="member-serve">
 				<ul>
-					<li><i class="iconfont fl member-serve-li-oi">&#xe61a;</i>
+					<li onclick="window.location = '{:url('user/service')}';"><i class="iconfont fl member-serve-li-oi">&#xe61a;</i>
 						<p class="fl">客户服务</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
-					<li><i class="iconfont fl member-serve-li-ti">&#xe61e;</i>
+					<li onclick="window.location = '{:url('user/share')}'"><i class="iconfont fl member-serve-li-ti">&#xe61e;</i>
 						<p class="fl">我的分享</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
 				</ul>
 			</div>
+			<!--{if $history}-->
 			<div class="member-record">
 				<div class="member-record-title">
 					<i class="iconfont fl member-record-title-i">&#xe624;</i>
-					<p class="fl">浏览历史</p><i class="iconfont fr member-order-i">&#xe60c;</i>
+					<p class="fl">{$lang.clear_history}</p><i class="iconfont fr member-order-i">&#xe60c;</i>
 				</div>
 				<div class="member-record-silde">
 					<div class="member-record-silde-div">
 						<ul class="fl">
+							<!-- {foreach from=$history item=val} -->
 							<li class="fl">
-								<a href="comm-info.htm#/{{h.id}}"><img src="{{h.img}}" alt=""></a>
-								<p>aaaaa</p>
-								<span>bbbb</span>
+								<a href="{:url('goods/index', array('id'=>$this->_var[val]['goods_id']))}"><img src="{$val.goods_thumb}" /></a>
+								<p>{$val.goods_name}</p>
+								<span>{$lang.sort_price}：{$val.shop_price}</span>
 							</li>
+							<!-- {/foreach} -->
 						</ul>
 					</div>
 				</div>
 			</div>
+			<!--{/if}-->
 		</div>
 		<footer class="member-footer">
 			<ul>
-				<li class="fl member-footer-list btn"><a href="../index.htm"><i class="iconfont">&#xe621;</i><span>首 页</span></a></li>
-				<li class="fl member-footer-list btn"><a href="comm-info.htm"><i class="iconfont">&#xe627;</i><span>分 类</span></a></li>
-				<li class="fl member-footer-list btn"><a href="search.htm"><i class="iconfont">&#xe617;</i><span>搜 索</span></a></li>
-				<li class="fl member-footer-list btn"><a href="cart.htm"><i class="iconfont">&#xe626;</i><span>购物车</span></a></li>
-				<li class="fl member-footer-list btn"><a href="member.htm"><i class="iconfont">&#xe625;</i><span>我</span></a></li>
+				<li class="fl member-footer-list btn"><a href="{:url('index/index')}"><i class="iconfont">&#xe621;</i><span>首 页</span></a></li>
+				<li class="fl member-footer-list btn"><a href="{:url('category/top_all')}"><i class="iconfont">&#xe627;</i><span>分 类</span></a></li>
+				<li class="fl member-footer-list btn"><a href="javascript:openSearch();"><i class="iconfont">&#xe617;</i><span>搜 索</span></a></li>
+				<li class="fl member-footer-list btn"><a href="{:url('flow/cart')}"><i class="iconfont">&#xe626;</i><span>购物车</span></a></li>
+				<li class="fl member-footer-list btn"><a href="{:url('user/index')}"><i class="iconfont">&#xe625;</i><span>我</span></a></li>
 			</ul>
 		</footer>
-		
+		<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 	</body>
-
 </html>
