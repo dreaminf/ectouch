@@ -47,6 +47,12 @@ class CategoryBaseModel extends BaseModel {
                     'left join ' . $this->pre . 'touch_category as t on t.cat_id = c.cat_id ' .
                     "WHERE c.parent_id = '$parent_id' AND c.is_show = 1 ORDER BY c.sort_order ASC, c.cat_id ASC";
 
+            if(session('drp_cat')){
+               $sql = 'SELECT c.cat_id,c.cat_name,c.parent_id,c.is_show,t.cat_image ' .
+                    'FROM ' . $this->pre . 'category as c ' .
+                    'left join ' . $this->pre . 'touch_category as t on t.cat_id = c.cat_id ' .
+                    "WHERE c.parent_id = '$parent_id' AND c.is_show = 1 and c.cat_id in(".session('drp_cat').") ORDER BY c.sort_order ASC, c.cat_id ASC";
+            }
             $res = $this->query($sql);
 
             foreach ($res AS $row) {
