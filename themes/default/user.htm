@@ -21,7 +21,13 @@
 					<p>0</p><span>消息</span>
 				</div>
 				<div class="member-photo-img">
-					<a href="{:url('user/profile')}"><img src="{$info.avatar}" /></a>
+					<a href="{:url('user/profile')}">
+						{if $info.avatar}
+						<img src="{$info.avatar}" />
+						{else}
+						<img src="__TPL__/images/member-photo-img2.jpeg" />
+						{/if}
+					</a>
 				</div>
 				<div class="member-photo-name">
 					<p>{$info.username}</p><span>{$rank_name}</span>
