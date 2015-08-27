@@ -2,7 +2,6 @@
 html{-webkit-text-size-adjust:none;overflow-y:scroll;}
 body,input,button,select,textarea{font:12px/1.5  Microsoft YaHei,Tahoma,Helvetica,'SimSun',sans-serif;color:#444;}
 html,body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,th,td{margin:0;padding:0;border:none}
-body{background:url(../images/bg.png);}
 td,th,div {word-break:break-all;word-wrap:break-word;}
 address,cite,dfn,em,var{font-style:normal;font-weight:normal}
 table{empty-cells:show;border-spacing:0;}
@@ -25,11 +24,12 @@ select{height: 30px;line-height: 30px;background-color: #fff;border: 1px solid #
 .clearfix {_zoom: 1;}
 .clearfix:after {content: ".";display: block;visibility: hidden;clear: both;height: 0px;}
 
-.wrap{margin:50px auto 0;box-shadow:0 0 20px #3F3F3F;width:980px;background-color:#fff;}
+.wrap{margin:120px auto 0;box-shadow:0 0 20px #3F3F3F;width:980px;background-color:#fff;}
 /* 头部样式 */
-.header{height:80px;padding: 0 5px;border-radius: 5px 5px 0 0;box-shadow:0 3px 3px #ddd;position:relative;color:#fff;background:#246fa6 url(../images/header.png) 0 0 repeat-x;}
-.header-title{float:left;font-size: 40px;line-height: 80px;}
+.header{height:80px;padding: 0 30px;position:relative;color:#fff;background:#246fa6 url(../images/header.png) 0 0 repeat-x;}
+.header-title{float:left;font-size: 30px;line-height: 80px;}
 .header-version{float: right;margin-top: 50px;}
+.install-bg {background: url('../images/bg.png') 50% 50% no-repeat #2f4158;background-size: cover;position: absolute;width: 100%;height: 100%;left: 0;top: 0;z-index: -1;}
 
 /* 步骤 */
 .step,.step li em,.step li{background:url(../images/step.png) repeat-x;}
@@ -94,5 +94,5 @@ select{height: 30px;line-height: 30px;background-color: #fff;border: 1px solid #
 .btn.error{background-position: 0 -60px;color: #DF0000;}
 .btn_old,.btn_old:hover{background-position:0 -60px;color:#999 !important;cursor:default;text-decoration:none;}
 /* 底部 */
-.footer{text-align:center;padding:15px 0 50px;color:#999999;}
+.footer{text-align:center;padding:15px 0 50px;color:#EEE;}
 .footer a{color:#999;text-decoration:none;}

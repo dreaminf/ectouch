@@ -2,7 +2,7 @@
 --
 -- 表的结构 `ecs_account_log`
 --
-DROP TABLE IF EXISTS `ecs_account_log`;
+
 CREATE TABLE IF NOT EXISTS `ecs_account_log` (
   `log_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` mediumint(8) unsigned NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `ecs_account_log` (
 --
 -- 表的结构 `ecs_ad`
 --
-DROP TABLE IF EXISTS `ecs_ad`;
+
 CREATE TABLE IF NOT EXISTS `ecs_ad` (
   `ad_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `position_id` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `ecs_ad` (
 --
 -- 表的结构 `ecs_admin_action`
 --
-DROP TABLE IF EXISTS `ecs_admin_action`;
+
 CREATE TABLE IF NOT EXISTS `ecs_admin_action` (
   `action_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `ecs_admin_action` (
 --
 -- 表的结构 `ecs_admin_log`
 --
-DROP TABLE IF EXISTS `ecs_admin_log`;
+
 CREATE TABLE IF NOT EXISTS `ecs_admin_log` (
   `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `log_time` int(10) unsigned NOT NULL DEFAULT '0',
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `ecs_admin_log` (
 --
 -- 表的结构 `ecs_admin_message`
 --
-DROP TABLE IF EXISTS `ecs_admin_message`;
+
 CREATE TABLE IF NOT EXISTS `ecs_admin_message` (
   `message_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `sender_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `ecs_admin_message` (
 --
 -- 表的结构 `ecs_admin_user`
 --
-DROP TABLE IF EXISTS `ecs_admin_user`;
+
 CREATE TABLE IF NOT EXISTS `ecs_admin_user` (
   `user_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `user_name` varchar(60) NOT NULL DEFAULT '',
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `ecs_admin_user` (
 --
 -- 表的结构 `ecs_adsense`
 --
-DROP TABLE IF EXISTS `ecs_adsense`;
+
 CREATE TABLE IF NOT EXISTS `ecs_adsense` (
   `from_ad` smallint(5) NOT NULL DEFAULT '0',
   `referer` varchar(255) NOT NULL DEFAULT '',
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `ecs_adsense` (
 --
 -- 表的结构 `ecs_ad_custom`
 --
-DROP TABLE IF EXISTS `ecs_ad_custom`;
+
 CREATE TABLE IF NOT EXISTS `ecs_ad_custom` (
   `ad_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `ad_type` tinyint(1) unsigned NOT NULL DEFAULT '1',
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS `ecs_ad_custom` (
 --
 -- 表的结构 `ecs_ad_position`
 --
-DROP TABLE IF EXISTS `ecs_ad_position`;
+
 CREATE TABLE IF NOT EXISTS `ecs_ad_position` (
   `position_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `position_name` varchar(60) NOT NULL DEFAULT '',
@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `ecs_ad_position` (
 --
 -- 表的结构 `ecs_affiliate_log`
 --
-DROP TABLE IF EXISTS `ecs_affiliate_log`;
+
 CREATE TABLE IF NOT EXISTS `ecs_affiliate_log` (
   `log_id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `order_id` mediumint(8) NOT NULL,
@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `ecs_affiliate_log` (
 --
 -- 表的结构 `ecs_agency`
 --
-DROP TABLE IF EXISTS `ecs_agency`;
+
 CREATE TABLE IF NOT EXISTS `ecs_agency` (
   `agency_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `agency_name` varchar(255) NOT NULL,
@@ -205,7 +205,7 @@ CREATE TABLE IF NOT EXISTS `ecs_agency` (
 --
 -- 表的结构 `ecs_area_region`
 --
-DROP TABLE IF EXISTS `ecs_area_region`;
+
 CREATE TABLE IF NOT EXISTS `ecs_area_region` (
   `shipping_area_id` smallint(5) unsigned NOT NULL DEFAULT '0',
   `region_id` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -217,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `ecs_area_region` (
 --
 -- 表的结构 `ecs_article`
 --
-DROP TABLE IF EXISTS `ecs_article`;
+
 CREATE TABLE IF NOT EXISTS `ecs_article` (
   `article_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `cat_id` smallint(5) NOT NULL DEFAULT '0',
@@ -242,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `ecs_article` (
 --
 -- 表的结构 `ecs_article_cat`
 --
-DROP TABLE IF EXISTS `ecs_article_cat`;
+
 CREATE TABLE IF NOT EXISTS `ecs_article_cat` (
   `cat_id` smallint(5) NOT NULL AUTO_INCREMENT,
   `cat_name` varchar(255) NOT NULL DEFAULT '',
@@ -263,7 +263,7 @@ CREATE TABLE IF NOT EXISTS `ecs_article_cat` (
 --
 -- 表的结构 `ecs_attribute`
 --
-DROP TABLE IF EXISTS `ecs_attribute`;
+
 CREATE TABLE IF NOT EXISTS `ecs_attribute` (
   `attr_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `cat_id` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -284,7 +284,7 @@ CREATE TABLE IF NOT EXISTS `ecs_attribute` (
 --
 -- 表的结构 `ecs_auction_log`
 --
-DROP TABLE IF EXISTS `ecs_auction_log`;
+
 CREATE TABLE IF NOT EXISTS `ecs_auction_log` (
   `log_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `act_id` mediumint(8) unsigned NOT NULL,
@@ -300,7 +300,7 @@ CREATE TABLE IF NOT EXISTS `ecs_auction_log` (
 --
 -- 表的结构 `ecs_auto_manage`
 --
-DROP TABLE IF EXISTS `ecs_auto_manage`;
+
 CREATE TABLE IF NOT EXISTS `ecs_auto_manage` (
   `item_id` mediumint(8) NOT NULL,
   `type` varchar(10) NOT NULL,
@@ -314,7 +314,7 @@ CREATE TABLE IF NOT EXISTS `ecs_auto_manage` (
 --
 -- 表的结构 `ecs_back_goods`
 --
-DROP TABLE IF EXISTS `ecs_back_goods`;
+
 CREATE TABLE IF NOT EXISTS `ecs_back_goods` (
   `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `back_id` mediumint(8) unsigned DEFAULT '0',
@@ -337,7 +337,7 @@ CREATE TABLE IF NOT EXISTS `ecs_back_goods` (
 --
 -- 表的结构 `ecs_back_order`
 --
-DROP TABLE IF EXISTS `ecs_back_order`;
+
 CREATE TABLE IF NOT EXISTS `ecs_back_order` (
   `back_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `delivery_sn` varchar(20) NOT NULL,
@@ -380,7 +380,7 @@ CREATE TABLE IF NOT EXISTS `ecs_back_order` (
 --
 -- 表的结构 `ecs_bonus_type`
 --
-DROP TABLE IF EXISTS `ecs_bonus_type`;
+
 CREATE TABLE IF NOT EXISTS `ecs_bonus_type` (
   `type_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `type_name` varchar(60) NOT NULL DEFAULT '',
@@ -401,7 +401,7 @@ CREATE TABLE IF NOT EXISTS `ecs_bonus_type` (
 --
 -- 表的结构 `ecs_booking_goods`
 --
-DROP TABLE IF EXISTS `ecs_booking_goods`;
+
 CREATE TABLE IF NOT EXISTS `ecs_booking_goods` (
   `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -425,7 +425,7 @@ CREATE TABLE IF NOT EXISTS `ecs_booking_goods` (
 --
 -- 表的结构 `ecs_brand`
 --
-DROP TABLE IF EXISTS `ecs_brand`;
+
 CREATE TABLE IF NOT EXISTS `ecs_brand` (
   `brand_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `brand_name` varchar(60) NOT NULL DEFAULT '',
@@ -443,7 +443,7 @@ CREATE TABLE IF NOT EXISTS `ecs_brand` (
 --
 -- 表的结构 `ecs_card`
 --
-DROP TABLE IF EXISTS `ecs_card`;
+
 CREATE TABLE IF NOT EXISTS `ecs_card` (
   `card_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `card_name` varchar(120) NOT NULL DEFAULT '',
@@ -459,7 +459,7 @@ CREATE TABLE IF NOT EXISTS `ecs_card` (
 --
 -- 表的结构 `ecs_cart`
 --
-DROP TABLE IF EXISTS `ecs_cart`;
+
 CREATE TABLE IF NOT EXISTS `ecs_cart` (
   `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -489,7 +489,7 @@ CREATE TABLE IF NOT EXISTS `ecs_cart` (
 --
 -- 表的结构 `ecs_category`
 --
-DROP TABLE IF EXISTS `ecs_category`;
+
 CREATE TABLE IF NOT EXISTS `ecs_category` (
   `cat_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `cat_name` varchar(90) NOT NULL DEFAULT '',
@@ -513,7 +513,7 @@ CREATE TABLE IF NOT EXISTS `ecs_category` (
 --
 -- 表的结构 `ecs_cat_recommend`
 --
-DROP TABLE IF EXISTS `ecs_cat_recommend`;
+
 CREATE TABLE IF NOT EXISTS `ecs_cat_recommend` (
   `cat_id` smallint(5) NOT NULL,
   `recommend_type` tinyint(1) NOT NULL,
@@ -525,7 +525,7 @@ CREATE TABLE IF NOT EXISTS `ecs_cat_recommend` (
 --
 -- 表的结构 `ecs_collect_goods`
 --
-DROP TABLE IF EXISTS `ecs_collect_goods`;
+
 CREATE TABLE IF NOT EXISTS `ecs_collect_goods` (
   `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -543,7 +543,7 @@ CREATE TABLE IF NOT EXISTS `ecs_collect_goods` (
 --
 -- 表的结构 `ecs_comment`
 --
-DROP TABLE IF EXISTS `ecs_comment`;
+
 CREATE TABLE IF NOT EXISTS `ecs_comment` (
   `comment_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `comment_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -567,7 +567,7 @@ CREATE TABLE IF NOT EXISTS `ecs_comment` (
 --
 -- 表的结构 `ecs_crons`
 --
-DROP TABLE IF EXISTS `ecs_crons`;
+
 CREATE TABLE IF NOT EXISTS `ecs_crons` (
   `cron_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `cron_code` varchar(20) NOT NULL,
@@ -596,7 +596,7 @@ CREATE TABLE IF NOT EXISTS `ecs_crons` (
 --
 -- 表的结构 `ecs_delivery_goods`
 --
-DROP TABLE IF EXISTS `ecs_delivery_goods`;
+
 CREATE TABLE IF NOT EXISTS `ecs_delivery_goods` (
   `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `delivery_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -621,7 +621,7 @@ CREATE TABLE IF NOT EXISTS `ecs_delivery_goods` (
 --
 -- 表的结构 `ecs_delivery_order`
 --
-DROP TABLE IF EXISTS `ecs_delivery_order`;
+
 CREATE TABLE IF NOT EXISTS `ecs_delivery_order` (
   `delivery_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `delivery_sn` varchar(20) NOT NULL,
@@ -663,7 +663,7 @@ CREATE TABLE IF NOT EXISTS `ecs_delivery_order` (
 --
 -- 表的结构 `ecs_email_list`
 --
-DROP TABLE IF EXISTS `ecs_email_list`;
+
 CREATE TABLE IF NOT EXISTS `ecs_email_list` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `email` varchar(60) NOT NULL,
@@ -677,7 +677,7 @@ CREATE TABLE IF NOT EXISTS `ecs_email_list` (
 --
 -- 表的结构 `ecs_email_sendlist`
 --
-DROP TABLE IF EXISTS `ecs_email_sendlist`;
+
 CREATE TABLE IF NOT EXISTS `ecs_email_sendlist` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
@@ -694,7 +694,7 @@ CREATE TABLE IF NOT EXISTS `ecs_email_sendlist` (
 --
 -- 表的结构 `ecs_error_log`
 --
-DROP TABLE IF EXISTS `ecs_error_log`;
+
 CREATE TABLE IF NOT EXISTS `ecs_error_log` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `info` varchar(255) NOT NULL,
@@ -709,7 +709,7 @@ CREATE TABLE IF NOT EXISTS `ecs_error_log` (
 --
 -- 表的结构 `ecs_exchange_goods`
 --
-DROP TABLE IF EXISTS `ecs_exchange_goods`;
+
 CREATE TABLE IF NOT EXISTS `ecs_exchange_goods` (
   `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `exchange_integral` int(10) unsigned NOT NULL DEFAULT '0',
@@ -723,7 +723,7 @@ CREATE TABLE IF NOT EXISTS `ecs_exchange_goods` (
 --
 -- 表的结构 `ecs_favourable_activity`
 --
-DROP TABLE IF EXISTS `ecs_favourable_activity`;
+
 CREATE TABLE IF NOT EXISTS `ecs_favourable_activity` (
   `act_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `act_name` varchar(255) NOT NULL,
@@ -747,7 +747,7 @@ CREATE TABLE IF NOT EXISTS `ecs_favourable_activity` (
 --
 -- 表的结构 `ecs_feedback`
 --
-DROP TABLE IF EXISTS `ecs_feedback`;
+
 CREATE TABLE IF NOT EXISTS `ecs_feedback` (
   `msg_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -771,7 +771,7 @@ CREATE TABLE IF NOT EXISTS `ecs_feedback` (
 --
 -- 表的结构 `ecs_friend_link`
 --
-DROP TABLE IF EXISTS `ecs_friend_link`;
+
 CREATE TABLE IF NOT EXISTS `ecs_friend_link` (
   `link_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `link_name` varchar(255) NOT NULL DEFAULT '',
@@ -787,7 +787,7 @@ CREATE TABLE IF NOT EXISTS `ecs_friend_link` (
 --
 -- 表的结构 `ecs_goods`
 --
-DROP TABLE IF EXISTS `ecs_goods`;
+
 CREATE TABLE IF NOT EXISTS `ecs_goods` (
   `goods_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `cat_id` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -849,7 +849,7 @@ CREATE TABLE IF NOT EXISTS `ecs_goods` (
 --
 -- 表的结构 `ecs_goods_activity`
 --
-DROP TABLE IF EXISTS `ecs_goods_activity`;
+
 CREATE TABLE IF NOT EXISTS `ecs_goods_activity` (
   `act_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `act_name` varchar(255) NOT NULL,
@@ -871,7 +871,7 @@ CREATE TABLE IF NOT EXISTS `ecs_goods_activity` (
 --
 -- 表的结构 `ecs_goods_article`
 --
-DROP TABLE IF EXISTS `ecs_goods_article`;
+
 CREATE TABLE IF NOT EXISTS `ecs_goods_article` (
   `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `article_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -884,7 +884,7 @@ CREATE TABLE IF NOT EXISTS `ecs_goods_article` (
 --
 -- 表的结构 `ecs_goods_attr`
 --
-DROP TABLE IF EXISTS `ecs_goods_attr`;
+
 CREATE TABLE IF NOT EXISTS `ecs_goods_attr` (
   `goods_attr_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -901,7 +901,7 @@ CREATE TABLE IF NOT EXISTS `ecs_goods_attr` (
 --
 -- 表的结构 `ecs_goods_cat`
 --
-DROP TABLE IF EXISTS `ecs_goods_cat`;
+
 CREATE TABLE IF NOT EXISTS `ecs_goods_cat` (
   `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `cat_id` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -913,7 +913,7 @@ CREATE TABLE IF NOT EXISTS `ecs_goods_cat` (
 --
 -- 表的结构 `ecs_goods_gallery`
 --
-DROP TABLE IF EXISTS `ecs_goods_gallery`;
+
 CREATE TABLE IF NOT EXISTS `ecs_goods_gallery` (
   `img_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -930,7 +930,7 @@ CREATE TABLE IF NOT EXISTS `ecs_goods_gallery` (
 --
 -- 表的结构 `ecs_goods_type`
 --
-DROP TABLE IF EXISTS `ecs_goods_type`;
+
 CREATE TABLE IF NOT EXISTS `ecs_goods_type` (
   `cat_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `cat_name` varchar(60) NOT NULL DEFAULT '',
@@ -944,7 +944,7 @@ CREATE TABLE IF NOT EXISTS `ecs_goods_type` (
 --
 -- 表的结构 `ecs_group_goods`
 --
-DROP TABLE IF EXISTS `ecs_group_goods`;
+
 CREATE TABLE IF NOT EXISTS `ecs_group_goods` (
   `parent_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -958,7 +958,7 @@ CREATE TABLE IF NOT EXISTS `ecs_group_goods` (
 --
 -- 表的结构 `ecs_keywords`
 --
-DROP TABLE IF EXISTS `ecs_keywords`;
+
 CREATE TABLE IF NOT EXISTS `ecs_keywords` (
   `date` date NOT NULL DEFAULT '0000-00-00',
   `searchengine` varchar(20) NOT NULL DEFAULT '',
@@ -972,7 +972,7 @@ CREATE TABLE IF NOT EXISTS `ecs_keywords` (
 --
 -- 表的结构 `ecs_link_goods`
 --
-DROP TABLE IF EXISTS `ecs_link_goods`;
+
 CREATE TABLE IF NOT EXISTS `ecs_link_goods` (
   `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `link_goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -986,7 +986,7 @@ CREATE TABLE IF NOT EXISTS `ecs_link_goods` (
 --
 -- 表的结构 `ecs_mail_templates`
 --
-DROP TABLE IF EXISTS `ecs_mail_templates`;
+
 CREATE TABLE IF NOT EXISTS `ecs_mail_templates` (
   `template_id` tinyint(1) unsigned NOT NULL AUTO_INCREMENT,
   `template_code` varchar(30) NOT NULL DEFAULT '',
@@ -1006,7 +1006,7 @@ CREATE TABLE IF NOT EXISTS `ecs_mail_templates` (
 --
 -- 表的结构 `ecs_member_price`
 --
-DROP TABLE IF EXISTS `ecs_member_price`;
+
 CREATE TABLE IF NOT EXISTS `ecs_member_price` (
   `price_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -1021,7 +1021,7 @@ CREATE TABLE IF NOT EXISTS `ecs_member_price` (
 --
 -- 表的结构 `ecs_nav`
 --
-DROP TABLE IF EXISTS `ecs_nav`;
+
 CREATE TABLE IF NOT EXISTS `ecs_nav` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `ctype` varchar(10) DEFAULT NULL,
@@ -1042,7 +1042,7 @@ CREATE TABLE IF NOT EXISTS `ecs_nav` (
 --
 -- 表的结构 `ecs_order_action`
 --
-DROP TABLE IF EXISTS `ecs_order_action`;
+
 CREATE TABLE IF NOT EXISTS `ecs_order_action` (
   `action_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `order_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -1062,7 +1062,7 @@ CREATE TABLE IF NOT EXISTS `ecs_order_action` (
 --
 -- 表的结构 `ecs_order_goods`
 --
-DROP TABLE IF EXISTS `ecs_order_goods`;
+
 CREATE TABLE IF NOT EXISTS `ecs_order_goods` (
   `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `order_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -1090,7 +1090,7 @@ CREATE TABLE IF NOT EXISTS `ecs_order_goods` (
 --
 -- 表的结构 `ecs_order_info`
 --
-DROP TABLE IF EXISTS `ecs_order_info`;
+
 CREATE TABLE IF NOT EXISTS `ecs_order_info` (
   `order_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `order_sn` varchar(20) NOT NULL DEFAULT '',
@@ -1171,7 +1171,7 @@ CREATE TABLE IF NOT EXISTS `ecs_order_info` (
 --
 -- 表的结构 `ecs_pack`
 --
-DROP TABLE IF EXISTS `ecs_pack`;
+
 CREATE TABLE IF NOT EXISTS `ecs_pack` (
   `pack_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `pack_name` varchar(120) NOT NULL DEFAULT '',
@@ -1187,7 +1187,7 @@ CREATE TABLE IF NOT EXISTS `ecs_pack` (
 --
 -- 表的结构 `ecs_package_goods`
 --
-DROP TABLE IF EXISTS `ecs_package_goods`;
+
 CREATE TABLE IF NOT EXISTS `ecs_package_goods` (
   `package_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -1202,7 +1202,7 @@ CREATE TABLE IF NOT EXISTS `ecs_package_goods` (
 --
 -- 表的结构 `ecs_payment`
 --
-DROP TABLE IF EXISTS `ecs_payment`;
+
 CREATE TABLE IF NOT EXISTS `ecs_payment` (
   `pay_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `pay_code` varchar(20) NOT NULL DEFAULT '',
@@ -1223,7 +1223,7 @@ CREATE TABLE IF NOT EXISTS `ecs_payment` (
 --
 -- 表的结构 `ecs_pay_log`
 --
-DROP TABLE IF EXISTS `ecs_pay_log`;
+
 CREATE TABLE IF NOT EXISTS `ecs_pay_log` (
   `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `order_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -1238,7 +1238,7 @@ CREATE TABLE IF NOT EXISTS `ecs_pay_log` (
 --
 -- 表的结构 `ecs_plugins`
 --
-DROP TABLE IF EXISTS `ecs_plugins`;
+
 CREATE TABLE IF NOT EXISTS `ecs_plugins` (
   `code` varchar(30) NOT NULL DEFAULT '',
   `version` varchar(10) NOT NULL DEFAULT '',
@@ -1253,7 +1253,7 @@ CREATE TABLE IF NOT EXISTS `ecs_plugins` (
 --
 -- 表的结构 `ecs_products`
 --
-DROP TABLE IF EXISTS `ecs_products`;
+
 CREATE TABLE IF NOT EXISTS `ecs_products` (
   `product_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -1268,7 +1268,7 @@ CREATE TABLE IF NOT EXISTS `ecs_products` (
 --
 -- 表的结构 `ecs_region`
 --
-DROP TABLE IF EXISTS `ecs_region`;
+
 CREATE TABLE IF NOT EXISTS `ecs_region` (
   `region_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -1286,7 +1286,7 @@ CREATE TABLE IF NOT EXISTS `ecs_region` (
 --
 -- 表的结构 `ecs_reg_extend_info`
 --
-DROP TABLE IF EXISTS `ecs_reg_extend_info`;
+
 CREATE TABLE IF NOT EXISTS `ecs_reg_extend_info` (
   `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` mediumint(8) unsigned NOT NULL,
@@ -1300,7 +1300,7 @@ CREATE TABLE IF NOT EXISTS `ecs_reg_extend_info` (
 --
 -- 表的结构 `ecs_reg_fields`
 --
-DROP TABLE IF EXISTS `ecs_reg_fields`;
+
 CREATE TABLE IF NOT EXISTS `ecs_reg_fields` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `reg_field_name` varchar(60) NOT NULL,
@@ -1316,7 +1316,7 @@ CREATE TABLE IF NOT EXISTS `ecs_reg_fields` (
 --
 -- 表的结构 `ecs_role`
 --
-DROP TABLE IF EXISTS `ecs_role`;
+
 CREATE TABLE IF NOT EXISTS `ecs_role` (
   `role_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `role_name` varchar(60) NOT NULL DEFAULT '',
@@ -1331,7 +1331,7 @@ CREATE TABLE IF NOT EXISTS `ecs_role` (
 --
 -- 表的结构 `ecs_searchengine`
 --
-DROP TABLE IF EXISTS `ecs_searchengine`;
+
 CREATE TABLE IF NOT EXISTS `ecs_searchengine` (
   `date` date NOT NULL DEFAULT '0000-00-00',
   `searchengine` varchar(20) NOT NULL DEFAULT '',
@@ -1344,7 +1344,7 @@ CREATE TABLE IF NOT EXISTS `ecs_searchengine` (
 --
 -- 表的结构 `ecs_sessions`
 --
-DROP TABLE IF EXISTS `ecs_sessions`;
+
 CREATE TABLE IF NOT EXISTS `ecs_sessions` (
   `sesskey` char(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
   `expiry` int(10) unsigned NOT NULL DEFAULT '0',
@@ -1365,7 +1365,7 @@ CREATE TABLE IF NOT EXISTS `ecs_sessions` (
 --
 -- 表的结构 `ecs_sessions_data`
 --
-DROP TABLE IF EXISTS `ecs_sessions_data`;
+
 CREATE TABLE IF NOT EXISTS `ecs_sessions_data` (
   `sesskey` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
   `expiry` int(10) unsigned NOT NULL DEFAULT '0',
@@ -1379,7 +1379,7 @@ CREATE TABLE IF NOT EXISTS `ecs_sessions_data` (
 --
 -- 表的结构 `ecs_shipping`
 --
-DROP TABLE IF EXISTS `ecs_shipping`;
+
 CREATE TABLE IF NOT EXISTS `ecs_shipping` (
   `shipping_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `shipping_code` varchar(20) NOT NULL DEFAULT '',
@@ -1402,7 +1402,7 @@ CREATE TABLE IF NOT EXISTS `ecs_shipping` (
 --
 -- 表的结构 `ecs_shipping_area`
 --
-DROP TABLE IF EXISTS `ecs_shipping_area`;
+
 CREATE TABLE IF NOT EXISTS `ecs_shipping_area` (
   `shipping_area_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `shipping_area_name` varchar(150) NOT NULL DEFAULT '',
@@ -1417,7 +1417,7 @@ CREATE TABLE IF NOT EXISTS `ecs_shipping_area` (
 --
 -- 表的结构 `ecs_shop_config`
 --
-DROP TABLE IF EXISTS `ecs_shop_config`;
+
 CREATE TABLE IF NOT EXISTS `ecs_shop_config` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -1437,7 +1437,7 @@ CREATE TABLE IF NOT EXISTS `ecs_shop_config` (
 --
 -- 表的结构 `ecs_snatch_log`
 --
-DROP TABLE IF EXISTS `ecs_snatch_log`;
+
 CREATE TABLE IF NOT EXISTS `ecs_snatch_log` (
   `log_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `snatch_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -1453,7 +1453,7 @@ CREATE TABLE IF NOT EXISTS `ecs_snatch_log` (
 --
 -- 表的结构 `ecs_stats`
 --
-DROP TABLE IF EXISTS `ecs_stats`;
+
 CREATE TABLE IF NOT EXISTS `ecs_stats` (
   `access_time` int(10) unsigned NOT NULL DEFAULT '0',
   `ip_address` varchar(15) NOT NULL DEFAULT '',
@@ -1473,7 +1473,7 @@ CREATE TABLE IF NOT EXISTS `ecs_stats` (
 --
 -- 表的结构 `ecs_suppliers`
 --
-DROP TABLE IF EXISTS `ecs_suppliers`;
+
 CREATE TABLE IF NOT EXISTS `ecs_suppliers` (
   `suppliers_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `suppliers_name` varchar(255) DEFAULT NULL,
@@ -1487,7 +1487,7 @@ CREATE TABLE IF NOT EXISTS `ecs_suppliers` (
 --
 -- 表的结构 `ecs_tag`
 --
-DROP TABLE IF EXISTS `ecs_tag`;
+
 CREATE TABLE IF NOT EXISTS `ecs_tag` (
   `tag_id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -1503,7 +1503,7 @@ CREATE TABLE IF NOT EXISTS `ecs_tag` (
 --
 -- 表的结构 `ecs_template`
 --
-DROP TABLE IF EXISTS `ecs_template`;
+
 CREATE TABLE IF NOT EXISTS `ecs_template` (
   `filename` varchar(30) NOT NULL DEFAULT '',
   `region` varchar(40) NOT NULL DEFAULT '',
@@ -1524,7 +1524,7 @@ CREATE TABLE IF NOT EXISTS `ecs_template` (
 --
 -- 表的结构 `ecs_topic`
 --
-DROP TABLE IF EXISTS `ecs_topic`;
+
 CREATE TABLE IF NOT EXISTS `ecs_topic` (
   `topic_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '''''',
@@ -1548,7 +1548,7 @@ CREATE TABLE IF NOT EXISTS `ecs_topic` (
 --
 -- 表的结构 `ecs_users`
 --
-DROP TABLE IF EXISTS `ecs_users`;
+
 CREATE TABLE IF NOT EXISTS `ecs_users` (
   `user_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(60) NOT NULL DEFAULT '',
@@ -1596,7 +1596,7 @@ CREATE TABLE IF NOT EXISTS `ecs_users` (
 --
 -- 表的结构 `ecs_user_account`
 --
-DROP TABLE IF EXISTS `ecs_user_account`;
+
 CREATE TABLE IF NOT EXISTS `ecs_user_account` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -1619,7 +1619,7 @@ CREATE TABLE IF NOT EXISTS `ecs_user_account` (
 --
 -- 表的结构 `ecs_user_address`
 --
-DROP TABLE IF EXISTS `ecs_user_address`;
+
 CREATE TABLE IF NOT EXISTS `ecs_user_address` (
   `address_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `address_name` varchar(50) NOT NULL DEFAULT '',
@@ -1645,7 +1645,7 @@ CREATE TABLE IF NOT EXISTS `ecs_user_address` (
 --
 -- 表的结构 `ecs_user_bonus`
 --
-DROP TABLE IF EXISTS `ecs_user_bonus`;
+
 CREATE TABLE IF NOT EXISTS `ecs_user_bonus` (
   `bonus_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `bonus_type_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -1663,7 +1663,7 @@ CREATE TABLE IF NOT EXISTS `ecs_user_bonus` (
 --
 -- 表的结构 `ecs_user_feed`
 --
-DROP TABLE IF EXISTS `ecs_user_feed`;
+
 CREATE TABLE IF NOT EXISTS `ecs_user_feed` (
   `feed_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -1679,7 +1679,7 @@ CREATE TABLE IF NOT EXISTS `ecs_user_feed` (
 --
 -- 表的结构 `ecs_user_rank`
 --
-DROP TABLE IF EXISTS `ecs_user_rank`;
+
 CREATE TABLE IF NOT EXISTS `ecs_user_rank` (
   `rank_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `rank_name` varchar(30) NOT NULL DEFAULT '',
@@ -1696,7 +1696,7 @@ CREATE TABLE IF NOT EXISTS `ecs_user_rank` (
 --
 -- 表的结构 `ecs_virtual_card`
 --
-DROP TABLE IF EXISTS `ecs_virtual_card`;
+
 CREATE TABLE IF NOT EXISTS `ecs_virtual_card` (
   `card_id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -1718,7 +1718,7 @@ CREATE TABLE IF NOT EXISTS `ecs_virtual_card` (
 --
 -- 表的结构 `ecs_volume_price`
 --
-DROP TABLE IF EXISTS `ecs_volume_price`;
+
 CREATE TABLE IF NOT EXISTS `ecs_volume_price` (
   `price_type` tinyint(1) unsigned NOT NULL,
   `goods_id` mediumint(8) unsigned NOT NULL,
@@ -1732,7 +1732,7 @@ CREATE TABLE IF NOT EXISTS `ecs_volume_price` (
 --
 -- 表的结构 `ecs_vote`
 --
-DROP TABLE IF EXISTS `ecs_vote`;
+
 CREATE TABLE IF NOT EXISTS `ecs_vote` (
   `vote_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `vote_name` varchar(250) NOT NULL DEFAULT '',
@@ -1748,7 +1748,7 @@ CREATE TABLE IF NOT EXISTS `ecs_vote` (
 --
 -- 表的结构 `ecs_vote_log`
 --
-DROP TABLE IF EXISTS `ecs_vote_log`;
+
 CREATE TABLE IF NOT EXISTS `ecs_vote_log` (
   `log_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `vote_id` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -1763,7 +1763,7 @@ CREATE TABLE IF NOT EXISTS `ecs_vote_log` (
 --
 -- 表的结构 `ecs_vote_option`
 --
-DROP TABLE IF EXISTS `ecs_vote_option`;
+
 CREATE TABLE IF NOT EXISTS `ecs_vote_option` (
   `option_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `vote_id` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -1779,7 +1779,7 @@ CREATE TABLE IF NOT EXISTS `ecs_vote_option` (
 --
 -- 表的结构 `ecs_wholesale`
 --
-DROP TABLE IF EXISTS `ecs_wholesale`;
+
 CREATE TABLE IF NOT EXISTS `ecs_wholesale` (
   `act_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `goods_id` mediumint(8) unsigned NOT NULL,

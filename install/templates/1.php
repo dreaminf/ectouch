@@ -5,7 +5,7 @@
 		</div>
 	</div>
 	<div class="btn-box">
-		<a href="./index.php?step=0" class="btn">上一步</a>
+		<a href="http://www.ectouch.cn" target="_blank" class="btn">不接受</a>
 		<a href="./index.php?step=2" class="btn">接 受</a>
 	</div>
 <?php require './templates/footer.php';?>

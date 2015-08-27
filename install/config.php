@@ -17,7 +17,7 @@ return array(
 	//数据库名
 	'dbName' => 'ectouch_db',
 	//数据库表前缀
-	'dbPrefix' => 'pre_',
+	'dbPrefix' => 'ecs_',
 	//站点名称
 	'siteName' => 'ECTouch微商城',
 	//站点关键字
@@ -36,5 +36,5 @@ return array(
 	'dbSetFile'=> 'config.ini.php',
 	/* ------安装验证/生成文件;非云平台安装有效------ */
 	'installFile' => '../data/install.lock',
-	'alreadyInstallInfo' => '你已经安装过该系统，如果想重新安装，请先删除站点config目录下的 install.lock 文件，然后再尝试安装！',
+	'alreadyInstallInfo' => '你已经安装过该系统，如果想重新安装，请先删除站点data目录下的 install.lock 文件，然后再尝试安装！',
 );

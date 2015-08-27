@@ -84,7 +84,7 @@ switch ($step) {
 		//需要读写权限的目录
 		$folder = $config['dirAccess'];
 		$install_path = str_replace('\\','/',getcwd()).'/';
-		$site_path = str_replace('Install/', '', $install_path);
+		$site_path = str_replace('install/', '', $install_path);
 		include ("./templates/2.php");
 		$_SESSION['INSTALLSTATUS'] = $error == 0?'SUCCESS':$error;
 		break;
@@ -173,7 +173,7 @@ switch ($step) {
 			if(empty($sqldata)){
 				alert(0,'数据库文件不能为空！');
 			}
-			$sqlFormat = sql_split($sqldata, $dbPrefix,$config['dbPrefix']);
+			$sqlFormat = sql_split($sqldata, $dbPrefix, $config['dbPrefix']);
 
 
 			/**
