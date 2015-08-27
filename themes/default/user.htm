@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>会员中心</title>
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link rel="stylesheet" href="css/member.css">
+	</head>
+	<body>
+		<header class="member-header-box comWidth">
+			<h1>会员中心</h1>
+		</header>
+		
+		<div class="member-main">
+			<div class="member-photo">
+				<div class="member-photo-left fl" ng-Touch="golink('member-favorite.htm')">
+					<i class="iconfont">&#xe62e;</i>
+					<p>{{res.like}}</p><span>收藏</span>
+				</div>
+				<div class="member-photo-right fr" ng-Touch="golink('member-message.htm')">
+					<i class="iconfont">&#xe62d;</i>
+					<p>{{res.messages}}</p><span>消息</span>
+				</div>
+				<div class="member-photo-img">
+					<a href="javascript:void(0)"><img ng-src="{{res.photo?res.photo:'img/member-photo-img2.jpeg'}}" alt="" class="{{photo?'active':'';}}" ng-Touch="photo=!photo" /></a>
+				</div>
+				<div class="member-photo-name">
+					<p>{{res.username}}</p><span>{{res.rank}}</span>
+				</div>
+				<div class="member-photo-address">
+					<a href="member-address.htm"><span>账户管理、收货地址 </span><i class="iconfont">&#xe60c;</i></a>
+				</div>
+			</div>
+			<div class="member-order">
+				<div class="member-order-title" ng-Touch="golink('order.htm')"><i class="iconfont fl member-order-title-i">&#xe61b; </i><span>我的订单</span><i class="iconfont fr member-order-i">&#xe60c;</i></div>
+				<ul class="member-order-list">
+					<li class="fl" id="payment">
+						<span class="member-order-list-num" ng-show="res.payment">{{res.payment}}</span>
+						<a href="order.htm#/order2"><i class="iconfont">&#xe61d; </i><span>待付款</span></a>
+					</li>
+					<li class="fl" id="goods">
+						<span class="member-order-list-num" ng-show="res.goods">{{res.goods}}</span>
+						<a href="order.htm#/order0"><i class="iconfont">&#xe61c; </i><span>待收货</span></a>
+					</li>
+					<li class="fl" id="comment">
+						<span class="member-order-list-num" ng-show="res.comment">{{res.comment}}</span>
+						<a href="order.htm#/order1"><i class="iconfont">&#xe619; </i><span>待评价</span></a>
+					</li>
+					<!--<li class="fl" id="repick">
+						<span class="member-order-list-num" ng-show="res.repick">{{res.repick}}</span>
+						<a href="member-serve1.htm"><i class="iconfont">&#xe61f; </i><span>返修/退货</span></a>
+					</li>-->
+				</ul>
+			</div>
+			<div class="member-purse">
+				<div class="member-purse-title" ng-Touch="golink('member-wallet.htm')"><i class="iconfont fl member-purse-title-i">&#xe61b; </i><span>我的钱包</span><i class="iconfont fr member-order-i">&#xe60c;</i></div>
+				<ul class="member-purse-list">
+					<li class="fl"><span>{{res.sum}}</span>
+						<p>余额</p>
+					</li>
+					<li class="fl"><span>{{res.red}}</span>
+						<p>红包</p>
+					</li>
+					<li class="fl"><span>{{res.score}}</span>
+						<p>积分</p>
+					</li>
+				</ul>
+			</div>
+			<div class="clearfix">
+			</div>
+			<div class="member-serve">
+				<ul>
+					<li ng-Touch="golink('member-serve3.htm')"><i class="iconfont fl member-serve-li-oi">&#xe61a;</i>
+						<p class="fl">客户服务</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
+					<li ng-Touch="golink('member-share.htm')"><i class="iconfont fl member-serve-li-ti">&#xe61e;</i>
+						<p class="fl">我的分享</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
+				</ul>
+			</div>
+			<div class="member-record">
+				<div class="member-record-title">
+					<i class="iconfont fl member-record-title-i">&#xe624;</i>
+					<p class="fl">浏览历史</p><i class="iconfont fr member-order-i">&#xe60c;</i>
+				</div>
+				<div class="member-record-silde">
+					<div class="member-record-silde-div">
+						<ul class="fl">
+							<li class="fl" ng-repeat="h in his">
+								<a href="comm-info.htm#/{{h.id}}"><img ng-src="{{h.img}}" alt=""></a>
+								<p>{{h.title}}</p>
+								<span>{{h.price | currency:'¥'}}</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer class="member-footer">
+			<ul>
+				<li class="fl member-footer-list btn"><a href="../index.htm"><i class="iconfont">&#xe621;</i><span>首 页</span></a></li>
+				<li class="fl member-footer-list btn"><a href="comm-info.htm"><i class="iconfont">&#xe627;</i><span>分 类</span></a></li>
+				<li class="fl member-footer-list btn"><a href="search.htm"><i class="iconfont">&#xe617;</i><span>搜 索</span></a></li>
+				<li class="fl member-footer-list btn"><a href="cart.htm"><i class="iconfont">&#xe626;</i><span>购物车</span></a></li>
+				<li class="fl member-footer-list btn"><a href="member.htm"><i class="iconfont">&#xe625;</i><span>我</span></a></li>
+			</ul>
+		</footer>
+		
+		<layer></layer>
+	</body>
+
+</html>
