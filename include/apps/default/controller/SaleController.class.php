@@ -45,6 +45,7 @@ class SaleController extends CommonController {
 		if(!$this->sale && !in_array($this->action, $without)){
           redirect(url('sale/sale_set'));
         }
+        $this->assign('user_id',session('user_id'));
     }
 
 
