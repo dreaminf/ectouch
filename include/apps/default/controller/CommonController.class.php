@@ -40,8 +40,8 @@ class CommonController extends BaseController
         $wxinfo = model('Base')->model->table('wechat')->field('id, token, appid, appsecret, oauth_redirecturi, type, oauth_status')->find();
         
         $sharetitle = "ectouch-title";
-        $sharedesc  = "ectouch-title";
-        $imgUrl     = 'http://'.$_SERVER['HTTP_HOST'].'/data/common/images/get_avatar.png';
+        $sharedesc  = "ectouch-desc";
+        $imgUrl     = 'http://shop.ectouch.cn/dev/data/common/images/get_avatar.png';
         $appid  = $wxinfo['appid'];
         $secret = $wxinfo['appsecret'];
         if (!session('access_token') || !session('ticket') ){
