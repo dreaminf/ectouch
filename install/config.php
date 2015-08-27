@@ -11,7 +11,7 @@ return array(
 	'footerInfo'=>'Copyright &copy; 2015 ECTouch.cn. All Rights Reserved.',
 	/* ------站点------ */
 	//数据库文件
-	'sqlFileName'=>array('structure.sql', 'data.sql', 'wechat.sql'),
+	'sqlFileName'=>array('structure.sql', 'data.sql', 'mobile.sql', 'wechat.sql'),
 	//数据库配置文件
 	'dbConfig'=>'../data/config.php',
 	//数据库名

@@ -1,15 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 2.8.0.3
--- http://www.phpmyadmin.net
---
--- 主机: localhost
--- 生成日期: 2006 年 11 月 02 日 16:55
--- 服务器版本: 3.23.58
--- PHP 版本: 4.4.2
---
--- 数据库: `ecs_liuw`
---
-
 
 --
 -- 导出表中的数据 `ecs_admin_action`
@@ -129,6 +117,7 @@ INSERT INTO `ecs_admin_action` (`action_id`, `parent_id`, `action_code`, `releva
 --
 --  `ecs_mail_templates`
 --
+
 INSERT INTO `ecs_mail_templates` (`template_id`, `template_code`, `is_html`, `template_subject`, `template_content`, `last_modify`, `last_send`, `type`) VALUES
 (1, 'send_password', 1, '密码找回', '{$user_name}您好！<br>\n<br>\n您已经进行了密码重置的操作，请点击以下链接(或者复制到您的浏览器):<br>\n<br>\n<a href="{$reset_email}" target="_blank">{$reset_email}</a><br>\n<br>\n以确认您的新密码重置操作！<br>\n<br>\n{$shop_name}<br>\n{$send_date}', 1194824789, 0, 'template'),
 (2, 'order_confirm', 0, '订单确认通知', '亲爱的{$order.consignee}，你好！ \n\n我们已经收到您于 {$order.formated_add_time} 提交的订单，该订单编号为：{$order.order_sn} 请记住这个编号以便日后的查询。\n\n{$shop_name}\n{$sent_date}\n\n\n', 1158226370, 0, 'template'),
@@ -3629,7 +3618,7 @@ INSERT INTO `ecs_shop_config` (`id`, `parent_id`, `code`, `type`, `store_range`,
 (236, 2, 'message_board', 'select', '1,0', '', '1', '1'),
 (239, 2, 'certificate_id', 'hidden', '', '', '', '1'),
 (240, 2, 'token', 'hidden', '', '', '', '1'),
-(241, 2, 'certi', 'hidden', '', '', 'http://service.shopex.cn/openapi/api.php', '1'),
+(241, 2, 'certi', 'hidden', '', '', 'http://service.ectouch.cn/openapi/api.php', '1'),
 (242, 2, 'send_verify_email', 'select', '1,0', '', '0', '1'),
 (243, 2, 'ent_id', 'hidden', '', '', '', '1'),
 (244, 2, 'ent_ac', 'hidden', '', '', '', '1'),
@@ -3707,7 +3696,7 @@ INSERT INTO `ecs_shop_config` (`id`, `parent_id`, `code`, `type`, `store_range`,
 (603, 6, 'hash_code', 'hidden', '', '', '31693422540744c0a6b6da635b7a5a93', '1'),
 (604, 6, 'template', 'hidden', '', '', 'default', '1'),
 (605, 6, 'install_date', 'hidden', '', '', '1224919217', '1'),
-(606, 6, 'ecs_version', 'hidden', '', '', 'v2.7.2', '1'),
+(606, 6, 'ecs_version', 'hidden', '', '', 'v2.7.3', '1'),
 (607, 6, 'sms_user_name', 'hidden', '', '', '', '1'),
 (608, 6, 'sms_password', 'hidden', '', '', '', '1'),
 (609, 6, 'sms_auth_str', 'hidden', '', '', '', '1'),
