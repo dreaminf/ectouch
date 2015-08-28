@@ -120,11 +120,8 @@ class passport implements IntegrateInterface
             return false;
         }
         /* 检查email是否重复 */
-        $sql = "SELECT " . $this->field_id . " FROM " . $this->table($this->user_table) . " WHERE " . $this->field_email . " = '$email'";
-        if ($this->db->table($this->user_table)
-            ->field($this->field_id)
-            ->where($this->field_email . " = '$email'")
-            ->getOne() > 0) {
+        $sql = "SELECT " . $this->field_id . " FROM {pre}" . $this->user_table . " WHERE " . $this->field_email . " = '$email'";
+        if ($this->db->getOne($sql) > 0) {
                 $this->error = ERR_EMAIL_EXISTS;
         
                 return false;
@@ -166,7 +163,7 @@ class passport implements IntegrateInterface
                 $values[] = $reg_date;
             }
         
-            $sql = "INSERT INTO " . $this->table($this->user_table) . " (" . implode(',', $fields) . ")" . " VALUES ('" . implode("', '", $values) . "')";
+            $sql = "INSERT INTO {pre}" . $this->user_table . " (" . implode(',', $fields) . ")" . " VALUES ('" . implode("', '", $values) . "')";
         
             $this->db->query($sql);
         
@@ -368,16 +365,10 @@ class passport implements IntegrateInterface
         }
         if ($password === null) {
             $condition[$this->field_name] = $post_username;
-            return $this->db->table($this->user_table)
-            ->field($this->field_id)
-            ->where($condition)
-            ->getOne();
+            return $this->db->table($this->user_table)->field($this->field_id)->where($condition)->find();
         } else {
             $condition['user_name'] = $post_username;
-            $row = $this->db->table($this->user_table)
-            ->field('user_id, password, salt, ec_salt')
-            ->where($condition)
-            ->find();
+            $row = $this->db->table($this->user_table)->field('user_id, password, salt, ec_salt')->where($condition)->find();
 
             if (empty($row)) {
                 return 0;
@@ -447,10 +438,8 @@ class passport implements IntegrateInterface
     {
         if (! empty($email)) {
             /* 检查email是否重复 */
-            if ($this->db->table($this->user_table)
-                ->field($this->field_id)
-                ->where($this->field_email . " = '$email' ")
-                ->getOne() > 0) {
+            $result = $this->db->table($this->user_table)->field($this->field_id)->where($this->field_email . " = '$email' ")->find();
+            if (count($result) > 0) {
                 $this->error = ERR_EMAIL_EXISTS;
                 return true;
             }
@@ -640,7 +629,7 @@ class passport implements IntegrateInterface
         $credits = $this->get_points_name();
         $fileds = array_keys($credits);
         if ($fileds) {
-            $sql = "SELECT " . $this->field_id . ', ' . implode(', ', $fileds) . " FROM " . $this->table($this->user_table) . " WHERE " . $this->field_name . "='$username'";
+            $sql = "SELECT " . $this->field_id . ', ' . implode(', ', $fileds) . " FROM {pre}" . $this->user_table . " WHERE " . $this->field_name . "='$username'";
             $row = $this->db->getRow($sql);
             return $row;
         } else {
