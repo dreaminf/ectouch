@@ -21,7 +21,7 @@ if (!file_exists('../include/language/' . $lang . '/calendar.php') || strrchr($l
 }
 
 require(dirname(dirname(__FILE__)) . '/data/config.php');
-header('Content-type: application/x-javascript; charset=' . CHARSET);
+header('Content-type: application/x-javascript; charset=utf-8');
 
 include_once('../include/language/' . $lang . '/calendar.php');
 
