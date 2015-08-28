@@ -58,8 +58,8 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_ad` (
 
 INSERT INTO `ecs_touch_ad` (`ad_id`, `position_id`, `media_type`, `ad_name`, `ad_link`, `ad_code`, `start_time`, `end_time`, `link_man`, `link_email`, `link_phone`, `click_count`, `enabled`) VALUES
 (1, 1, 0, '1', '', 'http://www.ectouch.cn/data/assets/images/ectouch_ad1.jpg', 1396339200, 1525161600, '', '', '', 0, 1),
-(2, 1, 0, '2', '', 'http://www.ectouch.cn/data/assets/images/ectouch_ad2.jpg', 1396339200, 1525161600, '', '', '', 0, 1),
-(3, 1, 0, '3', '', 'http://www.ectouch.cn/data/assets/images/ectouch_ad3.jpg', 1396339200, 1525161600, '', '', '', 0, 1);
+(2, 1, 0, '2', '', 'http://www.ectouch.cn/data/assets/images/ectouch_ad2.jpg', 1396339200, 1525161600, '', '', '', 0, 1);
+-- (3, 1, 0, '3', '', 'http://www.ectouch.cn/data/assets/images/ectouch_ad3.jpg', 1396339200, 1525161600, '', '', '', 0, 1);
 
 --
 -- 表的结构 `ecs_touch_ad_position`
@@ -225,29 +225,6 @@ INSERT INTO `ecs_touch_nav` (`id`, `ctype`, `cid`, `name`, `ifshow`, `vieworder`
 (6, '', 0, '品牌街', 1, 0, 0, 'index.php?c=brand', 'themes/default/images/nav/nav_5.png', 'middle'),
 (7, '', 0, '个人中心', 1, 0, 0, 'index.php?c=user', 'themes/default/images/nav/nav_6.png', 'middle'),
 (8, '', 0, '购物车', 1, 0, 0, 'index.php?c=flow&amp;a=cart', 'themes/default/images/nav/nav_7.png', 'middle');
-
---
--- 表的结构 `ecs_touch_payment`
---
-
-CREATE TABLE IF NOT EXISTS `ecs_touch_payment` (
-  `pay_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
-  `pay_code` varchar(20) NOT NULL DEFAULT '',
-  `pay_name` varchar(120) NOT NULL DEFAULT '',
-  `pay_fee` varchar(10) NOT NULL DEFAULT '0',
-  `pay_desc` text NOT NULL,
-  `pay_order` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `pay_config` text NOT NULL,
-  `enabled` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `is_cod` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `is_online` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`pay_id`),
-  UNIQUE KEY `pay_code` (`pay_code`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
-INSERT INTO `ecs_touch_payment` ( `pay_id`, `pay_code`, `pay_name`, `pay_fee`, `pay_desc`, `pay_order`, `pay_config`, `enabled`, `is_cod`, `is_online` ) VALUES  ('1', 'balance', '余额支付', '0', '使用帐户余额支付。只有会员才能使用，通过设置信用额度，可以透支。', '0', 'a:0:{}', '1', '0', '1');
-INSERT INTO `ecs_touch_payment` ( `pay_id`, `pay_code`, `pay_name`, `pay_fee`, `pay_desc`, `pay_order`, `pay_config`, `enabled`, `is_cod`, `is_online` ) VALUES  ('2', 'bank', '银行汇款/转帐', '0', '银行名称\n收款人信息：全称 ××× ；帐号或地址 ××× ；开户行 ×××。\n注意事项：办理电汇时，请在电汇单“汇款用途”一栏处注明您的订单号。', '0', 'a:0:{}', '1', '0', '0');
-INSERT INTO `ecs_touch_payment` ( `pay_id`, `pay_code`, `pay_name`, `pay_fee`, `pay_desc`, `pay_order`, `pay_config`, `enabled`, `is_cod`, `is_online` ) VALUES  ('3', 'cod', '货到付款', '0', '开通城市：×××\n货到付款区域：×××', '0', 'a:0:{}', '1', '1', '0');
 
 -- ----------------------------
 -- 增加短信接口配置项
