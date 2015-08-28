@@ -30,19 +30,12 @@ class AdminController extends BaseController {
     }
 
     protected function checkLogin() {
-        //验证来路是否合法
-        if (!isset($_SESSION['safe_route'])) {
-            // $this->redirect('index.php');
-        }
-
         //不需要登录验证的页面
-        $without = array(
-            'Index' => array('login', 'verify', 'forget'),
-        );
-
-        //如果当前访问是无需登录验证，则直接返回		
-        if (isset($without[CONTROLLER_NAME]) && in_array(ACTION_NAME, $without[CONTROLLER_NAME])) {
-            return true;
+        $access = array('Wechat', 'Extend');
+        
+        //如果当前访问是无需登录验证，则直接返回
+        if (!in_array(CONTROLLER_NAME, $access)) {
+            $this->redirect('./admin');
         }
 
         if (intval($_SESSION['admin_id']) > 0) {
