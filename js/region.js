@@ -65,7 +65,6 @@ region.changed = function(obj, type, selName)
 region.response = function(result, text_result)
 {
   var sel = document.getElementById(result.target);
-
   sel.length = 1;
   sel.selectedIndex = 0;
   sel.style.display = (result.regions.length == 0 && ! region.isAdmin && result.type + 0 == 3) ? "none" : '';
@@ -98,10 +97,10 @@ region.getFileName = function()
 {
   if (region.isAdmin)
   {
-    return "../index.php?c=common&a=region";
+    return "../index.php?c=public&a=region";
   }
   else
   {
-    return "index.php?c=common&a=region";
+    return "index.php?c=public&a=region";
   }
 }
