@@ -29,7 +29,7 @@ if (isset($set_modules) && $set_modules == TRUE) {
     /* 代码 */
     $modules[$i]['code'] = basename(__FILE__, '.php');
     /* 描述对应的语言项 */
-    $modules[$i]['desc'] = 'alipay_wap_desc';
+    $modules[$i]['desc'] = 'alipay_desc';
     /* 是否支持货到付款 */
     $modules[$i]['is_cod'] = '0';
     /* 是否支持在线支付 */
@@ -70,7 +70,7 @@ if (isset($set_modules) && $set_modules == TRUE) {
 /**
  * 支付插件类
  */
-class alipay_wap
+class alipay
 {
 
     /**

@@ -1269,11 +1269,11 @@ class FlowController extends CommonController {
             $sms->send(C('sms_shop_mobile'), sprintf($msg, $order ['consignee'], $order ['mobile']), '', 13, 1);
         }
         /* 如果需要，微信通知 by wanglu */
-        if (method_exists('WechatController', 'do_oauth')) {
-            $order_url = __HOST__ . url('user/order_detail', array('order_id' => $order ['order_id']));
-            $order_url = urlencode(base64_encode($order_url));
-            send_wechat_message('order_remind', '', $order['order_sn'] . L('order_effective'), $order_url, $order['order_sn']);
-        }
+        // if (method_exists('WechatController', 'do_oauth')) {
+        //     $order_url = __HOST__ . url('user/order_detail', array('order_id' => $order ['order_id']));
+        //     $order_url = urlencode(base64_encode($order_url));
+        //     send_wechat_message('order_remind', '', $order['order_sn'] . L('order_effective'), $order_url, $order['order_sn']);
+        // }
         /* 如果订单金额为0 处理虚拟卡 */
         if ($order ['order_amount'] <= 0) {
             $sql = "SELECT goods_id, goods_name, goods_number AS num FROM " . $this->model->pre . "cart WHERE is_real = 0 AND extension_code = 'virtual_card'" . " AND session_id = '" . SESS_ID . "' AND rec_type = '$flow_type'";
