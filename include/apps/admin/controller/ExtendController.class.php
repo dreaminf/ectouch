@@ -26,7 +26,7 @@ class ExtendController extends AdminController
         $this->plugin_name = I('get.ks');
         $this->assign('controller', CONTROLLER_NAME);
         //公众号类型
-        $where['id'] = session('wechat_id');
+        $where['id'] = 1; // session('wechat_id');
         $this->wechat_type = $this->model->table('wechat')
         ->field('type')
         ->where($where)
