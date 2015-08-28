@@ -10,7 +10,7 @@
      <li>
      	<!--{if $cat.cat_id}-->
      	<div class="media panel-body">
-            <img class="pull-left" src="{$cat.cat_image}">
+            <img class="pull-left" src="{$cat.cat_image}" style="display:None">
             <div class="pull-left ect-category-right">
                 <h3>{$cat.name|escape:html}</h3>
                 <h5> 
@@ -26,7 +26,7 @@
         <!--{else}-->
         <a href="{:url('category/index',array('id'=>$this->_var['cat']['id']))}">
         <div class="media panel-body">
-            <img class="pull-left" src="{$cat.cat_image}">
+            <img class="pull-left" src="{$cat.cat_image}" style="display:None">
             <div class="pull-left ect-category-right">
                 <h3>{$cat.name|escape:html}</h3>
                 <h5> 
