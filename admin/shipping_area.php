@@ -49,7 +49,7 @@ elseif ($_REQUEST['act'] == 'add' && !empty($_REQUEST['shipping']))
     $shipping = $db->getRow("SELECT shipping_name, shipping_code FROM " .$ecs->table('shipping'). " WHERE shipping_id='$_REQUEST[shipping]'");
 
     $set_modules = 1;
-    include_once(ROOT_PATH.'includes/modules/shipping/'.$shipping['shipping_code'].'.php');
+    include_once(BASE_PATH.'modules/shipping/'.$shipping['shipping_code'].'.php');
 
     $fields = array();
     foreach ($modules[0]['configure'] AS $key => $val)
@@ -100,7 +100,7 @@ elseif ($_REQUEST['act'] == 'insert')
     {
         $shipping_code = $db->getOne("SELECT shipping_code FROM " .$ecs->table('shipping').
                                     " WHERE shipping_id='$_POST[shipping]'");
-        $plugin        = '../includes/modules/shipping/'. $shipping_code. ".php";
+        $plugin        = BASE_PATH.'modules/shipping/'. $shipping_code. ".php";
 
         if (!file_exists($plugin))
         {
@@ -175,7 +175,7 @@ elseif ($_REQUEST['act'] == 'edit')
     $row = $db->getRow($sql);
 
     $set_modules = 1;
-    include_once(ROOT_PATH.'includes/modules/shipping/'.$row['shipping_code'].'.php');
+    include_once(BASE_PATH.'modules/shipping/'.$row['shipping_code'].'.php');
 
     $fields = unserialize($row['configure']);
     /* 如果配送方式支持货到付款并且没有设置货到付款支付费用，则加入货到付款费用 */
@@ -262,7 +262,7 @@ elseif ($_REQUEST['act'] == 'update')
     else
     {
         $shipping_code = $db->getOne("SELECT shipping_code FROM " .$ecs->table('shipping'). " WHERE shipping_id='$_POST[shipping]'");
-        $plugin        = '../includes/modules/shipping/'. $shipping_code. ".php";
+        $plugin        = BASE_PATH.'modules/shipping/'. $shipping_code. ".php";
 
         if (!file_exists($plugin))
         {
