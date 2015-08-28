@@ -44,7 +44,7 @@ class EcModel {
      */
     public function connect() {
         $dbDriver = 'Ec' . ucfirst($this->config['DB_TYPE']);
-        require_once( dirname(__FILE__) . '/driver/db/' . $dbDriver . '.class.php' );
+        require_once( dirname(__FILE__) . '/drivers/db/' . $dbDriver . '.class.php' );
         $this->db = new $dbDriver($this->config); //实例化数据库驱动类	  
     }
 

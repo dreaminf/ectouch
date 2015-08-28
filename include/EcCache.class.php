@@ -30,7 +30,7 @@ class EcCache
     public function __construct($config = array(), $type = 'FileCache')
     {
         $cacheDriver = 'Ec' . $type;
-        require_once (dirname(__FILE__) . '/driver/cache/' . $cacheDriver . '.class.php');
+        require_once (dirname(__FILE__) . '/drivers/cache/' . $cacheDriver . '.class.php');
         $this->cache = new $cacheDriver($config);
     }
 
