@@ -18,6 +18,10 @@ class Model extends BaseModel
         return isset($data[0]) ? current($data[0]) : array();
     }
 
+    public function getOne($sql, $params = array()){
+        $this->queryOne($sql, $params);
+    }
+
     /**
      * 执行SQL查询返回一条
      * @param  string $sql SQL语句
