@@ -386,7 +386,7 @@ class ClipsBaseModel extends BaseModel {
      */
     public function get_online_payment_list($include_balance = true) {
         $sql = 'SELECT pay_id, pay_code, pay_name, pay_fee, pay_desc ' .
-                'FROM ' . $this->pre . "touch_payment WHERE enabled = 1 AND is_cod <> 1";
+                'FROM ' . $this->pre . "payment WHERE enabled = 1 AND is_cod <> 1";
         if (!$include_balance) {
             $sql .= " AND pay_code <> 'balance' ";
         }
@@ -456,7 +456,7 @@ class ClipsBaseModel extends BaseModel {
                 }
 
                 /* 支付方式的ID */
-                $this->table = 'touch_payment';
+                $this->table = 'payment';
                 $condition['pay_name'] = $vo['payment'];
                 $condition['enabled'] = 1;
                 $pid = $this->field('pay_id', $condition);

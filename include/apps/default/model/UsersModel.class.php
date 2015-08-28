@@ -835,56 +835,6 @@ class UsersModel extends BaseModel {
         }
         $order = model('Order')->order_info($order_id);
 
-        //切换手机订单的关联的支付方式
-        if ($order['mobile_pay'] <= 0) {
-            //查询手机版支付方式的配置参数
-            $sql = "SELECT pay_id, pay_config FROM " . $this->pre . 'touch_payment';
-            $touch_payment_list = $this->query($sql);
-            if (is_array($touch_payment_list)) {
-                foreach ($touch_payment_list as $vo) {
-                    $touch_store = unserialize($vo['pay_config']);
-                    /* 取出已经设置属性的code */
-                    $touch_code_list = array();
-                    foreach ($touch_store as $key => $value) {
-                        if ($value['name'] == 'relate_pay' && $value['value'] == $order['pay_id']) {
-                            $touch_pay_id = $vo['pay_id'];
-                        }
-                    }
-                }
-            }
-
-            // 默认没有设置关联支付方式的
-            if ($touch_pay_id <= 0) {
-                $payment_list = model('Order')->available_payment_list(false, 0, true);
-                /* 过滤掉余额支付方式 */
-                if (is_array($payment_list)) {
-                    foreach ($payment_list as $key => $payment) {
-                        if ($payment['pay_code'] != 'balance') {
-                            $touch_pay_id = $payment['pay_id'];
-                            break;
-                        }
-                    }
-                }
-            }
-
-            /* 检查订单是否未付款和未发货 以及订单金额是否为0 和支付id是否为改变 */
-            if ($touch_pay_id > 0 && $order['pay_status'] == PS_UNPAYED && $order['shipping_status'] == SS_UNSHIPPED && $order['goods_amount'] > 0) {
-                //查询电脑版支付方式
-                $touch_payment_info = model('Order')->payment_info($touch_pay_id);
-                $order['pay_id'] = $touch_payment_info['pay_id'];
-                $order['pay_name'] = $touch_payment_info['pay_name'];
-
-                $order_amount = $order['order_amount'] - $order['pay_fee'];
-                $pay_fee = pay_fee($touch_pay_id, $order_amount);
-                $order_amount += $pay_fee;
-
-                $sql = "UPDATE " . $this->pre .
-                        "order_info SET pay_id='$touch_pay_id', pay_name='$touch_payment_info[pay_name]', pay_fee='$pay_fee', order_amount='$order_amount', `mobile_pay` = '1'" .
-                        " WHERE order_id = '$order_id'";
-                $this->query($sql);
-            }
-        }
-
         //检查订单是否属于该用户
         if ($user_id > 0 && $user_id != $order['user_id']) {
             ECTouch::err()->add(L('no_priv'));
@@ -897,7 +847,7 @@ class UsersModel extends BaseModel {
             $sql = "SELECT shipping_code FROM " . $this->pre . "shipping WHERE shipping_id = '$order[shipping_id]'";
             $res = $this->row($sql);
             $shipping_code = $res['shipping_code'];
-            $plugin = ROOT_PATH . 'includes/modules/shipping/' . $shipping_code . '.php';
+            $plugin = BASE_PATH . 'modules/shipping/' . $shipping_code . '.php';
             if (file_exists($plugin)) {
                 include_once($plugin);
                 $shipping = new $shipping_code;

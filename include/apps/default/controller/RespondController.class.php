@@ -35,7 +35,7 @@ class RespondController extends CommonController
         /* 判断是否启用 */
         $condition['pay_code'] = $this->data['code'];
         $condition['enabled'] = 1;
-        $enabled = $this->model->table('touch_payment')->where($condition)->count();
+        $enabled = $this->model->table('payment')->where($condition)->count();
         if ($enabled == 0) {
             $msg = L('pay_disabled');
         } else {

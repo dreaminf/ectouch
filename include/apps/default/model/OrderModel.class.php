@@ -55,8 +55,7 @@ class OrderModel extends BaseModel {
      */
     function available_payment_list($support_cod, $cod_fee = 0, $is_online = false) {
         $sql = 'SELECT pay_id, pay_code, pay_name, pay_fee, pay_desc, pay_config, is_cod' .
-                ' FROM ' . $this->pre .
-                'touch_payment WHERE enabled = 1 ';
+                ' FROM ' . $this->pre .'payment WHERE enabled = 1 ';
         if (!$support_cod) {
             $sql .= 'AND is_cod = 0 '; // 如果不支持货到付款
         }
@@ -127,8 +126,7 @@ class OrderModel extends BaseModel {
      * @return  array   支付方式信息
      */
     function payment_info($pay_id) {
-        $sql = 'SELECT * FROM ' . $this->pre .
-                "touch_payment WHERE pay_id = '$pay_id' AND enabled = 1";
+        $sql = 'SELECT * FROM ' . $this->pre . "payment WHERE pay_id = '$pay_id' AND enabled = 1";
 
         return $this->row($sql);
     }

@@ -23,8 +23,7 @@ class PaymentModel extends BaseModel {
      *  @param  string  $code   支付方式代码
      */
     function get_payment($code) {
-        $sql = 'SELECT * FROM ' . $this->pre .
-                "touch_payment WHERE pay_code = '$code' AND enabled = '1'";
+        $sql = 'SELECT * FROM ' . $this->pre . "payment WHERE pay_code = '$code' AND enabled = '1'";
         $payment = $this->row($sql);
 
         if ($payment) {
