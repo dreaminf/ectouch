@@ -3786,9 +3786,9 @@ INSERT INTO `ecs_template` (`filename`, `region`, `library`, `sort_order`, `id`,
 --
 
 INSERT INTO `ecs_reg_fields` (`id`, `reg_field_name`, `dis_order`, `display`, `type`, `is_need`) VALUES  
-(1, 'MSN', 0, 1, 1, 1), 
-(2, 'QQ', 0, 1, 1, 1), 
-(3, '办公电话', 0, 1, 1, 1), 
-(4, '家庭电话', 0, 1, 1, 1), 
+(1, 'MSN', 0, 0, 1, 0), 
+(2, 'QQ', 0, 0, 1, 0), 
+(3, '办公电话', 0, 0, 1, 0), 
+(4, '家庭电话', 0, 0, 1, 0), 
 (5, '手机', 0, 1, 1, 1),
-(6, '密码找回问题', 0, 1, 1, 1);
+(6, '密码找回问题', 0, 0, 1, 0);
