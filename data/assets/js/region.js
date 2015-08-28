@@ -71,6 +71,10 @@ region.response = function(result, text_result)
   sel.length = 1;
   sel.selectedIndex = 0;
   sel.style.display = (result.regions.length == 0 && ! region.isAdmin && result.type + 0 == 3) ? "none" : '';
+  if( result.type + 0 == 3){
+      var sel_box = document.getElementById(result.target + '_box');
+      sel_box.style.display = (result.regions.length == 0 && ! region.isAdmin && result.type + 0 == 3) ? "none" : 'block';
+  }
 
   if (document.all)
   {
