@@ -127,7 +127,7 @@ class CommonController extends BaseController
         if (! empty($shop_closed)) {
             $close_comment = C('close_comment');
             $close_comment = empty($close_comment) ? 'closed.':$close_comment;
-            exit($close_comment);
+            exit('<h1 style="font-size: 5rem;text-align: center;margin-top: 40%;">'.$close_comment.'</h1>');
         }
         //NULL
         // 初始化session
