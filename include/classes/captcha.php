@@ -53,14 +53,14 @@ class captcha
      *
      * @var integer $width
      */
-    var $width      = 130;
+    var $width      = 120;
 
     /**
      * 图片的高度
      *
      * @var integer $height
      */
-    var $height     = 20;
+    var $height     = 30;
 
     /**
      * 构造函数
@@ -71,7 +71,7 @@ class captcha
      * @param   integer $height     图片高度
      * @return  bool
      */
-    public function __construct($folder = '', $width = 145, $height = 20)
+    public function __construct($folder = '', $width = 120, $height = 30)
     {
         if (!empty($folder))
         {
