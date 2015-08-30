@@ -6,9 +6,9 @@
 
 class error
 {
-    private $_message   = array();
-    private $_template  = '';
-    private $error_no   = 0;
+    public $_message   = array();
+    public $_template  = '';
+    public $error_no   = 0;
 
     /**
      * 构造函数
