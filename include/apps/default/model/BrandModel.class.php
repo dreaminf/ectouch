@@ -90,14 +90,14 @@ class BrandModel extends BaseModel {
      */
     function get_brands($app = 'brand', $size, $page) {
         $start = ($page - 1) * $size;
-        $sql = "SELECT b.brand_id, b.brand_name, b.brand_logo, b.brand_desc, t.brand_banner FROM " . $this->pre . "brand b LEFT JOIN  " . $this->pre . "touch_brand t ON t.brand_id = b.brand_id " . "WHERE is_show = 1 " . "GROUP BY b.brand_id , b.sort_order order by b.sort_order ASC LIMIT $start , $size";
+        $sql = "SELECT brand_id, brand_name, brand_logo, brand_desc FROM " . $this->pre . "brand WHERE is_show = 1 GROUP BY brand_id , sort_order order by sort_order ASC LIMIT $start , $size";
         $res = $this->query($sql);
         $arr = array();
         foreach ($res as $row) {
             $arr[$row['brand_id']]['brand_name'] = $row['brand_name'];
             $arr[$row['brand_id']]['url'] = url('brand/goods_list', array('id' => $row['brand_id']));
-            $arr[$row['brand_id']]['brand_logo'] = get_banner_path($row['brand_logo']);
-            $arr[$row['brand_id']]['brand_banner'] = get_banner_path($row['brand_banner']);
+            $arr[$row['brand_id']]['brand_logo'] = __ROOT__ . '/data/attached/brandlogo/' .get_banner_path($row['brand_logo']);
+            $arr[$row['brand_id']]['brand_banner'] = $arr[$row['brand_id']]['brand_logo'];
             $arr[$row['brand_id']]['goods_num'] = model('Brand')->goods_count_by_brand($row['brand_id']);
             $arr[$row['brand_id']]['brand_desc'] = htmlspecialchars($row['brand_desc'], ENT_QUOTES);
         }
@@ -128,7 +128,7 @@ class BrandModel extends BaseModel {
      *
      */
     function get_brands_count() {
-        $sql = "SELECT count(*) as num FROM " . $this->pre . "brand b LEFT JOIN  " . $this->pre . "touch_brand t ON t.brand_id = b.brand_id " . "WHERE is_show = 1 ";
+        $sql = "SELECT count(*) as num FROM " . $this->pre . "brand WHERE is_show = 1 ";
         $res = $this->row($sql);
         $sales_count = $res['num'] ? $res['num'] : 0;
         return $sales_count;

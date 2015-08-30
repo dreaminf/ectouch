@@ -25,10 +25,10 @@ class BrandBaseModel extends BaseModel {
      * @return  void
      */
     function get_brand_info($id) {
-        $sql = 'SELECT b.* , tb.brand_banner FROM ' . $this->pre . "brand as b LEFT JOIN " . $this->pre . "touch_brand as tb ON b.brand_id = tb.brand_id WHERE b.brand_id = '$id'";
+        $sql = 'SELECT * FROM ' . $this->pre . "brand WHERE brand_id = '$id'";
         $res = $this->row($sql);
-        $res['brand_logo'] = get_banner_path($res ['brand_logo']);
-        $res['brand_banner'] = get_banner_path($res ['brand_banner']);
+        $res['brand_logo'] = __ROOT__ . '/data/attached/brandlogo/' .get_banner_path($res ['brand_logo']);
+        $res['brand_banner'] = $res['brand_logo'];
 
         return $res;
     }
