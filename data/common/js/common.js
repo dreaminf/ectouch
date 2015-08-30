@@ -1027,8 +1027,7 @@ function addToCartResponse_quick(result) {
         if (result.error == 1) {
 			if(use_how_oos == 1){
         		if (confirm(result.message)) {
-    				location.href = 'index.php?m=default&c=user&a=add_booking&id='
-    						+ result.goods_id + '&spec=' + result.product_spec;
+    				location.href = 'index.php?m=default&c=user&a=add_booking&id=' + result.goods_id + '&spec=' + result.product_spec;
     			}
         	}else{
         		alert(result.message);
@@ -1043,15 +1042,30 @@ function addToCartResponse_quick(result) {
         }
     } else {
         var cartInfo = document.getElementById('ECS_CARTINFO');
-        var cart_url = 'index.php?m=default&c=flow&a=cart';
+        var cart_url = 'index.php?c=flow&a=cart';
+        //var cart_url = 'flow.php?step=cart';
         if (cartInfo) {
             cartInfo.innerHTML = result.content;
         }
 
-        var returnVal = window.confirm("商品已成功加入购物车\n是否去购物车查看？", "标题");
-        if (returnVal) {
+        if (result.one_step_buy == '1') {
             location.href = cart_url;
+        } else {
+            switch (result.confirm_type) {
+                case '1':
+                    if (confirm(result.message))
+                        location.href = cart_url;
+                    break;
+                case '2':
+                    if (!confirm(result.message))
+                        location.href = cart_url;
+                    break;
+                case '3':
+                    location.href = cart_url;
+                    break;
+                default:
+                    break;
+            }
         }
-
     }
 }
