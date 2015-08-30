@@ -1746,8 +1746,9 @@ function exception_handler($errno, $errstr, $errfile, $errline) {
  */
 function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods', $del = false) {
     $url = C('no_picture');
+    $shop_url = C('SHOP_URL') == '' ? __ROOT__:C('SHOP_URL');
     if(!empty($image)){
-      $base_url = substr(C('SHOP_URL'), -1) == '/' ? C('SHOP_URL') : C('SHOP_URL') . '/';
+      $base_url = substr($shop_url, -1) == '/' ? $shop_url : $shop_url . '/';
       if(strtolower(substr($image, 0, 4)) == 'http'){
           $url = $image;
       }else if(strtolower(substr($image, 0, 13)) == 'data/attached'){
