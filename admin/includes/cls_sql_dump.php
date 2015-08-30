@@ -337,7 +337,7 @@ class cls_sql_dump
      *
      * @return  array       $arr        信息数组
      */
-    function get_head($path)
+    static function get_head($path)
     {
         /* 获取sql文件头部信息 */
         $sql_info = array('date'=>'', 'mysql_ver'=> '', 'php_ver'=>0, 'ecs_ver'=>'', 'vol'=>0);
