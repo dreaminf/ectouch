@@ -138,16 +138,6 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_article` (
 INSERT INTO `ecs_touch_article` (`article_id`, `cat_id`, `title`, `content`, `author`, `author_email`, `keywords`, `is_open`, `add_time`, `file_url`, `open_type`) VALUES(6, -1, '用户协议', '', '', '', '', 1, UNIX_TIMESTAMP(), '', 0);
 
 --
--- 表的结构 `ecs_touch_brand`
---
-
-CREATE TABLE IF NOT EXISTS `ecs_touch_brand` (
-  `brand_id` int(8) NOT NULL,
-  `brand_banner` varchar(255) NOT NULL COMMENT '广告位',
-  `brand_content` text NOT NULL COMMENT '详情'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
 -- 表的结构 `ecs_touch_category`
 --
 
