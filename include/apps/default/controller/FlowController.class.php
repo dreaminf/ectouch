@@ -1032,8 +1032,8 @@ class FlowController extends CommonController {
                 $consignee ['city'],
                 $consignee ['district']
             )),
-            'mobile_order' => 1,
-            'mobile_pay' => 1
+            'order_source' => 1
+            // 'mobile_pay' => 1
         );
 
         /* 扩展信息 */
