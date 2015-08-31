@@ -120,8 +120,8 @@ function insert_ads($arr) {
     if (!empty($arr['num']) && $arr['num'] != 1) {
         $sql = 'SELECT a.ad_id, a.position_id, a.media_type, a.ad_link, a.ad_code, a.ad_name, p.ad_width, ' .
                 'p.ad_height, p.position_style, RAND() AS rnd ' .
-                'FROM ' . M()->pre . 'touch_ad ' . ' AS a ' .
-                'LEFT JOIN ' . M()->pre . 'touch_ad_position ' . ' AS p ON a.position_id = p.position_id ' .
+                'FROM ' . M()->pre . 'ad ' . ' AS a ' .
+                'LEFT JOIN ' . M()->pre . 'ad_position ' . ' AS p ON a.position_id = p.position_id ' .
                 "WHERE enabled = 1 AND start_time <= '" . $time . "' AND end_time >= '" . $time . "' " .
                 "AND a.position_id = '" . $arr['id'] . "' " .
                 'ORDER BY rnd LIMIT ' . $arr['num'];
@@ -130,8 +130,8 @@ function insert_ads($arr) {
         if ($static_res[$arr['id']] === NULL) {
             $sql = 'SELECT a.ad_id, a.position_id, a.media_type, a.ad_link, a.ad_code, a.ad_name, p.ad_width, ' .
                     'p.ad_height, p.position_style, RAND() AS rnd ' .
-                    'FROM ' . M()->pre . 'touch_ad ' . ' AS a ' .
-                    'LEFT JOIN ' . M()->pre . 'touch_ad_position' . ' AS p ON a.position_id = p.position_id ' .
+                    'FROM ' . M()->pre . 'ad ' . ' AS a ' .
+                    'LEFT JOIN ' . M()->pre . 'ad_position' . ' AS p ON a.position_id = p.position_id ' .
                     "WHERE enabled = 1 AND a.position_id = '" . $arr['id'] .
                     "' AND start_time <= '" . $time . "' AND end_time >= '" . $time . "' " .
                     'ORDER BY rnd LIMIT 1';

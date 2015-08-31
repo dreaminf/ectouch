@@ -14,7 +14,7 @@
       </ul>
     </div>
     <div class="bd">
-      {insert name='ads' id=1 num=3}
+      {insert name='ads' id=255 num=3}
     </div>
   </div>
   <div style="text-align: center;padding: 5px 0 18px;"><img src="__TPL__/images/logo.png" style="width:68%" /></div>

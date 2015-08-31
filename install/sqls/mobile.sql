@@ -30,68 +30,21 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_topic` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
--- 表的结构 `ecs_touch_ad`
---
-
-CREATE TABLE IF NOT EXISTS `ecs_touch_ad` (
-  `ad_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `position_id` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `media_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `ad_name` varchar(255) NOT NULL DEFAULT '',
-  `ad_link` varchar(255) NOT NULL DEFAULT '',
-  `ad_code` text NOT NULL,
-  `start_time` int(11) NOT NULL DEFAULT '0',
-  `end_time` int(11) NOT NULL DEFAULT '0',
-  `link_man` varchar(60) NOT NULL DEFAULT '',
-  `link_email` varchar(60) NOT NULL DEFAULT '',
-  `link_phone` varchar(60) NOT NULL DEFAULT '',
-  `click_count` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `enabled` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`ad_id`),
-  KEY `position_id` (`position_id`),
-  KEY `enabled` (`enabled`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
---
 -- 转存表中的数据 `ecs_touch_ad`
 --
 
-INSERT INTO `ecs_touch_ad` (`ad_id`, `position_id`, `media_type`, `ad_name`, `ad_link`, `ad_code`, `start_time`, `end_time`, `link_man`, `link_email`, `link_phone`, `click_count`, `enabled`) VALUES
-(1, 1, 0, '1', '', 'http://www.ectouch.cn/data/assets/images/ectouch_ad1.jpg', 1396339200, 1525161600, '', '', '', 0, 1),
-(2, 1, 0, '2', '', 'http://www.ectouch.cn/data/assets/images/ectouch_ad2.jpg', 1396339200, 1525161600, '', '', '', 0, 1);
+INSERT INTO `ecs_ad` (`position_id`, `media_type`, `ad_name`, `ad_link`, `ad_code`, `start_time`, `end_time`, `link_man`, `link_email`, `link_phone`, `click_count`, `enabled`) VALUES
+(255, 0, '1', '', 'http://www.ectouch.cn/data/assets/images/ectouch_ad1.jpg', 1396339200, 1525161600, '', '', '', 0, 1),
+(255, 0, '2', '', 'http://www.ectouch.cn/data/assets/images/ectouch_ad2.jpg', 1396339200, 1525161600, '', '', '', 0, 1);
 -- (3, 1, 0, '3', '', 'http://www.ectouch.cn/data/assets/images/ectouch_ad3.jpg', 1396339200, 1525161600, '', '', '', 0, 1);
-
---
--- 表的结构 `ecs_touch_ad_position`
---
-
-CREATE TABLE IF NOT EXISTS `ecs_touch_ad_position` (
-  `position_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
-  `position_name` varchar(255) NOT NULL DEFAULT '',
-  `ad_width` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `ad_height` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `position_desc` varchar(255) NOT NULL DEFAULT '',
-  `position_style` text NOT NULL,
-  PRIMARY KEY (`position_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
 
 --
 -- 转存表中的数据 `ecs_touch_ad_position`
 --
-
-INSERT INTO `ecs_touch_ad_position` (`position_id`, `position_name`, `ad_width`, `ad_height`, `position_desc`, `position_style`) VALUES
-(1, '首页Banner广告位', 360, 168, '', '<ul>\r\n{foreach from=$ads item=ad}\r\n  <li>{$ad}</li>\r\n{/foreach}\r\n</ul>\r\n');
-
---
--- 表的结构 `ecs_touch_adsense`
---
-
-CREATE TABLE IF NOT EXISTS `ecs_touch_adsense` (
-  `from_ad` smallint(5) NOT NULL DEFAULT '0',
-  `referer` varchar(255) NOT NULL DEFAULT '',
-  `clicks` int(10) unsigned NOT NULL DEFAULT '0',
-  KEY `from_ad` (`from_ad`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ALTER TABLE `ecs_ad_position` MODIFY COLUMN `position_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT FIRST;
+DELETE FROM `ecs_ad_position` WHERE `position_id` = 255;
+INSERT INTO `ecs_ad_position` (`position_id`, `position_name`, `ad_width`, `ad_height`, `position_desc`, `position_style`) VALUES
+(255, '手机端首页Banner广告位', 360, 168, '', '<ul>\r\n{foreach from=$ads item=ad}\r\n  <li>{$ad}</li>\r\n{/foreach}\r\n</ul>\r\n');
 
 --
 -- 表的结构 `ecs_touch_article_cat`
