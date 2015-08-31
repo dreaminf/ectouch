@@ -8,6 +8,11 @@
   <section class="flow-consignee ect-bg-colorf">
     <ul>
       <li>
+        <div class="input-text"><b class="pull-left">{$lang.username}：</b><span>
+          {$info.username}
+          </span></div>
+      </li>
+      <li>
         <div class="input-text"><b class="pull-left">{$lang.email}：</b><span>
           <input name="email" type="text" placeholder="{$lang.no_emaill}"  value="{$profile.email}">
           </span></div>
@@ -42,9 +47,18 @@
   </section>
   <input name="act" type="hidden" value="profile" />
   <div class="two-btn ect-padding-tb ect-padding-lr ect-margin-tb text-center">
-    <input name="submit" type="submit" value="{$lang.confirm_edit}" class="btn btn-info" />
+    <input name="submit" type="submit" value="{$lang.confirm_edit}" class="btn btn-info ect-bg-colory" />
   </div>
 </form>
+
+<section class="flow-consignee ect-bg-colorf">
+  <ul>
+    <li><a href="{:url('user/edit_password')}">修改密码</a></li>
+    <li><a href="{:url('user/address_list')}">收货地址</a></li>
+  </ul>
+</section>
+
 </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
-</body></html>
+</body>
+</html>
