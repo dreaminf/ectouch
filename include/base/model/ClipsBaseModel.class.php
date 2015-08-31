@@ -549,11 +549,11 @@ class ClipsBaseModel extends BaseModel {
             }
         }
         if ($u_row) {
-            $info['nickname'] = $u_row['nickname'];
-            $info['headimgurl'] = $u_row['headimgurl'];
+            $info['name'] = $u_row['nickname'];
+            $info['avatar'] = $u_row['headimgurl'];
         } else {
-            $info['nickname'] = $info['username'];
-            $info['headimgurl'] = __PUBLIC__ . '/images/get_avatar.png';
+            $info['name'] = $info['username'];
+            $info['avatar'] = __PUBLIC__ . '/images/get_avatar.png';
         }
 
         //如果$_SESSION中时间无效说明用户是第一次登录。取当前登录时间。
