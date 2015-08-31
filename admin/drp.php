@@ -92,41 +92,41 @@ if ($_REQUEST['act'] == 'edit')
 
 
 /*------------------------------------------------------ */
-//-- 申请分销温馨提示
+//-- 分销设置
 /*------------------------------------------------------ */
-if ($_REQUEST['act'] == 'apply')
+if ($_REQUEST['act'] == 'config')
 {
     if($_POST){
         $data = $_POST['data'];
-        $db->autoExecute($ecs->table('drp_config'), $data, 'UPDATE', "keyword = 'apply'");
-        ecs_header("Location: drp.php?act=apply\n");
+        if($data){
+            foreach($data as $key=>$val){
+                unset($dat);
+                $dat['centent']=$val;
+                $db->autoExecute($ecs->table('drp_config'), $dat, 'UPDATE', "keyword = '$key'");
+            }
+        }
+
+        ecs_header("Location: drp.php?act=config\n");
         exit;
     }
-    $info = $db->getRow("SELECT * FROM " . $ecs->table("drp_config") . " WHERE keyword ='apply'");
+    $info = $db->getAll("SELECT * FROM " . $ecs->table("drp_config"));
     $smarty->assign('info', $info);
     assign_query_info();
     if (empty($_REQUEST['is_ajax']))
     {
         $smarty->assign('full_page', 1);
     }
-    $smarty->assign('keyword', 'apply');
-    $smarty->assign('ur_here', $_LANG['drp_profit']);
-    $smarty->display('drp_apply.htm');
+    $smarty->assign('ur_here', $_LANG['config']);
+    $smarty->display('drp_config.htm');
 }
 
 /*------------------------------------------------------ */
-//-- 新手必读
+//-- 分销商管理
 /*------------------------------------------------------ */
-if ($_REQUEST['act'] == 'novice')
+if ($_REQUEST['act'] == 'users')
 {
-    if($_POST){
-        $data = $_POST['data'];
-        $db->autoExecute($ecs->table('drp_config'), $data, 'UPDATE', "keyword = 'novice'");
-        ecs_header("Location: drp.php?act=novice\n");
-        exit;
-    }
-    $info = $db->getRow("SELECT * FROM " . $ecs->table("drp_config") . " WHERE keyword ='novice'");
-    $smarty->assign('info', $info);
+    $list = $db->getAll("SELECT d.id,d.shop_name,d.real_name,d.shop_mobile,d.user_id,d.cat_id,d.open,u.user_name FROM " . $ecs->table("drp_shop") . " as d join " . $ecs->table("users") . " as u on d.user_id=u.user_id");
+    $smarty->assign('list', $list);
     assign_query_info();
     if (empty($_REQUEST['is_ajax']))
     {
@@ -134,7 +134,7 @@ if ($_REQUEST['act'] == 'novice')
     }
     $smarty->assign('keyword', 'novice');
     $smarty->assign('ur_here', $_LANG['drp_profit']);
-    $smarty->display('drp_novice.htm');
+    $smarty->display('drp_users.htm');
 }
 
 /*------------------------------------------------------ */

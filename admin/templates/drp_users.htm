@@ -1,0 +1,43 @@
+{if $full_page}
+<!-- $Id: users_list.htm 15617 2009-02-18 05:18:00Z sunxiaodong $ -->
+{include file="pageheader.htm"}
+{insert_scripts files="../js/utils.js,listtable.js"}
+
+<form method="POST" action="" name="listForm">
+
+<!-- start users list -->
+<div class="list-div" id="listDiv">
+{/if}
+
+<table cellpadding="4" cellspacing="1">
+    <tr>
+        <td style="">{$lang.cate_id}</td>
+        <td style="">{$lang.user.user_name}</td>
+        <td style="">{$lang.user.real_name}</td>
+        <td style="">{$lang.user.shop_name}</td>
+        <td style="">{$lang.user.shop_mobile}</td>
+        <td style="">{$lang.user.open}</td>
+        <td style="">{$lang.handle}</td>
+    </tr>
+    {foreach from=$list item=li}
+    <tr>
+        <td>{$li.id}</td>
+        <td>{$li.user_name}</td>
+        <td>{$li.real_name}</td>
+        <td>{$li.shop_name}</td>
+        <td>{$li.shop_mobile}</td>
+        <td>{if $li.open eq 1}{$lang.user.open_true}{else}{$lang.user.open_false}{/if}</td>
+        <td>
+          <a href="drp.php?act=user_edit&id={$li.user_id}" title="{$lang.edit}"><img src="images/icon_edit.gif" border="0" height="16" width="16" /></a>
+          <a href="javascript:confirm('{$lang.change}') ? location.href='drp.php?act=user_change&id={$li.user_id}' :''" title="{$lang.change}"><img src="images/icon_drop.gif" border="0" height="16" width="16" /></a>
+        </td>
+    </tr>
+    {/foreach}
+</table>
+{if $full_page}
+</div>
+<!-- end users list -->
+</form>
+{/literal}
+{include file="pagefooter.htm"}
+{/if}

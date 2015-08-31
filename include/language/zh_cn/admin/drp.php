@@ -23,6 +23,7 @@ $_LANG['profit2'] = '一级分店佣金';
 $_LANG['profit3'] = '二级分店佣金';
 $_LANG['submit'] = '提交';
 $_LANG['apply_wxts'] = '申请分销商时的温馨提示';
+$_LANG['config'] = '分销设置';
 
 $_LANG['user_name'] = '下单用户';
 $_LANG['parent_name'] = '所属分销商';
@@ -67,4 +68,15 @@ $_LANG['separate_by'][-2] = '推荐订单分成';
 
 $_LANG['show_affiliate_orders'] = '此列表显示此用户推荐的订单信息。';
 $_LANG['back_note'] = '返回会员编辑页面';
+
+$_LANG['user']['user_name'] = '用户名';
+$_LANG['user']['real_name'] = '真实姓名';
+$_LANG['user']['shop_name'] = '店铺名';
+$_LANG['user']['shop_mobile'] = '手机号';
+$_LANG['user']['open'] = '店铺状态';
+$_LANG['user']['open_true'] = '开启';
+$_LANG['user']['open_false'] = '关闭';
+$_LANG['handle'] = '操作';
+$_LANG['edit'] = '编辑';
+$_LANG['change'] = '您确认要修改店铺状态吗？';
 ?>

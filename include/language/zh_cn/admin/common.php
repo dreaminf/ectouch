@@ -403,9 +403,9 @@ $_LANG['10_shop_authorized'] = '授权证书';
 
 
 // 微分销
+$_LANG['drp_config'] = '分销设置';
+$_LANG['drp_users'] = '分销商管理';
 $_LANG['drp'] = '分销利润设置';
-$_LANG['apply'] = '分销申请提示';
-$_LANG['novice'] = '新手必读';
 $_LANG['order_list'] = '分销订单';
 
 // 微信通

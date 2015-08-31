@@ -10,14 +10,17 @@
 {/if}
 
 <table cellpadding="4" cellspacing="1">
+    {foreach from=$info item=li}
     <tr>
-        <td style="width:40%;">{$lang.novice}</td>
-        <td style="width:60%;"><textarea name="data[centent]">{$info.centent}</textarea></td>
+        <td style="width:40%;">{$li.name}</td>
+        <td style="width:60%;"><textarea name="data[{$li.keyword}]">{$li.centent}</textarea></td>
     </tr>
+    {/foreach}
     <tr>
-        <td><input type="hidden" value="{$keyword}" name="keyword"></td>
+        <td style="width:40%;"></td>
         <td><input type="submit" value="{$lang.submit}" class="button" /></td>
     </tr>
+
 </table>
 {if $full_page}
 </div>
