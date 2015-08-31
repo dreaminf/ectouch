@@ -44,6 +44,7 @@
 						<td><div id="J_install_tip_dbprefix"><span class="gray">建议使用默认，同一数据库安装多个ShuipFCMS时需修改</span></div></td>
 					</tr>
 				</table>
+				<?php if($independent):?>
 				<table width="100%">
 					<tr>
 						<td class="td1" width="100">网站配置</td>
@@ -98,6 +99,8 @@
 						<td><div id="J_install_tip_manager_email"></div></td>
 					</tr>
 				</table>
+				<?php endif;?>
+				<input type="hidden" name="independent" value="<?php echo $independent;?>" >
 				<div id="J_response_tips" style="display:none;"></div>
 			</div>
 		</div>

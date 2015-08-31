@@ -109,13 +109,17 @@ switch ($step) {
 		$scriptName = !empty($_SERVER["REQUEST_URI"]) ? $scriptName = $_SERVER["REQUEST_URI"] : $scriptName = $_SERVER["PHP_SELF"];
 		$rootpath = preg_replace("/\/(I|i)nstall\/index\.php(.*)$/", "", $scriptName);
 		$domain = $domain . $rootpath;
+		//是否独立安装
+		$independent = (stripos($domain, 'mobile') === false) ? 1:0;
 		include ("./templates/3.php");
 		break;
 	//安装详细过程
 	case '4':
 		verify(4);
 		if (intval($_GET['install'])) {
-			dataVerify();
+			//是否安装基础数据
+			$independent = trim($_POST['independent']);
+			dataVerify($independent);
 			//关闭特殊字符提交处理到数据库
 			if($phpversion <= '5.3.0'){
 				set_magic_quotes_runtime(0);
@@ -159,13 +163,10 @@ switch ($step) {
 					alert(1,"<li><span class='correct_span'>&radic;</span>成功创建数据库:{$dbName}<span style='float: right;''>".date('Y-m-d H:i:s')."</span></li>",0);
 				}
 			}
-			//是否安装基础数据
-			$installed = false;
-
 			//读取数据文件
 			foreach ($config['sqlFileName'] as $sqlFile) {
 				$rest = array('structure.sql', 'data.sql');
-				if($installed && in_array($sqlFile, $rest)){
+				if(!$independent && in_array($sqlFile, $rest)){
 					continue;
 				}
 				$sqldata .= file_get_contents('./sqls/'.$sqlFile);
@@ -180,7 +181,6 @@ switch ($step) {
 			 * 执行SQL语句
 			 */
 			$counts = count($sqlFormat);
-
 			for ($i = $n; $i < $counts; $i++) {
 				$sql = trim($sqlFormat[$i]);
 				if (strstr($sql, 'CREATE TABLE')) {
@@ -264,16 +264,18 @@ function verify($step = 3){
 		}
 	}
 }
-function dataVerify(){
+function dataVerify($independent = 1){
 	empty($_POST['dbhost'])?alert(0,'数据库服务器不能为空！'):'';
 	empty($_POST['dbport'])?alert(0,'数据库端口不能为空！'):'';
 	empty($_POST['dbuser'])?alert(0,'数据库用户名不能为空！'):'';
 	empty($_POST['dbname'])?alert(0,'数据库名不能为空！'):'';
 	empty($_POST['dbprefix'])?alert(0,'数据库表前缀不能为空！'):'';
-	empty($_POST['siteurl'])?alert(0,'网站域名不能为空！'):'';
-	empty($_POST['manager'])?alert(0,'管理员帐号不能为空！'):'';
-	empty($_POST['manager_pwd'])?alert(0,'管理员密码不能为空！'):'';
-	empty($_POST['manager_email'])?alert(0,'管理员邮箱不能为空！'):'';
+	if($independent){
+		empty($_POST['siteurl'])?alert(0,'网站域名不能为空！'):'';
+		empty($_POST['manager'])?alert(0,'管理员帐号不能为空！'):'';
+		empty($_POST['manager_pwd'])?alert(0,'管理员密码不能为空！'):'';
+		empty($_POST['manager_email'])?alert(0,'管理员邮箱不能为空！'):'';		
+	}
 }
 /**
  * 判断目录是否可写
