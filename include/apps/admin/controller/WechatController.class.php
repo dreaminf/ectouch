@@ -32,7 +32,8 @@ class WechatController extends AdminController
             $data = array(
                 'id' => $this->wechat_id,
                 'time' => time(),
-				'status' => 1,
+                'type' => 2,
+                'status' => 1,
 				'default_wx' => 1
             );
             $this->model->table('wechat')->data($data)->insert();

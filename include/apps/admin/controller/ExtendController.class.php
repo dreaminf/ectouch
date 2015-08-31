@@ -26,10 +26,10 @@ class ExtendController extends AdminController
         $this->plugin_name = I('get.ks');
         $this->assign('controller', CONTROLLER_NAME);
         //公众号类型
-        $where['id'] = 1; // session('wechat_id');
+        $this->wechat_id = 1; // $this->wechat_id;
         $this->wechat_type = $this->model->table('wechat')
         ->field('type')
-        ->where($where)
+        ->where('id='.$this->wechat_id)
         ->getOne();
         $this->assign('type', $this->wechat_type);
     }
@@ -42,7 +42,7 @@ class ExtendController extends AdminController
         // 数据库中的数据
         $extends = $this->model->table('wechat_extend')
             ->field('name, keywords, command, config, enable, author, website')
-            ->where('type = "function" and enable = 1 and wechat_id = ' . session('wechat_id'))
+            ->where('type = "function" and enable = 1 and wechat_id = ' . $this->wechat_id)
             ->order('id asc')
             ->select();
         if (! empty($extends)) {
@@ -88,11 +88,11 @@ class ExtendController extends AdminController
             }
 
             $data['type'] = 'function';
-            $data['wechat_id'] = session('wechat_id');
+            $data['wechat_id'] = $this->wechat_id;
             // 数据库是否存在该数据
             $rs = $this->model->table('wechat_extend')
                 ->field('name, config, enable')
-                ->where('command = "' . $data['command'] . '" and wechat_id = ' . session('wechat_id'))
+                ->where('command = "' . $data['command'] . '" and wechat_id = ' . $this->wechat_id)
                 ->find();
             if (! empty($rs)) {
                 // 已安装
@@ -111,7 +111,7 @@ class ExtendController extends AdminController
 			                if(file_exists($sql_file)){
 			                    //添加素材
 			                    $sql = file_get_contents($sql_file);
-			                    $sql = str_replace(array('ecs_wechat_media', '(0', 'http://', 'view/images'), array($this->model->pre.'wechat_media', '('.session('wechat_id'), __HOST__.url('default/wechat/plugin_show', array('name'=>$this->plugin_name)), 'plugins/'. $this->plugin_type . '/' . $this->plugin_name.'/view/images'), $sql);
+			                    $sql = str_replace(array('ecs_wechat_media', '(0', 'http://', 'view/images'), array($this->model->pre.'wechat_media', '('.$this->wechat_id, __HOST__.url('default/wechat/plugin_show', array('name'=>$this->plugin_name)), 'plugins/'. $this->plugin_type . '/' . $this->plugin_name.'/view/images'), $sql);
 			                    $this->model->query($sql);
 			                    //获取素材id
 			                    $cfg_value['media_id'] = $this->model->table('wechat_media')->field('id')->where('command = "'.$this->plugin_name.'"')->getOne();
@@ -122,7 +122,7 @@ class ExtendController extends AdminController
                     $data['enable'] = 1;
                     $this->model->table('wechat_extend')
                         ->data($data)
-                        ->where('command = "' . $data['command'] . '" and wechat_id = ' . session('wechat_id'))
+                        ->where('command = "' . $data['command'] . '" and wechat_id = ' . $this->wechat_id)
                         ->update();
                 }
             } else {
@@ -131,7 +131,7 @@ class ExtendController extends AdminController
                 if(file_exists($sql_file)){
                     //添加素材
                     $sql = file_get_contents($sql_file);
-                    $sql = str_replace(array('ecs_wechat_media', '(0', 'http://', 'view/images'), array($this->model->pre.'wechat_media', '('.session('wechat_id'), __HOST__.url('default/wechat/plugin_show', array('name'=>$this->plugin_name)), 'plugins/'. $this->plugin_type . '/' . $this->plugin_name.'/view/images'), $sql);
+                    $sql = str_replace(array('ecs_wechat_media', '(0', 'http://', 'view/images'), array($this->model->pre.'wechat_media', '('.$this->wechat_id, __HOST__.url('default/wechat/plugin_show', array('name'=>$this->plugin_name)), 'plugins/'. $this->plugin_type . '/' . $this->plugin_name.'/view/images'), $sql);
                     $this->model->query($sql);
                     //获取素材id
                     $cfg_value['media_id'] = $this->model->table('wechat_media')->field('id')->where('command = "'.$this->plugin_name.'"')->getOne();
@@ -150,7 +150,7 @@ class ExtendController extends AdminController
             // 获取配置信息
             $info = $this->model->table('wechat_extend')
                 ->field('name, keywords, command, config, enable, author, website')
-                ->where('command = "' . $this->plugin_name . '" and enable = 1 and wechat_id = ' . session('wechat_id'))
+                ->where('command = "' . $this->plugin_name . '" and enable = 1 and wechat_id = ' . $this->wechat_id)
                 ->find();
             // 修改页面显示
             if (empty($info)) {
@@ -194,13 +194,13 @@ class ExtendController extends AdminController
         }
         $config = $this->model->table('wechat_extend')
             ->field('enable')
-            ->where('command = "' . $keywords . '" and wechat_id = ' . session('wechat_id'))
+            ->where('command = "' . $keywords . '" and wechat_id = ' . $this->wechat_id)
             ->getOne();
         $data['enable'] = 0;
         
         $this->model->table('wechat_extend')
             ->data($data)
-            ->where('command = "' . $keywords . '" and wechat_id = ' . session('wechat_id'))
+            ->where('command = "' . $keywords . '" and wechat_id = ' . $this->wechat_id)
             ->update();
         //删除素材
         $media_count = $this->model->table('wechat_media')->where('command = "'.$keywords.'"')->count();
