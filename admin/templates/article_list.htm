@@ -19,7 +19,6 @@
 <!-- start cat list -->
 <div class="list-div" id="listDiv">
 {/if}
-
 <table cellspacing='1' cellpadding='3' id='list-table'>
   <tr>
     <th><input onclick='listTable.selectAll(this, "checkboxes")' type="checkbox">
@@ -39,10 +38,10 @@
     <td align="left"><span><!-- {if $list.cat_id > 0} -->{$list.cat_name|escape:html}<!-- {else} -->{$lang.reserve}<!-- {/if} --></span></td>
     <td align="center"><span>{if $list.article_type eq 0}{$lang.common}{else}{$lang.top}{/if}</span></td>
     <td align="center">{if $list.cat_id > 0}<span>
-    <img src="images/{if $list.is_open eq 1}yes{else}no{/if}.gif" onclick="listTable.toggle(this, 'toggle_show', {$list.article_id})" /></span>{else}<img src="images/yes.gif" alt="yes" />{/if}</td>
+    <img src="images/{if $list.is_open eq 1}yes{else}no{/if}.gif" onclick="listTable.toggle(this, 'toggle_show', {$list.article_id})" /></span>{else}<span><img src="images/yes.gif" alt="yes" onclick="listTable.toggle(this, 'toggle_show', {$list.article_id})" /></span>{/if}</td>
     <td align="center"><span>{$list.date}</span></td>
     <td align="center" nowrap="true"><span>
-      <a href="../index.php?c=article&id={$list.article_id}" target="_blank" title="{$lang.view}"><img src="images/icon_view.gif" border="0" height="16" width="16" /></a>&nbsp;
+      <a href="../index.php?m=default&c=article&a=info&aid={$list.article_id}" target="_blank" title="{$lang.view}"><img src="images/icon_view.gif" border="0" height="16" width="16" /></a>&nbsp;
       <a href="article.php?act=edit&id={$list.article_id}" title="{$lang.edit}"><img src="images/icon_edit.gif" border="0" height="16" width="16" /></a>&nbsp;
      <!-- {if $list.cat_id > 0} --><a href="javascript:;" onclick="listTable.remove({$list.article_id}, '{$lang.drop_confirm}')" title="{$lang.remove}"><img src="images/icon_drop.gif" border="0" height="16" width="16"></a><!-- {/if} --></span>
     </td>
