@@ -3370,7 +3370,7 @@ html.active {
 .member-photo-address {
   position: absolute;
   right: 0.625rem;
-  bottom: 0.825rem;
+  bottom: 1.6rem;
   height: 1.25rem; }
   .member-photo-address span {
     font-size: 1rem;
@@ -3408,7 +3408,7 @@ html.active {
   .member-order-list li {
     font-size: 1.125rem;
     color: #616161;
-    width: 25%;
+    width: 33.3%;
     text-align: center;
     position: relative; }
 
