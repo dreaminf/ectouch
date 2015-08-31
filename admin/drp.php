@@ -136,47 +136,127 @@ if ($_REQUEST['act'] == 'novice')
     $smarty->assign('ur_here', $_LANG['drp_profit']);
     $smarty->display('drp_novice.htm');
 }
+
 /*------------------------------------------------------ */
-//-- 增加下线分配方案
+//-- 订单列表 未分成
 /*------------------------------------------------------ */
-elseif ($_REQUEST['act'] == 'add')
+if ($_REQUEST['act'] == 'order_list')
 {
-    if (count($config['item']) < 5)
-    {
-        //下线不能超过5层
-        $_POST['level_point'] = (float)$_POST['level_point'];
-        $_POST['level_money'] = (float)$_POST['level_money'];
-        $maxpoint = $maxmoney = 100;
-        foreach ($config['item'] as $key => $val)
-        {
-            $maxpoint -= $val['level_point'];
-            $maxmoney -= $val['level_money'];
-        }
-        $_POST['level_point'] > $maxpoint && $_POST['level_point'] = $maxpoint;
-        $_POST['level_money'] > $maxmoney && $_POST['level_money'] = $maxmoney;
-        if (!empty($_POST['level_point']) && strpos($_POST['level_point'],'%') === false)
-        {
-            $_POST['level_point'] .= '%';
-        }
-        if (!empty($_POST['level_money']) && strpos($_POST['level_money'],'%') === false)
-        {
-            $_POST['level_money'] .= '%';
-        }
-        $items = array('level_point'=>$_POST['level_point'],'level_money'=>$_POST['level_money']);
-        $links[] = array('text' => $_LANG['affiliate'], 'href' => 'affiliate.php?act=list');
-        $config['item'][] = $items;
-        $config['on'] = 1;
-        $config['config']['separate_by'] = 0;
 
-        put_affiliate($config);
+    $list = $db->getAll("SELECT * FROM " . $ecs->table("order_info") . " WHERE parent_id > 0  and is_separate = 0");
+    foreach($list as $key=>$val){
+        $list[$key]['parent_name'] = $db->getOne("SELECT user_name FROM " . $ecs->table("users") . " WHERE user_id = $val[parent_id]");
+        $list[$key]['user_name'] = $db->getOne("SELECT user_name FROM " . $ecs->table("users") . " WHERE user_id = $val[user_id]");
     }
-    else
+    $smarty->assign('list', $list);
+    assign_query_info();
+    if (empty($_REQUEST['is_ajax']))
     {
-       make_json_error($_LANG['level_error']);
+        $smarty->assign('full_page', 1);
     }
+    $smarty->assign('keyword', 'novice');
+    $smarty->assign('ur_here', $_LANG['drp_profit']);
+    $smarty->display('drp_order_list.htm');
+}
+/*------------------------------------------------------ */
+//-- 分成
+/*------------------------------------------------------ */
+elseif ($_REQUEST['act'] == 'separate')
+{
+    include_once(BASE_PATH . 'helpers/order_helper.php');
+    $oid = (int)$_REQUEST['oid'];
 
-    ecs_header("Location: affiliate.php?act=query\n");
-    exit;
+    $row = $db->getRow("SELECT o.order_sn, o.is_separate, (o.goods_amount - o.discount) AS goods_amount, o.user_id FROM " . $GLOBALS['ecs']->table('order_info') . " o".
+        " LEFT JOIN " . $GLOBALS['ecs']->table('users') . " u ON o.user_id = u.user_id".
+        " WHERE order_id = '$oid'");
+
+    $order_sn = $row['order_sn'];
+
+    if (empty($row['is_separate']))
+    {
+        // 获取订单中商品
+
+
+        // 查询商品的所属顶级分类
+
+
+        // 获取上线 ，
+
+         
+
+
+        //计算利润
+
+
+        //将利润保存数据库
+
+
+        //更改订单分成状态
+
+
+
+        if(empty($separate_by))
+        {
+            //推荐注册分成
+            $num = count($affiliate['item']);
+            for ($i=0; $i < $num; $i++)
+            {
+                $affiliate['item'][$i]['level_point'] = (float)$affiliate['item'][$i]['level_point'];
+                $affiliate['item'][$i]['level_money'] = (float)$affiliate['item'][$i]['level_money'];
+                if ($affiliate['item'][$i]['level_point'])
+                {
+                    $affiliate['item'][$i]['level_point'] /= 100;
+                }
+                if ($affiliate['item'][$i]['level_money'])
+                {
+                    $affiliate['item'][$i]['level_money'] /= 100;
+                }
+                $setmoney = round($money * $affiliate['item'][$i]['level_money'], 2);
+                $setpoint = round($point * $affiliate['item'][$i]['level_point'], 0);
+                $row = $db->getRow("SELECT o.parent_id as user_id,u.user_name FROM " . $GLOBALS['ecs']->table('users') . " o" .
+                    " LEFT JOIN" . $GLOBALS['ecs']->table('users') . " u ON o.parent_id = u.user_id".
+                    " WHERE o.user_id = '$row[user_id]'"
+                );
+                $up_uid = $row['user_id'];
+                if (empty($up_uid) || empty($row['user_name']))
+                {
+                    break;
+                }
+                else
+                {
+                    $info = sprintf($_LANG['separate_info'], $order_sn, $setmoney, $setpoint);
+                    log_account_change($up_uid, $setmoney, 0, $setpoint, 0, $info);
+                    write_affiliate_log($oid, $up_uid, $row['user_name'], $setmoney, $setpoint, $separate_by);
+                }
+            }
+        }
+        else
+        {
+            //推荐订单分成
+            $row = $db->getRow("SELECT o.parent_id, u.user_name FROM " . $GLOBALS['ecs']->table('order_info') . " o" .
+                " LEFT JOIN" . $GLOBALS['ecs']->table('users') . " u ON o.parent_id = u.user_id".
+                " WHERE o.order_id = '$oid'"
+            );
+            $up_uid = $row['parent_id'];
+            if(!empty($up_uid) && $up_uid > 0)
+            {
+                $info = sprintf($_LANG['separate_info'], $order_sn, $money, $point);
+                log_account_change($up_uid, $money, 0, $point, 0, $info);
+                write_affiliate_log($oid, $up_uid, $row['user_name'], $money, $point, $separate_by);
+            }
+            else
+            {
+                $links[] = array('text' => $_LANG['affiliate_ck'], 'href' => 'affiliate_ck.php?act=list');
+                sys_msg($_LANG['edit_fail'], 1 ,$links);
+            }
+        }
+        $sql = "UPDATE " . $GLOBALS['ecs']->table('order_info') .
+            " SET is_separate = 1" .
+            " WHERE order_id = '$oid'";
+        $db->query($sql);
+    }
+    $links[] = array('text' => $_LANG['affiliate_ck'], 'href' => 'affiliate_ck.php?act=list');
+    sys_msg($_LANG['edit_ok'], 0 ,$links);
 }
 /*------------------------------------------------------ */
 //-- 修改配置

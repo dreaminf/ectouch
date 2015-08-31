@@ -35,11 +35,11 @@ class CommonController extends BaseController
                 call_user_func(array('WechatController', 'do_oauth'));
             }
         }
-
         if($_GET['drp_id'] > 0){
             $drp_info = model('Sale')->get_drp($_GET['drp_id']);
             if($drp_info['open'] == 1){
-                $_SESSION['drp_shop_name'] = $drp_info['shop_name'];
+                $drp_info['cat_id'] = substr($drp_info['cat_id'],0,-1);
+                $_SESSION['drp_shop'] = $drp_info;
             }
         }
         $wxinfo = model('Base')->model->table('wechat')->field('id, token, appid, appsecret, oauth_redirecturi, type, oauth_status')->find();
