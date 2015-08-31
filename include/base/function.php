@@ -1757,7 +1757,7 @@ function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods',
           $url = $base_url . $image;
       }
     }
-    return $url;
+    return str_replace('mobile/', '/', $url);
 }
 
 /**
