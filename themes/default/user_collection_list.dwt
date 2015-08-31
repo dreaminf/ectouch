@@ -19,8 +19,8 @@
 			</span>
 		</dd>
         <dd class="text-center">
-			<a class="flow-del" href="javascript:addToCart({$val.goods_id})">{$lang.add_to_cart}</a>
-			<a class="flow-del" href="javascript:if(confirm('{$lang.remove_collection_confirm}')) location.href='{:url('delete_collection', array('rec_id'=>$this->_var['val']['rec_id']))}'">{$lang.drop}</a>
+			<a class="btn btn-default btn-xs" href="javascript:addToCart({$val.goods_id})" style="margin-right:1rem;">{$lang.add_to_cart}</a>
+			<a class="btn btn-default btn-xs" href="javascript:if(confirm('{$lang.remove_collection_confirm}')) location.href='{:url('delete_collection', array('rec_id'=>$this->_var['val']['rec_id']))}'">{$lang.drop}</a>
 		</dd>
       </dl>
     </li>
