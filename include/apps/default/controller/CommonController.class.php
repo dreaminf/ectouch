@@ -203,35 +203,14 @@ class CommonController extends BaseController
         $wx_desc  = C('shop_desc');
         $wx_pic   = __URL__.'/images/logo.png';
 
-        $this->cache = new EcCache(array('DB_CACHE_PATH'=>'data/attached/db_cache/'));
-        $ticket = $this->cache->get('wechat_ticket');
-        if (empty($wechat_ticket)){
-            $config['appid'] = $wxinfo['appid'];
-            $config['appsecret'] = $wxinfo['appsecret'];
-            $this->weObj = new Wechat($config);
-            $ticket = $this->weObj->getJsTicket($appid);
-            $this->cache->set('wechat_ticket', $ticket, 7200);
-        }
-
-        $noncestr = rand(10000, 99999);
-        $jsapi_ticket = $ticket;
-        $timestamp = gmtime();
-        $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-        $str = "jsapi_ticket=$jsapi_ticket&noncestr=$noncestr&timestamp=$timestamp&url=$url";
-        $signature = sha1($str);
+        $this->weObj = new Wechat($config);
 
         $id = $_SESSION['drp_id'] ? $_SESSION['drp_id'] : $_SESSION['user_id'];
+        $url = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"];
         $url = strstr($url,'drp_id') ? $url : strstr($url,'?') ? $url.'&drp_id='.$id : $url.'?drp_id='.$id;
 
-        $this->assign('appid',$appid);
-        $this->assign('timestamp',$timestamp);
-        $this->assign('noncestr',$noncestr);
-        $this->assign('signature',$signature);
-
-        $this->assign('wx_title',$sharetitle);
-        $this->assign('wx_desc',$sharedesc);
-        $this->assign('wx_url',$url);
-        $this->assign('wx_pic',$wx_pic);
+        $aa = $this->weObj->getJsSign($url);
+        dump($aa);exit;
 
         $output = $this->fetch('library/js_sdk.lbi');
         $this->assign('wechat_js_sdk', $output);
