@@ -207,7 +207,7 @@ class CommonController extends BaseController
         $id = $_SESSION['drp_id'] ? $_SESSION['drp_id'] : $_SESSION['user_id'];
         $url = strstr($wx_url,'drp_id') ? $wx_url : strstr($wx_url,'?') ? $wx_url.'&drp_id='.$id : $wx_url.'?drp_id='.$id;
         
-        $jssdk = new JSSDK($appid, $secret);
+        $jssdk = new Jssdk($appid, $secret);
         $signPackage = $jssdk->GetSignPackage();
 
         $this->assign('wx_title', $wx_title);
