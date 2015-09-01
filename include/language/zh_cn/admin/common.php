@@ -400,7 +400,7 @@ $_LANG['10_shop_authorized'] = '授权证书';
 
 
 // 工具箱
-
+$_LANG['authorization'] = '第三方登录插件';
 
 // 微分销
 $_LANG['drp_config'] = '分销设置';
