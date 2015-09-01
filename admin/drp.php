@@ -176,10 +176,9 @@ if ($_REQUEST['act'] == 'user_edit')
     $smarty->display('drp_users_edit.htm');
 }
 /*------------------------------------------------------ */
-//-- 佣金提现管理
+//-- 佣金管理
 /*------------------------------------------------------ */
 if($_REQUEST['act'] == 'drp_log'){
-	
 	assign_query_info();
 	if (empty($_REQUEST['is_ajax']))
 	{
@@ -194,13 +193,14 @@ if($_REQUEST['act'] == 'drp_log'){
 		$money = $v['user_money'];
 		$gold = substr($money,1);
 	}
-	$use = $db->getOne("SELECT user_name FROM".$ecs->table("users")."WHERE user_id =".$user_id);
-	$smarty->assign('use',$use);
+	$user = $db->getRow("SELECT user_name,user_id FROM".$ecs->table("users")."WHERE user_id =".$user_id);
+	$shop_name = $db->getRow("SELECT shop_name FROM".$ecs->table('drp_shop')."WHERE user_id =".$user['user_id']);
+	$smarty->assign('shop_name',$shop_name['shop_name']);
+	$smarty->assign('user_name',$user['user_name']);
 	$smarty->assign('time',$time);
 	$smarty->assign('gold',$gold);
 	$smarty->assign('list',$list);
-	$smarty->display('drp_log.htm');
-	
+	$smarty->display('drp_log.htm');	
 }
 /*------------------------------------------------------ */
 //-- 佣金提现管理功能

@@ -21,20 +21,20 @@
     <th><a href="javascript:listTable.sort('add_time', 'DESC'); ">{$lang.user_id}</a>{$sort_add_time}</th>
     <th><a href="javascript:listTable.sort('add_time', 'DESC'); ">{$lang.add_date}</a>{$sort_add_time}</th>
     <th><a href="javascript:listTable.sort('amount', 'DESC'); ">{$lang.withdraw_gold}</a>{$sort_amount}</th>
-    <th><a href="javascript:listTable.sort('payment', 'DESC'); ">{$lang.pay_mothed}</a>{$sort_payment}</th>
+    <th><a href="javascript:listTable.sort('payment', 'DESC'); ">{$lang.withdraw_mode}</a>{$sort_payment}</th>
     <th><a href="javascript:listTable.sort('is_paid', 'DESC'); ">{$lang.commission_Status}</a>{$sort_is_paid}</th>
     <th>{$lang.handler}</th>
   </tr>
   {foreach from=$list item=item}
   <tr>
-    <td align="center">{$item.log_id}</td>
-    <td align="center">{$use}</td>
+    <td align="center">{$shop_name}</td>
+    <td align="center">{$user_name}</td>
     <td align="right">{$time}</td>
     <td align="right">{$gold}</td>
     <td>{if $item.payment}{$item.payment}{else}未知{/if}</td>
     <td align="center">{$item.change_desc}</td>
     <td align="center">{$item.admin_user}
-    <a href="drp.php?act=drp_refer&id={$item.log_id}" title="{$lang.withdraw}"><img src="images/icon_view.gif" border="0" height="16" width="16" />
+    <a href="drp.php?act=drp_refer&id={$item.log_id}" title="{$lang.withdraw}"><img src="images/icon_view.gif" class="withdraw" border="0" height="16" width="16" />
     <a href="javascript:;" onclick="listTable.remove({$item.id}, '{$lang.drop_confirm}')" title="{$lang.drop}" ><img src="images/icon_drop.gif" border="0" height="16" width="16" /></a>
     </td>
   </tr>
@@ -58,32 +58,12 @@
 </form>
 
 <script type="text/javascript" language="JavaScript">
-listTable.recordCount = {$record_count};
-listTable.pageCount = {$page_count};
-{foreach from=$filter item=item key=key}
-listTable.filter.{$key} = '{$item}';
-{/foreach}
-{literal}
-<!--
+$(function(){
+	$(".withdraw").click(function(){
+		alert(2132132);
+	})
+})
 
-onload = function()
-{
-    // ��ʼ��鶩��
-    startCheckOrder();
-}
-/**
- * �����û�
- */
-function searchUser()
-{
-    listTable.filter['keywords'] = Utils.trim(document.forms['searchForm'].elements['keyword'].value);
-    listTable.filter['process_type'] = document.forms['searchForm'].elements['process_type'].value;
-    listTable.filter['payment'] = Utils.trim(document.forms['searchForm'].elements['payment'].value);
-    listTable.filter['is_paid'] = document.forms['searchForm'].elements['is_paid'].value;
-    listTable.filter['page'] = 1;
-    listTable.loadList();
-}
-//-->
 </script>
 {/literal}
 {include file="pagefooter.htm"}
