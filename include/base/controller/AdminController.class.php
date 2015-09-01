@@ -31,7 +31,7 @@ class AdminController extends BaseController {
 
     protected function checkLogin() {
         //不需要登录验证的页面
-        $access = array('Wechat', 'Extend');
+        $access = array('Wechat', 'Extend', 'Authorization', 'Navigator');
         
         //如果当前访问是无需登录验证，则直接返回
         if (!in_array(CONTROLLER_NAME, $access)) {
