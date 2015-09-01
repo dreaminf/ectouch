@@ -100,7 +100,7 @@ class ArticleController extends CommonController {
         $this->assign('page_title', htmlspecialchars($page_info['title']));
         /* meta */
         $this->assign('meta_keywords', htmlspecialchars($article['keywords']));
-        $this->assign('meta_description', htmlspecialchars($article['goods_brief']));
+        $this->assign('meta_description', htmlspecialchars($article['description']));
 
         $this->display('article_info.dwt');
     }
