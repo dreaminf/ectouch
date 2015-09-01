@@ -208,9 +208,10 @@ class CommonController extends BaseController
         $id = $_SESSION['drp_id'] ? $_SESSION['drp_id'] : $_SESSION['user_id'];
         $url = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"];
         $url = strstr($url,'drp_id') ? $url : strstr($url,'?') ? $url.'&drp_id='.$id : $url.'?drp_id='.$id;
-
-        $aa = $this->weObj->getJsSign($url);
-        dump($aa);exit;
+        $aa = $this->weObj->getJsTicket($appid);
+        $bb = $this->weObj->getJsSign($url);
+        dump($aa);
+        dump($bb);exit;
 
         $output = $this->fetch('library/js_sdk.lbi');
         $this->assign('wechat_js_sdk', $output);
