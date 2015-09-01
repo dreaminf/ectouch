@@ -13,7 +13,7 @@
  * ----------------------------------------------------------------------------
  */
 $_LANG['website_name'] = '插件名称';
-$_LANG['website_qq'] = '作者QQ';
+$_LANG['website_qq'] = '作者';
 $_LANG['website_author'] = '作者';
 $_LANG['website_email'] = '邮箱地址';
 $_LANG['ur_here'] = '第三方登录插件';

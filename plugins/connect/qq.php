@@ -26,19 +26,19 @@ if (file_exists($payment_lang)) {
 if (isset($set_modules) && $set_modules == TRUE) {
     $i = isset($modules) ? count($modules) : 0;
     /* 类名 */
-    $modules[$i]['name'] = 'QQ';
+    $modules[$i]['name'] = 'QQ登录插件';
     // 文件名，不包含后缀
     $modules[$i]['type'] = 'qq';
 
     $modules[$i]['className'] = 'qq';
     // 作者信息
-    $modules[$i]['author'] = 'Zhulin';
+    $modules[$i]['author'] = 'ECTouch Team';
 
     // 作者QQ
-    $modules[$i]['qq'] = '2880175566';
+    $modules[$i]['qq'] = '10000';
 
     // 作者邮箱
-    $modules[$i]['email'] = 'zhulin@ecmoban.com';
+    $modules[$i]['email'] = 'support@ectouch.cn';
 
     // 申请网址
     $modules[$i]['website'] = 'http://connect.qq.com';

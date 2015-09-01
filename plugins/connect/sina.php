@@ -26,19 +26,19 @@ if (file_exists($payment_lang)) {
 if (isset($set_modules) && $set_modules == TRUE) {
     $i = isset($modules) ? count($modules) : 0;
     /* 类名 */
-    $modules[$i]['name'] = 'Sina';
+    $modules[$i]['name'] = '新浪微博登录';
     // 文件名，不包含后缀
     $modules[$i]['type'] = 'sina';
 
     $modules[$i]['className'] = 'sina';
     // 作者信息
-    $modules[$i]['author'] = 'Zhulin';
+    $modules[$i]['author'] = 'ECTouch Team';
 
     // 作者QQ
-    $modules[$i]['qq'] = '2880175566';
+    $modules[$i]['qq'] = '10000';
 
     // 作者邮箱
-    $modules[$i]['email'] = 'zhulin@ecmoban.com';
+    $modules[$i]['email'] = 'support@ectouch.cn';
 
     // 申请网址
     $modules[$i]['website'] = 'http://open.weibo.com';
