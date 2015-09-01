@@ -1,30 +1,27 @@
 <?php
+
 /**
- * ECTouch Open Source Project
+ * ECTouch E-Commerce Project
  * ============================================================================
- * Copyright (c) 2012-2014 http://ectouch.cn All rights reserved.
+ * Copyright (c) 2014-2015 http://ectouch.cn All rights reserved.
  * ----------------------------------------------------------------------------
- * 文件名称：notify_url.php
+ * 文件名称：wxpay.php
  * ----------------------------------------------------------------------------
- * 手机支付宝支付异步通知处理
+ * 功能描述：微信支付异步通知文件
  * ----------------------------------------------------------------------------
- * Licensed ( http://www.ectouch.cn/docs/license.txt )
+ * Licensed ( http://www.ectouch.cn/license.txt )
  * ----------------------------------------------------------------------------
  */
 
-/* 访问控制 */
 define('IN_ECTOUCH', true);
-if(!isset($_POST['sign'])){
-	header('location: ./index.php?'.$_SERVER['QUERY_STRING']);
-  exit;
-}
 define('CONTROLLER_NAME', 'Respond');
 
 $params['type'] = 1;
-$params['code'] = 'alipay_wap';
+$params['code'] = 'wxpay';
+$params['postStr'] = $GLOBALS["HTTP_RAW_POST_DATA"];
 $code = base64_encode(serialize($params));
 $code = str_replace(array('+', '/', '='), array('-', '_', ''), $code);
 $_GET['code'] = $code;
 /* 加载核心文件 */
-require ('include/EcTouch.php');
-
+$ROOT_PATH = str_replace('\\', '/', dirname(__FILE__) . '/../../');
+require($ROOT_PATH . 'include/EcTouch.php');

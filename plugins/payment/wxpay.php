@@ -100,13 +100,11 @@ class wxpay
         
         // 设置必填参数
         // 根目录url
-        $root_url = str_replace('mobile', '', __URL__);
-        
         $this->setParameter("openid", "$_SESSION[openid]"); // 商品描述
         $this->setParameter("body", $order['order_sn']); // 商品描述
         $this->setParameter("out_trade_no", $order['order_sn'] . 'O' . $order['log_id']); // 商户订单号
         $this->setParameter("total_fee", $order['order_amount'] * 100); // 总金额
-        $this->setParameter("notify_url", $root_url . 'notify_wap_wxpay.php'); // 通知地址
+        $this->setParameter("notify_url", __URL__ . '/api/notify/wxpay.php'); // 通知地址
         $this->setParameter("trade_type", "JSAPI"); // 交易类型
         $prepay_id = $this->getPrepayId();
         $jsApiParameters = $this->getParameters($prepay_id);

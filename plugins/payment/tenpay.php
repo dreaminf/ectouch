@@ -84,8 +84,8 @@ class tenpay
             'sp_billno' => $order['order_sn'] . 'O' . $order['log_id'], // 必填 商户系统内部的定单号,32 个字符内、可包含字母
             'total_fee' => $order['order_amount'] * 100, // 必填 总金额,以分为单位,不允许包含任何字母、符号
             'fee_type' => 1, // 可选 现金支付币种,目前只支持人民币,默认值是 1-人民币
-            'notify_url' => return_url(basename(__FILE__, '.php'), array('type'=>0)), // 必填 接收财付通通知的 URL
-            'callback_url' => return_url(basename(__FILE__, '.php'), array('type'=>1)), //必填 交易完成后跳转的 URL
+            'notify_url' => __URL__.'/api/notify/tenpay.php', // 必填 接收财付通通知的 URL
+            'callback_url' => return_url(basename(__FILE__, '.php'), array('type'=>0)), //必填 交易完成后跳转的 URL
             // 'attach' => , // 可选 商户附加信息,可做扩展参数255 字符内
             // 'time_start' => , // 可选 订单生成时间 格式为 yyyymmddhhmmss 如 2009 年 12 月 25日 9 点 10 分 10 秒表示为 20091225091010。时区为 GMT+8 beijing。该时间取自商户服务器
             // 'time_expire' => , // 可选 订单失效时间 格式为 yyyymmddhhmmss 如 2009 年 12 月 27日 9 点 10 分 10 秒表示为 20091227091010。时区为 GMT+8beijing。该时间取自商户服务器

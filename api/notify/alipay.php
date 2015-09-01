@@ -1,22 +1,25 @@
 <?php
-
 /**
- * ECTouch Open Source Project
+ * ECTouch E-Commerce Project
  * ============================================================================
  * Copyright (c) 2012-2014 http://ectouch.cn All rights reserved.
  * ----------------------------------------------------------------------------
- * File name：bank.php
+ * 文件名称：notify_url.php
  * ----------------------------------------------------------------------------
- * Function description：Bank transfer language file
+ * 手机支付宝支付异步通知处理
  * ----------------------------------------------------------------------------
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
  */
 
-/* 访问控制 */
-if (! defined('IN_ECTOUCH')) {
-    die('Deny Access');
-}
+define('IN_ECTOUCH', true);
+define('CONTROLLER_NAME', 'Respond');
 
-$_LANG['bank'] = 'Bank transfer';
-$_LANG['bank_desc'] = 'Bank name' . chr(13) . 'Recipient information: full name ××× ；Account or address ××× ；Open an account ×××。' . chr(13) . 'Note: please indicate your order number in the form of a wire transfer.';
+$params['type'] = 1;
+$params['code'] = 'alipay';
+$code = base64_encode(serialize($params));
+$code = str_replace(array('+', '/', '='), array('-', '_', ''), $code);
+$_GET['code'] = $code;
+/* 加载核心文件 */
+$ROOT_PATH = str_replace('\\', '/', dirname(__FILE__) . '/../../');
+require($ROOT_PATH . 'include/EcTouch.php');
