@@ -25,9 +25,9 @@
   <div class="index-search-box fl">
   	<a href="javascript:void(0)"><i class="index-search-icon iconfont fl">&#xe603;</i></a>
     <input type="text" class="index-search-input"   placeholder="商品搜索">
-    <a href="javascript:void(0)" id="scanQRCode"><i class="index-search-sound iconfont fr">&#xe623;</i></a>
+    <a href="javascript:void(0)"><i class="index-search-sound iconfont fr">&#xe623;</i></a>
   </div>
-  <a href="javascript:void(0)"><i class="index-header-right iconfont fr">&#xe629;</i></a>
+  <a href="javascript:void(0)"><i class="index-header-right iconfont fr">&#xe629;</i>s</a>
 </header>
 
 <div class="index-main comWidth">
@@ -67,7 +67,7 @@
   </div>
   
   <div class="index-recom">
-  	<h3><b>精品推荐</b></h3>
+  	<h3><b id="scanQRCode">精品推荐</b></h3>
   	<div class="index-recom-left fl">
           <a href="#"><img class="idnex-recom-left-img" src="" alt="" /></a>
       </div>
