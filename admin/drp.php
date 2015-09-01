@@ -176,6 +176,63 @@ if ($_REQUEST['act'] == 'user_edit')
     $smarty->display('drp_users_edit.htm');
 }
 /*------------------------------------------------------ */
+//-- 佣金提现管理
+/*------------------------------------------------------ */
+if($_REQUEST['act'] == 'drp_log'){
+	
+	assign_query_info();
+	if (empty($_REQUEST['is_ajax']))
+	{
+		$smarty->assign('full_page', 1);
+	}
+	$smarty->assign('ur_here', $_LANG['drp_log']);
+	$list = $db->getAll("SELECT * FROM".$ecs->table('drp_log')."WHERE user_money < 0 ");
+	foreach ($list as $v){
+		$user_id = $v['user_id'];
+		$tm = $v['change_time'];
+		$time = date("Y-m-d H:i:s",$tm);
+		$money = $v['user_money'];
+		$gold = substr($money,1);
+	}
+	$use = $db->getOne("SELECT user_name FROM".$ecs->table("users")."WHERE user_id =".$user_id);
+	$smarty->assign('use',$use);
+	$smarty->assign('time',$time);
+	$smarty->assign('gold',$gold);
+	$smarty->assign('list',$list);
+	$smarty->display('drp_log.htm');
+	
+}
+/*------------------------------------------------------ */
+//-- 佣金提现管理功能
+/*------------------------------------------------------ */
+if($_REQUEST['act'] == 'drp_refer'){
+	if(IS_GET){
+		$id =$_GET['id'];
+		$money = $db->getRow("SELECT user_money,user_id FROM".$ecs->table("drp_log")."WHERE log_id =".$id);
+		if(!empty($money['user_id'])){
+			$shop = $db->getRow("SELECT money,user_id FROM".$ecs->table("drp_shop")."WHERE user_id =".$money['user_id']);
+				if($shop['money'] <= $money['user_money']){
+					$cash = $shop['money'] + ($money['user_money']);
+					$dat['money'] = $cash;
+					$up = $db->autoExecute($ecs->table('drp_shop'), $dat, 'UPDATE', "user_id =".$shop['user_id']);
+						  if($up == true){
+							$user = $db->getRow("SELECT user_money,user_id FROM".$ecs->table("users")."WHERE user_id =".$money['user_id']);
+							$total_cash = $user['user_money'] + abs($money['user_money']);
+							  if(!$total_cash == 0){
+								$dat['user_money'] = $total_cash;
+								 $u = $db->autoExecute($ecs->table('users'), $dat, 'UPDATE', "user_id =".$money['user_id']);
+								  if($u == true){
+								  	sys_msg($_LANG['withdraw_ok'],'',$links[0]['drp_log']);
+								  }
+							 }  
+						} 
+				}else{
+					sys_msg($_LANG['Lack_of_funds'],'',$links[0]['drp_log']);
+				}
+		}	
+	}
+}
+/*------------------------------------------------------ */
 //-- 订单列表 未分成
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'order_list')
@@ -272,7 +329,7 @@ elseif ($_REQUEST['act'] == 'separate')
         {
             //推荐订单分成
             $row = $db->getRow("SELECT o.parent_id, u.user_name FROM " . $GLOBALS['ecs']->table('order_info') . " o" .
-                " LEFT JOIN" . $GLOBALS['ecs']->table('users') . " u ON o.parent_id = u.user_id".
+                " LEFT JOIN" . $GLOBALS['ecs']->table('users') . " u ON o.pare	nt_id = u.user_id".
                 " WHERE o.order_id = '$oid'"
             );
             $up_uid = $row['parent_id'];
