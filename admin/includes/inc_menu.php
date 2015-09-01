@@ -145,6 +145,9 @@ $modules['10_menu_tools']['captcha_manage']             = 'captcha_manage.php?ac
 //$modules['10_menu_tools']['file_check']                 = 'filecheck.php';
 //$modules['10_menu_tools']['fckfile_manage']             = 'fckfile_manage.php?act=list';
 
+$modules['10_menu_tools']['authorization']             = '../index.php?m=admin&c=authorization';
+$modules['10_menu_tools']['navigator']                 = '../index.php?m=admin&c=navigator';
+
 // 微分销
 //$modules['11_menu_rec']['affiliate']                     = 'affiliate.php?act=list';
 //$modules['11_menu_rec']['affiliate_ck']                  = 'affiliate_ck.php?act=list';
