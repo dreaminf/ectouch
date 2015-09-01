@@ -131,7 +131,7 @@ class CommonController extends BaseController
         }
         //NULL
         // 初始化session
-        self::$sess = new EcsSession(self::$db, self::$ecs->table('sessions'), self::$ecs->table('sessions_data'), 'ecsid');
+        self::$sess = new EcsSession(self::$db, self::$ecs->table('sessions'), self::$ecs->table('sessions_data'), C('COOKIE_PREFIX').'touch_id');
         define('SESS_ID', self::$sess->get_session_id());
         
         // 创建 Smarty 对象
