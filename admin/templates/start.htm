@@ -1,5 +1,5 @@
 <!-- $Id: start.htm 17216 2011-01-19 06:03:12Z liubo $ -->
-{include file="pageheader.htm"}
+{include file="bootstrap.htm"}
 <!-- directory install start -->
 <ul id="cloud_list" style="padding:0; margin: 0; list-style-type:none; color: #CC0000;">
  
@@ -56,10 +56,9 @@
 {/if}
 <!-- end personal message -->
 <!-- start order statistics -->
-<div class="list-div">
-<table cellspacing='1' cellpadding='3'>
+<table class="table table-striped table-bordered">
   <tr>
-    <th colspan="4" class="group-title">{$lang.order_stat}</th>
+    <th colspan="4">{$lang.order_stat}</th>
   </tr>
   <tr>
     <td width="20%"><a href="order.php?act=list&composite_status={$status.await_ship}">{$lang.await_ship}</a></td>
@@ -86,14 +85,12 @@
     <td>&nbsp;</td>
   </tr>
 </table>
-</div>
 <!-- end order statistics -->
-<br />
+
 <!-- start goods statistics -->
-<div class="list-div">
-<table cellspacing='1' cellpadding='3'>
+<table class="table table-striped table-bordered">
   <tr>
-    <th colspan="4" class="group-title">{$lang.goods_stat}</th>
+    <th colspan="4">{$lang.goods_stat}</th>
   </tr>
   <tr>
     <td width="20%">{$lang.goods_count}</td>
@@ -114,13 +111,11 @@
     <td><strong>{$goods.promote}</strong></td>
   </tr>
 </table>
-</div>
-<br />
+
 <!-- Virtual Card -->
-<div class="list-div">
-<table cellspacing='1' cellpadding='3'>
+<table class="table table-striped table-bordered">
   <tr>
-    <th colspan="4" class="group-title">{$lang.virtual_card_stat}</th>
+    <th colspan="4">{$lang.virtual_card_stat}</th>
   </tr>
   <tr>
     <td width="20%">{$lang.goods_count}</td>
@@ -141,14 +136,12 @@
     <td><strong>{$virtual_card.promote}</strong></td>
   </tr>
 </table>
-</div>
 <!-- end order statistics -->
-<br />
+
 <!-- start access statistics -->
-<div class="list-div">
-<table cellspacing='1' cellpadding='3'>
+<table class="table table-striped table-bordered">
   <tr>
-    <th colspan="4" class="group-title">{$lang.acess_stat}</th>
+    <th colspan="4">{$lang.acess_stat}</th>
   </tr>
   <tr>
     <td width="20%">{$lang.acess_today}</td>
@@ -163,14 +156,12 @@
     <td><strong>{$comment_number}</strong></td>
   </tr>
 </table>
-</div>
 <!-- end access statistics -->
-<br />
+
 <!-- start system information -->
-<div class="list-div">
-<table cellspacing='1' cellpadding='3'>
+<table class="table table-striped table-bordered">
   <tr>
-    <th colspan="4" class="group-title">{$lang.system_info}</th>
+    <th colspan="4">{$lang.system_info}</th>
   </tr>
   <tr>
     <td width="20%">{$lang.os}</td>
@@ -221,7 +212,6 @@
     <td></td>
   </tr>
 </table>
-</div>
 {literal}
 {insert_scripts files="../js/utils.js"}
 <script type="Text/Javascript" language="JavaScript">
