@@ -34,7 +34,7 @@ class CommonController extends BaseController
             if (method_exists('WechatController', 'do_oauth')) {
                 call_user_func(array('WechatController', 'do_oauth'));
                 $this->drp();
-                $this->wechatJsSdk();
+                //$this->wechatJsSdk();
             }
         }
 
