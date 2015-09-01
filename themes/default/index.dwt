@@ -1,44 +1,202 @@
-<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
-<!-- #BeginLibraryItem "/library/shop.lbi" --><!-- #EndLibraryItem -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>{$page_title}</title>
+<link rel="stylesheet" type="text/css" href="__TPL__/css/index.css"/>
+<style type="text/css">
+/*banner效果*/
+.focus { width: 100%; height: auto; position: relative; overflow: hidden;}
+.focus .hd { width: 100%; height: 0.8em; position: absolute; z-index: 1; text-align: center; bottom:0.5em;}
+.focus .hd ul { display: inline-block; height: 0.8em;}
+.focus .hd ul li { display: inline-block; width: 0.6em; height: 0.6em; text-indent:-999em; background: rgba(255, 255, 255, 0.8); margin: 0 0.3em; vertical-align: top; overflow: hidden; border-radius: 100%; -moz-border-radius: 100%; -webkit-border-radius: 100%; -o-border-radius: 100%; }
+.focus .hd ul .on { background: #41A28E; }
+.focus .bd { position: relative; z-index: 0;}
+.focus .bd li { height: auto; overflow: hidden; }
+.focus .bd li a img { width: 100%; height: auto; display: block; margin: 0; padding: 0; }
+.focus .bd li a { -webkit-tap-highlight-color: rgba(0, 0, 0, 0);/* 取消链接高亮 */ }
+</style>
+</head>
 
-<div class="con"> 
-  <header class="ect-header ect-margin-tb ect-margin-lr"> <a href="{:url('category/top_all')}" class="pull-left ect-icon ect-icon1 ect-icon-cate1"></a>
-    <div class="ect-header-div">
-      <button class="btn btn-default ect-text-left ect-btn-search" onClick="javascript:openSearch();"><i class="fa fa-search"></i>&nbsp;{$lang.no_keywords}</button>
-    </div>
-  </header>
+<body>
+<header class="index-header comWidth">
+  <i class="index-header-menu iconfont fl" onclick="window.location = '{:url('category/top_all')}'">&#xe627;</i>
+  <div class="index-search-box fl">
+  	<a href="javascript:void(0)"><i class="index-search-icon iconfont fl">&#xe603;</i></a>
+    <input type="text" class="index-search-input"   placeholder="商品搜索">
+    <a href="javascript:void(0)" id="scanQRCode"><i class="index-search-sound iconfont fr">&#xe623;</i></a>
+  </div>
+  <a href="javascript:void(0)"><i class="index-header-right iconfont fr">&#xe629;</i></a>
+</header>
+
+<div class="index-main comWidth">
   <!--banner滚动图片s-->
   <div id="focus" class="focus ect-margin-tb">
-    <div class="hd">
-      <ul>
-      </ul>
-    </div>
+    <div class="hd"><ul></ul></div>
     <div class="bd">
       {insert name='ads' id=255 num=3}
     </div>
   </div>
-  <div style="text-align: center;padding: 5px 0 18px;"><img src="__TPL__/images/logo.png" style="width:68%" /></div>
-  <!--首页快速导航-->
-  <nav class="container-fluid">
-    <ul class="row ect-row-nav">
+
+  <div class="index-menu">
+  	<ul class="index-menu-ul">
       <!--{foreach from=$navigator item=nav}--> 
-      <a href="{$nav.url}">
-      <li class="col-sm-3 col-xs-3"><i><img src="{$nav.pic}" ></i>
-        <p class="text-center">{$nav.name}</p>
-      </li>
-      </a> 
+      <li class="fl"><a href="{$nav.url}"><img src="{$nav.pic}" /></a><a class="index-menu-text" href="{$nav.name}">{$nav.name}</a></li>
       <!--{/foreach}-->
-    </ul>
-  </nav>
-  <!-- #BeginLibraryItem "/library/recommend_hot.lbi" --><!-- #EndLibraryItem -->
-  <footer>
-    <nav class="ect-nav"><!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --></nav>
-  </footer>
-  <div style="padding-bottom:4.2em;"></div>
+     </ul>
+  </div>
+
+  <div class="index-buy" style="display:none;">
+  	<h3><b>限时购</b></h3>
+  	<div class="index-buy-found">
+		<p class="fl" style="color:#EB904D;"><b>&nbsp; &nbsp;秒杀</b></p>
+      	<p class="index-buy-p fl">等你来发现</p>
+          <a class="index-buy-more fr" href="javascript:void(0)">点击查看更多 <i class=" iconfont fr">&#xe60c;</i></a>
+       </div>	
+       <div class="index-buy-bottom" >
+	<ul class="index-buy-list fl" >
+      	<!--<li class="fl">
+          	<a href="#"><img src="__TPL__/images/index-buy-img1.gif" alt="" /></a>
+              <a href="#"><p class="index-buy-title">马来西亚进口纽西兰曲...</p></a>
+              <p class="index-buy-price">￥128.00</p>
+              <span>5 折</span>
+          </li>-->
+      </ul>
+      </div>
+  </div>
+  
+  <div class="index-recom">
+  	<h3><b>精品推荐</b></h3>
+  	<div class="index-recom-left fl">
+          <a href="#"><img class="idnex-recom-left-img" src="" alt="" /></a>
+      </div>
+      <div class="index-recom-right fr">	
+      	<div class="index-recom-right-in">
+            <a href="#"><img class="index-recom-right-logo" src="__TPL__/images/recom-logo2.gif" alt="logo" /></a>
+          </div>	
+          <div class="index-recom-right-in bordernone">
+            <a href="#"><img class="index-recom-right-logo"  src="__TPL__/images/recom-logo3.gif" alt="logo" /></a>
+          </div>	
+      </div>
+      <div class="index-recom-bottom ">
+      	<ul class="fl">
+              <li class="fl">
+                  <a href="#"><img  class="index-recom-bottom-img"src="__TPL__/images/recom-img6.gif" alt="" /></a>
+                  <p class="index-recom-bottom-p"><a href="#">花花公子夏季透气网面鞋低帮运动休闲板鞋...</a></p>
+              	<p class="index-recom-bottom-price fl">￥239.90</p>
+              	<del class="index-recom-bottom-oldprice fl">￥430.0</del>
+              </li>
+          </ul>
+          <div class="index-recom-bottom-more fr">
+              <a href="/confirm.htm"><img src="__TPL__/images/recom-bottom-more.gif" alt="" /></a>
+          </div>
+      </div>
+  </div>
+  
+  <div class="index-brand" style="display:none;">
+  	<h3><b>品牌街</b></h3>
+  	<div class="index-brand-left fl">
+          <!--<a href="#"><img src="__TPL__/images/index-brand-left-img.gif" alt="" /></a>-->
+      </div>
+      <div class="index-brand-right fr">
+      	<!--<div class="index-brand-right-in">
+            <img src="__TPL__/images/index-brand-right-img1.gif" alt="" />
+          </div>
+          <div class="index-brand-right-in bordernone">
+            <a href="#"><img src="__TPL__/images/index-brand-right-img2.gif" alt="" /></a>
+          </div>-->
+      </div>
+      
+      <div class="clearfix"></div>
+      <div class="index-brand-bottom">
+      <div class="index-brand-bottom-div">
+      	<ul class="fl">
+          	<!--<li class="fl"><a href=""><img src="__TPL__/images/index-brand-logo1.gif" alt="" /></a></li>-->
+          </ul>
+         </div>
+         <div class="index-brand-bottom-more fr">
+          	<a href="/brand-list.htm"><img src="__TPL__/images/brand-bottom-more.gif" alt="" /></a>
+          </div>
+      </div>
+  </div>
+
+  <div class="index-theme">
+  	<h3><b>主题精选</b></h3>
+  	<ul>
+      	<li class="fl">
+              <a href="#"><img src="__TPL__/images/index-theme-icon1.gif"  alt="" /></a>
+        </li>
+        <li class="fr">
+            <a href="#"><img src="__TPL__/images/index-theme-icon2.gif" alt="" /></a>
+        </li>
+        <li class="fl">
+            <a href="#"><img src="__TPL__/images/index-theme-icon10.gif" alt="" /></a>
+        </li>
+        <li class="fr">
+            <a href="#"><img src="__TPL__/images/index-theme-icon4.gif" alt="" /></a>
+        </li><li class="fl">
+            <a href="#"><img src="__TPL__/images/index-theme-icon5.gif" alt="" /></a>
+        </li>
+        <li class="fr">
+            <a href="#"><img src="__TPL__/images/index-theme-icon6.gif" alt="" /></a>
+        </li><li class="fl">
+            <a href="#"><img src="__TPL__/images/index-theme-icon7.gif" alt=""/></a>
+        </li>
+        <li class="fr">
+            <a href="#"><img src="__TPL__/images/index-theme-icon8.gif" alt="" /></a>
+        </li><li class="fl">
+            <a href="#"><img src="__TPL__/images/index-theme-icon9.gif" alt="" /></a>
+        </li>
+        <li class="fr">
+            <a href="#"><img src="__TPL__/images/index-theme-icon10.gif" alt="" /></a>
+        </li>
+      </ul>
+  </div>
+
+	<div class="index-more">
+  	<div class="index-more-icon">
+      	<span>更多惊喜</span>
+      </div>
+      <ul class="index-more-list">
+      	<!--<li class="fl">
+          	<a href=""><img src="__TPL__/images/index-more-img1.gif" alt="" /></a>
+          	<a href=""><p>红蜻蜓女鞋2015春季新款正品圆头系带深口头层牛皮职业单鞋工作鞋</p></a>
+          	<span>¥ 283.6</span>
+          </li>-->
+      </ul>
+  </div>
 </div>
+
+  <footer class="index-footer comWidth"><!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --></footer>
+
+  <div class="search-box" style="display:block">
+		<div class="search-box-hot">
+			<div class="search-box-hot-bar">
+				<p class="fl">热搜</p><a href="#"><span class="fr">换一批</span><i class="iconfont fr">&#xe60c;</i></a>
+			</div>
+			<div class="search-box-hot-word">
+				<a href="">充电宝</a>
+				<a href="#">移动硬盘</a>
+				<a href="">充电宝</a>
+				<a href="">蓝牙耳机</a>
+				<a href="">充电宝</a>
+				<a href="">手机保护套</a>
+				
+			</div>
+		</div>
+		<div class="search-box-list">
+			<ul>
+				<li><i class="iconfont">&#xe60d;</i><span>佳洁士牙膏</span></li>
+				<li><i class="iconfont">&#xe60d;</i><span>畅玩平板</span></li>
+			</ul>
+		</div>
+		<button type="button" class="search-box-button">清空搜索历史</button>
+	</div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <script type="text/javascript">
 get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}" , '__TPL__/images/loader.gif');
 </script>
-</body></html>
+</body>
+</html>
