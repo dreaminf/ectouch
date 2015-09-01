@@ -45,6 +45,7 @@ class CommonController extends BaseController
         self::$view->assign('page_title', $page_info['title']);
         self::$view->assign('meta_keywords', C('shop_keywords'));
         self::$view->assign('meta_description', C('shop_desc'));
+        C('show_asynclist', 1);
         /* 模板赋值 */
         assign_template();
     }
