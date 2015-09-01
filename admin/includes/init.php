@@ -132,7 +132,7 @@ $err = new error('message.htm');
 
 /* 初始化session */
 // require(ROOT_PATH . 'includes/cls_session.php');
-$sess = new session($db, $ecs->table('sessions'), $ecs->table('sessions_data'), $db_config['COOKIE_PREFIX'].'touch_cp_id');
+$sess = new session($db, $ecs->table('sessions'), $ecs->table('sessions_data'), 'ECSCP_ID');
 
 /* 初始化 action */
 if (!isset($_REQUEST['act']))
