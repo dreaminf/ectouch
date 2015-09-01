@@ -211,7 +211,7 @@ if($_REQUEST['act'] == 'drp_refer'){
 		$money = $db->getRow("SELECT user_money,user_id FROM".$ecs->table("drp_log")."WHERE log_id =".$id);
 		if(!empty($money['user_id'])){
 			$shop = $db->getRow("SELECT money,user_id FROM".$ecs->table("drp_shop")."WHERE user_id =".$money['user_id']);
-				if($shop['money'] <= $money['user_money']){
+				if($shop['money'] >= abs($money['user_money'])){
 					$cash = $shop['money'] + ($money['user_money']);
 					$dat['money'] = $cash;
 					$up = $db->autoExecute($ecs->table('drp_shop'), $dat, 'UPDATE', "user_id =".$shop['user_id']);
