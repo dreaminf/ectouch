@@ -64,8 +64,7 @@ class UserController extends CommonController {
         $this->assign('comment_list', $comment_list);
         $this->assign('history', $history);
         $this->assign('title', L('user_center'));
-        $tpl = $_GET['t'] == 'new' ? 'user.htm':'user.dwt';
-        $this->display($tpl);
+        $this->display('user.dwt');
     }
 
     /**
