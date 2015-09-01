@@ -140,6 +140,14 @@ class GoodsController extends CommonController {
     public function info() {
         /* 获得商品的信息 */
         $goods = model('Goods')->get_goods_info($this->goods_id);
+
+        /* 页面标题 */
+        $page_info = get_page_title($goods['cat_id'], $goods['goods_name']);
+        $this->assign('page_title',           htmlspecialchars($page_info['title']));
+        /* meta */
+        $this->assign('meta_keywords',           htmlspecialchars($goods['keywords']));
+        $this->assign('meta_description',        htmlspecialchars($goods['goods_brief']));
+
         $this->assign('goods', $goods);
         $properties = model('Goods')->get_goods_properties($this->goods_id);  // 获得商品的规格和属性
         $this->assign('properties', $properties['pro']);                      // 商品属性

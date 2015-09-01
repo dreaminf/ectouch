@@ -94,15 +94,14 @@ class ArticleController extends CommonController {
         $article_id = intval(I('get.aid'));
         $article = model('Article')->get_article_info($article_id);
         $this->assign('article', $article);
-        
-        //处理关键词描述
-        if (!empty($article['keywords'])) {
-            $this->assign('meta_keywords',htmlspecialchars($article['keywords']));
-        }
-        if (!empty($article['description'])) {
-            $this->assign('meta_description',htmlspecialchars($article['description']));
-        }
-        
+
+        /* 页面标题 */
+        $page_info = get_page_title($article['cat_id'], $article['title']);
+        $this->assign('page_title', htmlspecialchars($page_info['title']));
+        /* meta */
+        $this->assign('meta_keywords', htmlspecialchars($article['keywords']));
+        $this->assign('meta_description', htmlspecialchars($article['goods_brief']));
+
         $this->display('article_info.dwt');
     }
 
