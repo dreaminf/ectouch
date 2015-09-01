@@ -193,7 +193,7 @@ class CommonController extends BaseController
      * 微信jsSDK
      */
     public function wechatJsSdk(){
-        $wxinfo   = model('Base')->model->table('wechat')->field('id, token, appid, appsecret, oauth_redirecturi, type, oauth_status')->find();
+        $wxinfo   = model('Base')->model->table('wechat')->field('token, appid, appsecret')->find();
         $appid    = $wxinfo['appid'];
         $secret   = $wxinfo['appsecret'];
         $token    = $wxinfo['token'];
@@ -203,7 +203,7 @@ class CommonController extends BaseController
         $wx_desc  = C('shop_desc');
         $wx_pic   = __URL__.'/images/logo.png';
 
-        $this->weObj = new Wechat($config);
+        $this->weObj = new Wechat($wxinfo);
 
         $id = $_SESSION['drp_id'] ? $_SESSION['drp_id'] : $_SESSION['user_id'];
         $url = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"];
