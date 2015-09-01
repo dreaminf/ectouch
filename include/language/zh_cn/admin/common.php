@@ -406,7 +406,8 @@ $_LANG['10_shop_authorized'] = '授权证书';
 $_LANG['drp_config'] = '分销设置';
 $_LANG['drp_users'] = '分销商管理';
 $_LANG['drp'] = '分销利润设置';
-$_LANG['order_list'] = '分销订单';
+$_LANG['order_list'] = '分销订单管理';
+$_LANG['drp_log'] = '佣金提现管理';
 
 // 微信通
 $_LANG['01_wechat_config'] = '公众号设置';

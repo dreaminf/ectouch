@@ -1,0 +1,50 @@
+{if $full_page}
+<!-- $Id: users_list.htm 15617 2009-02-18 05:18:00Z sunxiaodong $ -->
+{include file="pageheader.htm"}
+{insert_scripts files="../js/utils.js,listtable.js"}
+
+<form method="POST" action="" name="listForm">
+
+<!-- start users list -->
+<div class="list-div" id="listDiv">
+{/if}
+
+<table cellpadding="4" cellspacing="1">
+    <tr>
+        <td style="width:40%">{$lang.user.user_name}</td>
+        <td style="width:60%"><input type="text" value="{$info.user_name}"/></td>
+    </tr>
+    <tr>
+        <td style="width:40%">{$lang.user.real_name}</td>
+        <td style="width:60%"><input type="text" value="{$info.real_name}" name="data[real_name]" /></td>
+    </tr>
+    <tr>
+        <td style="width:40%">{$lang.user.shop_name}</td>
+        <td style="width:60%"><input type="text" value="{$info.shop_name}" name="data[shop_name]" /></td>
+    </tr>
+    <tr>
+        <td style="width:40%">{$lang.user.shop_mobile}</td>
+        <td style="width:60%"><input type="text" value="{$info.shop_mobile}" name="data[shop_mobile]" /></td>
+    </tr>
+    <tr>
+        <td style="width:40%">{$lang.user.open}</td>
+        <td style="width:60%"><input type="radio" name="open" value="1" >开启<input type="radio" name="open" value="0" >关闭</td>
+    </tr>
+    <tr>
+        <td style="width:40%">{$lang.user.cat_id}</td>
+        <td style="width:60%">{$li.cat_id}</td>
+    </tr>
+    <tr>
+        <td style="width:40%;"></td>
+        <td><input type="submit" value="{$lang.submit}" class="button" /></td>
+    </tr>
+
+
+</table>
+{if $full_page}
+</div>
+<!-- end users list -->
+</form>
+{/literal}
+{include file="pagefooter.htm"}
+{/if}

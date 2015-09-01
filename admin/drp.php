@@ -138,6 +138,44 @@ if ($_REQUEST['act'] == 'users')
 }
 
 /*------------------------------------------------------ */
+//-- 修改店铺状态
+/*------------------------------------------------------ */
+if ($_REQUEST['act'] == 'user_change')
+{
+    $id = $_GET['id'] ? $_GET['id'] : 0;
+    if($id == 0){
+        ecs_header("Location: drp.php?act=users\n");
+        exit;
+    }
+    $open = $_GET['open'] > 0 ? 0 : 1;
+    $data['open']=$open;
+    $db->autoExecute($ecs->table('drp_shop'), $data, 'UPDATE', "id = '$id'");
+    ecs_header("Location: drp.php?act=users\n");
+    exit;
+}
+
+/*------------------------------------------------------ */
+//-- 编辑店铺信息
+/*------------------------------------------------------ */
+if ($_REQUEST['act'] == 'user_edit')
+{
+    $id = $_GET['id'] ? $_GET['id'] : 0;
+    if($id == 0){
+        ecs_header("Location: drp.php?act=users\n");
+        exit;
+    }
+    $info = $db->getRow("SELECT d.id,d.shop_name,d.real_name,d.shop_mobile,d.user_id,d.cat_id,d.open,u.user_name FROM " . $ecs->table("drp_shop") . " as d join " . $ecs->table("users") . " as u on d.user_id=u.user_id where d.id = $id");
+    $smarty->assign('info', $info);
+    assign_query_info();
+    if (empty($_REQUEST['is_ajax']))
+    {
+        $smarty->assign('full_page', 1);
+    }
+    $smarty->assign('keyword', 'novice');
+    $smarty->assign('ur_here', $_LANG['drp_user_edit']);
+    $smarty->display('drp_users_edit.htm');
+}
+/*------------------------------------------------------ */
 //-- 订单列表 未分成
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'order_list')

@@ -79,4 +79,5 @@ $_LANG['user']['open_false'] = '关闭';
 $_LANG['handle'] = '操作';
 $_LANG['edit'] = '编辑';
 $_LANG['change'] = '您确认要修改店铺状态吗？';
+$_LANG['drp_user_edit'] = '店铺信息编辑？';
 ?>

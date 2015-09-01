@@ -152,6 +152,7 @@ $modules['11_menu_rec']['drp_config']                      = 'drp.php?act=config
 $modules['11_menu_rec']['drp']                             = 'drp.php?act=list';
 $modules['11_menu_rec']['drp_users']                       = 'drp.php?act=users';
 $modules['11_menu_rec']['order_list']                      = 'drp.php?act=order_list';
+$modules['11_menu_rec']['drp_log']                      = 'drp.php?act=drp_log';
 
 // 微信通
 $modules['12_menu_wechat']['01_wechat_config'] = '../index.php?m=admin&c=wechat';

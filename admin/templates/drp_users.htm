@@ -28,8 +28,8 @@
         <td>{$li.shop_mobile}</td>
         <td>{if $li.open eq 1}{$lang.user.open_true}{else}{$lang.user.open_false}{/if}</td>
         <td>
-          <a href="drp.php?act=user_edit&id={$li.user_id}" title="{$lang.edit}"><img src="images/icon_edit.gif" border="0" height="16" width="16" /></a>
-          <a href="javascript:confirm('{$lang.change}') ? location.href='drp.php?act=user_change&id={$li.user_id}' :''" title="{$lang.change}"><img src="images/icon_drop.gif" border="0" height="16" width="16" /></a>
+          <a href="drp.php?act=user_edit&id={$li.id}" title="{$lang.edit}"><img src="images/icon_edit.gif" border="0" height="16" width="16" /></a>
+          <a href="javascript:confirm('{$lang.change}') ? location.href='drp.php?act=user_change&id={$li.id}&open={$li.open}' :''" title="{$lang.change}"><img src="images/icon_drop.gif" border="0" height="16" width="16" /></a>
         </td>
     </tr>
     {/foreach}
