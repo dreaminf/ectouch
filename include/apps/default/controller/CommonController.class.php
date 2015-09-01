@@ -220,7 +220,7 @@ class CommonController extends BaseController
         $signature = sha1($str);
 
         $id = $_SESSION['drp_id'] ? $_SESSION['drp_id'] : $_SESSION['user_id'];
-        $url = strstr($url,'drp_id') ? $url : strstr($url,'?') ? $url.'&drp_id='.$id : $url.'?drp_id'.$id;
+        $url = strstr($url,'drp_id') ? $url : strstr($url,'?') ? $url.'&drp_id='.$id : $url.'?drp_id='.$id;
 
         $this->assign('appid',$appid);
         $this->assign('timestamp',$timestamp);
