@@ -5,8 +5,8 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<title>会员中心</title>
-		<meta name="description" content="" />
 		<meta name="keywords" content="" />
+		<meta name="description" content="" />
 		<link rel="stylesheet" href="__TPL__/css/member.css">
 	</head>
 	<body>
