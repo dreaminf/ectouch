@@ -210,6 +210,7 @@ class CommonController extends BaseController
         $url = strstr($url,'drp_id') ? $url : strstr($url,'?') ? $url.'&drp_id='.$id : $url.'?drp_id='.$id;
         $aa = $this->weObj->getJsTicket($appid);
         $bb = $this->weObj->getJsSign($url);
+        dump($wxinfo);
         dump($aa);
         dump($bb);exit;
 
