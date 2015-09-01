@@ -31,6 +31,14 @@ else
     @ini_set('include_path',      '.:' . ROOT_PATH);
 }
 
+$base_path = str_replace('\\','/', getcwd()).'/../../';
+$base_config = $base_path . 'data/config.php';
+if(file_exists($base_config)){
+    require $base_config;
+    header('Location: ../../'.ADMIN_PATH);
+    exit();
+}
+
 if (file_exists('../data/config.php'))
 {
     $db_config = require('../data/config.php');
@@ -41,10 +49,7 @@ else
 }
 
 /* 取得当前ecshop所在的根目录 */
-if(!defined('ADMIN_PATH'))
-{
-    define('ADMIN_PATH', 'admin');
-}
+defined('ADMIN_PATH') or define('ADMIN_PATH', 'admin');
 define('ROOT_PATH', str_replace(ADMIN_PATH . '/includes/init.php', '', str_replace('\\', '/', __FILE__)));
 
 if (defined('DEBUG_MODE') == false)
