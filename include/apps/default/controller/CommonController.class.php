@@ -33,54 +33,10 @@ class CommonController extends BaseController
         if(class_exists('WechatController')){
             if (method_exists('WechatController', 'do_oauth')) {
                 call_user_func(array('WechatController', 'do_oauth'));
+                $this->drp();
+                $this->wechatJsSdk();
             }
         }
-        if($_GET['drp_id'] > 0){
-            $drp_info = model('Sale')->get_drp($_GET['drp_id']);
-            if($drp_info['open'] == 1){
-                $drp_info['cat_id'] = substr($drp_info['cat_id'],0,-1);
-                $_SESSION['drp_shop'] = $drp_info;
-            }
-        }
-        $wxinfo = model('Base')->model->table('wechat')->field('id, token, appid, appsecret, oauth_redirecturi, type, oauth_status')->find();
-        
-        $sharetitle = "欢迎光临".C('shop_name').$_SESSION['drp_shop_name'];
-        $sharedesc  = C('shop_desc');
-        $imgUrl     = C('shop_url').__TPL__.'/images/logo.gif';
-        $appid  = $wxinfo['appid'];
-        $secret = $wxinfo['appsecret'];
-        if (!session('access_token') || !session('ticket') ){
-            $json = Http::doGet("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$secret");
-            $client_credential = json_decode($json);
-            $access_token = $client_credential->access_token;
-            session('access_token',$access_token);
-
-            $json = Http::doGet("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=".$access_token."&type=jsapi");
-            $jsapi = json_decode($json);
-            $ticket = $jsapi->ticket;
-            session('ticket',$ticket);
-        }
-        $noncestr = 'ectouch';
-        $jsapi_ticket = session('ticket');
-        $timestamp = gmtime();
-        $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-        $str = "jsapi_ticket=$jsapi_ticket"
-            ."&noncestr=$noncestr"
-            ."&timestamp=$timestamp"
-            ."&url=$url";
-        $signature = sha1($str);
-        self::$view->assign('appid',$appid);
-        self::$view->assign('noncestr',$noncestr);
-        self::$view->assign('jsapi_ticket',$jsapi_ticket);
-        self::$view->assign('timestamp',$timestamp);
-        $id = $_SESSION['drp_id'] ? $_SESSION['drp_id'] : $_SESSION['user_id'];
-        $url = strstr($url,'drp_id') ? $url : strstr($url,'?') ? $url.'&drp_id='.$id : $url.'?drp_id'.$id;
-        self::$view->assign('url',$url);
-        self::$view->assign('signature',$signature);
-        self::$view->assign('imgUrl',$imgUrl);
-
-        self::$view->assign('sharetitle',$sharetitle);
-        self::$view->assign('sharedesc',$sharedesc);
 
         /* 语言包 */
         $this->assign('lang', L());
@@ -106,6 +62,11 @@ class CommonController extends BaseController
     static function view()
     {
         return self::$view;
+    }
+
+    protected function fetch($filename, $cache_id = '')
+    {
+        return self::$view->fetch($filename, $cache_id);
     }
 
     protected function assign($tpl_var, $value = '')
@@ -212,6 +173,67 @@ class CommonController extends BaseController
         } else {
             $this->assign('ecs_css_path', __ROOT__ . '/themes/' . C('template') . '/css/style.css');
         }
+    }
+
+    /*
+     * 分销店铺信息
+     */
+    private function drp(){
+        if($_GET['drp_id'] > 0){
+            $drp_info = model('Sale')->get_drp($_GET['drp_id']);
+            if($drp_info['open'] == 1){
+                $drp_info['cat_id'] = substr($drp_info['cat_id'], 0, -1);
+                $_SESSION['drp_shop'] = $drp_info;
+            }
+        }
+    }
+
+    /*
+     * 微信jsSDK
+     */
+    public function wechatJsSdk(){
+        $wxinfo   = model('Base')->model->table('wechat')->field('id, token, appid, appsecret, oauth_redirecturi, type, oauth_status')->find();
+        $appid    = $wxinfo['appid'];
+        $secret   = $wxinfo['appsecret'];
+        $token    = $wxinfo['token'];
+
+        $drp_shop = $_SESSION['drp_shop'];
+        $wx_title = C('shop_name').$drp_shop['shop_name'];
+        $wx_desc  = C('shop_desc');
+        $wx_pic   = __URL__.'/images/logo.png';
+
+        $this->cache = new EcCache(array('DB_CACHE_PATH'=>'data/attached/db_cache/'));
+        $ticket = $this->cache->get('wechat_ticket');
+        if (empty($wechat_ticket)){
+            $config['appid'] = $wxinfo['appid'];
+            $config['appsecret'] = $wxinfo['appsecret'];
+            $this->weObj = new Wechat($config);
+            $ticket = $this->weObj->getJsTicket($appid);
+            $this->cache->set('wechat_ticket', $ticket, 7200);
+        }
+
+        $noncestr = rand(10000, 99999);
+        $jsapi_ticket = $ticket;
+        $timestamp = gmtime();
+        $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $str = "jsapi_ticket=$jsapi_ticket&noncestr=$noncestr&timestamp=$timestamp&url=$url";
+        $signature = sha1($str);
+
+        $id = $_SESSION['drp_id'] ? $_SESSION['drp_id'] : $_SESSION['user_id'];
+        $url = strstr($url,'drp_id') ? $url : strstr($url,'?') ? $url.'&drp_id='.$id : $url.'?drp_id'.$id;
+
+        $this->assign('appid',$appid);
+        $this->assign('timestamp',$timestamp);
+        $this->assign('noncestr',$noncestr);
+        $this->assign('signature',$signature);
+
+        $this->assign('wx_title',$sharetitle);
+        $this->assign('wx_desc',$sharedesc);
+        $this->assign('wx_url',$url);
+        $this->assign('wx_pic',$wx_pic);
+
+        $output = $this->fetch('library/js_sdk.lbi');
+        $this->assign('wechat_js_sdk', $output);
     }
 }
 
