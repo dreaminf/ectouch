@@ -201,18 +201,24 @@ class CommonController extends BaseController
         $drp_shop = $_SESSION['drp_shop'];
         $wx_title = C('shop_name').$drp_shop['shop_name'];
         $wx_desc  = C('shop_desc');
+        $wx_url   = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"];
         $wx_pic   = __URL__.'/images/logo.png';
 
-        $this->weObj = new Wechat($wxinfo);
-
         $id = $_SESSION['drp_id'] ? $_SESSION['drp_id'] : $_SESSION['user_id'];
-        $url = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"];
-        $url = strstr($url,'drp_id') ? $url : strstr($url,'?') ? $url.'&drp_id='.$id : $url.'?drp_id='.$id;
-        $aa = $this->weObj->getJsTicket($appid);
-        $bb = $this->weObj->getJsSign($url);
-        dump($this->weObj);
-        dump($aa);
-        dump($bb);exit;
+        $url = strstr($wx_url,'drp_id') ? $wx_url : strstr($wx_url,'?') ? $wx_url.'&drp_id='.$id : $wx_url.'?drp_id='.$id;
+        
+        $jssdk = new JSSDK($appid, $secret);
+        $signPackage = $jssdk->GetSignPackage();
+
+        $this->assign('wx_title', $wx_title);
+        $this->assign('wx_desc', $wx_desc);
+        $this->assign('wx_url', $wx_url);
+        $this->assign('wx_pic', $wx_pic);
+
+        $this->assign('appid', $signPackage["appId"]);
+        $this->assign('timestamp', $signPackage["timestamp"]);
+        $this->assign('noncestr', $signPackage["nonceStr"]);
+        $this->assign('signature', $signPackage["signature"]);
 
         $output = $this->fetch('library/js_sdk.lbi');
         $this->assign('wechat_js_sdk', $output);
