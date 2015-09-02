@@ -42,7 +42,7 @@
   <div class="index-menu">
   	<ul class="index-menu-ul">
       <!--{foreach from=$navigator item=nav}--> 
-      <li class="fl"><a href="{$nav.url}"><img src="{$nav.pic}" /></a><a class="index-menu-text" href="{$nav.name}">{$nav.name}</a></li>
+      <li class="fl"><a href="{$nav.url}"><img src="{$nav.pic}" /></a><a class="index-menu-text" href="{$nav.url}">{$nav.name}</a></li>
       <!--{/foreach}-->
      </ul>
   </div>
@@ -68,29 +68,36 @@
   
   <div class="index-recom">
   	<h3><b>精品推荐</b></h3>
-  	<div class="index-recom-left fl">
-          <a href="#"><img class="idnex-recom-left-img" src="" alt="" /></a>
+      <div class="index-recom-left fl">
+        <!--{foreach from=$best_goods item=goods name=goods}-->
+        <!--{if $smarty.foreach.goods.iteration == 1}-->
+        <a href="{$goods.url}"><img class="idnex-recom-left-img" src="{$goods.goods_img}" /></a>
+        <!--{/if}-->
+        <!--{/foreach}-->
       </div>
-      <div class="index-recom-right fr">	
-      	<div class="index-recom-right-in">
-            <a href="#"><img class="index-recom-right-logo" src="__TPL__/images/recom-logo2.gif" alt="logo" /></a>
-          </div>	
-          <div class="index-recom-right-in bordernone">
-            <a href="#"><img class="index-recom-right-logo"  src="__TPL__/images/recom-logo3.gif" alt="logo" /></a>
-          </div>	
+      <div class="index-recom-right fr">
+        <!--{foreach from=$best_goods item=goods name=goods}-->
+        <!--{if $smarty.foreach.goods.iteration == 2}-->
+        <a href="{$goods.url}"><img class="idnex-recom-left-img" src="{$goods.goods_img}" /></a>
+        <!--{/if}-->
+        <!--{/foreach}-->
       </div>
       <div class="index-recom-bottom ">
       	<ul class="fl">
-              <li class="fl">
-                  <a href="#"><img  class="index-recom-bottom-img"src="__TPL__/images/recom-img6.gif" alt="" /></a>
-                  <p class="index-recom-bottom-p"><a href="#">花花公子夏季透气网面鞋低帮运动休闲板鞋...</a></p>
-              	<p class="index-recom-bottom-price fl">￥239.90</p>
-              	<del class="index-recom-bottom-oldprice fl">￥430.0</del>
-              </li>
-          </ul>
-          <div class="index-recom-bottom-more fr">
-              <a href="/confirm.htm"><img src="__TPL__/images/recom-bottom-more.gif" alt="" /></a>
-          </div>
+          <!--{foreach from=$best_goods item=goods}-->
+          <!--{if $smarty.foreach.goods.iteration > 2}-->
+          <li class="fl">
+              <a href="{$goods.url}"><img class="index-recom-bottom-img" src="{$goods.thumb}" /></a>
+              <p class="index-recom-bottom-p"><a href="{$goods.url}">{$goods.short_name}</a></p>
+          	<p class="index-recom-bottom-price fl">{$goods.shop_price}</p>
+          	<del class="index-recom-bottom-oldprice fl">{$goods.market_price}</del>
+          </li>
+          <!--{/if}-->
+          <!--{/foreach}-->
+        </ul>
+        <div class="index-recom-bottom-more fr">
+            <a href="{:url('category/top_all')}"><img src="__TPL__/images/recom-bottom-more.gif" alt="" /></a>
+        </div>
       </div>
   </div>
   
@@ -142,31 +149,8 @@
   </div>
 </div>
 
-  <footer class="index-footer comWidth"><!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --></footer>
+<footer class="index-footer comWidth"><!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --></footer>
 
-  <div class="search-box" style="display:block">
-		<div class="search-box-hot">
-			<div class="search-box-hot-bar">
-				<p class="fl">热搜</p><a href="#"><span class="fr">换一批</span><i class="iconfont fr">&#xe60c;</i></a>
-			</div>
-			<div class="search-box-hot-word">
-				<a href="">充电宝</a>
-				<a href="#">移动硬盘</a>
-				<a href="">充电宝</a>
-				<a href="">蓝牙耳机</a>
-				<a href="">充电宝</a>
-				<a href="">手机保护套</a>
-				
-			</div>
-		</div>
-		<div class="search-box-list">
-			<ul>
-				<li><i class="iconfont">&#xe60d;</i><span>佳洁士牙膏</span></li>
-				<li><i class="iconfont">&#xe60d;</i><span>畅玩平板</span></li>
-			</ul>
-		</div>
-		<button type="button" class="search-box-button">清空搜索历史</button>
-	</div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <script type="text/javascript">
