@@ -76,6 +76,7 @@ $_LANG['user']['shop_mobile'] = '手机号';
 $_LANG['user']['open'] = '店铺状态';
 $_LANG['user']['open_true'] = '开启';
 $_LANG['user']['open_false'] = '关闭';
+$_LANG['user']['create_time'] = '创建时间';
 $_LANG['handle'] = '操作';
 $_LANG['edit'] = '编辑';
 $_LANG['change'] = '您确认要修改店铺状态吗？';
@@ -92,7 +93,7 @@ $_LANG['pay_mothed'] = '支付方式';
 $_LANG['process_type'] = '类型';
 $_LANG['confirm_date'] = '到款日期';
 $_LANG['surplus_notic'] = '管理员备注';
-$_LANG['surplus_desc'] = '会员描述';
+$_LANG['surplus_desc'] = '描述';
 $_LANG['surplus_type'] = '操作类型';
 
 $_LANG['no_user'] = '匿名购买';

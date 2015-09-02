@@ -15,8 +15,6 @@
 
 define('IN_ECTOUCH', true);
 require(dirname(__FILE__) . '/includes/init.php');
-admin_priv('affiliate');
-$config = get_affiliate();
 
 /*------------------------------------------------------ */
 //-- 分成管理页
@@ -40,7 +38,6 @@ if ($_REQUEST['act'] == 'list')
     $smarty->assign('ur_here', $_LANG['drp_profit']);
     $smarty->display('drp_cate_list.htm');
 }
-
 /*------------------------------------------------------ */
 //-- 设置分销利润
 /*------------------------------------------------------ */
@@ -125,18 +122,36 @@ if ($_REQUEST['act'] == 'config')
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'users')
 {
-    $list = $db->getAll("SELECT d.id,d.shop_name,d.real_name,d.shop_mobile,d.user_id,d.cat_id,d.open,u.user_name FROM " . $ecs->table("drp_shop") . " as d join " . $ecs->table("users") . " as u on d.user_id=u.user_id");
-    $smarty->assign('list', $list);
     assign_query_info();
     if (empty($_REQUEST['is_ajax']))
     {
         $smarty->assign('full_page', 1);
     }
+
+    $list = get_user_list();
+    $smarty->assign('list',         $list['list']);
+    $smarty->assign('filter',       $list['filter']);
+    $smarty->assign('record_count', $list['record_count']);
+    $smarty->assign('page_count',   $list['page_count']);
+
     $smarty->assign('keyword', 'novice');
     $smarty->assign('ur_here', $_LANG['drp_profit']);
     $smarty->display('drp_users.htm');
 }
 
+/*------------------------------------------------------ */
+//-- 排序、分页、查询
+/*------------------------------------------------------ */
+elseif ($_REQUEST['act'] == 'query')
+{
+    $list = get_user_list();
+    $smarty->assign('list',         $list['list']);
+    $smarty->assign('filter',       $list['filter']);
+    $smarty->assign('record_count', $list['record_count']);
+    $smarty->assign('page_count',   $list['page_count']);
+
+    make_json_result($smarty->fetch('drp_users.htm'), '',array('filter' => $list['filter'], 'page_count' => $list['page_count']));
+}
 /*------------------------------------------------------ */
 //-- 修改店铺状态
 /*------------------------------------------------------ */
@@ -218,113 +233,141 @@ if ($_REQUEST['act'] == 'user_edit')
 if ($_REQUEST['act'] == 'user_order')
 {
     // 获取用户id
-    $id = $_GET['id'] ? $_GET['id'] : 0;
-    if($id == 0){
+    $user_id = $_GET['id'] ? $_GET['id'] : 0;
+    if($user_id == 0){
+
         sys_msg($_LANG['empty_id']);
     }
-    $list = $db->getAll("SELECT * FROM " . $ecs->table("order_info") . " WHERE parent_id = $id  and is_separate = 0");
-    foreach($list as $key=>$val){
-        $list[$key]['parent_name'] = $db->getOne("SELECT user_name FROM " . $ecs->table("users") . " WHERE user_id = $val[parent_id]");
-        $list[$key]['user_name'] = $db->getOne("SELECT user_name FROM " . $ecs->table("users") . " WHERE user_id = $val[user_id]");
-    }
-    $smarty->assign('list', $list);
     assign_query_info();
     if (empty($_REQUEST['is_ajax']))
     {
         $smarty->assign('full_page', 1);
     }
-    $smarty->assign('keyword', 'novice');
+    $smarty->assign('user_id',$user_id);
+    $list = get_user_order_list($user_id);
+    $smarty->assign('list',         $list['list']);
+    $smarty->assign('filter',       $list['filter']);
+    $smarty->assign('record_count', $list['record_count']);
+    $smarty->assign('page_count',   $list['page_count']);
+
     $smarty->assign('ur_here', $_LANG['drp_user_edit']);
     $smarty->display('drp_user_order.htm');
+}
+
+/*------------------------------------------------------ */
+//-- 查看店铺订单
+/*------------------------------------------------------ */
+if ($_REQUEST['act'] == 'user_log')
+{
+    // 获取用户id
+    $user_id = $_GET['id'] ? $_GET['id'] : 0;
+    if($user_id == 0){
+
+        sys_msg($_LANG['empty_id']);
+    }
+    assign_query_info();
+    if (empty($_REQUEST['is_ajax']))
+    {
+        $smarty->assign('full_page', 1);
+    }
+    $smarty->assign('user_id',$user_id);
+    $list = get_user_log_list($user_id);
+    $smarty->assign('list',         $list['list']);
+    $smarty->assign('filter',       $list['filter']);
+    $smarty->assign('record_count', $list['record_count']);
+    $smarty->assign('page_count',   $list['page_count']);
+
+    $smarty->assign('ur_here', $_LANG['drp_user_edit']);
+    $smarty->display('drp_user_log.htm');
 }
 
 /*------------------------------------------------------ */
 //-- 佣金管理
 /*------------------------------------------------------ */
 if($_REQUEST['act'] == 'drp_log'){
-	assign_query_info();
-	if (empty($_REQUEST['is_ajax']))
-	{
-		$smarty->assign('full_page', 1);
-	}
-	//分页
-	$count = $db->getOne("SELECT COUNT(*) FROM".$ecs->table('drp_log'));
-	//页面
-	$smarty->assign('ur_here', $_LANG['drp_log']);
-	$list = $db->getAll("SELECT * FROM".$ecs->table('drp_log')."WHERE user_money < 0 ");
-	foreach ($list as $key=>$val){
-		$list[$key]['change_time'] = date("Y-m-d H:i:s",$val['change_time']);
-		$list[$key]['user_money'] = substr($val['user_money'],1);
-		$list[$key]['user_name'] = $db->getOne("SELECT user_name FROM".$ecs->table("users")."WHERE user_id =".$val['user_id']);
-		$list[$key]['shop_name'] = $db->getOne("SELECT shop_name FROM".$ecs->table('drp_shop')."WHERE user_id =".$val['user_id']);
-		if($val['change_type'] == 0){
-			$list[$key]['status'] = '未支付';
-		}
-	    if($val['change_type'] == 1){
-			$list[$key]['status'] = '已经支付';
-		}
-	}
-	$smarty->assign('count',$count);
-	$smarty->assign('list',$list);
-	$smarty->display('drp_log.htm');	
+    assign_query_info();
+    if (empty($_REQUEST['is_ajax']))
+    {
+        $smarty->assign('full_page', 1);
+    }
+    //分页
+    $count = $db->getOne("SELECT COUNT(*) FROM".$ecs->table('drp_log'));
+    //页面
+    $smarty->assign('ur_here', $_LANG['drp_log']);
+    $list = $db->getAll("SELECT * FROM".$ecs->table('drp_log')."WHERE user_money < 0 ");
+    foreach ($list as $key=>$val){
+        $list[$key]['change_time'] = date("Y-m-d H:i:s",$val['change_time']);
+        $list[$key]['user_money'] = substr($val['user_money'],1);
+        $list[$key]['user_name'] = $db->getOne("SELECT user_name FROM".$ecs->table("users")."WHERE user_id =".$val['user_id']);
+        $list[$key]['shop_name'] = $db->getOne("SELECT shop_name FROM".$ecs->table('drp_shop')."WHERE user_id =".$val['user_id']);
+        if($val['change_type'] == 0){
+            $list[$key]['status'] = '未支付';
+        }
+        if($val['change_type'] == 1){
+            $list[$key]['status'] = '已经支付';
+        }
+    }
+    $smarty->assign('count',$count);
+    $smarty->assign('list',$list);
+    $smarty->display('drp_log.htm');
 }
 /*------------------------------------------------------ */
 //-- 佣金提现管理功能
 /*------------------------------------------------------ */
 if($_REQUEST['act'] == 'drp_refer'){
-	if(IS_GET){
-		$id =$_GET['id'];
-		$money = $db->getRow("SELECT user_money,user_id,change_type FROM".$ecs->table("drp_log")."WHERE log_id =".$id);
-		if(intval($money['change_type']) === 0){
-			$shop = $db->getRow("SELECT money,user_id FROM".$ecs->table("drp_shop")."WHERE user_id =".$money['user_id']);
-				if($shop['money'] >= abs($money['user_money'])){
-					$cash = $shop['money'] + ($money['user_money']);
-					$dat['money'] = $cash;
-					$age['change_type'] = 1;
-					$db->autoExecute($ecs->table('drp_log'), $age, 'UPDATE', "user_id =".$money['user_id']);
-					$up = $db->autoExecute($ecs->table('drp_shop'), $dat, 'UPDATE', "user_id =".$shop['user_id']);
-						  if($up == true){
-							$user = $db->getRow("SELECT user_money,user_id FROM".$ecs->table("users")."WHERE user_id =".$money['user_id']);
-							if(!empty($user)){
-								$total_cash = $user['user_money'] + abs($money['user_money']);
-								if(!$total_cash == 0){
-									$dat['user_money'] = $total_cash;
-									$u = $db->autoExecute($ecs->table('users'), $dat, 'UPDATE', "user_id =".$money['user_id']);
-									if($u == true){
-										$links[0]['href'] = 'drp.php?act=drp_log';
-										sys_msg($_LANG['withdraw_ok'],'',$links);
-									}
-								}
-							}	
-						} 
-				}else{
-					$links[0]['href'] = 'drp.php?act=drp_log';
-					sys_msg($_LANG['Lack_of_funds'],'',$links);
-				}
-		}else{
-			$links[0]['href'] = 'drp.php?act=drp_log';	
-			sys_msg($_LANG['The_extracted'],'',$links);
-		}	
-	}
+    if(IS_GET){
+        $id =$_GET['id'];
+        $money = $db->getRow("SELECT user_money,user_id,change_type FROM".$ecs->table("drp_log")."WHERE log_id =".$id);
+        if(intval($money['change_type']) === 0){
+            $shop = $db->getRow("SELECT money,user_id FROM".$ecs->table("drp_shop")."WHERE user_id =".$money['user_id']);
+            if($shop['money'] >= abs($money['user_money'])){
+                $cash = $shop['money'] + ($money['user_money']);
+                $dat['money'] = $cash;
+                $age['change_type'] = 1;
+                $db->autoExecute($ecs->table('drp_log'), $age, 'UPDATE', "user_id =".$money['user_id']);
+                $up = $db->autoExecute($ecs->table('drp_shop'), $dat, 'UPDATE', "user_id =".$shop['user_id']);
+                if($up == true){
+                    $user = $db->getRow("SELECT user_money,user_id FROM".$ecs->table("users")."WHERE user_id =".$money['user_id']);
+                    if(!empty($user)){
+                        $total_cash = $user['user_money'] + abs($money['user_money']);
+                        if(!$total_cash == 0){
+                            $dat['user_money'] = $total_cash;
+                            $u = $db->autoExecute($ecs->table('users'), $dat, 'UPDATE', "user_id =".$money['user_id']);
+                            if($u == true){
+                                $links[0]['href'] = 'drp.php?act=drp_log';
+                                sys_msg($_LANG['withdraw_ok'],'',$links);
+                            }
+                        }
+                    }
+                }
+            }else{
+                $links[0]['href'] = 'drp.php?act=drp_log';
+                sys_msg($_LANG['Lack_of_funds'],'',$links);
+            }
+        }else{
+            $links[0]['href'] = 'drp.php?act=drp_log';
+            sys_msg($_LANG['The_extracted'],'',$links);
+        }
+    }
 }
 /*------------------------------------------------------ */
 //-- 佣金提现删除
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'order_delete'){
-	if(IS_GET){
-		$id=$_GET['id'];
-		$money = $db->getRow("SELECT change_type,user_id FROM".$ecs->table("drp_log")."WHERE log_id =".$id);
-		if(intval($money['change_type']) === 1){
-			$sql = "DELETE FROM " . $ecs->table('drp_log') .
-                    " WHERE user_id = ".$money['user_id'];
+    if(IS_GET){
+        $id=$_GET['id'];
+        $money = $db->getRow("SELECT change_type,user_id FROM ".$ecs->table("drp_log")." WHERE log_id =".$id);
+        if(intval($money['change_type']) === 1){
+            $sql = "DELETE FROM " . $ecs->table('drp_log') .
+                " WHERE user_id = ".$money['user_id'];
             $delete = $db->query($sql);
             if($delete == true){
-            	$links[0]['href'] = 'drp.php?act=drp_log';
-            	sys_msg($_LANG['delete_Success'],'',$links);
-            	 
-            }		
-		}
-	}
+                $links[0]['href'] = 'drp.php?act=drp_log';
+                sys_msg($_LANG['delete_Success'],'',$links);
+
+            }
+        }
+    }
 }
 /*------------------------------------------------------ */
 //-- 订单列表 未分成
@@ -371,7 +414,7 @@ elseif ($_REQUEST['act'] == 'separate')
 
         // 获取上线 ，
 
-         
+
 
 
         //计算利润
@@ -473,13 +516,13 @@ elseif ($_REQUEST['act'] == 'updata')
     $_POST['level_register_up'] = intval($_POST['level_register_up']);
     $temp = array();
     $temp['config'] = array('expire'                => $_POST['expire'],        //COOKIE过期数字
-                            'expire_unit'           => $_POST['expire_unit'],   //单位：小时、天、周
-                            'separate_by'           => $separate_by,            //分成模式：0、注册 1、订单
-                            'level_point_all'       =>$_POST['level_point_all'],    //积分分成比
-                            'level_money_all'       =>$_POST['level_money_all'],    //金钱分成比
-                            'level_register_all'    =>$_POST['level_register_all'], //推荐注册奖励积分
-                            'level_register_up'     =>$_POST['level_register_up']   //推荐注册奖励积分上限
-          );
+        'expire_unit'           => $_POST['expire_unit'],   //单位：小时、天、周
+        'separate_by'           => $separate_by,            //分成模式：0、注册 1、订单
+        'level_point_all'       =>$_POST['level_point_all'],    //积分分成比
+        'level_money_all'       =>$_POST['level_money_all'],    //金钱分成比
+        'level_register_all'    =>$_POST['level_register_all'], //推荐注册奖励积分
+        'level_register_up'     =>$_POST['level_register_up']   //推荐注册奖励积分上限
+    );
     $temp['item'] = $config['item'];
     $temp['on'] = 1;
     put_affiliate($temp);
@@ -571,21 +614,106 @@ elseif ($_REQUEST['act'] == 'del')
     exit;
 }
 
-function get_affiliate()
-{
-    $config = unserialize($GLOBALS['_CFG']['affiliate']);
-    empty($config) && $config = array();
 
-    return $config;
+/**
+ * 取得分销商列表
+ * @param   int     $user_id    用户id
+ * @param   string  $account_type   帐户类型：空表示所有帐户，user_money表示可用资金，
+ *                  frozen_money表示冻结资金，rank_points表示等级积分，pay_points表示消费积分
+ * @return  array
+ */
+function get_user_list()
+{
+    /* 初始化分页参数 */
+    $filter = array(
+
+    );
+
+    /* 查询记录总数，计算分页数 */
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('drp_shop');
+    $filter['record_count'] = $GLOBALS['db']->getOne($sql);
+    $filter = page_and_size($filter);
+
+    /* 查询记录 */
+    $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('drp_shop') .
+        " ORDER BY id DESC";
+    $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
+
+    $arr = array();
+    while ($row = $GLOBALS['db']->fetchRow($res))
+    {
+        $row['create_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['create_time']);
+        $row['user_name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$row['user_id']);
+        $arr[] = $row;
+    }
+    return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
 }
 
-function put_affiliate($config)
+
+/**
+ * 取得分销商订单
+ * @param   int     $user_id    用户id
+ * @param   string  $account_type   帐户类型：空表示所有帐户，user_money表示可用资金，
+ *                  frozen_money表示冻结资金，rank_points表示等级积分，pay_points表示消费积分
+ * @return  array
+ */
+function get_user_order_list($user_id)
 {
-    $temp = serialize($config);
-    $sql = "UPDATE " . $GLOBALS['ecs']->table('shop_config') .
-           "SET  value = '$temp' " .
-           "WHERE code = 'affiliate'";
-    $GLOBALS['db']->query($sql);
-    clear_all_files();
+    /* 初始化分页参数 */
+    $filter = array(
+        'id'=>$user_id,
+    );
+    /* 查询记录总数，计算分页数 */
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info'). " WHERE parent_id = $user_id  and is_separate = 0";
+    $filter['record_count'] = $GLOBALS['db']->getOne($sql);
+    $filter = page_and_size($filter);
+
+    /* 查询记录 */
+    $sql = "SELECT * FROM " .  $GLOBALS['ecs']->table('order_info'). " WHERE parent_id = $user_id  and is_separate = 0 " .
+        " ORDER BY order_id DESC";
+    $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
+
+    $arr = array();
+    while ($row = $GLOBALS['db']->fetchRow($res))
+    {
+        $row['add_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['add_time']);
+        $row['user_name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$row['user_id']);
+        $row['parent_name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$row['parent_id']);
+        $arr[] = $row;
+    }
+    return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
+}
+
+
+/**
+ * 取得分销商佣金
+ * @param   int     $user_id    用户id
+ * @param   string  $account_type   帐户类型：空表示所有帐户，user_money表示可用资金，
+ *                  frozen_money表示冻结资金，rank_points表示等级积分，pay_points表示消费积分
+ * @return  array
+ */
+function get_user_log_list($user_id)
+{
+    /* 初始化分页参数 */
+    $filter = array(
+        'id'=>$user_id,
+    );
+    /* 查询记录总数，计算分页数 */
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('drp_log'). " WHERE user_id = $user_id  and user_money > 0";
+    $filter['record_count'] = $GLOBALS['db']->getOne($sql);
+    $filter = page_and_size($filter);
+
+    /* 查询记录 */
+    $sql = "SELECT * FROM " .  $GLOBALS['ecs']->table('drp_log'). " WHERE user_id = $user_id  and user_money > 0 " .
+        " ORDER BY log_id DESC";
+    $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
+
+    $arr = array();
+    while ($row = $GLOBALS['db']->fetchRow($res))
+    {
+        $row['change_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['change_time']);
+        $arr[] = $row;
+    }
+    return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
 }
 ?>
