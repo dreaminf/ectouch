@@ -310,7 +310,7 @@ if($_REQUEST['act'] == 'drp_refer'){
 /*------------------------------------------------------ */
 //-- 佣金提现删除
 /*------------------------------------------------------ */
-if ($_REQUEST['act'] == 'order_list'){
+if ($_REQUEST['act'] == 'order_delete'){
 	if(IS_GET){
 		$id=$_GET['id'];
 		$money = $db->getRow("SELECT change_type,user_id FROM".$ecs->table("drp_log")."WHERE log_id =".$id);
