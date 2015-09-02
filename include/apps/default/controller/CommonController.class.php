@@ -204,9 +204,12 @@ class CommonController extends BaseController
         $wx_pic   = __URL__.'/images/logo.png';
 
         if(ACTION_NAME == 'goods' && isset($_GET['id'])){
-            $goods_id = I('id');
-            $goods = model('Goods')->get_goods_info($goods_id);
         }
+            $goods_id = I('id');
+            echo $goods_id;
+            echo $_GET['id'];
+            dump($_GET);
+            $goods = model('Goods')->get_goods_info($goods_id);
             dump($goods);
 
         $id = $_SESSION['drp_id'] ? $_SESSION['drp_id'] : $_SESSION['user_id'];
