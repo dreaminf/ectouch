@@ -124,34 +124,8 @@
   <div class="index-theme">
   	<h3><b>主题精选</b></h3>
   	<ul>
-      	<li class="fl">
-              <a href="#"><img src="__TPL__/images/index-theme-icon1.gif"  alt="" /></a>
-        </li>
-        <li class="fr">
-            <a href="#"><img src="__TPL__/images/index-theme-icon2.gif" alt="" /></a>
-        </li>
-        <li class="fl">
-            <a href="#"><img src="__TPL__/images/index-theme-icon10.gif" alt="" /></a>
-        </li>
-        <li class="fr">
-            <a href="#"><img src="__TPL__/images/index-theme-icon4.gif" alt="" /></a>
-        </li><li class="fl">
-            <a href="#"><img src="__TPL__/images/index-theme-icon5.gif" alt="" /></a>
-        </li>
-        <li class="fr">
-            <a href="#"><img src="__TPL__/images/index-theme-icon6.gif" alt="" /></a>
-        </li><li class="fl">
-            <a href="#"><img src="__TPL__/images/index-theme-icon7.gif" alt=""/></a>
-        </li>
-        <li class="fr">
-            <a href="#"><img src="__TPL__/images/index-theme-icon8.gif" alt="" /></a>
-        </li><li class="fl">
-            <a href="#"><img src="__TPL__/images/index-theme-icon9.gif" alt="" /></a>
-        </li>
-        <li class="fr">
-            <a href="#"><img src="__TPL__/images/index-theme-icon10.gif" alt="" /></a>
-        </li>
-      </ul>
+    	{insert name='ads' id=256 num=10}
+    </ul>
   </div>
 
 	<div class="index-more">
