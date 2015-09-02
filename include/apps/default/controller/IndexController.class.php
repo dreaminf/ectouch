@@ -78,6 +78,7 @@ class IndexController extends CommonController {
             // 热卖商品
             if ($goods_list) {
                 foreach ($goods_list as $key => $value) {
+                    $value['iteration'] = $key + 1;
                     $this->assign('goods', $value);
                     $list [] = array(
                         'single_item' => ECTouch::view()->fetch('library/asynclist_index.lbi')
