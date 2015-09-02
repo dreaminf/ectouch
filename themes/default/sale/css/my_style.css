@@ -690,12 +690,12 @@ margin-top:2rem;
 
 margin-top:1.3rem;
 }	
-.set4_nav,.set4_nav1{height:2.9rem; float:left; border:1px solid #CCC;line-height:2.2rem;}
+.set4_nav,.set4_nav1{ float:left; border:1px solid #CCC;line-height:2.9rem;}
 .set4_nav{width:40%; background-color:#eeeeee;}
-.set4_nav1{width:58%;}
+.set4_nav1{width:58%;overflow:hidden;}
 .set4_list{font-size:1.25rem;margin-left:1.3rem;line-height:2.9rem;}
 .set4_list1{font-size:1.3rem;color:#666;margin-left:1rem;line-height:2.9rem;}
-.set4_box2{border:1px solid #CCC;height:2.9rem;width:90%;margin-top:-0.6rem;}
+.set4_box2{border:1px solid #CCC;width:90%;margin-top:-0.6rem;overflow: hidden;}
 .set4_mvc{width:85%; height:2rem;}
 .set4_border{border-top:1px #ddd solid;
 			color:#fbfbfb;
@@ -957,7 +957,7 @@ textarea, input {
 
 .set-4-submit{font-size: 1.5rem;text-align: center;display: block;line-height: 4.125rem;background-color: #41A28E;margin-left: 2rem;width: 90%;margin-top: 2rem;color: #fff;border:none;}
 
-.set-4-input{height:2.55rem; font-size:1.25rem; width:99%; overflow:hidden;}
+.set-4-input{height:2.9rem; font-size:1.25rem; width:99%;}
 /*.set-4-submit{margin-top: 1.5rem;background-color: #41a28e;height: 4.125rem;width: 90%;border:none;color:#FFF;font-weight:bold;font-size: 1.5rem;}
 */
 .t-a-center{text-align:center;}
