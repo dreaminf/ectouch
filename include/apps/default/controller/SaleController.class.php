@@ -53,8 +53,8 @@ class SaleController extends CommonController {
      * 会员中心欢迎页
      */
     public function index() {
-        $apply_time = $this->model->table('users')->where(array('user_id'=>$_SESSION['user_id']))->field('apply_time')->find();
-        $sale['time'] = date('Y-m-d H:i:s',$apply_time['apply_time']);
+        $apply_time = $this->model->table('drp_shop')->where(array('user_id'=>$_SESSION['user_id']))->field('create_time')->find();
+        $sale['time'] = date('Y-m-d H:i:s',$apply_time['create_time']);
         $this->assign('sale',$sale);
 
         // 账户余额
