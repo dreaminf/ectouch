@@ -198,15 +198,14 @@ class CommonController extends BaseController
         $secret   = $wxinfo['appsecret'];
 
         //分销商信息
-        $drp_id   = isset($_SESSION['drp_id']) ? $_SESSION['drp_id'] : $_SESSION['user_id'];
+        $drp_id   = isset($_SESSION['drp_shop']['id']) ? $_SESSION['drp_shop']['id'] : $_SESSION['user_id'];
 
         //微信店信息
         $drp_shop = $_SESSION['drp_shop'];
         $wx_title = C('shop_name').$drp_shop['shop_name'];
         $wx_desc  = C('shop_desc');
-        $wx_url   = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"];
-        $wx_url   = strstr($wx_url,'?') ? $wx_url.'&drp_id='.$drp_id : $wx_url.'?drp_id='.$drp_id;
-        $wx_pic   = __URL__.'/images/logo.png';
+        $wx_url   = __URL__ . '/index.php?drp_id='.$drp_id;
+        $wx_pic   = __URL__ . '/images/logo.png';
 
         //商品信息
         if(CONTROLLER_NAME == 'goods' && isset($_GET['id'])){
