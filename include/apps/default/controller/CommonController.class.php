@@ -205,8 +205,9 @@ class CommonController extends BaseController
 
         if(ACTION_NAME == 'goods' && isset($_GET['id'])){
         }
+        echo ACTION_NAME;
             $goods_id = I('id');
-            echo $goods_id;
+            // echo $goods_id;
             echo $_GET['id'];
             dump($_GET);
             $goods = model('Goods')->get_goods_info($goods_id);
