@@ -46,85 +46,59 @@
       <!--{/foreach}-->
      </ul>
   </div>
-
-  <div class="index-buy" style="display:none;">
-  	<h3><b>限时购</b></h3>
-  	<div class="index-buy-found">
-		<p class="fl" style="color:#EB904D;"><b>&nbsp; &nbsp;秒杀</b></p>
-      	<p class="index-buy-p fl">等你来发现</p>
-          <a class="index-buy-more fr" href="javascript:void(0)">点击查看更多 <i class=" iconfont fr">&#xe60c;</i></a>
-       </div>	
-       <div class="index-buy-bottom" >
-	<ul class="index-buy-list fl" >
-      	<!--<li class="fl">
-          	<a href="#"><img src="__TPL__/images/index-buy-img1.gif" alt="" /></a>
-              <a href="#"><p class="index-buy-title">马来西亚进口纽西兰曲...</p></a>
-              <p class="index-buy-price">￥128.00</p>
-              <span>5 折</span>
-          </li>-->
-      </ul>
-      </div>
-  </div>
   
+  <style type="text/css">
+  .index-recom {border-bottom: 1px #eee solid}
+  </style>
+
   <div class="index-recom">
-  	<h3><b>精品推荐</b></h3>
+    <h3><b>限时促销</b></h3>
       <div class="index-recom-left fl">
-        <!--{foreach from=$best_goods item=goods name=goods}-->
-        <!--{if $smarty.foreach.goods.iteration == 1}-->
-        <a href="{$goods.url}"><img class="idnex-recom-left-img" src="{$goods.thumb}" /></a>
-        <!--{/if}-->
-        <!--{/foreach}-->
+        <a href=""><img src="http://img30.360buyimg.com/mobilecms/jfs/t1285/301/224079095/27270/fbbc1f40/555c6c90Ncb4fe515.jpg"></a>
+        {insert name='ads' id=3 num=1}
       </div>
       <div class="index-recom-right fr">
-        <!--{foreach from=$best_goods item=goods name=goods}-->
-        <!--{if $smarty.foreach.goods.iteration == 2}-->
-        <a href="{$goods.url}"><img class="idnex-recom-left-img" src="{$goods.thumb}" /></a>
-        <!--{/if}-->
-        <!--{/foreach}-->
-      </div>
-      <div class="index-recom-bottom ">
-      	<ul class="fl">
-          <!--{foreach from=$best_goods item=goods}-->
-          <!--{if $smarty.foreach.goods.iteration > 2}-->
-          <li class="fl">
-              <a href="{$goods.url}"><img class="index-recom-bottom-img" src="{$goods.thumb}" /></a>
-              <p class="index-recom-bottom-p"><a href="{$goods.url}">{$goods.short_name}</a></p>
-          	<p class="index-recom-bottom-price fl">{$goods.shop_price}</p>
-          	<del class="index-recom-bottom-oldprice fl">{$goods.market_price}</del>
-          </li>
-          <!--{/if}-->
-          <!--{/foreach}-->
-        </ul>
-        <div class="index-recom-bottom-more fr">
-            <a href="{:url('category/top_all')}"><img src="__TPL__/images/recom-bottom-more.gif" alt="" /></a>
-        </div>
+        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t2500/354/5004119/28206/c13fa182/55e5a38fN0b84386b.jpg"></a>
+        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t1738/16/1289696574/25303/b97d27f7/55e42bfdNf92543d6.jpg"></a>
+        {insert name='ads' id=4 num=2}
       </div>
   </div>
-  
-  <div class="index-brand" style="display:none;">
-  	<h3><b>品牌街</b></h3>
-  	<div class="index-brand-left fl">
-          <!--<a href="#"><img src="__TPL__/images/index-brand-left-img.gif" alt="" /></a>-->
+
+  <div class="index-recom">
+    <h3><b>热门活动</b></h3>
+      <div class="index-recom-left fl">
+        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t1786/20/1237061297/11292/32fb2a76/55e41b2aN73bcf4d3.jpg"></a>
+        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t1660/172/1178175164/12107/b84acf01/55e41becN110f0639.jpg"></a>
+        {insert name='ads' id=3 num=1}
       </div>
-      <div class="index-brand-right fr">
-      	<!--<div class="index-brand-right-in">
-            <img src="__TPL__/images/index-brand-right-img1.gif" alt="" />
-          </div>
-          <div class="index-brand-right-in bordernone">
-            <a href="#"><img src="__TPL__/images/index-brand-right-img2.gif" alt="" /></a>
-          </div>-->
+      <div class="index-recom-right fr">
+        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t1753/282/1346478890/16937/b0c72fa9/55e41ca6N55f0952e.jpg"></a>
+        {insert name='ads' id=4 num=2}
       </div>
-      
-      <div class="clearfix"></div>
-      <div class="index-brand-bottom">
-      <div class="index-brand-bottom-div">
-      	<ul class="fl">
-          	<!--<li class="fl"><a href=""><img src="__TPL__/images/index-brand-logo1.gif" alt="" /></a></li>-->
-          </ul>
-         </div>
-         <div class="index-brand-bottom-more fr">
-          	<a href="/brand-list.htm"><img src="__TPL__/images/brand-bottom-more.gif" alt="" /></a>
-          </div>
+  </div>
+
+  <div class="index-recom">
+    <h3><b>精品推荐</b></h3>
+      <div class="index-recom-left fl">
+        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t1339/42/1033573654/18650/85fb7e47/55e41d25Ne7fd71e7.jpg"></a>
+        {insert name='ads' id=3 num=1}
+      </div>
+      <div class="index-recom-right fr">
+        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t1825/226/1292630398/9320/a7003c2f/55e42185N8d6eb615.jpg"></a>
+        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t1753/288/1310409506/7943/7beba973/55e4221bN9857b1f4.jpg"></a>
+        {insert name='ads' id=4 num=2}
+      </div>
+  </div>
+  <div class="index-recom">
+    <h3><b>品牌街</b></h3>
+      <div class="index-recom-left fl">
+        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t2293/126/6325541/15463/885e77f2/55e5a839N76e8a8ab.jpg"></a>
+        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t2101/138/4648025/12171/7f46ddb9/55e5ac15N3f33b3cd.jpg"></a>
+        {insert name='ads' id=3 num=1}
+      </div>
+      <div class="index-recom-right fr">
+        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t2317/6/7126462/28018/ea8767a/55e5a70bNb1ffd2fe.jpg"></a>
+        {insert name='ads' id=4 num=2}
       </div>
   </div>
 
@@ -139,12 +113,9 @@
   	<div class="index-more-icon">
       	<span>更多惊喜</span>
       </div>
-      <ul class="index-more-list">
-      	<!--<li class="fl">
-          	<a href=""><img src="__TPL__/images/index-more-img1.gif" alt="" /></a>
-          	<a href=""><p>红蜻蜓女鞋2015春季新款正品圆头系带深口头层牛皮职业单鞋工作鞋</p></a>
-          	<span>¥ 283.6</span>
-          </li>-->
+      <ul class="index-more-list" id="J_ItemList">
+        <li class="single_item"></li>
+        <a href="javascript:;" style="text-align:center" class="get_more"></a>
       </ul>
   </div>
 </div>

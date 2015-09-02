@@ -73,12 +73,12 @@ class IndexController extends CommonController {
             $type = I('get.type');
             $start = $_POST['last'];
             $limit = $_POST['amount'];
-            $hot_goods = model('Index')->goods_list($type, $limit, $start);
+            $goods_list = model('Index')->goods_list($type, $limit, $start);
             $list = array();
             // 热卖商品
-            if ($hot_goods) {
-                foreach ($hot_goods as $key => $value) {
-                    $this->assign('hot_goods', $value);
+            if ($goods_list) {
+                foreach ($goods_list as $key => $value) {
+                    $this->assign('goods', $value);
                     $list [] = array(
                         'single_item' => ECTouch::view()->fetch('library/asynclist_index.lbi')
                     );
