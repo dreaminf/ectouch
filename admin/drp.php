@@ -255,14 +255,14 @@ if($_REQUEST['act'] == 'drp_log'){
 		$time = date("Y-m-d H:i:s",$tm);
 		$money = $v['user_money'];
 		$gold = substr($money,1);
+		$user = $db->getRow("SELECT user_name,user_id FROM".$ecs->table("users")."WHERE user_id =".$user_id);
+		$shop_name = $db->getRow("SELECT shop_name FROM".$ecs->table('drp_shop')."WHERE user_id =".$user['user_id']);
+		$smarty->assign('shop_name',$shop_name['shop_name']);
+		$smarty->assign('user_name',$user['user_name']);
+		$smarty->assign('time',$time);
+		$smarty->assign('gold',$gold);
+		$smarty->assign('list',$list);
 	}
-	$user = $db->getRow("SELECT user_name,user_id FROM".$ecs->table("users")."WHERE user_id =".$user_id);
-	$shop_name = $db->getRow("SELECT shop_name FROM".$ecs->table('drp_shop')."WHERE user_id =".$user['user_id']);
-	$smarty->assign('shop_name',$shop_name['shop_name']);
-	$smarty->assign('user_name',$user['user_name']);
-	$smarty->assign('time',$time);
-	$smarty->assign('gold',$gold);
-	$smarty->assign('list',$list);
 	$smarty->display('drp_log.htm');	
 }
 /*------------------------------------------------------ */
