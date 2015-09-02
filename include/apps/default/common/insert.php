@@ -124,7 +124,7 @@ function insert_ads($arr) {
                 'LEFT JOIN ' . M()->pre . 'ad_position ' . ' AS p ON a.position_id = p.position_id ' .
                 "WHERE enabled = 1 AND start_time <= '" . $time . "' AND end_time >= '" . $time . "' " .
                 "AND a.position_id = '" . $arr['id'] . "' " .
-                'ORDER BY a.id LIMIT ' . $arr['num'];
+                'ORDER BY a.ad_id LIMIT ' . $arr['num'];
         $res = M()->query($sql);
     } else {
         if ($static_res[$arr['id']] === NULL) {
@@ -134,7 +134,7 @@ function insert_ads($arr) {
                     'LEFT JOIN ' . M()->pre . 'ad_position' . ' AS p ON a.position_id = p.position_id ' .
                     "WHERE enabled = 1 AND a.position_id = '" . $arr['id'] .
                     "' AND start_time <= '" . $time . "' AND end_time >= '" . $time . "' " .
-                    'ORDER BY a.id LIMIT 1';
+                    'ORDER BY a.ad_id LIMIT 1';
             $static_res[$arr['id']] = M()->query($sql);
         }
         $res = $static_res[$arr['id']];
