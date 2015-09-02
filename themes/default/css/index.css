@@ -3223,7 +3223,7 @@ h3 {
   .index-recom .index-recom-left {
     width: 50%;
     border-right: 1px solid #F0F2F7; }
-    .index-recom .index-recom-left img {
+    .index-recom .index-recom-left img, .index-recom .index-recom-right img {
       width: 100%;
       max-height: 274px;
       max-width: 272.6px; }
@@ -3251,8 +3251,8 @@ h3 {
         padding-bottom: 1rem; }
         .index-recom .index-recom-bottom ul li img {
           height: 100%;
-          max-width: 224.3px;
-          max-height: 8rem;
+          /*max-width: 224.3px;
+          max-height: 8rem;*/
           overflow: hidden; }
         .index-recom .index-recom-bottom ul li .index-recom-bottom-p {
           font-size: 0.875rem;
