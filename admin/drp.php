@@ -370,6 +370,18 @@ if ($_REQUEST['act'] == 'order_delete'){
     }
 }
 /*------------------------------------------------------ */
+//-- 佣金管理搜索功能
+/*------------------------------------------------------ */
+if($_REQUEST['act'] == 'search'){
+	if(IS_POST){
+		$content = $_REQUEST['keyword'];
+
+		$row = $db->getAll("select" . $ecs->table("drp_log") . ". log_id," . $ecs->table("drp_log") .". user_money," . $ecs->table("drp_log") .". change_time," .$ecs->table("drp_log") .". change_desc," . $ecs->table("drp_log") .". change_type from " . $ecs->table("drp_shop") . " inner join " . $ecs->table("drp_log") . "inner join" . $ecs->table("users") . " where ".$ecs->table("drp_log").". user_money like '%$content%' or " . $ecs->table("drp_shop") . ". shop_name like '%$content%' or " . $ecs->table("drp_log") . ". log_id like '%$content%' or" . $ecs->table("users") . ". user_name like '%$content%'");
+		//echo $row;
+		dump($row);
+	}
+}
+/*------------------------------------------------------ */
 //-- 订单列表
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'order_list')
