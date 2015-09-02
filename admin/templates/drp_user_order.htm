@@ -1,0 +1,40 @@
+{if $full_page}
+<!-- $Id: users_list.htm 15617 2009-02-18 05:18:00Z sunxiaodong $ -->
+{include file="pageheader.htm"}
+{insert_scripts files="../js/utils.js,listtable.js"}
+<form method="POST" action="" name="listForm">
+
+<!-- start users list -->
+<div class="list-div" id="listDiv">
+{/if}
+<!--用户列表部分-->
+<table cellpadding="3" cellspacing="1">
+  <tr>
+    <th>{$lang.order_id}</th>
+    <th>{$lang.order_stats.name}</th>
+    <th>{$lang.sch_stats.name}</th>
+    <th>{$lang.user_name}</th>
+    <th>{$lang.parent_name}</th>
+    <th>时间</th>
+  <tr>
+  {foreach from=$list item=li}
+  <tr>
+    <td>{$li.order_sn}</td>
+    <td>{$lang.order_stats[$li.order_status]}</td>
+    <td>{$lang.sch_stats[$li.is_separate]}</td>
+    <td>{$li.user_name}</td>
+    <td>{$li.parent_name}</td>
+    <td>{$li.add_time|local_date="Y-m-d"}</td>
+  </tr>
+  {foreachelse}
+  <tr><td class="no-records" colspan="10">{$lang.no_records}</td></tr>
+  {/foreach}
+</table>
+
+{if $full_page}
+</div>
+<!-- end users list -->
+</form>
+{/literal}
+{include file="pagefooter.htm"}
+{/if}

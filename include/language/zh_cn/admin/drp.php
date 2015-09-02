@@ -76,10 +76,13 @@ $_LANG['user']['shop_mobile'] = '手机号';
 $_LANG['user']['open'] = '店铺状态';
 $_LANG['user']['open_true'] = '开启';
 $_LANG['user']['open_false'] = '关闭';
+$_LANG['user']['drp_cat'] = '分销分类';
 $_LANG['handle'] = '操作';
 $_LANG['edit'] = '编辑';
 $_LANG['change'] = '您确认要修改店铺状态吗？';
 $_LANG['drp_user_edit'] = '店铺信息编辑？';
+$_LANG['empty_id'] = '参数 ID 错误！';
+
 
 // 佣金提现管理
 $_LANG['drp_log']  = '佣金管理';

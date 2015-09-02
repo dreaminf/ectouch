@@ -159,13 +159,49 @@ if ($_REQUEST['act'] == 'user_change')
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'user_edit')
 {
+    // 修改店铺信息
+    if($_POST){
+        $id = $_POST['id'] ? $_POST['id'] : 0;
+        if($id == 0){
+            show_message(L('sale_cate_not_empty'));
+        }
+        $data = $_POST['data'];
+        $cat_id = '';
+        if($data['cat_id']){
+            foreach($data['cat_id'] as $key=>$val){
+                $cat_id.=$val.',';
+            }
+        }else{
+            show_message(L('sale_cate_not_empty'));
+        }
+        $data['cat_id'] = $cat_id;
+        $db->autoExecute($ecs->table('drp_shop'), $data, 'UPDATE', "id = '$id'");
+        ecs_header("Location: drp.php?act=users\n");
+        exit;
+    }
     $id = $_GET['id'] ? $_GET['id'] : 0;
     if($id == 0){
         ecs_header("Location: drp.php?act=users\n");
         exit;
     }
+    // 获取店铺信息
     $info = $db->getRow("SELECT d.id,d.shop_name,d.real_name,d.shop_mobile,d.user_id,d.cat_id,d.open,u.user_name FROM " . $ecs->table("drp_shop") . " as d join " . $ecs->table("users") . " as u on d.user_id=u.user_id where d.id = $id");
     $smarty->assign('info', $info);
+
+    $catArr = explode(',',$info['cat_id']);
+    if($catArr){
+        unset($catArr[(count($catArr)-1)]);
+    }
+    // 获取所有一级分类
+    $category = $db->getAll("select cat_id,cat_name from " . $ecs->table("category") . " where parent_id =0");
+    if($category){
+        foreach($category as $key=>$val){
+            if(in_array($val['cat_id'],$catArr)){
+                $category[$key]['is_select'] = 1;
+            }
+        }
+    }
+    $smarty->assign('category', $category);
     assign_query_info();
     if (empty($_REQUEST['is_ajax']))
     {
@@ -175,6 +211,33 @@ if ($_REQUEST['act'] == 'user_edit')
     $smarty->assign('ur_here', $_LANG['drp_user_edit']);
     $smarty->display('drp_users_edit.htm');
 }
+
+/*------------------------------------------------------ */
+//-- 查看店铺订单
+/*------------------------------------------------------ */
+if ($_REQUEST['act'] == 'user_order')
+{
+    // 获取用户id
+    $id = $_GET['id'] ? $_GET['id'] : 0;
+    if($id == 0){
+        sys_msg($_LANG['empty_id']);
+    }
+    $list = $db->getAll("SELECT * FROM " . $ecs->table("order_info") . " WHERE parent_id = $id  and is_separate = 0");
+    foreach($list as $key=>$val){
+        $list[$key]['parent_name'] = $db->getOne("SELECT user_name FROM " . $ecs->table("users") . " WHERE user_id = $val[parent_id]");
+        $list[$key]['user_name'] = $db->getOne("SELECT user_name FROM " . $ecs->table("users") . " WHERE user_id = $val[user_id]");
+    }
+    $smarty->assign('list', $list);
+    assign_query_info();
+    if (empty($_REQUEST['is_ajax']))
+    {
+        $smarty->assign('full_page', 1);
+    }
+    $smarty->assign('keyword', 'novice');
+    $smarty->assign('ur_here', $_LANG['drp_user_edit']);
+    $smarty->display('drp_user_order.htm');
+}
+
 /*------------------------------------------------------ */
 //-- 佣金管理
 /*------------------------------------------------------ */
