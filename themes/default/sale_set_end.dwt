@@ -15,9 +15,6 @@
 		<i class="iconfont icon-huangse icon-hao"></i>
 		<br>
 		<div class="yjtx2_content1">
-			<div class="yjtx2_content2">
-				<i class="iconfont icon-luse icon-duihao"></i>
-			</div>
 			<div class="yjtx2_content3">
 				<span class="yjtx2_list4">微店地址：</span><br>
 				<span class="yjtx2_list5">{$sale_url}</span>
@@ -27,9 +24,6 @@
 </div>
 <div class="set2_listz">
 	<span class="set2_list1zz">新手必读</span>
-</div>
-<div class="set2_listz">
-	<span class="set2_list1z1">开微店收入来源一</span>
 </div>
 <div class="set2_listz">
 	<span class="set2_list1z">{$novice}</span>
