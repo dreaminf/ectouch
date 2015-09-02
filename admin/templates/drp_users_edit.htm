@@ -12,7 +12,7 @@
 <table cellpadding="4" cellspacing="1">
     <tr>
         <td style="width:40%">{$lang.user.user_name}</td>
-        <td style="width:60%"><input type="text" value="{$info.user_name}"/></td>
+        <td style="width:60%"><input type="text" value="{$info.user_name}" readonly style="border:none; "/></td>
     </tr>
     <tr>
         <td style="width:40%">{$lang.user.real_name}</td>
@@ -28,14 +28,29 @@
     </tr>
     <tr>
         <td style="width:40%">{$lang.user.open}</td>
-        <td style="width:60%"><input type="radio" name="open" value="1" >开启<input type="radio" name="open" value="0" >关闭</td>
+        <td style="width:60%">
+            <label for="open1">
+                <input id="open1" type="radio" name="data[open]" value="1" {if $info.open eq 1}checked{/if}>开启
+            </label>
+            <label for="open2">
+                <input id="open2" type="radio" name="data[open]" value="0" {if $info.open eq 0}checked{/if} >关闭
+            </label>
+        </td>
     </tr>
     <tr>
-        <td style="width:40%">{$lang.user.cat_id}</td>
-        <td style="width:60%">{$li.cat_id}</td>
+        <td style="width:40%">{$lang.user.drp_cat}</td>
+        <td style="width:60%">
+            {foreach from=$category item=cate}
+            <p>
+                <label for="p-{$cate.cat_id}">
+                        <input id="p-{$cate.cat_id}" name="data[cat_id][]" type="checkbox" value="{$cate.cat_id}" {if $cate.is_select eq 1}checked{/if}>{$cate.cat_name}
+                </label>
+            </p>
+            {/foreach}
+        </td>
     </tr>
     <tr>
-        <td style="width:40%;"></td>
+        <td style="width:40%;"><input type="hidden" name="id" value="{$info.id}" /></td>
         <td><input type="submit" value="{$lang.submit}" class="button" /></td>
     </tr>
 

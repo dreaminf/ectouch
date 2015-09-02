@@ -159,13 +159,49 @@ if ($_REQUEST['act'] == 'user_change')
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'user_edit')
 {
+    // 修改店铺信息
+    if($_POST){
+        $id = $_POST['id'] ? $_POST['id'] : 0;
+        if($id == 0){
+            show_message(L('sale_cate_not_empty'));
+        }
+        $data = $_POST['data'];
+        $cat_id = '';
+        if($data['cat_id']){
+            foreach($data['cat_id'] as $key=>$val){
+                $cat_id.=$val.',';
+            }
+        }else{
+            show_message(L('sale_cate_not_empty'));
+        }
+        $data['cat_id'] = $cat_id;
+        $db->autoExecute($ecs->table('drp_shop'), $data, 'UPDATE', "id = '$id'");
+        ecs_header("Location: drp.php?act=users\n");
+        exit;
+    }
     $id = $_GET['id'] ? $_GET['id'] : 0;
     if($id == 0){
         ecs_header("Location: drp.php?act=users\n");
         exit;
     }
+    // 获取店铺信息
     $info = $db->getRow("SELECT d.id,d.shop_name,d.real_name,d.shop_mobile,d.user_id,d.cat_id,d.open,u.user_name FROM " . $ecs->table("drp_shop") . " as d join " . $ecs->table("users") . " as u on d.user_id=u.user_id where d.id = $id");
     $smarty->assign('info', $info);
+
+    $catArr = explode(',',$info['cat_id']);
+    if($catArr){
+        unset($catArr[(count($catArr)-1)]);
+    }
+    // 获取所有一级分类
+    $category = $db->getAll("select cat_id,cat_name from " . $ecs->table("category") . " where parent_id =0");
+    if($category){
+        foreach($category as $key=>$val){
+            if(in_array($val['cat_id'],$catArr)){
+                $category[$key]['is_select'] = 1;
+            }
+        }
+    }
+    $smarty->assign('category', $category);
     assign_query_info();
     if (empty($_REQUEST['is_ajax']))
     {
@@ -175,6 +211,33 @@ if ($_REQUEST['act'] == 'user_edit')
     $smarty->assign('ur_here', $_LANG['drp_user_edit']);
     $smarty->display('drp_users_edit.htm');
 }
+
+/*------------------------------------------------------ */
+//-- 查看店铺订单
+/*------------------------------------------------------ */
+if ($_REQUEST['act'] == 'user_order')
+{
+    // 获取用户id
+    $id = $_GET['id'] ? $_GET['id'] : 0;
+    if($id == 0){
+        sys_msg($_LANG['empty_id']);
+    }
+    $list = $db->getAll("SELECT * FROM " . $ecs->table("order_info") . " WHERE parent_id = $id  and is_separate = 0");
+    foreach($list as $key=>$val){
+        $list[$key]['parent_name'] = $db->getOne("SELECT user_name FROM " . $ecs->table("users") . " WHERE user_id = $val[parent_id]");
+        $list[$key]['user_name'] = $db->getOne("SELECT user_name FROM " . $ecs->table("users") . " WHERE user_id = $val[user_id]");
+    }
+    $smarty->assign('list', $list);
+    assign_query_info();
+    if (empty($_REQUEST['is_ajax']))
+    {
+        $smarty->assign('full_page', 1);
+    }
+    $smarty->assign('keyword', 'novice');
+    $smarty->assign('ur_here', $_LANG['drp_user_edit']);
+    $smarty->display('drp_user_order.htm');
+}
+
 /*------------------------------------------------------ */
 //-- 佣金管理
 /*------------------------------------------------------ */
@@ -192,14 +255,14 @@ if($_REQUEST['act'] == 'drp_log'){
 		$time = date("Y-m-d H:i:s",$tm);
 		$money = $v['user_money'];
 		$gold = substr($money,1);
+		$user = $db->getRow("SELECT user_name,user_id FROM".$ecs->table("users")."WHERE user_id =".$user_id);
+		$shop_name = $db->getRow("SELECT shop_name FROM".$ecs->table('drp_shop')."WHERE user_id =".$user['user_id']);
+		$smarty->assign('shop_name',$shop_name['shop_name']);
+		$smarty->assign('user_name',$user['user_name']);
+		$smarty->assign('time',$time);
+		$smarty->assign('gold',$gold);
+		$smarty->assign('list',$list);
 	}
-	$user = $db->getRow("SELECT user_name,user_id FROM".$ecs->table("users")."WHERE user_id =".$user_id);
-	$shop_name = $db->getRow("SELECT shop_name FROM".$ecs->table('drp_shop')."WHERE user_id =".$user['user_id']);
-	$smarty->assign('shop_name',$shop_name['shop_name']);
-	$smarty->assign('user_name',$user['user_name']);
-	$smarty->assign('time',$time);
-	$smarty->assign('gold',$gold);
-	$smarty->assign('list',$list);
 	$smarty->display('drp_log.htm');	
 }
 /*------------------------------------------------------ */
@@ -208,12 +271,14 @@ if($_REQUEST['act'] == 'drp_log'){
 if($_REQUEST['act'] == 'drp_refer'){
 	if(IS_GET){
 		$id =$_GET['id'];
-		$money = $db->getRow("SELECT user_money,user_id FROM".$ecs->table("drp_log")."WHERE log_id =".$id);
-		if(!empty($money['user_id'])){
+		$money = $db->getRow("SELECT user_money,user_id,change_type FROM".$ecs->table("drp_log")."WHERE log_id =".$id);
+		if(intval($money['change_type']) === 0){
 			$shop = $db->getRow("SELECT money,user_id FROM".$ecs->table("drp_shop")."WHERE user_id =".$money['user_id']);
 				if($shop['money'] >= abs($money['user_money'])){
 					$cash = $shop['money'] + ($money['user_money']);
 					$dat['money'] = $cash;
+					$age['change_type'] = 1;
+					$db->autoExecute($ecs->table('drp_log'), $age, 'UPDATE', "user_id =".$money['user_id']);
 					$up = $db->autoExecute($ecs->table('drp_shop'), $dat, 'UPDATE', "user_id =".$shop['user_id']);
 						  if($up == true){
 							$user = $db->getRow("SELECT user_money,user_id FROM".$ecs->table("users")."WHERE user_id =".$money['user_id']);
@@ -229,7 +294,27 @@ if($_REQUEST['act'] == 'drp_refer'){
 				}else{
 					sys_msg($_LANG['Lack_of_funds'],'',$links[0]['drp_log']);
 				}
+		}else{
+			sys_msg($_LANG['The_extracted'],'',$links[0]['drp_log']);
 		}	
+	}
+}
+/*------------------------------------------------------ */
+//-- 佣金提现删除
+/*------------------------------------------------------ */
+if ($_REQUEST['act'] == 'order_list'){
+	if(IS_GET){
+		$id=$_GET['id'];
+		$money = $db->getRow("SELECT change_type,user_id FROM".$ecs->table("drp_log")."WHERE log_id =".$id);
+		if(intval($money['change_type']) === 1){
+			$sql = "DELETE FROM " . $ecs->table('drp_log') .
+                    " WHERE user_id = ".$money['user_id'];
+            $delete = $db->query($sql);
+            if($delete == true){
+            	sys_msg($_LANG['delete_Success'],'',$links[0]['drp_log']);
+            	 
+            }		
+		}
 	}
 }
 /*------------------------------------------------------ */
