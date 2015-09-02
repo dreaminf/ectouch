@@ -24,7 +24,7 @@
   <i class="index-header-menu iconfont fl" onclick="window.location = '{:url('category/top_all')}'">&#xe627;</i>
   <div class="index-search-box fl">
   	<a href="javascript:void(0)"><i class="index-search-icon iconfont fl">&#xe603;</i></a>
-    <input type="text" class="index-search-input"   placeholder="商品搜索">
+    <input type="text" class="index-search-input" placeholder="商品搜索">
     <a href="javascript:void(0)"><i class="index-search-sound iconfont fr">&#xe623;</i></a>
   </div>
   <a href="javascript:void(0)" id="scanQRCode"><i class="index-header-right iconfont fr">&#xe629;</i></a>
@@ -54,51 +54,39 @@
   <div class="index-recom">
     <h3><b>限时促销</b></h3>
       <div class="index-recom-left fl">
-        <a href=""><img src="http://img30.360buyimg.com/mobilecms/jfs/t1285/301/224079095/27270/fbbc1f40/555c6c90Ncb4fe515.jpg"></a>
-        {insert name='ads' id=3 num=1}
+        {insert name='ads' id=257 num=1}
       </div>
       <div class="index-recom-right fr">
-        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t2500/354/5004119/28206/c13fa182/55e5a38fN0b84386b.jpg"></a>
-        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t1738/16/1289696574/25303/b97d27f7/55e42bfdNf92543d6.jpg"></a>
-        {insert name='ads' id=4 num=2}
+        {insert name='ads' id=258 num=2}
       </div>
   </div>
 
   <div class="index-recom">
     <h3><b>热门活动</b></h3>
       <div class="index-recom-left fl">
-        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t1786/20/1237061297/11292/32fb2a76/55e41b2aN73bcf4d3.jpg"></a>
-        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t1660/172/1178175164/12107/b84acf01/55e41becN110f0639.jpg"></a>
-        {insert name='ads' id=3 num=1}
+        {insert name='ads' id=259 num=1}
       </div>
       <div class="index-recom-right fr">
-        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t1753/282/1346478890/16937/b0c72fa9/55e41ca6N55f0952e.jpg"></a>
-        {insert name='ads' id=4 num=2}
+        {insert name='ads' id=260 num=2}
       </div>
   </div>
 
   <div class="index-recom">
     <h3><b>精品推荐</b></h3>
       <div class="index-recom-left fl">
-        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t1339/42/1033573654/18650/85fb7e47/55e41d25Ne7fd71e7.jpg"></a>
-        {insert name='ads' id=3 num=1}
+        {insert name='ads' id=261 num=1}
       </div>
       <div class="index-recom-right fr">
-        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t1825/226/1292630398/9320/a7003c2f/55e42185N8d6eb615.jpg"></a>
-        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t1753/288/1310409506/7943/7beba973/55e4221bN9857b1f4.jpg"></a>
-        {insert name='ads' id=4 num=2}
+        {insert name='ads' id=262 num=2}
       </div>
   </div>
   <div class="index-recom">
     <h3><b>品牌街</b></h3>
       <div class="index-recom-left fl">
-        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t2293/126/6325541/15463/885e77f2/55e5a839N76e8a8ab.jpg"></a>
-        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t2101/138/4648025/12171/7f46ddb9/55e5ac15N3f33b3cd.jpg"></a>
-        {insert name='ads' id=3 num=1}
+        {insert name='ads' id=263 num=1}
       </div>
       <div class="index-recom-right fr">
-        <a href=""><img src="http://m.360buyimg.com/mobilecms/jfs/t2317/6/7126462/28018/ea8767a/55e5a70bNb1ffd2fe.jpg"></a>
-        {insert name='ads' id=4 num=2}
+        {insert name='ads' id=264 num=2}
       </div>
   </div>
 
