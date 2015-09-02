@@ -52,7 +52,6 @@ function submit_saleSet() {
         alert(msg);
         return false;
     }else{
-        $("#formSub").submit();
         return true;
     }
 }
