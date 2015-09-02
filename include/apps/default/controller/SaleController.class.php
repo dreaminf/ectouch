@@ -482,12 +482,12 @@ class SaleController extends CommonController {
     public function sale_set_end(){
         // 设置为分销商
         $data['open'] = 1;
+        $data['create_time'] = gmtime();
         $where['user_id'] = $_SESSION['user_id'];
         $this->model->table('drp_shop')->data($data)->where($where)->update();
         unset($data);
         unset($where);
         $data['apply_sale'] = 1;
-        $data['apply_time'] = gmtime();
         $data['user_rank'] = 255;
         $where['user_id'] = $_SESSION['user_id'];
         $this->model->table('users')->data($data)->where($where)->update();

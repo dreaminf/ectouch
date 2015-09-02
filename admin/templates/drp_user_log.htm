@@ -1,8 +1,8 @@
+
 <!-- $Id: account_list.htm 14928 2008-10-06 09:25:48Z testyang $ -->
 {if $full_page}
 {include file="pageheader.htm"}
 {insert_scripts files="../js/utils.js,listtable.js"}
-
 <!--
 <div class="form-div">
 <form method="post" action="account_log.php?act=list&user_id={$smarty.get.user_id}" name="searchForm">
@@ -21,33 +21,30 @@
   </form>
 </div>
 -->
+<div class="tab-div">
+    <!-- tab bar -->
+    <div id="tabbar-div">
+        <p>
+            <a href="drp.php?act=user_order&id={$user_id}"><span class="tab-back" id="basic-tab">店铺订单</span></a>
+            <a href="drp.php?act=user_log&id={$user_id}"><span class="tab-front"   id="shop_info-tab">店铺佣金</span></a>
+        </p>
+    </div>
 <form method="post" action="" name="listForm">
     <div class="list-div" id="listDiv">
         {/if}
-        <!--用户列表部分-->
         <table cellpadding="3" cellspacing="1">
             <tr>
-                <th>{$lang.order_id}</th>
-                <th>{$lang.order_stats.name}</th>
-                <th>{$lang.sch_stats.name}</th>
-                <th>{$lang.user_name}</th>
-                <th>{$lang.parent_name}</th>
-
-                <th>{$lang.handler}</th>
+                <th>{$lang.surplus_id}</th>
+                <th>{$lang.surplus_amount}</th>
+                <th>{$lang.add_date}</th>
+                <th>{$lang.surplus_desc}</th>
             <tr>
                 {foreach from=$list item=li}
             <tr>
-                <td>{$li.order_sn}</td>
-                <td>{$lang.order_stats[$li.order_status]}</td>
-                <td>{$lang.sch_stats[$li.is_separate]}</td>
-                <td>{$li.user_name}</td>
-                <td>{$li.parent_name}</td>
-                <td align="center">
-
-                    <a href="javascript:confirm_redirect(separate_confirm, 'drp.php?act=separate&oid={$li.order_id}')">
-                        {$lang.affiliate_separate}
-                    </a>
-                </td>
+                <td>{$li.log_id}</td>
+                <td>{$li.user_money}</td>
+                <td>{$li.change_time}</td>
+                <td>{$li.change_desc}</td>
             </tr>
             {foreachelse}
             <tr><td class="no-records" colspan="10">{$lang.no_records}</td></tr>
@@ -65,6 +62,7 @@
     </div>
 </form>
 
+</div>
 <script type="text/javascript" language="javascript">
     <!--
     listTable.recordCount = {$record_count};
