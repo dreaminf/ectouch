@@ -76,17 +76,13 @@ $_LANG['user']['shop_mobile'] = '手机号';
 $_LANG['user']['open'] = '店铺状态';
 $_LANG['user']['open_true'] = '开启';
 $_LANG['user']['open_false'] = '关闭';
-$_LANG['user']['drp_cat'] = '分销分类';
 $_LANG['handle'] = '操作';
 $_LANG['edit'] = '编辑';
 $_LANG['change'] = '您确认要修改店铺状态吗？';
 $_LANG['drp_user_edit'] = '店铺信息编辑？';
-$_LANG['empty_id'] = '参数 ID 错误！';
-
 
 // 佣金提现管理
 $_LANG['drp_log']  = '佣金管理';
-
 $_LANG['user_surplus'] = '预付款';
 $_LANG['surplus_id'] = '编号';
 $_LANG['user_id'] = '会员名称';
@@ -127,9 +123,14 @@ $_LANG['continue_add'] = '继续添加申请';
 $_LANG['commission_Status'] = '佣金说明';
 $_LANG['shop_name'] = '店铺名称';
 $_LANG['withdraw'] = '提现';
+$_LANG['withdraw_mode'] = '提现方式';
 $_LANG['withdraw_gold'] = '提现金额';
 $_LANG['withdraw_ok'] = '提现成功';
 $_LANG['Lack_of_funds'] = '资金不足，无法提现';
+$_LANG['commission_fettle'] = '佣金状态';
+$_LANG['The_extracted'] = '对不起，佣金已经提取过了';
+$_LANG['delete_Success'] = '佣金删除成功';
+
 
 
 

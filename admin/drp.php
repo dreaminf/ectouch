@@ -271,12 +271,14 @@ if($_REQUEST['act'] == 'drp_log'){
 if($_REQUEST['act'] == 'drp_refer'){
 	if(IS_GET){
 		$id =$_GET['id'];
-		$money = $db->getRow("SELECT user_money,user_id FROM".$ecs->table("drp_log")."WHERE log_id =".$id);
-		if(!empty($money['user_id'])){
+		$money = $db->getRow("SELECT user_money,user_id,change_type FROM".$ecs->table("drp_log")."WHERE log_id =".$id);
+		if(intval($money['change_type']) === 0){
 			$shop = $db->getRow("SELECT money,user_id FROM".$ecs->table("drp_shop")."WHERE user_id =".$money['user_id']);
 				if($shop['money'] >= abs($money['user_money'])){
 					$cash = $shop['money'] + ($money['user_money']);
 					$dat['money'] = $cash;
+					$age['change_type'] = 1;
+					$db->autoExecute($ecs->table('drp_log'), $age, 'UPDATE', "user_id =".$money['user_id']);
 					$up = $db->autoExecute($ecs->table('drp_shop'), $dat, 'UPDATE', "user_id =".$shop['user_id']);
 						  if($up == true){
 							$user = $db->getRow("SELECT user_money,user_id FROM".$ecs->table("users")."WHERE user_id =".$money['user_id']);
@@ -292,7 +294,27 @@ if($_REQUEST['act'] == 'drp_refer'){
 				}else{
 					sys_msg($_LANG['Lack_of_funds'],'',$links[0]['drp_log']);
 				}
+		}else{
+			sys_msg($_LANG['The_extracted'],'',$links[0]['drp_log']);
 		}	
+	}
+}
+/*------------------------------------------------------ */
+//-- 佣金提现删除
+/*------------------------------------------------------ */
+if ($_REQUEST['act'] == 'order_list'){
+	if(IS_GET){
+		$id=$_GET['id'];
+		$money = $db->getRow("SELECT change_type,user_id FROM".$ecs->table("drp_log")."WHERE log_id =".$id);
+		if(intval($money['change_type']) === 1){
+			$sql = "DELETE FROM " . $ecs->table('drp_log') .
+                    " WHERE user_id = ".$money['user_id'];
+            $delete = $db->query($sql);
+            if($delete == true){
+            	sys_msg($_LANG['delete_Success'],'',$links[0]['drp_log']);
+            	 
+            }		
+		}
 	}
 }
 /*------------------------------------------------------ */
