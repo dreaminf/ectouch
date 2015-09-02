@@ -71,14 +71,14 @@
       <div class="index-recom-left fl">
         <!--{foreach from=$best_goods item=goods name=goods}-->
         <!--{if $smarty.foreach.goods.iteration == 1}-->
-        <a href="{$goods.url}"><img class="idnex-recom-left-img" src="{$goods.goods_img}" /></a>
+        <a href="{$goods.url}"><img class="idnex-recom-left-img" src="{$goods.thumb}" /></a>
         <!--{/if}-->
         <!--{/foreach}-->
       </div>
       <div class="index-recom-right fr">
         <!--{foreach from=$best_goods item=goods name=goods}-->
         <!--{if $smarty.foreach.goods.iteration == 2}-->
-        <a href="{$goods.url}"><img class="idnex-recom-left-img" src="{$goods.goods_img}" /></a>
+        <a href="{$goods.url}"><img class="idnex-recom-left-img" src="{$goods.thumb}" /></a>
         <!--{/if}-->
         <!--{/foreach}-->
       </div>
