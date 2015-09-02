@@ -210,11 +210,11 @@ class CommonController extends BaseController
 
         //商品信息
         if(CONTROLLER_NAME == 'goods' && isset($_GET['id'])){
-            $goods_id = I('id');
+            $goods_id = I('id', 0);
             $goods = model('Goods')->get_goods_info($goods_id);
             $wx_title = $goods['goods_name'];
             $wx_desc  = $goods['goods_name'];
-            $wx_url   = __URL__ .'/index.php?c=goods&id='$goods_id.'&drp_id='.$drp_id;
+            $wx_url   = __URL__ .'/index.php?c=goods&id='.$goods_id.'&drp_id='.$drp_id;
             $wx_pic   = $goods['goods_thumb'];
         }
         
