@@ -64,10 +64,10 @@
   <div class="index-recom">
     <h3><b>热门活动</b></h3>
       <div class="index-recom-left fl">
-        {insert name='ads' id=259 num=1}
+        {insert name='ads' id=259 num=2}
       </div>
       <div class="index-recom-right fr">
-        {insert name='ads' id=260 num=2}
+        {insert name='ads' id=260 num=1}
       </div>
   </div>
 
@@ -83,10 +83,10 @@
   <div class="index-recom">
     <h3><b>品牌街</b></h3>
       <div class="index-recom-left fl">
-        {insert name='ads' id=263 num=1}
+        {insert name='ads' id=263 num=2}
       </div>
       <div class="index-recom-right fr">
-        {insert name='ads' id=264 num=2}
+        {insert name='ads' id=264 num=1}
       </div>
   </div>
 
