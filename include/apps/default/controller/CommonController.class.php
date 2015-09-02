@@ -203,8 +203,14 @@ class CommonController extends BaseController
         $wx_url   = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"];
         $wx_pic   = __URL__.'/images/logo.png';
 
+        if(ACTION_NAME == 'goods' && isset($_GET['id'])){
+            $goods_id = I('id');
+            $goods = model('Goods')->get_goods_info($goods_id);
+            dump($goods);
+        }
+
         $id = $_SESSION['drp_id'] ? $_SESSION['drp_id'] : $_SESSION['user_id'];
-        $url = strstr($wx_url,'drp_id') ? $wx_url : strstr($wx_url,'?') ? $wx_url.'&drp_id='.$id : $wx_url.'?drp_id='.$id;
+        $wx_url = strstr($wx_url,'drp_id') ? $wx_url : strstr($wx_url,'?') ? $wx_url.'&drp_id='.$id : $wx_url.'?drp_id='.$id;
         
         $jssdk = new Jssdk($appid, $secret);
         $signPackage = $jssdk->GetSignPackage();
