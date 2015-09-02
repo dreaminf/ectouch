@@ -370,23 +370,23 @@ if ($_REQUEST['act'] == 'order_delete'){
     }
 }
 /*------------------------------------------------------ */
-//-- 订单列表 未分成
+//-- 订单列表
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'order_list')
 {
-
-    $list = $db->getAll("SELECT * FROM " . $ecs->table("order_info") . " WHERE parent_id > 0  and is_separate = 0");
-    foreach($list as $key=>$val){
-        $list[$key]['parent_name'] = $db->getOne("SELECT user_name FROM " . $ecs->table("users") . " WHERE user_id = $val[parent_id]");
-        $list[$key]['user_name'] = $db->getOne("SELECT user_name FROM " . $ecs->table("users") . " WHERE user_id = $val[user_id]");
-    }
-    $smarty->assign('list', $list);
     assign_query_info();
     if (empty($_REQUEST['is_ajax']))
     {
         $smarty->assign('full_page', 1);
     }
-    $smarty->assign('keyword', 'novice');
+    $is_separate = $_GET['is_separate'] ? $_GET['is_separate'] : 0;
+    $smarty->assign('is_separate', $is_separate);
+    $list = get_order_list($is_separate);
+    $smarty->assign('list',         $list['list']);
+    $smarty->assign('filter',       $list['filter']);
+    $smarty->assign('record_count', $list['record_count']);
+    $smarty->assign('page_count',   $list['page_count']);
+
     $smarty->assign('ur_here', $_LANG['drp_profit']);
     $smarty->display('drp_order_list.htm');
 }
@@ -398,7 +398,7 @@ elseif ($_REQUEST['act'] == 'separate')
     include_once(BASE_PATH . 'helpers/order_helper.php');
     $oid = (int)$_REQUEST['oid'];
 
-    $row = $db->getRow("SELECT o.order_sn, o.is_separate, (o.goods_amount - o.discount) AS goods_amount, o.user_id FROM " . $GLOBALS['ecs']->table('order_info') . " o".
+    $row = $db->getRow("SELECT o.order_id,o.order_sn, o.is_separate, (o.goods_amount - o.discount) AS goods_amount, o.user_id FROM " . $GLOBALS['ecs']->table('order_info') . " o".
         " LEFT JOIN " . $GLOBALS['ecs']->table('users') . " u ON o.user_id = u.user_id".
         " WHERE order_id = '$oid'");
 
@@ -407,87 +407,56 @@ elseif ($_REQUEST['act'] == 'separate')
     if (empty($row['is_separate']))
     {
         // 获取订单中商品
+        $parent_id = $db->getOne("SELECT parent_id FROM " . $GLOBALS['ecs']->table('order_info') .  " where order_id = $oid");
+        $goods_list = $db->getAll("SELECT goods_id,goods_price,goods_number FROM " . $GLOBALS['ecs']->table('order_goods') .  " where order_id = $oid");
 
+        $data1 = $data2 = $data3 = array(
+            'user_id'=>0,
+            'profit'=>0,
+        );
 
-        // 查询商品的所属顶级分类
+        foreach($goods_list as $key=>$val){
+            $profit = get_drp_profit($val['goods_id']);
+            if(!$profit){
+                $profit['profit1'] = 0;
+                $profit['profit2'] = 0;
+                $profit['profit3'] = 0;
+            }
 
-
-        // 获取上线 ，
-
-
-
-
-        //计算利润
-
-
-        //将利润保存数据库
-
-
-        //更改订单分成状态
-
-
-
-        if(empty($separate_by))
-        {
-            //推荐注册分成
-            $num = count($affiliate['item']);
-            for ($i=0; $i < $num; $i++)
-            {
-                $affiliate['item'][$i]['level_point'] = (float)$affiliate['item'][$i]['level_point'];
-                $affiliate['item'][$i]['level_money'] = (float)$affiliate['item'][$i]['level_money'];
-                if ($affiliate['item'][$i]['level_point'])
-                {
-                    $affiliate['item'][$i]['level_point'] /= 100;
-                }
-                if ($affiliate['item'][$i]['level_money'])
-                {
-                    $affiliate['item'][$i]['level_money'] /= 100;
-                }
-                $setmoney = round($money * $affiliate['item'][$i]['level_money'], 2);
-                $setpoint = round($point * $affiliate['item'][$i]['level_point'], 0);
-                $row = $db->getRow("SELECT o.parent_id as user_id,u.user_name FROM " . $GLOBALS['ecs']->table('users') . " o" .
-                    " LEFT JOIN" . $GLOBALS['ecs']->table('users') . " u ON o.parent_id = u.user_id".
-                    " WHERE o.user_id = '$row[user_id]'"
-                );
-                $up_uid = $row['user_id'];
-                if (empty($up_uid) || empty($row['user_name']))
-                {
-                    break;
-                }
-                else
-                {
-                    $info = sprintf($_LANG['separate_info'], $order_sn, $setmoney, $setpoint);
-                    log_account_change($up_uid, $setmoney, 0, $setpoint, 0, $info);
-                    write_affiliate_log($oid, $up_uid, $row['user_name'], $setmoney, $setpoint, $separate_by);
+            // 一级分销商利润
+            $data1['user_id'] = $parent_id;
+            $data1['profit']+= $val['goods_price']*$profit['profit1']/100*$val['goods_number'];
+            // 二级分销商
+            $data2['user_id'] = $db->getOne("SELECT parent_id FROM " . $GLOBALS['ecs']->table('users') .  " where user_id = $data1[user_id]");
+            if($data2['user_id']){
+                $data2['profit']+= $val['goods_price']*$profit['profit2']/100*$val['goods_number'];
+                // 三级分销商
+                $data3['user_id'] = $db->getOne("SELECT parent_id FROM " . $GLOBALS['ecs']->table('users') .  " where user_id = $data2[user_id]");
+                if($data3['user_id']){
+                    $data3['profit']+= $val['goods_price']*$profit['profit3']/100*$val['goods_number'];
                 }
             }
         }
-        else
-        {
-            //推荐订单分成
-            $row = $db->getRow("SELECT o.parent_id, u.user_name FROM " . $GLOBALS['ecs']->table('order_info') . " o" .
-                " LEFT JOIN" . $GLOBALS['ecs']->table('users') . " u ON o.pare	nt_id = u.user_id".
-                " WHERE o.order_id = '$oid'"
-            );
-            $up_uid = $row['parent_id'];
-            if(!empty($up_uid) && $up_uid > 0)
-            {
-                $info = sprintf($_LANG['separate_info'], $order_sn, $money, $point);
-                log_account_change($up_uid, $money, 0, $point, 0, $info);
-                write_affiliate_log($oid, $up_uid, $row['user_name'], $money, $point, $separate_by);
-            }
-            else
-            {
-                $links[] = array('text' => $_LANG['affiliate_ck'], 'href' => 'affiliate_ck.php?act=list');
-                sys_msg($_LANG['edit_fail'], 1 ,$links);
-            }
+
+        if($data1['profit'] > 0){
+            $info = sprintf($_LANG['separate_info'], $row['order_sn'], $data1['profit'], $data1['profit']);;
+            drp_log_change($data1['user_id'], $data1['profit'], $data1['profit'], $info);
+        }
+        if($data2['profit'] > 0){
+            $info = sprintf($_LANG['separate_info'], $row['order_sn'], $data2['profit'], $data2['profit']);;
+            drp_log_change($data2['user_id'], $data2['profit'], $data2['profit'], $info);
+        }
+        if($data3['profit'] > 0){
+            $info = sprintf($_LANG['separate_info'], $row['order_sn'], $data3['profit'], $data3['profit']);;
+            drp_log_change($data3['user_id'], $data3['profit'], $data3['profit'], $info);
         }
         $sql = "UPDATE " . $GLOBALS['ecs']->table('order_info') .
             " SET is_separate = 1" .
-            " WHERE order_id = '$oid'";
+            " WHERE order_id = $oid LIMIT 1";
         $db->query($sql);
+
     }
-    $links[] = array('text' => $_LANG['affiliate_ck'], 'href' => 'affiliate_ck.php?act=list');
+    $links[] = array('text' => $_LANG['affiliate_ck'], 'href' => 'drp.php?act=order_list');
     sys_msg($_LANG['edit_ok'], 0 ,$links);
 }
 /*------------------------------------------------------ */
@@ -715,5 +684,92 @@ function get_user_log_list($user_id)
         $arr[] = $row;
     }
     return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
+}
+
+
+/**
+ * 取得订单
+ * @param   int     $user_id    用户id
+ * @param   string  $account_type   帐户类型：空表示所有帐户，user_money表示可用资金，
+ *                  frozen_money表示冻结资金，rank_points表示等级积分，pay_points表示消费积分
+ * @return  array
+ */
+function get_order_list($is_separate)
+{
+    /* 初始化分页参数 */
+    $filter = array(
+        'is_separate'=>$is_separate,
+    );
+    /* 查询记录总数，计算分页数 */
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info'). " WHERE parent_id > 0  and is_separate = $is_separate";
+    $filter['record_count'] = $GLOBALS['db']->getOne($sql);
+    $filter = page_and_size($filter);
+
+    /* 查询记录 */
+    $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('order_info'). " WHERE parent_id > 0  and is_separate = $is_separate" .
+        " ORDER BY order_id DESC";
+    $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
+
+    $arr = array();
+    while ($row = $GLOBALS['db']->fetchRow($res))
+    {
+        $row['add_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['add_time']);
+        $row['user_name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$row['user_id']);
+        $row['parent_name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$row['parent_id']);
+        $arr[] = $row;
+    }
+    return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
+}
+
+/**
+ * 获取佣金比例
+ * @param $goods_id
+ */
+function get_drp_profit($goods_id=0){
+    if($goods_id == 0 ){
+        return false;
+    }
+    $id = $GLOBALS['db']->getOne("select cat_id from ".$GLOBALS['ecs']->table('goods') ." where goods_id = ".$goods_id);
+    $id = get_goods_cat($id);
+    $profit = $GLOBALS['db']->getRow("select * from ".$GLOBALS['ecs']->table('drp_profit') ." where cate_id = ".$id);
+    return $profit ? $profit : false;
+}
+
+function get_goods_cat($id){
+    $parent_id = $GLOBALS['db']->getOne("select parent_id from ".$GLOBALS['ecs']->table('category') ." where cat_id = ".$id);
+    if($parent_id==0){
+        return $id;
+    }else{
+        $id = get_goods_cat($parent_id);
+        return $id;
+    }
+}
+
+/**
+ * 记录帐户变动
+ * @param   int     $user_id        用户id
+ * @param   float   $user_money     可用余额变动
+ * @param   int     $pay_points     消费积分变动
+ * @param   string  $change_desc    变动说明
+ * @return  void
+ */
+function drp_log_change($user_id, $user_money = 0, $pay_points = 0, $change_desc = '')
+{
+    /* 插入帐户变动记录 */
+    $drp_log = array(
+        'user_id'       => $user_id,
+        'user_money'    => $user_money,
+        'pay_points'    => $pay_points,
+        'change_time'   => gmtime(),
+        'change_desc'   => $change_desc,
+        'change_type'   => 0
+    );
+    $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('drp_log'), $drp_log, 'INSERT');
+
+    /* 更新用户信息 */
+    $sql = "UPDATE " . $GLOBALS['ecs']->table('drp_shop') .
+        " SET money = money + ('$user_money')" .
+        " WHERE user_id = '$user_id' LIMIT 1";
+    $GLOBALS['db']->query($sql);
 }
 ?>

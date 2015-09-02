@@ -20,7 +20,14 @@
   <strong>{$lang.label_pay_points}</strong>{$user.pay_points}
   </form>
 </div>
--->
+--><div class="tab-div">
+    <!-- tab bar -->
+    <div id="tabbar-div">
+        <p>
+            <a href="drp.php?act=order_list&is_separate=0"><span class="{if $is_separate eq 0}tab-front{else}tab-back{/if}" id="basic-tab">未分成订单</span></a>
+            <a href="drp.php?act=order_list&is_separate=1"><span class="{if $is_separate eq 1}tab-front{else}tab-back{/if}" id="shop_info-tab">已分成订单</span></a>
+        </p>
+    </div>
 <form method="post" action="" name="listForm">
     <div class="list-div" id="listDiv">
         {/if}
@@ -28,26 +35,28 @@
         <table cellpadding="3" cellspacing="1">
             <tr>
                 <th>{$lang.order_id}</th>
+                <th>订单金额</th>
                 <th>{$lang.order_stats.name}</th>
                 <th>{$lang.sch_stats.name}</th>
                 <th>{$lang.user_name}</th>
                 <th>{$lang.parent_name}</th>
+                {if $is_separate eq 0}<th>{$lang.handler}</th>{/if}
 
-                <th>{$lang.handler}</th>
             <tr>
                 {foreach from=$list item=li}
             <tr>
                 <td>{$li.order_sn}</td>
+                <td>{$li.goods_amount}</td>
                 <td>{$lang.order_stats[$li.order_status]}</td>
                 <td>{$lang.sch_stats[$li.is_separate]}</td>
                 <td>{$li.user_name}</td>
                 <td>{$li.parent_name}</td>
+                {if $is_separate eq 0}
                 <td align="center">
-
-                    <a href="javascript:confirm_redirect(separate_confirm, 'drp.php?act=separate&oid={$li.order_id}')">
-                        {$lang.affiliate_separate}
-                    </a>
+                    <a href="javascript:confirm_redirect(separate_confirm, 'drp.php?act=separate&oid={$li.order_id}')">{$lang.affiliate_separate}</a>
                 </td>
+                {/if}
+
             </tr>
             {foreachelse}
             <tr><td class="no-records" colspan="10">{$lang.no_records}</td></tr>
@@ -64,6 +73,7 @@
         {if $full_page}
     </div>
 </form>
+    </div>
 
 <script type="text/javascript" language="javascript">
     <!--
