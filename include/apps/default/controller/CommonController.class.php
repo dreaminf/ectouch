@@ -197,25 +197,28 @@ class CommonController extends BaseController
         $appid    = $wxinfo['appid'];
         $secret   = $wxinfo['appsecret'];
 
+        //分销商信息
+        $drp_id   = isset($_SESSION['drp_id']) ? $_SESSION['drp_id'] : $_SESSION['user_id'];
+
+        //微信店信息
         $drp_shop = $_SESSION['drp_shop'];
         $wx_title = C('shop_name').$drp_shop['shop_name'];
         $wx_desc  = C('shop_desc');
         $wx_url   = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"];
+        $wx_url   = strstr($wx_url,'?') ? $wx_url.'&drp_id='.$drp_id : $wx_url.'?drp_id='.$drp_id;
         $wx_pic   = __URL__.'/images/logo.png';
 
-        if(ACTION_NAME == 'goods' && isset($_GET['id'])){
-        }
-        echo ACTION_NAME;
+        //商品信息
+        if(CONTROLLER_NAME == 'goods' && isset($_GET['id'])){
             $goods_id = I('id');
-            // echo $goods_id;
-            echo $_GET['id'];
-            dump($_GET);
             $goods = model('Goods')->get_goods_info($goods_id);
-            dump($goods);
-
-        $id = $_SESSION['drp_id'] ? $_SESSION['drp_id'] : $_SESSION['user_id'];
-        $wx_url = strstr($wx_url,'drp_id') ? $wx_url : strstr($wx_url,'?') ? $wx_url.'&drp_id='.$id : $wx_url.'?drp_id='.$id;
+            $wx_title = $goods['goods_name'];
+            $wx_desc  = $goods['goods_name'];
+            $wx_url   = __URL__ .'/index.php?c=goods&id='$goods_id.'&drp_id='.$drp_id;
+            $wx_pic   = $goods['goods_thumb'];
+        }
         
+        //微信JS SDK
         $jssdk = new Jssdk($appid, $secret);
         $signPackage = $jssdk->GetSignPackage();
 
