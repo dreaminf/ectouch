@@ -130,6 +130,7 @@ $_LANG['Lack_of_funds'] = '资金不足，无法提现';
 $_LANG['commission_fettle'] = '佣金状态';
 $_LANG['The_extracted'] = '对不起，佣金已经提取过了';
 $_LANG['delete_Success'] = '佣金删除成功';
+$_LANG['delete_search'] = '佣金搜索';
 
 
 

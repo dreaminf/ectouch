@@ -247,22 +247,25 @@ if($_REQUEST['act'] == 'drp_log'){
 	{
 		$smarty->assign('full_page', 1);
 	}
+	//分页
+	$count = $db->getOne("SELECT COUNT(*) FROM".$ecs->table('drp_log'));
+	//页面
 	$smarty->assign('ur_here', $_LANG['drp_log']);
 	$list = $db->getAll("SELECT * FROM".$ecs->table('drp_log')."WHERE user_money < 0 ");
-	foreach ($list as $v){
-		$user_id = $v['user_id'];
-		$tm = $v['change_time'];
-		$time = date("Y-m-d H:i:s",$tm);
-		$money = $v['user_money'];
-		$gold = substr($money,1);
-		$user = $db->getRow("SELECT user_name,user_id FROM".$ecs->table("users")."WHERE user_id =".$user_id);
-		$shop_name = $db->getRow("SELECT shop_name FROM".$ecs->table('drp_shop')."WHERE user_id =".$user['user_id']);
-		$smarty->assign('shop_name',$shop_name['shop_name']);
-		$smarty->assign('user_name',$user['user_name']);
-		$smarty->assign('time',$time);
-		$smarty->assign('gold',$gold);
-		$smarty->assign('list',$list);
+	foreach ($list as $key=>$val){
+		$list[$key]['change_time'] = date("Y-m-d H:i:s",$val['change_time']);
+		$list[$key]['user_money'] = substr($val['user_money'],1);
+		$list[$key]['user_name'] = $db->getOne("SELECT user_name FROM".$ecs->table("users")."WHERE user_id =".$val['user_id']);
+		$list[$key]['shop_name'] = $db->getOne("SELECT shop_name FROM".$ecs->table('drp_shop')."WHERE user_id =".$val['user_id']);
+		if($val['change_type'] == 0){
+			$list[$key]['status'] = '未支付';
+		}
+	    if($val['change_type'] == 1){
+			$list[$key]['status'] = '已经支付';
+		}
 	}
+	$smarty->assign('count',$count);
+	$smarty->assign('list',$list);
 	$smarty->display('drp_log.htm');	
 }
 /*------------------------------------------------------ */
@@ -282,20 +285,25 @@ if($_REQUEST['act'] == 'drp_refer'){
 					$up = $db->autoExecute($ecs->table('drp_shop'), $dat, 'UPDATE', "user_id =".$shop['user_id']);
 						  if($up == true){
 							$user = $db->getRow("SELECT user_money,user_id FROM".$ecs->table("users")."WHERE user_id =".$money['user_id']);
-							$total_cash = $user['user_money'] + abs($money['user_money']);
-							  if(!$total_cash == 0){
-								$dat['user_money'] = $total_cash;
-								 $u = $db->autoExecute($ecs->table('users'), $dat, 'UPDATE', "user_id =".$money['user_id']);
-								  if($u == true){
-								  	sys_msg($_LANG['withdraw_ok'],'',$links[0]['drp_log']);
-								  }
-							 }  
+							if(!empty($user)){
+								$total_cash = $user['user_money'] + abs($money['user_money']);
+								if(!$total_cash == 0){
+									$dat['user_money'] = $total_cash;
+									$u = $db->autoExecute($ecs->table('users'), $dat, 'UPDATE', "user_id =".$money['user_id']);
+									if($u == true){
+										$links[0]['href'] = 'drp.php?act=drp_log';
+										sys_msg($_LANG['withdraw_ok'],'',$links);
+									}
+								}
+							}	
 						} 
 				}else{
-					sys_msg($_LANG['Lack_of_funds'],'',$links[0]['drp_log']);
+					$links[0]['href'] = 'drp.php?act=drp_log';
+					sys_msg($_LANG['Lack_of_funds'],'',$links);
 				}
 		}else{
-			sys_msg($_LANG['The_extracted'],'',$links[0]['drp_log']);
+			$links[0]['href'] = 'drp.php?act=drp_log';	
+			sys_msg($_LANG['The_extracted'],'',$links);
 		}	
 	}
 }
@@ -311,7 +319,8 @@ if ($_REQUEST['act'] == 'order_list'){
                     " WHERE user_id = ".$money['user_id'];
             $delete = $db->query($sql);
             if($delete == true){
-            	sys_msg($_LANG['delete_Success'],'',$links[0]['drp_log']);
+            	$links[0]['href'] = 'drp.php?act=drp_log';
+            	sys_msg($_LANG['delete_Success'],'',$links);
             	 
             }		
 		}
