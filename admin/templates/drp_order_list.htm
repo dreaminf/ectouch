@@ -53,7 +53,12 @@
                 <td>{$li.parent_name}</td>
                 {if $is_separate eq 0}
                 <td align="center">
-                    <a href="javascript:confirm_redirect(separate_confirm, 'drp.php?act=separate&oid={$li.order_id}')">{$lang.affiliate_separate}</a>
+                    {if $li.separate eq 1}
+                        <a href="javascript:confirm_redirect(separate_confirm, 'drp.php?act=separate&oid={$li.order_id}')">{$lang.affiliate_separate}</a>
+                    {else}
+                        <span style="color:#e3e3e3;">{$lang.affiliate_separate}</span>
+                    {/if}
+
                 </td>
                 {/if}
 

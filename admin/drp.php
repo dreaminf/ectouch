@@ -633,12 +633,12 @@ function get_user_order_list($user_id)
         'id'=>$user_id,
     );
     /* 查询记录总数，计算分页数 */
-    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info'). " WHERE parent_id = $user_id  and is_separate = 0";
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info'). " WHERE parent_id = $user_id ";
     $filter['record_count'] = $GLOBALS['db']->getOne($sql);
     $filter = page_and_size($filter);
 
     /* 查询记录 */
-    $sql = "SELECT * FROM " .  $GLOBALS['ecs']->table('order_info'). " WHERE parent_id = $user_id  and is_separate = 0 " .
+    $sql = "SELECT * FROM " .  $GLOBALS['ecs']->table('order_info'). " WHERE parent_id = $user_id " .
         " ORDER BY order_id DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 
@@ -711,8 +711,15 @@ function get_order_list($is_separate)
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 
     $arr = array();
+    // 获取分销天数
+    $fxts = $GLOBALS['db']->getOne("select centent from " . $GLOBALS['ecs']->table('drp_config') ." where keyword = 'fxts'");
+    $fxts = $fxts*3600*24;
+    $nowTime = gmtime();
     while ($row = $GLOBALS['db']->fetchRow($res))
     {
+        if($row['pay_time'] > 0 && ($row['pay_time']+$fxts) <= $nowTime){
+            $row['separate'] = 1;
+        }
         $row['add_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['add_time']);
         $row['user_name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$row['user_id']);
         $row['parent_name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$row['parent_id']);
