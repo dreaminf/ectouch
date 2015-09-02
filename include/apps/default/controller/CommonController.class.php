@@ -34,7 +34,7 @@ class CommonController extends BaseController
             if (method_exists('WechatController', 'do_oauth')) {
                 call_user_func(array('WechatController', 'do_oauth'));
                 $this->drp();
-                //$this->wechatJsSdk();
+                $this->wechatJsSdk();
             }
         }
 
@@ -196,7 +196,6 @@ class CommonController extends BaseController
         $wxinfo   = model('Base')->model->table('wechat')->field('token, appid, appsecret')->find();
         $appid    = $wxinfo['appid'];
         $secret   = $wxinfo['appsecret'];
-        $token    = $wxinfo['token'];
 
         $drp_shop = $_SESSION['drp_shop'];
         $wx_title = C('shop_name').$drp_shop['shop_name'];
