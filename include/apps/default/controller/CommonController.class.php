@@ -206,8 +206,8 @@ class CommonController extends BaseController
         if(ACTION_NAME == 'goods' && isset($_GET['id'])){
             $goods_id = I('id');
             $goods = model('Goods')->get_goods_info($goods_id);
-            dump($goods);
         }
+            dump($goods);
 
         $id = $_SESSION['drp_id'] ? $_SESSION['drp_id'] : $_SESSION['user_id'];
         $wx_url = strstr($wx_url,'drp_id') ? $wx_url : strstr($wx_url,'?') ? $wx_url.'&drp_id='.$id : $wx_url.'?drp_id='.$id;
