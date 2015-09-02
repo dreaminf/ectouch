@@ -114,7 +114,7 @@
       	<span>更多惊喜</span>
       </div>
       <ul class="index-more-list" id="J_ItemList">
-        <li class="single_item"></li>
+        <div class="single_item"></div>
         <a href="javascript:;" style="text-align:center" class="get_more"></a>
       </ul>
   </div>
