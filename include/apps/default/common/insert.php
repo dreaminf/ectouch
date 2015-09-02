@@ -119,22 +119,22 @@ function insert_ads($arr) {
     $time = gmtime();
     if (!empty($arr['num']) && $arr['num'] != 1) {
         $sql = 'SELECT a.ad_id, a.position_id, a.media_type, a.ad_link, a.ad_code, a.ad_name, p.ad_width, ' .
-                'p.ad_height, p.position_style, RAND() AS rnd ' .
+                'p.ad_height, p.position_style ' .
                 'FROM ' . M()->pre . 'ad ' . ' AS a ' .
                 'LEFT JOIN ' . M()->pre . 'ad_position ' . ' AS p ON a.position_id = p.position_id ' .
                 "WHERE enabled = 1 AND start_time <= '" . $time . "' AND end_time >= '" . $time . "' " .
                 "AND a.position_id = '" . $arr['id'] . "' " .
-                'ORDER BY rnd LIMIT ' . $arr['num'];
+                'ORDER BY a.id LIMIT ' . $arr['num'];
         $res = M()->query($sql);
     } else {
         if ($static_res[$arr['id']] === NULL) {
             $sql = 'SELECT a.ad_id, a.position_id, a.media_type, a.ad_link, a.ad_code, a.ad_name, p.ad_width, ' .
-                    'p.ad_height, p.position_style, RAND() AS rnd ' .
+                    'p.ad_height, p.position_style ' .
                     'FROM ' . M()->pre . 'ad ' . ' AS a ' .
                     'LEFT JOIN ' . M()->pre . 'ad_position' . ' AS p ON a.position_id = p.position_id ' .
                     "WHERE enabled = 1 AND a.position_id = '" . $arr['id'] .
                     "' AND start_time <= '" . $time . "' AND end_time >= '" . $time . "' " .
-                    'ORDER BY rnd LIMIT 1';
+                    'ORDER BY a.id LIMIT 1';
             $static_res[$arr['id']] = M()->query($sql);
         }
         $res = $static_res[$arr['id']];
@@ -152,8 +152,7 @@ function insert_ads($arr) {
                 $src = (strpos($row['ad_code'], 'http://') === false && strpos($row['ad_code'], 'https://') === false) ?
                         __URL__ . "/$row[ad_code]" : $row['ad_code'];
                 $ads[] = "<a href='" . url('default/affiche/index', array('ad_id' => $row['ad_id'], 'uri' => urlencode($row["ad_link"]))) . "' 
-                target='_blank'><img src='$src' width='" . $row['ad_width'] . "' height='$row[ad_height]'
-                border='0' /></a>";
+                target='_blank'><img src='$src' border='0' /></a>";
                 break;
             case 1: // Flash
                 $src = (strpos($row['ad_code'], 'http://') === false && strpos($row['ad_code'], 'https://') === false) ?
