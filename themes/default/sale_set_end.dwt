@@ -16,8 +16,7 @@
 		<br>
 		<div class="yjtx2_content1">
 			<div class="yjtx2_content3">
-				<span class="yjtx2_list4">微店地址：</span><br>
-				<span class="yjtx2_list5">{$sale_url}</span>
+				<span class="yjtx2_list4">微店地址：{$sale_url}</span>
 			</div>
 		</div>
 	</div>
