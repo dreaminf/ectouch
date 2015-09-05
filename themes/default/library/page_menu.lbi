@@ -1,7 +1,7 @@
-<ul>
-	<li class="fl index-footer-list"><a href="{:url('index/index')}"><i class="iconfont">&#xe621;</i><span>{$lang.home}</span></a></li>
-	<li class="fl index-footer-list"><a href="{:url('category/top_all')}"><i class="iconfont">&#xe627;</i><span>{$lang.category}</span></a></li>
-	<li class="fl index-footer-list"><a href="javascript:openSearch();"><i class="iconfont">&#xe617;</i><span>{$lang.search}</span></a></li>
-	<li class="fl index-footer-list"><a href="{:url('flow/cart')}"><i class="iconfont">&#xe626;</i><span>{$lang.shopping_cart}</span></a></li>
-	<li class="fl index-footer-list"><a href="{:url('user/index')}"><i class="iconfont">&#xe625;</i><span>{$lang.user_center}</span></a></li>	
+<ul class="ect-diaplay-box text-center">
+  <li class="ect-box-flex"><a href="{:url('index/index')}"><i class="ect-icon ect-icon-home"></i>{$lang.home}</a></li>
+ <li class="ect-box-flex"><a href="{:url('category/top_all')}"><i class="ect-icon ect-icon-cate"></i>{$lang.category}</a></li>
+  <li class="ect-box-flex"><a href="javascript:openSearch();"><i class="ect-icon ect-icon-search"></i>{$lang.search}</a></li>
+  <li class="ect-box-flex"><a href="{:url('flow/cart')}"><i class="ect-icon ect-icon-flow"></i>{$lang.shopping_cart}</a></li>
+  <li class="ect-box-flex"><a href="{:url('user/index')}"><i class="ect-icon ect-icon-user"></i>{$lang.user_center}</a></li>
 </ul>
