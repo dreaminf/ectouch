@@ -27,8 +27,8 @@ return array(
 	//需要读写权限的目录
 	'dirAccess' => array(
 		'/',
-		'../data',
-		'../themes',
+		'/data',
+		'/themes',
 	),
 	/* ------写入数据库完成后处理的文件------ */
 	'handleFile' => 'main.php',

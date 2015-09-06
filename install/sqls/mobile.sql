@@ -200,17 +200,14 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_user_info` (
 -- 增加字段
 ALTER TABLE `ecs_order_info` ADD COLUMN `order_source` int(1) UNSIGNED NOT NULL DEFAULT 0;
 
-
---
--- 表的结构 `ecs_drp_config`
---
-
-CREATE TABLE IF NOT EXISTS `ecs_drp_config` (
+DROP TABLE IF EXISTS `ecs_drp_config`;
+CREATE TABLE `ecs_drp_config` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `centent` text COMMENT '分销申请 温馨提示',
   `keyword` varchar(20) DEFAULT NULL COMMENT '区分文章的key',
+  `name` varchar(50) DEFAULT NULL COMMENT '显示字段名',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_drp_log`
@@ -260,10 +257,9 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_shop` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 
---
--- 转存表中的数据 `ecs_drp_config`
---
-
-INSERT INTO `ecs_drp_config` (`id`, `centent`, `keyword`) VALUES
-(1, '温馨提示', 'apply'),
-(2, '新手必读', 'novice');
+-- ----------------------------
+-- Records of ecs_drp_config
+-- ----------------------------
+INSERT INTO `ecs_drp_config` VALUES ('1', '温馨提示', 'apply', '温馨提示');
+INSERT INTO `ecs_drp_config` VALUES ('2', '新手必读', 'novice', '新手必读');
+INSERT INTO `ecs_drp_config` VALUES ('3', '7', 'fxts', '分销天数');
