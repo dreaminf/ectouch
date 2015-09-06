@@ -6,7 +6,7 @@ class Jssdk {
   public function __construct($appId, $appSecret) {
     $this->appId = $appId;
     $this->appSecret = $appSecret;
-    $this->cachePath = ROOT_PATH . 'data/attached/wechat_cache/';
+    $this->cache = new EcCache(array('DB_CACHE_PATH'=>'data/attached/db_cache/'));
   }
 
   public function getSignPackage() {
@@ -45,10 +45,10 @@ class Jssdk {
   }
 
   private function getJsApiTicket() {
+    $name = 'wechat_jsapi_ticket'.$this->appId;
     // jsapi_ticket 应该全局存储与更新，以下代码以写入到文件中做示例
-    $data = json_decode(file_get_contents($this->cachePath ."jsapi_ticket.json"));
-
-    if ($data->expire_time < time()) {
+    $data = $this->cache->get($name);
+    if ($data === false) {
       $accessToken = $this->getAccessToken();
       // 如果是企业号用以下 URL 获取 ticket
       // $url = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token=$accessToken";
@@ -56,37 +56,32 @@ class Jssdk {
       $res = json_decode($this->httpGet($url));
       $ticket = $res->ticket;
       if ($ticket) {
-        $data->expire_time = time() + 7000;
-        $data->jsapi_ticket = $ticket;
-        $fp = fopen($this->cachePath ."jsapi_ticket.json", "w");
-        fwrite($fp, json_encode($data));
-        fclose($fp);
+        $expire_time = time() + 7000;
+        $this->cache->set($name, $ticket, $expire_time);
       }
     } else {
-      $ticket = $data->jsapi_ticket;
+      $ticket = $data;
     }
 
     return $ticket;
   }
 
   private function getAccessToken() {
+    $name = 'wechat_access_token'.$this->appId;
     // access_token 应该全局存储与更新，以下代码以写入到文件中做示例
-    $data = json_decode(file_get_contents($this->cachePath ."access_token.json"));
-    if ($data->expire_time < time()) {
+    $data = $this->cache->get($name);
+    if ($data === false) {
       // 如果是企业号用以下URL获取access_token
       // $url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=$this->appId&corpsecret=$this->appSecret";
       $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
       $res = json_decode($this->httpGet($url));
       $access_token = $res->access_token;
       if ($access_token) {
-        $data->expire_time = time() + 7000;
-        $data->access_token = $access_token;
-        $fp = fopen($this->cachePath ."access_token.json", "w");
-        fwrite($fp, json_encode($data));
-        fclose($fp);
+        $expire_time = time() + 7000;
+        $this->cache->set($name, $access_token, $expire_time);
       }
     } else {
-      $access_token = $data->access_token;
+      $access_token = $data;
     }
     return $access_token;
   }
