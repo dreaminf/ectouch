@@ -161,4 +161,18 @@ class BrandController extends CommonController {
         setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
     }
 
+    public function brand_show() {
+        $list = model('Brand')->get_brands('brand', '3', 1);
+        foreach($list as $key=>$val){
+            $list[$key]['goods'] =  model('Brand')->brand_get_goods_img($val['brand_id'],'','goods_id','desc','3','1');
+        }
+        $this->assign('list', $list);
+
+        $brand = model('Brand')->get_brands('brand', '11', 1);
+        $this->assign('brand', $brand);
+
+        $this->assign('title', L('brand_show'));
+        $this->display('brand_show.dwt');
+    }
+
 }

@@ -94,6 +94,7 @@ class BrandModel extends BaseModel {
         $res = $this->query($sql);
         $arr = array();
         foreach ($res as $row) {
+            $arr[$row['brand_id']]['brand_id'] = $row['brand_id'];
             $arr[$row['brand_id']]['brand_name'] = $row['brand_name'];
             $arr[$row['brand_id']]['url'] = url('brand/goods_list', array('id' => $row['brand_id']));
             $arr[$row['brand_id']]['brand_logo'] = __ROOT__ . '/data/attached/brandlogo/' .get_banner_path($row['brand_logo']);
@@ -132,6 +133,30 @@ class BrandModel extends BaseModel {
         $res = $this->row($sql);
         $sales_count = $res['num'] ? $res['num'] : 0;
         return $sales_count;
+    }
+
+    /**
+     * 获得品牌下的商品
+     *
+     * @access private
+     * @param integer $brand_id
+     * @return array
+     */
+    function brand_get_goods_img($brand_id, $cate, $sort, $order, $size, $page) {
+        $start = ($page - 1) * $size;
+        /* 获得商品列表 */
+        $sort = $sort == 'sales_volume' ? 'xl.sales_volume' : $sort;
+        $sql = 'SELECT goods_id,goods_thumb FROM ' . $this->pre . "goods  WHERE is_on_sale = 1 AND is_alone_sale = 1 AND is_delete = 0 AND brand_id = '$brand_id' " . "ORDER BY $sort $order LIMIT $start , $size";
+        $res = $this->query($sql);
+        $arr = array();
+        foreach ($res as $key=>$row) {
+            $arr[$key]['goods_id'] = $row['goods_id'];
+            $arr[$key]['url'] = url('goods/index', array('id' => $row['goods_id']));
+            $arr[$key]['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
+
+        }
+
+        return $arr;
     }
 
 }

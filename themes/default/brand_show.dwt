@@ -1,0 +1,78 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<link rel="stylesheet" href="__TPL__/css/brand.css">
+<div class="con">
+    <div class="ect-bg">
+        <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg">
+            <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a>
+            <span>品牌合集页</span>
+        </header>
+    </div>
+    <div class="brand-main">
+        <div class="brand-today">
+            <div class="brand-today-img">
+                <!--{foreach name=list from=$list item=li}-->
+                <div class="brand-today-img-text fr">
+                    <p>今日推荐</p><span>{$li.brand_name}</span>
+                </div>
+                <div class="brand-today-img-content fl ">
+                    <div id="focus{$li.brand_id}" class="focus goods-focus ect-padding-lr ect-margin-tb">
+                        <div class="hd">
+                            <ul>
+                            </ul>
+                        </div>
+                        <div class="bd">
+                            <ul id="Gallery">
+                                <!--{foreach name=li from=$li.goods item=l}-->
+                                <li><a href="{$l.url}"><img src="{$l.goods_thumb}" alt="" /></a></li>
+                                <!--{/foreach}-->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="brand-today-img-logo fl">
+                    <img src="{$li.brand_logo}" alt="" />
+                </div>
+                <!--{/foreach}-->
+            </div>
+        </div>
+
+        <div class="brand-lattice">
+            <ul>
+            </ul>
+        </div>
+        <div class="brand-list">
+            <ul>
+                <!--{foreach name=brand from=$brand item=br}-->
+                <li><a href="{$br.url}"><img src="{$br.brand_logo}" alt="" /></a></li>
+                <!--{/foreach}-->
+
+                <li><a href="{:url('brand/index')}"><img src="__TPL__/images/brand-list-img2.gif" alt="" /></a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</body></html>
+
+<script type="text/javascript">
+<!--{foreach name=list from=$list item=li}-->
+TouchSlide({
+    slideCell : "#focus{$li.brand_id}",
+    titCell : ".hd ul", // 开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+    mainCell : ".bd ul",
+    effect : "left",
+    autoPlay : true, // 自动播放
+    autoPage : true, // 自动分页
+    delayTime: 500, // 毫秒；切换效果持续时间（执行一次效果用多少毫秒）
+    interTime: 2500, // 毫秒；自动运行间隔（隔多少毫秒后执行下一个效果）
+    switchLoad : "_src" // 切换加载，真实图片路径为"_src"
+});
+<!--{/foreach}-->
+</script>
+<style>
+.ect-padding-lr{margin:0 !important;padding:0 !important;}
+.ect-padding-lr img{width:100%;height:auto;margin:0 !important;padding:0 !important;}
+.brand-main{margin:0;}
+</style>
