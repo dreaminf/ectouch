@@ -434,7 +434,7 @@ class OrderModel extends BaseModel {
 
         /* 取得商品信息 */
         $sql = "SELECT g.goods_name, g.goods_sn, g.is_on_sale, g.is_real, " .
-                "g.market_price, g.shop_price AS org_price, g.promote_price, g.promote_start_date, " .
+                "g.market_price, g.shop_price AS org_price,g.touch_profit, g.promote_price, g.promote_start_date, " .
                 "g.promote_end_date, g.goods_weight, g.integral, g.extension_code, " .
                 "g.goods_number, g.is_alone_sale, g.is_shipping," .
                 "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price " .
@@ -645,6 +645,7 @@ class OrderModel extends BaseModel {
             } else { //购物车没有此物品，则插入
                 $goods_price = model('GoodsBase')->get_final_price($goods_id, $num, true, $spec);
                 $parent['goods_price'] = max($goods_price, 0);
+                $parent['touch_profit'] = $goods['touch_profit'];
                 $parent['goods_number'] = $num;
                 $parent['parent_id'] = 0;
                 $this->table = 'cart';

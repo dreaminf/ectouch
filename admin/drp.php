@@ -420,7 +420,7 @@ elseif ($_REQUEST['act'] == 'separate')
     {
         // 获取订单中商品
         $parent_id = $db->getOne("SELECT parent_id FROM " . $GLOBALS['ecs']->table('order_info') .  " where order_id = $oid");
-        $goods_list = $db->getAll("SELECT goods_id,goods_price,goods_number FROM " . $GLOBALS['ecs']->table('order_goods') .  " where order_id = $oid");
+        $goods_list = $db->getAll("SELECT goods_id,touch_profit as goods_price,goods_number FROM " . $GLOBALS['ecs']->table('order_goods') .  " where order_id = $oid");
 
         $data1 = $data2 = $data3 = array(
             'user_id'=>0,

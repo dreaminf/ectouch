@@ -101,6 +101,11 @@
             <input type="button" value="{$lang.compute_by_mp}" onclick="marketPriceSetted()" />
             {$lang.require_field}</td>
           </tr>
+            <tr>
+                <td class="label">{$lang.lab_shop_profit}</td>
+                <td><input type="text" name="touch_profit" value="{$goods.touch_profit}" size="20" onblur="priceSetted()"/>
+                    </td>
+            </tr>
           {if $user_rank_list}
           <tr>
             <td class="label"><a href="javascript:showNotice('noticeUserPrice');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a>{$lang.lab_user_price}</td>
