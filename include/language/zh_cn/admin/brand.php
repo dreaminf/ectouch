@@ -17,6 +17,7 @@ $_LANG['brand_name'] = '品牌名称';
 $_LANG['site_url'] = '品牌网址';
 $_LANG['brand_desc'] = '品牌描述';
 $_LANG['brand_logo'] = '品牌LOGO';
+$_LANG['brand_banner'] = '品牌banner';
 $_LANG['sort_order'] = '排序';
 $_LANG['is_show'] = '是否显示';
 $_LANG['drop_brand_logo'] = '删除图标';
@@ -27,8 +28,11 @@ $_LANG['brand_edit_lnk'] = '重新编辑该品牌';
 $_LANG['brand_list_lnk'] = '返回列表页面';
 
 /*帮助信息*/
-$_LANG['up_brandlogo'] = '请上传图片，做为品牌的LOGO！';
-$_LANG['warn_brandlogo'] = '你已经上传过图片。再次上传时将覆盖原图片！';
+$_LANG['up_brandlogo'] = '请上传图片，做为品牌的Banner！上传图片大小为80*50';
+$_LANG['warn_brandlogo'] = '你已经上传过图片。再次上传时将覆盖原图片！上传图片大小为80*50';
+
+$_LANG['up_brandbanner'] = '请上传图片，做为品牌的Banner！上传图片大小为640*320';
+$_LANG['warn_brandbanner'] = '你已经上传过图片。再次上传时将覆盖原图片！上传图片大小为640*320';
 
 /*提示信息*/
 $_LANG['brand_edit'] = '编辑品牌记录';

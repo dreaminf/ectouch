@@ -79,14 +79,15 @@ elseif ($_REQUEST['act'] == 'insert')
 
      /*处理图片*/
     $img_name = basename($image->upload_image($_FILES['brand_logo'],'brandlogo'));
+    $img_banner = basename($image->upload_image($_FILES['brand_banner'],'brandbanner'));
 
      /*处理URL*/
     $site_url = sanitize_url( $_POST['site_url'] );
 
     /*插入数据*/
 
-    $sql = "INSERT INTO ".$ecs->table('brand')."(brand_name, site_url, brand_desc, brand_logo, is_show, sort_order) ".
-           "VALUES ('$_POST[brand_name]', '$site_url', '$_POST[brand_desc]', '$img_name', '$is_show', '$_POST[sort_order]')";
+    $sql = "INSERT INTO ".$ecs->table('brand')."(brand_name, site_url, brand_desc, brand_logo,brand_banner is_show, sort_order) ".
+           "VALUES ('$_POST[brand_name]', '$site_url', '$_POST[brand_desc]', '$img_name','$$img_banner', '$is_show', '$_POST[sort_order]')";
     $db->query($sql);
 
     admin_log($_POST['brand_name'],'add','brand');
@@ -110,7 +111,7 @@ elseif ($_REQUEST['act'] == 'edit')
 {
     /* 权限判断 */
     admin_priv('brand_manage');
-    $sql = "SELECT brand_id, brand_name, site_url, brand_logo, brand_desc, brand_logo, is_show, sort_order ".
+    $sql = "SELECT brand_id, brand_name, site_url, brand_logo, brand_desc, brand_logo,brand_banner is_show, sort_order ".
             "FROM " .$ecs->table('brand'). " WHERE brand_id='$_REQUEST[id]'";
     $brand = $db->GetRow($sql);
 
@@ -148,11 +149,17 @@ elseif ($_REQUEST['act'] == 'updata')
 
     /* 处理图片 */
     $img_name = basename($image->upload_image($_FILES['brand_logo'],'brandlogo'));
+    $img_banner = basename($image->upload_image($_FILES['brand_banner'],'brandbanner'));
     $param = "brand_name = '$_POST[brand_name]',  site_url='$site_url', brand_desc='$_POST[brand_desc]', is_show='$is_show', sort_order='$_POST[sort_order]' ";
     if (!empty($img_name))
     {
         //有图片上传
         $param .= " ,brand_logo = '$img_name' ";
+    }
+    if (!empty($img_banner))
+    {
+        //有图片上传
+        $param .= " ,brand_banner = '$img_banner' ";
     }
 
     if ($exc->edit($param,  $_POST['id']))
@@ -391,6 +398,12 @@ function get_brandlist()
         $site_url   = empty($rows['site_url']) ? 'N/A' : '<a href="'.$rows['site_url'].'" target="_brank">'.$rows['site_url'].'</a>';
 
         $rows['brand_logo'] = $brand_logo;
+
+        $brand_banner = empty($rows['brand_banner']) ? '' :
+            '<a href="../' . DATA_DIR . '/attached/brandbanner/'.$rows['brand_banner'].'" target="_brank"><img src="images/picflag.gif" alt="banner" width="16" height="16" border="0" alt='.$GLOBALS['_LANG']['brand_logo'].' /></a>';
+        $site_url   = empty($rows['site_url']) ? 'N/A' : '<a href="'.$rows['site_url'].'" target="_brank">'.$rows['site_url'].'</a>';
+
+        $rows['brand_banner'] = $brand_banner;
         $rows['site_url']   = $site_url;
 
         $arr[] = $rows;

@@ -28,7 +28,7 @@ class BrandBaseModel extends BaseModel {
         $sql = 'SELECT * FROM ' . $this->pre . "brand WHERE brand_id = '$id'";
         $res = $this->row($sql);
         $res['brand_logo'] = __ROOT__ . '/data/attached/brandlogo/' .get_banner_path($res ['brand_logo']);
-        $res['brand_banner'] = $res['brand_logo'];
+        $res['brand_banner'] = __ROOT__ . '/data/attached/brandbanner/' .get_banner_path($res ['brand_banner']);
 
         return $res;
     }
