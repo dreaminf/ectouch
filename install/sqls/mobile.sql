@@ -263,3 +263,12 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_shop` (
 INSERT INTO `ecs_drp_config` VALUES ('1', '温馨提示', 'apply', '温馨提示');
 INSERT INTO `ecs_drp_config` VALUES ('2', '新手必读', 'novice', '新手必读');
 INSERT INTO `ecs_drp_config` VALUES ('3', '7', 'fxts', '分销天数');
+
+
+ALTER TABLE `ecs_order_goods` ADD COLUMN `touch_sale` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
+ALTER TABLE `ecs_cart` ADD COLUMN `touch_sale` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
+ALTER TABLE `ecs_goods` ADD COLUMN `touch_sale` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
+
+ALTER TABLE `ecs_order_goods` ADD COLUMN `touch_fencheng` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
+ALTER TABLE `ecs_cart` ADD COLUMN `touch_fencheng` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
+ALTER TABLE `ecs_goods` ADD COLUMN `touch_fencheng` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
