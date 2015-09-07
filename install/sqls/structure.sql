@@ -480,7 +480,6 @@ CREATE TABLE IF NOT EXISTS `ecs_cart` (
   `is_shipping` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `can_handsel` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `goods_attr_id` varchar(255) NOT NULL DEFAULT '',
-  `touch_profit` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`rec_id`),
   KEY `session_id` (`session_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -833,7 +832,6 @@ CREATE TABLE IF NOT EXISTS `ecs_goods` (
   `rank_integral` int(11) NOT NULL DEFAULT '-1',
   `suppliers_id` smallint(5) unsigned DEFAULT NULL,
   `is_check` tinyint(1) unsigned DEFAULT NULL,
-  `touch_profit` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`goods_id`),
   KEY `goods_sn` (`goods_sn`),
   KEY `cat_id` (`cat_id`),
@@ -1082,7 +1080,6 @@ CREATE TABLE IF NOT EXISTS `ecs_order_goods` (
   `parent_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `is_gift` smallint(5) unsigned NOT NULL DEFAULT '0',
   `goods_attr_id` varchar(255) NOT NULL DEFAULT '',
-  `touch_profit` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`rec_id`),
   KEY `order_id` (`order_id`),
   KEY `goods_id` (`goods_id`)
