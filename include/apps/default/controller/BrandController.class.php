@@ -34,21 +34,17 @@ class BrandController extends CommonController {
     }
 
     public function index() {
-        $this->parameter();
-        $this->assign('brand_id', $this->brand);
-        $this->assign('page', $this->page);
-        $this->assign('size', $this->size);
-        $this->assign('sort', $this->sort);
-        $this->assign('order', $this->order);
-        
-        $count = model('Brand')->get_brands_count();
-        $this->pageLimit(url('index'), $this->size);
-        $this->assign('pager', $this->pageShow($count));
-        
-        $list = model('Brand')->get_brands('brand', $this->size, $this->page);
+        $list = model('Brand')->get_brands('brand', '3', 1);
+        foreach($list as $key=>$val){
+            $list[$key]['goods'] =  model('Brand')->brand_get_goods_img($val['brand_id'],'','goods_id','desc','3','1');
+        }
         $this->assign('list', $list);
-        
-        $this->display('brand_list.dwt');
+
+        $brand = model('Brand')->get_brands('brand', '11', 1);
+        $this->assign('brand', $brand);
+
+        $this->assign('title', '品牌集合页');
+        $this->display('brand_show.dwt');
     }
 
     /* ------------------------------------------------------ */
@@ -108,6 +104,8 @@ class BrandController extends CommonController {
         $sql = "SELECT COUNT(*) as count FROM  {pre}goods AS g WHERE brand_id = '$brand_id' AND g.is_hot = 1 and g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 ";
         $res = $this->model->getrow($sql);
         $this->assign('brand_goods_hot',$res['count']);
+
+        $this->assign('title', '品牌商品列表');
         $this->display('brand_goods_list.dwt');
     }
 
@@ -173,18 +171,24 @@ class BrandController extends CommonController {
         setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
     }
 
-    public function brand_show() {
-        $list = model('Brand')->get_brands('brand', '3', 1);
-        foreach($list as $key=>$val){
-            $list[$key]['goods'] =  model('Brand')->brand_get_goods_img($val['brand_id'],'','goods_id','desc','3','1');
-        }
+    public function nav() {
+
+        $this->parameter();
+        $this->assign('brand_id', $this->brand);
+        $this->assign('page', $this->page);
+        $this->assign('size', $this->size);
+        $this->assign('sort', $this->sort);
+        $this->assign('order', $this->order);
+
+        $count = model('Brand')->get_brands_count();
+        $this->pageLimit(url('index'), $this->size);
+        $this->assign('pager', $this->pageShow($count));
+
+        $list = model('Brand')->get_brands('brand', $this->size, $this->page);
         $this->assign('list', $list);
+        $this->assign('title','品牌列表');
+        $this->display('brand_list.dwt');
 
-        $brand = model('Brand')->get_brands('brand', '11', 1);
-        $this->assign('brand', $brand);
-
-        $this->assign('title', L('brand_show'));
-        $this->display('brand_show.dwt');
     }
 
 }

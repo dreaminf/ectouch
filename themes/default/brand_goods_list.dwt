@@ -4,7 +4,7 @@
         <div class="ect-bg">
             <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg">
                 <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a>
-                <span>品牌合集页</span>
+                <span>{$title}</span>
             </header>
         </div>
         <div class="group-logo">

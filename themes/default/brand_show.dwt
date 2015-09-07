@@ -4,7 +4,7 @@
     <div class="ect-bg">
         <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg">
             <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a>
-            <span>品牌合集页</span>
+            <span>{$title}</span>
         </header>
     </div>
     <div class="brand-main">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="brand-today-img-logo fl">
-                    <img src="{$li.brand_logo}" alt="" />
+                    <a href="{$li.url}"> <img src="{$li.brand_logo}" alt="" /></a>
                 </div>
                 <!--{/foreach}-->
             </div>
@@ -46,7 +46,7 @@
                 <li><a href="{$br.url}"><img src="{$br.brand_logo}" alt="" /></a></li>
                 <!--{/foreach}-->
 
-                <li><a href="{:url('brand/index')}"><img src="__TPL__/images/brand-list-img2.gif" alt="" /></a></li>
+                <li><a href="{:url('brand/nav')}"><img src="__TPL__/images/brand-list-img2.gif" alt="" /></a></li>
             </ul>
         </div>
 
