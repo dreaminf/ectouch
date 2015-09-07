@@ -272,3 +272,5 @@ ALTER TABLE `ecs_goods` ADD COLUMN `touch_sale` decimal(10,2) unsigned NOT NULL 
 ALTER TABLE `ecs_order_goods` ADD COLUMN `touch_fencheng` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
 ALTER TABLE `ecs_cart` ADD COLUMN `touch_fencheng` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
 ALTER TABLE `ecs_goods` ADD COLUMN `touch_fencheng` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
+
+ALTER TABLE `ecs_brand` ADD COLUMN `brand_banner` varchar(80)  DEFAULT '';
