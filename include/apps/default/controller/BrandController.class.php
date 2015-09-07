@@ -96,6 +96,18 @@ class BrandController extends CommonController {
         $this->pageLimit(url('goods_list', array('id' => $brand_id, 'sort' => $this->sort, 'order' => $this->order)), $this->size);
         $this->assign('pager', $this->pageShow($count));
 		$this->assign('show_marketprice', C('show_marketprice'));
+
+        $this->assign('brand_info',$brand_info);
+        // 商品数量
+        $this->assign('brand_goods_count',model('Brand')->goods_count_by_brand($brand_id));
+        //新品
+        $sql = "SELECT COUNT(*) as count FROM  {pre}goods AS g WHERE brand_id = '$brand_id' AND g.is_new = 1 and g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 ";
+        $res = $this->model->getrow($sql);
+        $this->assign('brand_goods_new',$res['count']);
+        //热销
+        $sql = "SELECT COUNT(*) as count FROM  {pre}goods AS g WHERE brand_id = '$brand_id' AND g.is_hot = 1 and g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 ";
+        $res = $this->model->getrow($sql);
+        $this->assign('brand_goods_hot',$res['count']);
         $this->display('brand_goods_list.dwt');
     }
 

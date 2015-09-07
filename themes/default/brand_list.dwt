@@ -1,21 +1,35 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<link rel="stylesheet" href="__TPL__/css/brand_list.css">
 <div class="con">
-<div style="height:4.2em;"></div>
-  <header>
-    <nav class="ect-nav ect-bg icon-write">
-      <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem -->
-    </nav>
-  </header>
-  
-  <div class="bran_list" id="J_ItemList" style="opacity:1;">
-    <ul class="single_item">
-    </ul>
-    <a href="javascript:;" class="get_more"></a> </div>
+    <div class="ect-bg">
+        <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg">
+            <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a>
+            <span>品牌合集页</span>
+        </header>
+    </div>
+    <div class="bran_list" id="J_ItemList" style="opacity:1;">
+        <ul class="single_item">
+        </ul>
+        <a href="javascript:;" class="get_more"></a>
+    </div>
 </div>
+<!--<div class="con">-->
+<!--<div style="height:4.2em;"></div>-->
+  <!--<header>-->
+    <!--<nav class="ect-nav ect-bg icon-write">-->
+      <!--&lt;!&ndash; #BeginLibraryItem "/library/page_menu.lbi" &ndash;&gt;&lt;!&ndash; #EndLibraryItem &ndash;&gt;-->
+    <!--</nav>-->
+  <!--</header>-->
+
+  <!--<div class="bran_list" id="J_ItemList" style="opacity:1;">-->
+    <!--<ul class="single_item">-->
+    <!--</ul>-->
+    <!--<a href="javascript:;" class="get_more"></a> </div>-->
+<!--</div>-->
 
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <script type="text/javascript">
 get_asynclist("{:url('brand/asynclist', array('page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order']))}" , '__TPL__/images/loader.gif');
-</script> 
+</script>
 </body></html>
