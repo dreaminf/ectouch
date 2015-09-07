@@ -149,13 +149,14 @@ $modules['10_menu_tools']['authorization']             = '../index.php?m=admin&c
 $modules['10_menu_tools']['navigator']                 = '../index.php?m=admin&c=navigator';
 
 // 微分销
-//$modules['11_menu_rec']['affiliate']                     = 'affiliate.php?act=list';
-//$modules['11_menu_rec']['affiliate_ck']                  = 'affiliate_ck.php?act=list';
 $modules['11_menu_rec']['01_drp_config']                      = 'drp.php?act=config';
 $modules['11_menu_rec']['02_drp_users']                       = 'drp.php?act=users';
 $modules['11_menu_rec']['03_drp']                             = 'drp.php?act=list';
 $modules['11_menu_rec']['04_order_list']                      = 'drp.php?act=order_list';
-$modules['11_menu_rec']['05_drp_log']                      = 'drp.php?act=drp_log';
+$modules['11_menu_rec']['05_affiliate']                       = 'affiliate.php?act=list';
+$modules['11_menu_rec']['06_affiliate_ck']                    = 'affiliate_ck.php?act=list';
+$modules['11_menu_rec']['07_ranking']                         = 'drp.php?act=ranking';
+$modules['11_menu_rec']['08_drp_log']                         = 'drp.php?act=drp_log';
 
 // 微信通
 $modules['12_menu_wechat']['01_wechat_config'] = '../index.php?m=admin&c=wechat';

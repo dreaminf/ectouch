@@ -403,11 +403,14 @@ $_LANG['10_shop_authorized'] = '授权证书';
 $_LANG['authorization'] = '第三方登录插件';
 
 // 微分销
-$_LANG['01_drp_config'] = '分销设置';
+$_LANG['01_drp_config'] = '微分销设置';
 $_LANG['02_drp_users'] = '分销商管理';
-$_LANG['03_drp'] = '分销利润设置';
-$_LANG['04_order_list'] = '分销订单管理';
-$_LANG['05_drp_log'] = '佣金提现管理';
+$_LANG['03_drp'] = '销售佣金设置';
+$_LANG['04_order_list'] = '销售订单管理';
+$_LANG['05_affiliate'] = '分成佣金设置';
+$_LANG['06_affiliate_ck'] = '分成订单管理';
+$_LANG['07_ranking'] = '分销商排行榜';
+$_LANG['08_drp_log'] = '佣金提现管理';
 
 // 微信通
 $_LANG['01_wechat_config'] = '公众号设置';
