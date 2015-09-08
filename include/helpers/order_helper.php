@@ -467,28 +467,14 @@ function order_goods($order_id)
             "FROM " . $global->ecs->table('order_goods') .
             " WHERE order_id = '$order_id'";
 
-   // $res = $global->db->query($sql);
-    $res = $global->model->query($sql);
-    // while ($row = $global->db->fetchRow($res))
-    // {
-    //     if ($row['extension_code'] == 'package_buy')
-    //     {
-    //         $row['package_goods_list'] = get_package_goods($row['goods_id']);
-    //     }
-    //     $goods_list[] = $row;
-    // }
-    // foreach ($res as $key=>$val)
-    // {
-    //     if ($row['extension_code'] == 'package_buy')
-    //     {
-    //         $row['package_goods_list'] = get_package_goods($row['goods_id']);
-    //     }
-    //     $goods_list[$key] = $row;
-    // }
-
-    //return $global->db->getAll($sql);
-    return $res;
-    //return $row;
+    $res = $global->db->getAll($sql);
+    foreach ($res as $row){
+        if ($row['extension_code'] == 'package_buy'){
+            $row['package_goods_list'] = get_package_goods($row['goods_id']);
+        }
+        $goods_list[] = $row;
+    }
+    return $goods_list;
 }
 
 /**
