@@ -925,7 +925,7 @@ margin-top:2rem;
 	overflow:hidden;
 	margin-top:1rem;
 	}
-.sp_box{ width:96%;height:17.375rem;}		
+.sp_box{ width:96%; overflow:hidden;}		
 .sp_box1,.sp_box2{ float:left;  width:44%;height:16rem;margin:0.7rem;}
 
 
