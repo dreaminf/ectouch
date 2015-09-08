@@ -12,9 +12,8 @@
         <div class="set4_box1">
 
           <div class="set4_nav">
-          	<input type="submit" value="{:C('SHOP_NAME')}" class="set-4-input-1" />
-          	<!--<span class="set4_list">{:C('SHOP_NAME')}</span>-->
-          </div>
+          
+          	<span class="set4_list">{:C('SHOP_NAME')}</span>
 
           <div class="set4_nav1"><input  type="text"  name="data[shop_name]" id="shop_name" placeholder="店名" value=""  class="set-4-input" /></div>
         </div>
