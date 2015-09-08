@@ -79,6 +79,22 @@ wx.ready(function(){
 	document.querySelector('#scanQRCode').onclick = function() {
 		wx.scanQRCode();
 	};
+	document.querySelector('#translateVoice').onclick = function () {
+		if (voice.localId == '') {
+			alert('请先使用 startRecord 接口录制一段声音');
+			return;
+		}
+		wx.translateVoice({
+			localId: voice.localId,
+			complete: function (res) {
+				if (res.hasOwnProperty('translateResult')) {
+					alert('识别结果：' + res.translateResult);
+				} else {
+					alert('无法识别');
+				}
+			}
+		});
+	};
 });
 wx.error(function(res){
 	alert(res.errMsg);

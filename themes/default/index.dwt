@@ -24,8 +24,8 @@
   <i class="index-header-menu iconfont fl" onclick="window.location = '{:url('category/top_all')}'">&#xe627;</i>
   <div class="index-search-box fl">
   	<a href="javascript:void(0)"><i class="index-search-icon iconfont fl">&#xe603;</i></a>
-    <input type="text" class="index-search-input" placeholder="商品搜索">
-    <a href="javascript:void(0)"><i class="index-search-sound iconfont fr">&#xe623;</i></a>
+    <input type="text" class="index-search-input" placeholder="商品搜索" x-webkit-speec>
+    <a href="javascript:void(0)" id="translateVoice"><i class="index-search-sound iconfont fr">&#xe623;</i></a>
   </div>
   <a href="javascript:void(0)" id="scanQRCode"><i class="index-header-right iconfont fr">&#xe629;</i></a>
 </header>
