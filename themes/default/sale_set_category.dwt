@@ -39,7 +39,9 @@
 				
 			</div>
             <div class="t-a-center">
-            	<button type="submit" >{:L('next_step')}</button>
+            	<button type="submit" class="set-4-submit">{:L('next_step')}</button>
+            
+            	
             </div>
 			</form>
 			<div class="dpxq_border"></div> 
