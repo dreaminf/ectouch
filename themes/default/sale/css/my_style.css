@@ -686,9 +686,7 @@ margin-top:2rem;
 	color:#424242;}	
 .set4_box{width:90%;height:1rem;margin-top:1.5rem;
 }	
-.set4_box1{width:90%;overflow: hidden;
-margin-top:1.3rem;
-}	
+.set4_box1{width:90%; margin-top:1.3rem;overflow:hidden;}	
 .set4_nav,.set4_nav1{ float:left; border:1px solid #CCC;}
 .set4_nav{width:40%; background-color:#eeeeee;height:3.03rem;}
 .set4_nav1{width:58%;overflow:hidden;}
