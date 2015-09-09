@@ -839,5 +839,51 @@ class ClipsBaseModel extends BaseModel {
             return $config;
         }
     }
+	
+	/**
+     * 获取收藏商品的数量
+     */
+    public function num_collection_goods($user_id) {
+	   $where['user_id'] = $user_id;       
+       $count = $this->model->table('collect_goods')->where($where)->count();
+	   return $count;
+    }
+	 /**
+     * 获取未付款订单的数量
+     */
+    public function not_pay($user_id) {
+	   $where['user_id'] = $user_id;
+       $where['pay_status'] = 0; 
+       $count = $this->model->table('order_info')->where($where)->count();
+	   return $count;
+    }
+	
+	 /**
+     * 获取未收货订单的数量
+     */
+	public function not_shouhuo($user_id) {
+	   $where['user_id'] = $user_id;
+       $where['shipping_status'] = 1; 
+       $count = $this->model->table('order_info')->where($where)->count();
+	   return $count;
+    }
+	 /**
+     * 获取用户积分余额
+     */
+	public function pay_money($user_id) {
+	   $where['user_id'] = $user_id;
+       $res = $this->model->table('users')->field('user_money , pay_points')->where($where)->find();
+	   return $res;
+    }
+	 /**
+     * 获取未评价订单的数量
+     */
+	public function not_pingjia($user_id) {		
+	    /*$sql="select count(id_value) from ". $this->pre ."comment where user_id='$user_id' and id_value not in(select b.goods_id from " .$this->pre."order_info as a  LEFT JOIN " .$this->pre. "order_goods  as b on a.order_id=b.order_id where a.user_id='$user_id')"; */
+		$sql="select count(b.goods_id) from " . $this->pre . "order_info as a  LEFT JOIN " .$this->pre. "order_goods  as b on a.order_id=b.order_id  where user_id='$user_id' and b.goods_id not in(select id_value from ". $this->pre . "comment where user_id='$user_id')";
+        $res = $this->query($sql);
+	    $row = $res[0]['count(b.goods_id)'];
+	    return $row;
+    }
 
 }
