@@ -47,6 +47,22 @@ class UserController extends CommonController {
         if ($rank = model('ClipsBase')->get_rank_info()) {
             $this->assign('rank_name', sprintf(L('your_level'), $rank['rank_name']));
         }
+		// 待付款
+        $not_pays = model('ClipsBase')->not_pay($this->user_id);
+		
+		// 待收货
+		$not_shouhuos = model('ClipsBase')->not_shouhuo($this->user_id);
+		
+		// 待评价
+		$not_comment = model('ClipsBase')->not_pingjia($this->user_id);	
+		
+		// 用户积分余额
+		$user_pay = model('ClipsBase')->pay_money($this->user_id);
+		$user_money = $user_pay['user_money'];  //余额
+		$user_points = $user_pay['pay_points'];	//积分
+		
+		// 收藏数量
+        $goods_num = model('ClipsBase')->num_collection_goods($this->user_id);
         // 收藏
         $goods_list = model('ClipsBase')->get_collection_goods($this->user_id, 5, 0);
         // 评论
@@ -59,6 +75,12 @@ class UserController extends CommonController {
         if ($rs) {
             $this->assign('new_msg', 1);
         }
+		$this->assign('goods_nums', $goods_num);//收藏数量
+		$this->assign('not_pays', $not_pays);  //待付款
+		$this->assign('not_shouhuos', $not_shouhuos);//待收货
+		$this->assign('not_comment', $not_comment);//待评论
+		$this->assign('user_money', $user_money);//余额
+		$this->assign('user_points', $user_points);//积分
         $this->assign('user_notice', C('user_notice'));
         $this->assign('goods_list', $goods_list);
         $this->assign('comment_list', $comment_list);
