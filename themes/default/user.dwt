@@ -14,7 +14,7 @@
 			<div class="member-photo">
 				<div class="member-photo-left fl" onclick="window.location = '{:url('user/collection_list')}'">
 					<i class="iconfont">&#xe62e;</i>
-					<p>0</p><span>收藏</span>
+					<p><!--{if $goods_nums neq ''}--> {$goods_nums}<!--{else}-->0<!--{/if}--></p><span>收藏</span>
 				</div>
 				<div class="member-photo-right fr" onclick="window.location = '{:url('user/msg_list')}'">
 					<i class="iconfont">&#xe62d;</i>
@@ -42,15 +42,15 @@
 				</div>
 				<ul class="member-order-list">
 					<li class="fl" id="payment">
-						<span class="member-order-list-num">1</span>
+						<span class="member-order-list-num"><!--{if $not_pays neq ''}--> {$not_pays}<!--{else}-->0<!--{/if}--></span>
 						<a href="{:url('user/not_pay_order_list')}"><i class="iconfont">&#xe61d; </i><span>待付款</span></a>
 					</li>
 					<li class="fl" id="goods">
-						<span class="member-order-list-num">12</span>
+						<span class="member-order-list-num"><!--{if $not_shouhuos neq ''}--> {$not_shouhuos}<!--{else}-->0<!--{/if}--></span>
 						<a href="{:url('user/order_list')}"><i class="iconfont">&#xe61c; </i><span>待收货</span></a>
 					</li>
 					<li class="fl" id="comment">
-						<span class="member-order-list-num">133</span>
+						<span class="member-order-list-num"><!--{if $not_comment neq ''}--> {$not_comment}<!--{else}-->0<!--{/if}--></span>
 						<a href="{:url('user/order_list')}"><i class="iconfont">&#xe619; </i><span>待评价</span></a>
 					</li>
 					<!-- <li class="fl" id="repick">
@@ -64,13 +64,13 @@
 					<i class="iconfont fl member-purse-title-i">&#xe61b; </i><span>我的钱包</span><i class="iconfont fr member-order-i">&#xe60c;</i>
 				</div>
 				<ul class="member-purse-list">
-					<li class="fl"><span>{$info.integral}</span>
+					<li class="fl"><span><!--{if $user_money neq ''}--> {$user_money}<!--{else}-->0<!--{/if}--></span>
 						<p>余额</p>
 					</li>
-					<li class="fl"><span>1111</span>
+					<li class="fl"><span>0</span>
 						<p>红包</p>
 					</li>
-					<li class="fl"><span>1111</span>
+					<li class="fl"><span><!--{if $user_points neq ''}--> {$user_points}<!--{else}-->0<!--{/if}--></span>
 						<p>积分</p>
 					</li>
 				</ul>
