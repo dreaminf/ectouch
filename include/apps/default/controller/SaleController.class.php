@@ -267,7 +267,7 @@ class SaleController extends CommonController {
 
     public function order_list(){
         $user_id = I('user_id') > 0 ? I('user_id') : $_SESSION['user_id'];
-        $where = 'parent_id = '.$user_id;
+        $where = 'drp_id = '.$user_id;
         $size = I(C('page_size'), 20);
         $sql = "select count(*) as count from {pre}order_info where $where";
         $count = $this->model->getOne($sql);
