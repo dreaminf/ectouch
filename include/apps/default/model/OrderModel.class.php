@@ -645,7 +645,8 @@ class OrderModel extends BaseModel {
             } else { //购物车没有此物品，则插入
                 $goods_price = model('GoodsBase')->get_final_price($goods_id, $num, true, $spec);
                 $parent['goods_price'] = max($goods_price, 0);
-                $parent['touch_profit'] = $goods['touch_profit'];
+                $parent['touch_sale'] = $goods['touch_sale'];
+                $parent['touch_fencheng'] = $goods['touch_fencheng'];
                 $parent['goods_number'] = $num;
                 $parent['parent_id'] = 0;
                 $this->table = 'cart';
