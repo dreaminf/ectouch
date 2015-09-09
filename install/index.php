@@ -20,7 +20,7 @@ if($phpversion < '5.2.4'){
 }
 //数据库文件
 foreach ($config['sqlFileName'] as $sqlFile) {
-	if(!file_exists('./sqls/'.$sqlFile)){
+	if(!file_exists('./sqldata/'.$sqlFile)){
 		exit(get_tip_html('数据库文件不存在，无法继续安装！'));
 	}
 }
@@ -170,13 +170,17 @@ switch ($step) {
 				if(!$independent && in_array($sqlFile, $rest)){
 					continue;
 				}
-				$sqldata .= file_get_contents('./sqls/'.$sqlFile);
+				$sqldata .= file_get_contents('./sqldata/'.$sqlFile);
+			}
+			//主题SQL文件
+			$themesSql = './sqldata/themes.sql';
+			if(is_file($themesSql)){
+				$sqldata .= file_get_contents($themesSql);
 			}
 			if(empty($sqldata)){
 				alert(0,'数据库文件不能为空！');
 			}
 			$sqlFormat = sql_split($sqldata, $dbPrefix, $config['dbPrefix']);
-
 
 			/**
 			 * 执行SQL语句
