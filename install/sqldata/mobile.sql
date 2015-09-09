@@ -34,9 +34,9 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_topic` (
 --
 
 INSERT INTO `ecs_ad` (`position_id`, `media_type`, `ad_name`, `ad_link`, `ad_code`, `start_time`, `end_time`, `link_man`, `link_email`, `link_phone`, `click_count`, `enabled`) VALUES
-(255, 0, '1', '', 'http://www.ectouch.cn/data/assets/images/ectouch_ad1.jpg', 1396339200, 1525161600, '', '', '', 0, 1),
-(255, 0, '2', '', 'http://www.ectouch.cn/data/assets/images/ectouch_ad2.jpg', 1396339200, 1525161600, '', '', '', 0, 1);
--- (3, 1, 0, '3', '', 'http://www.ectouch.cn/data/assets/images/ectouch_ad3.jpg', 1396339200, 1525161600, '', '', '', 0, 1);
+(255, 0, '1', '', 'http://www.ectouch.cn/data/assets/images/ectouch2_ad1.png', 1396339200, 1525161600, '', '', '', 0, 1),
+(255, 0, '2', '', 'http://www.ectouch.cn/data/assets/images/ectouch2_ad2.png', 1396339200, 1525161600, '', '', '', 0, 1),
+(255, 0, '3', '', 'http://www.ectouch.cn/data/assets/images/ectouch2_ad3.png', 1396339200, 1525161600, '', '', '', 0, 1);
 
 --
 -- 转存表中的数据 `ecs_touch_ad_position`
@@ -200,8 +200,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_user_info` (
 -- 增加字段
 ALTER TABLE `ecs_order_info` ADD COLUMN `order_source` int(1) UNSIGNED NOT NULL DEFAULT 0;
 
-DROP TABLE IF EXISTS `ecs_drp_config`;
-CREATE TABLE `ecs_drp_config` (
+CREATE TABLE IF NOT EXISTS `ecs_drp_config` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `centent` text COMMENT '分销申请 温馨提示',
   `keyword` varchar(20) DEFAULT NULL COMMENT '区分文章的key',
@@ -274,6 +273,5 @@ ALTER TABLE `ecs_cart` ADD COLUMN `touch_fencheng` decimal(10,2) unsigned NOT NU
 ALTER TABLE `ecs_goods` ADD COLUMN `touch_fencheng` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
 
 ALTER TABLE `ecs_brand` ADD COLUMN `brand_banner` varchar(80)  DEFAULT '';
-
 
 ALTER TABLE `ecs_order_info` ADD COLUMN `drp_id` int(8) unsigned NOT NULL DEFAULT '0';
