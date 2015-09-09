@@ -2,7 +2,7 @@
 	<div id="box">   		  
 		<div class="header">
 			<div class="yjfd_content10">
-				<a href="{:url('sale/index')}"><i class="iconfont icon-jiantou"></i></a><span class="tltle">{$title}</span>                 
+				<a href="{:url('sale/my_shop_info')}"><i class="iconfont icon-jiantou"></i></a><span class="tltle">{$title}</span>
 			</div>
 		</div>       
 		<!--{foreach from=$list item=li}-->	       

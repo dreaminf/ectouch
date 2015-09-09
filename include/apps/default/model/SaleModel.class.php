@@ -60,7 +60,7 @@ class SaleModel extends BaseModel {
             }
         }
         foreach($res as $key=>$val){
-            $res[$key]['time'] = date('Y-m-d',$val['time']);
+            $res[$key]['time'] = date('Y-m-d H:i:s',$val['create_time']);
         }
         return $res;
     }
@@ -107,7 +107,7 @@ class SaleModel extends BaseModel {
             }
         }
         foreach($res as $key=>$val){
-            $res[$key]['time'] = date('Y-m-d',$val['time']);
+            $res[$key]['time'] = date('Y-m-d',$val['reg_time']);
         }
         return $res;
     }

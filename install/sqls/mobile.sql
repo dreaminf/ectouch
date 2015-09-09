@@ -274,3 +274,6 @@ ALTER TABLE `ecs_cart` ADD COLUMN `touch_fencheng` decimal(10,2) unsigned NOT NU
 ALTER TABLE `ecs_goods` ADD COLUMN `touch_fencheng` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
 
 ALTER TABLE `ecs_brand` ADD COLUMN `brand_banner` varchar(80)  DEFAULT '';
+
+
+ALTER TABLE `ecs_order_info` ADD COLUMN `drp_id` int(8) unsigned NOT NULL DEFAULT '0';

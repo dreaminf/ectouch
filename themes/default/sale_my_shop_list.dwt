@@ -5,8 +5,8 @@
   </div>
   <!-- {if $list} -->
   <!--{foreach from=$list item=li}-->
-  <div class="dpgl_list"> <a href="dpxq.html"><span class="dpgl_list2">店名{$li.shop_name}</span></a><br>
-    <span class="yjfd_list">分销时间：{$time}</span><i class="iconfont icon-huise icon-jiantou1"></i> </div>
+  <div class="dpgl_list"> <a href=""><span class="dpgl_list2">店名{$li.shop_name}</span></a><br>
+    <span class="yjfd_list">分销时间：{$li.time}</span><i class="iconfont icon-huise icon-jiantou1"></i> </div>
   <div class="dpxq_border"></div>
   <!-- {/foreach}-->
   <!-- {else} -->

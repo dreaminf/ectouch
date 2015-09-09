@@ -377,8 +377,8 @@ class SaleController extends CommonController {
         $this->assign('money', $money ? $money : '0.00');
         // 一级分店数
         $sql = "select count(*) count from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id = ".$_SESSION['user_id'];
-        $shop_count = $this->model->getOne($sql);
-        $this->assign('shop_count', $shop_count ? $shop_count : 0);
+        $shop_count = $this->model->getRow($sql);
+        $this->assign('shop_count', $shop_count['count'] ? $shop_count['count'] : 0);
 
         // 我的会员数
         $user_count = M()->table('users')->where("parent_id=".$_SESSION['user_id'])->count();
