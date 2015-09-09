@@ -40,18 +40,18 @@
     <a href="{:url('sale/my_goods')}"><i class="iconfont icon-quanbushangpin"></i><span class="dpgl_list2">我的商品</span><i class="iconfont icon-huise icon-jiantou1"></i></a> </div>
     <div class="dpxq_border"></div>
     
-    <div class="dpgl_list" id="dpg1_list1">   
+    <div class="dpgl_list" id="dpg1_list1">
     <a href="javascript:;"><i class="iconfont icon-fenxiao"></i><span class="dpgl_list2">我的分销</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
       <ul class="index_nav">
-        <li class="index_nav1"><a href="{:url('sale/order_list')}" ><span class="index_list1">本店订单</span></a></li>
-        <li class="index_nav1"><a href="{:url('sale/my_shop_info')}"><span class="index_list1">我的分店</span></a></li>       
+          <li class="index_nav1"><a href="{:url('sale/my_shop_info')}"><span class="index_list1">我的分店</span></a></li>
+          <li class="index_nav1"><a href="{:url('sale/order_list')}" ><span class="index_list1">本店订单</span></a></li>
       </ul>
     </div>
     <div class="dpxq_border"></div>    
     <div class="dpgl_list" id="dpg1_list1">
      <i class="iconfont icon-gonggaofuzhi"></i><a href="javascript:;" ><span class="dpgl_list2">我的会员</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
      
-      <ul class="index_nav">       
+      <ul class="index_nav">
         <li class="index_nav1" ><a href="{:url('sale/user_list',array('key'=>'wfk'))}"><span class="index_list1">下单未付款会员</span></a></li>
         <li class="index_nav1"><a href="{:url('sale/user_list',array('key'=>'yfk'))}" ><span class="index_list1">下单已付款会员</span></a></li>
         <li class="index_nav1"><a href="{:url('sale/user_list',array('key'=>'gz'))}" ><span class="index_list1">关注公众号会员</span></a></li>

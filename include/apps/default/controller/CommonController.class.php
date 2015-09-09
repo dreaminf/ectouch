@@ -185,9 +185,11 @@ class CommonController extends BaseController
             if($drp_info['open'] == 1){
                 $drp_info['cat_id'] = substr($drp_info['cat_id'], 0, -1);
                 $_SESSION['drp_shop'] = $drp_info;
+
             }
         }
     }
+
 
     /*
      * 微信jsSDK
@@ -198,13 +200,13 @@ class CommonController extends BaseController
         $secret   = $wxinfo['appsecret'];
 
         //分销商信息
-        $drp_id   = isset($_SESSION['drp_shop']['id']) ? $_SESSION['drp_shop']['id'] : $_SESSION['user_id'];
+        $drp_id   = isset($_SESSION['drp_shop']['drp_id']) ? $_SESSION['drp_shop']['drp_id'] : 0;
 
         //微信店信息
         $drp_shop = $_SESSION['drp_shop'];
         $wx_title = C('shop_name').$drp_shop['shop_name'];
         $wx_desc  = C('shop_desc');
-        $wx_url   = __URL__ . '/index.php?drp_id='.$drp_id;
+        $wx_url   = __URL__ . '/index.php?u=' . $_SESSION['user_id'] . '&drp_id='.$drp_id;
         $wx_pic   = __URL__ . '/images/logo.png';
 
         //商品信息
@@ -213,7 +215,7 @@ class CommonController extends BaseController
             $goods = model('Goods')->get_goods_info($goods_id);
             $wx_title = $goods['goods_name'];
             $wx_desc  = $goods['goods_name'];
-            $wx_url   = __URL__ .'/index.php?c=goods&id='.$goods_id.'&drp_id='.$drp_id;
+            $wx_url   = __URL__ .'/index.php?c=goods&id='.$goods_id.'&u=' . $_SESSION['user_id'] . '&drp_id='.$drp_id;
             $wx_pic   = $goods['goods_thumb'];
         }
         

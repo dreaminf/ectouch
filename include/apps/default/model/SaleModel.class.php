@@ -30,8 +30,9 @@ class SaleModel extends BaseModel {
             if($list){
                 $where = '';
                 foreach ($list as $key=>$val){
-                    $where.=','.$val['user_id'];
+                    $where.=$val['user_id'].',';
                 }
+                $where = substr($where, 0, -1);
                 $sql = "select d.* from {pre}users  as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id in($where) and apply_sale = 1";
                 $list2 = M()->query($sql);
                 if($key == 2){
@@ -40,8 +41,9 @@ class SaleModel extends BaseModel {
                     if($list2){
                         $where = '';
                         foreach ($list2 as $key=>$val){
-                            $where.=','.$val['user_id'];
+                            $where.=$val['user_id'].',';
                         }
+                        $where = substr($where, 0, -1);
                         $sql = "select d.* from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id in($where) and apply_sale = 1";
                         $list3 = M()->query($sql);
                         if($key == 3){
@@ -78,6 +80,7 @@ class SaleModel extends BaseModel {
                 foreach ($list as $key=>$val){
                     $where.=','.$val['user_id'];
                 }
+
                 $sql = "select * from {pre}users WHERE parent_id in($where) ";
                 $list2 = M()->query($sql);
                 if($key == 2){
@@ -566,6 +569,7 @@ class SaleModel extends BaseModel {
         }
         $sql = "SELECT * FROM " . $this->pre . "drp_shop WHERE user_id = '$user_id'";
         $row = $this->row($sql);
+        $info['drp_id'] = $row['id'];
         $info['shop_name'] = $row['shop_name'];
         $info['real_name'] = $row['real_name'];
         $info['open']      = $row['open'];
