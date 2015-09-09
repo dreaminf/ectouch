@@ -434,7 +434,7 @@ class OrderModel extends BaseModel {
 
         /* 取得商品信息 */
         $sql = "SELECT g.goods_name, g.goods_sn, g.is_on_sale, g.is_real, " .
-                "g.market_price, g.shop_price AS org_price,g.touch_profit, g.promote_price, g.promote_start_date, " .
+                "g.market_price, g.shop_price AS org_price,g.touch_sale,touch_fencheng, g.promote_price, g.promote_start_date, " .
                 "g.promote_end_date, g.goods_weight, g.integral, g.extension_code, " .
                 "g.goods_number, g.is_alone_sale, g.is_shipping," .
                 "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price " .
