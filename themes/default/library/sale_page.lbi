@@ -1,4 +1,4 @@
-{if $pager.page_prev}
+<!-- {if $pager.page_prev} -->
 <div class="pagination">
     <p>
         <!-- {if $pager.page_prev} -->
@@ -29,5 +29,5 @@
     <style>
     .pagination p{width:30%;text-align:center;height:4rem;float:left;line-height:4rem;}
     </style>
-        {/if}
+<!--{/if}-->
  
