@@ -296,7 +296,7 @@ class SaleController extends CommonController {
             $errorCorrectionLevel = 'L';
             // 点的大小：1到10
             $matrixPointSize = 8;
-            QRcode::png($url, $mobile_qr, $errorCorrectionLevel, $matrixPointSize, 2);
+            @QRcode::png($url, $mobile_qr, $errorCorrectionLevel, $matrixPointSize, 2);
         }
         $this->assign('mobile_qr', $mobile_qr);
         $this->assign('title',L('store'));
