@@ -283,20 +283,6 @@ function process_image($page = 1, $page_size = 100, $type = 0, $thumb= true, $wa
             $goods_thumb = '';
             $image = '';
 
-            // 处理远程图片
-            $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-            if(preg_match("/^http/", $row['original_img'])){
-                if (@!mkdir('../' . IMAGE_DIR . '/remote_img', 0777)){
-                    $warning = sprintf($_LANG['safe_mode_warning'], '../' . IMAGE_DIR . '/remote_img');
-                    make_json_error($warning);
-                }
-                $remote_img = file_get_contents($row['original_img']);
-                $ext = end(explode('.', $row['original_img']));
-                file_put_contents('../' . IMAGE_DIR . '/remote_img/'. $row['goods_id'] . $ext, $remote_img);
-                $row['original_img'] = IMAGE_DIR . '/remote_img/'. $row['goods_id'] . $ext;
-                $row['goods_img'] = '';
-            }
-
             /* 水印 */
             if ($watermark)
             {
