@@ -1,4 +1,4 @@
-<!-- {if $pager.count > 0} -->
+<!-- {if $pager} -->
 <div class="pagination">
     <p>
         <!-- {if $pager.page_prev} -->
@@ -8,8 +8,7 @@
         <!-- {/if} -->
     </p>
     <p>
-		<!--{if $pager }-->
-            <!--{/if}-->
+
             <select name="page"  class="form-control" onchange="window.location.href=this.options[this.selectedIndex].value" >
             <!--{if $pager}-->
             {foreach from=$pager.page_number key=key item=item}
