@@ -284,6 +284,10 @@ class SaleController extends CommonController {
      * 店铺二维码
      */
     public function store(){
+        $filename  = './data/attached/drp1';
+        if(!file_exists($filename)){
+            mkdir($filename);
+        }
         $mobile_qr = './data/attached/drp/drp_'.$_SESSION['user_id'].'.png';
         if(!file_exists($drp_info['mobile_qr'])){
             // 二维码
