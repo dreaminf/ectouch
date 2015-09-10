@@ -2193,11 +2193,12 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit')
         $total = order_weight_price($order_id);
         foreach ($shipping_list AS $key => $shipping)
         {
-            $shipping_fee = shipping_fee($shipping['shipping_code'],
-                unserialize($shipping['configure']), $total['weight'], $total['amount'], $total['number']);
+            $shipping_configure = unserialize($shipping['configure']);
+            dump($shipping_configure);
+            $shipping_fee = shipping_fee($shipping['shipping_code'], , $total['weight'], $total['amount'], $total['number']);
             $shipping_list[$key]['shipping_fee'] = $shipping_fee;
-            $shipping_list[$key]['format_shipping_fee'] = price_format($shipping_fee);exit($shipping['configure']['free_money']);
-            $shipping_list[$key]['free_money'] = price_format($shipping['configure']['free_money']);
+            $shipping_list[$key]['format_shipping_fee'] = price_format($shipping_fee);
+            $shipping_list[$key]['free_money'] = price_format($shipping_configure['free_money']);
         }
         $smarty->assign('shipping_list', $shipping_list);
     }
