@@ -284,20 +284,14 @@ function process_image($page = 1, $page_size = 100, $type = 0, $thumb= true, $wa
             $image = '';
 
             // 处理远程图片
-            // $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-            // if(preg_match("/^http/", $row['original_img'])){
-            //     if (@!mkdir('../' . IMAGE_DIR . '/remote_img', 0777)){
-            //         $warning = sprintf($_LANG['safe_mode_warning'], '../' . IMAGE_DIR . '/remote_img');
-            //         make_json_error($warning);
-            //     }
-            //     $remote_img = file_get_contents($row['original_img']);
-            //     $ext = end(explode('.', $row['original_img']));
-            //     $row['original_img'] = IMAGE_DIR . '/remote_img/'. $row['goods_id'] . $ext;
-            //     $fp = @fopen($row['original_img'], "w");
-            //     @fwrite($fp, $get_file);
-            //     @fclose($fp);
-            //     $row['goods_img'] = '';
-            // }
+            $is_remote_img = false;
+            if(preg_match("/^http/", $row['original_img'])){
+                if(preg_match('/(.jpg|.png|.gif|.jpeg)$/',$row['original_img']) && copy(trim($row['original_img']), ROOT_PATH . 'data/attached/' . basename($row['original_img'])))
+                {
+                    $is_remote_img = true;
+                    $row['original_img'] = $row['goods_img'] = 'data/attached/' . basename($row['original_img']);
+                }
+            }
 
             /* 水印 */
             if ($watermark)
@@ -417,6 +411,10 @@ function process_image($page = 1, $page_size = 100, $type = 0, $thumb= true, $wa
                 {
                     replace_image($goods_thumb, $row['goods_thumb'], $row['goods_id'], $silent);
                 }
+            }
+            //删除远程临时文件
+            if($is_remote_img){
+                unlink(ROOT_PATH . $row['original_img']);
             }
         }
     }
