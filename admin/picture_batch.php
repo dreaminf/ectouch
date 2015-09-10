@@ -283,6 +283,12 @@ function process_image($page = 1, $page_size = 100, $type = 0, $thumb= true, $wa
             $goods_thumb = '';
             $image = '';
 
+            // 处理远程图片
+            $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+            if(preg_match("/^http/", $row['original_img'])){
+                exit('abc');
+            }
+
             /* 水印 */
             if ($watermark)
             {
