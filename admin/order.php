@@ -2194,7 +2194,6 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit')
         foreach ($shipping_list AS $key => $shipping)
         {
             $shipping_configure = unserialize($shipping['configure']);
-            dump($shipping_configure);
             $shipping_fee = shipping_fee($shipping['shipping_code'], $shipping_configure, $total['weight'], $total['amount'], $total['number']);
             $shipping_list[$key]['shipping_fee'] = $shipping_fee;
             $shipping_list[$key]['format_shipping_fee'] = price_format($shipping_fee);
