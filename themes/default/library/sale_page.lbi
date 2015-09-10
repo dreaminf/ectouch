@@ -1,4 +1,4 @@
-<!-- {if $pager.page_prev} -->
+<!-- {if $pager.count > 0} -->
 <div class="pagination">
     <p>
         <!-- {if $pager.page_prev} -->
