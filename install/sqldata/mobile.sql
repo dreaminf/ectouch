@@ -258,8 +258,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_shop` (
 -- ----------------------------
 -- Table structure for `ecs_drp_bank`
 -- ----------------------------
-DROP TABLE IF EXISTS `ecs_drp_bank`;
-CREATE TABLE `ecs_drp_bank` (
+CREATE TABLE IF NOT EXISTS `ecs_drp_bank` (
   `id` int(10) NOT NULL,
   `bank_name` varchar(50) DEFAULT NULL COMMENT '银行名称',
   `bank_card` varchar(50) DEFAULT NULL COMMENT '银行卡号',
