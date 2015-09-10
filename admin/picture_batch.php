@@ -290,8 +290,7 @@ function process_image($page = 1, $page_size = 100, $type = 0, $thumb= true, $wa
                     $warning = sprintf($_LANG['safe_mode_warning'], '../' . IMAGE_DIR . '/remote_img');
                     make_json_error($warning);
                 }
-                require ROOT_PATH . 'include/vendor/Http.class.php';
-                $remote_img = Http::doGet($row['original_img']);
+                $remote_img = file_get_contents($row['original_img']);
                 $ext = end(explode('.', $row['original_img']));
                 file_put_contents('../' . IMAGE_DIR . '/remote_img/'. $row['goods_id'] . $ext, $remote_img);
                 $row['original_img'] = IMAGE_DIR . '/remote_img/'. $row['goods_id'] . $ext;
