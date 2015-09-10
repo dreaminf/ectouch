@@ -1,4 +1,4 @@
-{$pager.page_prev}
+{if $pager.page_prev}
 <div class="pagination">
     <p>
         <!-- {if $pager.page_prev} -->
