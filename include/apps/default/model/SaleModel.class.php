@@ -529,15 +529,14 @@ class SaleModel extends BaseModel {
      * @param int $start 每页开始显示条数
      */
     function saleuser($uid=0){
-        $global = getInstance();
         $uid = $uid > 0 ? $uid : $_SESSION['user_id'];
-        $sql = "SELECT * FROM ".$global->ecs->table('users')." WHERE parent_id = " .$uid . " ORDER BY user_id DESC ";
-        $res = $global->db->getAll($sql);
+        $sql = "SELECT * FROM {pre}users WHERE parent_id = " .$uid . " ORDER BY user_id DESC ";
+        $res = M()->query($sql);
         if($res){
             foreach ($res as $k => $v) {
-                $res[$k]['user_id']     =   $v['user_id'];
+                $list[$k]['user_id']     =   $v['user_id'];
             }
-            return $res;
+            return $list;
         }else{
             return array();
         }
@@ -611,6 +610,100 @@ class SaleModel extends BaseModel {
             $id = $this->get_goods_cat($parent_id);
             return $id;
         }
+    }
+
+    /**
+     * 获取店铺销售总额
+     */
+    public function get_shop_sale_money($user_id=0,$separate=0){
+        $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$user_id)->getOne();
+        $order_id = M()->table('order_info')->field('order_id')->where('drp_id='.$drp_id ." and shop_separate=".$separate)->select();
+        $where = "0";
+        foreach($order_id as $key=>$val){
+            $where.=",".$val['order_id'];
+        }
+        $goods_list = M()->table('order_goods')->where('order_id in('.$where.')')->select();
+
+        foreach($goods_list as $key=>$val){
+            $profit = $this->get_drp_profit($val['goods_id']);
+            if(!$profit){
+                $profit['profit1'] = 0;
+            }
+
+            // 一级分销商利润
+            $data1['user_id'] = $user_id;
+            $data1['profit']+= $val['touch_sale']*$profit['profit1']/100*$val['goods_number'];
+        }
+
+        return $data1['profit'] ? $data1['profit'] : 0;
+    }
+
+    /**
+     * 获取分成佣金
+     */
+    public function get_user_separate_money($user_id=0,$separate=0){
+        $user_id = $user_id > 0 ? $user_id : session('user_id');
+        $affiliate = unserialize(C('affiliate'));
+        empty($affiliate) && $affiliate = array();
+
+        $separate_by = $affiliate['config']['separate_by'];
+
+        // 获取一级订单
+        $order_id = M()->table('order_info')->field('order_id')->where('parent_id='.$user_id ." and is_separate=".$separate)->select();
+        $where = "0";
+        foreach($order_id as $key=>$val){
+            $where.=",".$val['order_id'];
+        }
+        $goods_list = M()->table('order_goods')->where('order_id in('.$where.')')->select();
+        $money1=0;
+        foreach($goods_list as $Key=>$val){
+            $money1+= (float)$affiliate['item']['1']['level_money']*$val['touch_profit']/100;
+        }
+        // 二级
+        $user_list = $this->saleuser($user_id);
+        if($user_list){
+            $where_user = '-1';
+            foreach($user_list as $key=>$val){
+                $where_user.=",".$val['user_id'];
+            }
+            $order_id = M()->table('order_info')->field('order_id')->where("parent_id in(".$where_user.") and is_separate=".$separate)->select();
+            $where = "0";
+            foreach($order_id as $key=>$val){
+                $where.=",".$val['order_id'];
+            }
+            $goods_list = M()->table('order_goods')->where('order_id in('.$where.')')->select();
+            $money2=0;
+            foreach($goods_list as $Key=>$val){
+                $money2+= (float)$affiliate['item']['2']['level_money']*$val['touch_profit']/100;
+            }
+            // 三级
+            $user_list = M()->table('users')->field('user_id')->where("parent_id in(".$where_user.")")->select();
+            if($user_list){
+                $where_user = '-1';
+                foreach($user_list as $key=>$val){
+                    $where_user.=",".$val['user_id'];
+                }
+                $order_id = M()->table('order_info')->field('order_id')->where("parent_id in(".$where_user.") and is_separate=".$separate)->select();
+                $where = "0";
+                foreach($order_id as $key=>$val){
+                    $where.=",".$val['order_id'];
+                }
+                $goods_list = M()->table('order_goods')->where('order_id in('.$where.')')->select();
+                $money3=0;
+                foreach($goods_list as $Key=>$val){
+                    $money3+= (float)$affiliate['item']['3']['level_money']*$val['touch_profit']/100;
+                }
+            }else{
+                $money3 = 0;
+            }
+
+        }else{
+            $money2 =   0;
+        }
+        $data['money1'] = $money1 ? $money1 : 0;
+        $data['money2'] = $money2 ? $money2 : 0;
+        $data['money3'] = $money3 ? $money3 : 0;
+        return $data;
     }
 
 }
