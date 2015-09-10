@@ -12,7 +12,6 @@
     </div>
     <div class="bd">
       <ul id="Gallery">
-        <li><a href="{$goods.goods_img}"><img src="{$goods.goods_img}" alt="{$goods.goods_name}" /></a></li>
         <!--{if $pictures}--> 
         <!-- {foreach from=$pictures item=picture name=no}--> 
         <!-- {if $smarty.foreach.no.iteration > 1}  -->
