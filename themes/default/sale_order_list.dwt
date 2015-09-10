@@ -33,7 +33,9 @@
               <div class="bdda_content2"><span class="bdda2_list4">买家：{$item.user_name}</span></a><br><span class="bdda2_list3">{$item.is_separate}</span><span class="bdda2_content10">合计：{$item.sum}元</span></div><br>
           	  <div class="dpxq_border" ></div>
             </div>
-			<!--{/foreach}-->     
+			<!--{/foreach}-->
+
+        {include file='library/sale_page.lbi '}
     </div>
 </body>
 </html>

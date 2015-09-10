@@ -301,16 +301,23 @@ class SaleController extends CommonController {
 
     public function order_list(){
         $user_id = I('user_id') > 0 ? I('user_id') : $_SESSION['user_id'];
-        $where = 'drp_id = '.$user_id;
-        $size = I(C('page_size'), 20);
-        $sql = "select count(*) as count from {pre}order_info where $where";
-        $count = $this->model->getOne($sql);
-        $orders = model('Sale')->get_sale_orders($where , 10 , 0 ,$user_id);
+        $drp_id = $this->model->table('drp_shop')->field('id')->where("user_id=".$user_id)->getOne();
+        if(!$drp_id){
+            show_message('此用户尚未开店，无法查看订单');
+        }
+        $size = I(C('page_size'), 5);
+        $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
+        $where = 'drp_id = '.$drp_id;
+        $count = $this->model->table('order_info')->field('COUNT(*)')->where($where)->getOne();
+        $this->pageLimit(url('sale/order_list'), $size);
+        $this->assign('pager', $this->pageShow($count));
+        $orders = model('Sale')->get_sale_orders($where ,  $size, ($page-1)*$size,$user_id);
+
         if($orders){
             foreach($orders as $key=>$val){
                 foreach($val['goods'] as $k=>$v){
                     $orders[$key]['goods'][$k]['profit'] = model('Sale')->get_drp_profit($v['goods_id']);
-                    $orders[$key]['goods'][$k]['profit_money'] =$v['price']*$orders[$key]['goods'][$k]['profit'] /100;
+                    $orders[$key]['goods'][$k]['profit_money'] =$v['touch_sale']*$orders[$key]['goods'][$k]['profit'] /100;
                     $orders[$key]['sum']+=$orders[$key]['goods'][$k]['profit_money'];
                 }
 

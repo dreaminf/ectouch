@@ -208,7 +208,7 @@ class SaleModel extends BaseModel {
     function get_sale_orders($where, $num = 10, $start = 0 ,$user_id) {
         /* 取得订单列表 */
         $arr = array();
-        $sql = "SELECT order_id, order_sn, user_id, shipping_id, order_status, shipping_status, pay_status, add_time, is_separate, " .
+        $sql = "SELECT order_id, order_sn, user_id, shipping_id, order_status, shipping_status, pay_status, add_time, is_separate,drp_id,shop_separate, " .
             "(goods_amount + shipping_fee + insure_fee + pay_fee + pack_fee + card_fee + tax - discount) AS total_fee " .
             " FROM {pre}order_info " .
             " WHERE  " . $where . " ORDER BY add_time DESC LIMIT $start , $num";
@@ -219,13 +219,13 @@ class SaleModel extends BaseModel {
             $value['order_status'] = L('os.' . $value['order_status']) . ',' . L('ps.' . $value['pay_status']) . ',' . L('ss.' . $value['shipping_status']);
             $goods_list = model('Order')->order_goods($value['order_id']);
             foreach ($goods_list as $key => $val) {
-                $goods_list[$key]['market_price'] = price_format($val['market_price'], false);
                 $goods_list[$key]['price'] = $val['goods_price'];
                 $goods_list[$key]['goods_price'] = price_format($val['goods_price'], false);
                 $goods_list[$key]['subtotal'] = price_format($val['subtotal'], false);
-                $goods_list[$key]['tags'] = model('ClipsBase')->get_tags($val['goods_id']);
                 $goods_list[$key]['goods_thumb'] = get_image_path($value['order_id'], $val['goods_thumb']);
                 $goods_list[$key]['goods_number'] = $val['goods_number'];
+                $goods_list[$key]['touch_fencheng'] = $val['touch_fencheng'];
+                $goods_list[$key]['touch_sale'] = $val['touch_sale'];
             }
             $arr[] = array('order_id' => $value['order_id'],
                 'user_name' => M()->table('users')->field('user_name')->where("user_id=".$value[user_id])->getOne(),
@@ -236,7 +236,7 @@ class SaleModel extends BaseModel {
                 'shipping_id' => $value['shipping_id'],
                 'total_fee' => price_format($value['total_fee'], false),
                 'url' => url('user/order_detail', array('order_id' => $value['order_id'])),
-                'is_separate' => $value['is_separate'] > 0 ? "<span style='font-weight:bold'>已分成</span>" : "<span style='color:red;font-weight:bold'>未分成</span>",
+                'is_separate' => $value['shop_separate'] > 0 ? "<span style='font-weight:bold'>已分成</span>" : "<span style='color:red;font-weight:bold'>未分成</span>",
                 'goods'=>$goods_list,
             );
         }

@@ -181,7 +181,7 @@ class OrderModel extends BaseModel {
 
         $sql = "SELECT og.rec_id, og.goods_id, og.goods_name, og.goods_sn, og.market_price, og.goods_number, " .
                 "og.goods_price, og.goods_attr, og.is_real, og.parent_id, og.is_gift, " .
-                "og.goods_price * og.goods_number AS subtotal, og.extension_code, g.goods_thumb " .
+                "og.goods_price * og.goods_number AS subtotal, og.extension_code, g.goods_thumb, og.touch_fencheng, og.touch_sale " .
                 "FROM " . $this->pre . "order_goods as og left join " . $this->pre . "goods g on og.goods_id = g.goods_id" .
                 " WHERE og.order_id = '$order_id'";
 
