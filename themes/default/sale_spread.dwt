@@ -7,7 +7,12 @@
 			</div>
             <div style="margin:2rem;text-align:center;">
                 <div>
-                    <p><img src="{$info.headimgurl}" style="width:6rem;"></p>
+                    <p>
+                        {if $info.avatar}
+                        <img style="width:6rem;"src="{$info.avatar}" />
+                        {else}
+                        <img style="width:6rem;" src="__TPL__/images/member-photo-img2.jpeg" />
+                        {/if}
                     <p style="font-size: 2rem;height: 3rem;line-height: 3rem;">我是{$info.name}</p>
                     <p style="font-size: 2rem;height: 3rem;line-height: 3rem;">我为{:C('SHOP_NAME')}代言</p>
 
