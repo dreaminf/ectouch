@@ -154,7 +154,7 @@
             </span> <img class="pull-right" src="{:url('public/captcha', array('rand'=>$this->_var['rand']))}" alt="captcha" onClick="this.src='{:url('public/captcha')}&t='+Math.random()"  /> </p>
           <!-- {/if} -->
           <p class="ect-padding-tb">
-            <input type="submit" class="btn btn-info ect-btn-info" value="{$lang.submit_comment}"/>
+            <input type="submit" class="btn btn-info ect-btn-info ect-bg" value="{$lang.submit_comment}"/>
           </p>
         </div>
       </form>
