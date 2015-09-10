@@ -229,7 +229,7 @@ class image
             if (!make_dir($dir))
             {
                 /* 创建目录失败 */
-                $this->error_msg  = sprintf(L('directory_readonly'), $dir);
+                $this->error_msg  = sprintf(L('directory_readonly'), $dir).'make_thumb';
                 $this->error_no   = ERR_DIRECTORY_READONLY;
                 return false;
             }
