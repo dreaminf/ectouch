@@ -2191,6 +2191,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit')
 
         /* 取得配送费用 */
         $total = order_weight_price($order_id);
+        dump($shipping_list);exit;
         foreach ($shipping_list AS $key => $shipping)
         {
             $shipping_fee = shipping_fee($shipping['shipping_code'],
