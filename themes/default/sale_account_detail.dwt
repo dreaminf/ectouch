@@ -18,7 +18,7 @@
              <div class="dpxq_border"></div>
 			 <!--{/foreach}-->
 
-
+        {include file='library/sale_page.lbi '}
 
     </div>
 </body>

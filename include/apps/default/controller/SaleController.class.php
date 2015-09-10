@@ -125,11 +125,15 @@ class SaleController extends CommonController {
         if (empty($surplus_amount)) {
             $surplus_amount = 0;
         }
+
         $size = I(C('page_size'), 5);
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
         $where = 'user_id = ' . $this->user_id . ' AND user_money <> 0 ';
-        $sql = "select COUNT(*) as count from {pre}sale_log where $where";
-        $count = $this->model->getOne($sql);
+        $sql = "select COUNT(*) as count from {pre}drp_log where $where";
+        $count = $this->model->query($sql);
+        $count = $count['0']['count'];
+        $this->pageLimit(url('sale/account_detail'), $size);
+        $this->assign('pager', $this->pageShow($count));
         $account_detail = model('Sale')->get_sale_log($this->user_id, $size, ($page-1)*$size);
         $this->assign('title', L('add_surplus_log'));
         $this->assign('surplus_amount', price_format($surplus_amount, false));
@@ -403,7 +407,7 @@ class SaleController extends CommonController {
     public function my_shop_info(){
 
         // 总销售额
-        $money = model('Sale')->get_sale_money_total();
+        $money = model('Sale')->get_shop_sale_money($this->user_id,1);
         $this->assign('money', $money ? $money : '0.00');
         // 一级分店数
         $sql = "select count(*) count from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id = ".$_SESSION['user_id'];
@@ -702,15 +706,6 @@ class SaleController extends CommonController {
         $this->assign('goods_list', $goods_list);
         $this->display('sale_order_detail.dwt');
     }
-
-
-
-
-
-
-
-
-
 
 
 
