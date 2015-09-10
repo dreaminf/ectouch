@@ -42,9 +42,6 @@
                     </ul> 
                  </div> 
                  <div class="dpxq_border"></div>
-                <div class="dpgl_list">
-                     <a href="javascript:void(0)"><i class="iconfont icon-jinbichongzhi"></i><span class="dpgl_list2">可提现订单佣金</span><span class="wdyj_sum">{$saleMoney}元<i class="iconfont icon-huise icon-jiantou2"></i></span></a>
-                  </div> 
               </div>
                <div class="dpxq_border"></div>  
              <div class="yhk_content2"><a href="{:url('sale/account_raply')}"><span class="yhk_content">申请提现</span></a></div>             

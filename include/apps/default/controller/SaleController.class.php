@@ -289,9 +289,9 @@ class SaleController extends CommonController {
             mkdir($filename);
         }
         $mobile_qr = './data/attached/drp/drp_'.$_SESSION['user_id'].'.png';
-        if(!file_exists($drp_info['mobile_qr'])){
+        if(!file_exists($mobile_qr)){
             // 二维码
-            $url = $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$_SESSION['user_id'];
+            $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$_SESSION['user_id'];
             // 纠错级别：L、M、Q、H
             $errorCorrectionLevel = 'L';
             // 点的大小：1到10
