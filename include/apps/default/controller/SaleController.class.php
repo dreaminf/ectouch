@@ -141,7 +141,7 @@ class SaleController extends CommonController {
      *  会员申请提现
      */
     public function account_raply(){
-        $list = $this->model->table('drp_bank')->where("id=".$this->user_id)->select();
+        $list = $this->model->table('drp_bank')->where("user_id=".$this->user_id)->select();
         $this->assign('list',$list);
         // 获取剩余余额
         $surplus_amount = model('Sale')->saleMoney($this->user_id);
@@ -158,6 +158,10 @@ class SaleController extends CommonController {
      */
     public function act_account()
     {
+        $bank = I('bank') ? I('bank') : 0;
+        if($bank == 0){
+            show_message('请选择提现的银行卡');
+        }
         $amount = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
         if (!is_numeric($amount)){
             show_message(L('amount_gt_zero'));
@@ -183,19 +187,23 @@ class SaleController extends CommonController {
         }
         //插入会员账目明细
         $surplus['payment'] = '';
-        $surplus['rec_id']  =  model('Sale')->insert_user_account($surplus, $amount);
+        $surplus['rec_id']  =  model('ClipsBase')->insert_user_account($surplus, $amount);
 
         /* 如果成功提交 */
         if ($surplus['rec_id'] > 0)
         {
+            $bank_info = $this->model->table('drp_bank')->where("user_id=".$this->user_id ." and id=".$bank)->select();
+            $bank_info = $bank_info['0'];
             /* 插入帐户变动记录 */
             $account_log = array(
                 'user_id'       => $this->user_id,
                 'user_money'    => '-'.$amount,
                 'change_time'   => gmtime(),
                 'change_desc'   => isset($_POST['user_note'])    ? trim($_POST['user_note'])      : '',
+                'bank_info'   => "银行名称：".$bank_info['bank_name']." 帐号：".$bank_info['bank_card'],
             );
-            $this->model->table('sale_log')
+
+            $this->model->table('drp_log')
                 ->data($account_log)
                 ->insert();
 
