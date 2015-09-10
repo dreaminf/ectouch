@@ -8,12 +8,11 @@
             <div style="margin:2rem;text-align:center;">
                 <div>
                     <p><img src="{$info.headimgurl}" style="width:6rem;"></p>
-                    <p style="font-size: 2rem;height: 3rem;line-height: 3rem;">我是{$info.username}</p>
-                    <p style="font-size: 2rem;height: 3rem;line-height: 3rem;">我为自己代言</p>
+                    <p style="font-size: 2rem;height: 3rem;line-height: 3rem;">我是{$info.name}</p>
+                    <p style="font-size: 2rem;height: 3rem;line-height: 3rem;">我为{:C('SHOP_NAME')}代言</p>
 
                 </div>
                 <img src="{$mobile_qr}" style="width:80%;"/>
-                <div>长按二维码，关注公众号</div>
             </div>
 
         </div>

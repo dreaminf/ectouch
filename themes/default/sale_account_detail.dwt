@@ -5,12 +5,7 @@
                  <a href="{:url('sale/index')}"><i class="iconfont icon-jiantou"></i></a><span class="tltle">明细</span> 
               </div>
                </div>  
-              <div class="mx_nav">
-                  <ul>
-                        <li class="mx_nav1"><a href="{:url('sale/my_commission')}"><span class="bdda2_content" >本店佣金</span></a></li>
-                        <li class="mx_nav2"><a href="{:url('sale/account_raply')}">提现记录</a></li>
-                  </ul>
-          </div>
+            
 
              <div class="dpxq_border"></div>
 			 <!--{foreach from=$account_log item=li}-->

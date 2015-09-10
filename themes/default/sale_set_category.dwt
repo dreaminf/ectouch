@@ -13,7 +13,7 @@
             <div class="set2_content">
                    <div class="dpgl_list">                                 
                            <span class="set3_list2">温馨提示</span><i class="iconfont icon-huangse icon-hao" onClick="close_class('set2_content')"></i><br>
-                           <span class="set3_list3">{$wxts}</span>
+                           <span class="set3_list3">{$apply}</span>
                            
                    </div>
             </div> 

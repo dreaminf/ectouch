@@ -12,7 +12,7 @@
 	<div class="set2_content">
 	<div class="dpgl_list">
 		<span class="set3_list2">注册成功！请保存以下信息：</span>
-		<i class="iconfont icon-huangse icon-hao"></i>
+		<i class="iconfont icon-huangse icon-hao" onclick="close_class('set2_content')"></i>
 		<br>
 		<div class="yjtx2_content1">
 			<div class="yjtx2_content3">

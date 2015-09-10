@@ -5,7 +5,9 @@
 				<div class="yjfd_content10">
 				<a href="{:url('sale/index')}"><i class="iconfont icon-jiantou"></i></a><span class="tltle">提现</span>                 
 				</div>                  
-			</div>  
+			</div> 
+			{if $list}
+			
 			<div class="dpgl_list">                                 
                    <span class="dpgl_list2">提现金额</span><input  type="text"  name="amount" placeholder="提取金额" value="" class="raply" />
             </div>
@@ -15,7 +17,9 @@
             </div>
 			<div class="dpxq_border"></div>
 			<div class="t-a-center"><input type="submit" value="{:L('next_step')}" class="set-4-submit"></div>
-			
+			{else}
+				<div class="t-a-center"><input type="button" value="添加银行卡" onclick="location.href='{:url('sale/add_bank')}'" class="set-4-submit"></div>
+			{/if}
 		</div>
 	</form>
 	<style>

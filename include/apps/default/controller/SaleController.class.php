@@ -20,7 +20,7 @@ class SaleController extends CommonController {
     protected $user_id;
     protected $action;
     protected $back_act = '';
-	private $sale = null;
+    private $sale = null;
 
     /**
      * 构造函数
@@ -38,12 +38,12 @@ class SaleController extends CommonController {
         assign_template();
         $this->assign('action', $this->action);
         $this->assign('info', $info);
-		// 获取店铺信息
+        // 获取店铺信息
         $this->sale = $this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->find();
-		
-		$without = array('sale_set', 'sale_set_category', 'sale_set_end');
-		if(!$this->sale && !in_array($this->action, $without)){
-          redirect(url('sale/sale_set'));
+
+        $without = array('sale_set', 'sale_set_category', 'sale_set_end');
+        if(!$this->sale && !in_array($this->action, $without)){
+            redirect(url('sale/sale_set'));
         }
         $this->assign('user_id',session('user_id'));
     }
@@ -141,6 +141,8 @@ class SaleController extends CommonController {
      *  会员申请提现
      */
     public function account_raply(){
+        $list = $this->model->table('drp_bank')->where("id=".$this->user_id)->select();
+        $this->assign('list',$list);
         // 获取剩余余额
         $surplus_amount = model('Sale')->saleMoney($this->user_id);
         if (empty($surplus_amount)) {
@@ -495,7 +497,7 @@ class SaleController extends CommonController {
         $novice = $this->model->table('drp_config')->field("centent")->where(array("keyword"=>'novice'))->getOne();
         $this->assign('novice',$novice);
         // 设置分销商店铺地址
-        $this->assign('sale_url',$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$_SESSION['user_id']);
+        $this->assign('sale_url','http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$_SESSION['user_id']);
         $this->assign('title',L('sale_set_category'));
         $this->display('sale_set_end.dwt');
     }
@@ -809,6 +811,38 @@ class SaleController extends CommonController {
         return sprintf("%0.2f", $money);
     }
 
+    /**
+     * 添加银行卡
+     */
+    public function add_bank(){
+        if(IS_POST){
+            $data = I('data');
+            if(empty($data['bank_name'])){
+                show_message('请输入银行名称，如：建设银行/支付宝等');
+            }
+            if(empty($data['bank_card'])){
+                show_message('请输入帐号');
+            }
+            $data['user_id'] = $this->user_id;
+            $this->model->table('drp_bank')
+                ->data($data)
+                ->insert();
+            redirect(url('sale/account_raply'));
+        }
+        $this->assign('title', '添加银行卡');
+        $this->display('sale_add_bank.dwt');
+    }
 
+    /**
+     * 删除银行卡
+     */
+    public function del_bank(){
+        $id = I('id') ? I('id') : 0;
+        if($id==0){
+            show_message('请选择要删除的银行卡号');
+        }
+        $this->model->table('drp_bank')->where("id=".$id)->delete();
+        redirect(url('sale/account_raply'));
+    }
 
 }

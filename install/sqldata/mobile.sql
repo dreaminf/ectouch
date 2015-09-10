@@ -255,6 +255,17 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_shop` (
   PRIMARY KEY (`id`,`user_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
+-- ----------------------------
+-- Table structure for `ecs_drp_bank`
+-- ----------------------------
+DROP TABLE IF EXISTS `ecs_drp_bank`;
+CREATE TABLE `ecs_drp_bank` (
+  `id` int(10) NOT NULL,
+  `bank_name` varchar(50) DEFAULT NULL COMMENT '银行名称',
+  `bank_card` varchar(50) DEFAULT NULL COMMENT '银行卡号',
+  `user_id` int(10) DEFAULT NULL COMMENT '用户id',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ecs_drp_config
