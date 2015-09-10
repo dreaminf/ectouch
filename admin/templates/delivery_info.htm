@@ -93,7 +93,7 @@
   {foreach from=$goods_list item=goods}
   <tr>
     <td>
-    <a href="../goods.php?id={$goods.goods_id}" target="_blank">{$goods.goods_name} {if $goods.brand_name}[ {$goods.brand_name} ]{/if}
+    <a href="../index.php?c=goods&id={$goods.goods_id}" target="_blank">{$goods.goods_name} {if $goods.brand_name}[ {$goods.brand_name} ]{/if}
     </td>
     <td><div align="left">{$goods.goods_sn}</div></td>
     <td><div align="left">{$goods.product_sn}</div></td>

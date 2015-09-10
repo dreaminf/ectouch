@@ -26,7 +26,7 @@
     </tr>
   {foreach from=$goods_sales_list item=list}
     <tr align="center">
-      <td align="left"><a href="../goods.php?id={$list.goods_id}" target="_blank">{$list.goods_name}</a></td>
+      <td align="left"><a href="../index.php?c=goods&id={$list.goods_id}" target="_blank">{$list.goods_name}</a></td>
       <td><a href="order.php?act=info&order_id={$list.order_id}">{$list.order_sn}</a></td>
       <td align="right">{$list.goods_num}</td>
       <td align="right">{$list.sales_price}{$end_date}</td>

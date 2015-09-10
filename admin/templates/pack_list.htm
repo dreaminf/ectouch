@@ -18,7 +18,7 @@
     {foreach from=$packs_list item=pack}
     <tr>
       <td class="first-cell">
-        {if ($pack.pack_img)}<a href = "../data/packimg/{$pack.pack_img}" target="_brank"><img src="images/picflag.gif" width="16" height="16" border="0" alt="" /></a>{else}<img src="images/picnoflag.gif" width="16" height="16" border="0" alt="" />{/if}
+        {if ($pack.pack_img)}<a href = "../data/attached/packimg/{$pack.pack_img}" target="_brank"><img src="images/picflag.gif" width="16" height="16" border="0" alt="" /></a>{else}<img src="images/picnoflag.gif" width="16" height="16" border="0" alt="" />{/if}
         <span onclick="listTable.edit(this, 'edit_name', {$pack.pack_id})">{$pack.pack_name|escape:"html"}</span>
       </td>
       <td align="right"><span onclick="listTable.edit(this, 'edit_pack_fee', {$pack.pack_id})">{$pack.pack_fee}</span></td>

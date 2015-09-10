@@ -194,14 +194,14 @@
   <tr>
     <td>
     {if $goods.goods_id gt 0 && $goods.extension_code neq 'package_buy'}
-    <a href="../goods.php?id={$goods.goods_id}" target="_blank">{$goods.goods_name} {if $goods.brand_name}[ {$goods.brand_name} ]{/if}
+    <a href="../index.php?c=goods&id={$goods.goods_id}" target="_blank">{$goods.goods_name} {if $goods.brand_name}[ {$goods.brand_name} ]{/if}
     {if $goods.is_gift}{if $goods.goods_price > 0}{$lang.remark_favourable}{else}{$lang.remark_gift}{/if}{/if}
     {if $goods.parent_id > 0}{$lang.remark_fittings}{/if}</a>
     {elseif $goods.goods_id gt 0 && $goods.extension_code eq 'package_buy'}
     <a href="javascript:void(0)" onclick="setSuitShow({$goods.goods_id})">{$goods.goods_name}<span style="color:#FF0000;">{$lang.remark_package}</span></a>
     <div id="suit_{$goods.goods_id}" style="display:none">
         {foreach from=$goods.package_goods_list item=package_goods_list}
-          <a href="../goods.php?id={$package_goods_list.goods_id}" target="_blank">{$package_goods_list.goods_name}</a><br />
+          <a href="../index.php?c=goods&id={$package_goods_list.goods_id}" target="_blank">{$package_goods_list.goods_name}</a><br />
         {/foreach}
     </div>
     {/if}

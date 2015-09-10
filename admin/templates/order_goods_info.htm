@@ -11,7 +11,7 @@
   {foreach from=$goods_list item=goods}
   <tr>
     {if $goods.goods_id gt 0 && $goods.extension_code neq 'package_buy'}
-    <td><img src="{$goods.goods_thumb}" /><br /><a href="../goods.php?id={$goods.goods_id}" target="_blank">{$goods.goods_name} {if $goods.brand_name}[ {$goods.brand_name} ]{/if}
+    <td><img src="{$goods.goods_thumb}" /><br /><a href="../index.php?c=goods&id={$goods.goods_id}" target="_blank">{$goods.goods_name} {if $goods.brand_name}[ {$goods.brand_name} ]{/if}
     {if $goods.is_gift}{if $goods.goods_price > 0}{$lang.remark_favourable}{else}{$lang.remark_gift}{/if}{/if}
     {if $goods.parent_id > 0}{$lang.remark_fittings}{/if}</a></td>
     {else}

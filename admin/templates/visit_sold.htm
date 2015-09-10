@@ -29,7 +29,7 @@
   {foreach from=$click_sold_info key=Key item=list}
     <tr align="right">
       <td align="center">{$Key+1}</td>
-      <td align="left"><a href="../goods.php?id={$list.goods_id}" target="_blank">{$list.goods_name}</a></td>
+      <td align="left"><a href="../index.php?c=goods&id={$list.goods_id}" target="_blank">{$list.goods_name}</a></td>
       <td>{$list.click_count}</td>
       <td>{$list.sold_times}</td>
       <td>{$list.scale}</td>

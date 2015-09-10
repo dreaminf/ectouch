@@ -24,7 +24,7 @@
   {foreach from=$goods_order_data item=list name=val}
     <tr align="center">
       <td>{$smarty.foreach.val.iteration}</td>
-      <td align="left"><a href="../goods.php?id={$list.goods_id}" target="_blank">{$list.goods_name}</a></td>
+      <td align="left"><a href="../index.php?c=goods&id={$list.goods_id}" target="_blank">{$list.goods_name}</a></td>
       <td>{$list.goods_sn}</td>
       <td align="right">{$list.goods_num}</td>
       <td align="right">{$list.turnover}</td>

@@ -98,7 +98,7 @@
   <tr>
     <td>
     {if $goods.goods_id gt 0 && $goods.extension_code neq 'package_buy'}
-    <a href="../goods.php?id={$goods.goods_id}" target="_blank">{$goods.goods_name} {if $goods.brand_name}[ {$goods.brand_name} ]{/if}
+    <a href="../index.php?c=goods&id={$goods.goods_id}" target="_blank">{$goods.goods_name} {if $goods.brand_name}[ {$goods.brand_name} ]{/if}
     {/if}
     </td>
     <td><div align="left">{$goods.goods_sn}</div></td>

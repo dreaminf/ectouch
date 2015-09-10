@@ -25,7 +25,7 @@
     <td><span><input name="checkboxes[]" type="checkbox" value="{$tag.tag_id}">{$tag.tag_id}</span></td>
     <td class="first-cell"><span onclick="javascript:listTable.edit(this, 'edit_tag_name', {$tag.tag_id})">{$tag.tag_words|escape}</span></td>
     <td align="left"><span>{$tag.user_name}</span></td>
-    <td align="left"><span><a href="../goods.php?id={$tag.goods_id}" target="_blank">{$tag.goods_name}</a></span></td>
+    <td align="left"><span><a href="../index.php?c=goods&id={$tag.goods_id}" target="_blank">{$tag.goods_name}</a></span></td>
     <td align="center">
       <span>
       <a href="tag_manage.php?act=edit&amp;id={$tag.tag_id}" title="{$lang.edit}"><img src="images/icon_edit.gif" border="0" height="16" width="16" /></a>

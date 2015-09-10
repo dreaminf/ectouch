@@ -30,7 +30,7 @@
 </tr>
 <!-- {foreach from=$goodsdb item=val} -->
 <tr>
-  <td><a href="../goods.php?id={$val.goods_id}" target="_blank">{$val.goods_name}</a></td>
+  <td><a href="../index.php?c=goods&id={$val.goods_id}" target="_blank">{$val.goods_name}</a></td>
   <td align="center">{$val.last_update}</td>
   <td align="center">
     <form action="attention_list.php" method="post" name="form">

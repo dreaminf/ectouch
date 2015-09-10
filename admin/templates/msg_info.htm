@@ -9,7 +9,7 @@
         <div>{$msg.msg_content|escape:"html"|nl2br}</div>
         {if $msg.message_img}
         <div align="right">
-          <a href="../data/feedbackimg/{$msg.message_img}" target="_bank" width="300" height="400">{$lang.view_upload_file}</a>
+          <a href="../data/attached/feedbackimg/{$msg.message_img}" target="_bank" width="300" height="400">{$lang.view_upload_file}</a>
           <a href="user_msg.php?act=drop_file&id={$msg.msg_id}&file={$msg.message_img}">{$lang.drop}</a>
         </div>
         {/if}
