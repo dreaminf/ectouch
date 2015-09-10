@@ -285,8 +285,8 @@ function process_image($page = 1, $page_size = 100, $type = 0, $thumb= true, $wa
 
             // 处理远程图片
             $is_remote_img = false;
-            if(preg_match("/^http/", $row['original_img'])){
-                if(preg_match('/(.jpg|.png|.gif|.jpeg)$/',$row['original_img']) && copy(trim($row['original_img']), ROOT_PATH . 'data/attached/' . basename($row['original_img'])))
+            if(preg_match("/^http/", $row['original_img']) && @fopen($row['original_img'], 'r')){
+                if(preg_match('/(.jpg|.png|.gif|.jpeg)$/',$row['original_img']) && @copy(trim($row['original_img']), ROOT_PATH . 'data/attached/' . basename($row['original_img'])))
                 {
                     $is_remote_img = true;
                     $row['original_img'] = $row['goods_img'] = 'data/attached/' . basename($row['original_img']);
