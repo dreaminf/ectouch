@@ -17,6 +17,9 @@
           <!-- {foreach from=$comment_list item=comment} -->
           <li>
             <p>{$comment.content}</p>
+            <!-- {if $comment.re_content} -->
+            <p><font class="f1">{$lang.admin_username}</font>{$comment.re_content}</p>
+            <!-- {/if} -->
             <p>{$lang.comment_rank}：<span><img src="__TPL__/images/stars{$comment.rank}.png" class="star" alt="{$comment.comment_rank}" /></span></p>
             <p><span class="pull-left">{$lang.username}：<!--{if $comment.username}-->{$comment.username|escape:html}<!--{else}-->{$lang.anonymous}<!--{/if}--></span><span class="pull-right">{$comment.add_time}</span></p>
           </li>
