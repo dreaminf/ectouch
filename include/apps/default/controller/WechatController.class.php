@@ -686,7 +686,7 @@ class WechatController extends CommonController
 
             // 微信通验证
             $weObj = new Wechat($config);
-            $_SESSION['wechat_user'] = empty($_SESSION['wechat_user']) ? array():$_SESSION['wechat_user'];
+            $_SESSION['wechat_user'] = empty($_SESSION['wechat_user']) ? array() : $_SESSION['wechat_user'];
             
             // 微信浏览器浏览
             if (is_wechat_browser() && $_SESSION['user_id'] === 0 && empty($_SESSION['wechat_user'])) {
@@ -706,20 +706,144 @@ class WechatController extends CommonController
             }
 			
             $flag = I('get.flag');
+            //授权登录
             if ($_SESSION['user_id'] === 0 && !empty($_SESSION['wechat_user']) && ($wxinfo['oauth_status'] == '1' || $flag == 'oauth')) {
-                self::update_weixin_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj);
-                header('location: '. $_SESSION['redirect_url']);
-                exit();
+                //self::update_weixin_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj);
+                $haspc = file_exists('../data/config.php') ? 1 : 0;
+            	self::do_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj, 1, $haspc);
             }
+            else{
+            	$haspc = file_exists('../data/config.php') ? 1 : 0;
+            	self::do_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj, 0, $haspc);
+            }
+            header('location: '. $_SESSION['redirect_url']);
+            exit();
         }
     }
 
     /**
-     * 更新微信用户信息
+     * 用户处理
+     * @param  [type]  $wechat_user [description]
+     * @param  [type]  $wechat_id   [description]
+     * @param  [type]  $weObj       [description]
+     * @param  [type]  $isoauth     [是否开启自动登录]
+     * @param  integer $haspc       [是否有pc端]
+     * @return [type]               [description]
      *
+     * $userinfo = array('openid', 'nickname', 'sex', 'language', 'city', 'province', 'country', 'headimgurl', 'privilege', 'unionid');
+     */
+    static function do_user($userinfo, $wechat_id, $weObj, $isoauth = 0, $haspc = 0){
+    	$user = model('Base')->model->table('wechat_user')->field('openid, ect_uid')->where('openid = "' . $userinfo['openid'] . '"')->find();
+    	if($isoauth && $haspc){
+    		/* 有pc,开启自动登录 */
+    		self::do_oauth_user($userinfo, $wechat_id, $weObj, $user, $isoauth);
+    		
+    	}
+    	elseif($isoauth && empty($haspc)){
+    		//没有pc,开启自动登录
+    		self::update_weixin_user($userinfo, $wechat_id, $weObj);
+    	}
+    	elseif(empty($isoauth) && $haspc){
+			//有pc,没开启自动登录
+			self::do_oauth_user($userinfo, $wechat_id, $weObj, $user);
+    	}
+    	elseif(empty($isoauth) && empty($haspc)){
+    		//没有pc,没开启自动登录
+    		self::do_oauth_user($userinfo, $wechat_id, $weObj, $user);
+    	}
+    }
+
+    /**
+     * 自动登录操作
+     * @param  [type]  $userinfo  [description]
+     * @param  [type]  $wechat_id [description]
+     * @param  [type]  $weObj     [description]
+     * @param  [type]  $user      [description]
+     * @param  integer $isoauth   [description]
+     * @return [type]             [description]
+     */
+    static function do_oauth_user($userinfo, $wechat_id, $weObj, $user, $isoauth = 0){
+    	$user_url = __HOST__.url('user/login');
+    	if(empty($user)){
+			$group_id = $weObj->getUserGroup($userinfo['openid']);
+        	$group_id = $group_id ? $group_id : 0;
+			//微信用户绑定会员id
+            $ect_uid = isset($user['ect_uid']) && !empty($user['ect_uid']) ? $user['ect_uid'] : 0;
+            //查看公众号是否绑定
+            if(isset($userinfo['unionid'])){
+                $ect_uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where(array('unionid'=>$userinfo['unionid']))->getOne();
+            }
+
+            $data1['ect_uid'] = $ect_uid;
+            $data1['wechat_id'] = $wechat_id;
+            $data1['subscribe'] = 0;
+            $data1['openid'] = $userinfo['openid'];
+            $data1['nickname'] = $userinfo['nickname'];
+            $data1['sex'] = $userinfo['sex'];
+            $data1['city'] = $userinfo['city'];
+            $data1['country'] = $userinfo['country'];
+            $data1['province'] = $userinfo['province'];
+            $data1['language'] = $userinfo['language'];
+            $data1['headimgurl'] = $userinfo['headimgurl'];
+            $data1['subscribe_time'] = '';
+            $data1['group_id'] = $group_id;
+            $data1['unionid'] = isset($userinfo['unionid']) ? $userinfo['unionid'] : '';
+            
+            model('Base')->model->table('wechat_user')->data($data1)->insert();
+            //未绑定用户
+            if(empty($ect_uid)){
+            	//会员中心注册绑定
+            	header("Location:".$user_url);
+            	exit;
+            }
+            
+		}
+		elseif($user['ect_uid'] > 0 && $isoauth){
+            $userinfo['group_id'] = isset($userinfo['groupid']) ? $userinfo['groupid'] : $weObj->getUserGroup($userinfo['openid']);
+            unset($userinfo['groupid']);
+            model('Base')->model->table('wechat_user')
+                ->data($userinfo)
+                ->where('openid = "' . $userinfo['openid'] . '"')
+                ->update();
+            $new_user_name = model('Base')->model->table('users')
+                ->field('user_name')
+                ->where('user_id = "' . $user['ect_uid'] . '"')
+                ->getOne();
+            ECTouch::user()->set_session($new_user_name);
+            ECTouch::user()->set_cookie($new_user_name);
+            model('Users')->update_user_info();
+            // 推送量
+	        model('Base')->model->table('wechat')
+	            ->data('oauth_count = oauth_count + 1')
+	            ->where('default_wx = 1 and status = 1')
+	            ->update();
+	        
+	        session('openid', $userinfo['openid']);
+		}
+    }
+
+    /**
+     * 用户注册登录后绑定
+     * @return [type] [description]
+     */
+    static function do_bind(){
+    	if(!empty($_SESSION['user_id']) && !empty($_SESSION['wechat_user'])){
+    		$condition['openid'] = $_SESSION['wechat_user']['openid'];
+    		$user = model('Base')->model->table('wechat_user')->field('openid, ect_uid')->where($condition)->find();
+    		if($user){
+    			if(empty($user['ect_uid'])){
+    				model('Base')->model->table('wechat_user')->data(array('ect_uid'=>$_SESSION['user_id']))->where($condition)->update();
+    			}
+    		}
+    	}
+    }
+
+    /**
+     * 更新微信用户信息
+     *  
      * @param unknown $userinfo            
      * @param unknown $wechat_id            
-     * @param unknown $weObj            
+     * @param unknown $weObj       
      */
     static function update_weixin_user($userinfo, $wechat_id, $weObj)
     {
@@ -735,7 +859,7 @@ class WechatController extends CommonController
             //微信用户绑定会员id
             $ect_uid = 0;
             //查看公众号是否绑定
-            if($userinfo['unionid']){
+            if(isset($userinfo['unionid'])){
                 $ect_uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where(array('unionid'=>$userinfo['unionid']))->getOne();
             }
 
@@ -795,16 +919,16 @@ class WechatController extends CommonController
             }
             
             $data1['wechat_id'] = $wechat_id;
-            $data1['subscribe'] = 1;
+            $data1['subscribe'] = 0;
             $data1['openid'] = $userinfo['openid'];
             $data1['nickname'] = $userinfo['nickname'];
             $data1['sex'] = $userinfo['sex'];
             $data1['city'] = $userinfo['city'];
             $data1['country'] = $userinfo['country'];
             $data1['province'] = $userinfo['province'];
-            $data1['language'] = $userinfo['country'];
+            $data1['language'] = $userinfo['language'];
             $data1['headimgurl'] = $userinfo['headimgurl'];
-            $data1['subscribe_time'] = $time;
+            $data1['subscribe_time'] = '';
             $data1['group_id'] = $group_id;
             $data1['unionid'] = $userinfo['unionid'];
             

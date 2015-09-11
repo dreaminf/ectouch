@@ -1679,6 +1679,11 @@ class UserController extends CommonController {
                 model('Users')->update_user_info();
                 model('Users')->recalculate_price();
 
+                //微信用户绑定
+                if(class_exists('WechatController') && method_exists('WechatController', 'do_bind')){
+                    call_user_func('do_bind');
+                }
+
                 $jump_url = empty($this->back_act) ? url('index') : $this->back_act;
                 $this->redirect($jump_url);
             } else {
@@ -1833,6 +1838,12 @@ class UserController extends CommonController {
                 if (C('member_email_validate') && C('send_verify_email')) {
                     model('Users')->send_regiter_hash($_SESSION['user_id']);
                 }
+
+                //微信用户绑定
+                if(class_exists('WechatController') && method_exists('WechatController', 'do_bind')){
+                    call_user_func('do_bind');
+                }
+
                 $ucdata = empty(self::$user->ucdata) ? "" : self::$user->ucdata;
                 show_message(sprintf(L('register_success'), $username . $ucdata), array(L('back_up_page'), L('profile_lnk')), array($this->back_act,url('index')), 'info');
             } else {
