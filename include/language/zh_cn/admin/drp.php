@@ -71,6 +71,7 @@ $_LANG['back_note'] = '返回会员编辑页面';
 
 $_LANG['user']['user_name'] = '用户名';
 $_LANG['user']['real_name'] = '真实姓名';
+$_LANG['user']['money'] = '分销佣金';
 $_LANG['user']['shop_name'] = '店铺名';
 $_LANG['user']['shop_mobile'] = '手机号';
 $_LANG['user']['open'] = '店铺状态';

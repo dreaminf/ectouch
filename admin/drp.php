@@ -459,6 +459,27 @@ elseif ($_REQUEST['act'] == 'separate')
     sys_msg($_LANG['edit_ok'], 0 ,$links);
 }
 
+/*------------------------------------------------------ */
+//-- 分销商排行榜
+/*------------------------------------------------------ */
+if ($_REQUEST['act'] == 'ranking')
+{
+    assign_query_info();
+    if (empty($_REQUEST['is_ajax']))
+    {
+        $smarty->assign('full_page', 1);
+    }
+
+    $list = get_user_ranking($is_separate);
+    $smarty->assign('list',         $list['list']);
+    $smarty->assign('filter',       $list['filter']);
+    $smarty->assign('record_count', $list['record_count']);
+    $smarty->assign('page_count',   $list['page_count']);
+
+    $smarty->assign('ur_here', $_LANG['ranking']);
+    $smarty->display('drp_ranking.htm');
+}
+
 
 /**
  * 取得分销商列表
@@ -493,7 +514,6 @@ function get_user_list()
     }
     return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
 }
-
 
 /**
  * 取得分销商订单
@@ -635,6 +655,39 @@ function get_drp_log(){
 
     return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
 }
+
+
+/**
+ * 获取分销商排行
+ * @return array
+ */
+function get_user_ranking()
+{
+    /* 初始化分页参数 */
+    $filter = array(
+
+    );
+
+    /* 查询记录总数，计算分页数 */
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('drp_shop');
+    $filter['record_count'] = $GLOBALS['db']->getOne($sql);
+    $filter = page_and_size($filter);
+
+    /* 查询记录 */
+    $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('drp_shop') .
+        " ORDER BY money DESC";
+    $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
+
+    $arr = array();
+    while ($row = $GLOBALS['db']->fetchRow($res))
+    {
+        $row['create_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['create_time']);
+        $row['user_name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$row['user_id']);
+        $arr[] = $row;
+    }
+    return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
+}
+
 /**
  * 获取佣金比例
  * @param $goods_id
