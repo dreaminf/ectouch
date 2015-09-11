@@ -1680,7 +1680,7 @@ class UserController extends CommonController {
                 model('Users')->recalculate_price();
 
                 //微信用户绑定
-                if(class_exists('WechatController') && method_exists('WechatController', 'do_bind')){
+                if(!empty($_SESSION['wechat_user']) && class_exists('WechatController') && method_exists('WechatController', 'do_bind')){
                     call_user_func('do_bind');
                 }
 

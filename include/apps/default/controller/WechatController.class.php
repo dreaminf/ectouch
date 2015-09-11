@@ -711,13 +711,14 @@ class WechatController extends CommonController
                 //self::update_weixin_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj);
                 $haspc = file_exists('../data/config.php') ? 1 : 0;
             	self::do_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj, 1, $haspc);
+            	header('location: '. $_SESSION['redirect_url']);
+            	exit();
             }
             else{
             	$haspc = file_exists('../data/config.php') ? 1 : 0;
             	self::do_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj, 0, $haspc);
             }
-            header('location: '. $_SESSION['redirect_url']);
-            exit();
+            
         }
     }
 
