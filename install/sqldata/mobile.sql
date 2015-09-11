@@ -220,6 +220,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_log` (
   `change_time` int(10) unsigned NOT NULL,
   `change_desc` varchar(255) NOT NULL,
   `change_type` tinyint(3) unsigned NOT NULL,
+  `bank_info`  text COMMENT '提现银行卡信息',
   PRIMARY KEY (`log_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -285,3 +286,5 @@ ALTER TABLE `ecs_goods` ADD COLUMN `touch_fencheng` decimal(10,2) unsigned NOT N
 ALTER TABLE `ecs_brand` ADD COLUMN `brand_banner` varchar(80)  DEFAULT '';
 
 ALTER TABLE `ecs_order_info` ADD COLUMN `drp_id` int(8) unsigned NOT NULL DEFAULT '0';
+ALTER TABLE `ecs_order_info` ADD COLUMN `shop_separate` int(1) unsigned NOT NULL DEFAULT '0';
+ALTER TABLE `ecs_users` ADD COLUMN `apply_sale` int(1) unsigned NOT NULL DEFAULT '0';

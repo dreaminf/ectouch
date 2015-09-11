@@ -5,31 +5,34 @@
 				<div class="yjfd_content10">
 				<a href="{:url('sale/index')}"><i class="iconfont icon-jiantou"></i></a><span class="tltle">提现</span>                 
 				</div>                  
-			</div> 
+			</div>
+
 			{if $list}
-			
-			<div class="dpgl_list">                                 
-                   <span class="dpgl_list2">提现金额</span><input  type="text"  name="amount" placeholder="提取金额" value="" class="raply" />
+            <div class="dpgl_list">
+                <span class="dpgl_list2 h-l-3">选择提现银行卡</span>
+                <ul class="ect-radio bank">
+            <!--{foreach from=$list item=li}-->
+                    <li>
+                        <input name="bank" type="radio" id="bank_{$li.id}" value="{$li.id}"  >
+                        <label for="bank_{$li.id}">{$li.bank_name}&nbsp;{$li.bank_card}<i></i></label>
+                    </li>
+            <!-- {/foreach} -->
+                </ul>
+            </div><div class="dpxq_border"></div>
+            <div class="dpgl_list">
+                   <span class="dpgl_list2 h-l-3">提现金额</span><input  type="text"  name="amount" placeholder="提取金额" value="" class="h-l-3" />
             </div>
 			<div class="dpxq_border"></div>
 			<div class="dpgl_list">                                 
-                   <span  class="dpgl_list2" style="    line-height: 6.5rem;">提现备注</span><textarea  rows="3" name="user_note" placeholder="请填写卡号或其它信息，方便商家打款" class="raply" ></textarea>
+                   <span  class="dpgl_list2 h-l-3">提现备注</span><textarea  rows="3" name="user_note" placeholder="备注" class="h-l-3" ></textarea>
             </div>
 			<div class="dpxq_border"></div>
 			<div class="t-a-center"><input type="submit" value="{:L('next_step')}" class="set-4-submit"></div>
+            <div class="t-a-center"><input type="button" value="添加银行卡" onclick="location.href='{:url('sale/add_bank')}'" class="set-4-submit"></div>
 			{else}
 				<div class="t-a-center"><input type="button" value="添加银行卡" onclick="location.href='{:url('sale/add_bank')}'" class="set-4-submit"></div>
 			{/if}
 		</div>
 	</form>
-	<style>
-		.raply{
-			    height: 5rem;
-				font-size: 1.25rem;
-				width: 80%;
-				border: none;
-				margin-left: 1rem;
-		}
-	</style>
 </body>
 </html>

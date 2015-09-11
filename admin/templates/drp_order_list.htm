@@ -1,6 +1,7 @@
 <!-- $Id: account_list.htm 14928 2008-10-06 09:25:48Z testyang $ -->
 {if $full_page}
 {include file="pageheader.htm"}
+
 {insert_scripts files="../js/utils.js,listtable.js"}
 
 <!--
@@ -82,6 +83,7 @@
 
 <script type="text/javascript" language="javascript">
     <!--
+    listTable.query = "order_list_query";
     listTable.recordCount = {$record_count};
     listTable.pageCount = {$page_count};
 

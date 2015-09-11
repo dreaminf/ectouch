@@ -324,8 +324,6 @@ select{-webkit-appearance:none; border:0; color:#555; padding-left:0; border:1px
 .goods-num{overflow:hidden;}
 .bnt_sub {background: none repeat scroll 0 0 #41A28E;border: medium none;padding: 0.5em 0; color: #fff; margin-left: 1em; width:5.5em;
 border: 1px solid transparent;border-radius: 4px;cursor: pointer;display: inline-block;font-size: 14px;font-weight: 400;line-height: 1.42857;}
-/*商品详情*/
-.goods-info .tab-info *{width:100%;height:auto}
 /*评论*/
 .goods-info .tab-msg ul.msg li{border-bottom:1px dotted #e3e3e3; padding:0.4em 0;}
 .goods-info .tab-msg ul.msg li:last-child{border-bottom:1px solid #e3e3e3;}

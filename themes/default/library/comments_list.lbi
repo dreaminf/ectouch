@@ -16,9 +16,12 @@
         <ul class="msg">
           <!-- {foreach from=$comment_list item=comment} -->
           <li>
-            <p>{$comment.content}</p>
-            <p>{$lang.comment_rank}：<span><img src="__TPL__/images/stars{$comment.rank}.png" class="star" alt="{$comment.comment_rank}" /></span></p>
             <p><span class="pull-left">{$lang.username}：<!--{if $comment.username}-->{$comment.username|escape:html}<!--{else}-->{$lang.anonymous}<!--{/if}--></span><span class="pull-right">{$comment.add_time}</span></p>
+            <p>{$lang.comment_rank}：<span><img src="__TPL__/images/stars{$comment.rank}.png" class="star" alt="{$comment.comment_rank}" /></span></p>
+            <p>{$comment.content}</p>
+            <!-- {if $comment.re_content} -->
+            <p><font class="f1">{$lang.admin_username}</font>{$comment.re_content}</p>
+            <!-- {/if} -->
           </li>
           <!-- {/foreach} -->
         </ul>
@@ -154,7 +157,7 @@
             </span> <img class="pull-right" src="{:url('public/captcha', array('rand'=>$this->_var['rand']))}" alt="captcha" onClick="this.src='{:url('public/captcha')}&t='+Math.random()"  /> </p>
           <!-- {/if} -->
           <p class="ect-padding-tb">
-            <input type="submit" class="btn btn-info ect-btn-info" value="{$lang.submit_comment}"/>
+            <input type="submit" class="btn btn-info ect-btn-info ect-bg" value="{$lang.submit_comment}"/>
           </p>
         </div>
       </form>

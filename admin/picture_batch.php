@@ -283,6 +283,16 @@ function process_image($page = 1, $page_size = 100, $type = 0, $thumb= true, $wa
             $goods_thumb = '';
             $image = '';
 
+            // 处理远程图片
+            $is_remote_img = false;
+            if(preg_match("/^http/", $row['original_img']) && @fopen($row['original_img'], 'r')){
+                if(preg_match('/(.jpg|.png|.gif|.jpeg)$/',$row['original_img']) && @copy(trim($row['original_img']), ROOT_PATH . 'data/attached/' . basename($row['original_img'])))
+                {
+                    $is_remote_img = true;
+                    $row['original_img'] = $row['goods_img'] = 'data/attached/' . basename($row['original_img']);
+                }
+            }
+
             /* 水印 */
             if ($watermark)
             {
@@ -401,6 +411,10 @@ function process_image($page = 1, $page_size = 100, $type = 0, $thumb= true, $wa
                 {
                     replace_image($goods_thumb, $row['goods_thumb'], $row['goods_id'], $silent);
                 }
+            }
+            //删除远程临时文件
+            if($is_remote_img){
+                unlink(ROOT_PATH . $row['original_img']);
             }
         }
     }

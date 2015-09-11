@@ -1,12 +1,14 @@
-  <div class="pagination">
-		<!-- {if $pager.page_prev} -->
-              <a class="pagination-left" href="{$pager.page_prev}" >&lt;上一页</a>
-              <!-- {else} -->
-              <a class="no pagination-left">&lt;上一页</a>   
-              <!-- {/if} -->
+<!-- {if $pager} -->
+<div class="pagination">
     <p>
-		<!--{if $pager }-->
-            <!--{/if}-->
+        <!-- {if $pager.page_prev} -->
+        <a class="pagination-left" href="{$pager.page_prev}" >&lt;上一页</a>
+        <!-- {else} -->
+        <a class="no pagination-left">&lt;上一页</a>
+        <!-- {/if} -->
+    </p>
+    <p>
+
             <select name="page"  class="form-control" onchange="window.location.href=this.options[this.selectedIndex].value" >
             <!--{if $pager}-->
             {foreach from=$pager.page_number key=key item=item}
@@ -15,18 +17,16 @@
             <!--{/if}-->
             </select>
 	</p>
+    <p>
 		<!-- {if $pager.page_next} -->
               <a  class="pagination-right" href="{$pager.page_next}" >下一页&gt;</a>
               <!-- {else} -->
               <a class="no pagination-right">下一页&gt;</a> 
               <!-- {/if} -->
-  </div>
-<style>
-	.pagination{width:100%; position:relative;height: 4rem;}
-	.pagination .pagination-left,.pagination .pagination-right{display:block; height:2rem; position:absolute;}
-	.pagination .pagination-left{ left:0;height: 2rem;line-height: 2.2rem;}
-	.pagination .pagination-right{right:0;height: 2rem;line-height: 2.2rem;}
-	.pagination p{left:6rem; right:6rem; position:absolute;}
-	.form-control{text-align:center;}
-</style>
+    </p>
+</div>
+    <style>
+    .pagination p{width:30%;text-align:center;height:4rem;float:left;line-height:4rem;}
+    </style>
+<!--{/if}-->
  

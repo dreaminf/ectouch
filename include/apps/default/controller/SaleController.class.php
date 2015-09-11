@@ -125,11 +125,15 @@ class SaleController extends CommonController {
         if (empty($surplus_amount)) {
             $surplus_amount = 0;
         }
+
         $size = I(C('page_size'), 5);
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
         $where = 'user_id = ' . $this->user_id . ' AND user_money <> 0 ';
-        $sql = "select COUNT(*) as count from {pre}sale_log where $where";
-        $count = $this->model->getOne($sql);
+        $sql = "select COUNT(*) as count from {pre}drp_log where $where";
+        $count = $this->model->query($sql);
+        $count = $count['0']['count'];
+        $this->pageLimit(url('sale/account_detail'), $size);
+        $this->assign('pager', $this->pageShow($count));
         $account_detail = model('Sale')->get_sale_log($this->user_id, $size, ($page-1)*$size);
         $this->assign('title', L('add_surplus_log'));
         $this->assign('surplus_amount', price_format($surplus_amount, false));
@@ -141,7 +145,7 @@ class SaleController extends CommonController {
      *  会员申请提现
      */
     public function account_raply(){
-        $list = $this->model->table('drp_bank')->where("id=".$this->user_id)->select();
+        $list = $this->model->table('drp_bank')->where("user_id=".$this->user_id)->select();
         $this->assign('list',$list);
         // 获取剩余余额
         $surplus_amount = model('Sale')->saleMoney($this->user_id);
@@ -158,6 +162,10 @@ class SaleController extends CommonController {
      */
     public function act_account()
     {
+        $bank = I('bank') ? I('bank') : 0;
+        if($bank == 0){
+            show_message('请选择提现的银行卡');
+        }
         $amount = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
         if (!is_numeric($amount)){
             show_message(L('amount_gt_zero'));
@@ -183,26 +191,29 @@ class SaleController extends CommonController {
         }
         //插入会员账目明细
         $surplus['payment'] = '';
-        $surplus['rec_id']  =  model('Sale')->insert_user_account($surplus, $amount);
+        $surplus['rec_id']  =  model('ClipsBase')->insert_user_account($surplus, $amount);
 
         /* 如果成功提交 */
         if ($surplus['rec_id'] > 0)
         {
+            $bank_info = $this->model->table('drp_bank')->where("user_id=".$this->user_id ." and id=".$bank)->select();
+            $bank_info = $bank_info['0'];
             /* 插入帐户变动记录 */
             $account_log = array(
                 'user_id'       => $this->user_id,
                 'user_money'    => '-'.$amount,
                 'change_time'   => gmtime(),
                 'change_desc'   => isset($_POST['user_note'])    ? trim($_POST['user_note'])      : '',
+                'bank_info'   => "银行名称：".$bank_info['bank_name']." 帐号：".$bank_info['bank_card'],
             );
-            $this->model->table('sale_log')
+
+            $this->model->table('drp_log')
                 ->data($account_log)
                 ->insert();
 
             /* 更新用户信息 */
-            $sql = "UPDATE {pre}users" .
-                " SET sale_money = sale_money - ('$amount')," .
-                "  user_money = user_money + ('$amount')" .
+            $sql = "UPDATE {pre}drp_shop" .
+                " SET money = money - ('$amount')" .
                 " WHERE user_id = '$this->user_id' LIMIT 1";
             $this->model->query($sql);
 
@@ -224,6 +235,27 @@ class SaleController extends CommonController {
     public function my_commission(){
         $saleMoney =  model('Sale')->saleMoney();
         $this->assign('saleMoney',$saleMoney);
+        // 未分成
+        // 本店销售佣金
+        $sale_money = model('sale')->get_shop_sale_money($this->user_id);
+        $this->assign('sale_no_money',$sale_money);
+        // 分成佣金
+        $separate_money = model('sale')->get_user_separate_money($this->user_id);
+        $this->assign('separate_no_money1',$separate_money['money1']);
+        $this->assign('separate_no_money2',$separate_money['money2']);
+        $this->assign('separate_no_money3',$separate_money['money3']);
+        $this->assign('separate_no_money',$sale_money+$separate_money['money1']+$separate_money['money2']+$separate_money['money3']);
+
+        // 以分成
+        // 本店销售佣金
+        $sale_money = model('sale')->get_shop_sale_money($this->user_id,1);
+        $this->assign('sale_money',$sale_money);
+        // 分成佣金
+        $separate_money = model('sale')->get_user_separate_money($this->user_id,1);
+        $this->assign('separate_money1',$separate_money['money1']);
+        $this->assign('separate_money2',$separate_money['money2']);
+        $this->assign('separate_money3',$separate_money['money3']);
+        $this->assign('separate_money',$sale_money+$separate_money['money1']+$separate_money['money2']+$separate_money['money3']);
         $this->assign('title','我的佣金');
         $this->display('sale_my_commission.dwt');
     }
@@ -252,15 +284,19 @@ class SaleController extends CommonController {
      * 店铺二维码
      */
     public function store(){
+        $filename  = './data/attached/drp1';
+        if(!file_exists($filename)){
+            mkdir($filename);
+        }
         $mobile_qr = './data/attached/drp/drp_'.$_SESSION['user_id'].'.png';
-        if(!file_exists($drp_info['mobile_qr'])){
+        if(!file_exists($mobile_qr)){
             // 二维码
-            $url = $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$_SESSION['user_id'];
+            $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$_SESSION['user_id'];
             // 纠错级别：L、M、Q、H
             $errorCorrectionLevel = 'L';
             // 点的大小：1到10
             $matrixPointSize = 8;
-            QRcode::png($url, $mobile_qr, $errorCorrectionLevel, $matrixPointSize, 2);
+            @QRcode::png($url, $mobile_qr, $errorCorrectionLevel, $matrixPointSize, 2);
         }
         $this->assign('mobile_qr', $mobile_qr);
         $this->assign('title',L('store'));
@@ -269,16 +305,23 @@ class SaleController extends CommonController {
 
     public function order_list(){
         $user_id = I('user_id') > 0 ? I('user_id') : $_SESSION['user_id'];
-        $where = 'drp_id = '.$user_id;
-        $size = I(C('page_size'), 20);
-        $sql = "select count(*) as count from {pre}order_info where $where";
-        $count = $this->model->getOne($sql);
-        $orders = model('Sale')->get_sale_orders($where , 10 , 0 ,$user_id);
+        $drp_id = $this->model->table('drp_shop')->field('id')->where("user_id=".$user_id)->getOne();
+        if(!$drp_id){
+            show_message('此用户尚未开店，无法查看订单');
+        }
+        $size = I(C('page_size'), 5);
+        $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
+        $where = 'drp_id = '.$drp_id;
+        $count = $this->model->table('order_info')->field('COUNT(*)')->where($where)->getOne();
+        $this->pageLimit(url('sale/order_list'), $size);
+        $this->assign('pager', $this->pageShow($count));
+        $orders = model('Sale')->get_sale_orders($where ,  $size, ($page-1)*$size,$user_id);
+
         if($orders){
             foreach($orders as $key=>$val){
                 foreach($val['goods'] as $k=>$v){
                     $orders[$key]['goods'][$k]['profit'] = model('Sale')->get_drp_profit($v['goods_id']);
-                    $orders[$key]['goods'][$k]['profit_money'] =$v['price']*$orders[$key]['goods'][$k]['profit'] /100;
+                    $orders[$key]['goods'][$k]['profit_money'] =$v['touch_sale']*$orders[$key]['goods'][$k]['profit'] /100;
                     $orders[$key]['sum']+=$orders[$key]['goods'][$k]['profit_money'];
                 }
 
@@ -375,7 +418,7 @@ class SaleController extends CommonController {
     public function my_shop_info(){
 
         // 总销售额
-        $money = model('Sale')->get_sale_money_total();
+        $money = model('Sale')->get_shop_sale_money($this->user_id,1);
         $this->assign('money', $money ? $money : '0.00');
         // 一级分店数
         $sql = "select count(*) count from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id = ".$_SESSION['user_id'];
@@ -674,15 +717,6 @@ class SaleController extends CommonController {
         $this->assign('goods_list', $goods_list);
         $this->display('sale_order_detail.dwt');
     }
-
-
-
-
-
-
-
-
-
 
 
 

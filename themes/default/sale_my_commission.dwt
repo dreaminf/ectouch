@@ -12,39 +12,36 @@
              <div class="dpxq_border"></div>
              <div class="dpgl_list3">
                 <div class="dpgl_list" id="dpg1_list1">
-                <i class="iconfont icon-jinbichongzhi"></i><a href="javascript:;" ><span class="dpgl_list2">未分成订单佣金</span><span class="wdyj_sum">0元
+                <i class="iconfont icon-jinbichongzhi"></i><a href="javascript:;" ><span class="dpgl_list2">未分成订单佣金</span><span class="wdyj_sum">{$separate_no_money}元
                         <i class="iconfont icon-huise icon-jiantou2"> </i></span></a>
                         
                      <ul class="index_nav">     
-                        <li class="index_nav1"><a href="javascript:void(0)"><span class="dpgl_list1">本店员</span><span class="wdyj_sum">0元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+                        <li class="index_nav1"><a href="javascript:void(0)"><span class="dpgl_list1">本店销售佣金</span><span class="wdyj_sum">{$sale_no_money}元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
                          
-                        <li class="index_nav1"><a href="javascript:void(0)" ><span class="dpgl_list1">一级分店</span><span class="wdyj_sum">0元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+                        <li class="index_nav1"><a href="javascript:void(0)" ><span class="dpgl_list1">本店分成佣金</span><span class="wdyj_sum">{$separate_no_money1}元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
                          
-                        <li class="index_nav1"><a href="javascript:void(0)" ><span class="dpgl_list1">二级分店</span><span class="wdyj_sum">0元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+                        <li class="index_nav1"><a href="javascript:void(0)" ><span class="dpgl_list1">一级分店分成佣金</span><span class="wdyj_sum">{$separate_no_money2}元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
                          
-                        <li class="index_nav1"><a href="javascript:void(0)" ><span class="dpgl_list1">三级分店</span><span class="wdyj_sum">0元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+                        <li class="index_nav1"><a href="javascript:void(0)" ><span class="dpgl_list1">二级分店分成佣金</span><span class="wdyj_sum">{$separate_no_money3}元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
                     </ul> 
                    
                  </div>  
                  <div class="dpxq_border"></div>
                    <div class="dpgl_list" id="dpg1_list1">
-                   <i class="iconfont icon-jinbichongzhi"></i><a href="javascript:;" ><span class="dpgl_list2">已分成订单佣金</span><span class="wdyj_sum">0元<i class="iconfont icon-huise icon-jiantou2"></i></span></a>
+                   <i class="iconfont icon-jinbichongzhi"></i><a href="javascript:;" ><span class="dpgl_list2">已分成订单佣金</span><span class="wdyj_sum">{$separate_money}元<i class="iconfont icon-huise icon-jiantou2"></i></span></a>
                      <ul class="index_nav">
                         
                          
-                        <li class="index_nav1"><a href="javascript:void(0)"><span class="dpgl_list1">本店员</span><span class="wdyj_sum">0元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+                        <li class="index_nav1"><a href="javascript:void(0)"><span class="dpgl_list1">本店销售佣金</span><span class="wdyj_sum">{$sale_money}元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
                          
-                        <li class="index_nav1"><a href="javascript:void(0)" ><span class="dpgl_list1">一级分店</span><span class="wdyj_sum">0元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+                        <li class="index_nav1"><a href="javascript:void(0)" ><span class="dpgl_list1">本店分成佣金</span><span class="wdyj_sum">{$separate_money1}元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
                          
-                        <li class="index_nav1"><a href="javascript:void(0)" ><span class="dpgl_list1">二级分店</span><span class="wdyj_sum">0元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+                        <li class="index_nav1"><a href="javascript:void(0)" ><span class="dpgl_list1">一级分店分成佣金</span><span class="wdyj_sum">{$separate_money2}元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
                          
-                        <li class="index_nav1"><a href="javascript:void(0)" ><span class="dpgl_list1">三级分店</span><span class="wdyj_sum">0元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+                        <li class="index_nav1"><a href="javascript:void(0)" ><span class="dpgl_list1">二级分店分成佣金</span><span class="wdyj_sum">{$separate_money3}元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
                     </ul> 
                  </div> 
                  <div class="dpxq_border"></div>
-                <div class="dpgl_list">
-                     <a href="javascript:void(0)"><i class="iconfont icon-jinbichongzhi"></i><span class="dpgl_list2">可提现订单佣金</span><span class="wdyj_sum">{$saleMoney}元<i class="iconfont icon-huise icon-jiantou2"></i></span></a>
-                  </div> 
               </div>
                <div class="dpxq_border"></div>  
              <div class="yhk_content2"><a href="{:url('sale/account_raply')}"><span class="yhk_content">申请提现</span></a></div>             
