@@ -235,27 +235,19 @@ class SaleController extends CommonController {
     public function my_commission(){
         $saleMoney =  model('Sale')->saleMoney();
         $this->assign('saleMoney',$saleMoney);
-        // 未分成
-        // 本店销售佣金
+        // 未分成销售佣金
         $sale_money = model('sale')->get_shop_sale_money($this->user_id);
-        $this->assign('sale_no_money',$sale_money);
-        // 分成佣金
-        $separate_money = model('sale')->get_user_separate_money($this->user_id);
-        $this->assign('separate_no_money1',$separate_money['money1']);
-        $this->assign('separate_no_money2',$separate_money['money2']);
-        $this->assign('separate_no_money3',$separate_money['money3']);
-        $this->assign('separate_no_money',$sale_money+$separate_money['money1']+$separate_money['money2']+$separate_money['money3']);
+        $this->assign('sale_no_money',$sale_money['profit']);
+        $this->assign('sale_no_money1',$sale_money['profit1']);
+        $this->assign('sale_no_money2',$sale_money['profit2']);
+        $this->assign('sale_no_money_num',$sale_money['profit_num']);
 
-        // 以分成
-        // 本店销售佣金
+        // 已分成销售佣金
         $sale_money = model('sale')->get_shop_sale_money($this->user_id,1);
-        $this->assign('sale_money',$sale_money);
-        // 分成佣金
-        $separate_money = model('sale')->get_user_separate_money($this->user_id,1);
-        $this->assign('separate_money1',$separate_money['money1']);
-        $this->assign('separate_money2',$separate_money['money2']);
-        $this->assign('separate_money3',$separate_money['money3']);
-        $this->assign('separate_money',$sale_money+$separate_money['money1']+$separate_money['money2']+$separate_money['money3']);
+        $this->assign('sale_money',$sale_money['profit']);
+        $this->assign('sale_money1',$sale_money['profit']);
+        $this->assign('sale_money2',$sale_money['profit']);
+        $this->assign('sale_money_num',$sale_money['profit']);
         $this->assign('title','我的佣金');
         $this->display('sale_my_commission.dwt');
     }
