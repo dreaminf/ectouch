@@ -30,7 +30,7 @@
       <li class="dpgl_nav3">今日收入（元）</li>
     </ul>
     <ul>
-      <li class="dpgl_sum1">{$info.surplus}</li>
+      <li class="dpgl_sum1">{$sale_money_order}</li>
       <li class="dpgl_sum2">{$sale_money}</li>
       <li class="dpgl_sum3">{$sale_money_today}</li>
     </ul>

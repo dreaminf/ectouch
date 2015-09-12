@@ -59,7 +59,7 @@ class SaleController extends CommonController {
         $this->assign('sale',$sale);
         // 总销售额
         $sale_money = model('Sale')->get_sale_money_total();
-        $this->assign('sale_money',$sale_money);
+        $this->assign('sale_money_order',$sale_money ? $sale_money : '0.00');
         // 佣金总额
         $sale_money = model('Sale')->saleMoney();
         $this->assign('sale_money',$sale_money ? $sale_money : '0.00');
