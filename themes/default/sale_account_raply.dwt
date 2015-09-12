@@ -2,7 +2,7 @@
 <div id="box">
     <div class="header">
         <div class="yjfd_content10">
-            <a href="xzyh.html"><i class="iconfont icon-jiantou"></i></a><span class="tltle">佣金提现</span></a>
+            <a href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a><span class="tltle">佣金提现</span></a>
         </div>
     </div>
     <div class="a-raply-info">

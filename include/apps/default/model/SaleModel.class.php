@@ -108,6 +108,15 @@ class SaleModel extends BaseModel {
         }
         foreach($res as $key=>$val){
             $res[$key]['time'] = date('Y-m-d',$val['reg_time']);
+
+            if(class_exists('WechatController')){
+                if (method_exists('WechatController', 'get_avatar')) {
+                    $u_row = call_user_func(array('WechatController', 'get_avatar'), $val['user_id']);
+                }
+            }
+            if ($u_row) {
+                $res[$key]['username'] = $u_row['nickname'];
+            }
         }
         return $res;
     }
