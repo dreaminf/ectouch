@@ -253,6 +253,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_shop` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0',
   `money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
   `open` int(1) NOT NULL DEFAULT '0' COMMENT '店铺是否开启',
+  `bank` int(10) NOT NULL DEFAULT '0' COMMENT '默认银行卡',
   PRIMARY KEY (`id`,`user_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
