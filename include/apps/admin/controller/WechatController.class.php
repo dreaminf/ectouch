@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /**
  * ECTouch Open Source Project
@@ -137,7 +137,6 @@ class WechatController extends AdminController
      */
     public function modify()
     {
-        exit('no access.');
         if (IS_POST) {
             $condition['id'] = $this->wechat_id;
             $data = I('post.data', '', 'trim,htmlspecialchars');
