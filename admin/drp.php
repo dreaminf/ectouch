@@ -464,13 +464,16 @@ elseif ($_REQUEST['act'] == 'separate')
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'ranking')
 {
+
     assign_query_info();
     if (empty($_REQUEST['is_ajax']))
     {
         $smarty->assign('full_page', 1);
     }
 
-    $list = get_user_ranking($is_separate);
+    $time = $_REQUEST['time'];
+    $smarty->assign('time',         $time);
+    $list = get_user_ranking($time);
     $smarty->assign('list',         $list['list']);
     $smarty->assign('filter',       $list['filter']);
     $smarty->assign('record_count', $list['record_count']);
@@ -478,8 +481,24 @@ if ($_REQUEST['act'] == 'ranking')
 
     $smarty->assign('ur_here', $_LANG['ranking']);
     $smarty->display('drp_ranking.htm');
+
 }
 
+/*------------------------------------------------------ */
+//-- 分销商排行榜
+/*------------------------------------------------------ */
+if ($_REQUEST['act'] == 'ranking_query')
+{
+    $time = $_POST['time'] ? $_POST['time'] : 0;
+    $smarty->assign('time', $time);
+    $list = get_user_ranking($time);
+    $smarty->assign('list',         $list['list']);
+    $smarty->assign('filter',       $list['filter']);
+    $smarty->assign('record_count', $list['record_count']);
+    $smarty->assign('page_count',   $list['page_count']);
+
+    make_json_result($smarty->fetch('drp_ranking.htm'), '',array('filter' => $list['filter'], 'page_count' => $list['page_count']));
+}
 
 /**
  * 取得分销商列表
@@ -661,11 +680,11 @@ function get_drp_log(){
  * 获取分销商排行
  * @return array
  */
-function get_user_ranking()
+function get_user_ranking($time)
 {
     /* 初始化分页参数 */
     $filter = array(
-
+        'time'=>$time,
     );
 
     /* 查询记录总数，计算分页数 */
@@ -673,9 +692,17 @@ function get_user_ranking()
     $filter['record_count'] = $GLOBALS['db']->getOne($sql);
     $filter = page_and_size($filter);
 
+    $ext = '';
+    if ($time == '1') {// 一年
+        $ext = "AND l.change_time >'" . local_strtotime('-1 years') . "'";
+    } elseif ($time == '2') {// 半年
+        $ext = "AND l.change_time > '" . local_strtotime('-6 months') . "'";
+    } elseif ($time == '3') {// 一个月
+        $ext = " AND l.change_time > '" . local_strtotime(' - 1 months') . "'";
+    }
+
     /* 查询记录 */
-    $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('drp_shop') .
-        " ORDER BY money DESC";
+    $sql = "SELECT s1.* ,(select sum(l.user_money) from ".$GLOBALS['ecs']->table('drp_log')." as l join " . $GLOBALS['ecs']->table('drp_shop') ." as s on l.user_id=s.user_id where s.user_id=s1.user_id and l.user_money > 0 ".$ext.") as sale_money FROM " . $GLOBALS['ecs']->table('drp_shop') ." as s1 ORDER BY sale_money DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 
     $arr = array();
@@ -683,6 +710,7 @@ function get_user_ranking()
     {
         $row['create_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['create_time']);
         $row['user_name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$row['user_id']);
+        $row['sale_money'] = $row['sale_money'] ? $row['sale_money'] : 0;
         $arr[] = $row;
     }
     return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
