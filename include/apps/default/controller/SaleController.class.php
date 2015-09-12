@@ -485,8 +485,15 @@ class SaleController extends CommonController {
      * 微店设置
      */
     public function sale_set(){
-        if($this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id'],"open"=>1))->count() > 0){
-            redirect(url('sale/index'));
+        $info = $this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->select();
+        if($info){
+            if($info['0']['cat_id']==''){
+                redirect(url('sale/sale_set_category'));
+            }
+            else{
+                redirect(url('sale/index'));
+            }
+
         }
         if (IS_POST){
             $data = I('data');
