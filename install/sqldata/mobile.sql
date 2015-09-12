@@ -205,6 +205,8 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_config` (
   `centent` text COMMENT '分销申请 温馨提示',
   `keyword` varchar(20) DEFAULT NULL COMMENT '区分文章的key',
   `name` varchar(50) DEFAULT NULL COMMENT '显示字段名',
+  `remarks`  text COMMENT '备注',
+  `type` varchar(20) DEFAULT 'text' COMMENT '数据类型',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
@@ -271,9 +273,9 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_bank` (
 -- ----------------------------
 -- Records of ecs_drp_config
 -- ----------------------------
-INSERT INTO `ecs_drp_config` VALUES ('1', '温馨提示', 'apply', '温馨提示');
-INSERT INTO `ecs_drp_config` VALUES ('2', '新手必读', 'novice', '新手必读');
-INSERT INTO `ecs_drp_config` VALUES ('3', '7', 'fxts', '分销天数');
+INSERT INTO `ecs_drp_config` VALUES ('1', '温馨提示', 'apply','温馨提示', '申请分销商时，提示用户的信息','textarea');
+INSERT INTO `ecs_drp_config` VALUES ('2', '新手必读', 'novice','新手必读', '分销商申请成功后，用户要注意的事项','textarea');
+INSERT INTO `ecs_drp_config` VALUES ('3', '7', 'fxts','分销间隔', '下单并付款之后经过设置天数才可以对订单分成','text');
 
 
 ALTER TABLE `ecs_order_goods` ADD COLUMN `touch_sale` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
