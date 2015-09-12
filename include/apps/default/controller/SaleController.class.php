@@ -871,4 +871,34 @@ class SaleController extends CommonController {
         redirect(url('sale/account_raply'));
     }
 
+    /**
+     * 店铺详情
+     * @throws Exception
+     */
+    public function shop_detail(){
+        $id = I('id') ? I('id') : $this->user_id;
+        $info = M()->table('drp_shop')->where("user_id=".$id)->select();
+        $info['0']['time'] = date('Y-m-d H:i:s',$info['0']['create_time']);
+        $this->assign('shop_info', $info['0']);
+
+        $shop_user = model('ClipsBase')->get_user_default($id);
+        $this->assign('shop_user', $shop_user);
+        // 总销售额
+        $money = model('Sale')->get_sale_money_total($id);
+        $this->assign('money', $money ? $money : '0.00');
+        // 一级分店数
+        $sql = "select count(*) count from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id = ".$id;
+        $shop_count = $this->model->getRow($sql);
+        $this->assign('shop_count', $shop_count['count'] ? $shop_count['count'] : 0);
+
+        // 我的会员数
+        $user_count = M()->table('users')->where("parent_id=".$id)->count();
+        $this->assign('user_count', $user_count ? $user_count : 0);
+
+        // 店铺订单数
+        $order_count = M()->table('order_info')->where("drp_id=".$info['0']['id'])->count();;
+        $this->assign('order_count', $order_count ? $order_count : 0);
+        $this->assign('title', '店铺详情');
+        $this->display('sale_shop_detail.dwt');
+    }
 }
