@@ -440,14 +440,26 @@ elseif ($_REQUEST['act'] == 'separate')
         if($data1['profit'] > 0){
             $info = sprintf($_LANG['separate_info'], $row['order_sn'], $data1['profit'], $data1['profit']);;
             drp_log_change($data1['user_id'], $data1['profit'], $data1['profit'], $info);
+            $sql = "UPDATE " . $GLOBALS['ecs']->table('drp_shop') .
+                " SET money = money+".$data1['profit'] .
+                " WHERE user_id =".$data1['user_id'];
+            $db->query($sql);
         }
         if($data2['profit'] > 0){
             $info = sprintf($_LANG['separate_info'], $row['order_sn'], $data2['profit'], $data2['profit']);;
             drp_log_change($data2['user_id'], $data2['profit'], $data2['profit'], $info);
+            $sql = "UPDATE " . $GLOBALS['ecs']->table('drp_shop') .
+                " SET money = money+".$data2['profit'] .
+                " WHERE user_id =".$data2['user_id'];
+            $db->query($sql);
         }
         if($data3['profit'] > 0){
             $info = sprintf($_LANG['separate_info'], $row['order_sn'], $data3['profit'], $data3['profit']);;
             drp_log_change($data3['user_id'], $data3['profit'], $data3['profit'], $info);
+            $sql = "UPDATE " . $GLOBALS['ecs']->table('drp_shop') .
+                " SET money = money+".$data3['profit'] .
+                " WHERE user_id =".$data3['user_id'];
+            $db->query($sql);
         }
         $sql = "UPDATE " . $GLOBALS['ecs']->table('order_info') .
             " SET is_separate = 1" .
