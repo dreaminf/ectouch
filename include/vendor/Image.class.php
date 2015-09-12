@@ -206,6 +206,14 @@ class Image {
                 $posX = 340;
                 $posY = 790;
                 break;
+            case 12: //12 推广二维码位置
+                $posX = 95;
+                $posY = 390;
+                break;
+            case 13: //13 推广头像位置
+                $posX = 210;
+                $posY = 500;
+                break;
             default: //随机
                 $posX = rand(0, ($image_w - $w));
                 $posY = rand(0, ($image_h - $h));
