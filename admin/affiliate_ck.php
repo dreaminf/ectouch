@@ -140,7 +140,7 @@ elseif ($_REQUEST['act'] == 'separate')
         $goods_list = $db->getAll("SELECT goods_id,touch_fencheng as goods_price,goods_number FROM " . $GLOBALS['ecs']->table('order_goods') .  " where order_id = $oid");
 
         foreach($goods_list as $key=>$val){
-            $money = round($affiliate['config']['level_money_all'] * $val['goods_price'] * $val['goods_number'],2);
+            $money = $val['goods_price'];
             $integral = integral_to_give(array('order_id' => $oid, 'extension_code' => ''));
             $point = $money;
 

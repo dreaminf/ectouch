@@ -280,21 +280,56 @@ class SaleController extends CommonController {
      * 店铺二维码
      */
     public function store(){
-        $filename  = './data/attached/drp1';
+        $filename  = './data/attached/drp';
         if(!file_exists($filename)){
             mkdir($filename);
         }
-        $mobile_qr = './data/attached/drp/drp_'.$_SESSION['user_id'].'.png';
-        if(!file_exists($mobile_qr)){
-            // 二维码
-            $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$_SESSION['user_id'];
-            // 纠错级别：L、M、Q、H
-            $errorCorrectionLevel = 'L';
-            // 点的大小：1到10
-            $matrixPointSize = 8;
-            @QRcode::png($url, $mobile_qr, $errorCorrectionLevel, $matrixPointSize, 2);
+        $id = $this->user_id;
+        $bg_img = ROOT_PATH.'/data/attached/drp/dp-bg.png';//背景图
+        $ew_img = 'data/attached/drp/drp-'.$id.'.png';//二维码
+        $dp_img = 'data/attached/drp/dp-'.$id.'.png';//店铺二维码
+        $wx_img = 'data/attached/drp/wx-'.$id.'.png';//微信头像
+        if(!file_exists($dp_img)){
+            if(!file_exists($ew_img)){
+                // 二维码
+                $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$id;
+                // 纠错级别：L、M、Q、H
+                $errorCorrectionLevel = 'L';
+                // 点的大小：1到10
+                $matrixPointSize = 15;
+                @QRcode::png($url, $ew_img, $errorCorrectionLevel, $matrixPointSize, 2);
+            }
+
+            // 获取微信头像
+            if (!file_exists($wx_img)){
+
+                $info = model('ClipsBase')->get_user_default($id);
+                $ch = curl_init();
+                $timeout = 5;
+                curl_setopt ($ch, CURLOPT_URL, $info['headimgurl']);
+                curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en; rv:1.9.2) Gecko/20100115 Firefox/3.6 GTBDFff GTB7.0');
+                curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+                $thumb = curl_exec($ch);
+                curl_close($ch);
+                file_put_contents($wx_img,$thumb);
+
+                Image::thumb($wx_img, $wx_img,'','100','100'); // 将图片重新设置大小
+            }
+
+            // 生成海报图片
+            $img = file_get_contents($bg_img);
+            file_put_contents($dp_img,$img);
+            chmod(ROOT_PATH.$dp_img, 0777);
+            // 添加二维码水印
+            Image::water($dp_img,$ew_img,10);
+            // 添加微信头像水印
+            Image::water($dp_img,$wx_img,11);
         }
-        $this->assign('mobile_qr', $mobile_qr);
+
+
+
+        $this->assign('mobile_qr', $dp_img);
         $this->assign('title',L('store'));
         $this->display('sale_store.dwt');
     }
