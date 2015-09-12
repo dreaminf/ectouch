@@ -327,7 +327,7 @@ class SaleController extends CommonController {
         $ew_img = 'data/attached/drp/drp-'.$id.'.png';//二维码
         $dp_img = 'data/attached/drp/dp-'.$id.'.png';//店铺二维码
         $wx_img = 'data/attached/drp/wx-'.$id.'.png';//微信头像
-        if(!file_exists($dp_img)){
+//        if(!file_exists($dp_img)){
             if(!file_exists($ew_img)){
                 // 二维码
                 $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$id;
@@ -339,7 +339,7 @@ class SaleController extends CommonController {
             }
 
             // 获取微信头像
-            if (!file_exists($wx_img)){
+//            if (!file_exists($wx_img)){
 
                 $info = model('ClipsBase')->get_user_default($id);
                 $ch = curl_init();
@@ -353,7 +353,7 @@ class SaleController extends CommonController {
                 file_put_contents($wx_img,$thumb);
 
                 Image::thumb($wx_img, $wx_img,'','100','100'); // 将图片重新设置大小
-            }
+//            }
 
             // 生成海报图片
             $img = file_get_contents($bg_img);
@@ -363,7 +363,7 @@ class SaleController extends CommonController {
             Image::water($dp_img,$ew_img,10);
             // 添加微信头像水印
             Image::water($dp_img,$wx_img,11);
-        }
+//        }
 
 
 
