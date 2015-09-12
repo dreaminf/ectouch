@@ -260,7 +260,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_shop` (
 -- Table structure for `ecs_drp_bank`
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `ecs_drp_bank` (
-  `id` int(10) NOT NULL,
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `bank_name` varchar(50) DEFAULT NULL COMMENT '银行名称',
   `bank_card` varchar(50) DEFAULT NULL COMMENT '银行卡号',
   `user_id` int(10) DEFAULT NULL COMMENT '用户id',
