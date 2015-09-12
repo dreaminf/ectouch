@@ -145,8 +145,12 @@ class SaleController extends CommonController {
      *  会员申请提现
      */
     public function account_raply(){
-        $list = $this->model->table('drp_bank')->where("user_id=".$this->user_id)->select();
-        $this->assign('list',$list);
+        $bank = $this->model->table('drp_shop')->where(array('user_id'=>$_SESSION['user_id']))->field('bank')->find();
+        $bank_info = array();
+        if($bank['bank']){
+            $bank_info = $this->model->table('drp_bank')->where("id=".$bank['bank'])->select();
+        }
+        $this->assign('bank_info',$bank_info['0']);
         // 获取剩余余额
         $surplus_amount = model('Sale')->saleMoney($this->user_id);
         if (empty($surplus_amount)) {
@@ -855,8 +859,25 @@ class SaleController extends CommonController {
                 ->insert();
             redirect(url('sale/account_raply'));
         }
+
         $this->assign('title', '添加银行卡');
         $this->display('sale_add_bank.dwt');
+    }
+    public function select_bank(){
+        if(IS_POST){
+            $bank = I('bank') ? I('bank') : 0;
+            if($bank==0){
+                show_message('请选择银行卡');
+            }
+            $data['bank'] = $bank;
+            $this->model->table('drp_shop')->data($data)->where("user_id=".$this->user_id)->update();
+            redirect(url('sale/account_raply'));
+
+        }
+        $list = $this->model->table('drp_bank')->where("user_id=".$this->user_id)->select();
+        $this->assign('list',$list);
+        $this->assign('title','选择默认银行卡');
+        $this->display('sale_select_bank.dwt');
     }
 
     /**
