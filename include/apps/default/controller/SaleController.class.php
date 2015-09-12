@@ -57,8 +57,8 @@ class SaleController extends CommonController {
         $sale['time'] = date('Y-m-d H:i:s',$shop['create_time']);
         $sale['shop_name'] = $shop['shop_name'];
         $this->assign('sale',$sale);
-        // 账户余额
-        $sale_money = model('Sale')->saleMoney();
+        // 总销售额
+        $sale_money = model('Sale')->get_sale_money_total();
         $this->assign('sale_money',$sale_money);
         // 佣金总额
         $sale_money = model('Sale')->saleMoney();

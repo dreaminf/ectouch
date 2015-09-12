@@ -126,7 +126,8 @@ class SaleModel extends BaseModel {
      */
     function get_sale_money_total($uid=0){
         $uid = $uid > 0 ? $uid : $_SESSION['user_id'];
-        return M()->getOne("select sum(user_money) from {pre}drp_log where user_id = ".$uid ." and user_money > 0");
+
+        return M()->getOne("select sum(goods_amount) from {pre}order_info where drp_id = ".$uid);
     }
     /**
      * 查询分销商佣金
@@ -136,7 +137,7 @@ class SaleModel extends BaseModel {
      */
     function saleMoney($uid=0) {
         $uid = $uid > 0 ? $uid : $_SESSION['user_id'];
-        $money = M()->select("select sum(money) as money from {pre}drp_shop where user_id = ".$uid);
+        $money = M()->select("select sum(user_money) as money from {pre}drp_log where user_id = ".$uid ." and user_money > 0");
         $money = $money['0']['money'];
         return $money ? $money : 0;
 
