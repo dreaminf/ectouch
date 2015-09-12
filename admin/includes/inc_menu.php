@@ -64,9 +64,9 @@ $modules['04_menu_members']['05_user_rank_list']         = 'user_rank.php?act=li
 //$modules['04_menu_members']['06_list_integrate']         = 'integrate.php?act=list';
 $modules['04_menu_members']['08_unreply_msg']            = 'user_msg.php?act=list_all';
 $modules['04_menu_members']['09_user_account']           = 'user_account.php?act=list';
-$modules['04_menu_members']['10_user_account_manage']    = 'user_account_manage.php?act=list';
+//$modules['04_menu_members']['10_user_account_manage']    = 'user_account_manage.php?act=list';
 //$modules['04_menu_members']['ucenter_setup']              = 'integrate.php?act=setup&code=ucenter';
-$modules['04_menu_members']['021_reg_fields']             = 'reg_fields.php?act=list';
+//$modules['04_menu_members']['021_reg_fields']             = 'reg_fields.php?act=list';
 
 // 内容
 $modules['05_menu_content']['ad_position']                = 'ad_position.php?act=list';
