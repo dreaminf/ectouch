@@ -70,6 +70,21 @@ class Model extends BaseModel
             return array();
         }
     }
+
+    //只查询一条信息，返回一维数组
+    public function getCol()
+    {
+        $res = $this->select();
+        if ($res !== false) {
+            $arr = array();
+            foreach ($res as $row) {
+                $arr[] = reset($row);
+            }
+            return $arr;
+        } else {
+            return array();
+        }
+    }
 }
 
 class BaseModel

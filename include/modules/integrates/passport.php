@@ -258,10 +258,9 @@ class passport implements IntegrateInterface
         if ($this->need_sync || (isset($this->is_ecshop) && $this->is_ecshop)) {
             /* 如果需要同步或是ecshop插件执行这部分代码 */
             $where = (is_array($post_id)) ? db_create_in($post_id, 'user_name') : "user_name='" . $post_id . "'";
-            $col = M()->table('users')
+            $col = $this->db->table('users')
             ->field('user_id')
             ->where($where)
-            ->limit('1')
             ->getCol();
         
             if ($col) {
