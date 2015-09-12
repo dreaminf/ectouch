@@ -12,13 +12,23 @@
 <table cellpadding="4" cellspacing="1">
     {foreach from=$info item=li}
     <tr>
-        <td style="width:40%;">{$li.name}</td>
-        <td style="width:60%;"><textarea name="data[{$li.keyword}]">{$li.centent}</textarea></td>
+        <td style="width:20%;">{$li.name}</td>
+        <td style="width:40%;">
+            {if $li.type == 'textarea'}
+                <textarea cols="40" rows="5" name="data[{$li.keyword}]">{$li.centent}</textarea>
+
+            {elseif $li.type == 'text'}
+                <input type="text" size="40" name="data[{$li.keyword}]" value="{$li.centent}">
+            {/if}
+
+        </td>
+        <td><span>{$li.remarks}</span></td>
     </tr>
     {/foreach}
     <tr>
-        <td style="width:40%;"></td>
+        <td ></td>
         <td><input type="submit" value="{$lang.submit}" class="button" /></td>
+        <td></td>
     </tr>
 
 </table>
