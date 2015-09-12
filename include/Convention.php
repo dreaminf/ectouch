@@ -81,7 +81,7 @@ return array(
 		'DB_CACHE_TYPE' => 'FileCache', // 缓存类型，FileCache或Memcache或SaeMemcache
 		'DB_CACHE_TIME' => 600, // 缓存时间,0不缓存，-1永久缓存,单位：秒
 		/* 文件缓存配置 */
-		'DB_CACHE_PATH' => ROOT_PATH . 'data/attached/db_cache/', // 数据库查询内容缓存目录，地址相对于入口文件，一般不需要修改
+		'DB_CACHE_PATH' => ROOT_PATH . 'data/attached/caches/', // 数据库查询内容缓存目录，地址相对于入口文件，一般不需要修改
 		'DB_CACHE_CHECK' => false, // 是否对缓存进行校验，一般不需要修改
 		'DB_CACHE_FILE' => 'cachedata', // 缓存的数据文件名
 		'DB_CACHE_SIZE' => '15M', // 预设的缓存大小，最小为10M，最大为1G

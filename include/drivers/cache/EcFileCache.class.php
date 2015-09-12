@@ -24,7 +24,7 @@ class EcFileCache {
 
     public function __construct($config = array()) {
         $this->config = array(
-            'DB_CACHE_PATH' => 'data/db_cache/', //缓存目录
+            'DB_CACHE_PATH' => 'data/caches/', //缓存目录
             'DB_CACHE_CHECK' => 'false', //是否验证数据
             'DB_CACHE_FILE' => 'cachedata', //缓存的数据文件名
             'DB_CACHE_SIZE' => '15M', //预设的缓存大小

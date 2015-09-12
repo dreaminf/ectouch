@@ -6,7 +6,7 @@ class Jssdk {
   public function __construct($appId, $appSecret) {
     $this->appId = $appId;
     $this->appSecret = $appSecret;
-    $this->cache = new EcCache(array('DB_CACHE_PATH'=>'data/attached/db_cache/'));
+    $this->cache = new EcCache(array('DB_CACHE_PATH'=>'data/attached/caches/'));
   }
 
   public function getSignPackage() {
