@@ -31,11 +31,12 @@ class AdminController extends BaseController {
 
     protected function checkLogin() {
         //不需要登录验证的页面
-        $access = array('Wechat', 'Extend', 'Authorization', 'Navigator');
+        $access = array('Wechat', 'Extend', 'Authorization', 'Navigator', 'Index' => array('license'));
         
         //如果当前访问是无需登录验证，则直接返回
-        if (!in_array(CONTROLLER_NAME, $access)) {
-            $this->redirect('./admin');
+        if (!in_array(CONTROLLER_NAME, $access) && !in_array(ACTION_NAME, $access[CONTROLLER_NAME])) {
+            // $this->redirect('./admin');
+            exit('Access denied.');
         }
 
         if (intval($_SESSION['admin_id']) > 0) {
