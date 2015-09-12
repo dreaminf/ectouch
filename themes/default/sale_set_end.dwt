@@ -15,9 +15,7 @@
 		<i class="iconfont icon-huangse icon-hao" onclick="close_class('set2_content')"></i>
 		<br>
 		<div class="yjtx2_content1">
-			<div class="yjtx2_content3">
-				<span class="yjtx2_list4">微店地址：{$sale_url}</span>
-			</div>
+				<span class="yjtx2_list4" style="display: block;">微店地址：<br>{$sale_url}</span>
 		</div>
 	</div>
 </div>
