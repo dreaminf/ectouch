@@ -47,7 +47,7 @@
 					</li>
 					<li class="fl" id="goods">
 						<span class="member-order-list-num"><!--{if $list.not_shouhuos neq ''}--> {$list.not_shouhuos}<!--{else}-->0<!--{/if}--></span>
-						<a href="{:url('user/order_list')}"><i class="iconfont">&#xe61c; </i><span>待收货</span></a>
+						<a href="{:url('user/not_shoushuo')}"><i class="iconfont">&#xe61c; </i><span>待收货</span></a>
 					</li>
 					<li class="fl" id="comment">
 						<span class="member-order-list-num"><!--{if $list.not_comment neq ''}--> {$list.not_comment}<!--{else}-->0<!--{/if}--></span>
