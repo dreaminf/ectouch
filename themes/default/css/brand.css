@@ -61,7 +61,7 @@ html {overflow-y: scroll;}
 .brand-lattice li a {color: #FFFFFF;}
 .brand-list{width: 100%;height:auto;overflow: hidden;text-align: center;border-bottom: 1px solid #D7DCE1;margin-bottom: 1rem;}
 .brand-list ul {width: 100%;height: auto;overflow: hidden;margin: 0 auto;}
-.brand-list ul li {float: left;width: 33.3%;border-right: 1px solid #EDF0F2; border-bottom: 1px solid #EDF0F2;}
+.brand-list ul li {  float: left;  width: 33%;  border-right: 1px solid #EDF0F2;  border-bottom: 1px solid #EDF0F2;  height: 4rem;  background-color: #FFF;}
 .brand-list ul li img {display: block;margin: 0 auto;width: 100%;transition: all 0.5s}
 .brand-list ul li img.active {transform: scale(0.9);}
 .brand-hot {width: 100%;height: 320px;overflow: hidden;background-color: #FFFFFF;border-top: 1ps solid #D7DCE1;margin-bottom: 1rem;}

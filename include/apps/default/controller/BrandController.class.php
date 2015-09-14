@@ -34,11 +34,23 @@ class BrandController extends CommonController {
     }
 
     public function index() {
-        $list = model('Brand')->get_brands('brand', '3', 1);
+        $list = model('Brand')->get_brands('brand', '1', 1);
         foreach($list as $key=>$val){
             $list[$key]['goods'] =  model('Brand')->brand_get_goods_img($val['brand_id'],'','goods_id','desc','3','1');
         }
         $this->assign('list', $list);
+
+        $list = model('Brand')->get_brands('brand', '1', 2);
+        foreach($list as $key=>$val){
+            $list[$key]['goods'] =  model('Brand')->brand_get_goods_img($val['brand_id'],'','goods_id','desc','3','1');
+        }
+        $this->assign('list2', $list);
+
+        $list = model('Brand')->get_brands('brand', '1', 3);
+        foreach($list as $key=>$val){
+            $list[$key]['goods'] =  model('Brand')->brand_get_goods_img($val['brand_id'],'','goods_id','desc','3','1');
+        }
+        $this->assign('list3', $list);
 
         $brand = model('Brand')->get_brands('brand', '11', 1);
         $this->assign('brand', $brand);

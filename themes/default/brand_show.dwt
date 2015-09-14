@@ -35,7 +35,32 @@
                 <!--{/foreach}-->
             </div>
         </div>
-
+        <!--{foreach name=list from=$list2 item=li}-->
+        <div class="brand-today-img">
+            <div class="brand-today-img-text fl">
+                <p>今日推荐</p><span>{$li.brand_name}</span>
+            </div>
+            <div class="brand-today-img-content fr">
+                <img src="{$l.brand_banner}" alt="" />
+            </div>
+            <div class="brand-today-img-logo fl">
+                <img src="{$l.goods_thumb}" alt="" />
+            </div>
+        </div>
+        <!--{/foreach}-->
+        <!--{foreach name=list from=$list3 item=li}-->
+        <div class="brand-today-img">
+            <div class="brand-today-img-text fr">
+                <p>今日推荐</p><span>{$li.brand_name}</span>
+            </div>
+            <div class="brand-today-img-content fl">
+                <img src="{$l.brand_banner}" alt="" />
+            </div>
+            <div class="brand-today-img-logo fr">
+                <img src="{$l.goods_thumb}" alt="" />
+            </div>
+        </div>
+        <!--{/foreach}-->
         <div class="brand-lattice">
             <ul>
             </ul>
