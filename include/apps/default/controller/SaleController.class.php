@@ -54,7 +54,7 @@ class SaleController extends CommonController {
      */
     public function index() {
         $shop = $this->model->table('drp_shop')->where(array('user_id'=>$_SESSION['user_id']))->field('create_time,shop_name')->find();
-        $sale['time'] = date('Y-m-d H:i:s',$shop['create_time']);
+        $sale['time'] = local_date('Y-m-d H:i:s',$shop['create_time']);
         $sale['shop_name'] = $shop['shop_name'];
         $this->assign('sale',$sale);
         // 总销售额
@@ -603,7 +603,7 @@ class SaleController extends CommonController {
     public function sale_set_end(){
         // 设置为分销商
         $data['open'] = 1;
-        $data['create_time'] = gmtime()+8*3600;
+        $data['create_time'] = gmtime();
         $where['user_id'] = $_SESSION['user_id'];
         $this->model->table('drp_shop')->data($data)->where($where)->update();
         unset($data);
@@ -979,7 +979,7 @@ class SaleController extends CommonController {
     public function shop_detail(){
         $id = I('id') ? I('id') : $this->user_id;
         $info = M()->table('drp_shop')->where("user_id=".$id)->select();
-        $info['0']['time'] = date('Y-m-d H:i:s',$info['0']['create_time']);
+        $info['0']['time'] = local_date('Y-m-d H:i:s',$info['0']['create_time']);
         $this->assign('shop_info', $info['0']);
 
         $shop_user = model('ClipsBase')->get_user_default($id);

@@ -60,7 +60,7 @@ class SaleModel extends BaseModel {
             }
         }
         foreach($res as $key=>$val){
-            $res[$key]['time'] = date('Y-m-d H:i:s',$val['create_time']);
+            $res[$key]['time'] = local_date('Y-m-d H:i:s',$val['create_time']);
         }
         return $res;
     }
@@ -107,7 +107,7 @@ class SaleModel extends BaseModel {
             }
         }
         foreach($res as $key=>$val){
-            $res[$key]['time'] = date('Y-m-d',$val['reg_time']);
+            $res[$key]['time'] = local_date('Y-m-d',$val['reg_time']);
 
             if(class_exists('WechatController')){
                 if (method_exists('WechatController', 'get_avatar')) {
@@ -151,7 +151,7 @@ class SaleModel extends BaseModel {
      */
     function saleMoney_today($uid=0) {
         $uid = $uid > 0 ? $uid : $_SESSION['user_id'];
-        return M()->getOne("select sum(user_money) from {pre}drp_log where user_id = ".$uid ." and change_time > ".strtotime(date('Y-m-d')));
+        return M()->getOne("select sum(user_money) from {pre}drp_log where user_id = ".$uid ." and change_time > ".strtotime(local_date('Y-m-d')));
 
     }
 
@@ -513,7 +513,7 @@ class SaleModel extends BaseModel {
         foreach ($res as $k => $v) {
             $res[$k]['user_id']     =   $v['user_id'];
             $res[$k]['user_name']   =   $v['user_name'];
-            $res[$k]['reg_time']    =   date('Y-m-d H:i:s', ($v['reg_time']+8*3600));
+            $res[$k]['reg_time']    =   local_date('Y-m-d H:i:s', $v['reg_time']);
             $res[$k]['mobile_phone']    =    $v['mobile_phone'] ? substr_replace($v['mobile_phone'],'****',3,4) : '';
 
             if(class_exists('WechatController')){
