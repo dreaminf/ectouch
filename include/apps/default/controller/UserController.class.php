@@ -2360,4 +2360,32 @@ class UserController extends CommonController {
             }
         }
     }
+	
+	
+	/**
+     * 待评价订单
+     */
+    public function order_comment() {
+		$user_id = $this->user_id;
+		$sql="select b.goods_id from " . $this->model->pre . "order_info as a  LEFT JOIN " .$this->model->pre. "order_goods  as b on a.order_id=b.order_id  where user_id='$user_id' and b.goods_id not in(select id_value from ". $this->model->pre . "comment where user_id='$user_id')";		
+		$res = $this->model->query($sql);
+		foreach($res as $k =>$value)
+			 {
+				 $str.=$value['goods_id'].',';
+			 }
+			 $reb = substr($str,0,-1) ;			
+        $sql = 'SELECT g.goods_id, g.goods_name, g.goods_img ' .
+		        'FROM ' . $this->model->pre . 'goods AS g ' .  "WHERE g.goods_id in (".$reb.")"  ; 
+        $result = $this->model->query($sql);
+		foreach ($result as $key => $vo) {           
+            $goods[$key]['goods_id'] = $vo['goods_id'];
+            $goods[$key]['name'] = $vo['goods_name'];            
+            $goods[$key]['goods_img'] = get_image_path($vo['goods_id'], $vo['goods_img']);
+            $goods[$key]['url'] = url('goods/index', array('id' => $vo['goods_id']));
+		}
+		//dump($goods);
+		$this->assign('title','待评价');
+		$this->assign('goods_list',$goods);
+        $this->display('user_order_comment_list.dwt');
+	}
 }
