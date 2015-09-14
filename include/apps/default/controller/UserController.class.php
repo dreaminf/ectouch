@@ -571,7 +571,26 @@ class UserController extends CommonController {
         $this->assign('orders_list', $orders);
         $this->display('user_order_list.dwt');
     }
-
+	 /**
+     * 获取待收货订单
+     */
+    public function not_shoushuo() {
+		$where['user_id'] = $this->user_id;
+        $where['shipping_status'] = 1;
+        $pay = 1;
+        $size = I(C('page_size'), 10);
+        $count = $this->model->table('order_info')->where($where)->count();
+		//dump($count);exit;
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('order_list', $filter), $size);
+        $offset_page = explode(',', $offset);
+        $orders = model('Users')->not_shouhuo_orders($this->user_id, $pay, $offset_page[1], $offset_page[0]);
+        $this->assign('pay', $pay);
+        $this->assign('title', '待收货');
+        $this->assign('pager', $this->pageShow($count));
+        $this->assign('orders_list', $orders);
+        $this->display('user_order_list.dwt');
+    }
     /**
      * ajax获取订单
      */
