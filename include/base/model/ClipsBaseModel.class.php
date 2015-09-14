@@ -839,7 +839,15 @@ class ClipsBaseModel extends BaseModel {
             return $config;
         }
     }
-	
+	 /**
+     * 获取用户红包数量
+     */
+	public function my_bonus($user_id) {
+	   $where['user_id'] = $user_id;
+       
+       $count = $this->model->table('user_bonus')->where($where)->count();
+	   return $count;
+    }
 	/**
      * 获取收藏商品的数量
      */
