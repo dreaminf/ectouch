@@ -51,7 +51,7 @@
 					</li>
 					<li class="fl" id="comment">
 						<span class="member-order-list-num"><!--{if $list.not_comment neq ''}--> {$list.not_comment}<!--{else}-->0<!--{/if}--></span>
-						<a href="{:url('user/order_list')}"><i class="iconfont">&#xe619; </i><span>待评价</span></a>
+						<a href="{:url('user/order_comment')}"><i class="iconfont">&#xe619; </i><span>待评价</span></a>
 					</li>
 					<!-- <li class="fl" id="repick">
 						<span class="member-order-list-num">0</span>
