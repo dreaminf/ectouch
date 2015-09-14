@@ -24,7 +24,7 @@
 
 <!-- 品牌 start--> 
 <!--{if $brand}-->
-    <li class="brand-status" id="nav{$brand.info}">
+    <li class="brand-status" id="{$brand.info}">
         {$brand.info}
     </li>
     <!-- {foreach from=$brand.list item=li} -->

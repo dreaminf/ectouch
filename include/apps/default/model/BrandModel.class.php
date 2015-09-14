@@ -106,6 +106,8 @@ class BrandModel extends BaseModel {
             $arr[$first]['list'][] = $brand;
         }
         ksort($arr);
+
+        $arr[]= array();
         return $arr;
     }
 

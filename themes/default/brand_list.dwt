@@ -7,26 +7,29 @@
             <span>{$title}</span>
         </header>
     </div>
-    <div class="bran_list" id="J_ItemList" style="opacity:1;">
+    <div class="bran_list bs-example" id="J_ItemList" style="opacity:1;" data-example-id="embedded-scrollspy">
         <ul class="single_item">
         </ul>
         <a href="javascript:;" class="get_more"></a>
     </div>
     <div class="brand-letter" style="position: fixed;
     top: 5rem;
-    right: 1rem">
-        <ul>
+    right: 1rem" id="navbar-example" class="bs-docs-sidebar  affix">
+        <ul class="nav bs-docs-sidenav ect-brand-list-nav">
             <!--{foreach name=list from=$nav item=li}-->
-            <li><a href="#nav{$li}">{$li}</a></li>
+            <li><a href="#{$li}">{$li}</a></li>
             <!--{/foreach}-->
         </ul>
     </div>
-    <div style="height: 200px;"></div>
+    <div style="height: 1rem;"></div>
+
 </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <script type="text/javascript">
 get_asynclist("{:url('brand/asynclist', array('page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order']))}" , '__TPL__/images/loader.gif');
+
+$('body').scrollspy({ target: '#navbar-example' })
 </script>
 </body>
 </html>
