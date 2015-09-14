@@ -90,7 +90,7 @@ class BrandModel extends BaseModel {
      */
     function get_brands($app = 'brand', $size, $page) {
         $start = ($page - 1) * $size;
-        $sql = "SELECT brand_id, brand_name, brand_logo, brand_desc FROM " . $this->pre . "brand WHERE is_show = 1 GROUP BY brand_id , sort_order order by sort_order ASC LIMIT $start , $size";
+        $sql = "SELECT brand_id, brand_name, brand_logo, brand_desc,brand_banner FROM " . $this->pre . "brand WHERE is_show = 1 GROUP BY brand_id , sort_order order by sort_order ASC LIMIT $start , $size";
         $res = $this->query($sql);
         $arr = array();
         foreach ($res as $row) {
@@ -98,9 +98,63 @@ class BrandModel extends BaseModel {
             $arr[$row['brand_id']]['brand_name'] = $row['brand_name'];
             $arr[$row['brand_id']]['url'] = url('brand/goods_list', array('id' => $row['brand_id']));
             $arr[$row['brand_id']]['brand_logo'] = __ROOT__ . '/data/attached/brandlogo/' .get_banner_path($row['brand_logo']);
-            $arr[$row['brand_id']]['brand_banner'] = $arr[$row['brand_id']]['brand_logo'];
+            $arr[$row['brand_id']]['brand_banner'] = __ROOT__ . '/data/attached/brandbanner/' .get_banner_path($row['brand_banner']);
             $arr[$row['brand_id']]['goods_num'] = model('Brand')->goods_count_by_brand($row['brand_id']);
             $arr[$row['brand_id']]['brand_desc'] = htmlspecialchars($row['brand_desc'], ENT_QUOTES);
+        }
+        return $arr;
+    }
+
+    /**
+     * 获得品牌列表
+     *
+     * @global type $page_libs
+     * @staticvar null $static_page_libs
+     * @param type $cat
+     * @param type $app
+     * @param type $size
+     * @param type $page
+     * @return type
+     */
+    function get_brands_hj() {
+        $sql = "SELECT brand_id, brand_name, brand_logo, brand_desc,brand_banner FROM " . $this->pre . "brand WHERE is_show = 1 GROUP BY brand_id , sort_order order by sort_order ASC";
+        $res = $this->query($sql);
+        $arr = array();
+        foreach ($res as $key=>$row) {
+            if($key == 0 ){
+                $arr['top'][$row['brand_id']]['brand_id']   =   $row['brand_id'];
+                $arr['top'][$row['brand_id']]['brand_name'] =   $row['brand_name'];
+                $arr['top'][$row['brand_id']]['url']    =   url('brand/goods_list', array('id' => $row['brand_id']));
+                $arr['top'][$row['brand_id']]['brand_logo'] =   __ROOT__ . '/data/attached/brandlogo/' .get_banner_path($row['brand_logo']);
+                $arr['top'][$row['brand_id']]['brand_banner']   =   __ROOT__ . '/data/attached/brandbanner/' .get_banner_path($row['brand_banner']);
+                $arr['top'][$row['brand_id']]['goods_num']  =   model('Brand')->goods_count_by_brand($row['brand_id']);
+                $arr['top'][$row['brand_id']]['brand_desc'] =   htmlspecialchars($row['brand_desc'], ENT_QUOTES);
+            }elseif($key == 1 ){
+                $arr['center'][$row['brand_id']]['brand_id']   =   $row['brand_id'];
+                $arr['center'][$row['brand_id']]['brand_name'] =   $row['brand_name'];
+                $arr['center'][$row['brand_id']]['url']    =   url('brand/goods_list', array('id' => $row['brand_id']));
+                $arr['center'][$row['brand_id']]['brand_logo'] =   __ROOT__ . '/data/attached/brandlogo/' .get_banner_path($row['brand_logo']);
+                $arr['center'][$row['brand_id']]['brand_banner']   =   __ROOT__ . '/data/attached/brandbanner/' .get_banner_path($row['brand_banner']);
+                $arr['center'][$row['brand_id']]['goods_num']  =   model('Brand')->goods_count_by_brand($row['brand_id']);
+                $arr['center'][$row['brand_id']]['brand_desc'] =   htmlspecialchars($row['brand_desc'], ENT_QUOTES);
+            }elseif($key > 1 && $key < 6){
+                $arr['list1'][$row['brand_id']]['brand_id']   =   $row['brand_id'];
+                $arr['list1'][$row['brand_id']]['brand_name'] =   $row['brand_name'];
+                $arr['list1'][$row['brand_id']]['url']    =   url('brand/goods_list', array('id' => $row['brand_id']));
+                $arr['list1'][$row['brand_id']]['brand_logo'] =   __ROOT__ . '/data/attached/brandlogo/' .get_banner_path($row['brand_logo']);
+                $arr['list1'][$row['brand_id']]['brand_banner']   =   __ROOT__ . '/data/attached/brandbanner/' .get_banner_path($row['brand_banner']);
+                $arr['list1'][$row['brand_id']]['goods_num']  =   model('Brand')->goods_count_by_brand($row['brand_id']);
+                $arr['list1'][$row['brand_id']]['brand_desc'] =   htmlspecialchars($row['brand_desc'], ENT_QUOTES);
+            }else{
+                $arr['list2'][$row['brand_id']]['brand_id']   =   $row['brand_id'];
+                $arr['list2'][$row['brand_id']]['brand_name'] =   $row['brand_name'];
+                $arr['list2'][$row['brand_id']]['url']    =   url('brand/goods_list', array('id' => $row['brand_id']));
+                $arr['list2'][$row['brand_id']]['brand_logo'] =   __ROOT__ . '/data/attached/brandlogo/' .get_banner_path($row['brand_logo']);
+                $arr['list2'][$row['brand_id']]['brand_banner']   =   __ROOT__ . '/data/attached/brandbanner/' .get_banner_path($row['brand_banner']);
+                $arr['list2'][$row['brand_id']]['goods_num']  =   model('Brand')->goods_count_by_brand($row['brand_id']);
+                $arr['list2'][$row['brand_id']]['brand_desc'] =   htmlspecialchars($row['brand_desc'], ENT_QUOTES);
+            }
+
         }
         return $arr;
     }
@@ -146,13 +200,13 @@ class BrandModel extends BaseModel {
         $start = ($page - 1) * $size;
         /* 获得商品列表 */
         $sort = $sort == 'sales_volume' ? 'xl.sales_volume' : $sort;
-        $sql = 'SELECT goods_id,goods_thumb FROM ' . $this->pre . "goods  WHERE is_on_sale = 1 AND is_alone_sale = 1 AND is_delete = 0 AND brand_id = '$brand_id' " . "ORDER BY $sort $order LIMIT $start , $size";
+        $sql = 'SELECT goods_id,goods_img FROM ' . $this->pre . "goods  WHERE is_on_sale = 1 AND is_alone_sale = 1 AND is_delete = 0 AND brand_id = '$brand_id' " . "ORDER BY $sort $order LIMIT $start , $size";
         $res = $this->query($sql);
         $arr = array();
         foreach ($res as $key=>$row) {
             $arr[$key]['goods_id'] = $row['goods_id'];
             $arr[$key]['url'] = url('goods/index', array('id' => $row['goods_id']));
-            $arr[$key]['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
+            $arr[$key]['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_img'], true);
 
         }
 

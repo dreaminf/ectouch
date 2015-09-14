@@ -10,12 +10,12 @@
     <div class="brand-main">
         <div class="brand-today">
             <div class="brand-today-img">
-                <!--{foreach name=list from=$list item=li}-->
+                <!--{foreach name=list from=$list.top item=li}-->
                 <div class="brand-today-img-text fr">
                     <p>今日推荐</p><span>{$li.brand_name}</span>
                 </div>
                 <div class="brand-today-img-content fl ">
-                    <div id="focus{$li.brand_id}" class="focus goods-focus ect-padding-lr ect-margin-tb">
+                    <div id="focus" class="focus goods-focus ect-padding-lr ect-margin-tb">
                         <div class="hd">
                             <ul>
                             </ul>
@@ -35,39 +35,35 @@
                 <!--{/foreach}-->
             </div>
         </div>
-        <!--{foreach name=list from=$list2 item=li}-->
+        <!--{foreach name=list from=$list.center item=li}-->
         <div class="brand-today-img">
             <div class="brand-today-img-text fl">
                 <p>今日推荐</p><span>{$li.brand_name}</span>
             </div>
             <div class="brand-today-img-content fr">
-                <img src="{$l.brand_banner}" alt="" />
+                <img src="{$li.brand_banner}" alt="" />
             </div>
             <div class="brand-today-img-logo fl">
-                <img src="{$l.goods_thumb}" alt="" />
-            </div>
-        </div>
-        <!--{/foreach}-->
-        <!--{foreach name=list from=$list3 item=li}-->
-        <div class="brand-today-img">
-            <div class="brand-today-img-text fr">
-                <p>今日推荐</p><span>{$li.brand_name}</span>
-            </div>
-            <div class="brand-today-img-content fl">
-                <img src="{$l.brand_banner}" alt="" />
-            </div>
-            <div class="brand-today-img-logo fr">
-                <img src="{$l.goods_thumb}" alt="" />
+                <img src="{$li.brand_logo}" alt="" />
             </div>
         </div>
         <!--{/foreach}-->
         <div class="brand-lattice">
             <ul>
+
+                <!--{foreach name=list from=$list.list1 item=li}-->
+                <li>
+                    <img src="{$li.brand_banner}" alt="" class="brand-lattice-bg" />
+                    <img src="{$li.brand_logo}" alt="" class="brand-lattice-logo" />
+                    <span>{$li.brand_name}</span>
+			    </li>
+                <!--{/foreach}-->
             </ul>
         </div>
+
         <div class="brand-list">
             <ul>
-                <!--{foreach name=brand from=$brand item=br}-->
+                <!--{foreach name=brand from=$list.list2 item=br}-->
                 <li><a href="{$br.url}"><img src="{$br.brand_logo}" alt="" /></a></li>
                 <!--{/foreach}-->
 
@@ -84,7 +80,7 @@
 <script type="text/javascript">
 <!--{foreach name=list from=$list item=li}-->
 TouchSlide({
-    slideCell : "#focus{$li.brand_id}",
+    slideCell : "#focus",
     titCell : ".hd ul", // 开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
     mainCell : ".bd ul",
     effect : "left",
