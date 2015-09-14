@@ -11,8 +11,12 @@
         <div class="brand-today">
             <div class="brand-today-img">
                 <!--{foreach name=list from=$list.top item=li}-->
-                <div class="brand-today-img-text fr">
-                    <p>今日推荐</p><span>{$li.brand_name}</span>
+                <div class="top fr">
+
+                    <div class="">
+                        <a href="{$li.url}"> <img src="{$li.brand_logo}" alt="" /></a>
+                    </div>
+                    <span>{$li.brand_desc}</span>
                 </div>
                 <div class="brand-today-img-content fl ">
                     <div id="focus" class="focus goods-focus ect-padding-lr ect-margin-tb">
@@ -29,16 +33,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="brand-today-img-logo fl">
-                    <a href="{$li.url}"> <img src="{$li.brand_logo}" alt="" /></a>
-                </div>
                 <!--{/foreach}-->
             </div>
         </div>
         <!--{foreach name=list from=$list.center item=li}-->
         <div class="brand-today-img">
             <div class="brand-today-img-text fl">
-                <p>今日推荐</p><span>{$li.brand_name}</span>
+                <p>今日推荐</p><span>Recommendationof day</span>
             </div>
             <div class="brand-today-img-content fr">
                 <img src="{$li.brand_banner}" alt="" />

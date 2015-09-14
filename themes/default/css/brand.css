@@ -45,12 +45,12 @@ html {overflow-y: scroll;}
 .brand-today-content {width: 35%;height:100%;padding: 15% 5%;background-color: #FFFFFF;font-size: 1.6rem;color: #505050;line-height: 175%;font-weight: 400;}
 .carousel {width: 65%;}
 .brand-today-content img {display: block; margin: 1rem auto;width: 100%;}
-.brand-today-img-text {width: 43%;background-color: #41A28E;color: #FFFFFF;text-align: center;height: 100%; padding: 16% 5%;}
+.brand-today-img-text {width: 40%;background-color: #41A28E;color: #FFFFFF;text-align: center;height: 100%; padding: 16% 5%;}
 .brand-today-img-text p {font-size: 1.8rem;display: block;}
 .brand-today-img-text span {font-size: 1.5rem;line-height: 125%;}
-.brand-today-img-content {width: 57%;overflow: hidden;}
+.brand-today-img-content {width: 60%;overflow: hidden;}
 .brand-today-img-content img {width: 100%;}
-.brand-today-img-logo {width: 43%;}
+.brand-today-img-logo {width: 40%;}
 .brand-today-img-logo img {width: 75%;margin: 0 auto;display: block;}
 .brand-lattice {width: 100%;height: auto;overflow: hidden;}
 .brand-lattice ul li {width: 50%;height: auto;float: left;position: relative;}
@@ -70,7 +70,10 @@ html {overflow-y: scroll;}
 .brand-hot-div ul {width: 200%;height:100%;}
 .brand-hot-div ul li {float: left;margin: 0 0.5rem;width: 14%;}
 .brand-hot-div li img {width: 100%;display: block;margin: 0 auto;}
-
+.top {width: 40%;background-color: #FFF;color: #000;text-align: center;height: 100%; padding: 5% 5%; padding-bottom:0;}
+.top p {font-size: 1.8rem;display: block;}
+.top img {width:100%;height:auto;}
+.top span {font-size: 1.5rem;line-height: 125%;}
 
 
 /*media*/
@@ -98,20 +101,3 @@ html { font-size:40%;}
 .brand-today-content{padding: 8% 5%;}
 .brand-today-img-text{padding: 13% 5%;}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
