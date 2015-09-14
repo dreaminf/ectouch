@@ -332,7 +332,7 @@ class SaleController extends CommonController {
                 // 二维码
                 $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$id;
                 // 纠错级别：L、M、Q、H
-                $errorCorrectionLevel = 'L';
+                $errorCorrectionLevel = 'M';
                 // 点的大小：1到10
                 $matrixPointSize = 15;
                 @QRcode::png($url, $ew_img, $errorCorrectionLevel, $matrixPointSize, 2);
