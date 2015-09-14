@@ -591,7 +591,70 @@ class UsersModel extends BaseModel {
         }
         return $arr;
     }
+	
+	/**
+     *  获取用户未收货订单列表
+     *
+     * @access  public
+     * @param   int         $user_id        用户ID号
+     * @param   int         $pay            订单状态，0未付款，1全部，默认1 
+     * @param   int         $num            列表最大数量
+     * @param   int         $start          列表起始位置
+     * @return  array       $order_list     订单列表
+     */
+    function not_shouhuo_orders($user_id, $pay = 1, $num = 10, $start = 0) {
+        /* 取得订单列表 */
+        $arr = array();
 
+        if ($pay == 1) {
+            $pay = '';
+        } else {
+            $pay = 'and pay_status = ' . PS_UNPAYED;
+        }
+
+        $sql = "SELECT order_id, order_sn, shipping_id, order_status, shipping_status, pay_status, add_time, " .
+                "(goods_amount + shipping_fee + insure_fee + pay_fee + pack_fee + card_fee + tax - discount) AS total_fee " .
+                " FROM " . $this->pre .
+                "order_info WHERE user_id = '$user_id' and shipping_status = 1 ORDER BY add_time DESC LIMIT $start , $num";
+        $res = M()->query($sql);
+        foreach ($res as $key => $value) {
+            if ($value['order_status'] == OS_UNCONFIRMED) {
+                $value['handler'] = "<a href=\"" . url('user/cancel_order', array('order_id' => $value['order_id'])) . "\" onclick=\"if (!confirm('" . L('confirm_cancel') . "')) return false;\">" . L('cancel') . "</a>";
+            } else if ($value['order_status'] == OS_SPLITED) {
+                /* 对配送状态的处理 */
+                if ($value['shipping_status'] == SS_SHIPPED) {
+                    @$value['handler'] = "<a href=\"" . url('user/affirm_received', array('order_id' => $value['order_id'])) . "\" onclick=\"if (!confirm('" . L('confirm_received') . "')) return false;\">" . L('received') . "</a>";
+                } elseif ($value['shipping_status'] == SS_RECEIVED) {
+                    @$value['handler'] = '<span style="color:red">' . L('ss_received') . '</span>';
+                } else {
+                    if ($value['pay_status'] == PS_UNPAYED) {
+                        @$value['handler'] = "<a href=\"" . url('user/cancel_order', array('order_id' => $value['order_id'])) . "\">" . L('pay_money') . "</a>";
+                    } else {
+                        @$value['handler'] = "<a href=\"" . url('user/cancel_order', array('order_id' => $value['order_id'])) . "\">" . L('view_order') . "</a>";
+                    }
+                }
+            } else {
+                $value['handler'] = '<span>' . L('os.' . $value['order_status']) . '</span>';
+            }
+
+            $value['shipping_status'] = ($value['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $value['shipping_status'];
+            $value['order_status'] = L('os.' . $value['order_status']) . ',' . L('ps.' . $value['pay_status']) . ',' . L('ss.' . $value['shipping_status']);
+
+
+
+            $arr[] = array('order_id' => $value['order_id'],
+                'order_sn' => $value['order_sn'],
+                'img' => get_image_path(0, model('Order')->get_order_thumb($value['order_id'])),
+                'order_time' => local_date(C('time_format'), $value['add_time']),
+                'order_status' => $value['order_status'],
+                'shipping_id' => $value['shipping_id'],
+                'total_fee' => price_format($value['total_fee'], false),
+                'url' => url('user/order_detail', array('order_id' => $value['order_id'])),
+                'goods_count' => model('Users')->get_order_goods_count($value['order_id']),
+                'handler' => $value['handler']);
+        }
+        return $arr;
+    }
     /**
      * 取消一个用户订单
      *
