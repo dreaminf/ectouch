@@ -182,6 +182,10 @@ class BrandController extends CommonController {
 
         $list = model('Brand')->get_brands('brand', $this->size, $this->page);
         $this->assign('list', $list);
+        for($i='A',$a=0;$a<26;$a++,$i++){
+            $nav[]=$i;
+        }
+        $this->assign('nav',$nav);
         $this->assign('title','品牌列表');
         $this->display('brand_list.dwt');
 
