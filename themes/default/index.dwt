@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>{$page_title}</title>
 <link rel="stylesheet" type="text/css" href="__TPL__/css/index.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
 <style type="text/css">
 /*banner效果*/
 .focus { width: 100%; height: auto; position: relative; overflow: hidden;}
