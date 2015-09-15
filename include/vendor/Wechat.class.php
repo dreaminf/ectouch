@@ -233,7 +233,7 @@ class Wechat
 		$this->appsecret = isset($options['appsecret'])?$options['appsecret']:'';
 		$this->debug = isset($options['debug'])?$options['debug']:false;
 		$this->logcallback = isset($options['logcallback'])?$options['logcallback']:false;
-		$this->cache = new EcCache(array('DB_CACHE_PATH'=>'data/attached/caches/'));
+		$this->cache = new Cache();
 	}
 
 	/**
@@ -1156,7 +1156,7 @@ class Wechat
 	 * @return boolean
 	 */
 	protected function removeCache($cachename){
-		return $this->cache->del($cachename);
+		return $this->cache->rm($cachename);
 		//TODO: remove cache implementation
 		// return false;
 	}
