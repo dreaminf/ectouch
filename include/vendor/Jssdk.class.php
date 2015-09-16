@@ -56,7 +56,7 @@ class Jssdk {
       $res = json_decode($this->httpGet($url));
       $ticket = $res->ticket;
       if ($ticket) {
-        $expire_time = 7000;
+        $expire_time = $res->expires_in ? intval($res->expires_in)-100 : 3600;
         $this->cache->set($name, $ticket, $expire_time);
       }
     } else {
@@ -77,7 +77,7 @@ class Jssdk {
       $res = json_decode($this->httpGet($url));
       $access_token = $res->access_token;
       if ($access_token) {
-        $expire_time = 7000;
+        $expire_time = $res->expires_in ? intval($res->expires_in)-100 : 3600;
         $this->cache->set($name, $access_token, $expire_time);
       }
     } else {
