@@ -633,6 +633,12 @@ class SaleModel extends BaseModel {
             'profit2'=>0,
             'profit_num'=>0,
         );
+
+        $profit = array(
+            'profit1' => 0,
+            'profit2' => 0,
+            'profit3' => 0,
+        );
         // 本店销售佣金
         $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$user_id)->getOne();
         $order_id = M()->table('order_info')->field('order_id')->where('drp_id='.$drp_id ." and shop_separate=".$separate)->select();
