@@ -683,7 +683,7 @@ class SaleModel extends BaseModel {
                 foreach($goods_list as $key=>$val){
                     $profit = $this->get_drp_profit($val['goods_id']);
                     if(!$profit){
-                        $profit['profit2'] = 0;
+                        @$profit['profit2'] = 0;
                     }
                     // 一级分销商利润
                     $data['profit1']+= $val['touch_sale']*$profit['profit2']/100*$val['goods_number'];
