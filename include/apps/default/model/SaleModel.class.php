@@ -564,6 +564,9 @@ class SaleModel extends BaseModel {
             $sql = "SELECT user_id FROM {pre}drp_shop WHERE id = '$user_id'";
             $row = $this->row($sql);
             $user_id = $row['user_id'];
+            if(!$user_id){
+                return array();exit;
+            }
         }
         $sql = "SELECT pay_points, user_money, credit_line, last_login, is_validated,user_name FROM " . $this->pre . "users WHERE user_id = '$user_id'";
         $row = $this->row($sql);

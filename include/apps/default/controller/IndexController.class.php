@@ -21,15 +21,14 @@ class IndexController extends CommonController {
      * 首页信息
      */
     public function index() {
-        $drp_id = I('drp_id') ? I('drp_id') : 0;
-        if($drp_id > 0){
+        if($_SESSION['drp_shop']){
+            $drp_shop = $_SESSION['drp_shop'];
             //分销店铺
-            $drp_info = model('Sale')->get_drp($drp_id);
-            if($drp_info['open'] == 1){
-                $drp_info['mobile_qr'] = './data/attached/drp/drp_'.$drp_id.'.png';
+            if($drp_shop['open'] == 1){
+                $drp_info['mobile_qr'] = './data/attached/drp/drp_'.$drp_shop['user_id'].'.png';
                 if(!file_exists($drp_info['mobile_qr'])){
                     // 二维码
-                    $url = $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$drp_id;
+                    $url = $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$drp_shop['user_id'];
                     // 纠错级别：L、M、Q、H
                     $errorCorrectionLevel = 'L';
                     // 点的大小：1到10
