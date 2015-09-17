@@ -7,7 +7,7 @@
               </div>
              
             
-            <form action="{:url('sale/my_goods')}" method="post">
+            <form action="{:url('sale/my_goods')}" method="post" id="my_goods">
 			<div class="dpgl_list">                                 
 				<span class="dpgl_list2">选择分销商品</span>
 			</div>           
@@ -20,36 +20,17 @@
 			<!--{foreach from=$category item=li}-->
 				<div class="{if $li.is_select eq 1}sp_box2{else}sp_box1{/if} clear check" id="cate_{$li.cat_id}" onClick="select_cate('{$li.cat_id}')">
 					<input type="checkbox" name="cate[]" value="{$li.cat_id}" id="input_{$li.cat_id}" class="elecheck display-none" {if $li.is_select eq 1}checked="checked"{/if} />
-					<span class="sp_title {if $li.is_select eq 1}font-color-fff{/if}">{$li.cat_name}</span>
-					<span class="sp_content {if $li.is_select eq 1}font-color-fff{/if}">本店销售佣金：{$li.profit1}%</span>
-					<span class="sp_content {if $li.is_select eq 1}font-color-fff{/if}">一级分店佣金：{$li.profit2}%</span>
-					<span class="sp_content {if $li.is_select eq 1}font-color-fff{/if}">二级分店佣金：{$li.profit3}%</span>
+					<span class="sp_title">{$li.cat_name}</span>
+					<span>本店销售佣金：{$li.profit1}%</span>
+					<span>一级分店佣金：{$li.profit2}%</span>
+					<span>二级分店佣金：{$li.profit3}%</span>
 				</div> 
 			<!-- {/foreach} -->           
 				
 			</div>
-            <div class="t-a-center"><input type="submit" value="{:L('submit')}" class="set-4-submit"></div>
+            <div class="t-a-center"><input type="button" value="{:L('submit')}" id="set_cate" class="set-4-submit" onclick="set_my_goods()"></div>
 			</form>
 			<div class="dpxq_border"></div> 
     </div>
-       <script>
-       function check_all(){
-           if($("#checkAll").is(":checked")==true){
-               $(".elecheck").attr("checked",'true');
-               $(".check").removeClass("sp_box1").addClass("sp_box2");
-               $(".check"+" span").removeClass("font-color-7a").addClass("font-color-fff");
-
-           }else{
-               $(".elecheck").removeAttr("checked");
-               $(".check").removeClass("sp_box2").addClass("sp_box1");
-               $(".check"+" span").removeClass("font-color-fff").addClass("font-color-7a7a7a");
-
-           }
-
-
-
-//           $(".cate[]").check(true);
-       }
-       </script>
 </body>
 </html>

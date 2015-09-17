@@ -929,10 +929,11 @@ margin-top:2rem;
 .sp_box1,.sp_box2{ float:left;  width:44%;height:16rem;margin:0.7rem;}
 
 
-
-.sp_box2{background-color:#41a28e;}
-.sp_title{font-size:1.5rem; color:#424242;text-align:center;display:block;margin-top:5rem;}
-.sp_content{font-size:1.125rem; color:#7a7a7a;text-align:center;display:block;margin-top:0.4rem;}
+.sp_title{line-height: 3rem;    margin-top: 3rem;}
+.sp_box1{background-color:#F9F9F9;}
+.sp_box2{background-color:#41A28E;}
+.sp_box2 span{color:#FEFEFF; font-size:1.125rem;text-align:center;display:block;}
+.sp_box1 span{color:#6A6A6A; font-size:1.125rem;text-align:center;display:block;}
 
 
 .sp_title1{font-size:1.5rem; color:#FFF;text-align:center;display:block;margin-top:5rem;}
