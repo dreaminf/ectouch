@@ -181,7 +181,7 @@ class CommonController extends BaseController
      */
     private function drp(){
         if($_GET['drp_id'] > 0){
-            $drp_info = model('Sale')->get_drp($_GET['drp_id']);
+            $drp_info = model('Sale')->get_drp($_GET['drp_id'],'1');
             if($drp_info['open'] == 1){
                 $drp_info['cat_id'] = substr($drp_info['cat_id'], 0, -1);
                 $_SESSION['drp_shop'] = $drp_info;

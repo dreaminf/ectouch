@@ -558,8 +558,13 @@ class SaleModel extends BaseModel {
      * @param   int         $user_id            用户ID
      * @return  array       $info               默认页面所需资料数组
      */
-    public function get_drp($user_id) {
+    public function get_drp($user_id,$is_drp=0) {
 
+        if($is_drp != 0){
+            $sql = "SELECT user_id FROM {pre}drp_shop WHERE id = '$user_id'";
+            $row = $this->row($sql);
+            $user_id = $row['user_id'];
+        }
         $sql = "SELECT pay_points, user_money, credit_line, last_login, is_validated,user_name FROM " . $this->pre . "users WHERE user_id = '$user_id'";
         $row = $this->row($sql);
         $info = array();
