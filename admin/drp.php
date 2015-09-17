@@ -390,20 +390,20 @@ elseif ($_REQUEST['act'] == 'order_list_query')
     make_json_result($smarty->fetch('drp_order_list.htm'), '',array('filter' => $list['filter'], 'page_count' => $list['page_count']));
 }
 /*------------------------------------------------------ */
-//-- 分成
+//-- 销售
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'separate')
 {
     include_once(BASE_PATH . 'helpers/order_helper.php');
     $oid = (int)$_REQUEST['oid'];
 
-    $row = $db->getRow("SELECT o.order_id,o.order_sn, o.is_separate, (o.goods_amount - o.discount) AS goods_amount, o.user_id FROM " . $GLOBALS['ecs']->table('order_info') . " o".
+    $row = $db->getRow("SELECT o.order_id,o.order_sn, o.shop_separate, (o.goods_amount - o.discount) AS goods_amount, o.user_id FROM " . $GLOBALS['ecs']->table('order_info') . " o".
         " LEFT JOIN " . $GLOBALS['ecs']->table('users') . " u ON o.user_id = u.user_id".
         " WHERE order_id = '$oid'");
 
     $order_sn = $row['order_sn'];
 
-    if (empty($row['is_separate']))
+    if (empty($row['shop_separate']))
     {
         // 获取订单中商品
         $parent_id = $db->getOne("SELECT parent_id FROM " . $GLOBALS['ecs']->table('order_info') .  " where order_id = $oid");
@@ -462,7 +462,7 @@ elseif ($_REQUEST['act'] == 'separate')
             $db->query($sql);
         }
         $sql = "UPDATE " . $GLOBALS['ecs']->table('order_info') .
-            " SET is_separate = 1" .
+            " SET shop_separate = 1" .
             " WHERE order_id = $oid LIMIT 1";
         $db->query($sql);
 
@@ -628,12 +628,12 @@ function get_order_list($is_separate)
         'is_separate'=>$is_separate,
     );
     /* 查询记录总数，计算分页数 */
-    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info'). " WHERE parent_id > 0  and is_separate = $is_separate";
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info'). " WHERE parent_id > 0  and shop_separate = $is_separate";
     $filter['record_count'] = $GLOBALS['db']->getOne($sql);
     $filter = page_and_size($filter);
 
     /* 查询记录 */
-    $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('order_info'). " WHERE parent_id > 0  and is_separate = $is_separate" .
+    $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('order_info'). " WHERE parent_id > 0  and shop_separate = $is_separate" .
         " ORDER BY order_id DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 
