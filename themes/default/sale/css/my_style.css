@@ -297,7 +297,7 @@ div{
 	text-align:center;
 	}		
 .dpgl_list{
-	width:92%;
+	width:96%;
 	
 	margin-top:1.25rem;
 	}
@@ -768,11 +768,11 @@ margin-top:2rem;
 	color:#666;		
 	}
 .set3_list{
-	width:90%;
+	width:94%;
 	overflow:hidden;	
 	}
 .set3_lista{
-	width:90%;
+	width:94%;
 	overflow:hidden;
 	margin-top:0.8rem;	
 	}	
@@ -992,4 +992,20 @@ border:none;}
 .bank li{height:4rem;}
 .bank label{margin-left:1rem;}
 
-
+input[type=button]{
+    -webkit-appearance:none;
+    outline:none
+}
+.set-div{
+    width:100%;
+    text-align: center;
+}
+.set-div-button {
+    width: 94%;
+    height: 4rem;
+    line-height: 4rem;
+    font-size: 2rem;
+    color: #fff;
+    background-color: #41A28E;
+    border-radius: 0;
+}

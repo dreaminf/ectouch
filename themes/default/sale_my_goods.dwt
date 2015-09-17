@@ -28,9 +28,9 @@
 			<!-- {/foreach} -->           
 				
 			</div>
-            <div class="t-a-center"><input type="button" value="{:L('submit')}" id="set_cate" class="set-4-submit" onclick="set_my_goods()"></div>
+            <div class="set-div">
+                <input type="button" value="{:L('submit')}" id="set_cate" class="set-div-button" onclick="set_my_goods()">
+            </div>
 			</form>
-			<div class="dpxq_border"></div> 
-    </div>
 </body>
 </html>
