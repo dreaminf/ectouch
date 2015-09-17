@@ -211,57 +211,6 @@ class ExtendController extends AdminController
         $this->message('卸载成功', url('index'));
     }
 
-    /**
-     * 授权OAuth
-     */
-    public function oauth()
-    {
-        $list = $this->model->table('wechat_extend')
-            ->field('name, config, enable')
-            ->where('type = "oauth" and enable = 1')
-            ->find();
-        if (!empty($list['config'])) {
-            $list['config'] = unserialize($list['config']);
-        }
-
-        $this->assign('list', $list);
-        $this->display();
-    }
-
-    /**
-     * 授权OAuth编辑
-     */
-    public function oauth_edit()
-    {
-        if (IS_POST) {
-            $data['name'] = I('post.name');
-            $data['enable'] = I('post.enable');
-            $config = I('post.config');
-            if (empty($data['name'])) {
-                $this->message('请填写规则名称', NULL, 'error');
-            }
-            if (empty($config['redirect_uri'])) {
-                $this->message('请填写回调地址', NULL, 'error');
-            }
-            $data['config'] = serialize($config);
-            $this->model->table('wechat_extend')
-                ->data($data)
-                ->where('type = "oauth"')
-                ->update();
-            
-            $this->message('编辑成功', url('oauth'));
-        }
-        $rs = $this->model->table('wechat_extend')
-            ->field('name, config, enable')
-            ->where('type = "oauth"')
-            ->find();
-        if ($rs) {
-            $rs['config'] = unserialize($rs['config']);
-        }
-        
-        $this->assign('rs', $rs);
-        $this->display();
-    }
     
     /**
      * 获取中奖记录
