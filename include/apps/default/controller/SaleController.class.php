@@ -631,7 +631,8 @@ class SaleController extends CommonController {
         $novice = $this->model->table('drp_config')->field("centent")->where(array("keyword"=>'novice'))->getOne();
         $this->assign('novice',$novice);
         // 设置分销商店铺地址
-        $this->assign('sale_url','http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$_SESSION['user_id']);
+        $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$_SESSION['user_id'])->getOne();
+        $this->assign('sale_url','http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?u='.$_SESSION['user_id'].'&drp_id='.$drp_id);
         $this->assign('title',L('sale_set_category'));
         $this->display('sale_set_end.dwt');
     }
