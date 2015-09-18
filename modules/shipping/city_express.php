@@ -4,7 +4,7 @@
  * 城际快递插件
  */
 
-$shipping_lang = BASE_PATH.'language/' .C('lang'). '/shipping/city_express.php';
+$shipping_lang = ROOT_PATH.'language/' .C('lang'). '/shipping/city_express.php';
 if (file_exists($shipping_lang))
 {
     global $_LANG;

@@ -132,7 +132,7 @@ function shipping_fee($shipping_code, $shipping_config, $goods_weight, $goods_am
         $shipping_config = unserialize($shipping_config);
     }
 
-    $filename = BASE_PATH . 'includes/modules/shipping/' . $shipping_code . '.php';
+    $filename = ROOT_PATH . 'modules/shipping/' . $shipping_code . '.php';
     if (file_exists($filename))
     {
         include_once($filename);
@@ -165,7 +165,7 @@ function shipping_insure_fee($shipping_code, $goods_amount, $insure)
     }
     else
     {
-        $path = BASE_PATH . 'includes/modules/shipping/' . $shipping_code . '.php';
+        $path = ROOT_PATH . 'modules/shipping/' . $shipping_code . '.php';
 
         if (file_exists($path))
         {
@@ -284,7 +284,7 @@ function available_payment_list($support_cod, $cod_fee = 0, $is_online = false)
         $modules[] = $row;
     }
 
-    include_once(BASE_PATH.'helpers/compositor.php');
+    include_once(ROOT_PATH.'helpers/compositor.php');
 
     if(isset($modules))
     {
@@ -1562,7 +1562,7 @@ function order_refund($order, $refund_type, $refund_note, $refund_amount = 0)
     }
     else
     {
-        include_once(BASE_PATH . 'language/' .C('lang'). '/admin/order.php');
+        include_once(ROOT_PATH . 'language/' .C('lang'). '/admin/order.php');
         $change_desc = sprintf(L('order_refund'), $order['order_sn']);
     }
 
@@ -2213,7 +2213,7 @@ function &get_shipping_object($shipping_id)
         return $object;
     }
 
-    $file_path = BASE_PATH.'modules/shipping/' . $shipping['shipping_code'] . '.php';
+    $file_path = ROOT_PATH.'modules/shipping/' . $shipping['shipping_code'] . '.php';
 
     include_once($file_path);
 

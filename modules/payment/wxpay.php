@@ -10,7 +10,7 @@
 
 defined('IN_ECTOUCH') or die('Deny Access');
 
-$payment_lang = BASE_PATH . 'language/' .C('lang'). '/payment/wxpay.php';
+$payment_lang = ROOT_PATH . 'language/' .C('lang'). '/payment/wxpay.php';
 if (file_exists($payment_lang)) {
     global $_LANG;
     include_once($payment_lang);

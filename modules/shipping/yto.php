@@ -4,7 +4,7 @@
  *  圆通速递插件
  */
 
-$shipping_lang = BASE_PATH.'language/' .C('lang'). '/shipping/yto.php';
+$shipping_lang = ROOT_PATH.'language/' .C('lang'). '/shipping/yto.php';
 if (file_exists($shipping_lang))
 {
     global $_LANG;
@@ -15,7 +15,7 @@ if (file_exists($shipping_lang))
 /* 模块的基本信息 */
 if (isset($set_modules) && $set_modules == TRUE)
 {
-    include_once(BASE_PATH . 'language/' . C('lang') . '/admin/shipping.php');
+    include_once(ROOT_PATH . 'language/' . C('lang') . '/admin/shipping.php');
 
     $i = (isset($modules)) ? count($modules) : 0;
 

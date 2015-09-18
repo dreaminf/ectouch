@@ -9,7 +9,7 @@
  */
  
 
-$payment_lang = BASE_PATH . 'language/' .C('lang'). '/payment/alipay.php';
+$payment_lang = ROOT_PATH . 'language/' .C('lang'). '/payment/alipay.php';
 
 if (file_exists($payment_lang)){
     include_once($payment_lang);

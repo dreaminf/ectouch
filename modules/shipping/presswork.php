@@ -4,7 +4,7 @@
  * 挂号印刷品插件
  */
 
-$shipping_lang = BASE_PATH.'language/' .C('lang'). '/shipping/presswork.php';
+$shipping_lang = ROOT_PATH.'language/' .C('lang'). '/shipping/presswork.php';
 if (file_exists($shipping_lang))
 {
     global $_LANG;

@@ -49,7 +49,7 @@ class MY_Loader extends CI_Loader
         $global_config = load_config();
         C($global_config);
         // 载入语言文件
-        $global_lang = require(BASE_PATH . 'language/' . C('lang') . '/common.php');
+        $global_lang = require(ROOT_PATH . 'language/' . C('lang') . '/common.php');
         L($global_lang);
 
         if (C('shop_closed') == 1) {
@@ -266,9 +266,7 @@ class MY_Loader extends CI_Loader
         if (!isset(self::$_map[$class])) {
             //$class = ucfirst($class);
             $array = array(
-                BASE_PATH . 'classes/' . $class . '.php',
-                BASE_PATH . 'interface/' . $class . '.php',
-                BASE_PATH . 'vendor/' . $class . '.php',
+                ROOT_PATH . 'vendor/' . $class . '.php',
             );
             foreach ($array as $file) {
                 if (is_file($file)) {

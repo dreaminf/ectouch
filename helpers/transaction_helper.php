@@ -603,7 +603,7 @@ function update_address($address)
 function get_order_detail($order_id, $user_id = 0)
 {
     $global = getInstance();
-    include_once(BASE_PATH . 'helpers/order_helper.php');
+    include_once(ROOT_PATH . 'helpers/order_helper.php');
 
     $order_id = intval($order_id);
     if ($order_id <= 0)
@@ -626,7 +626,7 @@ function get_order_detail($order_id, $user_id = 0)
     if (!empty($order['invoice_no']))
     {
          $shipping_code = $global->db->GetOne("SELECT shipping_code FROM ".$global->ecs->table('shipping') ." WHERE shipping_id = '$order[shipping_id]'");
-         $plugin = BASE_PATH.'modules/shipping/'. $shipping_code. '.php';
+         $plugin = ROOT_PATH.'modules/shipping/'. $shipping_code. '.php';
          if (file_exists($plugin))
         {
               include_once($plugin);
@@ -676,7 +676,7 @@ function get_order_detail($order_id, $user_id = 0)
             $order['pay_desc']  = $payment_info['pay_desc'];
 
             /* 调用相应的支付方式文件 */
-            include_once(BASE_PATH . 'modules/payment/' . $payment_info['pay_code'] . '.php');
+            include_once(ROOT_PATH . 'modules/payment/' . $payment_info['pay_code'] . '.php');
 
             /* 取得在线支付方式的支付按钮 */
             $pay_obj    = new $payment_info['pay_code'];
@@ -778,7 +778,7 @@ function get_order_detail($order_id, $user_id = 0)
 function get_user_merge($user_id)
 {
     $global = getInstance();
-    include_once(BASE_PATH . 'helpers/order_helper.php');
+    include_once(ROOT_PATH . 'helpers/order_helper.php');
     $sql  = "SELECT order_sn FROM ".$global->ecs->table('order_info') .
             " WHERE user_id  = '$user_id' " . order_query_sql('unprocessed') .
                 "AND extension_code = '' ".

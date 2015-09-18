@@ -4,7 +4,7 @@
  * 到付运费插件 FPD(freight payable at destination)
  */
 
-$shipping_lang = BASE_PATH.'language/' .C('lang'). '/shipping/fpd.php';
+$shipping_lang = ROOT_PATH.'language/' .C('lang'). '/shipping/fpd.php';
 if (file_exists($shipping_lang))
 {
     global $_LANG;

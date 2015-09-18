@@ -13,7 +13,7 @@
  * ----------------------------------------------------------------------------
  */
 
-$payment_lang = BASE_PATH . 'language/' .C('lang'). '/payment/unionpay.php';
+$payment_lang = ROOT_PATH . 'language/' .C('lang'). '/payment/unionpay.php';
 if (file_exists($payment_lang)) {
     global $_LANG;
     include_once($payment_lang);

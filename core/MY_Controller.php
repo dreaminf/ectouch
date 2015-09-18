@@ -291,12 +291,12 @@ class Controller extends MY_Controller
      */
     protected function controller_lang(){
         // 载入控制器语言文件
-        $controller_lang_file = BASE_PATH . 'language/' . C('lang') . '/'. CONTROLLER_NAME .'.php';
+        $controller_lang_file = ROOT_PATH . 'language/' . C('lang') . '/'. CONTROLLER_NAME .'.php';
         if(file_exists($controller_lang_file)){
             $controller_lang = require($controller_lang_file);
             L($controller_lang);
         }
-        $flow_lang_file = BASE_PATH . 'language/' . C('lang') . '/shopping_flow.php';
+        $flow_lang_file = ROOT_PATH . 'language/' . C('lang') . '/shopping_flow.php';
         if(file_exists($flow_lang_file)){
             $flow_lang = require($flow_lang_file);
             L($flow_lang);

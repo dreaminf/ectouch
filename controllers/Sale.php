@@ -39,7 +39,7 @@ class Sale extends IndexController {
        
         // 如果是显示页面，对页面进行相应赋值
         assign_template();
-        $lang = require_cache(BASE_PATH . 'language/' . C('lang') . '/sale.php', true);
+        $lang = require_cache(ROOT_PATH . 'language/' . C('lang') . '/sale.php', true);
         L($lang);
         $this->assign('lang',L());
         $this->assign('action', $this->action);
