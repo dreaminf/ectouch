@@ -14,14 +14,14 @@
 			<a href="{:url('goods/index', array('id'=>$this->_var['orders']['goods_id']))}">
 			<img src="{$orders.goods_img}" class="pull-left" />
 			<dl>
-			   <dd>商品名称：{$orders.name}</dd></br>
-			   <dd>
-				 <a  style="" href="{:url('goods/comment_list',array('id'=>$this->_var['orders']['goods_id']))}">
-				 <span style="width:200px;height:40px;background-color:#eee;"> 商品评价</span>				   
-				 </a> 				
-			   </dd>
+			   <dd>商品名称：{$orders.name}</dd></br>			   
 			</dl>
 			<i class="pull-right fa fa-angle-right"></i> </a> 
+			<dd>
+				 <a  style="" href="{:url('goods/comment_list',array('id'=>$this->_var['orders']['goods_id']))}">
+				 <span style="color:#41A28E;position: absolute; top:72px; right: 28px;"> 去评价</span>				   
+				 </a> 				
+		    </dd>
 			</li>
 		<!--{/foreach}-->
 		</ul>
