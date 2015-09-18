@@ -1,8 +1,18 @@
 User-agent: *
 
-Disallow: /admin/
-Disallow: /api/
-Disallow: /data/
-Disallow: /include/
-Disallow: /plugins/
-Disallow: /themes/
+Disallow: /cache/
+Disallow: /classes/
+Disallow: /config/
+Disallow: /controllers/
+Disallow: /core/
+Disallow: /drivers/
+Disallow: /helpers/
+Disallow: /interface/
+Disallow: /language/
+Disallow: /libraries/
+Disallow: /logs/
+Disallow: /models/
+Disallow: /modules/
+Disallow: /notify/
+Disallow: /vendor/
+Disallow: /views/
