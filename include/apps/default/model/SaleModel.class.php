@@ -618,8 +618,8 @@ class SaleModel extends BaseModel {
         }
         $id = M()->table('goods')->field('cat_id')->where("goods_id=$goods_id")->getOne();
         $id = $this->get_goods_cat($id);
-        $profit1 = M()->table('drp_profit')->field('profit1')->where('cate_id='.$id)->getOne();
-        return $profit1 ? $profit1 : 0;
+        $profit = M()->table('drp_profit')->where('cate_id='.$id)->select();
+        return $profit;
     }
 
     public function get_goods_cat($id){
@@ -659,7 +659,7 @@ class SaleModel extends BaseModel {
         $goods_list = M()->table('order_goods')->where('order_id in('.$where.')')->select();
 
         foreach($goods_list as $key=>$val){
-            $profit['profit1'] = $this->get_drp_profit($val['goods_id']);
+            $profit = $this->get_drp_profit($val['goods_id']);
             if(!$profit['profit1']){
                 $profit['profit1'] = 0;
             }
@@ -684,7 +684,7 @@ class SaleModel extends BaseModel {
                 $goods_list = M()->table('order_goods')->where('order_id in('.$where.')')->select();
 
                 foreach($goods_list as $key=>$val){
-                    $profit['profit2'] = $this->get_drp_profit($val['goods_id']);
+                    $profit = $this->get_drp_profit($val['goods_id']);
                     if(!$profit['profit2']){
                         $profit['profit2'] = 0;
                     }
@@ -708,7 +708,7 @@ class SaleModel extends BaseModel {
                         $goods_list = M()->table('order_goods')->where('order_id in('.$where.')')->select();
 
                         foreach($goods_list as $key=>$val){
-                            $profit['profit3'] = $this->get_drp_profit($val['goods_id']);
+                            $profit = $this->get_drp_profit($val['goods_id']);
                             if(!$profit['profit3']){
                                 $profit['profit3'] = 0;
                             }
