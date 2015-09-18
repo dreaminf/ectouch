@@ -679,11 +679,6 @@ class WechatController extends CommonController
      */
     static function do_oauth_user($userinfo, $wechat_id, $weObj, $user, $isoauth = 0){
     	$user_url = __HOST__.url('user/login');
-        //调试
-            dump($userinfo);
-            dump($user);
-            dump($_SESSION);
-            exit;
     	if(empty($user)){
 			$group_id = $weObj->getUserGroup($userinfo['openid']);
         	$group_id = $group_id ? $group_id : 0;
