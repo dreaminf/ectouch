@@ -715,12 +715,9 @@ class WechatController extends CommonController
             
 		}
         elseif(!empty($user) && $user['ect_uid'] == 0){
-            //未绑定用户
-            if(empty($ect_uid)){
-                //会员中心注册绑定
-                header("Location:".$user_url);
-                exit;
-            }
+            //会员中心注册绑定
+            header("Location:".$user_url);
+            exit;
         }
 		elseif($user['ect_uid'] > 0 && $isoauth){
             $userinfo['group_id'] = isset($userinfo['groupid']) ? $userinfo['groupid'] : $weObj->getUserGroup($userinfo['openid']);
