@@ -340,7 +340,7 @@ class SaleController extends CommonController {
 //        if(!file_exists($ew_img)){
             $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$id)->getOne();
             // 二维码
-            $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?u='.$id.'drp_id='.$drp_id;
+            $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?u='.$id.'&drp_id='.$drp_id;
             // 纠错级别：L、M、Q、H
             $errorCorrectionLevel = 'M';
             // 点的大小：1到10
