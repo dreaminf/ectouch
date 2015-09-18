@@ -174,6 +174,9 @@ class CommonController extends BaseController
         } else {
             $this->assign('ecs_css_path', __ROOT__ . '/themes/' . C('template') . '/css/style.css');
         }
+
+        // 设置parent_id
+        session('parent_id',$_SESSION['user_id'] ? 0 : $_GET['u'] ? $_GET['u'] : 0);
     }
 
     /*

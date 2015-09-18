@@ -900,7 +900,10 @@ class WechatController extends CommonController
                 }
                 // 会员注册
                 $domain = get_top_domain();
-                if (model('Users')->register($username, $password, $username . '@' . $domain) !== false) {
+                $other = array(
+                    'parent_id' =>  $_SESSION['parent_id'] ? $_SESSION['parent_id'] : 0,
+                );
+                if (model('Users')->register($username, $password, $username . '@' . $domain,$other) !== false) {
                     $data['user_rank'] = 99;
                     
                     model('Base')->model->table('users')
