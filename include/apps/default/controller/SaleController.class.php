@@ -337,7 +337,7 @@ class SaleController extends CommonController {
         $ew_img = 'data/attached/drp/drp-'.$id.'.png';//二维码
         $dp_img = 'data/attached/drp/dp-'.$id.'.png';//店铺二维码
         $wx_img = 'data/attached/drp/wx-'.$id.'.png';//微信头像
-        if(!file_exists($ew_img)){
+//        if(!file_exists($ew_img)){
             $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$id)->getOne();
             // 二维码
             $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?u='.$id.'drp_id='.$drp_id;
@@ -346,7 +346,7 @@ class SaleController extends CommonController {
             // 点的大小：1到10
             $matrixPointSize = 15;
             @QRcode::png($url, $ew_img, $errorCorrectionLevel, $matrixPointSize, 2);
-        }
+//        }
 
         // 获取微信头像
 
