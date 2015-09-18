@@ -299,6 +299,7 @@ select{-webkit-appearance:none; border:0; color:#555; padding-left:0; border:1px
 .goods-info{background:#fff; border-top:1px #e3e3e3 solid;  width:100%; padding-bottom:0; border-bottom:0;}
 .goods-info p{overflow:hidden;}
 .goods-info section{position:relative; overflow:hidden;}
+.tab-pane img{width:100% ; height: auto;}
 .goods-info section.goods-title h4{position:absolute; right:3em; left:0em;}
 .goods-info section.goods-title span{font-size:1em; border-left:1px solid #e3e3e3;}
 .goods-info section.goods-title span i.fa{font-size:1.5em;}
