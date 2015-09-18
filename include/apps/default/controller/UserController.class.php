@@ -2373,9 +2373,14 @@ class UserController extends CommonController {
 			 {
 				 $str.=$value['goods_id'].',';
 			 }
-			 $reb = substr($str,0,-1) ;			
+	    $reb = substr($str,0,-1) ;	
+		if(empty($reb)) {
+			 $rebb= 0;
+		 }	else{			 
+			 $rebb=$reb;
+		 }
         $sql = 'SELECT g.goods_id, g.goods_name, g.goods_img ' .
-		        'FROM ' . $this->model->pre . 'goods AS g ' .  "WHERE g.goods_id in (".$reb.")"  ; 
+		        'FROM ' . $this->model->pre . 'goods AS g ' .  "WHERE g.goods_id in (".$rebb.")"  ; 
         $result = $this->model->query($sql);
 		foreach ($result as $key => $vo) {           
             $goods[$key]['goods_id'] = $vo['goods_id'];
