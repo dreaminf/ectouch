@@ -1,13 +1,10 @@
 User-agent: *
 
 Disallow: /cache/
-Disallow: /classes/
 Disallow: /config/
 Disallow: /controllers/
 Disallow: /core/
-Disallow: /drivers/
 Disallow: /helpers/
-Disallow: /interface/
 Disallow: /language/
 Disallow: /libraries/
 Disallow: /logs/
