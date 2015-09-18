@@ -249,9 +249,9 @@ class SaleController extends CommonController {
         // 已分成销售佣金
         $sale_money = model('sale')->get_shop_sale_money($this->user_id,1);
         $this->assign('sale_money',$sale_money['profit']);
-        $this->assign('sale_money1',$sale_money['profit']);
-        $this->assign('sale_money2',$sale_money['profit']);
-        $this->assign('sale_money_num',$sale_money['profit']);
+        $this->assign('sale_money1',$sale_money['profit1']);
+        $this->assign('sale_money2',$sale_money['profit2']);
+        $this->assign('sale_money_num',$sale_money['profit_num']);
         $this->assign('title','我的佣金');
         $this->display('sale_my_commission.dwt');
     }

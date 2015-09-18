@@ -659,8 +659,8 @@ class SaleModel extends BaseModel {
         $goods_list = M()->table('order_goods')->where('order_id in('.$where.')')->select();
 
         foreach($goods_list as $key=>$val){
-            $profit = $this->get_drp_profit($val['goods_id']);
-            if(!$profit){
+            $profit['profit1'] = $this->get_drp_profit($val['goods_id']);
+            if(!$profit['profit1']){
                 $profit['profit1'] = 0;
             }
             // 一级分销商利润
@@ -675,6 +675,7 @@ class SaleModel extends BaseModel {
                 $where_drp.=",".$val['id'];
             }
             $order_id = M()->table('order_info')->field('order_id')->where('drp_id in('.$where_drp.') and shop_separate='.$separate)->select();
+
             if($order_id){
                 $where = "0";
                 foreach($order_id as $key=>$val){
@@ -683,14 +684,13 @@ class SaleModel extends BaseModel {
                 $goods_list = M()->table('order_goods')->where('order_id in('.$where.')')->select();
 
                 foreach($goods_list as $key=>$val){
-                    $profit = $this->get_drp_profit($val['goods_id']);
-                    if(!$profit){
-                        @$profit['profit2'] = 0;
+                    $profit['profit2'] = $this->get_drp_profit($val['goods_id']);
+                    if(!$profit['profit2']){
+                        $profit['profit2'] = 0;
                     }
                     // 一级分销商利润
                     $data['profit1']+= $val['touch_sale']*$profit['profit2']/100*$val['goods_number'];
                 }
-
                 //二级分店
                 $sql = "select d.id from {pre}drp_shop as d JOIN {pre}users as u on d.user_id=u.user_id where u.parent_id in (".$where_drp.") and apply_sale = 1";
                 $drp_list = M()->query($sql);
@@ -708,8 +708,8 @@ class SaleModel extends BaseModel {
                         $goods_list = M()->table('order_goods')->where('order_id in('.$where.')')->select();
 
                         foreach($goods_list as $key=>$val){
-                            $profit = $this->get_drp_profit($val['goods_id']);
-                            if(!$profit){
+                            $profit['profit3'] = $this->get_drp_profit($val['goods_id']);
+                            if(!$profit['profit3']){
                                 $profit['profit3'] = 0;
                             }
                             // 一级分销商利润
