@@ -152,7 +152,8 @@ class SaleModel extends BaseModel {
      */
     function saleMoney_today($uid=0) {
         $uid = $uid > 0 ? $uid : $_SESSION['user_id'];
-        return M()->getOne("select sum(user_money) from {pre}drp_log where user_id = ".$uid ." and change_time > ".strtotime(local_date('Y-m-d')));
+        $user_money =  M()->getRow("select sum(user_money) as money from {pre}drp_log where user_id = ".$uid ." and change_time > ".strtotime(local_date('Y-m-d')));
+        return $user_money['money'];
 
     }
 
