@@ -602,7 +602,7 @@ class WechatController extends CommonController
             // 微信通验证
             $weObj = new Wechat($config);
             $_SESSION['wechat_user'] = empty($_SESSION['wechat_user']) ? array() : $_SESSION['wechat_user'];
-            
+            dump($_SESSION);
             // 微信浏览器浏览
             if (is_wechat_browser() && $_SESSION['user_id'] === 0 && empty($_SESSION['wechat_user'])) {
                 if(isset($_GET['code']) && !empty($_GET['code'])){
