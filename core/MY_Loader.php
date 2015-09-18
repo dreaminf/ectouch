@@ -90,11 +90,10 @@ class MY_Loader extends CI_Loader
 
             // 创建 Smarty 对象。
             $this->tpl = new template;
-
             $this->tpl->cache_lifetime = C('cache_time');
-            $this->tpl->template_dir = ROOT_PATH . 'themes/' . C('template');
-            $this->tpl->cache_dir = STORAGE_PATH . 'caches';
-            $this->tpl->compile_dir = STORAGE_PATH . 'compiled';
+            $this->tpl->template_dir = ROOT_PATH . 'views/' . C('template');
+            $this->tpl->cache_dir = ROOT_PATH . 'caches';
+            $this->tpl->compile_dir = ROOT_PATH . 'caches/compiled';
 
             if (APP_DEBUG) {
                 $this->tpl->direct_output = true;
@@ -107,9 +106,9 @@ class MY_Loader extends CI_Loader
             $this->tpl->assign('lang', L());
             $this->tpl->assign('ecs_charset', CHARSET);
             if (!empty($_CFG['stylename'])) {
-                $this->tpl->assign('ecs_css_path', 'themes/' . C('template') . '/css/style_' . C('stylename') . '.css');
+                $this->tpl->assign('ecs_css_path', 'views/' . C('template') . '/css/style_' . C('stylename') . '.css');
             } else {
-                $this->tpl->assign('ecs_css_path', 'themes/' . C('template') . '/css/style.css');
+                $this->tpl->assign('ecs_css_path', 'views/' . C('template') . '/css/style.css');
             }
 
         }
@@ -266,6 +265,7 @@ class MY_Loader extends CI_Loader
         if (!isset(self::$_map[$class])) {
             //$class = ucfirst($class);
             $array = array(
+                ROOT_PATH . 'classes/' . $class . '.php',
                 ROOT_PATH . 'vendor/' . $class . '.php',
             );
             foreach ($array as $file) {
