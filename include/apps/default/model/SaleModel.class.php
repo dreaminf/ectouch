@@ -126,8 +126,9 @@ class SaleModel extends BaseModel {
      */
     function get_sale_money_total($uid=0){
         $uid = $uid > 0 ? $uid : $_SESSION['user_id'];
-
-        return M()->getOne("select sum(goods_amount) from {pre}order_info where drp_id = ".$uid);
+        $drp_id = $this->model->table('drp_shop')->where("user_id=".$uid)->field('id')->getOne();
+        $goods_info =  M()->getRow("select sum(goods_amount) as money from {pre}order_info where pay_status='".PS_PAYED."' and drp_id = ".$drp_id);
+        return $goods_info['money'];
     }
     /**
      * 查询分销商佣金
