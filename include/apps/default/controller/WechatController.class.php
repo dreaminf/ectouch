@@ -161,72 +161,13 @@ class WechatController extends CommonController
             // 未关注
             if (empty($rs)) {
                 $ect_uid = 0;
-                //查看公众号是否绑定
-                if(isset($info['unionid'])){
-                    $ect_uid = $this->model->table('wechat_user')->field('ect_uid')->where(array('unionid'=>$info['unionid']))->getOne();
-                }
-                //用户未绑定
-                if(empty($ect_uid)){
-                    // 设置的用户注册信息
-                    $register = $this->model->table('wechat_extend')
-                        ->field('config')
-                        ->where('enable = 1 and command = "register_remind" and wechat_id = '.$this->wechat_id)
-                        ->find();
-                    if (! empty($register)) {
-                        $reg_config = unserialize($register['config']);
-                        $username = msubstr($reg_config['user_pre'], 3, 0, 'utf-8', false) . time().mt_rand(1, 99);
-                        // 密码随机数
-                        $rs = array();
-                        $arr = range(0, 9);
-                        $reg_config['pwd_rand'] = $reg_config['pwd_rand'] ? $reg_config['pwd_rand'] : 5;
-                        for ($i = 0; $i < $reg_config['pwd_rand']; $i ++) {
-                            $rs[] = array_rand($arr);
-                        }
-                        $pwd_rand = implode('', $rs);
-                        // 密码
-                        $password = $reg_config['pwd_pre'] . $pwd_rand;
-                        // 通知模版
-                        $template = str_replace(array(
-                            '[$username]',
-                            '[$password]'
-                        ), array(
-                            $username,
-                            $password
-                        ), $reg_config['template']);
-                    } else {
-                        $username = 'wx_' . time().mt_rand(1, 99);
-                        $password = 'ecmoban';
-                        // 通知模版
-                        $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
-                    }
-                    // 用户注册
-                    $domain = get_top_domain();
-                    if (model('Users')->register($username, $password, $username . '@' . $domain, array('parent_id'=>$scene_id)) !== false) {
-                        $datas['user_rank'] = 99;
-                        
-                        $this->model->table('users')
-                            ->data($datas)
-                            ->where('user_name = "' . $username . '"')
-                            ->update();
-                    } else {
-                        die('');
-                    }
-                    $data['ect_uid'] = $_SESSION['user_id'];
-                }
-                else{
-                    //微信用户已绑定
-                    $username = model('Base')->model->table('users')->field('user_name')->where(array('user_id'=>$ect_uid))->getOne();
-                    $template = '您已拥有帐号，用户名为'.$username;
-                    $data['ect_uid'] = $ect_uid;
-                }
-                
                 // 获取用户所在分组ID
                 //$group_id = $this->weObj->getUserGroup($openid);
                 $data['group_id'] = isset($info['groupid']) ? $info['groupid'] : $this->weObj->getUserGroup($openid);
                 // 获取被关注公众号信息
                 $data['wechat_id'] = $this->wechat_id;
-                $data['subscribe'] = 1;
-                $data['openid'] = $openid;
+                $data['subscribe'] = $info['subscribe'];
+                $data['openid'] = $info['openid'];
                 $data['nickname'] = $info['nickname'];
                 $data['sex'] = $info['sex'];
                 $data['city'] = $info['city'];
@@ -237,38 +178,15 @@ class WechatController extends CommonController
                 $data['subscribe_time'] = $info['subscribe_time'];
                 $data['remark'] = $info['remark'];
                 $data['unionid'] = isset($info['unionid']) ? $info['unionid'] : '';
-                //logResult(var_export($data, true));
-                $this->model->table('wechat_user')
-                    ->data($data)
-                    ->insert();
-                
-                // 红包信息
-                $content = $this->send_message($openid, 'bonus', $this->weObj, 1);
-                $bonus_msg = '';
-                if (! empty($content)) {
-                    $bonus_msg = $content['content'];
-                }
-                if(!empty($template) || !empty($bonus_msg)){
-                    // 微信端发送消息
-                    $msg = array(
-                        'touser' => $openid,
-                        'msgtype' => 'text',
-                        'text' => array(
-                            'content' => $template . "\r\n" . $bonus_msg
-                        )
-                    );
-                    $this->weObj->sendCustomMessage($msg);
-
-                    //记录用户操作信息
-                    $this->record_msg($openid, $template . $bonus_msg, 1);
-                }
-            } else {
+                $this->model->table('wechat_user')->data($data)->insert();
+            }
+            else {
                 // 获取用户所在分组ID
                 $data['group_id'] = isset($info['groupid']) ? $info['groupid'] : $this->weObj->getUserGroup($openid);
                 // 获取被关注公众号信息
                 $data['wechat_id'] = $this->wechat_id;
-                $data['subscribe'] = 1;
-                $data['openid'] = $openid;
+                $data['subscribe'] = $info['subscribe'];
+                $data['openid'] = $info['openid'];
                 $data['nickname'] = $info['nickname'];
                 $data['sex'] = $info['sex'];
                 $data['city'] = $info['city'];
@@ -279,10 +197,7 @@ class WechatController extends CommonController
                 $data['subscribe_time'] = $info['subscribe_time'];
                 $data['remark'] = $info['remark'];
                 $data['unionid'] = isset($info['unionid']) ? $info['unionid'] : '';
-                $this->model->table('wechat_user')
-                    ->data($data)
-                    ->where($where)
-                    ->update();
+                $this->model->table('wechat_user')->data($data)->where($where)->update();
             }
         }
     }
@@ -707,18 +622,19 @@ class WechatController extends CommonController
 			
             $flag = I('get.flag');
             //授权登录
-            if ($_SESSION['user_id'] === 0 && !empty($_SESSION['wechat_user']) && ($wxinfo['oauth_status'] == '1' || $flag == 'oauth')) {
-                //self::update_weixin_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj);
-                $haspc = file_exists('../data/config.php') ? 1 : 0;
-            	self::do_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj, 1, $haspc);
-            	header('location: '. $_SESSION['redirect_url']);
-            	exit();
+            if ($_SESSION['user_id'] === 0 && !empty($_SESSION['wechat_user']) && CONTROLLER_NAME !='Wechat') {
+                if($wxinfo['oauth_status'] == '1' || $flag == 'oauth'){
+                    //self::update_weixin_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj);
+                    $haspc = file_exists('../data/config.php') ? 1 : 0;
+                    self::do_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj, 1, $haspc);
+                    header('location: '. $_SESSION['redirect_url']);
+                    exit();
+                }
+                else{
+                    $haspc = file_exists('../data/config.php') ? 1 : 0;
+                    self::do_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj, 0, $haspc);
+                }
             }
-            else{
-            	$haspc = file_exists('../data/config.php') ? 1 : 0;
-            	self::do_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj, 0, $haspc);
-            }
-            
         }
     }
 
@@ -736,9 +652,8 @@ class WechatController extends CommonController
     static function do_user($userinfo, $wechat_id, $weObj, $isoauth = 0, $haspc = 0){
     	$user = model('Base')->model->table('wechat_user')->field('openid, ect_uid')->where('openid = "' . $userinfo['openid'] . '"')->find();
     	if($isoauth && $haspc){
-    		/* 有pc,开启自动登录 */
+    		// 有pc,开启自动登录
     		self::do_oauth_user($userinfo, $wechat_id, $weObj, $user, $isoauth);
-    		
     	}
     	elseif($isoauth && empty($haspc)){
     		//没有pc,开启自动登录
@@ -765,7 +680,7 @@ class WechatController extends CommonController
      */
     static function do_oauth_user($userinfo, $wechat_id, $weObj, $user, $isoauth = 0){
     	$user_url = __HOST__.url('user/login');
-    	if(empty($user)){
+    	if(empty($user) || (!empty($user) && $user['ect_uid'] == 0)){
 			$group_id = $weObj->getUserGroup($userinfo['openid']);
         	$group_id = $group_id ? $group_id : 0;
 			//微信用户绑定会员id
@@ -814,10 +729,7 @@ class WechatController extends CommonController
             ECTouch::user()->set_cookie($new_user_name);
             model('Users')->update_user_info();
             // 推送量
-	        model('Base')->model->table('wechat')
-	            ->data('oauth_count = oauth_count + 1')
-	            ->where('default_wx = 1 and status = 1')
-	            ->update();
+	        model('Base')->model->table('wechat')->data('oauth_count = oauth_count + 1')->where('default_wx = 1 and status = 1')->update();
 	        
 	        session('openid', $userinfo['openid']);
 		}
@@ -940,14 +852,14 @@ class WechatController extends CommonController
                 ->data($data1)
                 ->insert();
             // 微信端发送消息
-            $msg = array(
+            /*$msg = array(
                 'touser' => $userinfo['openid'],
                 'msgtype' => 'text',
                 'text' => array(
                     'content' => $template
                 )
             );
-            $weObj->sendCustomMessage($msg);
+            $weObj->sendCustomMessage($msg);*/
         } else {
             //开放平台有privilege字段,公众平台没有
             $userinfo['group_id'] = isset($userinfo['groupid']) ? $userinfo['groupid'] : $weObj->getUserGroup($userinfo['openid']);
