@@ -620,7 +620,7 @@ class WechatController extends CommonController
 			
             $flag = I('get.flag');
             //授权登录
-            if ($_SESSION['user_id'] === 0 && !empty($_SESSION['wechat_user']) && CONTROLLER_NAME !='Wechat') {
+            if ($_SESSION['user_id'] === 0 && !empty($_SESSION['wechat_user']) && CONTROLLER_NAME !='Wechat' && !empty($_SESSION['openid'])){
                 if($wxinfo['oauth_status'] == '1' || $flag == 'oauth'){
                     //self::update_weixin_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj);
                     $haspc = file_exists('../data/config.php') ? 1 : 0;
@@ -733,9 +733,8 @@ class WechatController extends CommonController
             model('Users')->update_user_info();
             // 推送量
 	        model('Base')->model->table('wechat')->data('oauth_count = oauth_count + 1')->where('default_wx = 1 and status = 1')->update();
-	        
-	        session('openid', $userinfo['openid']);
 		}
+        session('openid', $userinfo['openid']);
     }
 
     /**
