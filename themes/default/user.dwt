@@ -98,7 +98,7 @@
 							<li class="fl">
 								<a href="{:url('goods/index', array('id'=>$this->_var[val]['goods_id']))}"><img src="{$val.goods_thumb}" /></a>
 								<p>{$val.goods_name}</p>
-								<span>{$lang.sort_price}：{$val.shop_price}</span>
+								<span style="font-size: 0.9375rem;">{$lang.sort_price}：{$val.shop_price}</span>
 							</li>
 							<!-- {/foreach} -->
 						</ul>
