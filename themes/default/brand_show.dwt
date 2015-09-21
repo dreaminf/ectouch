@@ -51,9 +51,7 @@
                 <!--{foreach name=list from=$list.list1 item=li}-->
                 <li>
                     <a href="{:url('brand/goods_list',array('id'=>$this->_var['li']['brand_id']))}">
-                    <!--{foreach name=li from=$li.goods item=l}-->
-                    <img src="{$l.goods_thumb}" alt="" />
-                    <!--{/foreach}-->
+                    <img src="{$li.goods.0.goods_thumb}" alt="" />
                     <img src="{$li.brand_logo}" alt="" class="brand-lattice-logo" />
                     <span>{$li.brand_name}</span>
                     </a>
