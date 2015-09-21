@@ -749,7 +749,7 @@ class WechatController extends CommonController
     		$user = model('Base')->model->table('wechat_user')->field('openid, ect_uid')->where($condition)->find();
     		if($user && empty($user['ect_uid'])){
                 //用户是否绑定过
-                $isbind = model('Base')->model->table('users')->where(array('user_id'=>$_SESSION['user_id']))->count();
+                $isbind = model('Base')->model->table('wechat_user')->where(array('ect_uid'=>$_SESSION['user_id']))->count();
                 if($isbind == 0){
                     model('Base')->model->table('wechat_user')->data(array('ect_uid'=>$_SESSION['user_id']))->where($condition)->update();
                 }
