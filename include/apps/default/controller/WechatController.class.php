@@ -658,10 +658,12 @@ class WechatController extends CommonController
     		self::update_weixin_user($userinfo, $wechat_id, $weObj);
     	}
     	elseif(empty($isoauth) && $haspc){
+            echo '3';exit;
 			//有pc,没开启自动登录
 			self::do_oauth_user($userinfo, $wechat_id, $weObj, $user);
     	}
     	elseif(empty($isoauth) && empty($haspc)){
+            echo '4';exit;
     		//没有pc,没开启自动登录
     		self::do_oauth_user($userinfo, $wechat_id, $weObj, $user);
     	}
