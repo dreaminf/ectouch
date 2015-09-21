@@ -158,6 +158,20 @@ class SaleModel extends BaseModel {
     }
 
     /**
+     * 查询分销商可提现佣金
+     * @access
+     * @param   int     $user_id        会员ID
+     * @return  int
+     */
+    function saleMoney_surplus($uid=0) {
+        $uid = $uid > 0 ? $uid : $_SESSION['user_id'];
+        $money = M()->select("select sum(user_money) as money from {pre}drp_log where user_id = ".$uid);
+        $money = $money['0']['money'];
+        return $money ? $money : 0;
+
+    }
+
+    /**
      * 查询会员账户明细
      * @access
      * @param   int     $user_id    会员ID
