@@ -678,10 +678,6 @@ class WechatController extends CommonController
      */
     static function do_oauth_user($userinfo, $wechat_id, $weObj, $user, $isoauth = 0){
     	$user_url = __HOST__.url('user/login');
-        dump($_SESSION);
-        dump($user);
-        dump($userinfo);
-        dump($isoauth);exit;
     	if(empty($user)){
 			$group_id = $weObj->getUserGroup($userinfo['openid']);
         	$group_id = $group_id ? $group_id : 0;
@@ -719,6 +715,7 @@ class WechatController extends CommonController
 		}
         elseif(!empty($user) && $user['ect_uid'] == 0){
             //会员中心注册绑定
+            $_SESSION['redirect_user'] = 1;
             header("Location:".$user_url);
             exit;
         }
