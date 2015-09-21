@@ -54,7 +54,7 @@ class BrandController extends CommonController {
         // 开始工作
         $this->parameter();
         $asyn_last = intval(I('post.last')) + 1;
-        $this->size = I('post.amount');
+        $this->size = 100;//I('post.amount');
         $this->page = ($asyn_last > 0) ? ceil($asyn_last / $this->size) : 1;
         $list = model('Brand')->get_brands('brand', $this->size, $this->page);
         foreach ($list as $key => $value) {
@@ -171,25 +171,19 @@ class BrandController extends CommonController {
     }
 
     public function nav() {
-
         $this->parameter();
         $this->assign('brand_id', $this->brand);
         $this->assign('page', $this->page);
         $this->assign('size', $this->size);
         $this->assign('sort', $this->sort);
         $this->assign('order', $this->order);
-
-        $count = model('Brand')->get_brands_count();
-        $this->pageLimit(url('index'), $this->size);
-        $this->assign('pager', $this->pageShow($count));
-
         $list = model('Brand')->get_brands('brand', $this->size, $this->page);
         $this->assign('list', $list);
         for($i='A',$a=0;$a<26;$a++,$i++){
             $nav[]=$i;
         }
         $this->assign('nav',$nav);
-        $this->assign('title','品牌列表');
+        $this->assign('page_title',L('all_brand'));
         $this->display('brand_list.dwt');
 
     }
