@@ -7,6 +7,7 @@
             <span>{$title}</span>
         </header>
     </div>
+    <!--{if $list}-->
     <div class="brand-main">
         <div class="brand-today">
             <div class="brand-today-img">
@@ -74,6 +75,7 @@
 
     </div>
 </div>
+    <!--{/if}-->
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 </body></html>
