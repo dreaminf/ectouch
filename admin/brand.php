@@ -86,8 +86,8 @@ elseif ($_REQUEST['act'] == 'insert')
 
     /*插入数据*/
 
-    $sql = "INSERT INTO ".$ecs->table('brand')."(brand_name, site_url, brand_desc, brand_logo,brand_banner is_show, sort_order) ".
-           "VALUES ('$_POST[brand_name]', '$site_url', '$_POST[brand_desc]', '$img_name','$$img_banner', '$is_show', '$_POST[sort_order]')";
+    $sql = "INSERT INTO ".$ecs->table('brand')."(brand_name, site_url, brand_desc, brand_logo,brand_banner ,is_show, sort_order) ".
+           "VALUES ('$_POST[brand_name]', '$site_url', '$_POST[brand_desc]', '$img_name','$img_banner', '$is_show', '$_POST[sort_order]')";
     $db->query($sql);
 
     admin_log($_POST['brand_name'],'add','brand');
@@ -111,7 +111,7 @@ elseif ($_REQUEST['act'] == 'edit')
 {
     /* 权限判断 */
     admin_priv('brand_manage');
-    $sql = "SELECT brand_id, brand_name, site_url, brand_logo, brand_desc, brand_logo,brand_banner is_show, sort_order ".
+    $sql = "SELECT brand_id, brand_name, site_url, brand_logo, brand_desc, brand_logo,brand_banner , is_show, sort_order ".
             "FROM " .$ecs->table('brand'). " WHERE brand_id='$_REQUEST[id]'";
     $brand = $db->GetRow($sql);
 
