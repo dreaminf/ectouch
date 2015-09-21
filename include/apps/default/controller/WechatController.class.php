@@ -622,6 +622,7 @@ class WechatController extends CommonController
             //授权登录
             if ($_SESSION['user_id'] === 0 && !empty($_SESSION['wechat_user']) && CONTROLLER_NAME !='Wechat' && (empty($_SESSION['openid']) || isset($_SESSION['redirect_user']))){
                 if($wxinfo['oauth_status'] == '1' || $flag == 'oauth'){
+                    echo 'oauth';exit;
                     //self::update_weixin_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj);
                     $haspc = file_exists('../data/config.php') ? 1 : 0;
                     self::do_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj, 1, $haspc);
@@ -629,6 +630,7 @@ class WechatController extends CommonController
                     exit();
                 }
                 else{
+                    echo 'no oauth';exit;
                     $haspc = file_exists('../data/config.php') ? 1 : 0;
                     self::do_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj, 0, $haspc);
                 }
@@ -747,10 +749,8 @@ class WechatController extends CommonController
     	if(!empty($_SESSION['user_id']) && !empty($_SESSION['wechat_user'])){
     		$condition['openid'] = $_SESSION['wechat_user']['openid'];
     		$user = model('Base')->model->table('wechat_user')->field('openid, ect_uid')->where($condition)->find();
-    		if($user){
-    			if(empty($user['ect_uid'])){
+    		if($user && empty($user['ect_uid'])){
     				model('Base')->model->table('wechat_user')->data(array('ect_uid'=>$_SESSION['user_id']))->where($condition)->update();
-    			}
     		}
     	}
     }
