@@ -17,7 +17,7 @@
             <!-- {/if}-->
         </ul>
     </div>
-    <div class="brand-letter" style="position: fixed;top: 5rem;right: 1rem" id="navbar-example" class="bs-docs-sidebar  affix">
+    <div class="brand-letter" style="position: fixed;top: 1rem;right: 1rem" id="navbar-example" class="bs-docs-sidebar  affix">
         <ul class="nav bs-docs-sidenav ect-brand-list-nav">
             <!--{foreach name=list from=$nav item=li}-->
             <li><a href="#{$li}">{$li}</a></li>
