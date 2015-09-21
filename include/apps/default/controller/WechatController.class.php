@@ -634,6 +634,7 @@ class WechatController extends CommonController
                     self::do_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj, 0, $haspc);
                 }
             }
+            echo 'ffff';exit;
         }
     }
 
