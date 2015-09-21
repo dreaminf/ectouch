@@ -173,13 +173,7 @@ class BrandController extends CommonController {
     }
 
     public function nav() {
-        $this->parameter();
-        $this->assign('brand_id', $this->brand);
-        $this->assign('page', $this->page);
-        $this->assign('size', $this->size);
-        $this->assign('sort', $this->sort);
-        $this->assign('order', $this->order);
-        $list = model('Brand')->get_brands('brand', $this->size, $this->page);
+        $list = model('Brand')->get_brands('brand', 1000, 1);
         $this->assign('list', $list);
         for($i='A',$a=0;$a<26;$a++,$i++){
             $nav[]=$i;

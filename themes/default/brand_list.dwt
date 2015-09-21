@@ -3,12 +3,21 @@
 <div class="con">
     <div class="bran_list bs-example" id="J_ItemList" style="opacity:1;" data-example-id="embedded-scrollspy">
         <ul class="single_item">
+            <!--{if $list}-->
+                <!-- {foreach from=$list item=lis} -->
+                <li class="brand-status" id="{$lis.info}">
+                    {$lis.info}
+                </li>
+                <!-- {foreach from=$lis.list item=li} -->
+                    <li>
+                        <p><a href="{$li.url}"><img src="{$li.brand_logo}"></a>{$li.brand_name}</p>
+                    </li>
+                <!--{/foreach}-->
+                <!--{/foreach}-->
+            <!-- {/if}-->
         </ul>
-        <a href="javascript:;" class="get_more"></a>
     </div>
-    <div class="brand-letter" style="position: fixed;
-    top: 5rem;
-    right: 1rem" id="navbar-example" class="bs-docs-sidebar  affix">
+    <div class="brand-letter" style="position: fixed;top: 5rem;right: 1rem" id="navbar-example" class="bs-docs-sidebar  affix">
         <ul class="nav bs-docs-sidenav ect-brand-list-nav">
             <!--{foreach name=list from=$nav item=li}-->
             <li><a href="#{$li}">{$li}</a></li>
@@ -20,7 +29,6 @@
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <script type="text/javascript">
-get_asynclist("{:url('brand/asynclist', array('page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order']))}" , '__TPL__/images/loader.gif');
 $('body').scrollspy({ target: '#navbar-example' })
 </script>
 <style>
