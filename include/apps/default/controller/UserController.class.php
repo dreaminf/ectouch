@@ -1749,6 +1749,15 @@ class UserController extends CommonController {
     }
 
     /**
+     * 微信用户绑定页面
+     */
+    public function bind(){
+
+        $this->assign('title', '绑定');
+        $this->display('user_bind.dwt');
+    }
+
+    /**
      * 注册
      */
     public function register() {
@@ -2293,7 +2302,8 @@ class UserController extends CommonController {
             'logout',
             'clear_histroy',
             'add_collection',
-            'third_login'
+            'third_login',
+            'bind'
         );
         // 未登录处理
         if (empty($_SESSION['user_id']) && !in_array($this->action, $without)) {

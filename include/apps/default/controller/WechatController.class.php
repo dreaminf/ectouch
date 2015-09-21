@@ -677,7 +677,7 @@ class WechatController extends CommonController
      * @return [type]             [description]
      */
     static function do_oauth_user($userinfo, $wechat_id, $weObj, $user, $isoauth = 0){
-    	$user_url = __HOST__.url('user/login');
+    	$user_url = __HOST__.url('user/bind');
     	if(empty($user)){
 			$group_id = $weObj->getUserGroup($userinfo['openid']);
         	$group_id = $group_id ? $group_id : 0;
@@ -869,8 +869,8 @@ class WechatController extends CommonController
         }
         elseif(!empty($ret) && $ret['ect_uid'] == 0){
             $_SESSION['redirect_user'] = 1;
-            $login_url = __HOST__.url('user/login');
-            header("Location:".$login_url);
+            $bind_url = __HOST__.url('user/bind');
+            header("Location:".$bind_url);
             exit;
         }
         else {
