@@ -716,7 +716,7 @@ class WechatController extends CommonController
 		}
         elseif(!empty($user) && $user['ect_uid'] == 0){
             echo $user_url;
-            dump($_SESSION);
+            dump($_SESSION);exit;
             //会员中心注册绑定
             header("Location:".$user_url);
             exit;
