@@ -58,7 +58,8 @@ function insert_history() {
         $res = array();
         foreach ($query as $key => $row) {
             $goods['goods_id'] = $row['goods_id'];
-            $goods['goods_name'] = $row['goods_name'];
+            $name = mb_substr($row['goods_name'],0,23, 'utf-8');
+            $goods['goods_name'] = $name;
             $goods['short_name'] = C('goods_name_length') > 0 ? sub_str($row['goods_name'], C('goods_name_length')) : $row['goods_name'];
             $goods['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
             $goods['shop_price'] = price_format($row['shop_price']);
