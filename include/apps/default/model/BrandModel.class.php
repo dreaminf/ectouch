@@ -101,21 +101,33 @@ class BrandModel extends BaseModel {
             $brand['brand_banner'] = __ROOT__ . '/data/attached/brandbanner/' .get_banner_path($row['brand_banner']);
             $brand['goods_num'] = model('Brand')->goods_count_by_brand($row['brand_id']);
             $brand['brand_desc'] = htmlspecialchars($row['brand_desc'], ENT_QUOTES);
-            $first = $this->chineseFirst($row['brand_name']);
+            $first = $this->getLetter($row['brand_name']);
             $arr[$first]['info'] = $first;
             $arr[$first]['list'][] = $brand;
         }
         ksort($arr);
-
         $arr[]= array();
         return $arr;
     }
 
+
+    function getLetter($str){
+        $str= iconv("UTF-8","gb2312", $str);
+        $i=0;
+        while($i<strlen($str) ) {
+            $tmp=bin2hex(substr($str,$i,1));
+            if($tmp>='B0'){ //汉字的开始
+                return $this->chineseFirst($str);
+                $i+=2;
+            }
+            else{
+                return strtoupper(substr($str,$i,1));
+                $i++;
+            }
+        }
+    }
     function chineseFirst($str)
     {
-        $str = trim($str);
-        $str= iconv("UTF-8","gb2312", $str);    //如果程序是gbk的，此行就要注释掉
-
         //判断字符串是否全都是中文
         if (preg_match("/^[\x7f-\xff]/", $str))
         {
@@ -152,7 +164,6 @@ class BrandModel extends BaseModel {
         }
 
     }
-
     /**
      * 获得品牌列表
      *

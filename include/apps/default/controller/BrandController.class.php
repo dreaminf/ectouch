@@ -54,7 +54,7 @@ class BrandController extends CommonController {
         // 开始工作
         $this->parameter();
         $asyn_last = intval(I('post.last')) + 1;
-        $this->size = 100;//I('post.amount');
+        $this->size = I('post.amount');
         $this->page = ($asyn_last > 0) ? ceil($asyn_last / $this->size) : 1;
         $list = model('Brand')->get_brands('brand', $this->size, $this->page);
         foreach ($list as $key => $value) {
