@@ -1,12 +1,6 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 <link rel="stylesheet" href="__TPL__/css/brand_list.css">
     <div class="con">
-        <div class="ect-bg">
-            <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg">
-                <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a>
-                <span>{$title}</span>
-            </header>
-        </div>
         <div class="group-logo">
             <img src="{$brand_info.brand_banner}" alt="" />
             <ul>

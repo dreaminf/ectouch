@@ -104,7 +104,7 @@ class BrandController extends CommonController {
         $res = $this->model->getrow($sql);
         $this->assign('brand_goods_hot',$res['count']);
 
-        $this->assign('title', '品牌商品列表');
+        $this->assign('page_title', $brand_info['brand_name']);
         $this->display('brand_goods_list.dwt');
     }
 
