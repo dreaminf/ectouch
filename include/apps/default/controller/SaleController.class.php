@@ -237,7 +237,7 @@ class SaleController extends CommonController {
      * 我的佣金
      */
     public function my_commission(){
-        $saleMoney =  model('Sale')->saleMoney();
+        $saleMoney =  model('Sale')->saleMoney_surplus();
         $this->assign('saleMoney',$saleMoney);
         // 未分成销售佣金
         $sale_money = model('sale')->get_shop_sale_money($this->user_id);
