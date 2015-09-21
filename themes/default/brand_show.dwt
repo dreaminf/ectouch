@@ -33,6 +33,7 @@
         </div>
         <!--{foreach name=list from=$list.center item=li}-->
         <div class="brand-today-img">
+            <a href="{:url('brand/goods_list',array('id'=>$this->_var['li']['brand_id']))}">
             <div class="brand-today-img-text fl">
                 <p>今日推荐</p><span>Recommendationof day</span>
             </div>
@@ -42,16 +43,20 @@
             <div class="brand-today-img-logo fl">
                 <img src="{$li.brand_logo}" alt="" />
             </div>
+            </a>
         </div>
         <!--{/foreach}-->
         <div class="brand-lattice">
             <ul>
-
                 <!--{foreach name=list from=$list.list1 item=li}-->
                 <li>
-                    <img src="{$li.brand_banner}" alt="" class="brand-lattice-bg" />
+                    <a href="{:url('brand/goods_list',array('id'=>$this->_var['li']['brand_id']))}">
+                    <!--{foreach name=li from=$li.goods item=l}-->
+                    <img src="{$l.goods_thumb}" alt="" />
+                    <!--{/foreach}-->
                     <img src="{$li.brand_logo}" alt="" class="brand-lattice-logo" />
                     <span>{$li.brand_name}</span>
+                    </a>
 			    </li>
                 <!--{/foreach}-->
             </ul>
