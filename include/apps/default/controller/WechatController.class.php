@@ -629,6 +629,7 @@ class WechatController extends CommonController
                     exit();
                 }
                 else{
+                    dump($_SESSION);
                     $haspc = file_exists('../data/config.php') ? 1 : 0;
                     self::do_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj, 0, $haspc);
                 }
@@ -714,6 +715,8 @@ class WechatController extends CommonController
             
 		}
         elseif(!empty($user) && $user['ect_uid'] == 0){
+            echo $user_url;
+            dump($_SESSION);
             //会员中心注册绑定
             header("Location:".$user_url);
             exit;
