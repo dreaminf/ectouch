@@ -3395,6 +3395,10 @@ html.active {
     color: #464646;
     font-weight: 400;
     padding-left: 0.625rem; }
+    .member-order-title span.tip {
+      font-size: 1rem;
+      margin-right: 0.5rem;
+      float:right}
 
 .member-order-title-i {
   color: #FF6C60; }
@@ -3443,6 +3447,10 @@ html.active {
     color: #464646;
     font-weight: 400;
     padding-left: 0.625rem; }
+    .member-purse-title span.tip {
+      font-size: 1rem;
+      margin-right: 0.5rem;
+      float:right}
 
 .member-purse-title-i {
   color: #F4C600; }
