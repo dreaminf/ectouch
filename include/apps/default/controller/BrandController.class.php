@@ -42,7 +42,7 @@ class BrandController extends CommonController {
         }
 
         $this->assign('list', $list);
-        $this->assign('title', '品牌集合页');
+        $this->assign('page_title', L('brand_hj'));
         $this->display('brand_show.dwt');
     }
 
