@@ -619,7 +619,7 @@ class SaleModel extends BaseModel {
         $id = M()->table('goods')->field('cat_id')->where("goods_id=$goods_id")->getOne();
         $id = $this->get_goods_cat($id);
         $profit = M()->table('drp_profit')->where('cate_id='.$id)->select();
-        return $profit;
+        return $profit['0'];
     }
 
     public function get_goods_cat($id){
