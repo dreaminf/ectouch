@@ -59,7 +59,7 @@ class CommentController extends CommonController {
                 if (empty($cmt) || !isset($cmt->type) || !isset($cmt->id)) {
                     $result ['error'] = 1;
                     $result ['message'] = L('invalid_comments');
-                } elseif (!is_email($cmt->email)) {
+                } elseif (!empty($cmt->email) && !is_email($cmt->email)) {
                     $result ['error'] = 1;
                     $result ['message'] = L('error_email');
                 } else {

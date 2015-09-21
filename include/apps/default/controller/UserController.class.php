@@ -2393,4 +2393,27 @@ class UserController extends CommonController {
 		$this->assign('goods_list',$goods);
         $this->display('user_order_comment_list.dwt');
 	}
+	
+	/**
+     * 待评价订单商品评论
+     */
+    public function order_comment_list() {
+        $cmt = new stdClass();
+        $cmt->id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
+        $cmt->type = !empty($_GET['type']) ? intval($_GET['type']) : 0;
+        $cmt->page = isset($_GET['page']) && intval($_GET['page']) > 0 ? intval($_GET['page']) : 1;
+        $this->assign('comments_info', model('Comment')->get_comment_info($cmt->id, $cmt->type));
+        $this->assign('id', $cmt->id);
+        $this->assign('type', $cmt->type);
+        $this->assign('username', $_SESSION['user_name']);
+        $this->assign('email', $_SESSION['email']);
+        /* 验证码相关设置 */
+        if ((intval(C('captcha')) & CAPTCHA_COMMENT) && gd_version() > 0) {
+            $this->assign('enabled_captcha', 1);
+            $this->assign('rand', mt_rand());
+        }
+        $result['message'] = C('comment_check') ? L('cmt_submit_wait') : L('cmt_submit_done');
+        $this->assign('title', L('goods_comment'));
+        $this->display('user_order_goods_comment_list.dwt');
+    }
 }
