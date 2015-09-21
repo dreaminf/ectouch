@@ -622,7 +622,6 @@ class WechatController extends CommonController
             //授权登录
             if ($_SESSION['user_id'] === 0 && !empty($_SESSION['wechat_user']) && CONTROLLER_NAME !='Wechat' && (empty($_SESSION['openid']) || isset($_SESSION['redirect_user']))){
                 if($wxinfo['oauth_status'] == '1' || $flag == 'oauth'){
-                    echo 'oauth';exit;
                     //self::update_weixin_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj);
                     $haspc = file_exists('../data/config.php') ? 1 : 0;
                     self::do_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj, 1, $haspc);
@@ -630,7 +629,6 @@ class WechatController extends CommonController
                     exit();
                 }
                 else{
-                    echo 'no oauth';exit;
                     $haspc = file_exists('../data/config.php') ? 1 : 0;
                     self::do_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj, 0, $haspc);
                 }
@@ -717,6 +715,8 @@ class WechatController extends CommonController
 		}
         elseif(!empty($user) && $user['ect_uid'] == 0){
             $_SESSION['redirect_user'] = 1;
+            dump($user);
+            dump($_SESSION);exit;
             //会员中心注册绑定
             header("Location:".$user_url);
             exit;
