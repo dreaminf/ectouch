@@ -400,12 +400,11 @@ class SaleController extends CommonController {
         $this->pageLimit(url('sale/order_list'), $size);
         $this->assign('pager', $this->pageShow($count));
         $orders = model('Sale')->get_sale_orders($where ,  $size, ($page-1)*$size,$user_id);
-
         if($orders){
             foreach($orders as $key=>$val){
                 foreach($val['goods'] as $k=>$v){
                     $orders[$key]['goods'][$k]['profit'] = model('Sale')->get_drp_profit($v['goods_id']);
-                    $orders[$key]['goods'][$k]['profit_money'] =$v['touch_sale']*$orders[$key]['goods'][$k]['profit'] /100;
+                    $orders[$key]['goods'][$k]['profit_money'] = $v['touch_sale']*$orders[$key]['goods'][$k]['profit']['profit1'] /100;
                     $orders[$key]['sum']+=$orders[$key]['goods'][$k]['profit_money'];
                 }
 
