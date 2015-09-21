@@ -619,7 +619,6 @@ class WechatController extends CommonController
             }
 			
             $flag = I('get.flag');
-            dump($_SESSION);
             //授权登录
             if (($_SESSION['user_id'] === 0 && !empty($_SESSION['wechat_user']) && CONTROLLER_NAME !='Wechat' && empty($_SESSION['openid']) && !isset($_SESSION['redirect_user'])) || $flag == 'oauth'){
                 if($wxinfo['oauth_status'] == '1' || $flag == 'oauth'){
@@ -679,6 +678,10 @@ class WechatController extends CommonController
      */
     static function do_oauth_user($userinfo, $wechat_id, $weObj, $user, $isoauth = 0){
     	$user_url = __HOST__.url('user/login');
+        dump($_SESSION);
+        dump($user);
+        dump($userinfo);
+        dump($isoauth);exit;
     	if(empty($user)){
 			$group_id = $weObj->getUserGroup($userinfo['openid']);
         	$group_id = $group_id ? $group_id : 0;
