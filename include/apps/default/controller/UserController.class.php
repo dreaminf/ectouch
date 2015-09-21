@@ -1705,7 +1705,7 @@ class UserController extends CommonController {
 
                 //微信用户绑定
                 if(!empty($_SESSION['wechat_user']) && class_exists('WechatController') && method_exists('WechatController', 'do_bind')){
-                    call_user_func('do_bind');
+                    call_user_func(array('WechatController', 'do_bind'));
                 }
 
                 $jump_url = empty($this->back_act) ? url('index') : $this->back_act;
@@ -1864,8 +1864,8 @@ class UserController extends CommonController {
                 }
 
                 //微信用户绑定
-                if(class_exists('WechatController') && method_exists('WechatController', 'do_bind')){
-                    call_user_func('do_bind');
+                if(!empty($_SESSION['wechat_user']) &&class_exists('WechatController') && method_exists('WechatController', 'do_bind')){
+                    call_user_func(array('WechatController', 'do_bind'));
                 }
 
                 $ucdata = empty(self::$user->ucdata) ? "" : self::$user->ucdata;
