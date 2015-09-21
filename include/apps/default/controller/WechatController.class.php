@@ -862,12 +862,18 @@ class WechatController extends CommonController
                 )
             );
             $weObj->sendCustomMessage($msg);*/
-        } else {
+        }
+        elseif(!empty($ret) && $ret['ect_uid'] == 0){
+            $_SESSION['redirect_user'] = 1;
+            $login_url = __HOST__.url('user/login');
+            header("Location:".$login_url);
+            exit;
+        }
+        else {
             //开放平台有privilege字段,公众平台没有
             $userinfo['group_id'] = isset($userinfo['groupid']) ? $userinfo['groupid'] : $weObj->getUserGroup($userinfo['openid']);
             unset($userinfo['groupid']);
-            unset($userinfo['privilege']);
-            $userinfo['subscribe'] = 1;
+            $userinfo['privilege'] = isset($userinfo['privilege']) ? serialize($userinfo['privilege']) : '';
             model('Base')->model->table('wechat_user')
                 ->data($userinfo)
                 ->where('openid = "' . $userinfo['openid'] . '"')
