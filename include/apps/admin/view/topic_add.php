@@ -168,9 +168,7 @@
         <div class="tab-pane" id="desc">
           <table width="90%" class="table table-hover ectouch-table">
             <tr>
-              <td><div class="col-md-9"> 
-                  <script id="container" name="topic_intro" type="text/plain" style="width:810px; height:360px;"></script> 
-                </div></td>
+              <td><div class="col-md-9"><?php echo create_html_editor('topic_intro');?></div></td>
             </tr>
           </table>
           <input type="hidden" name="id" value="{$info['act_id']}" />
@@ -200,9 +198,6 @@
     </form>
   </div>
 </div>
-<script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.config.js"></script> 
-<script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.all.min.js"></script> 
-<script type="text/javascript">var ue = UE.getEditor('container');</script> 
 {include file="pagefooter"} 
 <script type="text/javascript">
 var data = '{$topic['data']}';

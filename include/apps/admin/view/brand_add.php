@@ -52,9 +52,7 @@
         </tr>
         <tr>
           <td>{$lang['brand_text']}</td>
-          <td><div class="col-md-9">
-              <script id="container" name="content" type="text/plain" style="width:810px; height:360px;"></script>
-            </div></td>
+          <td><div class="col-md-9"><?php echo create_html_editor('content');?></div></td>
         </tr>
         <tr>
           <td>{$lang['sort_order']}</td>
@@ -86,7 +84,4 @@
     </form>
   </div>
 </div>
-<script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.all.min.js"></script>
-<script type="text/javascript">var ue = UE.getEditor('container');</script>
 {include file="pagefooter"}

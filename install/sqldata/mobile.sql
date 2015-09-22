@@ -248,6 +248,5 @@ ALTER TABLE `ecs_order_info` ADD COLUMN `drp_id` int(8) unsigned NOT NULL DEFAUL
 ALTER TABLE `ecs_order_info` ADD COLUMN `shop_separate` int(1) unsigned NOT NULL DEFAULT '0';
 ALTER TABLE `ecs_users` ADD COLUMN `apply_sale` int(1) unsigned NOT NULL DEFAULT '0';
 
-
 ALTER TABLE `ecs_goods_activity` ADD COLUMN `touch_img` VARCHAR (50)  DEFAULT '';
 ALTER TABLE `ecs_favourable_activity` ADD COLUMN `touch_img` VARCHAR (50)  DEFAULT '';

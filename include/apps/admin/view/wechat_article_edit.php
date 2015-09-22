@@ -48,7 +48,7 @@
           </tr>
           <tr>
             <td width="200">正文:</td>
-            <td><div class="col-md-9"><?php echo create_html_editor('content', $article['content']);?></div></td>
+            <td><div class="col-md-9"><?php echo create_html_editor('content', html_out($article['content']));?></div></td>
           </tr>
           <tr>
             <td width="200">原文链接:</td>
