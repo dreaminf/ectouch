@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="__TPL__/css/index.css"/>
     <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
 <style type="text/css">
+    bady{background-color: #f7f7f7}
 /*banner效果*/
 .focus { width: 100%; height: auto; position: relative; overflow: hidden;}
 .focus .hd { width: 100%; height: 0.8em; position: absolute; z-index: 1; text-align: center; bottom:0.5em;}
@@ -17,20 +18,46 @@
 .focus .bd li { height: auto; overflow: hidden; }
 .focus .bd li a img { width: 100%; height: auto; display: block; margin: 0; padding: 0; }
 .focus .bd li a { -webkit-tap-highlight-color: rgba(0, 0, 0, 0);/* 取消链接高亮 */ }
+
+
+/*==================
+    搜索
+=============*/
+
+.ect-padding-lr { padding-left: 0.6em; padding-right: 0.6em; }
+.ect-bg {background: #41A28E !important; color: #fff !important; height: auto;overflow: hidden;}
+.search .ect-margin-tb{margin-top:0.6em; margin-bottom:0.6em;}
+.ect-header{height:2.5em; position:relative;background-color: #41A28E;}
+.ect-header span{font-size:1.4em; position:absolute; left:2.4em; right:3em; top:0.24em; text-align: center}
+.herder-close{color:#fff; float:right; font-size:2em; margin-top: -0.1em; margin-right:0.2em;}
+
+.search input{background-color: #FFF;}
+.input-search{position:relative; margin-top:0.8em; height:auto; height:3em; overflow:hidden;}
+.input-search span{position:absolute; left:0em; right:2.9em; border:1px solid #eee;
+    -webkit-border-radius:  0.4em 0 0 0.4em;
+    -moz-border-radius: 0.4em 0 0 0.4em;
+    border-radius: 0.4em 0 0 0.4em;}
+.input-search span input{width:100%; height:2.4em; font-size:1.2em; border:1px solid #fcfcfc; padding:0 0.6em; box-sizing:border-box; border-radius:0; border:none; border-radius:0.4em 0 0 0.4em;}
+.input-search button{width:3.6em; height:3em;  background:#e6e6e6; display:block; position:absolute; right:0em; border-radius: 0 0.4em 0.4em 0; border:none;}
+.input-search button i{color:#999; font-size:1.8em;}
+.hot-search{margin-top:0.4em; display:table; width:100%;}
+.hot-search p{margin-top:0.5em;}
+.hot-search h4{height:1.6em;}
+.hot-search a{display:table-cell; float:left;  padding:0.8em; background:#fff; margin-right:0.6em; margin-bottom:0.6em; border-radius:0.4em;}
 </style>
 </head>
 
 <body>
+<div class="con">
 <header class="index-header comWidth">
   <i class="index-header-menu iconfont fl" onclick="window.location = '{:url('category/top_all')}'">&#xe627;</i>
   <div class="index-search-box fl">
   	<a href="javascript:void(0)"><i class="index-search-icon iconfont fl">&#xe603;</i></a>
-    <input type="text" class="index-search-input" placeholder="商品搜索">
+    <input type="text" class="index-search-input" placeholder="商品搜索" onclick="openSearch();">
     <a href="javascript:void(0)" id="translateVoice" style="display:None;"><i class="index-search-sound iconfont fr">&#xe623;</i></a>
   </div>
   <a href="javascript:void(0)" id="scanQRCode"><i class="index-header-right iconfont fr">&#xe629;</i></a>
 </header>
-
 <div class="index-main comWidth">
   <!--banner滚动图片s-->
   <div id="focus" class="focus ect-margin-tb">
@@ -110,8 +137,8 @@
 </div>
 
 <footer class="index-footer comWidth"><!-- #BeginLibraryItem "/library/page_index_menu.lbi" --><!-- #EndLibraryItem --></footer>
-
-<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
+</div>
+<!-- #BeginLibraryItem "/library/search_index.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <script type="text/javascript">
 get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}" , '__TPL__/images/loader.gif');
