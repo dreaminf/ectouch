@@ -27,7 +27,7 @@ class ArticleModel extends BaseModel {
      * @return  array
      */
     function assign_articles($id, $num) {
-        $sql = 'SELECT cat_name FROM ' . $this->pre . "touch_article_cat WHERE cat_id = '" . $id . "'";
+        $sql = 'SELECT cat_name FROM ' . $this->pre . "article_cat WHERE cat_id = '" . $id . "'";
 
         $cat['id'] = $id;
         $res = $this->row($sql);
@@ -119,8 +119,8 @@ class ArticleModel extends BaseModel {
     function article_categories_tree($cat_id = 0) {
         if ($cat_id > 0) {
             $sql = 'SELECT parent_id FROM ' . $this->pre .
-                    "touch_article_cat  WHERE cat_id = '$cat_id'";
-            $res = $this->row($sql);          
+                    "article_cat  WHERE cat_id = '$cat_id'";
+            $res = $this->row($sql);
             $parent_id = $res['parent_id'];
         } else {
             $parent_id = 0;
@@ -131,20 +131,20 @@ class ArticleModel extends BaseModel {
           如果不是取当前分类及其下的子分类
          */
         $sql = 'SELECT count(*) as count FROM ' . $this->pre .
-                "touch_article_cat  WHERE parent_id = '$parent_id'";
+                "article_cat  WHERE parent_id = '$parent_id'";
         $res = $this->row($sql);
         if ($res['count']) {
             /* 获取当前分类及其子分类 */
             $sql = 'SELECT a.cat_id, a.cat_name, a.sort_order AS parent_order, a.cat_id, ' .
                     'b.cat_id AS child_id, b.cat_name AS child_name, b.sort_order AS child_order ' .
-                    'FROM ' . $this->pre . 'touch_article_cat AS a ' .
-                    'LEFT JOIN ' . $this->pre . 'touch_article_cat AS b ON b.parent_id = a.cat_id ' . 
+                    'FROM ' . $this->pre . 'article_cat AS a ' .
+                    'LEFT JOIN ' . $this->pre . 'article_cat AS b ON b.parent_id = a.cat_id ' . 
                     "WHERE a.parent_id = '$parent_id' ORDER BY parent_order ASC, a.cat_id ASC, child_order ASC";
         } else {
             /* 获取当前分类及其父分类 */
             $sql = 'SELECT a.cat_id, a.cat_name, b.cat_id AS child_id, b.cat_name AS child_name, b.sort_order ' .
-                    'FROM ' . $this->pre . 'touch_article_cat AS a ' .
-                    'LEFT JOIN ' . $this->pre . 'touch_article_cat AS b ON b.parent_id = a.cat_id ' .
+                    'FROM ' . $this->pre . 'article_cat AS a ' .
+                    'LEFT JOIN ' . $this->pre . 'article_cat AS b ON b.parent_id = a.cat_id ' .
                     "WHERE b.parent_id = '$parent_id' ORDER BY sort_order ASC";
         }
         $res = $this->query($sql);
@@ -175,7 +175,7 @@ class ArticleModel extends BaseModel {
     function get_article_info($article_id) {
         /* 获得文章的信息 */
         $sql = "SELECT a.*, IFNULL(AVG(r.comment_rank), 0) AS comment_rank " .
-                "FROM " . $this->pre . "touch_article AS a " .
+                "FROM " . $this->pre . "article AS a " .
                 "LEFT JOIN " . $this->pre . "comment AS r ON r.id_value = a.article_id AND comment_type = 1 " .
                 "WHERE a.is_open = 1 AND a.article_id = '$article_id' GROUP BY a.article_id";
         $row = $this->row($sql);

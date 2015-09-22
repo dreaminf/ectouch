@@ -17,7 +17,7 @@ defined('IN_ECTOUCH') or die('Deny Access');
 
 class ArticleBaseModel extends BaseModel {
 
-    protected $table = 'touch_article';
+    protected $table = 'article';
 
     /**
      * 获得文章分类下的文章列表
@@ -109,7 +109,8 @@ class ArticleBaseModel extends BaseModel {
         if ($res === NULL) {
             $data = read_static_cache('art_cat_pid_releate');
             if ($data === false) {
-                $sql = "SELECT s.*, COUNT(s.cat_id) AS has_children, COUNT(a.article_id) AS aricle_num " . ' FROM ' . $this->pre . "touch_article_cat AS s" . " LEFT JOIN " . $this->pre . "touch_article AS a ON a.cat_id=s.cat_id" . " GROUP BY s.cat_id " . " ORDER BY parent_id, sort_order ASC";
+                $sql = "SELECT s.*, COUNT(s.cat_id) AS has_children, COUNT(a.article_id) AS aricle_num " . ' FROM ' . 
+                $this->pre . "article_cat AS s" . " LEFT JOIN " . $this->pre . "article AS a ON a.cat_id=s.cat_id" . " GROUP BY s.cat_id " . " ORDER BY parent_id, sort_order ASC";
                 $res = $this->query($sql);
                 write_static_cache('art_cat_pid_releate', $res);
             } else {
@@ -319,8 +320,8 @@ class ArticleBaseModel extends BaseModel {
             }
 
             /* 文章总数 */
-            $sql = 'SELECT COUNT(*)as count FROM ' . $this->pre . 'touch_article AS a ' .
-                    'LEFT JOIN ' . $this->pre . 'touch_article_cat AS ac ON ac.cat_id = a.cat_id ' .
+            $sql = 'SELECT COUNT(*)as count FROM ' . $this->pre . 'article AS a ' .
+                    'LEFT JOIN ' . $this->pre . 'article_cat AS ac ON ac.cat_id = a.cat_id ' .
                     'WHERE 1 ' . $where;
             $res = $this->row($sql);
             
@@ -330,8 +331,8 @@ class ArticleBaseModel extends BaseModel {
 
             /* 获取文章数据 */
             $sql = 'SELECT a.* , ac.cat_name ' .
-                    'FROM ' . $this->pre . 'touch_article AS a ' .
-                    'LEFT JOIN ' . $this->pre . 'touch_article_cat AS ac ON ac.cat_id = a.cat_id ' .
+                    'FROM ' . $this->pre . 'article AS a ' .
+                    'LEFT JOIN ' . $this->pre . 'article_cat AS ac ON ac.cat_id = a.cat_id ' .
                     'WHERE 1 ' . $where . ' ORDER by ' . $filter['sort_by'] . ' ' . $filter['sort_order'] .' LIMIT '.$offset;
 
             $filter['keyword'] = stripslashes($filter['keyword']);

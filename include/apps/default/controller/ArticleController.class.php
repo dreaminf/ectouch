@@ -52,7 +52,7 @@ class ArticleController extends CommonController {
         $this->assign('artciles_list', $artciles_list);
         
         //处理关键词描述
-        $sql = "select * from ".M()->pre."touch_article_cat where cat_id = ".$this->cat_id;
+        $sql = "select * from ".M()->pre."article_cat where cat_id = ".$this->cat_id;
         $cat = M()->query($sql);
         if (!empty($cat['0']['keywords'])) {
             $this->assign('meta_keywords',htmlspecialchars($cat['0']['keywords']));
