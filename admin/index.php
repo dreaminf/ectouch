@@ -78,9 +78,32 @@ if ($_REQUEST['act'] == '')
         {
             unset($menus[$key]);
         }
-
     }
-//var_dump($menus);exit;
+    // 在PC端的情况下过滤菜单
+    $normal = array(
+        '00_menu_dashboard' => '*',
+        '01_menu_system' => array('shop_authorized' => 1),
+        '10_menu_tools' => array('authorization' => 1, 'navigator' => 1),
+        '11_menu_rec' => '*',
+        '12_menu_wechat' => '*',
+    );
+    if(IS_ECSHOP){
+        foreach($menus as $key => $val){
+            if(!isset($normal[$key])){
+                unset($menus[$key]);
+            }
+            if($normal[$key] == '*'){
+                continue;
+            }
+            $children = $val['children'];
+            foreach ($children as $k => $vo) {
+                if(!isset($normal[$key][$k])){
+                    unset($menus[$key]['children'][$k]);
+                }
+            }
+        }
+    }
+
     $smarty->assign('menus',     $menus);
     $smarty->assign('no_help',   $_LANG['no_help']);
     $smarty->assign('help_lang', $_CFG['lang']);

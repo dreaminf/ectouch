@@ -22,29 +22,19 @@ if (__FILE__ == '')
 @ini_set('session.auto_start',    0);
 @ini_set('display_errors',        1);
 
-if (DIRECTORY_SEPARATOR == '\\')
-{
+if (DIRECTORY_SEPARATOR == '\\'){
     @ini_set('include_path',      '.;' . ROOT_PATH);
-}
-else
-{
+}else{
     @ini_set('include_path',      '.:' . ROOT_PATH);
 }
 
-$base_path = str_replace('\\','/', getcwd()).'/../../';
+$base_path = str_replace('\\','/', dirname(dirname(getcwd()))).'/';
 $base_config = $base_path . 'data/config.php';
-if(file_exists($base_config)){
-    require $base_config;
-    header('Location: ../../'.ADMIN_PATH);
-    exit();
-}
+defined('IS_ECSHOP') or define('IS_ECSHOP', file_exists($base_config));
 
-if (file_exists('../data/config.php'))
-{
+if (file_exists('../data/config.php')){
     $db_config = require('../data/config.php');
-}
-else
-{
+}else{
     $db_config = require('../includes/config.php');
 }
 
@@ -52,22 +42,17 @@ else
 defined('ADMIN_PATH') or define('ADMIN_PATH', 'admin');
 define('ROOT_PATH', str_replace(ADMIN_PATH . '/includes/init.php', '', str_replace('\\', '/', __FILE__)));
 
-if (defined('DEBUG_MODE') == false)
-{
+if (defined('DEBUG_MODE') == false){
     define('DEBUG_MODE', 0);
 }
 
-if (PHP_VERSION >= '5.1' && !empty($timezone))
-{
+if (PHP_VERSION >= '5.1' && !empty($timezone)){
     date_default_timezone_set($timezone);
 }
 
-if (isset($_SERVER['PHP_SELF']))
-{
+if (isset($_SERVER['PHP_SELF'])){
     define('PHP_SELF', $_SERVER['PHP_SELF']);
-}
-else
-{
+}else{
     define('PHP_SELF', $_SERVER['SCRIPT_NAME']);
 }
 
