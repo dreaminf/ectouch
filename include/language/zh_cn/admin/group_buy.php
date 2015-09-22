@@ -103,4 +103,9 @@ $_LANG['no_select_group_buy'] = '您现在没有团购活动记录！';
 /* 操作日志 */
 $_LANG['log_action']['group_buy'] = '团购商品';
 
+
+$_LANG['touch_img'] = '团购banner';
+$_LANG['drop_touch_img'] = '删除团购banner';
+$_LANG['confirm_drop_img'] = '确定要删除团购banner吗？';
+
 ?>

@@ -27,7 +27,7 @@ class GroupbuyModel extends BaseModel {
         /* 取得团购活动 */
         $gb_list = array();
         $now = gmtime();
-        $sql = "SELECT b.*, IFNULL(g.goods_thumb, '') AS goods_thumb, t.act_banner ,t.sales_count ,t.click_num,  g.market_price , b.act_id AS group_buy_id, " .
+        $sql = "SELECT b.*, IFNULL(g.goods_thumb, '') AS goods_thumb, t.act_banner ,t.sales_count ,t.click_num, b.touch_img,  g.market_price , b.act_id AS group_buy_id, " .
                 "b.start_time AS start_date, b.end_time AS end_date " .
                 "FROM " . $this->pre . "goods_activity AS b " .
                 "LEFT JOIN " . $this->pre . "goods AS g ON b.goods_id = g.goods_id " .
@@ -96,7 +96,10 @@ class GroupbuyModel extends BaseModel {
             if (!empty($group_buy['goods_thumb'])) {
                 $group_buy['goods_thumb'] = get_image_path($group_buy['goods_id'], $group_buy['goods_thumb'], true);
             }
-            $group_buy['act_banner'] = $group_buy['act_banner'] ? $group_buy['act_banner'] : $group_buy['goods_thumb'];
+//            $group_buy['act_banner'] = $group_buy['touch_img'] ? $group_buy['touch_img'] : $group_buy['touch_img'];
+
+            $group_buy['touch_img'] = $group_buy['touch_img'] ?  __ROOT__ . '/data/attached/groupbuy/'.get_banner_path($group_buy['touch_img']) : get_banner_path($group_buy['touch_img']);
+            $group_buy['act_banner'] =  $group_buy['touch_img'];
             /* 处理链接 */
             $group_buy['url'] = url('groupbuy/info', array('id' => $group_buy ['group_buy_id']));
             /* 加入数组 */

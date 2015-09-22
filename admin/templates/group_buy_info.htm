@@ -19,7 +19,7 @@
   </form>
 </div>
 
-<form method="post" action="group_buy.php?act=insert_update" name="theForm" onsubmit="return validate()">
+<form method="post" action="group_buy.php?act=insert_update" name="theForm" enctype="multipart/form-data"  onsubmit="return validate()">
 <div class="main-div">
 <table id="group-table" cellspacing="1" cellpadding="3" width="100%">
   <tr>
@@ -78,6 +78,18 @@
     <td class="label">{$lang.label_desc}</td>
     <td><textarea  name="act_desc" cols="40" rows="3"  >{$group_buy.act_desc}</textarea></td>
   </tr>
+    <tr>
+        <td class="label">
+            {$lang.touch_img}
+        </td>
+        <td>
+            <input type="file" name="touch_img" id="touch_img" size="45">
+            {if $group_buy.touch_img neq ""}
+            <input type="button" value="{$lang.drop_touch_img}" onclick="if (confirm('{$lang.confirm_drop_img}'))location.href='group_buy.php?act=drop_img&id={$group_buy.act_id}'">
+            {/if}
+            </span>
+        </td>
+    </tr>
   <tr>
     <td class="label">&nbsp;</td>
     <td>

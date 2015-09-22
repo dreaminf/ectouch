@@ -17,7 +17,7 @@ define('IN_ECTOUCH', true);
 require(dirname(__FILE__) . '/includes/init.php');
 require_once(BASE_PATH . 'helpers/goods_helper.php');
 require_once(BASE_PATH . 'helpers/order_helper.php');
-
+$image = new image($_CFG['bgcolor']);
 /* 检查权限 */
 admin_priv('group_by');
 
@@ -288,6 +288,7 @@ elseif ($_REQUEST['act'] =='insert_update')
                 " SET is_finished = '" . GBS_SUCCEED . "' " .
                 "WHERE act_id = '$group_buy_id' LIMIT 1";
         $db->query($sql);
+        $img_name = basename($image->upload_image($_FILES['touch_img'],'groupbuy'));
 
         /* 清除缓存 */
         clear_cache_files();
@@ -491,6 +492,7 @@ elseif ($_REQUEST['act'] =='insert_update')
         {
             sys_msg($_LANG['invalid_time']);
         }
+        $img_name = basename($image->upload_image($_FILES['touch_img'],'groupbuy'));
 
         $group_buy = array(
             'act_name'   => $act_name,
@@ -505,7 +507,8 @@ elseif ($_REQUEST['act'] =='insert_update')
                     'restrict_amount'   => $restrict_amount,
                     'gift_integral'     => $gift_integral,
                     'deposit'           => $deposit
-                    ))
+                    )),
+            'touch_img' =>  $img_name,
         );
 
         /* 清除缓存 */
@@ -544,6 +547,32 @@ elseif ($_REQUEST['act'] =='insert_update')
             sys_msg($_LANG['add_success'], 0, $links);
         }
     }
+}
+/*------------------------------------------------------ */
+//-- 删除团购banner
+/*------------------------------------------------------ */
+elseif ($_REQUEST['act'] == 'drop_img')
+{
+    /* 权限判断 */
+    admin_priv('favourable');
+    $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+    /* 取得logo名称 */
+    $sql = "SELECT touch_img FROM " .$ecs->table('goods_activity'). " WHERE act_id = '$id'";
+    $img_name = $db->getOne($sql);
+
+    if (!empty($img_name))
+    {
+        @unlink(ROOT_PATH . DATA_DIR . '/attached/groupbuy/' .$img_name);
+        $sql = "UPDATE " .$ecs->table('goods_activity'). " SET touch_img = '' WHERE act_id = '$id'";
+        $db->query($sql);
+    }
+    /* 提示信息 */
+    $links = array(
+        array('href' => 'group_buy.php?act=add', 'text' => $_LANG['continue_add']),
+        array('href' => 'group_buy.php?act=list', 'text' => $_LANG['back_list'])
+    );
+    sys_msg($_LANG['add_success'], 0, $links);
 }
 
 /*------------------------------------------------------ */
