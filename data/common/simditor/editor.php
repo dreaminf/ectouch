@@ -40,8 +40,9 @@ body {margin:0px; padding:0px;}
       }
     });
     cBox = $('#<?php echo $item;?>', parent.document);
+    editor.setValue(cBox.val());
     return editor.on('valuechanged', function(e) {
-      return cBox.html(editor.getValue());
+      return cBox.val(editor.getValue());
     });
   });
 }).call(this);
