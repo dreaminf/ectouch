@@ -218,9 +218,28 @@
 <!--
 onload = function()
 {
+  var is_ecshop = {$is_ecshop};
+  if(is_ecshop){
+    doLinkAll(false);
+  }
   /* 检查订单 */
   startCheckOrder();
 }
+
+function doLinkAll(action){ 
+  var arr=document.getElementsByTagName("a");
+  for(var i=0;i <arr.length;i++){
+    if (action){ //重新设置链接 
+      if (arr[i].rel) arr[i].setAttribute("href",arr[i].rel);
+    }else{ //取消所有链接 
+      arr[i].setAttribute("rel",arr[i].href) 
+      arr[i].removeAttribute("href") 
+    }
+  }
+  o1.disabled=!action 
+  o2.disabled=action 
+}
+
   Ajax.call('index.php?is_ajax=1&act=main_api','', start_api, 'GET', 'TEXT','FLASE');
   //Ajax.call('cloud.php?is_ajax=1&act=cloud_remind','', cloud_api, 'GET', 'JSON');
    function start_api(result)

@@ -200,6 +200,7 @@ if ((DEBUG_MODE & 2) == 2)
     $smarty->force_compile = true;
 }
 
+$smarty->assign('is_ecshop', IS_ECSHOP ? 1:0);
 $smarty->assign('lang', $_LANG);
 $smarty->assign('help_open', $_CFG['help_open']);
 
