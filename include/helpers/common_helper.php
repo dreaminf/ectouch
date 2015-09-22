@@ -2240,7 +2240,7 @@ function user_uc_call($func, $params = null)
         if (!function_exists($func))
         {
             // include_once(ROOT_PATH . 'includes/lib_uc.php');
-			$global->load->helper('uc');
+            $global->load->helper('uc');
         }
 
         $res = call_user_func_array($func, $params);

@@ -46,8 +46,8 @@ $strConfig = str_replace('#DB_USER#', $dbUser, $strConfig);
 $strConfig = str_replace('#DB_PWD#', $dbPwd, $strConfig);
 $strConfig = str_replace('#DB_PORT#', $dbPort, $strConfig);
 $strConfig = str_replace('#DB_PREFIX#', $dbPrefix, $strConfig);
-$strConfig = str_replace('#HASH_CODE#', genRandomString(18), $strConfig);
-$strConfig = str_replace('#COOKIE_PREFIX#', genRandomString(6) . "_", $strConfig);
+// $strConfig = str_replace('#HASH_CODE#', genRandomString(18), $strConfig);
+// $strConfig = str_replace('#COOKIE_PREFIX#', genRandomString(6) . "_", $strConfig);
 @file_put_contents($config['dbConfig'], $strConfig);
 
 if($independent){

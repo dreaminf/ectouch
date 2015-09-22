@@ -8,6 +8,4 @@ return array(
     'DB_PREFIX'   => '#DB_PREFIX#',
     'DB_PORT'   => '#DB_PORT#',
     'DB_CHARSET'   => 'utf8',
-    'COOKIE_PREFIX' => '#COOKIE_PREFIX#',
-    'HASH_CODE' => '#HASH_CODE#'
 );
