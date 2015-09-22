@@ -254,24 +254,14 @@ function get_position_list()
 
 /**
  * 生成编辑器
- *
- * @param
- *            string input_name 输入框名称
- * @param
- *            string input_value 输入框值
+ * @param   string  input_name  输入框名称
+ * @param   string  input_value 输入框值
  */
 function create_html_editor($input_name, $input_value = '')
 {
-    global $smarty;
-    
-    $editor = new FCKeditor($input_name);
-    $editor->BasePath = '../includes/fckeditor/';
-    $editor->ToolbarSet = 'Normal';
-    $editor->Width = '100%';
-    $editor->Height = '320';
-    $editor->Value = $input_value;
-    $FCKeditor = $editor->CreateHtml();
-    $smarty->assign('FCKeditor', $FCKeditor);
+    $editor = '<input type="hidden" id="'.$input_name.'" name="'.$input_name.'" value="'.htmlspecialchars($input_value).'" />
+    <iframe id="'.$input_name.'_frame" src="data/common/simditor/editor.php?item='.$input_name.'" width="850" height="480" frameborder="0" scrolling="no"></iframe>';
+    return $editor;
 }
 
 /**

@@ -404,4 +404,22 @@ class IndexController extends AdminController
             $this->display();
         }
     }
+
+    public function uploader(){
+        $info = $this->ectouchUpload('upload_file');
+        if($info['error']){
+            $data = array(
+                'success' => false,
+                'msg' => $info['message']
+            );
+        }else{
+            $imageinfo = $info['message']['upload_file'];
+            $savepath = substr($imageinfo['savepath'] . $imageinfo['savename'], 1);
+            $data = array(
+                'success' => true,
+                'file_path' => __URL__ . $savepath
+            );
+        }
+        echo json_encode($data);
+    }
 }
