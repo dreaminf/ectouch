@@ -81,4 +81,8 @@ $_LANG['amount_error'] = '金额下限不能大于金额上限';
 $_LANG['act_name_exists'] = '该优惠活动名称已存在，请您换一个';
 
 $_LANG['nolimit'] = '没有限制';
+
+$_LANG['touch_img'] = '促销图片';
+$_LANG['drop_touch_img'] = '删除图片';
+$_LANG['confirm_drop_img'] = '确定要删除图片';
 ?>

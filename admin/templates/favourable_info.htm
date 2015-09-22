@@ -84,6 +84,18 @@
         <input name="add_gift" type="button" class="button" id="add_gift" onclick="addGift()" value="+" />
       </a></td>
   </tr>
+<tr>
+    <td class="label">
+        {$lang.touch_img}
+    </td>
+    <td>
+        <input type="file" name="touch_img" id="touch_img" size="45">
+        {if $favourable.touch_img neq ""}
+        <input type="button" value="{$lang.drop_touch_img}" onclick="if (confirm('{$lang.confirm_drop_img}'))location.href='favourable.php?act=drop_img&id={$favourable.act_id}'">
+        {/if}
+        </span>
+    </td>
+</tr>
   <tr>
     <td colspan="2" align="center">
       <input type="submit" class="button" value="{$lang.button_submit}" />

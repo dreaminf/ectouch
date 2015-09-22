@@ -25,7 +25,7 @@ class ActivityModel extends BaseModel {
      */
     function get_activity_info($size, $page) {
         $start = ($page - 1) * $size;
-        $sql = 'SELECT f.* , a.act_banner' . ' FROM ' . $this->pre . 'favourable_activity f LEFT JOIN ' . $this->pre . 'touch_activity a on a.act_id = f.act_id ' . " ORDER BY f.sort_order ASC, f.end_time DESC LIMIT $start , $size";
+        $sql = 'SELECT f.*  FROM ' . $this->pre . "favourable_activity f  ORDER BY f.sort_order ASC, f.end_time DESC LIMIT $start , $size";
         $res = $this->query($sql);
         $arr = array();
         foreach ($res as $row) {
@@ -34,7 +34,8 @@ class ActivityModel extends BaseModel {
             $arr[$row['act_id']]['url'] = url('activity/goods_list', array('id' => $row['act_id']));
             $arr[$row['act_id']]['act_name'] = $row['act_name'];
             $arr[$row['act_id']]['act_id'] = $row['act_id'];
-            $arr[$row['act_id']]['act_banner'] = get_banner_path($row['act_banner']);
+            $row['touch_img'] = $row['touch_img'] ?  __ROOT__ . '/data/attached/favourable/'.get_banner_path($row['touch_img']) : get_banner_path($row['touch_img']);
+            $arr[$row['act_id']]['act_banner'] =  $row['touch_img'];
         }
         return $arr;
     }
