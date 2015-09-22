@@ -110,7 +110,7 @@ switch ($step) {
 		$rootpath = preg_replace("/\/(I|i)nstall\/index\.php(.*)$/", "", $scriptName);
 		$domain = $domain . $rootpath;
 		//是否独立安装
-		$base_path = str_replace('\\','/', getcwd()).'/../../';
+		$base_path = str_replace('\\','/', dirname(dirname(getcwd()))).'/';
 		$independent = file_exists($base_path . 'data/config.php') ? 0 : 1;
 		include ("./templates/3.php");
 		break;
