@@ -115,53 +115,7 @@
         </div>
         <!--翻页 END--> 
       </div>
-    </div>
-    <!--评论表单 start-->
-    <div class="submit-comments">
-      <form action="javascript:;" onsubmit="submitComment(this)" method="post" name="commentForm" id="commentForm">
-        <div class="ect-padding-lr">
-          <h4 class="ect-margin-tb">{$lang.username}：<strong><!--{if $smarty.session.user_name}-->{$smarty.session.user_name}<!--{else}-->{$lang.anonymous}<!--{/if}--></strong></h4>
-          <ul class="comment-radio ect-radio ect-margin-tb ect-margin-bottom0">
-            <li>
-              <input name="comment_rank" type="radio" value="5" checked="checked" id="comment_rank5" />
-              <label for="comment_rank5"><i></i>{$lang.five_stars}</label>
-            </li>
-            <li>
-              <input name="comment_rank" type="radio" value="4" id="comment_rank4"/>
-              <label for="comment_rank4"><i></i>{$lang.four_stars}</label>
-            </li>
-            <li>
-              <input name="comment_rank" type="radio" value="3" id="comment_rank3"/>
-              <label for="comment_rank3"><i></i>{$lang.three_stars}</label>
-            </li>
-            <li>
-              <input name="comment_rank" type="radio" value="2" id="comment_rank2"/>
-              <label for="comment_rank2"><i></i>{$lang.two_stars}</label>
-            </li>
-            <li>
-              <input name="comment_rank" type="radio" value="1" id="comment_rank1"/>
-              <label for="comment_rank1"><i></i>{$lang.one_stars}</label>
-            </li>
-          </ul>
-          <p class="ect-padding-tb">
-            <input placeholder="E-mail"  type="text" name="email" id="email"  maxlength="100" value="{$smarty.session.email|escape}" >
-          </p>
-          <p class="ect-padding-tb">
-            <textarea name="content" placeholder="{$lang.comment_content}"></textarea>
-            <input type="hidden" name="cmt_type" value="{$comment_type}" />
-            <input type="hidden" name="id" value="{$id}" />
-          </p>
-          <!-- 判断是否启用验证码{if $enabled_captcha} -->
-          <p class="ect-padding-tb code"><span>
-            <input placeholder="{$lang.comment_captcha}" type="text" name="captcha"/>
-            </span> <img class="pull-right" src="{:url('public/captcha', array('rand'=>$this->_var['rand']))}" alt="captcha" onClick="this.src='{:url('public/captcha')}&t='+Math.random()"  /> </p>
-          <!-- {/if} -->
-          <p class="ect-padding-tb">
-            <input type="submit" class="btn btn-info ect-btn-info ect-bg" value="{$lang.submit_comment}"/>
-          </p>
-        </div>
-      </form>
-    </div>
+    </div>    
   </section>
   <!--用户评论 END--> 
 </div>
