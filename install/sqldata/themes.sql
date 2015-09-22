@@ -38,7 +38,7 @@ INSERT INTO `ecs_ad` (`position_id`, `media_type`, `ad_name`, `ad_link`, `ad_cod
 (257, 0, '1', '', 'http://img30.360buyimg.com/mobilecms/jfs/t1285/301/224079095/27270/fbbc1f40/555c6c90Ncb4fe515.jpg', 1396339200, 1525161600, '', '', '', 0, 1);
 INSERT INTO `ecs_ad` (`position_id`, `media_type`, `ad_name`, `ad_link`, `ad_code`, `start_time`, `end_time`, `link_man`, `link_email`, `link_phone`, `click_count`, `enabled`) VALUES
 (258, 0, '1', '', 'http://m.360buyimg.com/mobilecms/jfs/t2500/354/5004119/28206/c13fa182/55e5a38fN0b84386b.jpg', 1396339200, 1525161600, '', '', '', 0, 1),
-(258, 0, '1', '', 'http://m.360buyimg.com/mobilecms/jfs/t1738/16/1289696574/25303/b97d27f7/55e42bfdNf92543d6.jpg', 1396339200, 1525161600, '', '', '', 0, 1);
+(258, 0, '1', '', 'http://m.360buyimg.com/mobilecms/jfs/t1951/303/313107422/21311/5bc233db/55ffda9bN7c81adbe.jpg', 1396339200, 1525161600, '', '', '', 0, 1);
 
 INSERT INTO `ecs_ad` (`position_id`, `media_type`, `ad_name`, `ad_link`, `ad_code`, `start_time`, `end_time`, `link_man`, `link_email`, `link_phone`, `click_count`, `enabled`) VALUES
 (259, 0, '1', '', 'http://m.360buyimg.com/mobilecms/jfs/t1786/20/1237061297/11292/32fb2a76/55e41b2aN73bcf4d3.jpg', 1396339200, 1525161600, '', '', '', 0, 1),

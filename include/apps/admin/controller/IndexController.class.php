@@ -405,6 +405,9 @@ class IndexController extends AdminController
         }
     }
 
+    /**
+     * 编辑器上传
+     */
     public function uploader(){
         $info = $this->ectouchUpload('upload_file');
         if($info['error']){
