@@ -55,7 +55,14 @@ class CommentController extends CommonController {
                 $cmt->page = 1;
                 $cmt->id = !empty($cmt->id) ? intval($cmt->id) : 0;
                 $cmt->type = !empty($cmt->type) ? intval($cmt->type) : 0;
-
+				$this->user_id = $_SESSION['user_id'];
+				$where['user_id'] = $this->user_id;
+				$where['id_value'] = $cmt->id;
+				$row = $this->model->table('comment')->where($where)->count();
+				if($row>0){
+					$result ['error'] = 1;
+                    $result ['message'] = '此商品您已评论，只能评论一次哦';
+				}else{
                 if (empty($cmt) || !isset($cmt->type) || !isset($cmt->id)) {
                     $result ['error'] = 1;
                     $result ['message'] = L('invalid_comments');
@@ -175,6 +182,7 @@ class CommentController extends CommonController {
                         }
                     }
                 }
+				}
             }
         } else {
             /*
