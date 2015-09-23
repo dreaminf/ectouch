@@ -771,7 +771,7 @@ class WechatController extends CommonController
             ->field('openid, ect_uid')
             ->where('openid = "' . $userinfo['openid'] . '"')
             ->find();
-        if (empty($ret)) {
+        if (empty($ret) || (!empty($ret) && $ret['ect_uid'] == 0)) {
             // 获取用户所在分组ID
             $group_id = $weObj->getUserGroup($userinfo['openid']);
             $group_id = $group_id ? $group_id : 0;
@@ -839,24 +839,32 @@ class WechatController extends CommonController
                 $template = '您已拥有帐号，用户名为'.$username;
                 $data1['ect_uid'] = $ect_uid;
             }
-            
-            $data1['wechat_id'] = $wechat_id;
-            $data1['subscribe'] = 0;
-            $data1['openid'] = $userinfo['openid'];
-            $data1['nickname'] = $userinfo['nickname'];
-            $data1['sex'] = $userinfo['sex'];
-            $data1['city'] = $userinfo['city'];
-            $data1['country'] = $userinfo['country'];
-            $data1['province'] = $userinfo['province'];
-            $data1['language'] = $userinfo['language'];
-            $data1['headimgurl'] = $userinfo['headimgurl'];
-            $data1['subscribe_time'] = '';
-            $data1['group_id'] = $group_id;
-            $data1['unionid'] = $userinfo['unionid'];
-            
-            model('Base')->model->table('wechat_user')
-                ->data($data1)
-                ->insert();
+
+            if(!empty($ret)){
+                $userinfo['group_id'] = isset($userinfo['groupid']) ? $userinfo['groupid'] : $weObj->getUserGroup($userinfo['openid']);
+                unset($userinfo['groupid']);
+                $userinfo['privilege'] = isset($userinfo['privilege']) ? serialize($userinfo['privilege']) : '';
+                $userinfo['ect_uid'] = $data1['ect_uid'];
+                model('Base')->model->table('wechat_user')->data($userinfo)->where('openid = "' . $userinfo['openid'] . '"')->update();
+            }
+            else{
+                $data1['wechat_id'] = $wechat_id;
+                $data1['subscribe'] = 0;
+                $data1['openid'] = $userinfo['openid'];
+                $data1['nickname'] = $userinfo['nickname'];
+                $data1['sex'] = $userinfo['sex'];
+                $data1['city'] = $userinfo['city'];
+                $data1['country'] = $userinfo['country'];
+                $data1['province'] = $userinfo['province'];
+                $data1['language'] = $userinfo['language'];
+                $data1['headimgurl'] = $userinfo['headimgurl'];
+                $data1['subscribe_time'] = '';
+                $data1['group_id'] = $group_id;
+                $data1['unionid'] = $userinfo['unionid'];
+
+                model('Base')->model->table('wechat_user')->data($data1)->insert();
+            }
+
             // 微信端发送消息
             /*$msg = array(
                 'touser' => $userinfo['openid'],
@@ -866,12 +874,6 @@ class WechatController extends CommonController
                 )
             );
             $weObj->sendCustomMessage($msg);*/
-        }
-        elseif(!empty($ret) && $ret['ect_uid'] == 0){
-            $_SESSION['redirect_user'] = 1;
-            $bind_url = __HOST__.url('user/bind');
-            header("Location:".$bind_url);
-            exit;
         }
         else {
             //开放平台有privilege字段,公众平台没有
