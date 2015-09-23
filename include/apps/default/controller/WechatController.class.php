@@ -722,6 +722,7 @@ class WechatController extends CommonController
 		elseif($user['ect_uid'] > 0 && $isoauth){
             $userinfo['group_id'] = isset($userinfo['groupid']) ? $userinfo['groupid'] : $weObj->getUserGroup($userinfo['openid']);
             unset($userinfo['groupid']);
+            $userinfo['privilege'] = isset($userinfo['privilege']) ? serialize($userinfo['privilege']) : '';
             model('Base')->model->table('wechat_user')
                 ->data($userinfo)
                 ->where('openid = "' . $userinfo['openid'] . '"')
