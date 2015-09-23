@@ -1,23 +1,18 @@
 <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
 <div class="user-register"> 
- <!-- {if $shop_reg_closed eq 1} -->
-    <p class="text-center" style="font-size: x-large;">{$lang.shop_register_closed}</p>
-
-    <!-- {else} -->
-  <!--{if $enabled_sms_signin eq 1} 支持手机短信功能-->
-  <ul class="nav nav-tabs" role="tablist">
-    <li class="active"><a href="#one" role="tab" data-toggle="tab">{$lang.mobile_login}</a></li>
-    <li><a href="#two" role="tab" data-toggle="tab">{$lang.emaill_login}</a></li>
-  </ul>
+  <!-- {if $shop_reg_closed eq 1} -->
+  <p class="text-center" style="font-size: x-large;">{$lang.shop_register_closed}</p>
+  <!-- {else} -->
   <div class="tab-content">
-    <div class="tab-pane active" id="one">
-      <form action="{:url('user/register')}" method="post" name="formUser" onsubmit="return register2();">
+    <!--{if $enabled_sms_signin eq 1} 支持手机短信功能-->
+    <div class="tab-pane active">
+      <form action="{:url('user/register')}" method="post" name="formUser" onsubmit="return register2();" class="validforms">
         <input type="hidden" name="flag" id="flag" value="register" />
         <div class="flow-consignee ect-bg-colorf">
           <ul>
             <li>
               <div class="input-text"><b>{$lang.mobile}：</b><span>
-                <input placeholder="{$lang.no_mobile}" name="mobile" id="mobile_phone" type="text">
+                <input placeholder="{$lang.no_mobile}" name="mobile" id="mobile_phone" type="text" datatype="m">
                 </span></div>
             </li>
             <li>
@@ -26,18 +21,18 @@
                 </span> <a class="pull-right ect-bg" id="zphone" name="sendsms" onClick="sendSms();" type="botton">{$lang.get_code}</a></div>
             </li>
             <li>
-              <div class="input-text"><b>用户名：</b><span>
-                <input placeholder="用户名" name="username" type="text">
+              <div class="input-text"><b>{$lang.label_username}：</b><span>
+                <input placeholder="{$lang.label_username}" name="username" type="text" datatype="*3-15">
                 </span></div>
             </li>
             <li>
-              <div class="input-text"><b>密码：</b><span>
-                <input placeholder="密码" name="password" type="password">
+              <div class="input-text"><b>{$lang.password}：</b><span>
+                <input placeholder="{$lang.password}" name="password" type="password" datatype="*6-16">
                 </span></div>
             </li>
             <li>
-              <div class="input-text"><b>确认密码：</b><span>
-                <input placeholder="确认密码" name="repassword" type="password">
+              <div class="input-text"><b>{$lang.confirm_password}：</b><span>
+                <input placeholder="{$lang.confirm_password}" name="repassword" type="password" datatype="*" recheck="password">
                 </span></div>
             </li>
           </ul>
@@ -56,9 +51,9 @@
       </form>
     </div>
     <script type="text/javascript" src="__PUBLIC__/js/sms.js"></script> 
-    <!--{/if}-->
-    <div class="tab-pane" id="two">
-      <form action="{:url('user/register')}" method="post" name="formUser" class="validforms" >
+    <!--{else}-->
+    <div class="tab-pane active">
+      <form action="{:url('user/register')}" method="post" name="formUser" class="validforms">
         <input type="hidden" name="flag" id="flag" value="register" />
         <div class="flow-consignee ect-bg-colorf">
           <ul>
@@ -68,16 +63,16 @@
                 </span></div>
             </li>
             <li>
-              <div class="input-text"><b>{$lang.email}：</b><span>
-                <input placeholder="{$lang.no_emaill}" name="email" type="text" id="email" datatype="e" />
-                </span></div>
-            </li>
-            <li>
               <div class="input-text"><b>{$lang.password}：</b><span>
                 <input  placeholder="{$lang.no_password}" class="inputBg" name="password" id="password1" type="password" datatype="*6-16">
                 <input placeholder="{$lang.no_password}" class="inputBg" id="password_text" type="text" style="display:none;">
                 </span><i class="glyphicon glyphicon-eye-open" onClick="clickText();"></i></div>
-            </li>			
+            </li>
+            <li>
+              <div class="input-text"><b>{$lang.confirm_password}：</b><span>
+                <input placeholder="{$lang.confirm_password}" name="repassword" type="password" datatype="*" recheck="password">
+                </span></div>
+            </li>
             <!-- 判断是否启用验证码{if $enabled_captcha} -->
             <li>
               <div class="input-text code"><b>{$lang.code}：</b><span>
@@ -99,24 +94,24 @@
         </div>
       </form>
     </div>
+    <!--{/if}-->
   </div>
-</div>
-<!--  {/if} -->
+  <!--  {/if} -->
 </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <script type="text/javascript">
 /*点击更换密码框为文本框*/
 function clickText(){
-	if($("#password_text").is(":hidden")&&$("#password1").is(":visible")&&!$(".input-text .glyphicon-eye-open").hasClass("glyphicon-eye-close")){
-	  	var pwd = $("#password1").val();
-       	$("#password1").hide();
-       	$("#password_text").val(pwd).show();
-		$(".input-text .glyphicon-eye-open").addClass("glyphicon-eye-close");
-	}else{
-		var pwd_text = $("#password_text").val();
-       	$("#password_text").hide();
-       	$("#password1").val(pwd_text).show();;;		
-		$(".input-text .glyphicon-eye-open").removeClass("glyphicon-eye-close");			
-	}
+  if($("#password_text").is(":hidden")&&$("#password1").is(":visible")&&!$(".input-text .glyphicon-eye-open").hasClass("glyphicon-eye-close")){
+      var pwd = $("#password1").val();
+        $("#password1").hide();
+        $("#password_text").val(pwd).show();
+    $(".input-text .glyphicon-eye-open").addClass("glyphicon-eye-close");
+  }else{
+    var pwd_text = $("#password_text").val();
+        $("#password_text").hide();
+        $("#password1").val(pwd_text).show();;;   
+    $(".input-text .glyphicon-eye-open").removeClass("glyphicon-eye-close");      
+  }
 }
 </script>
