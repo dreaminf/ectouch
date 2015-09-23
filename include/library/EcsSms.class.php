@@ -48,8 +48,8 @@ class EcsSms {
             return true;
         } else {
             $sms_error = $gets['SubmitResult']['msg'];
-            $this->logResult($sms_error);
-            return false;
+            //$this->logResult($sms_error);
+            return $sms_error;
         }
     }
 

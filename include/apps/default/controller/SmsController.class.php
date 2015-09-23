@@ -70,16 +70,15 @@ class SmsController extends CommonController {
         $message = "您的验证码是：" . $this->mobile_code . "，请不要把验证码泄露给其他人，如非本人操作，可不用理会";
 
         $sms = new EcsSms();
-        $sms_error = '';
-        $send_result = $sms->send($this->mobile, $message, $sms_error);
+        $send_result = $sms->send($this->mobile, $message);
         $this->write_file($this->mobile, date("Y-m-d H:i:s"));
 
-        if ($send_result) {
+        if ($send_result === true) {
             $_SESSION['sms_mobile'] = $this->mobile;
             $_SESSION['sms_mobile_code'] = $this->mobile_code;
             exit(json_encode(array('code' => 2, 'mobile_code' => $this->mobile_code)));
         } else {
-            exit(json_encode(array('msg' => $sms_error)));
+            exit(json_encode(array('msg' => $send_result)));
         }
     }
 

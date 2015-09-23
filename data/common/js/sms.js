@@ -6,10 +6,10 @@ function sendSms(){
 		alert('请填写手机号码');
 		return false;
 	}
+	RemainTime();
 	$.post("index.php?m=default&c=sms&a=send&flag="+flag, { "mobile": mobile, "sms_code": code },function(result){
 		if (result.code==2){
-			RemainTime();
-			alert('手机验证码已经成功发送到您的手机');
+			alert('验证码已成功发送到您的手机');
 		}else{
 			if(result.msg){
 				alert(result.msg);

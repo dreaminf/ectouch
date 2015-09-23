@@ -1807,10 +1807,10 @@ class UserController extends CommonController {
                 }
             }             // 手机号注册处理
             elseif (1 == $enabled_sms) {
-                $username = isset($_POST['mobile']) ? in($_POST['mobile']) : '';
-                $password = isset($_POST['mobile_code']) ? in($_POST['mobile_code']) : '';
+                $username = isset($_POST['username']) ? in($_POST['username']) : '';
+                $password = isset($_POST['password']) ? in($_POST['password']) : '';
                 $sms_code = isset($_POST['sms_code']) ? in($_POST['sms_code']) : '';
-                $other['mobile_phone'] = $username;
+                $other['mobile_phone'] = isset($_POST['mobile']) ? in($_POST['mobile']) : '';
 
                 if (empty($username)) {
                     show_message(L('msg_mobile_blank'), L('register_back'), url('register'), 'error');
@@ -1820,13 +1820,13 @@ class UserController extends CommonController {
                     show_message(L('sms_code_error'), L('register_back'), url('register'), 'error');
                 }
 
-                if ($password != $_SESSION['sms_mobile_code']) {
-                    show_message(L('mobile_code_error'), L('register_back'), url('register'), 'error');
+                if ($password != $_POST['repassword']) {
+                    show_message('两次输入密码不一致', L('register_back'), url('register'), 'error');
                 }
 
                 // 验证手机号重复
-                $where['mobile_phone'] = $username;
-                $user_id = $this->model->table('users')->field('user_id')->where($where)->getOne();
+                // $where['mobile_phone'] = $username;
+                $user_id = $this->model->table('users')->field('user_id')->where($other)->getOne();
                 if ($user_id) {
                     show_message(L('msg_mobile_exists'), L('register_back'), url('register'), 'error');
                 }
@@ -1838,35 +1838,6 @@ class UserController extends CommonController {
             }
             $other['parent_id'] = $_SESSION['parent_id'] ? $_SESSION['parent_id'] : 0;
             if (model('Users')->register($username, $password, $email, $other) !== false) {
-                /*把新注册用户的扩展信息插入数据库*/
-                $sql = 'SELECT id,is_need,reg_field_name FROM ' . M()->pre . 'reg_fields' . ' WHERE  display = 1 ORDER BY dis_order, id';   //读出所有自定义扩展字段的id
-                $fields_arr = M()->query($sql);
-                
-                $extend_field_str = '';    //生成扩展字段的内容字符串
-                foreach ($fields_arr AS $val)
-                {
-                    $extend_field_index = 'extend_field' . $val['id'];
-                    if(!empty($_POST[$extend_field_index]))
-                    {
-                        $temp_field_content = strlen($_POST[$extend_field_index]) > 100 ? mb_substr($_POST[$extend_field_index], 0, 99) : $_POST[$extend_field_index];
-                        $extend_field_str .= " ('" . $_SESSION['user_id'] . "', '" . $val['id'] . "', '" . $temp_field_content . "'),";
-                    }
-                }
-                $extend_field_str = substr($extend_field_str, 0, -1);
-                
-                if ($extend_field_str)      //插入注册扩展数据
-                {
-                    $sql = 'INSERT INTO '. M()->pre . 'reg_extend_info' . ' (`user_id`, `reg_field_id`, `content`) VALUES' . $extend_field_str;
-                    M()->query($sql);
-                }
-                
-                /* 写入密码提示问题和答案 */
-                if (!empty($passwd_answer) && !empty($sel_question))
-                {
-                    $sql = 'UPDATE ' . M()->pre . 'users' . " SET `passwd_question`='$sel_question', `passwd_answer`='$passwd_answer'  WHERE `user_id`='" . $_SESSION['user_id'] . "'";
-                    M()->query($sql);
-                }
-                
                 // 判断是否需要自动发送注册邮件
                 if (C('member_email_validate') && C('send_verify_email')) {
                     model('Users')->send_regiter_hash($_SESSION['user_id']);
@@ -1884,22 +1855,7 @@ class UserController extends CommonController {
             }
             exit();
         }
-        
-        /* 取出注册扩展字段 */
-        $sql = 'SELECT * FROM ' . M()->pre . 'reg_fields' . ' WHERE type < 2 AND display = 1 ORDER BY dis_order, id';
-        $extend_info_list = M()->query($sql);
-        foreach ($extend_info_list as $key=>$val){
-            if($val['id'] >= 100){
-                unset($extend_info_list[$key]);
-            }
-        }
-        $this->assign('extend_info_list', $extend_info_list);
-
-         // 密码提示问题
-        $this->assign('password_question', L('passwd_questions'));
-        
         // 注册页面显示
-
         if (empty($this->back_act) && isset($GLOBALS['_SERVER']['HTTP_REFERER'])) {
             $this->back_act = strpos($GLOBALS['_SERVER']['HTTP_REFERER'], 'c=user') ? url('index/index') : $GLOBALS['_SERVER']['HTTP_REFERER'];
         }
