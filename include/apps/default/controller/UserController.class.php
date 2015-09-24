@@ -1770,11 +1770,8 @@ class UserController extends CommonController {
             if (0 == $enabled_sms) {
                 // 数据处理
                 $username = isset($_POST['username']) ? in($_POST['username']) : '';
-                $email = isset($_POST['email']) ? in($_POST['email']) : '';
                 $password = isset($_POST['password']) ? in($_POST['password']) : '';
                 $other = array();
-                $sel_question = isset($_POST['sel_question']) ? in($_POST['sel_question']) : '';
-                $passwd_answer = isset($_POST['passwd_answer']) ? in($_POST['passwd_answer']) : '';
 
                 // 验证码检查
                 if (intval(C('captcha')) & CAPTCHA_REGISTER) {
@@ -1805,8 +1802,7 @@ class UserController extends CommonController {
                 if (strpos($password, ' ') > 0) {
                     show_message(L('passwd_balnk'));
                 }
-            }             // 手机号注册处理
-            elseif (1 == $enabled_sms) {
+            } elseif (1 == $enabled_sms) { // 手机号注册处理
                 $username = isset($_POST['username']) ? in($_POST['username']) : '';
                 $password = isset($_POST['password']) ? in($_POST['password']) : '';
                 $sms_code = isset($_POST['sms_code']) ? in($_POST['sms_code']) : '';
@@ -1830,19 +1826,14 @@ class UserController extends CommonController {
                 if ($user_id) {
                     show_message(L('msg_mobile_exists'), L('register_back'), url('register'), 'error');
                 }
-
-                // 设置一个默认的邮箱
-                $email = $username . '@qq.com';
             } else {
                 ECTouch::err()->show(L('sign_up'), url('register'));
             }
+
+            // 设置一个默认的邮箱
+            $email = substr(md5($username), 0, 3) . time() . '@qq.com';
             $other['parent_id'] = $_SESSION['parent_id'] ? $_SESSION['parent_id'] : 0;
             if (model('Users')->register($username, $password, $email, $other) !== false) {
-                // 判断是否需要自动发送注册邮件
-                if (C('member_email_validate') && C('send_verify_email')) {
-                    model('Users')->send_regiter_hash($_SESSION['user_id']);
-                }
-
                 //微信用户绑定
                 if(!empty($_SESSION['wechat_user']) &&class_exists('WechatController') && method_exists('WechatController', 'do_bind')){
                     call_user_func(array('WechatController', 'do_bind'));

@@ -180,6 +180,19 @@ switch ($step) {
 			if(empty($sqldata)){
 				alert(0,'数据库文件不能为空！');
 			}
+			if(!$independent){
+				//获得默认主题名称
+				$result = mysql_query('select `value` from '.$dbPrefix.'shop_config where `code` = "template"', $conn);
+				if($result){
+					$row = mysql_fetch_assoc($result);
+					$newThemes = $row['value'];
+					$sqldata = str_replace('/default/', '/'.$newThemes.'/', $sqldata);
+					$oldThemes = '../themes/default';
+					if(is_dir($oldThemes)){
+						rename($oldThemes, '../themes/'.$newThemes);
+					}
+				}
+			}
 			$sqlFormat = sql_split($sqldata, $dbPrefix, $config['dbPrefix']);
 
 			/**

@@ -24,7 +24,10 @@ defined('ADDONS_PATH') or define('ADDONS_PATH', ROOT_PATH . 'plugins/');
 defined('DEFAULT_APP') or define('DEFAULT_APP', 'default');
 defined('DEFAULT_CONTROLLER') or define('DEFAULT_CONTROLLER', 'Index');
 defined('DEFAULT_ACTION') or define('DEFAULT_ACTION', 'index');
-
+/* 是否基于ecshop */
+$base_path = str_replace('\\','/', dirname(getcwd())).'/';
+$base_config = $base_path . 'data/config.php';
+defined('IS_ECSHOP') or define('IS_ECSHOP', file_exists($base_config));
 /* 系统函数 */
 require(BASE_PATH . 'Common.php');
 /* 默认配置 */
