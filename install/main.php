@@ -1,12 +1,13 @@
 <?php
+//网站域名
+$site_url = trim($_POST['siteurl']);
 
 if($independent){
 	$username = trim($_POST['manager']);
 	$password = trim($_POST['manager_pwd']);
 	//网站名称
 	$site_name = addslashes(trim($_POST['sitename']));
-	//网站域名
-	$site_url = trim($_POST['siteurl']);
+
 	//描述
 	$seo_description = trim($_POST['sitedescription']);
 	//关键词
@@ -21,16 +22,16 @@ if($independent){
 
 //插入微信菜单
 $query = "INSERT INTO `{$dbPrefix}wechat_menu` (`id`, `wechat_id`, `pid`, `name`, `type`, `key`, `url`, `sort`, `status`) VALUES
-(1, 1, 0, '微商城', 'view', '', '{$site_url}', 1, 1),
-(2, 1, 0, '微分销', 'view', '', '{$site_url}/?c=sale', 2, 1),
-(3, 1, 0, '个人中心', 'view', '', '{$site_url}/?c=user', 3, 1),
+(1, 1, 0, '微商城', 'click', '', '#', 1, 1),
+(2, 1, 0, '微分销', 'click', '', '#', 2, 1),
+(3, 1, 0, '个人中心', 'click', '', '#', 3, 1),
 (4, 1, 1, '商城首页', 'view', '', '{$site_url}', 1, 1),
 (5, 1, 1, '最新商品', 'click', 'news', '', 2, 1),
 (6, 1, 1, '推荐商品', 'click', 'best', '', 3, 1),
 (7, 1, 1, '热销商品', 'click', 'hot', '', 4, 1),
 (8, 1, 2, '我要开店', 'view', '', '{$site_url}/?c=sale&amp;a=sale_set', 1, 1),
 (9, 1, 2, '我的佣金', 'view', '', '{$site_url}/?c=sale&amp;a=my_commission', 2, 1),
-(10, 1, 2, '获取推广二维码', 'view', '', 'http://shop.ectouch.cn/v2/?c=sale&amp;a=spread', 3, 1),
+(10, 1, 2, '获取推广二维码', 'view', '', '{$site_url}/?c=sale&amp;a=spread', 3, 1),
 (11, 1, 2, '开店须知', 'click', 'notice', '', 4, 1),
 (12, 1, 3, '会员中心', 'view', '', '{$site_url}/?c=user', 1, 1),
 (13, 1, 3, '订单查询', 'click', 'ddcx', '', 2, 1),

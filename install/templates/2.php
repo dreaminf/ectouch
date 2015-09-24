@@ -18,7 +18,7 @@
 					<td>PHP版本</td>
 					<td>>5.3.x</td>
 					<td><span class="correct_span">&radic;</span> <?php echo $server['php']; ?></td>
-					<td>5.2.4</td>
+					<td>5.3.0</td>
 				</tr>
 				<tr>
 					<td>Mysql版本</td>

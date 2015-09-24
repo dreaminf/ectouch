@@ -10,23 +10,23 @@
 					</tr>
 					<tr>
 						<td class="tar">数据库服务器：</td>
-						<td><input type="text" name="dbhost" id="dbhost" value="127.0.0.1" class="input"></td>
-						<td><div id="J_install_tip_dbhost"><span class="gray">数据库服务器地址，一般为localhost</span></div></td>
+						<td><input type="text" name="dbhost" id="dbhost" value="<?php echo $config['dbHost'] ?>" class="input"></td>
+						<td><div id="J_install_tip_dbhost"><span class="gray">数据库服务器地址，一般为localhost 或 127.0.0.1</span></div></td>
 					</tr>
 					<tr>
 						<td class="tar">数据库端口：</td>
-						<td><input type="text" name="dbport" id="dbport" value="3306" class="input"></td>
+						<td><input type="text" name="dbport" id="dbport" value="<?php echo $config['dbPort'] ?>" class="input"></td>
 						<td><div id="J_install_tip_dbport"><span class="gray">数据库服务器端口，一般为3306</span></div></td>
 					</tr>
 					<tr>
 						<td class="tar">数据库用户名：</td>
-						<td><input type="text" name="dbuser" id="dbuser" value="root" class="input"></td>
+						<td><input type="text" name="dbuser" id="dbuser" value="<?php echo $config['dbUser'] ?>" class="input"></td>
 						<td><div id="J_install_tip_dbuser"></div></td>
 					</tr>
 					<tr>
 						<td class="tar">数据库密码：</td>
-						<td><input type="text" name="dbpw" id="dbpw" value="" class="input" autoComplete="off"></td>
-						<td><div id="J_install_tip_dbpw"></div></td>
+						<td><input type="text" name="dbpw" id="dbpw" value="<?php echo $config['dbPass'] ?>" class="input" autoComplete="off"></td>
+						<td><div id="J_install_tip_dbpw"><span class="gray">数据库密码请不要设置特殊字符，如'*','&','<','>','\',空格等</span></div></td>
 					</tr>
 					<tr>
 						<td class="tar">测试数据库连接：</td>
@@ -41,10 +41,9 @@
 					<tr>
 						<td class="tar">数据库表前缀：</td>
 						<td><input type="text" name="dbprefix" id="dbprefix" value="<?php echo $config['dbPrefix'] ?>" class="input"></td>
-						<td><div id="J_install_tip_dbprefix"><span class="gray">建议使用默认，同一数据库安装多个ShuipFCMS时需修改</span></div></td>
+						<td><div id="J_install_tip_dbprefix"><span class="gray">建议使用默认</span></div></td>
 					</tr>
 				</table>
-				<?php if($independent):?>
 				<table width="100%">
 					<tr>
 						<td class="td1" width="100">网站配置</td>
@@ -72,6 +71,7 @@
 						<td><div id="J_install_tip_siteinfo"></div></td>
 					</tr>
 				</table>
+				<?php if($independent):?>
 				<table width="100%">
 					<tr>
 						<td class="td1" width="100">创始人信息</td>

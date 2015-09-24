@@ -15,8 +15,8 @@ set_time_limit(1000);
 //php版本
 $phpversion = phpversion();
 //php版本过低提示
-if($phpversion < '5.3'){
-	exit(get_tip_html('您当前php版本('.$phpversion.')过低，不能安装本软件，请升级到5.3或更高版本再安装，谢谢！'));
+if($phpversion < '5.3.0'){
+	exit(get_tip_html('您当前php版本('.$phpversion.')过低，不能安装本软件，请升级到5.3.0或5.4.0版本再安装，谢谢！'));
 }
 //数据库文件
 foreach ($config['sqlFileName'] as $sqlFile) {
@@ -119,6 +119,17 @@ switch ($step) {
 		//是否独立安装
 		$base_path = str_replace('\\','/', dirname(dirname(getcwd()))).'/';
 		$independent = file_exists($base_path . 'data/config.php') ? 0 : 1;
+		// 不是独立安装 则自动读取PC端数据库连接信息
+		if($independent == 0){
+			require_once $base_path . 'data/config.php';
+			$db = explode(':',$db_host);
+			$config['dbHost'] = empty($db[0]) ? 'localhost': $db[0];
+			$config['dbPort'] = empty($db[1]) ? '3306' : $db[1];
+			$config['dbName'] = $db_name;
+			$config['dbUser'] = $db_user;
+			$config['dbPass'] = $db_pass;
+			$config['dbPrefix'] = empty($prefix) ? 'ecs_' : $prefix;
+		}
 		include ("./templates/3.php");
 		break;
 	//安装详细过程
@@ -159,8 +170,8 @@ switch ($step) {
 			mysql_query("SET NAMES 'utf8'"); //,character_set_client=binary,sql_mode='';
 			//获取数据库版本信息
 			$version = mysql_get_server_info($conn);
-			if ($version < 4.1) {
-				alert(0,'连接数版本太低!');
+			if ($version < 5.0) {
+				alert(0,'数据库版本太低!');
 			}
 			//选择数据库
 			if (!mysql_select_db($dbName, $conn)) {
