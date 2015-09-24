@@ -53,7 +53,7 @@ class ArticleBaseModel extends BaseModel {
                 $arr[$article_id]['title'] = $vo['title'];
                 $arr[$article_id]['short_title'] = C('article_title_length') > 0 ? sub_str($vo['title'], C('article_title_length')) : $vo['title'];
                 $arr[$article_id]['author'] = empty($vo['author']) || $vo['author'] == '_SHOPHELP' ? C('shop_name') : $vo['author'];
-                $arr[$article_id]['url'] = $vo['link'] ?  $vo['link'] : url('article/info', array('aid' => $article_id)) ;
+                $arr[$article_id]['url'] = $vo['link'] && $vo['link'] !='http://' ?  $vo['link'] : url('article/info', array('aid' => $article_id)) ;
                 $arr[$article_id]['add_time'] = date(C('date_format'), $vo['add_time']);
                 $i++;
             }
