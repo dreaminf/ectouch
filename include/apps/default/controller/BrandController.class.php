@@ -36,12 +36,17 @@ class BrandController extends CommonController {
     public function index() {
         $list = model('Brand')->get_brands_hj();
         if($list){
-            foreach($list['top'] as $key=>$val){
-                $list['top'][$key]['goods'] =  model('Brand')->brand_get_goods_img($val['brand_id'],'','goods_id','desc','3','1');
+            if($list['top']) {
+                foreach ($list['top'] as $key => $val) {
+                    $list['top'][$key]['goods'] = model('Brand')->brand_get_goods_img($val['brand_id'], '', 'goods_id', 'desc', '3', '1');
+                }
             }
-            foreach($list['list1'] as $key=>$val){
-                $list['list1'][$key]['goods'] =  model('Brand')->brand_get_goods_img($val['brand_id'],'','goods_id','desc','1','1');
+            if($list['list1']){
+                foreach($list['list1'] as $key=>$val){
+                    $list['list1'][$key]['goods'] =  model('Brand')->brand_get_goods_img($val['brand_id'],'','goods_id','desc','1','1');
+                }
             }
+
         }
         $this->assign('list', $list);
         $this->assign('page_title', L('brand_hj'));
