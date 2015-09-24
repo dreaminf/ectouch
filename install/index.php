@@ -81,6 +81,13 @@ switch ($step) {
 			$server['session'] = '<span class="correct_span error_span">&radic;</span> 不支持';
 			$error++;
 		}
+		//curl
+		if (function_exists('curl_init')) {
+			$server['curl'] = '<span class="correct_span">&radic;</span> 支持';
+		} else {
+			$server['curl'] = '<span class="correct_span error_span">&radic;</span> 不支持';
+			$error++;
+		}
 		//需要读写权限的目录
 		$folder = $config['dirAccess'];
 		$install_path = str_replace('\\','/',getcwd()).'/';

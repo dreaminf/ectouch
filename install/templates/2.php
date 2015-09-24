@@ -38,6 +38,12 @@
 					<td><?php echo $server['session']; ?></td>
 					<td>开启</td>
 				</tr>
+				<tr>
+					<td>curl扩展</td>
+					<td>开启</td>
+					<td><?php echo $server['curl']; ?></td>
+					<td>开启</td>
+				</tr>
 			</table>
 			<table width="100%">
 				<tr>
