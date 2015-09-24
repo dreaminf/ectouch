@@ -114,9 +114,11 @@ function submitComment(frm)
 */
   function commentResponse(result)
   {
+    var cart_url = 'index.php?c=user&a=order_comment';
     if (result.message)
     {
       alert(result.message);
+	  location.href = cart_url;
     }
 
     if (result.error == 0)

@@ -16,7 +16,7 @@
 			<dl>
 			   <dd>{$orders.name}</dd></br>			   
 			</dl>
-			<i class="pull-right fa fa-angle-right"></i> </a> 
+			
 			<dd>
 				 <a  style="" href="{:url('user/order_comment_list',array('id'=>$this->_var['orders']['goods_id']))}">				
 					  <button style="  border: 0px;  position: absolute;  top: 67px;  right: 10px;}">去评价</button>
