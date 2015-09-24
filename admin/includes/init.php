@@ -46,8 +46,8 @@ if (defined('DEBUG_MODE') == false){
     define('DEBUG_MODE', 0);
 }
 
-if (PHP_VERSION >= '5.1' && !empty($timezone)){
-    date_default_timezone_set($timezone);
+if (PHP_VERSION >= '5.1'){
+    date_default_timezone_set("PRC");
 }
 
 if (isset($_SERVER['PHP_SELF'])){
