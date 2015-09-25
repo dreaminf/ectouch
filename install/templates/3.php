@@ -44,6 +44,7 @@
 						<td><div id="J_install_tip_dbprefix"><span class="gray">建议使用默认</span></div></td>
 					</tr>
 				</table>
+				<?php if($independent):?>
 				<table width="100%">
 					<tr>
 						<td class="td1" width="100">网站配置</td>
@@ -71,7 +72,6 @@
 						<td><div id="J_install_tip_siteinfo"></div></td>
 					</tr>
 				</table>
-				<?php if($independent):?>
 				<table width="100%">
 					<tr>
 						<td class="td1" width="100">创始人信息</td>
@@ -99,8 +99,10 @@
 						<td><div id="J_install_tip_manager_email"></div></td>
 					</tr>
 				</table>
+				<?php else:?>
+				<input type="hidden" name="siteurl" value="http://<?php echo $domain ?>" />
 				<?php endif;?>
-				<input type="hidden" name="independent" value="<?php echo $independent;?>" >
+				<input type="hidden" name="independent" value="<?php echo $independent;?>" />
 				<div id="J_response_tips" style="display:none;"></div>
 			</div>
 		</div>

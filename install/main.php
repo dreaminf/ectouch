@@ -1,7 +1,6 @@
 <?php
 //网站域名
 $site_url = trim($_POST['siteurl']);
-
 if($independent){
 	$username = trim($_POST['manager']);
 	$password = trim($_POST['manager_pwd']);
