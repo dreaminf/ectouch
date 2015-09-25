@@ -109,7 +109,7 @@ switch ($step) {
 			$conn?alert(1,'数据库链接成功！','dbpw'):alert(0,'数据库链接失败！','dbpw');
 		}
 		//域名+路径
-		$domain = empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
+		$domain = empty($_SERVER['HTTP_HOST']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
 		if ((int) $_SERVER['SERVER_PORT'] != 80) {
 			$domain .= ":" . $_SERVER['SERVER_PORT'];
 		}
