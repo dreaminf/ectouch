@@ -5,21 +5,18 @@
  * ============================================================================
  * Copyright (c) 2014-2015 http://ectouch.cn All rights reserved.
  * ----------------------------------------------------------------------------
- * 文件名称：index.php
- * ----------------------------------------------------------------------------
- * 功能描述：移动端入口文件
+ * This is NOT a freeware, use is subject to license terms
  * ----------------------------------------------------------------------------
  * Licensed ( http://www.ectouch.cn/license )
  * ----------------------------------------------------------------------------
  */
 
 if(version_compare(PHP_VERSION,'5.2.4','<')) die('require PHP > 5.2.4 !');
-define('APP_DEBUG', true);
-define('IN_ECTOUCH', true);
-define('APPNAME', 'ECTouch');
-define('VERSION', '2.0-dev');
-define('RELEASE', '20150918');
-define('CHARSET', 'utf-8');
+defined('APP_DEBUG') or define('APP_DEBUG', true);
+defined('APPNAME') or define('APPNAME', 'ECTouch');
+defined('VERSION') or define('VERSION', '2.0-dev');
+defined('RELEASE') or define('RELEASE', '20150918');
+defined('CHARSET') or define('CHARSET', 'utf-8');
 define('NOW_TIME', $_SERVER['REQUEST_TIME']);
 define('REQUEST_METHOD', $_SERVER['REQUEST_METHOD']);
 define('IS_GET', REQUEST_METHOD == 'GET' ? true : false);
