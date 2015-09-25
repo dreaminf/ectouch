@@ -72,6 +72,33 @@ class SaleController extends CommonController {
     }
 
     /**
+     * 我的店铺
+     */
+    public function shop_config(){
+        if(IS_POST){
+
+            $data = $_POST['data'];
+            $data = I('data');
+            if (empty($data['shop_name'])){
+                show_message(L('shop_name_empty'));
+            }
+            if (empty($data['real_name'])){
+                show_message(L('real_name_empty'));
+            }
+            if (empty($data['shop_mobile'])){
+                show_message(L('shop_mobile_empty'));
+            }
+            $where['user_id'] = $_SESSION['user_id'];
+            $this->model->table('drp_shop')->data($data)->where($where)->update();
+            show_message(L('success'),'分销中心',url('sale/index'));
+        }
+        $drp_info = $this->model->table('drp_shop')->field('shop_name,real_name,shop_mobile,shop_img')->where('user_id='.session('user_id'))->select();
+        $this->assign('drp_info',$drp_info['0']);
+        $this->assign('title', L('shop_config'));
+        $this->display('sale_shop_config.dwt');
+    }
+
+    /**
      * 我的商品
      */
     public function my_goods(){
@@ -1016,5 +1043,30 @@ class SaleController extends CommonController {
         $this->assign('order_count', $order_count ? $order_count : 0);
         $this->assign('title', '店铺详情');
         $this->display('sale_shop_detail.dwt');
+    }
+
+    /**
+     * 分销商排行榜
+     */
+    public function ranking_list(){
+
+        $size = I(C('page_size'), 5);
+        $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
+        $sql = "select COUNT(*) as count from {pre}drp_shop";
+        $count = $this->model->query($sql);
+        $count = $count['0']['count'];
+        $this->pageLimit(url('sale/ranking_list'), $size);
+        $this->assign('pager', $this->pageShow($count));
+
+        $sql = "select *, (select sum(user_money) from {pre}drp_log WHERE user_money > 0 and {pre}drp_log.user_id= {pre}drp_shop.user_id) as sum_money from {pre}drp_shop order by sum_money desc limit  ".($page-1)*$size.','.$size;
+        $list = $this->model->query($sql);
+        if($list){
+            foreach($list as $key=>$val){
+                $list[$key]['sum_money'] = $val['sum_money'] ? $val['sum_money'] : 0.00;
+            }
+        }
+        $this->assign('list', $list);
+        $this->assign('title', L('ranking_list'));
+        $this->display('sale_ranking_list.dwt');
     }
 }

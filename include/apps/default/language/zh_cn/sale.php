@@ -64,4 +64,7 @@ $_LANG['my_user_list3'] = '三级会员';
 $_LANG['no_info'] = '暂无信息';
 $_LANG['success'] = '修改成功';
 
+$_LANG['shop_config'] = '我的店铺设置';
+$_LANG['ranking_list'] = '分销排行榜';
+
 ?>
