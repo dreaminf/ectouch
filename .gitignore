@@ -1,12 +1,12 @@
 .DS_Store
 
-cache/*
-!cache/index.html
-!cache/.htaccess
+caches/cache/*
+!caches/cache/index.html
+!caches/cache/.htaccess
 
-logs/*
-!logs/index.html
-!logs/.htaccess
+caches/logs/*
+!caches/logs/index.html
+!caches/logs/.htaccess
 
 # IDE Files
 #-------------------------
