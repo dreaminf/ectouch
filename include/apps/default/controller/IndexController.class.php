@@ -25,17 +25,17 @@ class IndexController extends CommonController {
             $drp_shop = $_SESSION['drp_shop'];
             //分销店铺
             if($drp_shop['open'] == 1){
-                $drp_info['mobile_qr'] = './data/attached/drp/drp_'.$drp_shop['user_id'].'.png';
-                if(!file_exists($drp_info['mobile_qr'])){
+                $drp_shop['mobile_qr'] = './data/attached/drp/drp_'.$drp_shop['user_id'].'.png';
+                if(!file_exists($drp_shop['mobile_qr'])){
                     // 二维码
                     $url = $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$drp_shop['user_id'];
                     // 纠错级别：L、M、Q、H
                     $errorCorrectionLevel = 'L';
                     // 点的大小：1到10
                     $matrixPointSize = 8;
-                    QRcode::png($url, $drp_info['mobile_qr'], $errorCorrectionLevel, $matrixPointSize, 2);
+                    QRcode::png($url, $drp_shop['mobile_qr'], $errorCorrectionLevel, $matrixPointSize, 2);
                 }
-                $this->assign('drp_info',$drp_info);
+                $this->assign('drp_info',$drp_shop);
             }
         }
         // 自定义导航栏

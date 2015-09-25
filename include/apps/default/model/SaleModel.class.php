@@ -608,6 +608,7 @@ class SaleModel extends BaseModel {
         $info['real_name'] = $row['real_name'];
         $info['open']      = $row['open'];
         $info['cat_id']    = $row['cat_id'];
+        $info['shop_img']    = $row['shop_img'] ? './data/attached/drp_logo/'.$row['shop_img'] : '';
         $info['user_id']   = $user_id;
 
         //如果$_SESSION中时间无效说明用户是第一次登录。取当前登录时间。

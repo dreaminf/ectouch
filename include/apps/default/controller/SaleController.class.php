@@ -88,6 +88,14 @@ class SaleController extends CommonController {
             if (empty($data['shop_mobile'])){
                 show_message(L('shop_mobile_empty'));
             }
+            if(!empty($_FILES['shop_img']['name'])){
+                $result = $this->uploadImage();
+                if ($result['error'] > 0) {
+                    show_message($result['message']);
+                }
+
+                $data['shop_img'] = $result['message']['shop_img']['savename'];
+            }
             $where['user_id'] = $_SESSION['user_id'];
             $this->model->table('drp_shop')->data($data)->where($where)->update();
             show_message(L('success'),'分销中心',url('sale/index'));
@@ -1073,5 +1081,29 @@ class SaleController extends CommonController {
         $this->assign('list', $list);
         $this->assign('title', L('ranking_list'));
         $this->display('sale_ranking_list.dwt');
+    }
+
+    /**
+     * 上传图片
+     * @return multitype:number type
+     */
+    public function uploadImage(){
+        $upload = new UploadFile();
+        //设置上传文件类型
+        $upload->allowExts = explode(',', 'jpg,jpeg,gif,png,bmp');
+        //设置附件上传目录
+        $upload->savePath = './data/attached/drp_logo/';
+        // 是否生成缩略图
+        $upload->thumb = false;
+        //缩略图大小
+        $upload->thumbMaxWidth = 500;
+        $upload->thumbMaxHeight = 500;
+        if (!$upload->upload($key)) {
+            //捕获上传异常
+            return array('error' => 1, 'message' => $upload->getErrorMsg());
+        } else {
+            //取得成功上传的文件信息
+            return array('error' => 0, 'message' => $upload->getUploadFileInfo());
+        }
     }
 }
