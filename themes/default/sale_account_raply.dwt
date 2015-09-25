@@ -6,7 +6,7 @@
         </div>
     </div>
     <div class="a-raply-info">
-        24小时内到账，法定节假日3天到账
+        24小时内到账，法定节假日3天到账,最低提现{$txxz}元
     </div>
     <form action="{:url('Sale/act_account')}" method="post" name="theForm" >
     <div class="bank-card">

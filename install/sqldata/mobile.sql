@@ -232,6 +232,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_bank` (
 INSERT INTO `ecs_drp_config` VALUES ('1', '温馨提示', 'apply','温馨提示', '申请分销商时，提示用户的信息','textarea');
 INSERT INTO `ecs_drp_config` VALUES ('2', '新手必读', 'novice','新手必读', '分销商申请成功后，用户要注意的事项','textarea');
 INSERT INTO `ecs_drp_config` VALUES ('3', '7', 'fxts','分销间隔', '下单并付款之后经过设置天数才可以对订单分成','text');
+INSERT INTO `ecs_drp_config` VALUES ('4', '100', 'txxz','提现限制', '申请提现时，少于该值将无法提现','text');
 
 
 ALTER TABLE `ecs_order_goods` ADD COLUMN `touch_sale` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';

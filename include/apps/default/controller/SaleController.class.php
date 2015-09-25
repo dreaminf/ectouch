@@ -184,6 +184,8 @@ class SaleController extends CommonController {
             $surplus_amount = 0;
         }
         $this->assign('surplus_amount', price_format($surplus_amount, false));
+        $txxz =  $this->model->getRow("select centent from {pre}drp_config where keyword='txxz'");
+        $this->assign('txxz',$txxz['centent']);
         $this->assign('title', L('label_user_surplus'));
         $this->display('sale_account_raply.dwt');
     }
@@ -204,7 +206,10 @@ class SaleController extends CommonController {
         {
             show_message(L('amount_gt_zero'));
         }
-
+        $txxz =  $this->model->getRow("select centent from {pre}drp_config where keyword='txxz'");
+        if($txxz['centent'] > $_POST['amount']){
+            show_message('提现金额必须大于'.$txxz['centent'].'元');
+        }
         /* 变量初始化 */
         $surplus = array(
             'user_id'      => $this->user_id,
