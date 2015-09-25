@@ -255,7 +255,6 @@ class ActivityController extends CommonController {
         if(empty($wall_id)){
             $this->redirect(url('index/index'));
         }
-        $_SESSION['openid'] = 'oWbbLt4fDrg78mvacsfpvi9Juo4I';
 
         $wechat_user = $this->model->table('wechat_wall_user')->field('id')->where(array('openid'=>$_SESSION['openid']))->find();
         //聊天室人数
