@@ -574,7 +574,7 @@ function cat_options($spec_cat_id, $arr)
  */
 function load_config()
 {
-    $global = getDbInstance();
+    $global = getInstance();
     $arr = array();
 
     $data = read_static_cache('shop_config');

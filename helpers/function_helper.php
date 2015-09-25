@@ -4,42 +4,10 @@
 /**
  * ECTouch 基础函数库
  */
-function getDbInstance(){
-    static $obj = array();
-    if(empty($obj)){
-        $db_config = require_cache(DATA_PATH . 'config.php', true);
-        $obj = new stdClass();
-        $obj->ecs = new ecshop($db_config['DB_NAME'], $db_config['DB_PREFIX']);
-        $obj->db = new mysql($db_config['DB_HOST'], $db_config['DB_USER'], $db_config['DB_PWD'], $db_config['DB_NAME']);
-        $obj->db->set_disable_cache_tables(array($obj->ecs->table('sessions'), $obj->ecs->table('sessions_data'), $obj->ecs->table('cart')));
-        $obj->err = new error('message.dwt');
-        $obj->model = new Model();
-    }
-    return $obj;
-}
-
 function getInstance(){
     static $obj = array();
     if(empty($obj)){
-        $obj = getDbInstance();
-        //$touch->cfg = null;
-        /*$obj->sess = new session($obj->db, $obj->ecs->table('sessions'), $obj->ecs->table('sessions_data'));*/
-        $obj->tpl = new template();
-        $obj->tpl->cache_lifetime = C('cache_time');
-        $obj->tpl->template_dir   = ROOT_PATH . 'themes/' . C('template');
-        $obj->tpl->cache_dir      = STORAGE_PATH . 'caches';
-        $obj->tpl->compile_dir    = STORAGE_PATH . 'compiled';
-
-        if (APP_DEBUG) {
-            $obj->tpl->direct_output = true;
-            $obj->tpl->force_compile = true;
-        } else {
-            $obj->tpl->direct_output = false;
-            $obj->tpl->force_compile = false;
-        }
-
-        //$touch->lang = null;
-        $obj->user =& init_users();
+        $obj = get_Instance()->load;
     }
     return $obj;
 }

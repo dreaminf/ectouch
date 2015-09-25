@@ -1,6 +1,6 @@
 User-agent: *
 
-Disallow: /cache/
+Disallow: /caches/
 Disallow: /classes/
 Disallow: /config/
 Disallow: /controllers/
@@ -8,8 +8,6 @@ Disallow: /core/
 Disallow: /helpers/
 Disallow: /language/
 Disallow: /libraries/
-Disallow: /logs/
-Disallow: /models/
 Disallow: /modules/
 Disallow: /notify/
 Disallow: /vendor/

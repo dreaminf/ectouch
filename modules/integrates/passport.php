@@ -65,9 +65,8 @@ class passport implements IntegrateInterface
         $this->field_passwd_question = 'passwd_question';
         $this->need_sync = false;
         $this->is_ecshop = 1;
-        
-        $db =  getDbInstance();
-        $this->db = $db->model;
+
+        $this->db = getInstance()->db;
     }
     /**
      * 用户登录
