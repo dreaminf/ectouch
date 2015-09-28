@@ -384,7 +384,7 @@ class SaleController extends CommonController {
             // 纠错级别：L、M、Q、H
             $errorCorrectionLevel = 'M';
             // 点的大小：1到10
-            $matrixPointSize = 14;
+            $matrixPointSize = 13;
             @QRcode::png($url, $ew_img, $errorCorrectionLevel, $matrixPointSize, 2);
 //        }
 
