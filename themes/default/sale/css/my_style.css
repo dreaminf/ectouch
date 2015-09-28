@@ -996,6 +996,10 @@ input[type=button]{
     -webkit-appearance:none;
     outline:none
 }
+input[type=submit]{
+    -webkit-appearance:none;
+    outline:none
+}
 .set-div{
     width:100%;
     text-align: center;
