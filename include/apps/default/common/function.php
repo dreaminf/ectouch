@@ -17,6 +17,14 @@ function is_wechat_browser()
 }
 
 /**
+ * 图片兼容地址
+ */
+function get_data_url($imgage = '', $prefix = ''){
+    $imgPrefix = (strpos($imgage, 'http://') === false && strpos($imgage, 'https://') === false && IS_ECSHOP) ? '../data/'. $prefix .'/' : __URL__ .'/data/attached/'. $prefix .'/';
+    return $imgPrefix . $imgage;
+}
+
+/**
  * 取得页面标题
  *
  * @access  public

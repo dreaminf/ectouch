@@ -148,16 +148,17 @@ function insert_ads($arr) {
             continue;
         }
         $position_style = $row['position_style'];
+
         switch ($row['media_type']) {
             case 0: // 图片广告
                 $src = (strpos($row['ad_code'], 'http://') === false && strpos($row['ad_code'], 'https://') === false) ?
-                        __URL__ . "/$row[ad_code]" : $row['ad_code'];
+                        get_data_url($row['ad_code'], 'afficheimg') : $row['ad_code'];
                 $ads[] = "<a href='" . url('default/affiche/index', array('ad_id' => $row['ad_id'], 'uri' => urlencode($row["ad_link"]))) . "' 
                 target='_blank'><img src='$src' border='0' /></a>";
                 break;
             case 1: // Flash
                 $src = (strpos($row['ad_code'], 'http://') === false && strpos($row['ad_code'], 'https://') === false) ?
-                        __URL__ . "/$row[ad_code]" : $row['ad_code'];
+                      get_data_url($row['ad_code'], 'afficheimg') : $row['ad_code'];
                 $ads[] = "<object classid=\"clsid:d27cdb6e-ae6d-11cf-96b8-444553540000\" " .
                         "codebase=\"http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0\"  " .
                         "width='$row[ad_width]' height='$row[ad_height]'>
