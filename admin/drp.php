@@ -633,7 +633,9 @@ function get_order_list($is_separate)
     $nowTime = gmtime();
     while ($row = $GLOBALS['db']->fetchRow($res))
     {
-
+        if($row['pay_time'] > 0 && ($row['pay_time']+$fxts) <= $nowTime){
+            $row['separate'] = 1;
+        }
         $row['add_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['add_time']);
         $row['user_name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$row['user_id']);
         $row['parent_name'] = $GLOBALS['db']->getOne("select shop_name from ".$GLOBALS['ecs']->table('drp_shop') ." where id = ".$row['drp_id']);
