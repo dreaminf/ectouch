@@ -138,9 +138,9 @@ class SaleModel extends BaseModel {
      */
     function saleMoney($uid=0) {
         $uid = $uid > 0 ? $uid : $_SESSION['user_id'];
-        $money = M()->query("select sum(user_money) as money from {pre}drp_log where user_id = ".$uid ." and user_money > 0");
+        $money = M()->getRow("select sum(user_money) as money from {pre}drp_log where user_id = ".$uid ." and user_money > 0");
         dump($money);
-        $money = $money['0']['money'];
+        $money = $money['money'];
         dump("select sum(user_money) as money from {pre}drp_log where user_id = ".$uid ." and user_money > 0");
         dump($money);
         return $money ? $money : 0;
