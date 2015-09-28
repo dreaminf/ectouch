@@ -384,7 +384,7 @@ class SaleController extends CommonController {
             // 纠错级别：L、M、Q、H
             $errorCorrectionLevel = 'M';
             // 点的大小：1到10
-            $matrixPointSize = 15;
+            $matrixPointSize = 10;
             @QRcode::png($url, $ew_img, $errorCorrectionLevel, $matrixPointSize, 2);
 //        }
 
@@ -419,9 +419,6 @@ class SaleController extends CommonController {
         if($info['avatar']) {
             Image::water($dp_img, $wx_img, 11);
         }
-
-
-
         $this->assign('mobile_qr', $dp_img);
         $this->assign('title',L('store'));
         $this->display('sale_store.dwt');
