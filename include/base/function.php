@@ -1757,7 +1757,11 @@ function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods',
           $url = $base_url . $image;
       }
     }
-    return str_replace('mobile/', '/', $url);
+    if(IS_ECSHOP){
+        return $url;
+    }else{
+        return str_replace('mobile/', '/', $url);
+    }
 }
 
 /**
@@ -1766,7 +1770,25 @@ function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods',
  * @return type
  */
 function get_banner_path($img) {
-    $img = empty($img) ? C('no_picture') : $img;
+    if(IS_ECSHOP){
+        $img = empty($img) ? C('no_picture') : $img;
+    }else{
+        $img = empty($img) ? C('no_picture') : __ROOT__ . '/data/attached/brandbanner/' .$img;
+    }
+    return $img;
+}
+
+/**
+ * 获取品牌logo图片
+ * @param type $img
+ * @return type
+ */
+function get_brand_logo($img) {
+    if(IS_ECSHOP){
+        $img = empty($img) ? C('no_picture') : '../../data/brandlogo/' .$img;
+    }else{
+        $img = empty($img) ? C('no_picture') : __ROOT__ . '/data/attached/brandlogo/' .$img;
+    }
     return $img;
 }
 
