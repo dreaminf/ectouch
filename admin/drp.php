@@ -390,7 +390,7 @@ elseif ($_REQUEST['act'] == 'order_list_query')
     make_json_result($smarty->fetch('drp_order_list.htm'), '',array('filter' => $list['filter'], 'page_count' => $list['page_count']));
 }
 /*------------------------------------------------------ */
-//-- 销售
+//-- 分销分成
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'separate')
 {
@@ -406,7 +406,8 @@ elseif ($_REQUEST['act'] == 'separate')
     if (empty($row['shop_separate']))
     {
         // 获取订单中商品
-        $parent_id = $db->getOne("SELECT parent_id FROM " . $GLOBALS['ecs']->table('order_info') .  " where order_id = $oid");
+        $drp_id = $db->getOne("SELECT drp_id FROM " . $GLOBALS['ecs']->table('order_info') .  " where order_id = $oid");
+        $parent_id = $db->getOne("SELECT user_id FROM " . $GLOBALS['ecs']->table('drp_shop') .  " where id = $drp_id");
         $goods_list = $db->getAll("SELECT goods_id,touch_sale as goods_price,goods_number FROM " . $GLOBALS['ecs']->table('order_goods') .  " where order_id = $oid");
 
         $data1 = $data2 = $data3 = array(
@@ -632,12 +633,10 @@ function get_order_list($is_separate)
     $nowTime = gmtime();
     while ($row = $GLOBALS['db']->fetchRow($res))
     {
-        if($row['pay_time'] > 0 && ($row['pay_time']+$fxts) <= $nowTime){
-            $row['separate'] = 1;
-        }
+
         $row['add_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['add_time']);
         $row['user_name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$row['user_id']);
-        $row['parent_name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$row['parent_id']);
+        $row['parent_name'] = $GLOBALS['db']->getOne("select shop_name from ".$GLOBALS['ecs']->table('drp_shop') ." where id = ".$row['drp_id']);
         $arr[] = $row;
     }
     return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
