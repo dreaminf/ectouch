@@ -1,6 +1,4 @@
 {include file="pageheader"}
-<link rel="stylesheet" href="__PUBLIC__/colorbox/colorbox.css" />
-<script src="__PUBLIC__/colorbox/jquery.colorbox-min.js"></script>
 <div class="container-fluid" style="padding:0">
 	<div class="row" style="margin:0">
 	  <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">

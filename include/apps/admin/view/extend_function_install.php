@@ -69,9 +69,7 @@
                                     {/loop}
                                 </select>
                             {elseif $val['type'] == 'button'}
-                            <p><a href="{url('wechat/auto_reply', array('type'=>'news', 'no_list'=>1))}" class="btn btn-primary iframe">选择素材</a></p>
-                            <link rel="stylesheet" href="__PUBLIC__/colorbox/colorbox.css" />
-                            <script src="__PUBLIC__/colorbox/jquery.colorbox-min.js"></script>
+                            <p><a href="javascript:change();" class="btn btn-primary">选择素材</a></p>
                             <style>
                             .article{border:1px solid #ddd;padding:5px 5px 0 5px;}
                             .cover{height:160px; position:relative;margin-bottom:5px;overflow:hidden;}
@@ -83,9 +81,16 @@
                             <input type="hidden" name="media" value="media" />
                             <div class="content thumbnail borderno"></div>
                             <script type="text/javascript">
-                            $(function(){
-                            	$(".iframe").colorbox({iframe:true, width:"60%", height:"60%"});
-                            })
+                            function change(){
+                                layer.open({
+                                    type: 2, 
+                                    title: '选择素材', 
+                                    shadeClose: true, 
+                                    shade: 0.8, 
+                                    area: ['60%', '60%'], 
+                                    content: "{url('wechat/auto_reply', array('type'=>'news', 'no_list'=>1))}"
+                                });
+                            }
                             </script>                                
                             {else}
                             <input type="hidden" name="cfg_name[]" value="{$val['name']}" />
