@@ -12,7 +12,8 @@
             <div class="main">
                 <!--logo-->
                 <div class="logo">
-                    <img src="__TPL__/wall/img/logo.png"/>
+                    <img src="__TPL__/wall/img/logo.png" class="fl"/>
+                    <img src="__TPL__/wall/img/logo-title.png" class="fl logo-title"/>
                 </div>
                 
                 <!--main-->
@@ -60,7 +61,7 @@
                             <h3 class="fl">序号</h3>
                             <h4 class="fr">用户昵称</h4>
                         </div>
-                        <ul>
+                        <ul id="award">
                         {foreach from=$list item=list key=key}
                             <li>
                                 <div class="fl award-list-info">

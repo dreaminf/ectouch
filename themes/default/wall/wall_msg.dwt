@@ -12,8 +12,9 @@
 			<div class="main">
 				<!--logo-->
 				<div class="logo">
-					<img src="__TPL__/wall/img/logo.png"/>
-				</div>
+                    <img src="__TPL__/wall/img/logo.png" class="fl"/>
+                    <img src="__TPL__/wall/img/logo-title.png" class="fl logo-title"/>
+                </div>
 				
 				<!--main-->
 				<div class="content">

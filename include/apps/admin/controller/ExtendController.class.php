@@ -218,7 +218,8 @@ class ExtendController extends AdminController
         /*$list = $this->model->table('wechat_wall')->field('id, name, logo, background, starttime, endtime, prize, content, support, status')->select();*/
         $sql = "SELECT w.*, count(DISTINCT u.id) as user_count, count(m.id) as msg_count  FROM ".$this->model->pre."wechat_wall w LEFT JOIN ".$this->model->pre."wechat_wall_user u ON w.id = u.wall_id LEFT JOIN ".$this->model->pre."wechat_wall_msg m ON u.id = m.user_id ORDER BY w.id DESC";
         $list = $this->model->query($sql);
-        if($list){
+
+        if($list[0]['id']){
             foreach($list as $k=>$v){
                 $list[$k]['starttime'] = date('Y-m-d H:i', $v['starttime']);
                 $list[$k]['endtime'] = date('Y-m-d H:i', $v['endtime']);
@@ -233,6 +234,9 @@ class ExtendController extends AdminController
                     $list[$k]['status'] = '已结束';
                 }
             }
+        }
+        else{
+            $list = array();
         }
 
         $this->assign('list', $list);

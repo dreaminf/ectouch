@@ -12,7 +12,8 @@
             <div class="main">
                 <!--logo-->
                 <div class="logo">
-                    <img src="__TPL__/wall/img/logo.png"/>
+                    <img src="__TPL__/wall/img/logo.png" class="fl"/>
+                    <img src="__TPL__/wall/img/logo-title.png" class="fl logo-title"/>
                 </div>
 
                 <!--main-->
