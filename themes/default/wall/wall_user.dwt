@@ -12,8 +12,8 @@
             <div class="main">
                 <!--logo-->
                 <div class="logo">
-                    <img src="__TPL__/wall/img/logo.png" class="fl"/>
-                    <img src="__TPL__/wall/img/logo-title.png" class="fl logo-title"/>
+                    <img src="{$wall.logo}" class="fl"/>
+                    <span class="fl logo-title">{$wall.name}</span>
                 </div>
 
                 <!--main-->

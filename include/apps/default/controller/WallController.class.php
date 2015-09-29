@@ -85,8 +85,10 @@ class WallController extends CommonController {
                 $list[$k+1] = $v;
             }
         }
+        //参与人数
+        $total = $this->model->table('wechat_wall_user')->where(array('status'=>1))->count();
 
-
+        $this->assign('total', $total);
         $this->assign('prize_num', count($list));
         $this->assign('list', $list);
         $this->assign('wall', $wall);

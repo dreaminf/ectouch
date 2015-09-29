@@ -12,8 +12,8 @@
             <div class="main">
                 <!--logo-->
                 <div class="logo">
-                    <img src="__TPL__/wall/img/logo.png" class="fl"/>
-                    <img src="__TPL__/wall/img/logo-title.png" class="fl logo-title"/>
+                    <img src="{$wall.logo}" class="fl"/>
+                    <span class="fl logo-title">{$wall.name}</span>
                 </div>
                 
                 <!--main-->
@@ -23,7 +23,7 @@
                         <div class="award-content-header">
                             <img src="__TPL__/wall/img/choujiang.png" class="fl"/>
                             <h1 class="fl">现场抽奖</h1>
-                            <h2 class="fr">参加抽奖人数<span>12</span>人</h2>
+                            <h2 class="fr">参加抽奖人数<span>{$total}</span>人</h2>
                         </div>
                     
                         <div class="award-content-detail">
