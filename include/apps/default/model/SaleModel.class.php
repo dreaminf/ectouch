@@ -472,8 +472,9 @@ class SaleModel extends BaseModel {
             $res['count'] = count($user_list);
             $res['list'] = $user_list;
         }elseif($key == 'gz'){
-            $sql = "SELECT user_id FROM {pre}users  as u join {pre}wechat_user as w on u.user_id=w.ect_uid where u.user_id > 0 and w.subscribe = 1 and u.parent_id = " . $_SESSION['user_id'] . " GROUP BY user_id";
+           echo  $sql = "SELECT user_id FROM {pre}users  as u join {pre}wechat_user as w on u.user_id=w.ect_uid where u.user_id > 0 and w.subscribe = 1 and u.parent_id = " . $_SESSION['user_id'] . " GROUP BY user_id";
             $user_list =  M()->query($sql);
+            dump($user_list);
             $res['count'] = count($user_list);
             $res['list'] = $user_list;
         }elseif($key == 'fk'){
