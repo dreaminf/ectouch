@@ -1516,9 +1516,9 @@ function get_products_info($goods_id, $spec_goods_attr_id)
  * @return int
  */
 function get_goods_collect($goods_id = 0) {
-    $touch = getInstance();
-    $sql = "SELECT count(*) as count FROM {pre}collect_goods WHERE goods_id = '" . $goods_id . "'";
-    $count = $touch->model->queryRow($sql);
+    $global = getInstance();
+    $sql = "SELECT count(*) as count FROM ".$global->ecs->table('collect_goods')." WHERE goods_id = '" . $goods_id . "'";
+    $count = $global->db->getRow($sql);
     return $count['count'];
 }
 
@@ -1531,7 +1531,7 @@ function get_goods_collect($goods_id = 0) {
  */
 function get_goods_sales($goods_id)
 {
-    $touch = getInstance();
+    $global = getInstance();
     /* 统计时间段 */
     $period = C('top10_time');
     $ext = '';
@@ -1552,6 +1552,6 @@ function get_goods_sales($goods_id)
         " AND o . shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)) .
         " AND o . pay_status " . db_create_in(array(PS_PAYED, PS_PAYING)) .
         " AND g . goods_id = '$goods_id'";
-    $result = $touch->model->queryRow($sql);
+    $result = $global->model->queryRow($sql);
     return $result['count'];
 }
