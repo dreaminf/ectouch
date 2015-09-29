@@ -476,11 +476,7 @@ class SaleModel extends BaseModel {
             $user_list =  M()->query($sql);
             if($user_list){
                 foreach($user_list as $key=>$val){
-                    if(M()->table('order_info')->where('user_id='.$val['user_id'])->count()){
-                        unset($user_list[$key]);
-                    }else{
-                        $user_list[$key] = $this->get_drp($val['user_id']);
-                    }
+                    $user_list[$key] = $this->get_drp($val['user_id']);
                 }
             }
             $res['count'] = count($user_list);
