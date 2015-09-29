@@ -53,6 +53,7 @@ $_LANG['store'] = '店铺二维码';
 $_LANG['user_list_wfk'] = '下单未付款会员列表';
 $_LANG['user_list_yfk'] = '下单已付款会员列表';
 $_LANG['user_list_ywc'] = '订单完成会员列表';
+$_LANG['user_list_gz'] = '关注公众号会员';
 $_LANG['user_list_fk'] = '访客';
 $_LANG['my_shop_info'] = '我的分店';
 $_LANG['my_shop_list1'] = '我的分店';
