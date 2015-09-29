@@ -120,7 +120,7 @@ class Welcome extends IndexController {
             $goods[$key]['thumb'] = get_image_path($vo['goods_id'], $vo['goods_thumb'], true);
             $goods[$key]['goods_img'] = get_image_path($vo['goods_id'], $vo['goods_img']);
             $goods[$key]['url'] = url('goods/index', array('id' => $vo['goods_id']));
-            $goods[$key]['sales_count'] = get_sales_count($vo['goods_id']);
+            $goods[$key]['sales_count'] = 0;//get_sales_count($vo['goods_id']);
             $goods[$key]['sc'] = get_goods_collect($vo['goods_id']);
             $goods[$key]['mysc'] = 0;
             // 检查是否已经存在于用户的收藏夹
@@ -131,7 +131,7 @@ class Welcome extends IndexController {
                 $rs = $this->model->table('collect_goods')->where($condition)->count();
                 $goods[$key]['mysc'] = $rs;
             }
-            $goods[$key]['promotion'] = get_promotion_show($vo['goods_id']);
+            $goods[$key]['promotion'] = 0;//get_promotion_show($vo['goods_id']);
             $type_goods[$type][] = $goods[$key];
         }
         return $type_goods[$type];
@@ -203,9 +203,9 @@ class Welcome extends IndexController {
                     'cat_id' => $cat_recommend_data['cat_id'], 
                     'cat_name' => $cat_recommend_data['cat_name'],
                     'url' => url('category/index', array('id' => $cat_recommend_data['cat_id'])), 
-                    'child_id' => get_parent_id_tree($cat_recommend_data['cat_id']), 
+                    'child_id' => 0,//get_parent_id_tree($cat_recommend_data['cat_id']), 
                     'goods_list' => assign_cat_goods($cat_recommend_data['cat_id'],3),
-                    'cat_image' => get_banner_path(get_cat_image($cat_recommend_data['cat_id'])),
+                    'cat_image' => ''// get_banner_path(get_cat_image($cat_recommend_data['cat_id'])),
                     
                 );
             }
