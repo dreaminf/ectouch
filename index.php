@@ -13,6 +13,7 @@
 
 if(version_compare(PHP_VERSION,'5.2.4','<')) die('require PHP > 5.2.4 !');
 defined('APP_DEBUG') or define('APP_DEBUG', true);
+defined('IN_ECS') or define('IN_ECS', true);
 defined('APPNAME') or define('APPNAME', 'ECTouch');
 defined('VERSION') or define('VERSION', '2.0-dev');
 defined('RELEASE') or define('RELEASE', '20150918');
@@ -21,8 +22,6 @@ define('NOW_TIME', $_SERVER['REQUEST_TIME']);
 define('REQUEST_METHOD', $_SERVER['REQUEST_METHOD']);
 define('IS_GET', REQUEST_METHOD == 'GET' ? true : false);
 define('IS_POST', REQUEST_METHOD == 'POST' ? true : false);
-define('IS_PUT', REQUEST_METHOD == 'PUT' ? true : false);
-define('IS_DELETE', REQUEST_METHOD == 'DELETE' ? true : false);
 define('IS_AJAX', ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') || !empty($_POST['ajax']) || !empty($_GET['ajax'])) ? true : false);
 define('ROOT_PATH', str_replace('\\', '/', realpath(dirname(__FILE__) . '/')) . '/');
 $_SERVER['CI_ENV'] = APP_DEBUG ? 'development':'production';
@@ -89,7 +88,7 @@ switch (ENVIRONMENT)
  * Include the path if the folder is not in the same directory
  * as this file.
  */
-	$system_path = 'vendor/system';
+	$system_path = 'vendor';
 
 /*
  *---------------------------------------------------------------
