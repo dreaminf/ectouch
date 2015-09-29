@@ -47,9 +47,9 @@ class MY_Loader extends CI_Loader
      */
     private function init()
     {
-        $ecsdb = dirname(ROOT_PATH) . '/data/config.php';
-        if(file_exists($ecsdb)){
-            require($ecsdb);
+        $ecs_conf = dirname(ROOT_PATH) . '/data/config.php';
+        if(file_exists($ecs_conf)){
+            require($ecs_conf);
         }else{
             die('Can\'t connect to the database.');
         }

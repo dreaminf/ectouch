@@ -187,13 +187,13 @@ class BaseController extends MY_Controller
 /**
  * 前端控制器基类 抽象类
  */
-abstract class Controller extends BaseController
+abstract class IndexController extends BaseController
 {
     public function __construct()
     {
         parent::__construct();
         $this->load_lang();
-		$this->load->helper('lib');
+        $this->load->helper('lib');
         $this->set_theme(C('template'));
     }
 
