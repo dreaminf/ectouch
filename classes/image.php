@@ -1,16 +1,14 @@
 <?php
 
 /**
- * 后台对上传文件的处理类(实现图片上传，图片缩小， 增加水印)
- * 需要定义以下常量
- *  define('ERR_INVALID_IMAGE',             1);
- *  define('ERR_NO_GD',                     2);
- *  define('ERR_IMAGE_NOT_EXISTS',          3);
- *  define('ERR_DIRECTORY_READONLY',        4);
- *  define('ERR_UPLOAD_FAILURE',            5);
- *  define('ERR_INVALID_PARAM',             6);
- *  define('ERR_INVALID_IMAGE_TYPE',        7);
- *  define('ROOT_PATH',                     '网站根目录')
+ * ECTouch E-Commerce Project
+ * ============================================================================
+ * Copyright (c) 2014-2015 http://ectouch.cn All rights reserved.
+ * ----------------------------------------------------------------------------
+ * This is NOT a freeware, use is subject to license terms
+ * ----------------------------------------------------------------------------
+ * Licensed ( http://www.ectouch.cn/license )
+ * ----------------------------------------------------------------------------
  */
 
 class image

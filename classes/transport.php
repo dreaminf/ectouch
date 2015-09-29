@@ -1,8 +1,14 @@
 <?php
 
 /**
- * 服务器之间数据传输器。采集到的信息包括HTTP头和HTTP体，
- * 并以一维数组的形式返回，如：array('header' => 'bar', 'body' => 'foo')。
+ * ECTouch E-Commerce Project
+ * ============================================================================
+ * Copyright (c) 2014-2015 http://ectouch.cn All rights reserved.
+ * ----------------------------------------------------------------------------
+ * This is NOT a freeware, use is subject to license terms
+ * ----------------------------------------------------------------------------
+ * Licensed ( http://www.ectouch.cn/license )
+ * ----------------------------------------------------------------------------
  */
 
 class transport
