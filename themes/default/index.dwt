@@ -173,12 +173,12 @@
     .share-div{position:fixed; left: 0; top:0; bottom:0; right:0; background:rgba(0,0,0,0.8); z-index: 1000; display: none;}
     .share-div.active{display:inherit;}
     .share-div{text-align: center;}
-    .share-div img{width:50%;height: auto;margin-top: 8rem;}
+    .share-div img{position: absolute; right: 0.2rem; top: 0.4rem;}
 </style>
 
 
 <div class="share-div">
-    <Img src="{$drp_info.mobile_qr}"></Img>
+    <Img src="__TPL__/sale/images/share-index.png"></Img>
 </div>
 
 <div class="ect-index-header">
