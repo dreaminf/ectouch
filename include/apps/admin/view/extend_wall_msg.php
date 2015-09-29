@@ -22,7 +22,7 @@
                         <td>{$l['status']}</td>
                         <td>
                             {$l['handler']}
-                            <a class="btn btn-primary" href="javascript:if(confirm('确定要删除吗？')){location.href='{url('wall_data_del', array('wall_id'=>$wall_id, 'user_id'=>$user_id, 'msg_id'=>$l['id']))}'}">删除</a>
+                            <a class="btn btn-default" href="javascript:if(confirm('确定要删除吗？')){location.href='{url('wall_data_del', array('wall_id'=>$wall_id, 'user_id'=>$user_id, 'msg_id'=>$l['id']))}'}">删除</a>
                         </td>
                     </tr>
                     {/loop}

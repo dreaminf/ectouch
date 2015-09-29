@@ -14,6 +14,7 @@
                         <th class="text-center">昵称</th>
                         <th class="text-center">性别</th>
                         <th class="text-center">添加时间</th>
+                        <th class="text-center">未审核消息</th>
                         <th class="text-center">状态</th>
                         <th class="text-center">操作</th>
                     </tr>
@@ -22,6 +23,7 @@
                         <td>{$l['nickname']}</td>
                         <td>{$l['sex']}</td>
                         <td>{$l['addtime']}</td>
+                        <td>{$l['nocheck']}</td>
                         <td>{$l['status']}</td>
                         <td>
                             {$l['handler']}

@@ -28,7 +28,7 @@
                         <img src="__TPL__/wall/img/ava1.png"/>
                         {/if}
                     </div>
-                    <div class="fl user-info">
+                    <div class="user-info">
                         <div class="user-name" id="name">
                             <input type="text" placeholder="姓名" name="nickname" value="{$user.nickname}" />
                             <i class="iconfont fr">&#xe601;</i>

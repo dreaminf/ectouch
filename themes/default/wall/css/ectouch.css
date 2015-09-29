@@ -64,9 +64,11 @@ header{
 		line-height: 5rem;
 		background-color: #38af82;
 		color: #fff;
+		position: relative;
 }
 header i{
-	padding-left:1rem;
+	position: absolute;
+	left:1rem;
 	color: #fff;
 }
 header h1{
@@ -83,20 +85,20 @@ header h1{
 	border-bottom: 1px solid #d1d1d1;
 }
 .user-pic{
-	max-width: 12rem;
-	max-height: 12rem;
-	width: 25%;
-	padding:1rem;
+	max-width: 10rem;
+	max-height: 10rem;
+	overflow: hidden;
+	padding: 1rem;
 }
 .user-pic img{
 	width: 100%;
 	vertical-align: middle;
 }
 .user-info{
-	width: 75%;
+	margin-left: 10.5rem;
 }
 .user-name{
-	padding: 1.5rem 0;
+	padding: 1rem 0;
 	position: relative;
 	padding-right: 1.5rem;
 	overflow: hidden;
@@ -306,7 +308,6 @@ header h1{
 }
 
 /*media*/
-
 @media all and (max-width: 340px) {
   .other-ava ul li a{
 		display: block;
