@@ -23,6 +23,8 @@ class BaseController extends MY_Controller
     public function __construct(){
         parent::__construct();
         $this->load->start();
+        $params = $this->load->dbconf;
+        $this->load->library('model', $params);
     }
 
     protected function is_cached($filename, $cache_id = ''){
@@ -192,28 +194,11 @@ abstract class IndexController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->load_lang();
-        $this->load->helper('lib');
         $this->set_theme(C('template'));
     }
 
     private function set_theme($theme = 'default'){
         define('__TPL__', base_url('views/' . $theme));
-    }
-
-    /**
-     * 加载控制器语言包
-     */
-    protected function load_lang(){
-        // 载入控制器语言文件
-        $controller_lang = ROOT_PATH . 'language/' . C('lang') . '/'. CONTROLLER_NAME .'.php';
-        if(file_exists($controller_lang)){
-            L(require($controller_lang));
-        }
-        $flow_lang = ROOT_PATH . 'language/' . C('lang') . '/shopping_flow.php';
-        if(file_exists($flow_lang)){
-            L(require($flow_lang));
-        }
     }
 }
 
