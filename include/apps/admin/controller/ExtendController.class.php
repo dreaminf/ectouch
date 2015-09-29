@@ -281,7 +281,17 @@ class ExtendController extends AdminController
 
             //奖项
             if($prize){
-                $data['prize'] = serialize($prize);
+                // 奖品处理
+                if (is_array($prize['prize_level']) && is_array($prize['prize_count']) && is_array($prize['prize_name'])) {
+                    foreach ($prize['prize_level'] as $key => $val) {
+                        $prize_arr[] = array(
+                            'prize_level' => $val,
+                            'prize_name' => $prize['prize_name'][$key],
+                            'prize_count' => $prize['prize_count'][$key]
+                        );
+                    }
+                }
+                $data['prize'] = serialize($prize_arr);
             }
             //更新
             if($id){
@@ -300,18 +310,7 @@ class ExtendController extends AdminController
             if($wall){
                 $wall['starttime'] = date('Y-m-d H:i', $wall['starttime']);
                 $wall['endtime'] = date('Y-m-d H:i', $wall['endtime']);
-                $prize = unserialize($wall['prize']);
-
-                // 奖品处理
-                if (is_array($prize['prize_level']) && is_array($prize['prize_count']) && is_array($prize['prize_name'])) {
-                    foreach ($prize['prize_level'] as $key => $val) {
-                        $wall['prize_arr'][] = array(
-                            'prize_level' => $val,
-                            'prize_name' => $prize['prize_name'][$key],
-                            'prize_count' => $prize['prize_count'][$key]
-                        );
-                    }
-                }
+                $wall['prize_arr'] = unserialize($wall['prize']);
             }
             $this->assign('wall', $wall);
         }
