@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MY_Loader extends CI_Loader
 {
+    public $dbconf = array();
     public $ecs = null;
     public $db = null;
     public $err = null;
@@ -22,10 +23,6 @@ class MY_Loader extends CI_Loader
         $this->init_view();
         $this->init_user();
         $this->init_gzip();
-    }
-    
-    public function db(){
-        return $this->db;
     }
 
     /**
@@ -59,11 +56,27 @@ class MY_Loader extends CI_Loader
         $helper_list = array('time', 'base', 'common', 'main', 'insert', 'goods', 'article');
         $this->helper($helper_list);
 
-        $db_host = substr($db_host, 0, strpos($db_host, ':'));
+        $db_hosts = explode(':', $db_host);
+        $db_host = $db_hosts[0];
+        $db_port = isset($db_hosts[1]) ? $db_hosts[1]:'3306';
+
         $this->ecs = new ecshop($db_name, $prefix);
         $this->db = new mysql($db_host, $db_user, $db_pass, $db_name);
         $this->db->set_disable_cache_tables(array($this->ecs->table('sessions'), $this->ecs->table('sessions_data'), $this->ecs->table('cart')));
         $this->err = new error('message.dwt');
+
+        $this->dbconf = array(
+            'DB_TYPE' => 'mysql',
+            'DB_HOST' => $db_host,
+            'DB_NAME' => $db_name,
+            'DB_USER' => $db_user,
+            'DB_PWD' => $db_pass,
+            'DB_PORT' => $db_port,
+            'DB_PREFIX' => $prefix,
+            'DB_CHARSET' => 'utf8',
+            'DB_CACHE_ON' => true,
+            'DB_CACHE_TIME' => '1800'
+        );
 
         C(load_config());
         L(require(ROOT_PATH . 'language/' . C('lang') . '/common.php'));
