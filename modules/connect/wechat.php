@@ -1,15 +1,13 @@
 <?php
 
 /**
- * ECTouch Open Source Project
+ * ECTouch E-Commerce Project
  * ============================================================================
- * Copyright (c) 2012-2014 http://ectouch.cn All rights reserved.
+ * Copyright (c) 2014-2015 http://ectouch.cn All rights reserved.
  * ----------------------------------------------------------------------------
- * 文件名称：sina.php
+ * This is NOT a freeware, use is subject to license terms
  * ----------------------------------------------------------------------------
- * 功能描述：新浪微博登录插件
- * ----------------------------------------------------------------------------
- * Licensed ( http://www.ectouch.cn/docs/license.txt )
+ * Licensed ( http://www.ectouch.cn/license )
  * ----------------------------------------------------------------------------
  */
 

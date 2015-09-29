@@ -1,6 +1,6 @@
 <?php
 
-class Ucenter implements IntegrateInterface
+class ucenter
 {
     /**
      * 用户登录

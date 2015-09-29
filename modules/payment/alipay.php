@@ -44,7 +44,7 @@ if (isset($set_modules) && $set_modules == TRUE){
     return;
 }
 
-class Alipay implements PaymentInterface
+class alipay
 {
     /**
      * 生成支付代码

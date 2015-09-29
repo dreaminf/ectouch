@@ -1,6 +1,6 @@
 <?php
 
-class passport implements IntegrateInterface
+class passport
 {
     /* 整合对象使用的数据库主机 */
     public $db_host = '';

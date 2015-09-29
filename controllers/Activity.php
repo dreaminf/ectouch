@@ -1,19 +1,15 @@
 <?php
 
 /**
- * ECTouch Open Source Project
+ * ECTouch E-Commerce Project
  * ============================================================================
- * Copyright (c) 2012-2014 http://ectouch.cn All rights reserved.
+ * Copyright (c) 2014-2015 http://ectouch.cn All rights reserved.
  * ----------------------------------------------------------------------------
- * 文件名称：ActivityControoller.class.php
+ * This is NOT a freeware, use is subject to license terms
  * ----------------------------------------------------------------------------
- * 功能描述：优惠活动控制器
- * ----------------------------------------------------------------------------
- * Licensed ( http://www.ectouch.cn/docs/license.txt )
+ * Licensed ( http://www.ectouch.cn/license )
  * ----------------------------------------------------------------------------
  */
-/* 访问控制 */
-defined('IN_ECTOUCH') or die('Deny Access');
 
 class Activity extends IndexController {
 
