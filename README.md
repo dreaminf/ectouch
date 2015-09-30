@@ -1,0 +1,1 @@
+ECTouch=======ECTouch（ECTouch移动商城系统）是一个基于 CodeIgniter 框架开发的 PHP 移动商城系统，她轻量小巧、简单易用、强大高效。###官方网站http://www.ectouch.cn

@@ -1,12 +1,14 @@
 .DS_Store
 
-caches/cache/*
-!caches/cache/index.html
-!caches/cache/.htaccess
+data/install.lock
 
-caches/logs/*
-!caches/logs/index.html
-!caches/logs/.htaccess
+data/caches/cache/*
+!data/caches/cache/index.html
+!data/caches/cache/.htaccess
+
+data/caches/logs/*
+!data/caches/logs/index.html
+!data/caches/logs/.htaccess
 
 # IDE Files
 #-------------------------

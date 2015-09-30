@@ -1,49 +1,7 @@
 <?php
-
-/**
- * ECTouch E-Commerce Project
- * ============================================================================
- * Copyright (c) 2014-2015 http://ectouch.cn All rights reserved.
- * ----------------------------------------------------------------------------
- * This is NOT a freeware, use is subject to license terms
- * ----------------------------------------------------------------------------
- * Licensed ( http://www.ectouch.cn/license )
- * ----------------------------------------------------------------------------
- */
-
 if(version_compare(PHP_VERSION,'5.2.4','<')) die('require PHP > 5.2.4 !');
-defined('APP_DEBUG') or define('APP_DEBUG', true);
-defined('IN_ECS') or define('IN_ECS', true);
-defined('APPNAME') or define('APPNAME', 'ECTouch');
-defined('VERSION') or define('VERSION', '2.0-dev');
-defined('RELEASE') or define('RELEASE', '20150918');
-defined('CHARSET') or define('CHARSET', 'utf-8');
-define('NOW_TIME', $_SERVER['REQUEST_TIME']);
-define('REQUEST_METHOD', $_SERVER['REQUEST_METHOD']);
-define('IS_GET', REQUEST_METHOD == 'GET' ? true : false);
-define('IS_POST', REQUEST_METHOD == 'POST' ? true : false);
-define('IS_AJAX', ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') || !empty($_POST['ajax']) || !empty($_GET['ajax'])) ? true : false);
-define('ROOT_PATH', str_replace('\\', '/', realpath(dirname(__FILE__) . '/')) . '/');
-$_SERVER['CI_ENV'] = APP_DEBUG ? 'development':'production';
-
-/*
- *---------------------------------------------------------------
- * APPLICATION ENVIRONMENT
- *---------------------------------------------------------------
- *
- * You can load different configurations depending on your
- * current environment. Setting the environment also influences
- * things like logging and error reporting.
- *
- * This can be set to anything, but default usage is:
- *
- *     development
- *     testing
- *     production
- *
- * NOTE: If you change these, also change the error_reporting() code below
- */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+header('Content-Type: text/html; charset=utf-8');
+define('ENVIRONMENT', 'development');
 
 /*
  *---------------------------------------------------------------
@@ -88,7 +46,7 @@ switch (ENVIRONMENT)
  * Include the path if the folder is not in the same directory
  * as this file.
  */
-	$system_path = 'vendor';
+	$system_path = 'include/system';
 
 /*
  *---------------------------------------------------------------
@@ -103,7 +61,7 @@ switch (ENVIRONMENT)
  *
  * NO TRAILING SLASH!
  */
-	$application_folder = './';
+	$application_folder = 'include';
 
 /*
  *---------------------------------------------------------------
@@ -118,7 +76,7 @@ switch (ENVIRONMENT)
  *
  * NO TRAILING SLASH!
  */
-	$view_folder = '';
+	$view_folder = 'themes';
 
 
 /*

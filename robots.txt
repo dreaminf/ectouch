@@ -1,14 +1,13 @@
-User-agent: *
+#
+# robots.txt for ECTouch
+#
 
-Disallow: /caches/
-Disallow: /classes/
-Disallow: /config/
-Disallow: /controllers/
-Disallow: /core/
-Disallow: /helpers/
-Disallow: /language/
-Disallow: /libraries/
-Disallow: /modules/
-Disallow: /notify/
-Disallow: /vendor/
-Disallow: /views/
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /data
+Disallow: /include
+Disallow: /plugins
+Disallow: /statics
+Disallow: /themes
