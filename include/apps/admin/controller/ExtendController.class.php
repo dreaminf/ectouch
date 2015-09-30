@@ -353,9 +353,8 @@ class ExtendController extends AdminController
         $this->assign('page', $this->pageShow($total));
 
         //$list = $this->model->table('wechat_wall_user')->field('id, nickname, sex, headimg, status, addtime')->where(array('wall_id'=>$id))->order('addtime desc, id desc')->limit($offset)->select();
-        $sql = "SELECT u.id, u.nickname, u.sex, u.headimg, u.status, u.addtime, count(m.id) as nocheck FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_wall_msg m ON u.id = m.user_id WHERE m.status = 0 ORDER BY u.addtime DESC limit $offset";
+        $sql = "SELECT id, nickname, sex, headimg, status, addtime FROM ".$this->model->pre."wechat_wall_user ORDER BY u.addtime DESC limit $offset";
         $list = $this->model->query($sql);
-        dump($list);
         if($list[0]['id']){
             foreach($list as $k=>$v){
                 if($v['sex'] == 0){
@@ -375,6 +374,7 @@ class ExtendController extends AdminController
                     $list[$k]['status'] = '未审核';
                     $list[$k]['handler'] = '<a class="btn btn-primary" href="'.url('wall_check', array('wall_id'=>$id, 'user_id'=>$v['id'])).'">审核</a>';
                 }
+                $list[$k]['nocheck'] = $this->model->table('wechat_wall_msg')->where(array('status'=>0))->count();
                 $list[$k]['addtime'] = date('Y-m-d H:i');
             }
         }
