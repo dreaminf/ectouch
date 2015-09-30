@@ -38,19 +38,19 @@
                                 </li>
                                 <li>
                                     <img src="__TPL__/wall/img/wall_1.png"/>
-                                    <p>阳光小猫</p>
+                                    <p class="award-content-name">阳光小猫</p>
                                 </li>
                                 <li>
                                     <img src="__TPL__/wall/img/wall_2.png"/>
-                                    <p>云彩</p>
+                                    <p class="award-content-name">云彩</p>
                                 </li>
                                 <li>
                                     <img src="__TPL__/wall/img/wall_3.png"/>
-                                    <p>天使</p>
+                                    <p class="award-content-name">天使</p>
                                 </li>
                                 <li>
                                     <img src="__TPL__/wall/img/wall_4.png"/>
-                                    <p>iori</p>
+                                    <p class="award-content-name">iori</p>
                                 </li>
                             </ul>
                             <!--<div class="award-detail-num">
