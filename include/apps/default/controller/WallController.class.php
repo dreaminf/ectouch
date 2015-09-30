@@ -234,7 +234,7 @@ class WallController extends CommonController {
 
 
         $this->assign('list', $list);
-        $this->assign('msg_count', count($list) - 1);
+        $this->assign('msg_count', count($list));
         $this->assign('user_num', $user_num);
         $this->assign('user', $wechat_user);
         $this->assign('wall_id', $wall_id);

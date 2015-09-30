@@ -252,6 +252,7 @@ input:focus{
 	margin: 0 auto;
 	padding: 65px 0;
 	text-align: center;
+	position: relative;
 }
 .award-detail-pic,.award-detail-pic li{
 	width: 100%;
@@ -300,6 +301,7 @@ input:focus{
 	line-height: 40px;
 }
 .award-content-detail input[type=button]{
+	position: absolute;
 	text-align:center;
 	background-color: #39B4E9;
 	border: none;
@@ -308,6 +310,9 @@ input:focus{
 	height: 40px;
 	color: #fff;
 	font-size: 20px;
+	top:430px;
+	display: block;
+	left:353.5px;
 }
 .award-list{
 	position: relative;

@@ -79,6 +79,8 @@
             var user = {$user.id};
             var wall_id = {$wall_id};
             function refresh(){
+                /*var result = {"code":0,"data":[{"content":"\u4f60\u597d34","addtime":"2015-09-30 09:21:04","nickname":"null","headimg":"http:\/\/wx.qlogo.cn\/mmopen\/wzWqpFxLPvEIkdqBtfTotOoevwbo2CbPAxjeBszIiaNQO80qN9FvWpc15mqO6kP7n2tVBOiaib5wg8ibicpeicTYPcqJs3cKAUCPnW\/0","id":"4","status":"0"}, {"content":"\u4f60\u597dfd","addtime":"2015-09-30 09:21:25","nickname":"null","headimg":"http:\/\/wx.qlogo.cn\/mmopen\/wzWqpFxLPvEIkdqBtfTotOoevwbo2CbPAxjeBszIiaNQO80qN9FvWpc15mqO6kP7n2tVBOiaib5wg8ibicpeicTYPcqJs3cKAUCPnW\/0","id":"4","status":"0"}]}*/
+
                 $.get("{:url('get_wall_msg')}", {start:start, num:num, wall_id:wall_id}, function(result){
                     if(result.code == 0 && result.data.length > 0){
                         var html = '';

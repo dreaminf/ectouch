@@ -36,6 +36,22 @@
                                     <img src="__TPL__/wall/img/wall_1.png"/>
                                     <p class="award-content-name">一笑而过</p>
                                 </li>
+                                <li>
+                                    <img src="__TPL__/wall/img/wall_1.png"/>
+                                    <p>阳光小猫</p>
+                                </li>
+                                <li>
+                                    <img src="__TPL__/wall/img/wall_2.png"/>
+                                    <p>云彩</p>
+                                </li>
+                                <li>
+                                    <img src="__TPL__/wall/img/wall_3.png"/>
+                                    <p>天使</p>
+                                </li>
+                                <li>
+                                    <img src="__TPL__/wall/img/wall_4.png"/>
+                                    <p>iori</p>
+                                </li>
                             </ul>
                             <!--<div class="award-detail-num">
                                 <span>抽取</span>
@@ -55,6 +71,7 @@
                                 <span>人</span> 
                             </div>-->
                             <input type="button" name="start" id="start" value="开始抽奖" />
+                            <input type="button" name="stop" id="stop" value="停止抽奖" style="display:none;" />
                         </div>
                     </div>
                     
@@ -122,7 +139,26 @@
         <script type="text/javascript">
         $(function(){
             //开始抽奖
+            var len = $(".award-detail-pic li img").length > 0 ? $(".award-detail-pic li img").length - 1 : 0, 
+                i = 1, 
+                time;
             $("#start").click(function(){
+                time = setInterval(function(){
+                    if(i > len){
+                        i = 0;
+                    }
+                    $(".award-detail-pic li").eq(i).addClass("active").siblings("li").removeClass("active");
+                    i++;
+                }, 60);
+                $("#stop").css("display", "inline-block");
+                $("#start").css("display", "none");
+                return false;
+            });
+
+            $("#stop").click(function(){
+                clearInterval(time);
+                $("#stop").css("display", "none");
+                $("#start").css("display", "inline-block");
                 $.post("{:url('start_draw', array('wall_id'=>$this->_var['wall']['id']))}", '', function(result){
                     if(result.errCode == 0){
                         //中奖
