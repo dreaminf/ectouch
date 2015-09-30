@@ -374,7 +374,7 @@ class ExtendController extends AdminController
                     $list[$k]['status'] = '未审核';
                     $list[$k]['handler'] = '<a class="btn btn-primary" href="'.url('wall_check', array('wall_id'=>$id, 'user_id'=>$v['id'])).'">审核</a>';
                 }
-                $list[$k]['nocheck'] = $this->model->table('wechat_wall_msg')->where(array('status'=>0))->count();
+                $list[$k]['nocheck'] = $this->model->table('wechat_wall_msg')->where(array('status'=>0, 'user_id'=>$v['id']))->count();
                 $list[$k]['addtime'] = date('Y-m-d H:i');
             }
         }
