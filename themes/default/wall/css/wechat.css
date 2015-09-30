@@ -191,7 +191,7 @@ input:focus{
 	border-radius: 50%;
 }
 .msg-list-info{
-	padding-top: 23px;
+	padding-top: 15px;
 	padding-bottom: 10px;
 }
 .msg-list-info .msg-name{
@@ -258,6 +258,7 @@ input:focus{
 	height: 260px;
 	display: block;
 	margin: 0 auto;
+	border-radius: 50%;
 }
 .award-content-name{
 	padding-top:25px;
@@ -379,6 +380,7 @@ input:focus{
 	margin-top: 10px;
 	width: 60px;
 	height: 60px;
+	border-radius: 50%;
 }
 .award-restart{
 	position: absolute;

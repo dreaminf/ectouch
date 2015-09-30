@@ -279,3 +279,4 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_wall_user` (
 
 -- 增加字段
 ALTER TABLE `ecs_wechat_prize` ADD COLUMN `wall_id` int(11) UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE `ecs_wechat_wall` ADD COLUMN `qrcode` varchar(255) UNSIGNED NOT NULL;
