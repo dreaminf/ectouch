@@ -247,6 +247,7 @@ class WallController extends CommonController {
                 if(!$list){
                     $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE m.status = 1 ORDER BY addtime ASC LIMIT ".$start.", ".$num;
                     $data = $this->model->query($sql);
+                    echo $this->model->getSql();
                     $Eccache->set($cache_key, $data, 10);
                     $list = $Eccache->get($cache_key);
                 }
