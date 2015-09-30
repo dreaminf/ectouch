@@ -355,6 +355,7 @@ class ExtendController extends AdminController
         //$list = $this->model->table('wechat_wall_user')->field('id, nickname, sex, headimg, status, addtime')->where(array('wall_id'=>$id))->order('addtime desc, id desc')->limit($offset)->select();
         $sql = "SELECT u.id, u.nickname, u.sex, u.headimg, u.status, u.addtime, count(m.id) as nocheck FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_wall_msg m ON u.id = m.user_id WHERE m.status = 0 ORDER BY u.addtime DESC limit $offset";
         $list = $this->model->query($sql);
+        dump($list);
         if($list[0]['id']){
             foreach($list as $k=>$v){
                 if($v['sex'] == 0){
