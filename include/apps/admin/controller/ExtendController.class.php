@@ -353,7 +353,7 @@ class ExtendController extends AdminController
         $this->assign('page', $this->pageShow($total));
 
         //$list = $this->model->table('wechat_wall_user')->field('id, nickname, sex, headimg, status, addtime')->where(array('wall_id'=>$id))->order('addtime desc, id desc')->limit($offset)->select();
-        $sql = "SELECT id, nickname, sex, headimg, status, addtime FROM ".$this->model->pre."wechat_wall_user ORDER BY u.addtime DESC limit $offset";
+        $sql = "SELECT id, nickname, sex, headimg, status, addtime FROM ".$this->model->pre."wechat_wall_user ORDER BY addtime DESC limit $offset";
         $list = $this->model->query($sql);
         if($list[0]['id']){
             foreach($list as $k=>$v){
