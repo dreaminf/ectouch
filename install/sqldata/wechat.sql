@@ -232,6 +232,10 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_user_group` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+--
+-- 表的结构 `ecs_wechat_wall`
+--
+
 CREATE TABLE IF NOT EXISTS `ecs_wechat_wall` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL COMMENT '活动名称',
@@ -279,4 +283,4 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_wall_user` (
 
 -- 增加字段
 ALTER TABLE `ecs_wechat_prize` ADD COLUMN `wall_id` int(11) UNSIGNED NOT NULL DEFAULT 0;
-ALTER TABLE `ecs_wechat_wall` ADD COLUMN `qrcode` varchar(255) UNSIGNED NOT NULL;
+ALTER TABLE `ecs_wechat_wall` ADD COLUMN `qrcode` varchar(255)  NOT NULL;
