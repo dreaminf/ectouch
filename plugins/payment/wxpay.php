@@ -94,13 +94,14 @@ class wxpay
         // 配置参数
         $this->payment = $payment;
         // 网页授权获取用户openid
-        if (! isset($_SESSION['openid']) || empty($_SESSION['openid'])) {
+        $openid = empty($_SESSION['openid']) ? $_SESSION['wechat_user']['openid'] : $_SESSION['openid'];
+        if (!isset($openid) || empty($openid)) {
             return false;
         }
         
         // 设置必填参数
         // 根目录url
-        $this->setParameter("openid", "$_SESSION[openid]"); // 商品描述
+        $this->setParameter("openid", "$openid"); // 商品描述
         $this->setParameter("body", $order['order_sn']); // 商品描述
         $this->setParameter("out_trade_no", $order['order_sn'] . 'O' . $order['log_id']); // 商户订单号
         $this->setParameter("total_fee", $order['order_amount'] * 100); // 总金额
