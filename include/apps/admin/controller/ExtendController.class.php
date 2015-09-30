@@ -444,7 +444,7 @@ class ExtendController extends AdminController
         $total = $this->model->table('wechat_wall_msg')->where(array('user_id'=>$user_id))->count();
         $this->assign('page', $this->pageShow($total));
 
-        $list = $this->model->table('wechat_wall_msg')->field('id, content, addtime, checktime, status')->where(array('user_id'=>$user_id))->order('addtime desc, checktime desc')->limit($offset)->select();
+        $list = $this->model->table('wechat_wall_msg')->field('id, content, addtime, checktime, status')->where(array('user_id'=>$user_id))->order('addtime asc, checktime asc')->limit($offset)->select();
         if($list){
             foreach($list as $k=>$v){
                 if($v['status'] == 1){
