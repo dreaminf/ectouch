@@ -375,7 +375,7 @@ class ExtendController extends AdminController
                     $list[$k]['handler'] = '<a class="btn btn-primary" href="'.url('wall_check', array('wall_id'=>$id, 'user_id'=>$v['id'])).'">审核</a>';
                 }
                 $list[$k]['nocheck'] = $this->model->table('wechat_wall_msg')->where(array('status'=>0, 'user_id'=>$v['id']))->count();
-                $list[$k]['addtime'] = date('Y-m-d H:i');
+                $list[$k]['addtime'] = $v['addtime'] ? date('Y-m-d H:i', $v['addtime']) : '';
             }
         }
         else{
@@ -410,7 +410,7 @@ class ExtendController extends AdminController
 
         if($list){
             foreach($list as $k=>$v){
-                $list[$k]['dateline'] = date('Y-m-d H:i:s', $v['dateline']);
+                $list[$k]['dateline'] = $v['dateline'] ? date('Y-m-d H:i:s', $v['dateline']) : '';
                 $list[$k]['winner'] = unserialize($v['winner']);
                 if($v['issue_status'] == 1){
                     $list[$k]['issue_status'] = '已发放';
@@ -456,8 +456,8 @@ class ExtendController extends AdminController
                     $list[$k]['status'] = '未审核';
                     $list[$k]['handler'] = '<a class="btn btn-primary" href="'.url('wall_check', array('wall_id'=>$wall_id, 'msg_id'=>$v['id'], 'user_id'=>$user_id)).'">审核</a>';
                 }
-                $list[$k]['addtime'] = date('Y-m-d H:i', $v['addtime']);
-                $list[$k]['checktime'] = date('Y-m-d H:i', $v['checktime']);
+                $list[$k]['addtime'] = $v['addtime'] ? date('Y-m-d H:i', $v['addtime']) : '';
+                $list[$k]['checktime'] = $v['checktime'] ? date('Y-m-d H:i', $v['checktime']) : '';
             }
         }
 
