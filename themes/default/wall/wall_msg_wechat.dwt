@@ -75,7 +75,7 @@
                 refresh();
             })
             var start = {$msg_count};
-            var num = 5;
+            var num = 1;
             var user = {$user.id};
             var wall_id = {$wall_id};
             function refresh(){
