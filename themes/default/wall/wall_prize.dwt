@@ -145,7 +145,7 @@
                 i = 1, 
                 time;
             $("#start").click(function(){
-                if(len > 1){
+                if(len > 0){
                     time = setInterval(function(){
                         if(i > len){
                             i = 1;
