@@ -210,7 +210,7 @@ class WallController extends CommonController {
         if(empty($wall_id)){
             $this->redirect(url('index/index'));
         }
-        $_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';
+        //$_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';
         //更改过头像跳到聊天页面
         $wechat_user = $this->model->table('wechat_wall_user')->where(array('openid'=>$_SESSION['wechat_user']['openid']))->count();
         if($wechat_user > 0){
@@ -246,7 +246,7 @@ class WallController extends CommonController {
         if(empty($wall_id)){
             $this->redirect(url('index/index'));
         }
-        $_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';
+        //$_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';
 
         $wechat_user = $this->model->table('wechat_wall_user')->field('id')->where(array('openid'=>$_SESSION['wechat_user']['openid']))->find();
         //聊天室人数
