@@ -48,8 +48,14 @@ input:focus{
 	display: inline-block;
 	margin-right: 28px;
 }
-.logo-title{
-	margin-top: 6.5px;
+.logo h1{
+	line-height: 55px;
+	font-size: 44px;
+	color: #39b4e9;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#39b4e9), to(#2b8fdd));
+	-webkit-text-fill-color: transparent;
+	-webkit-background-clip: text;
+	
 }
 .content{
 	background-color: rgba(0,0,0,0.3);
@@ -243,6 +249,7 @@ input:focus{
 .award-content-detail{
 	margin: 0 auto;
 	padding: 65px 0;
+	position: relative;
 }
 .award-content-detail img{
 	width:260px;
@@ -257,8 +264,11 @@ input:focus{
 	padding-bottom:50px;
 }
 .award-detail-start{
+	position: absolute;
 	margin: 0 auto;
 	text-align: center;
+	top: 435px;
+	left: 20%;
 }
 .award-detail-start span{
 	font-size: 16px;
