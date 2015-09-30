@@ -27,9 +27,17 @@
                         </div>
                     
                         <div class="award-content-detail">
-                            <img src="__TPL__/wall/img/wall_1.png"/>
-                            <p class="award-content-name">一笑而过</p>
-                            <div class="award-detail-start">
+                            <ul class="award-detail-pic">
+                                <li class="active">
+                                    <img src="__TPL__/wall/img/unknow.png"/>
+                                    <p class="award-content-name">求中奖</p>
+                                </li>
+                                <li>
+                                    <img src="__TPL__/wall/img/wall_1.png"/>
+                                    <p class="award-content-name">一笑而过</p>
+                                </li>
+                            </ul>
+                            <!--<div class="award-detail-num">
                                 <span>抽取</span>
                                 <select name="prize">
                                     {foreach from=$wall.prize item=prize}
@@ -44,9 +52,9 @@
                                     <option value="5">5</option>
                                     <option value="6">6</option>
                                 </select>
-                                <span>人</span>
-                                <input type="button" name="start" id="start" value="开始抽奖" />
-                            </div>
+                                <span>人</span> 
+                            </div>-->
+                            <input type="button" name="start" id="start" value="开始抽奖" />
                         </div>
                     </div>
                     

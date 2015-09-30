@@ -71,5 +71,28 @@
         <script type="text/javascript" src="__TPL__/wall/js/jquery.nicescroll.js" ></script>
         <script type="text/javascript" src="__TPL__/wall/js/jquery.scrollTo.min.js" ></script>
         <script type="text/javascript" src="__TPL__/wall/js/wechat.js" ></script>
+        <script type="text/javascript">
+        $(function(){
+			refresh();
+        })
+        var start = {$msg_count};
+        var num = 10;
+        var wall_id = {$wall.id};
+        function refresh(){
+            $.get("{:url('get_wall_msg')}", {start:start, num:num, wall_id:wall_id}, function(result){
+                if(result.code == 0 && result.data.length > 0){
+                    var html = '';
+                    for(var i=0; i<result.data.length; i++){
+                        html += '<li><img src="'+result['data'][i]['headimg']+'" class="fl" /><div class="fl"><div class="msg-list-info"><span class="msg-name">'+result['data'][i]['nickname']+'</span><span>'+result['data'][i]['addtime']+'</span></div><div class="msg-content"><div class="arrow"></div>'+result['data'][i]['content']+'</div></div></li>';
+                    }
+                    if(html){
+                        $("ul#ul").append(html);
+                    }
+                    start = parseInt(start) + parseInt(result.data.length);
+                }
+            }, 'json');
+            setTimeout("refresh()", 3000);
+        }
+        </script>
 	</body>
 </html>

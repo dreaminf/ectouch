@@ -182,7 +182,7 @@ input:focus{
 	box-sizing: border-box;
 	overflow: hidden;
 	width: 100%;
-	margin-bottom: 50px;
+	margin-bottom: 30px;
 }
 .msg-list li img{
 	width: 105px;
@@ -251,9 +251,20 @@ input:focus{
 .award-content-detail{
 	margin: 0 auto;
 	padding: 65px 0;
-	position: relative;
+	text-align: center;
 }
-.award-content-detail img{
+.award-detail-pic,.award-detail-pic li{
+	width: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+.award-detail-pic li.active{
+	display: block;
+}
+.award-detail-pic li{
+	display: none;
+}
+.award-detail-pic li img{
 	width:260px;
 	height: 260px;
 	display: block;
@@ -267,11 +278,8 @@ input:focus{
 	padding-bottom:50px;
 }
 .award-detail-start{
-	position: absolute;
 	margin: 0 auto;
 	text-align: center;
-	top: 435px;
-	left: 20%;
 }
 .award-detail-start span{
 	font-size: 16px;
@@ -285,13 +293,19 @@ input:focus{
 	color: #2e2727;
 	padding-left: 15px;
 }
-.award-detail-start input[type=button]{
+.award-detail-num{
+	margin-right: 30px;
+	float: left;
+	height: 40px;
+	line-height: 40px;
+}
+.award-content-detail input[type=button]{
+	text-align:center;
 	background-color: #39B4E9;
 	border: none;
 	border-radius: 20px;
 	width: 125px;
 	height: 40px;
-	margin-left: 30px;
 	color: #fff;
 	font-size: 20px;
 }

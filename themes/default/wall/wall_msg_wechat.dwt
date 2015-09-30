@@ -80,7 +80,7 @@
             var wall_id = {$wall_id};
             function refresh(){
                 $.get("{:url('get_wall_msg')}", {start:start, num:num, wall_id:wall_id}, function(result){
-                    if(result.code == 0){
+                    if(result.code == 0 && result.data.length > 0){
                         var html = '';
                         for(var i=0; i<result.data.length; i++){
                             if(result['data'][i]['id'] == user){
