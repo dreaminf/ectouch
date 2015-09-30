@@ -34,10 +34,6 @@
                                 </li>
                                 <li>
                                     <img src="__TPL__/wall/img/wall_1.png"/>
-                                    <p class="award-content-name">一笑而过</p>
-                                </li>
-                                <li>
-                                    <img src="__TPL__/wall/img/wall_1.png"/>
                                     <p class="award-content-name">阳光小猫</p>
                                 </li>
                                 <li>
@@ -52,6 +48,12 @@
                                     <img src="__TPL__/wall/img/wall_4.png"/>
                                     <p class="award-content-name">iori</p>
                                 </li>
+                                {foreach from=$no_prize item=no}
+                                <li>
+                                    <img src="{$no.headimg}"/>
+                                    <p class="award-content-name">{$no.nickname}</p>
+                                </li>
+                                {/foreach}
                             </ul>
                             <!--<div class="award-detail-num">
                                 <span>抽取</span>
@@ -80,7 +82,7 @@
                     <div class="fr award-list">
                         <div class="award-list-name">
                             <h1 class="fl">获奖名单</h1>
-                            <h2 class="fr">获奖人数：<span>{$prize_num}</span></h2>
+                            <h2 class="fr">获奖人数：<span id="prize_num">{$prize_num}</span></h2>
                         </div>
                         <div class="award-list-title">
                             <h3 class="fl">序号</h3>
@@ -97,7 +99,7 @@
                             </li>
                         {/foreach}
                         </ul>
-                        <input type="button" name="" id="" value="重新抽奖" class="award-restart"/>
+                        <input type="button" name="restart" value="重新抽奖" class="award-restart"/>
                     </div>
                 </div>
                 
@@ -143,35 +145,71 @@
                 i = 1, 
                 time;
             $("#start").click(function(){
-                time = setInterval(function(){
-                    if(i > len){
-                        i = 0;
-                    }
-                    $(".award-detail-pic li").eq(i).addClass("active").siblings("li").removeClass("active");
-                    i++;
-                }, 60);
-                $("#stop").css("display", "inline-block");
-                $("#start").css("display", "none");
-                return false;
+                if(len > 1){
+                    time = setInterval(function(){
+                        if(i > len){
+                            i = 1;
+                        }
+                        $(".award-detail-pic li").eq(i).addClass("active").siblings("li").removeClass("active");
+                        i++;
+                    }, 60);
+                    $("#stop").css("display", "inline-block");
+                    $("#start").css("display", "none");
+                }
+                else{
+                    alert("暂无数据");
+                }
             });
-
+            //停止抽奖
             $("#stop").click(function(){
-                clearInterval(time);
-                $("#stop").css("display", "none");
-                $("#start").css("display", "inline-block");
-                $.post("{:url('start_draw', array('wall_id'=>$this->_var['wall']['id']))}", '', function(result){
+                $.get("{:url('start_draw', array('wall_id'=>$this->_var['wall']['id']))}", '', function(result){
                     if(result.errCode == 0){
                         //中奖
-                        alert(result.data.nickname);
+                        $(".award-detail-pic li").removeClass("active");
+                        $(".award-detail-pic").append('<li class="active"><img src="'+result.data.headimg+'"><p class="award-content-name">'+result.data.nickname+'</p></li>');
+                        var key = $("#award li span.fl:last").text();
+                        if(key){
+                            key = parseInt(key) + 1;
+                        }
+                        else{
+                            key = 1;
+                        }
+                        var html = '<li><div class="fl award-list-info"><span class="fl">'+key+'</span><img src="'+result.data.headimg+'" class="fl"/></div><p class="fr">'+result.data.nickname+'</p></li>';
+                        $("#award").append(html);
+                        //获奖人数
+                        var prize_num = $("#award li").length ? $("#award li").length : 0;
+                        $("#prize_num").html(prize_num);
                     }
                     else if(result.errCode == 1){
                         location.href = result.errMsg;
                     }
                     else{
+                        $(".award-detail-pic li:first").addClass("active").siblings("li").removeClass("active");
                         alert(result.errMsg);
                     }
                     return false;
                 }, 'json');
+                clearInterval(time);
+                $("#stop").css("display", "none");
+                $("#start").css("display", "inline-block");
+            });
+            //重置抽奖
+            $(".award-restart").click(function(){
+                if(confirm("重置抽奖后，中奖用户将会重新放入奖池，确定要重置吗？")){
+                    $.get("{:url('reset_draw', array('wall_id'=>$this->_var['wall']['id']))}", '', function(result){
+                        if(result.errCode == 0){
+                            $("#award").empty();
+                            $(".award-detail-pic li:first").addClass("active").siblings("li").removeClass("active");
+                        }
+                        else if(result.errCode == 1){
+                            location.href = result.errMsg;
+                        }
+                        else{
+                            alert(result.errMsg);
+                        }
+                        return false;
+                    }, 'json');
+                }
             });
         })
         </script>

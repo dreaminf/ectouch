@@ -96,6 +96,11 @@ class WallController extends CommonController {
         //参与人数
         $total = $this->model->table('wechat_wall_user')->where(array('status'=>1))->count();
 
+        //没中奖的用户
+        $sql = "SELECT u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_prize p ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid not in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY u.addtime DESC";
+        $no_prize = $this->model->query($sql);
+
+        $this->assign('no_prize', $no_prize);
         $this->assign('total', $total);
         $this->assign('prize_num', count($list));
         $this->assign('list', $list);
@@ -131,7 +136,7 @@ class WallController extends CommonController {
 
             $sql = "SELECT u.nickname, u.headimg FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_prize p ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid not in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY u.addtime DESC";
             $list = $this->model->query($sql);
-
+            //$list = array('1');
             if($list){
                 //随机一个中奖人
                 $key = mt_rand(0, count($list) - 1);
@@ -146,12 +151,38 @@ class WallController extends CommonController {
                 $data['wall_id'] = $wall_id;
                 $this->model->table('wechat_prize')->data($data)->insert();
 
+                /*$rs = array();
+                $rs['nickname'] = 'null';
+                $rs['headimg'] = __TPL__.'/wall/img/wall_4.png';*/
                 $result['data'] = $rs;
                 exit(json_encode($result));
             }
         }
         $result['errCode'] = 2;
         $result['errMsg'] = '暂无数据';
+        exit(json_encode($result));
+    }
+
+    /**
+     * 重置抽奖
+     */
+    public function reset_draw(){
+        if(IS_AJAX){
+            $result['errCode'] = 0;
+            $result['errMsg'] = '';
+
+            $wall_id = I('get.wall_id');
+            if(empty($wall_id)){
+                $result['errCode'] = 1;
+                $result['errMsg'] = url('index/index');
+                exit(json_encode($result));
+            }
+            //删除中奖的用户
+            $this->model->table('wechat_prize')->where(array('wall_id'=>$wall_id, 'activity_type'=>'wall'))->delete();
+            exit(json_encode($result));
+        }
+        $result['errCode'] = 2;
+        $result['errMsg'] = '无效的请求';
         exit(json_encode($result));
     }
 
@@ -179,7 +210,7 @@ class WallController extends CommonController {
         if(empty($wall_id)){
             $this->redirect(url('index/index'));
         }
-        $_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';
+        //$_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';
         //更改过头像跳到聊天页面
         $wechat_user = $this->model->table('wechat_wall_user')->where(array('openid'=>$_SESSION['wechat_user']['openid']))->count();
         if($wechat_user > 0){
@@ -215,7 +246,7 @@ class WallController extends CommonController {
         if(empty($wall_id)){
             $this->redirect(url('index/index'));
         }
-        $_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';
+        //$_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';
 
         $wechat_user = $this->model->table('wechat_wall_user')->field('id')->where(array('openid'=>$_SESSION['wechat_user']['openid']))->find();
         //聊天室人数
