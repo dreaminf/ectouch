@@ -8,12 +8,12 @@
 		<link rel="stylesheet" type="text/css" href="__TPL__/wall/css/wechat.css"/>
 	</head>
 	<body>
-		<div class="con" {if $wall.background}style="background:url({$wall.background})"{/if}>
+		<div class="con" {if $wall.background}style="background-image:url({$wall.background})"{/if}>
             <div class="main">
                 <!--logo-->
                 <div class="logo">
                     <img src="{$wall.logo}" class="fl"/>
-                    <span class="fl logo-title">{$wall.name}</span>
+                    <h1 class="fl">{$wall.name}</h1>
                 </div>
 
                 <!--main-->

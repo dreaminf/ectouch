@@ -355,7 +355,7 @@ class ExtendController extends AdminController
         //$list = $this->model->table('wechat_wall_user')->field('id, nickname, sex, headimg, status, addtime')->where(array('wall_id'=>$id))->order('addtime desc, id desc')->limit($offset)->select();
         $sql = "SELECT u.id, u.nickname, u.sex, u.headimg, u.status, u.addtime, count(m.id) as nocheck FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_wall_msg m ON u.id = m.user_id WHERE m.status = 0 ORDER BY u.addtime DESC limit $offset";
         $list = $this->model->query($sql);
-        if($list){
+        if($list[0]['id']){
             foreach($list as $k=>$v){
                 if($v['sex'] == 0){
                     $list[$k]['sex'] = '女';
@@ -376,6 +376,9 @@ class ExtendController extends AdminController
                 }
                 $list[$k]['addtime'] = date('Y-m-d H:i');
             }
+        }
+        else{
+            $list = array();
         }
 
         $this->assign('wall_id', $id);
@@ -523,7 +526,57 @@ class ExtendController extends AdminController
      * 上墙地址（微信二维码生成链接）
      */
     public function towall(){
+        $wall_id = I('get.id');
+        if(empty($wall_id)){
+            exit(json_encode(array(
+                'status' => 0,
+                'msg' => '请选择微信墙'
+            )));
+        }
+        $wall_qrcode = $this->model->table('wechat_wall')->field('qrcode')->where(array('id'=>$wall_id))->getOne();
+        if($wall_qrcode){
+            $qrcode_url = $wall_qrcode;
+        }
+        else{
+            $url = __HOST__.url('default/wall/wall_user_wechat', array('wall_id'=>$wall_id));
+            $wxconfig = $this->model->table('wechat')->field('token, appid, appsecret')->where(array('id'=>1, 'status'=>1))->find();
+            if($wxconfig){
+                $wxObj  = new Wechat($wxconfig);
+                $shorturl = $wxObj->getShortUrl($url);
+                if(empty($shorturl)){
+                    exit(json_encode(array(
+                        'status' => 0,
+                        'msg' => $wxObj->errMsg
+                    )));
+                }
+                $ticket = $wxObj->getQRCode($shorturl, 2);
+                if(empty($ticket)){
+                    exit(json_encode(array(
+                        'status' => 0,
+                        'msg' => $wxObj->errMsg
+                    )));
+                }
+                $qrcode = $wxObj->getQRUrl($ticket['ticket']);
+                if(empty($qrcode)){
+                    exit(json_encode(array(
+                        'status' => 0,
+                        'msg' => $wxObj->errMsg
+                    )));
+                }
+                $this->model->table('wechat_wall')->data(array('qrcode'=>$qrcode))->where(array('id'=>$wall_id))->update();
 
+                $qrcode_url = $wall_qrcode;
+             }
+            else{
+                exit(json_encode(array(
+                    'status' => 0,
+                    'msg' => '请先配置公众号'
+                )));
+            }
+        }
+
+        $this->assign('qrcode_url', $qrcode_url);
+        $this->display('wechat_qrcode_get');
     }
 
     

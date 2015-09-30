@@ -18,7 +18,7 @@
                     <tr class="text-center">
                         <td>{$l['content']}</td>
                         <td>{$l['addtime']}</td>
-                        <td>{$l['checktime']}</td>
+                        <td>{if $l['checktime']}{$l['checktime']}{/if}</td>
                         <td>{$l['status']}</td>
                         <td>
                             {$l['handler']}

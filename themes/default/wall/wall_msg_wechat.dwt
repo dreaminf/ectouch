@@ -67,7 +67,7 @@
             $(function(){
                 $(".send").click(function(){
                     $.post("{:url('wall_msg_wechat')}", $(".msg-form").serialize(), function(result){
-                        if(result.code > 0){
+                        if(result){
                             alert(result.errMsg);
                         }
                     }, 'json');

@@ -14,7 +14,6 @@
                         <th class="text-center">微信昵称</th>
                         <th class="text-center">奖品</th>
                         <th class="text-center">是否发放</th>
-                        <th class="text-center">中奖用户信息</th>
                         <th class="text-center">中奖时间</th>
                         <th class="text-center">操作</th>
                     </tr>

@@ -200,7 +200,7 @@ class WallController extends CommonController {
 
             $this->model->table('wechat_wall_msg')->data($data)->insert();
             //留言成功，跳转
-            exit(json_encode(array('code'=>0)));
+            exit(json_encode(array('code'=>0, 'errMsg'=>'您的留言正在进行审查，请关注微信墙')));
         }
         $wall_id = I('get.wall_id');
         if(empty($wall_id)){
