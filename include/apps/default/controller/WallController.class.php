@@ -171,7 +171,7 @@ class WallController extends CommonController {
         if(empty($wall_id)){
             $this->redirect(url('index/index'));
         }
-        $_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';
+        //$_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';
         //更改过头像跳到聊天页面
         $wechat_user = $this->model->table('wechat_wall_user')->where(array('openid'=>$_SESSION['wechat_user']['openid']))->count();
         if($wechat_user > 0){
@@ -207,7 +207,7 @@ class WallController extends CommonController {
         if(empty($wall_id)){
             $this->redirect(url('index/index'));
         }
-        $_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';
+        //$_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';
 
         $wechat_user = $this->model->table('wechat_wall_user')->field('id')->where(array('openid'=>$_SESSION['wechat_user']['openid']))->find();
         //聊天室人数
@@ -240,12 +240,13 @@ class WallController extends CommonController {
         if(IS_AJAX && IS_GET){
             $start = I('get.start', 5);
             $num = I('get.num', 5);
-            if($start && $num){
+            $wall_id = I('get.wall_id');
+            if((empty($start) && $start !== 0) && $num){
                 $Eccache = new EcCache();
                 $cache_key = md5('cache_'.$start);
                 $list = $Eccache->get($cache_key);
                 if(!$list){
-                    $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE m.status = 1 ORDER BY addtime ASC LIMIT ".$start.", ".$num;
+                    $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE m.status = 1 AND u.wall_id = '$wall_id' ORDER BY addtime ASC LIMIT ".$start.", ".$num;
                     $data = $this->model->query($sql);
                     $Eccache->set($cache_key, $data, 10);
                     $list = $Eccache->get($cache_key);

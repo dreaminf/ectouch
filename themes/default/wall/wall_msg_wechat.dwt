@@ -77,8 +77,9 @@
             var start = {$msg_count};
             var num = 5;
             var user = {$user.id};
+            var wall_id = {$wall_id};
             function refresh(){
-                $.get("{:url('get_wall_msg')}", {start:start, num:num}, function(result){
+                $.get("{:url('get_wall_msg')}", {start:start, num:num, wall_id:wall_id}, function(result){
                     if(result.code == 0){
                         var html = '';
                         for(var i=0; i<result.data.length; i++){
