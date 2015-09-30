@@ -27,6 +27,11 @@ class BaseController extends MY_Controller
         $this->load->library('model', $params);
     }
 
+    protected function get_cache_id($extends = ''){
+        $extends = empty($extends) ? '':'-' . $extends;
+        return sprintf('%X', crc32($_SESSION['user_rank'] . '-' . C('lang') . $extends));
+    }
+
     protected function is_cached($filename, $cache_id = ''){
         $this->load->tpl->is_cached($filename, $cache_id);
     }

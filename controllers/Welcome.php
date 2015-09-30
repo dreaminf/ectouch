@@ -19,25 +19,28 @@ class Welcome extends IndexController {
      * 首页信息
      */
     public function index() {
-        // 自定义导航栏
-        $navigator = get_navigator();
-        $this->assign('navigator', $navigator['middle']);
-        $this->assign('best_goods', $this->goods_list('best', C('page_size')));
-        $this->assign('new_goods', $this->goods_list('new', C('page_size')));
-        $this->assign('hot_goods', $this->goods_list('hot', C('page_size')));
-        //首页推荐分类
-        $cat_rec = $this->get_recommend_res();
-        $this->assign('cat_best', $cat_rec[1]);
-        $this->assign('cat_new', $cat_rec[2]);
-        $this->assign('cat_hot', $cat_rec[3]);
-        // 促销活动
-        $this->assign('promotion_info', get_promotion_info());
-        // 团购商品
-        //$this->assign('group_buy_goods', group_buy_list(C('page_size'),1,'goods_id','ASC'));
-        // 获取分类
-        $this->assign('categories', get_categories_tree());
-        // 获取品牌
-        $this->assign('brand_list', get_brands($app = 'brand', C('page_size'), 1));
+        $cache_id = $this->get_cache_id();
+        if (!$this->is_cached('index.dwt', $cache_id)) {
+            // 自定义导航栏
+            $navigator = get_navigator();
+            $this->assign('navigator', $navigator['middle']);
+            $this->assign('best_goods', $this->goods_list('best', C('page_size')));
+            $this->assign('new_goods', $this->goods_list('new', C('page_size')));
+            $this->assign('hot_goods', $this->goods_list('hot', C('page_size')));
+            //首页推荐分类
+            $cat_rec = $this->get_recommend_res();
+            $this->assign('cat_best', $cat_rec[1]);
+            $this->assign('cat_new', $cat_rec[2]);
+            $this->assign('cat_hot', $cat_rec[3]);
+            // 促销活动
+            $this->assign('promotion_info', get_promotion_info());
+            // 团购商品
+            //$this->assign('group_buy_goods', group_buy_list(C('page_size'),1,'goods_id','ASC'));
+            // 获取分类
+            $this->assign('categories', get_categories_tree());
+            // 获取品牌
+            $this->assign('brand_list', get_brands($app = 'brand', C('page_size'), 1));
+        }
         $this->display('index.dwt');
     }
 
