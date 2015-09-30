@@ -29,8 +29,8 @@ class SaleModel extends BaseModel {
         }else{
             if($list){
                 $where = '';
-                foreach ($list as $key=>$val){
-                    $where.=$val['user_id'].',';
+                foreach ($list as $k => $val){
+                    $where .= $val['user_id'].',';
                 }
                 $where = substr($where, 0, -1);
                 $sql = "select d.* from {pre}users  as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id in($where) and apply_sale = 1";
@@ -40,8 +40,8 @@ class SaleModel extends BaseModel {
                 }else{
                     if($list2){
                         $where = '';
-                        foreach ($list2 as $key=>$val){
-                            $where.=$val['user_id'].',';
+                        foreach ($list2 as $k2 => $val){
+                            $where .= $val['user_id'].',';
                         }
                         $where = substr($where, 0, -1);
                         $sql = "select d.* from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id in($where) and apply_sale = 1";
@@ -59,7 +59,7 @@ class SaleModel extends BaseModel {
                 return false;
             }
         }
-        foreach($res as $key=>$val){
+        foreach($res as $key => $val){
             $res[$key]['time'] = local_date('Y-m-d H:i:s',$val['create_time']);
         }
         return $res;
@@ -77,7 +77,7 @@ class SaleModel extends BaseModel {
         }else{
             if($list){
                 $where = '';
-                foreach ($list as $key=>$val){
+                foreach ($list as $k => $val){
                     $where.=','.$val['user_id'];
                 }
 
@@ -88,7 +88,7 @@ class SaleModel extends BaseModel {
                 }else{
                     if($list2){
                         $where = '';
-                        foreach ($list2 as $key=>$val){
+                        foreach ($list2 as $k2 => $val){
                             $where.=','.$val['user_id'];
                         }
                         $sql = "select * from {pre}users WHERE parent_id in($where)";
@@ -106,7 +106,7 @@ class SaleModel extends BaseModel {
                 return false;
             }
         }
-        foreach($res as $key=>$val){
+        foreach($res as $key => $val){
             $res[$key]['time'] = local_date('Y-m-d',$val['reg_time']);
 
             if(class_exists('WechatController')){
