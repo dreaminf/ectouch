@@ -2,10 +2,10 @@
 //模型类，加载了外部的数据库驱动类和缓存类
 class Model{
     public $db = NULL; // 当前数据库操作对象
-	public $cache = NULL;	//缓存对象
-	public $sql = '';	//sql语句，主要用于输出构造成的sql语句
-	public  $pre = '';	//表前缀，主要用于在其他地方获取表前缀
-	public $config =array(); //配置
+    public $cache = NULL;	//缓存对象
+    public $sql = '';	//sql语句，主要用于输出构造成的sql语句
+    public  $pre = '';	//表前缀，主要用于在其他地方获取表前缀
+    public $config =array(); //配置
     protected $options = array(); // 查询表达式参数	
 	
     public function __construct( $config = array() ) {

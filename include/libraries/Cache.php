@@ -11,11 +11,10 @@ class Cache {
         if(!empty($options)) {
             $this->options = array_merge($this->options, $options);
         }
-        $this->connect();
+        $this->init();
     }
 
-    //连接数据库
-    public function connect() {
+    public function init() {
         $cacheDriver = ucfirst( $this->options['CACHE_TYPE'] ) .'Driver';
         require_once( dirname(__FILE__) . '/cache/' . $cacheDriver . '.php' );
         $this->cache = new $cacheDriver( $this->options ); //实例化数据库驱动类
