@@ -31,7 +31,7 @@
                                 <li class="active">
                                     <img src="__TPL__/wall/img/unknow.png"/>
                                     <p class="award-content-name">求中奖</p>
-                                </li>
+                                </li><!-- 
                                 <li>
                                     <img src="__TPL__/wall/img/wall_1.png"/>
                                     <p class="award-content-name">阳光小猫</p>
@@ -47,7 +47,7 @@
                                 <li>
                                     <img src="__TPL__/wall/img/wall_4.png"/>
                                     <p class="award-content-name">iori</p>
-                                </li>
+                                </li> -->
                                 {foreach from=$no_prize item=no}
                                 <li>
                                     <img src="{$no.headimg}"/>
