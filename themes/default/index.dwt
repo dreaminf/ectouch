@@ -191,7 +191,7 @@
         <a> <h1>{$drp_info.shop_name}</h1></a>
     </div>
     </div>
-    <img src="{if $drp_info1.shop_img}{$drp_info.shop_img}{else}__TPL__/sale/images/index_bg.jpg{/if}" class="fl"/>
+    <img src="{if $drp_info.shop_img}{$drp_info.shop_img}{else}__TPL__/sale/images/index_bg.jpg{/if}" class="fl"/>
 </div>
 
 <div class="ect-index-menu">
