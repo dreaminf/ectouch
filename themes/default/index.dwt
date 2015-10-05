@@ -204,13 +204,13 @@
         </li>
         <li>
             <a href="javascript:void(0);">
-                <h3>51</h3>
+                <h3>{$news_goods_num}</h3>
                 <h4>上新</h4>
             </a>
         </li>
         <li>
             <a href="javascript:void(0);">
-                <h3>8</h3>
+                <h3>{$promotion_goods_num}</h3>
                 <h4>促销</h4>
             </a>
         </li>

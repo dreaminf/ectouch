@@ -159,4 +159,33 @@ class IndexModel extends CommonModel {
         }
     }
 
+
+    /**
+     * 获得新品，精品、热销商品数量
+     *
+     * @access  public
+     * @return  array
+     */
+    function get_pro_goods($type = '') {
+        switch ($type)
+        {
+            case 'best':
+                $where   = 'AND g.is_best = 1';
+                break;
+            case 'new':
+                $where   = 'AND g.is_new = 1';
+                break;
+            case 'hot':
+                $where   = 'AND g.is_hot = 1';
+                break;
+            default:
+                $where   = '1';
+        }
+
+        $sql = 'SELECT count(g.goods_id) as num FROM ' . $this->pre . 'goods as g WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 ' 
+            . $where . " ORDER BY g.sort_order, g.goods_id DESC ";
+        $result = $this->row($sql);
+        return $result['num'];
+    }
+
 }

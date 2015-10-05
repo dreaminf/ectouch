@@ -37,6 +37,8 @@ class IndexController extends CommonController {
                 }
                 $this->assign('drp_info',$drp_shop);
             }
+            $this->assign('news_goods_num',model('Index')->get_pro_goods('new'));
+            $this->assign('promotion_goods_num', count(model('Index')->get_promote_goods()));            
         }
         // 自定义导航栏
         $navigator = model('Common')->get_navigator();
