@@ -862,10 +862,14 @@ class ClipsBaseModel extends BaseModel {
      * 获取未付款订单的数量
      */
     public function not_pay($user_id) {
-	   $where['user_id'] = $user_id;
-       $where['pay_status'] = 0; 
-       $count = $this->model->table('order_info')->where($where)->count();
-	   return $count;
+/*	   $where['user_id'] = $user_id;
+       $where['pay_status'] = 0;
+       $count = $this->model->table('order_info')->where($where)->count();*/
+
+       $where = 'and pay_status = ' . PS_UNPAYED . ' and order_status not in(' . OS_CANCELED . ','. OS_INVALID .','. OS_RETURNED .')';
+       $sql = "SELECT count(*) as num FROM " . $this->pre . "order_info WHERE user_id = '$user_id' " . $where ;
+       $res = $this->row($sql);
+	   return $res['num'];
     }
 	
 	 /**
@@ -887,10 +891,16 @@ class ClipsBaseModel extends BaseModel {
     }
 	 /**
      * 获取未评价订单的数量
+     * 未评价订单条件：订单全部完成
      */
 	public function not_pingjia($user_id) {		
 	    /*$sql="select count(id_value) from ". $this->pre ."comment where user_id='$user_id' and id_value not in(select b.goods_id from " .$this->pre."order_info as a  LEFT JOIN " .$this->pre. "order_goods  as b on a.order_id=b.order_id where a.user_id='$user_id')"; */
-		$sql="select count(b.goods_id) from " . $this->pre . "order_info as a  LEFT JOIN " .$this->pre. "order_goods  as b on a.order_id=b.order_id  where user_id='$user_id' and b.goods_id not in(select id_value from ". $this->pre . "comment where user_id='$user_id')";
+		$sql="select count(b.goods_id) from " . $this->pre . "order_info as o  LEFT JOIN " .$this->pre. "order_goods  as b on o.order_id=b.order_id  where user_id='$user_id' ".
+        " AND o.order_status " . db_create_in(array(OS_CONFIRMED, OS_SPLITED)) .
+        " AND o.shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)) .
+        " AND o.pay_status " . db_create_in(array(PS_PAYED, PS_PAYING)) .
+        " AND b.goods_id not in(select id_value from ". $this->pre . "comment where user_id='$user_id')";
+
         $res = $this->query($sql);
 	    $row = $res[0]['count(b.goods_id)'];
 	    return $row;

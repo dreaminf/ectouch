@@ -544,8 +544,11 @@ class UsersModel extends BaseModel {
 
         if ($pay == 1) {
             $pay = '';
-        } else {
-            $pay = 'and pay_status = ' . PS_UNPAYED;
+        } elseif($pay == 0) {
+            // 未付款 但不包含已取消、无效、退货订单的订单
+            $pay = 'and pay_status = ' . PS_UNPAYED . ' and order_status not in(' . OS_CANCELED . ','. OS_INVALID .','. OS_RETURNED .')';
+        }else{
+            $pay = 'and pay_status = ' . PS_UNPAYED ;
         }
 
         $sql = "SELECT order_id, order_sn, shipping_id, order_status, shipping_status, pay_status, add_time, " .
@@ -577,8 +580,8 @@ class UsersModel extends BaseModel {
             $value['order_status'] = L('os.' . $value['order_status']) . ',' . L('ps.' . $value['pay_status']) . ',' . L('ss.' . $value['shipping_status']);
 
 
-
-            $arr[] = array('order_id' => $value['order_id'],
+            $arr[] = array(
+                'order_id' => $value['order_id'],
                 'order_sn' => $value['order_sn'],
                 'img' => get_image_path(0, model('Order')->get_order_thumb($value['order_id'])),
                 'order_time' => local_date(C('time_format'), $value['add_time']),
@@ -587,7 +590,9 @@ class UsersModel extends BaseModel {
                 'total_fee' => price_format($value['total_fee'], false),
                 'url' => url('user/order_detail', array('order_id' => $value['order_id'])),
                 'goods_count' => model('Users')->get_order_goods_count($value['order_id']),
-                'handler' => $value['handler']);
+                'handler' => $value['handler']
+            );
+
         }
         return $arr;
     }

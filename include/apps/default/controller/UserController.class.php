@@ -2321,10 +2321,15 @@ class UserController extends CommonController {
 	
 	/**
      * 待评价订单
+     * 未评价订单条件：订单全部完成
      */
     public function order_comment() {
 		$user_id = $this->user_id;
-		$sql="select b.goods_id from " . $this->model->pre . "order_info as a  LEFT JOIN " .$this->model->pre. "order_goods  as b on a.order_id=b.order_id  where user_id='$user_id' and b.goods_id not in(select id_value from ". $this->model->pre . "comment where user_id='$user_id')";		
+		$sql="select b.goods_id from " . $this->model->pre . "order_info as o  LEFT JOIN " .$this->model->pre. "order_goods  as b on o.order_id=b.order_id  where user_id='$user_id' ".
+        " AND o.order_status " . db_create_in(array(OS_CONFIRMED, OS_SPLITED)) .
+        " AND o.shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)) .
+        " AND o.pay_status " . db_create_in(array(PS_PAYED, PS_PAYING)) .
+        " AND b.goods_id not in(select id_value from ". $this->model->pre . "comment where user_id='$user_id')";
 		$res = $this->model->query($sql);
 		foreach($res as $k =>$value)
 			 {
