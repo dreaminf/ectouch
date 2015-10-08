@@ -38,7 +38,7 @@ class image
         {
             /* 创建当月目录 */
             $dir = date('Ym');
-            $dir = ROOT_PATH . $this->images_dir . '/' . $dir . '/';
+            $dir = ROOT_PATH . $this->data_dir . '/attached/' . $dir . '/';
         }
         else
         {
@@ -203,7 +203,7 @@ class image
         /* 创建当月目录 */
         if (empty($path))
         {
-            $dir = ROOT_PATH . $this->images_dir . '/' . date('Ym').'/';
+            $dir = ROOT_PATH . $this->data_dir . '/attached/' . date('Ym').'/';
         }
         else
         {
