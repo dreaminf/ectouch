@@ -212,6 +212,7 @@ header h1{
 }
 .chat-me .chat-content h2{
 	text-align: right;
+    padding-bottom: 0.3rem;
 }
 .chat-content{
 	padding-left: 1rem;
@@ -226,12 +227,15 @@ header h1{
 }
 .chat-others-content{
 	border-radius: 10px;
-		width:auto;
-		font-size: 1.8rem;
-		color: #252424;
-		position: relative;
-		padding: 1rem;
-		background-color: #e7e7e7;
+	width:auto;
+	font-size: 1.8rem;
+	color: #252424;
+	position: relative;
+	padding: 1rem;
+	background-color: #e7e7e7;
+	table-layout:fixed;
+	word-break: break-all;
+	overflow:hidden;
 }
 .chat-me .chat-others-content{
 	background-color: #38af82;

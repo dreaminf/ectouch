@@ -447,6 +447,7 @@ class ExtendController extends AdminController
         //分页
         $filter['page'] = '{page}';
         $filter['id'] = $wall_id;
+        $filter['status'] = $status;
         $offset = $this->pageLimit(url('wall_msg_check', $filter), 12);
         $total = $num[0]['num'];
         $this->assign('page', $this->pageShow($total));
