@@ -9,5 +9,4 @@ Disallow: /api
 Disallow: /data
 Disallow: /include
 Disallow: /plugins
-Disallow: /statics
 Disallow: /themes
