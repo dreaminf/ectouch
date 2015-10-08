@@ -14,7 +14,7 @@
                 <table class="table table-hover table-bordered table-striped">
                     <tr class="text-center">
                         <th class="text-center">微信昵称</th>
-                        <th class="text-center">奖品</th>
+                        <!--<th class="text-center">奖品</th>-->
                         <th class="text-center">是否发放</th>
                         <th class="text-center">中奖时间</th>
                         <th class="text-center">操作</th>
@@ -22,9 +22,9 @@
                     {loop $list $val}
                     <tr>
                         <td class="text-center">{$val['nickname']}</td>
-                        <td class="text-center">{$val['prize_name']}</td>
+                        <!--<td class="text-center">{$val['prize_name']}</td>-->
                         <td class="text-center">{$val['issue_status']}</td>
-                        <td class="text-center">{if is_array($val['winner'])}{$val['winner']['name']}<br />{$val['winner']['phone']}<br />{$val['winner']['address']}{/if}</td>
+                        <!--<td class="text-center">{if is_array($val['winner'])}{$val['winner']['name']}<br />{$val['winner']['phone']}<br />{$val['winner']['address']}{/if}</td>-->
                         <td class="text-center">{$val['dateline']}</td>
                         <td class="text-center">
                             {$val['handler']}
