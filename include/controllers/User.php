@@ -415,7 +415,7 @@ class User extends IndexController {
             $order['log_id'] = insert_pay_log($surplus['rec_id'], $order['order_amount'], $type=PAY_SURPLUS, 0);
     
             /* 调用相应的支付方式文件 */
-            include_once (ROOT_PATH . 'include/modules/payment/' . $payment_info ['pay_code'] . '.php');
+            include_once (ROOT_PATH . 'plugins/payment/' . $payment_info ['pay_code'] . '.php');
     
             /* 取得在线支付方式的支付按钮 */
             $pay_obj = new $payment_info ['pay_code'] ();
@@ -490,7 +490,7 @@ class User extends IndexController {
             }
     
             /* 调用相应的支付方式文件 */
-            include_once (ROOT_PATH . 'include/modules/payment/' . $payment_info ['pay_code'] . '.php');
+            include_once (ROOT_PATH . 'plugins/payment/' . $payment_info ['pay_code'] . '.php');
             /* 取得在线支付方式的支付按钮 */
             $pay_obj = new $payment_info['pay_code']();
             $payment_info['pay_button'] = $pay_obj->get_code($order, $payment);
@@ -1097,7 +1097,7 @@ class User extends IndexController {
             if ($row && $row['user_id'] == $this->user_id) {
                 // 验证通过，删除留言，回复，及相应文件
                 if ($row['message_img']) {
-                    @unlink(ROOT_PATH . DATA_DIR . '/feedbackimg/' . $row['message_img']);
+                    @unlink(ROOT_PATH . 'data/attached/feedbackimg/' . $row['message_img']);
                 }
 
                 $where_d = 'msg_id = ' . $id . ' OR parent_id = ' . $id;

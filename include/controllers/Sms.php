@@ -108,8 +108,8 @@ class Sms extends IndexController {
     }
 
     private function write_file($file_name, $content) {
-        $this->mkdirs(ROOT_PATH . 'data/smslog/' . date('Ymd'));
-        $filename = ROOT_PATH . 'data/smslog/' . date('Ymd') . '/' . $file_name . '.log';
+        $this->mkdirs(ROOT_PATH . 'data/caches/smslog/' . date('Ymd'));
+        $filename = ROOT_PATH . 'data/caches/smslog/' . date('Ymd') . '/' . $file_name . '.log';
         $Ts = fopen($filename, "a+");
         fputs($Ts, "\r\n" . $content);
         fclose($Ts);
@@ -125,7 +125,7 @@ class Sms extends IndexController {
 
     private function read_file($file_name) {
         $content = '';
-        $filename = ROOT_PATH . 'data/smslog/' . date('Ymd') . '/' . $file_name . '.log';
+        $filename = ROOT_PATH . 'data/caches/smslog/' . date('Ymd') . '/' . $file_name . '.log';
         if (function_exists('file_get_contents')) {
             @$content = file_get_contents($filename);
         } else {

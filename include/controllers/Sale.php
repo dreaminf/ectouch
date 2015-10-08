@@ -39,7 +39,7 @@ class Sale extends IndexController {
        
         // 如果是显示页面，对页面进行相应赋值
         assign_template();
-        $lang = require_cache(ROOT_PATH . 'language/' . C('lang') . '/sale.php', true);
+        $lang = require_cache(ROOT_PATH . 'include/language/' . C('lang') . '/sale.php', true);
         L($lang);
         $this->assign('lang',L());
         $this->assign('action', $this->action);
@@ -253,7 +253,7 @@ class Sale extends IndexController {
      */
     public function spread(){
         // 分销二维码
-        $mobile_qr = 'data/drp/drp_qrcode_'.$this->user_id.'.png';
+        $mobile_qr = 'data/attached/drp/drp_qrcode_'.$this->user_id.'.png';
         $url = $_SERVER['HTTP_HOST'].url('index/index',array('parent_id'=>$this->user_id));
         $errorCorrectionLevel = 'L'; // 纠错级别：L、M、Q、H
         $matrixPointSize = 7; // 点的大小：1到10
