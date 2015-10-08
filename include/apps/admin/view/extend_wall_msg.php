@@ -4,7 +4,12 @@
         <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
             <div class="panel panel-default">
                 <div class="panel-heading" style="overflow:hidden;">
-                    数据信息
+                    <ul class="nav nav-pills">
+                        <li><a href="{url('wall_msg_check', array('id'=>$wall_id, 'status'=>0))}">未审核信息</a></li>
+                        <li><a href="{url('wall_msg_check', array('id'=>$wall_id, 'status'=>'all'))}">全部信息</a></li>
+                        <li class="active"><a href="{url('wall_user', array('id'=>$wall_id))}">参与人员</a></li>
+                        <li><a href="{url('wall_prize', array('id'=>$wall_id))}">获奖名单</a></li>
+                    </ul>
                 </div>
                 <table class="table table-hover table-bordered table-striped">
                     <tr class="text-center">
