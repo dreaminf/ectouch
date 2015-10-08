@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<title>用户信息</title>
 		<meta name="description" content="用户信息,微信墙" />
         <meta name="keywords" content="用户信息,微信墙" />
@@ -12,12 +12,12 @@
 	<body>
 		<div class="con">
             <!--header-->
-            <header>
+            <!-- <header>
                 <a href="javascript:history.go(-1);" class="fl">
                     <i class="iconfont">&#xe600;</i>
                 </a>
                 <h1>用户信息</h1>
-            </header>
+            </header> -->
             <!--main-->
             <div class="main">
                 <form action="{:url('wall_user_wechat')}" method="post" class="user-form">
