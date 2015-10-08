@@ -451,7 +451,7 @@ class ExtendController extends AdminController
         $total = $num[0]['num'];
         $this->assign('page', $this->pageShow($total));
 
-        $sql = "SELECT m.user_id, m.content, m.addtime, m.checktime, m.status, u.nickname FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id LEFT JOIN ".$this->model->pre."wechat_wall w ON u.wall_id = w.id WHERE w.id = ".$wall_id.$where ." ORDER BY m.addtime ASC LIMIT $offset";
+        $sql = "SELECT m.id, m.user_id, m.content, m.addtime, m.checktime, m.status, u.nickname FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id LEFT JOIN ".$this->model->pre."wechat_wall w ON u.wall_id = w.id WHERE w.id = ".$wall_id.$where ." ORDER BY m.addtime ASC LIMIT $offset";
         $list =  $this->model->query($sql);
         if($list){
             foreach($list as $k=>$v){
@@ -461,7 +461,7 @@ class ExtendController extends AdminController
                 }
                 else{
                     $list[$k]['status'] = '未审核';
-                    $list[$k]['handler'] = '<a class="btn btn-primary" href="'.url('wall_check', array('wall_id'=>$wall_id, 'msg_id'=>$v['id'], 'user_id'=>$v['user_id'])).'">审核</a>';
+                    $list[$k]['handler'] = '<a class="btn btn-primary" href="'.url('wall_check', array('wall_id'=>$wall_id, 'msg_id'=>$v['id'], 'user_id'=>$v['user_id'], 'status'=>$status)).'">审核</a>';
                 }
                 $list[$k]['addtime'] = $v['addtime'] ? date('Y-m-d H:i', $v['addtime']) : '';
                 $list[$k]['checktime'] = $v['checktime'] ? date('Y-m-d H:i', $v['checktime']) : '';
@@ -534,6 +534,10 @@ class ExtendController extends AdminController
         //留言审核
         if(!empty($user_id) && !empty($msg_id)){
             $this->model->table('wechat_wall_msg')->data(array('status'=>1, 'checktime'=>time()))->where(array('user_id'=>$user_id, 'id'=>$msg_id, 'status'=>0))->update();
+            if(isset($_GET['status'])){
+                $status = I('get.status');
+                $this->redirect(url('wall_msg_check', array('id'=>$wall_id, 'status'=>$status)));
+            }
 
             $this->redirect(url('wall_msg', array('wall_id'=>$wall_id, 'user_id'=>$user_id)));
         }
