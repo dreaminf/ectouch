@@ -67,7 +67,7 @@
             $(function(){
                 $(".send").click(function(){
                     $.post("{:url('wall_msg_wechat')}", $(".msg-form").serialize(), function(result){
-                        if(result){
+                        if(result.code > 0){
                             alert(result.errMsg);
                         }
                         $("textarea[name=content]").val("");
@@ -83,7 +83,7 @@
                 $.get("{:url('get_wall_msg')}", {start:start, num:num, wall_id:wall_id}, function(result){
                     if(result.code == 0 && result.data.length > 0){
                         var html = '';
-                        for(var i=0; i<result.data.length; i++){
+                        for(var i=result.data.length; i>0; i--){
                             if(result['data'][i]['id'] == user){
                                 html += '<div class="chat-me"><div class="fr chat-img"><img src="'+result['data'][i]['headimg']+'"/></div><div class="fr chat-content"><h2><span>'+result['data'][i]['nickname']+'</span>：</h2><div class="chat-others-content"><div class="arrow"></div>'+result['data'][i]['content']+'</div></div></div>';
                             }

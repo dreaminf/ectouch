@@ -257,7 +257,7 @@ class WallController extends CommonController {
         $Eccache = new EcCache();
         $list = $Eccache->get($cache_key);
         if(!$list){
-            $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE m.status = 1 AND u.wall_id = '$wall_id' ORDER BY addtime ASC LIMIT 0, 2";
+            $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE m.status = 1 AND u.wall_id = '$wall_id' ORDER BY addtime DESC LIMIT 0, 10";
             $data = $this->model->query($sql);
             $Eccache->set($cache_key, $data, 10);
             $list = $Eccache->get($cache_key);
@@ -285,7 +285,7 @@ class WallController extends CommonController {
                 $cache_key = md5('cache_'.$start);
                 $list = $Eccache->get($cache_key);
                 if(!$list){
-                    $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id, m.status FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE m.status = 1 AND u.wall_id = '$wall_id' ORDER BY addtime ASC LIMIT ".$start.", ".$num;
+                    $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id, m.status FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE m.status = 1 AND u.wall_id = '$wall_id' ORDER BY addtime DESC LIMIT ".$start.", ".$num;
                     $data = $this->model->query($sql);
                     $Eccache->set($cache_key, $data, 10);
                     $list = $Eccache->get($cache_key);
