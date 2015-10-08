@@ -203,7 +203,7 @@ abstract class IndexController extends BaseController
     }
 
     private function set_theme($theme = 'default'){
-        define('__TPL__', base_url('views/' . $theme));
+        define('__TPL__', base_url('themes/' . $theme));
     }
 }
 

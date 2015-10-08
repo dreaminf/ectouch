@@ -88,7 +88,7 @@ class MY_Loader extends CI_Loader
         );
 
         C(load_config());
-        L(require(ROOT_PATH . 'language/' . C('lang') . '/common.php'));
+        L(require(ROOT_PATH . 'include/language/' . C('lang') . '/common.php'));
 
         // 商店关闭了，输出关闭的消息
         if (C('shop_closed') == 1) {
@@ -126,9 +126,9 @@ class MY_Loader extends CI_Loader
 
             $this->tpl = new template;
             $this->tpl->cache_lifetime = C('cache_time');
-            $this->tpl->template_dir = ROOT_PATH . 'views/' . C('template');
-            $this->tpl->cache_dir = ROOT_PATH . 'caches/views';
-            $this->tpl->compile_dir = ROOT_PATH . 'caches/views/compiled';
+            $this->tpl->template_dir = ROOT_PATH . 'themes/' . C('template');
+            $this->tpl->cache_dir = ROOT_PATH . 'data/caches/views';
+            $this->tpl->compile_dir = ROOT_PATH . 'data/caches/views/compiled';
 
             if (APP_DEBUG) {
                 $this->tpl->direct_output = true;
@@ -236,9 +236,8 @@ class MY_Loader extends CI_Loader
         if (!isset(self::$_map[$class])) {
             //$class = ucfirst($class);
             $array = array(
-                ROOT_PATH . 'classes/' . $class . '.php',
-                ROOT_PATH . 'interface/' . $class . '.php',
-                ROOT_PATH . 'vendor/' . $class . '.php',
+                ROOT_PATH . 'include/classes/' . $class . '.php',
+                ROOT_PATH . 'include/vendor/' . $class . '.php',
             );
             foreach ($array as $file) {
                 if (is_file($file)) {
