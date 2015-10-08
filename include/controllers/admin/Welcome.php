@@ -19,7 +19,7 @@ class Welcome extends IndexController {
      * 首页信息
      */
     public function index() {
-        echo 'admin';
+        echo 'admin index';
     }
 
 }

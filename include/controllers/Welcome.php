@@ -20,6 +20,10 @@ class Welcome extends IndexController {
 	 */
 	public function index()
 	{
-		$this->display('welcome_message');
+		$this->display('index.dwt');
+	}
+
+	public function test(){
+		echo 'test';
 	}
 }
