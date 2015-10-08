@@ -265,7 +265,6 @@ class WallController extends CommonController {
         if(!$list){
             $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE (m.status = 1 OR u.openid = '$openid') AND u.wall_id = '$wall_id' ORDER BY m.addtime DESC LIMIT 0, 10";
             $data = $this->model->query($sql);
-            echo $this->model->getSql();
             
             if($data){
                 usort($data, function($a, $b){
