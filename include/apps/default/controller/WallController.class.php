@@ -134,7 +134,7 @@ class WallController extends CommonController {
                 exit(json_encode($result));
             }
 
-            $sql = "SELECT u.nickname, u.headimg FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_prize p ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid not in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY u.addtime DESC";
+            $sql = "SELECT u.nickname, u.headimg, u.openid FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_prize p ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid not in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY u.addtime DESC";
             $list = $this->model->query($sql);
             //$list = array('1');
             if($list){
@@ -143,7 +143,7 @@ class WallController extends CommonController {
                 $rs = isset($list[$key]) ? $list[$key] : $list[0];
                 //存储中奖用户
                 $data['wechat_id'] = $this->model->table('wechat')->field('id')->where(array('status'=>1))->getOne();
-                $data['openid'] = $_SESSION['wechat_user']['openid'];
+                $data['openid'] = $rs['openid'];
                 $data['issue_status'] = 0;
                 $data['dateline'] = time();
                 $data['prize_type'] = 1;

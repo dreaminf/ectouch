@@ -163,6 +163,7 @@
             //停止抽奖
             $("#stop").click(function(){
                 $.get("{:url('start_draw', array('wall_id'=>$this->_var['wall']['id']))}", '', function(result){
+                    $(".award-detail-pic li:first").addClass("active").siblings("li").removeClass("active");
                     if(result.errCode == 0){
                         //中奖
                         $(".award-detail-pic li").removeClass("active");
@@ -184,7 +185,6 @@
                         location.href = result.errMsg;
                     }
                     else{
-                        $(".award-detail-pic li:first").addClass("active").siblings("li").removeClass("active");
                         alert(result.errMsg);
                     }
                     return false;
