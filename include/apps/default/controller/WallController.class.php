@@ -263,9 +263,6 @@ class WallController extends CommonController {
         if(!$list){
             $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE m.status = 1 AND u.wall_id = '$wall_id' ORDER BY addtime DESC LIMIT 0, 10";
             $data = $this->model->query($sql);
-            if(isset($_GET['debug'])){
-                dump($data);    
-            }
             
             if($data){
                 usort($data, function($a, $b){
@@ -275,17 +272,16 @@ class WallController extends CommonController {
                     return $a['addtime'] > $b['addtime'] ? 1 : -1;
                 });
             }
-            if(isset($_GET['debug'])){
-                dump($data);    
-            }
 
             $Eccache->set($cache_key, $data, 10);
             $list = $Eccache->get($cache_key);
         }
+        $sql = "SELECT count(*) as num FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE m.status = 1 AND u.wall_id = '$wall_id' ORDER BY addtime DESC LIMIT 0, 10";
+        $num = $this->model->query($sql);
 
 
         $this->assign('list', $list);
-        $this->assign('msg_count', count($list));
+        $this->assign('msg_count', $num[0]['num']);
         $this->assign('user_num', $user_num);
         $this->assign('user', $wechat_user);
         $this->assign('wall_id', $wall_id);
@@ -298,14 +294,14 @@ class WallController extends CommonController {
     public function get_wall_msg(){
         if(IS_AJAX && IS_GET){
             $start = I('get.start', 0, 'intval');
-            $num = I('get.num', 5);
+            $num = I('get.num', 5); 
             $wall_id = I('get.wall_id');
             if((!empty($start) || $start === 0) && $num){
                 $Eccache = new EcCache();
                 $cache_key = md5('cache_'.$start);
                 $list = $Eccache->get($cache_key);
                 if(!$list){
-                    $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id, m.status FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE m.status = 1 AND u.wall_id = '$wall_id' ORDER BY addtime DESC LIMIT ".$start.", ".$num;
+                    $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id, m.status FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE m.status = 1 AND u.wall_id = '$wall_id' ORDER BY addtime ASC LIMIT ".$start.", ".$num;
                     $data = $this->model->query($sql);
                     $Eccache->set($cache_key, $data, 10);
                     $list = $Eccache->get($cache_key);
