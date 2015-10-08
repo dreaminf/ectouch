@@ -265,6 +265,7 @@ class WallController extends CommonController {
         if(!$list){
             $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE (m.status = 1 OR u.openid = '$_SESSION[wechat_user][openid]') AND u.wall_id = '$wall_id' ORDER BY m.addtime DESC LIMIT 0, 10";
             $data = $this->model->query($sql);
+            echo $this->model->getSql();
             
             if($data){
                 usort($data, function($a, $b){
@@ -280,7 +281,6 @@ class WallController extends CommonController {
         }
         $sql = "SELECT count(*) as num FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE (m.status = 1 OR u.openid = '$_SESSION[wechat_user][openid]') AND u.wall_id = '$wall_id' ORDER BY m.addtime DESC LIMIT 0, 10";
         $num = $this->model->query($sql);
-
 
         $this->assign('list', $list);
         $this->assign('msg_count', $num[0]['num']);
