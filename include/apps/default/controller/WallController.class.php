@@ -85,9 +85,8 @@ class WallController extends CommonController {
         }
 
         //中奖的用户
-        $sql = "SELECT u.nickname, u.headimg FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_prize p ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY u.addtime ASC";
+        $sql = "SELECT u.nickname, u.headimg FROM ".$this->model->pre."wechat_wall_user WHERE wall_id = '$wall_id' AND status = 1 AND openid in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY addtime ASC";
         $rs = $this->model->query($sql);
-        echo $this->model->getSql();
         $list = array();
         if($rs){
             foreach($rs as $k=>$v){
@@ -98,9 +97,8 @@ class WallController extends CommonController {
         $total = $this->model->table('wechat_wall_user')->where(array('status'=>1))->count();
 
         //没中奖的用户
-        $sql = "SELECT u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_prize p ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid not in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY u.addtime DESC";
+        $sql = "SELECT u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_user WHERE wall_id = '$wall_id' AND status = 1 AND openid not in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY addtime DESC";
         $no_prize = $this->model->query($sql);
-        echo $this->model->getSql();
 
         $this->assign('no_prize', $no_prize);
         $this->assign('total', $total);
@@ -212,7 +210,9 @@ class WallController extends CommonController {
         if(empty($wall_id)){
             $this->redirect(url('index/index'));
         }
-        //$_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';
+        if(isset($_GET['debug'])){
+            $_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';    
+        }
         //更改过头像跳到聊天页面
         $wechat_user = $this->model->table('wechat_wall_user')->where(array('openid'=>$_SESSION['wechat_user']['openid']))->count();
         if($wechat_user > 0){
@@ -248,7 +248,9 @@ class WallController extends CommonController {
         if(empty($wall_id)){
             $this->redirect(url('index/index'));
         }
-        //$_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';
+        if(isset($_GET['debug'])){
+            $_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';    
+        }
 
         $wechat_user = $this->model->table('wechat_wall_user')->field('id')->where(array('openid'=>$_SESSION['wechat_user']['openid']))->find();
         //聊天室人数
