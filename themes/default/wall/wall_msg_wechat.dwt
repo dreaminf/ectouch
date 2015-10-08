@@ -28,7 +28,7 @@
                             <img src="{$list.headimg}"/>
                         </div>
                         <div class="fr chat-content">
-                            <h2><span>{$list.nickname}</span>：</h2>
+                            <h2><span>{$list.nickname}</span></h2>
                             <div class="chat-others-content">
                                 <div class="arrow"></div>
                                 {$list.content}
@@ -41,7 +41,7 @@
                             <img src="{$list.headimg}"/>
                         </div>
                         <div class="fl chat-content">
-                            <h2><span>{$list.nickname}</span>：</h2>
+                            <h2><span>{$list.nickname}</span></h2>
                             <div class="chat-others-content">
                                 <div class="arrow"></div>
                                 {$list.content}
