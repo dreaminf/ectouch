@@ -70,6 +70,7 @@
                         if(result){
                             alert(result.errMsg);
                         }
+                        $("textarea[name=content]").val("");
                     }, 'json');
                 });
                 refresh();
