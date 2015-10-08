@@ -209,10 +209,10 @@ header h1{
 		font-size: 1.6rem;
 		color: #4f4f4f;
 		line-height: 2rem;
+		padding-bottom: 0.3rem;
 }
 .chat-me .chat-content h2{
 	text-align: right;
-    padding-bottom: 0.3rem;
 }
 .chat-content{
 	padding-left: 1rem;
@@ -243,7 +243,7 @@ header h1{
 
 .user-chat .arrow{
 	position: absolute;
-	top: 0.8rem;
+	top: 1%;
 	font-size: 0;
 	width: 0;
 	height: 0;
@@ -322,7 +322,7 @@ header h1{
 	}
 	.user-chat .arrow{
 		position: absolute;
-		top: 0.4rem;
+		top: 0.5%;
 		font-size: 0;
 	}
 }

@@ -71,7 +71,7 @@ class WallController extends CommonController {
     }
 
     /**
-     * 抽奖
+     * 抽奖页面
      */
     public function wall_prize(){
         $wall_id = I('get.wall_id');
@@ -87,6 +87,7 @@ class WallController extends CommonController {
         //中奖的用户
         $sql = "SELECT u.nickname, u.headimg FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_prize p ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY u.addtime ASC";
         $rs = $this->model->query($sql);
+        echo $this->model->getSql();
         $list = array();
         if($rs){
             foreach($rs as $k=>$v){
@@ -99,6 +100,7 @@ class WallController extends CommonController {
         //没中奖的用户
         $sql = "SELECT u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_prize p ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid not in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY u.addtime DESC";
         $no_prize = $this->model->query($sql);
+        echo $this->model->getSql();
 
         $this->assign('no_prize', $no_prize);
         $this->assign('total', $total);
