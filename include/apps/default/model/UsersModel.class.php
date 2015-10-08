@@ -941,6 +941,10 @@ class UsersModel extends BaseModel {
             //支付方式信息
             $payment_info = array();
             $payment_info = Model('Order')->payment_info($order['pay_id']);
+            // 只保留显示手机版支付方式
+            if(!file_exists(ROOT_PATH . 'plugins/payment/'.$payment['pay_code'].'.php')){
+                $payment_info = false;
+            }
 
             //无效支付方式
             if ($payment_info === false || substr($payment_info['pay_code'], 0 , 4) == 'pay_') {
