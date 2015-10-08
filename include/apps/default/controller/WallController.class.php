@@ -236,7 +236,7 @@ class WallController extends CommonController {
                 exit(json_encode(array('code'=>1, 'errMsg'=>'请选择对应的活动')));
             }
             $data['user_id'] = I('post.user_id');
-            $data['content'] = I('post.content');
+            $data['content'] = I('post.content', '', 'trim,htmlspecialchars');
             if(empty($data['user_id']) || empty($data['content'])){
                 exit(json_encode(array('code'=>1, 'errMsg'=>'请先登录或者发表的内容不能为空')));
             }
