@@ -190,38 +190,40 @@ class WallController extends CommonController {
      * 微信端抽奖用户申请
      */
     public function wall_user_wechat(){
-        if(IS_POST){
-            $wall_id = I('post.wall_id');
-            if(empty($wall_id)){
-                show_message("请选择对应的活动");
+        if(!empty($_SESSION['wechat_user'])){
+            if(IS_POST){
+                $wall_id = I('post.wall_id');
+                if(empty($wall_id)){
+                    show_message("请选择对应的活动");
+                }
+                $data['nickname'] = I('post.nickname');
+                $data['headimg'] = I('post.headimg');
+                $data['sex'] = I('post.sex');
+                $data['wall_id'] = $wall_id;
+                $data['addtime'] = time();
+                $data['openid'] = $_SESSION['wechat_user']['openid'];
+
+                $this->model->table('wechat_wall_user')->data($data)->insert();
+                $this->redirect(url('wall_msg_wechat', array('wall_id'=>$wall_id)));
+                exit;
             }
-            $data['nickname'] = I('post.nickname');
-            $data['headimg'] = I('post.headimg');
-            $data['sex'] = I('post.sex');
-            $data['wall_id'] = $wall_id;
-            $data['addtime'] = time();
-            $data['openid'] = $_SESSION['wechat_user']['openid'];
+            $wall_id = I('get.wall_id');
+            if(empty($wall_id)){
+                $this->redirect(url('index/index'));
+            }
+            /*if(isset($_GET['debug'])){
+                $_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';    
+            }*/
+            //更改过头像跳到聊天页面
+            $wechat_user = $this->model->table('wechat_wall_user')->where(array('openid'=>$_SESSION['wechat_user']['openid']))->count();
+            if($wechat_user > 0){
+                $this->redirect(url('wall_msg_wechat', array('wall_id'=>$wall_id)));
+            }
 
-            $this->model->table('wechat_wall_user')->data($data)->insert();
-            $this->redirect(url('wall_msg_wechat', array('wall_id'=>$wall_id)));
-            exit;
+            $this->assign('user', $_SESSION['wechat_user']);
+            $this->assign('wall_id', $wall_id);
+            $this->display('wall/wall_user_wechat.dwt');
         }
-        $wall_id = I('get.wall_id');
-        if(empty($wall_id)){
-            $this->redirect(url('index/index'));
-        }
-        if(isset($_GET['debug'])){
-            $_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';    
-        }
-        //更改过头像跳到聊天页面
-        $wechat_user = $this->model->table('wechat_wall_user')->where(array('openid'=>$_SESSION['wechat_user']['openid']))->count();
-        if($wechat_user > 0){
-            $this->redirect(url('wall_msg_wechat', array('wall_id'=>$wall_id)));
-        }
-
-        $this->assign('user', $_SESSION['wechat_user']);
-        $this->assign('wall_id', $wall_id);
-        $this->display('wall/wall_user_wechat.dwt');
     }
 
     /**
@@ -248,9 +250,9 @@ class WallController extends CommonController {
         if(empty($wall_id)){
             $this->redirect(url('index/index'));
         }
-        if(isset($_GET['debug'])){
+        /*if(isset($_GET['debug'])){
             $_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';    
-        }
+        }*/
 
         $wechat_user = $this->model->table('wechat_wall_user')->field('id')->where(array('openid'=>$_SESSION['wechat_user']['openid']))->find();
         //聊天室人数
