@@ -10,6 +10,10 @@ data/caches/logs/*
 !data/caches/logs/index.html
 !data/caches/logs/.htaccess
 
+data/caches/session/*
+!data/caches/session/index.html
+!data/caches/session/.htaccess
+
 # IDE Files
 #-------------------------
 /nbproject/
