@@ -1,11 +1,12 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * 缓存管理类
  */
 class Cache {
     public $cache = NULL;
-    protected $options = array('CACHE_TYPE' => 'Files');
+    protected $options = array('CACHE_TYPE' => 'File');
 
     public function __construct( $options = array() ) {
         if(!empty($options)) {

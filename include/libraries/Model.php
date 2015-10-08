@@ -1,4 +1,6 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
 //模型类，加载了外部的数据库驱动类和缓存类
 class Model{
     public $db = NULL; // 当前数据库操作对象

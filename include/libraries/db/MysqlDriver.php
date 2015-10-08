@@ -1,4 +1,6 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
 class MysqlDriver {
 	private $_writeLink = NULL; //主
 	private $_readLink = NULL; //从

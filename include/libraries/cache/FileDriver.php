@@ -1,9 +1,10 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * 文件类型缓存类
  */
-class FilesDriver {
+class FileDriver {
 
     /**
      * 架构函数
@@ -13,7 +14,7 @@ class FilesDriver {
         if(!empty($options)) {
             $this->options =  $options;
         }
-        $this->options['temp']      =   !empty($options['temp'])?   $options['temp']    :   ROOT_PATH .'caches/filecache/';
+        $this->options['temp']      =   !empty($options['temp'])?   $options['temp']    :   ROOT_PATH .'caches/cache/';
         $this->options['prefix']    =   isset($options['prefix'])?  $options['prefix']  :   '';
         $this->options['expire']    =   isset($options['expire'])?  $options['expire']  :   0;
         $this->options['length']    =   isset($options['length'])?  $options['length']  :   0;
