@@ -268,7 +268,7 @@ class WallController extends CommonController {
                     if($a['addtime'] == $b['addtime']){
                         return 0;
                     }
-                    return $a['addtime'] > $b['addtime'] ? -1 : 1;
+                    return $a['addtime'] > $b['addtime'] ? 1 : -1;
                 });
             }
             $Eccache->set($cache_key, $data, 10);
