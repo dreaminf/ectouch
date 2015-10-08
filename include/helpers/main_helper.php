@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * 更新用户SESSION,COOKIE及登录时间、登录次数。
