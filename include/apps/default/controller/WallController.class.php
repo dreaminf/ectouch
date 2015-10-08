@@ -253,8 +253,8 @@ class WallController extends CommonController {
         /*if(isset($_GET['debug'])){
             $_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';    
         }*/
-
-        $wechat_user = $this->model->table('wechat_wall_user')->field('id')->where(array('openid'=>$_SESSION['wechat_user']['openid']))->find();
+        $openid = $_SESSION['wechat_user']['openid'];
+        $wechat_user = $this->model->table('wechat_wall_user')->field('id')->where(array('openid'=>$openid))->find();
         //聊天室人数
         $user_num = $this->model->table('wechat_wall_msg')->field("COUNT(DISTINCT user_id)")->getOne();
 
@@ -263,7 +263,7 @@ class WallController extends CommonController {
         $Eccache = new EcCache();
         $list = $Eccache->get($cache_key);
         if(!$list){
-            $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE (m.status = 1 OR u.openid = '$_SESSION[wechat_user][openid]') AND u.wall_id = '$wall_id' ORDER BY m.addtime DESC LIMIT 0, 10";
+            $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE (m.status = 1 OR u.openid = '$openid') AND u.wall_id = '$wall_id' ORDER BY m.addtime DESC LIMIT 0, 10";
             $data = $this->model->query($sql);
             echo $this->model->getSql();
             
@@ -279,7 +279,7 @@ class WallController extends CommonController {
             $Eccache->set($cache_key, $data, 10);
             $list = $Eccache->get($cache_key);
         }
-        $sql = "SELECT count(*) as num FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE (m.status = 1 OR u.openid = '$_SESSION[wechat_user][openid]') AND u.wall_id = '$wall_id' ORDER BY m.addtime DESC LIMIT 0, 10";
+        $sql = "SELECT count(*) as num FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE (m.status = 1 OR u.openid = '$openid') AND u.wall_id = '$wall_id' ORDER BY m.addtime DESC LIMIT 0, 10";
         $num = $this->model->query($sql);
 
         $this->assign('list', $list);
@@ -303,7 +303,8 @@ class WallController extends CommonController {
                 $cache_key = md5('cache_'.$start);
                 $list = $Eccache->get($cache_key);
                 if(!$list){
-                    $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id, m.status FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE (m.status = 1 OR u.openid = '$_SESSION[wechat_user][openid]') AND u.wall_id = '$wall_id' ORDER BY m.addtime ASC LIMIT ".$start.", ".$num;
+                    $openid = $_SESSION['wechat_user']['openid'];
+                    $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id, m.status FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE (m.status = 1 OR u.openid = '$openid') AND u.wall_id = '$wall_id' ORDER BY m.addtime ASC LIMIT ".$start.", ".$num;
                     $data = $this->model->query($sql);
                     $Eccache->set($cache_key, $data, 10);
                     $list = $Eccache->get($cache_key);
