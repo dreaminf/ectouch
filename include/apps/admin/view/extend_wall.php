@@ -25,7 +25,7 @@
                         <td>{$l['status']}</td>
                         <td>
                             <a class="btn btn-primary" href="{url('wall_edit', array('id'=>$l['id']))}">设置</a>
-                            <a class="btn btn-default" href="{url('wall_user', array('id'=>$l['id']))}">数据</a>
+                            <a class="btn btn-default" href="{url('wall_msg_check', array('id'=>$l['id'], 'status'=>0))}">数据</a>
                             <a class="btn btn-default fancybox fancybox.iframe getqr" href="{url('towall', array('id'=>$l['id']))}">上墙地址</a>
                             <a class="btn btn-default" href="{url('default/wall/wall_msg', array('wall_id'=>$l['id']))}" target="_blank">大屏幕</a>
                             <a class="btn btn-primary" href="javascript:if(confirm('确定要删除吗？')){location.href='{url('wall_del', array('id'=>$l['id']))}'}">删除</a>

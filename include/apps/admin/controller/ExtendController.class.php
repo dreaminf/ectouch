@@ -429,6 +429,52 @@ class ExtendController extends AdminController
     }
 
     /**
+     * 审核以及未审核消息记录
+     */
+    public function wall_msg_check(){
+        $wall_id = I('get.id');
+        if(empty($wall_id)){
+            $this->message('请选择需要查看的数据', NULL, 'error');
+        }
+        $status = I('get.status');
+        $where = "";
+        if(empty($status)){
+            $where = " AND m.status = 0";
+        }
+
+        $sql = "SELECT COUNT(*) as num FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id LEFT JOIN ".$this->model->pre."wechat_wall w ON u.wall_id = w.id WHERE w.id = ".$wall_id.$where;
+        $num  = $this->model->query($sql);
+        //分页
+        $filter['page'] = '{page}';
+        $filter['id'] = $wall_id;
+        $offset = $this->pageLimit(url('wall_msg_check', $filter), 12);
+        $total = $num[0]['num'];
+        $this->assign('page', $this->pageShow($total));
+
+        $sql = "SELECT m.user_id, m.content, m.addtime, m.checktime, m.status, u.nickname FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id LEFT JOIN ".$this->model->pre."wechat_wall w ON u.wall_id = w.id WHERE w.id = ".$wall_id.$where ." ORDER BY m.addtime ASC LIMIT $offset";
+        $list =  $this->model->query($sql);
+        if($list){
+            foreach($list as $k=>$v){
+                if($v['status'] == 1){
+                    $list[$k]['status'] = '已审核';
+                    $list[$k]['handler'] = '';
+                }
+                else{
+                    $list[$k]['status'] = '未审核';
+                    $list[$k]['handler'] = '<a class="btn btn-primary" href="'.url('wall_check', array('wall_id'=>$wall_id, 'msg_id'=>$v['id'], 'user_id'=>$v['user_id'])).'">审核</a>';
+                }
+                $list[$k]['addtime'] = $v['addtime'] ? date('Y-m-d H:i', $v['addtime']) : '';
+                $list[$k]['checktime'] = $v['checktime'] ? date('Y-m-d H:i', $v['checktime']) : '';
+            }
+        }
+
+        $this->assign('status', $status);
+        $this->assign('wall_id', $wall_id);
+        $this->assign('list', $list);
+        $this->display('extend_wall_msg_check');
+    }
+
+    /**
      * 用户留言记录
      */
     public function wall_msg(){
