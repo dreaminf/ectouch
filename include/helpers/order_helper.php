@@ -133,7 +133,7 @@ function shipping_fee($shipping_code, $shipping_config, $goods_weight, $goods_am
         $shipping_config = unserialize($shipping_config);
     }
 
-    $filename = ROOT_PATH . 'modules/shipping/' . $shipping_code . '.php';
+    $filename = ROOT_PATH . 'plugins/shipping/' . $shipping_code . '.php';
     if (file_exists($filename))
     {
         include_once($filename);
@@ -166,7 +166,7 @@ function shipping_insure_fee($shipping_code, $goods_amount, $insure)
     }
     else
     {
-        $path = ROOT_PATH . 'modules/shipping/' . $shipping_code . '.php';
+        $path = ROOT_PATH . 'plugins/shipping/' . $shipping_code . '.php';
 
         if (file_exists($path))
         {
@@ -285,7 +285,7 @@ function available_payment_list($support_cod, $cod_fee = 0, $is_online = false)
         $modules[] = $row;
     }
 
-    include_once(ROOT_PATH.'helpers/compositor.php');
+    include_once(ROOT_PATH.'include/helpers/compositor.php');
 
     if(isset($modules))
     {
@@ -1563,7 +1563,7 @@ function order_refund($order, $refund_type, $refund_note, $refund_amount = 0)
     }
     else
     {
-        include_once(ROOT_PATH . 'language/' .C('lang'). '/admin/order.php');
+        include_once(ROOT_PATH . 'include/language/' .C('lang'). '/admin/order.php');
         $change_desc = sprintf(L('order_refund'), $order['order_sn']);
     }
 
@@ -2138,7 +2138,7 @@ function merge_order($from_order_sn, $to_order_sn)
             "WHERE order_id " . db_create_in(array($from_order['order_id'], $to_order['order_id']));
     $global->db->query($sql);
 
-    include_once(ROOT_PATH . 'includes/lib_clips.php');
+    include_once(ROOT_PATH . 'include/helpers/clips_helper.php');
     /* 插入支付日志 */
     insert_pay_log($order_id, $order['order_amount'], PAY_ORDER);
 
@@ -2214,7 +2214,7 @@ function &get_shipping_object($shipping_id)
         return $object;
     }
 
-    $file_path = ROOT_PATH.'modules/shipping/' . $shipping['shipping_code'] . '.php';
+    $file_path = ROOT_PATH.'plugins/shipping/' . $shipping['shipping_code'] . '.php';
 
     include_once($file_path);
 
@@ -2595,7 +2595,7 @@ function integral_to_give($order)
     /* 判断是否团购 */
     if ($order['extension_code'] == 'group_buy')
     {
-        include_once(ROOT_PATH . 'includes/lib_goods.php');
+        include_once(ROOT_PATH . 'include/helpers/goods_helper.php');
         $group_buy = group_buy_info(intval($order['extension_id']));
 
         return array('custom_points' => $group_buy['gift_integral'], 'rank_points' => $order['goods_amount']);

@@ -238,7 +238,7 @@ function &init_users()
     }
 	$integrate_code = (C('integrate_code') == 'ecshop') ? 'passport':C('integrate_code');
 	$integrate_config = C('integrate_config');
-    include_once(ROOT_PATH . 'modules/integrates/' . $integrate_code . '.php');
+    include_once(ROOT_PATH . 'plugins/integrates/' . $integrate_code . '.php');
     $cfg = unserialize($integrate_config);
     $cls = new $integrate_code($cfg);
 
@@ -1076,7 +1076,7 @@ function virtual_card_shipping ($goods, $order_sn, &$msg, $process = 'other')
 {
     $global = getInstance();
     /* 包含加密解密函数所在文件 */
-    include_once(ROOT_PATH . 'helpers/code_helper.php');
+    include_once(ROOT_PATH . 'include/helpers/code_helper.php');
 
     /* 检查有没有缺货 */
     $sql = "SELECT COUNT(*) FROM ".$global->ecs->table('virtual_card')." WHERE goods_id = '$goods[goods_id]' AND is_saled = 0 ";
@@ -1197,7 +1197,7 @@ function virtual_card_result($order_sn, $goods)
 {
     $global = getInstance();
     /* 包含加密解密函数所在文件 */
-    include_once(ROOT_PATH . 'helpers/code_helper.php');
+    include_once(ROOT_PATH . 'include/helpers/code_helper.php');
 
     /* 获取已经发送的卡片数据 */
     $sql = "SELECT card_sn, card_password, end_date, crc32 FROM ".$global->ecs->table('virtual_card')." WHERE goods_id= '$goods[goods_id]' AND order_sn = '$order_sn' ";

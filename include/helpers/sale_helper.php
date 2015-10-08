@@ -319,7 +319,7 @@ function get_user_count($user_id = 0){
             $sql = "SELECT shipping_code FROM " . $this->pre . "shipping WHERE shipping_id = '$order[shipping_id]'";
             $res = $this->row($sql);
             $shipping_code = $res['shipping_code'];
-            $plugin = ROOT_PATH . 'includes/modules/shipping/' . $shipping_code . '.php';
+            $plugin = ROOT_PATH . 'plugins/shipping/' . $shipping_code . '.php';
             if (file_exists($plugin)) {
                 include_once($plugin);
                 $shipping = new $shipping_code;

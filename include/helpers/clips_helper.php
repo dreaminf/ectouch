@@ -634,7 +634,7 @@ function get_user_default($user_id)
             " WHERE user_id = '" .$user_id. "' AND add_time > '" .local_strtotime('-1 months'). "'";
     $info['order_count'] = $global->db->getOne($sql);
 
-    include_once(ROOT_PATH . 'helpers/order_helper.php');
+    include_once(ROOT_PATH . 'include/helpers/order_helper.php');
     $sql = "SELECT order_id, order_sn ".
             " FROM " .$global->ecs->table('order_info').
             " WHERE user_id = '" .$user_id. "' AND shipping_time > '" .$last_time. "'". order_query_sql('shipped');
