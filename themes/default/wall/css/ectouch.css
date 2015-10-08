@@ -93,6 +93,7 @@ header h1{
 .user-pic img{
 	width: 100%;
 	vertical-align: middle;
+	border-radius: 50%;
 }
 .user-info{
 	margin-left: 10.5rem;
@@ -156,6 +157,7 @@ header h1{
 }
 .other-ava ul li a img{
 	width: 100%;
+	border-radius: 50%;
 }
 .user-btn{
 	margin-top: 2.5rem;
@@ -201,6 +203,7 @@ header h1{
 }
 .chat-img img{
 	width: 6rem;
+	border-radius: 50%;
 }
 .chat-content h2{
 		font-size: 1.6rem;
