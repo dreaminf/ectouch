@@ -263,6 +263,10 @@ class WallController extends CommonController {
         if(!$list){
             $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE m.status = 1 AND u.wall_id = '$wall_id' ORDER BY addtime DESC LIMIT 0, 10";
             $data = $this->model->query($sql);
+            if(isset($_GET['debug'])){
+                dump($data);    
+            }
+            
             if($data){
                 usort($data, function($a, $b){
                     if($a['addtime'] == $b['addtime']){
@@ -271,6 +275,10 @@ class WallController extends CommonController {
                     return $a['addtime'] > $b['addtime'] ? 1 : -1;
                 });
             }
+            if(isset($_GET['debug'])){
+                dump($data);    
+            }
+
             $Eccache->set($cache_key, $data, 10);
             $list = $Eccache->get($cache_key);
         }
