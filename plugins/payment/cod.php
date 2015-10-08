@@ -1,12 +1,5 @@
 <?php
-
-/**
- * Class Cod
- * Desc: 货到付款插件
- * Author: carson
- * Email: wanganlin@ecmoban.com
- * Date: 20150608
- */
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cod implements PaymentInterface
 {

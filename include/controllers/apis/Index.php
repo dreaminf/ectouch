@@ -1,21 +1,5 @@
 <?php
-
-/**
- * ECTouch Open Source Project
- * ============================================================================
- * Copyright (c) 2012-2014 http://ectouch.cn All rights reserved.
- * ----------------------------------------------------------------------------
- * 文件名称：ApiController.class.php
- * ----------------------------------------------------------------------------
- * 功能描述：ECTouch接口控制器
- * 调用说明：url('api/index', array('openid'=>$openid, 'title'=>$title, 'msg'=>$msg, 'url'=>$url));
- * ----------------------------------------------------------------------------
- * Licensed ( http://www.ectouch.cn/docs/license.txt )
- * ----------------------------------------------------------------------------
- */
-
-/* 访问控制 */
-defined('IN_ECTOUCH') or die('Deny Access');
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Api extends IndexController
 {

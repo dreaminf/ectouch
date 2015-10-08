@@ -1,19 +1,5 @@
 <?php
-
-/**
- * ECTouch Open Source Project
- * ============================================================================
- * Copyright (c) 2012-2014 http://ectouch.cn All rights reserved.
- * ----------------------------------------------------------------------------
- * 文件名称：SnatchControoller.class.php
- * ----------------------------------------------------------------------------
- * 功能描述：夺宝奇兵控制器
- * ----------------------------------------------------------------------------
- * Licensed ( http://www.ectouch.cn/docs/license.txt )
- * ----------------------------------------------------------------------------
- */
-/* 访问控制 */
-defined('IN_ECTOUCH') or die('Deny Access');
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Snatch extends IndexController {
 

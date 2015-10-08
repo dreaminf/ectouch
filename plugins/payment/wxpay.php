@@ -1,12 +1,5 @@
 <?php
-
-/**
- * Class Wxpay
- * Desc: 微信支付插件
- * Author: carson
- * Email: wanganlin@ecmoban.com
- * Date: 20150608
- */
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class wxpay implements PaymentInterface
 {

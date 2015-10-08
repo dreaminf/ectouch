@@ -1,29 +1,16 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
-/**
- * ECTouch Open Source Project
- * ============================================================================
- * Copyright (c) 2012-2014 http://ectouch.cn All rights reserved.
- * ----------------------------------------------------------------------------
- * 文件名称：unionpay.php
- * ----------------------------------------------------------------------------
- * 功能描述：银联WAP支付插件
- * ----------------------------------------------------------------------------
- * Licensed ( http://www.ectouch.cn/docs/license.txt )
- * ----------------------------------------------------------------------------
- */
-
-defined('SDK_SIGN_CERT_PATH') or define('SDK_SIGN_CERT_PATH', DATA_PATH . '/cer/' . 'PM_700000000000001_acp.pfx');
-defined('SDK_SIGN_CERT_PWD') or define('SDK_SIGN_CERT_PWD', '000000');
-defined('SDK_VERIFY_CERT_DIR') or define('SDK_VERIFY_CERT_DIR', DATA_PATH . '/cer/');
-defined('SDK_FRONT_TRANS_URL') or define('SDK_FRONT_TRANS_URL', 'https://101.231.204.80:5000/gateway/api/frontTransReq.do');
-defined('SDK_BACK_TRANS_URL') or define('SDK_BACK_TRANS_URL', 'https://101.231.204.80:5000/gateway/api/backTransReq.do');
-defined('SDK_SINGLE_QUERY_URL') or define('SDK_SINGLE_QUERY_URL', 'https://101.231.204.80:5000/gateway/api/queryTrans.do');
-
-/**
- * 余额支付插件类
- */
 class unionpay {
+
+    public funcion __construct(){
+        defined('SDK_SIGN_CERT_PATH') or define('SDK_SIGN_CERT_PATH', DATA_PATH . '/cer/' . 'PM_700000000000001_acp.pfx');
+        defined('SDK_SIGN_CERT_PWD') or define('SDK_SIGN_CERT_PWD', '000000');
+        defined('SDK_VERIFY_CERT_DIR') or define('SDK_VERIFY_CERT_DIR', DATA_PATH . '/cer/');
+        defined('SDK_FRONT_TRANS_URL') or define('SDK_FRONT_TRANS_URL', 'https://101.231.204.80:5000/gateway/api/frontTransReq.do');
+        defined('SDK_BACK_TRANS_URL') or define('SDK_BACK_TRANS_URL', 'https://101.231.204.80:5000/gateway/api/backTransReq.do');
+        defined('SDK_SINGLE_QUERY_URL') or define('SDK_SINGLE_QUERY_URL', 'https://101.231.204.80:5000/gateway/api/queryTrans.do');
+    }
     /**
      * 生成支付代码
      *
