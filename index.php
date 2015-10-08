@@ -4,7 +4,7 @@ if(version_compare(PHP_VERSION, '5.2.4', '<')){
 }
 header('Content-Type: text/html; charset=utf-8');
 defined('ENVIRONMENT') or define('ENVIRONMENT', 'development');
-define('ROOT_PATH', str_replace('\\', '/', dirname(__FILE__) . '/') . '/');
+define('ROOT_PATH', str_replace('\\', '/', dirname(__FILE__)) . '/');
 
 /*
  *---------------------------------------------------------------
