@@ -85,7 +85,7 @@ class WallController extends CommonController {
         }
 
         //中奖的用户
-        $sql = "SELECT u.nickname, u.headimg FROM ".$this->model->pre."wechat_wall_user WHERE wall_id = '$wall_id' AND status = 1 AND openid in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY addtime ASC";
+        $sql = "SELECT nickname, headimg FROM ".$this->model->pre."wechat_wall_user WHERE wall_id = '$wall_id' AND status = 1 AND openid in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY addtime ASC";
         $rs = $this->model->query($sql);
         $list = array();
         if($rs){
@@ -97,7 +97,7 @@ class WallController extends CommonController {
         $total = $this->model->table('wechat_wall_user')->where(array('status'=>1))->count();
 
         //没中奖的用户
-        $sql = "SELECT u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_user WHERE wall_id = '$wall_id' AND status = 1 AND openid not in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY addtime DESC";
+        $sql = "SELECT nickname, headimg, id FROM ".$this->model->pre."wechat_wall_user WHERE wall_id = '$wall_id' AND status = 1 AND openid not in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY addtime DESC";
         $no_prize = $this->model->query($sql);
 
         $this->assign('no_prize', $no_prize);
