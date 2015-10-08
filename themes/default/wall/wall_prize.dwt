@@ -152,7 +152,7 @@
                         }
                         $(".award-detail-pic li").eq(i).addClass("active").siblings("li").removeClass("active");
                         i++;
-                    }, 60);
+                    }, 100);
                     $("#stop").css("display", "inline-block");
                     $("#start").css("display", "none");
                 }
