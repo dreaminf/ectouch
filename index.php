@@ -3,7 +3,8 @@ if(version_compare(PHP_VERSION, '5.2.4', '<')){
     die('require PHP > 5.2.4 !');
 }
 header('Content-Type: text/html; charset=utf-8');
-define('ENVIRONMENT', 'development');
+defined('ENVIRONMENT') or define('ENVIRONMENT', 'development');
+define('ROOT_PATH', str_replace('\\', '/', dirname(__FILE__) . '/') . '/');
 
 /*
  *---------------------------------------------------------------
