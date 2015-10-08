@@ -59,6 +59,13 @@
                                     <img src="__TPL__/wall/img/ava3.png"/>
                                 </a>
                             </li>
+                            {if $user.headimgurl}
+                            <li>
+                                <a href="javascript:;">
+                                    <img src="{$user.headimgurl}">
+                                </a>
+                            </li>
+                            {/if}
                         </ul>
                         <input type="hidden" name="headimg" value="{$user.headimgurl}" />
                         <input type="hidden" name="wall_id" value="{$wall_id}">
