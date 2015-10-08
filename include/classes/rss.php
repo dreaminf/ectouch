@@ -1,37 +1,5 @@
 <?php
-
-/**
- * ECTouch E-Commerce Project
- * ============================================================================
- * Copyright (c) 2014-2015 http://ectouch.cn All rights reserved.
- * ----------------------------------------------------------------------------
- * This is NOT a freeware, use is subject to license terms
- * ----------------------------------------------------------------------------
- * Licensed ( http://www.ectouch.cn/license )
- * ----------------------------------------------------------------------------
- */
-
-/*-----------------------------------------------------------------------*/
-// @package RSSBuilder
-// @category FLP
-/*-----------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------*/
-// Abstract class for getting ini preferences
-//-------------------------------------------------
-// Tested with WAMP (XP-SP1/1.3.24/4.0.12/4.3.0)
-// Last change: 2003-05-30
-//-------------------------------------------------
-// @desc Abstract class for the RSS classes
-// @access protected
-// @author Michael Wimmer <flaimo@gmx.net>
-// @copyright Michael Wimmer
-// @link http://www.flaimo.com/
-// @global array $GLOBALS['_TICKER_ini_settings']
-// @abstract
-// @package RSSBuilder
-// @category FLP
-// @version 1.001
-/*-----------------------------------------------------------------------*/
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class RSSBase
 {
