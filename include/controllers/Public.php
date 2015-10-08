@@ -17,23 +17,27 @@
 defined('IN_ECTOUCH') or die('Deny Access');
 
 class Public extends IndexController {
-
-    // 验证码
-    public function captcha() {
-        Image::buildImageVerify();
-    }
-
-    // 地区筛选
-    public function region() {
-        $type = I('request.type', 0, 'intval');
-        $parent = I('request.parent', 0, 'intval');
+    
+    public function region(){
+        $type   = !empty($_REQUEST['type'])   ? intval($_REQUEST['type'])   : 0;
+        $parent = !empty($_REQUEST['parent']) ? intval($_REQUEST['parent']) : 0;
 
         $arr['regions'] = get_regions($type, $parent);
-        $arr['type'] = $type;
-        $arr['target'] = I('request.target', '', 'trim,stripslashes');
-        $arr['target'] = htmlspecialchars($arr['target']);
+        $arr['type']    = $type;
+        $arr['target']  = !empty($_REQUEST['target']) ? stripslashes(trim($_REQUEST['target'])) : '';
+        $arr['target']  = htmlspecialchars($arr['target']);
 
-        echo json_encode($arr);
+        $json = new JSON;
+        echo $json->encode($arr);
+    }
+
+    public function captcha(){
+        $img = new captcha(ROOT_PATH . 'data/captcha/', C('captcha_width'), C('captcha_height'));
+        @ob_end_clean(); //清除之前出现的多余输入
+        if (isset($_REQUEST['is_login'])){
+            $img->session_word = 'captcha_login';
+        }
+        $img->generate_image();
     }
 
 }
