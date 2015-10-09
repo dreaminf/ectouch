@@ -105,6 +105,7 @@ class WechatController extends CommonController
         //扫描二维码
         if(!empty($scene_id)){
             //如果是链接，跳转
+            logResult($scene_id);
             if(preg_match("/http|https/", $scene_id)){
                 $this->redirect($scene_id);
             }
