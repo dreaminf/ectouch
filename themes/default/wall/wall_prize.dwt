@@ -193,6 +193,7 @@
                         else{
                             alert(result.errMsg);
                         }
+                        location.reload();
                         return false;
                     }, 'json');
                 }
