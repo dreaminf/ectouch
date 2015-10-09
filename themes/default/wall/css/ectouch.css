@@ -215,6 +215,7 @@ header h1{
 	text-align: right;
 }
 .chat-content{
+	display: inline-block;
 	margin-left: 1rem;
 	max-width: 70%;
 	position: relative;
