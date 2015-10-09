@@ -193,6 +193,7 @@
                         if(result.errCode == 0){
                             $("#award").empty();
                             $(".award-detail-pic li:first").addClass("active").siblings("li").removeClass("active");
+                            $("#prize_num").html("0");
                         }
                         else if(result.errCode == 1){
                             location.href = result.errMsg;
