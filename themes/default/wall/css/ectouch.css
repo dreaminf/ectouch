@@ -243,7 +243,7 @@ header h1{
 
 .user-chat .arrow{
 	position: absolute;
-	top: 1%;
+	top: 0.8rem;
 	font-size: 0;
 	width: 0;
 	height: 0;
@@ -322,7 +322,7 @@ header h1{
 	}
 	.user-chat .arrow{
 		position: absolute;
-		top: 0.5%;
+		top: 0.4rem;
 		font-size: 0;
 	}
 }

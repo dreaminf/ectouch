@@ -85,10 +85,10 @@
                         var html = '', j=0;
                         for(var i=result.data.length; i>0; i--){
                             if(result['data'][j]['id'] == user){
-                                html += '<div class="chat-me"><div class="fr chat-img"><img src="'+result['data'][j]['headimg']+'"/></div><div class="fr chat-content"><h2><span>'+result['data'][j]['nickname']+'</span>：</h2><div class="chat-others-content"><div class="arrow"></div>'+result['data'][j]['content']+'</div></div></div>';
+                                html += '<div class="chat-me"><div class="fr chat-img"><img src="'+result['data'][j]['headimg']+'"/></div><div class="fr chat-content"><h2><span>'+result['data'][j]['nickname']+'</span></h2><div class="chat-others-content"><div class="arrow"></div>'+result['data'][j]['content']+'</div></div></div>';
                             }
                             else{
-                                html += '<div class="chat-others"><div class="fl chat-img"><img src="'+result['data'][j]['headimg']+'"/></div><div class="fl chat-content"><h2><span>'+result['data'][j]['nickname']+'</span>：</h2><div class="chat-others-content"><div class="arrow"></div>'+result['data'][j]['content']+'</div></div></div>';
+                                html += '<div class="chat-others"><div class="fl chat-img"><img src="'+result['data'][j]['headimg']+'"/></div><div class="fl chat-content"><h2><span>'+result['data'][j]['nickname']+'</span></h2><div class="chat-others-content"><div class="arrow"></div>'+result['data'][j]['content']+'</div></div></div>';
                             }
                             j++;
                         }
