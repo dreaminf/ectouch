@@ -535,6 +535,8 @@ class ExtendController extends AdminController
         //留言审核
         if(!empty($user_id) && !empty($msg_id)){
             $this->model->table('wechat_wall_msg')->data(array('status'=>1, 'checktime'=>time()))->where(array('user_id'=>$user_id, 'id'=>$msg_id, 'status'=>0))->update();
+            //审核用户
+            $this->model->table('wechat_wall_user')->data(array('status'=>1, 'checktime'=>time()))->where(array('id'=>$user_id, 'status'=>0))->update();
             if(isset($_GET['status'])){
                 $status = I('get.status');
                 $this->redirect(url('wall_msg_check', array('id'=>$wall_id, 'status'=>$status)));

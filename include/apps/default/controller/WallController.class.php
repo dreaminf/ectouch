@@ -63,9 +63,9 @@ class WallController extends CommonController {
         $wall = $this->model->table('wechat_wall')->field('id, name, logo, background, starttime, endtime, prize, content, support')->where(array('id'=>$wall_id, 'status'=>1))->find();
 
         //用户
-        //$list = $this->model->table('wechat_wall_user')->field('nickname, headimg')->where(array('wall_id'=>$wall_id, 'status'=>1))->order('addtime desc')->select();
-        $sql = "SELECT u.nickname, u.headimg FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE u.wall_id = '$wall_id' AND m.status = 1 GROUP BY m.user_id ORDER BY u.addtime DESC";
-        $list = $this->model->query($sql);
+        $list = $this->model->table('wechat_wall_user')->field('nickname, headimg')->where(array('wall_id'=>$wall_id, 'status'=>1))->order('addtime desc')->select();
+        /*$sql = "SELECT u.nickname, u.headimg FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE u.wall_id = '$wall_id' AND m.status = 1 GROUP BY m.user_id ORDER BY u.addtime DESC";
+        $list = $this->model->query($sql);*/
 
         $this->assign('wall', $wall);
         $this->assign('list', $list);

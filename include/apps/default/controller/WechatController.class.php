@@ -104,11 +104,6 @@ class WechatController extends CommonController
         }
         //扫描二维码
         if(!empty($scene_id)){
-            //如果是链接，跳转
-            if(preg_match("/http:\/\/|https:\/\//", $scene_id)){
-                logResult($scene_id);
-                $this->redirect($scene_id);
-            }
             $qrcode_fun = $this->model->table('wechat_qrcode')->field('function')->where('scene_id = "'.$scene_id.'"')->getOne();
             //扫码引荐
             if(!empty($qrcode_fun) && isset($flag)){
