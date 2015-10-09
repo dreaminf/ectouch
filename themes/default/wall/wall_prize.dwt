@@ -163,7 +163,7 @@
                         //获奖人数
                         var prize_num = $("#award li").length ? $("#award li").length : 0;
                         $("#prize_num").html(prize_num);
-                        setTimeout(function(){remove_prize(result.data.id)}, 3000);
+                        setTimeout(function(){remove_prize(result.data.id)}, 2000);
                     }
                     else if(result.errCode == 1){
                         location.href = result.errMsg;
