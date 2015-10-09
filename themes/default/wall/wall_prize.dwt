@@ -28,12 +28,12 @@
                     
                         <div class="award-content-detail">
                             <ul class="award-detail-pic">
-                                <li class="active">
+                                <li class="active" oid="0">
                                     <img src="__TPL__/wall/img/unknow.png"/>
                                     <p class="award-content-name">求中奖</p>
                                 </li>
                                 {foreach from=$no_prize item=no}
-                                <li>
+                                <li oid="{$no.id}">
                                     <img src="{$no.headimg}"/>
                                     <p class="award-content-name">{$no.nickname}</p>
                                 </li>
@@ -147,11 +147,18 @@
             //停止抽奖
             $("#stop").click(function(){
                 $.get("{:url('start_draw', array('wall_id'=>$this->_var['wall']['id']))}", '', function(result){
-                    $(".award-detail-pic li:first").addClass("active").siblings("li").removeClass("active");
                     if(result.errCode == 0){
                         //中奖
-                        $(".award-detail-pic li").removeClass("active");
-                        $(".award-detail-pic").append('<li class="active"><img src="'+result.data.headimg+'"><p class="award-content-name">'+result.data.nickname+'</p></li>');
+                        $(".award-detail-pic li").each(function(){
+                            var oid = $(this).attr("oid");
+                            if(oid = result.data.id){
+                                $(this).addClass("active");
+                            }
+                            else{
+                                $(this).removeClass("active");
+                            }
+                        });
+                        
                         var key = $("#award li span.fl:last").text();
                         if(key){
                             key = parseInt(key) + 1;
@@ -164,11 +171,13 @@
                         //获奖人数
                         var prize_num = $("#award li").length ? $("#award li").length : 0;
                         $("#prize_num").html(prize_num);
+                        setTimeout('$(".award-detail-pic li:first").addClass("active").siblings("li").removeClass("active");', 500);
                     }
                     else if(result.errCode == 1){
                         location.href = result.errMsg;
                     }
                     else{
+                        $(".award-detail-pic li:first").addClass("active").siblings("li").removeClass("active");
                         alert(result.errMsg);
                     }
                     return false;
