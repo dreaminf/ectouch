@@ -215,22 +215,22 @@ header h1{
 	text-align: right;
 }
 .chat-content{
-	padding-left: 1rem;
-	width: 70%;
+	margin-left: 1rem;
+	max-width: 70%;
+	position: relative;
 }
-
 .chat-others .chat-content{
-	padding-left: 1rem;
+	margin-left: 1rem;
 }
 .chat-me .chat-content{
-	padding-right: 1rem;
+	margin-right: 1rem;
 }
 .chat-others-content{
 	border-radius: 10px;
 	width:auto;
 	font-size: 1.8rem;
 	color: #252424;
-	position: relative;
+	/*position: relative;*/
 	padding: 1rem;
 	background-color: #e7e7e7;
 	table-layout:fixed;
@@ -243,7 +243,7 @@ header h1{
 
 .user-chat .arrow{
 	position: absolute;
-	top: 0.8rem;
+	top: 2.5rem;
 	font-size: 0;
 	width: 0;
 	height: 0;
@@ -320,11 +320,11 @@ header h1{
 		display: block;
 		width: 6rem;
 	}
-	.user-chat .arrow{
+	/*.user-chat .arrow{
 		position: absolute;
 		top: 0.4rem;
 		font-size: 0;
-	}
+	}*/
 }
 
 @media (min-width: 500px) and (max-width: 640px) {
