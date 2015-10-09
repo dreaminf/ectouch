@@ -543,11 +543,9 @@ class FlowController extends CommonController {
         // 给货到付款的手续费加<span id>，以便改变配送的时候动态显示
         $payment_list = model('Order')->available_payment_list(1, $cod_fee);
         if (isset($payment_list)) {
-            // 只保留显示手机版支付方式
-            $mobile_pay = array('alipay','balance','cod','tenpay','wxpay');
             foreach ($payment_list as $key => $payment) {
                 // 只保留显示手机版支付方式
-                if(!in_array($payment['pay_code'], $mobile_pay)){
+                if(!file_exists(ROOT_PATH . 'plugins/payment/'.$payment['pay_code'].'.php')){
                     unset($payment_list[$key]);
                 }
                 if ($payment ['is_cod'] == '1') {
