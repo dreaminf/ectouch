@@ -125,11 +125,11 @@
         <script type="text/javascript">
         $(function(){
             //开始抽奖
-            var len = $(".award-detail-pic li img").length > 0 ? $(".award-detail-pic li img").length - 1 : 0, 
+            var len = $(".award-detail-pic li img").length > 1 ? $(".award-detail-pic li img").length - 1 : 1, 
                 i = 1, 
                 time;
             $("#start").click(function(){
-                if(len > 0){
+                if(len > 1){
                     time = setInterval(function(){
                         if(i > len){
                             i = 1;
