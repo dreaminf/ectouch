@@ -6,7 +6,7 @@ class Model{
     public $db = NULL; // 当前数据库操作对象
     public $cache = NULL;	//缓存对象
     public $sql = '';	//sql语句，主要用于输出构造成的sql语句
-    public  $pre = '';	//表前缀，主要用于在其他地方获取表前缀
+    public $pre = '';	//表前缀，主要用于在其他地方获取表前缀
     public $config =array(); //配置
     protected $options = array(); // 查询表达式参数	
 	
@@ -23,7 +23,7 @@ class Model{
 		require_once( dirname(__FILE__) . '/db/' . $dbDriver . '.php' );
 		$this->db = new $dbDriver( $this->config );	//实例化数据库驱动类
 	}
-	
+
 	//设置表，$$ignore_prefix为true的时候，不加上默认的表前缀
 	public function table($table, $ignorePre = false) {
 		if ( $ignorePre ) {
