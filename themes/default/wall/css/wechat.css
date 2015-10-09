@@ -201,6 +201,7 @@ input:focus{
 	font-size: 14px;
 }
 .msg-content{
+	display: inline-block;
 	position: relative;
 	background-color: #39B4E9;
 	border-radius: 10px;
