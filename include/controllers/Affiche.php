@@ -3,12 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Affiche extends IndexController
 {
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function index()
     {
         $ad_id = intval(I('get.ad_id'));
