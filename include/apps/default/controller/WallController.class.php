@@ -30,7 +30,7 @@ class WallController extends CommonController {
         $wall = $this->model->table('wechat_wall')->field('id, name, logo, background, starttime, endtime, prize, content, support')->where(array('id'=>$wall_id, 'status'=>1))->find();
 
         $cache_key = md5('cache_0');
-        $Eccache = new EcCache();
+        $Eccache = new Cache();
         $list = $Eccache->get($cache_key);
         if(!$list){
             //留言
@@ -263,7 +263,7 @@ class WallController extends CommonController {
 
         //初始缓存
         $cache_key = md5('cache_0');
-        $Eccache = new EcCache();
+        $Eccache = new Cache();
         $list = $Eccache->get($cache_key);
         if(!$list){
             $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE (m.status = 1 OR u.openid = '$openid') AND u.wall_id = '$wall_id' ORDER BY m.addtime DESC LIMIT 0, 10";
@@ -301,7 +301,7 @@ class WallController extends CommonController {
             $num = I('get.num', 5); 
             $wall_id = I('get.wall_id');
             if((!empty($start) || $start === 0) && $num){
-                $Eccache = new EcCache();
+                $Eccache = new Cache();
                 $cache_key = md5('cache_'.$start);
                 $list = $Eccache->get($cache_key);
                 if(!$list){
