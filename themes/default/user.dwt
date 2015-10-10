@@ -67,9 +67,11 @@
 					<li class="fl"><span><!--{if $list.user_money neq ''}--> {$list.user_money}<!--{else}-->0<!--{/if}--></span>
 						<p>余额</p>
 					</li>
+					<a href="{:url('user/bonus')}">
 					<li class="fl"><span><!--{if $list.bonus neq ''}--> {$list.bonus}<!--{else}-->0<!--{/if}--></span>
 						<p>红包</p>
 					</li>
+					</a>
 					<li class="fl"><span><!--{if $list.user_points neq ''}--> {$list.user_points}<!--{else}-->0<!--{/if}--></span>
 						<p>积分</p>
 					</li>
@@ -79,10 +81,9 @@
 			</div>
 			<div class="member-serve">
 				<ul>
-					<li onclick="window.location = '{:url('user/service')}';"><i class="iconfont fl member-serve-li-oi">&#xe61a;</i>
-						<p class="fl">客户服务</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
-					<li onclick="window.location = '{:url('user/share')}'"><i class="iconfont fl member-serve-li-ti">&#xe61e;</i>
-						<p class="fl">我的分享</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
+					<li onclick="window.location = '{:url('user/service')}';"><i class="iconfont fl member-serve-li-oi">&#xe61a;</i><p class="fl">客户服务</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
+					<li onclick="window.location = '{:url('user/share')}'"><i class="iconfont fl member-serve-li-ti">&#xe61e;</i><p class="fl">我的分享</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
+					<li onclick="window.location = '{:url('sale/index')}'"><i class="iconfont fl member-serve-li-ti">&#xe625;</i><p class="fl">我的分销</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
 				</ul>
 			</div>
 			<!--{if $history}-->
