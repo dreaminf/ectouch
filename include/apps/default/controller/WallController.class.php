@@ -87,7 +87,7 @@ class WallController extends CommonController {
         }
 
         //中奖的用户
-        $sql = "SELECT u.nickname, u.headimg FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_prize p ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY p.dateline ASC";
+        $sql = "SELECT u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_prize p ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY p.dateline ASC";
         $rs = $this->model->query($sql);
         $list = array();
         if($rs){

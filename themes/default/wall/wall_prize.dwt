@@ -76,7 +76,7 @@
                         {foreach from=$list item=list key=key}
                             <li>
                                 <div class="fl award-list-info">
-                                    <span class="fl">{$key}</span>
+                                    <span class="fl" oid="{$list.id}">{$key}</span>
                                     <img src="{$list.headimg}" class="fl"/>
                                 </div>
                                 <p class="fr">{$list.nickname}</p>
@@ -158,7 +158,7 @@
                         else{
                             key = 1;
                         }
-                        var html = '<li><div class="fl award-list-info"><span class="fl">'+key+'</span><img src="'+result.data.headimg+'" class="fl"/></div><p class="fr">'+result.data.nickname+'</p></li>';
+                        var html = '<li><div class="fl award-list-info"><span class="fl" oid="'+result.data.id+'">'+key+'</span><img src="'+result.data.headimg+'" class="fl"/></div><p class="fr">'+result.data.nickname+'</p></li>';
                         $("#award").append(html);
                         //获奖人数
                         var prize_num = $("#award li").length ? $("#award li").length : 0;
@@ -183,12 +183,11 @@
                 if(confirm("重置抽奖后，中奖用户将会重新放入奖池，确定要重置吗？")){
                     $.get("{:url('reset_draw', array('wall_id'=>$this->_var['wall']['id']))}", '', function(result){
                         if(result.errCode == 0){
-                            var i = 1;
                             $("#award li").each(function(){
                                 var img = $(this).find("img").attr("src");
                                 var name = $(this).find("p.fr").html();
-                                $(".award-detail-pic").append('<li class="active prize'+i+'"><img src="'+img+'"><p class="award-content-name">'+name+'</p></li>');
-                                i++;
+                                var oid = $(this).find("span.fl").attr("oid");
+                                $(".award-detail-pic").append('<li class="active prize'+oid+'"><img src="'+img+'"><p class="award-content-name">'+name+'</p></li>');
                             });
                             $("#award").empty();
                             $(".award-detail-pic li:first").addClass("active").siblings("li").removeClass("active");
