@@ -183,6 +183,13 @@
                 if(confirm("重置抽奖后，中奖用户将会重新放入奖池，确定要重置吗？")){
                     $.get("{:url('reset_draw', array('wall_id'=>$this->_var['wall']['id']))}", '', function(result){
                         if(result.errCode == 0){
+                            var i = 1;
+                            $("#award li").each(function(){
+                                var img = $(this).find("img").attr("src");
+                                var name = $(this).find("p.fr").html();
+                                $(".award-detail-pic").append('<li class="active prize'+i+'"><img src="'+img+'"><p class="award-content-name">'+name+'</p></li>');
+                                i++;
+                            });
                             $("#award").empty();
                             $(".award-detail-pic li:first").addClass("active").siblings("li").removeClass("active");
                             $("#prize_num").html("0");
@@ -193,7 +200,6 @@
                         else{
                             alert(result.errMsg);
                         }
-                        location.reload();
                         return false;
                     }, 'json');
                 }
