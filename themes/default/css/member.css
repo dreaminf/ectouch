@@ -3514,8 +3514,7 @@ html.active {
 .member-record-title-i {
   color: #39CAB2; }
 
-.member-record-silde {
-  overflow: hidden; }
+.member-record-silde { margin-bottom: 40px;  overflow: hidden; }
   .member-record-silde ul {
     height: 100%;
     width: 250%; }
