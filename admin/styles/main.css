@@ -283,10 +283,28 @@ td.micro-label {
 }
 
 input.button {
-  padding: 3px 8px;
+  display: inline-block;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+
+  padding: 6px 12px;
   margin: 2px 2px;
-  border: 1px solid #BCBCBC;
-  background: #E2E3E5;
+  border: 1px solid #357ebd;
+  background: #1b9ad5;
+  color: #fff;
 }
 
 input.capital {

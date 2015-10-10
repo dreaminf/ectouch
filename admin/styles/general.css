@@ -6,7 +6,8 @@ body {
   margin: 0px;
   padding: 0px;
   color: #192E32;
-  font: 12px "sans-serif", "Arial", "Verdana";
+  /*font: 12px "sans-serif", "Arial", "Verdana";*/
+  font-family: 'Î¢ÈíÑÅºÚ';
 }
 
 p, td, div {
@@ -24,10 +25,23 @@ form {
 }
 
 input, textarea, select {
-  font: 12px "courier new";
+  /*font: 12px "courier new";*/
   padding: 4px 3px;
   border: 1px #B1B1B1 solid;
   border-radius: 3px;
+
+  font-size: 12px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
 a:visited {
