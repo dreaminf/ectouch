@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>优惠活动</title>
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap/css/font-awesome.min.css">
+		<!--<link rel="stylesheet" href="css/user.css" />-->
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+
+	<body>
+		<div class="con">
+			<div style="height:4.2em;"></div>
+			<!--头部-->
+			<header>
+				<nav class="ect-nav ect-bg icon-write">
+					<ul class="ect-diaplay-box text-center">
+						<li class="ect-box-flex"><a href="{:url('index/index')}"><i class="ect-icon ect-icon-home"></i>主页</a></li>
+						<li class="ect-box-flex"><a href="{:url('category/top_all')}"><i class="ect-icon ect-icon-cate"></i>分类</a></li>
+						<li class="ect-box-flex"><a href="javascript:openSearch();"><i class="ect-icon ect-icon-search"></i>搜索</a></li>
+						<li class="ect-box-flex"><a href="{:url('flow/cart')}"><i class="ect-icon ect-icon-flow"></i>购物车</a></li>
+						<li class="ect-box-flex"><a href="{:url('user/index')}"><i class="ect-icon ect-icon-user"></i>用户中心</a></li>
+					</ul>
+				</nav>
+			</header>
+
+			<div class="bran_list" id="J_ItemList" style="opacity:1;">
+				<ul class="single_item">
+				</ul>
+				<a href="javascript:;" class="get_more"></a>
+			</div>
+		</div>
+
+		<div class="search" style="display:none;">
+			<div class="ect-bg">
+				<header class="ect-header ect-margin-tb ect-margin-lr text-center">
+					<span>搜索</span>
+					<a href="javascript:;" onClick="closeSearch();"><i class="icon-close pull-right"></i></a>
+				</header>
+			</div>
+			<div class="ect-padding-lr">
+				<form action="{:url('category/index')}<!-- {if $id} -->&id={$id}<!-- {/if} -->" method="post" id="searchForm" name="searchForm">
+					<div class="input-search">
+						<span>
+			     	   <input name="keywords" type="search" placeholder="关键字" id="keywordBox">
+			        </span>
+						<button type="submit" value="{$lang.search}" onclick="return check('keywordBox')"><i class="glyphicon glyphicon-search"></i></button>
+					</div>
+				</form>
+				<!-- {if $hot_search_keywords} -->
+				<div class="hot-search">
+					<p>
+						<h4 class="title"><b>热门搜索：</b></h4>
+					</p>
+					<!-- {foreach from=$hot_search_keywords item=ky} -->
+					<a href="{:url('category/index', array('keywords'=>$this->_var[ky]))}<!-- {if $id} -->&id={$id}<!-- {/if} -->">女装</a>
+					<!-- {/foreach} -->
+				</div>
+				<!-- {/if} -->
+			</div>
+		</div>
+
+		<a id="scrollUp" href="#top" style="position: fixed; z-index: 10;"><i class="fa fa-angle-up"></i></a>
+		<style>
+			#scrollUp {
+				border-radius:100%;
+				background-color: #777;
+				color: #eee;
+				font-size: 40px;
+				line-height: 1;text-align: center;text-decoration: none;bottom: 1em;right: 10px;overflow: hidden;width: 46px;
+				height: 46px;
+				border: none;
+				opacity: 0.6;
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery.json.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/jquery.more.js"></script>
+		<script type="text/javascript" src="js/utils.js"></script>
+		<script src="js/TouchSlide.1.1.js"></script>
+		<script src="js/ectouch.js"></script>
+		<script src="js/simple-inheritance.min.js"></script>
+		<script src="js/code-photoswipe-1.0.11.min.js"></script>
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="js/jquery.scrollUp.min.js"></script>
+		<script type="text/javascript" src="js/validform.js"></script>
+		<script language="javascript">
+			 /*banner滚动图片*/
+			TouchSlide({
+				slideCell: "#focus",
+				titCell: ".hd ul", // 开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+				mainCell: ".bd ul",
+				effect: "left",
+				autoPlay: true, // 自动播放
+				autoPage: true, // 自动分页
+				delayTime: 200, // 毫秒；切换效果持续时间（执行一次效果用多少毫秒）
+				interTime: 2500, // 毫秒；自动运行间隔（隔多少毫秒后执行下一个效果）
+				switchLoad: "_src" // 切换加载，真实图片路径为"_src"
+			});
+			/*弹出评论层并隐藏其他层*/
+			function openSearch() {
+				if ($(".con").is(":visible")) {
+					$(".con").hide();
+					$(".search").show();
+				}
+			}
+
+			function closeSearch() {
+				if ($(".con").is(":hidden")) {
+					$(".con").show();
+					$(".search").hide();
+				}
+			}
+		</script>
+
+		<script type="text/javascript">
+			get_asynclist("{:url('activity/asynclist', array('page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order']))}", 'images/loader.gif');
+		</script>
+		<script src="js/TouchSlide.1.1.js"></script>
+	</body>
+
+</html>
+
+</body>
+
+</html>

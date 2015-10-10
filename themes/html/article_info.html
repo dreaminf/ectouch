@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>文章页面</title>
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap/css/font-awesome.min.css">
+		<!--<link rel="stylesheet" href="css/user.css" />-->
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+
+	<body>
+		<div class="con">
+			<div class="ect-bg">
+				<header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write article">
+					<a class="ect-icon ect-icon-home pull-left" href="index.php"></a><span>购物导航</span>
+					<a class="ect-icon ect-icon-cate pull-right" href="{:url('article/index')}"></a>
+				</header>
+			</div>
+			<div class="article-info">
+				<h3>这是文章标题</h3>
+				<div class="article-info-con"> 这是文章内容</div>
+			</div>
+		</div>
+		<footer class="logo">
+			<a href="http://www.ectouch.cn" title="ECTouch官网" target="_blank"><img src="__TPL__/images/copyright.png" width="176" height="60"></a>
+		</footer>
+		
+		<!-- #BeginLibraryItem "/library/page_footer.lbi" -->
+		<!-- #EndLibraryItem -->
+		<a id="scrollUp" href="#top" style="position: fixed; z-index: 10;"><i class="fa fa-angle-up"></i></a>
+		<style>
+			#scrollUp {
+				border-radius:100%;
+				background-color: #777;
+				color: #eee;
+				font-size: 40px;
+				line-height: 1;text-align: center;text-decoration: none;bottom: 1em;right: 10px;overflow: hidden;width: 46px;
+				height: 46px;
+				border: none;
+				opacity: 0.6;
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery.json.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/jquery.more.js"></script>
+		<script type="text/javascript" src="js/utils.js"></script>
+		<script src="js/TouchSlide.1.1.js"></script>
+		<script src="js/ectouch.js"></script>
+		<script src="js/simple-inheritance.min.js"></script>
+		<script src="js/code-photoswipe-1.0.11.min.js"></script>
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="js/jquery.scrollUp.min.js"></script>
+		<script type="text/javascript" src="js/validform.js"></script>
+		<script language="javascript">
+			 /*banner滚动图片*/
+			TouchSlide({
+				slideCell: "#focus",
+				titCell: ".hd ul", // 开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+				mainCell: ".bd ul",
+				effect: "left",
+				autoPlay: true, // 自动播放
+				autoPage: true, // 自动分页
+				delayTime: 200, // 毫秒；切换效果持续时间（执行一次效果用多少毫秒）
+				interTime: 2500, // 毫秒；自动运行间隔（隔多少毫秒后执行下一个效果）
+				switchLoad: "_src" // 切换加载，真实图片路径为"_src"
+			});
+			/*弹出评论层并隐藏其他层*/
+			function openSearch() {
+				if ($(".con").is(":visible")) {
+					$(".con").hide();
+					$(".search").show();
+				}
+			}
+
+			function closeSearch() {
+				if ($(".con").is(":hidden")) {
+					$(".con").show();
+					$(".search").hide();
+				}
+			}
+		</script>
+
+		<script type="text/javascript">
+			get_asynclist("{:url('activity/asynclist', array('page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order']))}", 'images/loader.gif');
+		</script>
+		<script src="js/TouchSlide.1.1.js"></script>
+	</body>
+
+</html>
+</body>
+
+</html>

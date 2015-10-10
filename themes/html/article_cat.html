@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title></title>
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap/css/font-awesome.min.css">
+		<!--<link rel="stylesheet" href="css/user.css" />-->
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+
+	<body>
+		<div class="con">
+			<div class="ect-bg">
+				<header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write article">
+					<a class="ect-icon ect-icon-home pull-left" href="index.php"></a>
+					<span>帮助</span>
+					<a class="ect-icon ect-icon-cate pull-right" href="{:url('article/index')}"></a>
+				</header>
+			</div>
+			<div class="article-list">
+				<form action="{:url('article/art_list')}" name="search_form" method="post" class="article_search">
+					<div class="input-search">
+						<span>
+							<input autocomplete="off" placeholder="关键字"  name="keywords" id="requirement" class="J_SearchInput inputSear" type="text">
+						</span>
+						<input name="id" type="hidden" value="{$cat_id}" />
+						<input name="cur_url" id="cur_url" type="hidden" value="" />
+						<button type="button" disabled="true" class="input-delete J_InputDelete"> <span></span> </button>
+						<button type="submit"><i class="glyphicon glyphicon-search"></i></button>
+					</div>
+				</form>
+				<div class="nav">
+					<ul>
+						<li><a href="{:url('article/art_list', array('id'=>$this->_var['cat']['id']))}">标题 | 注销</a></li>
+					</ul>
+				</div>
+				<div class="article-list-ol">
+					<ol>
+
+						<li>
+							<a href="{$article.url}">
+								<span class="num">1、</span>标题
+							</a>
+						</li>
+
+						<!-- #BeginLibraryItem "/library/pages.lbi" -->
+						<!-- #EndLibraryItem -->
+					</ol>
+				</div>
+				<!-- {/if} -->
+			</div>
+			<footer class="logo">
+				<a href="http://www.ectouch.cn" title="ECTouch官网" target="_blank"><img src="images/copyright.png" width="176" height="60"></a>
+			</footer>
+		</div>
+
+		<!-- #BeginLibraryItem "/library/search.lbi" -->
+		<!-- #EndLibraryItem -->
+		<div class="search" style="display:none;">
+			<div class="ect-bg">
+				<header class="ect-header ect-margin-tb ect-margin-lr text-center">
+					<span>搜索</span>
+					<a href="javascript:;" onClick="closeSearch();"><i class="icon-close pull-right"></i></a>
+				</header>
+			</div>
+			<div class="ect-padding-lr">
+				<form action="{:url('category/index')}<!-- {if $id} -->&id={$id}<!-- {/if} -->" method="post" id="searchForm" name="searchForm">
+					<div class="input-search">
+						<span>
+			     	   <input name="keywords" type="search" placeholder="关键字" id="keywordBox">
+			        </span>
+						<button type="submit" value="{$lang.search}" onclick="return check('keywordBox')"><i class="glyphicon glyphicon-search"></i></button>
+					</div>
+				</form>
+				<!-- {if $hot_search_keywords} -->
+				<div class="hot-search">
+					<p>
+						<h4 class="title"><b>热门搜索：</b></h4>
+					</p>
+					<!-- {foreach from=$hot_search_keywords item=ky} -->
+					<a href="{:url('category/index', array('keywords'=>$this->_var[ky]))}<!-- {if $id} -->&id={$id}<!-- {/if} -->">女装</a>
+					<!-- {/foreach} -->
+				</div>
+				<!-- {/if} -->
+			</div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>拍卖活动</title>
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap/css/font-awesome.min.css">
+		<!--<link rel="stylesheet" href="css/user.css" />-->
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+
+	<body>
+		<div class="con">
+			<div class="ect-bg">
+				<header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg">
+					<a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>标题</span>
+					<a href="javascript:;" onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a>
+				</header>
+				<nav class="ect-nav ect-nav-list" style="display:none;">
+					<ul class="ect-diaplay-box text-center">
+						<li class="ect-box-flex"><a href="{:url('index/index')}"><i class="ect-icon ect-icon-home"></i>主页</a></li>
+						<li class="ect-box-flex"><a href="{:url('category/top_all')}"><i class="ect-icon ect-icon-cate"></i>分类</a></li>
+						<li class="ect-box-flex"><a href="javascript:openSearch();"><i class="ect-icon ect-icon-search"></i>搜索</a></li>
+						<li class="ect-box-flex"><a href="{:url('flow/cart')}"><i class="ect-icon ect-icon-flow"></i>购物车</a></li>
+						<li class="ect-box-flex"><a href="{:url('user/index')}"><i class="ect-icon ect-icon-user"></i>用户中心</a></li>
+					</ul>
+				</nav>
+			</div>
+			<!--商品图片相册-->
+			<div id="focus" class="focus goods-focus ect-padding-lr ect-margin-tb">
+				<div class="hd">
+					<ul>
+					</ul>
+				</div>
+				<div class="bd">
+					<ul id="Gallery">
+						<li>
+							<a href="{$auction_goods.goods_img}">
+								<img src="images/index_1.fw.png" alt="{$auction_goods.goods_name}" />
+							</a>
+						</li>
+						<!--{if $pictures}-->
+						<!-- {foreach from=$pictures item=picture name=no}-->
+						<!-- {if $smarty.foreach.no.iteration > 1}  -->
+						<li>
+							<a href="{$picture.img_url}"><img src="{$picture.img_url}" alt="{$picture.img_desc}" /></a>
+						</li>
+						<!-- {/if}-->
+						<!--{/foreach}-->
+						<!--{/if}-->
+					</ul>
+				</div>
+			</div>
+			<!--商品属性介绍-->
+			<div class="goods-info ect-padding-tb">
+				<!--商品描述-->
+				<section class="ect-margin-tb ect-margin-lr goods-title">
+					<h4 class="title pull-left">商品名称1321546543213244564654654</h4>
+					<span class="pull-right text-center  ect-padding-lr"> 收藏 </span> </section>
+				<section class="ect-margin-tb ect-margin-lr "> 目前价格：¥12
+					<br/> 起止时间：8：00 -- 结束时间：10：00
+					<br> 起始价：¥1
+					<br> 成交价：¥1000
+					</p>
+				<section class="ect-margin-tb ect-margin-bottom0 ect-padding-tb goods-promotion ect-padding-lr ">
+					<h5><b>剩余支付时间</b></h5>
+					<h5><span id="leftTime">15分钟</span></h5>
+				</section>
+				<form name="theForm" action="{:url('auction/bid')}" method="post">
+					<section class="ect-padding-lr ect-padding-tb goods-option">
+						<div class="goods-num"> <span class="pull-left">竞拍价：</span>
+							<div class="input-group pull-left wrap">
+								<input type="text" class="form-contro form-num" name="price" id="price" />
+							</div>
+							<input name="bid" type="submit" class="bnt_sub" id="bid" value="提交" style="vertical-align:middle;" />
+							<input name="id" type="hidden" value="{$auction.act_id}" />
+						</div>
+					</section>
+				</form>
+				<!-- {else} 已结束 -->
+				<form name="theForm" action="{:url('auction/buy')}" method="post">
+					<!-- {if $auction.is_winner} -->
+					<span class="f_red">竞价者</span>
+					<br />
+					<input name="buy" type="submit" class="bnt_sub" value="点击购买" />
+					<input name="id" type="hidden" value="{$auction.act_id}" />
+					<!-- {else} -->
+					已结束
+					<!-- {/if} -->
+				</form>
+				<!-- {/if} -->
+				<section class="goods-more-a"> <a class="ect-padding-lr ect-padding-tb" href="{:url('Auction/record' , array('id' => $this->_var['auction']['act_id']))}">
+					<span class="Text">活动介绍</span>
+					<i class="pull-right fa fa-chevron-right"></i></a>
+					<a class="ect-padding-lr ect-padding-tb" href="{:url('Auction/record' , array('id' => $this->_var['auction']['act_id']))}">
+						<span class="Text">出价记录</span>
+						<i class="pull-right fa fa-chevron-right"></i></a>
+				</section>
+			</div>
+			<div class="goods-related ect-padding-lr ect-padding-tb"> 相关产品 </div>
+			<footer class="logo">
+				<a href="http://www.ectouch.cn" title="ECTouch官网" target="_blank"><img src="images/copyright.png" width="176" height="60"></a>
+			</footer>
+		</div>
+		<!-- #BeginLibraryItem "/library/search.lbi" -->
+		<!-- #EndLibraryItem -->
+		
+		
+		
+		
+		<!-- #BeginLibraryItem "/library/page_footer.lbi" -->
+		<!-- #EndLibraryItem -->
+		<script type="text/javascript" src="js/lefttime.js"></script>
+		<script type="text/javascript">
+			TouchSlide({
+				slideCell: "#picScroll",
+				titCell: ".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+				autoPage: "true", //自动分页
+				pnLoop: "false", // 前后按钮不循环
+				switchLoad: "_src" //切换加载，真实图片路径为"_src" 
+			});
+		</script>
+		<script type="text/javascript">
+			var gmt_end_time = "{$auction.gmt_end_time|default:0}"; {
+				foreach from = $lang.goods_js item = item key = key
+			}
+			var {
+				$key
+			} = "{$item}";
+			var now_time = {
+				$now_time
+			}; {
+				/foreach}
+onload = function()
+{
+  try
+  {
+    onload_leftTime(now_time);
+  }
+  catch (e)
+  {}
+}
+		</script>
+	</body>
+
+</html>

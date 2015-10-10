@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>促销商品列表</title>
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap/css/font-awesome.min.css">
+		<!--<link rel="stylesheet" href="css/user.css" />-->
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+
+	<body>
+		<div class="con">
+			<div style="height:7.2em;"></div>
+			<header>
+				<nav class="ect-nav ect-bg icon-write">
+					<ul class="ect-diaplay-box text-center">
+						<li class="ect-box-flex"><a href="{:url('index/index')}"><i class="ect-icon ect-icon-home"></i>主页</a></li>
+						<li class="ect-box-flex"><a href="{:url('category/top_all')}"><i class="ect-icon ect-icon-cate"></i>分类</a></li>
+						<li class="ect-box-flex"><a href="javascript:openSearch();"><i class="ect-icon ect-icon-search"></i>搜索</a></li>
+						<li class="ect-box-flex"><a href="{:url('flow/cart')}"><i class="ect-icon ect-icon-flow"></i>购物车</a></li>
+						<li class="ect-box-flex"><a href="{:url('user/index')}"><i class="ect-icon ect-icon-user"></i>用户中心</a></li>
+					</ul>
+				</nav>
+			</header>
+			<!-- #BeginLibraryItem "/library/goods_list_act.lbi" -->
+			<!-- #EndLibraryItem -->
+
+			<form method="GET" class="sort" name="listform">
+				<div class="ect-wrapper text-center">
+					<div>
+						<a class="{if $sort == 'goods_id' && $order == 'DESC'}ect-colory{/if}" href="{:url('activity/goods_list#goods_list',array('id'=>$this->_var['id'],'display'=>$this->_var['display'],'brand'=>$this->_var['brand_id'],'price_min'=>$this->_var['price_min'],'price_max'=>$this->_var['price_max'],'filter_attr'=>$this->_var['filter_attr'], 'sort'=>'goods_id', 'order'=> 'DESC', 'keywords'=>$this->_var['keywords']))}">默认</a>
+						<a class="{if $sort =='sales_volume' && $order == 'DESC'}select ect-colory{elseif $sort =='sales_volume' && $order == 'ASC'}ect-colory{else}{/if}" href="{:url('activity/goods_list#goods_list',array('id'=>$this->_var['id'],'display'=>$this->_var['display'],'brand'=>$this->_var['brand_id'],'price_min'=>$this->_var['price_min'],'price_max'=>$this->_var['price_max'],'filter_attr'=>$this->_var['filter_attr'], 'sort'=>'sales_volume', 'order'=> ($this->_var['sort']=='sales_volume' && $this->_var['order']=='ASC')?'DESC':'ASC', 'keywords'=>$this->_var['keywords']))}">销量<i class="glyphicon glyphicon-arrow-up"></i></a>
+						<a class="{if $sort =='click_count' && $order == 'DESC'}select ect-colory{elseif $sort =='click_count' && $order == 'ASC'}ect-colory{else}{/if}" href="{:url('activity/goods_list#goods_list',array('id'=>$this->_var['id'],'display'=>$this->_var['display'],'brand'=>$this->_var['brand_id'],'price_min'=>$this->_var['price_min'],'price_max'=>$this->_var['price_max'],'filter_attr'=>$this->_var['filter_attr'], 'sort'=>'click_count', 'order'=> ($this->_var['sort']=='click_count' && $this->_var['order']=='ASC')?'DESC':'ASC', 'keywords'=>$this->_var['keywords']))}">人气<i class="glyphicon glyphicon-arrow-up"></i></a>
+						<a class="{if $sort =='shop_price' && $order == 'DESC'}select ect-colory{elseif $sort =='shop_price' && $order == 'ASC'}ect-colory{/if}" href="{:url('activity/goods_list#goods_list',array('id'=>$this->_var['id'],'display'=>$this->_var['display'],'brand'=>$this->_var['brand_id'],'price_min'=>$this->_var['price_min'],'price_max'=>$this->_var['price_max'],'filter_attr'=>$this->_var['filter_attr'], 'sort'=>'shop_price', 'order'=> ($this->_var['sort']=='shop_price' && $this->_var['order']=='ASC')?'DESC':'ASC', 'keywords'=>$this->_var['keywords']))}">价格<i class="glyphicon glyphicon-arrow-up"></i></a>
+					</div>
+				</div>
+
+				<input type="hidden" name="id" value="{$id}" />
+				<input type="hidden" name="display" value="{$display}" id="display" />
+				<input type="hidden" name="brand" value="{$brand_id}" />
+				<input type="hidden" name="price_min" value="{$price_min}" />
+				<input type="hidden" name="price_max" value="{$price_max}" />
+				<input type="hidden" name="filter_attr" value="{$filter_attr}" />
+				<input type="hidden" name="page" value="{$page}" />
+				<input type="hidden" name="sort" value="{$sort}" />
+				<input type="hidden" name="order" value="{$order}" />
+				<input type="hidden" name="keywords" value="{$keywords}" />
+			</form>
+
+			<div class="ect-margin-tb ect-pro-list ect-margin-bottom0 ect-border-bottom0">
+				<ul id="J_ItemList">
+					<!--{foreach name=goods_list from=$goods_list item=act_goods}-->
+					<li class="single_item">
+						<a href="{$act_goods.url}">
+							<img src="images/index_1.fw.png" alt="商品名称">
+						</a>
+						<dl>
+							<dt>
+							<h4 class="title"><a href="{$act_goods.url}">商品名称</a></h4>
+							</dt>
+							<dd>
+								<span class="pull-left">
+									<strong>价格
+										<b class="ect-colory">¥1910</b>
+									</strong>
+									<small class="ect-margin-lr">
+										<del>¥1910</del>
+									</small>
+								</span>
+								<span class="ect-pro-price"> 
+						        	<i class="label tuan">74.03折</i> 
+						        	<!--<i class="label mz"> {$lang.favourable_mz}</i> 
+						        	<i class="label mj"> {$lang.favourable_mj}</i> 
+						        	<i class="label zk"> {$lang.favourable_zk}</i> -->
+						        </span>
+							</dd>
+							<dd>
+								<span class="pull-left {if $goods.mysc!= 0}ect-colory{/if}">
+									<i class="fa {if $goods.mysc!= 0}fa-heart{else}fa-heart-o{/if}"></i>
+									<i class="fa fa-eye"></i>139次浏览
+								</span>
+								<span class="pull-right">销售：0件</span>
+							</dd>
+						</dl>
+					</li>
+					<!--{/foreach}-->
+				</ul>
+			</div>
+			<!--{include file='library/page.lbi '}-->
+			<ul class="pager ect-margin-lr ect-page">
+				<li class="pull-left"><a href="{$pager.page_prev|default:#}">上一页</a></li>
+				<!-- {if $pager.page_number} -->
+				<li class="form-select">
+					<i class="fa fa-sort-desc"></i>
+					<select name="sel_question" onChange="window.location.href=this.value;">
+						<!-- {foreach from=$pager.page_number key=key item=num} -->
+						<option value="{$num}" {if $pager.page==$ key}selected{/if}>1/15</option>
+						<!-- {/foreach} -->
+					</select>
+				</li>
+				<!-- {/if} -->
+				<li class="pull-right"><a href="{$pager.page_next|default:#}">下一页</a></li>
+			</ul>
+
+			<!--{/if} -->
+
+		</div>
+		<!-- #BeginLibraryItem "/library/search.lbi" -->
+		<!-- #EndLibraryItem -->
+		<div class="search" style="display:none;">
+			<div class="ect-bg">
+				<header class="ect-header ect-margin-tb ect-margin-lr text-center">
+					<span>搜索</span>
+					<a href="javascript:;" onClick="closeSearch();"><i class="icon-close pull-right"></i></a>
+				</header>
+			</div>
+			<div class="ect-padding-lr">
+				<form action="{:url('category/index')}<!-- {if $id} -->&id={$id}<!-- {/if} -->" method="post" id="searchForm" name="searchForm">
+					<div class="input-search">
+						<span>
+			     	   <input name="keywords" type="search" placeholder="关键字" id="keywordBox">
+			        </span>
+						<button type="submit" value="{$lang.search}" onclick="return check('keywordBox')"><i class="glyphicon glyphicon-search"></i></button>
+					</div>
+				</form>
+				<!-- {if $hot_search_keywords} -->
+				<div class="hot-search">
+					<p>
+						<h4 class="title"><b>热门搜索：</b></h4>
+					</p>
+					<!-- {foreach from=$hot_search_keywords item=ky} -->
+					<a href="{:url('category/index', array('keywords'=>$this->_var[ky]))}<!-- {if $id} -->&id={$id}<!-- {/if} -->">女装</a>
+					<!-- {/foreach} -->
+				</div>
+				<!-- {/if} -->
+			</div>
+		</div>
+
+		<!-- #BeginLibraryItem "/library/page_footer.lbi" -->
+		<!-- #EndLibraryItem -->
+		<a id="scrollUp" href="#top" style="position: fixed; z-index: 10;"><i class="fa fa-angle-up"></i></a>
+		<style>
+			#scrollUp {
+				border-radius: 100%;
+				background-color: #777;
+				color: #eee;
+				font-size: 40px;
+				line-height: 1;
+				text-align: center;
+				text-decoration: none;
+				bottom: 1em;
+				right: 10px;
+				overflow: hidden;
+				width: 46px;
+				height: 46px;
+				border: none;
+				opacity: 0.6;
+			}
+		</style>
+		<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/js/jquery.json.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/js/jquery.more.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/js/utils.js"></script>
+		<script src="__TPL__/js/TouchSlide.1.1.js"></script>
+		<script src="__TPL__/js/ectouch.js"></script>
+		<script src="__TPL__/js/simple-inheritance.min.js"></script>
+		<script src="__TPL__/js/code-photoswipe-1.0.11.min.js"></script>
+		<script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__TPL__/js/jquery.scrollUp.min.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/js/validform.js"></script>
+		<script language="javascript">
+			 /*banner滚动图片*/
+			TouchSlide({
+				slideCell: "#focus",
+				titCell: ".hd ul", // 开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+				mainCell: ".bd ul",
+				effect: "left",
+				autoPlay: true, // 自动播放
+				autoPage: true, // 自动分页
+				delayTime: 200, // 毫秒；切换效果持续时间（执行一次效果用多少毫秒）
+				interTime: 2500, // 毫秒；自动运行间隔（隔多少毫秒后执行下一个效果）
+				switchLoad: "_src" // 切换加载，真实图片路径为"_src"
+			});
+			/*弹出评论层并隐藏其他层*/
+			function openSearch() {
+				if ($(".con").is(":visible")) {
+					$(".con").hide();
+					$(".search").show();
+				}
+			}
+
+			function closeSearch() {
+				if ($(".con").is(":hidden")) {
+					$(".con").show();
+					$(".search").hide();
+				}
+			}
+		</script>
+
+		<!--<script type="text/javascript">-->
+		<!--{if $show_asynclist}-->
+		<!--get_asynclist("{:url('activity/asynclist_list', array('id'=>$this->_var['id'], 'category'=>$this->_var['category'], 'brand'=>$this->_var['brand_id'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order']))}", '__TPL__/images/loader.gif');-->
+		<!--{/if}-->
+		<!--</script>-->
+	</body>
+
+</html>
