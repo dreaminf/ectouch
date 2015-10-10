@@ -19,6 +19,7 @@ class ExtendController extends AdminController
 
     public $plugin_name = '';
     public $wechat_type = '';
+    public $wechat_id = 0;
 
     public function __construct()
     {
@@ -27,10 +28,7 @@ class ExtendController extends AdminController
         $this->assign('controller', CONTROLLER_NAME);
         //公众号类型
         $this->wechat_id = 1; // $this->wechat_id;
-        $this->wechat_type = $this->model->table('wechat')
-        ->field('type')
-        ->where('id='.$this->wechat_id)
-        ->getOne();
+        $this->wechat_type = $this->model->table('wechat')->field('type')->where('id='.$this->wechat_id)->getOne();
         $this->assign('type', $this->wechat_type);
     }
 
@@ -593,7 +591,7 @@ class ExtendController extends AdminController
         }
         else{
             $url = __HOST__.url('default/wall/wall_user_wechat', array('wall_id'=>$wall_id));
-            $wxconfig = $this->model->table('wechat')->field('token, appid, appsecret')->where(array('id'=>1, 'status'=>1))->find();
+            $wxconfig = $this->model->table('wechat')->field('token, appid, appsecret')->where(array('id'=>$this->wechat_id, 'status'=>1))->find();
             if($wxconfig){
                 $wxObj  = new Wechat($wxconfig);
                 $shorturl = $wxObj->getShortUrl($url);
