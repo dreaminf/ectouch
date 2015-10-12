@@ -124,6 +124,7 @@ $_LANG['edit_surplus_notic'] = '现在的状态已经是 已完成，如果您�
 $_LANG['back_list'] = '返回充值和提现申请';
 $_LANG['continue_add'] = '继续添加申请';
 $_LANG['commission_Status'] = '佣金说明';
+$_LANG['withdrawals_info'] = '提现信息';
 $_LANG['shop_name'] = '店铺名称';
 $_LANG['withdraw'] = '提现';
 $_LANG['withdraw_mode'] = '提现方式';

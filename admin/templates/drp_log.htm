@@ -23,7 +23,7 @@
     <th><a href="javascript:listTable.sort('add_time', 'DESC'); ">{$lang.user_id}</a>{$sort_add_time}</th>
     <th><a href="javascript:listTable.sort('add_time', 'DESC'); ">{$lang.add_date}</a>{$sort_add_time}</th>
     <th><a href="javascript:listTable.sort('payment', 'DESC'); ">{$lang.withdraw_gold}</a>{$sort_payment}</th>
-    <th><a href="javascript:listTable.sort('is_paid', 'DESC'); ">{$lang.commission_Status}</a>{$sort_is_paid}</th>
+    <th><a href="javascript:listTable.sort('is_paid', 'DESC'); ">{$lang.withdrawals_info}</a>{$sort_is_paid}</th>
     <th><a href="javascript:listTable.sort('is_paid', 'DESC'); ">{$lang.commission_fettle}</a>{$sort_is_paid}</th>
     <th>{$lang.handler}</th>
   </tr>
@@ -35,7 +35,7 @@
     <td align="center">{$item.user_name}</td>
     <td align="right">{$item.change_time}</td>
     <td align="right">{$item.user_money}</td>
-    <td align="center">{$item.change_desc}</td>
+    <td align="center">{$item.bank_info}</td>
     <td align="center">{$item.status}</td>
     <td align="center">{$item.admin_user}
     <a rel="drp.php?act=drp_refer&id={$item.log_id}" title="{$lang.withdraw}"><img src="images/icon_send_bonus.gif" class="withdraw" border="0" height="16" width="16" />

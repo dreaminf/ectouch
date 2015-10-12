@@ -203,8 +203,9 @@ class SaleController extends CommonController {
      */
     public function act_account()
     {
-        $bank = I('bank') ? I('bank') : 0;
-        if($bank == 0){
+        $bank_id = I('bank');
+        $bank = model('Sale')->get_bank_info($bank_id);
+        if(!$bank){
             show_message('请选择提现的银行卡');
         }
         $amount = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
@@ -240,15 +241,13 @@ class SaleController extends CommonController {
         /* 如果成功提交 */
         if ($surplus['rec_id'] > 0)
         {
-            $bank_info = $this->model->table('drp_bank')->where("user_id=".$this->user_id ." and id=".$bank)->select();
-            $bank_info = $bank_info['0'];
             /* 插入帐户变动记录 */
             $account_log = array(
                 'user_id'       => $this->user_id,
                 'user_money'    => '-'.$amount,
                 'change_time'   => gmtime(),
                 'change_desc'   => isset($_POST['user_note'])    ? trim($_POST['user_note'])      : '',
-                'bank_info'   => "银行名称：".$bank_info['bank_name']." 帐号：".$bank_info['bank_card'],
+                'bank_info'   => "银行名称：".$bank['bank_name']." 帐号：".$bank['bank_card'],
             );
 
             $this->model->table('drp_log')

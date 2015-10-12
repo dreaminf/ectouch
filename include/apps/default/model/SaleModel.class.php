@@ -815,4 +815,17 @@ class SaleModel extends BaseModel {
         return $data;
     }
 
+
+    /**
+     * 根据银行卡id获取银行卡信息
+     * @param $bank_id
+     */
+    public function get_bank_info($bank_id=0){
+        if($bank_id==0){
+            return false;
+        }
+        $bank_info = $this->model->table('drp_bank')->where("id=$bank_id")->select();
+        return $bank_info['0'];
+    }
+
 }
