@@ -76,7 +76,6 @@ class SaleController extends CommonController {
      */
     public function shop_config(){
         if(IS_POST){
-
             $data = $_POST['data'];
             $data = I('data');
             if (empty($data['shop_name'])){
@@ -691,6 +690,10 @@ class SaleController extends CommonController {
             exit();
         }elseif($_SESSION['user_rank'] == 255 && in_array($this->action, $deny)){
             redirect(url('sale/index'));
+        }
+
+        if(model('Sale')->get_drp_status() == 0){
+            show_message(L('drp_close'),L('home'),url());
         }
     }
 

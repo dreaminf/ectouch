@@ -828,4 +828,17 @@ class SaleModel extends BaseModel {
         return $bank_info['0'];
     }
 
+    /**
+     * 获取分销店铺是否开启
+     * @param int $user_id
+     */
+    public function get_drp_status($user_id=0){
+        $user_id = $user_id==0 ? session('user_id') : $user_id;
+        if($this->model->table('drp_shop')->where("user_id=".$user_id)->field('id')->getOne()){
+            return $this->model->table('drp_shop')->where("user_id=".$user_id)->field('open')->getOne();
+        }else{
+            return 1;
+        }
+    }
+
 }
