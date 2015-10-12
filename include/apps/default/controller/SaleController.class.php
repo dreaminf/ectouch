@@ -440,9 +440,8 @@ class SaleController extends CommonController {
                 foreach($val['goods'] as $k=>$v){
                     $orders[$key]['goods'][$k]['profit'] = model('Sale')->get_drp_profit($v['goods_id']);
                     $orders[$key]['goods'][$k]['profit_money'] = $v['touch_sale']*$orders[$key]['goods'][$k]['profit']['profit1'] /100;
-                    $orders[$key]['sum']+=$orders[$key]['goods'][$k]['profit_money'];
+                    $orders[$key]['sum']+=$orders[$key]['goods'][$k]['profit_money']*$v['goods_number'];
                 }
-
             }
         }
         $this->assign('orders_list', $orders);
