@@ -15,6 +15,7 @@ class MY_Loader extends CI_Loader
     public function __construct(){
         parent::__construct();
         spl_autoload_register(array($this, 'autoload'));
+        defined('IN_ECS') or define('IN_ECS', true);
         defined('APPNAME') or define('APPNAME', 'ECTouch');
         defined('VERSION') or define('VERSION', '2.0-dev');
         defined('RELEASE') or define('RELEASE', '20150918');
@@ -71,7 +72,7 @@ class MY_Loader extends CI_Loader
         $db_port = isset($db_hosts[1]) ? $db_hosts[1]:'3306';
 
         $this->ecs = new ecshop($db_name, $prefix);
-        $this->db = new mysql($db_host, $db_user, $db_pass, $db_name);
+        $this->db = new mysql($db_host, $db_user, $db_pass, $db_name, $prefix);
         $this->db->set_disable_cache_tables(array($this->ecs->table('sessions'), $this->ecs->table('sessions_data'), $this->ecs->table('cart')));
         $this->err = new error('message.dwt');
 
