@@ -1013,3 +1013,7 @@ input[type=submit]{
     background-color: #41A28E;
     border-radius: 0;
 }
+
+.margin-top-2{
+    margin-top:2rem;
+}

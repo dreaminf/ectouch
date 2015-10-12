@@ -37,7 +37,7 @@
             <input type="text" name="amount" placeholder="当前可提取佣金为{$surplus_amount}">
         </div>
     </div>
-    <div class="t-a-center"><input type="submit" value="{:L('next_step')}" class=" set-div-button"></div>
+    <div class="t-a-center margin-top-2"><input type="submit" value="{:L('next_step')}" class=" set-div-button"></div>
         </form>
     <style>
         body{background:#f0f0f6;}
