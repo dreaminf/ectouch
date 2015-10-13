@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<title>微信墙</title>
-		<link rel="stylesheet" type="text/css" href="__TPL__/wall/css/wechat.css"/>
-	</head>
-	<body>
-		<div class="con" {if $wall.background}style="background-image:url({$wall.background})"{/if}>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>微信墙</title>
+        <link rel="stylesheet" type="text/css" href="__TPL__/wall/css/wechat.css"/>
+    </head>
+    <body>
+        <div class="con" {if $wall.background}style="background-image:url({$wall.background})"{/if}>
             <div class="main">
                 <!--logo-->
                 <div class="logo">
@@ -99,7 +99,7 @@
                 </div>
             </div>
         </div>
-		<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
         <script type="text/javascript" src="__TPL__/wall/js/jquery.nicescroll.js" ></script>
         <script type="text/javascript" src="__TPL__/wall/js/jquery.scrollTo.min.js" ></script>
         <script type="text/javascript" src="__TPL__/wall/js/wechat.js" ></script>
@@ -114,7 +114,7 @@
                         $("#start").css("display", "none");
                         var len = result.data.length > 0 ? result.data.length - 1 : 0, i = 0;
                         if(result.data.length > 0){
-                            var = prize = result.data;
+                            var prize = result.data;
                             time = setInterval(function(){
                                 if(i > len){
                                     i = 0;
@@ -188,5 +188,5 @@
             $(".award-detail-pic li:first").addClass("active").siblings("li").removeClass("active");
         }
         </script>
-	</body>
+    </body>
 </html>

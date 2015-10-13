@@ -8,7 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="__TPL__/wall/css/wechat.css"/>
 	</head>
 	<body>
-		<div class="con" {if $wall.background}style="background-image:url({$wall.background})"{/if}>
+		<div class="con wall-con" {if $wall.background}style="background-image:url({$wall.background})"{/if}>
 			<div class="main">
 				<!--logo-->
 				<div class="logo">
@@ -87,6 +87,8 @@
                     }
                     if(html){
                         $("ul#ul").append(html);
+                        //添加跳转锚点
+                        
                     }
                     start = parseInt(start) + parseInt(result.data.length);
                 }
