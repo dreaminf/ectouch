@@ -1033,11 +1033,11 @@ class template
                 $scripts[] = $val;
                 if ($val{0} == '.')
                 {
-                    $str .= '<script type="text/javascript" src="' . $val . '"></script>';
+                    $str .= '<script type="text/javascript" src="' . $val . '"></script>' . "\n";
                 }
                 else
                 {
-                    $str .= '<script type="text/javascript" src="js/' . $val . '"></script>';
+                    $str .= '<script type="text/javascript" src="js/' . $val . '"></script>' . "\n";
                 }
             }
         }
