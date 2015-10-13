@@ -14,7 +14,7 @@ class FileDriver {
         if(!empty($options)) {
             $this->options =  $options;
         }
-        $this->options['temp']      =   !empty($options['temp'])?   $options['temp']    :   ROOT_PATH .'caches/cache/';
+        $this->options['temp']      =   !empty($options['temp'])?   $options['temp']    :   ROOT_PATH .'data/caches/cache/';
         $this->options['prefix']    =   isset($options['prefix'])?  $options['prefix']  :   '';
         $this->options['expire']    =   isset($options['expire'])?  $options['expire']  :   0;
         $this->options['length']    =   isset($options['length'])?  $options['length']  :   0;
