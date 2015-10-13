@@ -3,8 +3,21 @@ if(version_compare(PHP_VERSION, '5.2.4', '<')){
     die('require PHP > 5.2.4 !');
 }
 header('Content-Type: text/html; charset=utf-8');
-defined('ENVIRONMENT') or define('ENVIRONMENT', 'development');
-define('ROOT_PATH', str_replace('\\', '/', dirname(dirname(__FILE__))) . '/');
+defined('ROOT_PATH') or define('ROOT_PATH', str_replace('\\', '/', dirname(dirname(__FILE__))) . '/');
+defined('BASE_PATH') or define('BASE_PATH', ROOT_PATH . 'include/');
+defined('DATA_PATH') or define('DATA_PATH', ROOT_PATH . 'data/');
+defined('ADDONS_PATH') or define('ADDONS_PATH', ROOT_PATH . 'plugins/');
+defined('STORAGE_PATH') or define('STORAGE_PATH', DATA_PATH . 'attached/');
+// 调试信息
+defined('APP_DEBUG') or define('APP_DEBUG', true);
+defined('ENVIRONMENT') or define('ENVIRONMENT', APP_DEBUG ? 'development':'production');
+// 模块绑定
+defined('BIND_MODULE') or define('BIND_MODULE', '');
+defined('BIND_CONTROLLER') or define('BIND_CONTROLLER', '');
+defined('BIND_ACTION') or define('BIND_ACTION', '');
+defined('VIEW_PATH') or define('VIEW_PATH', '');
+// RESTful格式
+defined('REST_EXTEND') or define('REST_EXTEND', 'JSON');
 
 /*
  *---------------------------------------------------------------
@@ -49,7 +62,7 @@ switch (ENVIRONMENT)
  * Include the path if the folder is not in the same directory
  * as this file.
  */
-	$system_path = 'include/system';
+	$system_path = BASE_PATH . 'system';
 
 /*
  *---------------------------------------------------------------
@@ -64,7 +77,7 @@ switch (ENVIRONMENT)
  *
  * NO TRAILING SLASH!
  */
-	$application_folder = 'include';
+	$application_folder = BASE_PATH;
 
 /*
  *---------------------------------------------------------------
@@ -79,7 +92,7 @@ switch (ENVIRONMENT)
  *
  * NO TRAILING SLASH!
  */
-	$view_folder = 'themes';
+	$view_folder = VIEW_PATH;
 
 
 /*
@@ -103,13 +116,13 @@ switch (ENVIRONMENT)
  */
 	// The directory name, relative to the "controllers" folder.  Leave blank
 	// if your controller is not in a sub-folder within the "controllers" folder
-	// $routing['directory'] = '';
+	$routing['directory'] = BIND_MODULE;
 
 	// The controller class file name.  Example:  mycontroller
-	// $routing['controller'] = '';
+	$routing['controller'] = BIND_CONTROLLER;
 
 	// The controller function you wish to be called.
-	// $routing['function']	= '';
+	$routing['function'] = BIND_ACTION;
 
 
 /*
@@ -170,7 +183,7 @@ switch (ENVIRONMENT)
  * -------------------------------------------------------------------
  */
 	// The name of THIS file
-	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
+	define('SELF', substr($_SERVER['PHP_SELF'], strrpos($_SERVER['PHP_SELF'], '/') + 1));
 
 	// Path to the system folder
 	define('BASEPATH', str_replace('\\', '/', $system_path));
