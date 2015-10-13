@@ -176,7 +176,7 @@ class Model{
 	public function initCache() {		
 		if (is_object($this->cache)) {
 			return true;
-		} else if ($this->config['DB_CACHE_ON']) {
+		} else if ($this->config['DB_CACHE_ON'] || $this->options['cache']) {
 			require_once( dirname(__FILE__) . '/Cache.php' );
 			$this->cache = new Cache();
 			return true;
