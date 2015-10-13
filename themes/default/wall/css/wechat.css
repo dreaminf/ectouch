@@ -195,6 +195,7 @@ input:focus{
 }
 .msg-list-info span{
 	font-size: 14px;
+	margin-right: 10px;
 }
 .msg-content{
 	display: inline-block;
@@ -418,8 +419,13 @@ input:focus{
 	right: 60.5px;
 }
 
-
-
+.wall-con .content{
+	height: 740px;
+	margin-bottom: 20px;
+}
+.wall-con .msg-list{
+	height: 665px;
+}
 
 
 
