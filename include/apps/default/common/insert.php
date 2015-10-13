@@ -209,7 +209,7 @@ function insert_member_info() {
         }
         $captcha = intval(C('captcha'));
         if (($captcha & CAPTCHA_LOGIN) && (!($captcha & CAPTCHA_LOGIN_FAIL) || (($captcha & CAPTCHA_LOGIN_FAIL) && $_SESSION['login_fail'] > 2)) && gd_version() > 0) {
-            ECTouch::view()->assign('enabled_captcha', 1);
+            ECTouch::view()->assign('enabled_captcha_comments', 1);
             ECTouch::view()->assign('rand', mt_rand());
         }
     }

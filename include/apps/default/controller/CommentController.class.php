@@ -242,7 +242,7 @@ class CommentController extends CommonController {
             $this->assign('email', $_SESSION['email']);
             /* 验证码相关设置 */
             if ((intval(C('captcha')) & CAPTCHA_COMMENT) && gd_version() > 0) {
-                $this->assign('enabled_captcha', 1);
+                $this->assign('enabled_captcha_comments', 1);
                 $this->assign('rand', mt_rand());
             }
             //$result['rank'] = $rank;
