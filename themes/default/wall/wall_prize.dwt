@@ -112,13 +112,16 @@
                     if(result.errCode == 0){
                         $("#stop").css("display", "inline-block");
                         $("#start").css("display", "none");
-                        var len = result.data.length > 0 ? result.data.length - 1 : 0;
+                        var len = result.data.length > 0 ? result.data.length - 1 : 0, i = 0;
                         if(result.data.length > 0){
                             var prize = result.data;
                             time = setInterval(function(){
-                                var rand = Math.floor(Math.random()*len+1);
-                                $(".container").html('<img src="'+prize[rand].headimg+'" /><p class="award-content-name">'+prize[rand].nickname+'</p>').addClass("active").css("display", "block").siblings("li").removeClass("active");
-                            }, 100);
+                                if(i > len){
+                                    i = 0;
+                                }
+                                $(".container").html('<img src="'+prize[i].headimg+'" /><p class="award-content-name">'+prize[i].nickname+'</p>').addClass("active").css("display", "block").siblings("li").removeClass("active");
+                                i++;
+                            }, 80);
                         }
                         else{
                             alert("暂无参与抽奖用户");
