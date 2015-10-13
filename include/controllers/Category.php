@@ -21,10 +21,30 @@ class Category extends IndexController {
 	public function index(){
 		$this->redirect('all');
 	}
-	
-	public function all(){
-		$this->display('all.html');
-	}
+	/**
+	 * 获取分类信息
+	 * 只获取二级分类当没有参数时获取最高的二级分类
+	 */
+ 	public function all(){
+        $cat_id = I('get.id');
+        /* 页面的缓存ID */
+        $cache_id = sprintf('%X', crc32($_SERVER['REQUEST_URI'] . C('lang')));
+            // 获得请求的分类 ID
+            if ($cat_id > 0) {
+                $category = M('CategoryBase')->get_child_tree($cat_id);
+            } else {
+                //顶级分类
+                ecs_header("Location: " . url('category/top_all') . "\n");
+            }
+            $this->assign('title', L('catalog'));
+            $this->assign('category', $category);
+
+            /* 页面标题 */
+            $page_info = get_page_title($cat_id);
+            $this->assign('ur_here', $page_info['ur_here']);
+            $this->assign('page_title', ($cat_id > 0) ? $page_info['title'] : L('catalog') . '_' . $page_info['title']);
+        $this->display('category_all.dwt', $cache_id);
+	} 
 	
 	public function products() {
 		/* 获得请求的分类 ID */
@@ -58,7 +78,7 @@ class Category extends IndexController {
 			
 			/* 赋值固定内容 */
 			if ($brand > 0) {
-				$sql = "SELECT brand_name FROM " . $GLOBALS ['ecs']->table ( 'brand' ) . " WHERE brand_id = '$brand'";
+				$sql = "SELECT brand_name FROM {pre}brand WHERE brand_id =".$brand;
 				$brand_name = $this->load->db->getOne ( $sql );
 			} else {
 				$brand_name = '';
@@ -358,35 +378,42 @@ class Category extends IndexController {
 	private function init() {
 		/* 初始化分页信息 */
 		$this->parameter['page'] = I('page', 1, 'intval');
-		$this->size = isset (C('page_size')) && intval (C('page_size')) > 0 ? intval (C('page_size')) : 10;
-		$this->brand = isset (I('brand')) && intval (I('brand')) > 0 ? intval (I('brand')) : 0;
-		$this->price_max = isset (I('price_max')) && intval (I('price_max')) > 0 ? intval (I('price_max')) : 0;
-		$this->price_min = isset (I('price_min')) && intval (I('price_min')) > 0 ? intval (I('price_min')) : 0;
-		$this->filter_attr_str = isset (I('filter_attr')) ? htmlspecialchars ( trim (I('filter_attr')) ) : '0';
+		$page = intval(C('page_size'));
+		$this->size = isset ($page) && $page > 0 ? $page : 10;
+		$brand = intval(I('brand'));
+		$this->brand = isset ($brand) && $brand > 0 ? $brand : 0;
+		$price_max = intval(I('price_max'));
+		$this->price_max = isset ($price_max) && $price_max > 0 ? $price_max : 0;
+		$price_min = intval(I('price_min'));
+		$this->price_min = isset ($price_min) && $price_min > 0 ? $price_min : 0;
+		$filter_attr = I('filter_attr');
+		$this->filter_attr_str = isset ($filter_attr) ? htmlspecialchars ( trim ($filter_attr) ) : '0';
 		
-		$this->filter_attr_str = trim ( urldecode ( $filter_attr_str ) );
-		$this->filter_attr_str = preg_match ( '/^[\d\.]+$/', $filter_attr_str ) ? $filter_attr_str : '';
-		$this->filter_attr_str = empty ( $filter_attr_str ) ? '' : explode ( '.', $filter_attr_str );
+		$this->filter_attr_str = trim (urldecode ($this->filter_attr_str));
+		$this->filter_attr_str = preg_match ( '/^[\d\.]+$/', $this->filter_attr_str ) ? $this->filter_attr_str : '';
+		$this->filter_attr_str = empty ($this->filter_attr_str ) ? '' : explode ( '.',$this->filter_attr_str );
 		
 		/* 排序、显示方式以及类型 */
 		$this->default_display_type =C('show_order_type') == '0' ? 'list' : (C('show_order_type') == '1' ? 'grid' : 'text');
 		$this->default_sort_order_method = C('sort_order_method') == '0' ? 'DESC' : 'ASC';
 		$this->default_sort_order_type = C('sort_order_type') == '0' ? 'goods_id' : (C('sort_order_type') == '1' ? 'shop_price' : 'last_update');
-		
-		$sort = (isset (I('sort') ) && in_array ( trim ( strtolower ( I('sort') ) ), array (
+		$sort = I('sort');
+		$sort = (isset ($sort) && in_array ( trim ( strtolower ($sort) ), array (
 				'goods_id',
 				'shop_price',
 				'last_update' 
-		) )) ? trim (I('sort')) : $default_sort_order_type;
-		$order = (isset (I('order') ) && in_array ( trim ( strtoupper (I('order')) ), array (
+		) )) ? trim ($sort) : $this->default_sort_order_type;
+		$order = I('order');
+		$order = (isset ($order) && in_array ( trim ( strtoupper ($order) ), array (
 				'ASC',
 				'DESC' 
-		) )) ? trim (I('order') ) : $default_sort_order_method;
-		$display = (isset (I('display')) && in_array ( trim ( strtolower (I('display')) ), array (
+		) )) ? trim ($order) : $this->default_sort_order_method;
+		$display = I('display');
+		$display = (isset ($display) && in_array ( trim ( strtolower ($display) ), array (
 				'list',
 				'grid',
 				'text' 
-		) )) ? trim (I('display')) : (isset ( $_COOKIE ['ECS'] ['display'] ) ? $_COOKIE ['ECS'] ['display'] : $default_display_type);
+		) )) ? trim ($display) : (isset ( $_COOKIE ['ECS'] ['display'] ) ? $_COOKIE ['ECS'] ['display'] : $this->default_display_type);
 		$display = in_array ( $display, array (
 				'list',
 				'grid',
