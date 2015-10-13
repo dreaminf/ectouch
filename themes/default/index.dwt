@@ -6,10 +6,8 @@
 <meta name="Keywords" content="{$meta_keywords}" />
 <meta name="Description" content="{$meta_description}" />
 <title>{$page_title}</title>
-<link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
-<link rel="stylesheet" href="css/bootstrap/font-awesome.min.css">
+<link rel="stylesheet" href="statics/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/photoswipe.css">
 {* 包含脚本文件 *}
 {insert_scripts files='common.js'}
 </head>
