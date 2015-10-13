@@ -28,34 +28,15 @@
                     
                         <div class="award-content-detail">
                             <ul class="award-detail-pic">
-                                <li class="active prize0">
+                                <li class="active">
                                     <img src="__TPL__/wall/img/unknow.png"/>
                                     <p class="award-content-name">求中奖</p>
                                 </li>
-                                {foreach from=$no_prize item=no}
-                                <li class="prize{$no.id}">
-                                    <img src="{$no.headimg}"/>
-                                    <p class="award-content-name">{$no.nickname}</p>
+                                <li class="container" style="display:none;">
+                                    <img src="" />
+                                    <p class="award-content-name"></p>
                                 </li>
-                                {/foreach}
                             </ul>
-                            <!--<div class="award-detail-num">
-                                <span>抽取</span>
-                                <select name="prize">
-                                    {foreach from=$wall.prize item=prize}
-                                    <option value="{$prize.prize_level}">{$prize.prize_level}</option>
-                                    {/foreach}
-                                </select>
-                                <select name="num">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                </select>
-                                <span>人</span> 
-                            </div>-->
                             <input type="button" name="start" id="start" value="开始抽奖" />
                             <input type="button" name="stop" id="stop" value="停止抽奖" style="display:none;" />
                         </div>
@@ -76,7 +57,7 @@
                         {foreach from=$list item=list key=key}
                             <li>
                                 <div class="fl award-list-info">
-                                    <span class="fl" oid="{$list.id}">{$key}</span>
+                                    <span class="fl">{$key}</span>
                                     <img src="{$list.headimg}" class="fl"/>
                                 </div>
                                 <p class="fr">{$list.nickname}</p>
@@ -125,45 +106,50 @@
         <script type="text/javascript">
         $(function(){
             //开始抽奖
-            var len = $(".award-detail-pic li img").length > 1 ? $(".award-detail-pic li img").length - 1 : 1, 
-                i = 1, 
-                time;
+            var time;
             $("#start").click(function(){
-                if(len > 1){
-                    time = setInterval(function(){
-                        if(i > len){
-                            i = 1;
+                $.get("{:url('no_prize', array('wall_id'=>$this->_var['wall']['id']))}", '', function(result){
+                    if(result.errCode == 0){
+                        $("#stop").css("display", "inline-block");
+                        $("#start").css("display", "none");
+                        var len = result.data.length > 0 ? result.data.length - 1 : 0, i = 0;
+                        if(result.data.length > 0){
+                            var = prize = result.data;
+                            time = setInterval(function(){
+                                if(i > len){
+                                    i = 0;
+                                }
+                                var rand = Math.floor(Math.random()*len+1);
+                                $(".container").html('<img src="'+prize[rand].headimg+'" /><p class="award-content-name">'+prize[rand].nickname+'</p>').addClass("active").css("display", "block").siblings("li").removeClass("active");
+                                i++;
+                            }, 100);
                         }
-                        $(".award-detail-pic li").eq(i).addClass("active").siblings("li").removeClass("active");
-                        i++;
-                    }, 100);
-                    $("#stop").css("display", "inline-block");
-                    $("#start").css("display", "none");
-                }
-                else{
-                    alert("暂无数据");
-                }
+                        else{
+                            alert("暂无参与抽奖用户");
+                        }
+                    }
+                    else if(result.errCode == 1){
+                        location.href = result.errMsg;
+                    }
+                    else{
+                        alert(result.errMsg);
+                    }
+                }, 'json');                
             });
             //停止抽奖
             $("#stop").click(function(){
                 $.get("{:url('start_draw', array('wall_id'=>$this->_var['wall']['id']))}", '', function(result){
                     if(result.errCode == 0){
                         //中奖
-                        $(".award-detail-pic li.prize"+result.data.id).addClass("active").siblings("li").removeClass("active");
+                        $(".container").html('<img src="'+result.data.headimg+'" /><p class="award-content-name">'+result.data.nickname+'</p>').addClass("active").css("display", "block").siblings("li").removeClass("active");
                         
                         var key = $("#award li span.fl:last").text();
-                        if(key){
-                            key = parseInt(key) + 1;
-                        }
-                        else{
-                            key = 1;
-                        }
-                        var html = '<li><div class="fl award-list-info"><span class="fl" oid="'+result.data.id+'">'+key+'</span><img src="'+result.data.headimg+'" class="fl"/></div><p class="fr">'+result.data.nickname+'</p></li>';
+                        key = key ? parseInt(key) + 1 : 1;
+                        var html = '<li><div class="fl award-list-info"><span class="fl">'+key+'</span><img src="'+result.data.headimg+'" class="fl"/></div><p class="fr">'+result.data.nickname+'</p></li>';
                         $("#award").append(html);
                         //获奖人数
-                        var prize_num = $("#award li").length ? $("#award li").length : 0;
-                        $("#prize_num").html(prize_num);
-                        setTimeout(function(){remove_prize(result.data.id)}, 2000);
+                        $("#prize_num").html(result.data.prize_num);
+                        setTimeout(function(){remove_prize()}, 2000);
                     }
                     else if(result.errCode == 1){
                         location.href = result.errMsg;
@@ -183,12 +169,6 @@
                 if(confirm("重置抽奖后，中奖用户将会重新放入奖池，确定要重置吗？")){
                     $.get("{:url('reset_draw', array('wall_id'=>$this->_var['wall']['id']))}", '', function(result){
                         if(result.errCode == 0){
-                            $("#award li").each(function(){
-                                var img = $(this).find("img").attr("src");
-                                var name = $(this).find("p.fr").html();
-                                var oid = $(this).find("span.fl").attr("oid");
-                                $(".award-detail-pic").append('<li class="active prize'+oid+'"><img src="'+img+'"><p class="award-content-name">'+name+'</p></li>');
-                            });
                             $("#award").empty();
                             $(".award-detail-pic li:first").addClass("active").siblings("li").removeClass("active");
                             $("#prize_num").html("0");
@@ -204,9 +184,8 @@
                 }
             });
         })
-        function remove_prize(oid){
+        function remove_prize(){
             $(".award-detail-pic li:first").addClass("active").siblings("li").removeClass("active");
-            $(".award-detail-pic li.prize"+oid).remove();
         }
         </script>
 	</body>

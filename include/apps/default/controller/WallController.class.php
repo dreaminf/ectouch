@@ -87,7 +87,8 @@ class WallController extends CommonController {
         }
 
         //中奖的用户
-        $sql = "SELECT u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_prize p ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY p.dateline ASC";
+        //$sql = "SELECT u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_prize p ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') GROUP BY u.id ORDER BY p.dateline ASC";
+        $sql = "SELECT u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_prize P LEFT JOIN ".$this->model->pre."wechat_wall_user u ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') GROUP BY u.id ORDER BY p.dateline ASC";
         $rs = $this->model->query($sql);
         $list = array();
         if($rs){
@@ -98,17 +99,40 @@ class WallController extends CommonController {
         //参与人数
         $total = $this->model->table('wechat_wall_user')->where(array('status'=>1))->count();
 
-        //没中奖的用户
-        /*$sql = "SELECT nickname, headimg, id FROM ".$this->model->pre."wechat_wall_user WHERE wall_id = '$wall_id' AND status = 1 AND openid not in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY addtime DESC";*/
-        $sql = "SELECT u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_prize p ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid not in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY u.addtime ASC";
-        $no_prize = $this->model->query($sql);
-
-        $this->assign('no_prize', $no_prize);
         $this->assign('total', $total);
         $this->assign('prize_num', count($list));
         $this->assign('list', $list);
         $this->assign('wall', $wall);
         $this->display('wall/wall_prize.dwt');
+    }
+
+    /**
+     * 获取未中奖用户
+     */
+    public function no_prize(){
+        if(IS_AJAX){
+            $result['errCode'] = 0;
+            $result['errMsg'] = '';
+
+            $wall_id = I('get.wall_id');
+            if(empty($wall_id)){
+                $result['errCode'] = 1;
+                $result['errMsg'] = url('index/index');
+                exit(json_encode($result));
+            }
+            //没中奖的用户
+            $sql = "SELECT nickname, headimg, id FROM ".$this->model->pre."wechat_wall_user WHERE wall_id = '$wall_id' AND status = 1 AND openid not in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY addtime DESC";
+            //$sql = "SELECT u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_prize p ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid not in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY u.addtime ASC";
+            $no_prize = $this->model->query($sql);
+            if(empty($no_prize)){
+                $result['errCode'] = 2;
+                $result['errMsg'] = '暂无参与抽奖用户';
+                exit(json_encode($result));
+            }
+            
+            $result['data'] = $no_prize;
+            exit(json_encode($result));
+        }
     }
 
     /**
@@ -153,6 +177,9 @@ class WallController extends CommonController {
                 $data['activity_type'] = 'wall';
                 $data['wall_id'] = $wall_id;
                 $this->model->table('wechat_prize')->data($data)->insert();
+
+                //中奖人数
+                $rs['prize_num'] = $this->model->table('wechat_prize')->where(array('wall_id'=>$wall_id, 'activity_type'=>'wall'))->count();
 
                 /*$rs = array();
                 $rs['nickname'] = 'null';
