@@ -51,11 +51,7 @@ input:focus{
 .logo h1{
 	line-height: 55px;
 	font-size: 44px;
-	color: #39b4e9;
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#39b4e9), to(#2b8fdd));
-	-webkit-text-fill-color: transparent;
-	-webkit-background-clip: text;
-	
+	color: #fff;
 }
 .content{
 	background-color: rgba(0,0,0,0.3);
@@ -203,11 +199,14 @@ input:focus{
 .msg-content{
 	display: inline-block;
 	position: relative;
-	background-color: #39B4E9;
+	background-color: #zai 39B4E9;
 	border-radius: 10px;
 	max-width: 970px;
 	font-size: 30px;
 	padding: 15px;
+	table-layout: fixed;
+    word-break: break-all;
+    overflow: hidden;
 }
 .arrow{
 	position: absolute;
