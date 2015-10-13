@@ -140,11 +140,11 @@ class MY_Loader extends CI_Loader
             }
 
             $this->tpl->assign('lang', L());
-            $this->tpl->assign('ecs_charset', CHARSET);
+            $this->tpl->assign('charset', CHARSET);
             if (C('stylename') !== '') {
-                $this->tpl->assign('ecs_css_path', 'views/' . C('template') . '/css/style_' . C('stylename') . '.css');
+                $this->tpl->assign('css_path', 'themes/' . C('template') . '/css/style_' . C('stylename') . '.css');
             } else {
-                $this->tpl->assign('ecs_css_path', 'views/' . C('template') . '/css/style.css');
+                $this->tpl->assign('css_path', 'themes/' . C('template') . '/css/style.css');
             }
         }
     }
