@@ -6,44 +6,44 @@ class Welcome extends IndexController
 
     public function index()
     {
-        /* »º´æ±àºÅ */
+        /* ç¼“å­˜ç¼–å· */
         $cache_id = $this->get_cache_id();
         if (!$this->is_cached('index.dwt', $cache_id)) {
+
             assign_template();
 
             $position = assign_ur_here();
-            $this->assign('page_title', $position['title']);    // Ò³Ãæ±êÌâ
-            $this->assign('ur_here', $position['ur_here']);  // µ±Ç°Î»ÖÃ
+            $this->assign('page_title', $position['title']);    // é¡µé¢æ ‡é¢˜
+            $this->assign('ur_here', $position['ur_here']);  // å½“å‰ä½ç½®
 
             /* meta information */
             $this->assign('keywords', htmlspecialchars(C('shop_keywords')));
             $this->assign('description', htmlspecialchars(C('shop_desc')));
 
-            $this->assign('categories', get_categories_tree()); // ·ÖÀàÊ÷
-            $this->assign('helps', get_shop_help());       // Íøµê°ïÖú
-            $this->assign('top_goods', get_top10());           // ÏúÊÛÅÅĞĞ
+            $this->assign('categories', get_categories_tree()); // åˆ†ç±»æ ‘
+            $this->assign('helps', get_shop_help());       // ç½‘åº—å¸®åŠ©
+            $this->assign('top_goods', get_top10());           // é”€å”®æ’è¡Œ
 
-            $this->assign('best_goods', get_recommend_goods('best'));    // ÍÆ¼öÉÌÆ·
-            $this->assign('new_goods', get_recommend_goods('new'));     // ×îĞÂÉÌÆ·
-            $this->assign('hot_goods', get_recommend_goods('hot'));     // ÈÈµãÎÄÕÂ
-            $this->assign('promotion_goods', get_promote_goods()); // ÌØ¼ÛÉÌÆ·
+            $this->assign('best_goods', get_recommend_goods('best'));    // æ¨èå•†å“
+            $this->assign('new_goods', get_recommend_goods('new'));     // æœ€æ–°å•†å“
+            $this->assign('hot_goods', get_recommend_goods('hot'));     // çƒ­ç‚¹æ–‡ç« 
+            $this->assign('promotion_goods', get_promote_goods()); // ç‰¹ä»·å•†å“
             $this->assign('brand_list', get_brands());
-            $this->assign('promotion_info', get_promotion_info()); // Ôö¼ÓÒ»¸ö¶¯Ì¬ÏÔÊ¾ËùÓĞ´ÙÏúĞÅÏ¢µÄ±êÇ©À¸
+            $this->assign('promotion_info', get_promotion_info()); // å¢åŠ ä¸€ä¸ªåŠ¨æ€æ˜¾ç¤ºæ‰€æœ‰ä¿ƒé”€ä¿¡æ¯çš„æ ‡ç­¾æ 
 
-            $this->assign('new_articles', $this->getNewArticles());   // ×îĞÂÎÄÕÂ
-            $this->assign('group_buy_goods', $this->getGroupBuy());      // ÍÅ¹ºÉÌÆ·
-            $this->assign('auction_list', $this->getAuction());        // ÅÄÂô»î¶¯
-            $this->assign('shop_notice', C('shop_notice'));       // ÉÌµê¹«¸æ
+            $this->assign('new_articles', $this->getNewArticles());   // æœ€æ–°æ–‡ç« 
+            $this->assign('group_buy_goods', $this->getGroupBuy());      // å›¢è´­å•†å“
+            $this->assign('auction_list', $this->getAuction());        // æ‹å–æ´»åŠ¨
+            $this->assign('shop_notice', C('shop_notice'));       // å•†åº—å…¬å‘Š
 
-            /* Ê×Ò³Ö÷¹ã¸æÉèÖÃ */
+            /* é¦–é¡µä¸»å¹¿å‘Šè®¾ç½® */
             $this->assign('index_ad', C('index_ad'));
             if (C('index_ad') == 'cus') {
-                $sql = 'SELECT ad_type, content, url FROM {pre}ad_custom WHERE ad_status = 1';
-                $ad = $this->load->db->getRow($sql, true);
+                $ad = $this->model->table('ad_custom')->field('ad_type, content, url')->where('ad_status = 1')->find();
                 $this->assign('ad', $ad);
             }
 
-            /* Ê×Ò³ÍÆ¼ö·ÖÀà */
+            /* é¦–é¡µæ¨èåˆ†ç±» */
             $cat_recommend_res = $this->load->db->getAll("SELECT c.cat_id, c.cat_name, cr.recommend_type FROM {pre}cat_recommend AS cr INNER JOIN {pre}category AS c ON cr.cat_id=c.cat_id");
             if (!empty($cat_recommend_res)) {
                 $cat_rec = array();
@@ -53,7 +53,7 @@ class Welcome extends IndexController
                 $this->assign('cat_rec', $cat_rec);
             }
 
-            /* Ò³ÃæÖĞµÄ¶¯Ì¬ÄÚÈİ */
+            /* é¡µé¢ä¸­çš„åŠ¨æ€å†…å®¹ */
             assign_dynamic('index');
         }
 
@@ -61,7 +61,7 @@ class Welcome extends IndexController
     }
 
     /**
-     * »ñµÃ×îĞÂµÄÎÄÕÂÁĞ±í¡£
+     * è·å¾—æœ€æ–°çš„æ–‡ç« åˆ—è¡¨ã€‚
      *
      * @access  private
      * @return  array
@@ -89,7 +89,7 @@ class Welcome extends IndexController
     }
 
     /**
-     * »ñµÃ×îĞÂµÄÍÅ¹º»î¶¯
+     * è·å¾—æœ€æ–°çš„å›¢è´­æ´»åŠ¨
      *
      * @access  private
      * @return  array
@@ -113,11 +113,11 @@ class Welcome extends IndexController
             $res = $this->load->db->query($sql);
 
             while ($row = $this->load->db->fetchRow($res)) {
-                /* Èç¹ûËõÂÔÍ¼Îª¿Õ£¬Ê¹ÓÃÄ¬ÈÏÍ¼Æ¬ */
+                /* å¦‚æœç¼©ç•¥å›¾ä¸ºç©ºï¼Œä½¿ç”¨é»˜è®¤å›¾ç‰‡ */
                 $row['goods_img'] = get_image_path($row['goods_id'], $row['goods_img']);
                 $row['thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
 
-                /* ¸ù¾İ¼Û¸ñ½×Ìİ£¬¼ÆËã×îµÍ¼Û */
+                /* æ ¹æ®ä»·æ ¼é˜¶æ¢¯ï¼Œè®¡ç®—æœ€ä½ä»· */
                 $ext_info = unserialize($row['ext_info']);
                 $price_ladder = $ext_info['price_ladder'];
                 if (!is_array($price_ladder) || empty($price_ladder)) {
@@ -140,7 +140,7 @@ class Welcome extends IndexController
     }
 
     /**
-     * È¡µÃÅÄÂô»î¶¯ÁĞ±í
+     * å–å¾—æ‹å–æ´»åŠ¨åˆ—è¡¨
      * @return  array
      */
     private function getAuction()
