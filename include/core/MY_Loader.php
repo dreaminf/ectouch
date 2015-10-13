@@ -84,7 +84,7 @@ class MY_Loader extends CI_Loader
             'DB_PORT' => $db_port,
             'DB_PREFIX' => $prefix,
             'DB_CHARSET' => 'utf8',
-            'DB_CACHE_ON' => true,
+            'DB_CACHE_ON' => false,
             'DB_CACHE_TIME' => '1800'
         );
 

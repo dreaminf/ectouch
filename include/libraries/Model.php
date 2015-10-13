@@ -205,11 +205,11 @@ class Model{
 	private function _writeCache($data) {
 		//缓存时间为0，不设置缓存
 		if ( $this->options['cache'] == 0)
-			return false;		
-		if ( $this->initCache() ) {				
+			return false;
+		if ( $this->initCache() ) {
 			$expire = $this->options['cache'];
 			unset($this->options['cache']);
-			return $this->cache->set($this->sql, $data, $expire);	
+			return $this->cache->set($this->sql, $data, $expire);
 		}
 		return false;	
 	}
