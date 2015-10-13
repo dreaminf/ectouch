@@ -38,7 +38,7 @@ class WallController extends CommonController {
             $data = $this->model->query($sql);
             if($data){
                 foreach($data as $k=>$v){
-                    $data[$k]['addtime'] = date('Y-m-d H:i:s', $v['addtime']);
+                    $data[$k]['addtime'] = date('Y-m-d H:i', $v['addtime']);
                 }
             }
             $Eccache->set($cache_key, $data, 10);
