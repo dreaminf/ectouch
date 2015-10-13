@@ -103,6 +103,7 @@ class template
         error_reporting($this->_errorlevel);
         $this->_seterror--;
 
+        header('X-Powered-By:ECTouch');
         echo $out;
     }
 
