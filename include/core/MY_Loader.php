@@ -25,7 +25,6 @@ class MY_Loader extends CI_Loader
         define('IS_GET', REQUEST_METHOD == 'GET' ? true : false);
         define('IS_POST', REQUEST_METHOD == 'POST' ? true : false);
         define('IS_AJAX', ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') || !empty($_POST['ajax']) || !empty($_GET['ajax'])) ? true : false);
-        define('APP_DEBUG', ENVIRONMENT == 'development' ? true : false);
     }
 
     public function start(){
