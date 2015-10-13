@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<title>用户信息</title>
-		<meta name="description" content="用户信息,微信墙" />
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>用户信息</title>
+        <meta name="description" content="用户信息,微信墙" />
         <meta name="keywords" content="用户信息,微信墙" />
-		<link href="__TPL__/wall/css/ectouch.css" rel="stylesheet" />
-	</head>
-	<body>
-		<div class="con">
+        <link href="__TPL__/wall/css/ectouch.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="con">
             <!--header-->
             <!-- <header>
                 <a href="javascript:history.go(-1);" class="fl">
@@ -35,9 +35,9 @@
                         </div>
                         <div class="user-name">
                             <select name="sex">
-                                <option value="1">男</option>
-                                <option value="2">女</option>
-                                <option value="0">保密</option>
+                                <option value="1" {if $user.sex == 1}selected{/if}>男</option>
+                                <option value="2" {if $user.sex == 2}selected{/if}>女</option>
+                                <option value="0" {if $user.sex == 0}selected{/if}>保密</option>
                             </select>
                         </div>
                     </div>
@@ -74,26 +74,27 @@
                 </form>
             </div>
         </div>
-		<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
-		<script type="text/javascript">
-        			$(function(){
-        				$('#name input[type=text]').bind("blur",function(){
-        					var Value=$(this).val();
-        					var isEmpty=false;
-        					if(Value==""){
-        				        $('.user-info i').hide();
-        				        isEmpty=true;
-        				    }
-        				    if(!isEmpty){
-        				    	$('.user-info i').hide();
-        					    $('.user-info i').show();
-        				    }
-        					$('#name input[type=text]').bind('input propertychange', function(){
-        				        $('.user-info i').show();
-        				    });
-        				});
+        <script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+        <script type="text/javascript">
+                    $(function(){
+                        $('.user-info i').show();
+                        $('#name input[type=text]').bind("blur",function(){
+                            var Value=$(this).val();
+                            var isEmpty=false;
+                            if(Value==""){
+                                $('.user-info i').hide();
+                                isEmpty=true;
+                            }
+                            if(!isEmpty){
+                                $('.user-info i').hide();
+                                $('.user-info i').show();
+                            }
+                            $('#name input[type=text]').bind('input propertychange', function(){
+                                $('.user-info i').show();
+                            });
+                        });
 
-        				$('.user-info i').click(function(){
+                        $('.user-info i').click(function(){
                             $('#name input').val('');
                             $('.user-info i').hide();
                         });
@@ -104,7 +105,7 @@
                                 $("input[name=headimg]").val(img);
                             }
                         });
-        			});
-        		</script>
-	</body>
+                    });
+                </script>
+    </body>
 </html>
