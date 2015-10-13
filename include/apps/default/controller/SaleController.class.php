@@ -622,6 +622,7 @@ class SaleController extends CommonController {
                 show_message(L('sale_cate_not_empty'));
             }
             $data['cat_id'] = $cat_id;
+            $data['open'] = 1;
             $where['user_id'] = $_SESSION['user_id'];
             $this->model->table('drp_shop')->data($data)->where($where)->update();
             redirect(url('sale/sale_set_end'));
@@ -650,7 +651,6 @@ class SaleController extends CommonController {
      */
     public function sale_set_end(){
         // 设置为分销商
-        $data['open'] = 1;
         $data['create_time'] = gmtime();
         $where['user_id'] = $_SESSION['user_id'];
         $this->model->table('drp_shop')->data($data)->where($where)->update();

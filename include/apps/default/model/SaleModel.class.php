@@ -830,7 +830,7 @@ class SaleModel extends BaseModel {
      */
     public function get_drp_status($user_id=0){
         $user_id = $user_id==0 ? session('user_id') : $user_id;
-        if($this->model->table('drp_shop')->where("user_id=".$user_id)->field('id')->getOne()){
+        if($this->model->table('drp_shop')->where("user_id=".$user_id ." and create_time > 0")->field('id')->getOne()){
             return $this->model->table('drp_shop')->where("user_id=".$user_id)->field('open')->getOne();
         }else{
             return 1;
