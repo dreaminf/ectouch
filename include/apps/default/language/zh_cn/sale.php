@@ -68,5 +68,6 @@ $_LANG['success'] = '修改成功';
 $_LANG['shop_config'] = '我的店铺设置';
 $_LANG['ranking_list'] = '分销排行榜';
 $_LANG['drp_close'] = '您的店铺已被管理员关闭，请联系管理员。';
+$_LANG['drp_log_desc'] = '用户提现';
 
 ?>

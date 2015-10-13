@@ -245,7 +245,7 @@ class SaleController extends CommonController {
                 'user_id'       => $this->user_id,
                 'user_money'    => '-'.$amount,
                 'change_time'   => gmtime(),
-                'change_desc'   => isset($_POST['user_note'])    ? trim($_POST['user_note'])      : '',
+                'change_desc'   => L('drp_log_desc'),
                 'bank_info'   => "银行名称：".$bank['bank_name']." 帐号：".$bank['bank_card'],
             );
 
