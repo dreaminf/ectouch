@@ -3,48 +3,31 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 class Category extends IndexController {
 	
 	private $parameter = array();
-	private $size = array();
-	private $brand = array();
-	private $price_max = array();
-	private $price_min = array();
-	private $filter_attr_str = array();
-	private $default_display_type = array();
-	private $default_sort_order_method = array();
-    private $default_sort_order_type = array();
 	
 	public function __construct() {
-		parent::__construct ();
-		
-		$this->init ();
+		parent::__construct();
+		$this->init();
 	}
 	
 	public function index(){
 		$this->redirect('all');
 	}
+
 	/**
 	 * 获取分类信息
 	 * 只获取二级分类当没有参数时获取最高的二级分类
 	 */
  	public function all(){
-        $cat_id = I('get.id');
-        /* 页面的缓存ID */
-        $cache_id = sprintf('%X', crc32($_SERVER['REQUEST_URI'] . C('lang')));
-            // 获得请求的分类 ID
-            if ($cat_id > 0) {
-                $category = M('CategoryBase')->get_child_tree($cat_id);
-            } else {
-                //顶级分类
-                ecs_header("Location: " . url('category/top_all') . "\n");
-            }
-            $this->assign('title', L('catalog'));
-            $this->assign('category', $category);
+        $cat_id = I('id', 0);
 
-            /* 页面标题 */
-            $page_info = get_page_title($cat_id);
-            $this->assign('ur_here', $page_info['ur_here']);
-            $this->assign('page_title', ($cat_id > 0) ? $page_info['title'] : L('catalog') . '_' . $page_info['title']);
+        $category = get_child_tree($cat_id);
+        $this->assign('category', $category);
+
+        $this->assign('page_title', L('catalog'));
+
+        $cache_id = $this->get_cache_id();
         $this->display('category_all.dwt', $cache_id);
-	} 
+	}
 	
 	public function products() {
 		/* 获得请求的分类 ID */
@@ -378,10 +361,11 @@ class Category extends IndexController {
 	private function init() {
 		/* 初始化分页信息 */
 		$this->parameter['page'] = I('page', 1, 'intval');
-		$page = intval(C('page_size'));
-		$this->size = isset ($page) && $page > 0 ? $page : 10;
-		$brand = intval(I('brand'));
-		$this->brand = isset ($brand) && $brand > 0 ? $brand : 0;
+		$this->parameter['size'] = C('page_size') > 0 ? C('page_size') : 10;
+		$this->parameter['brand'] = I('brand', 0, 'intval');
+
+
+
 		$price_max = intval(I('price_max'));
 		$this->price_max = isset ($price_max) && $price_max > 0 ? $price_max : 0;
 		$price_min = intval(I('price_min'));
