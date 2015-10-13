@@ -19,14 +19,12 @@ class Category extends IndexController {
 	 */
  	public function all(){
         $cat_id = I('id', 0);
-
-        $category = get_child_tree($cat_id);
+        $category = get_child_tree($cat_id);        
         $this->assign('category', $category);
-
         $this->assign('page_title', L('catalog'));
 
         $cache_id = $this->get_cache_id();
-        $this->display('category_all.dwt', $cache_id);
+        $this->display('category_top_all.dwt', $cache_id);
 	}
 	
 	public function products() {
@@ -363,20 +361,13 @@ class Category extends IndexController {
 		$this->parameter['page'] = I('page', 1, 'intval');
 		$this->parameter['size'] = C('page_size') > 0 ? C('page_size') : 10;
 		$this->parameter['brand'] = I('brand', 0, 'intval');
+        $this->parameter['price_max'] = intval(I('price_max')) > 0 ? I('price_max') : 0;
+        $this->parameter['price_min'] = intval(I('price_min')) > 0 ? intval(I('price_min')) : 0;
+        $filter_attr_str = I('filter_attr') ? htmlspecialchars ( trim (I('filter_attr'))) : '0';
+        $filter_attr_str = trim (urldecode ($filter_attr_str));
+        $filter_attr_str = preg_match ( '/^[\d\.]+$/', $filter_attr_str) ? $filter_attr_str : '';
+        $this->parameter['filter_attr_str'] = empty ($filter_attr_str) ? '' : explode ( '.',$filter_attr_str);
 
-
-
-		$price_max = intval(I('price_max'));
-		$this->price_max = isset ($price_max) && $price_max > 0 ? $price_max : 0;
-		$price_min = intval(I('price_min'));
-		$this->price_min = isset ($price_min) && $price_min > 0 ? $price_min : 0;
-		$filter_attr = I('filter_attr');
-		$this->filter_attr_str = isset ($filter_attr) ? htmlspecialchars ( trim ($filter_attr) ) : '0';
-		
-		$this->filter_attr_str = trim (urldecode ($this->filter_attr_str));
-		$this->filter_attr_str = preg_match ( '/^[\d\.]+$/', $this->filter_attr_str ) ? $this->filter_attr_str : '';
-		$this->filter_attr_str = empty ($this->filter_attr_str ) ? '' : explode ( '.',$this->filter_attr_str );
-		
 		/* 排序、显示方式以及类型 */
 		$this->default_display_type =C('show_order_type') == '0' ? 'list' : (C('show_order_type') == '1' ? 'grid' : 'text');
 		$this->default_sort_order_method = C('sort_order_method') == '0' ? 'DESC' : 'ASC';
@@ -414,7 +405,7 @@ class Category extends IndexController {
 	 * @return void
 	 */
 	function get_cat_info($cat_id) {
-		return $this->load->db->getRow ( 'SELECT cat_name, keywords, cat_desc, style, grade, filter_attr, parent_id FROM ' . $GLOBALS ['ecs']->table ( 'category' ) . " WHERE cat_id = '$cat_id'" );
+		return $this->load->db->getRow ( 'SELECT cat_name, keywords, cat_desc, style, grade, filter_attr, parent_id FROM {pre}category WHERE cat_id ='.$cat_id );
 	}
 	
 	/**
@@ -471,7 +462,7 @@ class Category extends IndexController {
 			
 			$arr [$row ['goods_id']] ['goods_id'] = $row ['goods_id'];
 			if ($display == 'grid') {
-				$arr [$row ['goods_id']] ['goods_name'] = $GLOBALS ['_CFG'] ['goods_name_length'] > 0 ? sub_str ( $row ['goods_name'], $GLOBALS ['_CFG'] ['goods_name_length'] ) : $row ['goods_name'];
+				$arr [$row ['goods_id']] ['goods_name'] = C('goods_name_length') > 0 ? sub_str ( $row ['goods_name'], C('goods_name_length')) : $row ['goods_name'];
 			} else {
 				$arr [$row ['goods_id']] ['goods_name'] = $row ['goods_name'];
 			}
