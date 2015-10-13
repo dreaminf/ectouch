@@ -482,15 +482,11 @@ class SaleModel extends BaseModel {
             $res['count'] = count($user_list);
             $res['list'] = $user_list;
         }elseif($key == 'fk'){
-            $sql = "SELECT user_id FROM {pre}users   where parent_id = " . $_SESSION['user_id'] . " GROUP BY user_id";
-            $user_list =  M()->query($sql);
+            $drp_id = $this->model->table('drp_shop')->field("id")->where(array("user_id"=>$_SESSION['user_id']))->getOne();
+            $user_list = $this->model->table('drp_visiter')->where(array("drp_id"=>$drp_id))->select();
             if($user_list){
                 foreach($user_list as $key=>$val){
-                    if(M()->table('order_info')->where('user_id='.$val['user_id'])->count()){
-                        unset($user_list[$key]);
-                    }else{
-                        $user_list[$key] = $this->get_drp($val['user_id']);
-                    }
+                    $user_list[$key] = $this->get_drp($val['user_id']);
                 }
             }
             $res['count'] = count($user_list);
@@ -838,6 +834,23 @@ class SaleModel extends BaseModel {
             return $this->model->table('drp_shop')->where("user_id=".$user_id)->field('open')->getOne();
         }else{
             return 1;
+        }
+    }
+
+    /**
+     * 添加访客信息
+     * @param $drp_id
+     */
+    public function drp_visiter($drp_id){
+        if($drp_id > 0 && session('user_id') > 0){
+           if($this->model->table('drp_visiter')->where('drp_id = '.$drp_id .' and user_id='.session('user_id'))->count() == 0){
+               $data['drp_id'] = $drp_id;
+               $data['user_id'] = session('user_id');
+               $data['visit_time'] = gmtime();
+               $this->model->table('drp_visiter')
+                   ->data($data)
+                   ->insert();
+           }
         }
     }
 

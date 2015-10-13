@@ -227,6 +227,16 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_bank` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for `ecs_drp_visiter`
+-- ----------------------------
+CREATE TABLE `ecs_drp_visiter` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL,
+  `drp_id` int(10) NOT NULL,
+  `visit_time` int(12) NOT NULL COMMENT '访问时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+-- ----------------------------
 -- Records of ecs_drp_config
 -- ----------------------------
 INSERT INTO `ecs_drp_config` VALUES ('1', '温馨提示', 'apply','温馨提示', '申请分销商时，提示用户的信息','textarea');

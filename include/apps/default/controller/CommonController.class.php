@@ -188,6 +188,7 @@ class CommonController extends BaseController
             if($drp_info['open'] == 1){
                 $drp_info['cat_id'] = substr($drp_info['cat_id'], 0, -1);
                 $_SESSION['drp_shop'] = $drp_info;
+                model('Sale')->drp_visiter($_GET['drp_id']);
 
             }
         }elseif($_SESSION['user_id'] && !$_SESSION['drp_shop']){
