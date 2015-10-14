@@ -1,10 +1,5 @@
 <!-- #BeginLibraryItem "/library/sale_header.lbi" --><!-- #EndLibraryItem -->
 <div id="box">
-    <div class="header">
-        <div class="yjfd_content10">
-            <a href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a><span class="tltle">佣金提现</span></a>
-        </div>
-    </div>
     <div class="a-raply-info">
         24小时内到账，法定节假日3天到账,最低提现{$txxz}元
     </div>

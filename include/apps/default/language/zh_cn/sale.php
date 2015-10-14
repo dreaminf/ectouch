@@ -46,7 +46,7 @@ $_LANG['sale_set_category'] = '分销分类选择';
 $_LANG['next_step'] = '下一步';
 $_LANG['set_error'] = '设置失败';
 $_LANG['sale_cate_not_empty'] = '分销分类不能为空';
-$_LANG['sale'] = '分销中心';
+$_LANG['sale'] = '店铺详情';
 $_LANG['share'] = '朋友圈分享';
 $_LANG['spread'] = '推广二维码';
 $_LANG['store'] = '店铺二维码';
@@ -69,5 +69,7 @@ $_LANG['shop_config'] = '我的店铺设置';
 $_LANG['ranking_list'] = '分销排行榜';
 $_LANG['drp_close'] = '您的店铺已被管理员关闭，请联系管理员。';
 $_LANG['drp_log_desc'] = '用户提现';
+$_LANG['order_list'] = '本店订单';
+$_LANG['label_user_surplus'] = '佣金提现';
 
 ?>

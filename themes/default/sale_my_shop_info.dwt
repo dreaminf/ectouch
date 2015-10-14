@@ -1,7 +1,6 @@
 <!-- #BeginLibraryItem "/library/sale_header.lbi" --><!-- #EndLibraryItem -->
 <div id="box">
-   		  <div class="wdfd_header"><div class="yjfd_content10"><a href="{:url('sale/index')}"><i class="iconfont icon-jiantou"></i></a><span class="tltle">{$title}</span></div></div>
-          <div class="wdfd_nav">
+   		  <div class="wdfd_nav">
               <ul>
                     <li class="wdfd_nav1"><a href="{:url('sale/my_shop_list',array('key'=>'1'))}">我的分店</a></li>
                     <li class="wdfd_nav2"><a href="{:url('sale/my_shop_list',array('key'=>'2'))}">一级分店</a></li>

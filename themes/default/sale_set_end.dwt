@@ -1,10 +1,6 @@
 <!-- #BeginLibraryItem "/library/sale_header.lbi" --><!-- #EndLibraryItem -->
 <div id="box">
-	<div class="header">
-		<div class="yjfd_content10">
-			<a href="set3.html"><i class="iconfont icon-jiantou"></i></a><span class="tltle">设置微店</span>
-		</div>
-	</div>
+
 	 <div class="set-new-box">
             <img src="__TPL__/sale/images/kawc.png"/>
        </div>        
