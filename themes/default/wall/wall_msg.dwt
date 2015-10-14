@@ -51,6 +51,7 @@
         <script type="text/javascript">
         $(function(){
 			refresh();
+			window.location.hash = "bottom";
         })
         var start = {$msg_count};
         var num = 10;
