@@ -272,6 +272,12 @@
     </ul>
   </div>
 
+    <div class="index-theme" >
+        <ul class="index-more-list"  style="background-color: #F3F4F5;">
+        <!-- #BeginLibraryItem "/library/cat_goods.lbi" --><!-- #EndLibraryItem -->
+        </ul>
+    </div>
+
 	<div class="index-more">
   	<div class="index-more-icon">
       	<span>更多惊喜</span>

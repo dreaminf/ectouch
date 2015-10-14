@@ -1,7 +1,7 @@
 <?php
 header("Content-type: text/html; charset=utf-8");
 //开启session
-session_start();
+if (!session_id()) session_start();
 //配置信息
 $config = include './config.php';
 if(empty($config)){

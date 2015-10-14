@@ -293,7 +293,7 @@ header h1{
 }
 
 .chat-main{
-	padding-bottom: 5rem;
+	/*padding-bottom: 5rem;*/
 }
 .user-chat-comment{
 	position: fixed;
@@ -310,7 +310,7 @@ header h1{
 	width: 100%;
 	box-sizing: border-box;
 	overflow-y: scroll;
-	bottom: 4rem;
+	bottom: 7rem;
 	left: 0;
 	top: 0;
 	/*z-index: 10;*/
