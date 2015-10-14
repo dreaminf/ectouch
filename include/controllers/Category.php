@@ -49,6 +49,7 @@ class Category extends IndexController
         $min = I('request.price_min');
 
         $goodslist = $this->category_get_goods($children, $brand, $min, $max, $ext = 0, $this->parameter['size'], $page = 10, $this->parameter['sort'], $this->parameter['order']);
+        $this->assign('goods_list', $goodslist);
         $this->assign('show_marketprice', C('show_marketprice'));
         $this->display('category.dwt');
     }
