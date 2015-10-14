@@ -45,6 +45,13 @@ function dump($var, $echo=true, $label=null, $strict=true) {
         return $output;
 }
 
+// 检测输入的验证码是否正确，$code为用户输入的验证码字符串
+function check_verify($code, $id = ''){
+    $global = get_instance();
+    $global->library('verify');
+    return $global->verify->check($code, $id);
+}
+
 /**
  * 生成URL
  * @param  string $route  URL路径
