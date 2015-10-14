@@ -1,11 +1,5 @@
 <!-- #BeginLibraryItem "/library/sale_header.lbi" --><!-- #EndLibraryItem -->
 <div>
-		  <div class="header">
-			  <div class="yjfd_content10">
-			 <a href="{:url('sale/index')}"><i class="iconfont icon-jiantou"></i></a><span class="tltle">{$title}</span>
-		  </div>     
-		  </div>
-	  </div>
           	<!--{foreach from=$list item=li}-->
 				<div class="dpgl_list">                                 
 				   <span class="bdda2_list2">{$li.shop_name}</span>
