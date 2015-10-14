@@ -26,7 +26,8 @@
 				
 				<!--main-->
 				<div class="content">
-					<ul class="msg-list" id="ul">
+					<div class="msg-list" id="ul">
+					<ul>
 						{foreach from=$list item=list}
 						<li>
 							<img src="{$list.headimg}" class="fl"/>
@@ -42,8 +43,8 @@
 							</div>
 						</li>
 						{/foreach}
-						<a class="bottom"></a>
 					</ul>
+					</div>
 				</div>
 				
 				<!--footer-->
@@ -55,11 +56,11 @@
 		<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
         <script type="text/javascript" src="__TPL__/wall/js/jquery.nicescroll.js" ></script>
         <script type="text/javascript" src="__TPL__/wall/js/jquery.scrollTo.min.js" ></script>
-        <script type="text/javascript" src="__TPL__/wall/js/wechat.js" ></script>
+        <script type="text/javascript" src="__TPL__/wall/js/wechat.js?v=1.0" ></script>
         <script type="text/javascript">
         $(function(){
 			refresh();
-			$("#ul").animate({scrollTop:$(".bottom").offset().top}, 800);
+			$("#ul").animate({scrollTop:$("#ul ul").height()}, 800);
         })
         var start = {$msg_count};
         var num = 10;
@@ -72,9 +73,9 @@
                         html += '<li><img src="'+result['data'][i]['headimg']+'" class="fl" /><div class="fl"><div class="msg-list-info"><span class="msg-name">'+result['data'][i]['nickname']+'</span><span>'+result['data'][i]['addtime']+'</span></div><div class="msg-content"><div class="arrow"></div>'+result['data'][i]['content']+'</div></div></li>';
                     }
                     if(html){
-                        $("ul#ul a.bottom").before(html);
+                        $("#ul ul").append(html);
                         //添加跳转锚点
-                        $("#ul").animate({scrollTop:$(".bottom").offset().top}, 800);
+                        $("#ul").animate({scrollTop:$("#ul ul").height()}, 800);
                     }
                     start = parseInt(start) + parseInt(result.data.length);
                 }

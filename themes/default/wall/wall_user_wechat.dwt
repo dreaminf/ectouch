@@ -7,10 +7,10 @@
         <title>用户信息</title>
         <meta name="description" content="用户信息,微信墙" />
         <meta name="keywords" content="用户信息,微信墙" />
-        <link href="__TPL__/wall/css/ectouch.css" rel="stylesheet" />
-    </head>
-    <body>
-        <div class="con">
+		<link href="__TPL__/wall/css/ectouch.css?v=1.0" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="con">
             <!--header-->
             <!-- <header>
                 <a href="javascript:history.go(-1);" class="fl">
