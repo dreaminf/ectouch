@@ -21,11 +21,6 @@
                 </span> <a class="pull-right ect-bg" id="zphone" name="sendsms" onClick="sendSms();" type="botton">{$lang.get_code}</a></div>
             </li>
             <li>
-              <div class="input-text"><b>{$lang.label_username}：</b><span>
-                <input placeholder="{$lang.label_username}" name="username" type="text" datatype="*3-15">
-                </span></div>
-            </li>
-            <li>
               <div class="input-text"><b>{$lang.password}：</b><span>
                 <input placeholder="{$lang.password}" name="password" type="password" datatype="*6-16">
                 </span></div>
@@ -38,8 +33,8 @@
           </ul>
         </div>
         <p class="ect-checkbox ect-padding-tb ect-margin-tb ect-margin-bottom0 ect-padding-lr">
-          <input id="agreement1" name="agreement" type="checkbox" value="1" checked="checked" >
-          <label for="agreement1">{$lang.agreement}<i></i></label>
+          <input id="agreement" name="agreement" type="checkbox" value="1" checked="checked" >
+          <label for="agreement">{$lang.agreement}<i></i></label>
         </p>
         <div class="ect-padding-lr ect-padding-tb">
           <input name="act" type="hidden" value="act_register" />

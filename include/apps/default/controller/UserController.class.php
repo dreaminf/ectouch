@@ -1803,7 +1803,7 @@ class UserController extends CommonController {
                     show_message(L('passwd_balnk'));
                 }
             } elseif (1 == $enabled_sms) { // 手机号注册处理
-                $username = isset($_POST['username']) ? in($_POST['username']) : '';
+                $username = isset($_POST['mobile']) ? in($_POST['mobile']) : '';
                 $password = isset($_POST['password']) ? in($_POST['password']) : '';
                 $sms_code = isset($_POST['sms_code']) ? in($_POST['sms_code']) : '';
                 $other['mobile_phone'] = isset($_POST['mobile']) ? in($_POST['mobile']) : '';
