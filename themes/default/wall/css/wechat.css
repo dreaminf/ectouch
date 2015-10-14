@@ -208,7 +208,6 @@ input:focus{
 	padding: 15px;
 	table-layout: fixed;
     word-break: break-all;
-    overflow: hidden;
 }
 .arrow{
 	position: absolute;
