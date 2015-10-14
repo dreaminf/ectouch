@@ -114,7 +114,7 @@ class Wechat extends IndexController
                     if (empty($rs2)) {
                         //推荐商品
                         $rs_rec = $this->recommend_goods($wedata['FromUserName'], $keywords);
-                        if(empty($rs_rec)){
+                        if($rs_rec){
                             // 消息自动回复
                             $this->msg_reply('msg');    
                         }
@@ -147,78 +147,13 @@ class Wechat extends IndexController
             // 未关注
             if (empty($rs)) {
                 $ect_uid = 0;
-                //查看公众号是否绑定
-                if(isset($info['unionid'])){
-                    $ect_uid = $this->model->table('wechat_user')->field('ect_uid')->where(array('unionid'=>$info['unionid']))->getOne();
-                }
-                //用户未绑定
-                if(empty($ect_uid)){
-                    // 设置的用户注册信息
-                    $register = $this->model->table('wechat_extend')
-                        ->field('config')
-                        ->where('enable = 1 and command = "register_remind" and wechat_id = '.$this->wechat_id)
-                        ->find();
-                    if (! empty($register)) {
-                        $reg_config = unserialize($register['config']);
-                        $username = msubstr($reg_config['user_pre'], 3, 0, 'utf-8', false) . time().mt_rand(1, 99);
-                        // 密码随机数
-                        $rs = array();
-                        $arr = range(0, 9);
-                        $reg_config['pwd_rand'] = $reg_config['pwd_rand'] ? $reg_config['pwd_rand'] : 5;
-                        for ($i = 0; $i < $reg_config['pwd_rand']; $i ++) {
-                            $rs[] = array_rand($arr);
-                        }
-                        $pwd_rand = implode('', $rs);
-                        // 密码
-                        $password = $reg_config['pwd_pre'] . $pwd_rand;
-                        // 通知模版
-                        $template = str_replace(array(
-                            '[$username]',
-                            '[$password]'
-                        ), array(
-                            $username,
-                            $password
-                        ), $reg_config['template']);
-                    } else {
-                        $username = 'wx_' . time().mt_rand(1, 99);
-                        $password = 'ecmoban';
-                        // 通知模版
-                        $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
-                    }
-                    // 用户注册
-                    
-                    $scene_id = empty($scene_id) ? 0 : $scene_id;
-                    $scene_id = (strlen($scene_id) > 8) ? substr($scene_id, 8):$scene_id;// 通过日期来解决临时二维码方案by carson。针对用户级别在亿级以下。
-                    $scene_user_id = $this->model->table("users")->field('user_id')->where(array('user_id'=>$scene_id))->getOne();
-                    $scene_user_id = empty($scene_user_id) ? 0 : $scene_user_id;
-                    $domain = get_top_domain();
-                    if (model('Users')->register($username, $password, $username . '@' . $domain, array('parent_id'=>$scene_user_id)) !== false) {
-                        $datas['user_rank'] = 99;
-                        
-                        $this->model->table('users')
-                            ->data($datas)
-                            ->where('user_name = "' . $username . '"')
-                            ->update();
-                        model('Users')->update_user_info();
-                    } else {
-                        die('');
-                    }
-                    $data['ect_uid'] = $_SESSION['user_id'];
-                }
-                else{
-                    //微信用户已绑定
-                    $username = model('Base')->model->table('users')->field('user_name')->where(array('user_id'=>$ect_uid))->getOne();
-                    $template = '您已拥有帐号，用户名为'.$username;
-                    $data['ect_uid'] = $ect_uid;
-                }
-                
                 // 获取用户所在分组ID
                 //$group_id = $this->weObj->getUserGroup($openid);
                 $data['group_id'] = isset($info['groupid']) ? $info['groupid'] : $this->weObj->getUserGroup($openid);
                 // 获取被关注公众号信息
                 $data['wechat_id'] = $this->wechat_id;
-                $data['subscribe'] = 1;
-                $data['openid'] = $openid;
+                $data['subscribe'] = $info['subscribe'];
+                $data['openid'] = $info['openid'];
                 $data['nickname'] = $info['nickname'];
                 $data['sex'] = $info['sex'];
                 $data['city'] = $info['city'];
@@ -229,38 +164,15 @@ class Wechat extends IndexController
                 $data['subscribe_time'] = $info['subscribe_time'];
                 $data['remark'] = $info['remark'];
                 $data['unionid'] = isset($info['unionid']) ? $info['unionid'] : '';
-                //logResult(var_export($data, true));
-                $this->model->table('wechat_user')
-                    ->data($data)
-                    ->insert();
-                
-                // 红包信息
-                $content = $this->send_message($openid, 'bonus', $this->weObj, 1);
-                $bonus_msg = '';
-                if (! empty($content)) {
-                    $bonus_msg = $content['content'];
-                }
-                if(!empty($template) || !empty($bonus_msg)){
-                    // 微信端发送消息
-                    $msg = array(
-                        'touser' => $openid,
-                        'msgtype' => 'text',
-                        'text' => array(
-                            'content' => $template . "\r\n" . $bonus_msg
-                        )
-                    );
-                    $this->weObj->sendCustomMessage($msg);
-
-                    //记录用户操作信息
-                    $this->record_msg($openid, $template . $bonus_msg, 1);
-                }
-            } else {
+                $this->model->table('wechat_user')->data($data)->insert();
+            }
+            else {
                 // 获取用户所在分组ID
                 $data['group_id'] = isset($info['groupid']) ? $info['groupid'] : $this->weObj->getUserGroup($openid);
                 // 获取被关注公众号信息
                 $data['wechat_id'] = $this->wechat_id;
-                $data['subscribe'] = 1;
-                $data['openid'] = $openid;
+                $data['subscribe'] = $info['subscribe'];
+                $data['openid'] = $info['openid'];
                 $data['nickname'] = $info['nickname'];
                 $data['sex'] = $info['sex'];
                 $data['city'] = $info['city'];
@@ -271,10 +183,7 @@ class Wechat extends IndexController
                 $data['subscribe_time'] = $info['subscribe_time'];
                 $data['remark'] = $info['remark'];
                 $data['unionid'] = isset($info['unionid']) ? $info['unionid'] : '';
-                $this->model->table('wechat_user')
-                    ->data($data)
-                    ->where($where)
-                    ->update();
+                $this->model->table('wechat_user')->data($data)->where($where)->update();
             }
         }
     }
@@ -670,52 +579,177 @@ class Wechat extends IndexController
     static function do_oauth()
     {
         // 默认公众号信息
-        $wxinfo = model('Base')->model->table('wechat')
-            ->field('id, token, appid, appsecret, oauth_redirecturi, type, oauth_status')
-            ->where('default_wx = 1 and status = 1')
-            ->find();
+        $wxinfo = model('Base')->model->table('wechat')->field('id, token, appid, appsecret, oauth_redirecturi, type, oauth_status')->find();
         if (! empty($wxinfo) && $wxinfo['type'] == 2) {
             $config['token'] = $wxinfo['token'];
             $config['appid'] = $wxinfo['appid'];
             $config['appsecret'] = $wxinfo['appsecret'];
-            
+
             // 微信通验证
             $weObj = new Wechat($config);
+            $_SESSION['wechat_user'] = empty($_SESSION['wechat_user']) ? array() : $_SESSION['wechat_user'];
             // 微信浏览器浏览
-
-            if (self::is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid'])) && !empty($wxinfo['oauth_status'])) {
-                if (! isset($_SESSION['redirect_url'])) {
-                    session('redirect_url', __HOST__ . $_SERVER['REQUEST_URI']);
-                }
-                $url = $weObj->getOauthRedirect($wxinfo['oauth_redirecturi'], 1);
-                if (isset($_GET['code']) && !empty($_GET['code'])) {
+            if (is_wechat_browser() && $_SESSION['user_id'] === 0 && empty($_SESSION['wechat_user'])) {
+                if(isset($_GET['code']) && !empty($_GET['code'])){
                     $token = $weObj->getOauthAccessToken();
-                    if ($token) {
-                        $userinfo = $weObj->getOauthUserinfo($token['access_token'], $token['openid']);
-                        self::update_weixin_user($userinfo, $wxinfo['id'], $weObj);
-                        if (! empty($_SESSION['redirect_url'])) {
-                            $redirect_url = session('redirect_url');
-                            header('Location:' . $redirect_url, true, 302);
-                            exit();
-                        }
-                    } else {
-                        header('Location:' . $url, true, 302);
-                        exit();
-                    }
-                } else {
-                    header('Location:' . $url, true, 302);
+                    $_SESSION['wechat_user'] = $weObj->getOauthUserinfo($token['access_token'], $token['openid']); //用户数据
+                }
+
+                if(empty($_SESSION['wechat_user'])){
+                    $_SESSION['redirect_url'] = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+                    //$auth = $weObj->getOauthRedirect($_SESSION['redirect_url'], '1', 'snsapi_base');
+                    $auth = $weObj->getOauthRedirect($_SESSION['redirect_url'], '1');
+                    header('location: '. $auth);
                     exit();
+                }
+            }
+			
+            $flag = I('get.flag');
+            //授权登录
+            if (($_SESSION['user_id'] === 0 && !empty($_SESSION['wechat_user']) && CONTROLLER_NAME !='Wechat' && empty($_SESSION['openid']) && !isset($_SESSION['redirect_user'])) || $flag == 'oauth'){
+                if($wxinfo['oauth_status'] == '1' || $flag == 'oauth'){
+                    //self::update_weixin_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj);
+                    $haspc = file_exists('../data/config.php') ? 1 : 0;
+                    self::do_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj, 1, $haspc);
+                    header('location: '. $_SESSION['redirect_url']);
+                    exit();
+                }
+                else{
+                    $haspc = file_exists('../data/config.php') ? 1 : 0;
+                    self::do_user($_SESSION['wechat_user'], $wxinfo['id'], $weObj, 0, $haspc);
                 }
             }
         }
     }
 
     /**
-     * 更新微信用户信息
+     * 用户处理
+     * @param  [type]  $wechat_user [description]
+     * @param  [type]  $wechat_id   [description]
+     * @param  [type]  $weObj       [description]
+     * @param  [type]  $isoauth     [是否开启自动登录]
+     * @param  integer $haspc       [是否有pc端]
+     * @return [type]               [description]
      *
+     * $userinfo = array('openid', 'nickname', 'sex', 'language', 'city', 'province', 'country', 'headimgurl', 'privilege', 'unionid');
+     */
+    static function do_user($userinfo, $wechat_id, $weObj, $isoauth = 0, $haspc = 0){
+    	$user = model('Base')->model->table('wechat_user')->field('openid, ect_uid')->where('openid = "' . $userinfo['openid'] . '"')->find();
+    	if($isoauth && $haspc){
+    		// 有pc,开启自动登录
+    		self::do_oauth_user($userinfo, $wechat_id, $weObj, $user, $isoauth);
+    	}
+    	elseif($isoauth && empty($haspc)){
+    		//没有pc,开启自动登录
+    		self::update_weixin_user($userinfo, $wechat_id, $weObj);
+    	}
+    	elseif(empty($isoauth) && $haspc){
+			//有pc,没开启自动登录
+			self::do_oauth_user($userinfo, $wechat_id, $weObj, $user);
+    	}
+    	elseif(empty($isoauth) && empty($haspc)){
+    		//没有pc,没开启自动登录
+    		self::do_oauth_user($userinfo, $wechat_id, $weObj, $user);
+    	}
+    }
+
+    /**
+     * 自动登录操作
+     * @param  [type]  $userinfo  [description]
+     * @param  [type]  $wechat_id [description]
+     * @param  [type]  $weObj     [description]
+     * @param  [type]  $user      [description]
+     * @param  integer $isoauth   [description]
+     * @return [type]             [description]
+     */
+    static function do_oauth_user($userinfo, $wechat_id, $weObj, $user, $isoauth = 0){
+    	$user_url = __HOST__.url('user/bind');
+    	if(empty($user)){
+			$group_id = $weObj->getUserGroup($userinfo['openid']);
+        	$group_id = $group_id ? $group_id : 0;
+			//微信用户绑定会员id
+            $ect_uid = isset($user['ect_uid']) && !empty($user['ect_uid']) ? $user['ect_uid'] : 0;
+            //查看公众号是否绑定
+            if(isset($userinfo['unionid'])){
+                $ect_uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where(array('unionid'=>$userinfo['unionid']))->getOne();
+            }
+
+            $data1['ect_uid'] = $ect_uid;
+            $data1['wechat_id'] = $wechat_id;
+            $data1['subscribe'] = 0;
+            $data1['openid'] = $userinfo['openid'];
+            $data1['nickname'] = $userinfo['nickname'];
+            $data1['sex'] = $userinfo['sex'];
+            $data1['city'] = $userinfo['city'];
+            $data1['country'] = $userinfo['country'];
+            $data1['province'] = $userinfo['province'];
+            $data1['language'] = $userinfo['language'];
+            $data1['headimgurl'] = $userinfo['headimgurl'];
+            $data1['subscribe_time'] = '';
+            $data1['group_id'] = $group_id;
+            $data1['unionid'] = isset($userinfo['unionid']) ? $userinfo['unionid'] : '';
+            
+            model('Base')->model->table('wechat_user')->data($data1)->insert();
+            //未绑定用户
+            if(empty($ect_uid)){
+                $_SESSION['redirect_user'] = 1;
+            	//会员中心注册绑定
+            	header("Location:".$user_url);
+            	exit;
+            }
+            
+		}
+        elseif(!empty($user) && $user['ect_uid'] == 0){
+            //会员中心注册绑定
+            $_SESSION['redirect_user'] = 1;
+            header("Location:".$user_url);
+            exit;
+        }
+		elseif($user['ect_uid'] > 0 && $isoauth){
+            $userinfo['group_id'] = isset($userinfo['groupid']) ? $userinfo['groupid'] : $weObj->getUserGroup($userinfo['openid']);
+            unset($userinfo['groupid']);
+            $userinfo['privilege'] = isset($userinfo['privilege']) ? serialize($userinfo['privilege']) : '';
+            model('Base')->model->table('wechat_user')
+                ->data($userinfo)
+                ->where('openid = "' . $userinfo['openid'] . '"')
+                ->update();
+            $new_user_name = model('Base')->model->table('users')
+                ->field('user_name')
+                ->where('user_id = "' . $user['ect_uid'] . '"')
+                ->getOne();
+            ECTouch::user()->set_session($new_user_name);
+            ECTouch::user()->set_cookie($new_user_name);
+            model('Users')->update_user_info();
+            // 推送量
+	        model('Base')->model->table('wechat')->data('oauth_count = oauth_count + 1')->where('default_wx = 1 and status = 1')->update();
+		}
+        session('openid', $userinfo['openid']);
+    }
+
+    /**
+     * 用户注册登录后绑定
+     * @return [type] [description]
+     */
+    static function do_bind(){
+    	if(!empty($_SESSION['user_id']) && !empty($_SESSION['wechat_user'])){
+    		$condition['openid'] = $_SESSION['wechat_user']['openid'];
+    		$user = model('Base')->model->table('wechat_user')->field('openid, ect_uid')->where($condition)->find();
+    		if($user && empty($user['ect_uid'])){
+                //用户是否绑定过
+                $isbind = model('Base')->model->table('wechat_user')->where(array('ect_uid'=>$_SESSION['user_id']))->count();
+                if($isbind == 0){
+                    model('Base')->model->table('wechat_user')->data(array('ect_uid'=>$_SESSION['user_id']))->where($condition)->update();
+                }
+    		}
+    	}
+    }
+
+    /**
+     * 更新微信用户信息
+     *  
      * @param unknown $userinfo            
      * @param unknown $wechat_id            
-     * @param unknown $weObj            
+     * @param unknown $weObj       
      */
     static function update_weixin_user($userinfo, $wechat_id, $weObj)
     {
@@ -724,14 +758,14 @@ class Wechat extends IndexController
             ->field('openid, ect_uid')
             ->where('openid = "' . $userinfo['openid'] . '"')
             ->find();
-        if (empty($ret)) {
+        if (empty($ret) || (!empty($ret) && $ret['ect_uid'] == 0)) {
             // 获取用户所在分组ID
             $group_id = $weObj->getUserGroup($userinfo['openid']);
             $group_id = $group_id ? $group_id : 0;
             //微信用户绑定会员id
             $ect_uid = 0;
             //查看公众号是否绑定
-            if($userinfo['unionid']){
+            if(isset($userinfo['unionid'])){
                 $ect_uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where(array('unionid'=>$userinfo['unionid']))->getOne();
             }
 
@@ -771,14 +805,16 @@ class Wechat extends IndexController
                 }
                 // 会员注册
                 $domain = get_top_domain();
-                if (model('Users')->register($username, $password, $username . '@' . $domain) !== false) {
+                $other = array(
+                    'parent_id' =>  $_SESSION['parent_id'] ? $_SESSION['parent_id'] : 0,
+                );
+                if (model('Users')->register($username, $password, $username . '@' . $domain,$other) !== false) {
                     $data['user_rank'] = 99;
                     
                     model('Base')->model->table('users')
                         ->data($data)
                         ->where('user_name = "' . $username . '"')
                         ->update();
-                    model('Users')->update_user_info();
                 } else {
                     die('授权失败，如重试一次还未解决问题请联系管理员');
                 }
@@ -790,37 +826,47 @@ class Wechat extends IndexController
                 $template = '您已拥有帐号，用户名为'.$username;
                 $data1['ect_uid'] = $ect_uid;
             }
-            
-            $data1['wechat_id'] = $wechat_id;
-            $data1['subscribe'] = 1;
-            $data1['openid'] = $userinfo['openid'];
-            $data1['nickname'] = $userinfo['nickname'];
-            $data1['sex'] = $userinfo['sex'];
-            $data1['city'] = $userinfo['city'];
-            $data1['country'] = $userinfo['country'];
-            $data1['province'] = $userinfo['province'];
-            $data1['language'] = $userinfo['country'];
-            $data1['headimgurl'] = $userinfo['headimgurl'];
-            $data1['subscribe_time'] = $time;
-            $data1['group_id'] = $group_id;
-            $data1['unionid'] = $userinfo['unionid'];
-            
-            model('Base')->model->table('wechat_user')
-                ->data($data1)
-                ->insert();
+
+            if(!empty($ret)){
+                $userinfo['group_id'] = isset($userinfo['groupid']) ? $userinfo['groupid'] : $weObj->getUserGroup($userinfo['openid']);
+                unset($userinfo['groupid']);
+                $userinfo['privilege'] = isset($userinfo['privilege']) ? serialize($userinfo['privilege']) : '';
+                $userinfo['ect_uid'] = $data1['ect_uid'];
+                model('Base')->model->table('wechat_user')->data($userinfo)->where('openid = "' . $userinfo['openid'] . '"')->update();
+            }
+            else{
+                $data1['wechat_id'] = $wechat_id;
+                $data1['subscribe'] = 0;
+                $data1['openid'] = $userinfo['openid'];
+                $data1['nickname'] = $userinfo['nickname'];
+                $data1['sex'] = $userinfo['sex'];
+                $data1['city'] = $userinfo['city'];
+                $data1['country'] = $userinfo['country'];
+                $data1['province'] = $userinfo['province'];
+                $data1['language'] = $userinfo['language'];
+                $data1['headimgurl'] = $userinfo['headimgurl'];
+                $data1['subscribe_time'] = '';
+                $data1['group_id'] = $group_id;
+                $data1['unionid'] = $userinfo['unionid'];
+
+                model('Base')->model->table('wechat_user')->data($data1)->insert();
+            }
+
             // 微信端发送消息
-            $msg = array(
+            /*$msg = array(
                 'touser' => $userinfo['openid'],
                 'msgtype' => 'text',
                 'text' => array(
                     'content' => $template
                 )
             );
-            $weObj->sendCustomMessage($msg);
-        } else {
+            $weObj->sendCustomMessage($msg);*/
+        }
+        else {
             //开放平台有privilege字段,公众平台没有
-            unset($userinfo['privilege']);
-            $userinfo['subscribe'] = 1;
+            $userinfo['group_id'] = isset($userinfo['groupid']) ? $userinfo['groupid'] : $weObj->getUserGroup($userinfo['openid']);
+            unset($userinfo['groupid']);
+            $userinfo['privilege'] = isset($userinfo['privilege']) ? serialize($userinfo['privilege']) : '';
             model('Base')->model->table('wechat_user')
                 ->data($userinfo)
                 ->where('openid = "' . $userinfo['openid'] . '"')
@@ -929,33 +975,33 @@ class Wechat extends IndexController
      * @return [type] [description]
      */
     public function check_auth(){
-    	$appid = I('get.appid');
-    	$appsecret = I('get.appsecret');
-    	if(empty($appid) || empty($appsecret)){
-    		echo json_encode(array('errmsg'=>'信息不完整，请提供完整信息', 'errcode'=>1));	
-    		exit;
-    	}
-    	$config = $this->model->table('wechat')
+        $appid = I('get.appid');
+        $appsecret = I('get.appsecret');
+        if(empty($appid) || empty($appsecret)){
+            echo json_encode(array('errmsg'=>'信息不完整，请提供完整信息', 'errcode'=>1));   
+            exit;
+        }
+        $config = $this->model->table('wechat')
             ->field('token, appid, appsecret')
             ->where('appid = "' . $appid . '" and appsecret = "'.$appsecret.'" and status = 1')
             ->find();
         if(empty($config)){
-        	echo json_encode(array('errmsg'=>'信息错误，请检查提供的信息', 'errcode'=>1));
-        	exit;	
+            echo json_encode(array('errmsg'=>'信息错误，请检查提供的信息', 'errcode'=>1));
+            exit;   
         }
 
         $obj = new Wechat($config);
         $access_token = $obj->checkAuth();
         if($access_token){
           echo json_encode(array('access_token'=>$access_token, 'errcode'=>0));
-          exit;	
+          exit; 
         }
         else{
-          echo json_encode(array('errmsg'=>$obj->errmsg, 'errcode'=>$obj->errcode));	
+          echo json_encode(array('errmsg'=>$obj->errmsg, 'errcode'=>$obj->errcode));    
           exit;
         }
     }
-    
+
     /**
      * 推荐分成二维码
      * @param  string  $user_name [description]
@@ -965,59 +1011,62 @@ class Wechat extends IndexController
      * @return [type]             [description]
      */
     static function rec_qrcode($user_name = '', $user_id = 0, $expire_seconds = 0, $fun = ''){
-    	if(empty($user_id)){
-    	 return false;
-    	}
-    	// 默认公众号信息
+        if(empty($user_id)){
+            return false;
+        }
+        // 默认公众号信息
         $wxinfo = model('Base')->model->table('wechat')->field('id, token, appid, appsecret, oauth_redirecturi, type, oauth_status')->where('default_wx = 1 and status = 1')->find();
 
         if (! empty($wxinfo) && $wxinfo['type'] == 2) {
-        	$config['token'] = $wxinfo['token'];
+            $config['token'] = $wxinfo['token'];
             $config['appid'] = $wxinfo['appid'];
             $config['appsecret'] = $wxinfo['appsecret'];
             // 微信通验证
             $weObj = new Wechat($config);
 
-        	$qrcode = model('Base')->model->table('wechat_qrcode')->field('id, scene_id, type, expire_seconds, qrcode_url')->where(array('scene_id'=>$user_id, 'wechat_id'=>$wxinfo['id']))->find();
-        	if($qrcode['id'] && !empty($qrcode['qrcode_url'])){
-              return $qrcode['qrcode_url'];
-        	}elseif($qrcode['id'] && empty($qrcode['qrcode_url'])){
-            $ticket = $weObj->getQRCode((int)$qrcode['scene_id'], $qrcode['type'], $qrcode['expire_seconds']);
-            if (empty($ticket)) {
-                //$weObj->errCode, $weObj->errMsg
-                return false;
+            $qrcode = model('Base')->model->table('wechat_qrcode')->field('id, scene_id, type, expire_seconds, qrcode_url')->where(array('scene_id'=>$user_id, 'wechat_id'=>$wxinfo['id']))->find();
+            if($qrcode['id'] && !empty($qrcode['qrcode_url'])){
+
+                return $qrcode['qrcode_url'];
             }
-            $data['ticket'] = $ticket['ticket'];
-            $data['expire_seconds'] = $ticket['expire_seconds'];
-            $data['endtime'] = time() + $ticket['expire_seconds'];
-            // 二维码地址
-            $data['qrcode_url'] = $weObj->getQRUrl($ticket['ticket']);
-            model('Base')->model->table('wechat_qrcode')->data($data)->where(array('id'=>$qrcode['id']))->update();
+            elseif($qrcode['id'] && empty($qrcode['qrcode_url'])){
+                $ticket = $weObj->getQRCode((int)$qrcode['scene_id'], $qrcode['type'], $qrcode['expire_seconds']);
+                if (empty($ticket)) {
+                    //$weObj->errCode, $weObj->errMsg
+                    return false;
+                }
+                $data['ticket'] = $ticket['ticket'];
+                $data['expire_seconds'] = $ticket['expire_seconds'];
+                $data['endtime'] = time() + $ticket['expire_seconds'];
+                // 二维码地址
+                $data['qrcode_url'] = $weObj->getQRUrl($ticket['ticket']);
+                M()->table('wechat_qrcode')->data($data)->where(array('id'=>$qrcode['id']))->update();
 
-            return $data['qrcode_url'];
-        	}else{
-        	 $data['function'] = $fun;
-        	$data['scene_id'] = $user_id;
-        	$data['username'] = $user_name;
-            $data['type'] = empty($expire_seconds) ? 1 : 0;
-            $data['wechat_id'] = $wxinfo['id'];
-            $data['status'] = 1;
-            //生成二维码
-            $ticket = $weObj->getQRCode((int)$data['scene_id'], $data['type'], $expire_seconds);
-            if (empty($ticket)) {
-                //$weObj->errCode, $weObj->errMsg
-                return false;
+                return $data['qrcode_url'];
             }
-            $data['ticket'] = $ticket['ticket'];
-            $data['expire_seconds'] = $ticket['expire_seconds'];
-            $data['endtime'] = time() + $ticket['expire_seconds'];
-            // 二维码地址
-            $data['qrcode_url'] = $weObj->getQRUrl($ticket['ticket']);
+            else{
+                $data['function'] = $fun;
+                $data['scene_id'] = $user_id;
+                $data['username'] = $user_name;
+                $data['type'] = empty($expire_seconds) ? 1 : 0;
+                $data['wechat_id'] = $wxinfo['id'];
+                $data['status'] = 1;
+                //生成二维码
+                $ticket = $weObj->getQRCode((int)$data['scene_id'], $data['type'], $expire_seconds);
+                if (empty($ticket)) {
+                    //$weObj->errCode, $weObj->errMsg
+                    return false;
+                }
+                $data['ticket'] = $ticket['ticket'];
+                $data['expire_seconds'] = $ticket['expire_seconds'];
+                $data['endtime'] = time() + $ticket['expire_seconds'];
+                // 二维码地址
+                $data['qrcode_url'] = $weObj->getQRUrl($ticket['ticket']);
 
-            model('Base')->model->table('wechat_qrcode')->data($data)->insert();
+                M()->table('wechat_qrcode')->data($data)->insert();
 
-            return $data['qrcode_url'];
-        	}
+                return $data['qrcode_url'];
+            }
         }
         return false;
     }
