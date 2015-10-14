@@ -1,100 +1,60 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="{$charset}">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="Keywords" content="{$meta_keywords}" />
-<meta name="Description" content="{$meta_description}" />
-<title>{$page_title}</title>
-<link rel="stylesheet" href="statics/css/bootstrap.min.css">
-<link rel="stylesheet" href="themes/default/css/ectouch_cate.css">
-<link rel="stylesheet" href="themes/default/js/categorylist.js">
-<link rel="stylesheet" href="themes/default/js/zepto.js">
-<link rel="stylesheet" href="{$css_path}">
-{* 包含脚本文件 *}
-{insert_scripts files='common.js'}
-</head>
-<body>
-
-<div class="wrap">
-	<div class="boxSearch">
-    	<form action="{:url('category/index')}{if $id}&id={$id}{/if}"  method="post" id="searchForm" name="searchForm">
-        	<input name="keywords" type="search" id="keywordBox">
-            <button type="submit" value="{$lang.search}" onclick="return check('keywordBox')"></button>
-            <span>{$lang.no_keywords}</span>
-        </form>
-    </div>
-    <div class="boxCategory">
-    	<div class="category-left">
-        	<ul class="cate-list">
-				<!--顶级分类-->
-            	<!--{foreach from=$category item=cat name=no}-->
-            	<li><a href="javascript:;">{$cat.name|escape:html}</a></li>
-                <!--{/foreach}-->
-            </ul>
-        </div>
-        <div class="category-right">
-        	<div class="cate-conts">
-				<!--{foreach from=$category item=cat name=no}-->
-            	<script type="text/javascript">window.cateNameList=window.cateNameList||[];window.cateNameList.push("{$cat.name|escape:html}");</script>
-                <div class="cate-item{if $smarty.foreach.no.index eq 0}{else} none{/if}">	
-					<!--顶级分类图标-->
-                	<div class="cateItemBanner">
-					    <a href="javascript:;"><img src="{$cat.cat_image}"></a>
-				    </div>
-                    <div class="cateRecommended">
-						<!--二级分类-->
-                    	<!--{foreach from=$cat.cat_id item=child name=no1}-->
-                    	<div class="cateItemSec">
-                        	<p class="tit"><a href="{:url('category/index',array('id'=>$this->_var['child']['id']))}">{$child.name|escape:html|truncate:5,false} </a></p>
-                            <ul>
-								<!--三级分类小图标-->
-								<!--{foreach from=$child.cat_id item=childd name=no2}-->
-                            	<li>
-								    <a href="{$childd.url}">
-										<div class="pic">
-											<img src="{$childd.cat_image}" style="width:160px;height:185px">
-											<p>{$childd.name|escape:html}</p>
-										</div>
-                                     </a>
-								</li>
-                                <!--{/foreach}-->
-                            </ul>
-                           
-                        </div>
-                        <!--{/foreach}-->
-                    </div>
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="con">
+<header class="ect-header ect-margin-tb ect-margin-lr text-center"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a>
+<span>{$title}</span>
+ <a href="javascript:openSearch();" class="pull-right ect-icon ect-icon1 ect-icon-search1"></a>
+</header>
+<div class="panel panel-default ect-category-all ect-border-radius0">
+    <ul>
+     <!--{foreach from=$category item=cat name=no}-->
+     <li>
+     	<!--{if $cat.cat_id}-->
+     	<div class="media panel-body">
+            <img class="pull-left" src="{$cat.cat_image}" style="display:None">
+            <div class="pull-left ect-category-right">
+                <h3>{$cat.name|escape:html}</h3>
+                <h5> 
+                <!--{foreach from=$cat.cat_id item=child name=no1}-->
+                <!--{if $smarty.foreach.no1.index lt 3}-->
+                <!--{if $smarty.foreach.no1.index gt 0}-->/<!--{/if}-->
+                {$child.name|escape:html|truncate:5,false} 
+                <!--{/if}-->
+                <!--{/foreach}--></h5>
                 </div>
-                <!--{/foreach}-->
-            </div>
+                <i class="fa fa-angle-down ect-transition05"></i>
         </div>
-    </div>
+        <!--{else}-->
+        <a href="{:url('category/index',array('id'=>$this->_var['cat']['id']))}">
+        <div class="media panel-body">
+            <img class="pull-left" src="{$cat.cat_image}" style="display:None">
+            <div class="pull-left ect-category-right">
+                <h3>{$cat.name|escape:html}</h3>
+                <h5> 
+                <!--{foreach from=$cat.cat_id item=child name=no1}-->
+                <!--{if $smarty.foreach.no1.index lt 3}-->
+                <!--{if $smarty.foreach.no1.index gt 0}-->/<!--{/if}-->
+                {$child.name|escape:html|truncate:5,false} 
+                <!--{/if}-->
+                <!--{/foreach}--></h5>
+                </div>
+                <i class="fa fa-angle-down ect-transition05"></i>
+        </div></a>
+        <!--{/if}-->
+        <div class="ect-category-child">
+        <!--{foreach from=$cat.cat_id item=child name=no1}-->
+            <!--{if $child.cat_id}-->
+            <a href="{:url('category/all',array('id'=>$this->_var['child']['id']))}">{$child.name|escape:html}</a>
+            <!--{else}-->
+            <a href="{$child.url}">{$child.name|escape:html}</a>
+            <!--{/if}-->
+        <!--{/foreach}--> 
+        </div>
+      </li>
+      <!--{/foreach}-->
+    </ul> 
 </div>
-<div style="display:none;">
-
 </div>
-<script>
-$(function(){
-	$("body").addClass("bodyCategory");
-	
-	//搜索焦点事件
-	$("#keywordBox").focus(function(){
-		$(this).siblings("span").hide();
-	})
-	$(".boxSearch span").click(function(){
-		$(this).hide();
-		$(this).siblings("input").focus();
-	})
-	$("#keywordBox").blur(function(){
-		if( $(this).val() == "" ){
-			$(this).siblings("span").show();
-		}else{
-			$(this).siblings("span").hide();
-		}
-	});
-});
-</script>
-<script type="text/javascript" src="__TPL__/js/saved_resource"></script>
-<script type="text/javascript" src="__TPL__/js/categorylist.js"></script>
+<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 </body>
 </html>

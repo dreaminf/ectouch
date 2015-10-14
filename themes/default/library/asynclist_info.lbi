@@ -24,10 +24,15 @@
 
 <!-- 品牌 start--> 
 <!--{if $brand}-->
-<li>
-  <p><a href="{$brand.url}"><img src="{$brand.brand_banner}"></a><span>{$brand.brand_name}</span></p>
-</li>
-<!-- {/if}--> 
+    <li class="brand-status" id="{$brand.info}">
+        {$brand.info}
+    </li>
+    <!-- {foreach from=$brand.list item=li} -->
+    <li>
+      <p><a href="{$li.url}"><img src="{$li.brand_logo}"></a>{$li.brand_name}</p>
+    </li>
+    <!--{/foreach}-->
+    <!-- {/if}-->
 <!-- 品牌end--> 
 
 <!-- 品牌商品 start--> 

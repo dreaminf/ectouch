@@ -33,13 +33,10 @@
     <section class="ect-margin-tb ect-margin-lr ">
       <p><span class="pull-left">{$lang.amount}：<b class="ect-colory" id="ECS_GOODS_AMOUNT"></b></span><span class="pull-right">{$lang.sort_sales}：{$sales_count} {$lang.piece}</span></p>
       <p><!--{if $goods.is_promote and $goods.gmt_end_time } 促销-->{$lang.promote_price}<!--{else}-->{$lang.shop_price}<!--{/if}--><!--{if $goods.is_promote and $goods.gmt_end_time } 促销--> 
-        {$goods.promote_price}  
+        {$goods.promote_price} 
         <!--{else}--> 
         {$goods.shop_price_formated} 
-        <!--{/if}--> <small> <del><!-- {if $cfg.show_marketprice} 市场价格-->{$goods.market_price} <!-- {/if} --></del></small>
-	  </p>
-	  <p><!--{if $goods.is_promote and $goods.gmt_end_time } 促销--><strong id="leftTime" class="price">{$lang.please_waiting}</strong><!--{/if}--></p>
-		 
+        <!--{/if}--> <small> <del><!-- {if $cfg.show_marketprice} 市场价格-->{$goods.market_price} <!-- {/if} --></del></small></p>
     </section>
     <!-- {if $promotion} 优惠活动 -->
     <section class="ect-margin-tb ect-margin-bottom0 ect-padding-tb goods-promotion ect-padding-lr ">
@@ -111,8 +108,8 @@
         </div>
       </section>
       <section class="goods-more-a"> 
-      <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_brief}</span> <span class="pull-right"><i class="fa fa-chevron-right"></i></span></a> 
-      <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_comment}</span> <span class="pull-right"><span class="ect-color">{$comments.count}</span>{$lang.comment_num} <span class="ect-color">{$comments.favorable}%</span>{$lang.favorable_comment} <i class="fa fa-chevron-right"></i></span></a> 
+     <!--  <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_brief}</span> <span class="pull-right"><i class="fa fa-chevron-right"></i></span></a> 
+      <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_comment}</span> <span class="pull-right"><span class="ect-color">{$comments.count}</span>{$lang.comment_num} <span class="ect-color">{$comments.favorable}%</span>{$lang.favorable_comment} <i class="fa fa-chevron-right"></i></span></a>  -->
       </section>
       <div class="ect-padding-lr ect-padding-tb goods-submit">
         <div><a type="botton" class="btn btn-info ect-btn-info ect-colorf ect-bg" href="javascript:addToCart_quick({$goods.goods_id})">{$lang.buy_now}</a></div>
@@ -154,6 +151,7 @@
       </section>
     </form>
   </div>
+  <!--{if $related_goods}-->
   <div class="goods-related ect-padding-lr ect-padding-tb">
     <p><strong>{$lang.releate_goods}：</strong></p>
     <!-- 本例主要代码 Start ================================ -->
@@ -183,6 +181,8 @@
     
     <!-- 本例主要代码 End ================================ --> 
   </div>
+  <!--{/if}-->
+  <!-- #BeginLibraryItem "/goods_info_.dwt" --><!-- #EndLibraryItem --> 
   <footer class="logo"><a href="http://www.ectouch.cn" title="ECTouch官网" target="_blank"><img src="__TPL__/images/copyright.png" width="176" height="60"></a></footer>
 </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
@@ -192,16 +192,16 @@ document.addEventListener('DOMContentLoaded', function(){Code.photoSwipe('a', '#
 
 
 /*倒计时*/
-var goods_id = {$goods.goods_id};
+var goods_id = {$goods_id};
 var goodsattr_style = 1;
+var gmt_end_time = 0;
+var day = "天";
+var hour = "小时";
+var minute = "分钟";
+var second = "秒";
+var end = "结束";
 var goodsId = {$goods_id};
-
-var gmt_end_time = "{$goods.gmt_end_time|default:0}";
-{foreach from=$lang.goods_js item=item key=key}
-var {$key} = "{$item}";
-{/foreach}
 var now_time = {$now_time};
-
 var use_how_oos = {:C('use_how_oos')};
 onload = function(){
   changePrice(2);

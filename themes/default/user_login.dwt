@@ -32,7 +32,7 @@
   <input type="submit" class="btn btn-info ect-btn-info ect-bg" value="{$lang.now_landing}" />
   </div>
   </form>
-  <p class="ect-padding-lr ect-margin-tb text-right ect-margin-bottom0" style="clear:both;">
+  <p class="ect-padding-lr ect-margin-tb text-right ect-margin-bottom0" style="clear:both">
 	<a href="{:url('user/get_password_phone')}">{$lang.forgot_password}</a>  
 	<a href="{:url('user/register')}">{$lang.free_registered}</a>
   </p>
@@ -40,7 +40,10 @@
   	{$lang.third_login}
   	<p>
     	<a href="{:url('user/third_login',array('type'=>'qq'))}"><img src="__TPL__/images/qq.png"></a>
-        <a href="{:url('user/third_login',array('type'=>'sina'))}"><img src="__TPL__/images/weibo.png"></a>
+    	<a href="{:url('user/third_login',array('type'=>'sina'))}"><img src="__TPL__/images/weibo.png"></a>
+    	<!-- {if $oauth_url} -->
+      <a href="{$oauth_url}"><img src="__TPL__/images/wechat.png"></a>
+    	<!-- {/if} -->
     </p>
   </div>
   </div>
