@@ -72,7 +72,7 @@
                         html += '<li><img src="'+result['data'][i]['headimg']+'" class="fl" /><div class="fl"><div class="msg-list-info"><span class="msg-name">'+result['data'][i]['nickname']+'</span><span>'+result['data'][i]['addtime']+'</span></div><div class="msg-content"><div class="arrow"></div>'+result['data'][i]['content']+'</div></div></li>';
                     }
                     if(html){
-                        $("ul#ul").append(html);
+                        $("ul#ul a.bottom").before(html);
                         //添加跳转锚点
                         $("#ul").animate({scrollTop:$(".bottom").offset().top}, 800);
                     }
