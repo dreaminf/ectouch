@@ -35,8 +35,7 @@ class AdminController extends BaseController {
         
         //如果当前访问是无需登录验证，则直接返回
         if (!in_array(CONTROLLER_NAME, $access) && !in_array(ACTION_NAME, $access[CONTROLLER_NAME])) {
-            // $this->redirect('./admin');
-            exit(CONTROLLER_NAME . 'Access denied.' . ACTION_NAME);
+            $this->redirect('./admin');
         }
 
         if (intval($_SESSION['admin_id']) > 0) {
