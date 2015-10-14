@@ -27,9 +27,10 @@ class Groupbuy extends IndexController {
         $this->assign('size', $this->size);
         $this->assign('sort', $this->sort);
         $this->assign('order', $this->order);
-        $gb_list = group_buy_list($this->size, $this->page, $this->sort, $this->order);
+        $this->sort = 'b.act_id';
+        $gb_list = model('Groupbuy')->group_buy_list($this->size, $this->page, $this->sort, $this->order);
         $this->assign('gb_list', $gb_list);
-        $count = group_buy_count();
+        $count = model('Groupbuy')->group_buy_count();
         $this->pageLimit(url('index', array('sort' => $this->sort, 'order' => $this->order)), $this->size);
         $this->assign('pager', $this->pageShow($count));
         /* 显示模板 */
@@ -44,12 +45,13 @@ class Groupbuy extends IndexController {
         $this->parameter();
         $asyn_last = intval(I('post.last')) + 1;
         $this->size = I('post.amount');
+        $this->sort = 'b.act_id';
         $this->page = ($asyn_last > 0) ? ceil($asyn_last / $this->size) : 1;
-        $gb_list = group_buy_list($this->size, $this->page, $this->sort, $this->order);
+        $gb_list = model('Groupbuy')->group_buy_list($this->size, $this->page, $this->sort, $this->order);
         foreach ($gb_list as $key => $value) {
             $this->assign('groupbuy', $value);
             $sayList [] = array(
-                'single_item' => $this->load->tpl->fetch('library/asynclist_info.lbi')
+                'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
             );
         }
         die(json_encode($sayList));
@@ -68,7 +70,7 @@ class Groupbuy extends IndexController {
             exit;
         }
         /* 取得团购活动信息 */
-        $group_buy = group_buy_info($group_buy_id);
+        $group_buy = model('GroupBuyBase')->group_buy_info($group_buy_id);
         if (empty($group_buy)) {
             ecs_header("Location: ./\n");
             exit;
@@ -78,7 +80,7 @@ class Groupbuy extends IndexController {
         $this->assign('group_buy', $group_buy);
         /* 取得团购商品信息 */
         $goods_id = $group_buy['goods_id'];
-        $goods = goods_info($goods_id);
+        $goods = model('Goods')->goods_info($goods_id);
         if (empty($goods)) {
             ecs_header("Location: ./\n");
             exit;
@@ -87,7 +89,7 @@ class Groupbuy extends IndexController {
         $this->assign('gb_goods', $goods);
 
         /* 取得商品的规格 */
-        $properties = get_goods_properties($goods_id);
+        $properties = model('Goods')->get_goods_properties($goods_id);
         $this->assign('properties', $properties['pro']); // 商品属性
         $this->assign('specification', $properties['spe']); // 商品规格
         //模板赋值
@@ -131,7 +133,7 @@ class Groupbuy extends IndexController {
         $number = $number < 1 ? 1 : $number;
 
         /* 查询：取得团购活动信息 */
-        $group_buy = group_buy_info($group_buy_id, $number);
+        $group_buy = model('GroupBuyBase')->group_buy_info($group_buy_id, $number);
         if (empty($group_buy)) {
             ecs_header("Location: ./\n");
             exit;
@@ -143,7 +145,7 @@ class Groupbuy extends IndexController {
         }
 
         /* 查询：取得团购商品信息 */
-        $goods = get_goods_info($group_buy['goods_id']);
+        $goods = model('Goods')->get_goods_info($group_buy['goods_id']);
         if (empty($goods)) {
             ecs_header("Location: ./\n");
             exit;
@@ -166,7 +168,7 @@ class Groupbuy extends IndexController {
         /* 查询：如果商品有规格则取规格商品信息 配件除外 */
         if ($specs) {
             $_specs = explode(',', $specs);
-            $product_info = get_products_info($goods['goods_id'], $_specs);
+            $product_info = model('ProductsBase')->get_products_info($goods['goods_id'], $_specs);
         }
 
         empty($product_info) ? $product_info = array('product_number' => 0, 'product_id' => 0) : '';
@@ -190,7 +192,7 @@ class Groupbuy extends IndexController {
         $goods_attr = join(chr(13) . chr(10), $attr_list);
 
         /* 更新：清空购物车中所有团购商品 */
-        clear_cart(CART_GROUP_BUY_GOODS);
+        model('Order')->clear_cart(CART_GROUP_BUY_GOODS);
 
         /* 更新：加入购物车 */
         $goods_price = $group_buy['deposit'] > 0 ? $group_buy['deposit'] : $group_buy['cur_price'];
@@ -212,7 +214,7 @@ class Groupbuy extends IndexController {
             'rec_type' => CART_GROUP_BUY_GOODS,
             'is_gift' => 0
         );
-        $new_cart = filter_field('cart', $cart);
+        $new_cart = model('Common')->filter_field('cart', $cart);
         $this->model->table('cart')->data($new_cart)->insert();
 
         /* 更新：记录购物流程类型：团购 */
@@ -243,7 +245,7 @@ class Groupbuy extends IndexController {
         /* 排序、显示方式以及类型 */
         $default_display_type = C('show_order_type') == '0' ? 'list' : (C('show_order_type') == '1' ? 'grid' : 'album');
         $default_sort_order_method = C('sort_order_method') == '0' ? 'DESC' : 'ASC';
-        $default_sort_order_type = C('sort_order_type') == '0' ? 'act_id' : (C('sort_order_type') == '1' ? 'cur_price' : 'last_update');
+        $default_sort_order_type = C('sort_order_type') == '0' ? 'goods_id' : (C('sort_order_type') == '1' ? 'cur_price' : 'last_update');
 
         $this->sort = (isset($_REQUEST ['sort']) && in_array(trim(strtolower($_REQUEST ['sort'])), array(
                     'goods_id',

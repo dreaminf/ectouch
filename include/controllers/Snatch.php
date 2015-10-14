@@ -10,16 +10,16 @@ class Snatch extends IndexController {
      */
     public function __construct() {
         parent::__construct();
-        $this->id = isset($_REQUEST ['id']) ? intval($_REQUEST ['id']) : get_last_snatch();
+        $this->id = isset($_REQUEST ['id']) ? intval($_REQUEST ['id']) : model('Snatch')->get_last_snatch();
     }
 
     /**
      * 夺宝骑兵列表
      */
     public function index() {
-        $this->assign('goods_list', get_snatch_list());     //所有有效的夺宝奇兵列表
+        $this->assign('goods_list', model('Snatch')->get_snatch_list());     //所有有效的夺宝奇兵列表
         $this->assign('show_asynclist', C('show_asynclist'));
-        $this->assign('tile', L('snatch_list'));
+        $this->assign('title', L('snatch_list'));
         $this->display('snatch_list.dwt');
     }
 
@@ -27,20 +27,20 @@ class Snatch extends IndexController {
      * 夺宝奇兵详情
      */
     public function info() {
-        $goods = get_snatch($this->id);
+        $goods = model('Snatch')->get_snatch($this->id);
         if ($goods) {
             if ($goods['is_end']) {
                 //如果活动已经结束,获取活动结果
-                $this->assign('result', get_snatch_result($this->id));
+                $this->assign('result', model('ActivityBase')->get_snatch_result($this->id));
             }
             $this->assign('id', $this->id);
             $this->assign('snatch_goods', $goods); // 竞价商品
-            $this->assign('pictures', get_goods_gallery($goods['goods_id']));
-            $this->assign('myprice', get_myprice($this->id));
+            $this->assign('pictures', model('GoodsBase')->get_goods_gallery($goods['goods_id']));
+            $this->assign('myprice', model('Snatch')->get_myprice($this->id));
             if ($goods['product_id'] > 0) {
-                $goods_specifications = get_specifications_list($goods['goods_id']);
+                $goods_specifications = model('goodsBase')->get_specifications_list($goods['goods_id']);
 
-                $good_products = get_good_products($goods['goods_id'], 'AND product_id = ' . $goods['product_id']);
+                $good_products = model('ProductsBase')->get_good_products($goods['goods_id'], 'AND product_id = ' . $goods['product_id']);
 
                 $_good_products = explode('|', $good_products[0]['goods_attr']);
                 $products_info = '';
@@ -59,8 +59,8 @@ class Snatch extends IndexController {
             $this->assign('vote_id', $vote['id']);
             $this->assign('vote', $vote['content']);
         }
-        $this->assign('price_list', get_price_list($this->id));
-        $this->assign('promotion_info', get_promotion_info());
+        $this->assign('price_list', model('Snatch')->get_price_list($this->id));
+        $this->assign('promotion_info', model('GoodsBase')->get_promotion_info());
         $this->assign('feed_url', (C('rewrite') == 1) ? "feed-typesnatch.xml" : 'feed.php?type=snatch'); // RSS URL
         $this->display('snatch.dwt');
     }
@@ -70,7 +70,7 @@ class Snatch extends IndexController {
      */
     public function new_price_list() {
         $id = I('get.id');
-        $this->assign('price_list', get_price_list($id));
+        $this->assign('price_list', model('Snatch')->get_price_list($id));
         $this->display('library/snatch_price.lbi');
         exit;
     }
@@ -134,7 +134,7 @@ class Snatch extends IndexController {
             die($json->encode($result));
         }
 
-        log_account_change($_SESSION['user_id'], 0, 0, 0, 0 - $row['cost_points'], sprintf(L('snatch_log'), $row['snatch_name'])); //扣除用户积分
+        model('ClipsBase')->log_account_change($_SESSION['user_id'], 0, 0, 0, 0 - $row['cost_points'], sprintf(L('snatch_log'), $row['snatch_name'])); //扣除用户积分
 
         $snatch_log['snatch_id'] = $id;
         $snatch_log['user_id'] = $_SESSION['user_id'];
@@ -142,9 +142,9 @@ class Snatch extends IndexController {
         $snatch_log['bid_time'] = gmtime();
         $this->model->table('snatch_log')->data($snatch_log)->insert();
 
-        $this->assign('myprice', get_myprice($id));
+        $this->assign('myprice', model('Snatch')->get_myprice($id));
         $this->assign('id', $id);
-        $result['content'] = $this->load->tpl->fetch('library/snatch.lbi');
+        $result['content'] = ECTouch::view()->fetch('library/snatch.lbi');
         die($json->encode($result));
     }
 
@@ -159,7 +159,7 @@ class Snatch extends IndexController {
         if (empty($_SESSION['user_id'])) {
             show_message(L('not_login'));
         }
-        $snatch = get_snatch($this->id);
+        $snatch = model('Snatch')->get_snatch($this->id);
 
         if (empty($snatch)) {
             $this->redirect(url('index', array('id' => $this->id)));
@@ -172,7 +172,7 @@ class Snatch extends IndexController {
             exit;
         }
 
-        $result = get_snatch_result($this->id);
+        $result = model('ActivityBase')->get_snatch_result($this->id);
 
         if ($_SESSION['user_id'] != $result['user_id']) {
             show_message(L('not_for_you'));
@@ -206,7 +206,7 @@ class Snatch extends IndexController {
             $snatch['product_id'] = 0;
         }
         /* 清空购物车中所有商品 */
-        clear_cart(CART_SNATCH_GOODS);
+        model('Order')->clear_cart(CART_SNATCH_GOODS);
 
         /* 加入购物车 */
         $cart = array(

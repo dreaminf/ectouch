@@ -2,7 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Activity extends IndexController {
-
     private $children = '';
     private $brand = '';
     private $goods = '';
@@ -27,11 +26,11 @@ class Activity extends IndexController {
         $this->assign('size', $this->size);
         $this->assign('sort', $this->sort);
         $this->assign('order', $this->order);
-		$count = get_activity_count();
+		$count = model('Activity')->get_activity_count();
         $this->pageLimit(url('index'), $this->size);
         $this->assign('pager', $this->pageShow($count));
         
-        $list = get_activity_info($this->size, $this->page);
+        $list = model('Activity')->get_activity_info($this->size, $this->page);
         $this->assign('list', $list);
 		
         $this->display('activity.dwt');
@@ -46,11 +45,11 @@ class Activity extends IndexController {
         $asyn_last = intval(I('post.last')) + 1;
         $this->size = I('post.amount');
         $this->page = ($asyn_last > 0) ? ceil($asyn_last / $this->size) : 1;
-        $list = get_activity_info($this->size, $this->page);
+        $list = model('Activity')->get_activity_info($this->size, $this->page);
         foreach ($list as $key => $activity) {
             $this->assign('activity', $activity);
             $sayList [] = array(
-                'single_item' => $this->load->tpl->fetch('library/asynclist_info.lbi')
+                'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
             );
         }
         die(json_encode($sayList));
@@ -83,10 +82,10 @@ class Activity extends IndexController {
                 $this->goods = " g.goods_id " . db_create_in($res['act_range_ext']);
             }
         }
-        $count = category_get_count($this->children, $this->brand, $this->goods,$this->price_min, $this->price_max,$this->ext);
+        $count = model('Activity')->category_get_count($this->children, $this->brand, $this->goods,$this->price_min, $this->price_max,$this->ext);
         $this->pageLimit(url('goods_list', array('id' => $id, 'brand' => $this->brand, 'sort' => $this->sort, 'order' => $this->order)), $this->size);
         $this->assign('pager', $this->pageShow($count));
-        $goods_list = category_get_goods($this->children, $this->brand, $this->goods, $this->size, $this->page, $this->sort, $this->order);
+        $goods_list = model('Activity')->category_get_goods($this->children, $this->brand, $this->goods, $this->size, $this->page, $this->sort, $this->order);
         $this->assign('goods_list', $goods_list);
         $this->display('activity_goods_list.dwt');
     }
@@ -116,11 +115,11 @@ class Activity extends IndexController {
         $asyn_last = intval(I('post.last')) + 1;
         $this->size = I('post.amount');
         $this->page = ($asyn_last > 0) ? ceil($asyn_last / $this->size) : 1;
-        $goodslist = category_get_goods($this->children, $this->brand, $this->goods, $this->size, $this->page, $this->sort, $this->order);
+        $goodslist = model('Activity')->category_get_goods($this->children, $this->brand, $this->goods, $this->size, $this->page, $this->sort, $this->order);
         foreach ($goodslist as $key => $value) {
             $this->assign('act_goods', $value);
             $sayList [] = array(
-                'single_item' => $this->load->tpl->fetch('library/asynclist_info.lbi')
+                'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
             );
         }
         die(json_encode($sayList));
@@ -160,5 +159,4 @@ class Activity extends IndexController {
         $this->assign('display', $display);
         setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
     }
-
 }

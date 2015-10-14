@@ -2,7 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Article extends IndexController {
-
     private $size = 10;
     private $page = 1;
     private $cat_id = 0;
@@ -19,7 +18,7 @@ class Article extends IndexController {
     /* ------------------------------------------------------ */
     public function index() {
         $cat_id = intval(I('get.id'));
-        $this->assign('article_categories', article_categories_tree($cat_id)); //文章分类树
+        $this->assign('article_categories', model('Article')->article_categories_tree($cat_id)); //文章分类树
         $this->display('article_cat.dwt');
     }
 
@@ -31,14 +30,14 @@ class Article extends IndexController {
         $this->parameter();
         $this->assign('keywords', $this->keywords);
         $this->assign('id', $this->cat_id);
-        $artciles_list = get_cat_articles($this->cat_id, $this->page, $this->size, $this->keywords);
-        $count = get_article_count($this->cat_id, $this->keywords);
+        $artciles_list = model('ArticleBase')->get_cat_articles($this->cat_id, $this->page, $this->size, $this->keywords);
+        $count = model('ArticleBase')->get_article_count($this->cat_id, $this->keywords);
         $this->pageLimit(url('art_list', array('id' => $this->cat_id)), $this->size);
         $this->assign('pager', $this->pageShow($count));
         $this->assign('artciles_list', $artciles_list);
         
         //处理关键词描述
-        $sql = "select * from ".M()->pre."touch_article_cat where cat_id = ".$this->cat_id;
+        $sql = "select * from ".M()->pre."article_cat where cat_id = ".$this->cat_id;
         $cat = M()->query($sql);
         if (!empty($cat['0']['keywords'])) {
             $this->assign('meta_keywords',htmlspecialchars($cat['0']['keywords']));
@@ -58,13 +57,13 @@ class Article extends IndexController {
         $asyn_last = intval(I('post.last')) + 1;
         $this->size = I('post.amount');
         $this->page = ($asyn_last > 0) ? ceil($asyn_last / $this->size) : 1;
-        $list = get_cat_articles($this->cat_id, $this->page, $this->size, $this->keywords);
+        $list = model('ArticleBase')->get_cat_articles($this->cat_id, $this->page, $this->size, $this->keywords);
         $id = ($this->page - 1) * $this->size + 1;
         foreach ($list as $key => $value) {
             $this->assign('id', $id);
             $this->assign('article', $value);
             $sayList [] = array(
-                'single_item' => $this->load->tpl->fetch('library/asynclist_info.lbi')
+                'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
             );
             $id++;
         }
@@ -78,17 +77,16 @@ class Article extends IndexController {
     public function info() {
         /* 文章详情 */
         $article_id = intval(I('get.aid'));
-        $article = get_article_info($article_id);
+        $article = model('Article')->get_article_info($article_id);
         $this->assign('article', $article);
-        
-        //处理关键词描述
-        if (!empty($article['keywords'])) {
-            $this->assign('meta_keywords',htmlspecialchars($article['keywords']));
-        }
-        if (!empty($article['description'])) {
-            $this->assign('meta_description',htmlspecialchars($article['description']));
-        }
-        
+
+        /* 页面标题 */
+        $page_info = get_page_title($article['cat_id'], $article['title']);
+        $this->assign('page_title', htmlspecialchars($page_info['title']));
+        /* meta */
+        $this->assign('meta_keywords', htmlspecialchars($article['keywords']));
+        $this->assign('meta_description', htmlspecialchars($article['description']));
+
         $this->display('article_info.dwt');
     }
 

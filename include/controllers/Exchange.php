@@ -28,8 +28,8 @@ class Exchange extends IndexController {
         $this->assign('size', $this->size);
         $this->assign('sort', $this->sort);
         $this->assign('order', $this->order);
-        $goods_list = exchange_get_goods($this->children, $this->integral_min, $this->integral_max, $this->ext, $this->size, $this->page, $this->sort, $this->order);
-        $count = get_exchange_goods_count($this->children, $this->integral_min, $this->integral_max);
+        $goods_list = model('Exchange')->exchange_get_goods($this->children, $this->integral_min, $this->integral_max, $this->ext, $this->size, $this->page, $this->sort, $this->order);
+        $count = model('Exchange')->get_exchange_goods_count($this->children, $this->integral_min, $this->integral_max);
         $this->pageLimit(url('index', array('sort' => $this->sort, 'order' => $this->order)), $this->size);
         $this->assign('goods_list', $goods_list);
         $this->assign('pager', $this->pageShow($count));
@@ -45,11 +45,11 @@ class Exchange extends IndexController {
         $asyn_last = intval(I('post.last')) + 1;
         $this->size = I('post.amount');
         $this->page = ($asyn_last > 0) ? ceil($asyn_last / $this->size) : 1;
-        $list = exchange_get_goods($this->children, $this->integral_min, $this->integral_max, $this->ext, $this->size, $this->page, $this->sort, $this->order);
+        $list = model('Exchange')->exchange_get_goods($this->children, $this->integral_min, $this->integral_max, $this->ext, $this->size, $this->page, $this->sort, $this->order);
         foreach ($list as $key => $value) {
             $this->assign('exchange', $value);
             $sayList [] = array(
-                'single_item' => $this->load->tpl->fetch('library/asynclist_info.lbi')
+                'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
             );
         }
         die(json_encode($sayList));
@@ -66,7 +66,7 @@ class Exchange extends IndexController {
         if (!$goods_id) {
             ecs_header("Location: ./\n");
         }
-        $goods = get_exchange_goods_info($goods_id);
+        $goods = model('Exchange')->get_exchange_goods_info($goods_id);
         $this->assign('goods', $goods);
 
         /* 上一个商品下一个商品 */
@@ -93,13 +93,13 @@ class Exchange extends IndexController {
             }
         }
         // 获得商品的规格和属性
-        $properties = get_goods_properties($goods['goods_id']);
+        $properties = model('Goods')->get_goods_properties($goods['goods_id']);
         // 商品属性
         $this->assign('properties', $properties ['pro']);
         // 商品规格
         $this->assign('specification', $properties ['spe']);
         $this->assign('goods_id', $goods_id);
-        $this->assign('pictures', get_goods_gallery($goods_id));
+        $this->assign('pictures', model('GoodsBase')->get_goods_gallery($goods_id));
         $this->assign('cfg', C('CFG'));
         $this->display('exchange_info.dwt');
     }
@@ -126,7 +126,7 @@ class Exchange extends IndexController {
             exit;
         }
         /* 查询：取得兑换商品信息 */
-        $goods = get_exchange_goods_info($goods_id);
+        $goods = model('Exchange')->get_exchange_goods_info($goods_id);
         if (empty($goods)) {
             ecs_header("Location: ./\n");
             exit;
@@ -140,7 +140,7 @@ class Exchange extends IndexController {
             show_message(L('eg_error_status'), array(L('back_up_page')), array($back_act), 'error');
         }
 
-        $user_info = get_user_info($_SESSION['user_id']);
+        $user_info = model('Users')->get_user_info($_SESSION['user_id']);
         $user_points = $user_info['pay_points']; // 用户的积分总数
         if ($goods['exchange_integral'] > $user_points) {
             show_message(L('eg_error_integral'), array(L('back_up_page')), array($back_act), 'error');
@@ -159,7 +159,7 @@ class Exchange extends IndexController {
         if (!empty($specs)) {
             $_specs = explode(',', $specs);
 
-            $product_info = get_products_info($goods_id, $_specs);
+            $product_info = model('ProductsBase')->get_products_info($goods_id, $_specs);
         }
         if (empty($product_info)) {
             $product_info = array('product_number' => '', 'product_id' => 0);
@@ -183,7 +183,7 @@ class Exchange extends IndexController {
         $goods_attr = join(chr(13) . chr(10), $attr_list);
 
         /* 更新：清空购物车中所有团购商品 */
-        clear_cart(CART_EXCHANGE_GOODS);
+        model('Order')->clear_cart(CART_EXCHANGE_GOODS);
 
         /* 更新：加入购物车 */
         $number = 1;

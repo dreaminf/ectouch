@@ -32,7 +32,7 @@ class Sms extends IndexController {
         }
 
         if ($_SESSION['sms_mobile']) {
-            if (strtotime(read_file($this->mobile)) > (time() - 60)) {
+            if (strtotime($this->read_file($this->mobile)) > (time() - 60)) {
                 exit(json_encode(array('msg' => '获取验证码太过频繁，一分钟之内只能获取一次。')));
             }
         }
@@ -55,16 +55,15 @@ class Sms extends IndexController {
         $message = "您的验证码是：" . $this->mobile_code . "，请不要把验证码泄露给其他人，如非本人操作，可不用理会";
 
         $sms = new EcsSms();
-        $sms_error = '';
-        $send_result = $sms->send($this->mobile, $message, $sms_error);
+        $send_result = $sms->send($this->mobile, $message);
         $this->write_file($this->mobile, date("Y-m-d H:i:s"));
 
-        if ($send_result) {
+        if ($send_result === true) {
             $_SESSION['sms_mobile'] = $this->mobile;
             $_SESSION['sms_mobile_code'] = $this->mobile_code;
             exit(json_encode(array('code' => 2, 'mobile_code' => $this->mobile_code)));
         } else {
-            exit(json_encode(array('msg' => $sms_error)));
+            exit(json_encode(array('msg' => $send_result)));
         }
     }
 
@@ -93,8 +92,8 @@ class Sms extends IndexController {
     }
 
     private function write_file($file_name, $content) {
-        $this->mkdirs(ROOT_PATH . 'data/caches/smslog/' . date('Ymd'));
-        $filename = ROOT_PATH . 'data/caches/smslog/' . date('Ymd') . '/' . $file_name . '.log';
+        $this->mkdirs(ROOT_PATH . 'data/smslog/' . date('Ymd'));
+        $filename = ROOT_PATH . 'data/smslog/' . date('Ymd') . '/' . $file_name . '.log';
         $Ts = fopen($filename, "a+");
         fputs($Ts, "\r\n" . $content);
         fclose($Ts);
@@ -110,7 +109,7 @@ class Sms extends IndexController {
 
     private function read_file($file_name) {
         $content = '';
-        $filename = ROOT_PATH . 'data/caches/smslog/' . date('Ymd') . '/' . $file_name . '.log';
+        $filename = ROOT_PATH . 'data/smslog/' . date('Ymd') . '/' . $file_name . '.log';
         if (function_exists('file_get_contents')) {
             @$content = file_get_contents($filename);
         } else {

@@ -18,6 +18,11 @@ class Topic extends IndexController {
      */
     public function index() {
         $topic = $this->model->table('touch_topic')->field('*')->where('topic_id =' . $this->id)->find();
+        if(empty($topic))
+        {
+            /* 如果没有找到任何记录则跳回到首页 */
+            $this->redirect(url('index/index'));
+        }
         $topic['intro'] = html_out($topic['intro']);
         $topic['data'] = addcslashes($topic['data'], "'");
         $tmp = @unserialize($topic["data"]);
@@ -64,8 +69,8 @@ class Topic extends IndexController {
             $row['short_name'] = C('goods_name_length') > 0 ? sub_str($row['goods_name'], C('goods_name_length')) : $row['goods_name'];
             $row['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
             $row['short_style_name'] = add_style($row['short_name'], $row['goods_name_style']);
-            $row['sales_count'] = get_sales_count($row['goods_id']);
-            $row['sc'] = get_goods_collect($row['goods_id']);
+            $row['sales_count'] = model('GoodsBase')->get_sales_count($row['goods_id']);
+            $row['sc'] = model('GoodsBase')->get_goods_collect($row['goods_id']);
             $row['mysc'] = 0;
             // 检查是否已经存在于用户的收藏夹
             if ($_SESSION['user_id']) {
@@ -78,9 +83,9 @@ class Topic extends IndexController {
                         ->count();
                 $row['mysc'] = $rs;
             }
-            $row['promotion'] = get_promotion_show($row['goods_id']);
-            $row['comment_count'] = get_goods_comment($row['goods_id'], 0);  //商品总评论数量
-            $row['favorable_count'] = favorable_comment($row['goods_id'], 0);  //获得商品好评数量
+            $row['promotion'] = model('GoodsBase')->get_promotion_show($row['goods_id']);
+            $row['comment_count'] = model('Comment')->get_goods_comment($row['goods_id'], 0);  //商品总评论数量
+            $row['favorable_count'] = model('Comment')->favorable_comment($row['goods_id'], 0);  //获得商品好评数量
             foreach ($arr AS $key => $value) {
                 foreach ($value AS $val) {
                     if ($val == $row['goods_id']) {

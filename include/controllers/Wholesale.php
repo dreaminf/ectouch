@@ -42,12 +42,12 @@ class Wholesale extends Controller {
             $this->assign('search_keywords', $search_keywords);
         }
 
-        $count = wholesale_count($search_category, $search_keywords, $where);
+        $count = model('Wholesale')->wholesale_count($search_category, $search_keywords, $where);
         if ($count > 0) {
             $this->pageLimit(url('index'), $this->size);
             $this->assign('pager', $this->pageShow($count));
             /* 取得当前页的批发商品 */
-            $this->assign('wholesale_list', wholesale_list($this->size, $this->page, $where));
+            $this->assign('wholesale_list', model('Wholesale')->wholesale_list($this->size, $this->page, $where));
         }
         /* 模板赋值 */
         $this->assign('page', $this->page);
@@ -85,11 +85,11 @@ class Wholesale extends Controller {
             $this->assign('search_keywords', $search_keywords);
         }
 
-        $wholesale_list = wholesale_list($this->size, $this->page, $where);
+        $wholesale_list = model('Wholesale')->wholesale_list($this->size, $this->page, $where);
         foreach ($wholesale_list as $key => $value) {
             $this->assign('wholesale', $value);
             $sayList [] = array(
-                'single_item' => $this->load->tpl->fetch('library/asynclist_info.lbi')
+                'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
             );
         }
         die(json_encode($sayList));
@@ -107,17 +107,17 @@ class Wholesale extends Controller {
             exit;
         }
         $this->assign('id', $id);
-        $this->assign('wholesale', wholesale_info($id));
-        $this->assign('pictures', get_goods_gallery($id));
+        $this->assign('wholesale', model('Wholesale')->wholesale_info($id));
+        $this->assign('pictures', model('GoodsBase')->get_goods_gallery($id));
         // 获得商品的规格和属性
-        $properties = get_goods_properties($id);
+        $properties = model('Goods')->get_goods_properties($id);
         // 商品属性
         $this->assign('properties', $properties ['pro']);
         // 商品规格
         $this->assign('specification', $properties ['spe']);
         /* 批发商品购物车 */
         $this->assign('cart_goods', isset($_SESSION['wholesale_goods']) ? $_SESSION['wholesale_goods'] : array());
-        $comments = get_comment_info($id,0);
+        $comments = model('Comment')->get_comment_info($id,0);
         $this->assign('comments', $comments);
         $this->assign('title',L('wholesale_goods_info'));
         $this->display('wholesale.dwt');
@@ -157,7 +157,7 @@ class Wholesale extends Controller {
         }
 
         /* 取批发相关数据 */
-        $wholesale = wholesale_info($act_id);
+        $wholesale = model('GoodsBase')->wholesale_info($act_id);
 
         /* 检查session中该商品，该属性是否存在 */
         if (isset($_SESSION['wholesale_goods'])) {
@@ -180,7 +180,7 @@ class Wholesale extends Controller {
                 $goods_list[0]['qp_list'] = $attr_price['qp_list'];
                 break;
             } // 有属性
-            elseif (($key = is_attr_matching($goods_list, $attr_price['attr'])) !== false) {
+            elseif (($key = model('wholesale')->is_attr_matching($goods_list, $attr_price['attr'])) !== false) {
                 $attr_matching = true;
                 $goods_list[$key]['qp_list'] = $attr_price['qp_list'];
             }
@@ -315,7 +315,7 @@ class Wholesale extends Controller {
             $this->assign('order', $order);
             $this->assign('shop_name', C('shop_name'));
             $this->assign('send_date', date(C('time_format')));
-            $content = $this->load->tpl->fetch('str:' . $tpl['template_content']);
+            $content = ECTouch::view()->fetch('str:' . $tpl['template_content']);
             send_mail(C('shop_name'), C('service_email'), $tpl['template_subject'], $content, $tpl['is_html']);
         }
 
@@ -368,6 +368,5 @@ class Wholesale extends Controller {
         $this->assign('display', $display);
         setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
     }
-
 }
 

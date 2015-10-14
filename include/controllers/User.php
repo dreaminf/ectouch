@@ -11,49 +11,67 @@ class User extends IndexController {
      * 构造函数
      */
     public function __construct() {
-        
         parent::__construct();
-        // 加载clips文件
-        $helper_list = array('clips','order','lib','transaction');
-        $this->load->helper($helper_list);
         // 属性赋值
         $this->user_id = $_SESSION['user_id'];
         $this->action = ACTION_NAME;
         // 验证登录
         $this->check_login();
         // 用户信息
-        $info = get_user_default($this->user_id);
+        $info = model('ClipsBase')->get_user_default($this->user_id);
         // 如果是显示页面，对页面进行相应赋值
         assign_template();
         $this->assign('action', $this->action);
         $this->assign('info', $info);
-        $this->assign('lang',L());
     }
 
     /**
      * 会员中心欢迎页
      */
     public function index() {
-        // 是否开启分销、是否是分销商
-        $this->assign('is_close', C('sale') == 1 ? 0 : 1);
-        $this->assign('user_rank',$_SESSION['user_rank']);
-        
         // 用户等级
-        if ($rank = get_rank_info()) {
+        if ($rank = model('ClipsBase')->get_rank_info()) {
             $this->assign('rank_name', sprintf(L('your_level'), $rank['rank_name']));
         }
+		// 待付款
+        $not_pays = model('ClipsBase')->not_pay($this->user_id);
+		
+		// 待收货
+		$not_shouhuos = model('ClipsBase')->not_shouhuo($this->user_id);
+		// 红包
+		$bonus = model('ClipsBase')->my_bonus($this->user_id);	
+		// 待评价
+		$not_comment = model('ClipsBase')->not_pingjia($this->user_id);	
+		
+		// 用户积分余额
+		$user_pay = model('ClipsBase')->pay_money($this->user_id);
+		$user_money = $user_pay['user_money'];  //余额
+		$user_points = $user_pay['pay_points'];	//积分
+		
+		// 收藏数量
+        $goods_num = model('ClipsBase')->num_collection_goods($this->user_id);
         // 收藏
-        $goods_list = get_collection_goods($this->user_id, 5, 0);
+        $goods_list = model('ClipsBase')->get_collection_goods($this->user_id, 5, 0);
         // 评论
-        $comment_list = get_comment_list($this->user_id, 5, 0);
+        $comment_list = model('ClipsBase')->get_comment_list($this->user_id, 5, 0);
         // 浏览记录
         $history = insert_history();
         // 信息中心是否有新回复
-        $sql = 'SELECT msg_id FROM {pre}feedback WHERE parent_id IN (SELECT f.msg_id FROM {pre}feedback f WHERE f.parent_id = 0 and f.user_id = ' . $this->user_id . '  ORDER BY msg_time DESC) ORDER BY msg_time DESC';
+        $sql = 'SELECT msg_id FROM ' . $this->model->pre . 'feedback WHERE parent_id IN (SELECT f.msg_id FROM ' . $this->model->pre . 'feedback f LEFT JOIN ' . $this->model->pre . 'touch_feedback t ON f.msg_id = t.msg_id WHERE f.parent_id = 0 and f.user_id = ' . $this->user_id . ' and t.msg_read = 0 ORDER BY msg_time DESC) ORDER BY msg_time DESC';
         $rs = $this->model->query($sql);
         if ($rs) {
             $this->assign('new_msg', 1);
         }
+		$arr=array(
+		'goods_nums'=> $goods_num,
+		'not_pays'=> $not_pays,
+		'not_shouhuos'=>  $not_shouhuos,
+		'not_comment'=>  $not_comment,
+		'user_money'=> $user_money,
+		'user_points'=> $user_points,
+		'bonus'=> $bonus,
+		);
+		$this->assign('list',$arr);
         $this->assign('user_notice', C('user_notice'));
         $this->assign('goods_list', $goods_list);
         $this->assign('comment_list', $comment_list);
@@ -150,10 +168,10 @@ class User extends IndexController {
                 'other' => isset($other) ? $other : array()
             );
 
-            if (edit_profile($profile)) {
+            if (model('Users')->edit_profile($profile)) {
                 show_message(L('edit_profile_success'), L('profile_lnk'), url('profile'), 'info');
             } else {
-                if ($this->user->error == ERR_EMAIL_EXISTS) {
+                if (self::$user->error == ERR_EMAIL_EXISTS) {
                     $msg = sprintf(L('email_exist'), $profile['email']);
                 } else {
                     $msg = L('edit_profile_failed');
@@ -163,11 +181,14 @@ class User extends IndexController {
             exit();
         }
         // 用户资料
-        $user_info = get_profile($this->user_id);
+        $user_info = model('Users')->get_profile($this->user_id);
         // 取出注册扩展字段
         $where = 'type < 2 and display = 1';
-        $sql = "select * from {pre}reg_fields where $where order by dis_order , id";
-        $extend_info_list = $this->model->query($sql);
+        $extend_info_list = $this->model->table('reg_fields')
+                ->where($where)
+                ->order('dis_order, id')
+                ->select();
+
         $condition['user_id'] = $this->user_id;
         $extend_info_arr = $this->model->table('reg_extend_info')
                 ->field('reg_field_id, content')
@@ -217,19 +238,18 @@ class User extends IndexController {
      */
     public function account_detail() {
         // 获取剩余余额
-        $surplus_amount = get_user_surplus($this->user_id);
+        $surplus_amount = model('ClipsBase')->get_user_surplus($this->user_id);
         if (empty($surplus_amount)) {
             $surplus_amount = 0;
         }
         $size = I(C('page_size'), 5);
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
         $where = 'user_id = ' . $this->user_id . ' AND user_money <> 0';
-        $sql = "select count(*) as count from {pre}account_log where $where";
-        $count = $this->model->queryOne($sql);
-        $pager = get_pager(url('user/account_detail'), array(), $count, $page);
-        $this->assign('pager', $pager);
+        $count = $this->model->table('account_log')->field('COUNT(*)')->where($where)->getOne();
+        $this->pageLimit(url('user/account_detail'), $size);
+        $this->assign('pager', $this->pageShow($count));
         
-        $account_detail = get_account_detail($this->user_id, $size, ($page-1)*$size);
+        $account_detail = model('Users')->get_account_detail($this->user_id, $size, ($page-1)*$size);
         
         $this->assign('title', L('label_user_surplus'));
         $this->assign('surplus_amount', price_format($surplus_amount, false));
@@ -242,26 +262,29 @@ class User extends IndexController {
      *  会员充值和提现申请记录 
      */
     public function  account_log(){
-    
-        $size = I(C('page_size'), 5);
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
-        $sql = "select count(*) as count from {pre}user_account where user_id = $this->user_id AND process_type". db_create_in(array(SURPLUS_SAVE, SURPLUS_RETURN));
-        $count = $this->model->queryOne($sql);
-        $pager = get_pager(url('user/account_log'), array(), $count, $page);
-        $this->assign('pager', $pager);
+
+        /* 获取记录条数 */
+        $record_count = $this->model->table('user_account')->field('COUNT(*)')->where("user_id = $this->user_id AND process_type ". db_create_in(array(SURPLUS_SAVE, SURPLUS_RETURN)))->getOne();
+
+        //分页函数
+        $pager = get_pager('index.php', array('c' => 'user'), $record_count, $page);
+
         //获取剩余余额
-        $surplus_amount = get_user_surplus($this->user_id);
+        $surplus_amount = model('ClipsBase')->get_user_surplus($this->user_id);
         if (empty($surplus_amount))
         {
             $surplus_amount = 0;
         }
+
         //获取余额记录
-        $account_log = get_account_log($this->user_id, $size, ($page-1)*$size);
-    
+        $account_log = model('ClipsBase')->get_account_log($this->user_id, $pager['size'], $pager['start']);
+
         //模板赋值
+        $this->assign('title', L('label_user_surplus'));
         $this->assign('surplus_amount', price_format($surplus_amount, false));
         $this->assign('account_log',    $account_log);
-        $this->assign('title', L('label_user_surplus'));
+        $this->assign('pager',          $pager);
         $this->display('user_account_log.dwt');
     }
     
@@ -277,7 +300,7 @@ class User extends IndexController {
             exit;
         }
     
-        $result = del_user_account($id, $this->user_id);
+        $result = model('ClipsBase')->del_user_account($id, $this->user_id);
         ecs_header("Location: ".url('User/account_log'));
     }
     
@@ -286,7 +309,7 @@ class User extends IndexController {
      */
     public function account_raply(){
         // 获取剩余余额
-        $surplus_amount = get_user_surplus($this->user_id);
+        $surplus_amount = model('ClipsBase')->get_user_surplus($this->user_id);
         if (empty($surplus_amount)) {
             $surplus_amount = 0;
         }
@@ -301,9 +324,9 @@ class User extends IndexController {
     public function account_deposit(){
         $this->assign('title', L('label_user_surplus'));
         $surplus_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-        $account    = get_surplus_info($surplus_id);
+        $account    = model('ClipsBase')->get_surplus_info($surplus_id);
     
-        $this->assign('payment', get_online_payment_list(false));
+        $this->assign('payment', model('ClipsBase')->get_online_payment_list(false));
         $this->assign('order',   $account);
         $this->display('user_account_deposit.dwt');
     }
@@ -316,7 +339,7 @@ class User extends IndexController {
         $amount = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
         if ($amount <= 0)
         {
-            show_message(L('amount_gt_zero'));
+            show_message($_LANG['amount_gt_zero']);
         }
     
         /* 变量初始化 */
@@ -333,7 +356,7 @@ class User extends IndexController {
         if ($surplus['process_type'] == 1)
         {
             /* 判断是否有足够的余额的进行退款的操作 */
-            $sur_amount = get_user_surplus($this->user_id);
+            $sur_amount = model('ClipsBase')->get_user_surplus($this->user_id);
             if ($amount > $sur_amount)
             {
                 $content = L('surplus_amount_error');
@@ -343,7 +366,7 @@ class User extends IndexController {
             //插入会员账目明细
             $amount = '-'.$amount;
             $surplus['payment'] = '';
-            $surplus['rec_id']  = insert_user_account($surplus, $amount);
+            $surplus['rec_id']  = model('ClipsBase')->insert_user_account($surplus, $amount);
     
             /* 如果成功提交 */
             if ($surplus['rec_id'] > 0)
@@ -353,7 +376,7 @@ class User extends IndexController {
             }
             else
             {
-                $content = L('process_false');
+                $content = $L('process_false');
                 show_message($content, L('back_page_up'), '', 'info');
             }
         }
@@ -368,18 +391,18 @@ class User extends IndexController {
     
             //获取支付方式名称
             $payment_info = array();
-            $payment_info = payment_info($surplus['payment_id']);
+            $payment_info = model('Order')->payment_info($surplus['payment_id']);
             $surplus['payment'] = $payment_info['pay_name'];
     
             if ($surplus['rec_id'] > 0)
             {
                 //更新会员账目明细
-                $surplus['rec_id'] = update_user_account($surplus);
+                $surplus['rec_id'] = model('ClipsBase')->update_user_account($surplus);
             }
             else
             {
                 //插入会员账目明细
-                $surplus['rec_id'] = insert_user_account($surplus, $amount);
+                $surplus['rec_id'] = model('ClipsBase')->insert_user_account($surplus, $amount);
             }
     
             //取得支付信息，生成支付代码
@@ -398,7 +421,7 @@ class User extends IndexController {
             $order['order_amount']   = $amount + $payment_info['pay_fee'];
     
             //记录支付log
-            $order['log_id'] = insert_pay_log($surplus['rec_id'], $order['order_amount'], $type=PAY_SURPLUS, 0);
+            $order['log_id'] = model('ClipsBase')->insert_pay_log($surplus['rec_id'], $order['order_amount'], $type=PAY_SURPLUS, 0);
     
             /* 调用相应的支付方式文件 */
             include_once (ROOT_PATH . 'plugins/payment/' . $payment_info ['pay_code'] . '.php');
@@ -440,11 +463,11 @@ class User extends IndexController {
     
         //获取单条会员帐目信息
         $order = array();
-        $order = get_surplus_info($surplus_id);
+        $order = model('ClipsBase')->get_surplus_info($surplus_id);
     
         //支付方式的信息
         $payment_info = array();
-        $payment_info = payment_info($payment_id);
+        $payment_info = model('Order')->payment_info($payment_id);
     
         /* 如果当前支付方式没有被禁用，进行支付的操作 */
         if (!empty($payment_info))
@@ -456,7 +479,7 @@ class User extends IndexController {
             $order['order_sn'] = $surplus_id;
     
             //获取需要支付的log_id
-            $order['log_id'] = get_paylog_id($surplus_id, $pay_type = PAY_SURPLUS);
+            $order['log_id'] = model('ClipsBase')->get_paylog_id($surplus_id, $pay_type = PAY_SURPLUS);
     
             $order['user_name']      = $_SESSION['user_name'];
             $order['surplus_amount'] = $order['amount'];
@@ -492,7 +515,7 @@ class User extends IndexController {
         else
         {
     
-            $this->assign('payment', get_online_payment_list());
+            $this->assign('payment', model('ClipsBase')->get_online_payment_list());
             $this->assign('order',   $order);
             $this->display('user_account_deposit.dwt');
         }
@@ -502,17 +525,17 @@ class User extends IndexController {
      * 获取未付款订单
      */
     public function not_pay_order_list() {
-        $pay = 1;
-		$size = I(C('page_size'), 10);
-        $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
-		$this->assign('show_asynclist', C('show_asynclist'));
-        $sql = "select count(*) count from {pre}order_info where user_id=$this->user_id";
-        $count = $this->model->queryOne($sql);
-        $pager = get_pager(url('not_pay_order_list'), array(), $count, $page, $size);
-        $this->assign('pager', $pager);
-        $orders = get_user_orders($this->user_id, $pager['size'], $pager['start']);
+        $pay = 0;
+        $size = I(C('page_size'), 10);
+        $this->assign('show_asynclist', C('show_asynclist'));
+        $count = $this->model->table('order_info')->where('user_id = ' . $this->user_id)->count();
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('not_pay_order_list', $filter), $size);
+        $offset_page = explode(',', $offset);
+        $orders = model('Users')->get_user_orders($this->user_id, $pay, $offset_page[1], $offset_page[0]);
         $this->assign('pay', $pay);
-        $this->assign('title', L('order_list_lnk'));
+        $this->assign('title', L('not_pay_list'));
+        $this->assign('pager', $this->pageShow($count));
         $this->assign('orders_list', $orders);
         $this->display('user_order_list.dwt');
     }
@@ -521,21 +544,39 @@ class User extends IndexController {
      * 获取全部订单
      */
     public function order_list() {
-        $pay = 0;
-		$size = I(C('page_size'), 10);
-        $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
-		$this->assign('show_asynclist', C('show_asynclist'));
-        $sql = "select count(*) count from {pre}order_info where user_id=$this->user_id";
-        $count = $this->model->queryOne($sql);
-        $pager = get_pager(url('not_pay_order_list'), array(), $count, $page, $size);
-        $this->assign('pager', $pager);
-        $orders = get_user_orders($this->user_id, $pager['size'], $pager['start']);
+        $pay = 1;
+        $size = I(C('page_size'), 10);
+        $count = $this->model->table('order_info')->where('user_id = ' . $this->user_id)->count();
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('order_list', $filter), $size);
+        $offset_page = explode(',', $offset);
+        $orders = model('Users')->get_user_orders($this->user_id, $pay, $offset_page[1], $offset_page[0]);
         $this->assign('pay', $pay);
         $this->assign('title', L('order_list_lnk'));
+        $this->assign('pager', $this->pageShow($count));
         $this->assign('orders_list', $orders);
         $this->display('user_order_list.dwt');
     }
-
+	 /**
+     * 获取待收货订单
+     */
+    public function not_shoushuo() {
+		$where['user_id'] = $this->user_id;
+        $where['shipping_status'] = 1;
+        $pay = 1;
+        $size = I(C('page_size'), 10);
+        $count = $this->model->table('order_info')->where($where)->count();
+		//dump($count);exit;
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('order_list', $filter), $size);
+        $offset_page = explode(',', $offset);
+        $orders = model('Users')->not_shouhuo_orders($this->user_id, $pay, $offset_page[1], $offset_page[0]);
+        $this->assign('pay', $pay);
+        $this->assign('title', '待收货');
+        $this->assign('pager', $this->pageShow($count));
+        $this->assign('orders_list', $orders);
+        $this->display('user_order_list.dwt');
+    }
     /**
      * ajax获取订单
      */
@@ -545,17 +586,16 @@ class User extends IndexController {
             $limit = $_POST['amount'];
             $pay = isset($_GET['pay']) ? intval($_GET['pay']) : 0;
 
-//             $order_list = get_user_orders($this->user_id, $pay, $limit, $start);
-            $order_list = get_user_orders($this->user_id, $limit, $start);
+            $order_list = model('Users')->get_user_orders($this->user_id, $pay, $limit, $start);
             foreach ($order_list as $key => $order) {
                 $this->assign('orders', $order);
                 $sayList[] = array(
-                    'single_item' =>  $this->view->fetch('library/asynclist_info.lbi')
+                    'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
                 );
             }
             die(json_encode($sayList));
         } else {
-            $this->redirect('index');
+            $this->redirect(url('index'));
         }
     }
 
@@ -590,23 +630,23 @@ class User extends IndexController {
         $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
 
         // 订单详情
-        $order = get_order_detail($order_id, $this->user_id);
+        $order = model('Users')->get_order_detail($order_id, $this->user_id);
         if ($order['order_status'] == OS_UNCONFIRMED) {
-            $order['handler'] = "<a class=\"btn btn-info ect-colorf\" href=\"" . url('user/cancel_order', array(
+            $order['handler'] = "<a class=\"btn btn-info ect-colorf ect-bg\" href=\"" . url('user/cancel_order', array(
                         'order_id' => $order['order_id']
                     )) . "\" onclick=\"if (!confirm('" . L('confirm_cancel') . "')) return false;\">" . L('cancel') . "</a>";
-        } else
-        if ($order['order_status'] == OS_SPLITED) {
+        }
+        elseif ($order['order_status'] == OS_SPLITED) {
             /* 对配送状态的处理 */
             if ($order['shipping_status'] == SS_SHIPPED) {
-                @$order['handler'] = "<a class=\"btn btn-info ect-colorf\" href=\"" . url('user/affirm_received', array(
+                @$order['handler'] = "<a class=\"btn btn-info ect-colorf ect-bg\" href=\"" . url('user/affirm_received', array(
                             'order_id' => $order['order_id']
                         )) . "\" onclick=\"if (!confirm('" . L('confirm_received') . "')) return false;\">" . L('received') . "</a>";
             } elseif ($order['shipping_status'] == SS_RECEIVED) {
-                @$order['handler'] = '<a class="btn btn-info ect-colorf" type="button" href="javascript:void(0);">' . L('ss_received') . '</a>';
+                @$order['handler'] = '<a class="btn btn-info ect-colorf ect-bg" type="button" href="javascript:void(0);">' . L('ss_received') . '</a>';
             } else {
                 if ($order['pay_status'] == PS_UNPAYED) {
-                    @$order['handler'] = "<a class=\"btn btn-infoect-colorf\" href=\"" . url('user/cancel_order', array(
+                    @$order['handler'] = "<a class=\"btn btn-infoect-colorf ect-bg\" href=\"" . url('user/cancel_order', array(
                                 'order_id' => $order['order_id']
                             )) . "\">" . L('pay_money') . "</a>";
                 } else {
@@ -614,27 +654,27 @@ class User extends IndexController {
                 }
             }
         } else {
-            $order['handler'] = '<a class="btn btn-info ect-colorf" type="button" href="javascript:void(0);">' . L('os.' . $order['order_status']) . '</a>';
+            $order['handler'] = '<a class="btn btn-info ect-colorf ect-bg" type="button" href="javascript:void(0);">' . L('os.' . $order['order_status']) . '</a>';
         }
         if ($order === false) {
-            $this->err->show(L('back_home_lnk'), './');
+            ECTouch::err()->show(L('back_home_lnk'), './');
             exit();
         }
 
         // 订单商品
-        $goods_list = order_goods($order_id);
+        $goods_list = model('Order')->order_goods($order_id);
         foreach ($goods_list as $key => $value) {
             $goods_list[$key]['market_price'] = price_format($value['market_price'], false);
             $goods_list[$key]['goods_price'] = price_format($value['goods_price'], false);
             $goods_list[$key]['subtotal'] = price_format($value['subtotal'], false);
-            $goods_list[$key]['tags'] = get_tags($value['goods_id']);
+            $goods_list[$key]['tags'] = model('ClipsBase')->get_tags($value['goods_id']);
             $goods_list[$key]['goods_thumb'] = get_image_path($order_id, $value['goods_thumb']);
         }
 
         // 设置能否修改使用余额数
         if ($order['order_amount'] > 0) {
             if ($order['order_status'] == OS_UNCONFIRMED || $order['order_status'] == OS_CONFIRMED) {
-                $user = user_info($order['user_id']);
+                $user = model('Order')->user_info($order['user_id']);
                 if ($user['user_money'] + $user['credit_line'] > 0) {
                     $this->assign('allow_edit_surplus', 1);
                     $this->assign('max_surplus', sprintf(L('max_surplus'), $user['user_money']));
@@ -644,11 +684,19 @@ class User extends IndexController {
 
         // 未发货，未付款时允许更换支付方式
         if ($order['order_amount'] > 0 && $order['pay_status'] == PS_UNPAYED && $order['shipping_status'] == SS_UNSHIPPED) {
-            $payment_list = available_payment_list(false, 0, true);
+            $payment_list = model('Order')->available_payment_list(false, 0, true);
 
             // 过滤掉当前支付方式和余额支付方式
             if (is_array($payment_list)) {
                 foreach ($payment_list as $key => $payment) {
+                    // 如果不是微信浏览器访问并且不是微信会员 则不显示微信支付
+                    if ($payment ['pay_code'] == 'wxpay' && !is_wechat_browser() && empty($_SESSION['openid'])) {
+                        unset($payment_list [$key]);
+                    }
+                    // 兼容过滤ecjia支付方式
+                    if (substr($payment['pay_code'], 0 , 4) == 'pay_') {
+                        unset($payment_list[$key]);
+                    }               
                     if ($payment['pay_id'] == $order['pay_id'] || $payment['pay_code'] == 'balance') {
                         unset($payment_list[$key]);
                     }
@@ -658,15 +706,20 @@ class User extends IndexController {
         }
         $order['pay_desc'] = html_out($order['pay_desc']);
 
+        // 如果是银行汇款或货到付款 则显示支付描述
+        $payment = model('Order')->payment_info($order ['pay_id']);
+        if ($payment['pay_code'] == 'bank' || $payment['pay_code'] == 'cod'){
+            $this->assign('pay_desc',$payment['pay_desc']);
+        }
+        // 如果是微信支付 不允许再使用余额修改订单价格后支付
+        if($payment['pay_code'] == 'wxpay'){
+            $this->assign('allow_edit_surplus', 0);
+        }
+
         // 订单 支付 配送 状态语言项
         $order['order_status'] = L('os.' . $order['order_status']);
         $order['pay_status'] = L('ps.' . $order['pay_status']);
         $order['shipping_status'] = L('ss.' . $order['shipping_status']);
-        // 如果是银行汇款或货到付款 则显示支付描述
-        $payment = payment_info($order ['pay_id']);
-        if ($payment['pay_code'] == 'bank' || $payment['pay_code'] == 'balance'){
-            $this->assign('pay_desc',$payment['pay_desc']);
-        }
 		
         $this->assign('title', L('order_detail'));
         $this->assign('order', $order);
@@ -679,11 +732,11 @@ class User extends IndexController {
      */
     public function affirm_received() {
         $order_id = I('get.order_id', 0, 'intval');
-        if (affirm_received($order_id, $this->user_id)) {
+        if (model('Users')->affirm_received($order_id, $this->user_id)) {
             ecs_header("Location: " . url('order_list') . "\n");
             exit();
         } else {
-            $this->err->show(L('order_list_lnk'), url('order_list'));
+            ECTouch::err()->show(L('order_list_lnk'), url('order_list'));
         }
     }
 
@@ -702,14 +755,14 @@ class User extends IndexController {
         // 检查余额
         $surplus = floatval($_POST['surplus']);
         if ($surplus <= 0) {
-            $this->err->add(L('error_surplus_invalid'));
-            $this->err->show(L('order_detail'), url('order_detail', array(
+            ECTouch::err()->add(L('error_surplus_invalid'));
+            ECTouch::err()->show(L('order_detail'), url('order_detail', array(
                 'order_id' => $order_id
             )));
         }
 
         // 取得订单order_id
-        $order = order_info($order_id);
+        $order = model('Order')->order_info($order_id);
         if (empty($order)) {
             ecs_header("Location: " . url('index/index') . "\n");
             exit();
@@ -723,8 +776,8 @@ class User extends IndexController {
 
         // 检查订单是否未付款，检查应付款金额是否大于0
         if ($order['pay_status'] != PS_UNPAYED || $order['order_amount'] <= 0) {
-            $this->err->add(L('error_order_is_paid'));
-            $this->err->show(L('order_detail'), url('order_detail', array(
+            ECTouch::err()->add(L('error_order_is_paid'));
+            ECTouch::err()->show(L('order_detail'), url('order_detail', array(
                 'order_id' => $order_id
             )));
         }
@@ -738,12 +791,12 @@ class User extends IndexController {
         }
 
         // 取得用户信息
-        $user = user_info($_SESSION['user_id']);
+        $user = model('Order')->user_info($_SESSION['user_id']);
 
         // 用户帐户余额是否足够
         if ($surplus > $user['user_money'] + $user['credit_line']) {
-            $this->err->add(L('error_surplus_not_enough'));
-            $this->err->show(L('order_detail'), url('order_detail', array(
+            ECTouch::err()->add(L('error_surplus_not_enough'));
+            ECTouch::err()->show(L('order_detail'), url('order_detail', array(
                 'order_id' => $order_id
             )));
         }
@@ -760,7 +813,7 @@ class User extends IndexController {
                     $order['city'],
                     $order['district']
                 );
-                $shipping = shipping_area_info($order['shipping_id'], $regions);
+                $shipping = model('Shipping')->shipping_area_info($order['shipping_id'], $regions);
                 if ($shipping['support_cod'] == '1') {
                     $cod_fee = $shipping['pay_fee'];
                 }
@@ -786,11 +839,11 @@ class User extends IndexController {
             $order['pay_time'] = gmtime();
         }
         $order = addslashes_deep($order);
-        update_order($order_id, $order);
+        model('Users')->update_order($order_id, $order);
 
         // 更新用户余额
         $change_desc = sprintf(L('pay_order_by_surplus'), $order['order_sn']);
-        log_account_change($user['user_id'], (- 1) * $surplus, 0, 0, 0, $change_desc);
+        model('ClipsBase')->log_account_change($user['user_id'], (- 1) * $surplus, 0, 0, 0, $change_desc);
         // 销量
         $this->update_touch_goods($order_id);
         // 跳转
@@ -812,7 +865,7 @@ class User extends IndexController {
             ecs_header("Location: " . url('index/index') . "\n");
             exit();
         }
-        $payment_info = payment_info($pay_id);
+        $payment_info = model('Order')->payment_info($pay_id);
         if (empty($payment_info)) {
             ecs_header("Location: " . url('index/index') . "\n");
             exit();
@@ -826,7 +879,7 @@ class User extends IndexController {
         }
 
         // 取得订单
-        $order = order_info($order_id);
+        $order = model('Order')->order_info($order_id);
         if (empty($order)) {
             ecs_header("Location: " . url('index/index') . "\n");
             exit();
@@ -875,12 +928,12 @@ class User extends IndexController {
     public function cancel_order() {
         $order_id = I('get.order_id', 0, 'intval');
 
-        if (cancel_order($order_id, $this->user_id)) {
+        if (model('Users')->cancel_order($order_id, $this->user_id)) {
             $url = url('order_list');
             ecs_header("Location: $url\n");
             exit();
         } else {
-            $this->err->show(L('order_list_lnk'), url('order_list'));
+            ECTouch::err()->show(L('order_list_lnk'), url('order_list'));
         }
     }
 
@@ -892,27 +945,26 @@ class User extends IndexController {
             $start = $_POST['last'];
             $limit = $_POST['amount'];
             // 获得用户所有的收货人信息
-            $consignee_list = get_consignee_list($this->user_id, 0, $limit, $start);
+            $consignee_list = model('Users')->get_consignee_list($this->user_id, 0, $limit, $start);
             if ($consignee_list) {
                 foreach ($consignee_list as $k => $v) {
                     $address = '';
                     if ($v['province']) {
-                        $address .= get_region_name($v['province']);
+                        $address .= model('RegionBase')->get_region_name($v['province']);
                     }
                     if ($v['city']) {
-                        $address .= get_region_name($v['city']);
+                        $address .= model('RegionBase')->get_region_name($v['city']);
                     }
                     if ($v['district']) {
-                        $address .= get_region_name($v['district']);
+                        $address .= model('RegionBase')->get_region_name($v['district']);
                     }
                     $v['address'] = $address . ' ' . $v['address'];
                     $v['url'] = url('user/edit_address', array(
                         'id' => $v['address_id']
                     ));
                     $this->assign('consignee', $v);
-                    
                     $sayList[] = array(
-                        'single_item' => $this->load->tpl->fetch('library/asynclist_info.lbi')
+                        'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
                     );
                 }
             }
@@ -939,20 +991,20 @@ class User extends IndexController {
                 'mobile' => I('post.mobile')
             );
 
-            if (update_address($address)) {
+            if (model('Users')->update_address($address)) {
                 show_message(L('edit_address_success'), L('address_list_lnk'), url('address_list'));
             }
             exit();
         }
 
-        $province_list = get_regions(1, 1);
-        $city_list = get_regions(2);
-        $district_list = get_regions(3);
+        $province_list = model('RegionBase')->get_regions(1, 1);
+        $city_list = model('RegionBase')->get_regions(2);
+        $district_list = model('RegionBase')->get_regions(3);
 
         $this->assign('title', L('add_address'));
         // 取得国家列表、商店所在国家、商店所在国家的省列表
-        $this->assign('country_list', get_regions());
-        $this->assign('shop_province_list', get_regions(1, C('shop_country')));
+        $this->assign('country_list', model('RegionBase')->get_regions());
+        $this->assign('shop_province_list', model('RegionBase')->get_regions(1, C('shop_country')));
         $this->assign('province_list', $province_list);
         $this->assign('city_list', $city_list);
         $this->assign('district_list', $district_list);
@@ -978,7 +1030,7 @@ class User extends IndexController {
                 'mobile' => I('post.mobile')
             );
 
-            if (update_address($address)) {
+            if (model('Users')->update_address($address)) {
                 show_message(L('edit_address_success'), L('address_list_lnk'), url('address_list'));
             }
             exit();
@@ -987,17 +1039,17 @@ class User extends IndexController {
         $id = isset($_GET['id']) ? intval($_GET['id']) : '';
 
         // 获得用户对应收货人信息
-        $consignee = get_consignee_list($_SESSION['user_id'], $id);
+        $consignee = model('Users')->get_consignee_list($_SESSION['user_id'], $id);
 
-        $province_list = get_regions(1, 1);
-        $city_list = get_regions(2, $consignee['province']);
-        $district_list = get_regions(3, $consignee['city']);
+        $province_list = model('RegionBase')->get_regions(1, $consignee['country']);
+        $city_list = model('RegionBase')->get_regions(2, $consignee['province']);
+        $district_list = model('RegionBase')->get_regions(3, $consignee['city']);
 
         $this->assign('title', L('edit_address'));
         $this->assign('consignee', $consignee);
         // 取得国家列表、商店所在国家、商店所在国家的省列表
-        $this->assign('country_list', get_regions());
-        $this->assign('shop_province_list', get_regions(1, C('shop_country')));
+        $this->assign('country_list', model('RegionBase')->get_regions());
+        $this->assign('shop_province_list', model('RegionBase')->get_regions(1, C('shop_country')));
         $this->assign('province_list', $province_list);
         $this->assign('city_list', $city_list);
         $this->assign('district_list', $district_list);
@@ -1011,7 +1063,7 @@ class User extends IndexController {
     public function del_address_list() {
         $id = intval($_GET['id']);
 
-        if (drop_consignee($id)) {
+        if (model('Users')->drop_consignee($id)) {
             $url = url('address_list');
             ecs_header("Location: $url\n");
             exit();
@@ -1030,13 +1082,25 @@ class User extends IndexController {
             $limit = $_POST['amount'];
 
             // 获取信息
-            $message_list = get_message_list($this->user_id, $_SESSION['user_name'], $limit, $start, $order_id);
+            $message_list = model('ClipsBase')->get_message_list($this->user_id, $_SESSION['user_name'], $limit, $start, $order_id);
             if (is_array($message_list)) {
+                // 修改信息状态
+                $sql = 'SELECT parent_id FROM ' . $this->model->pre . 'feedback WHERE parent_id in (SELECT f.msg_id FROM ' . $this->model->pre . 'feedback f LEFT JOIN ' . $this->model->pre . 'touch_feedback t ON f.msg_id = t.msg_id WHERE f.parent_id = 0 AND f.user_id = ' . $this->user_id . ' AND t.msg_read = 0 ORDER BY msg_time DESC) ORDER BY msg_time DESC';
+                $rs = $this->model->query($sql);
+                if ($rs) {
+                    foreach ($rs as $v) {
+                        $where['msg_id'] = $v['parent_id'];
+                        $data['msg_read'] = 1;
+                        $this->model->table('touch_feedback')
+                                ->data($data)
+                                ->where($where)
+                                ->update();
+                    }
+                }
                 foreach ($message_list as $key => $vo) {
-                    $vo['url'] = url('user/del_msg',array('id'=>$vo['msg_id'],'order_id'=>$vo['order_id']));
                     $this->assign('msg', $vo);
                     $sayList[] = array(
-                        'single_item' => $this->view->fetch('library/asynclist_info.lbi')
+                        'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
                     );
                 }
             }
@@ -1046,20 +1110,21 @@ class User extends IndexController {
             $order_id = I('request.order_id') ? intval(I('request.order_id')) : 0;
             /* 获取用户留言的数量 */
             if ($order_id) {
-                $sql = "SELECT COUNT(*) as count FROM {pre}feedback WHERE parent_id = 0 AND order_id = '$order_id' AND user_id = '$this->user_id'";
-                $order_info = $this->row("SELECT * FROM {pre}order_info WHERE order_id = '$order_id' AND user_id = '$this->user_id'");
+                $sql = "SELECT COUNT(*) as count FROM " . $this->model->pre .
+                        "feedback WHERE parent_id = 0 AND order_id = '$order_id' AND user_id = '$this->user_id'";
+                $order_info = $this->row("SELECT * FROM " . $this->model->pre . "order_info WHERE order_id = '$order_id' AND user_id = '$this->user_id'");
                 $order_info['url'] = url('user/order_detail', array('order_id' => $order_id));
             } else {
-                $sql = "SELECT COUNT(*) as count FROM {pre}feedback WHERE parent_id = 0 AND user_id = '$this->user_id' AND user_name = '" . $_SESSION['user_name'] . "' AND order_id=0";
+                $sql = "SELECT COUNT(*) as count FROM " . $this->model->pre .
+                        "feedback WHERE parent_id = 0 AND user_id = '$this->user_id' AND user_name = '" . $_SESSION['user_name'] . "' AND order_id=0";
             }
-            $count = $this->model->queryOne($sql);
-            $size = I(C('page_size'), 10);
-            $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
-            $pager = get_pager(url('msg_list'), array(), $count, $page, $size);
-            $this->assign('pager', $pager);
-            $orders = get_user_orders($this->user_id, $pager['size'], $pager['start']);
+            $count = $this->model->getRow($sql);
+            $filter['page'] = '{page}';
+            $offset = $this->pageLimit(url('msg_list', $filter), 5);
+            $offset_page = explode(',', $offset);
             // 获取信息
-            $message_list = get_message_list($this->user_id, $_SESSION['user_name'],  $pager['size'],$pager['start'], $order_id);
+            $message_list = model('ClipsBase')->get_message_list($this->user_id, $_SESSION['user_name'], $offset_page[1], $offset_page[0], $order_id);
+            $this->assign('pager', $this->pageShow($count['count']));
             $this->assign('message_list', $message_list);
         }
         $this->assign('title', L('user_service_list'));
@@ -1083,12 +1148,13 @@ class User extends IndexController {
             if ($row && $row['user_id'] == $this->user_id) {
                 // 验证通过，删除留言，回复，及相应文件
                 if ($row['message_img']) {
-                    @unlink(ROOT_PATH . 'data/attached/feedbackimg/' . $row['message_img']);
+                    @unlink(ROOT_PATH . DATA_DIR . '/feedbackimg/' . $row['message_img']);
                 }
 
                 $where_d = 'msg_id = ' . $id . ' OR parent_id = ' . $id;
-                $sql = "delete  from {pre}feedback where $where_d";
-                $this->model->execute($sql);
+                $this->model->table('feedback')
+                        ->where($where_d)
+                        ->delete();
             }
         }
         $url = url('msg_list', array(
@@ -1114,10 +1180,15 @@ class User extends IndexController {
                 'upload' => (isset($_FILES['message_img']['error']) && $_FILES['message_img']['error'] == 0) || (!isset($_FILES['message_img']['error']) && isset($_FILES['message_img']['tmp_name']) && $_FILES['message_img']['tmp_name'] != 'none') ? $_FILES['message_img'] : array()
             );
 
-            if (add_message($message)) {
+            if (model('ClipsBase')->add_message($message)) {
+                $data['msg_id'] = M()->insert_id();
+                $this->model->table('touch_feedback')
+                        ->data($data)
+                        ->insert();
+
                 show_message(L('add_message_success'), L('user_service'), url('msg_list'), 'info');
             } else {
-                $this->err->show(L('user_service'), url('service'));
+                self::err()->show(L('user_service'), url('service'));
             }
             exit();
         }
@@ -1146,8 +1217,11 @@ class User extends IndexController {
                 for ($i = 1; $i <= $num; $i++) {
                     $count = 0;
                     if ($up_uid) {
-                        $sql = "select user_id from {pre}users where parent_id IN($up_uid)";
-                        $rs = $this->model->query($sql);
+                        $where = 'parent_id IN(' . $up_uid . ')';
+                        $rs = $this->model->table('users')
+                                ->field('user_id')
+                                ->where($where)
+                                ->select();
                         if (empty($rs)) {
                             $rs = array();
                         }
@@ -1165,24 +1239,24 @@ class User extends IndexController {
                     $affdb[$i]['money'] = $share['item'][$i - 1]['level_money'];
                     $this->assign('affdb', $affdb);
 
-                    $sqlcount = "SELECT count(*) as count FROM {pre}order_info o LEFT JOIN {pre}users u ON o.user_id = u.user_id" . " LEFT JOIN {pre}affiliate_log a ON o.order_id = a.order_id" . " WHERE o.user_id > 0 AND (u.parent_id IN ($all_uid) AND o.is_separate = 0 OR a.user_id = '$this->user_id' AND o.is_separate > 0)";
+                    $sqlcount = "SELECT count(*) as count FROM " . $this->model->pre . "order_info o" . " LEFT JOIN " . $this->model->pre . "users u ON o.user_id = u.user_id" . " LEFT JOIN " . $this->model->pre . "affiliate_log a ON o.order_id = a.order_id" . " WHERE o.user_id > 0 AND (u.parent_id IN ($all_uid) AND o.is_separate = 0 OR a.user_id = '$this->user_id' AND o.is_separate > 0)";
 
-                    $sql = "SELECT o.*, a.log_id, a.user_id as suid,  a.user_name as auser, a.money, a.point, a.separate_type FROM {pre}order_info o LEFT JOIN {pre}users u ON o.user_id = u.user_id LEFT JOIN {pre}affiliate_log a ON o.order_id = a.order_id  WHERE o.user_id > 0 AND (u.parent_id IN ($all_uid) AND o.is_separate = 0 OR a.user_id = '$this->user_id' AND o.is_separate > 0)" . " ORDER BY order_id DESC";
+                    $sql = "SELECT o.*, a.log_id, a.user_id as suid,  a.user_name as auser, a.money, a.point, a.separate_type FROM " . $this->model->pre . "order_info o" . " LEFT JOIN " . $this->model->pre . "users u ON o.user_id = u.user_id" . " LEFT JOIN " . $this->model->pre . "affiliate_log a ON o.order_id = a.order_id" . " WHERE o.user_id > 0 AND (u.parent_id IN ($all_uid) AND o.is_separate = 0 OR a.user_id = '$this->user_id' AND o.is_separate > 0)" . " ORDER BY order_id DESC";
                 }
             } else {
                 // 推荐订单分成
-                $sqlcount = "SELECT count(*) as count FROM {pre}order_info o" . " LEFT JOIN {pre}users u ON o.user_id = u.user_id" . " LEFT JOIN {pre}affiliate_log a ON o.order_id = a.order_id" . " WHERE o.user_id > 0 AND (o.parent_id = '$this->user_id' AND o.is_separate = 0 OR a.user_id = '$this->user_id' AND o.is_separate > 0)";
+                $sqlcount = "SELECT count(*) as count FROM " . $this->model->pre . "order_info o" . " LEFT JOIN " . $this->model->pre . "users u ON o.user_id = u.user_id" . " LEFT JOIN " . $this->model->pre . "affiliate_log a ON o.order_id = a.order_id" . " WHERE o.user_id > 0 AND (o.parent_id = '$this->user_id' AND o.is_separate = 0 OR a.user_id = '$this->user_id' AND o.is_separate > 0)";
 
-                $sql = "SELECT o.*, a.log_id,a.user_id as suid, a.user_name as auser, a.money, a.point, a.separate_type,u.parent_id as up FROM {pre}order_info o" . " LEFT JOIN {pre}users u ON o.user_id = u.user_id" . " LEFT JOIN {pre}affiliate_log a ON o.order_id = a.order_id" . " WHERE o.user_id > 0 AND (o.parent_id = '$this->user_id' AND o.is_separate = 0 OR a.user_id = '$this->user_id' AND o.is_separate > 0)" . " ORDER BY order_id DESC";
+                $sql = "SELECT o.*, a.log_id,a.user_id as suid, a.user_name as auser, a.money, a.point, a.separate_type,u.parent_id as up FROM " . $this->model->pre . "order_info o" . " LEFT JOIN " . $this->model->pre . "users u ON o.user_id = u.user_id" . " LEFT JOIN " . $this->model->pre . "affiliate_log a ON o.order_id = a.order_id" . " WHERE o.user_id > 0 AND (o.parent_id = '$this->user_id' AND o.is_separate = 0 OR a.user_id = '$this->user_id' AND o.is_separate > 0)" . " ORDER BY order_id DESC";
             }
 
-            $count = $this->model->queryOne($sqlcount);
-            
-            $size = I(C('page_size'), 10);
-            $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
-            $pager = get_pager(url('msg_list'), array(), $count, $page, $size);
-            $this->assign('pager', $pager);
-            $sql = $sql . ' LIMIT ' . $pager['size'].','.$pager['start'];
+            $res = $this->model->query($sqlcount);
+            $count = $res[0]['count'];
+            $url_format = url('share', array(
+                'page' => '{page}'
+            ));
+            $limit = $this->pageLimit($url_format, 10);
+            $sql = $sql . ' LIMIT ' . $limit;
             $rt = $this->model->query($sql);
             if ($rt) {
                 foreach ($rt as $k => $v) {
@@ -1198,6 +1272,9 @@ class User extends IndexController {
             } else {
                 $rt = array();
             }
+            $pager = $this->pageShow($count);
+
+            $this->assign('pager', $pager);
             $this->assign('affiliate_type', $share['config']['separate_by']);
             $this->assign('logdb', $rt);
         } else {
@@ -1214,14 +1291,14 @@ class User extends IndexController {
             );
             $this->assign('types', $types);
 
-            $goods = get_goods_info($goodsid);
+            $goods = model('Goods')->get_goods_info($goodsid);
             $goods['goods_img'] = get_image_path(0, $goods['goods_img']);
             $goods['goods_thumb'] = get_image_path(0, $goods['goods_thumb']);
             $goods['shop_price'] = price_format($goods['shop_price']);
 
             $this->assign('goods', $goods);
         }
-        $shopurl = $url='http://'.$_SERVER['SERVER_NAME'].$_SERVER["PHP_SELF"]. '/?u=' . $this->user_id;
+        $shopurl = __URL__ . '/?u=' . $this->user_id;
         
         $this->assign('shopurl', $shopurl);
         $this->assign('domain', __HOST__);
@@ -1263,7 +1340,7 @@ class User extends IndexController {
     public function del_tag() {
         if (IS_AJAX) {
             $tag_words = I('get.tag_wrods');
-            $rs = delete_tag($tag_words, $this->user_id);
+            $rs = model('ClipsBase')->delete_tag($tag_words, $this->user_id);
             if (empty($rs)) {
                 exit(json_encode(array('status' => 0, 'msg' => '删除失败')));
             }
@@ -1276,21 +1353,21 @@ class User extends IndexController {
     public function bonus() {
         if (IS_POST) {
             $bonus_sn = I('post.bonus_sn', '', 'intval');
-            if (add_bonus($this->user_id, $bonus_sn)) {
+            if (model('Users')->add_bonus($this->user_id, $bonus_sn)) {
                 show_message(L('add_bonus_sucess'), L('back_up_page'), url('bonus'), 'info');
             } else {
-                $this->err->show(L('back_up_page'), url('bonus'));
+                ECTouch::err()->show(L('back_up_page'), url('bonus'));
             }
         }
-        $sql = "select count(*) as count from {pre}user_bonus where user_id=".$this->user_id;
-        $count = $this->model->queryOne($sql);
-        $size = C('page_size') ? C('page_size') : 10;
-        $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
-        $pager = get_pager(url('bonus'), array(), $count, $page, $size);
-        $this->assign('pager', $pager);
-        $bonus = get_user_bouns_list($this->user_id,$pager['size'],$pager['start']);
+        // 分页
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('bonus', $filter), 5);
+        $offset_page = explode(',', $offset);
+        $count = $this->model->table('user_bonus')->where('user_id = ' . $this->user_id)->count();
+        $bonus = model('Users')->get_user_bouns_list($this->user_id, $offset_page[1], $offset_page[0]);
 
         $this->assign('title', L('label_bonus'));
+        $this->assign('pager', $this->pageShow($count));
         $this->assign('bonus', $bonus);
         $this->display('user_bonus.dwt');
     }
@@ -1301,18 +1378,18 @@ class User extends IndexController {
     public function booking_list() {
         /* 获取缺货登记的数量 */
         $sql = "SELECT COUNT(*) as num " .
-                "FROM {pre}booking_goods AS bg, {pre}goods AS g " .
-                "WHERE bg.goods_id = g.goods_id AND user_id = '$this->user_id'";
-        $count = $this->model->queryOne($sql);
-        
-        $size = C('page_size') ? C('page_size') : 10;
-        $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
-        $pager = get_pager(url('bonus'), array(), $count, $page, $size);
-        $this->assign('pager', $pager);
+                "FROM " . $this->model->pre . "booking_goods AS bg, " .
+                $this->model->pre . "goods AS g " .
+                "WHERE bg.goods_id = g.goods_id AND bg.user_id = '$this->user_id'";
+        $count = $this->model->query($sql);
         // 分页
-        $booking_list = get_booking_list($this->user_id,$pager['size'],$pager['start']);
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('booking_list', $filter), 5);
+        $offset_page = explode(',', $offset);
+        $booking_list = model('ClipsBase')->get_booking_list($this->user_id, $offset_page[1], $offset_page[0]);
 
         $this->assign('title', L('label_booking'));
+        $this->assign('pager', $this->pageShow($count[0]['num']));
         $this->assign('booking_list', $booking_list);
         $this->display('user_booking_list.dwt');
     }
@@ -1333,15 +1410,15 @@ class User extends IndexController {
             );
 
             // 查看此商品是否已经登记过
-            $rec_id = get_booking_rec($this->user_id, $booking['goods_id']);
+            $rec_id = model('ClipsBase')->get_booking_rec($this->user_id, $booking['goods_id']);
             if ($rec_id > 0) {
                 show_message(L('booking_rec_exist'), L('back_page_up'), '', 'error');
             }
 
-            if (add_booking($booking)) {
+            if (model('ClipsBase')->add_booking($booking)) {
                 show_message(L('booking_success'), L('back_booking_list'), url('booking_list'), 'info');
             } else {
-                $this->err->show(L('booking_list_lnk'), url('booking_list'));
+                ECTouch::err()->show(L('booking_list_lnk'), url('booking_list'));
             }
         }
         $goods_id = I('get.id', 0);
@@ -1356,7 +1433,8 @@ class User extends IndexController {
 
             $attr_list = array();
             $sql = "SELECT a.attr_name, g.attr_value " .
-                    "FROM {pre}goods_attr AS g, {pre}attribute AS a " .
+                    "FROM " . $this->model->pre . "goods_attr AS g, " .
+                    $this->model->pre . "attribute AS a " .
                     "WHERE g.attr_id = a.attr_id " .
                     "AND g.goods_attr_id " . db_create_in($goods_attr_id);
             $row = $this->model->query($sql);
@@ -1369,8 +1447,8 @@ class User extends IndexController {
             $goods_attr = join(chr(13) . chr(10), $attr_list);
         }
         $this->assign('goods_attr', $goods_attr);
-        $this->assign('goods', get_goodsinfo($goods_id));
-        $this->assign('title', L('label_booking'));
+        $this->assign('goods', model('ClipsBase')->get_goodsinfo($goods_id));
+	$this->assign('title', L('label_booking'));
         $this->display('user_add_booking.dwt');
     }
 
@@ -1380,12 +1458,12 @@ class User extends IndexController {
     public function del_booking() {
         $id = I('get.rec_id', 0);
         if ($id == 0 || $this->user_id == 0) {
-            $this->redirect('booking_list');
+            $this->redirect(url('booking_list'));
         }
 
-        $result = delete_booking($id, $this->user_id);
+        $result = model('ClipsBase')->delete_booking($id, $this->user_id);
         if ($result) {
-            $this->redirect('booking_list');
+            $this->redirect(url('booking_list'));
         }
     }
 
@@ -1398,7 +1476,7 @@ class User extends IndexController {
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('collection_list', $filter), 5);
         $offset_page = explode(',', $offset);
-        $collection_list = get_collection_goods($this->user_id, $offset_page[1], $offset_page[0]);
+        $collection_list = model('ClipsBase')->get_collection_goods($this->user_id, $offset_page[1], $offset_page[0]);
 
         $this->assign('title', L('label_collection'));
         $this->assign('pager', $this->pageShow($count));
@@ -1485,7 +1563,7 @@ class User extends IndexController {
                         ->where($where)
                         ->delete();
             }
-            $this->redirect('collection_list');
+            $this->redirect(url('collection_list'));
         } else {
             echo json_encode(array('status' => 0));
         }
@@ -1499,7 +1577,7 @@ class User extends IndexController {
         if ($rec_id) {
             $this->model->table('collect_goods')->data('is_attention = 1')->where('rec_id = ' . $rec_id . ' and user_id = ' . $this->user_id)->update();
         }
-        $this->redirect('collection_list');
+        $this->redirect(url('collection_list'));
     }
 
     /**
@@ -1510,7 +1588,7 @@ class User extends IndexController {
         if ($rec_id) {
             $this->model->table('collect_goods')->data('is_attention = 0')->where('rec_id = ' . $rec_id . ' and user_id = ' . $this->user_id)->update();
         }
-        $this->redirect('collection_list');
+        $this->redirect(url('collection_list'));
     }
 
     /**
@@ -1522,7 +1600,7 @@ class User extends IndexController {
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('comment_list', $filter), 5);
         $offset_page = explode(',', $offset);
-        $comment_list = get_comment_list($this->user_id, $offset_page[1], $offset_page[0]);
+        $comment_list = model('ClipsBase')->get_comment_list($this->user_id, $offset_page[1], $offset_page[0]);
 
         $this->assign('title', L('label_comment'));
         $this->assign('pager', $this->pageShow($count));
@@ -1556,7 +1634,7 @@ class User extends IndexController {
                         ->where($where)
                         ->delete();
             }
-            $this->redirect('comment_list');
+            $this->redirect(url('comment_list'));
         } else {
             echo json_encode(array('status' => 0));
         }
@@ -1606,13 +1684,18 @@ class User extends IndexController {
                         ->getOne();
                 $username = $username_try ? $username_try : $username;
             }
-            $user = getInstance();
-            if ($user->user->login($username, $password, isset($_POST['remember']))) {
-                update_user_info();
-                recalculate_price();
+
+            if (self::$user->login($username, $password, isset($_POST['remember']))) {
+                model('Users')->update_user_info();
+                model('Users')->recalculate_price();
+
+                //微信用户绑定
+                if(!empty($_SESSION['wechat_user']) && class_exists('WechatController') && method_exists('WechatController', 'do_bind')){
+                    call_user_func(array('WechatController', 'do_bind'));
+                }
 
                 $jump_url = empty($this->back_act) ? url('index') : $this->back_act;
-                redirect($jump_url);
+                $this->redirect($jump_url);
             } else {
                 $_SESSION['login_fail']++;
                 show_message(L('login_failure'), L('relogin_lnk'), url('login', array(
@@ -1639,11 +1722,25 @@ class User extends IndexController {
             $this->assign('rand', mt_rand());
         }
 		
+		//微信浏览器显示授权登录
+        if(is_wechat_browser()){
+            $this->assign('oauth_url', url('user/index', array('flag'=>'oauth')));
+        }
+		
+        $this->assign('title', L('login'));
         $this->assign('step', I('get.step'));
         $this->assign('anonymous_buy', C('anonymous_buy'));
-        $this->assign('title', L('login'));
         $this->assign('back_act', $this->back_act);
         $this->display('user_login.dwt');
+    }
+
+    /**
+     * 微信用户绑定页面
+     */
+    public function bind(){
+
+        $this->assign('title', '绑定');
+        $this->display('user_bind.dwt');
     }
 
     /**
@@ -1659,7 +1756,6 @@ class User extends IndexController {
             if (0 == $enabled_sms) {
                 // 数据处理
                 $username = isset($_POST['username']) ? in($_POST['username']) : '';
-                $email = isset($_POST['email']) ? in($_POST['email']) : '';
                 $password = isset($_POST['password']) ? in($_POST['password']) : '';
                 $other = array();
 
@@ -1692,12 +1788,11 @@ class User extends IndexController {
                 if (strpos($password, ' ') > 0) {
                     show_message(L('passwd_balnk'));
                 }
-            }             // 手机号注册处理
-            elseif (1 == $enabled_sms) {
-                $username = isset($_POST['mobile']) ? in($_POST['mobile']) : '';
-                $password = isset($_POST['mobile_code']) ? in($_POST['mobile_code']) : '';
+            } elseif (1 == $enabled_sms) { // 手机号注册处理
+                $username = isset($_POST['username']) ? in($_POST['username']) : '';
+                $password = isset($_POST['password']) ? in($_POST['password']) : '';
                 $sms_code = isset($_POST['sms_code']) ? in($_POST['sms_code']) : '';
-                $other['mobile_phone'] = $username;
+                $other['mobile_phone'] = isset($_POST['mobile']) ? in($_POST['mobile']) : '';
 
                 if (empty($username)) {
                     show_message(L('msg_mobile_blank'), L('register_back'), url('register'), 'error');
@@ -1707,105 +1802,37 @@ class User extends IndexController {
                     show_message(L('sms_code_error'), L('register_back'), url('register'), 'error');
                 }
 
-                if ($password != $_SESSION['sms_mobile_code']) {
-                    show_message(L('mobile_code_error'), L('register_back'), url('register'), 'error');
+                if ($password != $_POST['repassword']) {
+                    show_message('两次输入密码不一致', L('register_back'), url('register'), 'error');
                 }
 
                 // 验证手机号重复
-                $where['mobile_phone'] = $username;
-                $user_id = $this->model->table('users')
-                        ->field('user_id')
-                        ->where($where)
-                        ->getOne();
+                // $where['mobile_phone'] = $username;
+                $user_id = $this->model->table('users')->field('user_id')->where($other)->getOne();
                 if ($user_id) {
                     show_message(L('msg_mobile_exists'), L('register_back'), url('register'), 'error');
                 }
+            } else {
+                ECTouch::err()->show(L('sign_up'), url('register'));
+            }
 
-                // 设置一个默认的邮箱
-                $email = $username . '@qq.com';
+            // 设置一个默认的邮箱
+            $email = substr(md5($username), 0, 3) . time() . '@qq.com';
+            $other['parent_id'] = $_SESSION['parent_id'] ? $_SESSION['parent_id'] : 0;
+            if (model('Users')->register($username, $password, $email, $other) !== false) {
+                //微信用户绑定
+                if(!empty($_SESSION['wechat_user']) &&class_exists('WechatController') && method_exists('WechatController', 'do_bind')){
+                    call_user_func(array('WechatController', 'do_bind'));
+                }
+
+                $ucdata = empty(self::$user->ucdata) ? "" : self::$user->ucdata;
+                show_message(sprintf(L('register_success'), $username . $ucdata), array(L('back_up_page'), L('profile_lnk')), array($this->back_act,url('index')), 'info');
             } else {
-                $this->err->show(L('sign_up'), url('register'));
-            }
-            
-            /*把新注册用户的扩展信息插入数据库*/
-            $sql = 'SELECT id,is_need,reg_field_name FROM ' . M()->pre . 'reg_fields' . ' WHERE display = 1 ORDER BY dis_order, id';   //读出所有自定义扩展字段的id
-            $fields_arr = M()->query($sql);
-            $extend_field_str = '';    //生成扩展字段的内容字符串
-            foreach ($fields_arr AS $val)
-            {
-                $extend_field_index = 'extend_field' . $val['id'];
-                if(empty($_POST[$extend_field_index]))
-                {
-                    if ($val['is_need']==1){
-                        show_message($val['reg_field_name'].L('can_not_empty'), L('register_back'), url('register'), 'error');
-                    }
-                }
-            }
-            if (register($username, $password, $email, $other) !== false) {
-                
-                /*把新注册用户的扩展信息插入数据库*/
-                $sql = 'SELECT id,is_need,reg_field_name FROM ' . M()->pre . 'reg_fields' . ' WHERE  display = 1 ORDER BY dis_order, id';   //读出所有自定义扩展字段的id
-                $fields_arr = M()->query($sql);
-                
-                $extend_field_str = '';    //生成扩展字段的内容字符串
-                foreach ($fields_arr AS $val)
-                {
-                    $extend_field_index = 'extend_field' . $val['id'];
-                    if(!empty($_POST[$extend_field_index]))
-                    {
-                        $temp_field_content = strlen($_POST[$extend_field_index]) > 100 ? mb_substr($_POST[$extend_field_index], 0, 99) : $_POST[$extend_field_index];
-                        $extend_field_str .= " ('" . $_SESSION['user_id'] . "', '" . $val['id'] . "', '" . $temp_field_content . "'),";
-                    }else {
-                        if ($val['is_need']==1){
-                            show_message($val['reg_field_name'].L('can_not_empty'), L('register_back'), url('register'), 'error');
-                        }
-                    }
-                }
-                $extend_field_str = substr($extend_field_str, 0, -1);
-                
-                if ($extend_field_str)      //插入注册扩展数据
-                {
-                    $sql = 'INSERT INTO '. M()->pre . 'reg_extend_info' . ' (`user_id`, `reg_field_id`, `content`) VALUES' . $extend_field_str;
-                    M()->query($sql);
-                }
-                
-                /* 写入密码提示问题和答案 */
-                if (!empty($passwd_answer) && !empty($sel_question))
-                {
-                    $sql = 'UPDATE ' . M()->pre . 'users' . " SET `passwd_question`='$sel_question', `passwd_answer`='$passwd_answer'  WHERE `user_id`='" . $_SESSION['user_id'] . "'";
-                    M()->query($sql);
-                }
-                
-                // 判断是否需要自动发送注册邮件
-                if (C('member_email_validate') && C('send_verify_email')) {
-                    send_regiter_hash($_SESSION['user_id']);
-                }
-                $ucdata = empty($this->user->ucdata) ? "" : $this->user->ucdata;
-                show_message(sprintf(L('register_success'), $username . $ucdata), array(
-                    L('back_up_page'),
-                    L('profile_lnk')
-                        ), array(
-                    $this->back_act,
-                    url('index')
-                        ), 'info');
-            } else {
-                $this->err->show(L('sign_up'), url('register'));
+                ECTouch::err()->show(L('sign_up'), url('register'));
             }
             exit();
         }
-        
-        /* 取出注册扩展字段 */
-        $sql = 'SELECT * FROM ' . M()->pre . 'reg_fields' . ' WHERE type < 2 AND display = 1 ORDER BY dis_order, id';
-        $extend_info_list = M()->query($sql);
-        foreach ($extend_info_list as $key=>$val){
-            if($val['id'] >= 100){
-                unset($extend_info_list[$key]);
-            }
-        }
-        $this->assign('extend_info_list', $extend_info_list);
-
         // 注册页面显示
-
         if (empty($this->back_act) && isset($GLOBALS['_SERVER']['HTTP_REFERER'])) {
             $this->back_act = strpos($GLOBALS['_SERVER']['HTTP_REFERER'], 'c=user') ? url('index/index') : $GLOBALS['_SERVER']['HTTP_REFERER'];
         }
@@ -1839,7 +1866,7 @@ class User extends IndexController {
     public function validate_email() {
         $hash = I('get.hash');
         if ($hash) {
-            $id = register_hash('decode', $hash);
+            $id = model('Users')->register_hash('decode', $hash);
             if ($id > 0) {
                 $this->model->table('users')->data('is_validated = 1')->where('user_id = ' . $id)->update();
                 $row = $this->model->table('users')->field('user_name, email')->where('user_id = ' . $id)->find();
@@ -1863,7 +1890,7 @@ class User extends IndexController {
                     )), 'error');
         }
         $url = __URL__ . '/index.php?m=default&c=user&a=third_login&type=' . $type;
-        $info = get_third_user_info($type);
+        $info = model('ClipsBase')->get_third_user_info($type);
         // 判断是否安装
         if (!$info) {
             show_message(L('no_register_auth'), L('relogin_lnk'), url('login', array(
@@ -1881,29 +1908,29 @@ class User extends IndexController {
                     $userinfo = $res->get_user_info($openid);
                     // 处理数据
                     $userinfo['aite_id'] = $type . '_' . $openid; // 添加登录标示
-                    $userinfo['user_name'] = str_replace("'", "", empty($userinfo['name']) ? $userinfo['nickname'] : $userinfo['name']);
-                    if (get_one_user($userinfo['aite_id'])) {
+                    if ($userinfo['user_name'] = model('Users')->get_one_user($userinfo['aite_id'])) {
                         // 已有记录
-                        $this->user->set_session($userinfo['user_name']);
-                        $this->user->set_cookie($userinfo['user_name']);
-                        update_user_info();
-                        recalculate_price();
+                        self::$user->set_session($userinfo['user_name']);
+                        self::$user->set_cookie($userinfo['user_name']);
+                        model('Users')->update_user_info();
+                        model('Users')->recalculate_price();
                         $jump_url = empty($this->back_act) ? url('index') : $this->back_act;
-                        redirect($jump_url);
+                        $this->redirect($jump_url);
                     }
-                    // 无记录
-                    if (check_user_name($userinfo['user_name'])) { // 重名处理
-                        $userinfo['user_name'] = $userinfo['user_name'] . '_' . $type . (rand(10000, 99999));
+                    $userinfo['user_name'] = trim($res->get_user_name($userinfo));
+                    $userinfo['user_name'] = preg_replace('/\'\/^\\s*$|^c:\\\\con\\\\con$|[%,\\*\\"\\s\\t\\<\\>\\&\'\\\\]/', '', $userinfo['user_name']);
+                    if (self::$user->check_user($userinfo['user_name'])) {
+                        $userinfo['user_name'] = $userinfo['user_name'] . rand(1000, 9999); // 重名处理
                     }
-                    $userinfo['email'] = empty($userinfo['email']) ? get_pinyin($userinfo['user_name']) . '@' . get_top_domain() : $userinfo['email'];
+                    $userinfo['email'] = empty($userinfo['email']) ? substr($openid, -6) . '@' . get_top_domain() : $userinfo['email'];
                     // 插入数据库
-                    third_reg($userinfo);
-                    $this->user->set_session($userinfo['user_name']);
-                    $this->user->set_cookie($userinfo['user_name']);
-                    update_user_info();
-                    recalculate_price();
+                    model('Users')->third_reg($userinfo);
+                    self::$user->set_session($userinfo['user_name']);
+                    self::$user->set_cookie($userinfo['user_name']);
+                    model('Users')->update_user_info();
+                    model('Users')->recalculate_price();
                     $jump_url = empty($this->back_act) ? url('index') : $this->back_act;
-                    redirect($jump_url);
+                    $this->redirect($jump_url);
                 }
             } else {
                 show_message(L('process_false'), L('relogin_lnk'), url('login', array(
@@ -1911,7 +1938,7 @@ class User extends IndexController {
                         )), 'error');
             }
         } else {
-            // 开始授权登录
+            // 开始授权登录  
             $url = $obj->act_login($info, $url);
             ecs_header("Location: " . $url . "\n");
             exit();
@@ -1959,7 +1986,7 @@ class User extends IndexController {
             $this->assign('sms_code', $sms_code);
             $this->display('user_get_password.dwt');
         } else {
-            $this->redirect('get_password_email');
+            $this->redirect(url('get_password_email'));
         }
     }
 
@@ -1972,7 +1999,7 @@ class User extends IndexController {
             $uid = intval($_GET['uid']);
 
             // 判断链接的合法性
-            $user_info = $this->user->get_profile_by_id($uid);
+            $user_info = self::$user->get_profile_by_id($uid);
             if (empty($user_info) || ($user_info && md5($user_info['user_id'] . C('hash_code') . $user_info['reg_time']) != $code)) {
                 show_message(L('parm_error'), L('back_home_lnk'), url('index/index'), 'info');
             }
@@ -2018,7 +2045,7 @@ class User extends IndexController {
         $email = !empty($_POST['email']) ? in($_POST['email']) : '';
 
         // 用户信息
-        $user_info = $this->user->get_user_info($user_name);
+        $user_info = self::$user->get_user_info($user_name);
 
         if ($user_info && $user_info['email'] == $email) {
             // 生成code
@@ -2115,11 +2142,11 @@ class User extends IndexController {
                 show_message(L('passport_js.password_shorter'));
             }
 
-            $user_info = $this->user->get_profile_by_id($user_id); // 论坛记录
+            $user_info = self::$user->get_profile_by_id($user_id); // 论坛记录
             // 短信找回，邮件找回，问题找回，登录修改密码
-            if ((!empty($mobile) && $user_info['mobile'] == $mobile) || ($user_info && (!empty($code) && md5($user_info['user_id'] . C('hash_code') . $user_info['reg_time']) == $code)) || (!empty($question) && $user_info['passwd_question'] == $question) || ($_SESSION['user_id'] > 0 && $_SESSION['user_id'] == $user_id && $this->user->check_user($_SESSION['user_name'], $old_password))) {
+            if ((!empty($mobile) && $user_info['mobile'] == $mobile) || ($user_info && (!empty($code) && md5($user_info['user_id'] . C('hash_code') . $user_info['reg_time']) == $code)) || (!empty($question) && $user_info['passwd_question'] == $question) || ($_SESSION['user_id'] > 0 && $_SESSION['user_id'] == $user_id && self::$user->check_user($_SESSION['user_name'], $old_password))) {
 
-                if ($this->user->edit_user(array(
+                if (self::$user->edit_user(array(
                             'username' => ((empty($code) && empty($mobile) && empty($question)) ? $_SESSION['user_name'] : $user_info['user_name']),
                             'old_password' => $old_password,
                             'password' => $new_password
@@ -2131,10 +2158,9 @@ class User extends IndexController {
                             ->where($where)
                             ->update();
 
-                    $this->user->logout();
+                    self::$user->logout();
                     show_message(L('edit_password_success'), L('relogin_lnk'), url('login'), 'info');
                 } else {
-                   
                     show_message(L('edit_password_failure'), L('back_page_up'), '', 'info');
                 }
             } else {
@@ -2145,11 +2171,15 @@ class User extends IndexController {
         // 显示修改密码页面
         if (isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0) {
             $this->assign('title', L('edit_password'));
+            // 判断登录方式
+            if (model('Users')->is_third_user($_SESSION['user_id'])) {
+                $this->assign('is_third', 1);
+            }
             $this->display('user_edit_password.dwt');
         } else {
-            $this->redirect('login', array(
+            $this->redirect(url('login', array(
                 'referer' => urlencode(url($this->action))
-            ));
+            )));
         }
     }
 
@@ -2163,8 +2193,8 @@ class User extends IndexController {
             $this->back_act = url('login');
         }
 
-        $this->user->logout();
-        $ucdata = empty($this->user->ucdata) ? "" : $this->user->ucdata;
+        self::$user->logout();
+        $ucdata = empty(self::$user->ucdata) ? "" : self::$user->ucdata;
         show_message(L('logout') . $ucdata, array(
             L('back_up_page'),
             L('back_home_lnk')
@@ -2191,7 +2221,6 @@ class User extends IndexController {
      * 未登录验证
      */
     private function check_login() {
-       
         // 不需要登录的操作或自己验证是否登录（如ajax处理）的方法
         $without = array(
             'login',
@@ -2206,14 +2235,15 @@ class User extends IndexController {
             'logout',
             'clear_histroy',
             'add_collection',
-            'third_login'
+            'third_login',
+            'bind'
         );
         // 未登录处理
         if (empty($_SESSION['user_id']) && !in_array($this->action, $without)) {
-            $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-            $this->redirect('login', array(
+            $url = __HOST__ . $_SERVER['REQUEST_URI'];
+            $this->redirect(url('login', array(
                 'referer' => urlencode($url)
-            ));
+            )));
             exit();
         }
 
@@ -2223,7 +2253,7 @@ class User extends IndexController {
             'register'
         );
         if (isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0 && in_array($this->action, $deny)) {
-            $this->redirect('index');
+            $this->redirect(url('index/index'));
             exit();
         }
     }
@@ -2232,7 +2262,7 @@ class User extends IndexController {
      * 更新商品销量
      */
     private function update_touch_goods($order) {
-        $sql = 'select pay_status from {pre}order_info where  order_id = "' . $order . '"';
+        $sql = 'select pay_status from ' . $this->model->pre . 'order_info where  order_id = "' . $order . '"';
         $pay_status = $this->model->query($sql);
         $pay_status = $pay_status[0];
         if ($pay_status == 2) {
@@ -2250,10 +2280,10 @@ class User extends IndexController {
             } else {
                 $ext = '';
             }
-            $sql = 'select goods_id from {pre}order_info where  order_id = "' . $order . '"';
+            $sql = 'select goods_id from ' . $this->model->pre . 'order_info where  order_id = "' . $order . '"';
             $arrGoodsid = $this->model->query($sql);
 
-            $sql = 'select extension_code from {pre}order_info where  order_id = "' . $order . '"';
+            $sql = 'select extension_code from ' . $this->model->pre . 'order_info where  order_id = "' . $order . '"';
             $extension_code = $this->model->query($sql);
 
             if ($extension_code == '') {
@@ -2263,78 +2293,75 @@ class User extends IndexController {
                     $res = $this->model->query($sql);
                     $sales_count = $res[0]['count'];
 
-                    $nCount = $this->query('select COUNT(*) from {pre}touch_goods where  goods_id = "' . $val['goods_id'] . '"');
+                    $nCount = $this->query('select COUNT(*) from ' . $this->model->pre . 'touch_goods where  goods_id = "' . $val['goods_id'] . '"');
                     if ($nCount[0]['COUNT(*)'] == 0) {
                         $this->model->query("INSERT INTO " . $this->model->pre . "touch_goods (`goods_id` ,`sales_volume` ) VALUES ( '" . $val['goods_id'] . "' , '0')");
                     }
-                    $sql = 'update {pre}touch_goods AS a set a.sales_volume = ' . $sales_count . " WHERE goods_id=" . $val['goods_id'];
+                    $sql = 'update ' . $this->model->pre . 'touch_goods AS a set a.sales_volume = ' . $sales_count . " WHERE goods_id=" . $val['goods_id'];
                     $this->model->query($sql);
                 }
             }
         }
     }
-    
-    /**
-     * 申请成为分销商
+	
+	
+	/**
+     * 待评价订单
+     * 未评价订单条件：订单全部完成
      */
-    public function apply_sale()
-    {
-        $sale_ms = C('sale_ms');
-        if ($sale_ms == 1) {
-    
-            // 1 无需审核 ---- 点击我要分销直接成为分销商
-            $sql = "update {pre}users set user_rank = 255 ,apply_sale=0 , apply_time = " . gmtime() . " where user_id = " . $_SESSION['user_id'];
-            $this->model->execute($sql);
-    
-            $data['sale_name'] = C('shop_name');
-            $data['user_id'] = $this->user_id;
-            $this->model->table('sale')
-            ->data($data)
-            ->insert();
-    
-            ecs_header("Location: " . url('Sale/index'));
-            exit();
-        } elseif ($sale_ms == 2) {
-    
-            // 2 需要审核----点击我要分销申请，后台管理同意
-            $sql = "update {pre}users set apply_sale=1 , apply_time = " . gmtime() . " where user_id = " . $_SESSION['user_id'];
-            $this->model->execute($sql);
-            show_message(L('apply_sale_wait2'), L('back_user_home_lnk'), url('user/index'), 'info');
-        } elseif ($sale_ms == 3) {
-    
-            // 3 购物即可分销----随意购买一个商品即可成为分销商
-            show_message(L('apply_sale_wait3'), L('back_user_home_lnk'), url('user/index'), 'info');
-        } elseif ($sale_ms == 4) {
-    
-            // 4 购买分销----购买成为分销商
-            $sql = "SELECT * FROM {pre}payment WHERE pay_code = 'wxpay' AND enabled = 1";
-            $payment =  $this->model->queryRow($sql);
-            $order = array();
-            $order['pay_id'] = 4;
-            $order['user_id'] = $_SESSION['user_id'];
-            $order['add_time'] = gmtime();
-            $order['pay_status'] = PS_UNPAYED;
-            $order['order_amount'] = C('sale_money');
-            $order['order_sn'] = get_order_sn();
-            $order['consignee'] = '申请分销商';
-            $order['is_sale'] = '1';
-            $this->model->table('order_info')->data($order)->insert();
-            $new_order_id = M()->insert_id();
-            /* 插入支付日志 */
-            $order ['log_id'] = insert_pay_log($new_order_id, $order ['order_amount'], PAY_ORDER);
-    
-            include_once (ROOT_PATH . 'plugins/payment/wxpay.php');
-    
-            $pay_obj = new wxpay();
-    
-            $pay_online = $pay_obj->get_code($order, unserialize_config($payment ['pay_config']));
-    
-            $order ['pay_desc'] = $payment ['pay_desc'];
-             
-            $this->assign('pay_online', $pay_online);
-            $_SESSION['sale_new_order_id'] = $new_order_id;
-            $this->display('sale_apply.dwt');
+    public function order_comment() {
+		$user_id = $this->user_id;
+		$sql="select b.goods_id from " . $this->model->pre . "order_info as o  LEFT JOIN " .$this->model->pre. "order_goods  as b on o.order_id=b.order_id  where user_id='$user_id' ".
+        " AND o.order_status " . db_create_in(array(OS_CONFIRMED, OS_SPLITED)) .
+        " AND o.shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)) .
+        " AND o.pay_status " . db_create_in(array(PS_PAYED, PS_PAYING)) .
+        " AND b.goods_id not in(select id_value from ". $this->model->pre . "comment where user_id='$user_id')";
+		$res = $this->model->query($sql);
+		foreach($res as $k =>$value)
+			 {
+				 $str.=$value['goods_id'].',';
+			 }
+	    $reb = substr($str,0,-1) ;	
+		if(empty($reb)) {
+			 $rebb= 0;
+		 }	else{			 
+			 $rebb=$reb;
+		 }
+        $sql = 'SELECT g.goods_id, g.goods_name, g.goods_img ' .
+		        'FROM ' . $this->model->pre . 'goods AS g ' .  "WHERE g.goods_id in (".$rebb.")"  ; 
+        $result = $this->model->query($sql);
+		foreach ($result as $key => $vo) {           
+            $goods[$key]['goods_id'] = $vo['goods_id'];
+            $goods[$key]['name'] = $vo['goods_name'];            
+            $goods[$key]['goods_img'] = get_image_path($vo['goods_id'], $vo['goods_img']);
+            $goods[$key]['url'] = url('goods/index', array('id' => $vo['goods_id']));
+		}
+		//dump($goods);
+		$this->assign('title','待评价');
+		$this->assign('goods_list',$goods);
+        $this->display('user_order_comment_list.dwt');
+	}
+	
+	/**
+     * 待评价订单商品评论
+     */
+    public function order_comment_list() {
+        $cmt = new stdClass();
+        $cmt->id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
+        $cmt->type = !empty($_GET['type']) ? intval($_GET['type']) : 0;
+        $cmt->page = isset($_GET['page']) && intval($_GET['page']) > 0 ? intval($_GET['page']) : 1;
+        $this->assign('comments_info', model('Comment')->get_comment_info($cmt->id, $cmt->type));
+        $this->assign('id', $cmt->id);
+        $this->assign('type', $cmt->type);
+        $this->assign('username', $_SESSION['user_name']);
+        $this->assign('email', $_SESSION['email']);
+        /* 验证码相关设置 */
+        if ((intval(C('captcha')) & CAPTCHA_COMMENT) && gd_version() > 0) {
+            $this->assign('enabled_captcha', 1);
+            $this->assign('rand', mt_rand());
         }
+        $result['message'] = C('comment_check') ? L('cmt_submit_wait') : L('cmt_submit_done');
+        $this->assign('title', L('goods_comment'));
+        $this->display('user_order_goods_comment_list.dwt');
     }
-
 }

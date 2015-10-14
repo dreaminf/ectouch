@@ -2,7 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Auction extends IndexController {
-
     private $size = 10;
     private $page = 1;
     private $sort = 'last_update';
@@ -25,11 +24,11 @@ class Auction extends IndexController {
         $this->assign('sort', $this->sort);
         $this->assign('order', $this->order);
         /* 取得拍卖活动总数 */
-        $count = auction_count();
+        $count = model('Auction')->auction_count();
         /* 如果没有缓存，生成缓存 */
         if ($count > 0) {
             /* 取得当前页的拍卖活动 */
-            $auction_list = auction_list($this->size, $this->page, $this->sort, $this->order);
+            $auction_list = model('Auction')->auction_list($this->size, $this->page, $this->sort, $this->order);
             $this->assign('auction_list', $auction_list);
             /* 设置分页链接 */
             $this->pageLimit(url('index', array('sort' => $this->sort, 'order' => $this->order)), $this->size);
@@ -46,11 +45,11 @@ class Auction extends IndexController {
         $this->size = I('post.amount');
         $this->page = ($asyn_last > 0) ? ceil($asyn_last / $this->size) : 1;
         
-        $list = auction_list($this->size, $this->page, $this->sort, $this->order);
+        $list = model('Auction')->auction_list($this->size, $this->page, $this->sort, $this->order);
         foreach ($list as $key => $auction) {
             $this->assign('auction', $auction);
             $sayList [] = array(
-                'single_item' => $this->load->tpl->fetch('library/asynclist_info.lbi')
+                'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
             );
         }
         die(json_encode($sayList));
@@ -68,7 +67,7 @@ class Auction extends IndexController {
         }
 
         /* 取得拍卖活动信息 */
-        $auction = auction_info($id);
+        $auction = model('Auction')->auction_info($id);
         if (empty($auction)) {
             $this->redirect(url('Auction/index'));
             exit;
@@ -88,12 +87,12 @@ class Auction extends IndexController {
         $cache_id = sprintf('%X', crc32($cache_id));
 
         /* 如果没有缓存，生成缓存 */
-        if (!$this->load->tpl->is_cached('auction.dwt', $cache_id)) {
+        if (!ECTouch::view()->is_cached('auction.dwt', $cache_id)) {
             //取货品信息
             if ($auction['product_id'] > 0) {
-                $goods_specifications = get_specifications_list($auction['goods_id']);
+                $goods_specifications = model('goodsBase')->get_specifications_list($auction['goods_id']);
 
-                $good_products = get_good_products($auction['goods_id'], 'AND product_id = ' . $auction['product_id']);
+                $good_products = model('ProductsBase')->get_good_products($auction['goods_id'], 'AND product_id = ' . $auction['product_id']);
 
                 $_good_products = explode('|', $good_products[0]['goods_attr']);
                 $products_info = '';
@@ -110,7 +109,7 @@ class Auction extends IndexController {
 
             /* 取得拍卖商品信息 */
             $goods_id = $auction['goods_id'];
-            $goods = goods_info($goods_id);
+            $goods = model('Goods')->goods_info($goods_id);
             if (empty($goods)) {
                 $this->redirect(url('Auction/index'));
                 exit;
@@ -118,7 +117,7 @@ class Auction extends IndexController {
             $goods['url'] = url('goods/index', array('id' => $goods_id));
             $this->assign('auction_goods', $goods);
             // 商品相册
-            $this->assign('pictures', get_goods_gallery($goods_id));
+            $this->assign('pictures', model('GoodsBase')->get_goods_gallery($goods_id));
             // print_r($goods );
         }
         //更新商品点击次数
@@ -141,16 +140,16 @@ class Auction extends IndexController {
             exit;
         }
         /* 取得拍卖活动信息 */
-        $auction = auction_info($id);
+        $auction = model('Auction')->auction_info($id);
         if (empty($auction)) {
             $this->redirect(url('Auction/index'));
             exit;
         }
         $goods_id = $auction['goods_id'];
-        $goods = goods_info($goods_id);
+        $goods = model('Goods')->goods_info($goods_id);
         $this->assign('goods', $goods);
         /* 出价记录 */
-        $this->assign('auction_log', auction_log($id));
+        $this->assign('auction_log', model('Auction')->auction_log($id));
         $this->assign('title', L('detail_intro'));
         $this->display('aution_record.dwt');
     }
@@ -167,7 +166,7 @@ class Auction extends IndexController {
         }
 
         /* 取得拍卖活动信息 */
-        $auction = auction_info($id);
+        $auction = model('Auction')->auction_info($id);
         if (empty($auction)) {
             $this->redirect(url('Auction/index'));
             exit;
@@ -183,7 +182,7 @@ class Auction extends IndexController {
         if ($user_id <= 0) {
             show_message(L('au_bid_after_login'));
         }
-        $user = user_info($user_id);
+        $user = model('Order')->user_info($user_id);
 
         /* 取得出价 */
         $bid_price = isset($_POST['price']) ? round(floatval($_POST['price']), 2) : 0;
@@ -232,11 +231,11 @@ class Auction extends IndexController {
 
             /* 如果不是第一个出价，解冻上一个用户的保证金 */
             if ($auction['bid_user_count'] > 0) {
-                log_account_change($auction['last_bid']['bid_user'], $auction['deposit'], (-1) * $auction['deposit'], 0, 0, sprintf(L('au_unfreeze_deposit'), $auction['act_name']));
+                model('ClipsBase')->log_account_change($auction['last_bid']['bid_user'], $auction['deposit'], (-1) * $auction['deposit'], 0, 0, sprintf(L('au_unfreeze_deposit'), $auction['act_name']));
             }
 
             /* 冻结当前用户的保证金 */
-            log_account_change($user_id, (-1) * $auction['deposit'], $auction['deposit'], 0, 0, sprintf(L('au_freeze_deposit'), $auction['act_name']));
+            model('ClipsBase')->log_account_change($user_id, (-1) * $auction['deposit'], $auction['deposit'], 0, 0, sprintf(L('au_freeze_deposit'), $auction['act_name']));
         }
 
         /* 插入出价记录 */
@@ -271,7 +270,7 @@ class Auction extends IndexController {
         }
 
         /* 取得拍卖活动信息 */
-        $auction = auction_info($id);
+        $auction = model('Auction')->auction_info($id);
         if (empty($auction)) {
             $this->redirect(url('Auction/index'));
             exit;
@@ -304,12 +303,12 @@ class Auction extends IndexController {
         }
 
         /* 查询：取得商品信息 */
-        $goods = goods_info($auction['goods_id']);
+        $goods = model('Goods')->goods_info($auction['goods_id']);
         /* 查询：处理规格属性 */
         $goods_attr = '';
         $goods_attr_id = '';
         if ($auction['product_id'] > 0) {
-            $product_info = get_good_products($auction['goods_id'], 'AND product_id = ' . $auction['product_id']);
+            $product_info = model('ProductsBase')->get_good_products($auction['goods_id'], 'AND product_id = ' . $auction['product_id']);
 
             $goods_attr_id = str_replace('|', ',', $product_info[0]['goods_attr']);
 
@@ -329,7 +328,7 @@ class Auction extends IndexController {
         }
 
         /* 清空购物车中所有拍卖商品 */
-        clear_cart(CART_AUCTION_GOODS);
+        model('Order')->clear_cart(CART_AUCTION_GOODS);
 
         /* 加入购物车 */
         $cart = array(

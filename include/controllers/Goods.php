@@ -18,7 +18,7 @@ class Goods extends IndexController {
      */
     public function index() {
         // 获得商品的信息
-        $goods = get_goods_info($this->goods_id);
+        $goods = model('Goods')->get_goods_info($this->goods_id);
         // 如果没有找到任何记录则跳回到首页
         if ($goods === false) {
             ecs_header("Location: ./\n");
@@ -27,7 +27,7 @@ class Goods extends IndexController {
                 $goods ['goods_brand_url'] = url('brand/index', array('id' => $goods ['brand_id']));
             }
             $shop_price = $goods ['shop_price'];
-            $linked_goods = get_related_goods($this->goods_id); 
+            $linked_goods = model('Goods')->get_related_goods($this->goods_id); 
             $goods ['goods_style_name'] = add_style($goods ['goods_name'], $goods ['goods_name_style']);
 
             // 购买该商品可以得到多少钱的红包
@@ -41,34 +41,34 @@ class Goods extends IndexController {
                     $goods ['bonus_money'] = price_format($goods ['bonus_money']);
                 }
             }
-            $comments = get_comment_info($this->goods_id,0);
+            $comments = model('Comment')->get_comment_info($this->goods_id,0);
             $this->assign('goods', $goods);
             $this->assign('comments', $comments);
             $this->assign('goods_id', $goods ['goods_id']);
             $this->assign('promote_end_time', $goods ['gmt_end_time']);
             // 获得商品的规格和属性
-            $properties = get_goods_properties($this->goods_id);
+            $properties = model('Goods')->get_goods_properties($this->goods_id);
             // 商品属性
             $this->assign('properties', $properties ['pro']);
             // 商品规格
             $this->assign('specification', $properties ['spe']);
             // 相同属性的关联商品
-            $this->assign('attribute_linked', get_same_attribute_goods($properties));
+            $this->assign('attribute_linked', model('Goods')->get_same_attribute_goods($properties));
             // 关联商品
             $this->assign('related_goods', $linked_goods);
             // 关联文章
-            $this->assign('goods_article_list', get_linked_articles($this->goods_id));
+            $this->assign('goods_article_list', model('Goods')->get_linked_articles($this->goods_id));
             // 配件
-            $this->assign('fittings', get_goods_fittings(array($this->goods_id)));
+            $this->assign('fittings', model('Goods')->get_goods_fittings(array($this->goods_id)));
             // 会员等级价格
-            $this->assign('rank_prices', get_user_rank_prices($this->goods_id, $shop_price));
+            $this->assign('rank_prices', model('Goods')->get_user_rank_prices($this->goods_id, $shop_price));
             // 商品相册
-            $this->assign('pictures', get_goods_gallery($this->goods_id));
+            $this->assign('pictures', model('GoodsBase')->get_goods_gallery($this->goods_id));
             // 获取关联礼包
-            $package_goods_list = get_package_goods_list($goods ['goods_id']);
+            $package_goods_list = model('Goods')->get_package_goods_list($goods ['goods_id']);
             $this->assign('package_goods_list', $package_goods_list);
             //取得商品优惠价格列表
-            $volume_price_list = get_volume_price_list($goods ['goods_id'], '1');
+            $volume_price_list = model('GoodsBase')->get_volume_price_list($goods ['goods_id'], '1');
             // 商品优惠价格区间
             $this->assign('volume_price_list', $volume_price_list);
         }
@@ -101,14 +101,14 @@ class Goods extends IndexController {
            
         // 当前系统时间
         $this->assign('now_time', gmtime());
-        $this->assign('sales_count', get_sales_count($this->goods_id));
+        $this->assign('sales_count', model('GoodsBase')->get_sales_count($this->goods_id));
         $this->assign('image_width', C('image_width'));
         $this->assign('image_height', C('image_height'));
         $this->assign('id', $this->goods_id);
         $this->assign('type', 0);
         $this->assign('cfg', C('CFG'));
         // 促销信息
-        $this->assign('promotion', get_promotion_info($this->goods_id));
+        $this->assign('promotion', model('GoodsBase')->get_promotion_info($this->goods_id));
         $this->assign('title', L('goods_detail'));
         /* 页面标题 */
         $page_info = get_page_title($goods['cat_id'], $goods['goods_name']);
@@ -125,9 +125,17 @@ class Goods extends IndexController {
      */
     public function info() {
         /* 获得商品的信息 */
-        $goods = get_goods_info($this->goods_id);
+        $goods = model('Goods')->get_goods_info($this->goods_id);
+
+        /* 页面标题 */
+        $page_info = get_page_title($goods['cat_id'], $goods['goods_name']);
+        $this->assign('page_title',           htmlspecialchars($page_info['title']));
+        /* meta */
+        $this->assign('meta_keywords',           htmlspecialchars($goods['keywords']));
+        $this->assign('meta_description',        htmlspecialchars($goods['goods_brief']));
+
         $this->assign('goods', $goods);
-        $properties = get_goods_properties($this->goods_id);  // 获得商品的规格和属性
+        $properties = model('Goods')->get_goods_properties($this->goods_id);  // 获得商品的规格和属性
         $this->assign('properties', $properties['pro']);                      // 商品属性
         $this->assign('specification', $properties['spe']);                   // 商品规格
         $this->assign('title', L('detail_intro'));
@@ -142,7 +150,7 @@ class Goods extends IndexController {
         $cmt->id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
         $cmt->type = !empty($_GET['type']) ? intval($_GET['type']) : 0;
         $cmt->page = isset($_GET['page']) && intval($_GET['page']) > 0 ? intval($_GET['page']) : 1;
-        $this->assign('comments_info', get_comment_info($cmt->id, $cmt->type));
+        $this->assign('comments_info', model('Comment')->get_comment_info($cmt->id, $cmt->type));
         $this->assign('id', $cmt->id);
         $this->assign('type', $cmt->type);
         $this->assign('username', $_SESSION['user_name']);
@@ -193,7 +201,7 @@ class Goods extends IndexController {
             } else {
                 $res ['qty'] = $number;
             }
-            $shop_price = get_final_price($this->goods_id, $number, true, $attr_id);
+            $shop_price = model('GoodsBase')->get_final_price($this->goods_id, $number, true, $attr_id);
             $res ['result'] = price_format($shop_price * $number);
         }
         die(json_encode($res));

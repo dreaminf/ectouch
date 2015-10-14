@@ -3,6 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Affiche extends IndexController
 {
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function index()
     {
         $ad_id = intval(I('get.ad_id'));
@@ -21,7 +27,7 @@ class Affiche extends IndexController
             $str = "";
             
             /* 取得广告的信息 */
-            $sql = 'SELECT ad.ad_id, ad.ad_name, ad.ad_link, ad.ad_code ' . 'FROM ' . $this->model->pre . 'touch_ad AS ad ' . 'LEFT JOIN ' . $this->model->pre . 'touch_ad_position AS p ON ad.position_id = p.position_id ' . "WHERE ad.ad_id = '$ad_id' and " . gmtime() . " >= ad.start_time and " . gmtime() . "<= ad.end_time";
+            $sql = 'SELECT ad.ad_id, ad.ad_name, ad.ad_link, ad.ad_code ' . 'FROM ' . $this->model->pre . 'ad AS ad ' . 'LEFT JOIN ' . $this->model->pre . 'ad_position AS p ON ad.position_id = p.position_id ' . "WHERE ad.ad_id = '$ad_id' and " . gmtime() . " >= ad.start_time and " . gmtime() . "<= ad.end_time";
             
             $ad_info = $this->model->query($sql);
             $ad_info = $ad_info[0];
@@ -78,13 +84,13 @@ class Affiche extends IndexController
             $_SESSION['referer'] = stripslashes($site_name);
             /* 如果是商品的站外JS */
             if ($ad_id == '-1') {
-                $count = $this->model->table('touch_adsense')
+                $count = $this->model->table('adsense')
                     ->where("from_ad = '-1' AND referer = '" . $site_name . "'")
                     ->count();
                 if ($count > 0) {
-                    $sql = "UPDATE " . $this->model->pre . "touch_adsense SET clicks = clicks + 1 WHERE from_ad = '-1' AND referer = '" . $site_name . "'";
+                    $sql = "UPDATE " . $this->model->pre . "adsense SET clicks = clicks + 1 WHERE from_ad = '-1' AND referer = '" . $site_name . "'";
                 } else {
-                    $sql = "INSERT INTO " . $this->model->pre . "touch_adsense (from_ad, referer, clicks) VALUES ('-1', '" . $site_name . "', '1')";
+                    $sql = "INSERT INTO " . $this->model->pre . "adsense (from_ad, referer, clicks) VALUES ('-1', '" . $site_name . "', '1')";
                 }
                 $this->model->query($sql);
                 
@@ -100,17 +106,17 @@ class Affiche extends IndexController
                 exit();
             } else {
                 /* 更新站内广告的点击次数 */
-                $this->model->query('UPDATE ' . $this->model->pre . "touch_ad SET click_count = click_count + 1 WHERE ad_id = '$ad_id'");
-                $count = $this->model->table('touch_adsense')
+                $this->model->query('UPDATE ' . $this->model->pre . "ad SET click_count = click_count + 1 WHERE ad_id = '$ad_id'");
+                $count = $this->model->table('adsense')
                     ->where("from_ad = '" . $ad_id . "' AND referer = '" . $site_name . "'")
                     ->count();
                 if ($count > 0) {
-                    $sql = "UPDATE " . $this->model->pre . "touch_adsense SET clicks = clicks + 1 WHERE from_ad = '" . $ad_id . "' AND referer = '" . $site_name . "'";
+                    $sql = "UPDATE " . $this->model->pre . "adsense SET clicks = clicks + 1 WHERE from_ad = '" . $ad_id . "' AND referer = '" . $site_name . "'";
                 } else {
-                    $sql = "INSERT INTO " . $this->model->pre . "touch_adsense (from_ad, referer, clicks) VALUES ('" . $ad_id . "', '" . $site_name . "', '1')";
+                    $sql = "INSERT INTO " . $this->model->pre . "adsense (from_ad, referer, clicks) VALUES ('" . $ad_id . "', '" . $site_name . "', '1')";
                 }
                 $this->model->query($sql);
-                $ad_info = $this->model->table('touch_ad')
+                $ad_info = $this->model->table('ad')
                     ->field('*')
                     ->where('ad_id =' . $ad_id)
                     ->find();

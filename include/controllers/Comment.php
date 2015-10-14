@@ -41,11 +41,18 @@ class Comment extends IndexController {
                 $cmt->page = 1;
                 $cmt->id = !empty($cmt->id) ? intval($cmt->id) : 0;
                 $cmt->type = !empty($cmt->type) ? intval($cmt->type) : 0;
-
+				$this->user_id = $_SESSION['user_id'];
+				$where['user_id'] = $this->user_id;
+				$where['id_value'] = $cmt->id;
+				$row = $this->model->table('comment')->where($where)->count();
+				if($row>0){
+					$result ['error'] = 1;
+                    $result ['message'] = '此商品您已评论，只能评论一次哦';
+				}else{
                 if (empty($cmt) || !isset($cmt->type) || !isset($cmt->id)) {
                     $result ['error'] = 1;
                     $result ['message'] = L('invalid_comments');
-                } elseif (!is_email($cmt->email)) {
+                } elseif (!empty($cmt->email) && !is_email($cmt->email)) {
                     $result ['error'] = 1;
                     $result ['message'] = L('error_email');
                 } else {
@@ -99,7 +106,7 @@ class Comment extends IndexController {
 
                             /* 无错误就保存留言 */
                             if (empty($result ['error'])) {
-                                add_comment($cmt);
+                                model('Comment')->add_comment($cmt);
                             }
                         }
                     } else {
@@ -155,12 +162,13 @@ class Comment extends IndexController {
                             }
                             /* 无错误就保存留言 */
                             if (empty($result ['error'])) {
-                                add_comment($cmt);
+                                model('Comment')->add_comment($cmt);
                                 $_SESSION ['send_time'] = $cur_time;
                             }
                         }
                     }
                 }
+				}
             }
         } else {
             /*
@@ -178,49 +186,49 @@ class Comment extends IndexController {
 
         if ($result ['error'] == 0) {
             //全部评价
-            $comment = assign_comment($cmt->id, $cmt->type, 0, $cmt->page);
+            $comment = model('Comment')->assign_comment($cmt->id, $cmt->type, 0, $cmt->page);
             $this->assign('comment_list', $comment['comments']);
             $this->assign('pager', $comment['pager']);
             //好评           
-            $comment_favorable = assign_comment($cmt->id, $cmt->type, '1');
+            $comment_favorable = model('Comment')->assign_comment($cmt->id, $cmt->type, '1');
             $this->assign('comment_fav', $comment_favorable['comments']);
             $this->assign('pager_fav', $comment_favorable['pager']);
             //中评
-            $comment_medium = assign_comment($cmt->id, $cmt->type, '2');
+            $comment_medium = model('Comment')->assign_comment($cmt->id, $cmt->type, '2');
             $this->assign('comment_med', $comment_medium['comments']);
             $this->assign('pager_med', $comment_medium['pager']);
             //差评
-            $comment_bad = assign_comment($cmt->id, $cmt->type, '3');
+            $comment_bad = model('Comment')->assign_comment($cmt->id, $cmt->type, '3');
             $this->assign('comment_bad', $comment_bad['comments']);
             $this->assign('pager_poor', $comment_bad['pager']);
             if ($rank == 1) {
-                $comment_favorable = assign_comment($cmt->id, $cmt->type, '1', $cmt->page);
+                $comment_favorable = model('Comment')->assign_comment($cmt->id, $cmt->type, '1', $cmt->page);
                 $this->assign('comment_fav', $comment_favorable['comments']);
                 $this->assign('pager_fav', $comment_favorable['pager']);
             }
             if ($rank == 2) {
-                $comment_medium = assign_comment($cmt->id, $cmt->type, '2', $cmt->page);
+                $comment_medium = model('Comment')->assign_comment($cmt->id, $cmt->type, '2', $cmt->page);
                 $this->assign('comment_med', $comment_medium['comments']);
                 $this->assign('pager_med', $comment_medium['pager']);
             }
             if ($rank == 3) {
-                $comment_bad = assign_comment($cmt->id, $cmt->type, '3', $cmt->page);
+                $comment_bad = model('Comment')->assign_comment($cmt->id, $cmt->type, '3', $cmt->page);
                 $this->assign('comment_bad', $comment_bad['comments']);
                 $this->assign('pager_bad', $comment_bad['pager']);
             } else {
-                $comment = assign_comment($cmt->id, $cmt->type, '0', $cmt->page);
+                $comment = model('Comment')->assign_comment($cmt->id, $cmt->type, '0', $cmt->page);
                 $this->assign('comment_list', $comment['comments']);
                 $this->assign('pager', $comment['pager']);
             }
             $this->assign('rank', $rank);
-            $this->assign('comments_info', get_comment_info($cmt->id, $cmt->type));
+            $this->assign('comments_info', model('Comment')->get_comment_info($cmt->id, $cmt->type));
             $this->assign('comment_type', $cmt->type);
             $this->assign('id', $cmt->id);
             $this->assign('username', $_SESSION['user_name']);
             $this->assign('email', $_SESSION['email']);
             /* 验证码相关设置 */
             if ((intval(C('captcha')) & CAPTCHA_COMMENT) && gd_version() > 0) {
-                $this->assign('enabled_captcha', 1);
+                $this->assign('enabled_captcha_comments', 1);
                 $this->assign('rand', mt_rand());
             }
             //$result['rank'] = $rank;
