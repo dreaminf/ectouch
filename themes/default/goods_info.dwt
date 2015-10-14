@@ -1,9 +1,4 @@
-<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
-<div class="con">
-  <div class="ect-bg">
-    <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span> <a href="javascript:;"  onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a></header>
-    <nav class="ect-nav ect-nav-list" style="display:none;"> <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --> </nav>
-  </div>
+<div class="con">  
   <div class="goods-info ect-padding-tb">
   	<!--商品描述-->
       <section class="user-tab ect-border-bottom0">
@@ -11,7 +6,7 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs text-center">
           <li class="col-xs-6 active"><a href="#one" role="tab" data-toggle="tab">{$lang.goods_brief}</a></li>
-          <li class="col-xs-6"><a href="#two" role="tab" data-toggle="tab">{$lang.goods_attr}</a></li>
+           <li class="col-xs-6"><a  href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span>商品评论（{$comments.count}）</span> </a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
@@ -33,8 +28,6 @@
           </div>
         </div>
       </section>
-  </div>
-  <footer class="logo"><a href="http://www.ectouch.cn" title="ECTouch官网" target="_blank"><img src="__TPL__/images/copyright.png" width="176" height="60"></a></footer>
+  </div> 
 </div>
-<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->  
-</body></html>
+
