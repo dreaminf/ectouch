@@ -280,9 +280,9 @@ class WallController extends CommonController {
         if(empty($wall_id)){
             $this->redirect(url('index/index'));
         }
-        /*if(isset($_GET['debug'])){
+        if(isset($_GET['debug'])){
             $_SESSION['wechat_user']['openid'] = 'o1UgVuKGG67Y1Yoy_zC1JqoYSH54';    
-        }*/
+        }
         $openid = $_SESSION['wechat_user']['openid'];
         $wechat_user = $this->model->table('wechat_wall_user')->field('id')->where(array('openid'=>$openid))->find();
         //聊天室人数
