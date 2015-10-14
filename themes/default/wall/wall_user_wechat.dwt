@@ -21,24 +21,26 @@
             <!--main-->
             <div class="main">
                 <form action="{:url('wall_user_wechat')}" method="post" class="user-form">
-                    <div class="fl user-pic">
-                        {if $user.headimgurl}
-                        <img src="{$user.headimgurl}">
-                        {else}
-                        <img src="__TPL__/wall/img/ava1.png"/>
-                        {/if}
-                    </div>
-                    <div class="user-info">
-                        <div class="user-name" id="name">
-                            <input type="text" placeholder="姓名" name="nickname" value="{$user.nickname}" />
-                            <i class="iconfont fr">&#xe601;</i>
+                    <div id="" style="border-bottom: 1px solid #d1d1d1;">
+                        <div class="fl user-pic">
+                            {if $user.headimgurl}
+                            <img src="{$user.headimgurl}">
+                            {else}
+                            <img src="__TPL__/wall/img/ava1.png"/>
+                            {/if}
                         </div>
-                        <div class="user-name">
-                            <select name="sex">
-                                <option value="1" {if $user.sex == 1}selected{/if}>男</option>
-                                <option value="2" {if $user.sex == 2}selected{/if}>女</option>
-                                <option value="0" {if $user.sex == 0}selected{/if}>保密</option>
-                            </select>
+                        <div class="user-info">
+                            <div class="user-name" id="name">
+                                <input type="text" placeholder="姓名" name="nickname" value="{$user.nickname}" />
+                                <i class="iconfont fr">&#xe601;</i>
+                            </div>
+                            <div class="user-name">
+                                <select name="sex">
+                                    <option value="1" {if $user.sex == 1}selected{/if}>男</option>
+                                    <option value="2" {if $user.sex == 2}selected{/if}>女</option>
+                                    <option value="0" {if $user.sex == 0}selected{/if}>保密</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="other-ava">

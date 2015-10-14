@@ -34,35 +34,12 @@
 							</div>
 						</li>
 						{/foreach}
+						<a name="bottom"></a>
 					</ul>
 				</div>
 				
 				<!--footer-->
 				<div class="footer">
-					<div class="footer-msg">
-						<h1>{$wall.content}</h1>
-						<ul class="fr">
-							<li class="footer-menu">
-                                <a href="{:url('wall_user', array('wall_id'=>$this->_var['wall']['id']))}">
-                                    <div class="footer-menu-pic shangqiang">
-                                    微信上墙</div>
-                                </a>
-                            </li>
-                            <li class="footer-menu">
-                                <a href="{:url('wall_msg', array('wall_id'=>$this->_var['wall']['id']))}" class="active">
-                                    <div class="footer-menu-pic liebiao active">
-                                    留言列表</div>
-
-                                </a>
-                            </li>
-                            <li class="footer-menu">
-                                <a href="{:url('wall_prize', array('wall_id'=>$this->_var['wall']['id']))}" class="">
-                                    <div class="footer-menu-pic choujiang ">
-                                    抽奖</div>
-                                </a>
-                            </li>
-						</ul>
-					</div>
 					<p>{$wall.support}</p>
 				</div>
 			</div>
@@ -88,7 +65,7 @@
                     if(html){
                         $("ul#ul").append(html);
                         //添加跳转锚点
-                        
+                        window.location.hash = "bottom";
                     }
                     start = parseInt(start) + parseInt(result.data.length);
                 }
