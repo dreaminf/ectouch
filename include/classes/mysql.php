@@ -298,7 +298,6 @@ class mysql
         } else {
             $sql .= ' LIMIT ' . $start . ', ' . $num;
         }
-
         return $this->query($sql);
     }
 
