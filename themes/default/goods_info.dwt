@@ -1,5 +1,4 @@
-<div class="con">  
-  <div class="goods-info ect-padding-tb">
+<div class="goods-info ect-padding-tb">
   	<!--商品描述-->
       <section class="user-tab ect-border-bottom0">
         <div id="is-nav-tabs" style="height:3.15em; display:none;"></div>
@@ -28,6 +27,6 @@
           </div>
         </div>
       </section>
-  </div> 
-</div>
+ </div> 
+
 
