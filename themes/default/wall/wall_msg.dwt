@@ -34,7 +34,7 @@
 							</div>
 						</li>
 						{/foreach}
-						<a name="bottom"></a>
+						<a class="bottom"></a>
 					</ul>
 				</div>
 				
@@ -51,7 +51,7 @@
         <script type="text/javascript">
         $(function(){
 			refresh();
-			window.location.hash = "bottom";
+			$("#ul").animate({scrollTop:$(".bottom").offset().top}, 800);
         })
         var start = {$msg_count};
         var num = 10;
@@ -66,7 +66,7 @@
                     if(html){
                         $("ul#ul").append(html);
                         //添加跳转锚点
-                        window.location.hash = "bottom";
+                        $("#ul").animate({scrollTop:$(".bottom").offset().top}, 800);
                     }
                     start = parseInt(start) + parseInt(result.data.length);
                 }

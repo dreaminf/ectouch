@@ -333,7 +333,7 @@ class WallController extends CommonController {
                 $list = $Eccache->get($cache_key);
                 if(!$list){
                     $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id, m.status FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE m.status = 1 AND u.wall_id = '$wall_id' ORDER BY m.addtime ASC LIMIT ".$start.", ".$num;
-                    if(isset($_SESSION['wechat_user'])){
+                    if(isset($_SESSION['wechat_user']) && !empty($_SESSION['wechat_user']['openid'])){
                         $openid = $_SESSION['wechat_user']['openid'];    
                         $sql = "SELECT m.content, m.addtime, u.nickname, u.headimg, u.id, m.status FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE (m.status = 1 OR u.openid = '$openid') AND u.wall_id = '$wall_id' ORDER BY m.addtime ASC LIMIT ".$start.", ".$num;
                     }
