@@ -12,6 +12,6 @@
  */
 
 define('BIND_CONTROLLER', 'Respond');
-$_GET['code'] = 'wxpay'; // 支付插件名称
+$_GET['code'] = 'unionpay'; // 支付插件名称
 $_GET['type'] = 'notify'; // 异步通知：notify，同步通知：return
-require dirname(dirname(__FILE__)) . '/include/bootstrap.php';
+require dirname(dirname(__FILE__)) . '/bootstrap.php';
