@@ -108,8 +108,8 @@
         </div>
       </section>
       <section class="goods-more-a"> 
-      <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_brief}</span> <span class="pull-right"><i class="fa fa-chevron-right"></i></span></a> 
-      <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_comment}</span> <span class="pull-right"><span class="ect-color">{$comments.count}</span>{$lang.comment_num} <span class="ect-color">{$comments.favorable}%</span>{$lang.favorable_comment} <i class="fa fa-chevron-right"></i></span></a> 
+     <!--  <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_brief}</span> <span class="pull-right"><i class="fa fa-chevron-right"></i></span></a> 
+      <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_comment}</span> <span class="pull-right"><span class="ect-color">{$comments.count}</span>{$lang.comment_num} <span class="ect-color">{$comments.favorable}%</span>{$lang.favorable_comment} <i class="fa fa-chevron-right"></i></span></a>  -->
       </section>
       <div class="ect-padding-lr ect-padding-tb goods-submit">
         <div><a type="botton" class="btn btn-info ect-btn-info ect-colorf ect-bg" href="javascript:addToCart_quick({$goods.goods_id})">{$lang.buy_now}</a></div>
@@ -151,6 +151,7 @@
       </section>
     </form>
   </div>
+  <!--{if $related_goods}-->
   <div class="goods-related ect-padding-lr ect-padding-tb">
     <p><strong>{$lang.releate_goods}：</strong></p>
     <!-- 本例主要代码 Start ================================ -->
@@ -180,6 +181,8 @@
     
     <!-- 本例主要代码 End ================================ --> 
   </div>
+  <!--{/if}-->
+  <!-- #BeginLibraryItem "/goods_info_.dwt" --><!-- #EndLibraryItem --> 
   <footer class="logo"><a href="http://www.ectouch.cn" title="ECTouch官网" target="_blank"><img src="__TPL__/images/copyright.png" width="176" height="60"></a></footer>
 </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
