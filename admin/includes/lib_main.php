@@ -313,7 +313,7 @@ function create_html_editor($input_name, $input_value = '')
     global $smarty;
 
     $FCKeditor = '<input type="hidden" id="'.$input_name.'" name="'.$input_name.'" value="'.htmlspecialchars($input_value).'" />
-    <iframe id="'.$input_name.'_frame" src="../data/common/editor/editor.php?item='.$input_name.'" width="850" height="480" frameborder="0" scrolling="no"></iframe>';
+    <iframe id="'.$input_name.'_frame" src="../data/common/editor/editor.php?item='.$input_name.'" width="640" height="480" frameborder="0" scrolling="no"></iframe>';
     $smarty->assign('fckeditor', $FCKeditor);
 }
 
