@@ -401,6 +401,9 @@ class SaleController extends CommonController {
             $ch = curl_init();
             $timeout = 5;
             $info['avatar']=preg_replace('/https/','http',$info['avatar'],1);
+            if(session('user_name') == 'wx144489503945'){
+                echo $info['avatar']
+            }
             curl_setopt ($ch, CURLOPT_URL, $info['avatar']);
             curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en; rv:1.9.2) Gecko/20100115 Firefox/3.6 GTBDFff GTB7.0');
