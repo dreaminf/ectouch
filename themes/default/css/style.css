@@ -501,10 +501,10 @@ border: 1px solid transparent;border-radius: 4px;cursor: pointer;display: inline
 .ect-wholesale-list{clear:both; margin:6px 0; overflow:hidden;}
 
 /* 资金管理*/
-.nav-tabs>li{
+.account>li{
     width:25%;
     text-align: center;
 }
-.nav-tabs>li>a{
+.account>li>a{
     padding: 10px 0;
 }

@@ -1,5 +1,5 @@
 <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
-<ul class="nav nav-tabs" role="tablist">
+<ul class="nav nav-tabs account" role="tablist">
     <li><a href="{:url('User/account_detail')}" >{$lang.add_surplus_log}</a></li>
     <li><a href="{:url('User/account_log')}" >{$lang.view_application}</a></li>
 	<li class="active"><a href="{:url('User/account_deposit')}" >{$lang.surplus_type_0}</a></li>
