@@ -3,7 +3,7 @@
       <section class="user-tab ect-border-bottom0">
         <div id="is-nav-tabs" style="height:3.15em; display:none;"></div>
         <!-- Nav tabs -->
-        <ul class="nav nav-tabs text-center">
+        <ul class="nav nav-tabs text-center" style="position: static;">
           <li class="col-xs-6 active"><a href="#one" role="tab" data-toggle="tab">{$lang.goods_brief}</a></li>
            <li class="col-xs-6"><a  href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span>商品评论（{$comments.count}）</span> </a></li>
         </ul>
