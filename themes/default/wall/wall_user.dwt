@@ -8,7 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="__TPL__/wall/css/wechat.css"/>
 	</head>
 	<body>
-		<div class="con" {if $wall.background}style="background-image:url({$wall.background})"{/if}>
+		<div class="con" id="con" {if $wall.background}style="background-image:url({$wall.background})"{/if}>
             <div class="main">
                 <!--logo-->
                 <div class="logo">
@@ -62,5 +62,13 @@
         <script type="text/javascript" src="__TPL__/wall/js/jquery.nicescroll.js" ></script>
         <script type="text/javascript" src="__TPL__/wall/js/jquery.scrollTo.min.js" ></script>
         <script type="text/javascript" src="__TPL__/wall/js/wechat.js" ></script>
+        <script type="text/javascript">
+			window.onload=function(){
+				var con=document.getElementById('con');
+				var conHeight=con.offsetHeight;
+				var c=document.documentElement.clientHeight;
+				con.style.height=c+'px';
+			}
+		</script>
 	</body>
 </html>

@@ -182,6 +182,10 @@
                     }, 'json');
                 }
             });
+            
+            //全屏显示
+            $('.con').height($(window).height());
+            
         })
         function remove_prize(){
             $(".award-detail-pic li:first").addClass("active").siblings("li").removeClass("active");
