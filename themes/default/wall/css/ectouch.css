@@ -169,8 +169,11 @@ header h1{
 	border-radius: 10px;
 }
 .user-chat{
+	height: 100%;
 	margin-top: 3rem;
 	padding: 0 1rem;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
 .user-chat p{
 	margin: 0 auto;
@@ -309,7 +312,8 @@ header h1{
 	position: fixed;
 	width: 100%;
 	box-sizing: border-box;
-	overflow-y: scroll;
+	overflow: hidden;
+	/*overflow-y: scroll;*/
 	bottom: 7rem;
 	left: 0;
 	top: 0;
