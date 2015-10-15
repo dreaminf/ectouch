@@ -15,7 +15,7 @@
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <style type="text/css">
 body {margin:0px; padding:0px;}
-#container {width:640px; height:480px;}
+#container {width:640px; height:420px;}
 </style>
 </head>
 
