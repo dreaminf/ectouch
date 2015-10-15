@@ -22,7 +22,7 @@ class UploadController extends AdminController {
 
     public function __construct() {
         parent::__construct();
-        $this->content = file_get_contents(ROOT_PATH . "data/common/ueditor/config.json");
+        $this->content = file_get_contents(ROOT_PATH . "data/common/editor/config.json");
         $this->conf = json_decode(preg_replace("/\/\*[\s\S]+?\*\//", "", str_replace(array('__ROOT__', '__HOST__'), array(__ROOT__, __HOST__), $this->content)), true);
     }
 
