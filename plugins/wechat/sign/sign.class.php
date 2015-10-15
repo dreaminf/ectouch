@@ -104,7 +104,7 @@ class sign extends PluginWechatController
                     ->count();
                 // 当前时间减去时间间隔得到的历史时间之后赠送的次数
                 if ($num < $config['point_num']) {
-                    $this->do_point($fromusername, $info, $config['point_value']);
+                    $this->do_point($fromusername, $info, $config['rank_point_value'], $config['pay_point_value']);
                 }
             }
         }

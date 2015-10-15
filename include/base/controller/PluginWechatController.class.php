@@ -39,15 +39,21 @@ abstract class PluginWechatController
     /**
      * 积分赠送处理
      */
-    public function do_point($fromusername, $info, $point_value)
+    public function do_point($fromusername, $info, $rank_points, $pay_points)
     {
         $time = time();
         $user_id = model('Base')->model->table('wechat_user')
             ->field('ect_uid')
             ->where('openid = "' . $fromusername . '"')
             ->getOne();
-        // 增加积分
-        $point = 'rank_points = rank_points +' . intval($point_value);
+        // 增加等级积分
+        $point = 'rank_points = rank_points +' . intval($rank_points);
+        model('Base')->model->table('users')
+            ->data($point)
+            ->where('user_id = ' . $user_id)
+            ->update();
+        // 增加消费积分
+        $point = 'pay_points = pay_points +' . intval($pay_points);
         model('Base')->model->table('users')
             ->data($point)
             ->where('user_id = ' . $user_id)
@@ -56,8 +62,8 @@ abstract class PluginWechatController
         $data['user_id'] = $user_id;
         $data['user_money'] = 0;
         $data['frozen_money'] = 0;
-        $data['rank_points'] = $point_value;
-        $data['pay_points'] = 0;
+        $data['rank_points'] = $rank_points;
+        $data['pay_points'] = $pay_points;
         $data['change_time'] = $time;
         $data['change_desc'] = $info['name'] . '积分赠送';
         $data['change_type'] = ACT_OTHER;
