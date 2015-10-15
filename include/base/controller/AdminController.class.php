@@ -30,14 +30,24 @@ class AdminController extends BaseController {
     }
 
     protected function checkLogin() {
-        $access = array('wechat', 'extend', 'upload', 'authorization', 'navigator', 'index' => array('license', 'uploader'));
-        
-        if (!in_array(strtolower(CONTROLLER_NAME), $access)) {
-            exit('1');
-            $this->redirect('./admin');
-        }
-        if (!in_array(strtolower(ACTION_NAME), $access[strtolower(CONTROLLER_NAME)])) {
-            exit('2');
+        $access = array(
+            'wechat' => '*', 
+            'extend' => '*', 
+            'upload' => '*', 
+            'authorization' => '*', 
+            'navigator' => '*', 
+            'index' => array('license', 'uploader')
+        );
+        $controller = strtolower(CONTROLLER_NAME);
+        $action = strtolower(ACTION_NAME);
+
+        if (isset($access[$controller])) { exit('1');
+            if($access[$controller] != '*'){
+                if (!isset($access[$controller][$action])) { exit('2');
+                    $this->redirect('./admin');
+                }
+            }
+        }else{
             $this->redirect('./admin');
         }
         if (intval($_SESSION['admin_id']) <= 0) {
