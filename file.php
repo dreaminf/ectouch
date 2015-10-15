@@ -1,4 +1,8 @@
 <?php
+error_reporting(E_ALL ^ E_NOTICE);
+set_time_limit(0);
+header('Content-Type: text/html; charset=utf-8');
+
 // 遍历文件夹下的一级文件
 function listDir($dir,$stauts=0){
     if(is_dir($dir)){
@@ -67,17 +71,20 @@ $dirArr = array(
 );
 
 if($_POST){
-    if(!empty($_POST['password'])){
         // 密码验证
         $password = $_POST['password'];
-        // 密码通过
+        // 密码失败返回密码验证页面
         if($pass != $password){
-            // 密码失败返回密码验证页面
-            echo '<script>alert("验证密码错误");location.href="file.php";</script>';
+            exit('<script>alert("验证密码错误");location.href="file.php";</script>');
         }
 
         // 连接数据库
-        $mysql_info = require_once("./data/config.php");
+        $db_config = "./data/config.php";
+        if(!file_exists($db_config)){
+            exit('<script>alert("请先安装系统。");location.href="file.php";</script>');
+        }
+
+        $mysql_info = require_once($db_config);
         if($mysql_info){
             $con = mysql_connect($mysql_info['DB_HOST'],$mysql_info['DB_USER'],$mysql_info['DB_PWD']);
             if (!$con){
@@ -107,22 +114,20 @@ if($_POST){
             mysql_close($con);
         }
 
-
-    }
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>ECTouch微分销代码管理</title>
+    <title>ECTouch微商城工具</title>
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <body>
 <?php
 if(empty($_POST)){
     ?>
-    <h1>ECTouch微分销代码管理</h1>
+    <h2>ECTouch微商城工具</h2>
     <form class="form-inline" method="post">
         <div class="form-group">
             <label for="inputPassword2" class="sr-only">Password</label>
