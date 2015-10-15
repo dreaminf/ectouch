@@ -35,13 +35,13 @@ $_LANG['user_service_list'] = '消息中心';
 $_LANG['user_history'] = '浏览记录';
 
 /* 会员余额(预付款) */
-$_LANG['add_surplus_log'] = '查看帐户明细';
-$_LANG['view_application'] = '查看申请记录';
+$_LANG['add_surplus_log'] = '帐户明细';
+$_LANG['view_application'] = '申请记录';
 $_LANG['surplus_pro_type'] = '类型';
 $_LANG['repay_money'] = '提现金额';
 $_LANG['money'] = '金额';
-$_LANG['surplus_type_0'] = '充值';
-$_LANG['surplus_type_1'] = '提现';
+$_LANG['surplus_type_0'] = '账户充值';
+$_LANG['surplus_type_1'] = '余额提现';
 $_LANG['deposit_money'] = '充值金额';
 $_LANG['process_notic'] = '会员备注';
 $_LANG['admin_notic'] = '管理员备注';

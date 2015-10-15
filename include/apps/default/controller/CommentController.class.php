@@ -72,10 +72,7 @@ class CommentController extends CommonController {
                 } else {
                     if ((intval(C('captcha')) & CAPTCHA_COMMENT) && gd_version() > 0) {
                         /* 检查验证码 */
-                        if ($_SESSION ['ectouch_verify'] !== strtoupper($cmt->captcha)) {
-                            $result ['error'] = 1;
-                            $result ['message'] = L('invalid_captcha');
-                        } else {
+
                             $factor = intval(C('comment_factor'));
                             if ($cmt->type == 0 && $factor > 0) {
                                 /* 只有商品才检查评论条件 */
@@ -122,7 +119,7 @@ class CommentController extends CommonController {
                             if (empty($result ['error'])) {
                                 model('Comment')->add_comment($cmt);
                             }
-                        }
+
                     } else {
                         /* 没有验证码时，用时间来限制机器人发帖或恶意发评论 */
                         if (!isset($_SESSION ['send_time'])) {
