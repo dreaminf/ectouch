@@ -148,7 +148,7 @@ class zjd extends PluginWechatController
         $starttime = strtotime($config['starttime']);
         $endtime = strtotime($config['endtime']);
         // 用户抽奖剩余的次数
-        $openid = session('openid');
+        $openid = isset($_SESSION['wechat_user']) ? $_SESSION['wechat_user']['openid'] : '';
         $count = model('Base')->model->table('wechat_prize')
             ->where('openid = "' . $openid . '"  and activity_type = "'.$this->plugin_name.'" and dateline between "' . $starttime . '" and "' . $endtime . '"')
             ->count();
@@ -197,7 +197,7 @@ class zjd extends PluginWechatController
             $id = I('get.id');
             $rs = model('Base')->model->table('wechat_prize')
                 ->field('winner')
-                ->where('openid = "' . session('openid') . '" and id = ' . $id)
+                ->where('openid = "' . $_SESSION['wechat_user']['openid'] . '" and id = ' . $id)
                 ->getOne();
             if (! empty($rs)) {
                 show_message('已经领取', '', '', 'error');
@@ -212,7 +212,7 @@ class zjd extends PluginWechatController
         if (IS_GET && IS_AJAX) {
             $rs = array();
             // 未登录
-            $openid = session('openid');
+            $openid = isset($_SESSION['wechat_user']) ? $_SESSION['wechat_user']['openid'] : '';
             if (empty($openid)) {
                 $rs['status'] = 2;
                 $rs['msg'] = '请先登录';
