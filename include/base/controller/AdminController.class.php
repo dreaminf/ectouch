@@ -41,17 +41,17 @@ class AdminController extends BaseController {
         $controller = strtolower(CONTROLLER_NAME);
         $action = strtolower(ACTION_NAME);
 
+        if (intval($_SESSION['admin_id']) <= 0) { exit('3');
+            $this->redirect('./admin');
+        }
+
         if (isset($access[$controller])) {
             if($access[$controller] != '*'){
-                if (!in_array($action, $access[$controller])) { exit('2');
+                if (!in_array($action, $access[$controller])) {
                     $this->redirect('./admin');
                 }
             }
         }else{
-            $this->redirect('./admin');
-        }
-        if (intval($_SESSION['admin_id']) <= 0) {
-            exit('3');
             $this->redirect('./admin');
         }
     }
