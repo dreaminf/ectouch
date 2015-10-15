@@ -19,12 +19,13 @@ class ExtendController extends AdminController
 
     public $plugin_name = '';
     public $wechat_type = '';
-    public $wechat_id = 0;
+    private $wechat_id  = 0;
 
     public function __construct()
     {
         parent::__construct();
         $this->plugin_name = I('get.ks');
+        $this->assign('action', ACTION_NAME);
         $this->assign('controller', CONTROLLER_NAME);
         //公众号类型
         $this->wechat_id = 1; // $this->wechat_id;
@@ -569,6 +570,11 @@ class ExtendController extends AdminController
         if(!empty($user_id) && !empty($msg_id)){
             $this->model->table('wechat_wall_msg')->where(array('user_id'=>$user_id, 'id'=>$msg_id))->delete();
 
+            if(isset($_GET['status'])){
+                $status = I('get.status');
+                $this->redirect(url('wall_msg_check', array('id'=>$wall_id, 'status'=>$status)));
+            }
+            
             $this->redirect(url('wall_msg', array('wall_id'=>$wall_id, 'user_id'=>$user_id)));
         }
         $this->redirect(url('wall'));
