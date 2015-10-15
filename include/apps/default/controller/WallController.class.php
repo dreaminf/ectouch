@@ -34,9 +34,15 @@ class WallController extends CommonController {
         $list = $Eccache->get($cache_key);
         if(!$list){
             //留言
-            $sql = "SELECT u.nickname, u.headimg, m.content, m.addtime FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE m.status = 1 and u.wall_id = '$wall_id' ORDER BY m.addtime ASC LIMIT 0, 10";
+            $sql = "SELECT u.nickname, u.headimg, m.content, m.addtime FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE m.status = 1 and u.wall_id = '$wall_id' ORDER BY m.addtime DESC LIMIT 0, 10";
             $data = $this->model->query($sql);
             if($data){
+                usort($data, function($a, $b){
+                    if($a['addtime'] == $b['addtime']){
+                        return 0;
+                    }
+                    return $a['addtime'] > $b['addtime'] ? 1 : -1;
+                });
                 foreach($data as $k=>$v){
                     $data[$k]['addtime'] = date('Y-m-d H:i', $v['addtime']);
                 }
@@ -45,7 +51,11 @@ class WallController extends CommonController {
             $list = $Eccache->get($cache_key);
         }
 
-        $this->assign('msg_count', count($list));
+        $sql = "SELECT count(*) as num FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE m.status = 1 AND u.wall_id = '$wall_id' ORDER BY m.addtime DESC";
+        $num = $this->model->query($sql);
+
+        $this->assign('list', $list);
+        $this->assign('msg_count', $num[0]['num']);
         $this->assign('wall', $wall);
         $this->assign('list', $list);
         $this->display('wall/wall_msg.dwt');
@@ -88,7 +98,7 @@ class WallController extends CommonController {
 
         //中奖的用户
         //$sql = "SELECT u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_prize p ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') GROUP BY u.id ORDER BY p.dateline ASC";
-        $sql = "SELECT u.nickname, u.headimg, u.id, u.wechatname, u.headimgurl FROM ".$this->model->pre."wechat_prize p LEFT JOIN ".$this->model->pre."wechat_wall_user u ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') GROUP BY u.id ORDER BY p.dateline ASC";
+        $sql = "SELECT u.nickname, u.headimg, u.id, u.wechatname, u.headimgurl FROM ".$this->model->pre."wechat_prize p LEFT JOIN ".$this->model->pre."wechat_wall_user u ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall' AND prize_type = 1) GROUP BY u.id ORDER BY p.dateline ASC";
         $rs = $this->model->query($sql);
         $list = array();
         if($rs){
@@ -121,7 +131,7 @@ class WallController extends CommonController {
                 exit(json_encode($result));
             }
             //没中奖的用户
-            $sql = "SELECT nickname, headimg, wechatname, headimgurl, id FROM ".$this->model->pre."wechat_wall_user WHERE wall_id = '$wall_id' AND status = 1 AND openid not in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY addtime DESC";
+            $sql = "SELECT nickname, headimg, id, wechatname, headimgurl FROM ".$this->model->pre."wechat_wall_user WHERE wall_id = '$wall_id' AND status = 1 AND openid not in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY addtime DESC";
             //$sql = "SELECT u.nickname, u.headimg, u.id FROM ".$this->model->pre."wechat_wall_user u LEFT JOIN ".$this->model->pre."wechat_prize p ON u.openid = p.openid WHERE u.wall_id = '$wall_id' AND u.status = 1 AND u.openid not in (SELECT openid FROM ".$this->model->pre."wechat_prize WHERE wall_id = '$wall_id' AND activity_type = 'wall') ORDER BY u.addtime ASC";
             $no_prize = $this->model->query($sql);
             if(empty($no_prize)){
@@ -208,7 +218,9 @@ class WallController extends CommonController {
                 exit(json_encode($result));
             }
             //删除中奖的用户
-            $this->model->table('wechat_prize')->where(array('wall_id'=>$wall_id, 'activity_type'=>'wall'))->delete();
+            //$this->model->table('wechat_prize')->where(array('wall_id'=>$wall_id, 'activity_type'=>'wall'))->delete();
+            //不显示在中奖池
+            $this->model->table('wechat_prize')->data(array('prize_type'=>0))->where(array('wall_id'=>$wall_id, 'activity_type'=>'wall'))->update();
             exit(json_encode($result));
         }
         $result['errCode'] = 2;
@@ -310,7 +322,8 @@ class WallController extends CommonController {
             $Eccache->set($cache_key, $data, 10);
             $list = $Eccache->get($cache_key);
         }
-        $sql = "SELECT count(*) as num FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE (m.status = 1 OR u.openid = '$openid') AND u.wall_id = '$wall_id' ORDER BY m.addtime DESC LIMIT 0, 10";
+        //最后一条数据的key
+        $sql = "SELECT count(*) as num FROM ".$this->model->pre."wechat_wall_msg m LEFT JOIN ".$this->model->pre."wechat_wall_user u ON m.user_id = u.id WHERE (m.status = 1 OR u.openid = '$openid') AND u.wall_id = '$wall_id' ORDER BY m.addtime DESC";
         $num = $this->model->query($sql);
 
         $this->assign('list', $list);
