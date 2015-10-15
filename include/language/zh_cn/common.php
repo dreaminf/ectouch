@@ -7,7 +7,6 @@ $_LANG['shot_message'] = "短消息";
 
 /* 公共语言项 */
 $_LANG['sys_msg'] = '系统提示';
-$_LANG['catalog'] = '目录';
 $_LANG['please_view_order_detail'] = '商品已发货，详情请到用户中心订单详情查看';
 $_LANG['user_center'] = '用户中心';
 $_LANG['shop_closed'] = '本店盘点中，请您稍后再来...';
@@ -31,7 +30,7 @@ $_LANG['best_goods'] = '精品推荐';
 $_LANG['new_goods'] = '新品上市';
 $_LANG['hot_goods'] = '热销商品';
 $_LANG['view_cart'] = '查看购物车';
-$_LANG['catalog'] = '所有分类';
+$_LANG['catalog'] = '全部商品分类';
 $_LANG['regist_login'] = '注册/登录';
 $_LANG['profile'] = '个人资料';
 $_LANG['query_info'] = "共执行 %d 个查询，用时 %f 秒，在线 %d 人";
@@ -714,3 +713,5 @@ $_LANG['label_collection'] = '我的收藏';
 $_LANG['article_list'] = '文章列表';
 $_LANG['preferences_price'] = '优惠价格';
 $_LANG['divided_into'] = '分成规则';
+
+return $_LANG;
