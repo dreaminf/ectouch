@@ -318,7 +318,7 @@ class SaleController extends CommonController {
         $wx_img = 'data/attached/drp/wx-'.$id.'.png';//微信头像
         if(!file_exists($ew_img)){
             $b = call_user_func(array('WechatController', 'rec_qrcode'), session('user_name'),session('user_id'));
-            $img = file_get_contents($b);
+            $img = @file_get_contents($b);
             file_put_contents($ew_img,$img);
             Image::thumb($ew_img, $ew_img,'','330','330'); // 将图片重新设置大小
         }
@@ -332,6 +332,7 @@ class SaleController extends CommonController {
         if($info['avatar']){
             $ch = curl_init();
             $timeout = 5;
+            $info['avatar']=preg_replace('/https/','http',$info['avatar'],1);
             curl_setopt ($ch, CURLOPT_URL, $info['avatar']);
             curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en; rv:1.9.2) Gecko/20100115 Firefox/3.6 GTBDFff GTB7.0');
@@ -399,6 +400,7 @@ class SaleController extends CommonController {
         if($info['avatar']){
             $ch = curl_init();
             $timeout = 5;
+            $info['avatar']=preg_replace('/https/','http',$info['avatar'],1);
             curl_setopt ($ch, CURLOPT_URL, $info['avatar']);
             curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en; rv:1.9.2) Gecko/20100115 Firefox/3.6 GTBDFff GTB7.0');
