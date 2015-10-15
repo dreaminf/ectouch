@@ -11,7 +11,7 @@
 <script type="text/javascript" src="ueditor.config.js"></script>
 <script type="text/javascript" src="ueditor.all.min.js"></script>
 <script type="text/javascript" src="lang/<?php echo $lang;?>/<?php echo $lang;?>.js"></script>
-<script type="text/javascript" src="third-party/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
 <style type="text/css">
 body {margin:0px; padding:0px;}
 </style>
