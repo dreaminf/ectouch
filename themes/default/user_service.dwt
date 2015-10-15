@@ -31,7 +31,7 @@
     </ul>
   </section>
   <div class="two-btn ect-padding-tb ect-padding-lr ect-margin-tb text-center">
-    <input type="submit" value="{$lang.submit}" class="btn btn-info" />
+    <input type="submit" value="{$lang.submit}" class="btn btn-info ect-bg-colory" />
   </div>
 </form>
 </div>

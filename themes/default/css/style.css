@@ -499,3 +499,12 @@ border: 1px solid transparent;border-radius: 4px;cursor: pointer;display: inline
 .ect-wholesale section:last-child{border-bottom:1px solid #e3e3e3 !important;}
 .ect-wholesale-list:first-child{margin-top:15px;}
 .ect-wholesale-list{clear:both; margin:6px 0; overflow:hidden;}
+
+/* 资金管理*/
+.nav-tabs>li{
+    width:25%;
+    text-align: center;
+}
+.nav-tabs>li>a{
+    padding: 10px 0;
+}
