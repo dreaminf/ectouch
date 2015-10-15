@@ -1,8 +1,7 @@
 .DS_Store
 
+data/config.php
 data/install.lock
-
-!data/attached/index.html
 
 data/caches/cache/*
 !data/caches/cache/index.html
@@ -11,6 +10,11 @@ data/caches/cache/*
 data/caches/logs/*
 !data/caches/logs/index.html
 !data/caches/logs/.htaccess
+
+data/attachment/*
+!data/attachment/index.html
+data/avatar/*
+!data/avatar/default/
 
 # IDE Files
 #-------------------------
