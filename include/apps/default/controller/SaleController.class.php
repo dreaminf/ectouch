@@ -401,7 +401,7 @@ class SaleController extends CommonController {
             $ch = curl_init();
             $timeout = 5;
             $info['avatar']=preg_replace('/https/','http',$info['avatar'],1);
-            if(session('user_name') == 'wx144489503945'){
+            if(session('user_id') == '2434'){
                 echo $info['avatar'];
             }
             curl_setopt ($ch, CURLOPT_URL, $info['avatar']);
