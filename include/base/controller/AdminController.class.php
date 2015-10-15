@@ -41,7 +41,7 @@ class AdminController extends BaseController {
         $controller = strtolower(CONTROLLER_NAME);
         $action = strtolower(ACTION_NAME);
 
-        if (intval($_SESSION['admin_id']) <= 0) { exit('3');
+        if (intval($_SESSION['admin_id']) <= 0) {
             $this->redirect('./admin');
         }
 
