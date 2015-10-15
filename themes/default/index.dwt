@@ -115,7 +115,7 @@
     }
     .ect-index-name{margin-top:0.3rem; color: #fff; position:absolute; right:0; bottom:1rem; color:#fff;font-size: 1rem; right:1rem;}
     .ect-index-name h1{font-weight: normal; font-size:1.2rem; color: #fff;}
-    .ect-index-detail{text-align: left; display:block;  left: 0; width:6rem; height:6rem; position: absolute; bottom:-2rem; z-index: 999; left:1rem;}
+    .ect-index-detail{text-align: left; display:block;  left: 0; width:6rem; height:6rem; position: absolute; bottom:-2rem; z-index: 3; left:1rem;}
     .ect-index-info .ect-index-detail img{
 
         width: 6rem;
