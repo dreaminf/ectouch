@@ -41,7 +41,7 @@ class AdminController extends BaseController {
         $controller = strtolower(CONTROLLER_NAME);
         $action = strtolower(ACTION_NAME);
 
-        if (isset($access[$controller])) { exit('1');
+        if (isset($access[$controller])) {
             if($access[$controller] != '*'){
                 if (!isset($access[$controller][$action])) { exit('2');
                     $this->redirect('./admin');
