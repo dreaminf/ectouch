@@ -942,7 +942,7 @@ class UsersModel extends BaseModel {
             $payment_info = array();
             $payment_info = Model('Order')->payment_info($order['pay_id']);
             // 只保留显示手机版支付方式
-            if(!file_exists(ROOT_PATH . 'plugins/payment/'.$payment['pay_code'].'.php')){
+            if(!file_exists(ROOT_PATH . 'plugins/payment/'.$payment_info['pay_code'].'.php')){
                 $payment_info = false;
             }
 
