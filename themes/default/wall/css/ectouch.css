@@ -170,7 +170,7 @@ header h1{
 }
 .user-chat{
 	height: 100%;
-	padding: 3rem 1rem;
+	padding: 1.5rem 1rem;
 	overflow-x: hidden;
 	overflow-y: scroll;
 }
