@@ -349,10 +349,10 @@ class SaleController extends CommonController {
         $img = file_get_contents($bg_img);
         file_put_contents($dp_img,$img);
         chmod(ROOT_PATH.$dp_img, 0777);
-        if(!file_exists($ew_img)){
-            // 添加二维码水印
-            Image::water($dp_img,$ew_img,12);          
-        }
+
+        // 添加二维码水印
+        Image::water($dp_img,$ew_img,12);
+
         // 添加微信头像水印
         if($info['avatar']){
             Image::water($dp_img,$wx_img,13);
