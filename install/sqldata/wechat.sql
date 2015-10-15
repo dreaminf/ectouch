@@ -247,6 +247,7 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_wall` (
   `content` varchar(255) NOT NULL COMMENT '活动说明',
   `support` varchar(255) NOT NULL COMMENT '赞助支持',
   `status` tinyint(1) unsigned zerofill NOT NULL COMMENT '活动状态，0未开始， 1进行中， 2已结束',
+  'qrcode' varchar(255) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -278,9 +279,10 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_wall_user` (
   `addtime` int(11) unsigned NOT NULL COMMENT '添加时间',
   `checktime` int(11) unsigned NOT NULL COMMENT '审核时间',
   `openid` varchar(100) NOT NULL COMMENT '微信用户openid',
+  `wechatname` varchar(60) NOT NULL COMMENT '微信用户昵称',
+  `headimgurl` varchar(255) NOT NULL COMMENT '微信用户头像',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- 增加字段
 ALTER TABLE `ecs_wechat_prize` ADD COLUMN `wall_id` int(11) UNSIGNED NOT NULL DEFAULT 0;
-ALTER TABLE `ecs_wechat_wall` ADD COLUMN `qrcode` varchar(255)  NOT NULL;

@@ -58,9 +58,9 @@
                             <li>
                                 <div class="fl award-list-info">
                                     <span class="fl">{$key}</span>
-                                    <img src="{$list.headimg}" class="fl"/>
+                                    <img src="{$list.headimgurl}" class="fl"/>
                                 </div>
-                                <p class="fr">{$list.nickname}</p>
+                                <p class="fr">{$list.wechatname}</p>
                             </li>
                         {/foreach}
                         </ul>
@@ -119,7 +119,7 @@
                                 if(i > len){
                                     i = 0;
                                 }
-                                $(".container").html('<img src="'+prize[i].headimg+'" /><p class="award-content-name">'+prize[i].nickname+'</p>').addClass("active").css("display", "block").siblings("li").removeClass("active");
+                                $(".container").html('<img src="'+prize[i].headimgurl+'" /><p class="award-content-name">'+prize[i].wechatname+'</p>').addClass("active").css("display", "block").siblings("li").removeClass("active");
                                 i++;
                             }, 80);
                         }
@@ -140,11 +140,11 @@
                 $.get("{:url('start_draw', array('wall_id'=>$this->_var['wall']['id']))}", '', function(result){
                     if(result.errCode == 0){
                         //中奖
-                        $(".container").html('<img src="'+result.data.headimg+'" /><p class="award-content-name">'+result.data.nickname+'</p>').addClass("active").css("display", "block").siblings("li").removeClass("active");
+                        $(".container").html('<img src="'+result.data.headimgurl+'" /><p class="award-content-name">'+result.data.wechatname+'</p>').addClass("active").css("display", "block").siblings("li").removeClass("active");
                         
                         var key = $("#award li span.fl:last").text();
                         key = key ? parseInt(key) + 1 : 1;
-                        var html = '<li><div class="fl award-list-info"><span class="fl">'+key+'</span><img src="'+result.data.headimg+'" class="fl"/></div><p class="fr">'+result.data.nickname+'</p></li>';
+                        var html = '<li><div class="fl award-list-info"><span class="fl">'+key+'</span><img src="'+result.data.headimgurl+'" class="fl"/></div><p class="fr">'+result.data.wechatname+'</p></li>';
                         $("#award").append(html);
                         //获奖人数
                         $("#prize_num").html(result.data.prize_num);
