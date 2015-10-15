@@ -61,6 +61,7 @@ class SaleModel extends BaseModel {
         }
         foreach($res as $key => $val){
             $res[$key]['time'] = local_date('Y-m-d H:i:s',$val['create_time']);
+            $res[$key]['shop_name'] = C('shop_name').$res[$key]['shop_name'];
         }
         return $res;
     }
@@ -605,7 +606,7 @@ class SaleModel extends BaseModel {
         $sql = "SELECT * FROM " . $this->pre . "drp_shop WHERE user_id = '$user_id'";
         $row = $this->row($sql);
         $info['drp_id'] = $row['id'];
-        $info['shop_name'] = $row['shop_name'];
+        $info['shop_name'] = C('shop_name').$row['shop_name'];
         $info['real_name'] = $row['real_name'];
         $info['open']      = $row['open'];
         $info['cat_id']    = $row['cat_id'];
@@ -620,7 +621,6 @@ class SaleModel extends BaseModel {
         }
 
         $info['time'] = local_date(C('time_format'), $last_time);
-
         return $info;
     }
 

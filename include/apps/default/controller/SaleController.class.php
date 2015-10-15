@@ -55,7 +55,7 @@ class SaleController extends CommonController {
     public function index() {
         $shop = $this->model->table('drp_shop')->where(array('user_id'=>$_SESSION['user_id']))->field('create_time,shop_name')->find();
         $sale['time'] = local_date('Y-m-d H:i:s',$shop['create_time']);
-        $sale['shop_name'] = $shop['shop_name'];
+        $sale['shop_name'] = C('shop_name').$shop['shop_name'];
         $this->assign('sale',$sale);
         // 总销售额
         $sale_money = model('Sale')->get_sale_money_total();
@@ -592,7 +592,7 @@ class SaleController extends CommonController {
             if (empty($data['shop_mobile'])){
                 show_message(L('shop_mobile_empty'));
             }
-            $data['shop_name'] = C('SHOP_NAME').$data['shop_name'];
+            $data['shop_name'] = $data['shop_name'];
             $data['user_id'] = $_SESSION['user_id'];
             if($this->model->table('drp_shop')->data($data)->insert()){
                 redirect(url('sale/sale_set_category'));
@@ -1033,6 +1033,7 @@ class SaleController extends CommonController {
         $id = I('id') ? I('id') : $this->user_id;
         $info = M()->table('drp_shop')->where("user_id=".$id)->select();
         $info['0']['time'] = local_date('Y-m-d H:i:s',$info['0']['create_time']);
+        $info['0']['shop_name'] = C('shop_name').$info['0']['shop_name'];
         $this->assign('shop_info', $info['0']);
 
         $shop_user = model('ClipsBase')->get_user_default($id);
@@ -1061,7 +1062,7 @@ class SaleController extends CommonController {
      */
     public function ranking_list(){
 
-        $size = I(C('page_size'), 5);
+        $size = I(C('page_size'), 10);
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
         $sql = "select COUNT(*) as count from {pre}drp_shop";
         $count = $this->model->query($sql);
@@ -1074,6 +1075,7 @@ class SaleController extends CommonController {
         if($list){
             foreach($list as $key=>$val){
                 $list[$key]['sum_money'] = $val['sum_money'] ? $val['sum_money'] : 0.00;
+                $list[$key]['shop_name'] = C('shop_name').$val['shop_name'];
             }
         }
         $this->assign('list', $list);
