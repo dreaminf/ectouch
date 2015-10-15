@@ -48,8 +48,8 @@ class Category extends IndexController
         // 排序、显示方式以及类型
         $default_display_type = C('show_order_type') == '0' ? 'list' : (C('show_order_type') == '1' ? 'grid' : 'text');
         $default_sort_order_method = C('sort_order_method') == '0' ? 'DESC' : 'ASC';
-        $default_sort_order_type   = C('sort_order_type') == '0' ? 'goods_id' : (C('sort_order_type') == '1' ? 'shop_price' : 'last_update');
-        $sort  = I('sort');
+        $default_sort_order_type = C('sort_order_type') == '0' ? 'goods_id' : (C('sort_order_type') == '1' ? 'shop_price' : 'last_update');
+        $sort = I('sort');
         $order = I('order');
         $display = I('display');
         $display = in_array(strtolower($display), array('list', 'grid', 'text')) ? $display : (isset($_COOKIE['ECS']['display']) ? $_COOKIE['ECS']['display'] : $default_display_type);
