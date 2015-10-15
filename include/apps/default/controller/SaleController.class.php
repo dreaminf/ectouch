@@ -351,7 +351,9 @@ class SaleController extends CommonController {
         chmod(ROOT_PATH.$dp_img, 0777);
 
         // 添加二维码水印
-        Image::water($dp_img,$ew_img,12);
+        if(file_get_contents($ew_img)){
+            Image::water($dp_img,$ew_img,12);
+        }
 
         // 添加微信头像水印
         if($info['avatar']){
@@ -401,9 +403,7 @@ class SaleController extends CommonController {
             $ch = curl_init();
             $timeout = 5;
             $info['avatar']=preg_replace('/https/','http',$info['avatar'],1);
-            if(session('user_id') == '2434'){
-                echo $info['avatar'];
-            }
+            
             curl_setopt ($ch, CURLOPT_URL, $info['avatar']);
             curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en; rv:1.9.2) Gecko/20100115 Firefox/3.6 GTBDFff GTB7.0');
