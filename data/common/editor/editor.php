@@ -1,6 +1,7 @@
 <?php
     require 'config.php';
-    //if(!$enable) die('没有编辑器使用权限'); //权限验证
+    //权限验证
+    if(!$enable) exit('加载超时请尝试刷新页面。');
     $lang = $_CFG['lang'] == 'en_us' ? 'en':'zh-cn';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -14,6 +15,7 @@
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <style type="text/css">
 body {margin:0px; padding:0px;}
+#container {width:640px; height:480px;}
 </style>
 </head>
 
