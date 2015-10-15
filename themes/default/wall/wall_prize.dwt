@@ -6,9 +6,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <title>微信墙</title>
         <link rel="stylesheet" type="text/css" href="__TPL__/wall/css/wechat.css"/>
+        <script type="text/javascript">
+			window.onload=function(){
+				var con=document.getElementById('con');
+				var conHeight=con.offsetHeight;
+				var c=document.documentElement.clientHeight;
+				con.style.height=c+'px';
+			}
+		</script>
     </head>
     <body>
-        <div class="con" {if $wall.background}style="background-image:url({$wall.background})"{/if}>
+        <div class="con" id="con" {if $wall.background}style="background-image:url({$wall.background})"{/if}>
             <div class="main">
                 <!--logo-->
                 <div class="logo">
@@ -182,9 +190,6 @@
                     }, 'json');
                 }
             });
-            
-            //全屏显示
-            $('.con').height($(window).height());
             
         })
         function remove_prize(){
