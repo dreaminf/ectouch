@@ -129,6 +129,13 @@ switch ($step) {
 			$config['dbUser'] = $db_user;
 			$config['dbPass'] = $db_pass;
 			$config['dbPrefix'] = empty($prefix) ? 'ecs_' : $prefix;
+		}else{
+			$config['dbHost'] = 'localhost';
+			$config['dbPort'] = '3306';
+			$config['dbName'] = '';
+			$config['dbUser'] = '';
+			$config['dbPass'] = '';
+			$config['dbPrefix'] = 'ecs_';
 		}
 		include ("./templates/3.php");
 		break;

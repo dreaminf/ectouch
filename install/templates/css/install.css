@@ -25,7 +25,7 @@ body {background: url('../images/bg.png') no-repeat #2f4158;background-size: cov
 .clearfix {_zoom: 1;}
 .clearfix:after {content: ".";display: block;visibility: hidden;clear: both;height: 0px;}
 
-.wrap{margin:120px auto 0;box-shadow:0 0 20px #3F3F3F;width:980px;background-color:#fff;}
+.wrap{margin:80px auto 0;box-shadow:0 0 20px #3F3F3F;width:980px;background-color:#fff;}
 /* 头部样式 */
 .header{height:80px;padding: 0 30px;position:relative;color:#fff;background:#246fa6 url(../images/header.png) 0 0 repeat-x;}
 .header-title{float:left;font-size: 30px;line-height: 80px;}
