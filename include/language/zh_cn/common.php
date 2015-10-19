@@ -499,7 +499,7 @@ $_LANG['brand_category'] = '分类浏览：';
 $_LANG['all_category'] = '所有分类';
 
 /* 商品分类页 */
-$_LANG['goods_filter'] = '商品筛选';
+$_LANG['goods_filter'] = '筛选';
 $_LANG['sort_default'] = '默认';
 $_LANG['sort_sales'] = '销量';
 $_LANG['sort_popularity'] = '人气';
