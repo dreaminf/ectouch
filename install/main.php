@@ -22,20 +22,19 @@ if($independent){
 //插入微信菜单
 $query = "INSERT INTO `{$dbPrefix}wechat_menu` (`id`, `wechat_id`, `pid`, `name`, `type`, `key`, `url`, `sort`, `status`) VALUES
 (1, 1, 0, '微商城', 'click', '', '#', 1, 1),
-(2, 1, 0, '微分销', 'click', '', '#', 2, 1),
+(2, 1, 0, '微互动', 'click', '', '#', 2, 1),
 (3, 1, 0, '个人中心', 'click', '', '#', 3, 1),
 (4, 1, 1, '商城首页', 'view', '', '{$site_url}', 1, 1),
 (5, 1, 1, '最新商品', 'click', 'news', '', 2, 1),
 (6, 1, 1, '推荐商品', 'click', 'best', '', 3, 1),
 (7, 1, 1, '热销商品', 'click', 'hot', '', 4, 1),
-(8, 1, 2, '我要开店', 'view', '', '{$site_url}/?c=sale&amp;a=sale_set', 1, 1),
-(9, 1, 2, '我的佣金', 'view', '', '{$site_url}/?c=sale&amp;a=my_commission', 2, 1),
-(10, 1, 2, '获取推广二维码', 'view', '', '{$site_url}/?c=sale&amp;a=spread', 3, 1),
-(11, 1, 2, '开店须知', 'click', 'notice', '', 4, 1),
-(12, 1, 3, '会员中心', 'view', '', '{$site_url}/?c=user', 1, 1),
-(13, 1, 3, '订单查询', 'click', 'ddcx', '', 2, 1),
-(14, 1, 3, '积分查询', 'click', 'jfcx', '', 3, 1),
-(15, 1, 3, '签到送积分', 'click', 'sign', '', 4, 1)";
+(8, 1, 2, '大转盘', 'click', 'dzp', '', 1, 1),
+(9, 1, 2, '砸金蛋', 'click', 'zjd', '', 2, 1),
+(10, 1, 2, '刮刮卡', 'click', 'ggk', '', 3, 1),
+(11, 1, 3, '会员中心', 'view', '', '{$site_url}/?c=user', 1, 1),
+(12, 1, 3, '订单查询', 'click', 'ddcx', '', 2, 1),
+(13, 1, 3, '积分查询', 'click', 'jfcx', '', 3, 1),
+(14, 1, 3, '签到送积分', 'click', 'sign', '', 4, 1)";
 mysql_query($query);
 
 //读取配置文件，并替换真实配置数据
@@ -46,8 +45,6 @@ $strConfig = str_replace('#DB_USER#', $dbUser, $strConfig);
 $strConfig = str_replace('#DB_PWD#', $dbPwd, $strConfig);
 $strConfig = str_replace('#DB_PORT#', $dbPort, $strConfig);
 $strConfig = str_replace('#DB_PREFIX#', $dbPrefix, $strConfig);
-// $strConfig = str_replace('#HASH_CODE#', genRandomString(18), $strConfig);
-// $strConfig = str_replace('#COOKIE_PREFIX#', genRandomString(6) . "_", $strConfig);
 @file_put_contents($config['dbConfig'], $strConfig);
 
 if($independent){
