@@ -9,7 +9,7 @@ defined('DATA_PATH') or define('DATA_PATH', ROOT_PATH . 'data/');
 defined('ADDONS_PATH') or define('ADDONS_PATH', ROOT_PATH . 'plugins/');
 defined('STORAGE_PATH') or define('STORAGE_PATH', DATA_PATH . 'attached/');
 // 调试信息
-defined('APP_DEBUG') or define('APP_DEBUG', true);
+defined('APP_DEBUG') or define('APP_DEBUG', false);
 defined('ENVIRONMENT') or define('ENVIRONMENT', APP_DEBUG ? 'development':'production');
 // 模块绑定
 defined('BIND_MODULE') or define('BIND_MODULE', '');
