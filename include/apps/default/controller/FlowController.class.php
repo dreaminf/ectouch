@@ -1035,9 +1035,7 @@ class FlowController extends CommonController {
                 $consignee ['province'],
                 $consignee ['city'],
                 $consignee ['district']
-            )),
-            'order_source' => 1
-            // 'mobile_pay' => 1
+            ))
         );
 
         /* 扩展信息 */
@@ -1202,7 +1200,7 @@ class FlowController extends CommonController {
         }
 
         $order ['from_ad'] = !empty($_SESSION ['from_ad']) ? $_SESSION ['from_ad'] : '0';
-        $order ['referer'] = !empty($_SESSION ['referer']) ? addslashes($_SESSION ['referer']) : '';
+        $order ['referer'] = !empty($_SESSION ['referer']) ? addslashes($_SESSION ['referer']). 'Touch' : 'Touch';
 
         /* 记录扩展信息 */
         if ($flow_type != CART_GENERAL_GOODS) {
