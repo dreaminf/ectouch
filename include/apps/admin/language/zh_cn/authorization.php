@@ -29,6 +29,8 @@ $_LANG['version'] = '版本';
 $_LANG['app_key'] = 'App Key';
 $_LANG['app_secret'] = 'App Secret';
 $_LANG['app_id'] = 'APP ID';
+$_LANG['token'] = 'TOKEN';
+$_LANG['redirecturi'] = '回调地址';
 
 $_LANG['yes_uninstall'] = '卸载成功';
 $_LANG['no_uninstall'] = '卸载失败,找不到文件';
