@@ -282,7 +282,7 @@ elseif ($_REQUEST['act'] == 'remove')
     $logo_name = $db->getOne($sql);
     if (!empty($logo_name))
     {
-        @unlink(ROOT_PATH . DATA_DIR . '/attached/brandlogo/' .$logo_name);
+        @unlink(ROOT_PATH . DATA_DIR . '/attachment/brandlogo/' .$logo_name);
     }
 
     $exc->drop($id);
@@ -312,7 +312,7 @@ elseif ($_REQUEST['act'] == 'drop_logo')
 
     if (!empty($logo_name))
     {
-        @unlink(ROOT_PATH . DATA_DIR . '/attached/brandlogo/' .$logo_name);
+        @unlink(ROOT_PATH . DATA_DIR . '/attachment/brandlogo/' .$logo_name);
         $sql = "UPDATE " .$ecs->table('brand'). " SET brand_logo = '' WHERE brand_id = '$brand_id'";
         $db->query($sql);
     }
@@ -394,13 +394,13 @@ function get_brandlist()
     while ($rows = $GLOBALS['db']->fetchRow($res))
     {
         $brand_logo = empty($rows['brand_logo']) ? '' :
-            '<a href="../' . DATA_DIR . '/attached/brandlogo/'.$rows['brand_logo'].'" target="_brank"><img src="images/picflag.gif" width="16" height="16" border="0" alt='.$GLOBALS['_LANG']['brand_logo'].' /></a>';
+            '<a href="../' . DATA_DIR . '/attachment/brandlogo/'.$rows['brand_logo'].'" target="_brank"><img src="images/picflag.gif" width="16" height="16" border="0" alt='.$GLOBALS['_LANG']['brand_logo'].' /></a>';
         $site_url   = empty($rows['site_url']) ? 'N/A' : '<a href="'.$rows['site_url'].'" target="_brank">'.$rows['site_url'].'</a>';
 
         $rows['brand_logo'] = $brand_logo;
 
         $brand_banner = empty($rows['brand_banner']) ? '' :
-            '<a href="../' . DATA_DIR . '/attached/brandbanner/'.$rows['brand_banner'].'" target="_brank"><img src="images/picflag.gif" alt="banner" width="16" height="16" border="0" alt='.$GLOBALS['_LANG']['brand_logo'].' /></a>';
+            '<a href="../' . DATA_DIR . '/attachment/brandbanner/'.$rows['brand_banner'].'" target="_brank"><img src="images/picflag.gif" alt="banner" width="16" height="16" border="0" alt='.$GLOBALS['_LANG']['brand_logo'].' /></a>';
         $site_url   = empty($rows['site_url']) ? 'N/A' : '<a href="'.$rows['site_url'].'" target="_brank">'.$rows['site_url'].'</a>';
 
         $rows['brand_banner'] = $brand_banner;

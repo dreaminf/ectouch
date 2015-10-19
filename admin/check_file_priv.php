@@ -44,18 +44,18 @@ if ($_REQUEST['act']== 'check')
     $dir_subdir['images'][]    = IMAGE_DIR . '/upload/Flash';
     $dir_subdir['images'][]    = IMAGE_DIR . '/upload/Media';
     $dir_subdir['data'][]      = DATA_DIR;
-    $dir_subdir['data'][]      = DATA_DIR . '/attached/afficheimg';
-    $dir_subdir['data'][]      = DATA_DIR . '/attached/brandlogo';
-    $dir_subdir['data'][]      = DATA_DIR . '/attached/cardimg';
-    $dir_subdir['data'][]      = DATA_DIR . '/attached/feedbackimg';
-    $dir_subdir['data'][]      = DATA_DIR . '/attached/packimg';
-    $dir_subdir['data'][]      = DATA_DIR . '/attached/sqldata';
-    $dir_subdir['temp'][]      = DATA_DIR . '/attached/backup';
-    $dir_subdir['temp'][]      = DATA_DIR . '/attached/caches';
-    $dir_subdir['temp'][]      = DATA_DIR . '/attached/compiled';
-    $dir_subdir['temp'][]      = DATA_DIR . '/attached/compiled/admin';
-    $dir_subdir['temp'][]      = DATA_DIR . '/attached/query_caches';
-    $dir_subdir['temp'][]      = DATA_DIR . '/attached/static_caches';
+    $dir_subdir['data'][]      = DATA_DIR . '/attachment/afficheimg';
+    $dir_subdir['data'][]      = DATA_DIR . '/attachment/brandlogo';
+    $dir_subdir['data'][]      = DATA_DIR . '/attachment/cardimg';
+    $dir_subdir['data'][]      = DATA_DIR . '/attachment/feedbackimg';
+    $dir_subdir['data'][]      = DATA_DIR . '/attachment/packimg';
+    $dir_subdir['data'][]      = DATA_DIR . '/attachment/sqldata';
+    $dir_subdir['temp'][]      = DATA_DIR . '/attachment/backup';
+    $dir_subdir['temp'][]      = DATA_DIR . '/attachment/caches';
+    $dir_subdir['temp'][]      = DATA_DIR . '/attachment/compiled';
+    $dir_subdir['temp'][]      = DATA_DIR . '/attachment/compiled/admin';
+    $dir_subdir['temp'][]      = DATA_DIR . '/attachment/query_caches';
+    $dir_subdir['temp'][]      = DATA_DIR . '/attachment/static_caches';
 
     /* 将商品图片目录加入检查范围 */
     foreach ($goods_img_dir as $val)

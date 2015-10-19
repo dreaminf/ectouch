@@ -62,15 +62,15 @@ if ($_REQUEST['act'] == 'list')
         $sql .= " AND theme <> '".$tmp['code']."' ";
         $available_code[] = $tmp['code'];
     }
-    $tmp_bak_dir = @opendir(ROOT_PATH . 'data/attached/backup/library/');
+    $tmp_bak_dir = @opendir(ROOT_PATH . 'data/attachment/backup/library/');
     while ($file = readdir($tmp_bak_dir))
     {
-        if ($file != '.' && $file != '..' && $file != '.svn' && $file != 'index.htm' && $file != '.gitignore' && is_file(ROOT_PATH .'data/attached/backup/library/' . $file) == true)
+        if ($file != '.' && $file != '..' && $file != '.svn' && $file != 'index.htm' && $file != '.gitignore' && is_file(ROOT_PATH .'data/attachment/backup/library/' . $file) == true)
         {
             $code = substr($file, 0, strpos($file, '-'));
             if (!in_array($code, $available_code))
             {
-                @unlink(ROOT_PATH . 'data/attached/backup/library/' . $file);
+                @unlink(ROOT_PATH . 'data/attachment/backup/library/' . $file);
             }
         }
     }
@@ -579,7 +579,7 @@ if ($_REQUEST['act'] == 'backup')
     $tpl= $_CFG['template'];
     //$tpl = trim($_REQUEST['tpl_name']);
 
-    $filename = '../data/attached/backup/' . $tpl . '_' . date('Ymd') . '.zip';
+    $filename = '../data/attachment/backup/' . $tpl . '_' . date('Ymd') . '.zip';
 
     $zip = new PHPZip;
     $done = $zip->zip('../themes/' . $tpl . '/', $filename);
@@ -622,7 +622,7 @@ if ($_REQUEST['act'] == 'update_library')
 
     if (@file_exists($lib_file) === true && @file_put_contents($lib_file, $html))
     {
-        @file_put_contents('../data/attached/backup/library/' . $_CFG['template'] . '-' . $_POST['lib'] . '.lbi', $org_html);
+        @file_put_contents('../data/attachment/backup/library/' . $_CFG['template'] . '-' . $_POST['lib'] . '.lbi', $org_html);
 
         make_json_result('', $_LANG['update_lib_success']);
     }
@@ -641,7 +641,7 @@ if ($_REQUEST['act'] == 'restore_library')
     $lib_name   = trim($_GET['lib']);
     $lib_file   = '../themes/' . $_CFG['template'] . '/library/' . $lib_name . '.lbi';
     $lib_file   = str_replace("0xa", '', $lib_file); // 过滤 0xa 非法字符
-    $lib_backup = '../data/attached/backup/library/' . $_CFG['template'] . '-' . $lib_name . '.lbi';
+    $lib_backup = '../data/attachment/backup/library/' . $_CFG['template'] . '-' . $lib_name . '.lbi';
     $lib_backup = str_replace("0xa", '', $lib_backup); // 过滤 0xa 非法字符
 
     if (file_exists($lib_backup) && filemtime($lib_backup) >= filemtime($lib_file))

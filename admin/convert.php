@@ -126,7 +126,7 @@ elseif ($_REQUEST['act'] == 'check')
     $to_dir_list = array(
         ROOT_PATH . IMAGE_DIR . '/upload/',
         $img_dir,
-        ROOT_PATH . DATA_DIR . '/attached/afficheimg/',
+        ROOT_PATH . DATA_DIR . '/attachment/afficheimg/',
         ROOT_PATH . 'cert/'
     );
 

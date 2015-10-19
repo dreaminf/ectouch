@@ -175,7 +175,7 @@ elseif ($_REQUEST['act'] == 'insert')
             }
 
             $source_file = $_FILES['upfile_flash']['tmp_name'];
-            $target      = ROOT_PATH . DATA_DIR . '/attached/afficheimg/';
+            $target      = ROOT_PATH . DATA_DIR . '/attachment/afficheimg/';
             $file_name   = $urlstr .'.swf';
 
             if (!move_upload_file($source_file, $target.$file_name))
@@ -287,7 +287,7 @@ elseif ($_REQUEST['act'] == 'edit')
     {
         if (strpos($ads_arr['ad_code'], 'http://') === false && strpos($ads_arr['ad_code'], 'https://') === false)
         {
-            $src = '../' . DATA_DIR . '/attached/afficheimg/'. $ads_arr['ad_code'];
+            $src = '../' . DATA_DIR . '/attachment/afficheimg/'. $ads_arr['ad_code'];
             $smarty->assign('img_src', $src);
         }
         else
@@ -300,7 +300,7 @@ elseif ($_REQUEST['act'] == 'edit')
     {
         if (strpos($ads_arr['ad_code'], 'http://') === false && strpos($ads_arr['ad_code'], 'https://') === false)
         {
-            $src = '../' . DATA_DIR . '/attached/afficheimg/'. $ads_arr['ad_code'];
+            $src = '../' . DATA_DIR . '/attachment/afficheimg/'. $ads_arr['ad_code'];
             $smarty->assign('flash_url', $src);
         }
         else
@@ -399,7 +399,7 @@ elseif ($_REQUEST['act'] == 'update')
             }
 
             $source_file = $_FILES['upfile_flash']['tmp_name'];
-            $target      = ROOT_PATH . DATA_DIR . '/attached/afficheimg/';
+            $target      = ROOT_PATH . DATA_DIR . '/attachment/afficheimg/';
             $file_name   = $urlstr .'.swf';
 
             if (!move_upload_file($source_file, $target.$file_name))
@@ -440,7 +440,7 @@ elseif ($_REQUEST['act'] == 'update')
         $ad_code = "ad_code = '$_POST[ad_text]', ";
     }
 
-    $ad_code = str_replace('../' . DATA_DIR . '/attached/afficheimg/', '', $ad_code);
+    $ad_code = str_replace('../' . DATA_DIR . '/attachment/afficheimg/', '', $ad_code);
     /* 更新信息 */
     $sql = "UPDATE " .$ecs->table('ad'). " SET ".
             "position_id = '$_POST[position_id]', ".
@@ -540,7 +540,7 @@ elseif ($_REQUEST['act'] == 'remove')
     if ((strpos($img, 'http://') === false) && (strpos($img, 'https://') === false) && get_file_suffix($img, $allow_suffix))
     {
         $img_name = basename($img);
-        @unlink(ROOT_PATH. DATA_DIR . '/attached/afficheimg/'.$img_name);
+        @unlink(ROOT_PATH. DATA_DIR . '/attachment/afficheimg/'.$img_name);
     }
 
     admin_log('', 'remove', 'ads');

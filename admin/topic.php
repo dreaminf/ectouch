@@ -167,11 +167,11 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
                     $name .= chr(mt_rand(97, 122));
                 }
                 $name .= '.' . end(explode('.', $_FILES['topic_img']['name']));
-                $target = ROOT_PATH . DATA_DIR . '/attached/afficheimg/' . $name;
+                $target = ROOT_PATH . DATA_DIR . '/attachment/afficheimg/' . $name;
 
                 if (move_upload_file($_FILES['topic_img']['tmp_name'], $target))
                 {
-                    $topic_img = DATA_DIR . '/attached/afficheimg/' . $name;
+                    $topic_img = DATA_DIR . '/attachment/afficheimg/' . $name;
                 }
             }
             else if (!empty($_REQUEST['url']))
@@ -218,11 +218,11 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
             $name .= chr(mt_rand(97, 122));
         }
         $name .= '.' . end(explode('.', $_FILES['title_pic']['name']));
-        $target = ROOT_PATH . DATA_DIR . '/attached/afficheimg/' . $name;
+        $target = ROOT_PATH . DATA_DIR . '/attachment/afficheimg/' . $name;
 
         if (move_upload_file($_FILES['title_pic']['tmp_name'], $target))
         {
-            $title_pic = DATA_DIR . '/attached/afficheimg/' . $name;
+            $title_pic = DATA_DIR . '/attachment/afficheimg/' . $name;
         }
     }
     else if (!empty($_REQUEST['title_url']))
@@ -464,9 +464,9 @@ function get_url_image($url)
         $name .= chr(mt_rand(97, 122));
     }
     $name .= '.' . $ext;
-    $target = ROOT_PATH . DATA_DIR . '/attached/afficheimg/' . $name;
+    $target = ROOT_PATH . DATA_DIR . '/attachment/afficheimg/' . $name;
 
-    $tmp_file = DATA_DIR . '/attached/afficheimg/' . $name;
+    $tmp_file = DATA_DIR . '/attachment/afficheimg/' . $name;
     $filename = ROOT_PATH . $tmp_file;
 
     $img = file_get_contents($url);

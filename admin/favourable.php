@@ -387,7 +387,7 @@ elseif ($_REQUEST['act'] == 'drop_img')
 
     if (!empty($img_name))
     {
-        @unlink(ROOT_PATH . DATA_DIR . '/attached/favourable/' .$img_name);
+        @unlink(ROOT_PATH . DATA_DIR . '/attachment/favourable/' .$img_name);
         $sql = "UPDATE " .$ecs->table('favourable_activity'). " SET touch_img = '' WHERE act_id = '$id'";
         $db->query($sql);
     }

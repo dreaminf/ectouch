@@ -66,19 +66,19 @@ defined('APP_DEBUG') or define('APP_DEBUG', true);
 defined('BASEPATH') or define('BASEPATH', ROOT_PATH . 'include/');
 defined('BASE_PATH') or define('BASE_PATH', ROOT_PATH . 'include/');
 defined('DATA_PATH') or define('DATA_PATH', ROOT_PATH . 'data/');
-defined('STORAGE_PATH') or define('STORAGE_PATH', DATA_PATH . 'attached/');
+defined('STORAGE_PATH') or define('STORAGE_PATH', DATA_PATH . 'attachment/');
 
 defined('__ROOT__') OR define('__ROOT__', '../');
 defined('__PUBLIC__') OR define('__PUBLIC__', '../data/assets');
 defined('__TPL__') OR define('__TPL__', '../data/assets/admin');
 
-require(BASE_PATH . 'base/constant.php');
+require ROOT_PATH . 'include/config/setting.php';
 spl_autoload_register('autoload');
-require(ROOT_PATH . 'include/helpers/time_helper.php');
-require(ROOT_PATH . 'include/helpers/base_helper.php');
-require(ROOT_PATH . 'include/helpers/common_helper.php');
-require(ROOT_PATH . ADMIN_PATH . '/includes/lib_main.php');
-require(ROOT_PATH . ADMIN_PATH . '/includes/cls_exchange.php');
+require ROOT_PATH . 'include/helpers/time_helper.php';
+require ROOT_PATH . 'include/helpers/base_helper.php';
+require ROOT_PATH . 'include/helpers/common_helper.php';
+require ROOT_PATH . ADMIN_PATH . '/includes/lib_main.php';
+require ROOT_PATH . ADMIN_PATH . '/includes/cls_exchange.php';
 
 /* 对用户传入的变量进行转义操作。*/
 if (!get_magic_quotes_gpc())
@@ -160,16 +160,16 @@ if (file_exists(ROOT_PATH . 'include/language/' . $_CFG['lang'] . '/admin/' . ba
 }
 L($_LANG);
 
-if (!file_exists('../data/attached/caches'))
+if (!file_exists('../data/caches'))
 {
-    @mkdir('../data/attached/caches', 0777);
-    @chmod('../data/attached/caches', 0777);
+    @mkdir('../data/caches', 0777);
+    @chmod('../data/caches', 0777);
 }
 
-if (!file_exists('../data/attached/compiled/admin'))
+if (!file_exists('../data/caches/compiled/admin'))
 {
-    @mkdir('../data/attached/compiled/admin', 0777);
-    @chmod('../data/attached/compiled/admin', 0777);
+    @mkdir('../data/attachment/caches/admin', 0777);
+    @chmod('../data/attachment/caches/admin', 0777);
 }
 
 clearstatcache();
@@ -194,7 +194,7 @@ if (preg_replace('/(?:\.|\s+)[a-z]*$/i', '', $_CFG['ecs_version']) != preg_repla
 $smarty = new template;
 
 $smarty->template_dir  = ROOT_PATH . ADMIN_PATH . '/templates';
-$smarty->compile_dir   = ROOT_PATH . 'data/attached/compiled/admin';
+$smarty->compile_dir   = ROOT_PATH . 'data/caches/compiled/admin';
 if ((DEBUG_MODE & 2) == 2)
 {
     $smarty->force_compile = true;

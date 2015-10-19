@@ -198,7 +198,7 @@ if ($_REQUEST['act'] == 'drop_pack_img')
 
     if (!empty($img_name))
     {
-        @unlink(ROOT_PATH . DATA_DIR . '/attached/packimg/' .$img_name);
+        @unlink(ROOT_PATH . DATA_DIR . '/attachment/packimg/' .$img_name);
         $sql = "UPDATE " .$ecs->table('pack'). " SET pack_img = '' WHERE pack_id = '$pack_id'";
         $db->query($sql);
     }
@@ -288,7 +288,7 @@ if ($_REQUEST['act'] == 'remove')
         /* 删除图片 */
         if (!empty($img))
         {
-             @unlink('../' . DATA_DIR . '/attached/packimg/'.$img);
+             @unlink('../' . DATA_DIR . '/attachment/packimg/'.$img);
         }
         admin_log(addslashes($name),'remove','pack');
 

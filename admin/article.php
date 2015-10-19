@@ -683,18 +683,18 @@ function get_articleslist()
 /* 上传文件 */
 function upload_article_file($upload)
 {
-    if (!make_dir("../" . DATA_DIR . "/attached/article"))
+    if (!make_dir("../" . DATA_DIR . "/attachment/article"))
     {
         /* 创建目录失败 */
         return false;
     }
 
     $filename = image::random_filename() . substr($upload['name'], strpos($upload['name'], '.'));
-    $path     = ROOT_PATH. DATA_DIR . "/attached/article/" . $filename;
+    $path     = ROOT_PATH. DATA_DIR . "/attachment/article/" . $filename;
 
     if (move_upload_file($upload['tmp_name'], $path))
     {
-        return DATA_DIR . "/attached/article/" . $filename;
+        return DATA_DIR . "/attachment/article/" . $filename;
     }
     else
     {

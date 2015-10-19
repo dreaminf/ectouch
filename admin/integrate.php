@@ -107,12 +107,12 @@ if ($_REQUEST['act'] == 'install')
 if ($_REQUEST['act'] == 'view_install_log')
 {
     $code = empty($_GET['code']) ? '' : trim($_GET['code']);
-    if (empty($code) || file_exists(ROOT_PATH . DATA_DIR . '/attached/integrate_' . $code . '_log.php' ))
+    if (empty($code) || file_exists(ROOT_PATH . DATA_DIR . '/attachment/integrate_' . $code . '_log.php' ))
     {
         sys_msg($_LANG['lost_intall_log'], 1);
     }
 
-    include(ROOT_PATH . DATA_DIR . '/attached/integrate_' . $code . '_log.php');
+    include(ROOT_PATH . DATA_DIR . '/attachment/integrate_' . $code . '_log.php');
     if (isset($del_list) || isset($rename_list) || isset($ignore_list))
     {
         if (isset($del_list))
@@ -781,7 +781,7 @@ if ($_REQUEST['act'] == 'sync')
     $tasks[] = array('task_name'=>$_LANG['task_save'],'task_status'=>'<span id="task_save">' . $_LANG['task_uncomplete'] . '</span>');
 
     /* 保存修改日志 */
-    $fp = @fopen(ROOT_PATH . DATA_DIR . '/attached/integrate_' . $_SESSION['code'] . '_log.php', 'wb');
+    $fp = @fopen(ROOT_PATH . DATA_DIR . '/attachment/integrate_' . $_SESSION['code'] . '_log.php', 'wb');
     $log = '';
     if (isset($del_list))
     {

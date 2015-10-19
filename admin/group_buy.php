@@ -563,7 +563,7 @@ elseif ($_REQUEST['act'] == 'drop_img')
 
     if (!empty($img_name))
     {
-        @unlink(ROOT_PATH . DATA_DIR . '/attached/groupbuy/' .$img_name);
+        @unlink(ROOT_PATH . DATA_DIR . '/attachment/groupbuy/' .$img_name);
         $sql = "UPDATE " .$ecs->table('goods_activity'). " SET touch_img = '' WHERE act_id = '$id'";
         $db->query($sql);
     }
