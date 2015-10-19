@@ -7,8 +7,9 @@
 <meta http-equiv="refresh" content="3;URL={$message.back_url}" />
 {/if}
 <title>{$page_title}</title>
-<link rel="stylesheet" href="statics/css/bootstrap.min.css">
+<link rel="stylesheet" href="themes/default/css/bootstrap.min.css">
 <link rel="stylesheet" href="themes/default/css/ectouch_cate.css">
+<link rel="stylesheet" href="themes/default/css/photoswipe.css">
 <link rel="stylesheet" href="{$css_path}">
 </head>
 <body>
