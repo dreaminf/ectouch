@@ -11,7 +11,7 @@ class Welcome extends IndexController
             $drp_shop = $_SESSION['drp_shop'];
             //分销店铺
             if($drp_shop['open'] == 1){
-                $drp_shop['mobile_qr'] = './data/attached/drp/drp_'.$drp_shop['user_id'].'.png';
+                $drp_shop['mobile_qr'] = './data/attachment/drp/drp_'.$drp_shop['user_id'].'.png';
                 if(!file_exists($drp_shop['mobile_qr'])){
                     // 二维码
                     $url = $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?drp_id='.$drp_shop['user_id'];

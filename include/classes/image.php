@@ -38,12 +38,12 @@ class image
         {
             /* 创建当月目录 */
             $dir = date('Ym');
-            $dir = ROOT_PATH . $this->data_dir . '/attached/' . $dir . '/';
+            $dir = ROOT_PATH . $this->data_dir . '/attachment/' . $dir . '/';
         }
         else
         {
             /* 创建目录 */
-            $dir = ROOT_PATH . $this->data_dir . '/attached/' . $dir . '/';
+            $dir = ROOT_PATH . $this->data_dir . '/attachment/' . $dir . '/';
             if ($img_name)
             {
                 $img_name = $dir . $img_name; // 将图片定位到正确地址
@@ -203,7 +203,7 @@ class image
         /* 创建当月目录 */
         if (empty($path))
         {
-            $dir = ROOT_PATH . $this->data_dir . '/attached/' . date('Ym').'/';
+            $dir = ROOT_PATH . $this->data_dir . '/attachment/' . date('Ym').'/';
         }
         else
         {

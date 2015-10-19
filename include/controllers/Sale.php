@@ -293,15 +293,15 @@ class Sale extends IndexController {
      * 推广二维码
      */
     public function spread(){
-        $filename  = './data/attached/drp';
+        $filename  = './data/attachment/drp';
         if(!file_exists($filename)){
             mkdir($filename);
         }
         $id = $this->user_id;
-        $bg_img = ROOT_PATH.'/data/attached/drp/tg-bg.png';//背景图
-        $ew_img = 'data/attached/drp/tg-ew-'.$id.'.png';//二维码
-        $dp_img = 'data/attached/drp/tg-'.$id.'.png';//店铺二维码
-        $wx_img = 'data/attached/drp/wx-'.$id.'.png';//微信头像
+        $bg_img = ROOT_PATH.'/data/attachment/drp/tg-bg.png';//背景图
+        $ew_img = 'data/attachment/drp/tg-ew-'.$id.'.png';//二维码
+        $dp_img = 'data/attachment/drp/tg-'.$id.'.png';//店铺二维码
+        $wx_img = 'data/attachment/drp/wx-'.$id.'.png';//微信头像
         if(!file_exists($ew_img)){
             $b = call_user_func(array('WechatController', 'rec_qrcode'), session('user_name'),session('user_id'));
             $img = file_get_contents($b);
@@ -352,15 +352,15 @@ class Sale extends IndexController {
      * 店铺二维码
      */
     public function store(){
-        $filename  = './data/attached/drp';
+        $filename  = './data/attachment/drp';
         if(!file_exists($filename)){
             mkdir($filename);
         }
         $id = $this->user_id;
-        $bg_img = ROOT_PATH.'/data/attached/drp/dp-bg.png';//背景图
-        $ew_img = 'data/attached/drp/drp-'.$id.'.png';//二维码
-        $dp_img = 'data/attached/drp/dp-'.$id.'.png';//店铺二维码
-        $wx_img = 'data/attached/drp/wx-'.$id.'.png';//微信头像
+        $bg_img = ROOT_PATH.'/data/attachment/drp/dp-bg.png';//背景图
+        $ew_img = 'data/attachment/drp/drp-'.$id.'.png';//二维码
+        $dp_img = 'data/attachment/drp/dp-'.$id.'.png';//店铺二维码
+        $wx_img = 'data/attachment/drp/wx-'.$id.'.png';//微信头像
 //        if(!file_exists($ew_img)){
             $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$id)->getOne();
             // 二维码
@@ -1076,7 +1076,7 @@ class Sale extends IndexController {
         //设置上传文件类型
         $upload->allowExts = explode(',', 'jpg,jpeg,gif,png,bmp');
         //设置附件上传目录
-        $upload->savePath = './data/attached/drp_logo/';
+        $upload->savePath = './data/attachment/drp_logo/';
         // 是否生成缩略图
         $upload->thumb = false;
         //缩略图大小

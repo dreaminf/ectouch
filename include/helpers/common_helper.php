@@ -1302,9 +1302,9 @@ function clear_tpl_files($is_cache = true, $ext = '')
 
     if ($is_cache)
     {
-        $cache_dir = STORAGE_PATH . 'caches/';
-        $dirs[] = STORAGE_PATH . 'query_caches/';
-        $dirs[] = STORAGE_PATH . 'static_caches/';
+        $cache_dir = DATA_PATH . 'caches/cache/';
+        $dirs[] = DATA_PATH . 'caches/query/';
+        $dirs[] = DATA_PATH . 'caches/static/';
         for($i = 0; $i < 16; $i++)
         {
             $hash_dir = $cache_dir . dechex($i);
@@ -1313,8 +1313,8 @@ function clear_tpl_files($is_cache = true, $ext = '')
     }
     else
     {
-        $dirs[] = STORAGE_PATH . 'compiled/';
-        $dirs[] = STORAGE_PATH . 'compiled/admin/';
+        $dirs[] = DATA_PATH . 'caches/compiled/';
+        $dirs[] = DATA_PATH . 'caches/compiled/admin/';
     }
 
     $str_len = strlen($ext);

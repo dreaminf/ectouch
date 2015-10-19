@@ -7,7 +7,7 @@ defined('ROOT_PATH') or define('ROOT_PATH', str_replace('\\', '/', dirname(dirna
 defined('BASE_PATH') or define('BASE_PATH', ROOT_PATH . 'include/');
 defined('DATA_PATH') or define('DATA_PATH', ROOT_PATH . 'data/');
 defined('ADDONS_PATH') or define('ADDONS_PATH', ROOT_PATH . 'plugins/');
-defined('STORAGE_PATH') or define('STORAGE_PATH', DATA_PATH . 'attached/');
+defined('STORAGE_PATH') or define('STORAGE_PATH', DATA_PATH . 'attachment/');
 // 调试信息
 defined('APP_DEBUG') or define('APP_DEBUG', false);
 defined('ENVIRONMENT') or define('ENVIRONMENT', APP_DEBUG ? 'development':'production');

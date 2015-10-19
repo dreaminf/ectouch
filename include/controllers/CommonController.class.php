@@ -85,8 +85,8 @@ class Comment extends IndexController {
         self::$view = new EcsTemplate();
         self::$view->cache_lifetime = C('cache_time');
         self::$view->template_dir = ROOT_PATH . 'themes/' . C('template');
-        self::$view->cache_dir = ROOT_PATH . 'data/attached/caches';
-        self::$view->compile_dir = ROOT_PATH . 'data/attached/compiled';
+        self::$view->cache_dir = DATA_PATH . 'caches/cache';
+        self::$view->compile_dir = DATA_PATH . 'caches/compiled';
         
         if ((DEBUG_MODE & 2) == 2) {
             self::$view->direct_output = true;

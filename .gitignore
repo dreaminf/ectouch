@@ -7,12 +7,22 @@ data/caches/cache/*
 !data/caches/cache/index.html
 !data/caches/cache/.htaccess
 
+data/caches/compiled/*
+data/caches/compiled/admin/*
+!data/caches/compiled/admin/index.html
+
 data/caches/logs/*
 !data/caches/logs/index.html
-!data/caches/logs/.htaccess
+
+data/caches/query/*
+!data/caches/query/index.html
+
+data/caches/static/*
+!data/caches/static/index.html
 
 data/attachment/*
 !data/attachment/index.html
+
 data/avatar/*
 !data/avatar/default/
 
