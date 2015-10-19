@@ -2,7 +2,7 @@
 return array(
 	/* ------系统------ */
 	//系统名称
-	'name'=>'ECTouch微分销商城',
+	'name'=>'ECTouch微商城',
 	//系统版本
 	'version'=>'2.0',
 	//系统powered
@@ -19,11 +19,11 @@ return array(
 	//数据库表前缀
 	'dbPrefix' => 'ecs_',
 	//站点名称
-	'siteName' => 'ECTouch微分销商城',
+	'siteName' => 'ECTouch微商城',
 	//站点关键字
-	'siteKeywords' => 'ECTouch微分销商城',
+	'siteKeywords' => 'ECTouch微商城',
 	//站点描述
-	'siteDescription' => 'ECTouch微分销商城',
+	'siteDescription' => 'ECTouch微商城',
 	//需要读写权限的目录
 	'dirAccess' => array(
 		'/',
