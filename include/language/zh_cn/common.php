@@ -504,7 +504,8 @@ $_LANG['sort_default'] = '默认';
 $_LANG['sort_sales'] = '销量';
 $_LANG['sort_popularity'] = '人气';
 $_LANG['sort_price'] = '价格';
-
+$_LANG['clear_filter'] = '清空';
+$_LANG['button_submit'] = '确定';
 
 /* cls_image类的语言项 */
 $_LANG['directory_readonly'] = '目录 % 不存在或不可写';

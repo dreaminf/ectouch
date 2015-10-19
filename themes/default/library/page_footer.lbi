@@ -11,17 +11,17 @@
 	opacity: 0.6;
 }
 </style>
-<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js" ></script> 
-<script type="text/javascript" src="__PUBLIC__/js/jquery.json.js" ></script> 
-<script type="text/javascript" src="__PUBLIC__/js/common.js"></script> 
-<script type="text/javascript" src="__PUBLIC__/js/jquery.more.js"></script> 
-<script type="text/javascript" src="__PUBLIC__/js/utils.js" ></script> 
-<script src="__TPL__/js/TouchSlide.1.1.js"></script> 
-<script src="__TPL__/js/ectouch.js"></script> 
-<script src="__TPL__/js/simple-inheritance.min.js"></script> 
-<script src="__TPL__/js/code-photoswipe-1.0.11.min.js"></script> 
-<script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script> 
-<script src="__TPL__/js/jquery.scrollUp.min.js"></script> 
+<script type="text/javascript" src="data/assets/js/jquery.min.js" ></script>
+<script type="text/javascript" src="data/assets/js/jquery.json.js" ></script>
+<script type="text/javascript" src="data/assets/js/common.js"></script>
+<script type="text/javascript" src="data/assets/js/jquery.more.js"></script>
+<script type="text/javascript" src="data/assets/js/utils.js" ></script>
+<script src="themes/default/js/TouchSlide.1.1.js"></script>
+<script src="themes/default/js/ectouch.js"></script>
+<script src="themes/default/js/simple-inheritance.min.js"></script>
+<script src="themes/default/js/code-photoswipe-1.0.11.min.js"></script>
+<script src="data/assets/js/bootstrap/js/bootstrap.min.js"></script>
+<script src="themes/default/js/jquery.scrollUp.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/validform.js" ></script>
 <script language="javascript">
 	/*banner滚动图片*/

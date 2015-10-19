@@ -15,10 +15,10 @@
       <p>
       <h4 class="title"><b>{$lang.hot_search}：</b></h4>
       </p>
-      <!-- {foreach from=$hot_search_keywords item=ky} --> 
-      <a href="{:url('category/index', array('keywords'=>$this->_var[ky]))}<!-- {if $id} -->&id={$id}<!-- {/if} -->">{$ky}</a> 
-      <!-- {/foreach} --> 
+      <!-- {foreach from=$hot_search_keywords item=ky} -->
+      <a href="{:url('category/index', array('keywords'=>$this->_var[ky]))}<!-- {if $id} -->&id={$id}<!-- {/if} -->">{$ky}</a>
+      <!-- {/foreach} -->
     </div>
-    <!-- {/if} --> 
+    <!-- {/if} -->
   </div>
 </div>
