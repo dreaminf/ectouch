@@ -128,7 +128,7 @@ class WechatController extends CommonController
                     if (empty($rs2)) {
                         //推荐商品
                         $rs_rec = $this->recommend_goods($wedata['FromUserName'], $keywords);
-                        if($rs_rec){
+                        if(empty($rs_rec)){
                             // 消息自动回复
                             $this->msg_reply('msg');    
                         }
