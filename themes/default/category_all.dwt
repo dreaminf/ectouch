@@ -7,9 +7,9 @@
 		</a>
 	</div>
 	<div class="touch_category_top_but">
-		<form action="aaa/bbb" method="GET">
-		<input type="text" value="" />
-		</form>
+        <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a>
+        <span>{$title}</span>
+        <a href="javascript:openSearch();" class="pull-right ect-icon ect-icon1 ect-icon-search1"></a>
 	</div>
   </div>
   <div class="touch_category_body">

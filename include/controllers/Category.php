@@ -28,12 +28,11 @@ class Category extends IndexController
         }
         if(IS_AJAX){
             $id = I('id');
-            $goodsArr[] = $this->get_cat_two($id);
+            $goodsArr = $this->get_cat_two($id);
             $this->assign('goodsArr',$goodsArr);
             $info = $this->fetch('library/asynclist_category.lbi');
             die(json_encode($info));
         }
-
         $this->display('category_all.dwt', $cache_id);
     }
     public function info(){
@@ -384,7 +383,7 @@ class Category extends IndexController
      */
     public function get_cat_two($cat_id)
     {
-        return $this->load->db->getRow('SELECT cat_name, keywords, cat_desc, style, grade, filter_attr, parent_id FROM {pre}category as g WHERE parent_id =' . $cat_id);
+        return $this->load->db->getAll('SELECT cat_name, keywords, cat_desc, style, grade, filter_attr, parent_id FROM {pre}category as g WHERE g.parent_id =' . $cat_id);
     }
 
 

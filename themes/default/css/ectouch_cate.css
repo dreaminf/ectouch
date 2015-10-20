@@ -1198,6 +1198,6 @@ border: 1px solid transparent;border-radius: 4px;cursor: pointer;display: inline
 .touch_category_right_img img{width:100%;height:auto;}
 .touch_category_right_goods h4{font-size: 12px;margin: 0;padding: 1% 0 0 0;line-height: 1em;color: #888;}
 .touch_category_right_goods ul{margin-top: 1%;}
-.touch_category_right_goods li{width: 32.8%;height:5.5rem;float: left;text-align: center;}
+.touch_category_right_goods li{width: 32.8%;height:5.5rem;float: left;text-align: center;margin-top:1rem;}
 .touch_category_right_goods li a{text-decoration:none;color: #252525;}
 .touch_category_right_goods li span{font-size: 12px;display: block;margin: 0.3rem 0 0.6rem;line-height: 0.6rem;height: 1rem;text-overflow: ellipsis;}

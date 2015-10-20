@@ -3,7 +3,7 @@
 <ul id="two_ul">
 {foreach from=$goodsArr item="vo"}
     <li>
-        <a href="#">
+        <a href="category/index">
             <img src="themes/default/images/2.png">
             <span>{$vo.cat_name}</span>
         </a>
