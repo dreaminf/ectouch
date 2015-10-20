@@ -26,6 +26,14 @@ class Category extends IndexController
             $this->assign('category', $category);
             $this->assign('page_title', L('catalog'));
         }
+        if(IS_AJAX){
+            $id = I('id');
+            $goodsArr[] = $this->get_cat_two($id);
+            $this->assign('goodsArr',$goodsArr);
+            $info = $this->fetch('library/asynclist_category.lbi');
+            die(json_encode($info));
+        }
+
         $this->display('category_all.dwt', $cache_id);
     }
     public function info(){
@@ -367,6 +375,19 @@ class Category extends IndexController
     {
         return $this->load->db->getRow('SELECT cat_name, keywords, cat_desc, style, grade, filter_attr, parent_id FROM {pre}category as g WHERE ' . $cat_id);
     }
+    /**
+     * 获得二级分类的信息
+     *
+     * @param integer $cat_id
+     *
+     * @return void
+     */
+    public function get_cat_two($cat_id)
+    {
+        return $this->load->db->getRow('SELECT cat_name, keywords, cat_desc, style, grade, filter_attr, parent_id FROM {pre}category as g WHERE parent_id =' . $cat_id);
+    }
+
+
 
     /**
      * 获得分类下的商品总数

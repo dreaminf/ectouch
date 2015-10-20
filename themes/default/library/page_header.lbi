@@ -11,5 +11,6 @@
 <link rel="stylesheet" href="themes/default/css/ectouch_cate.css">
 <link rel="stylesheet" href="themes/default/css/photoswipe.css">
 <link rel="stylesheet" href="{$css_path}">
+<script type="text/javascript" src="themes/default/js/jquery-1.9.1.min.js"></script>
 </head>
 <body>

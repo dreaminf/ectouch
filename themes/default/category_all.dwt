@@ -1,51 +1,51 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
-<div class="con">
-<header class="ect-header ect-margin-tb ect-margin-lr text-center"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a>
-<span>{$title}</span>
- <a href="javascript:openSearch();" class="pull-right ect-icon ect-icon1 ect-icon-search1"></a>
-</header>
-<div class="panel panel-default ect-category-all ect-border-radius0" >
-    <ul>
-     <!--{foreach from=$category item=cat name=no}-->
-     <li>
-     	<!--{if $cat.cat_id}-->
-        <div class="media panel-body"> 
-            <div class="pull-left ect-category-right">
-                <h3>{$cat.name|escape:html}</h3>
-                <h5 style="display:none;"> <!--{foreach from=$cat.cat_id item=child name=no1}-->
-            <!--{if $smarty.foreach.no1.index lt 3}-->
-            <!--{if $smarty.foreach.no1.index gt 0}-->/<!--{/if}-->
-            {$child.name|escape:html|truncate:5,false} 
-            <!--{/if}-->
-            <!--{/foreach}--></h5>
-            </div>
-            <i class="fa fa-angle-down ect-transition05"></i>
-        </div>
-        <!--{else}-->
-        <a href="{:url('category/index',array('id'=>$this->_var['cat']['id']))}"><div class="media panel-body"> 
-            <div class="pull-left ect-category-right">
-                <h3>{$cat.name|escape:html}</h3>
-                <h5 style="display:none;"> <!--{foreach from=$cat.cat_id item=child name=no1}-->
-            <!--{if $smarty.foreach.no1.index lt 3}-->
-            <!--{if $smarty.foreach.no1.index gt 0}-->/<!--{/if}-->
-            {$child.name|escape:html|truncate:5,false} 
-            <!--{/if}-->
-            <!--{/foreach}--></h5>
-            </div>
-            <i class="fa fa-angle-right ect-transition05"></i>
-        </div></a>
-        <!--{/if}-->
-        <div class="ect-category-child">
-        <!--{foreach from=$cat.cat_id item=child name=no1}-->
-        <a href="{$child.url}">{$child.name|escape:html}</a>
-        <!--{/foreach}--> 
-        </div>
-      </li>
-      <!--{/foreach}-->
-    </ul> 
-</div>
-</div>
-<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
-<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
-</body>
+ <body>
+  <div class="touch_category_top">
+	<div class="touch_category_top_left">
+		<a href="#">
+			<img src="themes/default/images/ico_left.png" />
+		</a>
+	</div>
+	<div class="touch_category_top_but">
+		<form action="aaa/bbb" method="GET">
+		<input type="text" value="" />
+		</form>
+	</div>
+  </div>
+  <div class="touch_category_body">
+	  <div class="touch_category_left">
+		<ul>
+		{foreach from=$category item="vo"}
+			<li><a id ="ajax_id" href="javascript:void(0);" onclick="getval({$vo.id})">{$vo.name}</a></li>
+		{/foreach}
+		</ul>
+	  </div>
+	  <div class="touch_category_right">
+			<div class="touch_category_right_img">
+				<a href="#">
+					<img src="themes/default/images/1.png" />
+				</a>
+			</div>
+			<div class="touch_category_right_goods">
+
+				<div class="touch_category_top_list">
+		<a href="#">
+			<img src="themes/default/images/list.png">
+		</a>
+	</div>
+	    <div id='category-goods'></div>
+	</div>
+    </div>
+  </div>
+  </div>
+ </body>
+ <script type="text/javascript">
+ function getval(tpl){
+     $.post("http://localhost/project/mobile/index.php?c=category&a=all",{id: tpl},function(data){
+        $("#category-goods").html(data);
+         },'json')
+     }
+
+ </script>
+
 </html>

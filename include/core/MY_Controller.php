@@ -37,7 +37,7 @@ class BaseController extends MY_Controller
     }
 
     protected function fetch($filename, $cache_id = ''){
-        $this->load->tpl->fetch($filename, $cache_id);
+        return $this->load->tpl->fetch($filename, $cache_id);
     }
 
     protected function assign($key = '', $value = ''){

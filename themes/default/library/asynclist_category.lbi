@@ -1,0 +1,12 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<h4>外套</h4>
+<ul id="two_ul">
+{foreach from=$goodsArr item="vo"}
+    <li>
+        <a href="#">
+            <img src="themes/default/images/2.png">
+            <span>{$vo.cat_name}</span>
+        </a>
+    </li>
+{/foreach}
+</ul>
