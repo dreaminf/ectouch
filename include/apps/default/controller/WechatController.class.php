@@ -119,7 +119,7 @@ class WechatController extends CommonController
             $this->record_msg($wedata['FromUserName'], $keywords);
             // 多客服
             $rs = $this->customer_service($wedata['FromUserName'], $keywords);
-            if (empty($rs)) {
+            if (empty($rs) && $keywords != 'kefu') {
                 // 功能插件
                 $rs1 = $this->get_function($wedata['FromUserName'], $keywords);
                 if (empty($rs1)) {
