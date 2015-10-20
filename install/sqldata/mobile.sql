@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_bank` (
 -- ----------------------------
 -- Table structure for `ecs_drp_visiter`
 -- ----------------------------
-CREATE TABLE NOT EXISTS `ecs_drp_visiter` (
+CREATE TABLE IF NOT EXISTS `ecs_drp_visiter` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` int(10) NOT NULL,
   `drp_id` int(10) NOT NULL,
