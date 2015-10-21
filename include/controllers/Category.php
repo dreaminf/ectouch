@@ -26,6 +26,8 @@ class Category extends IndexController
             $this->assign('category', $category);
             $this->assign('page_title', L('catalog'));
         }
+        //dump($category);exit;
+
         if(IS_AJAX){
             $id = I('id');
             $goodsArr = $this->get_cat_two($id);
@@ -33,6 +35,7 @@ class Category extends IndexController
             $info = $this->fetch('library/asynclist_category.lbi');
             die(json_encode($info));
         }
+        
         $this->display('category_all.dwt', $cache_id);
     }
     public function info(){

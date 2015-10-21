@@ -675,15 +675,13 @@ function get_brands($cat = 0, $app = 'brand')
     global $page_libs;
     $template = basename(PHP_SELF);
     $template = substr($template, 0, strrpos($template, '.'));
-    include_once(dirname(ROOT_PATH) . '/' . ADMIN_PATH . '/includes/lib_template.php');
+    //include_once(dirname(ROOT_PATH) . '/' . ADMIN_PATH . '/includes/lib_template.php');
     static $static_page_libs = null;
     if ($static_page_libs == null)
     {
             $static_page_libs = $page_libs;
     }
-
     $children = ($cat > 0) ? ' AND ' . get_children($cat) : '';
-
     $sql = "SELECT b.brand_id, b.brand_name, b.brand_logo, b.brand_desc, COUNT(*) AS goods_num, IF(b.brand_logo > '', '1', '0') AS tag ".
             "FROM " . $global->ecs->table('brand') . "AS b, ".
                 $global->ecs->table('goods') . " AS g ".
@@ -696,7 +694,6 @@ function get_brands($cat = 0, $app = 'brand')
         $sql .= " LIMIT $num ";
     }
     $row = $global->db->getAll($sql);
-
     foreach ($row AS $key => $val)
     {
         $row[$key]['url'] = build_uri($app, array('cid' => $cat, 'bid' => $val['brand_id']), $val['brand_name']);

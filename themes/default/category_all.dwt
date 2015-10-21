@@ -7,16 +7,19 @@
 		</a>
 	</div>
 	<div class="touch_category_top_but">
-        <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a>
-        <span>{$title}</span>
-        <a href="javascript:openSearch();" class="pull-right ect-icon ect-icon1 ect-icon-search1"></a>
+        <input type="text" />
 	</div>
+			<div class="touch_category_top_list">
+    		<a href="#">
+    			<img src="themes/default/images/list.png">
+    		</a>
+    	</div>
   </div>
   <div class="touch_category_body">
 	  <div class="touch_category_left">
 		<ul>
 		{foreach from=$category item="vo"}
-			<li><a id ="ajax_id" href="javascript:void(0);" onclick="getval({$vo.id})">{$vo.name}</a></li>
+			<li class="for_list"><a id ="ajax_id" href="javascript:void(0);" onclick="getval({$vo.id})">{$vo.name}</a></li>
 		{/foreach}
 		</ul>
 	  </div>
@@ -28,11 +31,7 @@
 			</div>
 			<div class="touch_category_right_goods">
 
-				<div class="touch_category_top_list">
-		<a href="#">
-			<img src="themes/default/images/list.png">
-		</a>
-	</div>
+
 	    <div id='category-goods'></div>
 	</div>
     </div>
@@ -40,6 +39,10 @@
   </div>
  </body>
  <script type="text/javascript">
+      $(".touch_category_left ul li").click(function(){
+             $(".touch_category_left ul li").removeClass("add_clear");
+             $(this).addClass("add_clear");
+       });
  function getval(tpl){
      $.post("http://localhost/project/mobile/index.php?c=category&a=all",{id: tpl},function(data){
         $("#category-goods").html(data);
