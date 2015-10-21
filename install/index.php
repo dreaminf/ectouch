@@ -271,8 +271,9 @@ switch ($step) {
 		require $version_file;
 		$version_content = "<?php\ndefine('APPNAME', '".APPNAME."');\ndefine('VERSION', '".VERSION."');\ndefine('RELEASE', '".RELEASE."');\ndefine('ECTOUCH_AUTH_KEY', '".$appid."');";
 		if(ECTOUCH_AUTH_KEY == ''){
-			@file_put_contents($version_file, $version_content);
+			define('IN_ECTOUCH', true);
 			require '../include/vendor/Cloud.class.php';
+			@file_put_contents($version_file, $version_content);
 			$cloud = Cloud::getInstance();
 			$site_info = get_site_info($appid);
 			$cloud->data($site_info)->act('post.install');
@@ -463,11 +464,13 @@ function get_appid(){
 function get_site_info($appid = ECTOUCH_AUTH_KEY){
 	$db_config = require '../data/config.php';
     $conn = mysql_connect($db_config['DB_HOST'], $db_config['DB_USER'], $db_config['DB_PWD']);
-	$sql = 'SELECT code, value FROM ' . $db_config['DB_PREFIX'] . 'shop_config WHERE parent_id > 0';
+    mysql_query("SET NAMES 'utf8'");
+    mysql_select_db($db_config['DB_NAME'], $conn);
+	$sql = 'SELECT `code`, `value` FROM ' . $db_config['DB_PREFIX'] . 'shop_config';
     $result = mysql_query($sql, $conn);
 
     $config = array();
-    while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+    while ($row = mysql_fetch_array($result)) {
     	$config[$row['code']] = $row['value'];
     }
 
@@ -505,7 +508,7 @@ function get_site_info($appid = ECTOUCH_AUTH_KEY){
 }
 
 function get_region_name($region_id, $conn, $db_config){
-	$sql = 'SELECT region_name FROM ' . $db_config['DB_PREFIX'] . 'region WHERE region_id = '. intval($region_id);
+	$sql = 'SELECT `region_name` FROM ' . $db_config['DB_PREFIX'] . 'region WHERE region_id = '. intval($region_id);
     $result = mysql_query($sql, $conn);
 
     if ($result !== false)
