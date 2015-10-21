@@ -11,5 +11,4 @@
  * ----------------------------------------------------------------------------
  */
 
-define('BIND_MODULE', 'Admin');
-require dirname(dirname(__FILE__)) . '/include/bootstrap.php';
+header('Location: ../index.php?m=admin');
