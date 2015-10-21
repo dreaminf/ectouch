@@ -265,20 +265,21 @@ switch ($step) {
 		if(isset($_SESSION['INSTALLOK']) && $_SESSION['INSTALLOK'] == 1){
 			filewrite($config['installFile']);
 		}
-		
-		$appid = appid();
-		$config_file = '../data/version.php';
-		require $config_file;
-		$content = "<?php\ndefine('APPNAME', '".APPNAME."');\ndefine('VERSION', '".VERSION."');\ndefine('RELEASE', '".RELEASE."');\ndefine('ECTOUCH_AUTH_KEY', '".$appid."');";
+
+		$appid = get_appid();
+		$version_file = '../data/version.php';
+		require $version_file;
+		$version_content = "<?php\ndefine('APPNAME', '".APPNAME."');\ndefine('VERSION', '".VERSION."');\ndefine('RELEASE', '".RELEASE."');\ndefine('ECTOUCH_AUTH_KEY', '".$appid."');";
 		if(ECTOUCH_AUTH_KEY == ''){
-			@file_put_contents($config_file, $content);
-			@fopen($this->lockFile, 'w');
-			//$site_info = site_info($appid);
-			//$this->cloud->data($site_info)->act('post.install');
+			@file_put_contents($version_file, $version_content);
+			require '../include/vendor/Cloud.class.php';
+			$cloud = Cloud::getInstance();
+			$site_info = get_site_info($appid);
+			$cloud->data($site_info)->act('post.install');
 		}
 		unset($_SESSION);
 		break;
-}	
+}
 
 /**
  * 错误提示html
@@ -436,10 +437,10 @@ function genRandomString($len = 6) {
 	return $ip[$type];
  }
 
- /**
+/**
  * 生成为一的appid
  */
-function appid(){
+function get_appid(){
     if (function_exists('com_create_guid')){
         $guid = com_create_guid();
     }else{
@@ -453,4 +454,65 @@ function appid(){
                 .substr($charid,20,12);
     }
     return strtoupper(hash('ripemd128', $guid));
+}
+
+/**
+ * 站点数据
+ * @param string $appid
+ */
+function get_site_info($appid = ECTOUCH_AUTH_KEY){
+	$db_config = require '../data/config.php';
+    $conn = mysql_connect($db_config['DB_HOST'], $db_config['DB_USER'], $db_config['DB_PWD']);
+	$sql = 'SELECT code, value FROM ' . $db_config['DB_PREFIX'] . 'shop_config WHERE parent_id > 0';
+    $result = mysql_query($sql, $conn);
+
+    $config = array();
+    while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+    	$config[$row['code']] = $row['value'];
+    }
+
+    $shop_country = get_region_name($config['shop_country'], $conn, $db_config);
+    $shop_province = get_region_name($config['shop_province'], $conn, $db_config);
+    $shop_city = get_region_name($config['shop_city'], $conn, $db_config);
+
+    $mysql_ver = (!$conn) ? '未知':mysql_get_server_info($conn);
+    $data = array(
+        'appid'    => $appid,
+        'domain'   =>  __HOST__,
+        'url'      =>  __URL__,
+        'shop_name'=>  $config['shop_name'],
+        'shop_title'=> $config['shop_title'],
+        'shop_desc'=>  $config['shop_desc'],
+        'shop_keywords'=> $config['shop_keywords'],
+        'country'  =>  $shop_country,
+        'province' =>  $shop_province,
+        'city'     =>  $shop_city,
+        'address'  =>  $config['shop_address'],
+        'qq'       =>  $config['qq'],
+        'ww'       =>  $config['ww'],
+        'ym'       =>  $config['ym'],
+        'msn'      =>  $config['msn'],
+        'email'    =>  $config['service_email'],
+        'phone'    =>  $config['service_phone'],
+        'icp'      =>  $config['icp_number'],
+        'version'  =>  VERSION.'('.RELEASE.')',
+        'language' =>  $config['lang'],
+        'php_ver'  =>  PHP_VERSION,
+        'mysql_ver'=>  $mysql_ver,
+        'charset'  =>  'utf-8'
+    );
+    return $data;
+}
+
+function get_region_name($region_id, $conn, $db_config){
+	$sql = 'SELECT region_name FROM ' . $db_config['DB_PREFIX'] . 'region WHERE region_id = '. intval($region_id);
+    $result = mysql_query($sql, $conn);
+
+    if ($result !== false)
+    {
+        $row = mysql_fetch_row($result);
+        return $row[0];
+    }else{
+    	return '';
+    }
 }
