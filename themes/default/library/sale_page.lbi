@@ -1,13 +1,13 @@
 <!-- {if $pager} -->
 <div class="pagination">
-    <p>
+    <p style="float:left">
         <!-- {if $pager.page_prev} -->
         <a class="pagination-left" href="{$pager.page_prev}" >&lt;上一页</a>
         <!-- {else} -->
         <a class="no pagination-left">&lt;上一页</a>
         <!-- {/if} -->
     </p>
-    <p>
+    <p class="p-select">
 
             <select name="page"  class="form-control" onchange="window.location.href=this.options[this.selectedIndex].value" >
             <!--{if $pager}-->
@@ -17,7 +17,7 @@
             <!--{/if}-->
             </select>
 	</p>
-    <p>
+    <p  style="float:right  ">
 		<!-- {if $pager.page_next} -->
               <a  class="pagination-right" href="{$pager.page_next}" >下一页&gt;</a>
               <!-- {else} -->
@@ -26,7 +26,9 @@
     </p>
 </div>
     <style>
-    .pagination p{width:30%;text-align:center;height:4rem;float:left;line-height:4rem;}
+    .pagination{width:100%; overflow: hidden; position: relative; height:3rem; padding: 2rem; box-sizing: border-box;}
+    .p-select{ position: absolute;left: 6rem; right:6rem; text-align: center ;}
+    .p-select select{border:none; background:none;}
     </style>
 <!--{/if}-->
  
