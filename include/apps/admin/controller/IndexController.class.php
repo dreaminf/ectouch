@@ -51,6 +51,13 @@ class IndexController extends AdminController
                 $this->message('授权成功', NULL, 'success');
             }
         } else {
+            // 检测是否授权
+            $data = array('appid' => ECTOUCH_AUTH_KEY);
+            $empower = $this->cloud->data($data)->act('get.licenseInfo');
+            if($empower){
+                $this->assign('empower',$empower);
+            }
+
             $this->assign('ur_here', L('empower'));
             $this->display();
         }
