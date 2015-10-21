@@ -265,6 +265,17 @@ switch ($step) {
 		if(isset($_SESSION['INSTALLOK']) && $_SESSION['INSTALLOK'] == 1){
 			filewrite($config['installFile']);
 		}
+		
+		$appid = appid();
+		$config_file = '../data/version.php';
+		require $config_file;
+		$content = "<?php\ndefine('APPNAME', '".APPNAME."');\ndefine('VERSION', '".VERSION."');\ndefine('RELEASE', '".RELEASE."');\ndefine('ECTOUCH_AUTH_KEY', '".$appid."');";
+		if(ECTOUCH_AUTH_KEY == ''){
+			@file_put_contents($config_file, $content);
+			@fopen($this->lockFile, 'w');
+			//$site_info = site_info($appid);
+			//$this->cloud->data($site_info)->act('post.install');
+		}
 		unset($_SESSION);
 		break;
 }	
@@ -424,3 +435,22 @@ function genRandomString($len = 6) {
 	$ip   = $long ? array($ip, $long) : array('0.0.0.0', 0);
 	return $ip[$type];
  }
+
+ /**
+ * 生成为一的appid
+ */
+function appid(){
+    if (function_exists('com_create_guid')){
+        $guid = com_create_guid();
+    }else{
+        mt_srand((double)microtime()*10000);
+        $charid = strtoupper(md5(uniqid(rand(), true)));
+        $hyphen = chr(45);// "-"
+        $guid = substr($charid, 0, 8).$hyphen
+                .substr($charid, 8, 4).$hyphen
+                .substr($charid,12, 4).$hyphen
+                .substr($charid,16, 4).$hyphen
+                .substr($charid,20,12);
+    }
+    return strtoupper(hash('ripemd128', $guid));
+}
