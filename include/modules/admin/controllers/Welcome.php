@@ -5,6 +5,6 @@ class Welcome extends IndexController
 {
     public function index()
     {
-        echo 'alipay.';
+        echo 'admin.';
     }
 }
