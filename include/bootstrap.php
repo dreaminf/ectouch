@@ -12,7 +12,7 @@ defined('STORAGE_PATH') or define('STORAGE_PATH', DATA_PATH . 'attachment/');
 defined('APP_DEBUG') or define('APP_DEBUG', false);
 defined('ENVIRONMENT') or define('ENVIRONMENT', APP_DEBUG ? 'development':'production');
 // 模块绑定
-defined('BIND_MODULE') or define('BIND_MODULE', 'shop');
+defined('BIND_MODULE') or define('BIND_MODULE', 'site');
 defined('BIND_CONTROLLER') or define('BIND_CONTROLLER', '');
 defined('BIND_ACTION') or define('BIND_ACTION', '');
 defined('VIEW_PATH') or define('VIEW_PATH', '');
