@@ -21,7 +21,7 @@
         </tr>
         <tr>
             <th>授权域名：</th>
-            <td><a target="blank" href="http://www.phpcms.cn">{$empower['domain']}</a></td>
+            <td><a target="blank" href="{$empower['domain']}">{$empower['domain']}</a></td>
         </tr>
         <tr>
             <th>网站名称：</th>

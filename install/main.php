@@ -17,6 +17,7 @@ if($independent){
 	mysql_query("UPDATE `{$dbPrefix}shop_config` SET  `value` = '$seo_description' WHERE code='shop_desc'");
 	mysql_query("UPDATE `{$dbPrefix}shop_config` SET  `value` = '$seo_keywords' WHERE code='shop_keywords'");
 	mysql_query("UPDATE `{$dbPrefix}shop_config` SET  `value` = 'default' WHERE code='template'");
+	mysql_query("UPDATE `{$dbPrefix}shop_config` SET  `value` = '".time()."' WHERE code='install_date'");
 }
 
 //插入微信菜单
