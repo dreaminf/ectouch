@@ -98,12 +98,38 @@ class sina {
      * @param unknown $code            
      * @return boolean
      */
-    public function call_back($info, $url, $code) {
+    public function call_back($info, $url, $code, $type) {
         $result = $this->access_token($url, $code);
         if (isset($result['access_token']) && $result['access_token'] != '') {
             // 保存登录信息，此示例中使用session保存
-            $_SESSION['access_token'] = $result['access_token']; // access token
-            // echo '授权完成，请记录<br/>access token：<input size="50" value="', $result['access_token'], '">' . $_SESSION['sina_t'];
+           $this->access_token = $result['access_token']; // access token echo '授权完成，请记录<br/>access token：<input size="50" value="', $result['access_token'], '">' . $_SESSION['qq_t'];
+            $openid = $this->get_openid();
+            // 获取用户信息
+            $userinfo = $this->get_user_info($openid);
+            // 处理数据
+            $userinfo['aite_id'] = $type . '_' . $openid; // 添加登录标示
+            $user = init_users();
+            if ($userinfo['user_name'] = model('Users')->get_one_user($userinfo['aite_id'])) {
+                // 已有记录
+                $user->set_session($userinfo['user_name']);
+                $user->set_cookie($userinfo['user_name']);
+                model('Users')->update_user_info();
+                model('Users')->recalculate_price();
+
+                return true;
+            }
+            $userinfo['user_name'] = trim($this->get_user_name($userinfo));
+            $userinfo['user_name'] = preg_replace('/\'\/^\\s*$|^c:\\\\con\\\\con$|[%,\\*\\"\\s\\t\\<\\>\\&\'\\\\]/', '', $userinfo['user_name']);
+            if ($user->check_user($userinfo['user_name'])) {
+                $userinfo['user_name'] = $userinfo['user_name'] . rand(1000, 9999); // 重名处理
+            }
+            $userinfo['email'] = empty($userinfo['email']) ? substr($openid, -6) . '@' . get_top_domain() : $userinfo['email'];
+            // 插入数据库
+            model('Users')->third_reg($userinfo);
+            $user->set_session($userinfo['user_name']);
+            $user->set_cookie($userinfo['user_name']);
+            model('Users')->update_user_info();
+            model('Users')->recalculate_price();
             return true;
         } else {
             // echo "授权失败";
