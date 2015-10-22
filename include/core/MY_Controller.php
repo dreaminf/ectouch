@@ -6,7 +6,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class MY_Controller extends CI_Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
         define('CONTROLLER_NAME', strtolower($this->router->class));
         define('ACTION_NAME', strtolower($this->router->method));
@@ -20,31 +21,37 @@ class BaseController extends MY_Controller
      * 构造函数 取得模板对象实例
      * @access public
      */
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
         $this->load->start();
         $params = $this->load->dbconf;
         $this->load->library('model', $params);
     }
 
-    protected function get_cache_id($extends = ''){
-        $extends = empty($extends) ? '':'-' . $extends;
+    protected function get_cache_id($extends = '')
+    {
+        $extends = empty($extends) ? '' : '-' . $extends;
         return sprintf('%X', crc32($_SESSION['user_rank'] . '-' . C('lang') . $extends));
     }
 
-    protected function is_cached($filename, $cache_id = ''){
+    protected function is_cached($filename, $cache_id = '')
+    {
         $this->load->tpl->is_cached($filename, $cache_id);
     }
 
-    protected function fetch($filename, $cache_id = ''){
+    protected function fetch($filename, $cache_id = '')
+    {
         return $this->load->tpl->fetch($filename, $cache_id);
     }
 
-    protected function assign($key = '', $value = ''){
+    protected function assign($key = '', $value = '')
+    {
         $this->load->tpl->assign($key, $value);
     }
 
-    protected function display($filename = '', $cache_id = ''){
+    protected function display($filename = '', $cache_id = '')
+    {
         $this->load->tpl->display($filename, $cache_id);
     }
 
@@ -53,7 +60,8 @@ class BaseController extends MY_Controller
      * @param $msg
      * @param $code
      */
-    protected function jserror($msg, $code){
+    protected function jserror($msg, $code)
+    {
         echo json_encode(array(
             "error" => '1',
             'code' => $code,
@@ -67,7 +75,8 @@ class BaseController extends MY_Controller
      * @param $msg
      * @param array $data
      */
-    protected function jssuccess($msg, $data = array()){
+    protected function jssuccess($msg, $data = array())
+    {
         echo json_encode(array(
             "error" => '0',
             "message" => $msg,
@@ -84,8 +93,9 @@ class BaseController extends MY_Controller
      * @param mixed $ajax 是否为Ajax方式 当数字时指定跳转时间
      * @return void
      */
-    protected function error($message='',$jumpUrl='',$ajax=false) {
-        $this->dispatchJump($message,0,$jumpUrl,$ajax);
+    protected function error($message = '', $jumpUrl = '', $ajax = false)
+    {
+        $this->dispatchJump($message, 0, $jumpUrl, $ajax);
     }
 
     /**
@@ -96,8 +106,9 @@ class BaseController extends MY_Controller
      * @param mixed $ajax 是否为Ajax方式 当数字时指定跳转时间
      * @return void
      */
-    protected function success($message='',$jumpUrl='',$ajax=false) {
-        $this->dispatchJump($message,1,$jumpUrl,$ajax);
+    protected function success($message = '', $jumpUrl = '', $ajax = false)
+    {
+        $this->dispatchJump($message, 1, $jumpUrl, $ajax);
     }
 
     /**
@@ -108,13 +119,14 @@ class BaseController extends MY_Controller
      * @param int $json_option 传递给json_encode的option参数
      * @return void
      */
-    protected function ajaxReturn($data,$type='',$json_option=0) {
-        if(empty($type)) $type = 'JSON';
-        switch (strtoupper($type)){
+    protected function ajaxReturn($data, $type = '', $json_option = 0)
+    {
+        if (empty($type)) $type = 'JSON';
+        switch (strtoupper($type)) {
             case 'JSON' :
                 // 返回JSON数据格式到客户端 包含状态信息
                 header('Content-Type:application/json; charset=utf-8');
-                exit(json_encode($data,$json_option));
+                exit(json_encode($data, $json_option));
             case 'XML'  :
                 // 返回xml格式数据
                 header('Content-Type:text/xml; charset=utf-8');
@@ -122,8 +134,8 @@ class BaseController extends MY_Controller
             case 'JSONP':
                 // 返回JSON数据格式到客户端 包含状态信息
                 header('Content-Type:application/json; charset=utf-8');
-                $handler  =   isset($_GET['callback']) ? $_GET['callback'] : 'jsonpReturn';
-                exit($handler.'('.json_encode($data,$json_option).');');
+                $handler = isset($_GET['callback']) ? $_GET['callback'] : 'jsonpReturn';
+                exit($handler . '(' . json_encode($data, $json_option) . ');');
             case 'EVAL' :
                 // 返回可执行的js脚本
                 header('Content-Type:text/html; charset=utf-8');
@@ -140,9 +152,10 @@ class BaseController extends MY_Controller
      * @param string $msg 跳转提示信息
      * @return void
      */
-    protected function redirect($url,$params=array(),$delay=0,$msg='') {
-        $url    =   url($url,$params);
-        redirect($url,$delay,$msg);
+    protected function redirect($url, $params = array(), $delay = 0, $msg = '')
+    {
+        $url = url($url, $params);
+        redirect($url, $delay, $msg);
     }
 
     /**
@@ -156,37 +169,38 @@ class BaseController extends MY_Controller
      * @access private
      * @return void
      */
-    private function dispatchJump($message,$status=1,$jumpUrl='',$ajax=false) {
-        if(true === $ajax || IS_AJAX) {// AJAX提交
-            $data           =   is_array($ajax)?$ajax:array();
-            $data['info']   =   $message;
-            $data['status'] =   $status;
-            $data['url']    =   $jumpUrl;
+    private function dispatchJump($message, $status = 1, $jumpUrl = '', $ajax = false)
+    {
+        if (true === $ajax || IS_AJAX) {// AJAX提交
+            $data = is_array($ajax) ? $ajax : array();
+            $data['info'] = $message;
+            $data['status'] = $status;
+            $data['url'] = $jumpUrl;
             $this->ajaxReturn($data);
         }
-        if(is_int($ajax)) $this->assign('waitSecond',$ajax);
-        if(!empty($jumpUrl)) $this->assign('jumpUrl',$jumpUrl);
+        if (is_int($ajax)) $this->assign('waitSecond', $ajax);
+        if (!empty($jumpUrl)) $this->assign('jumpUrl', $jumpUrl);
         // 提示标题
         $this->assign('msgTitle', $status ? '操作成功' : '操作失败');
         //如果设置了关闭窗口，则提示完毕后自动关闭窗口
-        if($this->get('closeWin')) $this->assign('jumpUrl','javascript:window.close();');
-        $this->assign('status',$status); // 状态
-        if($status) { //发送成功信息
-            $this->assign('message',$message);// 提示信息
+        if ($this->get('closeWin')) $this->assign('jumpUrl', 'javascript:window.close();');
+        $this->assign('status', $status); // 状态
+        if ($status) { //发送成功信息
+            $this->assign('message', $message);// 提示信息
             // 成功操作后默认停留1秒
-            if(!isset($this->waitSecond))    $this->assign('waitSecond','1');
+            if (!isset($this->waitSecond)) $this->assign('waitSecond', '1');
             // 默认操作成功自动返回操作前页面
-            if(!isset($this->jumpUrl)) $this->assign("jumpUrl", $_SERVER["HTTP_REFERER"]);
+            if (!isset($this->jumpUrl)) $this->assign("jumpUrl", $_SERVER["HTTP_REFERER"]);
             $this->display('success');
-        }else{
-            $this->assign('error',$message);// 提示信息
+        } else {
+            $this->assign('error', $message);// 提示信息
             //发生错误时候默认停留3秒
-            if(!isset($this->waitSecond))    $this->assign('waitSecond','3');
+            if (!isset($this->waitSecond)) $this->assign('waitSecond', '3');
             // 默认发生错误的话自动返回上页
-            if(!isset($this->jumpUrl)) $this->assign('jumpUrl',"javascript:history.back(-1);");
+            if (!isset($this->jumpUrl)) $this->assign('jumpUrl', "javascript:history.back(-1);");
             $this->display('error');
             // 中止执行  避免出错后继续执行
-            exit ;
+            exit;
         }
     }
 }
@@ -202,7 +216,8 @@ abstract class IndexController extends BaseController
         $this->set_theme(C('template'));
     }
 
-    private function set_theme($theme = 'default'){
+    private function set_theme($theme = 'default')
+    {
         define('__TPL__', base_url('themes/' . $theme));
     }
 }
@@ -268,7 +283,7 @@ abstract class RestController extends BaseController
         //$this->user_id = 1;
         //$this->access_token = $session['token'] = 'c6a6a4d1c53bcfb641eacfcc77d33619';
         //$this->access_token = 'c6a6a4d1c53bcfb641eacfcc77d33619';
-        if(isset($session['uid']) && isset($session['token'])){
+        if (isset($session['uid']) && isset($session['token'])) {
             $this->user_id = $session['uid'];
             $this->access_token = $session['token'];
         }
@@ -462,7 +477,7 @@ abstract class RestController extends BaseController
             $data = $data['response'];
         }
         $data = array_merge(array('response' => $data), array('status' => array('code' => 1)));
-        if(is_array($extends) && !empty($extends)){
+        if (is_array($extends) && !empty($extends)) {
             $data = array_merge($data, $extends);
         }
         exit($this->encodeData($data, strtolower($type)));
