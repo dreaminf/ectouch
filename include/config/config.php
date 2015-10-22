@@ -183,8 +183,7 @@ $config['allow_get_array'] = TRUE;
 $config['enable_query_strings'] = TRUE;
 $config['controller_trigger'] = 'c';
 $config['function_trigger'] = 'a';
-$config['directory_trigger'] = 'd';
-$config['module_trigger'] = 'm';
+$config['directory_trigger'] = 'm';
 
 /*
 |--------------------------------------------------------------------------
@@ -506,5 +505,3 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
-
-$config['modules_path'] = 'modules/';
