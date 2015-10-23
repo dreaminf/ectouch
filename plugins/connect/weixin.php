@@ -109,9 +109,7 @@ class weixin {
      */
     public function call_back($info, $url, $code, $type){
         if (!empty($code)) {
-            $_GET['code'] = $code;
             $token = $this->weObj->getOauthAccessToken();
-            echo $this->weObj->errMsg;exit;
             $userinfo = $this->weObj->getOauthUserinfo($token['access_token'], $token['openid']);
             //公众号信息
             $wechat = model('Base')->model->table('wechat')->field('id, oauth_status')->where(array('type'=>2, 'status'=>1, 'default_wx'=>1))->find();
