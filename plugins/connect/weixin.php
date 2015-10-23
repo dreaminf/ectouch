@@ -107,8 +107,8 @@ class weixin {
     /**
      * 登录处理
      */
-    public function call_back($info, $url, $code, $type){
-        if (!empty($code)) {
+    public function call_back($info, $url, $_GET, $type){
+        if (!empty($_GET['code'])) {
             $token = $this->weObj->getOauthAccessToken();
             $userinfo = $this->weObj->getOauthUserinfo($token['access_token'], $token['openid']);
             //公众号信息
