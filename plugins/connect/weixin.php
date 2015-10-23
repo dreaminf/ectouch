@@ -203,7 +203,7 @@ class weixin {
             $group_id = $group_id ? $group_id : 0;
 
             $data1['wechat_id'] = $wechat_id;
-            $data1['subscribe'] = 1;
+            $data1['subscribe'] = 0;
             $data1['openid'] = $userinfo['openid'];
             $data1['nickname'] = $userinfo['nickname'];
             $data1['sex'] = $userinfo['sex'];
