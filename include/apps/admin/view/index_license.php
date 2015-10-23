@@ -3,10 +3,11 @@
 
 
 <style type="text/css">
+    body{    background-color: #F4F6F8;}
     body,p{margin:0;padding:0;border:0;}
-    ul{width:450px; position:absolute;left:325px; top:268px;overflow:hidden;}
+    ul{width:auto; position:absolute;left:320px; top:284px;overflow:hidden;}
     ul li{list-style:none;float:left;}
-    p{line-height:32px;color:#414040;font-size:14px;}
+    p{line-height:24px;color:#414040;font-size:12px;}
     .certificate{background-image:url(__PUBLIC__/images/license_bg.png);background-position:center;background-repeat:no-repeat;width:829px;height:640px;margin:0 auto;position:relative;}
     .cont-title{text-align:right;}
 </style>
