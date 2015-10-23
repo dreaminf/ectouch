@@ -215,6 +215,7 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_user` (
   `group_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户组id',
   `ect_uid` int(11) unsigned NOT NULL COMMENT 'ecshop会员id',
   `bein_kefu` tinyint(1) unsigned NOT NULL COMMENT '是否处在多客服流程',
+  `isbind` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否绑定过',
   PRIMARY KEY (`uid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

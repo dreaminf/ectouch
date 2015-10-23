@@ -110,8 +110,17 @@ class weixin {
         if (!empty($code)) {
             $token = $this->weObj->getOauthAccessToken();
             $userinfo = $this->weObj->getOauthUserinfo($token['access_token'], $token['openid']);
-            $this->update_weixin_user($userinfo, $this->weObj);
-            return true;
+            //公众号信息
+            $wechat = model('Base')->model->table('wechat')->field('id, oauth_status')->where(array('type'=>2, 'status'=>1, 'default_wx'=>1))->find();
+            $this->update_weixin_user($userinfo, $wechat['id'], $this->weObj);
+            //用户是否绑定过
+            $isbind = $this->model->table('wechat_user')->field('isbind')->where(array('openid'=>$userinfo['openid']))->getOne();
+            if($isbind || !$wechat['oauth_status']){
+                return true;
+            }
+            else{
+                return array('url'=>url('user/bind'));
+            }
         } else {
             return false;
         }
@@ -123,10 +132,9 @@ class weixin {
      * @param unknown $userinfo          
      * @param unknown $weObj            
      */
-    public function update_weixin_user($userinfo, $weObj)
+    public function update_weixin_user($userinfo, $wechat_id = 0, $weObj)
     {
         $time = time();
-        $wechat_id = model('Base')->model->table('wechat')->field('id')->where(array('type'=>2, 'status'=>1, 'default_wx'=>1))->getOne();
         $ret = model('Base')->model->table('wechat_user')->field('openid, ect_uid')->where('openid = "' . $userinfo['openid'] . '"')->find();
         if (empty($ret)) {
             //微信用户绑定会员id
