@@ -1917,7 +1917,7 @@ class UserController extends CommonController {
             if ($rs = $obj->call_back($info, $url, $_GET['code'], $type)) {
                 $jump_url = empty($this->back_act) ? url('index') : $this->back_act;
                 if(is_array($rs)){
-                    $jump_url = $rs;
+                    $jump_url = $rs['url'];
                 }
                 $this->redirect($jump_url);
             } else {
