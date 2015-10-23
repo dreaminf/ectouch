@@ -93,6 +93,7 @@ class weixin {
      */
     public function act_login($info, $url){
         // 微信浏览器浏览
+        $this->redirecturi = $url ? $url : $this->redirecturi;
         if (is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid']))) {
             return $this->weObj->getOauthRedirect($this->redirecturi, 1);
         }
@@ -110,7 +111,6 @@ class weixin {
         if (!empty($code)) {
             $token = $this->weObj->getOauthAccessToken();
             $userinfo = $this->weObj->getOauthUserinfo($token['access_token'], $token['openid']);
-            dump($userinfo);exit;
             //公众号信息
             $wechat = model('Base')->model->table('wechat')->field('id, oauth_status')->where(array('type'=>2, 'status'=>1, 'default_wx'=>1))->find();
             $this->update_weixin_user($userinfo, $wechat['id'], $this->weObj);
