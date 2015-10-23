@@ -115,7 +115,7 @@ class weixin {
             $wechat = model('Base')->model->table('wechat')->field('id, oauth_status')->where(array('type'=>2, 'status'=>1, 'default_wx'=>1))->find();
             $this->update_weixin_user($userinfo, $wechat['id'], $this->weObj);
             //用户是否绑定过
-            $isbind = $this->model->table('wechat_user')->field('isbind')->where(array('openid'=>$userinfo['openid']))->getOne();
+            $isbind = model('Base')->model->table('wechat_user')->field('isbind')->where(array('openid'=>$userinfo['openid']))->getOne();
             if($isbind || !$wechat['oauth_status']){
                 return true;
             }
