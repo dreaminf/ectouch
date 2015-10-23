@@ -110,6 +110,7 @@ class weixin {
     public function call_back($info, $url, $code, $type){
         if (!empty($code)) {
             $token = $this->weObj->getOauthAccessToken();
+            echo $this->weObj->errMsg;
             dump($token);
             $userinfo = $this->weObj->getOauthUserinfo($token['access_token'], $token['openid']);
             dump($userinfo);exit;
