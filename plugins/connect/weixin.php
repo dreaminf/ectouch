@@ -94,6 +94,7 @@ class weixin {
     public function act_login($info, $url){
         // 微信浏览器浏览
         if (is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid']))) {
+            echo $this->redirecturi;exit;
             return $this->weObj->getOauthRedirect($this->redirecturi, 1);
         }
         else{
