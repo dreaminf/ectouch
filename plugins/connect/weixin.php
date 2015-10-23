@@ -109,8 +109,8 @@ class weixin {
      */
     public function call_back($info, $url, $code, $type){
         if (!empty($code)) {
-            dump($_GET);
-            $token = $this->weObj->getOauthAccessToken($code);
+            $token = $this->weObj->getOauthAccessToken();
+            dump($token);
             $userinfo = $this->weObj->getOauthUserinfo($token['access_token'], $token['openid']);
             dump($userinfo);exit;
             //公众号信息
