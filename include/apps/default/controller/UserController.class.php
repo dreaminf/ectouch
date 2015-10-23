@@ -1913,6 +1913,7 @@ class UserController extends CommonController {
         }
         $obj = new $type($info);
         if ($_GET['code'] && $_GET['code'] != '') {
+            dump($_GET);
             // 授权成功 返回登录
             if ($rs = $obj->call_back($info, $url, $_GET['code'], $type)) {
                 $jump_url = empty($this->back_act) ? url('index') : $this->back_act;
