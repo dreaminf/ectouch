@@ -78,7 +78,7 @@ class weixin {
     public function __construct($conf) {
         $this->token = $conf['token'];
         $this->appid = $conf['app_id'];
-        $this->appkey = $conf['app_key'];
+        $this->appsecret = $conf['app_secret'];
         $this->redirecturi = $conf['redirecturi'];
 
         $config['token'] = $this->token;
