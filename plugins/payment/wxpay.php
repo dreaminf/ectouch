@@ -179,7 +179,7 @@ class wxpay
                     $order_sn = $out_trade_no[1]; // 订单号log_id
                                                   // 改变订单状态
                     model('Payment')->order_paid($order_sn, 2);
-                    
+
                     // 修改订单信息(openid，tranid)
                     model('Base')->model->table('pay_log')
                         ->data('openid = "' . $postdata['openid'] . '", transid = "' . $postdata['transaction_id'] . '"')
