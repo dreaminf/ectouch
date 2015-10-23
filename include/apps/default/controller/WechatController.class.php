@@ -653,7 +653,7 @@ class WechatController extends CommonController
      * 跳转到第三方登录
      */
     static function do_oauth(){
-        if(!isset($_SESSION['repeat']) || empty($_SESSION['repeat'])){
+        if(is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid'])) && (!isset($_SESSION['repeat']) || empty($_SESSION['repeat']))){
             $url = url('user/third_login', array('type'=>'weixin'));
             $_SESSION['repeat'] = 1;
             header("Location: ".$url);
