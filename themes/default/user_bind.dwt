@@ -25,7 +25,7 @@
   </div>
   </form>
   <p class="ect-padding-lr ect-margin-tb text-right ect-margin-bottom0" style="clear:both">
-	<a href="{:url('user/register')}">创建新帐号</a>
+	<a href="{:url('index/index')}">不绑定，直接进入微商城</a>
   </p>
   </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
