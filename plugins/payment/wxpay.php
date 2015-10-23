@@ -194,7 +194,7 @@ class wxpay
                         $order_url = __HOST__ . url('user/order_detail', array(
                             'order_id' => $order_id
                         ));
-                        $order_url = str_replace('notify_wap_wxpay', 'mobile/index', $order_url);
+                        $order_url = str_replace('api/notify/wxpay.php', '', $order_url);
                         $order_url = urlencode(base64_encode($order_url));
                         send_wechat_message('pay_remind', '', $out_trade_no[0] . ' 订单已支付', $order_url, $out_trade_no[0]);
                     }
