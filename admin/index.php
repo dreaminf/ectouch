@@ -85,7 +85,7 @@ if ($_REQUEST['act'] == '')
         '01_menu_system' => array('shop_authorized' => 1,'02_payment_list' => 1),
         '02_menu_goods' => array('01_goods_list' => 1, '06_goods_brand_list' => 1),
         '06_menu_promotion' => array('08_group_buy' => 1, '12_favourable' => 1),
-        '10_menu_tools' => array('authorization' => 1, 'navigator' => 1),
+        '10_menu_tools' => array('01_navigator' => 1, '02_authorization' => 1, '99_upgrade' => 1),
         '11_menu_rec' => '*',
         '12_menu_wechat' => '*',
     );
