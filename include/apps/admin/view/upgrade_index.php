@@ -1,6 +1,6 @@
 {include file="pageheader"}
 
-<div class="row" style="margin:0">
+<div class="row" style="margin:0; display:None;">
   <div class="ectouch-mb5">
   	<a href="{url('index')}" class="btn btn-info">{$lang['upgrade']}</a>
     <a href="{url('checkfile')}" class="btn btn-success">{$lang['checkfile']}</a>
@@ -37,7 +37,7 @@
     <?php foreach($pathlist as $v) { ?>
     <tr>
       <td><?php echo $v;?></td>
-      <td class="text-right"><?php echo substr($v, 7, 8);?></td>
+      <td class="text-right"><?php echo substr($v, 1, 8);?></td>
     </tr>
     <?php }?>
   </table>

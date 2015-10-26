@@ -164,7 +164,7 @@ $_LANG['51_virtual_card_add'] = '添加虚拟商品';
 $_LANG['52_virtual_card_change'] = '更改加密串';
 $_LANG['goods_auto'] = '商品自动上下架';
 $_LANG['article_auto'] = '文章自动发布';
-$_LANG['navigator'] = '自定义导航栏';
+$_LANG['navigator'] = $_LANG['01_navigator'] = '自定义导航栏';
 
 /* 促销管理 */
 $_LANG['02_snatch_list'] = '夺宝奇兵';
@@ -250,14 +250,14 @@ $_LANG['shop_authorized'] = '授权证书';
 $_LANG['shp_webcollect'] = '网罗天下';
 $_LANG['02_payment_list'] = '支付方式';
 $_LANG['03_shipping_list'] = '配送方式';
-$_LANG['04_mail_settings'] = '邮件服务器设置';
+$_LANG['04_mail_settings'] = $_LANG['03_mail_settings'] = '邮件服务器设置';
 $_LANG['05_area_list'] = '地区列表';
 $_LANG['07_cron_schcron'] = '计划任务';
 $_LANG['08_friendlink_list'] = '友情链接';
 $_LANG['shipping_area_list'] = '配送区域';
 $_LANG['sitemap'] = '站点地图';
 $_LANG['check_file_priv'] = '文件权限检测';
-$_LANG['captcha_manage'] = '验证码管理';
+$_LANG['captcha_manage'] = $_LANG['05_captcha_manage'] = '验证码管理';
 $_LANG['fckfile_manage'] = 'Fck上传文件管理';
 $_LANG['ucenter_setup'] = 'UCenter设置';
 $_LANG['file_check'] = '文件校验';
@@ -294,7 +294,7 @@ $_LANG['search_log'] = '搜索关键字';
 $_LANG['email_list'] = '邮件订阅管理';
 $_LANG['magazine_list'] = '杂志管理';
 $_LANG['attention_list'] = '关注管理';
-$_LANG['view_sendlist'] = '邮件队列管理';
+$_LANG['view_sendlist'] = $_LANG['04_view_sendlist'] = '邮件队列管理';
 
 /* 积分兑换管理 */
 $_LANG['15_exchange_goods'] = '积分商城商品';
@@ -400,7 +400,9 @@ $_LANG['10_shop_authorized'] = '授权证书';
 
 
 // 工具箱
-$_LANG['authorization'] = '第三方登录插件';
+$_LANG['02_authorization'] = '第三方登录插件';
+$_LANG['99_upgrade'] = '在线升级';
+
 
 // 微分销
 $_LANG['01_drp_config'] = '微分销设置';

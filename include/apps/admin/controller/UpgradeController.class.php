@@ -26,7 +26,7 @@ class UpgradeController extends AdminController
     // md5验证地址
     private $_upgrademd5 = 'http://www.ectouch.cn/upgrademd5/';
     // 补丁地址
-    private $_patchurl = 'http://download.ectouch.cn/upgrade/1.0/patch/';
+    private $_patchurl = 'http://download.ectouch.cn/2.0/patch/';
 
     /**
      * 构造函数
@@ -34,9 +34,10 @@ class UpgradeController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->patch_charset = str_replace('-', '', EC_CHARSET);
-        $this->upgrade_path_base = $this->_patchurl . $this->patch_charset . '/';
-        defined('CACHE_PATH') or define('CACHE_PATH', ROOT_PATH.'data/attached/');
+        $this->patch_charset = str_replace('-', '', CHARSET);
+        $this->upgrade_path_base = $this->_patchurl; // . $this->patch_charset . '/';
+        defined('DS') or define('DS', DIRECTORY_SEPARATOR);
+        defined('CACHE_PATH') or define('CACHE_PATH', ROOT_PATH.'data/caches/');
     }
 
     /**
@@ -63,7 +64,7 @@ class UpgradeController extends AdminController
         // 获取补丁列表
         $pathlist = $this->pathlist();
         if (empty($pathlist)) {
-            $this->message(L('upgrade_success'), url('checkfile'));
+            $this->message(L('upgrade_success'), url('index'));
         }
         // 创建缓存文件夹
         if (! file_exists(CACHE_PATH . 'upgrade')) {
@@ -71,13 +72,13 @@ class UpgradeController extends AdminController
         }
 
         foreach ($pathlist as $k => $v) {
-            $release = str_replace('patch_R', '', basename($v, ".zip"));
+            $release = str_replace('R', '', basename($v, ".zip"));
             // 远程压缩包地址
             $upgradezip_url = $this->upgrade_path_base . $v;
             // 保存到本地地址
-            $upgradezip_path = CACHE_PATH . 'upgrade' . DIRECTORY_SEPARATOR . $v;
+            $upgradezip_path = CACHE_PATH . 'upgrade' . DS . $v;
             // 解压路径
-            $upgradezip_source_path = CACHE_PATH . 'upgrade' . DIRECTORY_SEPARATOR . basename($v, ".zip");
+            $upgradezip_source_path = CACHE_PATH . 'upgrade' . DS . basename($v, ".zip");
             // 下载压缩包
             @file_put_contents($upgradezip_path, Http::doGet($upgradezip_url));
             // 解压缩
@@ -86,7 +87,8 @@ class UpgradeController extends AdminController
                 die("Error : unpack the failure.");
             }
             // 拷贝utf8/upload文件夹到根目录
-            $copy_from = $upgradezip_source_path . DIRECTORY_SEPARATOR . $this->patch_charset . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR;
+            // $copy_from = $upgradezip_source_path . DS . $this->patch_charset . DS . 'upload' . DS;
+            $copy_from = $upgradezip_source_path . DS . 'upload' . DS;
             $copy_to = ROOT_PATH;
             
             $this->copyfailnum = 0;
@@ -99,7 +101,8 @@ class UpgradeController extends AdminController
 
             // 执行sql
             // sql目录地址
-            $sql_path = CACHE_PATH . 'upgrade' . DIRECTORY_SEPARATOR . basename($v, ".zip") . DIRECTORY_SEPARATOR . $this->patch_charset . DIRECTORY_SEPARATOR . 'upgrade' . DIRECTORY_SEPARATOR;
+            // $sql_path = CACHE_PATH . 'upgrade' . DS . basename($v, ".zip") . DS . $this->patch_charset . DS . 'upgrade' . DS;
+            $sql_path = CACHE_PATH . 'upgrade' . DS . basename($v, ".zip") . DS . 'upgrade' . DS;
             $file_list = glob($sql_path . '*');
             if (! empty($file_list)) {
                 foreach ($file_list as $fk => $fv) {
@@ -124,7 +127,8 @@ class UpgradeController extends AdminController
             
             // 读取版本号写入version.php文件
             // 配置文件地址
-            $configpath = CACHE_PATH . 'upgrade' . DIRECTORY_SEPARATOR . basename($v, ".zip") . DIRECTORY_SEPARATOR . $this->patch_charset . DIRECTORY_SEPARATOR . 'upgrade' . DIRECTORY_SEPARATOR . 'version.php';
+            // $configpath = CACHE_PATH . 'upgrade' . DS . basename($v, ".zip") . DS . $this->patch_charset . DS . 'upgrade' . DS . 'version.php';
+            $configpath = CACHE_PATH . 'upgrade' . DS . basename($v, ".zip") . DS . 'upgrade' . DS . 'version.php';
             if (file_exists($configpath)) {
                 $config = include $configpath;
                 // 版本文件地址
@@ -157,7 +161,7 @@ class UpgradeController extends AdminController
         if (! empty($do)) {
             $this->ec_readdir('.');
             // 读取接口
-            $ectouch_md5 = Http::doGet($this->_upgrademd5 . RELEASE . '_' . $this->patch_charset . ".php");
+            $ectouch_md5 = Http::doGet($this->_upgrademd5 . RELEASE . ".php");
             $ectouch_md5_arr = json_decode($ectouch_md5, 1);
             $ectouch_md5_arr = empty($ectouch_md5_arr) ? array():$ectouch_md5_arr;
             // 计算数组差集
@@ -187,7 +191,8 @@ class UpgradeController extends AdminController
      */
     public function buildhash(){
         $this->ec_readdir('.');
-        file_put_contents(CACHE_PATH . RELEASE . '_' . $this->patch_charset.'.php', json_encode($this->md5_arr));
+        // file_put_contents(CACHE_PATH . RELEASE . '_' . $this->patch_charset.'.php', json_encode($this->md5_arr));
+        file_put_contents(CACHE_PATH . RELEASE . '.php', json_encode($this->md5_arr));
         $this->message(L('build_success'), url('index'));
     }
     
@@ -199,11 +204,11 @@ class UpgradeController extends AdminController
         $pathlist = $allpathlist = array();
         $key = - 1;
         // 获取压缩包列表
-        preg_match_all("/\"(patch_R[\w_]+\.zip)\"/", $pathlist_str, $allpathlist);
+        preg_match_all("/\"(R[\w_]+\.zip)\"/", $pathlist_str, $allpathlist);
         $allpathlist = $allpathlist[1];
         // 获取可供当前版本升级的压缩包
         foreach ($allpathlist as $k => $v) {
-            if (strstr($v, 'patch_R' . RELEASE)) {
+            if (strstr($v, 'R' . RELEASE)) {
                 $key = $k;
                 break;
             }
@@ -256,9 +261,9 @@ class UpgradeController extends AdminController
         while (false !== ($file = readdir($handle))) {
             if ($file != '.' && $file != '..') { // 排除"."和"."
                                                  // 生成源文件名
-                $filefrom = $dirfrom . DIRECTORY_SEPARATOR . $file;
+                $filefrom = $dirfrom . DS . $file;
                 // 生成目标文件名
-                $fileto = $dirto . DIRECTORY_SEPARATOR . $file;
+                $fileto = $dirto . DS . $file;
                 if (is_dir($filefrom)) { // 如果是子目录，则进行递归操作
                     $this->copydir($filefrom, $fileto, $cover);
                 } else { // 如果是文件，则直接用copy函数复制

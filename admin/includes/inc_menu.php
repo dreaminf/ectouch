@@ -133,21 +133,22 @@ $modules['09_menu_backup']['04_sql_query']               = 'sql.php?act=main';
 //$modules['10_menu_tools']['email_list']           = 'email_list.php?act=list';
 //$modules['10_menu_tools']['magazine_list']        = 'magazine_list.php?act=list';
 //$modules['10_menu_tools']['attention_list']       = 'attention_list.php?act=list';
-$modules['10_menu_tools']['view_sendlist']        = 'view_sendlist.php?act=list';
+$modules['10_menu_tools']['04_view_sendlist']        = 'view_sendlist.php?act=list';
 
-$modules['10_menu_tools']['04_mail_settings']           = 'shop_config.php?act=mail_settings';
+$modules['10_menu_tools']['03_mail_settings']           = 'shop_config.php?act=mail_settings';
 //$modules['10_menu_tools']['06_plugins']                 = 'plugins.php?act=list';
 //$modules['10_menu_tools']['07_cron_schcron']            = 'cron.php?act=list';
 //$modules['10_menu_tools']['sitemap']                    = 'sitemap.php';
 //$modules['10_menu_tools']['check_file_priv']            = 'check_file_priv.php?act=check';
-$modules['10_menu_tools']['captcha_manage']             = 'captcha_manage.php?act=main';
+$modules['10_menu_tools']['05_captcha_manage']             = 'captcha_manage.php?act=main';
 //$modules['10_menu_tools']['flashplay']                  = 'flashplay.php?act=list';
 //$modules['10_menu_tools']['navigator']                  = 'navigator.php?act=list';
 //$modules['10_menu_tools']['file_check']                 = 'filecheck.php';
 //$modules['10_menu_tools']['fckfile_manage']             = 'fckfile_manage.php?act=list';
 
-$modules['10_menu_tools']['authorization']             = '../index.php?m=admin&c=authorization';
-$modules['10_menu_tools']['navigator']                 = '../index.php?m=admin&c=navigator';
+$modules['10_menu_tools']['01_navigator']                 = '../index.php?m=admin&c=navigator';
+$modules['10_menu_tools']['02_authorization']             = '../index.php?m=admin&c=authorization';
+$modules['10_menu_tools']['99_upgrade']                 = '../index.php?m=admin&c=upgrade';
 
 // 微分销
 $modules['11_menu_rec']['01_drp_config']                      = 'drp.php?act=config';

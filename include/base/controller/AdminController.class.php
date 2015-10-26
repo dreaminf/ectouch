@@ -35,7 +35,8 @@ class AdminController extends BaseController {
             'extend' => '*', 
             'upload' => '*', 
             'authorization' => '*', 
-            'navigator' => '*', 
+            'navigator' => '*',
+            'upgrade' => '*',
             'index' => array('license', 'uploader')
         );
         $controller = strtolower(CONTROLLER_NAME);
