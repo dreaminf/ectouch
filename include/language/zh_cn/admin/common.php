@@ -164,7 +164,7 @@ $_LANG['51_virtual_card_add'] = '添加虚拟商品';
 $_LANG['52_virtual_card_change'] = '更改加密串';
 $_LANG['goods_auto'] = '商品自动上下架';
 $_LANG['article_auto'] = '文章自动发布';
-$_LANG['navigator'] = $_LANG['01_navigator'] = '自定义导航栏';
+$_LANG['navigator'] = $_LANG['01_navigator'] = '导航设置';
 
 /* 促销管理 */
 $_LANG['02_snatch_list'] = '夺宝奇兵';
@@ -400,7 +400,7 @@ $_LANG['10_shop_authorized'] = '授权证书';
 
 
 // 工具箱
-$_LANG['02_authorization'] = '第三方登录插件';
+$_LANG['02_authorization'] = '登录插件';
 $_LANG['99_upgrade'] = '在线更新';
 
 
