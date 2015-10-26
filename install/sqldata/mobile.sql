@@ -138,7 +138,7 @@ INSERT INTO `ecs_shop_config` (parent_id, code, type, store_range, store_dir, va
 
 CREATE TABLE IF NOT EXISTS `ecs_touch_auth` (
   `id` tinyint(2) NOT NULL AUTO_INCREMENT,
-  `auth_config` varchar(255) NOT NULL,
+  `auth_config` text NOT NULL,
   `from` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='登录插件';
