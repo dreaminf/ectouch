@@ -50,10 +50,9 @@ if (isset($set_modules) && $set_modules == TRUE) {
     $modules[$i]['date'] = '2014-8-19';
     /* 配置信息 */
     $modules[$i]['config'] = array(
-        array('type' => 'text', 'name' => 'token', 'value' => ''),
         array('type' => 'text', 'name' => 'app_id', 'value' => ''),
         array('type' => 'text', 'name' => 'app_secret', 'value' => ''),
-        array('type' => 'text', 'name' => 'redirecturi', 'value' => ''),
+        array('type' => 'text', 'name' => 'token', 'value' => ''),
     );
     return;
 }
@@ -66,7 +65,6 @@ class weixin {
     private $token = '';
     private $appid = '';
     private $appkey = '';
-    private $redirecturi = '';
     private $weObj = '';
 
     /**
@@ -79,7 +77,6 @@ class weixin {
         $this->token = $conf['token'];
         $this->appid = $conf['app_id'];
         $this->appsecret = $conf['app_secret'];
-        $this->redirecturi = $conf['redirecturi'];
 
         $config['token'] = $this->token;
         $config['appid'] = $this->appid;
@@ -93,9 +90,8 @@ class weixin {
      */
     public function act_login($info, $url){
         // 微信浏览器浏览
-        $this->redirecturi = $url ? $url : $this->redirecturi;
         if (is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid']))) {
-            return $this->weObj->getOauthRedirect($this->redirecturi, 1);
+            return $this->weObj->getOauthRedirect($url, 1);
         }
         else{
             show_message("请在微信内访问或者已经登录。", L('relogin_lnk'), url('login', array(
