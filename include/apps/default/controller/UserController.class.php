@@ -1925,6 +1925,8 @@ class UserController extends CommonController {
                     'referer' => urlencode($this->back_act)
                         )), 'error');
             }
+            //删除避免重复跳转验证
+            unset($_SESSION['repeat']);
         } else {
             // 开始授权登录  
             $url = $obj->act_login($info, $url);
