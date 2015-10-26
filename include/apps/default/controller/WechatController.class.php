@@ -668,7 +668,6 @@ class WechatController extends CommonController
     static function do_bind(){
     	if(!empty($_SESSION['user_id']) && !empty($_SESSION['wechat_user'])){
     		$condition['openid'] = $_SESSION['wechat_user']['openid'];
-            model('Base')->model->table('wechat_user')->data(array('isbind'=>1))->where($condition)->update();
     		$user = model('Base')->model->table('wechat_user')->field('openid, ect_uid')->where($condition)->find();
     		if($user && empty($user['ect_uid'])){
                 //用户是否绑定过

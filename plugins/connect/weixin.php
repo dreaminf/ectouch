@@ -116,6 +116,7 @@ class weixin {
                 return true;
             }
             else{
+                model('Base')->model->table('wechat_user')->data(array('isbind'=>1))->where(array('openid'=>$userinfo['openid']))->update();
                 return array('url'=>url('user/bind'));
             }
         } else {
