@@ -82,10 +82,13 @@ class UserController extends CommonController {
             $isbind = model('Base')->model->table('wechat_user')->field('isbind')->where(array('openid'=>$_SESSION['wechat_user']['openid']))->getOne();
             //公众号信息
             $wechat = model('Base')->model->table('wechat')->field('id, oauth_status')->where(array('type'=>2, 'status'=>1, 'default_wx'=>1))->find();
+            dump($isbind);
+            dump($wechat);
             if(!$isbind && $wechat['oauth_status']){
                 $bind = 1;
             }    
         }
+        dump($_SESSION);
         $this->assign('isbind', $bind);
 
 		$arr=array(
