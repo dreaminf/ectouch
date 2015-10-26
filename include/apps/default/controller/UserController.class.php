@@ -1808,7 +1808,7 @@ class UserController extends CommonController {
                     $condition['openid'] = $_SESSION['wechat_user']['openid'];
                     $user = model('Base')->model->table('wechat_user')->field('openid, ect_uid, isbind')->where($condition)->find();
                     if($user && empty($user['isbind'])){
-                        model('Base')->model->table('wechat_user')->data(array('ect_uid'=>$user_id))->where($condition)->update();
+                        model('Base')->model->table('wechat_user')->data(array('ect_uid'=>$user_id, 'isbind'=>1))->where($condition)->update();
                         show_message('账号绑定成功', '会员中心', url('index'), 'error');
                     }
                     else{
