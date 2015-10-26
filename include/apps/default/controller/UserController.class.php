@@ -77,13 +77,13 @@ class UserController extends CommonController {
             $this->assign('new_msg', 1);
         }
         //是否显示绑定按钮
-        $bind = 0;
+        $bind = 1;
         if(isset($_SESSION['wechat_user']) && !empty($_SESSION['wechat_user']['openid'])){
             $isbind = model('Base')->model->table('wechat_user')->field('isbind')->where(array('openid'=>$_SESSION['wechat_user']['openid']))->getOne();
             //公众号信息
             $wechat = model('Base')->model->table('wechat')->field('id, oauth_status')->where(array('type'=>2, 'status'=>1, 'default_wx'=>1))->find();
             if(empty($isbind) && !empty($wechat['oauth_status'])){
-                $bind = 1;
+                $bind = 0;
             }    
         }
         $this->assign('isbind', $bind);
