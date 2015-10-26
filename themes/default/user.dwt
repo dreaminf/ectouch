@@ -32,7 +32,7 @@
 				<div class="member-photo-name">
 					<p>{$info.name}</p><span>{$rank_name}</span>
 				</div>
-				{if $isbind}
+				{if !$isbind}
 				<div class="member-photo-address" style="left:1rem;">
 					<a href="{:url('user/bind')}"><span>电脑端账号绑定</span></a>
 				</div>
