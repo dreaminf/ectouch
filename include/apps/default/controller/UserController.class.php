@@ -76,6 +76,18 @@ class UserController extends CommonController {
         if ($rs) {
             $this->assign('new_msg', 1);
         }
+        //是否显示绑定按钮
+        $bind = 0;
+        if(isset($_SESSION['wechat_user']) && !empty($_SESSION['wechat_user']['openid'])){
+            $isbind = model('Base')->model->table('wechat_user')->field('isbind')->where(array('openid'=>$_SESSION['wechat_user']['openid']))->getOne();
+            //公众号信息
+            $wechat = model('Base')->model->table('wechat')->field('id, oauth_status')->where(array('type'=>2, 'status'=>1, 'default_wx'=>1))->find();
+            if(!$isbind && $wechat['oauth_status']){
+                $bind = 1;
+            }    
+        }
+        $this->assign('isbind', $bind);
+
 		$arr=array(
 		'goods_nums'=> $goods_num,
 		'not_pays'=> $not_pays,
@@ -1704,9 +1716,9 @@ class UserController extends CommonController {
                 model('Users')->recalculate_price();
 
                 //微信用户绑定
-                if(!empty($_SESSION['wechat_user']) && class_exists('WechatController') && method_exists('WechatController', 'do_bind')){
+                /*if(!empty($_SESSION['wechat_user']) && class_exists('WechatController') && method_exists('WechatController', 'do_bind')){
                     call_user_func(array('WechatController', 'do_bind'));
-                }
+                }*/
 
                 $jump_url = empty($this->back_act) ? url('index') : $this->back_act;
                 $this->redirect($jump_url);
@@ -1752,7 +1764,73 @@ class UserController extends CommonController {
      * 微信用户绑定页面
      */
     public function bind(){
+        if(IS_POST){
+            $username = I('post.username');
+            $password = I('post.password');
+            $this->back_act = urldecode(I('post.back_act'));
 
+            $captcha = intval(C('captcha'));
+            if (($captcha & CAPTCHA_LOGIN) && (!($captcha & CAPTCHA_LOGIN_FAIL) || (($captcha & CAPTCHA_LOGIN_FAIL) && $_SESSION['login_fail'] > 2))) {
+                if (empty($_POST['captcha'])) {
+                    show_message(L('invalid_captcha'), L('relogin_lnk'), url('login', array(
+                        'referer' => urlencode($this->back_act)
+                            )), 'error');
+                }
+                // 检查验证码
+                if ($_SESSION['ectouch_verify'] !== strtoupper($_POST['captcha'])) {
+                    show_message(L('invalid_captcha'), L('relogin_lnk'), url('login', array(
+                        'referer' => urlencode($this->back_act)
+                            )), 'error');
+                }
+            }
+
+            // 用户名是邮箱格式
+            if (is_email($username)) {
+                $where['email'] = $username;
+                $username_try = $this->model->table('users')
+                        ->field('user_name')
+                        ->where($where)
+                        ->getOne();
+                $username = $username_try ? $username_try : $username;
+            }
+
+            // 用户名是手机格式
+            if (is_mobile($username)) {
+                $where['mobile_phone'] = $username;
+                $username_try = $this->model->table('users')
+                        ->field('user_name')
+                        ->where($where)
+                        ->getOne();
+                $username = $username_try ? $username_try : $username;
+            }
+            if($user_id = self::$user->check_user($username, $password)){
+                if(!empty($_SESSION['wechat_user'])){
+                    $condition['openid'] = $_SESSION['wechat_user']['openid'];
+                    $user = model('Base')->model->table('wechat_user')->field('openid, ect_uid')->where($condition)->find();
+                    if($user && empty($user['ect_uid'])){
+                        //用户是否绑定过
+                        $isbind = model('Base')->model->table('wechat_user')->where(array('ect_uid'=>$_SESSION['user_id']))->count();
+                        if($isbind == 0){
+                            model('Base')->model->table('wechat_user')->data(array('ect_uid'=>$user_id))->where($condition)->update();
+                        }
+                    }
+                }
+            }
+            else{
+                 show_message('用户名或密码错误', L('relogin_lnk'), url('login', array(
+                    'referer' => urlencode($this->back_act)
+                        )), 'error');
+            }
+        }
+        if (isset($_GET['referer']) && !empty($_GET['referer'])) {
+            $this->back_act = $_GET['referer'];
+        }
+
+        if (empty($this->back_act) && isset($GLOBALS['_SERVER']['HTTP_REFERER'])) {
+            $this->back_act = strpos($GLOBALS['_SERVER']['HTTP_REFERER'], 'c=user') ? url('index/index') : $GLOBALS['_SERVER']['HTTP_REFERER'];
+            $this->back_act = urlencode($this->back_act);
+        }
+        $this->assign('back_act', $this->back_act);
         $this->assign('title', '绑定');
         $this->display('user_bind.dwt');
     }
@@ -1835,9 +1913,9 @@ class UserController extends CommonController {
             $other['parent_id'] = $_SESSION['parent_id'] ? $_SESSION['parent_id'] : 0;
             if (model('Users')->register($username, $password, $email, $other) !== false) {
                 //微信用户绑定
-                if(!empty($_SESSION['wechat_user']) &&class_exists('WechatController') && method_exists('WechatController', 'do_bind')){
+                /*if(!empty($_SESSION['wechat_user']) &&class_exists('WechatController') && method_exists('WechatController', 'do_bind')){
                     call_user_func(array('WechatController', 'do_bind'));
-                }
+                }*/
 
                 $ucdata = empty(self::$user->ucdata) ? "" : self::$user->ucdata;
                 show_message(sprintf(L('register_success'), $username . $ucdata), array(L('back_up_page'), L('profile_lnk')), array($this->back_act,url('index')), 'info');

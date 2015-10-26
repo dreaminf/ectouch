@@ -32,6 +32,11 @@
 				<div class="member-photo-name">
 					<p>{$info.name}</p><span>{$rank_name}</span>
 				</div>
+				{if $isbind}
+				<div class="member-photo-address" style="left:1rem;">
+					<a href="{:url('user/bind')}"><span>电脑端账号绑定</span></a>
+				</div>
+				{/if}
 				<div class="member-photo-address">
 					<a href="{:url('user/profile')}"><span>账户管理、收货地址 </span><i class="iconfont">&#xe60c;</i></a>
 				</div>

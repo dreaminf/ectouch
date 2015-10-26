@@ -68,7 +68,7 @@
 			</td>
 		</tr> -->
 		<tr>
-			<td>自动登录</td>
+			<td>电脑端账号绑定</td>
 			<td><div class="col-sm-4 col-lg-2 col-md-3">
 				<div  class="btn-group" data-toggle="buttons">
 					<label class="btn btn-primary {if $data['oauth_status']==1}active{/if}">
@@ -79,7 +79,7 @@
 					</label>
 				</div>
 				</div>
-				<p class="help-block">开启之后，微商城会自动进行授权登录。</p>
+				<p class="help-block">开启之后，微商城会员中心会出现电脑端账号绑定按钮，绑定后不再出现。</p>
 			</td>
 		</tr>
 		<!-- <tr>

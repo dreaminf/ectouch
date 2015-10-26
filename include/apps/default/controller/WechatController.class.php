@@ -660,24 +660,6 @@ class WechatController extends CommonController
             exit;
         }
     }
-
-    /**
-     * 用户注册登录后绑定
-     * @return [type] [description]
-     */
-    static function do_bind(){
-    	if(!empty($_SESSION['user_id']) && !empty($_SESSION['wechat_user'])){
-    		$condition['openid'] = $_SESSION['wechat_user']['openid'];
-    		$user = model('Base')->model->table('wechat_user')->field('openid, ect_uid')->where($condition)->find();
-    		if($user && empty($user['ect_uid'])){
-                //用户是否绑定过
-                $isbind = model('Base')->model->table('wechat_user')->where(array('ect_uid'=>$_SESSION['user_id']))->count();
-                if($isbind == 0){
-                    model('Base')->model->table('wechat_user')->data(array('ect_uid'=>$_SESSION['user_id']))->where($condition)->update();
-                }
-    		}
-    	}
-    }
     
     /**
      * 记录用户操作信息

@@ -58,11 +58,11 @@
   </ul>
 </section>
 
-<section class="flow-consignee ect-bg-colorf">
+<!-- <section class="flow-consignee ect-bg-colorf">
   <ul>
     <li><a href="{:url('user/logout')}">注销退出</a></li>
   </ul>
-</section>
+</section> -->
 
 </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

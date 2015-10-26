@@ -110,15 +110,7 @@ class weixin {
             //公众号信息
             $wechat = model('Base')->model->table('wechat')->field('id, oauth_status')->where(array('type'=>2, 'status'=>1, 'default_wx'=>1))->find();
             $this->update_weixin_user($userinfo, $wechat['id'], $this->weObj);
-            //用户是否绑定过
-            $isbind = model('Base')->model->table('wechat_user')->field('isbind')->where(array('openid'=>$userinfo['openid']))->getOne();
-            if($isbind || !$wechat['oauth_status']){
-                return true;
-            }
-            else{
-                model('Base')->model->table('wechat_user')->data(array('isbind'=>1))->where(array('openid'=>$userinfo['openid']))->update();
-                return array('url'=>url('user/bind'));
-            }
+            return true;
         } else {
             return false;
         }

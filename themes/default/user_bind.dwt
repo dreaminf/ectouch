@@ -1,5 +1,5 @@
 <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
- <form name="formLogin" action="{:url('user/login')}" method="post" class="validforms">
+ <form name="formLogin" action="{:url('user/bind')}" method="post" class="validforms">
  <div class="flow-consignee ect-bg-colorf">
      <section>
       <ul>
@@ -24,9 +24,6 @@
   <input type="submit" class="btn btn-info ect-btn-info ect-bg" value="立即绑定" />
   </div>
   </form>
-  <p class="ect-padding-lr ect-margin-tb text-right ect-margin-bottom0" style="clear:both">
-	<a href="{:url('index/index')}">不绑定，直接进入微商城</a>
-  </p>
   </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
