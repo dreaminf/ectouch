@@ -1814,16 +1814,17 @@ class UserController extends CommonController {
                             model('Base')->model->table('wechat_user')->data(array('ect_uid'=>$user_id))->where($condition)->update();
                             show_message('账号绑定成功', '会员中心', url('index'), 'error');
                         }
-                    show_message('请不要重复绑定', L('relogin_lnk'), url('index'), 'error');
+                        show_message('请不要重复绑定', L('relogin_lnk'), url('index'), 'error');
+                    }
+                    else{
+                        show_message('请先进行微信授权登录', L('relogin_lnk'), url('index'), 'error');   
+                    }
                 }
                 else{
-                    show_message('请先进行微信授权登录', L('relogin_lnk'), url('index'), 'error');   
+                    show_message('用户名或密码错误', L('relogin_lnk'), url('bind', array(
+                        'referer' => urlencode($this->back_act)
+                    )), 'error');
                 }
-            }
-            else{
-                show_message('用户名或密码错误', L('relogin_lnk'), url('bind', array(
-                    'referer' => urlencode($this->back_act)
-                )), 'error');
             }
         }
         if (isset($_GET['referer']) && !empty($_GET['referer'])) {
