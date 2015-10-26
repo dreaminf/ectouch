@@ -401,7 +401,7 @@ $_LANG['10_shop_authorized'] = '授权证书';
 
 // 工具箱
 $_LANG['02_authorization'] = '第三方登录插件';
-$_LANG['99_upgrade'] = '在线升级';
+$_LANG['99_upgrade'] = '在线更新';
 
 
 // 微分销
