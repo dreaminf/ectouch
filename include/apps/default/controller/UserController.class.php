@@ -1806,14 +1806,10 @@ class UserController extends CommonController {
             if($user_id = self::$user->check_user($username, $password)){
                 if(!empty($_SESSION['wechat_user'])){
                     $condition['openid'] = $_SESSION['wechat_user']['openid'];
-                    $user = model('Base')->model->table('wechat_user')->field('openid, ect_uid')->where($condition)->find();
-                    if($user && empty($user['ect_uid'])){
-                        //用户是否绑定过
-                        $isbind = model('Base')->model->table('wechat_user')->where(array('ect_uid'=>$_SESSION['user_id']))->count();
-                        if($isbind == 0){
-                            model('Base')->model->table('wechat_user')->data(array('ect_uid'=>$user_id))->where($condition)->update();
-                            show_message('账号绑定成功', '会员中心', url('index'), 'error');
-                        }
+                    $user = model('Base')->model->table('wechat_user')->field('openid, ect_uid, isbind')->where($condition)->find();
+                    if($user && empty($user['isbind'])){
+                        model('Base')->model->table('wechat_user')->data(array('ect_uid'=>$user_id))->where($condition)->update();
+                        show_message('账号绑定成功', '会员中心', url('index'), 'error');
                     }
                     else{
                         show_message('请不要重复绑定', L('relogin_lnk'), url('index'), 'error');
