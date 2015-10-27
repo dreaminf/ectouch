@@ -114,6 +114,10 @@ class weixin {
             if(!empty($_SESSION['redirect_url'])){
                 return array('url'=>$_SESSION['redirect_url']);
             }
+            if(isset($_SESSION['repeat'])){
+                //删除避免重复跳转验证
+                unset($_SESSION['repeat']);
+            }
             return true;
         } else {
             return false;
