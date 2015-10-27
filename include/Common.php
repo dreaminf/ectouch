@@ -713,6 +713,7 @@ function redirect($url, $time=0, $msg='') {
  * @return boolean
  */
 function autoload($className) {
+    static $classes = array();
     $array = array(
         BASE_PATH . 'base/model/' . $className . '.class.php',
         BASE_PATH . 'base/controller/' . $className . '.class.php',
@@ -723,9 +724,14 @@ function autoload($className) {
         BASE_PATH . 'vendor/' . $className . '.class.php'
     );
     foreach ($array as $file) {
-        if (is_file($file)) {
-            require_once ($file);
+        $key = md5($file);
+        if (isset($classes[$key])) {
             return true;
+        }
+        if (is_file($file)) {
+            require $file;
+            $classes[$key] = true;
+            return $classes[$key];
         }
     }
     return false;
@@ -794,6 +800,7 @@ function model($model) {
         if (!class_exists($className)) {
             throw new Exception(C('_APP_NAME') . '/' . $className . '.class.php 模型类不存在');
         }
+        $className = class_exists('MY_'. $className) ? 'MY_'. $className : $className;
         $objArray[$className] = new $className();
     }
     return $objArray[$className];

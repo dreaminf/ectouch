@@ -78,6 +78,7 @@ try {
     if (! class_exists($controller)) {
         E(APP_NAME . '/' . $controller . '.class.php 控制器类不存在', 404);
     }
+    $controller = class_exists('MY_'. $controller) ? 'MY_'. $controller : $controller;
     $obj = new $controller();
     /* 是否非法操作 */
     if (! preg_match('/^[A-Za-z](\w)*$/', $action)) {
