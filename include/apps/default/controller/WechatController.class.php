@@ -656,6 +656,9 @@ class WechatController extends CommonController
         if(is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid'])) && (!isset($_SESSION['repeat']) || empty($_SESSION['repeat']))){
             $url = url('user/third_login', array('type'=>'weixin'));
             $_SESSION['repeat'] = 1;
+            if (! isset($_SESSION['redirect_url'])) {
+                $_SESSION['redirect_url'] = __HOST__ . $_SERVER['REQUEST_URI'];
+            }
             header("Location: ".$url);
             exit;
         }
