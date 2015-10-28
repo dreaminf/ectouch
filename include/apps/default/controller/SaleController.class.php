@@ -171,7 +171,8 @@ class SaleController extends CommonController {
         $this->assign('title', L('add_surplus_log'));
         $this->assign('surplus_amount', price_format($surplus_amount, false));
         $this->assign('account_log', $account_detail);
-        $this->display('sale_account_detail.dwt');
+        $dwt = $account_detail ? 'sale_account_detail.dwt' : 'sale_show_message.dwt';
+        $this->display($dwt);
     }
 
     /**
@@ -455,7 +456,8 @@ class SaleController extends CommonController {
         }
         $this->assign('orders_list', $orders);
         $this->assign('title', L('order_list'));
-        $this->display('sale_order_list.dwt');
+        $dwt = $orders ? 'sale_order_list.dwt' : 'sale_show_message.dwt';
+        $this->display($dwt);
     }
     /**
      * 获取全部未付款订单
@@ -572,7 +574,8 @@ class SaleController extends CommonController {
         $list = model('Sale')->get_shop_list($key);
         $this->assign('list', $list);
         $this->assign('title', L('my_shop_list'.$key));
-        $this->display('sale_my_shop_list.dwt');
+        $dwt = $list ? 'sale_my_shop_list.dwt' : 'sale_show_message.dwt';
+        $this->display($dwt);
     }
 
 
@@ -711,9 +714,11 @@ class SaleController extends CommonController {
     {
         $key = I('key') ? I('key') : 'wfk';
         $info = model('Sale')->get_sale_info($key);
+
         $this->assign('info',$info);
         $this->assign('title',L('user_list_'.$key));
-        $this->display('sale_user_list.dwt');
+        $dwt = $info ? 'sale_user_list.dwt' : 'sale_show_message.dwt';
+        $this->display($dwt);
     }
 
     /**
@@ -724,7 +729,9 @@ class SaleController extends CommonController {
         $list = model('Sale')->get_user_list($key);
         $this->assign('list',$list);
         $this->assign('title',L('my_user_list'.$key));
-        $this->display('sale_my_user_list.dwt');
+
+        $dwt = $list ? 'sale_my_user_list.dwt' : 'sale_show_message.dwt';
+        $this->display($dwt);
     }
 
     /**

@@ -494,8 +494,7 @@ class SaleModel extends BaseModel {
         }else{
             return false;
         }
-
-        return $res;
+        return $res['count'] > 0 ? $res : false;
 
 
     }
