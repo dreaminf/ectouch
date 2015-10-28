@@ -181,7 +181,7 @@ class OrderModel extends BaseModel {
 
         $sql = "SELECT og.rec_id, og.goods_id, og.goods_name, og.goods_sn, og.market_price, og.goods_number, " .
                 "og.goods_price, og.goods_attr, og.is_real, og.parent_id, og.is_gift, " .
-                "og.goods_price * og.goods_number AS subtotal, og.extension_code, g.goods_thumb, og.touch_fencheng, og.touch_sale " .
+                "og.goods_price * og.goods_number AS subtotal, og.extension_code, g.goods_thumb " .
                 "FROM " . $this->pre . "order_goods as og left join " . $this->pre . "goods g on og.goods_id = g.goods_id" .
                 " WHERE og.order_id = '$order_id'";
 
@@ -434,7 +434,7 @@ class OrderModel extends BaseModel {
 
         /* 取得商品信息 */
         $sql = "SELECT g.goods_name, g.goods_sn, g.is_on_sale, g.is_real, " .
-                "g.market_price, g.shop_price AS org_price,g.touch_sale,touch_fencheng, g.promote_price, g.promote_start_date, " .
+                "g.market_price, g.shop_price AS org_price, g.promote_price, g.promote_start_date, " .
                 "g.promote_end_date, g.goods_weight, g.integral, g.extension_code, " .
                 "g.goods_number, g.is_alone_sale, g.is_shipping," .
                 "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price " .
@@ -645,8 +645,6 @@ class OrderModel extends BaseModel {
             } else { //购物车没有此物品，则插入
                 $goods_price = model('GoodsBase')->get_final_price($goods_id, $num, true, $spec);
                 $parent['goods_price'] = max($goods_price, 0);
-                $parent['touch_sale'] = $goods['touch_sale'];
-                $parent['touch_fencheng'] = $goods['touch_fencheng'];
                 $parent['goods_number'] = $num;
                 $parent['parent_id'] = 0;
                 $this->table = 'cart';

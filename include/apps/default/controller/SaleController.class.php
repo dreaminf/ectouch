@@ -664,11 +664,9 @@ class SaleController extends CommonController {
         $this->model->table('drp_shop')->data($data)->where($where)->update();
         unset($data);
         unset($where);
-        $data['apply_sale'] = 1;
         $data['user_rank'] = 255;
         $where['user_id'] = $_SESSION['user_id'];
         $this->model->table('users')->data($data)->where($where)->update();
-
         $novice = $this->model->table('drp_config')->field("centent")->where(array("keyword"=>'novice'))->getOne();
         $this->assign('novice',$novice);
         // 设置分销商店铺地址
