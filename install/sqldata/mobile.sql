@@ -236,6 +236,41 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_visiter` (
   `visit_time` int(12) NOT NULL COMMENT '访问时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `ecs_drp_goods`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `ecs_drp_goods` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `goods_id` int(10) NOT NULL DEFAULT '0',
+  `touch_sale` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `touch_fencheng` decimal(10,2) NOT NULL DEFAULT '0.00',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `ecs_drp_order_goods`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `ecs_drp_order_goods` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `goods_id` int(10) DEFAULT NULL,
+  `touch_sale` decimal(10,2) DEFAULT '0.00',
+  `touch_fencheng` decimal(10,2) DEFAULT '0.00',
+  `order_id` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `ecs_drp_order_info`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `ecs_drp_order_info` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `drp_id` int(10) NOT NULL DEFAULT '0',
+  `shop_separate` int(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
 -- ----------------------------
 -- Records of ecs_drp_config
 -- ----------------------------
@@ -245,19 +280,7 @@ INSERT INTO `ecs_drp_config` VALUES ('3', '7', 'fxts','分销间隔', '下单并
 INSERT INTO `ecs_drp_config` VALUES ('4', '100', 'txxz','提现限制', '申请提现时，少于该值将无法提现','text');
 
 
-ALTER TABLE `ecs_order_goods` ADD COLUMN `touch_sale` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
-ALTER TABLE `ecs_cart` ADD COLUMN `touch_sale` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
-ALTER TABLE `ecs_goods` ADD COLUMN `touch_sale` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
-
-ALTER TABLE `ecs_order_goods` ADD COLUMN `touch_fencheng` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
-ALTER TABLE `ecs_cart` ADD COLUMN `touch_fencheng` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
-ALTER TABLE `ecs_goods` ADD COLUMN `touch_fencheng` decimal(10,2) unsigned NOT NULL DEFAULT '0.00';
-
 ALTER TABLE `ecs_brand` ADD COLUMN `brand_banner` varchar(80)  DEFAULT '';
-
-ALTER TABLE `ecs_order_info` ADD COLUMN `drp_id` int(8) unsigned NOT NULL DEFAULT '0';
-ALTER TABLE `ecs_order_info` ADD COLUMN `shop_separate` int(1) unsigned NOT NULL DEFAULT '0';
 ALTER TABLE `ecs_users` ADD COLUMN `apply_sale` int(1) unsigned NOT NULL DEFAULT '0';
-
 ALTER TABLE `ecs_goods_activity` ADD COLUMN `touch_img` VARCHAR (50)  DEFAULT '';
 ALTER TABLE `ecs_favourable_activity` ADD COLUMN `touch_img` VARCHAR (50)  DEFAULT '';
