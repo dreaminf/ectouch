@@ -397,19 +397,19 @@ elseif ($_REQUEST['act'] == 'separate')
     include_once(BASE_PATH . 'helpers/order_helper.php');
     $oid = (int)$_REQUEST['oid'];
 
-    $row = $db->getRow("SELECT o.order_id,o.order_sn, o.shop_separate, (o.goods_amount - o.discount) AS goods_amount, o.user_id FROM " . $GLOBALS['ecs']->table('order_info') . " o".
-        " LEFT JOIN " . $GLOBALS['ecs']->table('users') . " u ON o.user_id = u.user_id".
-        " WHERE order_id = '$oid'");
-
-    $order_sn = $row['order_sn'];
+    $row = $db->getRow("SELECT o.order_id, o.user_id, d.shop_separate, d.drp_id  FROM " . $GLOBALS['ecs']->table('order_info') . " o".
+        " LEFT JOIN " . $GLOBALS['ecs']->table('drp_order_info') . " d ON d.order_id = o.order_id".
+        " WHERE d.order_id = '$oid'");
 
     if (empty($row['shop_separate']))
     {
         // 获取订单中商品
-        $drp_id = $db->getOne("SELECT drp_id FROM " . $GLOBALS['ecs']->table('order_info') .  " where order_id = $oid");
+        $drp_id = $row['drp_id'];
         $parent_id = $db->getOne("SELECT user_id FROM " . $GLOBALS['ecs']->table('drp_shop') .  " where id = $drp_id");
-        $goods_list = $db->getAll("SELECT goods_id,touch_sale as goods_price,goods_number FROM " . $GLOBALS['ecs']->table('order_goods') .  " where order_id = $oid");
-
+        $goods_list = $db->getAll("SELECT goods_id,goods_number,order_id FROM " . $GLOBALS['ecs']->table('order_goods') .  " where order_id = $oid");
+        foreach($goods_list as $key=>$val){
+            $goods_list[$key]['goods_price'] = $db->getOne("SELECT touch_sale FROM " . $GLOBALS['ecs']->table('drp_order_goods') .  " where order_id = $val[order_id] and goods_id = $val[goods_id]");
+        }
         $data1 = $data2 = $data3 = array(
             'user_id'=>0,
             'profit'=>0,
@@ -450,7 +450,7 @@ elseif ($_REQUEST['act'] == 'separate')
             $info = sprintf($_LANG['separate_info'], $row['order_sn'], $data3['profit'], $data3['profit']);;
             drp_log_change($data3['user_id'], $data3['profit'], $data3['profit'], $info);
         }
-        $sql = "UPDATE " . $GLOBALS['ecs']->table('order_info') .
+        $sql = "UPDATE " . $GLOBALS['ecs']->table('drp_order_info') .
             " SET shop_separate = 1" .
             " WHERE order_id = $oid LIMIT 1";
         $db->query($sql);
@@ -548,13 +548,15 @@ function get_user_order_list($user_id)
     $filter = array(
         'id'=>$user_id,
     );
+    $sql = "SELECT id FROM " . $GLOBALS['ecs']->table('drp_shop'). " WHERE user_id = $user_id ";
+    $drp_id = $GLOBALS['db']->getOne($sql);
     /* 查询记录总数，计算分页数 */
-    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info'). " WHERE parent_id = $user_id ";
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('drp_order_info'). " WHERE drp_id = $drp_id ";
     $filter['record_count'] = $GLOBALS['db']->getOne($sql);
     $filter = page_and_size($filter);
 
     /* 查询记录 */
-    $sql = "SELECT * FROM " .  $GLOBALS['ecs']->table('order_info'). " WHERE parent_id = $user_id " .
+    $sql = "SELECT o.* FROM " .  $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id = $drp_id " .
         " ORDER BY order_id DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 
@@ -617,12 +619,12 @@ function get_order_list($is_separate)
         'is_separate'=>$is_separate,
     );
     /* 查询记录总数，计算分页数 */
-    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info'). " WHERE drp_id > 0  and shop_separate = $is_separate";
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('drp_order_info'). " WHERE drp_id > 0  and shop_separate = $is_separate";
     $filter['record_count'] = $GLOBALS['db']->getOne($sql);
     $filter = page_and_size($filter);
 
     /* 查询记录 */
-    $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('order_info'). " WHERE drp_id > 0  and shop_separate = $is_separate" .
+    $sql = "SELECT o.* FROM " .  $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 and  d.shop_separate = $is_separate" .
         " ORDER BY order_id DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 
