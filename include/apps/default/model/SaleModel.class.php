@@ -22,7 +22,7 @@ class SaleModel extends BaseModel {
      */
     function get_shop_list($key=1){
         $res = array();
-        $sql = "select d.* from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id = ".$_SESSION['user_id'] ." and apply_sale = 1";
+        $sql = "select d.* from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id = ".$_SESSION['user_id'] ." and open = 1";
         $list = M()->query($sql);
         if($key == 1){
             $res = $list;
@@ -33,7 +33,7 @@ class SaleModel extends BaseModel {
                     $where .= $val['user_id'].',';
                 }
                 $where = substr($where, 0, -1);
-                $sql = "select d.* from {pre}users  as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id in($where) and apply_sale = 1";
+                $sql = "select d.* from {pre}users  as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id in($where) and open = 1";
                 $list2 = M()->query($sql);
                 if($key == 2){
                     $res = $list2;
@@ -44,7 +44,7 @@ class SaleModel extends BaseModel {
                             $where .= $val['user_id'].',';
                         }
                         $where = substr($where, 0, -1);
-                        $sql = "select d.* from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id in($where) and apply_sale = 1";
+                        $sql = "select d.* from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id in($where) and open = 1";
                         $list3 = M()->query($sql);
                         if($key == 3){
                             $res = $list3;
@@ -235,21 +235,20 @@ class SaleModel extends BaseModel {
     function get_sale_orders($where, $num = 10, $start = 0 ,$user_id) {
         /* 取得订单列表 */
         $arr = array();
-        $sql = "SELECT order_id, order_sn, user_id, shipping_id, order_status, shipping_status, pay_status, add_time, is_separate,drp_id,shop_separate, " .
-            "(goods_amount + shipping_fee + insure_fee + pay_fee + pack_fee + card_fee + tax - discount) AS total_fee " .
-            " FROM {pre}order_info " .
+        $sql = "SELECT o.order_id, o.order_sn, o.user_id, o.shipping_id, o.order_status, o.shipping_status, o.pay_status, o.add_time, o.is_separate, " .
+            "(o.goods_amount + o.shipping_fee + o.insure_fee + o.pay_fee + o.pack_fee + o.card_fee + o.tax - o.discount) AS total_fee, d.shop_separate " .
+            " FROM {pre}order_info as o right join {pre}drp_order_info as d on o.order_id=d.order_id " .
             " WHERE  " . $where . " ORDER BY add_time DESC LIMIT $start , $num";
         $res = M()->query($sql);
         foreach ($res as $key => $value) {
 
             $value['shipping_status'] = ($value['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $value['shipping_status'];
             $value['order_status'] = L('os.' . $value['order_status']) . ',' . L('ps.' . $value['pay_status']) . ',' . L('ss.' . $value['shipping_status']);
-            $goods_list = model('Order')->order_goods($value['order_id']);
+            $goods_list = $this->get_order_goods($value['order_id']);
             foreach ($goods_list as $key => $val) {
                 $goods_list[$key]['price'] = $val['goods_price'];
                 $goods_list[$key]['goods_price'] = price_format($val['goods_price'], false);
-                $goods_list[$key]['subtotal'] = price_format($val['subtotal'], false);
-                $goods_list[$key]['goods_thumb'] = get_image_path($value['order_id'], $val['goods_thumb']);
+                $goods_list[$key]['subtotal'] = price_format($value['total_fee'], false);
                 $goods_list[$key]['goods_number'] = $val['goods_number'];
                 $goods_list[$key]['touch_fencheng'] = $val['touch_fencheng'];
                 $goods_list[$key]['touch_sale'] = $val['touch_sale'];
@@ -683,7 +682,7 @@ class SaleModel extends BaseModel {
             $data['profit']+= $val['touch_sale']*$profit['profit1']/100*$val['goods_number'];
         }
         //一级分店
-        $sql = "select d.id from {pre}drp_shop as d JOIN {pre}users as u on d.user_id=u.user_id where u.parent_id=".$user_id." and apply_sale = 1";
+        $sql = "select d.id from {pre}drp_shop as d JOIN {pre}users as u on d.user_id=u.user_id where u.parent_id=".$user_id." and open = 1";
         $drp_list = M()->query($sql);
         if($drp_list){
             $where_drp = '-1';
@@ -708,7 +707,7 @@ class SaleModel extends BaseModel {
                     $data['profit1']+= $val['touch_sale']*$profit['profit2']/100*$val['goods_number'];
                 }
                 //二级分店
-                $sql = "select d.id from {pre}drp_shop as d JOIN {pre}users as u on d.user_id=u.user_id where u.parent_id in (".$where_drp.") and apply_sale = 1";
+                $sql = "select d.id from {pre}drp_shop as d JOIN {pre}users as u on d.user_id=u.user_id where u.parent_id in (".$where_drp.") and open = 1";
                 $drp_list = M()->query($sql);
                 if($drp_list){
                     $where_drp = '-1';
@@ -875,4 +874,52 @@ class SaleModel extends BaseModel {
         }
     }
 
+    /**
+     * @param int $order_id
+     * 根据订单id获取订单商品
+     */
+    public function get_order_goods($order_id = 0){
+        if($order_id > 0){
+            $sql = "select og.rec_id,og.goods_id,og.goods_name,og.goods_number,og.goods_price, g.goods_thumb from {pre}order_goods as og join {pre}goods as g on og.goods_id = g.goods_id where og.order_id=$order_id";
+            $goodsArr = $this->model->query($sql);
+            if($goodsArr){
+                foreach($goodsArr as $key=>$val){
+                    $sql = "select * from {pre}drp_order_goods where order_id = $order_id and goods_id = $val[goods_id]";
+                    $drp_goods = $this->model->getRow($sql);
+                    $goodsArr[$key]['touch_sale'] = $drp_goods['touch_sale'];
+                    $goodsArr[$key]['touch_fencheng'] = $drp_goods['touch_fencheng'];
+                }
+            }
+            return $goodsArr;
+
+        }
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

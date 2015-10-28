@@ -20,7 +20,7 @@ class SaleController extends CommonController {
     protected $user_id;
     protected $action;
     protected $back_act = '';
-    private $sale = null;
+    private $drp = null;
 
     /**
      * 构造函数
@@ -39,10 +39,9 @@ class SaleController extends CommonController {
         $this->assign('action', $this->action);
         $this->assign('info', $info);
         // 获取店铺信息
-        $this->sale = $this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->find();
-
+        $this->drp = $this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->find();
         $without = array('sale_set', 'sale_set_category', 'sale_set_end');
-        if(!$this->sale && !in_array($this->action, $without)){
+        if(!$this->drp && !in_array($this->action, $without)){
             redirect(url('sale/sale_set'));
         }
         $this->assign('user_id',session('user_id'));
@@ -439,7 +438,9 @@ class SaleController extends CommonController {
         $size = I(C('page_size'), 5);
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
         $where = 'drp_id = '.$drp_id;
-        $count = $this->model->table('order_info')->field('COUNT(*)')->where($where)->getOne();
+        $sql = "select count(*) as count from {pre}drp_order_info as d right join {pre}order_info as o on d.order_id=o.order_id where d.drp_id=$drp_id";
+        $count = $this->model->getRow($sql);
+        $count = $count['count'] ? $count['count'] : 0;
         $this->pageLimit(url('sale/order_list'), $size);
         $this->assign('pager', $this->pageShow($count));
         $orders = model('Sale')->get_sale_orders($where ,  $size, ($page-1)*$size,$user_id);
@@ -555,8 +556,9 @@ class SaleController extends CommonController {
         $this->assign('user_count', $user_count ? $user_count : 0);
 
         // 店铺订单数
-        $order_count = M()->table('order_info')->where("parent_id=".$_SESSION['user_id'])->count();;
-        $this->assign('order_count', $order_count ? $order_count : 0);
+        $sql = "select count(*) as count from {pre}drp_order_info where drp_id = $this->drp['id']";
+        $order_count = $this->model->getOne($sql);
+        $this->assign('order_count', $order_count['count'] ? $order_count['count'] : 0);
 
         $this->assign('title', L('my_shop_info'));
         $this->display('sale_my_shop_info.dwt');
