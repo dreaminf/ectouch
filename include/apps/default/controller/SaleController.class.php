@@ -437,7 +437,7 @@ class SaleController extends CommonController {
         }
         $size = I(C('page_size'), 5);
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
-        $where = 'drp_id = '.$drp_id;
+        $where = 'd.drp_id = '.$drp_id;
         $sql = "select count(*) as count from {pre}drp_order_info as d right join {pre}order_info as o on d.order_id=o.order_id where d.drp_id=$drp_id";
         $count = $this->model->getRow($sql);
         $count = $count['count'] ? $count['count'] : 0;
@@ -556,8 +556,8 @@ class SaleController extends CommonController {
         $this->assign('user_count', $user_count ? $user_count : 0);
 
         // 店铺订单数
-        $sql = "select count(*) as count from {pre}drp_order_info where drp_id = $this->drp['id']";
-        $order_count = $this->model->getOne($sql);
+        $sql = "select count(*) as count from {pre}drp_order_info where drp_id = ".$this->drp['id'];
+        $order_count = $this->model->getRow($sql);
         $this->assign('order_count', $order_count['count'] ? $order_count['count'] : 0);
 
         $this->assign('title', L('my_shop_info'));

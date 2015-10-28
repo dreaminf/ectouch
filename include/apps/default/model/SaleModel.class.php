@@ -857,21 +857,31 @@ class SaleModel extends BaseModel {
      * @param $order_id
      */
     public function update_order_sale($order_id){
-        $goodsArr = $this->model->table('order_goods')->where('order_id='.$order_id)->field('goods_id')->select();
-        if($goodsArr){
-            foreach($goodsArr as $key=>$val){
-                $goods_sale = $this->model->table('drp_goods')->where('goods_id = '.$val['goods_id'])->field('touch_sale,touch_fencheng')->select();
-                if($goods_sale){
-                    $data['touch_sale'] = $goods_sale['0']['touch_sale'];
-                    $data['touch_fencheng'] = $goods_sale['0']['touch_fencheng'];
-                    $data['goods_id'] = $val['goods_id'];
-                    $data['order_id'] = $order_id;
-                    $this->model->table('drp_order_goods')
-                        ->data($data)
-                        ->insert();
+        if($order_id > 0){
+            $goodsArr = $this->model->table('order_goods')->where('order_id='.$order_id)->field('goods_id')->select();
+            if($goodsArr){
+                foreach($goodsArr as $key=>$val){
+                    $goods_sale = $this->model->table('drp_goods')->where('goods_id = '.$val['goods_id'])->field('touch_sale,touch_fencheng')->select();
+                    if($goods_sale){
+                        $data['touch_sale'] = $goods_sale['0']['touch_sale'];
+                        $data['touch_fencheng'] = $goods_sale['0']['touch_fencheng'];
+                        $data['goods_id'] = $val['goods_id'];
+                        $data['order_id'] = $order_id;
+                        $this->model->table('drp_order_goods')
+                            ->data($data)
+                            ->insert();
+                    }
                 }
             }
+            unset($data);
+            $data['drp_id'] = $_SESSION['drp_shop']['drp_id'];
+            $data['shop_separate'] = 0;
+            $data['order_id'] = $order_id;
+            $this->model->table('drp_order_info')
+                ->data($data)
+                ->insert();
         }
+
     }
 
     /**
