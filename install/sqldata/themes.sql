@@ -7,16 +7,16 @@ INSERT INTO `ecs_ad_position` (`position_id`, `position_name`, `ad_width`, `ad_h
 
 DELETE FROM `ecs_ad` WHERE `position_id` = 256;
 INSERT INTO `ecs_ad` (`position_id`, `media_type`, `ad_name`, `ad_link`, `ad_code`, `start_time`, `end_time`, `link_man`, `link_email`, `link_phone`, `click_count`, `enabled`) VALUES
-(256, 0, '1', '', 'data/attached/afficheimg/index-theme-icon1.gif', 1396339200, 1525161600, '', '', '', 0, 1),
-(256, 0, '1', '', 'data/attached/afficheimg/index-theme-icon2.gif', 1396339200, 1525161600, '', '', '', 0, 1),
-(256, 0, '1', '', 'data/attached/afficheimg/index-theme-icon3.gif', 1396339200, 1525161600, '', '', '', 0, 1),
-(256, 0, '1', '', 'data/attached/afficheimg/index-theme-icon4.gif', 1396339200, 1525161600, '', '', '', 0, 1),
-(256, 0, '1', '', 'data/attached/afficheimg/index-theme-icon5.gif', 1396339200, 1525161600, '', '', '', 0, 1),
-(256, 0, '1', '', 'data/attached/afficheimg/index-theme-icon6.gif', 1396339200, 1525161600, '', '', '', 0, 1),
-(256, 0, '1', '', 'data/attached/afficheimg/index-theme-icon7.gif', 1396339200, 1525161600, '', '', '', 0, 1),
-(256, 0, '1', '', 'data/attached/afficheimg/index-theme-icon8.gif', 1396339200, 1525161600, '', '', '', 0, 1),
-(256, 0, '1', '', 'data/attached/afficheimg/index-theme-icon9.gif', 1396339200, 1525161600, '', '', '', 0, 1),
-(256, 0, '1', '', 'data/attached/afficheimg/index-theme-icon10.gif', 1396339200, 1525161600, '', '', '', 0, 1);
+(256, 0, '1', '', 'index-theme-icon1.gif', 1396339200, 1525161600, '', '', '', 0, 1),
+(256, 0, '1', '', 'index-theme-icon2.gif', 1396339200, 1525161600, '', '', '', 0, 1),
+(256, 0, '1', '', 'index-theme-icon3.gif', 1396339200, 1525161600, '', '', '', 0, 1),
+(256, 0, '1', '', 'index-theme-icon4.gif', 1396339200, 1525161600, '', '', '', 0, 1),
+(256, 0, '1', '', 'index-theme-icon5.gif', 1396339200, 1525161600, '', '', '', 0, 1),
+(256, 0, '1', '', 'index-theme-icon6.gif', 1396339200, 1525161600, '', '', '', 0, 1),
+(256, 0, '1', '', 'index-theme-icon7.gif', 1396339200, 1525161600, '', '', '', 0, 1),
+(256, 0, '1', '', 'index-theme-icon8.gif', 1396339200, 1525161600, '', '', '', 0, 1),
+(256, 0, '1', '', 'index-theme-icon9.gif', 1396339200, 1525161600, '', '', '', 0, 1),
+(256, 0, '1', '', 'index-theme-icon10.gif', 1396339200, 1525161600, '', '', '', 0, 1);
 
 INSERT INTO `ecs_ad_position` (`position_id`, `position_name`, `ad_width`, `ad_height`, `position_desc`, `position_style`) VALUES
 (257, '手机端首页限时促销广告位1', 360, 168, '', '{foreach from=$ads item=ad name=ads}{$ad}{/foreach}');
