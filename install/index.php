@@ -272,6 +272,7 @@ switch ($step) {
 		$version_content = "<?php\ndefine('APPNAME', '".APPNAME."');\ndefine('VERSION', '".VERSION."');\ndefine('RELEASE', '".RELEASE."');\ndefine('ECTOUCH_AUTH_KEY', '".$appid."');";
 		if(ECTOUCH_AUTH_KEY == ''){
 			define('IN_ECTOUCH', true);
+			require '../include/vendor/Http.class.php';
 			require '../include/vendor/Cloud.class.php';
 			@file_put_contents($version_file, $version_content);
 			$cloud = Cloud::getInstance();
