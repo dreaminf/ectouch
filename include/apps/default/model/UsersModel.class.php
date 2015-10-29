@@ -1816,8 +1816,6 @@ class UsersModel extends BaseModel {
         $email = $info['email'];
         if ($this->register($username, $password, $email) !== false) {
             $uid = $_SESSION['user_id'];
-            $sql = "update " . $this->pre . "users set aite_id='" . $info['aite_id'] . "' where user_id='$uid'";
-            $this->query($sql);
             // 更新附表
             $this->table = "touch_user_info";
             $touch_data['user_id'] = $uid;
