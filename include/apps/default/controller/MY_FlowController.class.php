@@ -435,7 +435,7 @@ class MY_FlowController extends FlowController {
         // 销量
         model('Flow')->add_touch_goods($flow_type, $order ['extension_code']);
         /* 清空购物车 */
-       // model('Order')->clear_cart($flow_type);
+        model('Order')->clear_cart($flow_type);
         /* 清除缓存，否则买了商品，但是前台页面读取缓存，商品数量不减少 */
         clear_all_files();
 
