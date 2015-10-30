@@ -50,7 +50,7 @@ class paypal
             "<input type='hidden' name='notify_url' value='$data_notify_url'>" .
             "<input type='hidden' name='rm' value='2'>" .
             "<input type='hidden' name='cancel_return' value='$cancel_return'>" .
-            "<input type='submit' value='立即支付' class='btn btn-info' style='padding:0.8rem'>" .                      // 按钮
+            "<input type='submit' value='去付款' class='btn btn-info' style='padding:0.8rem'>" .                      // 按钮
             "</form><br />";
         return $def_url;
     }

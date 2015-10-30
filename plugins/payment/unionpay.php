@@ -270,7 +270,7 @@ eot;
             $html .= "    <input type=\"hidden\" name=\"{$key}\" id=\"{$key}\"  value=\"{$value}\" />\n";
         }
         $html .= <<<eot
-    <input type="submit" type="hidden" value="立即支付" class="btn btn-info ect-btn-info ect-colorf ect-bg c-btn3">
+    <input type="submit" type="hidden" value="去付款" class="btn btn-info ect-btn-info ect-colorf ect-bg c-btn3">
     </form>
 eot;
         return $html;

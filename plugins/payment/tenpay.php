@@ -69,7 +69,7 @@ class tenpay
             return '<div style="color:red; text-align: center">错误信息：'.$xml['err_info'].'</div>';
         }
         /* 生成支付按钮 */
-        $button = '<div><input type="button" class="btn btn-info ect-btn-info ect-colorf ect-bg" onclick="window.open(\'' . $gateway . '?token_id=' . $xml['token_id'] . '\')" value="' . L('pay_button') . '" class="c-btn3" /></div>';
+        $button = '<div><input type="button" class="btn btn-info ect-btn-info ect-colorf ect-bg" onclick="window.open(\'' . $gateway . '?token_id=' . $xml['token_id'] . '\')" value="去付款" class="c-btn3" /></div>';
         return $button;
     }
 
