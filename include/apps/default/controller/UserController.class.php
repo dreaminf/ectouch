@@ -722,7 +722,10 @@ class UserController extends CommonController {
                     // 兼容过滤ecjia支付方式
                     if (substr($payment['pay_code'], 0 , 4) == 'pay_') {
                         unset($payment_list[$key]);
-                    }               
+                    }
+                    if(!file_exists(ROOT_PATH . 'plugins/payment/'.$payment['pay_code'].'.php')){
+                        unset($payment_list[$key]);
+                    }
                     if ($payment['pay_id'] == $order['pay_id'] || $payment['pay_code'] == 'balance') {
                         unset($payment_list[$key]);
                     }
