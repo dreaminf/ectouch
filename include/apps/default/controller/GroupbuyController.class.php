@@ -121,6 +121,7 @@ class GroupbuyController extends CommonController {
         }
         $this->assign('now_time', gmtime());           // 当前系统时间
         $this->assign('goods_id', $group_buy_id);     // 商品的id
+		$this->assign('pictures', model('GoodsBase')->get_goods_gallery($goods_id));
         $this->display('group_buy_info.dwt');
     }
 
