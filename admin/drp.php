@@ -98,7 +98,7 @@ if ($_REQUEST['act'] == 'config')
         if($data){
             foreach($data as $key=>$val){
                 unset($dat);
-                $dat['centent']=$val;
+                $dat['value']=$val;
                 $db->autoExecute($ecs->table('drp_config'), $dat, 'UPDATE', "keyword = '$key'");
             }
         }
@@ -107,6 +107,13 @@ if ($_REQUEST['act'] == 'config')
         exit;
     }
     $info = $db->getAll("SELECT * FROM " . $ecs->table("drp_config"));
+    foreach($info as $key=>$val){
+        // radio
+        if($val['type'] == 'radio'){
+            $info[$key]['centent'] = explode(',',$val['centent']);
+        }
+    }
+
     $smarty->assign('info', $info);
     assign_query_info();
     if (empty($_REQUEST['is_ajax']))
@@ -398,7 +405,7 @@ elseif ($_REQUEST['act'] == 'separate')
     $oid = (int)$_REQUEST['oid'];
 
     $row = $db->getRow("SELECT o.order_id, o.user_id, d.shop_separate, d.drp_id  FROM " . $GLOBALS['ecs']->table('order_info') . " o".
-        " LEFT JOIN " . $GLOBALS['ecs']->table('drp_order_info') . " d ON d.id = o.order_id".
+        " LEFT JOIN " . $GLOBALS['ecs']->table('drp_order_info') . " d ON d.order_id = o.order_id".
         " WHERE d.order_id = '$oid'");
 
     if (empty($row['shop_separate']))
@@ -556,7 +563,7 @@ function get_user_order_list($user_id)
     $filter = page_and_size($filter);
 
     /* 查询记录 */
-    $sql = "SELECT o.* FROM " .  $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.id=o.order_id WHERE d.drp_id = $drp_id " .
+    $sql = "SELECT o.* FROM " .  $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id = $drp_id " .
         " ORDER BY order_id DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 
@@ -624,7 +631,7 @@ function get_order_list($is_separate)
     $filter = page_and_size($filter);
 
     /* 查询记录 */
-    $sql = "SELECT o.* FROM " .  $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.id=o.order_id WHERE d.drp_id > 0 and  d.shop_separate = $is_separate" .
+    $sql = "SELECT o.* FROM " .  $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 and  d.shop_separate = $is_separate" .
         " ORDER BY order_id DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 

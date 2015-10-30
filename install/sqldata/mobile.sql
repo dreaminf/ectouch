@@ -158,11 +158,12 @@ ALTER TABLE `ecs_order_info` ADD COLUMN `order_source` int(1) UNSIGNED NOT NULL 
 
 CREATE TABLE IF NOT EXISTS `ecs_drp_config` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `centent` text COMMENT '分销申请 温馨提示',
+  `centent` text COMMENT '多选时的选项',
   `keyword` varchar(20) DEFAULT NULL COMMENT '区分文章的key',
   `name` varchar(50) DEFAULT NULL COMMENT '显示字段名',
   `remarks`  text COMMENT '备注',
   `type` varchar(20) DEFAULT 'text' COMMENT '数据类型',
+  `value` TEXT COMMENT '默认值',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
@@ -275,10 +276,12 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_order_info` (
 -- ----------------------------
 -- Records of ecs_drp_config
 -- ----------------------------
-INSERT INTO `ecs_drp_config` VALUES ('1', '温馨提示', 'apply','温馨提示', '申请分销商时，提示用户的信息','textarea');
-INSERT INTO `ecs_drp_config` VALUES ('2', '新手必读', 'novice','新手必读', '分销商申请成功后，用户要注意的事项','textarea');
-INSERT INTO `ecs_drp_config` VALUES ('3', '7', 'fxts','分销间隔', '下单并付款之后经过设置天数才可以对订单分成','text');
-INSERT INTO `ecs_drp_config` VALUES ('4', '100', 'txxz','提现限制', '申请提现时，少于该值将无法提现','text');
+
+INSERT INTO `ecs_drp_config` VALUES ('1', '', 'apply', '温馨提示', '申请分销商时，提示用户需要注意的信息', 'textarea', '温馨提示1');
+INSERT INTO `ecs_drp_config` VALUES ('2', '', 'novice', '新手必读', '分销商申请成功后，用户要注意的事项', 'textarea', '新手必读1');
+INSERT INTO `ecs_drp_config` VALUES ('3', '', 'fxts', '间隔', '下单并付款之后经过间隔天数才可以对订单分成', 'text', '1');
+INSERT INTO `ecs_drp_config` VALUES ('4', '', 'txxz', '提现标准', '申请提现时，少于该值将无法提现', 'text', '10');
+INSERT INTO `ecs_drp_config` VALUES ('5', 'open,close', 'msg_open', '消息推送', '是否开启消息推送', 'radio', 'open');
 
 
 ALTER TABLE `ecs_brand` ADD COLUMN `brand_banner` varchar(80)  DEFAULT '';
