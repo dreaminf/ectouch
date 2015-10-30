@@ -14,7 +14,13 @@
     </div>
     <div class="bd">
       <ul id="Gallery">
-        <li><a href="{$gb_goods.goods_img}"><img alt="{$gb_goods.goods_name}" src="{$gb_goods.goods_img}" /></a></li>
+        <!--{if $pictures }--> 
+        <!-- {foreach from=$pictures item=picture name=no}-->
+        <li><a href="{$picture.img_url}"><img src="{$picture.img_url}" alt="{$picture.img_desc}" /></a></li>
+        <!--{/foreach}--> 
+		<!--{else}-->
+		<li><a href="{$goods.goods_img}"><img src="{$goods.goods_img}" alt="{$goods.goods_name}" /></a></li>
+        <!--{/if}-->
       </ul>
     </div>
   </div>
