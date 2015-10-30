@@ -2016,6 +2016,14 @@ class UserController extends CommonController {
     }
 
     /**
+     * 清空session
+     */
+    public function unsetsession(){
+        $name = I('get.name');
+        unset($_SESSION[$name]);
+    }
+
+    /**
      * 手机找回密码
      */
     public function get_password_phone() {
@@ -2306,7 +2314,8 @@ class UserController extends CommonController {
             'clear_histroy',
             'add_collection',
             'third_login',
-            'bind'
+            'bind',
+            'unsetsession'
         );
         // 未登录处理
         if (empty($_SESSION['user_id']) && !in_array($this->action, $without)) {
