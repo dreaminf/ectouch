@@ -39,7 +39,7 @@
 <div class="fx-fdong">
     <div class="fx-fdong-con">
         <img class="fx-fdong-con-img" src="__TPL__/sale/images/fenxiao-img.png" />
-        <span class="fx-fdong-price" id="price">¥1280.00</span>
+        <span class="fx-fdong-price" id="price">¥{$money}</span>
         <div class="fx-fdong-abs">
             <button class="fx-fdong-button" onclick="apply()">我要开店</button>
         </div>
