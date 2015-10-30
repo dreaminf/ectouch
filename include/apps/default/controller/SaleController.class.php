@@ -1171,6 +1171,9 @@ class SaleController extends CommonController {
             }
         }
 
+        $headimgurl = $this->model->table('wechat_user')->field('headimgurl')->where('ect_uid = '.session('user_id'))->getOne();
+        $this->assign('headimgurl',$headimgurl);
+
         $money = $this->model->table('drp_config')->field('value')->where('keyword = "money"')->getOne();
         $this->assign('money',$money);
         $this->assign('title','分销申请');

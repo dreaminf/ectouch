@@ -38,7 +38,7 @@
 </div>
 <div class="fx-fdong">
     <div class="fx-fdong-con">
-        <img class="fx-fdong-con-img" src="__TPL__/sale/images/fenxiao-img.png" />
+        <img class="fx-fdong-con-img" src="{if $headimgurl}{$$headimgurl}{else}__TPL__/sale/images/fenxiao-img.png{/if}" />
         <span class="fx-fdong-price" id="price">¥{$money}</span>
         <div class="fx-fdong-abs">
             <button class="fx-fdong-button" onclick="apply()">我要开店</button>
