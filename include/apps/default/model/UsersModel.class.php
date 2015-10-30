@@ -1797,11 +1797,6 @@ class UsersModel extends BaseModel {
         $sql = 'SELECT u.user_name FROM ' . $this->pre . 'users u LEFT JOIN ' . $this->pre .
                 'touch_user_info t ON t.user_id = u.user_id WHERE t.aite_id = "' . $aite_id . '" ';
         $res = $this->row($sql);
-        if(!$res){
-            //touch没有记录查询pc
-            $sql = 'SELECT user_name FROM ' . $this->pre . 'users  WHERE aite_id = "' . $aite_id . '" ';
-            $res = $this->row($sql);
-        }
         return $res['user_name'];
     }
 
