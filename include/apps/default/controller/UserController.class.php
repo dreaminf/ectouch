@@ -2016,6 +2016,14 @@ class UserController extends CommonController {
     }
 
     /**
+     * 清空session
+     */
+    public function unsetsession(){
+        $name = I('get.name');
+        unset($_SESSION[$name]);
+    }
+
+    /**
      * 手机找回密码
      */
     public function get_password_phone() {
