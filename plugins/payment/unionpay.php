@@ -15,44 +15,9 @@
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
-$payment_lang = ROOT_PATH . 'plugins/payment/language/' . C('lang') . '/' . basename(__FILE__);
-
-if (file_exists($payment_lang)) {
-    include_once ($payment_lang);
-    L($_LANG);
-}
-
-/* 模块的基本信息 */
-if (isset($set_modules) && $set_modules == TRUE) {
-    $i = isset($modules) ? count($modules) : 0;
-    /* 代码 */
-    $modules[$i]['code'] = basename(__FILE__, '.php');
-    /* 描述对应的语言项 */
-    $modules[$i]['desc'] = 'unionpay_desc';
-    /* 是否货到付款 */
-    $modules[$i]['is_cod'] = '0';
-    /* 是否支持在线支付 */
-    $modules[$i]['is_online'] = '1';
-    /* 作者 */
-    $modules[$i]['author'] = 'ECTouch Team';
-    /* 网址 */
-    $modules[$i]['website'] = 'http://www.ectouch.cn';
-    /* 版本号 */
-    $modules[$i]['version'] = '1.0.0';
-    /* 配置信息 */
-    $modules[$i]['config'] = array(
-        array(
-            'name' => 'mer_id',
-            'type' => 'text',
-            'value' => ''
-        ),
-    );
-    // 签名证书密码
-    return;
-}
-defined('SDK_SIGN_CERT_PATH') or define('SDK_SIGN_CERT_PATH', ROOT_PATH . '/data/certificate/pay/PM_700000000000001_acp.pfx');
+defined('SDK_SIGN_CERT_PATH') or define('SDK_SIGN_CERT_PATH', ROOT_PATH . 'data/certificate/pay/PM_700000000000001_acp.pfx');
 defined('SDK_SIGN_CERT_PWD') or define('SDK_SIGN_CERT_PWD', '000000');
-defined('SDK_VERIFY_CERT_DIR') or define('SDK_VERIFY_CERT_DIR', ROOT_PATH . '/data/certificate/pay/');
+defined('SDK_VERIFY_CERT_DIR') or define('SDK_VERIFY_CERT_DIR', ROOT_PATH . 'data/certificate/pay/');
 defined('SDK_FRONT_TRANS_URL') or define('SDK_FRONT_TRANS_URL', 'https://101.231.204.80:5000/gateway/api/frontTransReq.do');
 defined('SDK_BACK_TRANS_URL') or define('SDK_BACK_TRANS_URL', 'https://101.231.204.80:5000/gateway/api/backTransReq.do');
 defined('SDK_SINGLE_QUERY_URL') or define('SDK_SINGLE_QUERY_URL', 'https://101.231.204.80:5000/gateway/api/queryTrans.do');
