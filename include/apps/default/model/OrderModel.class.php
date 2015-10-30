@@ -132,6 +132,16 @@ class OrderModel extends BaseModel {
     }
 
     /**
+     * 取得支付方式信息
+     * @param   int     $pay_code     支付方式
+     * @return  array   支付方式信息
+     */
+    function payment_code_info($pay_code) {
+        $sql = 'SELECT * FROM ' . $this->pre . "payment WHERE pay_code = '$pay_code' AND enabled = 1";
+        return $this->row($sql);
+    }
+
+    /**
      * 取得订单信息
      * @param   int     $order_id   订单id（如果order_id > 0 就按id查，否则按sn查）
      * @param   string  $order_sn   订单号
