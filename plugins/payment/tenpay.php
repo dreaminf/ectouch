@@ -66,10 +66,10 @@ class tenpay
         $result = Http::doPost($init_url, $data);
         $xml = (array)simplexml_load_string($result);
         if (isset($xml['err_info'])) {
-            return '<div style="color:red; text-align: center">错误信息：'.$xml['err_info'].'</div>';
+            return '<div><input type="button" class="btn btn-info ect-btn-info ect-colorf ect-bg c-btn3" value="无法完成付款，请切换其他方式" /></div>';
         }
         /* 生成支付按钮 */
-        $button = '<div><input type="button" class="btn btn-info ect-btn-info ect-colorf ect-bg" onclick="window.open(\'' . $gateway . '?token_id=' . $xml['token_id'] . '\')" value="去付款" class="c-btn3" /></div>';
+        $button = '<div><input type="button" class="btn btn-info ect-btn-info ect-colorf ect-bg c-btn3" onclick="window.open(\'' . $gateway . '?token_id=' . $xml['token_id'] . '\')" value="去付款" /></div>';
         return $button;
     }
 
