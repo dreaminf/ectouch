@@ -1161,6 +1161,9 @@ class SaleController extends CommonController {
 
             }
         }
+
+        $money = $this->model->table('drp_config')->field('value')->where('keyword = "money"')->getOne();
+        $this->assign('money',$money);
         $this->assign('title','分销申请');
         $this->display('sale_apply.dwt');
     }
