@@ -89,10 +89,9 @@ class weixin {
      * 授权登录地址
      */
     public function act_login($info, $url){
-        $redirect_url = __URL__;
         // 微信浏览器浏览
         if (is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid']))) {
-            return $this->weObj->getOauthRedirect($redirect_url, 1);
+            return $this->weObj->getOauthRedirect($url, 1);
         }
         else{
             show_message("请在微信内访问或者已经登录。", L('relogin_lnk'), url('login', array(
@@ -106,16 +105,16 @@ class weixin {
      */
     public function call_back($info, $url, $code, $type){
         if (!empty($code)) {
-            if(isset($_SESSION['repeat'])){
-                //删除避免重复跳转验证
-                unset($_SESSION['repeat']);
-            }
             $token = $this->weObj->getOauthAccessToken();
             $userinfo = $this->weObj->getOauthUserinfo($token['access_token'], $token['openid']);
             $_SESSION['wechat_user'] = empty($userinfo) ? array() : $userinfo;
             //公众号信息
             $wechat = model('Base')->model->table('wechat')->field('id, oauth_status')->where(array('type'=>2, 'status'=>1, 'default_wx'=>1))->find();
             $this->update_weixin_user($userinfo, $wechat['id'], $this->weObj);
+            if(isset($_SESSION['repeat'])){
+                //删除避免重复跳转验证
+                unset($_SESSION['repeat']);
+            }
             if(!empty($_SESSION['redirect_url'])){
                 return array('url'=>$_SESSION['redirect_url']);
             }
