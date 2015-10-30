@@ -391,6 +391,12 @@ class ClipsBaseModel extends BaseModel {
             $sql .= " AND pay_code <> 'balance' ";
         }
         $modules = M()->query($sql);
+        foreach ($modules as $k => $v) {
+            // 只保留显示手机版支付方式
+            if(!file_exists(ROOT_PATH . 'plugins/payment/'.$v['pay_code'].'.php')){
+                unset($modules[$k]);
+            }
+        }
         //支付插件排序
         if (isset($modules)) {
             /* 将财付通提升至第二个显示 */

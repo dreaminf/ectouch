@@ -89,9 +89,10 @@ class weixin {
      * 授权登录地址
      */
     public function act_login($info, $url){
+        $redirect_url = __URL__;
         // 微信浏览器浏览
         if (is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid']))) {
-            return $this->weObj->getOauthRedirect($url, 1);
+            return $this->weObj->getOauthRedirect($redirect_url, 1);
         }
         else{
             show_message("请在微信内访问或者已经登录。", L('relogin_lnk'), url('login', array(
