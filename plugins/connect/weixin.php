@@ -106,6 +106,10 @@ class weixin {
      */
     public function call_back($info, $url, $code, $type){
         if (!empty($code)) {
+            if(isset($_SESSION['repeat'])){
+                //删除避免重复跳转验证
+                unset($_SESSION['repeat']);
+            }
             $token = $this->weObj->getOauthAccessToken();
             $userinfo = $this->weObj->getOauthUserinfo($token['access_token'], $token['openid']);
             $_SESSION['wechat_user'] = empty($userinfo) ? array() : $userinfo;
@@ -114,10 +118,6 @@ class weixin {
             $this->update_weixin_user($userinfo, $wechat['id'], $this->weObj);
             if(!empty($_SESSION['redirect_url'])){
                 return array('url'=>$_SESSION['redirect_url']);
-            }
-            if(isset($_SESSION['repeat'])){
-                //删除避免重复跳转验证
-                unset($_SESSION['repeat']);
             }
             return true;
         } else {
