@@ -13,5 +13,6 @@
  * ----------------------------------------------------------------------------
  */
 
+define('APP_DEBUG', true);
 define('IN_ECTOUCH', true);
 require ('include/EcTouch.php');

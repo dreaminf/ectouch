@@ -15,7 +15,9 @@
 
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
-
+header("Content-Type:text/html;charset=utf-8");
+header("Pragma: no-cache");
+header("Cache-control: private");
 if (version_compare(PHP_VERSION, '5.2.0', '<')) die('require PHP > 5.2.0 !');
 defined('BASE_PATH') or define('BASE_PATH', dirname(__FILE__) . '/');
 defined('ROOT_PATH') or define('ROOT_PATH', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/');
@@ -37,17 +39,17 @@ C('DB', load_file(ROOT_PATH . 'data/config.php'));
 /* 设置时区 */
 date_default_timezone_set(C('DEFAULT_TIMEZONE'));
 /* 调试配置 */
-defined('DEBUG') or define('DEBUG', C('DEBUG'));
+defined('APP_DEBUG') or define('APP_DEBUG', C('DEBUG'));
 /* 版本信息 */
 load_file(ROOT_PATH . 'data/version.php');
 /* 错误和异常处理 */
 register_shutdown_function('fatalError');
 
 /* 错误等级 */
-if (DEBUG) {
+if (APP_DEBUG) {
     @ini_set("display_errors", 1);
     error_reporting(E_ALL ^ E_NOTICE); // 除了notice提示，其他类型的错误都报告
-	debug(); // system 运行时间，占用内存开始计算
+    debug(); // system 运行时间，占用内存开始计算
 } else {
     @ini_set("display_errors", 0);
     error_reporting(0); // 把错误报告，全部屏蔽
