@@ -12,7 +12,7 @@
     </div>
     <div class="bd">
       <ul id="Gallery">
-        <li><a href="{$goods.goods_img}"><img src="{$goods.goods_img}" alt="{$goods.goods_name}" /></a></li>
+        <!--<li><a href="{$goods.goods_img}"><img src="{$goods.goods_img}" alt="{$goods.goods_name}" /></a></li>-->
         <!--{if $pictures}--> 
         <!-- {foreach from=$pictures item=picture name=no}-->
         <li><a href="{$picture.img_url}"><img src="{$picture.img_url}" alt="{$picture.img_desc}" /></a></li>
