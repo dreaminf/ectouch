@@ -27,6 +27,7 @@ input[type=text],textarea{border-radius:5px;  border:1px solid #e3e3e3; backgrou
 @media only screen and (max-width:640px) and (min-width:630px){body{font-size:18px}}
 
 ul, li, dl, dt, dd, p, h1, h2, h3, h4, h5, form, img, div { margin: 0; padding: 0; list-style: none; border: 0 none; }
+.tab-info img{width:100%; height:auto;}
 .con{background:#f7f7f7;overflow:hidden;}
 del{color:#bbb;}
 .h4-list{font-size:1.4em; padding:0.6em;}
