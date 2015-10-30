@@ -1129,6 +1129,15 @@ class SaleController extends CommonController {
 
     public function apply(){
         if(IS_POST){
+            $apply_list = $this->model->table('drp_apply')->where("user_id = ".session('user_id'))->select();
+
+            if($apply_list){
+                foreach($apply_list as $key=>$val){
+                    $this->model->table('order_info')->where("order_id=".$val['order_id'])->delete();
+                    $this->model->table('drp_apply')->where("order_id=".$val['order_id'])->delete();
+                }
+
+            }
             $price = I('price');
             $order['order_sn'] = get_order_sn(); // 获取新订单号
             $order['goods_amount'] = $price;
