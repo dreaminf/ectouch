@@ -328,11 +328,67 @@ class MY_FlowController extends FlowController {
             $sms->send(C('sms_shop_mobile'), sprintf($msg, $order ['consignee'], $order ['mobile']), '', 13, 1);
         }
         /* 如果需要，微信通知 by wanglu */
-        // if (method_exists('WechatController', 'do_oauth')) {
-        //     $order_url = __HOST__ . url('user/order_detail', array('order_id' => $order ['order_id']));
-        //     $order_url = urlencode(base64_encode($order_url));
-        //     send_wechat_message('order_remind', '', $order['order_sn'] . L('order_effective'), $order_url, $order['order_sn']);
-        // }
+//         if (method_exists('WechatController', 'do_oauth')) {
+//             $order_url = __HOST__ . url('user/order_detail', array('order_id' => $order ['order_id']));
+//             $order_url = urlencode(base64_encode($order_url));
+//             send_wechat_message('order_remind', '', $order['order_sn'] . L('order_effective'), $order_url, $order['order_sn']);
+//         }
+
+        // 推送消息
+        $message_status = M()->table('drp_config')->field('value')->where('keyword = "msg_open"')->getOne();
+        if (method_exists('WechatController', 'send_message') && $order['pay_status'] == PS_PAYED && $message_status=='open') {
+
+            // 模版信息设置
+            $data['openid'] = '';
+            $data['open_id'] = 'OPENTM206547887';
+            $data['url'] = 'http://'.$_SERVER['HTTP_HOST'].url('sale/order_detail',array('order_id'=>$new_order_id));
+            $data['first'] = '下线会员卖出商品';  // 简介
+            $data['keyword1'] = $order ['order_sn'];  // 订单编号
+            $data['keyword2'] = $this->model->table('order_goods')->field('goods_name')->where("order_id ='".$new_order_id."'")->getOne();  // 商品名称
+            $data['keyword3'] = local_date('Y-m-d H:i:s',($order ['add_time'])); // 下单时间
+            $data['keyword4'] = price_format($order ['goods_amount']);  // 下单金额
+            $data['keyword5'] = '';  // 分销商名称
+
+            // 获取订单所属店铺信息
+            $drp_id = M()->table('drp_order_info')->field('drp_id')->where('order_id = ' . $new_order_id)->getOne();
+            if($drp_id){
+                // 本店用户id
+                $user_id = M()->table('drp_shop')->field('user_id')->where('id = ' . $drp_id)->getOne();
+                if($user_id){
+                    // 获取openid 和 微信昵称
+                    $userInfo = M()->table('wechat_user')->field('openid,nickname')->where('ect_uid = ' . $user_id)->find();
+                    $data['openid'] = $userInfo['openid'];
+                    $data['keyword5'] = $userInfo['nickname'];
+                    if($data['openid']){
+                        call_user_func(array('WechatController', 'sendTemplateMessage'), $data);
+                    }
+                    // 一级用户id
+                    $parent_id1 = M()->table('users')->field('parent_id')->where('user_id = ' . $user_id)->getOne();
+                    if($parent_id1){
+                        // 获取openid 和 微信昵称
+                        $userInfo = M()->table('wechat_user')->field('openid,nickname')->where('ect_uid = ' . $parent_id1)->find();
+                        $data['openid'] = $userInfo['openid'];
+                        $data['keyword5'] = $userInfo['nickname'];
+                        if($data['openid']){
+                            call_user_func(array('WechatController', 'sendTemplateMessage'), $data);
+                        }
+                        // 二级用户id
+                        $parent_id2 = M()->table('users')->field('parent_id')->where('user_id = ' . $parent_id1)->getOne();
+                        if($parent_id2) {
+                            // 获取openid 和 微信昵称
+                            $userInfo = M()->table('wechat_user')->field('openid,nickname')->where('ect_uid = ' . $parent_id2)->find();
+                            $data['openid'] = $userInfo['openid'];
+                            $data['keyword5'] = $userInfo['nickname'];
+                            if($data['openid']){
+                                call_user_func(array('WechatController', 'sendTemplateMessage'), $data);
+                            }
+                        }
+                    }
+                }
+
+
+            }
+         }
         /* 如果订单金额为0 处理虚拟卡 */
         if ($order ['order_amount'] <= 0) {
             $sql = "SELECT goods_id, goods_name, goods_number AS num FROM " . $this->model->pre . "cart WHERE is_real = 0 AND extension_code = 'virtual_card'" . " AND session_id = '" . SESS_ID . "' AND rec_type = '$flow_type'";
@@ -379,7 +435,7 @@ class MY_FlowController extends FlowController {
         // 销量
         model('Flow')->add_touch_goods($flow_type, $order ['extension_code']);
         /* 清空购物车 */
-        model('Order')->clear_cart($flow_type);
+       // model('Order')->clear_cart($flow_type);
         /* 清除缓存，否则买了商品，但是前台页面读取缓存，商品数量不减少 */
         clear_all_files();
 

@@ -2219,4 +2219,389 @@ class WechatController extends AdminController
             }
         }
     }
+
+
+    /**
+     * 模板消息
+     */
+    public function news_list(){
+        $list = $this->model->table('wechat_template')
+            ->order('add_time desc')
+            ->select();
+        $this->assign('list',$list);
+        $this->display();
+    }
+    /**
+     * 模板消息添加
+     */
+    public function template_edit(){
+        $res = array (
+            '0' => array (
+                'IT科技',
+                array (
+                    '1' => '互联网/电子商务',
+                    '2' => 'IT软件与服务',
+                    '3' => 'IT硬件与设备',
+                    '4' => '电子技术',
+                    '5' => '通信与运营商',
+                    '6' => '网络游戏'
+                )
+            )
+        ,
+            '1' => array (
+                '金融业',
+                array (
+                    '7' => '银行',
+                    '8' => '基金|理财|信托',
+                    '9' => '保险'
+                )
+            ),
+            '2' => array (
+                '餐饮',
+                array (
+                    '10' => '餐饮'
+                )
+            ),
+            '3' => array (
+                '酒店旅游',
+                array (
+                    '11' => '酒店',
+                    '12' => '旅游'
+                )
+            )
+        ,
+            '4' => array (
+                '运输与仓储',
+                array (
+                    '13' => '快递',
+                    '14' => '物流',
+                    '15' => '仓储'
+                )
+            )
+        ,
+            '5' => array (
+                '教育',
+                array (
+                    '16' => '培训',
+                    '17' => '院校'
+                )
+            ),
+            '6' => array (
+                '政府与公共事业',
+                array (
+                    '18' => '学术科研',
+                    '19' => '交警',
+                    '20' => '博物馆',
+                    '21' => '公共事业|非盈利机构'
+                )
+            )
+        ,
+            '7' => array (
+                '医药护理',
+                array (
+                    '22' => '医药医疗',
+                    '23' => '护理美容',
+                    '24' => '保健与卫生'
+                )
+            )
+        ,
+            '8' => array (
+                '交通工具',
+                array (
+                    '25' => '汽车相关',
+                    '26' => '摩托车相关',
+                    '27' => '火车相关',
+                    '28' => '飞机相关'
+                )
+            ),
+            '9' => array (
+                '房地产',
+                array (
+                    '29' => '建筑',
+                    '30' => '物业'
+                )
+            ),
+            '10' => array (
+                '消费品',
+                array (
+                    '31' => '消费品'
+                )
+            ),
+            '11' => array (
+                '商业服务',
+                array (
+                    '32' => '法律',
+                    '33' => '会展',
+                    '34' => '中介服务',
+                    '35' => '认证',
+                    '36' => '审计'
+                )
+            ),
+            '12' => array (
+                '文体娱乐',
+                array (
+                    '37' => '传媒',
+                    '38' => '体育',
+                    '39' => '娱乐休闲'
+                )
+            ),
+            '13' => array (
+                '印刷',
+                array (
+                    '40' => '印刷'
+                )
+            ),
+            '14' => array (
+                '其它',
+                array (
+                    '41' => '其它'
+                )
+            )
+
+        );
+
+        foreach($res as $key => $val){
+            $data['one'][] = $val['0'];
+        }
+        $this->assign('one',$data['one']);
+        $this->display('wechat_template_edit');
+    }
+    /**
+     * 二级联动返回
+     */
+    public function select(){
+        $res = array (
+            '0' => array (
+                'IT科技',array ('1' => '互联网/电子商务','2' => 'IT软件与服务','3' => 'IT硬件与设备','4' => '电子技术','5' => '通信与运营商','6' => '网络游戏')),'1' => array ('金融业',array ('7' => '银行','8' => '基金|理财|信托','9' => '保险')),'2' => array ('餐饮',array ('10' => '餐饮')),'3' => array ('酒店旅游',array ('11' => '酒店','12' => '旅游')),'4' => array ('运输与仓储',array ('13' => '快递','14' => '物流','15' => '仓储')),'5' => array ('教育',array ('16' => '培训','17' => '院校')),'6' => array ('政府与公共事业',array ('18' => '学术科研','19' => '交警','20' => '博物馆','21' => '公共事业|非盈利机构')),'7' => array ('医药护理',array ('22' => '医药医疗','23' => '护理美容','24' => '保健与卫生')),'8' => array ('交通工具',array ('25' => '汽车相关','26' => '摩托车相关','27' => '火车相关','28' => '飞机相关')),
+            '9' => array (
+                '房地产',
+                array (
+                    '29' => '建筑',
+                    '30' => '物业'
+                )
+            ),
+            '10' => array (
+                '消费品',
+                array (
+                    '31' => '消费品'
+                )
+            ),
+            '11' => array (
+                '商业服务',
+                array (
+                    '32' => '法律',
+                    '33' => '会展',
+                    '34' => '中介服务',
+                    '35' => '认证',
+                    '36' => '审计'
+                )
+            ),
+            '12' => array (
+                '文体娱乐',
+                array (
+                    '37' => '传媒',
+                    '38' => '体育',
+                    '39' => '娱乐休闲'
+                )
+            ),
+            '13' => array (
+                '印刷',
+                array (
+                    '40' => '印刷'
+                )
+            ),
+            '14' => array (
+                '其它',
+                array (
+                    '41' => '其它'
+                )
+            )
+
+        );
+        if(IS_POST){
+            $int = $_POST;
+            $info = $res[$int['o1']]['1'];
+        }
+        $result = '';
+        foreach ($info as $key =>$val){
+            $result.="<option value='$key'>$val</option>";
+        }
+        $info['two'] = $info;
+        die(json_encode($result));
+
+    }
+    /**
+     * 设置行业
+     */
+    public function add_template(){
+        if(IS_POST){
+            $two = I('two');
+            $deputy = I('deputy_two');
+            $grounds = I('grounds');
+            $template_list = I('template_list');
+            if(empty($this->weObj)){
+                $mag = '请先配置公众号！';
+                $url = url('wechat/modify');
+                $this->message($mag,$url);
+            }else{
+                $info = $this->model->table('wechat_Industry')->select();
+                if(!empty($info)){
+                    $data['one_Industry'] = $two;
+                    $data['two_Industry'] = $deputy;
+                    $data['apply_info'] = $grounds;
+                    $data['template_list'] = $template_list;
+                    $data['add_time'] = time();
+                    $a = $this->model->table('wechat_industry')
+                        ->data($data)
+                        ->where("1")
+                        ->update();
+                }else{
+                    $data['one_Industry'] = $two;
+                    $data['two_Industry'] = $deputy;
+                    $data['template_list'] = $template_list;
+                    $data['apply_info'] = $grounds;
+                    $data['add_time'] = time();
+                    $a = $this->model->table('wechat_industry')
+                        ->data($data)
+                        ->insert();
+
+                }
+                $res = $this->weObj->setTMIndustry($two,$deputy);
+            }
+        }
+    }
+    /**
+     * 开关按钮
+     */
+    public function is_switch(){
+        if(IS_GET){
+            $id = I('value');
+            $template_id = I('id');
+            $res['switch'] = $id;
+            $age['template_id'] = $template_id;
+            $list = $this->model->table('wechat_template')
+                ->data($res)
+                ->where($age)
+                ->update();
+        }
+
+    }
+    /**
+     * ajax取值
+     */
+    public function json(){
+        $group_id = I('template_id');
+        $template_id = $this->weObj->addTemplateMessage($group_id);
+        //$template_id = 'Doclyl5uP7Aciu-qZ7mJNPtWkbkYnWBWVja26EGbNyk';
+        if(!empty($template_id)){
+            die(json_encode($template_id));
+        }else{
+            die(json_encode('您输入的模板编号重复或者不存在,请重新输入！'));
+        }
+    }
+    /**
+     * 添加模板消息
+     */
+    public function set_template(){
+        $count = $this->model->table('wechat_template')
+            ->field('id')
+            ->count();
+        if($count >= 15){
+            $url = url('wechat/news_list');
+            $mag = '您添加的模板已经达到上限';
+            $this->message($mag,$url);
+        }else{
+            if(IS_POST){
+                $group_title = I('template_title');
+                $group_id = I('pass');
+                $text = I('text');
+                $grounds = I('grounds');
+                $info['switch'] = 0;
+                $info['template_list'] = $group_title;
+                $info['template_id'] = $group_id;
+                $info['grounds'] = $text;
+                $info['contents'] = $grounds;
+                $info['add_time'] = time();
+                if(strlen($group_id) === 64){
+                    $url = url('wechat/set_template');
+                    $mag = '您输入的模板编号重复或者不存在,请重新输入！';
+                    $this->message($mag,$url);
+                }
+                $add = $this->model->table('wechat_template')
+                    ->data($info)
+                    ->insert();
+                if($add == true){
+                    $mag = '添加成功！';
+                    $url = url('wechat/news_list');
+                    $this->message($mag,$url);
+                }
+            }else{
+                $res = array('0' =>array('会员',array('hyzc' =>'会员注册','hyxd' => '会员下单')),'1' =>array('订单',array('hyxd' =>'会员下单','xdzf' => '下单支付')),'2' =>array('发货',array('fhtx' =>'发货提醒')));
+                foreach($res as $key => $val){
+                    $group[$key]['title'] = $val['0'];
+                    if($val['1']){
+                        foreach ($val['1'] as $k => $v){
+                            $group[$key]['option'][$k] = $v;
+
+                        }
+                    }
+                }
+
+                $this->assign('group',$group);
+                $this->display('wechat_set_template');
+            }
+        }
+    }
+    /**
+     * 发送消息详情,传入openid
+     */
+    public function sendTemplateMessage($data){
+
+        $info = $this->model->table('wechat_template')
+            ->field('switch,template_id')
+            ->where('open_id="'.$data['open_id'].'"')
+            ->find();
+        if($info['switch'] == 1){
+            //发送
+            $format = array(
+                'touser' => $data['openid'],
+                'template_id' => $info['template_id'],
+                'url' => $data['url'],
+                'topcolor' => '#FF0000',
+                "topcolor"=>"#FF0000",
+                'data' =>array(
+                    'first' => array(
+                        'value' =>$data['first'],
+                        'color'=>'#173177'
+                    ),
+                    'keyword1'=>array(
+                        'value'=>$data['keyword1'],
+                        'color'=>'#FF0000'
+                    ),
+                    'keyword2'=>array(
+                        'value'=>$data['keyword2'],
+                        'color'=>'#FF0000'
+                    ),
+                    'keyword3'=>array(
+                        'value'=>$data['keyword3'],
+                        'color'=>'#FF0000'
+                    ),
+                    'keyword4'=>array(
+                        'value'=>$data['keyword4'],
+                        'color'=>'#FF0000'
+                    ),
+                    'keyword5'=>array(
+                        'value'=>$data['keyword5'],
+                        'color'=>'#FF0000'
+                    ),
+                    'remark'=>array(
+                        'value'=>$data['remark'],
+                        'color'=>'#FF0000'
+                    )
+                )
+            );
+            dump($info);
+            $result = $this->weObj->sendTemplateMessage($format);
+        }
+    }
 }

@@ -18,7 +18,11 @@
                 <textarea cols="40" rows="5" name="data[{$li.keyword}]">{$li.centent}</textarea>
 
             {elseif $li.type == 'text'}
-                <input type="text" size="40" name="data[{$li.keyword}]" value="{$li.centent}">
+                <input type="text" size="40" name="data[{$li.keyword}]" value="{$li.value}">
+            {elseif $li.type == 'radio'}
+                {foreach from=$li.centent item=c}
+                    <input type="radio" name="data[{$li.keyword}]" value="{$c}" {if $li.value == $c}checked{/if} >{$c}
+                {/foreach}
             {/if}
 
         </td>

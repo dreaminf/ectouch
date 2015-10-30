@@ -825,45 +825,6 @@ class SaleController extends CommonController {
     }
 
 
-
-    /**
-     * 销售订单详情
-     */
-    public function order_detail() {
-        $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
-
-        // 订单详情
-        $order = get_order_detail($order_id, $this->user_id);
-
-        if ($order === false) {
-            ECTouch::err()->show(L('back_home_lnk'), './');
-            exit();
-        }
-
-        // 订单商品
-        $goods_list = model('Order')->order_goods($order_id);
-        foreach ($goods_list as $key => $value) {
-            $goods_list[$key]['market_price'] = price_format($value['market_price'], false);
-            $goods_list[$key]['goods_price'] = price_format($value['goods_price'], false);
-            $goods_list[$key]['subtotal'] = price_format($value['subtotal'], false);
-            $goods_list[$key]['tags'] = model('ClipsBase')->get_tags($value['goods_id']);
-            $goods_list[$key]['goods_thumb'] = get_image_path($order_id, $value['goods_thumb']);
-        }
-
-        // 订单 支付 配送 状态语言项
-        $order['order_status'] = L('os.' . $order['order_status']);
-        $order['pay_status'] = L('ps.' . $order['pay_status']);
-        $order['shipping_status'] = L('ss.' . $order['shipping_status']);
-
-
-        $this->assign('title', L('order_detail'));
-        $this->assign('order', $order);
-        $this->assign('goods_list', $goods_list);
-        $this->display('sale_order_detail.dwt');
-    }
-
-
-
     public function get_order_count($user_id = 0){
         // 订单数量
         $affiliate = unserialize(C('affiliate'));
@@ -1096,6 +1057,34 @@ class SaleController extends CommonController {
         $this->assign('list', $list);
         $this->assign('title', L('ranking_list'));
         $this->display('sale_ranking_list.dwt');
+    }
+
+
+
+    /**
+     * 销售订单详情
+     */
+    public function order_detail() {
+        $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
+
+        if ($order_id == 0) {
+            ECTouch::err()->show(L('back_home_lnk'), './');
+            exit();
+        }
+        $where = 'd.order_id = '.$order_id;
+        $orders = model('Sale')->get_sale_orders($where,1,0,0);
+        if($orders){
+            foreach($orders as $key=>$val){
+                foreach($val['goods'] as $k=>$v){
+                    $orders[$key]['goods'][$k]['profit'] = model('Sale')->get_drp_profit($v['goods_id']);
+                    $orders[$key]['goods'][$k]['profit_money'] = $v['touch_sale']*$orders[$key]['goods'][$k]['profit']['profit1'] /100;
+                    $orders[$key]['sum']+=$orders[$key]['goods'][$k]['profit_money']*$v['goods_number'];
+                }
+            }
+        }
+        $this->assign('orders_list', $orders);
+        $this->assign('title', L('order_detail'));
+        $this->display('sale_order_detail.dwt');
     }
 
     /**

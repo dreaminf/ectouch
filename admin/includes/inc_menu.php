@@ -165,7 +165,7 @@ $modules['12_menu_wechat']['01_wechat_config'] = '../index.php?m=admin&c=wechat'
 $modules['12_menu_wechat']['02_wechat_masssend'] = '../index.php?m=admin&c=wechat&a=mass_message';
 $modules['12_menu_wechat']['03_wechat_autoreply'] = '../index.php?m=admin&c=wechat&a=reply_subscribe';
 $modules['12_menu_wechat']['04_wechat_selfmenu'] = '../index.php?m=admin&c=wechat&a=menu_list';
-//$modules['12_menu_wechat']['05_wechat_tmplmsg'] = '../index.php?m=admin&c=wechat&a=tmplmsg';
+$modules['12_menu_wechat']['05_wechat_tmplmsg'] = '../index.php?m=admin&c=wechat&a=news_list';
 $modules['12_menu_wechat']['06_wechat_contactmanage'] = '../index.php?m=admin&c=wechat&a=subscribe_list';
 $modules['12_menu_wechat']['07_wechat_appmsg'] = '../index.php?m=admin&c=wechat&a=article';
 $modules['12_menu_wechat']['08_wechat_qrcode'] = '../index.php?m=admin&c=wechat&a=share_list';

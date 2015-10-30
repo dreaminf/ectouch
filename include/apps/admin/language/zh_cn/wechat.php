@@ -125,3 +125,35 @@ $_LANG['scan_num'] = '扫描量';
 $_LANG['expire_seconds'] = '有效时间';
 $_LANG['share_help'] = '不填则为无限制';
 $_LANG['no_limit'] = '无限制';
+
+//模板消息
+
+$_LANG['determine'] = '确定';
+$_LANG['reset'] = '重置';
+$_LANG['template_info'] = '模板消息';
+$_LANG['set_industry'] = '设置所属行业';
+$_LANG['add_template'] = '添加模板';
+$_LANG['serial'] = '编号';
+$_LANG['one_Industry'] = '一级行业';
+$_LANG['two_Industry'] = '二级行业';
+$_LANG['add_time'] = '创建时间';
+$_LANG['info'] = '信息';
+$_LANG['news_add'] = '模板消息添加';
+$_LANG['main_Industry'] = '主营行业';
+$_LANG['deputy_Industry'] = '副营行业';
+$_LANG['apply_grounds'] = '申请理由';
+$_LANG['use_specification'] = '使用规范';
+$_LANG['detail'] = '模板消息详情';
+$_LANG['Industry'] = '行业';
+$_LANG['die_time'] = '最后修改时间';
+$_LANG['info_detail'] = '详细内容';
+$_LANG['detail_gallery'] = '内容示例';
+$_LANG['shop_name'] = '商品名称:';
+$_LANG['shop_time'] = '商品价格:';
+$_LANG['buy_time'] = '购买时间:';
+$_LANG['template_title'] = '模板标题:';
+$_LANG['template_info'] = '模板内容:';
+$_LANG['template_id'] = '模板ID:';
+$_LANG['template_list'] = '模板列表:';
+$_LANG['detect_template'] = '检测模板ID';
+$_LANG['edit_template'] = '修改模板';

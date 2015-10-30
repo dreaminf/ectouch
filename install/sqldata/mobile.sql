@@ -267,6 +267,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_order_info` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `drp_id` int(10) NOT NULL DEFAULT '0',
   `shop_separate` int(1) unsigned NOT NULL DEFAULT '0',
+  `order_id` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
