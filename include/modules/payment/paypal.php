@@ -1,7 +1,7 @@
 <?php
 defined('IN_ECTOUCH') or die('Deny Access');
 
-$payment_lang = BASE_PATH . 'language/' .C('lang'). '/payment/cod.php';
+$payment_lang = BASE_PATH . 'language/' .C('lang'). '/payment/paypal.php';
 
 if (file_exists($payment_lang)) {
     global $_LANG;
@@ -15,20 +15,21 @@ if (isset($set_modules) && $set_modules == TRUE)
     /* 代码 */
     $modules[$i]['code']    = basename(__FILE__, '.php');
     /* 描述对应的语言项 */
-    $modules[$i]['desc']    = 'cod_desc';
+    $modules[$i]['desc']    = 'paypal_desc';
     /* 是否支持货到付款 */
-    $modules[$i]['is_cod']  = '1';
+    $modules[$i]['is_cod']  = '0';
     /* 是否支持在线支付 */
-    $modules[$i]['is_online']  = '0';
-    /* 支付费用，由配送决定 */
-    $modules[$i]['pay_fee'] = '0';
+    $modules[$i]['is_online']  = '1';
     /* 作者 */
-    $modules[$i]['author']  = 'ECTouch TEAM';
+    $modules[$i]['author']  = 'ECTouch Team';
     /* 网址 */
-    $modules[$i]['website'] = 'http://www.ectouch.cn';
+    $modules[$i]['website'] = 'http://www.paypal.com';
     /* 版本号 */
     $modules[$i]['version'] = '1.0.0';
     /* 配置信息 */
-    $modules[$i]['config']  = array();
+    $modules[$i]['config'] = array(
+        array('name' => 'paypal_account', 'type' => 'text', 'value' => ''),
+        array('name' => 'paypal_currency', 'type' => 'select', 'value' => 'USD')
+    );
     return;
 }
