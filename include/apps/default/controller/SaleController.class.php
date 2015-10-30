@@ -702,6 +702,14 @@ class SaleController extends CommonController {
             redirect(url('sale/index'));
         }
 
+        // 增加判断
+        $examine = $this->model->table('drp_config')->field('value')->where('keyword = "examine"')->getOne();
+        if($examine == 'open' && $this->action !='apply'){
+            $is_apply = $this->model->table('drp_apply')->field('apply')->where('user_id ='.session('user_id'))->getOne();
+            if($is_apply != 2 ){
+                redirect(url('sale/apply'));
+            }
+        }
         if(model('Sale')->get_drp_status() == 0){
             show_message(L('drp_close'),L('home'),url());
         }
@@ -1109,5 +1117,51 @@ class SaleController extends CommonController {
             //取得成功上传的文件信息
             return array('error' => 0, 'message' => $upload->getUploadFileInfo());
         }
+    }
+
+    /**
+     * 分销商审核中
+     */
+    public function examine(){
+        $this->assign('title','分销商审核');
+        $this->display('sale_examine.dwt');
+    }
+
+    public function apply(){
+        if(IS_POST){
+            $price = I('price');
+            $order['order_sn'] = get_order_sn(); // 获取新订单号
+            $order['goods_amount'] = $price;
+            $order['user_id'] = session('user_id');
+            $order['order_status'] = OS_UNCONFIRMED;
+            $order['shipping_status'] = SS_UNSHIPPED;
+            $order['pay_status'] = PS_UNPAYED;
+
+            $this->model->table('order_info')
+                ->data($order)
+                ->insert();
+
+            $drp_data['user_id'] = session('user_id');
+            $drp_data['apply'] = 1;
+            $drp_data['order_id'] = M()->insert_id();
+            $this->model->table('drp_apply')
+                ->data($drp_data)
+                ->insert();
+
+            /* 取得支付信息，生成支付代码 */
+            if ($order ['order_amount'] > 0) {
+                $payment['pay_code'] = 'wxpay';
+
+                include_once (ROOT_PATH . 'plugins/payment/' . $payment ['pay_code'] . '.php');
+
+                $pay_obj = new $payment ['pay_code'] ();
+
+                $pay_online = $pay_obj->get_code($order, unserialize_config($payment ['pay_config']));
+                echo $pay_online;exit;
+
+            }
+        }
+        $this->assign('title','分销申请');
+        $this->display('sale_apply.dwt');
     }
 }
