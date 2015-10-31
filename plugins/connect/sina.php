@@ -118,8 +118,7 @@ class sina {
 
                 return true;
             }
-            $userinfo['user_name'] = trim($this->get_user_name($userinfo));
-            $userinfo['user_name'] = preg_replace('/\'\/^\\s*$|^c:\\\\con\\\\con$|[%,\\*\\"\\s\\t\\<\\>\\&\'\\\\]/', '', $userinfo['user_name']);
+            $userinfo['user_name'] = substr(strtoupper($userinfo['aite_id']), 0, 8);
             if ($user->check_user($userinfo['user_name'])) {
                 $userinfo['user_name'] = $userinfo['user_name'] . rand(1000, 9999); // 重名处理
             }
