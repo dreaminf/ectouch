@@ -40,7 +40,7 @@ class SaleController extends CommonController {
         $this->assign('info', $info);
         // 获取店铺信息
         $this->drp = $this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->find();
-        $without = array('sale_set', 'sale_set_category', 'sale_set_end');
+        $without = array('sale_set', 'sale_set_category', 'sale_set_end' , 'store');
         if(!$this->drp && !in_array($this->action, $without)){
             redirect(url('sale/sale_set'));
         }
@@ -307,11 +307,14 @@ class SaleController extends CommonController {
      * 推广二维码
      */
     public function spread(){
+        $id = I('u') ? I('u') : $this->user_id;
+        if(!$id){
+            redirect(url('index/index'));
+        }
         $filename  = './data/attached/drp';
         if(!file_exists($filename)){
             mkdir($filename);
         }
-        $id = $this->user_id;
         $bg_img = ROOT_PATH.'/data/attached/drp/tg-bg.png';//背景图
         $ew_img = 'data/attached/drp/tg-ew-'.$id.'.png';//二维码
         $dp_img = 'data/attached/drp/tg-'.$id.'.png';//店铺二维码
@@ -372,11 +375,15 @@ class SaleController extends CommonController {
      * 店铺二维码
      */
     public function store(){
+        $id = I('u') ? I('u') : $this->user_id;
+        if(!$id){
+            redirect(url('index/index'));
+        }
         $filename  = './data/attached/drp';
         if(!file_exists($filename)){
             mkdir($filename);
         }
-        $id = $this->user_id;
+
         $bg_img = ROOT_PATH.'/data/attached/drp/dp-bg.png';//背景图
         $ew_img = 'data/attached/drp/drp-'.$id.'.png';//二维码
         $dp_img = 'data/attached/drp/dp-'.$id.'.png';//店铺二维码
@@ -691,14 +698,19 @@ class SaleController extends CommonController {
             'sale_set_category',
             'sale_set_end',
         );
+        $shareArr = array(
+            'store',
+        );
         // 未登录处理
-        if (empty($_SESSION['user_id'])) {
+        if (empty($_SESSION['user_id']) && !in_array($this->action, $shareArr)) {
+            echo $this->action;
+            exit;
             $url = 'http://'.$_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
             redirect(url('user/login', array(
                 'referer' => urlencode($url)
             )));
             exit();
-        }elseif($_SESSION['user_rank'] == 255 && in_array($this->action, $deny)){
+        }elseif($_SESSION['user_rank'] == 255 && in_array($this->action, $deny) && !in_array($this->action, $shareArr)){
             redirect(url('sale/index'));
         }
 
