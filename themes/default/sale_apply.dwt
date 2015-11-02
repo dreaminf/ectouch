@@ -41,17 +41,12 @@
         <img class="fx-fdong-con-img" src="{if $headimgurl}{$$headimgurl}{else}__TPL__/sale/images/fenxiao-img.png{/if}" />
         <span class="fx-fdong-price" id="price">¥{$money}</span>
         <div class="fx-fdong-abs">
-            <button class="fx-fdong-button" onclick="apply()">我要开店</button>
+            <button class="fx-fdong-button" onclick="callpay()">我要开店</button>
         </div>
 
     </div>
 </div>
 <div id="pay-money-zf" style="display:none;">{$pay_online}</div>
 <script type="text/javascript" src="__TPL__/sale/js/jquery-1.9.1.js"></script>
-<script>
-    function apply(){
-        $("#wx_pay").click();
-    }
-</script>
 </body>
 </html>
