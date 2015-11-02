@@ -295,11 +295,13 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_apply` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `apply` int(1) DEFAULT '1',
   `user_id` int(10) DEFAULT NULL,
-  `order_id` int(20) DEFAULT NULL,
   `time` int(12) DEFAULT NULL,
+  `order_sn` varchar(255) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT NULL,
+  `pay_status` int(1) DEFAULT NULL,
+  `log_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
+)  ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ecs_drp_config

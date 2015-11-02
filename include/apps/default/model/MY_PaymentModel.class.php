@@ -38,13 +38,11 @@ class MY_PaymentModel extends PaymentModel {
                     "pay_log WHERE log_id = '$log_id'";
             $pay_log = $this->row($sql);
 
-            $is_apply = $this->model->table('drp_apply')->field('apply')->where("order_id = ".$pay_log[order_id])->getOne();
-            if($is_apply == 1){
-                $order_info =  $this->model->table('order_info')->where("order_id = ".$pay_log[order_id])->find();
-                $this->model->table('order_info')->where("order_id=".$order_info['order_id'])->delete();
+            $apply_info = $this->model->table('drp_apply')->where("log_id = '".$log_id."'")->find();
+            if($pay_log['order_id'] == $apply_info['id']){
                 $data['apply'] = 2;
                 $data['time'] = gmtime();
-                $where['order_id'] = $order_info['order_id'];
+                $where['id'] = $apply_info['id'];
                 $this->model->table('drp_apply')->data($data)->where($where)->update();
             }else {
 

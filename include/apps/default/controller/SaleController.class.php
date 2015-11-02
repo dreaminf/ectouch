@@ -40,7 +40,7 @@ class SaleController extends CommonController {
         $this->assign('info', $info);
         // 获取店铺信息
         $this->drp = $this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->find();
-        $without = array('sale_set', 'sale_set_category', 'sale_set_end' , 'store');
+        $without = array('sale_set', 'sale_set_category', 'sale_set_end' , 'store','spread');
         if(!$this->drp && !in_array($this->action, $without)){
             redirect(url('sale/sale_set'));
         }
@@ -700,11 +700,10 @@ class SaleController extends CommonController {
         );
         $shareArr = array(
             'store',
+            'spread',
         );
         // 未登录处理
         if (empty($_SESSION['user_id']) && !in_array($this->action, $shareArr)) {
-            echo $this->action;
-            exit;
             $url = 'http://'.$_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
             redirect(url('user/login', array(
                 'referer' => urlencode($url)
@@ -1141,37 +1140,35 @@ class SaleController extends CommonController {
 
     public function apply(){
         if(IS_POST){
-            $apply_list = $this->model->table('drp_apply')->where("user_id = ".session('user_id'))->select();
+            // 清除之前记录
+            $this->model->table('drp_apply')->where("user_id=".session('user_id'))->delete();
+            $price = $this->model->table('drp_config')->where("keyword='money'")->field('value')->getOne();
 
-            if($apply_list){
-                foreach($apply_list as $key=>$val){
-                    $this->model->table('order_info')->where("order_id=".$val['order_id'])->delete();
-                    $this->model->table('drp_apply')->where("order_id=".$val['order_id'])->delete();
-                }
-
-            }
-            $price = I('price');
-            $order['order_sn'] = get_order_sn(); // 获取新订单号
-            $order['goods_amount'] = $price;
+            // 生成支付记录
+            $order['apply'] = 1;
             $order['user_id'] = session('user_id');
-            $order['order_status'] = OS_UNCONFIRMED;
-            $order['shipping_status'] = SS_UNSHIPPED;
+            $order['order_sn'] = 'ECT'.get_order_sn(); // 获取新订单号
+            $order['time'] = gmtime();
+            $order['amount'] = $price;
             $order['pay_status'] = PS_UNPAYED;
 
-            $this->model->table('order_info')
+            $this->model->table('drp_apply')
                 ->data($order)
                 ->insert();
 
-            $drp_data['user_id'] = session('user_id');
-            $drp_data['apply'] = 1;
-            $drp_data['order_id'] = M()->insert_id();
-            $this->model->table('drp_apply')
-                ->data($drp_data)
-                ->insert();
-
             /* 取得支付信息，生成支付代码 */
-            if ($order ['order_amount'] > 0) {
-                $payment['pay_code'] = 'wxpay';
+            if ($order ['amount'] > 0) {
+                $new_order_id = M()->insert_id();
+                $log_id = model('ClipsBase')->insert_pay_log($new_order_id, $order ['amount'], PAY_ORDER);
+
+                $data['log_id'] = $log_id;
+
+                $where['order_sn'] = $order['order_sn'];
+
+                $this->model->table('drp_apply')->data($data)->where($where)->update();
+
+                $sql = "SELECT * FROM {pre}payment WHERE pay_code = 'wxpay' AND enabled = 1";
+                $payment = $this->model->getRow($sql);
 
                 include_once (ROOT_PATH . 'plugins/payment/' . $payment ['pay_code'] . '.php');
 
