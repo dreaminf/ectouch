@@ -46,15 +46,11 @@
 
     </div>
 </div>
-<div id="pay-money-zf" style="display:none;"></div>
+<div id="pay-money-zf" style="display:none;">{$pay_online}</div>
 <script type="text/javascript" src="__TPL__/sale/js/jquery-1.9.1.js"></script>
 <script>
     function apply(){
-        var price = $("#price").val();
-        $.post('{:url("sale/apply")}', {'price':price}, function(data){
-            $("#pay-money-zf").html(data);
-            $("#wx_pay").click();
-        });
+        $("#wx_pay").click();
     }
 </script>
 </body>

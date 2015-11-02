@@ -52,6 +52,9 @@ class wxpay
         $this->setParameter("total_fee", $order['order_amount'] * 100); // 总金额
         $this->setParameter("notify_url", __URL__ . '/api/notify/wxpay.php'); // 通知地址
         $this->setParameter("trade_type", "JSAPI"); // 交易类型
+        if($order['apply'] == 1){
+            $this->setParameter("attach", "drp");
+        }
         $prepay_id = $this->getPrepayId();
         $jsApiParameters = $this->getParameters($prepay_id);
         // wxjsbridge
@@ -95,6 +98,11 @@ class wxpay
             $wxsign = $postdata['sign'];
             unset($postdata['sign']);
             
+
+            // 微信附加参数
+            $attach = $postdata['attach'];
+            unset($postdata['attach']);
+
             foreach ($postdata as $k => $v) {
                 $Parameters[$k] = $v;
             }
@@ -123,7 +131,11 @@ class wxpay
                     $out_trade_no = explode('O', $postdata['out_trade_no']);
                     $order_sn = $out_trade_no[1]; // 订单号log_id
                                                   // 改变订单状态
-                    model('Payment')->order_paid($order_sn, 2);
+                    if($attach == 'drp'){
+                        model('Payment')->drp_order_paid($order_sn, 2);
+                    }else{
+                        model('Payment')->order_paid($order_sn, 2);
+                    }
 
                     // 修改订单信息(openid，tranid)
                     model('Base')->model->table('pay_log')

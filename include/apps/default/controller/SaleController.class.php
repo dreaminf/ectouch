@@ -1139,55 +1139,63 @@ class SaleController extends CommonController {
     }
 
     public function apply(){
-        if(IS_POST){
-            // 清除之前记录
-            $this->model->table('drp_apply')->where("user_id=".session('user_id'))->delete();
-            $price = $this->model->table('drp_config')->where("keyword='money'")->field('value')->getOne();
 
+        // 清除之前记录
+        $apply_info = $this->model->table('drp_apply')->where("user_id=".session('user_id'))->find();
+        $price = $this->model->table('drp_config')->where("keyword='money'")->field('value')->getOne();
+        if($apply_info['apply'] == 2){
+            redirect(url('sale/index'));exit;
+        }
+        if($apply_info){
+            if($apply_info['amount'] != $price){
+                $data['amount'] = $price;
+                $where['user_id'] = session('user_id');
+                $this->model->table('drp_apply')->data($data)->where($where)->update();
+            }
+
+        }else{
+            unset($apply_info);
             // 生成支付记录
-            $order['apply'] = 1;
-            $order['user_id'] = session('user_id');
-            $order['order_sn'] = 'ECT'.get_order_sn(); // 获取新订单号
-            $order['time'] = gmtime();
-            $order['amount'] = $price;
-            $order['pay_status'] = PS_UNPAYED;
+            $apply_info['apply'] = 1;
+            $apply_info['user_id'] = session('user_id');
+            $apply_info['time'] = gmtime();
+            $apply_info['amount'] = $price;
 
             $this->model->table('drp_apply')
-                ->data($order)
-                ->insert();
+            ->data($apply_info)
+            ->insert();
 
-            /* 取得支付信息，生成支付代码 */
-            if ($order ['amount'] > 0) {
-                $new_order_id = M()->insert_id();
-                $log_id = model('ClipsBase')->insert_pay_log($new_order_id, $order ['amount'], PAY_ORDER);
-
-                $data['log_id'] = $log_id;
-
-                $where['order_sn'] = $order['order_sn'];
-
-                $this->model->table('drp_apply')->data($data)->where($where)->update();
-
-                $sql = "SELECT * FROM {pre}payment WHERE pay_code = 'wxpay' AND enabled = 1";
-                $payment = $this->model->getRow($sql);
-
-                include_once (ROOT_PATH . 'plugins/payment/' . $payment ['pay_code'] . '.php');
-
-                $pay_obj = new $payment ['pay_code'] ();
-
-                $pay_online = $pay_obj->get_code($order, unserialize_config($payment ['pay_config']));
-                echo $pay_online;exit;
-
-            }
-        }else{
-
-            $headimgurl = $this->model->table('wechat_user')->field('headimgurl')->where('ect_uid = '.session('user_id'))->getOne();
-            $this->assign('headimgurl',$headimgurl);
-
-            $money = $this->model->table('drp_config')->field('value')->where('keyword = "money"')->getOne();
-            $this->assign('money',$money);
-            $this->assign('title','分销申请');
-            $this->display('sale_apply.dwt');
         }
+
+        /* 取得支付信息，生成支付代码 */
+        if ($apply_info ['amount'] > 0) {
+            $apply_id = M()->insert_id();
+
+            $sql = "SELECT * FROM {pre}payment WHERE pay_code = 'wxpay' AND enabled = 1";
+            $payment = $this->model->getRow($sql);
+
+            include_once (ROOT_PATH . 'plugins/payment/' . $payment ['pay_code'] . '.php');
+
+            $pay_obj = new $payment ['pay_code'] ();
+            //补全支付信息
+            $apply_info['order_amount'] = $apply_info ['amount'];
+            $apply_info['order_sn'] = get_order_sn();
+            $apply_info['log_id'] = $apply_id;
+
+            $pay_online = $pay_obj->get_code($apply_info, unserialize_config($payment ['pay_config']));
+
+            $this->assign('pay_online',$pay_online);
+
+        }
+
+        $headimgurl = $this->model->table('wechat_user')->field('headimgurl')->where('ect_uid = '.session('user_id'))->getOne();
+        $this->assign('headimgurl',$headimgurl);
+
+        $money = $this->model->table('drp_config')->field('value')->where('keyword = "money"')->getOne();
+        $this->assign('money',$money);
+        $this->assign('title','分销申请');
+        $this->display('sale_apply.dwt');
+
 
     }
 }
