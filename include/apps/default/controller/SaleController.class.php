@@ -40,7 +40,7 @@ class SaleController extends CommonController {
         $this->assign('info', $info);
         // 获取店铺信息
         $this->drp = $this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->find();
-        $without = array('sale_set', 'sale_set_category', 'sale_set_end' , 'store','spread');
+        $without = array('sale_set', 'sale_set_category', 'sale_set_end' , 'store','spread','apply');
         if(!$this->drp && !in_array($this->action, $without)){
             redirect(url('sale/sale_set'));
         }
@@ -411,7 +411,7 @@ class SaleController extends CommonController {
             $ch = curl_init();
             $timeout = 5;
             $info['avatar']=preg_replace('/https/','http',$info['avatar'],1);
-            
+
             curl_setopt ($ch, CURLOPT_URL, $info['avatar']);
             curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en; rv:1.9.2) Gecko/20100115 Firefox/3.6 GTBDFff GTB7.0');
@@ -1140,9 +1140,9 @@ class SaleController extends CommonController {
 
     public function apply(){
 
-        // 清除之前记录
         $apply_info = $this->model->table('drp_apply')->where("user_id=".session('user_id'))->find();
         $price = $this->model->table('drp_config')->where("keyword='money'")->field('value')->getOne();
+
         if($apply_info['apply'] == 2){
             redirect(url('sale/index'));exit;
         }
@@ -1152,7 +1152,7 @@ class SaleController extends CommonController {
                 $where['user_id'] = session('user_id');
                 $this->model->table('drp_apply')->data($data)->where($where)->update();
             }
-
+            $apply_id = $apply_info['id'];
         }else{
             unset($apply_info);
             // 生成支付记录
@@ -1162,14 +1162,13 @@ class SaleController extends CommonController {
             $apply_info['amount'] = $price;
 
             $this->model->table('drp_apply')
-            ->data($apply_info)
-            ->insert();
+                ->data($apply_info)
+                ->insert();
 
+            $apply_id = $this->model->insert_id();
         }
-
         /* 取得支付信息，生成支付代码 */
         if ($apply_info ['amount'] > 0) {
-            $apply_id = M()->insert_id();
 
             $sql = "SELECT * FROM {pre}payment WHERE pay_code = 'wxpay' AND enabled = 1";
             $payment = $this->model->getRow($sql);

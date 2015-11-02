@@ -35,7 +35,7 @@ class MY_PaymentModel extends PaymentModel {
         if ($log_id > 0) {
             /* 取得要修改的支付记录信息 */
             $sql = "SELECT * FROM " . $this->pre .
-                    "pay_log WHERE log_id = '$log_id'";
+                "pay_log WHERE log_id = '$log_id'";
             $pay_log = $this->row($sql);
 
             if ($pay_log && $pay_log['is_paid'] == 0) {
@@ -228,13 +228,11 @@ class MY_PaymentModel extends PaymentModel {
         /* 取得支付编号 */
         $log_id = intval($log_id);
         if ($log_id > 0) {
-            $apply_info = $this->model->table('drp_apply')->where("id = '" . $log_id . "'")->find();
-            if ($apply_info['apply']==1) {
-                $data['apply'] = 2;
-                $data['time'] = gmtime();
-                $where['id'] = $apply_info['id'];
-                $this->model->table('drp_apply')->data($data)->where($where)->update();
-            }
+            $data['apply'] = 2;
+            $data['time'] = gmtime();
+            $where['id'] = $log_id;
+            $this->model->table('drp_apply')->data($data)->where($where)->update();
+
         }
     }
 

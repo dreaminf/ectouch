@@ -97,18 +97,16 @@ class wxpay
             // 微信端签名
             $wxsign = $postdata['sign'];
             unset($postdata['sign']);
-            
 
             // 微信附加参数
             $attach = $postdata['attach'];
-            unset($postdata['attach']);
 
             foreach ($postdata as $k => $v) {
                 $Parameters[$k] = $v;
             }
             // 签名步骤一：按字典序排序参数
             ksort($Parameters);
-            
+
             $buff = "";
             foreach ($Parameters as $k => $v) {
                 $buff .= $k . "=" . $v . "&";
@@ -130,13 +128,12 @@ class wxpay
                     // 获取log_id
                     $out_trade_no = explode('O', $postdata['out_trade_no']);
                     $order_sn = $out_trade_no[1]; // 订单号log_id
-                                                  // 改变订单状态
+                    // 改变订单状态
                     if($attach == 'drp'){
                         model('Payment')->drp_order_paid($order_sn, 2);
                     }else{
                         model('Payment')->order_paid($order_sn, 2);
                     }
-
                     // 修改订单信息(openid，tranid)
                     model('Base')->model->table('pay_log')
                         ->data('openid = "' . $postdata['openid'] . '", transid = "' . $postdata['transaction_id'] . '"')
@@ -149,8 +146,8 @@ class wxpay
                             ->where('order_sn = "' . $out_trade_no[0] . '"')
                             ->getOne();
                         $order_url = __HOST__ . url('user/order_detail', array(
-                            'order_id' => $order_id
-                        ));
+                                'order_id' => $order_id
+                            ));
                         $order_url = str_replace('api/notify/wxpay.php', '', $order_url);
                         $order_url = urlencode(base64_encode($order_url));
                         send_wechat_message('pay_remind', '', $out_trade_no[0] . ' 订单已支付', $order_url, $out_trade_no[0]);
@@ -174,7 +171,7 @@ class wxpay
                 $xml .= "<" . $key . "><![CDATA[" . $val . "]]></" . $key . ">";
         }
         $xml .= "</xml>";
-        
+
         echo $xml;
         exit();
     }
@@ -222,7 +219,7 @@ class wxpay
         }
         // 签名步骤一：按字典序排序参数
         ksort($Parameters);
-        
+
         $buff = "";
         foreach ($Parameters as $k => $v) {
             $buff .= $k . "=" . $v . "&";
@@ -320,7 +317,7 @@ class wxpay
         } catch (Exception $e) {
             die($e->getMessage());
         }
-        
+
         // $response = $this->postXmlCurl($xml, $url, 30);
         $response = Http::curlPost($url, $xml, 30);
         $result = json_decode(json_encode(simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
@@ -341,7 +338,7 @@ class wxpay
         $jsApiObj["signType"] = "MD5";
         $jsApiObj["paySign"] = $this->getSign($jsApiObj);
         $this->parameters = json_encode($jsApiObj);
-        
+
         return $this->parameters;
     }
 }
