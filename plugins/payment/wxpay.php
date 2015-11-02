@@ -308,6 +308,7 @@ class wxpay
             $this->parameters["spbill_create_ip"] = $_SERVER['REMOTE_ADDR']; // 终端ip
             $this->parameters["nonce_str"] = $this->createNoncestr(); // 随机字符串
             $this->parameters["sign"] = $this->getSign($this->parameters); // 签名
+            $this->parameters["attach"] = 'drp'; // 测试
             $xml = "<xml>";
             foreach ($this->parameters as $key => $val) {
                 if (is_numeric($val)) {
