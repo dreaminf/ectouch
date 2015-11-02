@@ -1183,11 +1183,7 @@ class SaleController extends CommonController {
             $apply_info['log_id'] = $apply_id;
 
             $pay_online = $pay_obj->get_code($apply_info, unserialize_config($payment ['pay_config']));
-            // 测试信息
-            if(session('user_id')=='1659'){
-                echo '测试购买分销商<br>';
-                echo $pay_online;
-            }
+
             $this->assign('pay_online',$pay_online);
 
         }
