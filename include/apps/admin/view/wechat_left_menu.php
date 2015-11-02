@@ -19,5 +19,4 @@
 	<a class="list-group-item {if $action == 'remind'}active{/if}" href="{url('wechat/remind')}">提醒设置</a>
 	<a class="list-group-item {if $action == 'customer_service'}active{/if}" href="{url('wechat/customer_service')}">多客服设置</a>
 	<a class="list-group-item {if $action == 'share_list'}active{/if}" href="{url('wechat/share_list')}">扫码引荐</a>
-    <a class="list-group-item {if $action == 'wechat_wall'}active{/if}" href="{url('extend/wechat_wall')}">微信墙</a>
 </div>
