@@ -298,6 +298,8 @@ class passport implements IntegrateInterface
                 $this->db->query($sql);
                 $sql = "DELETE FROM {pre}account_log  WHERE " . db_create_in($col, 'user_id'); // 删除用户日志
                 $this->db->query($sql);
+                $sql = "DELETE FROM {pre}wechat_user  WHERE " . db_create_in($col, 'ect_uid'); // 删除微信用户
+                $this->db->query($sql);
             }
         }
     }
