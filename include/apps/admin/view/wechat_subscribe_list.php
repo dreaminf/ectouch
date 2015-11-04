@@ -31,7 +31,7 @@
     				{loop $list $key $val}
     				<tr>
     					<td class="text-center"><input type="checkbox" name="id[]" value="{$val['openid']}" class="checks"></td>
-    					<td class="text-center">{if $val['headimgurl']}<a href="{$val['headimgurl']}" class="fancybox" target="_blank"><img src="{$val['headimgurl']}" width="50" alt="{$val['nickname']}" />{/if}</td>
+    					<td class="text-center">{if $val['headimgurl']}<a href="admin/users.php?act=edit&id={$val['ect_uid']}"><img src="{$val['headimgurl']}" width="50" alt="{$val['nickname']}" />{/if}</td>
     					<td class="text-center">{$val['nickname']}({if $val['sex'] == 1}男{elseif $val['sex'] == 0}女{else}{/if})<br />{$val['name']}</td>
     					<td class="text-center">{$val['province']} - {$val['city']}</td>
     					<td class="text-center">{date('Y-m-d H:i:s', $val['subscribe_time'])}</td>
