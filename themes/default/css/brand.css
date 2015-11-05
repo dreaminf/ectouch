@@ -54,7 +54,7 @@ html {overflow-y: scroll;}
 .brand-today-img-logo img {width: 75%;margin: 0 auto;display: block;}
 .brand-lattice {width: 100%;height: auto;overflow: hidden;}
 .brand-lattice ul li {width: 50%;height: auto;float: left;position: relative;}
-.brand-lattice-bg {width: 100%;}
+.brand-lattice-bg {width: 100%; min-height: 220px;}
 .brand-lattice-logo {transition: all 2s;position: absolute;border-radius: 50%;width: 45%;z-index: 2;top: 30%;left: 28%;}
 .brand-lattice-logo.active {transform: rotateY(360deg);-webkit-transform: rotateY(360deg);-moz-transform: rotateY(360deg);}
 .brand-lattice li span {background-color: rgba(102,103,104,0.8);position: absolute;bottom: 0;left: 0;right: 0;width: 100%;color:#FFFFFF;font-size: 2rem;line-height: 2.5rem;display: block;text-align: center;}
@@ -73,7 +73,7 @@ html {overflow-y: scroll;}
 .top {width: 40%;background-color: #FFF;color: #000;text-align: center;height: 100%; padding: 5% 5%; padding-bottom:0;}
 .top p {font-size: 1.8rem;display: block;}
 .top img {width:100%;height:auto;}
-.top span {font-size: 1.5rem;line-height: 125%;}
+.top span {overflow: hidden;text-overflow: ellipsis;font-size: 1.5rem;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 6;}
 
 
 /*media*/
