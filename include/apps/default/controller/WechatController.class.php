@@ -205,12 +205,6 @@ class WechatController extends CommonController
                     $scene_user_id = empty($scene_user_id) ? 0 : $scene_user_id;
                     $domain = get_top_domain();
                     if (model('Users')->register($username, $password, $username . '@' . $domain, array('parent_id'=>$scene_user_id)) !== false) {
-                        $datas['user_rank'] = 99;
-                        
-                        $this->model->table('users')
-                            ->data($datas)
-                            ->where('user_name = "' . $username . '"')
-                            ->update();
                         model('Users')->update_user_info();
                     } else {
                         die('');

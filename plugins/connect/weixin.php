@@ -179,9 +179,6 @@ class weixin {
                 // 会员注册
                 $domain = get_top_domain();
                 if (model('Users')->register($username, $password, $username . '@' . $domain) !== false) {
-                    $data['user_rank'] = 99;
-                    
-                    model('Base')->model->table('users')->data($data)->where('user_name = "' . $username . '"')->update();
                     model('Users')->update_user_info();
                 } else {
                     die('授权失败，如重试一次还未解决问题请联系管理员');
