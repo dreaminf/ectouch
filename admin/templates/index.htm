@@ -228,7 +228,7 @@ function addFavorite(url, title) {
               <li><a href="../index.php" target="_blank" title="{$lang.preview}"><span>{$lang.preview}</span></a></li>
               <li><a href="index.php?act=clear_cache" target="workspace">更新缓存</a></li>
               <li><a href="privilege.php?act=modif" target="workspace"><span>{$lang.profile}</span></a></li>
-              <li><a href="privilege.php?act=modif" target="workspace">您好&nbsp;:&nbsp;Admin</a></li>
+              <li><a href="privilege.php?act=modif" target="workspace">您好&nbsp;:&nbsp;{$smarty.session.admin_name}</a></li>
             </ul>
           </div>
           <!-- End of Top navigation --> 
