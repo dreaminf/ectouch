@@ -734,6 +734,9 @@ class UserController extends CommonController {
 					if ($payment['pay_id'] == '8' || $payment['pay_id'] == '9') {
                         unset($payment_list[$key]);
                     }
+					if(!file_exists(ROOT_PATH . 'plugins/payment/'.$payment['pay_code'].'.php')){
+                        unset($payment_list[$key]);
+                    }
                 }
             }
             $this->assign('payment_list', $payment_list);
