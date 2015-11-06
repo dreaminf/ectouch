@@ -731,6 +731,9 @@ class UserController extends CommonController {
                     if ($payment['pay_id'] == $order['pay_id'] || $payment['pay_code'] == 'balance') {
                         unset($payment_list[$key]);
                     }
+					if ($payment['pay_id'] == '8' || $payment['pay_id'] == '9') {
+                        unset($payment_list[$key]);
+                    }
                 }
             }
             $this->assign('payment_list', $payment_list);
