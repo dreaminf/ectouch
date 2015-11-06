@@ -18,7 +18,7 @@
 				</div>
 				<div class="member-photo-right fr" onclick="window.location = '{:url('user/msg_list')}'">
 					<i class="iconfont">&#xe62d;</i>
-					<p>0</p><span>消息</span>
+					<p><!--{if $list.msg_list neq ''}--> {$list.msg_list}<!--{else}-->0<!--{/if}--></p><span>消息</span>
 				</div>
 				<div class="member-photo-img">
 					<a href="{:url('user/profile')}">

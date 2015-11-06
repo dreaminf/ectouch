@@ -864,6 +864,39 @@ class ClipsBaseModel extends BaseModel {
        $count = $this->model->table('collect_goods')->where($where)->count();
 	   return $count;
     }
+	
+	/**
+     * 获取未读取的消息数量
+     */
+	public function msg_lists($user_id){
+		$sql = "select msg_id from " . $this->pre . "feedback where  user_name= '".$_SESSION["user_name"]."'";
+		$ress = $this->query($sql);				
+		if($ress){
+			foreach($ress as $k)
+			{
+			    $str.=$k['msg_id'].',';
+			}
+		}
+	    $reb = substr($str,0,-1) ;	
+		if(!$reb){
+			$reb = 0;
+		}
+		$sql = "select parent_id from " . $this->pre . "feedback where parent_id in ($reb)";
+		$res = $this->query($sql);
+		if($res){
+			foreach($res as $k)
+			{
+			    $strs.=$k['parent_id'].',';
+			}
+		}
+	    $rebs = substr($strs,0,-1) ;
+		if(!$rebs){
+			$rebs = 0;
+		}	
+		$sql = "select count(*) as num from " . $this->pre . "touch_feedback where msg_id in ($rebs) and msg_read =0 ";
+		$resb = $this->row($sql);
+		return $resb['num']; 		
+	}
 	 /**
      * 获取未付款订单的数量
      */

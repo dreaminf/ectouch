@@ -61,7 +61,8 @@ class UserController extends CommonController {
 		$user_pay = model('ClipsBase')->pay_money($this->user_id);
 		$user_money = $user_pay['user_money'];  //余额
 		$user_points = $user_pay['pay_points'];	//积分
-		
+		// 获取未读取消息数量
+        $msg_list = model('ClipsBase')->msg_lists($this->user_id);
 		// 收藏数量
         $goods_num = model('ClipsBase')->num_collection_goods($this->user_id);
         // 收藏
@@ -89,6 +90,7 @@ class UserController extends CommonController {
         $this->assign('isbind', $bind);
 
 		$arr=array(
+		'msg_list'=> $msg_list,
 		'goods_nums'=> $goods_num,
 		'not_pays'=> $not_pays,
 		'not_shouhuos'=>  $not_shouhuos,
