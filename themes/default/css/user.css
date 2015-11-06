@@ -64,6 +64,7 @@
 .user-register .nav-tabs li a { border: 0; border-bottom: 1px solid #e3e3e3; }
 .user-register .nav-tabs li a:hover { background: none; border: 0; }
 .user-register .flow-consignee i.glyphicon-eye-open { right: 0; top: 0.1em; z-index: 11; font-size: 1.2em; color: #666; position: absolute; }
+.code img {width:3em;}
 /*user资金管理*/
 .user-account-detail { overflow: hidden; }
 .user-account-detail ul li { border-bottom: 1px solid #e3e3e3; overflow: hidden; padding: 0.6em; }

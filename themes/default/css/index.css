@@ -3356,7 +3356,9 @@ h3 {
 
 .index-more-icon {
   width: 100%;
-  text-align: center; }
+  text-align: center;
+  clear: both;
+  }
   .index-more-icon span {
     background: url(../img/index-more-icon1.gif) no-repeat center;
     font-size: 1.4rem;
