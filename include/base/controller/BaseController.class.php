@@ -22,6 +22,7 @@ class BaseController extends Controller {
     protected static $db = NULL;
     protected static $err = NULL;
     protected $appConfig = array();
+    protected $load = null;
 
     public function __construct() {
         parent::__construct();
@@ -81,6 +82,8 @@ class BaseController extends Controller {
         self::$err = new EcsError('message.dwt');
         //载入系统参数
         C('CFG', model('Base')->load_config());
+
+        $this->load = new Loader();
     }
 
     //载入函数、语言文件
