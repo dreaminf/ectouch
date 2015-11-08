@@ -150,6 +150,7 @@ $modules['10_menu_tools']['01_navigator']                 = '../index.php?m=admi
 $modules['10_menu_tools']['02_authorization']             = '../index.php?m=admin&c=authorization';
 $modules['10_menu_tools']['99_upgrade']                 = '../index.php?m=admin&c=upgrade';
 
+/*DRP_START*/
 // 微分销
 $modules['11_menu_rec']['01_drp_config']                      = 'drp.php?act=config';
 $modules['11_menu_rec']['02_drp_users']                       = 'drp.php?act=users';
@@ -159,6 +160,7 @@ $modules['11_menu_rec']['05_affiliate']                       = 'affiliate.php?a
 $modules['11_menu_rec']['06_affiliate_ck']                    = 'affiliate_ck.php?act=list';
 $modules['11_menu_rec']['07_ranking']                         = 'drp.php?act=ranking';
 $modules['11_menu_rec']['08_drp_log']                         = 'drp.php?act=drp_log';
+/*DRP_END*/
 
 // 微信通
 $modules['12_menu_wechat']['01_wechat_config'] = '../index.php?m=admin&c=wechat';

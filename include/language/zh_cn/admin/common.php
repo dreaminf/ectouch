@@ -403,7 +403,7 @@ $_LANG['10_shop_authorized'] = '授权证书';
 $_LANG['02_authorization'] = '登录插件';
 $_LANG['99_upgrade'] = '在线更新';
 
-
+/*DRP_START*/
 // 微分销
 $_LANG['01_drp_config'] = '微分销设置';
 $_LANG['02_drp_users'] = '分销商管理';
@@ -413,6 +413,7 @@ $_LANG['05_affiliate'] = '分成佣金设置';
 $_LANG['06_affiliate_ck'] = '分成订单管理';
 $_LANG['07_ranking'] = '分销商排行榜';
 $_LANG['08_drp_log'] = '佣金提现管理';
+/*DRP_END*/
 
 // 微信通
 $_LANG['01_wechat_config'] = '公众号设置';

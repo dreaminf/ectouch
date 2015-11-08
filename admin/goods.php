@@ -416,11 +416,14 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
 
     /* 创建 html editor */
     create_html_editor('goods_desc', $goods['goods_desc']);
-
+    
+    /*DRP_START*/
     $sql = "SELECT touch_sale,touch_fencheng FROM " . $ecs->table('drp_goods') . " WHERE goods_id = '$_REQUEST[goods_id]'";
     $goods_sale = $db->getRow($sql);
     $goods['touch_sale'] = $goods_sale['touch_sale'];
     $goods['touch_fencheng'] = $goods_sale['touch_fencheng'];
+    /*DRP_END*/
+    
     /* 模板赋值 */
     $smarty->assign('code',    $code);
     $smarty->assign('ur_here', $is_add ? (empty($code) ? $_LANG['02_goods_add'] : $_LANG['51_virtual_card_add']) : ($_REQUEST['act'] == 'edit' ? $_LANG['edit_goods'] : $_LANG['copy_goods']));
@@ -934,9 +937,8 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     /* 商品编号 */
     $goods_id = $is_insert ? $db->insert_id() : $_REQUEST['goods_id'];
 
-
+    /*DRP_START*/
     // 分销
-
     $touch_sale = !empty($_POST['touch_sale']) ? $_POST['touch_sale'] : 0;
     $touch_fencheng = !empty($_POST['touch_fencheng']) ? $_POST['touch_fencheng'] : 0;
     $sql="SELECT count(*) FROM ". $ecs->table('drp_goods')."WHERE goods_id='$goods_id'";
@@ -950,9 +952,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
             "VALUES ('$_REQUEST[goods_id]', '$touch_sale', '$touch_fencheng')";
     }
     $db->query($sql);
-
-
-
+    /*DRP_END*/
 
     /* 记录日志 */
     if ($is_insert)

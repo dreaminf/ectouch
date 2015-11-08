@@ -33,7 +33,9 @@ class CommonController extends BaseController
         if(class_exists('WechatController')){
             if (method_exists('WechatController', 'do_oauth')) {
                 call_user_func(array('WechatController', 'do_oauth'));
+                /*DRP_START*/
                 $this->drp();
+                /*DRP_END*/
                 $this->wechatJsSdk();
             }
         }
@@ -178,7 +180,8 @@ class CommonController extends BaseController
         // 设置parent_id
         session('parent_id',$_SESSION['user_id'] ? 0 : $_GET['u'] ? $_GET['u'] : 0);
     }
-
+    
+    /*DRP_START*/
     /*
      * 分销店铺信息
      */
@@ -210,7 +213,7 @@ class CommonController extends BaseController
             }
         }
     }
-
+    /*DRP_END*/
 
     /*
      * 微信jsSDK
