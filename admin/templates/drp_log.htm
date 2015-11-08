@@ -38,9 +38,9 @@
     <td align="center">{$item.bank_info}</td>
     <td align="center">{$item.status}</td>
     <td align="center">{$item.admin_user}
-    <a rel="drp.php?act=drp_refer&id={$item.log_id}" title="{$lang.withdraw}"><img src="images/icon_send_bonus.gif" class="withdraw" border="0" height="16" width="16" />
-    <a rel="drp.php?act=order_delete&id={$item.log_id}" title="{$lang.drop}"><img src="images/icon_drop.gif" class="drop" border="0" height="16" width="16" />  
-    </td>
+    {if $item.change_type ==0 }<a rel="drp.php?act=drp_refer&id={$item.log_id}" title="{$lang.withdraw}"><img src="images/icon_send_bonus.gif" class="withdraw" border="0" height="16" width="16" />
+    {else}<a rel="drp.php?act=order_delete&id={$item.log_id}" title="{$lang.drop}"><img src="images/icon_drop.gif" class="drop" border="0" height="16" width="16" />
+    {/if}</td>
   </tr>
   {/foreach}
 </table>

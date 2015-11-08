@@ -186,13 +186,13 @@ class SaleController extends CommonController {
         }
         $this->assign('bank_info',$bank_info['0']);
         // 获取剩余余额
-        $surplus_amount = model('Sale')->saleMoney($this->user_id);
+        $surplus_amount = $this->model->table('drp_shop')->where('user_id='.$this->user_id)->field('money')->getOne();
         if (empty($surplus_amount)) {
             $surplus_amount = 0;
         }
         $this->assign('surplus_amount', price_format($surplus_amount, false));
-        $txxz =  $this->model->getRow("select centent from {pre}drp_config where keyword='txxz'");
-        $this->assign('txxz',$txxz['centent']);
+        $txxz =  $this->model->getRow("select value from {pre}drp_config where keyword='txxz'");
+        $this->assign('txxz',$txxz['value']);
         $this->assign('title', L('label_user_surplus'));
         $this->display('sale_account_raply.dwt');
     }
@@ -214,9 +214,9 @@ class SaleController extends CommonController {
         {
             show_message(L('amount_gt_zero'));
         }
-        $txxz =  $this->model->getRow("select centent from {pre}drp_config where keyword='txxz'");
-        if($txxz['centent'] > $_POST['amount']){
-            show_message('提现金额必须大于'.$txxz['centent'].'元');
+        $txxz =  $this->model->getRow("select value from {pre}drp_config where keyword='txxz'");
+        if($txxz['value'] > $_POST['amount']){
+            show_message('提现金额必须大于'.$txxz['value'].'元');
         }
         /* 变量初始化 */
         $surplus = array(
@@ -228,7 +228,7 @@ class SaleController extends CommonController {
             'amount'       => $amount
         );
         /* 判断是否有足够的余额的进行退款的操作 */
-        $sur_amount =  model('Sale')->saleMoney($this->user_id);
+        $sur_amount =  $this->model->table('drp_shop')->where('user_id='.$this->user_id)->field('money')->getOne();
         if ($amount > $sur_amount)
         {
             show_message('佣金金额不足', L('back_page_up'), '', 'info');
@@ -647,7 +647,7 @@ class SaleController extends CommonController {
             $this->model->table('drp_shop')->data($data)->where($where)->update();
             redirect(url('sale/sale_set_end'));
         }
-        $apply = $this->model->table('drp_config')->field("centent")->where(array("keyword"=>'apply'))->getOne();
+        $apply = $this->model->table('drp_config')->field("value")->where(array("keyword"=>'apply'))->getOne();
         $this->assign('apply',$apply);
         $category = $this->model->table('category')->field("cat_id,cat_name")->where(array("parent_id"=>0))->select();
         if($category){
@@ -679,7 +679,7 @@ class SaleController extends CommonController {
         $data['user_rank'] = 255;
         $where['user_id'] = $_SESSION['user_id'];
         $this->model->table('users')->data($data)->where($where)->update();
-        $novice = $this->model->table('drp_config')->field("centent")->where(array("keyword"=>'novice'))->getOne();
+        $novice = $this->model->table('drp_config')->field("value")->where(array("keyword"=>'novice'))->getOne();
         $this->assign('novice',$novice);
         // 设置分销商店铺地址
         $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$_SESSION['user_id'])->getOne();
@@ -1065,7 +1065,7 @@ class SaleController extends CommonController {
         $this->pageLimit(url('sale/ranking_list'), $size);
         $this->assign('pager', $this->pageShow($count));
 
-        $sql = "select *, (select sum(user_money) from {pre}drp_log WHERE user_money > 0 and {pre}drp_log.user_id= {pre}drp_shop.user_id) as sum_money from {pre}drp_shop order by sum_money desc limit  ".($page-1)*$size.','.$size;
+        $sql = "select *, (select sum(user_money) from {pre}drp_log WHERE user_money > 0 and status=1 and  {pre}drp_log.user_id= {pre}drp_shop.user_id) as sum_money from {pre}drp_shop order by sum_money desc limit  ".($page-1)*$size.','.$size;
         $list = $this->model->query($sql);
         if($list){
             foreach($list as $key=>$val){

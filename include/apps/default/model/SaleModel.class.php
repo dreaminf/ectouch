@@ -139,7 +139,7 @@ class SaleModel extends BaseModel {
      */
     function saleMoney($uid=0) {
         $uid = $uid > 0 ? $uid : $_SESSION['user_id'];
-        $money = M()->getRow("select sum(user_money) as money from {pre}drp_log where user_id = ".$uid ." and user_money > 0");
+        $money = M()->getRow("select sum(user_money) as money from {pre}drp_log where user_id = ".$uid ." and user_money > 0 and status=1");
         $money = $money['money'];
         return $money ? $money : 0;
 
@@ -153,7 +153,7 @@ class SaleModel extends BaseModel {
      */
     function saleMoney_today($uid=0) {
         $uid = $uid > 0 ? $uid : $_SESSION['user_id'];
-        $user_money =  M()->getRow("select sum(user_money) as money from {pre}drp_log where user_id = ".$uid ." and change_time > ".strtotime(local_date('Y-m-d')));
+        $user_money =  M()->getRow("select sum(user_money) as money from {pre}drp_log where user_id = ".$uid ." and change_time > ".strtotime(local_date('Y-m-d'))." and status=1");
         return $user_money['money'];
 
     }
