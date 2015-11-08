@@ -142,7 +142,7 @@ elseif ($_REQUEST['act'] == 'insert')
     {
         if ((isset($_FILES['ad_img']['error']) && $_FILES['ad_img']['error'] == 0) || (!isset($_FILES['ad_img']['error']) && isset($_FILES['ad_img']['tmp_name'] ) &&$_FILES['ad_img']['tmp_name'] != 'none'))
         {
-            $ad_code = $image->upload_image($_FILES['ad_img'], 'afficheimg');
+            $ad_code = basename($image->upload_image($_FILES['ad_img'], 'afficheimg'));
         }
         if (!empty($_POST['img_url']))
         {
