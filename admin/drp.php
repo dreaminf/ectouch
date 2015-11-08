@@ -403,63 +403,29 @@ elseif ($_REQUEST['act'] == 'separate')
 {
     include_once(BASE_PATH . 'helpers/order_helper.php');
     $oid = (int)$_REQUEST['oid'];
+    $row = $db->getRow("SELECT order_id,shop_separate  FROM " . $GLOBALS['ecs']->table('drp_order_info').
+        " WHERE order_id = '$oid'");
 
-    $row = $db->getRow("SELECT o.order_id, o.user_id, d.shop_separate, d.drp_id  FROM " . $GLOBALS['ecs']->table('order_info') . " o".
-        " LEFT JOIN " . $GLOBALS['ecs']->table('drp_order_info') . " d ON d.order_id = o.order_id".
-        " WHERE d.order_id = '$oid'");
-
-    if (empty($row['shop_separate']))
+    if ($row['shop_separate'] == 0)
     {
-        // 获取订单中商品
-        $drp_id = $row['drp_id'];
-        $parent_id = $db->getOne("SELECT user_id FROM " . $GLOBALS['ecs']->table('drp_shop') .  " where id = $drp_id");
-        $goods_list = $db->getAll("SELECT goods_id,goods_number,order_id FROM " . $GLOBALS['ecs']->table('order_goods') .  " where order_id = $oid");
-        foreach($goods_list as $key=>$val){
-            $goods_list[$key]['goods_price'] = $db->getOne("SELECT touch_sale FROM " . $GLOBALS['ecs']->table('drp_order_goods') .  " where order_id = $val[order_id] and goods_id = $val[goods_id]");
-        }
-        $data1 = $data2 = $data3 = array(
-            'user_id'=>0,
-            'profit'=>0,
-        );
 
-        foreach($goods_list as $key=>$val){
-            $profit = get_drp_profit($val['goods_id']);
-            if(!$profit){
-                $profit['profit1'] = 0;
-                $profit['profit2'] = 0;
-                $profit['profit3'] = 0;
+        $log = $db->getAll("SELECT *  FROM " . $GLOBALS['ecs']->table('drp_log').
+            " WHERE order_id = '$oid'");
+
+        if($log){
+            foreach($log as $key=>$val){
+                drp_log_change($val['user_id'], $val['user_money'], $val['pay_points']);
             }
-
-            // 一级分销商利润
-            $data1['user_id'] = $parent_id;
-            $data1['profit']+= $val['goods_price']*$profit['profit1']/100*$val['goods_number'];
-            // 二级分销商
-            $data2['user_id'] = $db->getOne("SELECT parent_id FROM " . $GLOBALS['ecs']->table('users') .  " where user_id = $data1[user_id]");
-            if($data2['user_id']){
-                $data2['profit']+= $val['goods_price']*$profit['profit2']/100*$val['goods_number'];
-                // 三级分销商
-                $data3['user_id'] = $db->getOne("SELECT parent_id FROM " . $GLOBALS['ecs']->table('users') .  " where user_id = $data2[user_id]");
-                if($data3['user_id']){
-                    $data3['profit']+= $val['goods_price']*$profit['profit3']/100*$val['goods_number'];
-                }
-            }
-        }
-
-        if($data1['profit'] > 0){
-            $info = sprintf($_LANG['separate_info'], $row['order_sn'], $data1['profit'], $data1['profit']);;
-            drp_log_change($data1['user_id'], $data1['profit'], $data1['profit'], $info);
-        }
-        if($data2['profit'] > 0){
-            $info = sprintf($_LANG['separate_info'], $row['order_sn'], $data2['profit'], $data2['profit']);;
-            drp_log_change($data2['user_id'], $data2['profit'], $data2['profit'], $info);
-        }
-        if($data3['profit'] > 0){
-            $info = sprintf($_LANG['separate_info'], $row['order_sn'], $data3['profit'], $data3['profit']);;
-            drp_log_change($data3['user_id'], $data3['profit'], $data3['profit'], $info);
         }
         $sql = "UPDATE " . $GLOBALS['ecs']->table('drp_order_info') .
             " SET shop_separate = 1" .
             " WHERE order_id = $oid LIMIT 1";
+        $db->query($sql);
+
+
+        $sql = "UPDATE " . $GLOBALS['ecs']->table('drp_log') .
+            " SET status = 1" .
+            " WHERE order_id = $oid ";
         $db->query($sql);
 
     }
@@ -648,6 +614,13 @@ function get_order_list($is_separate)
         $row['add_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['add_time']);
         $row['user_name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$row['user_id']);
         $row['parent_name'] = $GLOBALS['db']->getOne("select shop_name from ".$GLOBALS['ecs']->table('drp_shop') ." where id = ".$row['drp_id']);
+        $log = $GLOBALS['db']->getAll("select user_id,change_desc from ".$GLOBALS['ecs']->table('drp_log') ." where order_id = ".$row['order_id']);
+        if($log){
+            foreach($log as $key=>$val){
+                $log[$key]['name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$val['user_id']);
+            }
+        }
+        $row['log'] = $log;
         $arr[] = $row;
     }
     return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
@@ -758,19 +731,8 @@ function get_goods_cat($id){
  * @param   string  $change_desc    变动说明
  * @return  void
  */
-function drp_log_change($user_id, $user_money = 0, $pay_points = 0, $change_desc = '')
+function drp_log_change($user_id, $user_money = 0, $pay_points = 0)
 {
-    /* 插入帐户变动记录 */
-    $drp_log = array(
-        'user_id'       => $user_id,
-        'user_money'    => $user_money,
-        'pay_points'    => $pay_points,
-        'change_time'   => gmtime(),
-        'change_desc'   => $change_desc,
-        'change_type'   => 0
-    );
-    $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('drp_log'), $drp_log, 'INSERT');
-
     /* 更新用户信息 */
     $sql = "UPDATE " . $GLOBALS['ecs']->table('drp_shop') .
         " SET money = money + ('$user_money')" .

@@ -128,7 +128,7 @@ class SaleModel extends BaseModel {
     function get_sale_money_total($uid=0){
         $uid = $uid > 0 ? $uid : $_SESSION['user_id'];
         $drp_id = $this->model->table('drp_shop')->where("user_id=".$uid)->field('id')->getOne();
-        $goods_info =  M()->getRow("select sum(goods_amount) as money from {pre}order_info where pay_status='".PS_PAYED."' and drp_id = ".$drp_id);
+        $goods_info =  M()->getRow("select sum(o.goods_amount) as money from {pre}order_info as o join {pre}drp_order_info as d on o.order_id = d.order_id  where o.pay_status='".PS_PAYED."' and d.drp_id = ".$drp_id);
         return $goods_info['money'];
     }
     /**
@@ -242,6 +242,7 @@ class SaleModel extends BaseModel {
         $res = M()->query($sql);
         foreach ($res as $key => $value) {
 
+
             $value['shipping_status'] = ($value['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $value['shipping_status'];
             $value['order_status'] = L('os.' . $value['order_status']) . ',' . L('ps.' . $value['pay_status']) . ',' . L('ss.' . $value['shipping_status']);
             $goods_list = $this->get_order_goods($value['order_id']);
@@ -264,6 +265,7 @@ class SaleModel extends BaseModel {
                 'url' => url('user/order_detail', array('order_id' => $value['order_id'])),
                 'is_separate' => $value['shop_separate'] > 0 ? "<span style='font-weight:bold'>已分成</span>" : "<span style='color:red;font-weight:bold'>未分成</span>",
                 'goods'=>$goods_list,
+                'log' => $this->model->getRow("select * from {pre}drp_log where order_id=".$value['order_id']),//table('drp_log')->where('order_id=90')->getRow(),
             );
         }
         return $arr;
@@ -647,6 +649,39 @@ class SaleModel extends BaseModel {
     }
 
     /**
+     * 获取订单佣金比例
+     * @param $goods_id
+     */
+    public function get_drp_order_profit($order_id=0,$goods_id=0){
+        if($goods_id == 0 || $order_id == 0){
+            return false;
+        }
+        $drp_id = $this->model->table('drp_order_info')->field('drp_id')->where("order_id=$order_id")->getOne();
+        if($drp_id){
+            $user_id = M()->table('drp_shop')->field('user_id')->where('id = ' . $drp_id)->getOne();
+            if($user_id == session('user_id')){
+                $key = 'profit1';
+            }else{
+                $user_id = $this->model->table('users')->field('parent_id')->where("user_id=$user_id")->getOne();
+                if($user_id == session('user_id')){
+                    $key = 'profit2';
+                }else{
+                    $user_id = $this->model->table('users')->field('parent_id')->where("user_id=$user_id")->getOne();
+                    if($user_id == session('user_id')){
+                        $key = 'profit3';
+                    }
+                }
+            }
+        }
+
+        $id = M()->table('goods')->field('cat_id')->where("goods_id=$goods_id")->getOne();
+        $id = $this->get_goods_cat($id);
+        $profit = M()->table('drp_profit')->where('cate_id='.$id)->select();
+
+        return $profit['0'][$key];
+    }
+
+    /**
      * 获取店铺销售总额
      */
     public function get_shop_sale_money($user_id=0,$separate=0){
@@ -857,8 +892,15 @@ class SaleModel extends BaseModel {
      */
     public function update_order_sale($order_id){
         if($order_id > 0){
+            $order_sn = $this->model->table('order_info')->where('order_id='.$order_id)->field('order_sn')->getOne();
             $goodsArr = $this->model->table('order_goods')->where('order_id='.$order_id)->field('goods_id')->select();
             if($goodsArr){
+                // 初始化分销商三级利润
+                $sale_money = array(
+                    'profit1'=>0,
+                    'profit2'=>0,
+                    'profit3'=>0,
+                );
                 foreach($goodsArr as $key=>$val){
                     $goods_sale = $this->model->table('drp_goods')->where('goods_id = '.$val['goods_id'])->field('touch_sale,touch_fencheng')->select();
                     if($goods_sale){
@@ -869,6 +911,13 @@ class SaleModel extends BaseModel {
                         $this->model->table('drp_order_goods')
                             ->data($data)
                             ->insert();
+                        //  获取佣金比例
+                        $profit = model('Sale')->get_drp_profit($data['goods_id']);
+
+                        // 分销商三级利润
+                        $sale_money['profit1']+= $data['touch_sale']/100*$profit['profit1'];
+                        $sale_money['profit2']+= $data['touch_sale']/100*$profit['profit2'];
+                        $sale_money['profit3']+= $data['touch_sale']/100*$profit['profit3'];
                     }
                 }
             }
@@ -879,6 +928,62 @@ class SaleModel extends BaseModel {
             $this->model->table('drp_order_info')
                 ->data($data)
                 ->insert();
+        }
+
+        // 获取订单所属店铺信息
+        $drp_id = M()->table('drp_order_info')->field('drp_id')->where('order_id = ' . $order_id)->getOne();
+        if($drp_id){
+            // 本店用户id
+            $user_id = M()->table('drp_shop')->field('user_id')->where('id = ' . $drp_id)->getOne();
+            if($user_id){
+                /* 插入帐户变动记录 */
+                $account_log = array(
+                    'user_id'       => $user_id,
+                    'user_money'    => $sale_money['profit1'],
+                    'change_time'   => gmtime(),
+                    'change_desc'   => '订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit1'] .' 分成积分：'.$sale_money['profit1'],
+                    'order_id'      =>  $order_id,
+                );
+
+                $this->model->table('drp_log')
+                    ->data($account_log)
+                    ->insert();
+
+                // 一级用户id
+                $parent_id1 = M()->table('users')->field('parent_id')->where('user_id = ' . $user_id)->getOne();
+                if($parent_id1){
+                    /* 插入帐户变动记录 */
+                    $account_log = array(
+                        'user_id'       => $user_id,
+                        'user_money'    => $sale_money['profit2'],
+                        'change_time'   => gmtime(),
+                        'change_desc'   => '订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit2'] .' 分成积分：'.$sale_money['profit2'],
+                        'order_id'      =>  $order_id,
+                    );
+
+                    $this->model->table('drp_log')
+                        ->data($account_log)
+                        ->insert();
+                    // 二级用户id
+                    $parent_id2 = M()->table('users')->field('parent_id')->where('user_id = ' . $parent_id1)->getOne();
+                    if($parent_id2) {
+                        /* 插入帐户变动记录 */
+                        $account_log = array(
+                            'user_id'       => $user_id,
+                            'user_money'    => $sale_money['profit3'],
+                            'change_time'   => gmtime(),
+                            'change_desc'   => '订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit3'] .' 分成积分：'.$sale_money['profit3'],
+                            'order_id'      =>  $order_id,
+                        );
+
+                        $this->model->table('drp_log')
+                            ->data($account_log)
+                            ->insert();
+                    }
+                }
+            }
+
+
         }
 
     }

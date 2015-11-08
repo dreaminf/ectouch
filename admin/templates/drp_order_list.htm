@@ -38,7 +38,7 @@
                 <th>{$lang.order_id}</th>
                 <th>订单金额</th>
                 <th>{$lang.order_stats.name}</th>
-                <th>{$lang.sch_stats.name}</th>
+                <th>佣金明细</th>
                 <th>{$lang.user_name}</th>
                 <th>{$lang.parent_name}</th>
                 {if $is_separate eq 0}<th>{$lang.handler}</th>{/if}
@@ -49,7 +49,9 @@
                 <td>{$li.order_sn}</td>
                 <td>{$li.goods_amount}</td>
                 <td>{$lang.order_stats[$li.order_status]}</td>
-                <td>{$lang.sch_stats[$li.shop_separate]}</td>
+                <td>{foreach from=$li.log item=l}
+                    用户：{$l.name};明细:{$l.change_desc}<br>
+                    {/foreach}</td>
                 <td>{$li.user_name}</td>
                 <td>{$li.parent_name}</td>
                 {if $is_separate eq 0}
