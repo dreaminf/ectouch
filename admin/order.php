@@ -508,7 +508,7 @@ elseif ($_REQUEST['act'] == 'info')
             $shipping_code = $db->getOne("SELECT shipping_code FROM " . $ecs->table('shipping') . " WHERE shipping_id=" . $order['shipping_id']);
             if ($shipping_code)
             {
-                include_once(ROOT_PATH . 'includes/modules/shipping/' . $shipping_code . '.php');
+                include_once(ROOT_PATH . 'include/modules/shipping/' . $shipping_code . '.php');
             }
 
             if (!empty($_LANG['shipping_print']))
