@@ -137,10 +137,10 @@ elseif ($_REQUEST['act'] == 'separate')
         {
             $affiliate['config']['level_money_all'] /= 100;
         }
-        $goods_list = $db->getAll("SELECT goods_id,touch_fencheng as goods_price,goods_number FROM " . $GLOBALS['ecs']->table('order_goods') .  " where order_id = $oid");
+        $goods_list = $db->getAll("SELECT goods_id,goods_number FROM " . $GLOBALS['ecs']->table('order_goods') .  " where order_id = $oid");
 
         foreach($goods_list as $key=>$val){
-            $money = $val['goods_price'];
+            $money = $db->getOne("SELECT touch_fencheng as goods_price FROM " . $GLOBALS['ecs']->table('drp_order_goods') .  " where goods_id = ".$val['goods_id']." and order_id = $oid");
             $integral = integral_to_give(array('order_id' => $oid, 'extension_code' => ''));
             $point = $money;
 
