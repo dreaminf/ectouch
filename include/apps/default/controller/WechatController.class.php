@@ -235,6 +235,26 @@ class WechatController extends CommonController
                 $data['remark'] = $info['remark'];
                 $data['unionid'] = isset($info['unionid']) ? $info['unionid'] : '';
                 $this->model->table('wechat_user')->data($data)->insert();
+                // 红包信息
+                $content = $this->send_message($openid, 'bonus', $this->weObj, 1);
+                $bonus_msg = '';
+                if (! empty($content)) {
+                    $bonus_msg = $content['content'];
+                }
+                if(!empty($template) || !empty($bonus_msg)){
+                    // 微信端发送消息
+                    $msg = array(
+                        'touser' => $openid,
+                        'msgtype' => 'text',
+                        'text' => array(
+                            'content' => $template . "\r\n" . $bonus_msg
+                        )
+                    );
+                    $this->weObj->sendCustomMessage($msg);
+
+                    //记录用户操作信息
+                    $this->record_msg($openid, $template . $bonus_msg, 1);
+                }
             }
             else {
                 // 获取用户所在分组ID
