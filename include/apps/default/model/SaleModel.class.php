@@ -116,7 +116,11 @@ class SaleModel extends BaseModel {
                 }
             }
             if ($u_row) {
-                $res[$key]['username'] = $u_row['nickname'];
+                $res[$key]['user_name'] = $u_row['nickname'];
+                $res[$key]['headimgurl'] = $u_row['headimgurl'];
+            } else {
+                $res[$key]['user_name'] = $val['username'];
+                $res[$key]['headimgurl'] = __PUBLIC__ . '/images/get_avatar.png';
             }
         }
         return $res;
@@ -544,7 +548,7 @@ class SaleModel extends BaseModel {
                 $res[$k]['headimgurl'] = $u_row['headimgurl'];
             } else {
                 $res[$k]['username'] = $v['username'];
-                $res[$k]['headimgurl'] = ____ . '/images/get_avatar.png';
+                $res[$k]['headimgurl'] = __PUBLIC__ . '/images/get_avatar.png';
             }
         }
 
@@ -876,14 +880,14 @@ class SaleModel extends BaseModel {
      */
     public function drp_visiter($drp_id){
         if($drp_id > 0 && session('user_id') > 0){
-           if($this->model->table('drp_visiter')->where('drp_id = '.$drp_id .' and user_id='.session('user_id'))->count() == 0){
-               $data['drp_id'] = $drp_id;
-               $data['user_id'] = session('user_id');
-               $data['visit_time'] = gmtime();
-               $this->model->table('drp_visiter')
-                   ->data($data)
-                   ->insert();
-           }
+            if($this->model->table('drp_visiter')->where('drp_id = '.$drp_id .' and user_id='.session('user_id'))->count() == 0){
+                $data['drp_id'] = $drp_id;
+                $data['user_id'] = session('user_id');
+                $data['visit_time'] = gmtime();
+                $this->model->table('drp_visiter')
+                    ->data($data)
+                    ->insert();
+            }
         }
     }
 
