@@ -850,7 +850,7 @@ class ClipsBaseModel extends BaseModel {
      */
 	public function my_bonus($user_id) {
 	   $time = time();
-	   $sql="select count(u.bonus_id) from " . $this->pre .'user_bonus as u left join ' . $this->pre . 'bonus_type as b on u.bonus_id=b.type_id' .
+	   $sql="select count(u.bonus_id) from " . $this->pre .'user_bonus as u left join ' . $this->pre . 'bonus_type as b on u.bonus_type_id=b.type_id' .
 	   " where u.user_id='$user_id' and b.use_end_date>$time and u.order_id=0";
 	   $res = $this->query($sql);
 	   $count= $res[0]['count(u.bonus_id)'];
