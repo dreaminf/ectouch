@@ -128,7 +128,7 @@ class SaleController extends CommonController {
         if($catArr){
             unset($catArr[(count($catArr)-1)]);
         }
-        $category = $this->model->table('category')->field("cat_id,cat_name")->where(array("parent_id"=>0))->select();
+        $category = $this->model->table('category')->field("cat_id,cat_name")->where(array("parent_id"=>0,"is_show"=>1))->select();
         if($category){
             foreach($category as $key=>$val){
                 $category[$key]['profit1'] = $this->model->table('drp_profit')->field("profit1")->where(array("cate_id"=>$val['cat_id']))->getOne();
