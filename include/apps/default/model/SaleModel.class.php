@@ -257,7 +257,9 @@ class SaleModel extends BaseModel {
                 $goods_list[$key]['goods_number'] = $val['goods_number'];
                 $goods_list[$key]['touch_fencheng'] = $val['touch_fencheng'];
                 $goods_list[$key]['touch_sale'] = $val['touch_sale'];
+                $goods_list[$key]['goods_thumb'] = get_image_path($val['goods_id'],$val['goods_thumb']);
             }
+
             $arr[] = array('order_id' => $value['order_id'],
                 'user_name' => M()->table('users')->field('user_name')->where("user_id=".$value[user_id])->getOne(),
                 'order_sn' => $value['order_sn'],
@@ -732,7 +734,7 @@ class SaleModel extends BaseModel {
                 $sql = "select user_id from {pre}drp_shop where id in (".$where_drp.")";
                 $user_list = M()->query($sql);
 
-                $where_user = '0';
+                $where_user = '-1';
                 foreach($user_list as $key=>$val){
                     $where_user.=",".$val['user_id'];
                 }
@@ -745,6 +747,7 @@ class SaleModel extends BaseModel {
                         $where_drp.=",".$val['id'];
                     }
                     $order_id = M()->table('drp_order_info')->field('order_id')->where('drp_id in('.$where_drp.') and shop_separate='.$separate)->select();
+
                     if($order_id){
                         $where = "-1";
                         foreach($order_id as $key=>$val){
@@ -882,7 +885,7 @@ class SaleModel extends BaseModel {
     public function update_order_sale($order_id){
         if($order_id > 0){
             $order_sn = $this->model->table('order_info')->where('order_id='.$order_id)->field('order_sn')->getOne();
-            $goodsArr = $this->model->table('order_goods')->where('order_id='.$order_id)->field('goods_id')->select();
+            $goodsArr = $this->model->table('order_goods')->where('order_id='.$order_id)->field('goods_id,goods_number')->select();
             if($goodsArr){
                 // 初始化分销商三级利润
                 $sale_money = array(
@@ -902,11 +905,10 @@ class SaleModel extends BaseModel {
                             ->insert();
                         //  获取佣金比例
                         $profit = model('Sale')->get_drp_profit($data['goods_id']);
-
                         // 分销商三级利润
-                        $sale_money['profit1']+= $data['touch_sale']/100*$profit['profit1'];
-                        $sale_money['profit2']+= $data['touch_sale']/100*$profit['profit2'];
-                        $sale_money['profit3']+= $data['touch_sale']/100*$profit['profit3'];
+                        $sale_money['profit1']+= $data['touch_sale']/100*$profit['profit1']*$val['goods_number'];
+                        $sale_money['profit2']+= $data['touch_sale']/100*$profit['profit2']*$val['goods_number'];
+                        $sale_money['profit3']+= $data['touch_sale']/100*$profit['profit3']*$val['goods_number'];
                     }
                 }
             }
