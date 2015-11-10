@@ -98,7 +98,7 @@ class Wechat
 	const MEDIA_UPLOADNEWS_URL = '/media/uploadnews?';
 	const MASS_SEND_URL = '/message/mass/send?';
 	const TEMPLATE_SET_INDUSTRY_URL = '/message/template/api_set_industry?';
-	const TEMPLATE_ADD_TPL_URL = '/message/template/api_add_template?';
+	const TEMPLATE_ADD_TPL_URL = '/template/api_add_template?';
 	const TEMPLATE_SEND_URL = '/message/template/send?';
 	const MASS_SEND_GROUP_URL = '/message/mass/sendall?';
 	const MASS_DELETE_URL = '/message/mass/delete?';
@@ -233,6 +233,7 @@ class Wechat
 		$this->appsecret = isset($options['appsecret'])?$options['appsecret']:'';
 		$this->debug = isset($options['debug'])?$options['debug']:false;
 		$this->logcallback = isset($options['logcallback'])?$options['logcallback']:false;
+		$this->cache = new Cache();
 	}
 
 	/**
@@ -1133,8 +1134,9 @@ class Wechat
 	 * @return boolean
 	 */
 	protected function setCache($cachename,$value,$expired){
+    	return $this->cache->set($cachename,$value,$expired);
 		//TODO: set cache implementation
-		return false;
+		// return false;
 	}
 
 	/**
@@ -1143,8 +1145,9 @@ class Wechat
 	 * @return mixed
 	 */
 	protected function getCache($cachename){
+		return $this->cache->get($cachename);
 		//TODO: get cache implementation
-		return false;
+		// return false;
 	}
 
 	/**
@@ -1153,8 +1156,9 @@ class Wechat
 	 * @return boolean
 	 */
 	protected function removeCache($cachename){
+		return $this->cache->rm($cachename);
 		//TODO: remove cache implementation
-		return false;
+		// return false;
 	}
 
 	/**
@@ -1450,7 +1454,6 @@ class Wechat
 	public function createMenu($data){
 		if (!$this->access_token && !$this->checkAuth()) return false;
 		$result = $this->http_post(self::API_URL_PREFIX.self::MENU_CREATE_URL.'access_token='.$this->access_token,self::json_encode($data));
-		
 		if ($result)
 		{
 			$json = json_decode($result,true);
