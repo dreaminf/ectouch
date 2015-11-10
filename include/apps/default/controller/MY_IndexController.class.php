@@ -63,6 +63,9 @@ class MY_IndexController extends IndexController {
         $this->assign('brand_list', model('Brand')->get_brands($app = 'brand', C('page_size'), 1));
         // 分类下的文章
         $this->assign('cat_articles', model('Article')->assign_articles(1,5)); // 1 是文章分类id ,5 是文章显示数量
+
+        $dwt = $_SESSION['drp_shop'] ? 'sale_shop.dwt': 'index.dwt';
+        $this->display($dwt);
         $this->display('index.dwt');
     }
 }
