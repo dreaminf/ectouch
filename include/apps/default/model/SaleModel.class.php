@@ -170,7 +170,7 @@ class SaleModel extends BaseModel {
      */
     function saleMoney_surplus($uid=0) {
         $uid = $uid > 0 ? $uid : $_SESSION['user_id'];
-        $money = M()->getRow("select sum(user_money) as money from {pre}drp_log where user_id = ".$uid);
+        $money = M()->getRow("select sum(money) as money from {pre}drp_shop where user_id = ".$uid);
         $money = $money['money'];
         return $money ? $money : 0;
 
@@ -697,28 +697,18 @@ class SaleModel extends BaseModel {
             'profit_num'=>0,
         );
 
-        $profit = array(
-            'profit1' => 0,
-            'profit2' => 0,
-            'profit3' => 0,
-        );
         // 本店销售佣金
         $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$user_id)->getOne();
-        $order_id = M()->table('order_info')->field('order_id')->where('drp_id='.$drp_id ." and shop_separate=".$separate)->select();
-        $where = "0";
+        // 本店订单
+        $order_id = M()->table('drp_order_info')->field('order_id')->where('drp_id='.$drp_id ." and shop_separate=".$separate)->select();
+        $where = "-1";
         foreach($order_id as $key=>$val){
             $where.=",".$val['order_id'];
         }
-        $goods_list = M()->table('order_goods')->where('order_id in('.$where.')')->select();
+        // 本店利润
+        $data['profit'] = M()->getRow("select sum(user_money) as money from {pre}drp_log where order_id in(".$where.") and user_id = ".$user_id ." and user_money > 0 ");
+        $data['profit'] = $data['profit']['money'] ? $data['profit']['money'] : 0;
 
-        foreach($goods_list as $key=>$val){
-            $profit = $this->get_drp_profit($val['goods_id']);
-            if(!$profit['profit1']){
-                $profit['profit1'] = 0;
-            }
-            // 一级分销商利润
-            $data['profit']+= $val['touch_sale']*$profit['profit1']/100*$val['goods_number'];
-        }
         //一级分店
         $sql = "select d.id from {pre}drp_shop as d JOIN {pre}users as u on d.user_id=u.user_id where u.parent_id=".$user_id." and open = 1";
         $drp_list = M()->query($sql);
@@ -727,54 +717,49 @@ class SaleModel extends BaseModel {
             foreach($drp_list as $key=>$val){
                 $where_drp.=",".$val['id'];
             }
-            $order_id = M()->table('order_info')->field('order_id')->where('drp_id in('.$where_drp.') and shop_separate='.$separate)->select();
-
+            // 一级订单
+            $order_id = M()->table('drp_order_info')->field('order_id')->where('drp_id in('.$where_drp.') and shop_separate='.$separate)->select();
             if($order_id){
-                $where = "0";
+                $where = "-1";
                 foreach($order_id as $key=>$val){
                     $where.=",".$val['order_id'];
                 }
-                $goods_list = M()->table('order_goods')->where('order_id in('.$where.')')->select();
+                // 一级分店利润
+                $data['profit1'] = M()->getRow("select sum(user_money) as money from {pre}drp_log where order_id in(".$where.") and user_id = ".$user_id ." and user_money > 0 ");
+                $data['profit1'] = $data['profit1']['money'] ? $data['profit1']['money'] : 0;
 
-                foreach($goods_list as $key=>$val){
-                    $profit = $this->get_drp_profit($val['goods_id']);
-                    if(!$profit['profit2']){
-                        $profit['profit2'] = 0;
-                    }
-                    // 一级分销商利润
-                    $data['profit1']+= $val['touch_sale']*$profit['profit2']/100*$val['goods_number'];
+                //一级用户
+                $sql = "select user_id from {pre}drp_shop where id in (".$where_drp.")";
+                $user_list = M()->query($sql);
+
+                $where_user = '0';
+                foreach($user_list as $key=>$val){
+                    $where_user.=",".$val['user_id'];
                 }
                 //二级分店
-                $sql = "select d.id from {pre}drp_shop as d JOIN {pre}users as u on d.user_id=u.user_id where u.parent_id in (".$where_drp.") and open = 1";
+                $sql = "select d.id from {pre}drp_shop as d JOIN {pre}users as u on d.user_id=u.user_id where u.parent_id in(".$where_user.") and open = 1";
                 $drp_list = M()->query($sql);
                 if($drp_list){
                     $where_drp = '-1';
                     foreach($drp_list as $key=>$val){
                         $where_drp.=",".$val['id'];
                     }
-                    $order_id = M()->table('order_info')->field('order_id')->where('drp_id in('.$where_drp.') and shop_separate='.$separate)->select();
+                    $order_id = M()->table('drp_order_info')->field('order_id')->where('drp_id in('.$where_drp.') and shop_separate='.$separate)->select();
                     if($order_id){
-                        $where = "0";
+                        $where = "-1";
                         foreach($order_id as $key=>$val){
                             $where.=",".$val['order_id'];
                         }
-                        $goods_list = M()->table('order_goods')->where('order_id in('.$where.')')->select();
+                        $data['profit2'] = M()->getRow("select sum(user_money) as money from {pre}drp_log where order_id in(".$where.") and user_id = ".$user_id ." and user_money > 0 ");
+                        $data['profit2'] = $data['profit2']['money'] ? $data['profit2']['money'] : 0;
 
-                        foreach($goods_list as $key=>$val){
-                            $profit = $this->get_drp_profit($val['goods_id']);
-                            if(!$profit['profit3']){
-                                $profit['profit3'] = 0;
-                            }
-                            // 一级分销商利润
-                            $data['profit2']+= $val['touch_sale']*$profit['profit3']/100*$val['goods_number'];
-                        }
                     }
 
                 }
             }
 
         }
-        foreach($data as $Key=>$val){
+        foreach($data as $key=>$val){
             $data['profit_num']+=$val;
         }
         return $data;
@@ -958,7 +943,7 @@ class SaleModel extends BaseModel {
                 if($parent_id1){
                     /* 插入帐户变动记录 */
                     $account_log = array(
-                        'user_id'       => $user_id,
+                        'user_id'       => $parent_id1,
                         'user_money'    => $sale_money['profit2'],
                         'change_time'   => gmtime(),
                         'change_desc'   => '订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit2'] .' 分成积分：'.$sale_money['profit2'],
@@ -973,7 +958,7 @@ class SaleModel extends BaseModel {
                     if($parent_id2) {
                         /* 插入帐户变动记录 */
                         $account_log = array(
-                            'user_id'       => $user_id,
+                            'user_id'       => $parent_id2,
                             'user_money'    => $sale_money['profit3'],
                             'change_time'   => gmtime(),
                             'change_desc'   => '订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit3'] .' 分成积分：'.$sale_money['profit3'],
@@ -1014,30 +999,3 @@ class SaleModel extends BaseModel {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
