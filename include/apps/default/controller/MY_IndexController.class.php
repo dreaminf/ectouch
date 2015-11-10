@@ -66,6 +66,5 @@ class MY_IndexController extends IndexController {
 
         $dwt = $_SESSION['drp_shop'] ? 'sale_shop.dwt': 'index.dwt';
         $this->display($dwt);
-        $this->display('index.dwt');
     }
 }
