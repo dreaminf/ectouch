@@ -233,40 +233,28 @@ class SaleController extends CommonController {
         {
             show_message('佣金金额不足', L('back_page_up'), '', 'info');
         }
-        //插入会员账目明细
-        $surplus['payment'] = '';
-        $surplus['rec_id']  =  model('ClipsBase')->insert_user_account($surplus, $amount);
+        /* 插入帐户变动记录 */
+        $account_log = array(
+            'user_id'       => $this->user_id,
+            'user_money'    => '-'.$amount,
+            'change_time'   => gmtime(),
+            'change_desc'   => L('drp_log_desc'),
+            'bank_info'   => "银行名称：".$bank['bank_name']." 帐号：".$bank['bank_card'],
+        );
 
-        /* 如果成功提交 */
-        if ($surplus['rec_id'] > 0)
-        {
-            /* 插入帐户变动记录 */
-            $account_log = array(
-                'user_id'       => $this->user_id,
-                'user_money'    => '-'.$amount,
-                'change_time'   => gmtime(),
-                'change_desc'   => L('drp_log_desc'),
-                'bank_info'   => "银行名称：".$bank['bank_name']." 帐号：".$bank['bank_card'],
-            );
+        $this->model->table('drp_log')
+            ->data($account_log)
+            ->insert();
 
-            $this->model->table('drp_log')
-                ->data($account_log)
-                ->insert();
+        /* 更新用户信息 */
+        $sql = "UPDATE {pre}drp_shop" .
+            " SET money = money - ('$amount')" .
+            " WHERE user_id = '$this->user_id' LIMIT 1";
+        $this->model->query($sql);
 
-            /* 更新用户信息 */
-            $sql = "UPDATE {pre}drp_shop" .
-                " SET money = money - ('$amount')" .
-                " WHERE user_id = '$this->user_id' LIMIT 1";
-            $this->model->query($sql);
+        $content = L('surplus_appl_submit');
+        show_message($content, L('back_account_log'), url('sale/account_detail'), 'info');
 
-            $content = L('surplus_appl_submit');
-            show_message($content, L('back_account_log'), url('sale/account_detail'), 'info');
-        }
-        else
-        {
-            $content = L('process_false');
-            show_message($content, L('back_page_up'), '', 'info');
-        }
 
 
     }
@@ -389,14 +377,14 @@ class SaleController extends CommonController {
         $dp_img = 'data/attached/drp/dp-'.$id.'.png';//店铺二维码
         $wx_img = 'data/attached/drp/wx-'.$id.'.png';//微信头像
 //        if(!file_exists($ew_img)){
-            $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$id)->getOne();
-            // 二维码
-            $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?u='.$id.'&drp_id='.$drp_id;
-            // 纠错级别：L、M、Q、H
-            $errorCorrectionLevel = 'M';
-            // 点的大小：1到10
-            $matrixPointSize = 13;
-            @QRcode::png($url, $ew_img, $errorCorrectionLevel, $matrixPointSize, 2);
+        $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$id)->getOne();
+        // 二维码
+        $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?u='.$id.'&drp_id='.$drp_id;
+        // 纠错级别：L、M、Q、H
+        $errorCorrectionLevel = 'M';
+        // 点的大小：1到10
+        $matrixPointSize = 13;
+        @QRcode::png($url, $ew_img, $errorCorrectionLevel, $matrixPointSize, 2);
 //        }
 
         // 获取微信头像
