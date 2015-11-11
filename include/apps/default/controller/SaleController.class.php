@@ -218,15 +218,7 @@ class SaleController extends CommonController {
         if($txxz['value'] > $_POST['amount']){
             show_message('提现金额必须大于'.$txxz['value'].'元');
         }
-        /* 变量初始化 */
-        $surplus = array(
-            'user_id'      => $this->user_id,
-            'rec_id'       => !empty($_POST['rec_id'])      ? intval($_POST['rec_id'])       : 0,
-            'process_type' => isset($_POST['surplus_type']) ? intval($_POST['surplus_type']) : 0,
-            'payment_id'   => isset($_POST['payment_id'])   ? intval($_POST['payment_id'])   : 0,
-            'user_note'    => isset($_POST['user_note'])    ? trim($_POST['user_note'])      : '',
-            'amount'       => $amount
-        );
+
         /* 判断是否有足够的余额的进行退款的操作 */
         $sur_amount =  $this->model->table('drp_shop')->where('user_id='.$this->user_id)->field('money')->getOne();
         if ($amount > $sur_amount)
@@ -251,12 +243,8 @@ class SaleController extends CommonController {
             " SET money = money - ('$amount')" .
             " WHERE user_id = '$this->user_id' LIMIT 1";
         $this->model->query($sql);
-
         $content = L('surplus_appl_submit');
         show_message($content, L('back_account_log'), url('sale/account_detail'), 'info');
-
-
-
     }
 
     /**
