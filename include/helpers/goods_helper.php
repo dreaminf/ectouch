@@ -1320,6 +1320,20 @@ function goods_info($goods_id)
     return $row;
 }
 
+//UTF-8
+function mb_unserialize($serial_str) {
+    $serial_str = str_replace("\r", "", $serial_str);
+    $serial_str = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $serial_str );
+    return unserialize($serial_str);
+}
+
+//ASC
+function asc_unserialize($serial_str) {
+    $serial_str = str_replace("\r", "", $serial_str);
+    $serial_str = preg_replace('!s:(\d+):"(.*?)";!se', '"s:".strlen("$2").":\"$2\";"', $serial_str );
+    return unserialize($serial_str);
+}
+
 /**
  * 取得优惠活动信息
  * @param   int     $act_id     活动id
@@ -1333,11 +1347,18 @@ function favourable_info($act_id)
     $row = $global->db->getRow($sql);
     if (!empty($row))
     {
+        if (CHARSET == 'utf-8')
+        {
+            $row['gift'] = asc_unserialize($row['gift']);
+        }
+        if (CHARSET == 'gbk')
+        {
+            $row['gift'] = mb_unserialize($row['gift']);
+        }
         $row['start_time'] = local_date(C('time_format'), $row['start_time']);
         $row['end_time'] = local_date(C('time_format'), $row['end_time']);
         $row['formated_min_amount'] = price_format($row['min_amount']);
         $row['formated_max_amount'] = price_format($row['max_amount']);
-        $row['gift'] = unserialize($row['gift']);
         if ($row['act_type'] == FAT_GOODS)
         {
             $row['act_type_ext'] = round($row['act_type_ext']);
