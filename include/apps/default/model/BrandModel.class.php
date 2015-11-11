@@ -91,7 +91,7 @@ class BrandModel extends BaseModel {
     function get_brands($app = 'brand', $size, $page) {
         ini_set("memory_limit","-1");  //内存设置
         $start = ($page - 1) * $size;
-        $sql = "SELECT brand_id, brand_name, brand_logo, brand_desc,brand_banner FROM " . $this->pre . "brand WHERE is_show = 1 GROUP BY brand_id , sort_order order by CONVERT (brand_name USING gbk) COLLATE gbk_chinese_ci ASC LIMIT $start , $size";
+        $sql = "SELECT brand_id, brand_name, brand_logo, brand_desc,brand_banner FROM " . $this->pre . "brand WHERE is_show = 1 GROUP BY brand_id  ASC LIMIT $start , $size";
         $res = $this->query($sql);
         $arr = array();
         foreach ($res as $row) {
@@ -103,25 +103,26 @@ class BrandModel extends BaseModel {
             $brand['goods_num'] = model('Brand')->goods_count_by_brand($row['brand_id']);
             $brand['brand_desc'] = htmlspecialchars($row['brand_desc'], ENT_QUOTES);
             $first = $this->getLetter($brand['brand_name']);
-            if($first){
-                $arr[$first]['info'] = $first;
-                $arr[$first]['list'][] = $brand;
-            }
+            $arr[$first]['info'] = $first ? $first : 'A';
+            $arr[$first]['list'][] = $brand;
         }
         ksort($arr);
         $arr[]= array();
         return $arr;
     }
 
-
+    /**
+     * 获取字符串首字母
+     * @param $str  字符串
+     * @return string  首字母
+     */
     function getLetter($str){
-        $str= iconv("UTF-8","gb2312", $str);
         $i=0;
         while($i<strlen($str) ) {
             $tmp=bin2hex(substr($str,$i,1));
             if($tmp>='B0'){ //汉字
-                $hanzi =iconv("gb2312","UTF-8", $str);
-                $pinyin = join(' ', PinYint::toPinyin($hanzi));
+                $object = new Pinyin();
+                $pinyin = $object->output($str);
                 return strtoupper(substr($pinyin,0,1));
                 $i+=2;
             }
@@ -131,11 +132,7 @@ class BrandModel extends BaseModel {
             }
         }
     }
-    function chineseFirst($str)
-    {
-        echo join(' ', PinYint::toPinyin($str));
 
-    }
     /**
      * 获得品牌列表
      *
