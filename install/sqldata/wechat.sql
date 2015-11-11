@@ -233,57 +233,21 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_user_group` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 表的结构 `ecs_wechat_wall`
---
-
-CREATE TABLE IF NOT EXISTS `ecs_wechat_wall` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL COMMENT '活动名称',
-  `logo` varchar(100) NOT NULL COMMENT '公司logo',
-  `background` varchar(100) NOT NULL COMMENT '活动背景',
-  `starttime` int(11) unsigned NOT NULL COMMENT '开始时间',
-  `endtime` int(11) unsigned NOT NULL COMMENT '结束时间',
-  `prize` text NOT NULL COMMENT '奖品列表',
-  `content` varchar(255) NOT NULL COMMENT '活动说明',
-  `support` varchar(255) NOT NULL COMMENT '赞助支持',
-  `status` tinyint(1) unsigned zerofill NOT NULL COMMENT '活动状态，0未开始， 1进行中， 2已结束',
-  `qrcode` varchar(255) NOT NULL,
+-- ----------------------------
+-- Table structure for `ecs_wechat_template`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `ecs_wechat_template` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `open_id` varchar(255) DEFAULT NULL,
+  `template_id` varchar(255) DEFAULT NULL,
+  `contents` varchar(133) DEFAULT NULL,
+  `template` text,
+  `title` varchar(33) NOT NULL,
+  `add_time` int(11) DEFAULT NULL,
+  `switch` tinyint(2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for ecs_wechat_wall_msg
--- ----------------------------
-
-CREATE TABLE IF NOT EXISTS `ecs_wechat_wall_msg` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户留言id',
-  `user_id` int(11) unsigned NOT NULL COMMENT '用户编号',
-  `content` text NOT NULL COMMENT '留言内容',
-  `addtime` int(11) unsigned NOT NULL COMMENT '发送时间',
-  `checktime` int(11) unsigned NOT NULL COMMENT '审核时间',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '审核状态，0未审核，1审核通过',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for ecs_wechat_wall_user
--- ----------------------------
-
-CREATE TABLE IF NOT EXISTS `ecs_wechat_wall_user` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户id',
-  `wall_id` int(11) unsigned NOT NULL COMMENT '微信墙id',
-  `nickname` varchar(60) NOT NULL COMMENT '用户昵称',
-  `sex` tinyint(1) unsigned NOT NULL COMMENT '性别,2女，1男，0保密',
-  `headimg` varchar(255) NOT NULL COMMENT '头像',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '审核状态',
-  `addtime` int(11) unsigned NOT NULL COMMENT '添加时间',
-  `checktime` int(11) unsigned NOT NULL COMMENT '审核时间',
-  `openid` varchar(100) NOT NULL COMMENT '微信用户openid',
-  `wechatname` varchar(60) NOT NULL COMMENT '微信用户昵称',
-  `headimgurl` varchar(255) NOT NULL COMMENT '微信用户头像',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
--- 增加字段
-ALTER TABLE `ecs_wechat_prize` ADD COLUMN `wall_id` int(11) UNSIGNED NOT NULL DEFAULT 0;
+INSERT INTO `ecs_wechat_template` VALUES ('1', 'OPENTM206547887', '', '{{first.DATA}}\r\n订单编号：{{keyword1.DATA}}\r\n商品名称：{{keyword2.DATA}}\r\n下单时间：{{keyword3.DATA}}\r\n下单金额：{{keyword4.DATA}}\r\n分销商名称：{{keyword5.DATA', '您的分销商有新的订单产生。\r\n订单编号：2015070210121001\r\n商品名称：2015新款简约百搭蕾丝连衣裙\r\n下单时间：2015年07月02日 10:12\r\n下单金额：128元\r\n分销商名称：木友衣橱\r\n订单已付款，请尽快发货！', '分销订单通知', '', '0');
+INSERT INTO `ecs_wechat_template` VALUES ('2', 'OPENTM400075274', '', '{{first.DATA}}\r\n结款金额：{{keyword1.DATA}}\r\n银行卡：{{keyword2.DATA}}\r\n{{remark.DATA}}\r\n', '内容示例\r\n您本月的分销结款金额如下，\r\n结款金额：1000\r\n银行卡：62XXXXXXXXXX\r\n银行到账可能会有延迟，如有问题，祝生活愉快！', '分销结款通知', '', '0');
+INSERT INTO `ecs_wechat_template` VALUES ('3', 'OPENTM207126233', '', '{{first.DATA}}\r\n分销商名称：{{keyword1.DATA}}\r\n分销商电话：{{keyword2.DATA}}\r\n申请时间：{{keyword3.DATA}}\r\n{{remark.DATA}}\r\n', '分销商申请成功提醒\r\n分销商名称：张三\r\n分销商电话：15050510328\r\n申请时间：2015.07.28 10:01\r\n如有疑问，请在微信中留言，我们将第一时间为您服务。', '分销商申请成功提醒', '', '0');
