@@ -10,7 +10,12 @@
     <ul class="o-info">
       <li>
         <div class="input-text"><b class="pull-left">{$lang.repay_money}：</b><span>
-          <input name="amount" placeholder="{$lang.repay_money}" type="text" class="inputBg_touch" value="" />
+          <input name="amount" placeholder="{$lang.repay_money}" type="text" class="inputBg_touch" value="{$order.amount|escape}" />
+          </span></div>
+      </li>
+      <li>
+        <div class="input-text"><b class="pull-left">{$lang.process_notic}：</b><span>
+          <input name="user_note" placeholder="{$lang.process_notic}" type="text" class="inputBg_touch" value="{$order.user_note|escape}" />
           </span></div>
       </li>
     </ul>
