@@ -283,15 +283,6 @@ class SaleController extends CommonController {
     }
 
     /**
-     * 朋友圈推广
-     */
-    public function share(){
-        $this->assign('mobile_qr', call_user_func(array('WechatController', 'rec_qrcode'), session('user_name'),session('user_id')));
-        $this->assign('title',L('share'));
-        $this->display('sale_share.dwt');
-    }
-
-    /**
      * 推广二维码
      */
     public function spread(){
