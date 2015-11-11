@@ -44,7 +44,7 @@ body {padding:5px; font-size:12px; margin-bottom:0px; font-family:'微软雅黑'
   {/if}
 </ol>
 {if $action_link}
-<div class="row" style="margin:0; display:None;">
+<div class="row" style="margin:0;">
 	<div class="pull-right ectouch-mb5"><a href="{$action_link['href']}" class="btn btn-primary">{$action_link['text']}</a></div>
 </div>
 {/if}
