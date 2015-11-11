@@ -167,8 +167,10 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
             'other_cat'     => array(), // 扩展分类
             'goods_type'    => 0,       // 商品类型
             'shop_price'    => 0,
+            /*DRP_START*/
             'touch_sale'    => 0,
             'touch_fencheng'    => 0,
+            /*DRP_END*/
             'promote_price' => 0,
             'market_price'  => 0,
             'integral'      => 0,
@@ -237,8 +239,10 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
                 'other_cat'     => array(), // 扩展分类
                 'goods_type'    => 0,       // 商品类型
                 'shop_price'    => 0,
+                /*DRP_START*/
                 'touch_sale'    => 0,
                 'touch_fencheng'    => 0,
+                /*DRP_END*/
                 'promote_price' => 0,
                 'market_price'  => 0,
                 'integral'      => 0,
