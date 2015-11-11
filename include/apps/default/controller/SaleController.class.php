@@ -646,7 +646,7 @@ class SaleController extends CommonController {
     }
 
     /**
-     * 我的N级会员
+     * 我的会员
      */
     public function my_user_list(){
         $key = I('key') ? I('key') : '1';
@@ -658,24 +658,6 @@ class SaleController extends CommonController {
         $this->display($dwt);
     }
 
-    /**
-     * 我要分销
-     */
-    public function to_sale(){
-        //生成分享连接
-        $shopurl = __HOST__.url('index/index',array('sale'=>$this->user_id));
-        $this->assign('shopurl', $shopurl);
-        $this->assign('domain', __HOST__);
-        $this->assign('shopdesc', C('shop_desc'));
-
-        // 生成二维码
-        $mobile_url = __URL__; // 二维码内容
-
-        $this->assign('mobile_qr', call_user_func(array('WechatController', 'rec_qrcode'), session('user_name'),$_SESSION['user_id']));
-
-        $this->assign('title','购物去哪儿');
-        $this->display('sale_to_code.dwt');
-    }
 
     /**
      * 添加银行卡
