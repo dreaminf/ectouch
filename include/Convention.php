@@ -100,7 +100,7 @@ return array(
 	/* 模板配置 */
 	'TPL' => array(
 		'TPL_TEMPLATE_PATH' => BASE_PATH, // 模板目录，一般不需要修改
-		'TPL_TEMPLATE_SUFFIX' => '.php', // 模板后缀，一般不需要修改
+		'TPL_TEMPLATE_SUFFIX' => '.html', // 模板后缀，一般不需要修改
 		'TPL_CACHE_ON' => false, // 是否开启模板缓存，true开启,false不开启
 		'TPL_CACHE_TYPE' => '', // 数据缓存类型，为空或Memcache或SaeMemcache，其中为空为普通文件缓存
 		/* 普通文件缓存 */
