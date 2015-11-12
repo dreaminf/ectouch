@@ -24,21 +24,6 @@ $del_file = array(
   'include/language/zh_cn/admin/drp.php',
   'include/apps/default/language/zh_cn/sale.php',
 );
-// 更新数据库
-$update_db = array(
-  'DROP TABLE ecs_drp_config;',
-  'DROP TABLE ecs_drp_log;',
-  'DROP TABLE ecs_drp_profit;',
-  'DROP TABLE ecs_drp_shop;',
-  'DROP TABLE ecs_drp_bank;',
-  'DROP TABLE ecs_drp_visiter;',
-  'DROP TABLE ecs_drp_goods;',
-  'DROP TABLE ecs_drp_order_goods;',
-  'DROP TABLE ecs_drp_order_info;',
-  'DROP TABLE ecs_drp_apply;',
-  'ALTER TABLE `ecs_users` DROP COLUMN `apply_sale`;',
-  'DELETE FROM `ecs_wechat_template`;',
-);
 
 // 修改文件
 foreach($edit_file as $vo){
@@ -48,8 +33,6 @@ foreach($edit_file as $vo){
 foreach($del_file as $vo){
     delete($vo);
 }
-// 更新数据库
-update($update_db);
 
 /**
  * private function
@@ -106,25 +89,3 @@ function del_pre($files) {
     }
     $res->close();
 }
-
-function update($sqls){
-  $db = require ROOT_PATH . 'data/config.php';
-  //设置数据库连接信息。数据库服务器地址，数据库用户名，数据密码
-  mysql_connect($db['DB_HOST'], $db['DB_USER'], $db['DB_PWD']);
-  //设置查询的数据库名称
-  mysql_select_db($db['DB_NAME']);
-  /**
-  $rs = mysql_query('show tables');
-  while($arr = mysql_fetch_array($rs)){
-    //设置要批量删除的数据库表前缀，如：prefix_
-    $TF = strpos($arr[0], $db['DB_PREFIX'] . 'drp_');
-    if($TF === 0){
-      $FT = mysql_query("drop table $arr[0]");
-    } 
-  }
-  */
-  foreach($sqls as $sql){
-    mysql_query($sql);
-  }
-}
-
