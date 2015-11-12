@@ -33,7 +33,7 @@ return array(
 	/* ------写入数据库完成后处理的文件------ */
 	'handleFile' => 'main.php',
 	/* ------生成数据库配置文件的模板------ */
-	'dbSetFile'=> 'config.ini.php',
+	'dbSetFile'=> 'config.ini',
 	/* ------安装验证/生成文件;非云平台安装有效------ */
 	'installFile' => '../data/install.lock',
 	'alreadyInstallInfo' => '你已经安装过该系统，如果想重新安装，请先删除站点data目录下的 install.lock 文件，然后再尝试安装！',
