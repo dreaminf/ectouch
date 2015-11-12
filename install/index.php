@@ -267,10 +267,10 @@ switch ($step) {
 		}
 
 		$appid = get_appid();
-		$version_file = '../data/version.php';
+		$version_file = '../data/certificate/appkey.php';
 		require $version_file;
-		$version_content = "<?php\ndefine('APPNAME', '".APPNAME."');\ndefine('VERSION', '".VERSION."');\ndefine('RELEASE', '".RELEASE."');\ndefine('ECTOUCH_AUTH_KEY', '".$appid."');";
-		if(ECTOUCH_AUTH_KEY == ''){
+		$version_content = "<?php\ndefine('AUTH_KEY', '".$appid."');";
+		if(AUTH_KEY == ''){
 			define('IN_ECTOUCH', true);
 			require '../include/vendor/Http.class.php';
 			require '../include/vendor/Cloud.class.php';
@@ -462,7 +462,7 @@ function get_appid(){
  * 站点数据
  * @param string $appid
  */
-function get_site_info($appid = ECTOUCH_AUTH_KEY){
+function get_site_info($appid = AUTH_KEY){
 	$db_config = require '../data/config.php';
     $conn = mysql_connect($db_config['DB_HOST'], $db_config['DB_USER'], $db_config['DB_PWD']);
     mysql_query("SET NAMES 'utf8'");

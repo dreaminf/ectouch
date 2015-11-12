@@ -1518,7 +1518,7 @@ function write_static_cache($cache_name, $caches) {
  * @param string $act
  * @param string $appid
  */
-function site_info($appid = ECTOUCH_AUTH_KEY){
+function site_info($appid = AUTH_KEY){
     C('CFG', model('Base')->load_config());
     $shop_country = model('RegionBase')->get_region_name(C('shop_country'));
     $shop_province = model('RegionBase')->get_region_name(C('shop_province'));

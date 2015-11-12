@@ -132,7 +132,7 @@ class UpgradeController extends AdminController
             if (file_exists($configpath)) {
                 $config = include $configpath;
                 // 版本文件地址
-                $content = "<?php\ndefine('APPNAME', '".$config['APPNAME']."');\ndefine('VERSION', '".$config['VERSION']."');\ndefine('RELEASE', '".$release."');\ndefine('ECTOUCH_AUTH_KEY', '".ECTOUCH_AUTH_KEY."');";
+                $content = "<?php\ndefine('APPNAME', '".$config['APPNAME']."');\ndefine('VERSION', '".$config['VERSION']."');\ndefine('RELEASE', '".$release."');";
                 @file_put_contents(ROOT_PATH . 'data/version.php', $content);
             }
             
