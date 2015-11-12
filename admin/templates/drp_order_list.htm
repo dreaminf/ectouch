@@ -48,7 +48,7 @@
             <tr>
                 <td>{$li.order_sn}</td>
                 <td>{$li.goods_amount}</td>
-                <td>{$lang.order_stats[$li.order_status]}</td>
+                <td>{$lang.os[$li.order_status]},{$lang.ps[$li.pay_status]},{$lang.ss[$li.shipping_status]}</td>
                 <td>{foreach from=$li.log item=l}
                     用户：{$l.name};明细:{$l.change_desc}<br>
                     {/foreach}</td>
