@@ -16,8 +16,8 @@
              <div class="dpgl_list">
                  <ul>
                      <li>
-                        <p class="dpgl-p1"><span class="pull-left">用户体现</span><span class="pull-right">{$li.amount}</span></p>
-                         <p class="dpgl-p2"><span class="pull-left">{$li.change_time}</span>{if $li.order_id > 0 && $li.status < 1}<span class="pull-right dd-color">等待处理</span>{else}<span class="pull-right lv-color">成功</span>{/if}</p>
+                        <p class="dpgl-p1"><span class="pull-left">{$li.change_type}</span><span class="pull-right">{$li.amount}</span></p>
+                         <p class="dpgl-p2"><span class="pull-left">{$li.change_time}</span>{if  $li.status eq 0}<span class="pull-right dd-color">等待处理</span>{else}<span class="pull-right lv-color">成功</span>{/if}</p>
                          <p class="dpgl-desc">{$li.change_desc}</p>
                      </li>
                  </ul>

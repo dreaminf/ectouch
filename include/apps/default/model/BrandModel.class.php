@@ -89,7 +89,6 @@ class BrandModel extends BaseModel {
      * @return type
      */
     function get_brands($app = 'brand', $size, $page) {
-        ini_set("memory_limit","-1");  //内存设置
         $start = ($page - 1) * $size;
         $sql = "SELECT brand_id, brand_name, brand_logo, brand_desc,brand_banner FROM " . $this->pre . "brand WHERE is_show = 1 GROUP BY brand_id  ASC LIMIT $start , $size";
         $res = $this->query($sql);

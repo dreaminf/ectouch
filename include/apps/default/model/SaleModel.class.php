@@ -153,7 +153,7 @@ class SaleModel extends BaseModel {
         // 获取余额记录
         $account_log = array();
 
-        $sql = "SELECT * FROM  {pre}drp_log WHERE user_id = " . $user_id . ' AND user_money <> 0 ' .
+        $sql = "SELECT * FROM  {pre}drp_log WHERE user_id = " . $user_id .
             " ORDER BY log_id DESC limit " . $start . ',' . $num;
         $res = M()->query($sql);
 
@@ -171,6 +171,7 @@ class SaleModel extends BaseModel {
             $res[$k]['pay_points'] = abs($v['pay_points']);
             $res[$k]['short_change_desc'] = sub_str($v['change_desc'], 60);
             $res[$k]['amount'] = $v['user_money'];
+            $res[$k]['change_type'] = $v['change_type'] == DRP_SEPARATE ? '佣金分成' : '佣金提现';
         }
 
         return $res;

@@ -159,9 +159,9 @@ class SaleController extends CommonController {
             $surplus_amount = 0;
         }
 
-        $size = I(C('page_size'), 5);
+        $size = I(C('page_size'), 10);
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
-        $where = 'user_id = ' . $this->user_id . ' AND user_money <> 0 ';
+        $where = 'user_id = ' . $this->user_id;
         $sql = "select COUNT(*) as count from {pre}drp_log where $where";
         $count = $this->model->query($sql);
         $count = $count['0']['count'];
@@ -231,7 +231,9 @@ class SaleController extends CommonController {
             'user_money'    => '-'.$amount,
             'change_time'   => gmtime(),
             'change_desc'   => L('drp_log_desc'),
-            'bank_info'   => "银行名称：".$bank['bank_name']." 帐号：".$bank['bank_card'],
+            'change_type'   => DRP_WITHDRAW,
+            'bank_info'     => "银行名称：".$bank['bank_name']." 帐号：".$bank['bank_card'],
+            'status'        => 0
         );
 
         $this->model->table('drp_log')

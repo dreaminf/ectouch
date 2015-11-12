@@ -228,3 +228,11 @@ define('LICENSE_VERSION', '1.0');
 
 /* 配送方式 */
 define('SHIP_LIST', 'cac|city_express|ems|flat|fpd|post_express|post_mail|presswork|sf_express|sto_express|yto|zto');
+
+/* 微分销佣金类型 */
+define('DRP_SEPARATE',0); // 佣金分成
+define('DRP_WITHDRAW',1); // 佣金提现
+define('DRP_NOT_MANAGE',0); // 未处理
+define('DRP_MANAGE',1); // 已处理
+
+

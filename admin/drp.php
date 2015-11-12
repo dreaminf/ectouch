@@ -323,15 +323,13 @@ elseif ($_REQUEST['act'] == 'drp_log_query')
 if($_REQUEST['act'] == 'drp_refer'){
     if(IS_GET){
         $id =$_GET['id'];
-        $money = $db->getRow("SELECT user_money,user_id,change_type FROM".$ecs->table("drp_log")."WHERE log_id =".$id);
-        if(intval($money['change_type']) === 0){
-            $age['change_type'] = 1;
+        $money = $db->getRow("SELECT user_money,user_id,status FROM".$ecs->table("drp_log")."WHERE log_id =".$id);
+        if(intval($money['status']) == DRP_NOT_MANAGE){
+            $age['status'] = DRP_MANAGE;
             $db->autoExecute($ecs->table('drp_log'), $age, 'UPDATE', "log_id =".$id);
-
             $links[0]['text'] = $GLOBALS['_LANG']['go_back'];
             $links[0]['href'] = 'drp.php?act=drp_log';
             sys_msg($_LANG['withdraw_ok'],'0',$links);
-
         }else{
             $links[0]['href'] = 'drp.php?act=drp_log';
             sys_msg($_LANG['The_extracted'],'1',$links);
@@ -344,8 +342,8 @@ if($_REQUEST['act'] == 'drp_refer'){
 if ($_REQUEST['act'] == 'order_delete'){
     if(IS_GET){
         $id=$_GET['id'];
-        $money = $db->getRow("SELECT change_type,user_id FROM ".$ecs->table("drp_log")." WHERE log_id =".$id);
-        if(intval($money['change_type']) === 1){
+        $money = $db->getRow("SELECT status,user_id FROM ".$ecs->table("drp_log")." WHERE log_id =".$id);
+        if(intval($money['status']) == DRP_MANAGE){
             $sql = "DELETE FROM " . $ecs->table('drp_log') .
                 " WHERE user_id = ".$money['user_id'] ." and log_id = $id";
             $delete = $db->query($sql);
@@ -633,12 +631,13 @@ function get_drp_log(){
     /* 初始化分页参数 */
     $filter = array(
     );
+
     /* 查询记录总数，计算分页数 */
-    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('drp_log'). " WHERE user_money < 0";
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('drp_log'). " WHERE change_type = ".DRP_WITHDRAW;
     $filter['record_count'] = $GLOBALS['db']->getOne($sql);
     $filter = page_and_size($filter);
     /* 查询记录 */
-    $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('drp_log'). " WHERE user_money < 0" .
+    $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('drp_log'). " WHERE change_type = ".DRP_WITHDRAW .
         " ORDER BY change_time DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
     while ($row = $GLOBALS['db']->fetchRow($res)){
@@ -647,11 +646,8 @@ function get_drp_log(){
         $row['user_money'] = substr($row['user_money'],1);
         $row['user_name'] = $GLOBALS['db']->getOne("SELECT user_name FROM".$GLOBALS['ecs']->table("users")."WHERE user_id =".$row['user_id']);
         $row['shop_name'] = $GLOBALS['db']->getOne("SELECT shop_name FROM".$GLOBALS['ecs']->table('drp_shop')."WHERE user_id =".$row['user_id']);
-        if($row['change_type'] == 0){
-            $row['status'] = '未支付';
-        }else{
-            $row['status'] = '已支付';
-        }
+        $row['status_show'] = $row['status'] == DRP_NOT_MANAGE ? '未支付' : '已支付';
+        $row['status'] = $row['status'];
         $arr[] = $row;
     }
 
