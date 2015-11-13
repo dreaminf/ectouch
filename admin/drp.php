@@ -590,7 +590,7 @@ function get_order_list($is_separate)
         'is_separate'=>$is_separate,
     );
     /* 查询记录总数，计算分页数 */
-    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('drp_order_info'). " WHERE drp_id > 0  and shop_separate = $is_separate";
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 and  d.shop_separate = ".$is_separate;
     $filter['record_count'] = $GLOBALS['db']->getOne($sql);
     $filter = page_and_size($filter);
 
