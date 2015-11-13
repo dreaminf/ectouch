@@ -363,13 +363,12 @@ class SaleModel extends BaseModel {
     }
 
     /**
-     * 获取用户中心默认页面所需的数据
+     * 获取分销商信息
      * @access  public
      * @param   int         $user_id            用户ID
      * @return  array       $info               默认页面所需资料数组
      */
-    public function get_drp($user_id,$is_drp=0) {
-
+    public function get_drp($user_id=0,$is_drp=0) {
         if($is_drp != 0){
             $sql = "SELECT user_id FROM {pre}drp_shop WHERE id = '$user_id'";
             $row = $this->row($sql);
@@ -378,8 +377,10 @@ class SaleModel extends BaseModel {
                 return array();exit;
             }
         }
-        $sql = "SELECT pay_points, user_money, credit_line, last_login, is_validated,user_name FROM " . $this->pre . "users WHERE user_id = '$user_id'";
-        $row = $this->row($sql);
+        if($user_id == 0){
+            return false;
+        }
+        $user_name = $this->model->table('users')->field("user_name")->where(array("user_id"=>$user_id))->getOne();
         $info = array();
         //新增获取用户头像，昵称
         $u_row = '';
@@ -392,7 +393,7 @@ class SaleModel extends BaseModel {
             $info['username'] = $u_row['nickname'];
             $info['headimgurl'] = $u_row['headimgurl'];
         } else {
-            $info['username'] = $row['user_name'];
+            $info['username'] = $user_name;
             $info['headimgurl'] = __PUBLIC__ . '/images/get_avatar.png';
         }
         $sql = "SELECT * FROM " . $this->pre . "drp_shop WHERE user_id = '$user_id'";
@@ -404,15 +405,7 @@ class SaleModel extends BaseModel {
         $info['cat_id']    = $row['cat_id'];
         $info['shop_img']    = $row['shop_img'] ? './data/attached/drp_logo/'.$row['shop_img'] : '';
         $info['user_id']   = $user_id;
-
-        //如果$_SESSION中时间无效说明用户是第一次登录。取当前登录时间。
-        $last_time = !isset($_SESSION['last_time']) ? $row['last_login'] : $_SESSION['last_time'];
-
-        if ($last_time == 0) {
-            $_SESSION['last_time'] = $last_time = gmtime();
-        }
-
-        $info['time'] = local_date(C('time_format'), $last_time);
+        $info['time']   = local_date(C('time_format'), $this->model->table('users')->field("reg_time")->where(array("user_id"=>$user_id))->getOne());
         return $info;
     }
 
@@ -640,11 +633,14 @@ class SaleModel extends BaseModel {
      * @param int $user_id
      */
     public function get_drp_status($user_id=0){
-        $user_id = $user_id==0 ? session('user_id') : $user_id;
-        if($this->model->table('drp_shop')->where("user_id=".$user_id ." and create_time > 0")->field('id')->getOne()){
-            return $this->model->table('drp_shop')->where("user_id=".$user_id)->field('open')->getOne();
+        if($user_id == 0){
+            return false;
+        }
+        $status = $this->model->table('drp_shop')->where("user_id=".$user_id)->field('open')->getOne();
+        if($status == 1){
+            return true;
         }else{
-            return 1;
+            return false;
         }
     }
 

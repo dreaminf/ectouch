@@ -30,20 +30,18 @@ class SaleController extends CommonController {
         // 属性赋值
         $this->user_id = $_SESSION['user_id'];
         $this->action = ACTION_NAME;
-        // 验证登录
+        // 分销商信息
+        $this->drp = model('sale')->get_drp($this->user_id);
+
         $this->check_login();
         // 用户信息
         $info = model('ClipsBase')->get_user_default($this->user_id);
+
         // 如果是显示页面，对页面进行相应赋值
         assign_template();
         $this->assign('action', $this->action);
         $this->assign('info', $info);
-        // 获取店铺信息
-        $this->drp = $this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->find();
-        $without = array('sale_set', 'sale_set_category', 'sale_set_end' , 'store','spread','apply');
-        if(!$this->drp && !in_array($this->action, $without)){
-            redirect(url('sale/sale_set'));
-        }
+
         $this->assign('user_id',session('user_id'));
     }
 
@@ -528,7 +526,6 @@ class SaleController extends CommonController {
                 show_message(L('sale_cate_not_empty'));
             }
             $data['cat_id'] = $cat_id;
-            $data['open'] = 1;
             $where['user_id'] = $_SESSION['user_id'];
             $this->model->table('drp_shop')->data($data)->where($where)->update();
             redirect(url('sale/sale_set_end'));
@@ -556,15 +553,16 @@ class SaleController extends CommonController {
      *  设置完成
      */
     public function sale_set_end(){
+        // 是否选择商品
+        if($this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id'],'cat_id'=>''))->count() > 0){
+            redirect(url('sale/sale_set_category'));
+        }
         // 设置为分销商
         $data['create_time'] = gmtime();
+        $data['open'] = 1;
         $where['user_id'] = $_SESSION['user_id'];
         $this->model->table('drp_shop')->data($data)->where($where)->update();
-        unset($data);
-        unset($where);
-        $data['user_rank'] = 255;
-        $where['user_id'] = $_SESSION['user_id'];
-        $this->model->table('users')->data($data)->where($where)->update();
+
         $novice = $this->model->table('drp_config')->field("value")->where(array("keyword"=>'novice'))->getOne();
         $this->assign('novice',$novice);
         // 设置分销商店铺地址
@@ -578,6 +576,7 @@ class SaleController extends CommonController {
      * 未登录验证
      */
     private function check_login() {
+        $drp_status = model('Sale')->get_drp_status($this->user_id);
         // 分销商不能访问的方法
         $deny = array(
             'sale_set',
@@ -595,8 +594,11 @@ class SaleController extends CommonController {
                 'referer' => urlencode($url)
             )));
             exit();
-        }elseif($_SESSION['user_rank'] == 255 && in_array($this->action, $deny) && !in_array($this->action, $shareArr)){
+            // 分销商不能访问的方法
+        }elseif($drp_status && in_array($this->action, $deny)){
             redirect(url('sale/index'));
+        }elseif(!$drp_status && !in_array($this->action,$deny) && !in_array($this->action,$shareArr)){
+            redirect(url('sale/sale_set'));
         }
 
         // 增加判断
@@ -607,9 +609,7 @@ class SaleController extends CommonController {
                 redirect(url('sale/apply'));
             }
         }
-        if(model('Sale')->get_drp_status() == 0){
-            show_message(L('drp_close'),L('home'),url());
-        }
+
     }
 
     /**
