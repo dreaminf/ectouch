@@ -1,6 +1,6 @@
 <!-- #BeginLibraryItem "/library/sale_header.lbi" --><!-- #EndLibraryItem --><body>
 <div id="box">
-   		  <div class="wdfd_content"><p class="wdfd_p">可提现金额（元）</p><h1 class="wdfd_h1">{$saleMoney}</h1>
+   		  <div class="wdfd_content"><p class="wdfd_p">可提现金额（元）</p><h1 class="wdfd_h1">{$saleMoney_surplus}</h1>
           <span class="wdyj_content">总佣金{$saleMoney}元</span>
           </div>
           <p class="time">可提现金额为交易成功后7天，且为可提现的金额</p>
