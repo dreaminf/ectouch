@@ -19,13 +19,13 @@
         </div>
         <div class="content2">
             <ul>
-                <li class="dpxq_p">{$shop_info.shop_name}</li>
-                <li class="dpxq_h5">{$shop_user.name|truncate:10}</li>
-                <li class="dpxq_h6">{$shop_info.shop_mobile}</li>
+                <li class="dpxq_p">{$shop_user.shop_name}</li>
+                <li class="dpxq_h5">{$shop_user.username|truncate:10}</li>
+                <li class="dpxq_h6">{$shop_user.shop_mobile}</li>
             </ul>
         </div>
     </div>
-    <p class="time">分销时间：{$shop_info.time}</p>
+    <p class="time">分销时间：{$shop_user.time}</p>
     <div class="dpxq_border"></div>
     <div class="dpxq_content5">
         <div class="dpxq_nav10">

@@ -449,7 +449,7 @@ class SaleController extends CommonController {
         $this->assign('user_count', $user_count ? $user_count : 0);
 
         // 店铺订单数
-        $sql = "select count(*) as count from {pre}drp_order_info where drp_id = ".$this->drp['id'];
+        $sql = "select count(*) as count from {pre}drp_order_info where drp_id = ".$this->drp['drp_id'];
         $order_count = $this->model->getRow($sql);
         $this->assign('order_count', $order_count['count'] ? $order_count['count'] : 0);
 
@@ -702,7 +702,8 @@ class SaleController extends CommonController {
         $info['0']['shop_name'] = C('shop_name').$info['0']['shop_name'];
         $this->assign('shop_info', $info['0']);
 
-        $shop_user = model('ClipsBase')->get_user_default($id);
+        $shop_user = model('Sale')->get_drp($id);
+
         $this->assign('shop_user', $shop_user);
         // 总销售额
         $money = model('Sale')->get_sale_money_total($id);

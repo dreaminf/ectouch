@@ -403,6 +403,7 @@ class SaleModel extends BaseModel {
         $info['real_name'] = $row['real_name'];
         $info['open']      = $row['open'];
         $info['cat_id']    = $row['cat_id'];
+        $info['shop_mobile']    = $row['shop_mobile'];
         $info['shop_img']    = $row['shop_img'] ? './data/attached/drp_logo/'.$row['shop_img'] : '';
         $info['user_id']   = $user_id;
         $info['time']   = local_date(C('time_format'), $this->model->table('users')->field("reg_time")->where(array("user_id"=>$user_id))->getOne());
