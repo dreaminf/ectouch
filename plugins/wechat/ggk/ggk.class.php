@@ -145,7 +145,7 @@ class ggk extends PluginWechatController
         $sql = 'SELECT u.nickname, p.prize_name, p.id FROM ' . model('Base')->model->pre . 'wechat_prize p LEFT JOIN ' . model('Base')->model->pre . 'wechat_user u ON p.openid = u.openid where dateline between "' . $starttime . '" and "' . $endtime . '" and p.prize_type = 1 and p.activity_type = "'.$this->plugin_name.'" ORDER BY dateline desc limit 10';
         $list = model('Base')->model->query($sql);
         
-        $file = ROOT_PATH . 'plugins/wechat/' . $this->plugin_name . '/view/index.php';
+        $file = ROOT_PATH . 'plugins/wechat/' . $this->plugin_name . '/view/index.html';
         if (file_exists($file)) {
             require_once ($file);
         }
@@ -190,7 +190,7 @@ class ggk extends PluginWechatController
             if (! empty($rs)) {
                 show_message('已经领取', '', '', 'error');
             }
-            $file = ROOT_PATH . 'plugins/wechat/' . $this->plugin_name . '/view/user_info.php';
+            $file = ROOT_PATH . 'plugins/wechat/' . $this->plugin_name . '/view/user_info.html';
             if (file_exists($file)) {
                 require_once ($file);
             }
