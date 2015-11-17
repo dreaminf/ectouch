@@ -132,7 +132,7 @@ function shipping_fee($shipping_code, $shipping_config, $goods_weight, $goods_am
         $shipping_config = unserialize($shipping_config);
     }
 
-    $filename = BASE_PATH . '/modules/shipping/' . $shipping_code . '.php';
+    $filename = BASE_PATH . 'modules/shipping/' . $shipping_code . '.php';
     if (file_exists($filename))
     {
         include_once($filename);
@@ -165,7 +165,7 @@ function shipping_insure_fee($shipping_code, $goods_amount, $insure)
     }
     else
     {
-        $path = BASE_PATH . '/modules/shipping/' . $shipping_code . '.php';
+        $path = BASE_PATH . 'modules/shipping/' . $shipping_code . '.php';
 
         if (file_exists($path))
         {
