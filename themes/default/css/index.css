@@ -3144,19 +3144,27 @@ h3 {
   background-color: #FFF;
   overflow: hidden;
   margin-bottom: 0.3rem; }
-  .index-menu ul li {
-    width: 21%;
-    margin: 1% 2%;
-    background-color: #FFF; }
-    .index-menu ul li img {
-      max-height: 100%;
-      width: 60%; }
-    .index-menu ul li .index-menu-text {
-      font-size: 1rem;
-      color: #4C4D51;
-      display: block;
-      text-align: center;
-      padding-top: 0.5rem; }
+.index-menu ul li {
+  /*width: 21%;*/
+  /*margin: 1% 2%;*/
+  width: 25%;
+  float: left;
+  margin: 0.5em 0;
+  background-color: #FFF;
+}
+.index-menu ul li img {
+  /*max-height: 100%;*/
+  /*width: 60%;*/
+  width: 3.17em;
+  height: auto;
+}
+.index-menu ul li .index-menu-text {
+  font-size: 1rem;
+  color: #4C4D51;
+  display: block;
+  text-align: center;
+  padding-top: 0.5rem;
+}
 
 .index-buy {
   padding: 0 2%;
