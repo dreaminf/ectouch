@@ -31,7 +31,7 @@ class SaleController extends CommonController {
         $this->user_id = $_SESSION['user_id'];
         $this->action = ACTION_NAME;
         // 分销商信息
-        $this->drp = model('sale')->get_drp($this->user_id);
+        $this->drp = model('Sale')->get_drp($this->user_id);
 
         $this->check_login();
         // 用户信息
@@ -256,14 +256,14 @@ class SaleController extends CommonController {
         $saleMoney =  model('Sale')->saleMoney();
         $this->assign('saleMoney',$saleMoney);
         // 未分成销售佣金
-        $sale_money = model('sale')->get_shop_sale_money($this->user_id);
+        $sale_money = model('Sale')->get_shop_sale_money($this->user_id);
         $this->assign('sale_no_money',$sale_money['profit']);
         $this->assign('sale_no_money1',$sale_money['profit1']);
         $this->assign('sale_no_money2',$sale_money['profit2']);
         $this->assign('sale_no_money_num',$sale_money['profit_num']);
 
         // 已分成销售佣金
-        $sale_money = model('sale')->get_shop_sale_money($this->user_id,1);
+        $sale_money = model('Sale')->get_shop_sale_money($this->user_id,1);
         $this->assign('sale_money',$sale_money['profit']);
         $this->assign('sale_money1',$sale_money['profit1']);
         $this->assign('sale_money2',$sale_money['profit2']);
