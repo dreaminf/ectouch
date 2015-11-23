@@ -584,6 +584,7 @@ class SaleController extends CommonController {
             'sale_set',
             'sale_set_category',
             'sale_set_end',
+			'apply',
         );
         $shareArr = array(
             'store',
@@ -846,7 +847,9 @@ class SaleController extends CommonController {
 
             $sql = "SELECT * FROM {pre}payment WHERE pay_code = 'wxpay' AND enabled = 1";
             $payment = $this->model->getRow($sql);
-
+			if(!$payment ['pay_code']){
+				show_message('因商家暂未开通微信支付，此功能暂未开发');exit;
+			}
             include_once (ROOT_PATH . 'plugins/payment/' . $payment ['pay_code'] . '.php');
 
             $pay_obj = new $payment ['pay_code'] ();
