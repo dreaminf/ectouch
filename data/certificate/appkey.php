@@ -1,2 +1,2 @@
 <?php
-define('ECTOUCH_AUTH_KEY', '');
+define('AUTH_KEY', '');
