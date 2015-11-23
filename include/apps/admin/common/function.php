@@ -260,7 +260,7 @@ function get_position_list()
 function create_html_editor($input_name, $input_value = '')
 {
     $editor = '<input type="hidden" id="'.$input_name.'" name="'.$input_name.'" value="'.htmlspecialchars($input_value).'" />
-    <iframe id="'.$input_name.'_frame" src="data/common/editor/editor.php?item='.$input_name.'" width="642" height="482" frameborder="0" scrolling="no"></iframe>';
+    <iframe id="'.$input_name.'_frame" src="plugins/editor/editor.php?item='.$input_name.'" width="642" height="482" frameborder="0" scrolling="no"></iframe>';
     return $editor;
 }
 

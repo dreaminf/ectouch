@@ -3,7 +3,7 @@ header("Content-Type: text/html; charset=utf-8");
 error_reporting( E_ERROR | E_WARNING );
 
 define('IN_ECS', true);
-define('ROOT_PATH', preg_replace('/data\/common(.*)/i', '', str_replace('\\', '/', __FILE__)));
+define('ROOT_PATH', preg_replace('/plugins\/editor(.*)/i', '', str_replace('\\', '/', __FILE__)));
 
 if (isset($_SERVER['PHP_SELF'])){
     define('PHP_SELF', $_SERVER['PHP_SELF']);
@@ -11,7 +11,7 @@ if (isset($_SERVER['PHP_SELF'])){
     define('PHP_SELF', $_SERVER['SCRIPT_NAME']);
 }
 
-$root_url = preg_replace('/data\/common(.*)/i', '', PHP_SELF);
+$root_url = preg_replace('/plugins\/editor(.*)/i', '', PHP_SELF);
 
 $db_config = require(ROOT_PATH . 'data/config.php');
 require(ROOT_PATH . 'include/helpers/base_helper.php');

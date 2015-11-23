@@ -20,7 +20,7 @@
      * window.UEDITOR_HOME_URL = "/xxxx/xxxx/";
      */
     var URL = window.UEDITOR_HOME_URL || getUEBasePath();
-    var sURL = URL.toLowerCase().replace('data/common/editor/', 'index.php?m=admin&c=upload');
+    var sURL = URL.toLowerCase().replace('plugins/editor/', 'index.php?m=admin&c=upload');
 
     /**
      * 配置项主体。注意，此处所有涉及到路径的配置别遗漏URL变量。
