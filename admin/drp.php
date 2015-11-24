@@ -595,7 +595,7 @@ function get_order_list($is_separate)
     $filter = page_and_size($filter);
 
     /* 查询记录 */
-    $sql = "SELECT o.* FROM " .  $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 and  d.shop_separate = $is_separate" .
+    $sql = "SELECT o.*,d.drp_id as drp FROM " .  $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 and  d.shop_separate = $is_separate" .
         " ORDER BY order_id DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 
@@ -611,7 +611,7 @@ function get_order_list($is_separate)
         }
         $row['add_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['add_time']);
         $row['user_name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$row['user_id']);
-        $row['parent_name'] = $GLOBALS['db']->getOne("select shop_name from ".$GLOBALS['ecs']->table('drp_shop') ." where id = ".$row['drp_id']);
+        $row['parent_name'] = $GLOBALS['db']->getOne("select shop_name from ".$GLOBALS['ecs']->table('drp_shop') ." where id = ".$row['drp']);
         $log = $GLOBALS['db']->getAll("select user_id,change_desc from ".$GLOBALS['ecs']->table('drp_log') ." where order_id = ".$row['order_id']);
         if($log){
             foreach($log as $key=>$val){
@@ -621,6 +621,7 @@ function get_order_list($is_separate)
         $row['log'] = $log;
         $arr[] = $row;
     }
+    dump($arr);
     return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
 }
 
