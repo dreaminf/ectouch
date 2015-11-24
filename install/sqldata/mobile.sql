@@ -152,6 +152,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_user_info` (
   `aite_id` varchar(200) NOT NULL COMMENT '标识'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户信息';
 
+-- /*DRP_START*/
 
 CREATE TABLE IF NOT EXISTS `ecs_drp_config` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -164,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_config` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- /*DRP_START*/
+
 
 --
 -- 表的结构 `ecs_drp_log`
