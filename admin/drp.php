@@ -621,7 +621,6 @@ function get_order_list($is_separate)
         $row['log'] = $log;
         $arr[] = $row;
     }
-    dump($arr);
     return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
 }
 
