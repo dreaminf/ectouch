@@ -5,7 +5,7 @@
 	background-color: #777;
 	color: #eee;
 	font-size: 40px;
-	line-height: 1;text-align: center;text-decoration: none;bottom: 1em;right: 10px;overflow: hidden;width: 46px;
+	line-height: 1;text-align: center;text-decoration: none;bottom: 1.5em;right: 10px;overflow: hidden;width: 46px;
 	height: 46px;
 	border: none;
 	opacity: 0.6;

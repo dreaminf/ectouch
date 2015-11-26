@@ -33,6 +33,9 @@ class GoodsController extends CommonController {
     public function index() {
         // 获得商品的信息
         $goods = model('Goods')->get_goods_info($this->goods_id);
+		//购物车商品数量
+        $cart_goods = model('Order')->cart_goods();
+        $this->assign('seller_cart_total_number', $cart_goods[0]['goods_number']); 	
         // 如果没有找到任何记录则跳回到首页
         if ($goods === false) {
             ecs_header("Location: ./\n");
