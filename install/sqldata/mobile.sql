@@ -165,8 +165,6 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_config` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-
-
 --
 -- 表的结构 `ecs_drp_log`
 --
