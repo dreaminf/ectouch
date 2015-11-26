@@ -22,7 +22,7 @@ class IndexController extends CommonController {
      */
     public function index() {
         $cache_id = sprintf('%X', crc32($_SESSION['user_rank'] . '-' . C('lang')));
-        if (!$this->is_cached('index.dwt', $cache_id))
+        if (!ECTouch::view()->is_cached('index.dwt', $cache_id))
         {
             // 自定义导航栏
             $navigator = model('Common')->get_navigator();
