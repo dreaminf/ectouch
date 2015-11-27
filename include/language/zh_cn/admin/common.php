@@ -406,6 +406,7 @@ $_LANG['99_upgrade'] = '在线更新';
 /*DRP_START*/
 // 微分销
 $_LANG['01_drp_config'] = '微分销设置';
+$_LANG['02_drp_audit'] = '分销商审核';
 $_LANG['02_drp_users'] = '分销商管理';
 $_LANG['03_drp'] = '销售佣金设置';
 $_LANG['04_order_list'] = '销售订单管理';

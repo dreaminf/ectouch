@@ -153,6 +153,7 @@ $modules['10_menu_tools']['99_upgrade']                 = '../index.php?m=admin&
 /*DRP_START*/
 // 微分销
 $modules['11_menu_rec']['01_drp_config']                      = 'drp.php?act=config';
+$modules['11_menu_rec']['02_drp_audit']                       = 'drp.php?act=users&type=audit';
 $modules['11_menu_rec']['02_drp_users']                       = 'drp.php?act=users';
 $modules['11_menu_rec']['03_drp']                             = 'drp.php?act=list';
 $modules['11_menu_rec']['04_order_list']                      = 'drp.php?act=order_list';
