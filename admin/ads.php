@@ -440,7 +440,7 @@ elseif ($_REQUEST['act'] == 'update')
         $ad_code = "ad_code = '$_POST[ad_text]', ";
     }
 
-    $ad_code = str_replace('../' . DATA_DIR . '/attached/afficheimg/', '', $ad_code);
+    $ad_code = str_replace(DATA_DIR . '/attached/afficheimg/', '', $ad_code);
     /* 更新信息 */
     $sql = "UPDATE " .$ecs->table('ad'). " SET ".
             "position_id = '$_POST[position_id]', ".
