@@ -211,6 +211,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_shop` (
   `cat_id` text COMMENT '分销分类id',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0',
   `money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `audit` int(1) NOT NULL DEFAULT '0' COMMENT '店铺是否审核',
   `open` int(1) NOT NULL DEFAULT '0' COMMENT '店铺是否开启',
   `bank` int(10) NOT NULL DEFAULT '0' COMMENT '默认银行卡',
   PRIMARY KEY (`id`,`user_id`)
@@ -295,6 +296,7 @@ INSERT INTO `ecs_drp_config` VALUES ('4', '', 'txxz', '提现标准', '申请提
 INSERT INTO `ecs_drp_config` VALUES ('5', 'open,close', 'msg_open', '消息推送', '是否开启消息推送', 'radio', 'open');
 INSERT INTO `ecs_drp_config` VALUES ('6', 'open,close', 'examine', '购买分销商', '是否开启购买成为分销商', 'radio', 'open');
 INSERT INTO `ecs_drp_config` VALUES ('7', '', 'money', '购买金额', '购买分销商金额', 'text', '1');
+INSERT INTO `ecs_drp_config` VALUES ('8', 'open,close', 'audit', '分销商审核', '是否对新申请的分销商进行审核', 'radio', 'open');
 ALTER TABLE `ecs_users` ADD COLUMN `apply_sale` int(1) unsigned NOT NULL DEFAULT '0';
 
 -- /*DRP_END*/

@@ -134,8 +134,8 @@ if ($_REQUEST['act'] == 'users')
     {
         $smarty->assign('full_page', 1);
     }
-
-    $list = get_user_list();
+    $type = (isset($_GET['type']) && $_GET['audit'] == 'audit') ? 0:1;//分销商状态
+    $list = get_user_list($type);
     $smarty->assign('list',         $list['list']);
     $smarty->assign('filter',       $list['filter']);
     $smarty->assign('record_count', $list['record_count']);
@@ -479,20 +479,22 @@ if ($_REQUEST['act'] == 'ranking_query')
  *                  frozen_money表示冻结资金，rank_points表示等级积分，pay_points表示消费积分
  * @return  array
  */
-function get_user_list()
+function get_user_list($type = '1')
 {
     /* 初始化分页参数 */
     $filter = array(
 
     );
 
+    $conditioin = ' where `audit` = "'.$type.'" '; // 是否审核
+
     /* 查询记录总数，计算分页数 */
-    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('drp_shop');
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('drp_shop') . $conditioin;
     $filter['record_count'] = $GLOBALS['db']->getOne($sql);
     $filter = page_and_size($filter);
 
     /* 查询记录 */
-    $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('drp_shop') .
+    $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('drp_shop') . $conditioin .
         " ORDER BY id DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 

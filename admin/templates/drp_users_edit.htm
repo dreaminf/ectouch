@@ -38,10 +38,21 @@
         </td>
     </tr>
     <tr>
+        <td style="width:40%">审核状态</td>
+        <td style="width:60%">
+            <label for="audit1">
+                <input id="audit1" type="radio" name="data[audit]" value="1" {if $info.audit eq 1}checked{/if}>已审核
+            </label>
+            <label for="audit2">
+                <input id="audit2" type="radio" name="data[audit]" value="0" {if $info.audit eq 0}checked{/if}>未审核
+            </label>
+        </td>
+    </tr>
+    <tr>
         <td style="width:40%">{$lang.user.drp_cat}</td>
         <td style="width:60%">
             {foreach from=$category item=cate}
-            <p>
+            <p style="width: 33%; float: left;">
                 <label for="p-{$cate.cat_id}">
                         <input id="p-{$cate.cat_id}" name="data[cat_id][]" type="checkbox" value="{$cate.cat_id}" {if $cate.is_select eq 1}checked{/if}>{$cate.cat_name}
                 </label>

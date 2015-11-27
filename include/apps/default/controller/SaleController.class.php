@@ -560,8 +560,10 @@ class SaleController extends CommonController {
             redirect(url('sale/sale_set_category'));
         }
         // 设置为分销商
+        $audit = $this->model->table('drp_config')->field("value")->where(array("keyword"=>'audit'))->getOne();
         $data['create_time'] = gmtime();
-        $data['open'] = 1;
+        $data['audit'] = ($audit == 'open') ? 0:1;
+        $data['open'] = ($audit == 'open') ? 0:1;
         $where['user_id'] = $_SESSION['user_id'];
         $this->model->table('drp_shop')->data($data)->where($where)->update();
 
