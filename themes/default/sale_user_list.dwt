@@ -1,10 +1,10 @@
 <!-- #BeginLibraryItem "/library/sale_header.lbi" --><!-- #EndLibraryItem -->
 	<div id="box">
 		<!--{foreach from=$info.list item=li}-->	       
-		<div class="dpgl_list">                                 
-			<a href=""><span class="dpgl_list2">{$li.username}</span><br>
-			<span class="yjfd_list">{$li.time}</span>                   
-			<i class="iconfont icon-huise icon-jiantou1"></i></a>
+		<div class="dpgl_list">
+            <img src="{$li.headimgurl}" class="user-list-img" />
+			<span class="dpgl_list2">{$li.username}</span><br />
+			<span class="yjfd_list">{$li.time}</span>
 		</div>
 		<div class="dpxq_border"></div>	
 		<!--{/foreach}-->

@@ -1025,3 +1025,9 @@ input[type=submit]{
     border-top: 1px solid #e3e3e3;
     background-color: #FFF;
 }
+
+.user-list-img{
+    width:4rem;
+    height:auto;
+    float:left;
+}
