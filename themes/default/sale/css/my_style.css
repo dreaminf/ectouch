@@ -612,7 +612,7 @@ color:#000;}
 	}
 .set2_content{
 	width:90%;
-	height:10rem;
+	min-height:10rem;
 	background-color:#fcf8e3;
 	margin-top:2rem;
 	
