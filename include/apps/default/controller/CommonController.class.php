@@ -186,6 +186,7 @@ class CommonController extends BaseController
      * 分销店铺信息
      */
     private function drp(){
+
         if($_GET['drp_id'] > 0){
             $drp_info = model('Sale')->get_drp($_GET['drp_id'],'1');
             if($drp_info['open'] == 1){
@@ -211,6 +212,11 @@ class CommonController extends BaseController
                 }
 
             }
+        }
+
+        // 判断访问控制器
+        if(CONTROLLER_NAME == 'Index' && ACTION_NAME=='index' && I('type') != 'share' && $_SESSION['drp_shop']['open'] == 1){
+            redirect(url('store/index'));
         }
     }
     /*DRP_END*/
@@ -242,7 +248,7 @@ class CommonController extends BaseController
             $wx_url   = __URL__ .'/index.php?c=goods&id='.$goods_id.'&u=' . $_SESSION['user_id'] . '&drp_id='.$drp_id;
             $wx_pic   = $goods['goods_thumb'];
         }
-        
+        $wx_url.='&type=share';
         //微信JS SDK
         $jssdk = new Jssdk($appid, $secret);
         $signPackage = $jssdk->GetSignPackage();

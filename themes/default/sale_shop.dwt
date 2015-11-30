@@ -49,23 +49,10 @@
 
 <body>
 <div class="con">
-<header class="index-header comWidth">
-  <i class="index-header-menu iconfont fl" onclick="window.location = '{:url('category/top_all')}'">&#xe627;</i>
-  <div class="index-search-box fl">
-  	<a href="javascript:void(0)"><i class="index-search-icon iconfont fl">&#xe603;</i></a>
-    <input type="text" class="index-search-input" placeholder="商品搜索" onclick="openSearch();">
-    <a href="javascript:void(0)" id="translateVoice" style="display:None;"><i class="index-search-sound iconfont fr">&#xe623;</i></a>
-  </div>
-  <a href="javascript:void(0)" id="scanQRCode"><i class="index-header-right iconfont fr">&#xe629;</i></a>
-</header>
-<div class="index-main comWidth">
+<div class="index-main comWidth" >
 <style type="text/css">
+    .index-main{margin:0;}
     .index-recom {border-bottom: 1px #eee solid}
-
-    /*
-  *  2015-9-16   cy
-  *  首页头部
-  */
 
     .ect-index-header {
         width: 100%;
@@ -168,7 +155,7 @@
 
     <div class="ect-index-info ">
         <a href="javascript:void(0);" class="ect-index-detail">
-            <img src="{$drp_info.headimgurl}">
+            <img src="{$drp_info.headimgurl}" />
 
         </a><div class="ect-index-name">
         <a> <h1>{$drp_info.shop_name}</h1></a>
@@ -208,52 +195,6 @@
         </li>
     </ul>
 </div>
-
-  <div class="index-recom">
-    <h3><b>限时促销</b></h3>
-      <div class="index-recom-left fl">
-        {insert name='ads' id=257 num=1}
-      </div>
-      <div class="index-recom-right fr">
-        {insert name='ads' id=258 num=2}
-      </div>
-  </div>
-
-  <div class="index-recom">
-    <h3><b>热门活动</b></h3>
-      <div class="index-recom-left fl">
-        {insert name='ads' id=259 num=2}
-      </div>
-      <div class="index-recom-right fr">
-        {insert name='ads' id=260 num=1}
-      </div>
-  </div>
-
-  <div class="index-recom">
-    <h3><b>精品推荐</b></h3>
-      <div class="index-recom-left fl">
-        {insert name='ads' id=261 num=1}
-      </div>
-      <div class="index-recom-right fr">
-        {insert name='ads' id=262 num=2}
-      </div>
-  </div>
-  <div class="index-recom">
-    <h3><b>品牌街</b></h3>
-      <div class="index-recom-left fl">
-        {insert name='ads' id=263 num=2}
-      </div>
-      <div class="index-recom-right fr">
-        {insert name='ads' id=264 num=1}
-      </div>
-  </div>
-
-  <div class="index-theme">
-  	<h3><b>主题精选</b></h3>
-  	<ul>
-    	{insert name='ads' id=256 num=10}
-    </ul>
-  </div>
 
     <div class="index-theme" >
         <ul class="index-more-list"  style="background-color: #F3F4F5;">
