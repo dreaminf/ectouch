@@ -134,7 +134,7 @@ if ($_REQUEST['act'] == 'users')
     {
         $smarty->assign('full_page', 1);
     }
-    $type = (isset($_GET['type']) && $_GET['audit'] == 'audit') ? 0:1;//分销商状态
+    $type = (isset($_GET['type']) && $_GET['type'] == 'audit') ? 0:1;//分销商状态
     $list = get_user_list($type);
     $smarty->assign('list',         $list['list']);
     $smarty->assign('filter',       $list['filter']);
