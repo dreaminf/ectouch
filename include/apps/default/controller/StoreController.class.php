@@ -7,7 +7,7 @@
  * ----------------------------------------------------------------------------
  * 文件名称：IndexController.class.php
  * ----------------------------------------------------------------------------
- * 功能描述：ECTouch首页控制器
+ * 功能描述：ECTouch分销店铺控制器
  * ----------------------------------------------------------------------------
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
@@ -15,7 +15,7 @@
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
-class MY_IndexController extends IndexController {
+class StoreController extends IndexController {
 
     /**
      * 首页信息
@@ -63,8 +63,6 @@ class MY_IndexController extends IndexController {
         $this->assign('brand_list', model('Brand')->get_brands($app = 'brand', C('page_size'), 1));
         // 分类下的文章
         $this->assign('cat_articles', model('Article')->assign_articles(1,5)); // 1 是文章分类id ,5 是文章显示数量
-
-        $dwt = $_SESSION['drp_shop'] ? 'sale_shop.dwt': 'index.dwt';
-        $this->display($dwt);
+        $this->display('sale_shop.dwt');
     }
 }
