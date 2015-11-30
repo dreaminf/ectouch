@@ -154,7 +154,6 @@
   <!--{if $related_goods}-->
   <div class="goods-related ect-padding-lr ect-padding-tb">
     <p><strong>{$lang.releate_goods}：</strong></p>
-    <!-- 本例主要代码 Start ================================ -->
     <div id="picScroll" class="picScroll">
       <div class="hd">
         <ul>
@@ -178,12 +177,9 @@
         </ul>
       </div>
     </div>
-    
-    <!-- 本例主要代码 End ================================ --> 
   </div>
   <!--{/if}-->
   <!-- #BeginLibraryItem "/goods_info.dwt" --><!-- #EndLibraryItem --> 
-  <footer class="logo"><a href="http://www.ectouch.cn" title="ECTouch官网" target="_blank"><img src="__TPL__/images/copyright.png" width="176" height="60"></a></footer>
 </div>
 <!-- #BeginLibraryItem "/library/page_footer_nav.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> 
