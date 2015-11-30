@@ -9,7 +9,7 @@
                 <label for="checkAll"  >全选<i></i></label>
 			</div>
 			
-			<div class="sp_box" >
+			<div class="sp_box" style="margin-bottom: 7rem">
 			<!--{foreach from=$category item=li}-->
 				<div class="{if $li.is_select eq 1}sp_box2{else}sp_box1{/if} clear check" id="cate_{$li.cat_id}" onClick="select_cate('{$li.cat_id}')">
 					<input type="checkbox" name="cate[]" value="{$li.cat_id}" id="input_{$li.cat_id}" class="elecheck display-none" {if $li.is_select eq 1}checked="checked"{/if} />
@@ -18,10 +18,9 @@
 					<span>一级分店佣金：{$li.profit2}%</span>
 					<span>二级分店佣金：{$li.profit3}%</span>
 				</div> 
-			<!-- {/foreach} -->           
-				
-			</div>
-            <div class="set-div">
+			<!-- {/foreach} -->
+            </div>
+            <div class="set-div float">
                 <input type="button" value="{:L('submit')}" id="set_cate" class="set-div-button" onclick="set_my_goods()">
             </div>
 			</form>

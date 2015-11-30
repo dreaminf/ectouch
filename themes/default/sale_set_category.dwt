@@ -22,7 +22,7 @@
                     <label for="checkAll"  >全选<i></i></label>
                 </div>
 
-                <div class="sp_box" >
+                <div class="sp_box" style="margin-bottom: 7rem">
                     <!--{foreach from=$category item=li}-->
                     <div class="{if $li.is_select eq 1}sp_box2{else}sp_box1{/if} clear check" id="cate_{$li.cat_id}" onClick="select_cate('{$li.cat_id}')">
                         <input type="checkbox" name="cate[]" value="{$li.cat_id}" id="input_{$li.cat_id}" class="elecheck display-none" {if $li.is_select eq 1}checked="checked"{/if} />
@@ -34,7 +34,7 @@
                     <!-- {/foreach} -->
 
                 </div>
-            <div class="t-a-center">
+            <div class="t-a-center float">
             	<button type="submit" class="set-4-submit">{:L('next_step')}</button>
 
 
