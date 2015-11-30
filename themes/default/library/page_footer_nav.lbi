@@ -1,6 +1,6 @@
 <style type="text/css"> 
 	.dis-box{display:-moz-box; display:-webkit-box; display:box; color:#FFF;}
-	.dis-box a{ display:block;  -moz-box-flex:1; -webkit-box-flex:1; box-flex:1; text-align:center;color: #fff; padding: 0.2rem;}
+	.dis-box a{ display:block;  -moz-box-flex:1; -webkit-box-flex:1; box-flex:1; text-align:center;color: #fff;}
 	.dis-box a.a-heart,.dis-box a.a-flow-cart{width:3rem;}	
 	.tbl-type{background:#333333; height:auto;  padding:0; position: fixed; bottom:0; width:100%; max-width:640px;}
 	.tbl-type a img {height: 2rem;width: auto;}	
