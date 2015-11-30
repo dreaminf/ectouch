@@ -367,7 +367,7 @@ elseif ($_REQUEST['act'] == 'update')
     {
         if ((isset($_FILES['ad_img']['error']) && $_FILES['ad_img']['error'] == 0) || (!isset($_FILES['ad_img']['error']) && isset($_FILES['ad_img']['tmp_name']) && $_FILES['ad_img']['tmp_name'] != 'none'))
         {
-            $img_up_info = $image->upload_image($_FILES['ad_img'], 'afficheimg');
+            $img_up_info = basename($image->upload_image($_FILES['ad_img'], 'afficheimg'));
             $ad_code = "ad_code = '".$img_up_info."'".',';
         }
         else
@@ -440,7 +440,7 @@ elseif ($_REQUEST['act'] == 'update')
         $ad_code = "ad_code = '$_POST[ad_text]', ";
     }
 
-    $ad_code = str_replace(DATA_DIR . '/attached/afficheimg/', '', $ad_code);
+    $ad_code = str_replace('../' . DATA_DIR . '/attached/afficheimg/', '', $ad_code);
     /* 更新信息 */
     $sql = "UPDATE " .$ecs->table('ad'). " SET ".
             "position_id = '$_POST[position_id]', ".
