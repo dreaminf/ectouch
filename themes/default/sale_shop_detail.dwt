@@ -1,16 +1,11 @@
 <!-- #BeginLibraryItem "/library/sale_header.lbi" --><!-- #EndLibraryItem -->
 <div id="box">
-    <div class="header">
-        <div class="yjfd_content10">
-            <a href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a><span class="tltle">店铺详情</span>
-        </div>
-    </div>
     <div class="content">
         <div class="content1">
             <div class="content1">
                 <div class="index_image1"><a href="">
-                    {if $info.avatar}
-                    <img class="index_image2" src="{$info.avatar}" />
+                    {if $shop_user.headimgurl}
+                    <img class="index_image2" src="{$shop_user.headimgurl}" />
                     {else}
                     <img class="index_image2" src="__TPL__/images/member-photo-img2.jpeg" />
                     {/if}

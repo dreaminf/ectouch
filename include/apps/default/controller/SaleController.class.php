@@ -708,7 +708,6 @@ class SaleController extends CommonController {
         $this->assign('shop_info', $info['0']);
 
         $shop_user = model('Sale')->get_drp($id);
-
         $this->assign('shop_user', $shop_user);
         // 总销售额
         $money = model('Sale')->get_sale_money_total($id);
@@ -815,6 +814,9 @@ class SaleController extends CommonController {
         $this->display('sale_examine.dwt');
     }
 
+    /**
+     * 购买成为分销商
+     */
     public function apply(){
 
         $apply_info = $this->model->table('drp_apply')->where("user_id=".session('user_id'))->find();
