@@ -13,7 +13,7 @@
 .focus .hd { width: 100%; height: 0.8em; position: absolute; z-index: 1; text-align: center; bottom:0.5em;}
 .focus .hd ul { display: inline-block; height: 0.8em;}
 .focus .hd ul li { display: inline-block; width: 0.6em; height: 0.6em; text-indent:-999em; background: rgba(255, 255, 255, 0.8); margin: 0 0.3em; vertical-align: top; overflow: hidden; border-radius: 100%; -moz-border-radius: 100%; -webkit-border-radius: 100%; -o-border-radius: 100%; }
-.focus .hd ul .on { background: #41A28E; }
+.focus .hd ul .on { background: #1CBB7F; }
 .focus .bd { position: relative; z-index: 0;}
 .focus .bd li { height: auto; overflow: hidden; }
 .focus .bd li a img { width: 100%; height: auto; display: block; margin: 0; padding: 0; }
@@ -25,9 +25,9 @@
 =============*/
 
 .ect-padding-lr { padding-left: 0.6em; padding-right: 0.6em; }
-.ect-bg {background: #41A28E !important; color: #fff !important; height: auto;overflow: hidden;}
+.ect-bg {background: #1CBB7F !important; color: #fff !important; height: auto;overflow: hidden;}
 .search .ect-margin-tb{margin-top:0.6em; margin-bottom:0.6em;}
-.ect-header{height:2.5em; position:relative;background-color: #41A28E;}
+.ect-header{height:2.5em; position:relative;background-color: #1CBB7F;}
 .ect-header span{font-size:1.4em; position:absolute; left:2.4em; right:3em; top:0.24em; text-align: center}
 .herder-close{color:#fff; float:right; font-size:2em; margin-top: -0.1em; margin-right:0.2em;}
 

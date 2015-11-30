@@ -3026,7 +3026,7 @@ html, body, .index-header, .index-footer {
   overflow: hidden;
   margin: 0 auto;
   height: 4rem;
-  background-color: #41A28E;
+  background-color: #1CBB7F;
   padding: 0 1.3rem;
   top: 0; }
   .index-header .index-header-menu, .index-header .index-header-right {
@@ -3036,7 +3036,6 @@ html, body, .index-header, .index-footer {
   .index-header .index-search-box {
     overflow: hidden;
     width: auto;
-    border: 1px solid #4DA895;
     background-color: #FDFDFD;
     border-radius: 5px;
     height: 3rem;
@@ -3192,7 +3191,7 @@ h3 {
           padding: 0.18rem 0.875rem;
           font-size: 0.875rem;
           border-radius: 15px;
-          background-color: #41A28E;
+          background-color: #1CBB7F;
           margin: 0 auto;
           text-align: center;
           color: #FFFFFF;
@@ -3267,7 +3266,7 @@ h3 {
           overflow: hidden; }
         .index-recom .index-recom-bottom ul li .index-recom-bottom-price {
           font-size: 1.125rem;
-          color: #41A18D;
+          color: #1CBB7F;
           padding-right: 0.1rem; }
         .index-recom .index-recom-bottom ul li .index-recom-bottom-oldprice {
           font-size: 0.81rem;
@@ -3290,7 +3289,7 @@ h3 {
     height: 50%;
     border-right: 1px solid #F0F2F7; }
     .index-brand .index-brand-left a {
-      color: #41A18D; }
+      color: #1CBB7F; }
     .index-brand .index-brand-left img {
       max-height: 95%; }
   .index-brand .index-brand-right {
@@ -3301,7 +3300,7 @@ h3 {
       height: 50%;
       border-bottom: 1px solid #F0F2F7; }
       .index-brand .index-brand-right .index-brand-right-in a {
-        color: #41A18D; }
+        color: #1CBB7F; }
       .index-brand .index-brand-right .index-brand-right-in img {
         max-width: 302.9px;
         max-height: 155px; }
@@ -3395,7 +3394,7 @@ h3 {
       line-height: 1.2rem; }
     .index-more-list li span {
       font-size: 1.125rem;
-      color: #41A18D;
+      color: #1CBB7F;
       padding: 0 0.45rem; }
 
 .index-touch {

@@ -14,9 +14,9 @@
 =============*/
 
 .ect-padding-lr { padding-left: 0.6em; padding-right: 0.6em; }
-.ect-bg {background: #41A28E !important; color: #fff !important; height: auto;overflow: hidden;}
+.ect-bg {background: #1CBB7F !important; color: #fff !important; height: auto;overflow: hidden;}
 .search .ect-margin-tb{margin-top:0.6em; margin-bottom:0.6em;}
-.ect-header{height:2.5em; position:relative;background-color: #41A28E;}
+.ect-header{height:2.5em; position:relative;background-color: #1CBB7F;}
 .ect-header span{font-size:1.4em; position:absolute; left:2.4em; right:3em; top:0.24em; text-align: center}
 .herder-close{color:#fff; float:right; font-size:2em; margin-top: -0.1em; margin-right:0.2em;}
 

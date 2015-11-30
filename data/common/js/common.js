@@ -4,7 +4,7 @@
 $(function(){
     // 微信内隐藏头部工具栏
     if(isWeiXin()){
-        $('.ect-header').hide();
+        // $('.ect-header').hide();
     }
 })
 

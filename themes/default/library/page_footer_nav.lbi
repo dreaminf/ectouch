@@ -6,8 +6,8 @@
 	.tbl-type a img {height: 2rem;width: auto;}	
 	.tbl-type  a img{display:block; margin:0; margin-bottom:0.1rem; }
 	.tbl-type  a i{display:block; margin:0; margin-bottom:0.1rem;font-size: 2.35rem; }
-	.tbl-type .btn-addcart{background:#DD2727;width: 6rem;height:4rem; line-height:4rem;}
-	.tbl-type .btn-cart {background: #FF9500;}
+	.tbl-type .btn-addcart{background:#1CBB7F;width: 6rem;height:4rem; line-height:4rem;}
+	.tbl-type .btn-cart {background: #FFAB35;}
 	.tbl-type a .btn-cart-num{  position: absolute; display: block;right: -1rem;top: -.7rem; color: #fff;font-style: normal;  min-width: 1.6rem;list-style: initial; font-size: 1.3rem; background: #CB1717;line-height: 1.6rem;border-radius: 0.9rem;  height: 1.6rem; padding: 0 .4rem;}
 	</style>
 <div class="tbl-type detail-tbn2">
