@@ -1,5 +1,22 @@
 /* $Id : common.js 4865 2007-01-31 14:04:10Z paulgao $ */
 
+
+$(function(){
+    // 微信内隐藏头部工具栏
+    if(isWeiXin()){
+        $('.ect-header').hide();
+    }
+})
+
+function isWeiXin(){
+    var ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 function get_asynclist(url, src) {
     $('#J_ItemList').more({'address': url, 'spinner_code': '<div style="text-align:center; margin:10px;"><img src="' + src + '" /></div>'})
     $(window).scroll(function() {
