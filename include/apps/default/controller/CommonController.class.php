@@ -226,9 +226,7 @@ class CommonController extends BaseController
      */
     public function wechatJsSdk(){
         $wxinfo   = model('Base')->model->table('wechat')->field('token, appid, appsecret, status')->find();
-        if (!$wxinfo['status']) {
-            return false;
-        }
+        
         $appid    = $wxinfo['appid'];
         $secret   = $wxinfo['appsecret'];
 
@@ -267,7 +265,9 @@ class CommonController extends BaseController
         $this->assign('signature', $signPackage["signature"]);
 
         $output = $this->fetch('library/js_sdk.lbi');
-        $this->assign('wechat_js_sdk', $output);
+        if ($wxinfo['status']) {
+            $this->assign('wechat_js_sdk', $output);
+        }
     }
 }
 
