@@ -166,7 +166,7 @@ class CategoryController extends CommonController {
         $this->assign('show_asynclist', C('show_asynclist'));
         // 初始化分页信息
         $page_size = C('page_size');
-        $brand = I('request.brand');
+        $brand = I('request.brand', 0, 'intval');
         $price_max = I('request.price_max');
         $price_min = I('request.price_min');
         $filter_attr = I('request.filter_attr');

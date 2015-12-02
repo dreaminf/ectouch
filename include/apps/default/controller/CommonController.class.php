@@ -225,7 +225,10 @@ class CommonController extends BaseController
      * 微信jsSDK
      */
     public function wechatJsSdk(){
-        $wxinfo   = model('Base')->model->table('wechat')->field('token, appid, appsecret')->find();
+        $wxinfo   = model('Base')->model->table('wechat')->field('token, appid, appsecret, status')->find();
+        if (!$wxinfo['status']) {
+            return false;
+        }
         $appid    = $wxinfo['appid'];
         $secret   = $wxinfo['appsecret'];
 

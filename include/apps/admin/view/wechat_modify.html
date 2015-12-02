@@ -66,6 +66,34 @@
 				</div>
 				<p class="help-block">{$lang['wechat_help5']}</p>
 			</td>
+		</tr>
+		<tr>
+			<td>微信OAuth名称</td>
+			<td><div class="col-sm-4">
+				<input type="text" name="data[oauth_name]" class="form-control" value="{$data['oauth_name']}"> 
+				</div>
+			</td>
+		</tr> -->
+		<tr>
+			<td>微信授权回调域名</td>
+			<td><div class="col-sm-4">
+				<input type="text" name="data[oauth_redirecturi]" class="form-control" value="{$data['oauth_redirecturi']}"> 
+				</div>
+				<p class="help-block">示例格式：http://shop.ectouch.cn</p>
+			</td>
+		</tr>
+		<!-- <tr>
+			<td>微信OAuth推送量</td>
+			<td><div class="col-sm-4">
+				<input type="text" name="data[oauth_count]" class="form-control" value="{$data['oauth_count']}" readonly> 
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>{$lang['sort_order']}</td>
+			<td><div class="col-sm-4">
+				<input type="text" name="data[sort]" value="10" class="form-control" value="{$data['sort']}">
+				</div></td>
 		</tr> -->
 		<tr>
 			<td>电脑端账号绑定</td>
@@ -82,33 +110,6 @@
 				<p class="help-block">开启之后，微商城会员中心会出现电脑端账号绑定按钮，绑定后不再出现。</p>
 			</td>
 		</tr>
-		<!-- <tr>
-			<td>微信OAuth名称</td>
-			<td><div class="col-sm-4">
-				<input type="text" name="data[oauth_name]" class="form-control" value="{$data['oauth_name']}"> 
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>微信OAuth回调地址</td>
-			<td><div class="col-sm-4">
-				<input type="text" name="data[oauth_redirecturi]" class="form-control" value="{$data['oauth_redirecturi']}"> 
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>微信OAuth推送量</td>
-			<td><div class="col-sm-4">
-				<input type="text" name="data[oauth_count]" class="form-control" value="{$data['oauth_count']}" readonly> 
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>{$lang['sort_order']}</td>
-			<td><div class="col-sm-4">
-				<input type="text" name="data[sort]" value="10" class="form-control" value="{$data['sort']}">
-				</div></td>
-		</tr>
 		<tr>
 			<td>{$lang['wechat_status']}</td>
 			<td><div class="col-sm-2">
@@ -121,7 +122,7 @@
 					</label>
 				</div>
 			</div></td>
-		</tr> -->
+		</tr>
 		{if $data['orgid']}
 		<tr>
 			<td>接口地址</td>
