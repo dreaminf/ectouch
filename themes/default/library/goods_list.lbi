@@ -115,7 +115,7 @@
         </div>
         <div class="btn1 row">
           <div class="col-xs-3">
-            <input type="button" class="clear" onClick="javascript:clear_filter()" value="{$lang.clear_filter}"/>
+            <button class="clear" onClick="javascript:clear_filter()">{$lang.clear_filter}</button>
           </div>
           <div class="col-xs-9">
             <input type="submit" class="sure" name="sub" value="{$lang.button_submit}"/>
