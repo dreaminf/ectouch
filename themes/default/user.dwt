@@ -34,6 +34,7 @@
 .hot-search h4{height:1.6em;}
 .hot-search a{display:table-cell; float:left;  padding:0.8em; background:#fff; margin-right:0.6em; margin-bottom:0.6em; border-radius:0.4em;}
 .con{margin-bottom: 4rem;}
+.member-order a{text-decoration: none;}
 </style>
 	</head>
 	<body>
