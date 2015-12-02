@@ -1,60 +1,143 @@
-<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
-<div class="con">
-<header class="ect-header ect-margin-tb ect-margin-lr text-center"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a>
-<span>{$title}</span>
- <a href="javascript:openSearch();" class="pull-right ect-icon ect-icon1 ect-icon-search1"></a>
-</header>
-<div class="panel panel-default ect-category-all ect-border-radius0">
-    <ul>
-     <!--{foreach from=$category item=cat name=no}-->
-     <li>
-     	<!--{if $cat.cat_id}-->
-     	<div class="media panel-body">
-            <img class="pull-left" src="{$cat.cat_image}" style="display:None">
-            <div class="pull-left ect-category-right">
-                <h3>{$cat.name|escape:html}</h3>
-                <h5> 
-                <!--{foreach from=$cat.cat_id item=child name=no1}-->
-                <!--{if $smarty.foreach.no1.index lt 3}-->
-                <!--{if $smarty.foreach.no1.index gt 0}-->/<!--{/if}-->
-                {$child.name|escape:html|truncate:5,false} 
-                <!--{/if}-->
-                <!--{/foreach}--></h5>
-                </div>
-                <i class="fa fa-angle-down ect-transition05"></i>
-        </div>
-        <!--{else}-->
-        <a href="{:url('category/index',array('id'=>$this->_var['cat']['id']))}">
-        <div class="media panel-body">
-            <img class="pull-left" src="{$cat.cat_image}" style="display:None">
-            <div class="pull-left ect-category-right">
-                <h3>{$cat.name|escape:html}</h3>
-                <h5> 
-                <!--{foreach from=$cat.cat_id item=child name=no1}-->
-                <!--{if $smarty.foreach.no1.index lt 3}-->
-                <!--{if $smarty.foreach.no1.index gt 0}-->/<!--{/if}-->
-                {$child.name|escape:html|truncate:5,false} 
-                <!--{/if}-->
-                <!--{/foreach}--></h5>
-                </div>
-                <i class="fa fa-angle-down ect-transition05"></i>
-        </div></a>
-        <!--{/if}-->
-        <div class="ect-category-child">
-        <!--{foreach from=$cat.cat_id item=child name=no1}-->
-            <!--{if $child.cat_id}-->
-            <a href="{:url('category/all',array('id'=>$this->_var['child']['id']))}">{$child.name|escape:html}</a>
-            <!--{else}-->
-            <a href="{$child.url}">{$child.name|escape:html}</a>
-            <!--{/if}-->
-        <!--{/foreach}--> 
-        </div>
-      </li>
-      <!--{/foreach}-->
-    </ul> 
-</div>
-</div>
-<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
-<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
-</body>
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="wap-font-scale" content="no">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<title>三级菜单页面</title>
+		<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="__TPL__/extension/css/style.css" />
+		<script type="text/javascript" src="__TPL__/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="__TPL__/js/jquery.nicescroll.js"></script>
+		<script type="text/javascript" src="__TPL__/js/jquery.scrollTo.min.js"></script>
+		<script type="text/javascript" src="__TPL__/js/ectouch.js"></script>
+		<script type="text/javascript" src="__TPL__/extension/js/ectouch.js"></script>
+		<script type="text/javascript">
+			$(function($) {
+				$(".menu-tab").niceScroll({
+					styler: "fb",
+					cursorcolor: "#CDCDCD",
+					cursorwidth: '0',
+					cursorborderradius: '0',
+					background: '#fff',
+					spacebarenabled: false,
+					cursorborder: '',
+					zindex: '1000',
+				});
+				$(".menu-content").niceScroll({
+					styler: "fb",
+					cursorcolor: "#CDCDCD",
+					cursorwidth: '0',
+					cursorborderradius: '0',
+					background: '#fff',
+					spacebarenabled: false,
+					cursorborder: '',
+					zindex: '1000',
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="con menu-con">
+			<div class="main">
+				<header>
+					<div class="fl header-search comm-search">
+						<input type="text" name="" id="" value="" placeholder="商品搜索" />
+					</div>
+					<a href="javascript:;" class="fr">
+						<i class="iconfont">&#xe603;</i>
+					</a>
+				</header>
+				<div class="category-body">
+					<!--tabmenu-->
+					<div class="menu-tab fl swiper-container">
+						<ul class="menu-list" id="swiper">
+							{foreach from=$category item="vo"}
+							<li class="selected ">
+								<a href="javascript:;">{$vo.name}</a>
+							</li>
+							{/foreach}
+						</ul>
+					</div>
+					<!--tabcont-->
+					<div class="menu-content fr">
+						{foreach from=$category item="vo"}
+						<div class="menu-cont-list">
+							<h2>{$vo.name}</h2>
+							<ul class="menu-cont-category">
+							{foreach from=$vo.cat_id item="v"}
+								<div class="menu-banner">
+									
+								</div>
+								<li>
+								<a href="{:url('category/all',array('id'=>$this->_var['v']['id']))}">
+								<img src="{$v.cat_image}"/>
+										<span>{$v.name}</span>
+								</li>
+								</a>
+								{/foreach}
+
+							</ul>
+
+
+						</div>
+						{/foreach}
+					</div>
+				</div>
+			</div>
+
+			<!--layer-->
+			<div class="comm-search-layer">
+				<header class="comm-search-layer-header">
+					<a href="javascript:;" class="fl layer-search-close">
+						<i class="iconfont">&#xe60d;</i>
+					</a>
+					<div class="fl header-search">
+						<input type="text" name="" id="" value="" placeholder="跑步鞋" />
+					</div>
+					<a href="javascript:;" class="fl layer-search-search">搜索</a>
+				</header>
+
+				<div class="layer-main">
+					<div class="layer-hot-srarch">
+						<h1>热门搜索</h1>
+						<ul class="layer-hot-list">
+							<li><a href="javascript:void(0);">跑步鞋</a></li>
+							<li><a href="javascript:void(0);">夏季衣服</a></li>
+							<li><a href="javascript:void(0);">短外套</a></li>
+							<li><a href="javascript:void(0);">面膜</a></li>
+							<li><a href="javascript:void(0);">女包</a></li>
+							<li><a href="javascript:void(0);">零食</a></li>
+							<li><a href="javascript:void(0);">短外套</a></li>
+							<li><a href="javascript:void(0);">面膜</a></li>
+							<li><a href="javascript:void(0);">女包</a></li>
+							<li><a href="javascript:void(0);">零食</a></li>
+						</ul>
+					</div>
+					<div class="layer-history-srarch">
+						<h1>历史搜索</h1>
+						<ul class="layer-history-list">
+							<li><a href="javascript:void(0);">跑步鞋</a></li>
+							<li><a href="javascript:void(0);">夏季衣服</a></li>
+							<li><a href="javascript:void(0);">短外套</a></li>
+							<li><a href="javascript:void(0);">面膜</a></li>
+							<li><a href="javascript:void(0);">女包</a></li>
+							<li><a href="javascript:void(0);">零食</a></li>
+						</ul>
+						<div class="layer-clear">
+							<i class="iconfont">&#xe610;</i><span>清空记录</span>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+
+		</div>
+	</body>
+
 </html>

@@ -17,7 +17,7 @@ define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 $exc = new exchange($ecs->table("category"), $db, 'cat_id', 'cat_name');
-
+$image = new image($_CFG['bgcolor']);
 /* act操作项的初始化 */
 if (empty($_REQUEST['act']))
 {
@@ -27,7 +27,6 @@ else
 {
     $_REQUEST['act'] = trim($_REQUEST['act']);
 }
-
 /*------------------------------------------------------ */
 //-- 商品分类列表
 /*------------------------------------------------------ */
@@ -93,7 +92,6 @@ if ($_REQUEST['act'] == 'insert')
 {
     /* 权限检查 */
     admin_priv('cat_manage');
-
     /* 初始化变量 */
     $cat['cat_id']       = !empty($_POST['cat_id'])       ? intval($_POST['cat_id'])     : 0;
     $cat['parent_id']    = !empty($_POST['parent_id'])    ? intval($_POST['parent_id'])  : 0;
@@ -110,6 +108,7 @@ if ($_REQUEST['act'] == 'insert')
 
     $cat['cat_recommend']  = !empty($_POST['cat_recommend'])  ? $_POST['cat_recommend'] : array();
 
+
     if (cat_exists($cat['cat_name'], $cat['parent_id']))
     {
         /* 同级别下不能有重复的分类名称 */
@@ -123,10 +122,24 @@ if ($_REQUEST['act'] == 'insert')
        $link[] = array('text' => $_LANG['go_back'], 'href' => 'javascript:history.back(-1)');
        sys_msg($_LANG['grade_error'], 0, $link);
     }
-
     /* 入库的操作 */
     if ($db->autoExecute($ecs->table('category'), $cat) !== false)
     {
+            //获取最后插入的ID
+            $sql = "SELECT cat_id,parent_id FROM ". $ecs->table("category") ." ORDER BY cat_id DESC LIMIT 1";
+            $cat_id = $db->getRow($sql);
+            /*图片入库*/
+        if(!empty($_FILES['category_image']['name'])){
+                $img_name = basename($image->upload_image($_FILES['category_image'], 'category'));
+                $gallery_thumb = $image->make_thumb('../data/attached/category/' . $img_name, 91, 68);
+                if ($gallery_thumb === false) {
+                    sys_msg($image->error_msg(), 1, array(), false);
+                }
+                $car_id = $cat_id['cat_id'];
+                $sql = "INSERT INTO " . $ecs->table('touch_category') . "(`cat_id`,`cat_image`)VALUES('$car_id','$gallery_thumb')";
+                $db->query($sql);
+
+        }
         $cat_id = $db->insert_id();
         if($cat['show_in_nav'] == 1)
         {
@@ -152,6 +165,8 @@ if ($_REQUEST['act'] == 'insert')
 
         sys_msg($_LANG['catadd_succed'], 0, $link);
     }
+
+
  }
 
 /*------------------------------------------------------ */
@@ -164,7 +179,6 @@ if ($_REQUEST['act'] == 'edit')
     $cat_info = get_cat_info($cat_id);  // 查询分类信息数据
     $attr_list = get_attr_list();
     $filter_attr_list = array();
-
     if ($cat_info['filter_attr'])
     {
         $filter_attr = explode(",", $cat_info['filter_attr']);  //把多个筛选属性放到数组中

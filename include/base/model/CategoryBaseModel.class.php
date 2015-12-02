@@ -27,7 +27,7 @@ class CategoryBaseModel extends BaseModel {
      */
     function get_categories_tree($cat_id = 0) {
         if ($cat_id > 0) {
-            $sql = 'SELECT parent_id FROM ' . $this->pre . "category WHERE cat_id = '$cat_id'";
+                $sql = 'SELECT parent_id FROM ' . $this->pre . "category  WHERE cat_id = '$cat_id'";
             $result = $this->row($sql);
             $parent_id = $result['parent_id'];
         } else {
@@ -42,10 +42,11 @@ class CategoryBaseModel extends BaseModel {
         $sql = 'SELECT count(*) FROM ' . $this->pre . "category WHERE parent_id = '$parent_id' AND is_show = 1 ";
         if ($this->row($sql) || $parent_id == 0) {
             /* 获取当前分类及其子分类 */
-            $sql = 'SELECT c.cat_id,c.cat_name,c.parent_id,c.is_show,t.cat_image ' .
+
+             $sql = 'SELECT c.cat_id,c.cat_name,c.parent_id,c.is_show,t.cat_image ' .
                     'FROM ' . $this->pre . 'category as c ' .
                     'left join ' . $this->pre . 'touch_category as t on t.cat_id = c.cat_id ' .
-                    "WHERE c.parent_id = '$parent_id' AND c.is_show = 1 ORDER BY c.sort_order ASC, c.cat_id ASC";
+                    "WHERE c.parent_id = 0 AND c.is_show = 1 ORDER BY c.sort_order ASC, c.cat_id ASC";
 
             /*DRP_START*/
             if(session('drp_shop')){
@@ -57,7 +58,6 @@ class CategoryBaseModel extends BaseModel {
             }
             /*DRP_END*/
             $res = $this->query($sql);
-
             foreach ($res AS $row) {
                 if ($row['is_show']) {
                     $cat_arr[$row['cat_id']]['id'] = $row['cat_id'];
@@ -65,7 +65,7 @@ class CategoryBaseModel extends BaseModel {
                     $cat_arr[$row['cat_id']]['cat_image'] = get_image_path(0, $row['cat_image'],false);
                     $cat_arr[$row['cat_id']]['url'] = url('category/index', array('id' => $row['cat_id']));
 
-                    if (isset($row['cat_id']) != NULL) {
+                    if (isset($row['cat_id']) == isset($row['parent_id'])) {
                         $cat_arr[$row['cat_id']]['cat_id'] = $this->get_child_tree($row['cat_id']);
                     }
                 }
@@ -77,6 +77,7 @@ class CategoryBaseModel extends BaseModel {
     }
 
     function get_child_tree($tree_id = 0) {
+
         $three_arr = array();
         $sql = 'SELECT count(*) FROM ' . $this->pre . "category WHERE parent_id = '$tree_id' AND is_show = 1 ";
         if ($this->row($sql) || $tree_id == 0) {
@@ -121,7 +122,21 @@ class CategoryBaseModel extends BaseModel {
         }
         return $cat_arr;
     }
-
+    
+    /**
+     * 获取品牌二级分类
+     */
+    function get_cagtegory_goods($cat_id){
+        $sql = "SELECT a.*,b.cat_image FROM  ".$this->pre."category AS a LEFT JOIN ".$this->pre."touch_category AS b ON a.cat_id = b.cat_id WHERE a.is_show = 1 AND a.parent_id = ".$cat_id;
+        $cate = $this->query($sql);
+        if($cate){
+            foreach($cate as $key=>$val){
+                $cate[$key]['cat_image'] = get_image_path($val['goods_id'],$val['goods_img']); //设置默认图片
+            }
+        }
+        return $cate;
+    }
+    
     /**
      * 调用当前分类的销售排行榜
      *

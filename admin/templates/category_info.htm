@@ -89,17 +89,17 @@
 
           </script>
 
-         
+
           <table width="100%" id="tbody-attr" align="center">
             {if $attr_cat_id eq 0}
             <tr>
-              <td>   
-                   <a href="javascript:;" onclick="addFilterAttr(this)">[+]</a> 
+              <td>
+                   <a href="javascript:;" onclick="addFilterAttr(this)">[+]</a>
                    <select onChange="changeCat(this)"><option value="0">{$lang.sel_goods_type}</option>{$goods_type_list}</select>&nbsp;&nbsp;
-                   <select name="filter_attr[]"><option value="0">{$lang.sel_filter_attr}</option></select><br />                   
+                   <select name="filter_attr[]"><option value="0">{$lang.sel_filter_attr}</option></select><br />
               </td>
-            </tr> 
-            {/if}           
+            </tr>
+            {/if}
             {foreach from=$filter_attr_list item=filter_attr name="filter_attr_tab"}
             <tr>
               <td>
@@ -136,6 +136,16 @@
         <td class="label">{$lang.keywords}:</td>
         <td><input type="text" name="keywords" value='{$cat_info.keywords}' size="50">
         </td>
+      </tr>
+      <tr>
+          <td class="label">
+              请选择分类图片
+          </td>
+          <td>
+              <input type="file" name="category_image" size="45" />
+        <span class="notice-span" style="display:block" id="warn_brandlogo">
+        </span>
+          </td>
       </tr>
 
       <tr>
@@ -193,7 +203,7 @@ function addFilterAttr(obj)
   {
     validator.addErrorMsg(filter_attr_not_selected);
   }
-  
+
   for (i = 0; i < filterAttr.length; i++)
   {
     for (j = i + 1; j <filterAttr.length; j++)
@@ -201,8 +211,8 @@ function addFilterAttr(obj)
       if (filterAttr.item(i).value == filterAttr.item(j).value)
       {
         validator.addErrorMsg(filter_attr_not_repeated);
-      } 
-    } 
+      }
+    }
   }
 
   if (!validator.passed())

@@ -239,3 +239,9 @@ $(function() {
     var window_height = $(window).height() / 3;
     user_tab_height.css("min-height", window_height);
 });
+
+
+$('.menu-tab ul li').click(function() {
+	$(this).addClass("selected").siblings().removeClass('selected');
+	$('.menu-cont-list').hide().eq($('.menu-tab ul li').index(this)).show();
+});
