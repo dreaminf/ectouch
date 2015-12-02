@@ -90,7 +90,7 @@ class GroupbuyModel extends BaseModel {
             $group_buy['market_price'] = price_format($group_buy['market_price']); //增加市场价 by carson add 20140606
             //$stat = group_buy_stat($group_buy['act_id'], $ext_info['deposit']);
             //$group_buy['cur_amount'] = $stat['valid_goods']; // 当前数量
-            $group_buy['sales_count'] = $group_buy['sales_count'] ? $group_buy['sales_count'] : 0; // 销售数量
+            $group_buy['sales_count'] = model('GoodsBase')->get_sales_count($group_buy['goods_id']); // 销售数量
             $group_buy['click_num'] = $group_buy['click_num'] ? $group_buy['click_num'] : 0; // 点击数量
             /* 处理图片 */
             if (!empty($group_buy['goods_thumb'])) {
