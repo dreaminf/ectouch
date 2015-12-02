@@ -1,4 +1,4 @@
-<form action="{url('edit', array('ks'=>'bd'))}" method="post" class="form-horizontal" role="form">
+<form action="{url('edit', array('ks'=>'bdsjh'))}" method="post" class="form-horizontal" role="form">
 <table class="table table-hover ectouch-table">
     <tr>
         <td width="200">功能名称</td>
@@ -16,6 +16,10 @@
                 <p class="help-block">多个变形词，请用“,”隔开</p>
             </div>
         </td>
+    </tr>
+    <tr>
+        <td width="200">功能说明</td>
+        <td><div class="col-md-10">微信用户绑定手机号，即可用手机号登录微商城（非微信授权登录）。</div></td>
     </tr>
     <tr>
         <td width="200">积分赠送</td>

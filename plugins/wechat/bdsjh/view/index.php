@@ -19,7 +19,7 @@
 				<div class="form-group">
 				    <label class="col-sm-2 control-label">手机号</label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" placeholder="填写正确手机号" name="data[username]" datatype="*" />
+				      <input type="text" class="form-control" placeholder="填写真实手机号" name="data[username]" datatype="*" />
 				    </div>
 			  	</div>
 <!-- 			  	<div class="form-group">

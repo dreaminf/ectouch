@@ -143,14 +143,16 @@ class bdsjh extends PluginWechatController
     {
         if (IS_POST) {
             $data = I('post.data');
-            $rs = Check::rule(array(
-                Check::must($data['username']),
-                '手机号不能为空'
-            ));
+            $rs = Check::rule(
+                array(
+                    Check::must($data['username']),'手机号不能为空'
+                ), 
+                array(
+                    Check::mobile($data['username']),'手机号格式不正确'
+                )
+            );
             if ($rs !== true) {
-                show_message($rs, '绑定手机号', url('wechat/plugin_show', array(
-                    'name' => $this->plugin_name
-                )));
+                show_message($rs, '绑定手机号', url('wechat/plugin_show', array('name' => $this->plugin_name)));
             }
             if(!isset($_SESSION['openid'])){
                 show_message('您需要微信授权登录，才能进行绑定手机号操作！', '首页', url('index/index'));
@@ -172,10 +174,11 @@ class bdsjh extends PluginWechatController
                 }
             }
 
-            //绑定
+            //绑定手机号
             $ect_uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where('openid = "'.$_SESSION['openid'].'"')->getOne();
+            $mobile_phone = model('Base')->model->table('users')->field('mobile_phone')->where('user_id = "'.$ect_uid.'"')->getOne();
 
-            if($ect_uid == $_SESSION['user_id']){
+            if(empty($mobile_phone) && $ect_uid == $_SESSION['user_id']){
                 model('Base')->model->table('users')->data('mobile_phone = '.$data['username'])->where('user_id = '.$ect_uid)->update();
                 model('Users')->update_user_info();
                 model('Users')->recalculate_price();
