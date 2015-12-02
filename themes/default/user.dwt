@@ -8,6 +8,7 @@
 		<meta name="keywords" content="" />
 		<meta name="description" content="" />
 		<link rel="stylesheet" href="__TPL__/css/member.css">
+		<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
 <style type="text/css">
 /*==================
     搜索
