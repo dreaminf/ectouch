@@ -32,8 +32,16 @@ class ArticleController extends CommonController {
     //-- 文章分类
     /* ------------------------------------------------------ */
     public function index() {
-        $cat_id = intval(I('get.id'));
-        $this->assign('article_categories', model('Article')->article_categories_tree($cat_id)); //文章分类树
+        $cat_id = I('get.id', 3, 'intval');
+        $sql = 'SELECT cat_id, cat_name, sort_order ' .
+            ' FROM {pre}article_cat ' .
+            ' WHERE cat_type = 5 AND parent_id = '. $cat_id .
+            ' ORDER BY sort_order ASC';
+        $data = $this->model->query($sql);
+        foreach($data as $key=>$vo){
+            $data[$key]['url'] = url('art_list', array('id'=>$vo['cat_id']));
+        }
+        $this->assign('article_categories', $data); //文章分类树
         $this->display('article_cat.dwt');
     }
 

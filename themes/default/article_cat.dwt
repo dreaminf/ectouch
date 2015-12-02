@@ -18,7 +18,7 @@
   <div class="nav">
     <ul>
       <!--{foreach from=$article_categories item=cat name="article_cat"}-->
-      <li><a href="{:url('article/art_list', array('id'=>$this->_var['cat']['id']))}">{$cat.name|escape:html}</a></li>
+      <li><a href="{$cat.url}">{$cat.cat_name|escape:html}</a></li>
       <!--{/foreach}-->
     </ul>
   </div>
