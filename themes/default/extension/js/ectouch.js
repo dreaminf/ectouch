@@ -76,6 +76,7 @@ $(function($) {
 
 $(function($) {
 	//login全屏
+	$('.login-con').height($(window).height()); 
 	$('.phone-number-o i').click(function() {
 		$('.phone-number-o input').val('');
 	});
@@ -122,50 +123,6 @@ $(function($) {
 });
 
 //flow-done
-$(function($) {
-
-	//	$('.confirm-pay-rem').click(function() {
-	//		var html = $('.confirm-pay-rem i').html();
-	//		$(this).removeClass('active');
-	//		if ($(this).hasClass('select')) {
-	//			$(this).removeClass('select').find('i').html('&#xe63a;');
-	//		} else {
-	//			$(this).addClass('select').find('i').html('&#xe638;');
-	//		}
-	//	});
-	//	$('.confirm-pay-layer').on('click', '.confirm-layer-title', function() {
-	//		var obj = $(this).closest('li');
-	//		if ($(this).hasClass('select')) {
-	//			$(this).removeClass('select').find('i').html('&#xe63a;');
-	//			obj.removeClass('has-select');
-	//		} else {
-	//			if (obj.hasClass('has-select')) {
-	//				return false;
-	//			} else {
-	//				$(this).addClass('select').find('i').html('&#xe638;');
-	//				obj.addClass('has-select');
-	//			}
-	//		}
-	//	});
-});
-//user-address-list
-$(function($) {
-
-	//	$('.address-list li').on('click', '.address-list-title', function() {
-	//		var obj = $(this).closest('li');
-	//		if ($(this).hasClass('select')) {
-	//			$(this).removeClass('select').find('i.select').html('&#xe63a;');
-	//			obj.removeClass('has-select');
-	//		} else {
-	//			if (obj.hasClass('has-select')) {
-	//				return false;
-	//			} else {
-	//				$(this).addClass('select').find('i.select').html('&#xe638;');
-	//				obj.addClass('has-select');
-	//			}
-	//		}
-	//	});
-});
 
 //cart-fitting
 $(function($) {
