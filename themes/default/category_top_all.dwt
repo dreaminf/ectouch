@@ -70,20 +70,13 @@
 							<h2>{$vo.name}</h2>
 							<ul class="menu-cont-category">
 							{foreach from=$vo.cat_id item="v"}
-								<div class="menu-banner">
-									
-								</div>
 								<li>
 								<a href="{:url('category/all',array('id'=>$this->_var['v']['id']))}">
-								<img src="{$v.cat_image}"/>
 										<span>{$v.name}</span>
 								</li>
 								</a>
 								{/foreach}
-
 							</ul>
-
-
 						</div>
 						{/foreach}
 					</div>
