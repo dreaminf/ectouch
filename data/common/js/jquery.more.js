@@ -8,7 +8,7 @@
 		'last': 0
 	}
 	var settings = {
-		'amount': '6',
+		'amount': '16',
 		'address': 'comments.php',
 		'format': 'json',
 		'template': '.single_item',
@@ -128,7 +128,6 @@
 		} else $.error('Method ' + method + ' does not exist!');
 
 	}
-
 
 	$(window).scroll(function() {
 		if (is_stop) {

@@ -95,11 +95,7 @@ html {
 	box-sizing: border-box;
 }
 
-input[type=text]:focus,
-input[type=text]:active,
-button:active,
-button:focus,
-button {
+input,input:focus,input:active,button,button[type=button],textarea:focus{
 	appearance: none;
 	-webkit-appearance: none;
 	outline: none;
@@ -234,6 +230,7 @@ header {
 
 header h1 {
 	line-height: 5rem;
+	font-size: 2rem;
 	color: #FFF;
 	font-weight: 400;
 	text-align: center;
@@ -2330,10 +2327,15 @@ body.active {
 }
 
 .menu-banner {
+	margin-top: 0.5rem;
+	width: 100%;
 	box-sizing: border-box;
 	overflow: hidden;
 }
 
+.menu-banner img {
+	width: 100%;
+}
 
 .menu-cont-category {
 	width: 100%;
@@ -2355,9 +2357,9 @@ body.active {
 
 .menu-cont-category li img {
 	margin: 1rem 0;
+	width: 90%;
 	max-height: 60px;
 	background: #fff;
-    padding: 0.7rem;
 }
 
 .menu-cont-category li span {
@@ -2736,6 +2738,7 @@ body.active {
 }
 
 .confirm-pay-layer label {
+	display: -webkit-box;
 	/*height: 3rem;*/
 }
 
@@ -2763,14 +2766,20 @@ body.active {
 }
 
 .confirm-layer-title p {
-	float: left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	-moz-box-flex: 1;
+	box-flex: 1;
+	-webkit-box-flex: 1;
+	-ms-box-flex: 1;
 	height: 3rem;
 	line-height: 3rem;
 	margin-right: 1rem;
 }
 
 .confirm-layer-check {
-	width: 50%;
+	width: 60%;
 	border: none;
 	border-bottom: 1px solid #ddd;
 	height: 3rem;
@@ -4267,6 +4276,7 @@ body.active {
 	color: #F15353;
 }
 .wholesale-content li {
+	background-size:0.8rem;
 	background: url(../img/point.png) center left no-repeat;
 }
 .wholesale-con .description-cont {
