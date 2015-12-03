@@ -61,7 +61,6 @@ class image
                 $img_name = $dir . $img_name; // 将图片定位到正确地址
             }
         }
-
         /* 如果目标目录不存在，则创建它 */
         if (!file_exists($dir))
         {
@@ -80,14 +79,12 @@ class image
             $img_name = $this->unique_name($dir);
             $img_name = $dir . $img_name . $this->get_filetype($upload['name']);
         }
-
         if (!$this->check_img_type($upload['type']))
         {
             $this->error_msg = L('invalid_upload_image_type');
             $this->error_no  =  ERR_INVALID_IMAGE_TYPE;
             return false;
         }
-
         /* 允许上传的文件类型 */
         $allow_file_types = '|GIF|JPG|JEPG|PNG|BMP|SWF|';
         if (!check_file_type($upload['tmp_name'], $img_name, $allow_file_types))
@@ -234,10 +231,8 @@ class image
                 return false;
             }
         }
-
         /* 如果文件名为空，生成不重名随机文件名 */
         $filename = $this->unique_name($dir);
-
         /* 生成文件 */
         if (function_exists('imagejpeg'))
         {
@@ -264,7 +259,6 @@ class image
 
         imagedestroy($img_thumb);
         imagedestroy($img_org);
-
         //确认文件是否生成
         if (file_exists($dir . $filename))
         {

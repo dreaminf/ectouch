@@ -66,7 +66,7 @@ class CategoryController extends AdminController {
             $this->message(L('catedit_succed'), url('index'));
         }
         $cat_id = I('cat_id');
-        //查询附表信息           
+        //查询附表信息
         $result = $this->model->table('touch_category')->where('cat_id=' . $cat_id)->find();
         if (empty($result)) {
             $data['cat_id'] = $cat_id;

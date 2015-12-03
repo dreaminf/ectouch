@@ -18,7 +18,7 @@ defined('IN_ECTOUCH') or die('Deny Access');
 
 class IndexController extends AdminController
 {
-    
+
     // 管理中心
     public function index()
     {
