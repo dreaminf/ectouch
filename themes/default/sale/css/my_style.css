@@ -959,7 +959,6 @@ text-align: center;
 line-height: 3.8rem;
 background-color: #41A28E;
 width: 90%;
-margin-top: 2rem;
 color: #fff;
 border:none;}
 
@@ -1024,6 +1023,8 @@ input[type=submit]{
     padding: 1rem 0;
     border-top: 1px solid #e3e3e3;
     background-color: #FFF;
+    left: 0;
+    right: 0;
 }
 
 .user-list-img{

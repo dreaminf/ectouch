@@ -3,11 +3,13 @@
   <div class="content">
     <div class="content1">
       <div class="index_image1">
+      <a href="{:url('store/index')}">
               {if $info.avatar}
               <img class="index_image2" src="{$info.avatar}" />
               {else}
               <img class="index_image2" src="__TPL__/images/member-photo-img2.jpeg" />
               {/if}
+              </a>
       </div>
     </div>
     <div class="content2">
