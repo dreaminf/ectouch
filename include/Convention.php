@@ -66,6 +66,8 @@ return array(
 		'URL_PARAMS_BIND' =>  true, // URL变量绑定到Action方法参数
 		'URL_PARAMS_BIND_TYPE'  =>  0, // URL变量绑定的类型 0 按变量名绑定 1 按变量顺序绑定
 		'AUTOLOAD_DIR' => array(), // 自动加载扩展目录
+		'VAR_AUTO_STRING' => false,
+		'DEFAULT_FILTER' => 'htmlspecialchars',
 	),
 	/* 数据库配置 */
 	'DB' => array(

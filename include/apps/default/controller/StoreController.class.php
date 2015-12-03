@@ -38,6 +38,11 @@ class StoreController extends CommonController {
         $this->assign('cat_new', $cat_rec[2]);
         $this->assign('cat_hot', $cat_rec[3]);
 
+        if($_SESSION['user_id']){
+            $drp_id = $this->model->table('drp_shop')->where(array('user_id'=>$_SESSION['user_id']))->field('id')->find();
+            $this->assign('is_drp', $drp_id ? 1 : 0);
+        }
+
         $this->display('sale_shop.dwt');
     }
 
