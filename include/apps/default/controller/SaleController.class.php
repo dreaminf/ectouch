@@ -580,41 +580,45 @@ class SaleController extends CommonController {
      * 未登录验证
      */
     private function check_login() {
-        $drp_status = model('Sale')->get_drp_status($this->user_id);
-        // 分销商不能访问的方法
-        $deny = array(
-            'sale_set',
-            'sale_set_category',
-            'sale_set_end',
-			'apply',
-        );
+        // 是否登陆
+        if(empty($this->user_id)){
+            $url = 'http://'.$_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+            redirect(url('user/login', array('referer' => urlencode($url)) ));
+            exit();
+        }
         $shareArr = array(
             'store',
             'spread',
+            'apply'
         );
-        // 未登录处理
-        if (empty($_SESSION['user_id']) && !in_array($this->action, $shareArr)) {
-            $url = 'http://'.$_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-            redirect(url('user/login', array(
-                'referer' => urlencode($url)
-            )));
-            exit();
-            // 分销商不能访问的方法
-        }elseif($drp_status && in_array($this->action, $deny)){
-            redirect(url('sale/index'));
-        }elseif(!$drp_status && !in_array($this->action,$deny) && !in_array($this->action,$shareArr)){
-            redirect(url('sale/sale_set'));
-        }
-
-        // 增加判断
-        $examine = $this->model->table('drp_config')->field('value')->where('keyword = "examine"')->getOne();
-        if($examine == 'open' && $this->action !='apply'){
-            $is_apply = $this->model->table('drp_apply')->field('apply')->where('user_id ='.session('user_id'))->getOne();
-            if($is_apply != 2 ){
-                redirect(url('sale/apply'));
+        if(!in_array($this->action,$shareArr)){
+            $deny = array(
+                'sale_set',
+                'sale_set_category',
+                'sale_set_end',
+            );
+            // 分销状态
+            $drp_status = model('Sale')->get_drp_status($this->user_id);
+            // 已经是分销商
+            if($drp_status && in_array($this->action, $deny)){
+                redirect(url('sale/index'));
+                exit();
+            }
+            // 不是分销商
+            if(!$drp_status && !in_array($this->action,$deny)){
+                redirect(url('sale/sale_set'));
+                exit;
+            }
+    
+            // 增加判断
+            $examine = $this->model->table('drp_config')->field('value')->where('keyword = "examine"')->getOne();
+            if($examine == 'open' && $this->action !='apply'){
+                $is_apply = $this->model->table('drp_apply')->field('apply')->where('user_id ='.session('user_id'))->getOne();
+                if(!$drp_status && $is_apply != 2 ){
+                    redirect(url('sale/apply'));
+                }
             }
         }
-
     }
 
     /**
