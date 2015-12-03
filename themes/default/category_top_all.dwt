@@ -7,9 +7,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
-		<title>全部类别</title>
+		<title>{$page_title}</title>
 		<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="__TPL__/extension/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="__TPL__/css/index.css"/>
 		<script type="text/javascript" src="__TPL__/extension/js/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src="__TPL__/extension/js/jquery.nicescroll.js"></script>
 		<script type="text/javascript" src="__TPL__/extension/js/jquery.scrollTo.min.js"></script>
@@ -38,19 +39,59 @@
 				});
 			});
 		</script>
+<style type="text/css">
+    bady{background-color: #f7f7f7}
+/*banner效果*/
+.focus { width: 100%; height: auto; position: relative; overflow: hidden;}
+.focus .hd { width: 100%; height: 0.8em; position: absolute; z-index: 1; text-align: center; bottom:0.5em;}
+.focus .hd ul { display: inline-block; height: 0.8em;}
+.focus .hd ul li { display: inline-block; width: 0.6em; height: 0.6em; text-indent:-999em; background: rgba(255, 255, 255, 0.8); margin: 0 0.3em; vertical-align: top; overflow: hidden; border-radius: 100%; -moz-border-radius: 100%; -webkit-border-radius: 100%; -o-border-radius: 100%; }
+.focus .hd ul .on { background: #1CBB7F; }
+.focus .bd { position: relative; z-index: 0;}
+.focus .bd li { height: auto; overflow: hidden; }
+.focus .bd li a img { width: 100%; height: auto; display: block; margin: 0; padding: 0; }
+.focus .bd li a { -webkit-tap-highlight-color: rgba(0, 0, 0, 0);/* 取消链接高亮 */ }
+
+
+/*==================
+    搜索
+=============*/
+
+.ect-padding-lr { padding-left: 0.6em; padding-right: 0.6em; }
+.ect-bg {background: #1CBB7F !important; color: #fff !important; height: auto;overflow: hidden;}
+.search .ect-margin-tb{margin-top:0.6em; margin-bottom:0.6em;}
+.ect-header{height:2.5em; position:relative;background-color: #1CBB7F;}
+.ect-header span{font-size:1.4em; position:absolute; left:2.4em; right:3em; top:0.24em; text-align: center}
+.herder-close{color:#fff; float:right; font-size:2em; margin-top: -0.1em; margin-right:0.2em;}
+
+.search input{background-color: #FFF;}
+.input-search{position:relative; margin-top:0.8em; height:auto; height:3em; overflow:hidden;}
+.input-search span{position:absolute; left:0em; right:2.9em; border:1px solid #eee;
+    -webkit-border-radius:  0.4em 0 0 0.4em;
+    -moz-border-radius: 0.4em 0 0 0.4em;
+    border-radius: 0.4em 0 0 0.4em;}
+.input-search span input{width:100%; height:2.4em; font-size:1.2em; border:1px solid #fcfcfc; padding:0 0.6em; box-sizing:border-box; border-radius:0; border:none; border-radius:0.4em 0 0 0.4em;}
+.input-search button{width:3.6em; height:3em;  background:#e6e6e6; display:block; position:absolute; right:0em; border-radius: 0 0.4em 0.4em 0; border:none;}
+.input-search button i{color:#999; font-size:1.8em;}
+.hot-search{margin-top:0.4em; display:table; width:100%;}
+.hot-search p{margin-top:0.5em;}
+.hot-search h4{height:1.6em;}
+.hot-search a{display:table-cell; float:left;  padding:0.8em; background:#fff; margin-right:0.6em; margin-bottom:0.6em; border-radius:0.4em;}
+</style>
 	</head>
 
 	<body>
 		<div class="con menu-con">
 			<div class="main">
-				<header>
-					<div class="fl header-search comm-search">
-						<input type="text" name="" id="" value="" placeholder="商品搜索" />
-					</div>
-					<a href="javascript:;" class="fr">
-						<i class="iconfont">&#xe603;</i>
-					</a>
-				</header>
+<header class="index-header comWidth">
+  <i class="index-header-menu iconfont fl" onclick="window.location = '{:url('category/top_all')}'">&#xe627;</i>
+  <div class="index-search-box fl">
+  	<a href="javascript:void(0)"><i class="index-search-icon iconfont fl">&#xe603;</i></a>
+    <input type="text" class="index-search-input" placeholder="商品搜索" onclick="openSearch();">
+    <a href="javascript:void(0)" id="translateVoice" style="display:None;"><i class="index-search-sound iconfont fr">&#xe623;</i></a>
+  </div>
+  <a href="javascript:void(0)" id="scanQRCode"><i class="index-header-right iconfont fr">&#xe629;</i></a>
+</header>
 				<div class="category-body">
 					<!--tabmenu-->
 					<div class="menu-tab fl swiper-container">
@@ -85,55 +126,24 @@
 					</div>
 				</div>
 			</div>
-
-			<!--layer-->
-			<div class="comm-search-layer">
-				<header class="comm-search-layer-header">
-					<a href="javascript:;" class="fl layer-search-close">
-						<i class="iconfont">&#xe60d;</i>
-					</a>
-					<div class="fl header-search">
-						<input type="text" name="" id="" value="" placeholder="跑步鞋" />
-					</div>
-					<a href="javascript:;" class="fl layer-search-search">搜索</a>
-				</header>
-
-				<div class="layer-main">
-					<div class="layer-hot-srarch">
-						<h1>热门搜索</h1>
-						<ul class="layer-hot-list">
-							<li><a href="javascript:void(0);">跑步鞋</a></li>
-							<li><a href="javascript:void(0);">夏季衣服</a></li>
-							<li><a href="javascript:void(0);">短外套</a></li>
-							<li><a href="javascript:void(0);">面膜</a></li>
-							<li><a href="javascript:void(0);">女包</a></li>
-							<li><a href="javascript:void(0);">零食</a></li>
-							<li><a href="javascript:void(0);">短外套</a></li>
-							<li><a href="javascript:void(0);">面膜</a></li>
-							<li><a href="javascript:void(0);">女包</a></li>
-							<li><a href="javascript:void(0);">零食</a></li>
-						</ul>
-					</div>
-					<div class="layer-history-srarch">
-						<h1>历史搜索</h1>
-						<ul class="layer-history-list">
-							<li><a href="javascript:void(0);">跑步鞋</a></li>
-							<li><a href="javascript:void(0);">夏季衣服</a></li>
-							<li><a href="javascript:void(0);">短外套</a></li>
-							<li><a href="javascript:void(0);">面膜</a></li>
-							<li><a href="javascript:void(0);">女包</a></li>
-							<li><a href="javascript:void(0);">零食</a></li>
-						</ul>
-						<div class="layer-clear">
-							<i class="iconfont">&#xe610;</i><span>清空记录</span>
-						</div>
-					</div>
-				</div>
-
-
-			</div>
-
 		</div>
+		<!-- #BeginLibraryItem "/library/search_index.lbi" --><!-- #EndLibraryItem -->
+		<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 	</body>
+<script type="text/javascript">
+get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}" , '__TPL__/images/loader.gif');
+</script>
+<script>
+    $(function($) {
+        $(".ect-index-share").click(function(){
+
+            $(".share-div").addClass("active");
+        });
+    });
+    $(".share-div").click(function(){
+        $(".share-div").removeClass("active");
+    })
+
+</script>
 
 </html>
