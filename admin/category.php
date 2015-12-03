@@ -128,7 +128,8 @@ if ($_REQUEST['act'] == 'insert')
             //获取最后插入的ID
             $sql = "SELECT cat_id,parent_id FROM ". $ecs->table("category") ." ORDER BY cat_id DESC LIMIT 1";
             $cat_id = $db->getRow($sql);
-            /*图片入库*/
+            /*图片入库 ,如果是二级分类则生成缩略图，一级分类正常图*/
+        if($cat_id['parent_id'] > 0){
         if(!empty($_FILES['category_image']['name'])){
                 $img_name = basename($image->upload_image($_FILES['category_image'], 'category'));
                 $gallery_thumb = $image->make_thumb('../data/attached/category/' . $img_name, 91, 68);
@@ -138,7 +139,13 @@ if ($_REQUEST['act'] == 'insert')
                 $car_id = $cat_id['cat_id'];
                 $sql = "INSERT INTO " . $ecs->table('touch_category') . "(`cat_id`,`cat_image`)VALUES('$car_id','$gallery_thumb')";
                 $db->query($sql);
-
+        }
+        }else if($cat_id['parent_id'] == 0){
+            $img_name = basename($image->upload_image($_FILES['category_image'], 'category'));
+            $car_id = $cat_id['cat_id'];
+            $img_name = "data/attached/category/".$img_name;
+            $sql = "INSERT INTO " . $ecs->table('touch_category') . "(`cat_id`,`cat_image`)VALUES('$car_id','$img_name')";
+            $db->query($sql);
         }
         $cat_id = $db->insert_id();
         if($cat['show_in_nav'] == 1)
