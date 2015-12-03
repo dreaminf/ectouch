@@ -50,7 +50,7 @@ $strConfig = str_replace('#DB_PREFIX#', $dbPrefix, $strConfig);
 
 if($independent){
 	//插入管理员
-	$verify = genRandomString(6); //生成随机认证码
+	$verify = rand(1000, 9999); //生成随机认证码
 	$time = time();
 	$ip = get_client_ip();
 	$password = md5(md5($password).$verify);
