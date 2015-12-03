@@ -71,7 +71,7 @@
 							<ul class="menu-cont-category">
 							{foreach from=$vo.cat_id item="v"}
 								<li>
-								<a href="{:url('category/all',array('id'=>$this->_var['v']['id']))}">
+								<a href="{:url('category/index',array('id'=>$this->_var['v']['id']))}">
 										<span>{$v.name}</span>
 								</li>
 								</a>
