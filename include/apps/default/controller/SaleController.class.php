@@ -706,10 +706,10 @@ class SaleController extends CommonController {
      */
     public function shop_detail(){
         $id = I('id') ? I('id') : $this->user_id;
-        $info = M()->table('drp_shop')->where("user_id=".$id)->select();
-        $info['0']['time'] = local_date('Y-m-d H:i:s',$info['0']['create_time']);
-        $info['0']['shop_name'] = C('shop_name').$info['0']['shop_name'];
-        $this->assign('shop_info', $info['0']);
+        $info = M()->table('drp_shop')->where("user_id=".$id)->find();
+        $info['time'] = local_date('Y-m-d H:i:s',$info['create_time']);
+        $info['shop_name'] = C('shop_name').$info['shop_name'];
+        $this->assign('shop_info', $info);
 
         $shop_user = model('Sale')->get_drp($id);
         $this->assign('shop_user', $shop_user);
@@ -726,7 +726,7 @@ class SaleController extends CommonController {
         $this->assign('user_count', $user_count ? $user_count : 0);
 
         // 店铺订单数
-        $order_count = M()->table('order_info')->where("drp_id=".$info['0']['id'])->count();;
+        $order_count = M()->table('drp_order_info')->where("drp_id=".$info['id'])->count();;
         $this->assign('order_count', $order_count ? $order_count : 0);
         $this->assign('title', '店铺详情');
         $this->display('sale_shop_detail.dwt');
