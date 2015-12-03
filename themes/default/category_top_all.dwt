@@ -56,8 +56,8 @@
 					<!--tabmenu-->
 					<div class="menu-tab fl swiper-container">
 						<ul class="menu-list" id="swiper">
-							{foreach from=$category item="vo"}
-							<li class="selected ">
+							{foreach from=$category item="vo" name="vo"}
+							<li {if $smarty.foreach.vo.index == 0} class="selected"{/if}>
 								<a href="javascript:;">{$vo.name}</a>
 							</li>
 							{/foreach}
