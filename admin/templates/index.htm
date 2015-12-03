@@ -89,7 +89,8 @@ function openItem(args){
 		first_obj = $('#sort_'+nav+'>li>dl>dd>ol>li').first().children('a');
 		$(first_obj).addClass('selected');		
 		//crumbs
-		$('#crumbs').html('<span>'+$('#nav_'+nav+' > span').html()+'</span><span class="arrow">&nbsp;</span><span>'+$(first_obj).text()+'</span>');		
+		$('#crumbs').html('<span>'+$('#nav_'+nav+' > span').html()+'</span><span class="arrow">&nbsp;</span><span>'+$(first_obj).text()+'</span>');
+		help_module = $(first_obj).text();
 	}else{
 		//左侧菜单事件
 		//location
@@ -99,10 +100,11 @@ function openItem(args){
 		$("a[name='item_"+nav+'_'+module+"']").addClass('selected');
 		//crumbs
 		$('#crumbs').html('<span>'+$('#nav_'+nav+' > span').html()+'</span><span class="arrow">&nbsp;</span><span>'+$('#item_'+nav+'_'+module).html()+'</span>');
+		help_module = $('#item_'+nav+'_'+module).text();
 	}
 	// src = 'index.php?m='+module+'&a='+action;
 	$('#workspace').attr('src', action.replace('amp;', ''));
-
+	$('#help').attr('href', 'http://wiki.ectouch.cn/index.php?title=%E5%B8%AE%E5%8A%A9:ECTouch%E5%90%8E%E5%8F%B0:' + help_module);
 }
 
 $(function(){
@@ -225,6 +227,7 @@ function addFavorite(url, title) {
           <div id="topnav" class="top-nav">
             <ul>
               <li><a href="privilege.php?act=logout" title="{$lang.signout}"><span>{$lang.signout}</span></a></li>
+              <li><a href="http://wiki.ectouch.cn/index.php?title=%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9" target="_blank" id="help"><span>帮助中心</span></a></li>
               <li><a href="../index.php" target="_blank" title="{$lang.preview}"><span>{$lang.preview}</span></a></li>
               <li><a href="index.php?act=clear_cache" target="workspace">更新缓存</a></li>
               <li><a href="privilege.php?act=modif" target="workspace"><span>{$lang.profile}</span></a></li>
