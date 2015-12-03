@@ -66,11 +66,15 @@
 					<div class="menu-content fr">
 						{foreach from=$category item="vo"}
 						<div class="menu-cont-list">
+								<div class="menu-banner">
+									<img src="{$vo.cat_image}" width="410px;" height="127px;" />
+								</div>
 							<h2>{$vo.name}</h2>
 							<ul class="menu-cont-category">
 							{foreach from=$vo.cat_id item="v"}
 								<li>
 								<a href="{:url('category/index',array('id'=>$this->_var['v']['id']))}">
+								<img src="{$v.cat_image}" />
 										<span>{$v.name}</span>
 								</li>
 								</a>
