@@ -155,7 +155,7 @@ class bdsjh extends PluginWechatController
                 show_message($rs, '绑定手机号', url('wechat/plugin_show', array('name' => $this->plugin_name)));
             }
             if(!isset($_SESSION['openid'])){
-                show_message('您需要微信授权登录，才能进行绑定手机号操作！', '首页', url('index/index'));
+                show_message('您需要微信授权登录，才能进行绑定手机号操作！', '返回首页', url('index/index'));
             }
             //会员信息
             $user = init_users();
