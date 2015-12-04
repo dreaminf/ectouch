@@ -83,15 +83,14 @@
 	<body>
 		<div class="con menu-con">
 			<div class="main">
-<header class="index-header comWidth">
-  <i class="index-header-menu iconfont fl" onclick="window.location = '{:url('category/top_all')}'">&#xe627;</i>
-  <div class="index-search-box fl">
-  	<a href="javascript:void(0)"><i class="index-search-icon iconfont fl">&#xe603;</i></a>
-    <input type="text" class="index-search-input" placeholder="商品搜索" onclick="openSearch();">
-    <a href="javascript:void(0)" id="translateVoice" style="display:None;"><i class="index-search-sound iconfont fr">&#xe623;</i></a>
-  </div>
-  <a href="javascript:void(0)" id="scanQRCode"><i class="index-header-right iconfont fr">&#xe629;</i></a>
-</header>
+				<header>
+					<div class="fl header-search">
+						<input type="text" name="" class="index-search-input" value="" placeholder="商品搜索"  onclick="openSearch();" />
+					</div>
+					<a href="javascript:;" class="fr">
+						<i class="iconfont">&#xe603;</i>
+					</a>
+				</header>
 				<div class="category-body">
 					<!--tabmenu-->
 					<div class="menu-tab fl swiper-container">
@@ -107,7 +106,7 @@
 					<div class="menu-content fr">
 						{foreach from=$category item="vo"}
 						<div class="menu-cont-list">
-								<div class="menu-banner" style="display:None">
+								<div class="menu-banner" style="display:block">
 									<img src="{$vo.cat_image}" width="410px;" height="127px;" />
 								</div>
 							<h2>{$vo.name}</h2>
