@@ -311,8 +311,28 @@ if ($_REQUEST['act'] == 'update') {
         sys_msg($_LANG['grade_error'], 0, $link);
     }
     
-    $dat = $db->getRow("SELECT cat_name, show_in_nav,parent_id FROM " . $ecs->table('category') . " WHERE cat_id = '$cat_id'");
+    $dat = $db->getRow("SELECT a.cat_name, a.show_in_nav,a.parent_id,b.cat_image FROM " . $ecs->table('category') . " AS a LEFT JOIN ". $ecs->table('touch_category') ." AS b ON a.cat_id = b.cat_id  WHERE a.cat_id = '$cat_id'");
     if ($db->autoExecute($ecs->table('category'), $cat, 'UPDATE', "cat_id='$cat_id'")) {
+        //如果图片没有则插入，有则更新
+        if(empty($dat['cat_image'])){
+            if ($dat['parent_id'] > 0) {
+                if (! empty($_FILES['category_image']['name'])) {
+                    $img_name = basename($image->upload_image($_FILES['category_image'], 'category'));
+                    $gallery_thumb = $image->make_thumb('../data/attached/category/' . $img_name, 91, 68);
+                    if ($gallery_thumb === false) {
+                        sys_msg($image->error_msg(), 1, array(), false);
+                    }
+                    $sql = "INSERT INTO " . $ecs->table('touch_category') . "(`cat_id`,`cat_image`)VALUES('$cat_id','$gallery_thumb')";
+                    $db->query($sql);
+                }
+            } else
+                if ($dat['parent_id'] == 0) {
+                    $img_name = basename($image->upload_image($_FILES['category_image'], 'category'));
+                    $img_name = "data/attached/category/" . $img_name;
+                    $sql = "INSERT INTO " . $ecs->table('touch_category') . "(`cat_id`,`cat_image`)VALUES('$cat_id','$img_name')";
+                    $db->query($sql);
+                }
+        }else{
         /* 图片入库 ,如果是二级分类则生成缩略图，一级分类正常图 */
         if ($dat['parent_id'] > 0) {
             if (! empty($_FILES['category_image']['name'])) {
@@ -321,19 +341,17 @@ if ($_REQUEST['act'] == 'update') {
                 if ($gallery_thumb === false) {
                     sys_msg($image->error_msg(), 1, array(), false);
                 }
-                $car_id = $cat_id['cat_id'];
                 $sql = "UPDATE" . $ecs->table('touch_category') . "SET cat_image = '" . $gallery_thumb . "' WHERE cat_id = " . $cat_id;
                 $db->query($sql);
             }
         } else 
             if ($dat['parent_id'] == 0) {
                 $img_name = basename($image->upload_image($_FILES['category_image'], 'category'));
-                $car_id = $cat_id['cat_id'];
                 $img_name = "data/attached/category/" . $img_name;
                 $sql = "UPDATE" . $ecs->table('touch_category') . "SET cat_image = '" . $img_name . "' WHERE cat_id = " . $cat_id;
                 $db->query($sql);
             }
-        
+        }
         if ($cat['cat_name'] != $dat['cat_name']) {
             // 如果分类名称发生了改变
             $sql = "UPDATE " . $ecs->table('nav') . " SET name = '" . $cat['cat_name'] . "' WHERE ctype = 'c' AND cid = '" . $cat_id . "' AND type = 'middle'";
