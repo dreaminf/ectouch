@@ -77,6 +77,7 @@
 .hot-search p{margin-top:0.5em;}
 .hot-search h4{height:1.6em;}
 .hot-search a{display:table-cell; float:left;  padding:0.8em; background:#fff; margin-right:0.6em; margin-bottom:0.6em; border-radius:0.4em;}
+#scrollUp{display:none}
 header{line-height:2rem}
 </style>
 	</head>
