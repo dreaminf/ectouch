@@ -61,7 +61,7 @@
 .ect-bg {background: #1CBB7F !important; color: #fff !important; height: auto;overflow: hidden;}
 .search .ect-margin-tb{margin-top:0.6em; margin-bottom:0.6em;}
 .ect-header{height:2.5em; position:relative;background-color: #1CBB7F;}
-.ect-header span{font-size:1.4em; position:absolute; left:2.4em; right:3em; top:0.24em; text-align: center}
+.ect-header span{font-size:1.2em; position:absolute; left:2.4em; right:3em; top:0.24em; text-align: center}
 .herder-close{color:#fff; float:right; font-size:2em; margin-top: -0.1em; margin-right:0.2em;}
 
 .search input{background-color: #FFF;}
@@ -70,7 +70,7 @@
     -webkit-border-radius:  0.4em 0 0 0.4em;
     -moz-border-radius: 0.4em 0 0 0.4em;
     border-radius: 0.4em 0 0 0.4em;}
-.input-search span input{width:100%; height:2.4em; font-size:1.2em; border:1px solid #fcfcfc; padding:0 0.6em; box-sizing:border-box; border-radius:0; border:none; border-radius:0.4em 0 0 0.4em;}
+.input-search span input{width:100%; height:2.4em; font-size:1.1em; border:1px solid #fcfcfc; padding:0 0.6em; box-sizing:border-box; border-radius:0; border:none; border-radius:0.4em 0 0 0.4em;}
 .input-search button{width:3.6em; height:3em;  background:#e6e6e6; display:block; position:absolute; right:0em; border-radius: 0 0.4em 0.4em 0; border:none;}
 .input-search button i{color:#999; font-size:1.8em;}
 .hot-search{margin-top:0.4em; display:table; width:100%;}
