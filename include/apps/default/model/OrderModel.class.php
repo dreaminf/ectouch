@@ -927,11 +927,9 @@ class OrderModel extends BaseModel {
             'total_number' => 0,
         );
         /* 循环、统计 */
-        //购物车和PC端同步，没有登录SESS_ID验证
-        $SESS_ID = $_SESSION['user_id'] > 0 ? " OR user_id='".$_SESSION['user_id']."'" : "";
         $sql = "SELECT *, IF(parent_id, parent_id, goods_id) AS pid " .
             " FROM " . $this->pre . "cart " .
-            " WHERE session_id='".SESS_ID."'" . $SESS_ID . " AND rec_type = '" . CART_GENERAL_GOODS . "'" .
+            " WHERE session_id='".SESS_ID."' AND rec_type = '" . CART_GENERAL_GOODS . "'" .
             " ORDER BY pid, parent_id";
         $res = $this->query($sql);
         /* 用于统计购物车中实体商品和虚拟商品的个数 */
