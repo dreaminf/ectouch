@@ -715,7 +715,7 @@ class SaleModel extends BaseModel {
                     'user_id'       => $user_id,
                     'user_money'    => $sale_money['profit1'],
                     'change_time'   => gmtime(),
-                    'change_desc'   => '订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit1'] .' 分成积分：'.$sale_money['profit1'],
+                    'change_desc'   => '订单分成，订单号：'.$order_sn.'</br>分成金额：'.$sale_money['profit1'] .' ， 分成积分：'.$sale_money['profit1'],
                     'order_id'      =>  $order_id,
                 );
 
