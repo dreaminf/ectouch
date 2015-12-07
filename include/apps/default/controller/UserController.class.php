@@ -367,7 +367,7 @@ class UserController extends CommonController {
         $amount = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
         if ($amount <= 0)
         {
-            show_message($_LANG['amount_gt_zero']);
+            show_message(L('select_amount'));
         }
     
         /* 变量初始化 */
