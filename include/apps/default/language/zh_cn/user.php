@@ -27,6 +27,7 @@ $_LANG['label_share'] = '我的分享';
 $_LANG['label_group_buy'] = '我的团购';
 $_LANG['label_booking'] = '缺货登记';
 $_LANG['label_user_surplus'] = '资金管理';
+$_LANG['label_act_account'] = '账户充值';
 $_LANG['label_track_packages'] = '跟踪包裹';
 $_LANG['label_transform_points'] = '积分兑换';
 $_LANG['label_logout'] = '退出';
