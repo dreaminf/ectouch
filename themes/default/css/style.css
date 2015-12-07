@@ -131,7 +131,7 @@ footer.logo img{width:8em; height:auto; display:block; margin:0.8em auto;}
 .user-tab{background:#FFF; border-bottom:1px solid #e3e3e3;}
 .user-tab-fixed .nav-tabs{position: fixed; top: 0px; z-index:10;}
 .user-tab .nav{background:#fff; width:100%; max-width:640px; border-top:1px solid #e3e3e3; height:3.15em;}
-.user-tab ul li{border-right:1px solid #e3e3e3; padding:0;}
+.user-tab ul li{/* border-right:1px solid #e3e3e3; */ padding:0;}
 .user-tab ul li:last-child{border-right:none;}
 .user-tab ul li>a:link,.user-tab li>a:hover{border:none; background:none; padding:0.8em 0;}
 .user-tab ul li.active a,.user-tab li.active a:hover{border:none; border-radius:0; background:none;}
@@ -329,7 +329,7 @@ border: 1px solid transparent;border-radius: 4px;cursor: pointer;display: inline
 /*评论*/
 .goods-info .tab-msg ul.msg li{border-bottom:1px dotted #e3e3e3; padding:0.4em 0;}
 .goods-info .tab-msg ul.msg li:last-child{border-bottom:1px solid #e3e3e3;}
-.goods-info ul.comment-radio li{border-bottom:none !important; margin-right:0.4em;}
+.goods-info ul.comment-radio li{border-bottom:none !important; margin-right:1em;}
 .goods-info .tab-msg h4.title{margin-bottom:0.1em; height:auto;}
 .goods-info .tab-msg p{color:#666; padding:0.2em 0;}
 .goods-info .tab-msg p span{color:#888;}
