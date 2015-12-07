@@ -26,8 +26,8 @@
     </p>
 </div>
     <style>
-    .pagination{width:100%; overflow: hidden; position: relative; height:3rem; padding: 2rem; box-sizing: border-box;}
-    .p-select{ position: absolute;left: 6rem; right:6rem; text-align: center ;}
+    .pagination{width:100%; overflow: hidden; position: relative; height:3rem; padding: 2rem; box-sizing: border-box;line-height: 0.3rem;}
+    .p-select{ position: absolute;left: 6rem; right:6rem; text-align: center ;top: 1.2rem;}
     .p-select select{border:none; background:none;}
     </style>
 <!--{/if}-->
