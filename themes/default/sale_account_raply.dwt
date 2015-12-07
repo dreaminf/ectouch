@@ -54,7 +54,7 @@
         .jg-text{margin:0; padding: 1.4rem; border-bottom:1px solid #dedee5; border-top:1px solid #dedee5; font-size:1.5rem; position: relative; background:#fff; margin-top:1rem;}
 
         .jg-text-input{ position:absolute; left: 7rem; right: 1.6rem; top:1.3rem; color:#303030}
-        .jg-text-input input[type=text]{width:100%; font-size:1.4rem; border:0;}
+        .jg-text-input input[type=text]{width:100%; font-size:1.4rem; border:0;padding-bottom:0.5rem}
         .jg-text label{color:#303030;}
         .jg-text span{color:#7a7a7a; margin-left:.2rem;}
 
