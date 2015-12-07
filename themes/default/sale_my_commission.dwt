@@ -12,11 +12,11 @@
                         <i class="iconfont icon-huise icon-jiantou2"> </i></span></a>
                         
                      <ul class="index_nav">     
-                        <li class="index_nav1"><a href="javascript:void(0)"><span class="dpgl_list1">本店销售佣金</span><span class="wdyj_sum">{$sale_no_money}元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+                        <li class="index_nav1"><span class="dpgl_list1">本店销售佣金</span><span class="wdyj_sum">{$sale_no_money}元&nbsp;&nbsp;&nbsp;&nbsp;</span></li>
 
-                        <li class="index_nav1"><a href="javascript:void(0)" ><span class="dpgl_list1">一级分店佣金</span><span class="wdyj_sum">{$sale_no_money1}元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+                        <li class="index_nav1"><span class="dpgl_list1">一级分店佣金</span><span class="wdyj_sum">{$sale_no_money1}元&nbsp;&nbsp;&nbsp;&nbsp;</span></li>
                          
-                        <li class="index_nav1"><a href="javascript:void(0)" ><span class="dpgl_list1">二级分店佣金</span><span class="wdyj_sum">{$sale_no_money2}元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+                        <li class="index_nav1"><span class="dpgl_list1">二级分店佣金</span><span class="wdyj_sum">{$sale_no_money2}元&nbsp;&nbsp;&nbsp;&nbsp;</span></li>
                     </ul> 
                    
                  </div>  
@@ -26,11 +26,11 @@
                      <ul class="index_nav">
                         
                          
-                        <li class="index_nav1"><a href="javascript:void(0)"><span class="dpgl_list1">本店销售佣金</span><span class="wdyj_sum">{$sale_money}元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+                        <li class="index_nav1"><span class="dpgl_list1">本店销售佣金</span><span class="wdyj_sum">{$sale_money}元&nbsp;&nbsp;&nbsp;&nbsp;</span></li>
                          
-                        <li class="index_nav1"><a href="javascript:void(0)" ><span class="dpgl_list1">一级分店佣金</span><span class="wdyj_sum">{$sale_money1}元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+                        <li class="index_nav1"><span class="dpgl_list1">一级分店佣金</span><span class="wdyj_sum">{$sale_money1}元&nbsp;&nbsp;&nbsp;&nbsp;</span></li>
                          
-                        <li class="index_nav1"><a href="javascript:void(0)" ><span class="dpgl_list1">二级分店佣金</span><span class="wdyj_sum">{$sale_money2}元&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+                        <li class="index_nav1"><span class="dpgl_list1">二级分店佣金</span><span class="wdyj_sum">{$sale_money2}元&nbsp;&nbsp;&nbsp;&nbsp;</span></li>
                     </ul> 
                  </div>
               </div>
