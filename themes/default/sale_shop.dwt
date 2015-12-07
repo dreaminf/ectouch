@@ -154,7 +154,7 @@
 <div class="ect-index-header">
 
     <div class="ect-index-info ">
-        <a href="javascript:void(0);" class="ect-index-detail">
+        <a href="{:url('user/index')}" class="ect-index-detail">
             <img src="{$drp_info.headimgurl}" />
 
         </a><div class="ect-index-name">
