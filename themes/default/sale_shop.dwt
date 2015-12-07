@@ -51,7 +51,7 @@
 <div class="con">
 <div class="index-main comWidth" >
 <style type="text/css">
-    .index-main{margin:0; margin-bottom:5rem;}
+    .index-main{margin:0; margin-bottom:4rem;}
     .index-recom {border-bottom: 1px #eee solid}
 
     .ect-index-header {
