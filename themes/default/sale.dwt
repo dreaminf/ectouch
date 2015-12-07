@@ -46,7 +46,7 @@
    </a>
    
         <div class="dpgl_list" id="dpg1_list1">
-        <a href="javascript:;"><i class="iconfont icon-fenxiao"></i><span class="dpgl_list2">我的分销</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
+        <i class="iconfont icon-fenxiao a_left"></i><a href="javascript:;" class="sale_list" ><span class="dpgl_list2">我的分销</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
         <ul class="index_nav">
           <li class="index_nav1"><a href="{:url('sale/order_list')}" ><span class="index_list1">本店订单</span></a></li>
           <li class="index_nav1"><a href="{:url('sale/my_shop_info')}"><span class="index_list1">我的分店</span></a></li>
@@ -55,7 +55,7 @@
         <div class="dpxq_border"></div>   
 		
 		<div class="dpgl_list" id="dpg1_list1">
-		 <i class="iconfont icon-gonggaofuzhi"></i><a href="javascript:;" ><span class="dpgl_list2">我的会员</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
+		 <i class="iconfont icon-gonggaofuzhi a_left"></i><a href="javascript:;" class="sale_list"  ><span class="dpgl_list2">我的会员</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
 		 
 		  <ul class="index_nav">
 			<li class="index_nav1" ><a href="{:url('sale/user_list',array('key'=>'wfk'))}"><span class="index_list1">下单未付款会员</span></a></li>
@@ -67,7 +67,7 @@
         <div class="dpxq_border"></div>
 		
     <div class="dpgl_list" id="dpg1_list1">
-     <i class="iconfont icon-jinbichongzhi"></i><a href="javascript:;" mce_href="#"><span class="dpgl_list2">我的佣金</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
+     <i class="iconfont icon-jinbichongzhi a_left"></i><a href="javascript:;"  class="sale_list"  mce_href="#"><span class="dpgl_list2">我的佣金</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
       <ul class="index_nav" style="display:none;">
           <li class="index_nav1"><a href="{:url('sale/my_commission')}" ><span class="index_list1">我的佣金</span></a></li>
         <li class="index_nav1"><a href="{:url('sale/account_detail')}"><span class="index_list1">佣金明细</span></a></li>
@@ -77,7 +77,7 @@
     <div class="dpxq_border"></div>
 	
     <div class="dpgl_list" id="dpg1_list1">
-     <i class="iconfont icon-mingpian"></i><a href="javascript:;" mce_href="#"><span class="dpgl_list2">我的名片</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
+     <i class="iconfont icon-mingpian a_left"></i><a href="javascript:;"  class="sale_list"  mce_href="#"><span class="dpgl_list2">我的名片</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
       <ul class="index_nav" style="display:none;"> 
         <li class="index_nav1"><a href="{:url('sale/spread',array('u'=>$this->_var['user_id']))}" ><span class="index_list1">推广二维码</span></a></li>
         <li class="index_nav1"><a href="{:url('sale/store',array('u'=>$this->_var['user_id']))}" ><span class="index_list1">店铺二维码</span></a></li>
