@@ -53,8 +53,12 @@
 
 <section class="flow-consignee ect-bg-colorf">
   <ul>
-    <li><a href="{:url('user/edit_password')}">修改密码</a></li>
-    <li><a href="{:url('user/address_list')}">收货地址</a></li>
+   <a href="{:url('user/edit_password')}">
+    <li>修改密码</li>
+   </a>
+   <a href="{:url('user/address_list')}">
+    <li>收货地址</li>
+   </a>
   </ul>
 </section>
 
