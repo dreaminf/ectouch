@@ -63,9 +63,9 @@
 <form class="hold-height" method="post" id="form" action="{:url('category/index')}">
   <div id="goFilter">
     <div class="touchweb_mod_Filter">
-      <div class="touchweb-com_headerFilter"> <a class="pull-left left" href="javascript:;" data-data-pc="-1">{$lang.is_cancel}</a>
+      <div class="touchweb-com_headerFilter"> <a class="pull-left left" href="javascript:;" data-data-pc="-1"> 〈</a>
         <h1 class="title"><span>{$lang.goods_filter}<span></h1>
-        <a class=" right pull-right" href="javascript:document.getElementById('form').submit()">{$lang.button_submit}</a> </div>
+        <a class=" right pull-right" href="javascript::void(0)"></a> </div>
       <div class="scrollContent">
         <div data-tpa="H5_SEARCH_FILTER" class="touchweb-com_listType">
           <input type="hidden" name="id" class="cat" value="{$id}"/>
