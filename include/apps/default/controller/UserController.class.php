@@ -459,6 +459,7 @@ class UserController extends CommonController {
             $payment_info['pay_button'] = $pay_obj->get_code($order, $payment);
     
             /* 模板赋值 */
+			$this->assign('title', L('label_act_account'));
             $this->assign('payment', $payment_info);
             $this->assign('pay_fee', price_format($payment_info['pay_fee'], false));
             $this->assign('amount',  price_format($amount, false));
