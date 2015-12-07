@@ -925,11 +925,12 @@ margin-top:2rem;
 	overflow:hidden;
 	margin-top:1rem;
 	}
-.sp_box{ width:96%; overflow:hidden;}		
-.sp_box1,.sp_box2{ float:left;  width:44%;height:16rem;margin:0.7rem;}
+.sp_box{ width:96%; overflow:hidden; margin-top:.4rem}
+.sp_box .sp_box_div{width:50%; padding:.4rem; float:left; box-sizing:border-box; display:inline-block;}
+.sp_box1,.sp_box2{ width:100%; padding:3.6rem 0;}
 
 
-.sp_title{line-height: 3rem;    margin-top: 3rem;}
+.sp_title{line-height: 3rem; }
 .sp_box1{background-color:#F9F9F9;}
 .sp_box2{background-color:#41A28E;}
 .sp_box2 span{color:#FEFEFF; font-size:1.125rem;text-align:center;display:block;}
