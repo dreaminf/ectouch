@@ -131,7 +131,9 @@
 
 	$(window).scroll(function() {
 		if (is_stop) {
-			if ($(window).scrollTop() == $(document).height() - $(window).height() && is_stop == true) {
+			var scrollTop = $(window).scrollTop() + 100;
+			var documentHeight = $(document).height() - $(window).height();
+			if (scrollTop >= documentHeight && is_stop == true) {
 				is_stop == false;
 				$('.get_more').click();
 				is_stop == true;
