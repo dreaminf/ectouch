@@ -126,14 +126,14 @@
     <li>
     <form name="payment" method="post" action="{:url('user/edit_payment')}">
       {$lang.change_payment}: <br/>
-      <select name="pay_id" style="margin:6px 0">
+      <select name="pay_id" style="margin:6px 0;float:left">
         <!--{foreach from=$payment_list item=payment}-->
         <option value="{$payment.pay_id}"> {$payment.pay_name}({$lang.pay_fee}:{$payment.format_pay_fee}) </option>
         <!--{/foreach}-->
       </select>
-      <br/>
+  
       <input type="hidden" name="order_id" value="{$order.order_id}" />
-      <input type="submit" name="Submit" class="btn btn-info ect-btn-info ect-colorf ect-bg" value="{$lang.button_submit}" />
+      <input type="submit" name="Submit" style="float:right;width:30%" class="btn btn-info ect-btn-info ect-colorf ect-bg" value="{$lang.button_submit}" />
     </form>  
     </li>
     <!--{/if}-->
