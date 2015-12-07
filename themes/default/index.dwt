@@ -5,25 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>{$page_title}</title>
 <link rel="stylesheet" type="text/css" href="__TPL__/css/index.css"/>
-    <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/swiper/css/swiper.min.css"/>
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
 <style type="text/css">
-    bady{background-color: #f7f7f7}
+bady{background-color: #f7f7f7}
 /*banner效果*/
-.focus { width: 100%; height: auto; position: relative; overflow: hidden;}
-.focus .hd { width: 100%; height: 0.8em; position: absolute; z-index: 1; text-align: center; bottom:0.5em;}
-.focus .hd ul { display: inline-block; height: 0.8em;}
-.focus .hd ul li { display: inline-block; width: 0.6em; height: 0.6em; text-indent:-999em; background: rgba(255, 255, 255, 0.8); margin: 0 0.3em; vertical-align: top; overflow: hidden; border-radius: 100%; -moz-border-radius: 100%; -webkit-border-radius: 100%; -o-border-radius: 100%; }
-.focus .hd ul .on { background: #1CBB7F; }
-.focus .bd { position: relative; z-index: 0;}
-.focus .bd li { height: auto; overflow: hidden; }
-.focus .bd li a img { width: 100%; height: auto; display: block; margin: 0; padding: 0; }
-.focus .bd li a { -webkit-tap-highlight-color: rgba(0, 0, 0, 0);/* 取消链接高亮 */ }
+.swiper-container {width: 100%; height: 100%;}
+.swiper-container img {width: 100%;}
+.swiper-pagination-bullet-active {background: #1CBB7F;}
 
-
-/*==================
-    搜索
-=============*/
-
+/*搜索*/
 .ect-padding-lr { padding-left: 0.6em; padding-right: 0.6em; }
 .ect-bg {background: #1CBB7F !important; color: #fff !important; height: auto;overflow: hidden;}
 .search .ect-margin-tb{margin-top:0.6em; margin-bottom:0.6em;}
@@ -60,13 +51,13 @@ header{line-height:2rem}
   <a href="javascript:void(0)" id="scanQRCode"><i class="index-header-right iconfont fr">&#xe629;</i></a>
 </header>
 <div class="index-main comWidth">
-    <!--banner滚动图片s-->
-    <div id="focus" class="focus ect-margin-tb">
-    <div class="hd"><ul></ul></div>
-    <div class="bd">
-    {insert name='ads' id=255 num=3}
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        {insert name='ads' id=255 num=3}
+      </div>
+      <div class="swiper-pagination"></div>
     </div>
-    </div>
+
 
     <div class="index-menu">
     <ul class="index-menu-ul">

@@ -44,6 +44,7 @@ $_LANG['shop_mobile_empty'] = '手机号不能为空';
 $_LANG['sale_set'] = '微店设置';
 $_LANG['sale_set_category'] = '分销分类选择';
 $_LANG['next_step'] = '下一步';
+$_LANG['now_edit'] = '立即修改';
 $_LANG['set_error'] = '设置失败';
 $_LANG['sale_cate_not_empty'] = '分销分类不能为空';
 $_LANG['sale'] = '店铺详情';
