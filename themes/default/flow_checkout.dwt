@@ -57,8 +57,13 @@
         <p><b>{$lang.invoice}</b></p>
         <i class="fa fa-angle-down"></i></a>
         <div id="collapseTwo1" class="panel-collapse collapse in" style="overflow:hidden;">
-          <li class="b_no"> 
-          <span class="modRadio fr"> <i class="fl"></i> <ins>{$lang.no}</ins> </span>
+          <!--<li class="b_no"> 
+          <span class="modRadio fr"> <i class="fl"></i> <ins>{$lang.no}</ins> </span>-->
+		  <div id="inv">
+		     <div id="inv_y" style="float:left;width:2rem;background:#CBC5C5"><span id="inv_ys" style="color:#CBC5C5">.</span></div>
+		     <div id="inv_n" style="float:left;width:2rem;background:#1CBB7F"><span id="inv_ns" style="color:#fff">否</span></div>
+		  </div>
+
 		  <input name="need_inv" type="checkbox"  class="input" id="ECS_NEEDINV" onclick="changeNeedInv()" value="1"  {if $order.need_inv}checked="true"{/if} style="display:none"/>
         
         </li>
