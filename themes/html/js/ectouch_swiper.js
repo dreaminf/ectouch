@@ -70,6 +70,7 @@ $(function($) {
 		paginationClickable: true,
 	});
 	var mySwiper = new Swiper('.member-record-silde-div', {
+//		loop: true,
 		paginationClickable: true,
 		slidesPerView: 3,
 	})
