@@ -45,7 +45,7 @@ class IndexModel extends CommonModel {
 		/*DRP_START*/ 
 		if($_SESSION['drp_shop']){
 			//获取分销商所选分类
-			$cat_id = model('category')->category_cat();		
+			$cat_id = $this->category_cat();		
 			if($cat_id){			
 				$type = " g.cat_id in($cat_id)";				
 			}
@@ -104,7 +104,7 @@ class IndexModel extends CommonModel {
 		/*DRP_START*/ 
 		if($_SESSION['drp_shop']){
 			//获取分销商所选分类
-			$cat_id = model('category')->category_cat();		
+			$cat_id = $this->category_cat();		
 			if($cat_id){		
 				$where = " and g.cat_id in($cat_id)";				
 			}
@@ -201,7 +201,7 @@ class IndexModel extends CommonModel {
 		/*DRP_START*/ 
 		if($_SESSION['drp_shop']){
 			//获取分销商所选分类
-			$cat_id = model('category')->category_cat();		
+			$cat_id = $this->category_cat();		
 			if($cat_id){		
 				$where = " and g.cat_id in($cat_id)";				
 			}
