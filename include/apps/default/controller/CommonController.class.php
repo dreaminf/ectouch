@@ -247,7 +247,7 @@ class CommonController extends BaseController
             $wx_title = $goods['goods_name'];
             $wx_desc  = $goods['goods_name'];
             $wx_url   = __URL__ .'/index.php?c=goods&id='.$goods_id.'&u=' . $_SESSION['user_id'] . '&drp_id='.$drp_id;
-            $wx_pic   = $goods['goods_thumb'];
+            $wx_pic   = __URL__ . $goods['goods_thumb'];
         }
         $wx_url.='&type=share';
         //微信JS SDK
