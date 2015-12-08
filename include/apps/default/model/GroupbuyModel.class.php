@@ -24,9 +24,8 @@ class GroupbuyModel extends BaseModel {
      * @return  array
      */
     function group_buy_list($size, $page, $sort, $order) {
-       
-        $sort=$_REQUEST["sort"];
         /* 取得团购活动 */
+        $sort=addslashes($_REQUEST['sort']);
         $gb_list = array();
         $now = gmtime();
         $sql = "SELECT b.*, IFNULL(g.goods_thumb, '') AS goods_thumb, t.act_banner ,t.sales_count ,t.click_num, b.touch_img,  g.market_price , b.act_id AS group_buy_id, " .
@@ -37,7 +36,6 @@ class GroupbuyModel extends BaseModel {
                 "LEFT JOIN " . $this->pre . "touch_goods as s on s.goods_id=g.goods_id " .
                 "WHERE b.act_type = '" . GAT_GROUP_BUY . "' " .
                 "AND b.start_time <= '$now' AND b.is_finished < 3 ORDER BY " . $sort . ' ' . $order . ' LIMIT ' . ($page - 1) * $size . ',' . $size;
-       
         $result = $this->query($sql);
         foreach ($result as $group_buy) {
             $ext_info = unserialize($group_buy['ext_info']);
