@@ -30,21 +30,21 @@
         <td style="width:40%">{$lang.user.open}</td>
         <td style="width:60%">
             <label for="open1">
-                <input id="open1" type="radio" name="data[open]" value="1" {if $info.open eq 1}checked{/if}>开启
+                <input id="open1" type="radio" name="data[open]" value="1" {if $info.open eq 1}checked{/if}>{$lang.user.open_true}
             </label>
             <label for="open2">
-                <input id="open2" type="radio" name="data[open]" value="0" {if $info.open eq 0}checked{/if} >关闭
+                <input id="open2" type="radio" name="data[open]" value="0" {if $info.open eq 0}checked{/if} >{$lang.user.open_false}
             </label>
         </td>
     </tr>
     <tr>
-        <td style="width:40%">审核状态</td>
+        <td style="width:40%">{$lang.user.audit}</td>
         <td style="width:60%">
             <label for="audit1">
-                <input id="audit1" type="radio" name="data[audit]" value="1" {if $info.audit eq 1}checked{/if}>已审核
+                <input id="audit1" type="radio" name="data[audit]" value="1" {if $info.audit eq 1}checked{/if}>{$lang.user.audit_true}
             </label>
             <label for="audit2">
-                <input id="audit2" type="radio" name="data[audit]" value="0" {if $info.audit eq 0}checked{/if}>未审核
+                <input id="audit2" type="radio" name="data[audit]" value="0" {if $info.audit eq 0}checked{/if}>{$lang.user.audit_false}
             </label>
         </td>
     </tr>
