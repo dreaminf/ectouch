@@ -25,9 +25,11 @@ class GroupbuyModel extends BaseModel {
      */
     function group_buy_list($size, $page, $sort, $order) {
         /* 取得团购活动 */
-        $sort=addslashes($_REQUEST['sort']);
+ 
         $gb_list = array();
         $now = gmtime();
+        $ssort=I('get.sort');
+        $sort=empty($ssort)?'goods_id':$ssort;
         $sql = "SELECT b.*, IFNULL(g.goods_thumb, '') AS goods_thumb, t.act_banner ,t.sales_count ,t.click_num, b.touch_img,  g.market_price , b.act_id AS group_buy_id, " .
                 "b.start_time AS start_date, b.end_time AS end_date " .
                 "FROM " . $this->pre . "goods_activity AS b " .
