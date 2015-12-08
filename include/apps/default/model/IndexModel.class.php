@@ -98,7 +98,11 @@ class IndexModel extends CommonModel {
     function get_promote_goods($cats = '') {
         $time = gmtime();
         $order_type = C('recommend_order');
-
+		//获取分销商所选分类
+		$cat_id = model('category')->category_cat();		
+		if($cat_id){		
+			$where = " and g.cat_id in($cat_id)";				
+		}
         /* 取得促销lbi的数量限制 */
         $num = model('Common')->get_library_number("recommend_promotion");
         $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.shop_price AS org_price, g.promote_price, ' .
@@ -109,7 +113,7 @@ class IndexModel extends CommonModel {
                 'LEFT JOIN ' . $this->pre . 'brand AS b ON b.brand_id = g.brand_id ' .
                 "LEFT JOIN " . $this->pre . "member_price AS mp " .
                 "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " .
-                'WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 ' .
+                'WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 '  . $where .
                 " AND g.is_promote = 1 AND promote_start_date <= '$time' AND promote_end_date >= '$time' ";
         $sql .= $order_type == 0 ? ' ORDER BY g.sort_order, g.last_update DESC' : ' ORDER BY rnd';
         $sql .= " LIMIT $num ";
@@ -188,6 +192,11 @@ class IndexModel extends CommonModel {
                 $where   = '1';
         }
 
+		//获取分销商所选分类
+		$cat_id = model('category')->category_cat();		
+		if($cat_id){		
+			$where = " and g.cat_id in($cat_id)";				
+		}	
         $sql = 'SELECT count(g.goods_id) as num FROM ' . $this->pre . 'goods as g WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 ' 
             . $where . " ORDER BY g.sort_order, g.goods_id DESC ";
         $result = $this->row($sql);
