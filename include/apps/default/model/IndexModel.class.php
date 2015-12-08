@@ -42,6 +42,12 @@ class IndexModel extends CommonModel {
             default:
                 $type   = '1';
         }
+		//获取分销商所选分类
+		$cat_id = model('category')->category_cat();		
+		if($cat_id){			
+			$type = " g.cat_id in($cat_id)";				
+		}
+		
         // 取出所有符合条件的商品数据，并将结果存入对应的推荐类型数组中
         $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.shop_price AS org_price, g.promote_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, " . "promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img, RAND() AS rnd " . 'FROM ' . $this->pre . 'goods AS g ' . "LEFT JOIN " . $this->pre . "member_price AS mp " . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ";
         $sql .= ' WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 AND ' . $type;
