@@ -707,25 +707,23 @@ function selectAddress(obj)
 $("#inv").click(function(){
 	
 	var v=$("#ECS_NEEDINV").is(":checked");
-	var yes=$("#inv_ys");
-	var no=$("#inv_ns");
-	var yesdiv=$("#inv_y");
-	var nodiv=$("#inv_n");
+	var show1=$("#inv_show1");
+	var show2=$("#inv_show2");
+	var none1=$("#inv_none1");
+	var none2=$("#inv_none2");
 	if(v==false){
-		yes.html("是");
-		yesdiv.attr("style","float:left;width:2rem;background:#1CBB7F");
-		yes.attr("style","color:#fff");
-		no.html(".");
-		nodiv.attr("style","float:left;width:2rem;background:#CBC5C5");
-		no.attr("style","color:#CBC5C5");
-		$("#ECS_NEEDINV").attr("checked",true);
+		show1.css("display","none");
+		show2.css("display","none");
+		none1.css("display","block");
+		none2.css("display","block");
+		$("#need_inv").html("<input name='need_inv' type='checkbox'  checked='checked' class='input' id='ECS_NEEDINV'  value='1' style='display:none' >");
+		
 	}else{
-		yes.html(".");
-		yesdiv.attr("style","float:left;width:2rem;background:#CBC5C5");
-		yes.attr("style","color:#CBC5C5");
-		no.html("否");
-		no.attr("style","color:#fff");
-		nodiv.attr("style","float:left;width:2rem;background:#1CBB7F");
-		$("#ECS_NEEDINV").attr("checked",false);
+		
+		none1.css("display","none");
+		none2.css("display","none");
+		show1.css("display","block");
+		show2.css("display","block");
+		$("#need_inv").html("<input name='need_inv' type='checkbox'  class='input' id='ECS_NEEDINV'  value='1' style='display:none' >");
 	}
 })
