@@ -338,42 +338,5 @@ class CategoryModel extends BaseModel {
         return $cats['cat_image'];
     }
 
-	/**
-     * 获得顶级分类下的所有分类    
-     */
-    function category_cat(){ 
-	    //获取店铺所选分类id
-        $sql = "select cat_id from " . $this->pre . "drp_shop where user_id= $_SESSION[user_id] ";
-		$res = $this->row($sql);		
-		if($res){
-			$cat = $res['cat_id'];
-			$reb['id'] = substr($cat,0,-1);	
-		}
-		if(!empty($reb['id'])){			
-			//获取店铺所选分类二级分类
-			$sql = "select cat_id from " . $this->pre ."category where parent_id in(".$reb['id'].")";
-			$res = $this->query($sql);
-			if($res){
-				foreach($res as $k)
-				{
-					$str.=$k['cat_id'].',';
-				}	
-				$reb['pid'] = substr($str,0,-1);				
-			}			
-		    if(!empty($reb['pid'])){			 
-				//获取店铺所选分类三级分类
-				$sql = "select cat_id from " . $this->pre ."category where parent_id in(".$reb['pid'].")";
-				$ress = $this->query($sql);
-				if($ress){
-					foreach($ress as $k)
-					{
-						$strs.=$k['cat_id'].',';
-					}
-					$reb['p_id'] = substr($strs,0,-1) ;
-				}			
-		   }
-		}
-		return  implode(',',$reb);	
-		
-    }
+	
 }

@@ -41,6 +41,7 @@
         <th style="">{$lang.user.shop_name}</th>
         <th style="">{$lang.user.shop_mobile}</th>
         <th style="">{$lang.user.create_time}</th>
+        <th style="">{$lang.user.audit}</th>
         <th style="">{$lang.user.open}</th>
         <th style="">{$lang.handle}</th>
     </tr>
@@ -52,6 +53,7 @@
         <td>{$li.shop_name}</td>
         <td>{$li.shop_mobile}</td>
         <td>{$li.create_time}</td>
+        <td>{if $li.audit eq 1}{$lang.user.audit_true}{else}{$lang.user.audit_false}{/if}</td>
         <td>{if $li.open eq 1}{$lang.user.open_true}{else}{$lang.user.open_false}{/if}</td>
         <td>
             <a href="drp.php?act=user_order&id={$li.user_id}"  title="{$lang.view}"><img src="images/icon_view.gif" width="16" height="16" border="0"></a>

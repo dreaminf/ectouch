@@ -42,12 +42,15 @@ class IndexModel extends CommonModel {
             default:
                 $type   = '1';
         }
-		//获取分销商所选分类
-		$cat_id = model('category')->category_cat();		
-		if($cat_id){			
-			$type = " g.cat_id in($cat_id)";				
+		/*DRP_START*/ 
+		if($_SESSION['drp_shop']){
+			//获取分销商所选分类
+			$cat_id = $this->category_cat();		
+			if($cat_id){			
+				$type = " g.cat_id in($cat_id)";				
+			}
 		}
-		
+		/*DRP_END*/
         // 取出所有符合条件的商品数据，并将结果存入对应的推荐类型数组中
         $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.shop_price AS org_price, g.promote_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, " . "promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img, RAND() AS rnd " . 'FROM ' . $this->pre . 'goods AS g ' . "LEFT JOIN " . $this->pre . "member_price AS mp " . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ";
         $sql .= ' WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 AND ' . $type;
@@ -98,11 +101,15 @@ class IndexModel extends CommonModel {
     function get_promote_goods($cats = '') {
         $time = gmtime();
         $order_type = C('recommend_order');
-		//获取分销商所选分类
-		$cat_id = model('category')->category_cat();		
-		if($cat_id){		
-			$where = " and g.cat_id in($cat_id)";				
+		/*DRP_START*/ 
+		if($_SESSION['drp_shop']){
+			//获取分销商所选分类
+			$cat_id = $this->category_cat();		
+			if($cat_id){		
+				$where = " and g.cat_id in($cat_id)";				
+			}
 		}
+		/*DRP_END*/
         /* 取得促销lbi的数量限制 */
         $num = model('Common')->get_library_number("recommend_promotion");
         $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.shop_price AS org_price, g.promote_price, ' .
@@ -191,16 +198,57 @@ class IndexModel extends CommonModel {
             default:
                 $where   = '1';
         }
-
-		//获取分销商所选分类
-		$cat_id = model('category')->category_cat();		
-		if($cat_id){		
-			$where = " and g.cat_id in($cat_id)";				
-		}	
+		/*DRP_START*/ 
+		if($_SESSION['drp_shop']){
+			//获取分销商所选分类
+			$cat_id = $this->category_cat();		
+			if($cat_id){		
+				$where = " and g.cat_id in($cat_id)";				
+			}
+		}
+		/*DRP_END*/
         $sql = 'SELECT count(g.goods_id) as num FROM ' . $this->pre . 'goods as g WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 ' 
             . $where . " ORDER BY g.sort_order, g.goods_id DESC ";
         $result = $this->row($sql);
         return $result['num'];
     }
-
+	/*DRP_START*/ 
+	/**
+     * 获得顶级分类下的所有分类    
+     */
+    function category_cat(){ 
+	    //获取店铺所选分类id
+        $sql = "select cat_id from " . $this->pre . "drp_shop where user_id= $_SESSION[user_id] ";
+		$res = $this->row($sql);		
+		if($res){
+			$cat = $res['cat_id'];
+			$reb['id'] = substr($cat,0,-1);	
+		}
+		if(!empty($reb['id'])){			
+			//获取店铺所选分类二级分类
+			$sql = "select cat_id from " . $this->pre ."category where parent_id in(".$reb['id'].")";
+			$res = $this->query($sql);
+			if($res){
+				foreach($res as $k)
+				{
+					$str.=$k['cat_id'].',';
+				}	
+				$reb['pid'] = substr($str,0,-1);				
+			}			
+		    if(!empty($reb['pid'])){			 
+				//获取店铺所选分类三级分类
+				$sql = "select cat_id from " . $this->pre ."category where parent_id in(".$reb['pid'].")";
+				$ress = $this->query($sql);
+				if($ress){
+					foreach($ress as $k)
+					{
+						$strs.=$k['cat_id'].',';
+					}
+					$reb['p_id'] = substr($strs,0,-1) ;
+				}			
+		   }
+		}
+		return  implode(',',$reb);			
+    }
+	/*DRP_END*/
 }

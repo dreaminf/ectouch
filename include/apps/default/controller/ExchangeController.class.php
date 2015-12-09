@@ -227,7 +227,7 @@ class ExchangeController extends CommonController {
         $_SESSION['extension_id'] = $goods_id;
 
         /* 进入收货人页面 */
-        ecs_header("Location: " . url('flow/consignee') . "\n");
+        ecs_header("Location: " . url('flow/consignee_list') . "\n");
         exit;
     }
 
