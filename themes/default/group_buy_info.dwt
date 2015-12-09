@@ -5,7 +5,7 @@
     <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$lang.groupbuy_goods_info}</span> <a href="javascript:;"  onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a></header>
     <nav class="ect-nav ect-nav-list" style="display:none;"> <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --> </nav>
   </div>
-  
+
   <!--商品图片相册-->
   <div id="focus" class="focus goods-focus ect-padding-lr ect-margin-tb">
     <div class="hd">

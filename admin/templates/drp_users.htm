@@ -4,6 +4,7 @@
 {insert_scripts files="../js/utils.js,listtable.js"}
 <script type="text/javascript" src="../js/calendar.php?lang={$cfg_lang}"></script>
 <link href="../js/calendar/calendar.css" rel="stylesheet" type="text/css" />
+
 <!--
 <div class="form-div">
 <form method="post" action="account_log.php?act=list&user_id={$smarty.get.user_id}" name="searchForm">
@@ -23,13 +24,19 @@
 </div>
 -->
 <div>
-    <form method="post" action="drp.php?act=user_export" >
-      <input name="start_time" type="text" id="start_time" size="22" value='{$group_buy.start_time}' readonly="readonly" /><input name="selbtn1" type="button" id="selbtn1" onclick="return showCalendar('start_time', '%Y-%m-%d %H:%M', '24', false, 'selbtn1');" value="{$lang.btn_select}" class="button"/>
-      <input name="end_time" type="text" id="end_time" size="22" value='{$group_buy.end_time}' readonly="readonly" /><input name="selbtn2" type="button" id="selbtn2" onclick="return showCalendar('end_time', '%Y-%m-%d %H:%M', '24', false, 'selbtn2');" value="{$lang.btn_select}" class="button"/>      
-       <input type="submit" value="{$lang.submitexport}" class="button" onclick="this.form.target = '_blank'"
- />
+    
+    <form action="drp.php?act=export" method="post" name="listForm">
+      <input name="start_time" type="text" id="start_time" size="22" value='{$filters}' readonly="readonly" />
+      <input name="selbtn1" type="button" id="selbtn1" onclick="return showCalendar('start_time', '%Y-%m-%d %H:%M', '24', false, 'selbtn1');" value="{$lang.btn_select}" class="button"/>
+      <input name="end_time" type="text" id="end_time" size="22" value='{$filter}' readonly="readonly" />
+      <input name="selbtn2" type="button" id="selbtn2" onclick="return showCalendar('end_time', '%Y-%m-%d %H:%M', '24', false, 'selbtn2');" value="{$lang.btn_select}" class="button"/>  
+      <input type="submit" value="{$lang.download}" class='button' onclick="this.form.target = '_blank'"/>
     </form>
+    
+        
+    
 </div>
+
 <form method="post" action="" name="listForm">
 <div class="list-div" id="listDiv">
 {/if}  
@@ -41,7 +48,6 @@
         <th style="">{$lang.user.shop_name}</th>
         <th style="">{$lang.user.shop_mobile}</th>
         <th style="">{$lang.user.create_time}</th>
-        <th style="">{$lang.user.audit}</th>
         <th style="">{$lang.user.open}</th>
         <th style="">{$lang.handle}</th>
     </tr>
@@ -53,7 +59,6 @@
         <td>{$li.shop_name}</td>
         <td>{$li.shop_mobile}</td>
         <td>{$li.create_time}</td>
-        <td>{if $li.audit eq 1}{$lang.user.audit_true}{else}{$lang.user.audit_false}{/if}</td>
         <td>{if $li.open eq 1}{$lang.user.open_true}{else}{$lang.user.open_false}{/if}</td>
         <td>
             <a href="drp.php?act=user_order&id={$li.user_id}"  title="{$lang.view}"><img src="images/icon_view.gif" width="16" height="16" border="0"></a>

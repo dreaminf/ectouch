@@ -25,7 +25,6 @@ class GroupbuyModel extends BaseModel {
      */
     function group_buy_list($size, $page, $sort, $order) {
         /* 取得团购活动 */
- 
         $gb_list = array();
         $now = gmtime();
         $ssort=I('get.sort');

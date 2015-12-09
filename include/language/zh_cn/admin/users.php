@@ -60,6 +60,7 @@ $_LANG['page_note'] = '此列表显示用户推荐的全部会员信息，';
 $_LANG['how_many_user'] = '个会员。';
 $_LANG['back_note'] = '返回会员编辑页面';
 $_LANG['affiliate_level'] = '推荐等级';
+$_LANG['button_excel'] = '导出ECxel';
 
 $_LANG['msn'] = 'MSN';
 $_LANG['qq'] = 'QQ';

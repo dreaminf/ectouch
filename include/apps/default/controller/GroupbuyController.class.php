@@ -36,6 +36,8 @@ class GroupbuyController extends CommonController {
     /* ------------------------------------------------------ */
 
     public function index() {
+        
+           
         $this->parameter();
         $this->assign('page', $this->page);
         $this->assign('size', $this->size);
@@ -48,6 +50,7 @@ class GroupbuyController extends CommonController {
         $this->pageLimit(url('index', array('sort' => $this->sort, 'order' => $this->order)), $this->size);
         $this->assign('pager', $this->pageShow($count));
         /* 显示模板 */
+        
         $this->display('group_buy_list.dwt');
     }
 
@@ -261,7 +264,6 @@ class GroupbuyController extends CommonController {
         $default_display_type = C('show_order_type') == '0' ? 'list' : (C('show_order_type') == '1' ? 'grid' : 'album');
         $default_sort_order_method = C('sort_order_method') == '0' ? 'DESC' : 'ASC';
         $default_sort_order_type = C('sort_order_type') == '0' ? 'goods_id' : (C('sort_order_type') == '1' ? 'cur_price' : 'last_update');
-
         $this->sort = (isset($_REQUEST ['sort']) && in_array(trim(strtolower($_REQUEST ['sort'])), array(
                     'goods_id',
                     'cur_price',

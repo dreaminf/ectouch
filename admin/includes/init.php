@@ -80,6 +80,7 @@ require(ROOT_PATH . 'include/helpers/common_helper.php');
 require(ROOT_PATH . ADMIN_PATH . '/includes/lib_main.php');
 require(ROOT_PATH . ADMIN_PATH . '/includes/cls_exchange.php');
 
+
 /* 对用户传入的变量进行转义操作。*/
 if (!get_magic_quotes_gpc())
 {
@@ -607,6 +608,7 @@ function autoload($class)
         //$class = ucfirst($class);
         $array = array(
             ROOT_PATH . 'include/classes/' . $class . '.php',
+            ROOT_PATH . 'include/interface/' . $class . '.php',
             ROOT_PATH . 'include/vendor/libraries/' . $class . '.php'
         );
         foreach ($array as $file) {

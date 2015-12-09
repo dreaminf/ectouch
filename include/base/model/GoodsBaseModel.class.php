@@ -597,6 +597,11 @@ class GoodsBaseModel extends BaseModel {
      */
     function get_sales_count($goods_id) {
         return get_goods_count($goods_id);
+        
     }
+   
+    
+    
+    
 
 }

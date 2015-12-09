@@ -661,7 +661,50 @@ elseif ($_REQUEST['act'] == 'aff_list')
     assign_query_info();
     $smarty->display('affiliate_list.htm');
 }
+/*
 
+ * 导出会员列表
+ *  */
+// 会员导出
+elseif ($_REQUEST['act'] == 'userexport'){
+
+	export_csv($_SESSION['user_list']);
+	exit;
+}
+
+function export_csv($export_list) {
+    $filename = date('Y-m-d-H-i-s').".csv";
+    header("Content-type:text/csv");
+    header("Content-Disposition:attachment;filename=".$filename);
+    header('Cache-Control:must-revalidate,post-check=0,pre-check=0');
+    header('Expires:0');
+    header('Pragma:public');
+    echo user_date($export_list);
+}
+function user_date($result) {
+    if(empty($result)) {
+        return ico("没有符合您要求的数据！^_^");
+    }
+    $data = ico('编号,会员名称,性别,生日,手机号,邮件地址,是否已验证,可用资金,冻结资金,等级积分,消费积分,注册日期'."\n");
+    $count = count($result);
+    for($i = 0 ; $i < $count ;  $i++) {
+        $data .= ico($result[$i]['user_id']).','.
+                 ico($result[$i]['user_name']).','.ico($result[$i]['sex']).','.
+                 ico($result[$i]['birthday']).','.ico($result[$i]['mobile_phone']).','.
+                 ico($result[$i]['email']).','.ico($result[$i]['is_validated']).','.
+                 ico($result[$i]['user_money']).','.ico($result[$i]['frozen_money']).','.
+                 ico($result[$i]['rank_points']).','.ico($result[$i]['pay_points']).','.
+                 ico($result[$i]['reg_time'])."\n";
+    } 
+    return $data;
+}
+    function ico($strInput) {
+    return iconv('utf-8','gb2312',$strInput);//页面编码为utf-8时使用，否则导出的中文为乱码
+    
+  
+
+}
+// 会员导出 end
 /**
  *  返回用户列表数据
  *
@@ -687,7 +730,7 @@ function user_list()
 
         $filter['sort_by']    = empty($_REQUEST['sort_by'])    ? 'user_id' : trim($_REQUEST['sort_by']);
         $filter['sort_order'] = empty($_REQUEST['sort_order']) ? 'DESC'     : trim($_REQUEST['sort_order']);
-
+        
         $ex_where = ' WHERE 1 ';
         if ($filter['keywords'])
         {
@@ -720,7 +763,7 @@ function user_list()
 
         /* 分页大小 */
         $filter = page_and_size($filter);
-        $sql = "SELECT user_id, user_name, email, is_validated, user_money, frozen_money, rank_points, pay_points, reg_time ".
+        $sql = "SELECT user_id, user_name,sex,birthday,mobile_phone,email, is_validated, user_money, frozen_money, rank_points, pay_points, reg_time ".
                 " FROM " . $GLOBALS['ecs']->table('users') . $ex_where .
                 " ORDER by " . $filter['sort_by'] . ' ' . $filter['sort_order'] .
                 " LIMIT " . $filter['start'] . ',' . $filter['page_size'];
@@ -743,9 +786,10 @@ function user_list()
     }
 
     $arr = array('user_list' => $user_list, 'filter' => $filter,
-        'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
-
+    'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
+    $_SESSION['user_list'] = $user_list;  
     return $arr;
+   
 }
 
 ?>

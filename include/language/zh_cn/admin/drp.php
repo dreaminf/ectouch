@@ -184,7 +184,7 @@ $_LANG['ps'][PS_UNPAYED] = '未付款';
 $_LANG['ps'][PS_PAYING] = '付款中';
 $_LANG['ps'][PS_PAYED] = '已付款';
 $_LANG['download'] = '导出';
-$_LANG['start_date'] = '起始时间';
-$_LANG['end_date'] = '结束时间';
+$_LANG['start_time'] = '起始时间';
+$_LANG['end_time'] = '结束时间';
 
 ?>
