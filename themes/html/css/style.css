@@ -2239,19 +2239,27 @@ body.active {
 	box-sizing: border-box;
 	overflow: hidden;
 }
-
+.category-body{
+	max-width: 640px;
+	min-width: 320px;
+	position: fixed;
+    width: 100%;
+    top: 4rem;
+    bottom: 0;
+}
 .menu-con header {
 	position: fixed;
+	min-width: 320px;
+    max-width: 640px;
 }
 
 .menu-tab {
 	background: #fff;
-	height: 100%;
-	min-height: 100%;
 	width: 25%;
 	box-sizing: border-box;
-	position: fixed;
-	top: 4rem;
+	position: absolute;
+	top: 0;
+	bottom: 0;
 }
 
 .menu-list {
@@ -2304,7 +2312,7 @@ body.active {
 	color: #252525;
 	box-sizing: border-box;
 	overflow-x: hidden;
-	padding-top: 4rem;
+	/*padding-top: 4rem;*/
 }
 
 .menu-cont-list {
