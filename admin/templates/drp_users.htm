@@ -2,6 +2,8 @@
 {if $full_page}
 {include file="pageheader.htm"}
 {insert_scripts files="../js/utils.js,listtable.js"}
+<script type="text/javascript" src="../js/calendar.php?lang={$cfg_lang}"></script>
+<link href="../js/calendar/calendar.css" rel="stylesheet" type="text/css" />
 <!--
 <div class="form-div">
 <form method="post" action="account_log.php?act=list&user_id={$smarty.get.user_id}" name="searchForm">
@@ -20,6 +22,14 @@
   </form>
 </div>
 -->
+<div>
+    <form method="post" action="drp.php?act=user_export" >
+      <input name="start_time" type="text" id="start_time" size="22" value='{$group_buy.start_time}' readonly="readonly" /><input name="selbtn1" type="button" id="selbtn1" onclick="return showCalendar('start_time', '%Y-%m-%d %H:%M', '24', false, 'selbtn1');" value="{$lang.btn_select}" class="button"/>
+      <input name="end_time" type="text" id="end_time" size="22" value='{$group_buy.end_time}' readonly="readonly" /><input name="selbtn2" type="button" id="selbtn2" onclick="return showCalendar('end_time', '%Y-%m-%d %H:%M', '24', false, 'selbtn2');" value="{$lang.btn_select}" class="button"/>      
+       <input type="submit" value="{$lang.submitexport}" class="button" onclick="this.form.target = '_blank'"
+ />
+    </form>
+</div>
 <form method="post" action="" name="listForm">
 <div class="list-div" id="listDiv">
 {/if}  

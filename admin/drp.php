@@ -142,6 +142,8 @@ if ($_REQUEST['act'] == 'users')
     $smarty->assign('page_count',   $list['page_count']);
 
     $smarty->assign('keyword', 'novice');
+    $smarty->assign('filter', date("Y-m-d H:i:s"));
+    $smarty->assign('filters', date("Y-m-d H:i:s",time()-86400*7));
     $smarty->assign('ur_here', $_LANG['drp_profit']);
     $smarty->display('drp_users.htm');
 }
@@ -481,6 +483,7 @@ if ($_REQUEST['act'] == 'ranking_query')
  */
 function get_user_list($type = '1')
 {
+    
     /* 初始化分页参数 */
     $filter = array(
 
@@ -497,7 +500,6 @@ function get_user_list($type = '1')
     $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('drp_shop') . $conditioin .
         " ORDER BY id DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
-
     $arr = array();
     while ($row = $GLOBALS['db']->fetchRow($res))
     {
@@ -737,4 +739,76 @@ function drp_log_change($user_id, $user_money = 0, $pay_points = 0)
         " WHERE user_id = '$user_id' LIMIT 1";
     $GLOBALS['db']->query($sql);
 }
+//导出分销商
+if($_REQUEST['act'] == 'export'){
+           
+   if(!empty($_POST['start_time']) ||!empty($_POST['end_time'])){
+        $start_time =strtotime($_POST['start_time']);
+        $end_time =strtotime($_POST['end_time']);
+        $sql = "SELECT *  FROM " . $ecs->table('drp_shop') .
+                " WHERE `create_time` >= '".$start_time."' AND `create_time` <= '".$end_time."'
+                 ORDER BY id DESC ";
+        $res = $db->query($sql);
+        $list[]=mysql_fetch_assoc($res);
+       
+        include_once (ROOT_PATH . 'include/vendor/PHPExcel.php');
+         //创建处理对象实例
+        $objPhpExcel = new \PHPExcel();
+        $objPhpExcel->getActiveSheet()->getDefaultColumnDimension()->setAutoSize(true);//设置单元格宽度
+        //设置表格的宽度  手动
+        $objPhpExcel->getActiveSheet()->getColumnDimension('G')->setWidth(20);
+        $objPhpExcel->getActiveSheet()->getColumnDimension('H')->setWidth(15);
+        $objPhpExcel->getActiveSheet()->getColumnDimension('I')->setWidth(15);
+        $objPhpExcel->getActiveSheet()->getColumnDimension('J')->setWidth(20);
+        //设置标题
+        $rowVal = array(0=>'编号',1=>'店铺名', 2=>'真实姓名', 3=>'手机号码', 4=>'分销id', 5=>'开店时间', 6=>'店铺是否审核', 7=>'店铺状态');
+        foreach ($rowVal as $k=>$r){
+            $objPhpExcel->getActiveSheet()->getStyleByColumnAndRow($k,1)->getFont()->setBold(true);//字体加粗
+            $objPhpExcel->getActiveSheet()->getStyleByColumnAndRow($k,1)->getAlignment(); //->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//文字居中
+            $objPhpExcel->getActiveSheet()->setCellValueByColumnAndRow($k,1,$r);
+        }
+        //设置当前的sheet索引 用于后续内容操作
+        $objPhpExcel->setActiveSheetIndex(0);
+        $objActSheet=$objPhpExcel->getActiveSheet();
+        //设置当前活动的sheet的名称
+        $title="分销商信息";
+        $objActSheet->setTitle($title);
+
+        //设置单元格内容
+        foreach($list as $k => $v)
+        {
+          
+            $num = $k+2;
+            $objPhpExcel->setActiveSheetIndex(0)
+            //Excel的第A列，uid是你查出数组的键值，下面以此类推
+            ->setCellValue('A'.$num, $v['id'])
+            ->setCellValue('B'.$num, $v['shop_name'])
+            ->setCellValue('C'.$num, $v['real_name'])
+            ->setCellValue('D'.$num, $v['shop_mobile'])
+            ->setCellValue('E'.$num, $v['cat_id'])
+            ->setCellValue('F'.$num, date("Y-m-d H:i:s",$v['create_time']))
+            ->setCellValue('G'.$num, $v['audit'])
+            ->setCellValue('H'.$num, $v['open'])
+            ;
+        }
+        $name = date('Y-m-d'); //设置文件名
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header("Content-Transfer-Encoding:utf-8");
+        header("Pragma: no-cache");
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$title.'_'.urlencode($name).'.xls"');
+        header('Cache-Control: max-age=0');
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPhpExcel, 'Excel5');
+        $objWriter->save('php://output');
+   }
+    
+}
+
+
+        
+
+
+
 ?>
