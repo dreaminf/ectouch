@@ -15,6 +15,7 @@
 <script type="text/javascript" src="__PUBLIC__/js/jquery.json.js" ></script> 
 <script type="text/javascript" src="__PUBLIC__/js/common.js"></script> 
 <script type="text/javascript" src="__PUBLIC__/js/jquery.more.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/js/jquery.pjax.js"></script> 
 <script type="text/javascript" src="__PUBLIC__/js/utils.js" ></script> 
 <script src="__PUBLIC__/swiper/js/jquery.swiper.min.js"></script> 
 <script src="__TPL__/js/ectouch.js"></script> 
@@ -44,6 +45,16 @@
 			$(".search").hide();
 		}
 	}
-</script> 
-
+	$(function() {
+		$('#loading').hide();
+		$(document).pjax('a', 'body');
+		$(document).on('pjax:send', function() {
+			$('#loading').show();
+		});
+		$(document).on('pjax:complete', function() {
+			$('#loading').hide();
+		});
+	})
+</script>
+<div id="loading"><img src="__TPL__/images/loading.gif"></div>
 {$wechat_js_sdk}
