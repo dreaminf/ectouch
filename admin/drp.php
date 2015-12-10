@@ -300,6 +300,8 @@ if($_REQUEST['act'] == 'drp_log'){
         $smarty->assign('full_page', 1);
     }
     $list = get_drp_log();
+    $smarty->assign('filterss', date("Y-m-d H:i:s"));
+    $smarty->assign('filters', date("Y-m-d H:i:s",time()-86400*7));    
     $smarty->assign('list',         $list['list']);
     $smarty->assign('filter',       $list['filter']);
     $smarty->assign('record_count', $list['record_count']);
@@ -352,7 +354,6 @@ if ($_REQUEST['act'] == 'order_delete'){
             if($delete == true){
                 $links[0]['href'] = 'drp.php?act=drp_log';
                 sys_msg($_LANG['delete_Success'],'',$links);
-
             }
         }
     }
@@ -653,8 +654,8 @@ function get_drp_log(){
         $row['status_show'] = $row['status'] == DRP_NOT_MANAGE ? '未支付' : '已支付';
         $row['status'] = $row['status'];
         $arr[] = $row;
+        
     }
-
     return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
 }
 
@@ -741,7 +742,6 @@ function drp_log_change($user_id, $user_money = 0, $pay_points = 0)
 }
 //导出分销商
 if($_REQUEST['act'] == 'export'){
-           
    if(!empty($_POST['start_time']) ||!empty($_POST['end_time'])){
         $start_time =strtotime($_POST['start_time']);
         $end_time =strtotime($_POST['end_time']);
@@ -750,7 +750,6 @@ if($_REQUEST['act'] == 'export'){
                  ORDER BY id DESC ";
         $res = $db->query($sql);
         $list[]=mysql_fetch_assoc($res);
-       
         include_once (ROOT_PATH . 'include/vendor/PHPExcel.php');
          //创建处理对象实例
         $objPhpExcel = new \PHPExcel();
@@ -773,11 +772,9 @@ if($_REQUEST['act'] == 'export'){
         //设置当前活动的sheet的名称
         $title="分销商信息";
         $objActSheet->setTitle($title);
-
         //设置单元格内容
         foreach($list as $k => $v)
         {
-          
             $num = $k+2;
             $objPhpExcel->setActiveSheetIndex(0)
             //Excel的第A列，uid是你查出数组的键值，下面以此类推
@@ -797,13 +794,84 @@ if($_REQUEST['act'] == 'export'){
         header("Content-Type: application/download");
         header("Content-Transfer-Encoding:utf-8");
         header("Pragma: no-cache");
-        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Type: application/vnd.ms-e xcel');
         header('Content-Disposition: attachment;filename="'.$title.'_'.urlencode($name).'.xls"');
         header('Cache-Control: max-age=0');
         $objWriter = \PHPExcel_IOFactory::createWriter($objPhpExcel, 'Excel5');
         $objWriter->save('php://output');
    }
     
+}
+
+//佣金体现导出
+if($_REQUEST['act'] == 'drplogexport'){
+   if(!empty($_POST['start_time']) ||!empty($_POST['end_time'])){
+       $start_time =strtotime($_POST['start_time']);
+       $end_time =strtotime($_POST['end_time']);
+     $sql="select dl.*,ds.shop_name,u.user_name  FROM ".$ecs->table('drp_log').
+          " as dl left join ".$ecs->table('drp_shop').
+          " as ds on dl.user_id=ds.user_id left join ".
+          $ecs->table('users').
+          " as u on dl.user_id=u.user_id ".
+          " WHERE `change_time` >="
+          .$start_time.
+          " AND `change_time` <='"
+          .$end_time.
+          "' ORDER BY log_id DESC " ;
+        $res = $db->query($sql);
+        $list[]=mysql_fetch_assoc($res);
+
+        include_once (ROOT_PATH . 'include/vendor/PHPExcel.php');
+         //创建处理对象实例
+        $objPhpExcel = new \PHPExcel();
+        $objPhpExcel->getActiveSheet()->getDefaultColumnDimension()->setAutoSize(true);//设置单元格宽度
+        //设置表格的宽度  手动
+        $objPhpExcel->getActiveSheet()->getColumnDimension('G')->setWidth(20);
+        $objPhpExcel->getActiveSheet()->getColumnDimension('H')->setWidth(15);
+        $objPhpExcel->getActiveSheet()->getColumnDimension('I')->setWidth(15);
+        $objPhpExcel->getActiveSheet()->getColumnDimension('J')->setWidth(20);
+        //设置标题
+        $rowVal = array(0=>'编号',1=>'店铺名', 2=>'会员名称', 3=>'操作日期', 4=>'提现金额', 5=>'提现信息', 6=>'佣金状态(1为已支付0为未支付)');
+        foreach ($rowVal as $k=>$r){
+            $objPhpExcel->getActiveSheet()->getStyleByColumnAndRow($k,1)->getFont()->setBold(true);//字体加粗
+            $objPhpExcel->getActiveSheet()->getStyleByColumnAndRow($k,1)->getAlignment(); //->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//文字居中
+            $objPhpExcel->getActiveSheet()->setCellValueByColumnAndRow($k,1,$r);
+        }
+        //设置当前的sheet索引 用于后续内容操作
+        $objPhpExcel->setActiveSheetIndex(0);
+        $objActSheet=$objPhpExcel->getActiveSheet();
+        //设置当前活动的sheet的名称
+        $title="佣金提现管理";
+        $objActSheet->setTitle($title);
+        //设置单元格内容
+        foreach($list as $k => $v)
+        {
+            $num = $k+2;
+            $objPhpExcel->setActiveSheetIndex(0)
+            //Excel的第A列，uid是你查出数组的键值，下面以此类推
+            ->setCellValue('A'.$num, $v['log_id'])
+            ->setCellValue('B'.$num, $v['shop_name'])
+            ->setCellValue('C'.$num, $v['user_name'])
+            ->setCellValue('D'.$num, date("Y-m-d H:i:s",$v['change_time']))
+            ->setCellValue('E'.$num, $v['user_money'])
+            ->setCellValue('F'.$num, $v['bank_info'])
+            ->setCellValue('G'.$num, $v['status'])
+           
+            ;
+        }
+       
+        $name = date('Y-m-d'); //设置文件名
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header("Content-Transfer-Encoding:utf-8");
+        header("Pragma: no-cache");
+        header('Content-Type: application/vnd.ms-e xcel');
+        header('Content-Disposition: attachment;filename="'.$title.'_'.urlencode($name).'.xls"');
+        header('Cache-Control: max-age=0');
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPhpExcel, 'Excel5');
+        $objWriter->save('php://output');
+   }
 }
 
 

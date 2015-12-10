@@ -3,6 +3,8 @@
 {include file="pageheader.htm"}
 {insert_scripts files="../admin/styles/general.css"}
 {insert_scripts files="../js/utils.js,listtable.js"}
+<script type="text/javascript" src="../js/calendar.php?lang={$cfg_lang}"></script>
+<link href="../js/calendar/calendar.css" rel="stylesheet" type="text/css" />
 <!--<div class="form-div">-->
   <!--<form action="drp.php?act=search" name="searchForm" method="post" >-->
     <!--<img src="images/icon_search.gif" width="25" height="22" border="0" alt="SEARCH" />-->
@@ -10,6 +12,21 @@
       <!--<input type="submit" value="{$lang.button_search}" class="button" />-->
   <!--</form>-->
 <!--</div>-->
+
+<div>
+    
+    <form action="drp.php?act=drplogexport" method="post" name="listForm">
+      <input name="start_time" type="text" id="start_time" size="22" value='{$filters}' readonly="readonly" />
+      <input name="selbtn1" type="button" id="selbtn1" onclick="return showCalendar('start_time', '%Y-%m-%d %H:%M', '24', false, 'selbtn1');" value="{$lang.btn_select}" class="button"/>
+      <input name="end_time" type="text" id="end_time" size="22" value='{$filterss}' readonly="readonly" />
+      <input name="selbtn2" type="button" id="selbtn2" onclick="return showCalendar('end_time', '%Y-%m-%d %H:%M', '24', false, 'selbtn2');" value="{$lang.btn_select}" class="button"/>  
+      <input type="submit" value="{$lang.download}" class='button' onclick="this.form.target = '_blank'"/>
+    </form>
+
+</div>
+
+
+
 
 <form method="POST" action="" name="listForm">
 <!-- start user_deposit list -->
@@ -30,7 +47,7 @@
   {foreach from=$list item=item}
   <tr>
 
-  	<td width="10%"><span><input name="checkboxes[]" type="checkbox" value="{$item.log_id}" />{$item.log_id}</span></td>
+    <td width="10%"><span><input name="checkboxes[]" type="checkbox" value="{$item.log_id}" />{$item.log_id}</span></td>
     <td align="center">{$item.shop_name}</td>
     <td align="center">{$item.user_name}</td>
     <td align="right">{$item.change_time}</td>
