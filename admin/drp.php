@@ -577,6 +577,7 @@ function get_user_log_list($user_id)
         $row['change_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['change_time']);
         $arr[] = $row;
     }
+ 
     return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
 }
 
@@ -648,7 +649,7 @@ function get_drp_log(){
     while ($row = $GLOBALS['db']->fetchRow($res)){
         $row['log_id'] = $row['log_id'];
         $row['change_time'] = date("Y-m-d H:i:s",$row['change_time']);
-        $row['user_money'] = substr($row['user_money'],1);
+        $row['user_money'] = $row['user_money'];
         $row['user_name'] = $GLOBALS['db']->getOne("SELECT user_name FROM".$GLOBALS['ecs']->table("users")."WHERE user_id =".$row['user_id']);
         $row['shop_name'] = $GLOBALS['db']->getOne("SELECT shop_name FROM".$GLOBALS['ecs']->table('drp_shop')."WHERE user_id =".$row['user_id']);
         $row['status_show'] = $row['status'] == DRP_NOT_MANAGE ? '未支付' : '已支付';
@@ -656,6 +657,7 @@ function get_drp_log(){
         $arr[] = $row;
         
     }
+   
     return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
 }
 
@@ -820,7 +822,7 @@ if($_REQUEST['act'] == 'drplogexport'){
           "' ORDER BY log_id DESC " ;
         $res = $db->query($sql);
         $list[]=mysql_fetch_assoc($res);
-
+    
         include_once (ROOT_PATH . 'include/vendor/PHPExcel.php');
          //创建处理对象实例
         $objPhpExcel = new \PHPExcel();
