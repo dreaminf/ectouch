@@ -134,8 +134,32 @@ if ($_REQUEST['act'] == 'users')
     {
         $smarty->assign('full_page', 1);
     }
-    $type = (isset($_GET['type']) && $_GET['type'] == 'audit') ? 0:1;//分销商状态
-    $list = get_user_list($type);
+
+    $list = get_user_list();
+    $smarty->assign('list',         $list['list']);
+    $smarty->assign('filter',       $list['filter']);
+    $smarty->assign('record_count', $list['record_count']);
+    $smarty->assign('page_count',   $list['page_count']);
+
+    $smarty->assign('keyword', 'novice');
+    $smarty->assign('filter', date("Y-m-d H:i:s"));
+    $smarty->assign('filters', date("Y-m-d H:i:s",time()-86400*7));
+    $smarty->assign('ur_here', $_LANG['drp_profit']);
+    $smarty->display('drp_users.htm');
+}
+
+/*------------------------------------------------------ */
+//-- 分销商审核管理
+/*------------------------------------------------------ */
+if ($_REQUEST['act'] == 'users_audit')
+{
+    assign_query_info();
+    if (empty($_REQUEST['is_ajax']))
+    {
+        $smarty->assign('full_page', 1);
+    }
+
+    $list = get_user_list(0);
     $smarty->assign('list',         $list['list']);
     $smarty->assign('filter',       $list['filter']);
     $smarty->assign('record_count', $list['record_count']);
@@ -744,12 +768,12 @@ function drp_log_change($user_id, $user_money = 0, $pay_points = 0)
 }
 //导出分销商
 if($_REQUEST['act'] == 'export'){
-   if(!empty($_POST['start_time']) ||!empty($_POST['end_time'])){
+   if(!empty($_POST['start_time']) || !empty($_POST['end_time'])){
+        $condition = ($_GET['from'] = 'users_audit') ? ' AND `audit` = "0"' : ' AND `audit` = "1"';
         $start_time =strtotime($_POST['start_time']);
         $end_time =strtotime($_POST['end_time']);
         $sql = "SELECT *  FROM " . $ecs->table('drp_shop') .
-                " WHERE `create_time` >= '".$start_time."' AND `create_time` <= '".$end_time."'
-                 ORDER BY id DESC ";
+                " WHERE `create_time` >= '".$start_time."' AND `create_time` <= '".$end_time."' ". $condition ." ORDER BY id DESC ";
         $res = $db->query($sql);
         $list[]=mysql_fetch_assoc($res);
         include_once (ROOT_PATH . 'include/vendor/PHPExcel.php');
