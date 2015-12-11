@@ -1572,7 +1572,11 @@ function send_wechat_message($type = '', $title = '', $msg = '', $url = '', $ord
             $openid = M()->table('wechat_user')->field('openid')->where('ect_uid = ' . $_SESSION['user_id'])->getOne();
         }
         if (!empty($title) && !empty($openid)) {
-            $dourl = __HOST__ . '/mobile/index.php?c=api&'. http_build_query(array('openid' => $openid, 'title' => $title, 'msg' => $msg, 'url' => $url), '', '&');
+            if(IS_ECSHOP){
+                $dourl = __HOST__ . '/mobile/index.php?c=api&'. http_build_query(array('openid' => $openid, 'title' => $title, 'msg' => $msg, 'url' => $url), '', '&');
+            }else{
+                $dourl = __HOST__ . '/index.php?c=api&'. http_build_query(array('openid' => $openid, 'title' => $title, 'msg' => $msg, 'url' => $url), '', '&');
+            }
             Http::doGet($dourl);
         }
     }
