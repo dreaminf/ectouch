@@ -14,7 +14,7 @@ class Jssdk {
 
     // 注意 URL 一定要动态获取，不能 hardcode.
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-    $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    $url = strtolower("$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
 
     $timestamp = time();
     $nonceStr = $this->createNonceStr();
