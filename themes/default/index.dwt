@@ -37,10 +37,38 @@ bady{background-color: #f7f7f7}
 .hot-search a{display:table-cell; float:left;  padding:0.8em; background:#fff; margin-right:0.6em; margin-bottom:0.6em; border-radius:0.4em;}
 header{line-height:2rem}
 </style>
+<style>
+/*==================
+    关注
+=============*/
+.dis-box{ display:-moz-box; display:-webkit-box; display:box; width:100%; margin-top:0rem; left: 0; right: 0;background-color: rgba(0, 0, 0, 0.8);
+  z-index: 4; overflow: hidden; margin: 0 auto; height: 4rem;  padding: 0 1.3rem; max-width: 640px;  min-width: 320px;}
+.box-flex{ -moz-box-flex:1; -webkit-box-flex:1; box-flex:1;   line-height: 1.5555rem;padding-top: 0.5rem;} 
+.dis-box .attention-img {width: 4rem;}
+.dis-box .attention-button  {width: 8rem;} 
+.dis-box img{width: 4rem;height: 4rem; margin-left: -1.3rem;}
+.button{  border: 0px;background: #57C850; width: 8rem; height: 2.5rem; border-radius: 5px;color: #fff;
+} 
+.index-max-box{position: fixed;z-index: 4999;top: 0;width: 100%; max-width: 640px;min-width: 320px;}
+.index-header{position:relative;}
+</style>
 </head>
 
 <body>
 <div class="con">
+<div class="index-max-box">
+{if !$isguanz}
+<div class="ect-attention dis-box" >
+	<div class="attention-img"><img src="__TPL__/images/attention-logo.png"></div>
+	<div class="attention-text box-flex">
+		<p style="font-size: 1rem;"><span style="color:#fff">欢迎进入</span><span style="color:#57C850"> 微商城</span></p>
+		<p style="font-size: 1rem;"><span style="color:#fff">关注公众号,享专属服务</span></p>
+	</div>
+	<div class="attention-button" style="  padding-top:0.8rem;">
+		<a href="{$w_url}"><button class="button">立即关注</button></a>
+	</div>
+</div>
+{/if}
 <header class="index-header comWidth">
   <i class="index-header-menu iconfont fl" onclick="window.location = '{:url('category/top_all')}'">&#xe627;</i>
   <div class="index-search-box fl">
@@ -50,6 +78,7 @@ header{line-height:2rem}
   </div>
   <a href="javascript:void(0)" id="scanQRCode"><i class="index-header-right iconfont fr">&#xe629;</i></a>
 </header>
+</div>
 <div class="index-main comWidth">
     <div class="swiper-container">
       <div class="swiper-wrapper">
@@ -138,6 +167,11 @@ header{line-height:2rem}
 get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}" , '__TPL__/images/loader.gif');
 </script>
 <script>
+	if($(".ect-attention").hasClass("ect-attention")){
+	$(".index-main").css({"marginTop":"8rem"})
+	}else{
+		 $(".index-main").css({"marginTop":"4rem"})
+		}
     $(function($) {
         $(".ect-index-share").click(function(){
 

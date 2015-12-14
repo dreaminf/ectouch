@@ -21,9 +21,16 @@ class IndexController extends CommonController {
      * 首页信息
      */
     public function index() {
+		//是否显示关注按钮
+		$condition['openid'] = $_SESSION['openid'];
+		$userinfo = $this->model->table('wechat_user')->field('subscribe')->where($condition)->find();
+		$this->assign('isguanz', $userinfo['subscribe']);
+		//调用关注链接
+		$url = $this->model->table('wechat')->field('w_url')->find();
+		$this->assign('w_url', $url['w_url']); 
         $cache_id = sprintf('%X', crc32($_SESSION['user_rank'] . '-' . C('lang')));
-        if (!ECTouch::view()->is_cached('index.dwt', $cache_id))
-        {
+       // if (!ECTouch::view()->is_cached('index.dwt', $cache_id))
+        //{
             // 自定义导航栏
             $navigator = model('Common')->get_navigator();
             $this->assign('navigator', $navigator['middle']);
@@ -36,7 +43,7 @@ class IndexController extends CommonController {
             $cat_rec = model('Index')->get_recommend_res(10,4);
             $this->assign('cat_best', $cat_rec[1]);
             $this->assign('cat_new', $cat_rec[2]);
-            $this->assign('cat_hot', $cat_rec[3]);
+            $this->assign('cat_hot', $cat_rec[3]);			
             // 促销活动
             $this->assign('promotion_info', model('GoodsBase')->get_promotion_info());
             // 团购商品
@@ -47,8 +54,8 @@ class IndexController extends CommonController {
             $this->assign('brand_list', model('Brand')->get_brands($app = 'brand', C('page_size'), 1));
             // 分类下的文章
             $this->assign('cat_articles', model('Article')->assign_articles(1,5)); // 1 是文章分类id ,5 是文章显示数量
-        }
-        $this->display('index.dwt', $cache_id);
+        //}
+        $this->display('index.dwt');
     }
 
     /**
