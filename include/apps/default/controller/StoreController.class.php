@@ -39,7 +39,7 @@ class StoreController extends CommonController {
         $this->assign('cat_hot', $cat_rec[3]);
 		//是否显示关注按钮
 		$condition['openid'] = $_SESSION['openid'];
-		$userinfo = $this->model->table('wechat_user')->field('subscribe')->where($condition)->find();y
+		$userinfo = $this->model->table('wechat_user')->field('subscribe')->where($condition)->find();
 		$this->assign('isguanz', $userinfo['subscribe']);
 		//调用关注链接
 		$url = $this->model->table('wechat')->field('w_url')->find();
