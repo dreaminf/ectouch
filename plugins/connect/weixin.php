@@ -108,13 +108,17 @@ class weixin {
             $token = $this->weObj->getOauthAccessToken();
             $userinfo = $this->weObj->getOauthUserinfo($token['access_token'], $token['openid']);
             $_SESSION['wechat_user'] = empty($userinfo) ? array() : $userinfo;
-            //公众号信息
-            $wechat = model('Base')->model->table('wechat')->field('id, oauth_status')->where(array('type'=>2, 'status'=>1, 'default_wx'=>1))->find();
-            $this->update_weixin_user($userinfo, $wechat['id'], $this->weObj);
-            if(isset($_SESSION['repeat'])){
-                //删除避免重复跳转验证
-                unset($_SESSION['repeat']);
-            }
+			if(!empty($userinfo)){
+				//公众号信息
+				$wechat = model('Base')->model->table('wechat')->field('id, oauth_status')->where(array('type'=>2, 'status'=>1, 'default_wx'=>1))->find();
+				$this->update_weixin_user($userinfo, $wechat['id'], $this->weObj);
+				if(isset($_SESSION['repeat'])){
+					//删除避免重复跳转验证
+					unset($_SESSION['repeat']);
+				}
+			}else{
+				return false;
+			}
             if(!empty($_SESSION['redirect_url'])){
                 return array('url'=>$_SESSION['redirect_url']);
             }
@@ -220,7 +224,8 @@ class weixin {
             ECTouch::user()->set_cookie($new_user_name);
             model('Users')->update_user_info();
         }
-        session('openid', $userinfo['openid']);
+		$_SESSION['openid'] = $userinfo['openid'];
+        setcookie('openid', $userinfo['openid'], gmtime() + 86400 * 7);
     }
 
 }
