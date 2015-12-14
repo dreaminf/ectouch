@@ -218,7 +218,7 @@ class CommonController extends BaseController
         if(CONTROLLER_NAME == 'Index' && ACTION_NAME=='index' && I('type') != 'share' && $_SESSION['drp_shop']['open'] == 1){
             redirect(url('store/index'));
         }
-    }
+    } 
     /*DRP_END*/
 
     /*

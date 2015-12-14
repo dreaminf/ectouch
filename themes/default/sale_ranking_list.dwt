@@ -1,8 +1,9 @@
 <!-- #BeginLibraryItem "/library/sale_header.lbi" --><!-- #EndLibraryItem -->
 <div>
           	<!--{foreach from=$list item=li}-->
-				<div class="dpgl_list">                                 
-				   <span class="bdda2_list2">{$li.shop_name}</span>
+				<div class="dpgl_list" style="overflow:hidden"> 
+				   <span class="bdda2_list2"><img src="{$li.user_img}" style="width:5rem; margin-right:1rem; float:left;"></span>				
+				   <span class="bdda2_list2" style="top:0rem">{$li.shop_name}</span>
 				   <span class="bdda2_list">总销售佣金：{$li.sum_money}</span>
 			    </div>
 

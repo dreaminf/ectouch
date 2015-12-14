@@ -751,6 +751,7 @@ class SaleController extends CommonController {
             foreach($list as $key=>$val){
                 $list[$key]['sum_money'] = $val['sum_money'] ? $val['sum_money'] : 0.00;
                 $list[$key]['shop_name'] = C('shop_name').$val['shop_name'];
+				$list[$key]['user_img'] = $this->wechat_iheadimgurl($val['user_id']);
             }
         }
         $this->assign('list', $list);
@@ -758,6 +759,11 @@ class SaleController extends CommonController {
         $this->display('sale_ranking_list.dwt');
     }
 
+	public function wechat_iheadimgurl($user_id){
+		 $sql = "select headimgurl from {pre}wechat_user where ect_uid = '$user_id'";
+		 $res = $this->model->query($sql);
+		 return $res[0]['headimgurl'];		 
+	 }
 
 
     /**
