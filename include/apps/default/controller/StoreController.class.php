@@ -37,12 +37,17 @@ class StoreController extends CommonController {
         $this->assign('cat_best', $cat_rec[1]);
         $this->assign('cat_new', $cat_rec[2]);
         $this->assign('cat_hot', $cat_rec[3]);
-
+		//是否显示关注按钮
+		$condition['openid'] = $_SESSION['openid'];
+		$userinfo = $this->model->table('wechat_user')->field('subscribe')->where($condition)->find();y
+		$this->assign('isguanz', $userinfo['subscribe']);
+		//调用关注链接
+		$url = $this->model->table('wechat')->field('w_url')->find();
+		$this->assign('w_url', $url['w_url']); 
         if($_SESSION['user_id']){
             $drp_id = $this->model->table('drp_shop')->where(array('user_id'=>$_SESSION['user_id']))->field('id')->find();
             $this->assign('is_drp', $drp_id ? 1 : 0);
         }
-
         $this->display('sale_shop.dwt');
     }
 
