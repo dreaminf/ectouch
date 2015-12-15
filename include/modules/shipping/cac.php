@@ -4,7 +4,7 @@
  * 上门取货插件
  */
 
-$shipping_lang = BASE_PATH.'language/' .C('lang'). '/shipping/cac.php';
+$shipping_lang = BASE_PATH.'languages/' .C('lang'). '/shipping/cac.php';
 if (file_exists($shipping_lang))
 {
     global $_LANG;

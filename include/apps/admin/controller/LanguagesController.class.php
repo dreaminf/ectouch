@@ -21,7 +21,7 @@ class LanguagesController extends AdminController
         //从languages目录下获取语言项文件 - 默认是前台模板语言包
         $lang_arr    = array();
 
-        $lang_path   = APP_PATH . 'default/language/' . C('lang');
+        $lang_path   = APP_PATH . 'default/languages/' . C('lang');
         $lang_dir    = @opendir($lang_path);
 
         while ($file = @readdir($lang_dir))

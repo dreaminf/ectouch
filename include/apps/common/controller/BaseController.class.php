@@ -61,7 +61,7 @@ class BaseController extends Controller {
         @ini_set("arg_separator.output", "&amp;");
         @ini_set('include_path', '.;' . BASE_PATH);
         //加载系统常量和函数库
-        require(APP_PATH . 'common/constant.php');
+        require(BASE_PATH . 'config/constant.php');
         require(APP_PATH . 'common/function.php');
         //对用户传入的变量进行转义操作
         if (!get_magic_quotes_gpc()) {
@@ -89,10 +89,10 @@ class BaseController extends Controller {
     //载入函数、语言文件
     private function _common() {
         //加载公共语言
-        require(APP_PATH . C('_APP_NAME') . '/language/' . C('LANG') . '/common.php');
+        require(APP_PATH . C('_APP_NAME') . '/languages/' . C('LANG') . '/common.php');
         //加载控制器语言
-        if (file_exists(APP_PATH . C('_APP_NAME') . '/language/' . C('LANG') . '/' . strtolower(CONTROLLER_NAME) . '.php')) {
-            require(APP_PATH . C('_APP_NAME') . '/language/' . C('LANG') . '/' . strtolower(CONTROLLER_NAME) . '.php');
+        if (file_exists(APP_PATH . C('_APP_NAME') . '/languages/' . C('LANG') . '/' . strtolower(CONTROLLER_NAME) . '.php')) {
+            require(APP_PATH . C('_APP_NAME') . '/languages/' . C('LANG') . '/' . strtolower(CONTROLLER_NAME) . '.php');
         }
         L($_LANG); //语言包赋值
         if (file_exists(APP_PATH . C('_APP_NAME') . '/common/insert.php')) {

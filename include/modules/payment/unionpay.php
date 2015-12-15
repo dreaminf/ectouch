@@ -1,7 +1,7 @@
 <?php
 defined('IN_ECTOUCH') or die('Deny Access');
 
-$payment_lang = BASE_PATH . 'language/' .C('lang'). '/payment/unionpay.php';
+$payment_lang = BASE_PATH . 'languages/' .C('lang'). '/payment/unionpay.php';
 
 if (file_exists($payment_lang)) {
     global $_LANG;

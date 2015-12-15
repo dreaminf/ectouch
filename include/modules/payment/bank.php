@@ -16,7 +16,7 @@
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
-$payment_lang = BASE_PATH . 'language/' .C('lang'). '/payment/bank.php';
+$payment_lang = BASE_PATH . 'languages/' .C('lang'). '/payment/bank.php';
 if (file_exists($payment_lang)) {
 	global $_LANG;
     include_once ($payment_lang);

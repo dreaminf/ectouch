@@ -23,7 +23,7 @@ class ConfigController extends AdminController {
      */
     public function index() {
         /* 可选语言 */
-        $path = APP_PATH . APP_NAME . '/language/';
+        $path = APP_PATH . APP_NAME . '/languages/';
         $dir = opendir($path);
         $lang_list = array();
         while (@$file = readdir($dir)) {

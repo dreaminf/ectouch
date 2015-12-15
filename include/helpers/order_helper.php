@@ -1547,7 +1547,7 @@ function order_refund($order, $refund_type, $refund_note, $refund_amount = 0)
     }
     else
     {
-        include_once(BASE_PATH . 'language/' .C('lang'). '/admin/order.php');
+        include_once(BASE_PATH . 'languages/' .C('lang'). '/admin/order.php');
         $change_desc = sprintf(L('order_refund'), $order['order_sn']);
     }
 

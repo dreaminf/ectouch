@@ -224,7 +224,7 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '')
 
                     /* 修改会员帐户金额 */
                     $_LANG = array();
-                    include_once(BASE_PATH . 'language/' . C('lang') . '/user.php');
+                    include_once(BASE_PATH . 'languages/' . C('lang') . '/user.php');
                     log_account_change($arr['user_id'], $arr['amount'], 0, 0, 0, $_LANG['surplus_type_0'], ACT_SAVING);
                 }
             }

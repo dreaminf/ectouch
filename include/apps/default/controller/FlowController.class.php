@@ -2115,7 +2115,7 @@ class FlowController extends CommonController {
         // 赋值于模板
         $this->assign('title', L('consignee_info'));
         // 加载user语言包
-        require(APP_PATH . C('_APP_NAME') . '/language/' . C('LANG') . '/user.php');
+        require(APP_PATH . C('_APP_NAME') . '/languages/' . C('LANG') . '/user.php');
         $_LANG = array_merge(L(), $_LANG);
         $this->assign('lang', $_LANG);
         $this->display('flow_consignee_list.dwt');

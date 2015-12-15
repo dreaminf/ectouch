@@ -4,7 +4,7 @@
  * 邮局平邮插件
  */
 
-$shipping_lang = BASE_PATH.'language/' .C('lang'). '/shipping/post_mail.php';
+$shipping_lang = BASE_PATH.'languages/' .C('lang'). '/shipping/post_mail.php';
 if (file_exists($shipping_lang))
 {
     global $_LANG;
