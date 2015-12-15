@@ -36,7 +36,7 @@ if ($_REQUEST['act'] == 'list')
 {
     //从languages目录下获取语言项文件
     $lang_arr    = array();
-    $lang_path   = '../include/language/' .$_CFG['lang'];
+    $lang_path   = '../include/languages/' .$_CFG['lang'];
     $lang_dir    = @opendir($lang_path);
 
     while ($file = @readdir($lang_dir))
@@ -55,15 +55,15 @@ if ($_REQUEST['act'] == 'list')
     $lang_file = isset($_POST['lang_file']) ? trim($_POST['lang_file']) : '';
     if ($lang_file == 'common')
     {
-        $file_path = '../include/language/'.$_CFG['lang'].'/common.php';
+        $file_path = '../include/languages/'.$_CFG['lang'].'/common.php';
     }
     elseif ($lang_file == 'shopping_flow')
     {
-        $file_path = '../include/language/'.$_CFG['lang'].'/shopping_flow.php';
+        $file_path = '../include/languages/'.$_CFG['lang'].'/shopping_flow.php';
     }
     else
     {
-        $file_path = '../include/language/'.$_CFG['lang'].'/user.php';
+        $file_path = '../include/languages/'.$_CFG['lang'].'/user.php';
     }
 
     $file_attr = '';

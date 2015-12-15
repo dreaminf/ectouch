@@ -565,7 +565,7 @@ elseif ($_REQUEST['act'] == 'modif')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'allot')
 {
-    include_once(BASE_PATH . 'language/' .$_CFG['lang']. '/admin/priv_action.php');
+    include_once(BASE_PATH . 'languages/' .$_CFG['lang']. '/admin/priv_action.php');
 
     admin_priv('allot_priv');
     if ($_SESSION['admin_id'] == $_GET['id'])

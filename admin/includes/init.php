@@ -72,7 +72,7 @@ defined('__ROOT__') OR define('__ROOT__', '../');
 defined('__PUBLIC__') OR define('__PUBLIC__', '../data/assets');
 defined('__TPL__') OR define('__TPL__', '../data/assets/admin');
 
-require(BASE_PATH . 'apps/common/constant.php');
+require(BASE_PATH . 'config/constant.php');
 spl_autoload_register('autoload');
 require(ROOT_PATH . 'include/helpers/time_helper.php');
 require(ROOT_PATH . 'include/helpers/base_helper.php');
@@ -152,12 +152,12 @@ if ($_REQUEST['act'] == 'captcha')
     exit;
 }
 
-require(ROOT_PATH . 'include/language/' .$_CFG['lang']. '/admin/common.php');
-require(ROOT_PATH . 'include/language/' .$_CFG['lang']. '/admin/log_action.php');
+require(ROOT_PATH . 'include/languages/' .$_CFG['lang']. '/admin/common.php');
+require(ROOT_PATH . 'include/languages/' .$_CFG['lang']. '/admin/log_action.php');
 
-if (file_exists(ROOT_PATH . 'include/language/' . $_CFG['lang'] . '/admin/' . basename(PHP_SELF)))
+if (file_exists(ROOT_PATH . 'include/languages/' . $_CFG['lang'] . '/admin/' . basename(PHP_SELF)))
 {
-    include(ROOT_PATH . 'include/language/' . $_CFG['lang'] . '/admin/' . basename(PHP_SELF));
+    include(ROOT_PATH . 'include/languages/' . $_CFG['lang'] . '/admin/' . basename(PHP_SELF));
 }
 L($_LANG);
 

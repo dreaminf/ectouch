@@ -17,7 +17,7 @@ define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 require_once(BASE_PATH . 'helpers/order_helper.php');
-require_once(BASE_PATH . 'language/' .$_CFG['lang']. '/admin/statistic.php');
+require_once(BASE_PATH . 'languages/' .$_CFG['lang']. '/admin/statistic.php');
 
 $smarty->assign('lang', $_LANG);
 

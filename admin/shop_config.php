@@ -46,7 +46,7 @@ if ($_REQUEST['act'] == 'list_edit')
     $lang_list = array();
     while (@$file = readdir($dir))
     {
-        if ($file != '.' && $file != '..' &&  $file != '.svn' && $file != '_svn' && is_dir('../include/language/' .$file))
+        if ($file != '.' && $file != '..' &&  $file != '.svn' && $file != '_svn' && is_dir('../include/languages/' .$file))
         {
             $lang_list[] = $file;
         }

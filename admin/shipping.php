@@ -28,7 +28,7 @@ if ($_REQUEST['act'] == 'list')
 
     for ($i = 0; $i < count($modules); $i++)
     {
-        $lang_file = BASE_PATH.'language/' .$_CFG['lang']. '/shipping/' .$modules[$i]['code']. '.php';
+        $lang_file = BASE_PATH.'languages/' .$_CFG['lang']. '/shipping/' .$modules[$i]['code']. '.php';
 
         if (file_exists($lang_file))
         {

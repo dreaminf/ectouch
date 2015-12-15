@@ -30,7 +30,7 @@ if ($_REQUEST['act'] == 'main')
     for ($i = 0; $i < count($modules); $i++)
     {
         $code = $modules[$i]['code'];
-        $lang_file = BASE_PATH.'language/' . $_CFG['lang'] . '/convert/' . $code . '.php';
+        $lang_file = BASE_PATH.'languages/' . $_CFG['lang'] . '/convert/' . $code . '.php';
         if (file_exists($lang_file))
         {
             include_once($lang_file);
@@ -148,7 +148,7 @@ elseif ($_REQUEST['act'] == 'check')
     $_SESSION['convert_config'] = $config;
 
     /* 包含插件语言文件 */
-    include_once(BASE_PATH . 'language/' . $_CFG['lang'] . '/convert/' . $config->code . '.php');
+    include_once(BASE_PATH . 'languages/' . $_CFG['lang'] . '/convert/' . $config->code . '.php');
 
     /* 取得第一步操作 */
     $step = $convert->next_step('');
@@ -183,7 +183,7 @@ elseif ($_REQUEST['act'] == 'process')
     $convert = new $config->code($sdb, $config->prefix, $config->path, $config->charset);
 
     /* 包含插件语言文件 */
-    include_once(BASE_PATH . 'language/' . $_CFG['lang'] . '/convert/' . $config->code . '.php');
+    include_once(BASE_PATH . 'languages/' . $_CFG['lang'] . '/convert/' . $config->code . '.php');
 
     /* 执行步骤 */
     $result = $convert->process($step);

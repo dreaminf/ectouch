@@ -39,7 +39,7 @@ if ($_REQUEST['act'] == 'add')
     $download_list = array();
     while (@$file = readdir($dir))
     {
-        if ($file != '.' && $file != '..' && $file != ".svn" && $file != "_svn" && is_dir('../include/language/' .$file) == true)
+        if ($file != '.' && $file != '..' && $file != ".svn" && $file != "_svn" && is_dir('../include/languages/' .$file) == true)
         {
             $download_list[$file] = sprintf($_LANG['download_file'], isset($_LANG['charset'][$file]) ? $_LANG['charset'][$file] : $file);
         }
@@ -886,7 +886,7 @@ elseif ($_REQUEST['act'] == 'download')
     // 下载
     if ($_GET['charset'] != $_CFG['lang'])
     {
-        $lang_file = '../include/language/' . $_GET['charset'] . '/admin/goods_batch.php';
+        $lang_file = '../include/languages/' . $_GET['charset'] . '/admin/goods_batch.php';
         if (file_exists($lang_file))
         {
             unset($_LANG['upload_goods']);
