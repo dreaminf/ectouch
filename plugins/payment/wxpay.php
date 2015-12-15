@@ -90,9 +90,10 @@ class wxpay
      */
     function notify($data)
     {
-        if (! empty($data['postStr'])) {
+        $inputdata = file_get_contents("php://input");
+        if (! empty($inputdata)) {
             $payment = model('Payment')->get_payment($data['code']);
-            $postdata = json_decode(json_encode(simplexml_load_string($data['postStr'], 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+            $postdata = json_decode(json_encode(simplexml_load_string($inputdata, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
             /* 检查插件文件是否存在，如果存在则验证支付是否成功，否则则返回失败信息 */
             // 微信端签名
             $wxsign = $postdata['sign'];
