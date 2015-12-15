@@ -57,8 +57,16 @@
 .dis-box img{width: 4rem;height: 4rem; margin-left: -1.3rem;}
 .button{  border: 0px;background: #57C850; width: 8rem; height: 2.5rem; border-radius: 5px;color: #fff;
 } 
-.index-max-box{position: fixed;z-index: 4999;top: 0;width: 100%;max-width: 640px;min-width: 320px;}
+.index-max-box{position: fixed;z-index: 1000;top: 0;width: 100%;max-width: 640px;min-width: 320px;}
 .index-header{position:relative;}
+
+/*弹出层样式*/
+.index-guanz-t{display:none;transition: width 2s;-moz-transition: width 2s;-webkit-transition: width 2s;-o-transition: width 2s;  text-align: center;}
+.index-guanz-t.active{display:block; transition: width 2s;-moz-transition: width 2s;-webkit-transition: width 2s;-o-transition: width 2s;}	
+.index-guanz-bg{background:rgba(0,0,0,0.7); position:fixed; top:0; left:0; right:0;bottom:0; z-index:1000;}
+.index-guanz-show{ position:fixed; left:50%;  margin-left: -9.5rem; top:30%; background:#fff; z-index:1001; overflow:hidden; width: 19rem; height: 19rem; padding: 0.5rem;}
+.index-guanz-show p{color:#FDFDFD;font-size: 1.2rem;}
+.index-guanz-show img{ width: 16rem;}
 </style>
 </head>
 
@@ -73,10 +81,18 @@
 		<p style="font-size: 1rem;"><span style="color:#fff">关注公众号,享专属服务</span></p>
 	</div>
 	<div class="attention-button" style="  padding-top:0.8rem;">
-		<a href="{$w_url}"><button class="button">立即关注</button></a>
+		<a class='lizhuanz'><button class="button">立即关注</button></a>
 	</div>
 </div>
 {/if}
+</div>
+<!--立即关注-->
+<div class="index-guanz-t"> 
+	<div class="index-guanz-show">
+		<p ><a class="index-show-close">取消</a></p>
+		<img src="__TPL__/images/guanzm.png">
+	</div>
+	<div class="index-guanz-bg"></div>
 </div>
 <div class="index-main comWidth" >
 <style type="text/css">
@@ -242,6 +258,15 @@
 get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}" , '__TPL__/images/loader.gif');
 </script>
 <script>
+	/*立即关注*/
+	$(function($) {
+	  $(".lizhuanz").click(function(){
+		 $(".index-guanz-t").addClass("active");
+	  });
+	  $(".index-show-close").click(function()	{
+		 $(".index-guanz-t").removeClass("active");
+	  });
+	});
 	if($(".ect-attention").hasClass("ect-attention")){
 	$(".index-main").css({"marginTop":"4rem"})
 	}else{
