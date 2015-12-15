@@ -608,7 +608,6 @@ function autoload($class)
         //$class = ucfirst($class);
         $array = array(
             ROOT_PATH . 'include/classes/' . $class . '.php',
-            ROOT_PATH . 'include/interface/' . $class . '.php',
             ROOT_PATH . 'include/vendor/libraries/' . $class . '.php'
         );
         foreach ($array as $file) {

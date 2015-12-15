@@ -715,12 +715,12 @@ function redirect($url, $time=0, $msg='') {
 function autoload($className) {
     static $classes = array();
     $array = array(
-        APP_PATH . 'common/model/' . $className . '.class.php',
-        APP_PATH . 'common/controller/' . $className . '.class.php',
-        APP_PATH . C('_APP_NAME') . '/model/' . $className . '.class.php',
-        APP_PATH . C('_APP_NAME') . '/controller/' . $className . '.class.php',
+        APP_PATH . 'common/models/' . $className . '.class.php',
+        APP_PATH . 'common/controllers/' . $className . '.class.php',
+        APP_PATH . C('_APP_NAME') . '/models/' . $className . '.class.php',
+        APP_PATH . C('_APP_NAME') . '/controllers/' . $className . '.class.php',
         BASE_PATH . 'base/' . $className . '.class.php',
-        BASE_PATH . 'library/' . $className . '.class.php',
+        BASE_PATH . 'libraries/' . $className . '.class.php',
         BASE_PATH . 'vendor/' . $className . '.class.php'
     );
     foreach ($array as $file) {
