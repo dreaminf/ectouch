@@ -61,14 +61,19 @@ $(function($) {
 		})
 		//wholesale
 	var mySwiper = new Swiper('.wholesale-header', {
-			slidesPerView: 'auto',
-			paginationClickable: true,
-			spaceBetween: 5
-		})
+		slidesPerView: 'auto',
+		paginationClickable: true,
+		spaceBetween: 5
+	})
 	var mySwiper = new Swiper('.wholesale-container', {
-		slidesPerView : 5,
+		slidesPerView: 5,
 		paginationClickable: true,
 	});
+	var mySwiper = new Swiper('.member-record-silde-div', {
+//		loop: true,
+		paginationClickable: true,
+		slidesPerView: 3,
+	})
 });
 $(function($) {
 	$('.wholesale-container li').css('width', 'auto');

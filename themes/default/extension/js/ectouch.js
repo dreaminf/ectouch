@@ -41,14 +41,6 @@ $(function($) {
 	$('.goods-multy-category label').click(function() {
 		$(this).toggleClass('active');
 	});
-	//category_index
-	//	if ($('.comm-search-layer').css("display") == "none") {
-	//		$('.menu-con').height($(window).height());
-	//		$('.category-body').height($(window).height() - $('.menut-header').height());
-	//	}
-	//	if ($('.comm-search-layer').css("display") == "block") {
-	//		$('.category-body').height($(window).height() - $('.menut-header').height());
-	//	}
 	//tabmenu
 	$('.menu-tab ul li').click(function() {
 		$(this).addClass("selected").siblings().removeClass('selected');
@@ -150,6 +142,9 @@ $(function($) {
 	//register
 	$('.register-psw-show').click(function() {
 			$(this).toggleClass('active');
+			if($(this).hasClass('active')){
+				
+			}
 		})
 		//user-profile
 	$('.profile-layer-select').click(function() {
@@ -208,20 +203,6 @@ $(function($) {
 		$(this).addClass("active").siblings().removeClass('active');
 		$('.wholesale-goods').hide().eq($('.wholesale-header li').index(this)).show();
 	});
-//	if($('.wholesale-tab-cont').hasClass('active')){
-//		var width=$(this).find('.wholesale-price-quantity li').width();
-//		console.log(width);
-//	}
-//	var width = $('.wholesale-price-quantity li').width();
-//	var n = $('.wholesale-price-quantity').children().length;
-////	console.log(n);
-//	width = $('.wholesale-price-quantity').width() / (n + 1);
-//	$('.wholesale-price-quantity li').css({
-//		"width": width
-//	});
-//	$('.wholesale-price-discount dd').css({
-//		"width": width
-//	});
 
 	//tabmenu
 	$('.wholesale-tab li').click(function() {
