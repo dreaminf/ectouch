@@ -76,6 +76,7 @@ class SnatchController extends CommonController {
         $this->assign('price_list', model('Snatch')->get_price_list($this->id));
         $this->assign('promotion_info', model('GoodsBase')->get_promotion_info());
         $this->assign('feed_url', (C('rewrite') == 1) ? "feed-typesnatch.xml" : 'feed.php?type=snatch'); // RSS URL
+		$this->assign('title', L('snatch'));
         $this->display('snatch.dwt');
     }
 
