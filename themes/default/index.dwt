@@ -65,7 +65,7 @@ header{line-height:2rem}
 <body>
 <div class="con">
 <div class="index-max-box">
-{if !$isguanz}
+{if !$subscribe}
 <div class="ect-attention dis-box" >
 	<div class="attention-img"><img src="__TPL__/images/attention-logo.png"></div>
 	<div class="attention-text box-flex">
@@ -193,9 +193,7 @@ get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}" , '__TPL__/ima
 	  $(".index-show-close").click(function()	{
 		 $(".index-guanz-t").removeClass("active");
 	  });
-	});
-</script>
-<script>	
+	});	
 	if($(".ect-attention").hasClass("ect-attention")){
 	$(".index-main").css({"marginTop":"8rem"})
 	}else{
