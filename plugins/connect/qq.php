@@ -16,7 +16,7 @@
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
-$payment_lang = ROOT_PATH . 'plugins/connect/language/' . C('lang') . '/' . basename(__FILE__);
+$payment_lang = ROOT_PATH . 'plugins/connect/languages/' . C('lang') . '/' . basename(__FILE__);
 
 if (file_exists($payment_lang)) {
     include_once ($payment_lang);

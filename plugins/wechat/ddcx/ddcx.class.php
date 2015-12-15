@@ -73,8 +73,8 @@ class ddcx extends PluginWechatController
                     }
                     $goods = substr($goods, 0, -1);
                 }
-                if (file_exists(APP_PATH . C('_APP_NAME') . '/language/' . C('LANG') . '/user.php')) {
-                    require(APP_PATH . C('_APP_NAME') . '/language/' . C('LANG') . '/user.php');
+                if (file_exists(APP_PATH . C('_APP_NAME') . '/languages/' . C('LANG') . '/user.php')) {
+                    require(APP_PATH . C('_APP_NAME') . '/languages/' . C('LANG') . '/user.php');
                 }
                 L($_LANG);
                 $order['order_status'] = L('os.' . $order['order_status']);
