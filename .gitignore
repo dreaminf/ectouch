@@ -6,13 +6,9 @@ data/install.lock
 data/attached/*
 !data/attached/index.html
 
-data/caches/cache/*
-!data/caches/cache/index.html
-!data/caches/cache/.htaccess
-
-data/caches/logs/*
-!data/caches/logs/index.html
-!data/caches/logs/.htaccess
+data/caches/*
+!data/caches/index.html
+!data/caches/.htaccess
 
 # IDE Files
 #-------------------------

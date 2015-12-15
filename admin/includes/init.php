@@ -72,7 +72,7 @@ defined('__ROOT__') OR define('__ROOT__', '../');
 defined('__PUBLIC__') OR define('__PUBLIC__', '../data/assets');
 defined('__TPL__') OR define('__TPL__', '../data/assets/admin');
 
-require(BASE_PATH . 'base/constant.php');
+require(BASE_PATH . 'apps/common/constant.php');
 spl_autoload_register('autoload');
 require(ROOT_PATH . 'include/helpers/time_helper.php');
 require(ROOT_PATH . 'include/helpers/base_helper.php');
@@ -161,16 +161,16 @@ if (file_exists(ROOT_PATH . 'include/language/' . $_CFG['lang'] . '/admin/' . ba
 }
 L($_LANG);
 
-if (!file_exists('../data/attached/caches'))
+if (!file_exists('../data/caches'))
 {
-    @mkdir('../data/attached/caches', 0777);
-    @chmod('../data/attached/caches', 0777);
+    @mkdir('../data/caches', 0777);
+    @chmod('../data/caches', 0777);
 }
 
-if (!file_exists('../data/attached/compiled/admin'))
+if (!file_exists('../data/caches/compiled/admin'))
 {
-    @mkdir('../data/attached/compiled/admin', 0777);
-    @chmod('../data/attached/compiled/admin', 0777);
+    @mkdir('../data/caches/compiled/admin', 0777);
+    @chmod('../data/caches/compiled/admin', 0777);
 }
 
 clearstatcache();
@@ -195,7 +195,7 @@ if (preg_replace('/(?:\.|\s+)[a-z]*$/i', '', $_CFG['ecs_version']) != preg_repla
 $smarty = new template;
 
 $smarty->template_dir  = ROOT_PATH . ADMIN_PATH . '/templates';
-$smarty->compile_dir   = ROOT_PATH . 'data/attached/compiled/admin';
+$smarty->compile_dir   = ROOT_PATH . 'data/caches/compiled/admin';
 if ((DEBUG_MODE & 2) == 2)
 {
     $smarty->force_compile = true;
