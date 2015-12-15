@@ -28,7 +28,7 @@ $base_path = str_replace('\\','/', dirname(getcwd())).'/';
 $base_config = $base_path . 'data/config.php';
 defined('IS_ECSHOP') or define('IS_ECSHOP', file_exists($base_config));
 /* 系统函数 */
-require(BASE_PATH . 'base/Common.php');
+require(BASE_PATH . 'base/helpers/function.php');
 /* 默认配置 */
 C(load_file(BASE_PATH . 'config/global.php'));
 /* 数据库配置 */
