@@ -747,7 +747,7 @@ function load_ext_file($path) {
     if($files = C('LOAD_EXT_FILE')) {
         $files      =  explode(',',$files);
         foreach ($files as $file){
-            $file   = $path.'common/'.$file.'.php';
+            $file   = $path.'helpers/'.$file.'.php';
             if(is_file($file)) include $file;
         }
     }
@@ -755,7 +755,7 @@ function load_ext_file($path) {
     if($configs = C('LOAD_EXT_CONFIG')) {
         if(is_string($configs)) $configs =  explode(',',$configs);
         foreach ($configs as $key=>$config){
-            $file   = $path.'conf/'.$config.'.php';
+            $file   = $path.'config/'.$config.'.php';
             if(is_file($file)) {
                 is_numeric($key)?C(load_config($file)):C($key,load_config($file));
             }

@@ -62,7 +62,7 @@ class BaseController extends Controller {
         @ini_set('include_path', '.;' . BASE_PATH);
         //加载系统常量和函数库
         require(BASE_PATH . 'config/constant.php');
-        require(APP_PATH . 'common/function.php');
+        require(APP_PATH . 'common/helpers/function.php');
         //对用户传入的变量进行转义操作
         if (!get_magic_quotes_gpc()) {
             if (!empty($_GET)) {
@@ -95,8 +95,8 @@ class BaseController extends Controller {
             require(APP_PATH . C('_APP_NAME') . '/languages/' . C('LANG') . '/' . strtolower(CONTROLLER_NAME) . '.php');
         }
         L($_LANG); //语言包赋值
-        if (file_exists(APP_PATH . C('_APP_NAME') . '/common/insert.php')) {
-            require(APP_PATH . C('_APP_NAME') . '/common/insert.php');
+        if (file_exists(APP_PATH . C('_APP_NAME') . '/helpers/insert.php')) {
+            require(APP_PATH . C('_APP_NAME') . '/helpers/insert.php');
         }
         //加载模板解析扩展函数
         require(BASE_PATH . 'vendor/Template.php');

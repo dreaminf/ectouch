@@ -72,12 +72,12 @@ class Dispatcher {
             define('MODULE_PATH', APP_PATH.APP_NAME.'/');
 
             // 加载模块配置文件
-            if(is_file(MODULE_PATH.'conf/config.php'))
-                C(load_config(MODULE_PATH.'conf/config.php'));
+            if(is_file(MODULE_PATH.'config/config.php'))
+                C(load_config(MODULE_PATH.'config/config.php'));
 
 			// 加载模块函数文件
-            if(is_file(MODULE_PATH.'common/function.php'))
-                include MODULE_PATH.'common/function.php';
+            if(is_file(MODULE_PATH.'helpers/function.php'))
+                include MODULE_PATH.'helpers/function.php';
 
 			// 加载模块的扩展配置文件
             load_ext_file(MODULE_PATH);
