@@ -28,9 +28,9 @@ $base_path = str_replace('\\','/', dirname(getcwd())).'/';
 $base_config = $base_path . 'data/config.php';
 defined('IS_ECSHOP') or define('IS_ECSHOP', file_exists($base_config));
 /* 系统函数 */
-require(BASE_PATH . 'Common.php');
+require(BASE_PATH . 'base/Common.php');
 /* 默认配置 */
-C(load_file(BASE_PATH . 'Convention.php'));
+C(load_file(BASE_PATH . 'base/Convention.php'));
 /* 数据库配置 */
 C('DB', load_file(ROOT_PATH . 'data/config.php'));
 /* 设置时区 */

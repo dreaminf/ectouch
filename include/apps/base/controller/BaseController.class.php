@@ -61,8 +61,8 @@ class BaseController extends Controller {
         @ini_set("arg_separator.output", "&amp;");
         @ini_set('include_path', '.;' . BASE_PATH);
         //加载系统常量和函数库
-        require(BASE_PATH . 'base/constant.php');
-        require(BASE_PATH . 'base/function.php');
+        require(APP_PATH . 'base/constant.php');
+        require(APP_PATH . 'base/function.php');
         //对用户传入的变量进行转义操作
         if (!get_magic_quotes_gpc()) {
             if (!empty($_GET)) {
