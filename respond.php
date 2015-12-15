@@ -13,12 +13,10 @@
  * ----------------------------------------------------------------------------
  */
 
-/* 访问控制 */
 define('IN_ECTOUCH', true);
+define('CONTROLLER_NAME', 'Respond');
 if(!isset($_REQUEST['code'])){
     header('location: ./index.php?'.$_SERVER['QUERY_STRING']);
     exit;
 }
-define('CONTROLLER_NAME', 'Respond');
-/* 加载核心文件 */
-require ('include/EcTouch.php');
+require ('include/bootstrap.php');

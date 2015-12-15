@@ -14,14 +14,8 @@
  */
 
 define('IN_ECTOUCH', true);
+define('ROOT_PATH', str_replace('\\', '/', dirname(dirname(dirname(__FILE__)))) . '/');
 define('CONTROLLER_NAME', 'Respond');
-
-$params['type'] = 1;
-$params['code'] = 'wxpay';
-$params['postStr'] = $GLOBALS["HTTP_RAW_POST_DATA"];
-$code = base64_encode(serialize($params));
-$code = str_replace(array('+', '/', '='), array('-', '_', ''), $code);
-$_GET['code'] = $code;
-/* 加载核心文件 */
-$ROOT_PATH = str_replace('\\', '/', dirname(__FILE__) . '/../../');
-require($ROOT_PATH . 'include/EcTouch.php');
+$_GET['code'] = 'wxpay';
+$_GET['type'] = 'notify';
+require ROOT_PATH . 'include/bootstrap.php';

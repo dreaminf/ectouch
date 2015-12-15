@@ -5,9 +5,9 @@
  * ============================================================================
  * Copyright (c) 2012-2015 http://ectouch.cn All rights reserved.
  * ----------------------------------------------------------------------------
- * 文件名称：alipay.php
+ * 文件名称：index.php
  * ----------------------------------------------------------------------------
- * 手机支付宝支付异步通知处理
+ * API接口
  * ----------------------------------------------------------------------------
  * Licensed ( http://www.ectouch.cn/docs/license.txt )
  * ----------------------------------------------------------------------------
@@ -15,7 +15,5 @@
 
 define('IN_ECTOUCH', true);
 define('ROOT_PATH', str_replace('\\', '/', dirname(dirname(dirname(__FILE__)))) . '/');
-define('CONTROLLER_NAME', 'Respond');
-$_GET['code'] = 'alipay';
-$_GET['type'] = 'notify';
+define('BIND_MODULE', 'apis');
 require ROOT_PATH . 'include/bootstrap.php';

@@ -5,7 +5,7 @@
  * ============================================================================
  * Copyright (c) 2012-2014 http://ectouch.cn All rights reserved.
  * ----------------------------------------------------------------------------
- * 文件名称：EcTouch.php
+ * 文件名称：bootstrap.php
  * ----------------------------------------------------------------------------
  * 功能描述：ECTouch公共入口文件
  * ----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ try {
     defined('__HOST__') or define('__HOST__', get_domain());
     defined('__ROOT__') or define('__ROOT__', rtrim(dirname($_SERVER["SCRIPT_NAME"]), '\\/'));
     defined('__URL__') or define('__URL__', __HOST__ . __ROOT__);
-	defined('__ADDONS__') or define('__ADDONS__', __ROOT__ . '/plugins');
+    defined('__ADDONS__') or define('__ADDONS__', __ROOT__ . '/plugins');
     defined('__PUBLIC__') or define('__PUBLIC__', __ROOT__ . '/data/common');
     defined('__ASSETS__') or define('__ASSETS__', __ROOT__ . '/data/assets/' . APP_NAME);
     /* 安装检测 */

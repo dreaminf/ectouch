@@ -14,4 +14,4 @@
  */
 
 define('IN_ECTOUCH', true);
-require ('include/EcTouch.php');
+require ('include/bootstrap.php');
