@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat` (
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `status` int(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态',
   `default_wx` int(1) NOT NULL DEFAULT '1' COMMENT '1为默认使用，0为不默认',
-  `w_url` varchar( 255 ) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

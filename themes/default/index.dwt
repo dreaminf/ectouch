@@ -57,7 +57,7 @@ header{line-height:2rem}
 <body>
 <div class="con">
 <div class="index-max-box">
-{if !$isguanz}
+{if !$subscribe}
 <div class="ect-attention dis-box" >
 	<div class="attention-img"><img src="__TPL__/images/attention-logo.png"></div>
 	<div class="attention-text box-flex">
