@@ -3,7 +3,7 @@
  *
  */
 
-class Cola_Ext_Db_Mysql extends Cola_Ext_Db_Abstract
+class Ultron_Ext_Db_Mysql extends Ultron_Ext_Db_Abstract
 {
     /**
      * Connect to MySQL
@@ -17,7 +17,7 @@ class Cola_Ext_Db_Mysql extends Cola_Ext_Db_Abstract
         }
 
         if (!extension_loaded('mysql')) {
-            throw new Cola_Ext_Db_Exception('Can not find mysql extension.');
+            throw new Ultron_Ext_Db_Exception('Can not find mysql extension.');
         }
 
         $func = ($this->config['persistent']) ? 'mysql_pconnect' : 'mysql_connect';

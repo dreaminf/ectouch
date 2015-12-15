@@ -3,7 +3,7 @@
  *
  */
 
-class Cola_Ext_Db_Mysqli extends Cola_Ext_Db_Abstract
+class Ultron_Ext_Db_Mysqli extends Ultron_Ext_Db_Abstract
 {
     /**
      * Connect to database
@@ -16,11 +16,11 @@ class Cola_Ext_Db_Mysqli extends Cola_Ext_Db_Abstract
         }
 
         if (!extension_loaded('mysqli')) {
-            throw new Cola_Ext_Db_Exception('NO_MYSQLI_EXTENSION_FOUND');
+            throw new Ultron_Ext_Db_Exception('NO_MYSQLI_EXTENSION_FOUND');
         }
 
         if ($this->config['persistent']) {
-            throw new Cola_Ext_Db_Exception('MYSQLI_EXTENSTION_DOES_NOT_SUPPORT_PERSISTENT_CONNECTION');
+            throw new Ultron_Ext_Db_Exception('MYSQLI_EXTENSTION_DOES_NOT_SUPPORT_PERSISTENT_CONNECTION');
         }
 
         $this->conn = mysqli_init();
@@ -76,7 +76,7 @@ class Cola_Ext_Db_Mysqli extends Cola_Ext_Db_Abstract
      * Query SQL
      *
      * @param string $sql
-     * @return Cola_Ext_Db_Mysqli
+     * @return Ultron_Ext_Db_Mysqli
      */
     protected function _query($sql)
     {

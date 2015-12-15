@@ -2,7 +2,7 @@
 /**
  *
  */
-class Cola_Router
+class Ultron_Router
 {
     public $enableDynamicMatch = true;
     public $defaultDynamicRule = array(
@@ -48,7 +48,7 @@ class Cola_Router
             $params[$next] = urldecode(next($tmp));
         }
 
-        Cola::setReg('_params', $params);
+        Ultron::setReg('_params', $params);
 
         return $dispatchInfo;
     }
@@ -80,7 +80,7 @@ class Cola_Router
                     $params += $rule['defaults'];
                 }
 
-                Cola::setReg('_params', $params);
+                Ultron::setReg('_params', $params);
             }
             return $rule;
         }

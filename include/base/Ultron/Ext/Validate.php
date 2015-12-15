@@ -21,10 +21,10 @@ $rules = array(
     'body'   => array('required' => true, 'range' => array(1, 500))
 );
 
-var_dump(Cola_Ext_Validate::check($data, $rules));
+var_dump(Ultron_Ext_Validate::check($data, $rules));
 **/
 
-class Cola_Ext_Validate
+class Ultron_Ext_Validate
 {
     /**
      * Validate Errors

@@ -2,7 +2,7 @@
 /**
  *
  */
-class Cola_Ext_Captcha
+class Ultron_Ext_Captcha
 {
     /**
      * Captch config
@@ -23,8 +23,8 @@ class Cola_Ext_Captcha
         'ttl'             => 90,
         'minPoints'       => 256,
         'maxPoints'       => 512,
-        'sessionValueKey' => '_COLA_CAPTCHA_VALUE_',
-        'sessionTtlKey'   => '_COLA_CAPTCHA_TTL_',
+        'sessionValueKey' => '_Ultron_CAPTCHA_VALUE_',
+        'sessionTtlKey'   => '_Ultron_CAPTCHA_TTL_',
     );
 
     /**
@@ -132,7 +132,7 @@ class Cola_Ext_Captcha
     }
 
     /**
-     * Colar
+     * Ultronr
      *
      * HEX color to RGB
      * @param string $color

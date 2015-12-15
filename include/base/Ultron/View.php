@@ -3,7 +3,7 @@
  *
  */
 
-class Cola_View
+class Ultron_View
 {
     /**
      * Base path of views
@@ -19,7 +19,7 @@ class Cola_View
     public function __construct($viewsHome = null)
     {
         if (is_null($viewsHome)) {
-            $viewsHome = Cola::getConfig('_viewsHome');
+            $viewsHome = Ultron::getConfig('_viewsHome');
         }
 
         if ($viewsHome) {
@@ -193,7 +193,7 @@ class Cola_View
     {
         switch ($key) {
             case 'config':
-                $this->config = Cola::getInstance()->config;
+                $this->config = Ultron::getInstance()->config;
                 return $this->config;
 
             default:

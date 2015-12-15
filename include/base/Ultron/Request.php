@@ -2,7 +2,7 @@
 /**
  *
  */
-class Cola_Request
+class Ultron_Request
 {
     /**
      * Retrieve a member of the pathinfo params
@@ -13,7 +13,7 @@ class Cola_Request
      */
     public static function param($key = null, $default = null)
     {
-        $params = (array)Cola::getReg('_params');
+        $params = (array)Ultron::getReg('_params');
 
         if (null === $key) return $params;
 

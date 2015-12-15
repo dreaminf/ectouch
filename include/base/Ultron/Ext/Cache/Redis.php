@@ -3,7 +3,7 @@
  * use https://github.com/nicolasff/phpredis
  *
  */
-class Cola_Ext_Cache_Redis extends Cola_Ext_Cache_Abstract
+class Ultron_Ext_Cache_Redis extends Ultron_Ext_Cache_Abstract
 {
     public $options = array(
         'persistent'            => true,

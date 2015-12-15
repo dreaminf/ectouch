@@ -1,5 +1,5 @@
 <?php
-class Cola_Config implements ArrayAccess
+class Ultron_Config implements ArrayAccess
 {
     /**
      * Contains array of configuration data
@@ -9,11 +9,11 @@ class Cola_Config implements ArrayAccess
     protected $_data = array();
 
     /**
-     * Cola_Config provides a property based interface to
+     * Ultron_Config provides a property based interface to
      * an array. The data are read-only unless $allowModifications
      * is set to true on construction.
      *
-     * Cola_Config also implements Countable and Iterator to
+     * Ultron_Config also implements Countable and Iterator to
      * facilitate easy access to the data.
      *
      * @param  array   $data
@@ -90,7 +90,7 @@ class Cola_Config implements ArrayAccess
      *
      * @param  string $name
      * @param  mixed  $value
-     * @throws Cola_Exception
+     * @throws Ultron_Exception
      * @return void
      */
     public function __set($name, $value)
@@ -113,7 +113,7 @@ class Cola_Config implements ArrayAccess
      * Support unset() overloading on PHP 5.1
      *
      * @param  string $name
-     * @throws Cola_Exception
+     * @throws Ultron_Exception
      * @return void
      */
     public function __unset($name)
@@ -121,7 +121,7 @@ class Cola_Config implements ArrayAccess
         if ($this->_allowModifications) {
             unset($this->_data[$name]);
         } else {
-            throw new Cola_Exception('Cola_Config is read only');
+            throw new Ultron_Exception('Ultron_Config is read only');
         }
     }
 
@@ -140,7 +140,7 @@ class Cola_Config implements ArrayAccess
      * merge config
      *
      * @param array $config
-     * @return Cola_Config
+     * @return Ultron_Config
      */
     public function merge($config)
     {
@@ -172,7 +172,7 @@ class Cola_Config implements ArrayAccess
      *
      * @param string $offset
      * @param mixed $value
-     * @return Cola_Config
+     * @return Ultron_Config
      */
     public function offsetSet($offset, $value)
     {

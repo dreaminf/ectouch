@@ -2,7 +2,7 @@
 /**
  *
  */
-abstract class Cola_Ext_Db_Pdo_Abstract extends Cola_Ext_Db_Abstract
+abstract class Ultron_Ext_Db_Pdo_Abstract extends Ultron_Ext_Db_Abstract
 {
 	/**
 	 * Create a PDO object and connects to the database.
@@ -58,7 +58,7 @@ abstract class Cola_Ext_Db_Pdo_Abstract extends Cola_Ext_Db_Abstract
      * Query sql
      *
      * @param string $sql
-     * @return Cola_Ext_Db_Mysql
+     * @return Ultron_Ext_Db_Mysql
      */
     protected function _query($sql)
     {

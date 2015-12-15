@@ -3,7 +3,7 @@
  *
  */
 
-abstract class Cola_Ext_Log_Abstract
+abstract class Ultron_Ext_Log_Abstract
 {
     const EMERG   = 0;  // Emergency: system is unusable
     const ALERT   = 1;  // Alert: action must be taken immediately
@@ -16,7 +16,7 @@ abstract class Cola_Ext_Log_Abstract
 
     protected $_options = array(
         'mode' => '0755',
-        'file' => '/tmp/Cola.log',
+        'file' => '/tmp/Ultron.log',
         'format' => '%time%|%event%|%msg%'
     );
 

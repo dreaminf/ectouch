@@ -3,7 +3,7 @@
  *
  */
 
-class Cola_Ext_Db_Pdo_Mysql extends Cola_Ext_Db_Pdo_Abstract
+class Ultron_Ext_Db_Pdo_Mysql extends Ultron_Ext_Db_Pdo_Abstract
 {
     protected function _dsn($params)
     {

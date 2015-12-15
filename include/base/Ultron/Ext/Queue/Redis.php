@@ -1,10 +1,10 @@
 <?php
 /**
- * Cola_Ext_Queue_Redis
+ * Ultron_Ext_Queue_Redis
  *
  * use https://github.com/nicolasff/phpredis
  */
-class Cola_Ext_Queue_Redis extends Cola_Ext_Queue_Abstract
+class Ultron_Ext_Queue_Redis extends Ultron_Ext_Queue_Abstract
 {
     protected $_redis;
 

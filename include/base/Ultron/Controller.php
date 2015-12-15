@@ -2,7 +2,7 @@
 /**
  *
  */
-abstract class Cola_Controller
+abstract class Ultron_Controller
 {
     /**
      * Template file extension
@@ -25,7 +25,7 @@ abstract class Cola_Controller
      */
     public function __call($method, $args)
     {
-        throw new Cola_Exception("Call to undefined method: Cola_Controller::{$method}()");
+        throw new Ultron_Exception("Call to undefined method: Ultron_Controller::{$method}()");
     }
 
     /**
@@ -36,7 +36,7 @@ abstract class Cola_Controller
     */
     protected function get($key = null, $default = null)
     {
-        return Cola_Request::get($key, $default);
+        return Ultron_Request::get($key, $default);
     }
 
     /**
@@ -47,7 +47,7 @@ abstract class Cola_Controller
     */
     protected function post($key = null, $default = null)
     {
-        return Cola_Request::post($key, $default);
+        return Ultron_Request::post($key, $default);
     }
 
     /**
@@ -58,18 +58,18 @@ abstract class Cola_Controller
     */
     protected function param($key = null, $default = null)
     {
-        return Cola_Request::param($key, $default);
+        return Ultron_Request::param($key, $default);
     }
 
     /**
      * View
      *
      * @param array $config
-     * @return Cola_View
+     * @return Ultron_View
      */
     protected function view($viewsHome = null)
     {
-        return $this->view = new Cola_View($viewsHome);
+        return $this->view = new Ultron_View($viewsHome);
     }
 
     /**
@@ -93,7 +93,7 @@ abstract class Cola_Controller
      */
     protected function defaultTemplate()
     {
-        $dispatchInfo = Cola::getInstance()->dispatchInfo;
+        $dispatchInfo = Ultron::getInstance()->dispatchInfo;
 
         $tpl = str_replace('_', DIRECTORY_SEPARATOR, substr($dispatchInfo['controller'], 0, -10))
              . DIRECTORY_SEPARATOR
@@ -153,19 +153,19 @@ abstract class Cola_Controller
                 return $this->view;
 
             case 'request':
-                $this->request = new Cola_Request();
+                $this->request = new Ultron_Request();
                 return $this->request;
 
             case 'response':
-                $this->response = new Cola_Response();
+                $this->response = new Ultron_Response();
                 return $this->response;
 
             case 'config':
-                $this->config = Cola::getInstance()->config;
+                $this->config = Ultron::getInstance()->config;
                 return $this->config;
 
             default:
-                throw new Cola_Exception('Undefined property: ' . get_class($this) . '::' . $key);
+                throw new Ultron_Exception('Undefined property: ' . get_class($this) . '::' . $key);
         }
     }
 }

@@ -2,7 +2,7 @@
 /**
  *
  */
-class Cola_Ext_Cache_Null extends Cola_Ext_Cache_Abstract
+class Ultron_Ext_Cache_Null extends Ultron_Ext_Cache_Abstract
 {
     /**
      * Set cache

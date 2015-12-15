@@ -2,7 +2,7 @@
 /**
  *
  */
-class Cola_Response
+class Ultron_Response
 {
     static protected $statusTexts = array(
         '100' => 'Continue',

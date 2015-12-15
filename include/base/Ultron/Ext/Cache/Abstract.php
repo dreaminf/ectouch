@@ -2,7 +2,7 @@
 /**
  *
  */
-abstract class Cola_Ext_Cache_Abstract
+abstract class Ultron_Ext_Cache_Abstract
 {
     public $conn;
 

@@ -1,6 +1,6 @@
 <?php
 
-class Cola_Ext_Cache_Memcached extends Cola_Ext_Cache_Abstract
+class Ultron_Ext_Cache_Memcached extends Ultron_Ext_Cache_Abstract
 {
     /**
      * Constructor

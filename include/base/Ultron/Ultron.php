@@ -3,11 +3,11 @@
 /**
  * Define
  */
-defined('COLA_DIR') || define('COLA_DIR', dirname(__FILE__));
+defined('ULTRON_DIR') || define('ULTRON_DIR', dirname(__FILE__));
 
-require COLA_DIR . '/Config.php';
+require ULTRON_DIR . '/Config.php';
 
-class Cola
+class Ultron
 {
     /**
      * Singleton instance
@@ -15,7 +15,7 @@ class Cola
      * Marked only as protected to allow extension of the class. To extend,
      * simply override {@link getInstance()}.
      *
-     * @var Cola
+     * @var Ultron
      */
     protected static $_instance = null;
 
@@ -29,14 +29,14 @@ class Cola
     /**
      * Run time config
      *
-     * @var Cola_Config
+     * @var Ultron_Config
      */
     public $config;
 
     /**
      * Router
      *
-     * @var Cola_Router
+     * @var Ultron_Router
      */
     public $router;
 
@@ -60,28 +60,28 @@ class Cola
      */
     protected function __construct()
     {
-        $this->config = new Cola_Config(array(
+        $this->config = new Ultron_Config(array(
             '_class' => array(
-                'Cola_Model'               => COLA_DIR . '/Model.php',
-                'Cola_View'                => COLA_DIR . '/View.php',
-                'Cola_Controller'          => COLA_DIR . '/Controller.php',
-                'Cola_Router'              => COLA_DIR . '/Router.php',
-                'Cola_Request'             => COLA_DIR . '/Request.php',
-                'Cola_Response'            => COLA_DIR . '/Response.php',
-                'Cola_Ext_Validate'        => COLA_DIR . '/Ext/Validate.php',
-                'Cola_Exception'           => COLA_DIR . '/Exception.php',
-                'Cola_Exception_Dispatch'  => COLA_DIR . '/Exception/Dispatch.php',
+                'Ultron_Model'               => ULTRON_DIR . '/Model.php',
+                'Ultron_View'                => ULTRON_DIR . '/View.php',
+                'Ultron_Controller'          => ULTRON_DIR . '/Controller.php',
+                'Ultron_Router'              => ULTRON_DIR . '/Router.php',
+                'Ultron_Request'             => ULTRON_DIR . '/Request.php',
+                'Ultron_Response'            => ULTRON_DIR . '/Response.php',
+                'Ultron_Ext_Validate'        => ULTRON_DIR . '/Ext/Validate.php',
+                'Ultron_Exception'           => ULTRON_DIR . '/Exception.php',
+                'Ultron_Exception_Dispatch'  => ULTRON_DIR . '/Exception/Dispatch.php',
             ),
         ));
 
-        Cola::registerAutoload();
+        Ultron::registerAutoload();
     }
 
     /**
      * Bootstrap
      *
      * @param mixed $arg string as a file and array as config
-     * @return Cola
+     * @return Ultron
      */
     public static function boot($config = 'config.inc.php')
     {
@@ -100,7 +100,7 @@ class Cola
     /**
      * Singleton instance
      *
-     * @return Cola
+     * @return Ultron
      */
     public static function getInstance()
     {
@@ -117,7 +117,7 @@ class Cola
      * @param string $name
      * @param mixed $value
      * @param string $delimiter
-     * @return Cola
+     * @return Ultron
      */
     public static function setConfig($name, $value, $delimiter = '.')
     {
@@ -128,7 +128,7 @@ class Cola
     /**
      * Get Config
      *
-     * @return Cola_Config
+     * @return Ultron_Config
      */
     public static function getConfig($name, $default = null, $delimiter = '.')
     {
@@ -140,7 +140,7 @@ class Cola
      *
      * @param string $name
      * @param mixed $obj
-     * @return Cola
+     * @return Ultron
      */
     public static function setReg($name, $obj)
     {
@@ -194,10 +194,10 @@ class Cola
         }
 
         /**
-         * auto load Cola class
+         * auto load Ultron class
          */
-        if ((!$classFile) && ('Cola' === substr($className, 0, 4))) {
-            $classFile = dirname(COLA_DIR) . DIRECTORY_SEPARATOR
+        if ((!$classFile) && ('Ultron' === substr($className, 0, 4))) {
+            $classFile = dirname(Ultron_DIR) . DIRECTORY_SEPARATOR
                        . str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
         }
 
@@ -226,7 +226,7 @@ class Cola
      * User define class path
      *
      * @param array $classPath
-     * @return Cola
+     * @return Ultron
      */
     public static function setClassPath($class, $path = '')
     {
@@ -244,9 +244,9 @@ class Cola
      *
      * @param string $func
      * @param boolean $enable
-     * @return Cola
+     * @return Ultron
      */
-    public static function registerAutoload($func = 'Cola::loadClass', $enable = true)
+    public static function registerAutoload($func = 'Ultron::loadClass', $enable = true)
     {
         $enable ? spl_autoload_register($func) : spl_autoload_unregister($func);
         return self::$_instance;
@@ -261,7 +261,7 @@ class Cola
     public function getDispatchInfo($init = false)
     {
         if ((null === $this->dispatchInfo) && $init) {
-            $this->router || ($this->router = new Cola_Router());
+            $this->router || ($this->router = new Ultron_Router());
 
             if ($urls = self::getConfig('_urls')) {
                 $this->router->rules += $urls;
@@ -282,12 +282,12 @@ class Cola
     public function dispatch()
     {
         if (!$dispatchInfo = $this->getDispatchInfo(true)) {
-            throw new Cola_Exception_Dispatch('No dispatch info found');
+            throw new Ultron_Exception_Dispatch('No dispatch info found');
         }
 
         if (isset($dispatchInfo['file'])) {
             if (!file_exists($dispatchInfo['file'])) {
-                throw new Cola_Exception_Dispatch("Can't find dispatch file:{$dispatchInfo['file']}");
+                throw new Ultron_Exception_Dispatch("Can't find dispatch file:{$dispatchInfo['file']}");
             }
             require_once $dispatchInfo['file'];
         }
@@ -295,7 +295,7 @@ class Cola
         if (isset($dispatchInfo['controller'])) {
             $classFile = self::getConfig('_controllersHome') . "/{$dispatchInfo['controller']}.php";
             if (!self::loadClass($dispatchInfo['controller'], $classFile)) {
-                throw new Cola_Exception_Dispatch("Can't load controller:{$dispatchInfo['controller']}");
+                throw new Ultron_Exception_Dispatch("Can't load controller:{$dispatchInfo['controller']}");
             }
             $controller = new $dispatchInfo['controller']();
         }
@@ -303,7 +303,7 @@ class Cola
         if (isset($dispatchInfo['action'])) {
             $func = isset($controller) ? array($controller, $dispatchInfo['action']) : $dispatchInfo['action'];
             if (!is_callable($func, true)) {
-                throw new Cola_Exception_Dispatch("Can't dispatch action:{$dispatchInfo['action']}");
+                throw new Ultron_Exception_Dispatch("Can't dispatch action:{$dispatchInfo['action']}");
             }
             call_user_func($func);
         }

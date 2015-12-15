@@ -1,5 +1,5 @@
 <?php
-Class Cola_Ext_Mongo
+Class Ultron_Ext_Mongo
 {
     protected $_mongo;
     protected $_db;
@@ -63,7 +63,7 @@ Class Cola_Ext_Mongo
             return true;
         }
 
-        throw new Cola_Exception('Mongo Auth Failed: bad user or password.');
+        throw new Ultron_Exception('Mongo Auth Failed: bad user or password.');
     }
 
     /**
@@ -228,7 +228,7 @@ Class Cola_Ext_Mongo
             return $id;
         }
 
-        throw new Cola_Exception('Cola_Ext_Mongo: gen auto increment id failed');
+        throw new Ultron_Exception('Ultron_Ext_Mongo: gen auto increment id failed');
     }
 
     /**

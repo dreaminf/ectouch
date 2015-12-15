@@ -3,7 +3,7 @@
  *
  */
 
-abstract class Cola_Ext_Db_Abstract
+abstract class Ultron_Ext_Db_Abstract
 {
     /**
      * Configuration
@@ -263,7 +263,7 @@ abstract class Cola_Ext_Db_Abstract
     protected function _throwException()
     {
         $error = $this->error();
-        throw new Cola_Ext_Db_Exception($error['msg'], $error['code']);
+        throw new Ultron_Ext_Db_Exception($error['msg'], $error['code']);
     }
 
     abstract public function connect();

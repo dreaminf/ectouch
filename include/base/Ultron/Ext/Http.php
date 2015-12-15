@@ -3,7 +3,7 @@
  *
  */
 
-class Cola_Ext_Http
+class Ultron_Ext_Http
 {
     /**
      * Default params
@@ -67,7 +67,7 @@ class Cola_Ext_Http
     public static function request($url, $params)
     {
         if (!function_exists('curl_init')) {
-            throw new Cola_Exception('Can not find curl extension');
+            throw new Ultron_Exception('Can not find curl extension');
         }
 
         $curl = curl_init();
@@ -81,7 +81,7 @@ class Cola_Ext_Http
         self::$info = curl_getinfo($curl) + array('errno' => $errno, 'error' => $error);
 
         if (0 !== $errno) {
-            throw new Cola_Exception($error, $errno);
+            throw new Ultron_Exception($error, $errno);
         }
 
         curl_close ($curl);

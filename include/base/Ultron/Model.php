@@ -2,7 +2,7 @@
 /**
  *
  */
-abstract class Cola_Model
+abstract class Ultron_Model
 {
     const ERROR_VALIDATE_CODE = -400;
 
@@ -216,45 +216,45 @@ abstract class Cola_Model
      *
      * @param array $config
      * @param string
-     * @return Cola_Ext_Db
+     * @return Ultron_Ext_Db
      */
     public function db($name = null)
     {
         is_null($name) && $name = $this->_db;
 
         if (is_array($name)) {
-            return Cola::factory('Cola_Ext_Db', $name);
+            return Ultron::factory('Ultron_Ext_Db', $name);
         }
 
-        $regName = "_cola_db_{$name}";
-        if (!$db = Cola::getReg($regName)) {
-            $config = (array)Cola::getConfig($name) + array('adapter' => 'Pdo_Mysql');
-            $db = Cola::factory('Cola_Ext_Db', $config);
-            Cola::setReg($regName, $db);
+        $regName = "_Ultron_db_{$name}";
+        if (!$db = Ultron::getReg($regName)) {
+            $config = (array)Ultron::getConfig($name) + array('adapter' => 'Pdo_Mysql');
+            $db = Ultron::factory('Ultron_Ext_Db', $config);
+            Ultron::setReg($regName, $db);
         }
 
         return $db;
     }
 
     /**
-     * Init Cola_Ext_Cache
+     * Init Ultron_Ext_Cache
      *
      * @param mixed $name
-     * @return Cola_Ext_Cache
+     * @return Ultron_Ext_Cache
      */
     public function cache($name = null)
     {
         is_null($name) && ($name = $this->_cache);
 
         if (is_array($name)) {
-            return Cola::factory('Cola_Ext_Cache', $name);
+            return Ultron::factory('Ultron_Ext_Cache', $name);
         }
 
-        $regName = "_cola_cache_{$name}";
-        if (!$cache = Cola::getReg($regName)) {
-            $config = (array)Cola::getConfig($name);
-            $cache = Cola::factory('Cola_Ext_Cache', $config);
-            Cola::setReg($regName, $cache);
+        $regName = "_Ultron_cache_{$name}";
+        if (!$cache = Ultron::getReg($regName)) {
+            $config = (array)Ultron::getConfig($name);
+            $cache = Ultron::factory('Ultron_Ext_Cache', $config);
+            Ultron::setReg($regName, $cache);
         }
 
         return $cache;
@@ -304,7 +304,7 @@ abstract class Cola_Model
             return true;
         }
 
-        $validate = new Cola_Ext_Validate();
+        $validate = new Ultron_Ext_Validate();
 
         $result = $validate->check($data, $rules, $ignoreNotExists);
 
@@ -344,11 +344,11 @@ abstract class Cola_Model
                 return $this->cache;
 
             case 'config':
-                $this->config = Cola::getInstance()->config;
+                $this->config = Ultron::getInstance()->config;
                 return $this->config;
 
             default:
-                throw new Cola_Exception('Undefined property: ' . get_class($this). '::' . $key);
+                throw new Ultron_Exception('Undefined property: ' . get_class($this). '::' . $key);
         }
     }
 }

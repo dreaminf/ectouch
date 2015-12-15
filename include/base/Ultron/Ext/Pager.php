@@ -3,7 +3,7 @@
  *
  */
 
-class Cola_Ext_Pager
+class Ultron_Ext_Pager
 {
     protected $_config = array(
         'prevNums'         => 2,
@@ -241,7 +241,7 @@ class Cola_Ext_Pager
     }
 
     /**
-     * Init Cola_Ext_Page
+     * Init Ultron_Ext_Page
      *
      */
     public function _init()

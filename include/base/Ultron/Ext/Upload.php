@@ -3,7 +3,7 @@
  *
  */
 
-class Cola_Ext_Upload
+class Ultron_Ext_Upload
 {
     /**
      * Upload config
@@ -118,7 +118,7 @@ class Cola_Ext_Upload
      * @param array $file
      * @return array
      */
-    public function save($namedBy = 'Cola_Ext_Upload::defaultName')
+    public function save($namedBy = 'Ultron_Ext_Upload::defaultName')
     {
         $ret = array();
 

@@ -1,6 +1,6 @@
 <?php
 
-class Cola_Exception extends Exception
+class Ultron_Exception extends Exception
 {
 
 }

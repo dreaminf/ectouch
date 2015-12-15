@@ -2,7 +2,7 @@
 /**
  *
  */
-abstract class Cola_Ext_Queue_Abstract
+abstract class Ultron_Ext_Queue_Abstract
 {
     protected $_params = array();
 
