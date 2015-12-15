@@ -25,8 +25,10 @@ class RespondController extends CommonController
     {
         parent::__construct();
         // 获取参数
-        $code = I('get.code');
-        $this->data = unserialize(urlsafe_b64decode($code));
+        $this->data = array(
+            'code' => I('get.code'),
+            'type' => I('get.type')
+        );
 	}
 
     // 发送
@@ -40,13 +42,11 @@ class RespondController extends CommonController
             $msg = L('pay_disabled');
         } else {
             $plugin_file = ADDONS_PATH.'payment/' . $this->data['code'] . '.php';
-            /* 检查插件文件是否存在，如果存在则验证支付是否成功，否则则返回失败信息 */
             if (file_exists($plugin_file)) {
-                /* 根据支付方式代码创建支付类的对象并调用其响应操作方法 */
                 include_once($plugin_file);
                 $payobj = new $this->data['code']();
-                /* 处理异步请求 */
-                if($this->data['type'] == 1){
+                // 处理异步请求
+                if($this->data['type'] == 'notify'){
                     @$payobj->notify($this->data);
                 }
                 $msg = (@$payobj->callback($this->data)) ? L('pay_success') : L('pay_fail');
