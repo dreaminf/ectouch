@@ -124,7 +124,9 @@
   </div>
 </div>
 
-<footer class="index-footer comWidth"><!-- #BeginLibraryItem "/library/page_index_menu.lbi" --><!-- #EndLibraryItem --></footer>
+<footer class="index-footer comWidth">
+	<!-- #BeginLibraryItem "/library/page_index_menu.lbi" --><!-- #EndLibraryItem -->
+</footer>
 </div>
 <!-- #BeginLibraryItem "/library/search_index.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

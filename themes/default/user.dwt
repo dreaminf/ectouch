@@ -8,38 +8,11 @@
 		<meta name="keywords" content="" />
 		<meta name="description" content="" />
 		<link rel="stylesheet" href="__TPL__/css/member.css">
+		<link rel="stylesheet" type="text/css" href="__TPL__/css/search_index.css"/>
 		<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
-<style type="text/css">
-/*==================
-    搜索
-=============*/
-
-.ect-padding-lr { padding-left: 0.6em; padding-right: 0.6em; }
-.ect-bg {background: #1CBB7F !important; color: #fff !important; height: auto;overflow: hidden;}
-.search .ect-margin-tb{margin-top:0.6em; margin-bottom:0.6em;}
-.ect-header{height:2.5em; position:relative;background-color: #1CBB7F;}
-.ect-header span{font-size:1.4em; position:absolute; left:2.4em; right:3em; top:0.24em; text-align: center}
-.herder-close{color:#fff; float:right; font-size:2em; margin-top: -0.1em; margin-right:0.2em;}
-
-.search input{background-color: #FFF;}
-.input-search{position:relative; margin-top:0.8em; height:auto; height:3em; overflow:hidden;}
-.input-search span{position:absolute; left:0em; right:2.9em; border:1px solid #eee;
-    -webkit-border-radius:  0.4em 0 0 0.4em;
-    -moz-border-radius: 0.4em 0 0 0.4em;
-    border-radius: 0.4em 0 0 0.4em;}
-.input-search span input{width:100%; height:2.4em; font-size:1.2em; border:1px solid #fcfcfc; padding:0 0.6em; box-sizing:border-box; border-radius:0; border:none; border-radius:0.4em 0 0 0.4em;}
-.input-search button{width:3.6em; height:3em;  background:#e6e6e6; display:block; position:absolute; right:0em; border-radius: 0 0.4em 0.4em 0; border:none;}
-.input-search button i{color:#999; font-size:1.8em;}
-.hot-search{margin-top:0.4em; display:table; width:100%;}
-.hot-search p{margin-top:0.5em;}
-.hot-search h4{height:1.6em;}
-.hot-search a{display:table-cell; float:left;  padding:0.8em; background:#fff; margin-right:0.6em; margin-bottom:0.6em; border-radius:0.4em;}
-.con{margin-bottom: 4rem;}
-.member-order a{text-decoration: none;}
-</style>
 	</head>
 	<body>
-	    <div class="con">
+	    <div class="con" style="margin-bottom: 4rem;">
 		<div class="member-main">
 			<div class="member-photo">
 				<div class="member-photo-left fl" onclick="window.location = '{:url('user/collection_list')}'">
@@ -146,13 +119,7 @@
 			<!--{/if}-->
 		</div>
 		<footer class="member-footer">
-			<ul>
-				<li class="fl member-footer-list btn"><a href="{:url('index/index')}"><i class="iconfont">&#xe621;</i><span>首 页</span></a></li>
-				<li class="fl member-footer-list btn"><a href="{:url('category/top_all')}"><i class="iconfont">&#xe627;</i><span>分 类</span></a></li>
-				<li class="fl member-footer-list btn"><a href="javascript:openSearch();"><i class="iconfont">&#xe617;</i><span>搜 索</span></a></li>
-				<li class="fl member-footer-list btn"><a href="{:url('flow/cart')}"><i class="iconfont">&#xe626;</i><span>购物车</span></a></li>
-				<li class="fl member-footer-list btn"><a href="{:url('user/index')}"><i class="iconfont">&#xe625;</i><span>我</span></a></li>
-			</ul>
+			<!-- #BeginLibraryItem "/library/page_user_menu.lbi" --><!-- #EndLibraryItem -->
 		</footer>
 		</div>
 		<!-- #BeginLibraryItem "/library/search_index.lbi" --><!-- #EndLibraryItem -->
