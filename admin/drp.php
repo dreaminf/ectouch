@@ -233,7 +233,7 @@ if ($_REQUEST['act'] == 'user_edit')
         exit;
     }
     // 获取店铺信息
-    $info = $db->getRow("SELECT d.id,d.shop_name,d.real_name,d.shop_mobile,d.user_id,d.cat_id,d.open,u.user_name FROM " . $ecs->table("drp_shop") . " as d join " . $ecs->table("users") . " as u on d.user_id=u.user_id where d.id = $id");
+    $info = $db->getRow("SELECT d.id,d.shop_name,d.real_name,d.shop_mobile,d.user_id,d.cat_id,d.open,d.audit,u.user_name FROM " . $ecs->table("drp_shop") . " as d join " . $ecs->table("users") . " as u on d.user_id=u.user_id where d.id = $id");
     $smarty->assign('info', $info);
 
     $catArr = explode(',',$info['cat_id']);
