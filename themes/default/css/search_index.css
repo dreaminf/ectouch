@@ -48,3 +48,100 @@ header{line-height:2rem}
 .index-guanz-show{ position:fixed; left:50%;  margin-left: -9.5rem; top:30%; background:#fff; z-index:1001; overflow:hidden; width: 19rem; height: 19rem; padding: 0.5rem;}
 .index-guanz-show p{color:#FDFDFD;font-size: 1.2rem;}
 .index-guanz-show img{ width: 16rem;}
+
+/*==================
+   分销商信息
+=============*/
+   .index-main{margin:0; margin-bottom:4rem;}
+    .index-recom {border-bottom: 1px #eee solid}
+
+    .ect-index-header {
+        width: 100%;
+        box-sizing: border-box;
+    //background-image: url(/themes/default/sale/images/index_bg.jpg);
+        position: relative;
+        height: 12.5rem;
+        background-size: 100% auto;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    .ect-index-info,.ect-index-menu,.ect-index-menu ul{
+        box-sizing: border-box;
+        width: 100%;
+
+    }
+    .ect-index-info{
+        position: absolute;
+        padding:0 1rem;
+        top:0;
+        bottom:0;
+        top: 4rem;
+        right: 0;
+        margin-top:-4.1rem;
+        width: 100%;
+    }
+    .ect-index-header>img{
+        width:100%;
+        height:12.5rem;
+    }
+    .ect-index-name{margin-top:0.3rem; color: #fff; position:absolute; right:0; bottom:1rem; color:#fff;font-size: 1rem; right:1rem;}
+    .ect-index-name h1{font-weight: normal; font-size:1.2rem; color: #fff;}
+    .ect-index-detail{text-align: left; display:block;  left: 0; width:6rem; height:6rem; position: absolute; bottom:-2rem; z-index: 999; left:1rem;}
+    .ect-index-info .ect-index-detail img{
+
+        width: 6rem;
+        height: 6rem;
+        margin-left: 0rem;
+    }
+    .ect-index-menu ul li{
+        padding: 0.8rem 0;
+        width: 25%;
+        box-sizing: border-box;
+        overflow: hidden;
+        float: left;
+        text-align: center;
+    }
+    .ect-index-menu ul li a{
+        border-right: 1px solid #e0e0e0;
+        display: block;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+    .ect-index-menu ul li a h3{
+        height: 1.6875rem;
+        font-size: 1.4rem;
+        color: #252525;
+        line-height: 1.8rem;
+        text-align: center;
+    }
+    .ect-index-menu ul li a h4{
+        /*height: 1.3125rem;*/
+        font-size: 1rem;
+        color: #999;
+        line-height: 1.2rem;
+        text-align: center;
+    }
+    .ect-index-menu-share{
+        height: 1.6875rem;
+        text-align: center;
+    }
+    .menu-share-pic{
+        display: inline-block;
+        width: 1.0625rem;
+        height: 1.125rem;
+        margin-top: .4375rem;
+        background:url(__TPL__/sale/images/index-share.png);
+        background-repeat: no-repeat;
+        background-size: 100%;
+    }
+
+    .drp-name{
+        font-size: 1.5rem;
+        text-align: center;
+        line-height: 3rem
+    }
+
+    .share-div{position:fixed; left: 0; top:0; bottom:0; right:0; background:rgba(0,0,0,0.8); z-index: 1000; display: none;}
+    .share-div.active{display:inherit;}
+    .share-div{text-align: center;}
+    .share-div img{position: absolute; right: 0.2rem; top: 0.4rem;}
