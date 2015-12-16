@@ -1072,11 +1072,9 @@ class UserController extends CommonController {
 
         // 获得用户对应收货人信息
         $consignee = model('Users')->get_consignee_list($_SESSION['user_id'], $id);
-
         $province_list = model('RegionBase')->get_regions(1, $consignee['country']);
         $city_list = model('RegionBase')->get_regions(2, $consignee['province']);
         $district_list = model('RegionBase')->get_regions(3, $consignee['city']);
-
         $this->assign('title', L('edit_address'));
         $this->assign('consignee', $consignee);
         // 取得国家列表、商店所在国家、商店所在国家的省列表
