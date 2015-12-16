@@ -45,16 +45,4 @@
 			$(".search").hide();
 		}
 	}
-	// $(function() {
-	// 	$('#loading').hide();
-	// 	$(document).pjax('a', 'body');
-	// 	$(document).on('pjax:send', function() {
-	// 		$('#loading').show();
-	// 	});
-	// 	$(document).on('pjax:complete', function() {
-	// 		$('#loading').hide();
-	// 	});
-	// })
 </script>
-<!-- <div id="loading"><img src="__TPL__/images/loading.gif"></div> -->
-{$wechat_js_sdk}
