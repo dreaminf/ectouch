@@ -3603,5 +3603,7 @@ body, .index-header, .index-footer {
 
 /*# sourceMappingURL=index.css.map */
 
+.swiper-wrapper .swiper-pagination-bullet-active {background: #1CBB7F;}
+
 #loading{ position: fixed; left:0; top: 0; right: 0; bottom: 0; background:rgba(255,255,255,0.6);z-index: 111;}
 #loading img{ position:absolute; width:5rem; height: auto; left:50%; top: 50%; margin-left:-2rem; margin-top:-3rem;}
