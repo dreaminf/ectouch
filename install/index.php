@@ -2,13 +2,14 @@
 header("Content-type: text/html; charset=utf-8");
 //开启session
 if (!session_id()) session_start();
+define('ROOT_PATH', str_replace('\\', '/', dirname(__FILE__)) . '/');
 //配置信息
-$config = include './config.php';
+$config = include ROOT_PATH . 'config.php';
 if(empty($config)){
 	exit(get_tip_html('安装配置信息不存在，无法继续安装！'));
 }
 //本地安装环境验证，获取相应判断信息
-require './localhost.php';
+require ROOT_PATH . 'localhost.php';
 
 //限制最大的执行时间
 set_time_limit(1000);
@@ -20,12 +21,12 @@ if($phpversion < '5.3.0'){
 }
 //数据库文件
 foreach ($config['sqlFileName'] as $sqlFile) {
-	if(!file_exists('./sqldata/'.$sqlFile)){
+	if(!file_exists(ROOT_PATH . 'sqldata/'.$sqlFile)){
 		exit(get_tip_html('数据库文件不存在，无法继续安装！'));
 	}
 }
 //写入数据库完成后处理的文件
-if (!file_exists('./'.$config['handleFile'])) {
+if (!file_exists(ROOT_PATH . ''.$config['handleFile'])) {
 	exit(get_tip_html('处理文件不存在，无法继续安装！'));
 }
 //设置报错级别并返回当前级别。
@@ -49,8 +50,8 @@ foreach ($steps as $key => $value) {
 switch ($step) {
 	//安装许可协议
 	case '1':
-		$license = file_get_contents('./license.txt');
-		include ("./templates/1.php");
+		$license = file_get_contents(ROOT_PATH . 'license.txt');
+		include (ROOT_PATH . "templates/1.php");
 		break;
 	//运行环境检测	
 	case '2':
@@ -92,7 +93,7 @@ switch ($step) {
 		$folder = $config['dirAccess'];
 		$install_path = str_replace('\\','/',getcwd()).'/';
 		$site_path = str_replace('install/', '', $install_path);
-		include ("./templates/2.php");
+		include (ROOT_PATH . "templates/2.php");
 		$_SESSION['INSTALLSTATUS'] = $error == 0?'SUCCESS':$error;
 		break;
 	//安装参数设置
@@ -137,7 +138,7 @@ switch ($step) {
 			$config['dbPass'] = '';
 			$config['dbPrefix'] = 'ecs_';
 		}
-		include ("./templates/3.php");
+		include (ROOT_PATH . "templates/3.php");
 		break;
 	//安装详细过程
 	case '4':
@@ -195,10 +196,10 @@ switch ($step) {
 				if(!$independent && in_array($sqlFile, $rest)){
 					continue;
 				}
-				$sqldata .= file_get_contents('./sqldata/'.$sqlFile);
+				$sqldata .= file_get_contents(ROOT_PATH . 'sqldata/'.$sqlFile);
 			}
 			//主题SQL文件
-			$themesSql = './sqldata/themes.sql';
+			$themesSql = ROOT_PATH . 'sqldata/themes.sql';
 			if(is_file($themesSql)){
 				$sqldata .= file_get_contents($themesSql);
 			}
@@ -212,9 +213,9 @@ switch ($step) {
 					$row = mysql_fetch_assoc($result);
 					$newThemes = $row['value'];
 					$sqldata = str_replace('/default/', '/'.$newThemes.'/', $sqldata);
-					$oldThemes = '../themes/default';
+					$oldThemes = ROOT_PATH . '../themes/default';
 					if(is_dir($oldThemes)){
-						rename($oldThemes, '../themes/'.$newThemes);
+						rename($oldThemes, ROOT_PATH . '../themes/'.$newThemes);
 					}
 				}
 			}
@@ -251,29 +252,29 @@ switch ($step) {
 			}
 
 			//处理
-			$data = include './'.$config['handleFile'];
+			$data = include ROOT_PATH . $config['handleFile'];
 			$_SESSION['INSTALLOK'] = $data['status']?1:0;
 			alert($data['status'],$data['info']);
 		}
-		include ("./templates/4.php");
+		include (ROOT_PATH . "templates/4.php");
 		break;
 	//安装完成
 	case '5':
 		verify(5);
-		include ("./templates/5.php");
+		include (ROOT_PATH . "templates/5.php");
 		//安装完成,生成.lock文件
 		if(isset($_SESSION['INSTALLOK']) && $_SESSION['INSTALLOK'] == 1){
-			filewrite($config['installFile']);
+			filewrite(ROOT_PATH . $config['installFile']);
 		}
 
 		$appid = get_appid();
-		$version_file = '../data/certificate/appkey.php';
+		$version_file = ROOT_PATH . '../data/certificate/appkey.php';
 		require $version_file;
 		$version_content = "<?php\ndefine('AUTH_KEY', '".$appid."');";
 		if(AUTH_KEY == ''){
 			define('IN_ECTOUCH', true);
-			require '../include/vendor/Http.class.php';
-			require '../include/vendor/Cloud.class.php';
+			require dirname(ROOT_PATH) . '/include/vendor/Http.class.php';
+			require dirname(ROOT_PATH) . '/include/vendor/Cloud.class.php';
 			@file_put_contents($version_file, $version_content);
 			$cloud = Cloud::getInstance();
 			$site_info = get_site_info($appid);
