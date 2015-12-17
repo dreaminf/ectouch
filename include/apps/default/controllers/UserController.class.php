@@ -1349,7 +1349,7 @@ class UserController extends CommonController {
             // 纠错级别：L、M、Q、H
             $errorCorrectionLevel = 'L';
             // 点的大小：1到10
-            $matrixPointSize = 4;
+            $matrixPointSize = 8;
             QRcode::png($value, false, $errorCorrectionLevel, $matrixPointSize, 2);
         }
     }
