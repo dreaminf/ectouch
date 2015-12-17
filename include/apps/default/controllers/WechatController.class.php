@@ -663,10 +663,29 @@ class WechatController extends CommonController
         return $u_row;
     }
 
+    public static function snsapi_base(){
+        if(is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid']))){
+            $wxinfo = model('Base')->model->table('wechat')->field('token, appid, appsecret, status')->find();
+            // 用code换token
+            if(isset($_GET['code']) && $_GET['state'] == 'repeat'){
+                $token = $this->weObj->getOauthAccessToken();
+                $_SESSION['openid'] = $token['openid'];
+            }
+            // 生成请求链接
+            if (! empty($wxinfo['oauth_redirecturi'])) {
+                $callback = rtrim($wxinfo['oauth_redirecturi'], '/')  .'/'. $_SERVER['REQUEST_URI'];
+            }
+            if (! isset($callback)) {
+                $callback = __HOST__ . $_SERVER['REQUEST_URI'];
+            }
+            $this->weObj->getOauthRedirect($callback, 'repeat', 'snsapi_base');
+        }
+    }
+
     /**
      * 跳转到第三方登录
      */
-    static function do_oauth(){
+    public static function snsapi_userinfo(){
         if(is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid'])) && (!isset($_SESSION['repeat']) || empty($_SESSION['repeat']))){
             $url = url('user/third_login', array('type'=>'weixin'));
             $_SESSION['repeat'] = 1;

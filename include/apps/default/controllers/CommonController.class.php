@@ -31,8 +31,8 @@ class CommonController extends BaseController
         $this->ecshop_init();
         // 微信oauth处理
         if(class_exists('WechatController')){
-            if (method_exists('WechatController', 'do_oauth')) {
-                call_user_func(array('WechatController', 'do_oauth'));
+            if (method_exists('WechatController', 'snsapi_userinfo')) {
+                call_user_func(array('WechatController', 'snsapi_userinfo'));
                 /*DRP_START*/
                 $this->drp();
                 /*DRP_END*/
