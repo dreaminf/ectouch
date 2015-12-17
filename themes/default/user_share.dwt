@@ -48,8 +48,36 @@
     </tr>
     <!-- {/if} -->
   </table>
+  <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd" class="u-table">
+    <tr>
+      <td style="text-align:center;">{$shopurl}<br><img src="{$domain}{:url('user/create_qrcode', array('value'=>$this->_var['shopurl']))}"></td>
+    </tr>
+    <tr>
+        <td >
+        	<div class="bdsharebuttonbox" data-tag="share_1" style="width:12em;margin:0 auto;">
+				<a class="bds_qzone" data-cmd="qzone" href="#"></a>
+				<a class="bds_tsina" data-cmd="tsina"></a>
+				<a class="bds_bdhome" data-cmd="bdhome"></a>
+				<a class="bds_renren" data-cmd="renren"></a>
+			</div>
+        </td>
+    </tr>
+  </table>
 </div>
 <!-- {/if} --> 
 <!-- {/if} -->
+<script>
+	window._bd_share_config = {
+		common : {
+			bdText : '{$shopdesc}',
+			bdUrl : '{$shopurl}',
+			bdPic : "{$domain}{:url('user/create_qrcode', array('value'=>$this->_var['shopurl']))}"
+		},
+		share : [{
+			"bdSize" : 32
+		}]
+	}
+	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
