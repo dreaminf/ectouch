@@ -34,8 +34,8 @@ class GoodsController extends CommonController {
         // 获得商品的信息
         $goods = model('Goods')->get_goods_info($this->goods_id);
 		//购物车商品数量
-        $cart_goods = model('Order')->get_cart_goods();
-        $this->assign('seller_cart_total_number',$cart_goods ['total']); 
+        $cart_goods = model('Order')->cart_goods();
+        $this->assign('seller_cart_total_number', count($cart_goods)); 	
         // 如果没有找到任何记录则跳回到首页
         if ($goods === false) {
             ecs_header("Location: ./\n");
