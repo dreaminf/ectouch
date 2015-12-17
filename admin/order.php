@@ -2497,7 +2497,7 @@ elseif ($_REQUEST['act'] == 'templates')
 elseif ($_REQUEST['act'] == 'edit_templates')
 {
     /* 更新模板文件的内容 */
-    $file_name = @fopen('../' . DATA_DIR . '/assets/order_print.html', 'w+');
+    $file_name = @fopen('../' . DATA_DIR . '/template/order_print.html', 'w+');
     @fwrite($file_name, stripslashes($_POST['FCKeditor1']));
     @fclose($file_name);
 
