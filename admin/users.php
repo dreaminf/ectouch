@@ -667,7 +667,7 @@ elseif ($_REQUEST['act'] == 'userexport'){
 	$list=($_SESSION['user_list']);
         include_once (ROOT_PATH . 'include/vendor/PHPExcel.php');
          //创建处理对象实例
-        $objPhpExcel = new \PHPExcel();
+        $objPhpExcel = new PHPExcel();
         $objPhpExcel->getActiveSheet()->getDefaultColumnDimension()->setAutoSize(true);//设置单元格宽度
         //设置表格的宽度  手动
         $objPhpExcel->getActiveSheet()->getColumnDimension('G')->setWidth(20);
