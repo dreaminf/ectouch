@@ -53,13 +53,13 @@ class unionpay {
             'txnType' => '01', //交易类型	
             'txnSubType' => '01', //交易子类
             'bizType' => '000000', //业务类型
-            'frontUrl' => return_url(basename(__FILE__, '.php'), array('type' => 1)), //前台通知地址
-            'backUrl' => return_url(basename(__FILE__, '.php'), array('type' => 0)), //后台通知地址	
+            'frontUrl' => return_url(basename(__FILE__, '.php'), true), //前台通知地址
+            'backUrl' => return_url(basename(__FILE__, '.php')), //后台通知地址	
             'signMethod' => '01', //签名方法
             'channelType' => '08', //渠道类型
             'accessType' => '0', //接入类型
             'merId' => $payment['mer_id'], //商户代码
-            'orderId' => $order['order_sn'] . '0' . $order['log_id'], // 请求号，唯一
+            'orderId' => $order['order_sn'] . 'B' . $order['log_id'], // 请求号，唯一
             'txnTime' => date('YmdHis', $order['add_time']), //订单发送时间
             'txnAmt' => $order['order_amount'] * 100, //交易金额 单位分
             'currencyCode' => '156', //交易币种
@@ -93,7 +93,7 @@ class unionpay {
             'bizType' => '000000', //业务类型
             'accessType' => '0', //接入类型
             'channelType' => '07', //渠道类型
-            'orderId' => $order['order_sn'] . '0' . $order['log_id'], //请修改被查询的交易的订单号
+            'orderId' => $order['order_sn'] . 'B' . $order['log_id'], //请修改被查询的交易的订单号
             'merId' => $payment['mer_id'], //商户代码，请修改为自己的商户号
             'txnTime' => date('YmdHis', $order['add_time']), //请修改被查询的交易的订单发送时间
         );
@@ -103,8 +103,6 @@ class unionpay {
         $result_arr = $this->coverStringToArray($result);
         if ($this->verify($result_arr)) {
             if ($result_arr['respCode'] == '00') {
-                print_r($result_arr );
-                echo "ee";
                 //改变订单支付方式
                 $log_id = substr($result_arr['orderId'], 14);
                 model('Payment')->order_paid($log_id, 2);
