@@ -42,7 +42,7 @@ if ($_REQUEST['act'] == 'list_edit')
     admin_priv('shop_config');
 
     /* 可选语言 */
-    $dir = opendir('../include/language');
+    $dir = opendir('../include/languages');
     $lang_list = array();
     while (@$file = readdir($dir))
     {

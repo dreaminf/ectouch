@@ -30,7 +30,7 @@ if ($_REQUEST['act'] == 'add')
     $smarty->assign('cat_list', cat_list());
 
     /* 取得可选语言 */
-    $dir = opendir('../include/language');
+    $dir = opendir('../include/languages');
     $lang_list = array(
         'UTF8'      => $_LANG['charset']['utf8'],
         'GB2312'    => $_LANG['charset']['zh_cn'],
