@@ -60,6 +60,7 @@
     </div>
 
   <div class="index-recom">
+    <h3><b>限时促销</b></h3>
       <div class="index-recom-left fl">
         {insert name='ads' id=257 num=1}
       </div>
@@ -67,10 +68,38 @@
         {insert name='ads' id=258 num=2}
       </div>
   </div>
+
+  <div class="index-recom">
+    <h3><b>热门活动</b></h3>
+      <div class="index-recom-left fl">
+        {insert name='ads' id=259 num=2}
+      </div>
+      <div class="index-recom-right fr">
+        {insert name='ads' id=260 num=1}
+      </div>
+  </div>
+  <div class="index-recom">
+    <h3><b>精品推荐</b></h3>
+      <div class="index-recom-left fl">
+        {insert name='ads' id=261 num=1}
+      </div>
+      <div class="index-recom-right fr">
+        {insert name='ads' id=262 num=2}
+      </div>
+  </div>
+  <div class="index-recom">
+    <h3><b>品牌街</b></h3>
+      <div class="index-recom-left fl">
+        {insert name='ads' id=263 num=2}
+      </div>
+      <div class="index-recom-right fr">
+        {insert name='ads' id=264 num=1}
+      </div>
+  </div>
   <div class="index-theme">
   	<h3><b>主题精选</b></h3>
   	<ul>
-    	{insert name='ads' id=256 num=4}
+    	{insert name='ads' id=256 num=10}
     </ul>
   </div>
 
