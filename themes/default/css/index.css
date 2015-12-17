@@ -3343,8 +3343,7 @@ h3 {
   overflow: hidden; }
   .index-theme ul {
     width: 100%;
-    padding: 0.625rem 0;
-    border-top: 1px solid #EAEDF4; }
+    padding: 0.625rem 0; }
     .index-theme ul li {
       width: 49.2%;
       background-color: #F3F4F5;
@@ -3365,7 +3364,7 @@ h3 {
     background: url(../img/index-more-icon1.gif) no-repeat center;
     font-size: 1.4rem;
     color: #656870;
-    line-height: 5rem;
+    line-height: 4rem;
     width: 100%;
     display: block; }
 

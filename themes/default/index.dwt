@@ -68,14 +68,13 @@
       </div>
   </div>
   <div class="index-theme">
-  	<h3><b>主题精选</b></h3>
   	<ul>
     	{insert name='ads' id=256 num=4}
     </ul>
   </div>
 
-  <div class="index-theme" >
-      <ul class="index-more-list"  style="background-color: #F3F4F5;">
+  <div class="index-theme" style="display:none">
+      <ul class="index-more-list">
       <!-- #BeginLibraryItem "/library/cat_goods.lbi" --><!-- #EndLibraryItem -->
       </ul>
   </div>
