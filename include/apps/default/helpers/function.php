@@ -1371,31 +1371,16 @@ function send_pwd_email($uid, $user_name, $email, $code) {
 /**
  * 取得返回信息地址
  * @param   string  $code   支付方式代码
- * @param   string  $params  必须有type值, $params = array('type'=>0), 0 同步，1 异步
+ * @param   string  $notify  是否是异步通知
  */
-function return_url($code = '', $params = array()) {
-    $params['code'] = $code;
-    $base64 = urlsafe_b64encode(serialize($params));
-    return __URL__ . '/respond.php?code=' . $base64;
-}
-
-//url base64编码
-function urlsafe_b64encode($string)
+function return_url($code, $notify = false, $data = array())
 {
-    $data = base64_encode($string);
-    $data = str_replace(array('+', '/', '='), array('-', '_', ''), $data);
-    return $data;
-}
-
-//url base64解码
-function urlsafe_b64decode($string)
-{
-    $data = str_replace(array('-', '_'), array('+', '/'), $string);
-    $mod4 = strlen($data) % 4;
-    if ($mod4) {
-        $data .= substr('====', $mod4);
+    if($notify){
+        return __URL__ . '/api/notify/' . $code . '.php';
+    }else{
+        $string = empty($data) ? '': '&'.http_build_query($data);
+        return __URL__ . '/respond.php?code=' . $code . $string;
     }
-    return base64_decode($data);
 }
 
 /* * ********************************************************

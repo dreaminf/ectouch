@@ -1,4 +1,4 @@
-<?php require './templates/header.php';?>
+<?php require ROOT_PATH . 'templates/header.php';?>
 	<form id="J_install_form" action="index.php?step=4" method="post">
 		<div class="section">
 			<div class="main server">
@@ -268,4 +268,4 @@
 		});
 	});
 	</script> 
-<?php require './templates/footer.php';?>
+<?php require ROOT_PATH . 'templates/footer.php';?>

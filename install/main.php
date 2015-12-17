@@ -39,14 +39,14 @@ $query = "INSERT INTO `{$dbPrefix}wechat_menu` (`id`, `wechat_id`, `pid`, `name`
 mysql_query($query);
 
 //读取配置文件，并替换真实配置数据
-$strConfig = file_get_contents('./' . $config['dbSetFile']);
+$strConfig = file_get_contents(ROOT_PATH . $config['dbSetFile']);
 $strConfig = str_replace('#DB_HOST#', $dbHost, $strConfig);
 $strConfig = str_replace('#DB_NAME#', $dbName, $strConfig);
 $strConfig = str_replace('#DB_USER#', $dbUser, $strConfig);
 $strConfig = str_replace('#DB_PWD#', $dbPwd, $strConfig);
 $strConfig = str_replace('#DB_PORT#', $dbPort, $strConfig);
 $strConfig = str_replace('#DB_PREFIX#', $dbPrefix, $strConfig);
-@file_put_contents($config['dbConfig'], $strConfig);
+@file_put_contents(ROOT_PATH . $config['dbConfig'], $strConfig);
 
 if($independent){
 	//插入管理员

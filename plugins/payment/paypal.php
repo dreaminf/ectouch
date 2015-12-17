@@ -30,10 +30,10 @@ class paypal
     {
         $data_order_id      = $order['log_id'];
         $data_amount        = $order['order_amount'];
-        $data_return_url    = return_url(basename(__FILE__, '.php'), array('type'=>0));
+        $data_return_url    = return_url(basename(__FILE__, '.php'));
         $data_pay_account   = $payment['paypal_account'];
         $currency_code      = $payment['paypal_currency'];
-        $data_notify_url    = return_url(basename(__FILE__, '.php'), array('type'=>1));
+        $data_notify_url    = return_url(basename(__FILE__, '.php'), true);
         $cancel_return      = __URL__;
 
         $def_url  = '<br /><form style="text-align:center;" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">' .   // 不能省略
@@ -148,5 +148,3 @@ class paypal
         $this->callback($data);
     }
 }
-
-?>

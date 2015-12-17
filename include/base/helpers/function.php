@@ -641,6 +641,17 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
             }
         }
     }
+    if(isset($_GET['u'])){
+        $url  .= '&u='.intval($_GET['u']);
+    }else{
+        $url  .= '&u='.$_SESSION['user_id'];
+    }
+    /*DRP_START*/
+    $drp_id = isset($_SESSION['drp_shop']['drp_id']) ? intval($_SESSION['drp_shop']['drp_id']) : 0;
+    if($drp_id > 0){
+        $url  .= '&drp_id='.$drp_id;
+    }
+    /*DRP_END*/
     if(isset($anchor)){
         $url  .= '#'.$anchor;
     }
@@ -983,7 +994,7 @@ function load_file($file) {
 function E($msg, $code = 0) {
     //throw new Exception($msg, $code);
     //exit($msg);
-    include(ROOT_PATH. '404.html');
+    include(ROOT_PATH. 'data/template/404.html');
     exit();
 }
 

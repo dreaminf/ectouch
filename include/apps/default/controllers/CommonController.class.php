@@ -36,7 +36,6 @@ class CommonController extends BaseController
                 /*DRP_START*/
                 $this->drp();
                 /*DRP_END*/
-                $this->wechatJsSdk();
             }
         }
 
@@ -220,55 +219,6 @@ class CommonController extends BaseController
         }
     } 
     /*DRP_END*/
-
-    /*
-     * 微信jsSDK
-     */
-    public function wechatJsSdk(){
-        $wxinfo   = model('Base')->model->table('wechat')->field('token, appid, appsecret, status')->find();
-        
-        $appid    = $wxinfo['appid'];
-        $secret   = $wxinfo['appsecret'];
-
-        //分销商信息
-        $drp_id   = isset($_SESSION['drp_shop']['drp_id']) ? $_SESSION['drp_shop']['drp_id'] : 0;
-
-        //微信店信息
-        $drp_shop = $_SESSION['drp_shop'];
-        $wx_title = C('shop_name').$drp_shop['shop_name'];
-        $wx_desc  = C('shop_desc');
-        $wx_url   = __URL__ . '/index.php?u=' . $_SESSION['user_id'] . '&drp_id='.$drp_id;
-        $wx_pic   = __URL__ . '/images/logo.png';
-
-        //商品信息
-        if(CONTROLLER_NAME == 'Goods' && isset($_GET['id'])){
-            $goods_id = I('id', 0);
-            $goods = model('Goods')->get_goods_info($goods_id);
-            $wx_title = $goods['goods_name'];
-            $wx_desc  = $goods['goods_name'];
-            $wx_url   = __URL__ .'/index.php?c=goods&id='.$goods_id.'&u=' . $_SESSION['user_id'] . '&drp_id='.$drp_id;
-            $wx_pic   = __URL__ . $goods['goods_thumb'];
-        }
-        $wx_url.='&type=share';
-        //微信JS SDK
-        $jssdk = new Jssdk($appid, $secret);
-        $signPackage = $jssdk->GetSignPackage();
-
-        $this->assign('wx_title', $wx_title);
-        $this->assign('wx_desc', $wx_desc);
-        $this->assign('wx_url', $wx_url);
-        $this->assign('wx_pic', $wx_pic);
-
-        $this->assign('appid', $signPackage["appId"]);
-        $this->assign('timestamp', $signPackage["timestamp"]);
-        $this->assign('noncestr', $signPackage["nonceStr"]);
-        $this->assign('signature', $signPackage["signature"]);
-
-        $output = $this->fetch('library/js_sdk.lbi');
-        if ($wxinfo['status']) {
-            $this->assign('wechat_js_sdk', $output);
-        }
-    }
 }
 
 class_alias('CommonController', 'ECTouch');

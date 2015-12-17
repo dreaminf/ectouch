@@ -25,9 +25,9 @@ class IndexController extends CommonController {
         $condition['openid'] = $_SESSION['openid'];
         $userinfo = $this->model->table('wechat_user')->field('subscribe')->where($condition)->find();
         $this->assign('subscribe', $userinfo['subscribe']);
-        $cache_id = sprintf('%X', crc32($_SESSION['user_rank'] . '-' . C('lang')));
-       // if (!ECTouch::view()->is_cached('index.dwt', $cache_id))
-        //{
+        $cache_id = sprintf('%X', crc32($_SESSION['user_rank'] . '-' . $userinfo['subscribe'] . '-' . C('lang')));
+        if (!ECTouch::view()->is_cached('index.dwt', $cache_id))
+        {
             // 自定义导航栏
             $navigator = model('Common')->get_navigator();
             $this->assign('navigator', $navigator['middle']);
@@ -51,8 +51,8 @@ class IndexController extends CommonController {
             $this->assign('brand_list', model('Brand')->get_brands($app = 'brand', C('page_size'), 1));
             // 分类下的文章
             $this->assign('cat_articles', model('Article')->assign_articles(1,5)); // 1 是文章分类id ,5 是文章显示数量
-        //}
-        $this->display('index.dwt');
+        }
+        $this->display('index.dwt', $cache_id);
     }
 
     /**

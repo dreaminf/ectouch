@@ -1,4 +1,3 @@
-﻿
 --
 -- 表的结构 `ecs_wechat`
 --
@@ -23,6 +22,8 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
 --
 -- 表的结构 `ecs_wechat_custom_message`
 --
@@ -35,6 +36,8 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_custom_message` (
   `send_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '发送时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 
 --
 -- 表的结构 `ecs_wechat_extend`
@@ -54,6 +57,8 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_extend` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
 --
 -- 表的结构 `ecs_wechat_mass_history`
 --
@@ -72,6 +77,8 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_mass_history` (
   `errorcount` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '发送失败的粉丝数',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 
 --
 -- 表的结构 `ecs_wechat_media`
@@ -99,6 +106,8 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_media` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
 --
 -- 表的结构 `ecs_wechat_menu`
 --
@@ -116,6 +125,8 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
 --
 -- 表的结构 `ecs_wechat_point`
 --
@@ -126,6 +137,8 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_point` (
   `keywords` varchar(100) NOT NULL COMMENT '关键词',
   `createtime` int(11) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
 -- 表的结构 `ecs_wechat_prize`
@@ -143,6 +156,8 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_prize` (
   `activity_type` varchar(20) NOT NULL COMMENT '活动类型',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 
 --
 -- 表的结构 `ecs_wechat_qrcode`
@@ -165,6 +180,8 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_qrcode` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
 --
 -- 表的结构 `ecs_wechat_reply`
 --
@@ -181,6 +198,8 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_reply` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
 --
 -- 表的结构 `ecs_wechat_rule_keywords`
 --
@@ -191,6 +210,39 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_rule_keywords` (
   `rule_keywords` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `ecs_wechat_template`
+--
+
+CREATE TABLE IF NOT EXISTS `ecs_wechat_template` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `open_id` varchar(255) DEFAULT NULL,
+  `template_id` varchar(255) DEFAULT NULL,
+  `contents` varchar(133) DEFAULT NULL,
+  `template` text,
+  `title` varchar(33) NOT NULL,
+  `add_time` int(11) DEFAULT NULL,
+  `switch` tinyint(2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- 转存表中的数据 `ecs_wechat_template`
+--
+
+-- /*DRP_START*/
+
+INSERT INTO `ecs_wechat_template` (`id`, `open_id`, `template_id`, `contents`, `template`, `title`, `add_time`, `switch`) VALUES
+(1, 'OPENTM206547887', '', '{{first.DATA}}\r\n订单编号：{{keyword1.DATA}}\r\n商品名称：{{keyword2.DATA}}\r\n下单时间：{{keyword3.DATA}}\r\n下单金额：{{keyword4.DATA}}\r\n分销商名称：{{keyword5.DATA', '您的分销商有新的订单产生。\r\n订单编号：2015070210121001\r\n商品名称：2015新款简约百搭蕾丝连衣裙\r\n下单时间：2015年07月02日 10:12\r\n下单金额：128元\r\n分销商名称：木友衣橱\r\n订单已付款，请尽快发货！', '分销订单通知', 0, 0),
+(2, 'OPENTM400075274', '', '{{first.DATA}}\r\n结款金额：{{keyword1.DATA}}\r\n银行卡：{{keyword2.DATA}}\r\n{{remark.DATA}}\r\n', '内容示例\r\n您本月的分销结款金额如下，\r\n结款金额：1000\r\n银行卡：62XXXXXXXXXX\r\n银行到账可能会有延迟，如有问题，祝生活愉快！', '分销结款通知', 0, 0),
+(3, 'OPENTM207126233', '', '{{first.DATA}}\r\n分销商名称：{{keyword1.DATA}}\r\n分销商电话：{{keyword2.DATA}}\r\n申请时间：{{keyword3.DATA}}\r\n{{remark.DATA}}\r\n', '分销商申请成功提醒\r\n分销商名称：张三\r\n分销商电话：15050510328\r\n申请时间：2015.07.28 10:01\r\n如有疑问，请在微信中留言，我们将第一时间为您服务。', '分销商申请成功提醒', 0, 0);
+
+-- /*DRP_END*/
+
+-- --------------------------------------------------------
 
 --
 -- 表的结构 `ecs_wechat_user`
@@ -219,6 +271,8 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_user` (
   PRIMARY KEY (`uid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
 --
 -- 表的结构 `ecs_wechat_user_group`
 --
@@ -232,26 +286,3 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_user_group` (
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- ----------------------------
--- Table structure for `ecs_wechat_template`
--- ----------------------------
-CREATE TABLE IF NOT EXISTS `ecs_wechat_template` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `open_id` varchar(255) DEFAULT NULL,
-  `template_id` varchar(255) DEFAULT NULL,
-  `contents` varchar(133) DEFAULT NULL,
-  `template` text,
-  `title` varchar(33) NOT NULL,
-  `add_time` int(11) DEFAULT NULL,
-  `switch` tinyint(2) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- /*DRP_START*/
-
-INSERT INTO `ecs_wechat_template` VALUES ('1', 'OPENTM206547887', '', '{{first.DATA}}\r\n订单编号：{{keyword1.DATA}}\r\n商品名称：{{keyword2.DATA}}\r\n下单时间：{{keyword3.DATA}}\r\n下单金额：{{keyword4.DATA}}\r\n分销商名称：{{keyword5.DATA', '您的分销商有新的订单产生。\r\n订单编号：2015070210121001\r\n商品名称：2015新款简约百搭蕾丝连衣裙\r\n下单时间：2015年07月02日 10:12\r\n下单金额：128元\r\n分销商名称：木友衣橱\r\n订单已付款，请尽快发货！', '分销订单通知', '', '0');
-INSERT INTO `ecs_wechat_template` VALUES ('2', 'OPENTM400075274', '', '{{first.DATA}}\r\n结款金额：{{keyword1.DATA}}\r\n银行卡：{{keyword2.DATA}}\r\n{{remark.DATA}}\r\n', '内容示例\r\n您本月的分销结款金额如下，\r\n结款金额：1000\r\n银行卡：62XXXXXXXXXX\r\n银行到账可能会有延迟，如有问题，祝生活愉快！', '分销结款通知', '', '0');
-INSERT INTO `ecs_wechat_template` VALUES ('3', 'OPENTM207126233', '', '{{first.DATA}}\r\n分销商名称：{{keyword1.DATA}}\r\n分销商电话：{{keyword2.DATA}}\r\n申请时间：{{keyword3.DATA}}\r\n{{remark.DATA}}\r\n', '分销商申请成功提醒\r\n分销商名称：张三\r\n分销商电话：15050510328\r\n申请时间：2015.07.28 10:01\r\n如有疑问，请在微信中留言，我们将第一时间为您服务。', '分销商申请成功提醒', '', '0');
-
--- /*DRP_END*/

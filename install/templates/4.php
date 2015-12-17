@@ -1,4 +1,4 @@
-<?php require './templates/header.php';?>
+<?php require ROOT_PATH . 'templates/header.php';?>
 	<div class="section">
 		<div class="main install">
 			<ul id="loginner"></ul>
@@ -45,4 +45,4 @@
 			reloads(n);
 		})
 	</script> 
-<?php require './templates/footer.php';?>
+<?php require ROOT_PATH . 'templates/footer.php';?>
