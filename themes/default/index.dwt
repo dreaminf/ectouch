@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="__TPL__/css/index.css"/>
 <link rel="stylesheet" type="text/css" href="__TPL__/css/search_index.css"/>
+<style type="text/css">
+  .swiper-wrapper .swiper-pagination-bullet-active {background: #1CBB7F;}
+</style>
 </head>
 <body>
 <div class="con">
