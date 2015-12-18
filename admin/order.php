@@ -395,7 +395,7 @@ elseif ($_REQUEST['act'] == 'info')
         $smarty->assign('print_time',   local_date($_CFG['time_format']));
         $smarty->assign('action_user',  $_SESSION['admin_name']);
 
-        $smarty->template_dir = '../' . DATA_DIR . '/assets';
+        $smarty->template_dir = '../' . DATA_DIR . '/template';
         $smarty->display('order_print.html');
     }
     /* 打印快递单 */
@@ -2462,7 +2462,7 @@ elseif ($_REQUEST['act'] == 'templates')
     admin_priv('order_os_edit');
 
     /* 读入订单打印模板文件 */
-    $file_path    = DATA_PATH. 'assets/order_print.html';
+    $file_path    = DATA_PATH. 'template/order_print.html';
     $file_content = file_get_contents($file_path);
     @fclose($file_content);
 
@@ -3041,7 +3041,7 @@ elseif ($_REQUEST['act'] == 'operate')
             $smarty->assign('goods_attr', $attr);
             $smarty->assign('goods_list', $goods_list);
 
-            $smarty->template_dir = '../' . DATA_DIR . '/assets';
+            $smarty->template_dir = '../' . DATA_DIR . '/template';
             $html .= $smarty->fetch('order_print.html') .
                 '<div style="PAGE-BREAK-AFTER:always"></div>';
         }
