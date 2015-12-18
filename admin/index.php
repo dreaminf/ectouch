@@ -328,7 +328,7 @@ elseif ($_REQUEST['act'] == 'main')
         $warning[] = sprintf($_LANG['not_writable'], 'images', $_LANG['images_cannt_write']);
     }
 
-    if (!is_writeable('../data/assets/order_print.html'))
+    if (!is_writeable('../data/template/order_print.html'))
     {
         $warning[] = $_LANG['order_print_canntwrite'];
     }
