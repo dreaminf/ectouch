@@ -143,12 +143,12 @@ class SnatchModel extends BaseModel {
      *
      * @return void
      */
-    function get_snatch_list($num = 10) {
+    function get_snatch_list($num = 10, $start = 0) {
         $now = gmtime();
         $sql = 'SELECT a.act_id AS snatch_id, a.act_name AS snatch_name, a.end_time ,g.goods_name ,g.goods_id, g.goods_thumb ,g.market_price, g.shop_price,' .
                 " g.promote_price, g.promote_start_date, g.promote_end_date, g.goods_brief FROM " . $this->pre .
                 "goods_activity a LEFT JOIN " . $this->pre . "goods g ON a.goods_id =g.goods_id  WHERE a.start_time <= '$now' AND a.act_type=" . GAT_SNATCH .
-                " ORDER BY a.end_time DESC LIMIT $num";
+                " ORDER BY a.end_time DESC LIMIT $start , $num";
         $snatch_list = array();
         $overtime = 0;
         $res = $this->query($sql);

@@ -31,7 +31,16 @@ class SnatchController extends CommonController {
      * 夺宝骑兵列表
      */
     public function index() {
-        $this->assign('goods_list', model('Snatch')->get_snatch_list());     //所有有效的夺宝奇兵列表
+        $size = I(C('page_size'), 10);
+		$now = gmtime();
+        $sql = 'SELECT count(*) as num FROM ' . $this->model->pre .
+                "goods_activity " . " WHERE start_time <= '$now' AND act_type= 0 ";
+		$counts = $this->model->query($sql);
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('index', $filter), $size);
+        $offset_page = explode(',', $offset);
+        $this->assign('pager', $this->pageShow($counts[0]['num']));	
+        $this->assign('goods_list', model('Snatch')->get_snatch_list($offset_page[1], $offset_page[0]));     //所有有效的夺宝奇兵列表
         //$this->assign('show_asynclist', C('show_asynclist'));
         $this->assign('title', L('snatch_list'));
         $this->display('snatch_list.dwt');
