@@ -230,7 +230,7 @@ class SaleController extends CommonController {
             'change_time'   => gmtime(),
             'change_desc'   => L('drp_log_desc'),
             'change_type'   => DRP_WITHDRAW,
-            'bank_info'     => "银行名称：".$bank['bank_name']." 帐号：".$bank['bank_card'],
+            'bank_info'     => "银行所在地：".$bank['bank_region']."  开户银行：".$bank['bank_name']."  开户姓名：".$bank['bank_user_name']."  帐号：".$bank['bank_card'],
             'status'        => 0
         );
 
@@ -660,6 +660,12 @@ class SaleController extends CommonController {
             }
             if(empty($data['bank_card'])){
                 show_message('请输入帐号');
+            }
+			if(empty($data['bank_region'])){
+                show_message('请输入开户所在地');
+            }
+			if(empty($data['bank_user_name'])){
+                show_message('请输开户名');
             }
             $data['user_id'] = $this->user_id;
             $this->model->table('drp_bank')
