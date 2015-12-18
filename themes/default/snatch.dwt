@@ -144,7 +144,7 @@ TouchSlide({
   slideCell : "#focus",
   titCell : ".hd ul", // 开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
   mainCell : ".bd ul",
-  effect : "left",
+  effect : "leftLoop",
   autoPlay : true, // 自动播放
   autoPage : true, // 自动分页
   delayTime: 200, // 毫秒；切换效果持续时间（执行一次效果用多少毫秒）
