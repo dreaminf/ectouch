@@ -1,9 +1,17 @@
-<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/goods_header.lbi" --><!-- #EndLibraryItem -->
 <div class="con">
-  <div style="height:7.2em;"></div>
-  <header>
-    <nav class="ect-nav ect-bg icon-write"> <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --> </nav>
-  </header>
+			<header>
+				<div class="list-search-box fl comm-search">
+					<a href="javascript:void(0)"><i class="iconfont"></i></a>
+					<input type="text" class="list-search-input" placeholder="商品搜索">
+					<a class="list-search-close fr ng-hide" ng-show="keyword.length>3" ng-touch="keyword=''">
+						<i class="iconfont"></i>
+					</a>
+				</div>
+				<a class="head-right fr" href="javascript:void(0)">
+					<i class="iconfont"></i>
+				</a>
+			</header>
   <!-- #BeginLibraryItem "/library/goods_list.lbi" --><!-- #EndLibraryItem --> </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
 <script type="text/javascript">

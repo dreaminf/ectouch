@@ -1,2 +1,2 @@
 <?php
-define('AUTH_KEY', '');
+define('AUTH_KEY', '8A425E34C3E534A56A2115ED615813AF');

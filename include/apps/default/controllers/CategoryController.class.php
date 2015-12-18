@@ -448,7 +448,7 @@ class CategoryController extends CommonController {
      */
     public function top_all() {
         /* 页面的缓存ID */
-        $cache_id = sprintf('%X', crc32($_SERVER['REQUEST_URI'] . C('lang')));
+        $cache_id = sprintf('%X', crc32($_SERVER['REQUEST_URI'] . C('lang').time()));
         if (!ECTouch::view()->is_cached('category_top_all.dwt', $cache_id)) {
             $category = model('CategoryBase')->get_categories_tree();
             $this->assign('title', L('catalog'));

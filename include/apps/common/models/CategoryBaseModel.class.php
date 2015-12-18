@@ -63,7 +63,7 @@ class CategoryBaseModel extends BaseModel {
                     $cat_arr[$row['cat_id']]['id'] = $row['cat_id'];
                     $cat_arr[$row['cat_id']]['name'] = $row['cat_name'];
                     if(!empty($row['cat_image'])){
-                        $cat_arr[$row['cat_id']]['cat_image'] = get_image_path(0, $row['cat_image'],false);
+                        $cat_arr[$row['cat_id']]['cat_image'] = __URL__ .'/'.$row['cat_image'];
                     }else{
                         $cat_arr[$row['cat_id']]['cat_image'] = __URL__ . '/data/attached/category/category_default_img.jpg';
                     }

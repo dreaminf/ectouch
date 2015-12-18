@@ -70,15 +70,12 @@ if ($_REQUEST['act'] == 'add')
     /* 模板赋值 */
     $smarty->assign('ur_here',      $_LANG['04_category_add']);
     $smarty->assign('action_link',  array('href' => 'category.php?act=list', 'text' => $_LANG['03_category_list']));
-
     $smarty->assign('goods_type_list',  goods_type_list(0)); // 取得商品类型
     $smarty->assign('attr_list',        get_attr_list()); // 取得商品属性
 
     $smarty->assign('cat_select',   cat_list(0, 0, true));
     $smarty->assign('form_act',     'insert');
     $smarty->assign('cat_info',     array('is_show' => 1));
-
-
 
     /* 显示页面 */
     assign_query_info();
@@ -347,13 +344,27 @@ if ($_REQUEST['act'] == 'update')
                 $db->query("UPDATE " . $ecs->table('nav') . " SET ifshow = 0 WHERE ctype = 'c' AND cid = '" . $cat_id . "' AND type = 'middle'");
             }
         }
+        /*图片入库*/
+        if(!empty($_FILES['category_image']['name'])){
+            $img_name = basename($image->upload_image($_FILES['category_image'], 'category'));
+            $gallery_thumb = $image->make_thumb('../data/attached/category/' . $img_name, 91, 68);
+            if ($gallery_thumb === false) {
+                sys_msg($image->error_msg(), 1, array(), false);
+            }
+            if(empty($cat_id['cat_image'])){
+                $sql = "INSERT INTO " . $ecs->table('touch_category') . "(`cat_id`,`cat_image`)VALUES('$cat_id','$gallery_thumb')";
+                $db->query($sql);
+            }else{
+                $sql = "UPDATE" . $ecs->table('touch_category') . " SET cat_image = '".$gallery_thumb."' WHERE cat_id =".$cat_id;
+                $db->query($sql);
+            }
+        }
 
         //更新首页推荐
         insert_cat_recommend($cat['cat_recommend'], $cat_id);
         /* 更新分类信息成功 */
         clear_cache_files(); // 清除缓存
         admin_log($_POST['cat_name'], 'edit', 'category'); // 记录管理员操作
-
         /* 提示信息 */
         $link[] = array('text' => $_LANG['back_list'], 'href' => 'category.php?act=list');
         sys_msg($_LANG['catedit_succed'], 0, $link);
