@@ -113,8 +113,8 @@ class BaseModel
     //连接数据库
     public function connect()
     {
-        $dbDriver = ucfirst($this->config['DB_TYPE']) . 'Driver';
-        require_once(BASE_PATH . 'drivers/db/' . $dbDriver . '.php');
+        $dbDriver = 'Ec' . ucfirst($this->config['DB_TYPE']);
+        require_once(BASE_PATH . 'base/drivers/db/' . $dbDriver . '.class.php');
         $this->db = new $dbDriver($this->config);    //实例化数据库驱动类
     }
 
