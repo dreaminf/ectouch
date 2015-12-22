@@ -641,7 +641,7 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
             }
         }
     }
-    if(isset($_GET['u'])){
+    if(isset($_GET['u']) && !empty($_GET['u'])){
         $url  .= '&u='.intval($_GET['u']);
     }else{
         $url  .= '&u='.$_SESSION['user_id'];
