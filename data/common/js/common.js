@@ -1064,7 +1064,7 @@ function addToCartResponse_quick(result) {
         if (cartInfo) {
             cartInfo.innerHTML = result.content;
         }
-
+		document.getElementById('total_number').innerHTML = result.cart_number;//更新数量
         if (result.one_step_buy == '1') {
             location.href = cart_url;
         } else {
