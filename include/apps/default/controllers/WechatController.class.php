@@ -666,6 +666,9 @@ class WechatController extends CommonController
     public static function snsapi_base(){
         if(is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid']))){
             $wxinfo = model('Base')->model->table('wechat')->field('token, appid, appsecret, status')->find();
+            if($wxinfo['status']){
+                self::snsapi_userinfo();
+            }
             // 用code换token
             if(isset($_GET['code']) && $_GET['state'] == 'repeat'){
                 $token = $this->weObj->getOauthAccessToken();
