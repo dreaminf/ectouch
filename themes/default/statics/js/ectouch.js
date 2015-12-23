@@ -456,11 +456,4 @@ $(function($) {
 
 $(function() {
 	$('#loading').hide();
-	$(document).pjax('a', '#pjax-container');
-	$(document).on('pjax:send', function() {
-		$('#loading').show();
-	});
-	$(document).on('pjax:complete', function() {
-		$('#loading').hide();
-	});
 })

@@ -240,7 +240,7 @@ a.btn-reset,a.btn-default{color:#555;}
 .search a.a-search-input{display:block; position: absolute; left:0; bottom:0; right:0; top:0; z-index: 2;}
 .search .text-all{border-bottom:0;}
 .search .input-text{padding:.3rem 0; border-bottom:0; background:#fff; background:#FFFFFF; border-radius: 4px; overflow: hidden;  position:relative;}
-.search .input-text input{padding-left:6.4rem;}
+.search .input-text input{padding-left:1rem;}
 .search .is-null{right:.6rem;}
 .search .search-check{ position: absolute; box-sizing: border-box; line-height: 2rem; padding:.5rem 0; padding-left:1rem;  color:#666;}
 .search-check i.icon-xiajiantou{ position:absolute; font-size:1.2rem;}
@@ -718,6 +718,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .menu-left,.menu-right{position:fixed; left:0;top:5.7rem; bottom:0; overflow-y: scroll;}
 .menu-right #loading{left:11rem; top:6.7rem;}
 
+.menu-left{background:#F6F6F9;}
 .menu-left ul li{padding:1.3rem .8rem; box-sizing: border-box;  font-size:1.5rem; width:8.6rem; text-align: center;}
 .menu-left ul li.active{background:#fff; position:relative;}
 .menu-left ul li.active:before{content: " "; position: absolute;display: block; width:2px; height:100%; background:#EC5151; top:0; left:0;}
