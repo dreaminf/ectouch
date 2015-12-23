@@ -451,12 +451,10 @@ class CategoryController extends CommonController {
         $cache_id = sprintf('%X', crc32($_SERVER['REQUEST_URI'] . C('lang').time()));
         if (!ECTouch::view()->is_cached('category_top_all.dwt', $cache_id)) {
             $category = model('CategoryBase')->get_categories_tree();
-            $this->assign('title', L('catalog'));
             $this->assign('category', $category);
+            dump($category);
             /* 页面标题 */
-            $page_info = get_page_title();
-            $this->assign('ur_here', $page_info['ur_here']);
-            $this->assign('page_title', L('catalog') . '_' . $page_info['title']);
+            $this->assign('page_title', L('catalog'));
         }
         $this->display('category_top_all.dwt', $cache_id);
     }
