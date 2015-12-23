@@ -655,6 +655,7 @@ class FlowController extends CommonController {
             }
             $this->assign('inv_type_list', $inv_type_list);
         }
+        // print_r($inv_type_list);
 
         /* 保存 session */
         $_SESSION ['flow_order'] = $order;
@@ -1002,11 +1003,11 @@ class FlowController extends CommonController {
 
         // 处理接收信息
         $how_oos = I('post.how_oos', 0);
-        $card_message = I('post.card_message', '');
+        $card_message = I('post.card_message', trim, '');
         $inv_type = I('post.inv_type', '');
-        $inv_payee = I('post.inv_payee', '');
-        $inv_content = I('post.inv_content', '');
-        $postscript = I('post.postscript', '');
+        $inv_payee = I('post.inv_payee', trim, '');
+        $inv_content = I('post.inv_content', trim,'');
+        $postscript = I('post.postscript',trim, '');
         $oos = L('oos.' . $how_oos);
         // 订单信息
         $order = array(
@@ -1014,15 +1015,15 @@ class FlowController extends CommonController {
             'pay_id' => I('post.payment'), // 付款方式
             'pack_id' => I('post.pack', 0),
             'card_id' => isset($_POST ['card']) ? intval($_POST ['card']) : 0,
-            'card_message' => trim($_POST ['card_message']),
+            'card_message' => $card_message,
             'surplus' => isset($_POST ['surplus']) ? floatval($_POST ['surplus']) : 0.00,
             'integral' => isset($_POST ['integral']) ? intval($_POST ['integral']) : 0,
             'bonus_id' => isset($_POST ['bonus']) ? intval($_POST ['bonus']) : 0,
             'need_inv' => empty($_POST ['need_inv']) ? 0 : 1,
-            'inv_type' => $_POST ['inv_type'],
-            'inv_payee' => trim($_POST ['inv_payee']),
-            'inv_content' => $_POST ['inv_content'],
-            'postscript' => trim($_POST ['postscript']),
+            'inv_type' => $inv_type,
+            'inv_payee' => $inv_payee,
+            'inv_content' => $inv_content,
+            'postscript' => $postscript,
             'how_oos' => isset($oos) ? addslashes("$oos") : '',
             'need_insure' => isset($_POST ['need_insure']) ? intval($_POST ['need_insure']) : 0,
             'user_id' => $_SESSION ['user_id'],

@@ -52,7 +52,7 @@
         <!--{else}-->
         <input name = "payment" type="radio" value = "-1" checked="checked"  style="display:none"/>
         <!--{/if}--> 
-        <!-- {if !$inv_content_list} 能否开发票 --> 
+        <!-- {if !$can_invoice} 能否开发票 --> 
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo1">
         <p><b>{$lang.invoice}</b></p>
         <i class="fa fa-angle-down"></i></a>
@@ -85,7 +85,7 @@
           </li>
           <li> <span class="pull-left select-span">{$lang.invoice_content}</span>
             <div class="form-select pull-left"> <i class="fa fa-sort"></i>
-              <select name="inv_type" id="ECS_INVCONTENT"  onchange="changeNeedInv()" style="border:1px solid #ccc;">
+              <select name="inv_content" id="ECS_INVCONTENT"  onchange="changeNeedInv()" style="border:1px solid #ccc;">
                 
             
            	 {html_options values=$inv_content_list output=$inv_content_list selected=$order.inv_content}
