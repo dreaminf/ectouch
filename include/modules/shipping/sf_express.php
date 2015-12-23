@@ -139,8 +139,8 @@ class sf_express
      */
     function query($invoice_sn)
     {
-        $form_str = '<a href="http://www.sf-express.com/tabid/68/Default.aspx" target="_blank">' .$invoice_sn. '</a>';
-        return $form_str;
+        //$form_str = '<a href="http://www.sf-express.com/tabid/68/Default.aspx" target="_blank">' .$invoice_sn. '</a>';
+        return $invoice_sn;
     }
 }
 

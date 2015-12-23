@@ -5,6 +5,7 @@
     <p>{$lang.order_number}：<span>{$order.order_sn}</span></p>
     <p>{$lang.order_money}：<span>{$order.formated_total_fee}</span></p>
     <p>{$lang.order_addtime}：<span>{$order.formated_add_time}</span></p>
+    <!-- {if $order.invoice_no}--><p>{$lang.consignment}：<span>{$order.invoice_no}</span></p>{/if}
     <!--{if $order.to_buyer}-->
     <p> {$lang.detail_to_buyer}：{$order.to_buyer} </p>
     <!-- {/if} -->

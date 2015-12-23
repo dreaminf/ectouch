@@ -123,26 +123,6 @@ class zto
     }
 
     /**
-     * 查询发货状态
-     *
-     * @access  public
-     * @param   string  $invoice_sn     发货单号
-     * @return  string
-     */
-    function query($invoice_sn)
-    {
-        $str = '<form style="margin:0px" methods="post" '.
-            'action="http://www.zto.cn/bill.asp" name="queryForm_' .$invoice_sn. '" target="_blank">'.
-            '<input type="hidden" name="ID" value="' .str_replace("<br>","\n",$invoice_sn). '" />'.
-            '<a href="javascript:document.forms[\'queryForm_' .$invoice_sn. '\'].submit();">' .$invoice_sn. '</a>'.
-            '<input type="hidden" name="imageField.x" value="26" />'.
-            '<input type="hidden" name="imageField.x" value="43" />'.
-            '</form>';
-
-        return $str;
-    }
-
-    /**
      * 计算保价费用
      * 保价费不低于100元，保价金额不得高于10000元，保价金额超过10000元的，超过的部分无效
      * @access  public
@@ -167,6 +147,27 @@ class zto
 
         return $fee;
     }
+    
+    /**
+     * 查询发货状态
+     *
+     * @access  public
+     * @param   string  $invoice_sn     发货单号
+     * @return  string
+     */
+    function query($invoice_sn)
+    {
+        // $str = '<form style="margin:0px" methods="post" '.
+        //     'action="http://www.zto.cn/bill.asp" name="queryForm_' .$invoice_sn. '" target="_blank">'.
+        //     '<input type="hidden" name="ID" value="' .str_replace("<br>","\n",$invoice_sn). '" />'.
+        //     '<a href="javascript:document.forms[\'queryForm_' .$invoice_sn. '\'].submit();">' .$invoice_sn. '</a>'.
+        //     '<input type="hidden" name="imageField.x" value="26" />'.
+        //     '<input type="hidden" name="imageField.x" value="43" />'.
+        //     '</form>';
+
+        return $invoice_sn;
+    }
+
 
 }
 

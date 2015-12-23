@@ -134,13 +134,13 @@ class yto
     function query($invoice_sn)
     {
         //圆通快递查询会判断链接来源，目前的查询无法生效。
-        $str = '<form style="margin:0px" methods="post" '.
-            'action="http://www.yto.net.cn/service/sql.aspx" name="queryForm_' .$invoice_sn. '" target="_blank">'.
-            '<input type="hidden" name="NumberText" value="' .$invoice_sn. '" />'.
-            '<a href="javascript:document.forms[\'queryForm_' .$invoice_sn. '\'].submit();">' .$invoice_sn. '</a>'.
-            '</form>';
+        // $str = '<form style="margin:0px" methods="post" '.
+        //     'action="http://www.yto.net.cn/service/sql.aspx" name="queryForm_' .$invoice_sn. '" target="_blank">'.
+        //     '<input type="hidden" name="NumberText" value="' .$invoice_sn. '" />'.
+        //     '<a href="javascript:document.forms[\'queryForm_' .$invoice_sn. '\'].submit();">' .$invoice_sn. '</a>'.
+        //     '</form>';
 
-        return $str;
+        return $invoice_sn;
 
     }
 }
