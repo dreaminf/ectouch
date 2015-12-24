@@ -280,7 +280,7 @@ $(function($) {
 		$(this).find("label").addClass("active");
 		city_span.text(city_txt);
 		if ($(".j-filter-city span.text-all-span").hasClass("j-city-scolor")) {
-			$(".j-filter-city span.text-all-span").css("color", "#ec5151");
+			$(".j-filter-city span.text-all-span").css("color", "#1CBB7F");
 		}
 		$("body").removeClass("show-city-div");
 	});
