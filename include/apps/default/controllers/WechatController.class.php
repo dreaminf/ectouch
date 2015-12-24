@@ -664,6 +664,7 @@ class WechatController extends CommonController
     }
 
     public static function snsapi_base(){
+        $_SESSION['openid'] = isset($_COOKIE['openid']) ? addslashes($_COOKIE['openid']) : '';
         if(is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid']))){
             $wxinfo = model('Base')->model->table('wechat')->field('token, appid, appsecret, status')->find();
             if($wxinfo['status']){
@@ -689,9 +690,8 @@ class WechatController extends CommonController
      * 跳转到第三方登录
      */
     public static function snsapi_userinfo(){
-        if(is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid'])) && (!isset($_SESSION['repeat']) || empty($_SESSION['repeat']))){
+        if(is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid'])) && ACTION_NAME != 'third_login'){
             $url = url('user/third_login', array('type'=>'weixin'));
-            $_SESSION['repeat'] = 1;
             $wxinfo   = model('Base')->model->table('wechat')->field('token, appid, appsecret, status')->find();
             if (! empty($wxinfo['oauth_redirecturi'])) {
                 $_SESSION['redirect_url'] = rtrim($wxinfo['oauth_redirecturi'], '/')  .'/'. $_SERVER['REQUEST_URI'];

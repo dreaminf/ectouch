@@ -112,10 +112,6 @@ class weixin {
 				//公众号信息
 				$wechat = model('Base')->model->table('wechat')->field('id, oauth_status')->where(array('type'=>2, 'status'=>1, 'default_wx'=>1))->find();
 				$this->update_weixin_user($userinfo, $wechat['id'], $this->weObj);
-				if(isset($_SESSION['repeat'])){
-					//删除避免重复跳转验证
-					unset($_SESSION['repeat']);
-				}
 			}else{
 				return false;
 			}
