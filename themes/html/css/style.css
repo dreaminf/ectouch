@@ -169,12 +169,12 @@ html.active,
 
 @font-face {
 	font-family: 'iconfont';
-	src: url('../../../data/assets/fonts/iconfont.eot');
+	src: url('../../default/fonts/iconfont.eot');
 	/* IE9*/
-	src: url('../../../data/assets/fonts/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-	url('../../../data/assets/fonts/iconfont.woff') format('woff'), /* chrome、firefox */
-	url('../../../data/assets/fonts/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-	url('../../../data/assets/fonts/iconfont.svg#iconfont') format('svg');
+	src: url('../../default/fonts/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	url('../../default/fonts/iconfont.woff') format('woff'), /* chrome、firefox */
+	url('../../default/fonts/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+	url('../../default/fonts/iconfont.svg#iconfont') format('svg');
 	/* iOS 4.1- */
 }
 
@@ -2514,6 +2514,8 @@ body.active {
 }
 
 .cart-footer {
+	max-width: 640px;
+    min-width: 320px;
 	padding: 0 2%;
 	left: 0;
 	right: 0;
@@ -2524,7 +2526,6 @@ body.active {
 	height: 4rem;
 	bottom: 0;
 	z-index: 4;
-	background-color: #383838;
 	background-color: #e3e3e3;
 }
 

@@ -39,13 +39,15 @@ a:hover{
 .btn{
 	padding: 0.375rem 0.75rem;
 }
-@font-face {font-family: 'iconfont';
-
-    src: url('../../../data/assets/fonts/iconfont.eot'); /* IE9*/
-    src: url('../../../data/assets/fonts/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('../../../data/assets/fonts/iconfont.woff') format('woff'), /* chrome、firefox */
-    url('../../../data/assets/fonts/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-    url('../../../data/assets/fonts/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+@font-face {
+	font-family: 'iconfont';
+	src: url('../../default/fonts/iconfont.eot');
+	/* IE9*/
+	src: url('../../default/fonts/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	url('../../default/fonts/iconfont.woff') format('woff'), /* chrome、firefox */
+	url('../../default/fonts/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+	url('../../default/fonts/iconfont.svg#iconfont') format('svg');
+	/* iOS 4.1- */
 }
 .iconfont{
     font-family:"iconfont" !important;
@@ -1289,6 +1291,12 @@ footer{
 	box-sizing: border-box;
 	overflow: hidden;
 	border-bottom: 1px solid #eef1f4;
+}
+.account-detail-list ul li a{
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
 }
 .account-detail-list ul li:last-child{
 	border-bottom: none;
