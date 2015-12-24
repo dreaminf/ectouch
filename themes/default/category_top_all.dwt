@@ -12,31 +12,27 @@
 	</aside>
 	{foreach from=$category item="val" name="val"}
 	<section class="menu-right padding-all j-content"{if $smarty.foreach.val.index != 0} style="display:none"{/if}>
-           {foreach from=$val.cat_id item="vnext3" name='category'}
-		   {if count($vnext3.cat_id)>0}
-		        <h5>{$vnext3.name}</h5>
-		        <ul>
-			     <!--3级分类-->
-				{foreach from=$vnext3.cat_id item="v"}
-				 <li class="w-3"><a href="{:url('category/index',array('id'=>$this->_var['v']['id']))}"></a>
-				 <!-- <img src="{$v.img}" /> --><span>{$v.name}</span>
-				 </li>
+		{foreach from=$val.cat_id item="vo" name='category'}
+			{if count($vo.cat_id)>0}
+				<h5>{$vo.name}</h5>
+				<ul>
+				{foreach from=$vo.cat_id item="v"}
+					<li class="w-3"><a href="{:url('category/index',array('id'=>$this->_var['v']['id']))}"></a>
+					<img src="{$v.img}" /><span>{$v.name}</span></li>
 				{/foreach}
-			    </ul>
-		   {else}
-		     {if $smarty.foreach.category.iteration==1}
-		        <h5>{$val.name}</h5>
-		      	<ul>
-				 <!--2级分类-->
+				</ul>
+			{else}
+				{if $smarty.foreach.category.iteration==1}
+				<h5>{$val.name}</h5>
+				<ul>
 				{foreach from=$val.cat_id item="v"}
-				 <li class="w-3"><a href="{:url('category/index',array('id'=>$this->_var['v']['id']))}"></a>
-				 <!-- <img src="{$v.img}" /> --><span>{$v.name}</span>
-				 </li>
+					<li class="w-3"><a href="{:url('category/index',array('id'=>$this->_var['v']['id']))}"></a>
+					<img src="{$v.img}" /><span>{$v.name}</span></li>
 				{/foreach}
-			    </ul>
-			 {/if}
-		   {/if}
-		   {/foreach}
+				</ul>
+				{/if}
+			{/if}
+		{/foreach}
 	</section>
 	{/foreach}
 </div>
