@@ -6,10 +6,6 @@ data/install.lock
 data/attached/*
 !data/attached/index.html
 
-data/caches/*
-!data/caches/index.html
-!data/caches/.htaccess
-
 # IDE Files
 #-------------------------
 /nbproject/
