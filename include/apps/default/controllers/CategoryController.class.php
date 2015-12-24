@@ -452,7 +452,6 @@ class CategoryController extends CommonController {
         if (!ECTouch::view()->is_cached('category_top_all.dwt', $cache_id)) {
             $category = model('CategoryBase')->get_categories_tree();
             $this->assign('category', $category);
-            dump($category);
             /* 页面标题 */
             $this->assign('page_title', L('catalog'));
         }
