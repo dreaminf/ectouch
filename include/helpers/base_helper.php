@@ -832,7 +832,7 @@ function ecs_geoip($ip)
     }
 
     if ($fp === NULL) {
-        $fp = fopen(DATA_PATH . 'ipdata/ipdata.dat', 'rb');
+        $fp = fopen(ROOT_PATH . 'data/ipdata/ipdata.dat', 'rb');
         if ($fp === false) {
             return 'Invalid IP data file';
         }
@@ -1011,7 +1011,7 @@ function read_static_cache($cache_name)
     if (!empty($result[$cache_name])) {
         return $result[$cache_name];
     }
-    $cache_file_path = STORAGE_PATH . 'static_caches/' . $cache_name . '.php';
+    $cache_file_path = ROOT_PATH . 'data/caches/static_caches/' . $cache_name . '.php';
     if (file_exists($cache_file_path)) {
         include_once($cache_file_path);
         $result[$cache_name] = $data;
@@ -1034,7 +1034,7 @@ function write_static_cache($cache_name, $caches)
     if (APP_DEBUG) {
         return false;
     }
-    $cache_file_path = STORAGE_PATH . 'static_caches/' . $cache_name . '.php';
+    $cache_file_path = ROOT_PATH . 'data/caches/static_caches/' . $cache_name . '.php';
     $content = "<?php\r\n";
     $content .= "\$data = " . var_export($caches, true) . ";\r\n";
     $content .= "?>";

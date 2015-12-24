@@ -101,8 +101,8 @@ class CommonController extends BaseController
         self::$view = new EcsTemplate();
         self::$view->cache_lifetime = C('cache_time');
         self::$view->template_dir = ROOT_PATH . 'themes/' . C('template');
-        self::$view->cache_dir = ROOT_PATH . 'data/attached/caches';
-        self::$view->compile_dir = ROOT_PATH . 'data/attached/compiled';
+        self::$view->cache_dir = ROOT_PATH . 'data/caches/caches';
+        self::$view->compile_dir = ROOT_PATH . 'data/caches/compiled';
         
         if ((DEBUG_MODE & 2) == 2) {
             self::$view->direct_output = true;

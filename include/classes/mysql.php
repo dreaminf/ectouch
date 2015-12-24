@@ -16,7 +16,7 @@ class mysql
 
     var $max_cache_time = 300; // 最大的缓存时间，以秒为单位
 
-    var $cache_data_dir = 'data/attached/query_caches/';
+    var $cache_data_dir = 'data/caches/query_caches/';
     var $root_path      = '';
 
     var $error_message  = array();
@@ -239,7 +239,7 @@ class mysql
 
         if (defined('APP_DEBUG') && APP_DEBUG)
         {
-            $logfilename = $this->root_path . 'data/attached/logs/mysql_query_' . $this->dbhash . '_' . date('Y_m_d') . '.log';
+            $logfilename = $this->root_path . 'data/caches/logs/mysql_query_' . $this->dbhash . '_' . date('Y_m_d') . '.log';
             $str = $sql . "\n\n";
 
             file_put_contents($logfilename, $str, FILE_APPEND);
