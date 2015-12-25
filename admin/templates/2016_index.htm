@@ -1,89 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<meta name="keyword" content="">
-		<title>后台管理</title>
+		<meta name="description" content="{$lang.app_name}">
+		<meta name="author" content="{$lang.app_name}">
+		<meta name="keyword" content="{$lang.app_name}">
+		<title>{$lang.cp_home}</title>
 		<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="__PUBLIC__/console/css/style.css" />
 	</head>
-
 	<body>
 		<div class="container ">
-			<nav class="navbar navbar-default header">
-				<div class="navbar-brand">
-					<a href="index.html"><i class="iconfont">&#xe60b;</i></a>
-				</div>
-				<!-- menu-->
-				<div class="topbar-wrapper">
-					<div class="topbar-left">
-						<ul class="navbar-nav">
-							<li class=""><a href="#">管理控制台 </a></li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">产品与服务<span class="caret"></span></a>
-								<ul class="dropdown-menu header-product">
-									<li class="select">
-										<a href="javascript:;">
-											<i class="iconfont">&#xe60b;</i>
-											<p>云订货</p>
-										</a>
-									</li>
-									<li>
-										<a href="javascript:;">
-											<i class="iconfont">&#xe60b;</i>
-											<p>云商城</p>
-										</a>
-									</li>
-									<li>
-										<a href="javascript:;">
-											<i class="iconfont">&#xe60b;</i>
-											<p>云供货</p>
-										</a>
-									</li>
-									<li>
-										<a href="javascript:;">
-											<i class="iconfont">&#xe60b;</i>
-											<p>云资源</p>
-										</a>
-									</li>
-								</ul>
-							</li>
-							
-						</ul>
-					</div>
-					<div class="topbar-right">
-						<ul class="navbar-nav">
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle dropdown-search" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-									<span class="glyphicon glyphicon-search"></span>搜索
-								</a>
-								<ul class="dropdown-menu header-search">
-									<li class="">
-										<input type="text" class="form-control fl" placeholder="搜索内容" aria-describedby="basic-addon2">
-										<span class="iconfont fr">&#xe625;</span>
-									</li>
-								</ul>
-							</li>
-							<li><a href="#">论坛BBS</a></li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">用户姓名<span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li><a href="#">基本信息</a></li>
-									<li><a href="#">修改密码</a></li>
-									<li><a href="#">安全设置</a></li>
-									<li role="separator" class="divider"></li>
-									<li><a href="#">系统信息</a></li>
-									<li><a href="#">退出</a></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
+			{include file="2016_pageheader.htm"}
 			<!--main-->
 			<div class="main">
 				<!--left-->
@@ -281,13 +210,6 @@
 			</div>
 
 		</div>
-		<script type="text/javascript" src="__PUBLIC__/console/js/jquery-1.9.1.min.js"></script>
-		<script type="text/javascript" src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="__PUBLIC__/console/js/jquery.cookie.js"></script>
-		<script type="text/javascript" src="__PUBLIC__/console/js/jquery.pjax.js"></script>
-		<script type="text/javascript" src="__PUBLIC__/console/js/comm.js"></script>
-		<script type="text/javascript">
-		</script>
+ 		{include file="2016_pagefooter.htm"}
 	</body>
-
 </html>

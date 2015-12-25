@@ -67,7 +67,7 @@ body{
 .header .navbar-brand{
 	float: left;
 	cursor: pointer;
-	width: 50px;
+	width: 80px;
 	height: 50px;
 	padding:0 10px;
 	line-height:50px;
@@ -90,7 +90,7 @@ body{
 	box-sizing: border-box;
 	line-height: 50px;
 	position: absolute;
-	left: 50px;
+	left: 80px;
 	right: 0;
 	top: 0;
 	bottom: ;
@@ -135,6 +135,7 @@ body{
 	position: absolute;
 	background: #fff;
 }
+.navbar-nav .open .dropdown-menu a { padding: 8px;}
 .navbar-nav .open .header-search{
 	background: none;
 	padding: 0;
