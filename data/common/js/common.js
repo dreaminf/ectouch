@@ -130,6 +130,7 @@ function addToCartResponse(result) {
                 default :
                     break;
             }
+			document.getElementById('total_number').innerHTML = result.cart_number;//更新数量
         }
     }
 }
@@ -1068,21 +1069,7 @@ function addToCartResponse_quick(result) {
         if (result.one_step_buy == '1') {
             location.href = cart_url;
         } else {
-            switch (result.confirm_type) {
-                case '1':
-                    if (confirm(result.message))
-                        location.href = cart_url;
-                    break;
-                case '2':
-                    if (!confirm(result.message))
-                        location.href = cart_url;
-                    break;
-                case '3':
-                    location.href = cart_url;
-                    break;
-                default:
-                    break;
-            }
+			location.href = cart_url;
         }
     }
 }

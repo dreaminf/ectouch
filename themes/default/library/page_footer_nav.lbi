@@ -23,8 +23,8 @@
 					<span>购物车</span>
 				</a>					
 				
-			<a class="btn-addcart btn-cart" onClick="addToCart_quick({$goods.goods_id});">加入购物车</a>
-			<a class="btn-addcart" onClick="addToCart({$goods.goods_id});">立即购买</a>		   		
+			<a class="btn-addcart btn-cart" onClick="addToCart({$goods.goods_id});">加入购物车</a>
+			<a class="btn-addcart" onClick="addToCart_quick({$goods.goods_id});">立即购买</a>		   		
 			
 	</div>
 </div>
