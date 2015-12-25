@@ -45,13 +45,17 @@ class StoreController extends CommonController {
     }
 
     /**
-     * 检测权限
+     * 检测店铺权限
      */
     public function check(){
         $action = ACTION_NAME;
-        if($action == 'index' && $_SESSION['drp_shop']['open'] != 1){
-            redirect(url('index/index'));
+		$drp_show = $this->model->table('drp_shop')->where(array('user_id'=>$_SESSION['user_id']))->field('id, open, audit')->find();
+		if($action == 'index' && $drp_show['audit'] != 1){
+		   show_message('开店已成功！请等待等待管理员审核','进入商城',url('index/index'));
         }
+        if($action == 'index' && $drp_show['open'] != 1){
+		   show_message('您的店铺未开启！请联系管理员','进入商城',url('index/index'));
+        }		
     }
 
     /**
