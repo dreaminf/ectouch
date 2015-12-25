@@ -1748,17 +1748,17 @@ function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods',
     $url = C('no_picture');
     $shop_url = C('SHOP_URL') == '' ? __URL__:C('SHOP_URL');
     if(!empty($image)){
-      $base_url = substr($shop_url, -1) == '/' ? $shop_url : $shop_url . '/';
-      if(strtolower(substr($image, 0, 4)) == 'http'){
-          $url = $image;
-      }else if(strtolower(substr($image, 0, 13)) == 'data/attached'){
-          $url = __URL__ . '/' . $image;
-      }else{
-          $url = $base_url . $image;
-      }
+        $base_url = substr($shop_url, -1) == '/' ? $shop_url : $shop_url . '/';
+        if(strtolower(substr($image, 0, 4)) == 'http'){
+            $url = $image;
+        }else if(strtolower(substr($image, 0, 13)) == 'data/attached'){
+            $url = __URL__ . '/' . $image;
+        }else{
+            $url = $base_url . $image;
+        }
     }
     if(IS_ECSHOP){
-        return '../' . $image;
+        return $url;
     }else{
         return str_replace('mobile/', '/', $url);
     }
