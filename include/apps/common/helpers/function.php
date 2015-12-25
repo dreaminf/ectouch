@@ -1598,8 +1598,8 @@ function clear_all_files($ext = '') {
         'filecache',
     );
     foreach ($dirs as $key => $value) {
-        del_dir(ROOT_PATH . 'data/attached/'.$value);
-        @mkdir(ROOT_PATH . 'data/attached/'.$value, 0777);
+        del_dir(ROOT_PATH . 'data/caches/'.$value);
+        @mkdir(ROOT_PATH . 'data/caches/'.$value, 0777);
     }
 }
 

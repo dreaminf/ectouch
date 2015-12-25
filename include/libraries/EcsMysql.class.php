@@ -14,7 +14,7 @@ class EcsMysql {
     var $queryTime = '';
     var $queryLog = array();
     var $max_cache_time = 300; // 最大的缓存时间，以秒为单位
-    var $cache_data_dir = 'data/attached/query_caches/';
+    var $cache_data_dir = 'data/caches/query_caches/';
     var $root_path = '';
     var $error_message = array();
     var $platform = '';
@@ -284,12 +284,10 @@ class EcsMysql {
 
     function ErrorMsg($message = '', $sql = '') {
         if ($message) {
-            echo "<b>ECSHOP info</b>: $message\n\n<br /><br />";
-            //print('<a href="http://faq.comsenz.com/?type=mysql&dberrno=2003&dberror=Can%27t%20connect%20to%20MySQL%20server%20on" target="_blank">http://faq.comsenz.com/</a>');
+            echo "<b>ECTouch info</b>: $message\n\n<br /><br />";
         } else {
             echo "<b>MySQL server error report:";
             print_r($this->error_message);
-            //echo "<br /><br /><a href='http://faq.comsenz.com/?type=mysql&dberrno=" . $this->error_message[3]['errno'] . "&dberror=" . urlencode($this->error_message[2]['error']) . "' target='_blank'>http://faq.comsenz.com/</a>";
         }
 
         exit;

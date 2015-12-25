@@ -1545,7 +1545,7 @@ function read_static_cache($cache_name) {
     if (!empty($result[$cache_name])) {
         return $result[$cache_name];
     }
-    $cache_file_path = ROOT_PATH . 'data/attached/static_caches/' . $cache_name . '.php';
+    $cache_file_path = ROOT_PATH . 'data/caches/static_caches/' . $cache_name . '.php';
     if (file_exists($cache_file_path)) {
         include_once($cache_file_path);
         $result[$cache_name] = $data;
@@ -1566,7 +1566,7 @@ function write_static_cache($cache_name, $caches) {
         return false;
     }
     //增加目录状态判断 by ecmoban carson
-    $static_caches = ROOT_PATH . 'data/attached/static_caches/';
+    $static_caches = ROOT_PATH . 'data/caches/static_caches/';
     if (!is_dir($static_caches)) {
         @mkdir($static_caches, 0777);
     }
