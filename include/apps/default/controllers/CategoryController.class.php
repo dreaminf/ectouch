@@ -86,7 +86,7 @@ class CategoryController extends CommonController {
         if (!empty($cat['cat_desc'])) {
             $this->assign('meta_description',htmlspecialchars($cat['cat_desc']));
         }
-
+        $this->assign('category', $cat);
         $this->assign('categories', model('CategoryBase')->get_categories_tree($this->cat_id));
 		$this->assign('show_marketprice', C('show_marketprice'));
         $this->display('category.dwt');
@@ -109,6 +109,18 @@ class CategoryController extends CommonController {
             );
         }
         die(json_encode($sayList));
+        exit();
+    }
+
+    /**
+     * 异步加载商品列表
+     */
+    public function async_list() {
+        $this->parameter();
+        $this->assign('show_marketprice', C('show_marketprice'));
+        $this->page = I('post.page');
+        $goodslist = $this->category_get_goods();
+        die(json_encode(array('list' => $goodslist)));
         exit();
     }
 
@@ -148,7 +160,7 @@ class CategoryController extends CommonController {
             if (!empty($tag_id)) {
                 $this->keywords .= 'OR g.goods_id ' . db_create_in($tag_id);
             }
-            $this->assign('keywords', $keywords);
+            $this->assign('keywords', $keyword);
             /*记录搜索历史记录*/
             if (!empty($_COOKIE['ECS']['keywords'])) {
                 $history = explode(',', $_COOKIE['ECS']['keywords']);
@@ -541,7 +553,8 @@ class CategoryController extends CommonController {
         $start = ($this->page - 1) * $this->size;
         $sort = $this->sort == 'sales_volume' ? 'xl.sales_volume' : $this->sort;
         /* 获得商品列表 */
-        $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, " . 'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img, xl.sales_volume ' . 'FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' . ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " . "WHERE $where $this->ext ORDER BY $sort $this->order LIMIT $start , $this->size";
+        $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, g.goods_number, " .
+            'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img, xl.sales_volume ' . 'FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' . ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " . "WHERE $where $this->ext ORDER BY $sort $this->order LIMIT $start , $this->size";
         $res = $this->model->query($sql);
         $arr = array();
         foreach ($res as $row) {
@@ -606,11 +619,21 @@ class CategoryController extends CommonController {
                         ->count();
                 $arr[$row['goods_id']]['mysc'] = $rs;
             }
+
+            $arr[$row['goods_id']]['goods_sales'] = $this->get_goods_sales($row['goods_id']);
+            $arr[$row['goods_id']]['goods_number'] = $row['goods_number'];
             $arr[$row['goods_id']]['promotion'] = model('GoodsBase')->get_promotion_show($row['goods_id']);
-            $arr[$row['goods_id']]['comment_count'] = model('Comment')->get_goods_comment($row['goods_id'], 0);  //商品总评论数量 
+            $arr[$row['goods_id']]['comment_count'] = model('Comment')->get_goods_comment($row['goods_id'], 0);  //商品总评论数量
             $arr[$row['goods_id']]['favorable_count'] = model('Comment')->favorable_comment($row['goods_id'], 0);  //获得商品好评百分比
         }
         return $arr;
+    }
+
+    private function get_goods_sales($goods_id)
+    {
+        $sql = "select sum(goods_number) as num from {pre}order_goods WHERE goods_id = " . $goods_id ;
+        $res = $this->model->query($sql);
+        return intval($res[0]['num']);
     }
 
 }

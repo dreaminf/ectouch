@@ -27,7 +27,7 @@ class CategoryModel extends BaseModel {
      * @return void
      */
     function get_cat_info($cat_id) {
-        return $this->row('SELECT cat_name, keywords, cat_desc, style, grade, filter_attr, parent_id FROM ' . $this->pre . "category WHERE cat_id = '$cat_id'");
+        return $this->row('SELECT cat_name, keywords, cat_desc, style, grade, filter_attr, parent_id, measure_unit FROM ' . $this->pre . "category WHERE cat_id = '$cat_id'");
     }
 
     /**

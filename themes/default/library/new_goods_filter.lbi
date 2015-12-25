@@ -1,119 +1,84 @@
 <div id="j-filter-div" class="j-filter-div filter-div ts-5 c-filter-div">
-			<div class="mask-filter-div"></div>
-			<section class="close-filter-div j-close-filter-div">
-				<div class="close-f-btn">
-					<i class="iconfont icon-fanhui"></i>
-					<span>关闭</span>
-				</div>
-			</section>
-			<section class="con-filter-div ">
-				<div class="swiper-wrapper">
-				<div class="swiper-slide">
-				
-				
+	<div class="mask-filter-div"></div>
+	<section class="close-filter-div j-close-filter-div">
+		<div class="close-f-btn">
+			<i class="iconfont icon-fanhui"></i>
+			<span>关闭</span>
+		</div>
+	</section>
+	<section class="con-filter-div">
+		<form class="hold-height" method="post" id="form" action="{:url('category/index')}">
+		<input type="hidden" name="id" class="cat" value="{$id}" />
+		<div class="swiper-wrapper">
+			<div class="swiper-slide">
 				<div class="price-range padding-all m-top08">
-					<label>价格区间</label>
+					<label>{$lang.sort_price}</label>
 					<div class="price-slider">
 						<div id="slider-range" class="slider"></div>
 						<div class="slider-info">
 							<span id="slider-range-amount"></span>
 						</div>
 					</div>
+					<input type="hidden" name="price_min" value="{$price_min}" />
+					<input type="hidden" name="price_max" value="{$price_max}" />
 				</div>
 				<div class="select-two">
 					<a class="select-title padding-all j-menu-select">
-						<label class="fl">品牌</label>
-						<span class="fr t-jiantou j-t-jiantou" id="j-t-jiantou"><em class="fl">全部</em><i class="iconfont icon-jiantou tf-180 ts-2"></i></span>
+						<label class="fl">{$lang.brand}</label>
+						<span class="fr t-jiantou j-t-jiantou" id="j-t-jiantou"><em class="fl">
+						<!--{foreach from=$brands item=brand name=brand}--> 
+						<!--{if $brand.brand_id == $brand_id}--> 
+						{$brand.brand_name}
+						<!--{/if}--> 
+						<!--{/foreach}-->
+						</em><i class="iconfont icon-jiantou tf-180 ts-2"></i></span>
 					</a>
 					<ul class="j-sub-menu padding-all j-get-one" data-istrue="true">
-						<li class="ect-select j-checkbox-all">
-							<label class="ts-1 active">全部<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
+						<!--{foreach from=$brands item=brand name=brands}-->
 						<li class="ect-select">
-							<label class="ts-1">帮宝适(Pampers)<i class="fr iconfont icon-gou ts-1"></i></label>
+							<label class="ts-1">{$brand.brand_name|escape:html}<i class="fr iconfont icon-gou ts-1"></i></label>
 						</li>
-						<li class="ect-select">
-							<label class="ts-1">好奇(Huggies)<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-						<li class="ect-select">
-							<label class="ts-1">花王(MERRIES)<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-						<li class="ect-select">
-							<label class="ts-1">大王(GOO.N)<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-						<li class="ect-select">
-							<label class="ts-1">妈咪宝贝(MamyPoko)<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-						<li class="ect-select">
-							<label class="ts-1">乐可爱(LaCUTE)<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
+						<!--{/foreach}-->
+						<input type="hidden" name="brand" value="{$brand_id}" />
 					</ul>
+					<!--{foreach from=$filter_attr_list item=filter name=filter}-->
 					<a class="select-title padding-all j-menu-select">
-						<label class="fl">型号</label>
-						<span class="fr t-jiantou j-t-jiantou"><em class="fl">全部</em><i class="iconfont icon-jiantou tf-180 ts-2"></i></span>
+						<label class="fl">{$filter.filter_attr_name}</label>
+						<span class="fr t-jiantou j-t-jiantou"><em class="fl">
+						<!--{foreach from=$filter.attr_list item=attr name=attr}--> 
+						<!--{if $attr.selected}--> 
+						{$attr.attr_value} 
+						<!--{/if}--> 
+						<!--{/foreach}-->
+						</em><i class="iconfont icon-jiantou tf-180 ts-2"></i></span>
 					</a>
 					<ul class="j-sub-menu padding-all j-get-one" data-istrue="true">
-						<li class="ect-select j-checkbox-all">
-							<label class="ts-1 active">全部<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
+					<!--{foreach from=$filter.attr_list item=attr name=attr}-->
 						<li class="ect-select">
-							<label class="ts-1">绵软干爽<i class="fr iconfont icon-gou ts-1"></i></label>
+							<label class="ts-1">{$attr.attr_value|escape:html}<i class="fr iconfont icon-gou ts-1"></i></label>
 						</li>
-						<li class="ect-select">
-							<label class="ts-1">超级薄<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-						<li class="ect-select">
-							<label class="ts-1">金装绵柔<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-						<li class="ect-select">
-							<label class="ts-1">绵柔<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-						<li class="ect-select">
-							<label class="ts-1">维E呵护<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-						<li class="ect-select">
-							<label class="ts-1">拉拉裤<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-						<li class="ect-select">
-							<label class="ts-1">维E(中国版)<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-						<li class="ect-select">
-							<label class="ts-1">创新薄<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
+						<!--{/foreach}-->
+						<input type="hidden" name="filter_attr" value="{$filter_attr}" />
 					</ul>
-					<a class="select-title padding-all j-menu-select">
-						<label class="fl">尺寸</label>
-						<span class="fr t-jiantou j-t-jiantou"><em class="fl">全部</em><i class="iconfont icon-jiantou tf-180 ts-2"></i></span>
-					</a>
-					<ul class="j-sub-menu padding-all j-get-one" data-istrue="true">
-						<li class="ect-select j-checkbox-all">
-							<label class="ts-1 active">全部<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-						<li class="ect-select">
-							<label class="ts-1">L<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-						<li class="ect-select">
-							<label class="ts-1">XL<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-						<li class="ect-select">
-							<label class="ts-1">XLL<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-						<li class="ect-select">
-							<label class="ts-1">XL(加大装)<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-						<li class="ect-select">
-							<label class="ts-1">XLL(加大装)<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-						<li class="ect-select">
-							<label class="ts-1">XLL(加大装)<i class="fr iconfont icon-gou ts-1"></i></label>
-						</li>
-					</ul>
+					<!--{/foreach}-->
 				</div>
 				<div class="ect-button-more dis-box padding-all">
-					<a class="box-flex btn-reset j-filter-reset" type="button">清空选项</a>
-					<a class="box-flex btn-submit" type="submit">确定</a>
+					<a class="box-flex btn-reset j-filter-reset" onclick="javascript:clear_filter();">清空选项</a>
+					<button type="submit" class="box-flex btn-submit">确定</button>
 				</div>
-				</div>
-				</div>
-			</section>
+			</div>
 		</div>
+		</form>
+	</section>
+</div>
+
+<script type="text/javascript">
+function clear_filter(){
+ $(".touchweb-com_listType .range").text("全部");
+	$(".touchweb-com_listType input").each(function() {
+		if($(this).attr('class') != 'cat'){ 
+			$(this).val("");
+		}
+	});
+}
+</script>
