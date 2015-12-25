@@ -1758,7 +1758,7 @@ function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods',
       }
     }
     if(IS_ECSHOP){
-        return $url;
+        return '../' . $image;
     }else{
         return str_replace('mobile/', '/', $url);
     }
