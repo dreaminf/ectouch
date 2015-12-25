@@ -402,6 +402,7 @@ class SaleModel extends BaseModel {
         $info['shop_name'] = C('shop_name').$row['shop_name'];
         $info['real_name'] = $row['real_name'];
         $info['open']      = $row['open'];
+		$info['audit']      = $row['audit'];
         $info['cat_id']    = $row['cat_id'];
         $info['shop_mobile']    = $row['shop_mobile'];
         $info['shop_img']    = $row['shop_img'] ? './data/attached/drp_logo/'.$row['shop_img'] : '';

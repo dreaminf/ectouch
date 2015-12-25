@@ -26,9 +26,9 @@
 </div>
 <!--立即关注弹出窗-->
 <div class="index-guanz-t"> 
-	<div class="index-guanz-show">
-		<p ><a class="index-show-close">取消</a></p>
+	<div class="index-guanz-show">		
 		<img src="__TPL__/images/guanzm.png">
+		<p><span class="left">长按二维码关注公众号</span><span class="right index-show-close">关闭</span></p>
 	</div>
 	<div class="index-guanz-bg"></div>
 </div>
