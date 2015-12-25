@@ -38,6 +38,10 @@ class CommonController extends BaseController
                 /*DRP_END*/
             }
         }
+		//是否显示关注按钮
+        $condition['openid'] = !empty($_SESSION['openid']) ? $_SESSION['openid'] : 0;		
+        $userinfo = $this->model->table('wechat_user')->field('subscribe')->where($condition)->find();
+        $this->assign('subscribe', $userinfo['subscribe']);
 
         /* 语言包 */
         $this->assign('lang', L());

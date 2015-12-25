@@ -21,10 +21,6 @@ class IndexController extends CommonController {
      * 首页信息
      */
     public function index() {
-        //是否显示关注按钮
-        $condition['openid'] = $_SESSION['openid'];
-        $userinfo = $this->model->table('wechat_user')->field('subscribe')->where($condition)->find();
-        $this->assign('subscribe', $userinfo['subscribe']);
         $cache_id = sprintf('%X', crc32($_SESSION['user_rank'] . '-' . $userinfo['subscribe'] . '-' . C('lang')));
         if (!ECTouch::view()->is_cached('index.dwt', $cache_id))
         {
