@@ -510,3 +510,21 @@ border: 1px solid transparent;border-radius: 4px;cursor: pointer;display: inline
 .account>li>a{
     padding: 10px 0;
 }
+
+/* 加入购物车弹出层 start*/
+.tipMask{background-color: #000;display: none;height:100%;left: 0;opacity: 0.4;position:fixed;top: 0;width: 100%;z-index: 101;   }
+/* 加入购物车弹出模块 */
+/*.popGeneral {background-color: #efefef;position: fixed;z-index:100010;left:0px;bottom:0; height:auto;width:90%;display: block;margin:5%;}*/
+.popGeneral {background-color: #efefef;position: fixed;z-index:100010;bottom:10rem; height:auto;width:90%;max-width: 600px; display: none;margin: 1.8rem;}
+.popGeneral .tit {background-color:#ea4b35;line-height: 3rem;height:3rem; }
+.popGeneral .tit  h4 {font-size: 0.8rem; line-height: 3rem;height:3rem;color:#FFF;text-align: center;}
+.popGeneral .tit .ico_08 {cursor: pointer;display: inline-block;position: absolute;right: 0.8rem;top:0.5rem;}
+.popGeneral #main{  display:table;  border-collapse:collapse; width:100%;    }   
+.popGeneral #left{  display:table-cell;  width:30%; padding:0.3rem 0;  text-align:center; vertical-align:top  }   
+.popGeneral #right{  display:table-cell;  width:50%; padding:0.3rem 0;text-align:left;vertical-align:top  }   
+.popGeneral #right p{ display: block;height:2rem; color:#333;line-height:1rem; padding-bottom:0.8rem; padding-right:0.8rem;   }
+.popGeneral #right span {color: #666;display: block;margin-bottom:0.4rem;}
+.popGeneral .popbtn { font-size:0.9rem; height:2rem; width: auto; /*padding:0.5rem 0.5rem;*/ background:#e1e1e1;display: -webkit-box}
+.popGeneral .popbtn a {background:#1CBB7F;height:3rem; line-height:3rem  ; text-align: center; display:block; width:50%; color:#fff; }
+.popGeneral .popbtn .bnt2{ /*margin-left:0.5rem;*/ background:#ea4b35}
+/* 加入购物车弹出层 end */

@@ -60,7 +60,7 @@ header{line-height:2rem}
     .ect-index-header {
         width: 100%;
         box-sizing: border-box;
-    //background-image: url(/themes/default/sale/images/index_bg.jpg);
+        /*background-image: url(../sale/images/index_bg.jpg);*/
         position: relative;
         height: 12.5rem;
         background-size: 100% auto;
@@ -132,7 +132,7 @@ header{line-height:2rem}
         width: 1.0625rem;
         height: 1.125rem;
         margin-top: .4375rem;
-        background:url(__TPL__/sale/images/index-share.png);
+        background:url(../sale/images/index-share.png);
         background-repeat: no-repeat;
         background-size: 100%;
     }

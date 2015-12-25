@@ -43,18 +43,16 @@ class CategoryBaseModel extends BaseModel {
         if ($this->row($sql) || $parent_id == 0) {
             /* 获取当前分类及其子分类 */
 
-             $sql = 'SELECT c.cat_id,c.cat_name,c.parent_id,c.is_show,g.goods_thumb as cat_img ' .
+             $sql = 'SELECT c.cat_id,c.cat_name,c.parent_id,c.is_show ' .
                     'FROM ' . $this->pre . 'category as c ' .
-                    'left join ' . $this->pre . 'goods as g on g.cat_id = c.cat_id ' .
-                    "WHERE c.parent_id = 0 AND c.is_show = 1 GROUP BY c.cat_id ORDER BY c.sort_order ASC, c.cat_id ASC";
+                    "WHERE c.parent_id = 0 AND c.is_show = 1 ORDER BY c.sort_order ASC, c.cat_id ASC";
 
             /*DRP_START*/
             if(session('drp_shop')){
                 $drp_shop = session('drp_shop');
-                $sql = 'SELECT c.cat_id,c.cat_name,c.parent_id,c.is_show,g.goods_thumb as cat_name ' .
+                $sql = 'SELECT c.cat_id,c.cat_name,c.parent_id,c.is_show ' .
                     'FROM ' . $this->pre . 'category as c ' .
-                    'left join ' . $this->pre . 'goods as g on g.cat_id = c.cat_id ' .
-                    "WHERE c.parent_id = '$parent_id' AND c.is_show = 1 and c.cat_id in(".$drp_shop['cat_id'].") GROUP BY c.cat_id ORDER BY c.sort_order ASC, c.cat_id ASC";
+                    "WHERE c.parent_id = '$parent_id' AND c.is_show = 1 and c.cat_id in(".$drp_shop['cat_id'].") ORDER BY c.sort_order ASC, c.cat_id ASC";
             }
             /*DRP_END*/
             $res = $this->query($sql);

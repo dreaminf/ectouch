@@ -130,6 +130,7 @@ function addToCartResponse(result) {
                 default :
                     break;
             }
+            //showDiv();
 			document.getElementById('total_number').innerHTML = result.cart_number;//更新数量
         }
     }

@@ -111,6 +111,7 @@
      <!--  <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_brief}</span> <span class="pull-right"><i class="fa fa-chevron-right"></i></span></a> 
       <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_comment}</span> <span class="pull-right"><span class="ect-color">{$comments.count}</span>{$lang.comment_num} <span class="ect-color">{$comments.favorable}%</span>{$lang.favorable_comment} <i class="fa fa-chevron-right"></i></span></a>  -->
       </section>
+
       <!-- <div class="ect-padding-lr ect-padding-tb goods-submit">
         <div><a type="botton" class="btn btn-info ect-btn-info ect-colorf ect-bg" href="javascript:addToCart_quick({$goods.goods_id})">{$lang.buy_now}</a></div>
       </div> -->
@@ -151,6 +152,36 @@
       </section>
     </form>
   </div>
+
+  <!--加入购物车弹出层 S-->
+  <script type="text/javascript">
+      function showDiv(){
+          document.getElementById('popDiv').style.display = 'block';
+          document.getElementById('hidDiv').style.display = 'block';
+          document.getElementById('cartNum').innerHTML = document.getElementById('goods_number').value;
+          document.getElementById('cartPrice').innerHTML = document.getElementById('ECS_GOODS_AMOUNT').innerHTML;
+      }
+      function closeDiv(){
+          document.getElementById('popDiv').style.display = 'none';
+          document.getElementById('hidDiv').style.display = 'none';
+      }
+  </script>
+  <div class="tipMask" id="hidDiv" style="display:none" ></div>
+  <div class="popGeneral" id="popDiv" >
+    <div class="tit">
+      <h4>{$lang.add_to_cart}</h4>
+      <span class="ico_08" onclick="closeDiv()"><a href="javascript:"></a></span> </div>
+    <div id="main">
+      <div id="left"> <img style="width:8rem;height:auto;" src="{$goods.goods_thumb}"> </div>
+      <div id="right">
+        <p>{$goods.goods_name}</p>
+        <span> 加入数量： <b id="cartNum"></b></span> <span> 总计金额： <b id="cartPrice"></b></span> 
+      </div>
+    </div>
+    <div class="popbtn"> <a class="bnt1 flex_in radius5" onclick="closeDiv()" href="javascript:void(0);">继续购物</a> <a class="bnt2 flex_in radius5" href="{:url('flow/cart')}">{$lang.check_out}</a> </div>
+  </div>
+  <!--加入购物车弹出层 E-->
+
   <!--{if $related_goods}-->
   <div class="goods-related ect-padding-lr ect-padding-tb">
     <p><strong>{$lang.releate_goods}：</strong></p>
