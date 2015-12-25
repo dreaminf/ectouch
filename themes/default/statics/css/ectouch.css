@@ -499,7 +499,7 @@ transform: rotate(135deg);background:#fff; bottom:-.6rem; z-index: -1; left:50%;
 .product-sequence a.active{color:#1CBB7F;}
 .product-sequence .icon-xiajiantou{margin-left: .1rem;  position: relative; font-size:1.2rem;  transition: 0.2s ease;}
 .product-sequence .icon-xiajiantou:before{position:absolute }
-.product-sequence a.a-change .icon-xiajiantou:before{-webkit-transform: rotate(-180deg);
+.product-sequence .a-change .icon-xiajiantou:before{-webkit-transform: rotate(-180deg);
 	-moz-transform: rotate(-180deg);
 	-ms-transform: rotate(-180deg);
 	-o-transform: rotate(-180deg);
@@ -730,7 +730,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .menu-right ul li:nth-child(3n+1) a{left:0; right:.7rem;}
 .menu-right ul li:nth-child(3n) a{right:0; left: .7rem;}
 .menu-right ul li span{display:block;height:2.6rem; line-height: 2.6rem; overflow: hidden; text-align: center; font-size:1.4rem}
-.menu-right ul li img{width:100%; height: auto;	}
+.menu-right ul li img{width:5rem; height: auto;	}
 .mune-no-img img{display:none}
 .mune-no-img span{border:1px solid #efefef; color:#555; border-radius: 4px;}
 
