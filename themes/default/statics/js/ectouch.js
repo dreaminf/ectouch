@@ -304,6 +304,7 @@ $(function($) {
 	/*点击弹出搜索层*/
 	$(".j-search-input").click(function() {
 		$("body").addClass("show-search-div");
+		$('input[name="keywords"]').focus()
 	});
 	/*关闭搜索层*/
 	$(".j-close-search").click(function() {
