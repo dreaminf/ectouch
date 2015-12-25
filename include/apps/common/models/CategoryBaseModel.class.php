@@ -43,18 +43,18 @@ class CategoryBaseModel extends BaseModel {
         if ($this->row($sql) || $parent_id == 0) {
             /* 获取当前分类及其子分类 */
 
-             $sql = 'SELECT c.cat_id,c.cat_name,c.parent_id,c.is_show,t.cat_image ' .
+             $sql = 'SELECT c.cat_id,c.cat_name,c.parent_id,c.is_show,g.goods_thumb as cat_img ' .
                     'FROM ' . $this->pre . 'category as c ' .
-                    'left join ' . $this->pre . 'touch_category as t on t.cat_id = c.cat_id ' .
-                    "WHERE c.parent_id = 0 AND c.is_show = 1 ORDER BY c.sort_order ASC, c.cat_id ASC";
+                    'left join ' . $this->pre . 'goods as g on g.cat_id = c.cat_id ' .
+                    "WHERE c.parent_id = 0 AND c.is_show = 1 GROUP BY c.cat_id ORDER BY c.sort_order ASC, c.cat_id ASC";
 
             /*DRP_START*/
             if(session('drp_shop')){
                 $drp_shop = session('drp_shop');
-                $sql = 'SELECT c.cat_id,c.cat_name,c.parent_id,c.is_show,t.cat_image ' .
+                $sql = 'SELECT c.cat_id,c.cat_name,c.parent_id,c.is_show,g.goods_thumb as cat_name ' .
                     'FROM ' . $this->pre . 'category as c ' .
-                    'left join ' . $this->pre . 'touch_category as t on t.cat_id = c.cat_id ' .
-                    "WHERE c.parent_id = '$parent_id' AND c.is_show = 1 and c.cat_id in(".$drp_shop['cat_id'].") ORDER BY c.sort_order ASC, c.cat_id ASC";
+                    'left join ' . $this->pre . 'goods as g on g.cat_id = c.cat_id ' .
+                    "WHERE c.parent_id = '$parent_id' AND c.is_show = 1 and c.cat_id in(".$drp_shop['cat_id'].") GROUP BY c.cat_id ORDER BY c.sort_order ASC, c.cat_id ASC";
             }
             /*DRP_END*/
             $res = $this->query($sql);
@@ -62,13 +62,8 @@ class CategoryBaseModel extends BaseModel {
                 if ($row['is_show']) {
                     $cat_arr[$row['cat_id']]['id'] = $row['cat_id'];
                     $cat_arr[$row['cat_id']]['name'] = $row['cat_name'];
-                    if(!empty($row['cat_image'])){
-                        $cat_arr[$row['cat_id']]['cat_image'] = __URL__ .'/'.$row['cat_image'];
-                    }else{
-                        $cat_arr[$row['cat_id']]['cat_image'] = __URL__ . '/data/attached/category/category_default_img.jpg';
-                    }
+                    $cat_arr[$row['cat_id']]['img'] = empty($row['cat_img']) ? '':$row['cat_img'];
                     $cat_arr[$row['cat_id']]['url'] = url('category/index', array('id' => $row['cat_id']));
-
                     if (isset($row['cat_id']) == isset($row['parent_id'])) {
                         $cat_arr[$row['cat_id']]['cat_id'] = $this->get_child_tree($row['cat_id']);
                     }
@@ -85,16 +80,16 @@ class CategoryBaseModel extends BaseModel {
         $three_arr = array();
         $sql = 'SELECT count(*) FROM ' . $this->pre . "category WHERE parent_id = '$tree_id' AND is_show = 1 ";
         if ($this->row($sql) || $tree_id == 0) {
-            $child_sql = 'SELECT c.cat_id, c.cat_name, c.parent_id, c.is_show, t.cat_image ' .
+            $child_sql = 'SELECT c.cat_id, c.cat_name, c.parent_id, c.is_show, g.goods_thumb as cat_img ' .
                     'FROM ' . $this->pre . 'category as c ' .
-                    'left join ' . $this->pre . 'touch_category as t on t.cat_id = c.cat_id ' .
-                    "WHERE c.parent_id = '$tree_id' AND c.is_show = 1 ORDER BY c.sort_order ASC, c.cat_id ASC";
+                    'left join ' . $this->pre . 'goods as g on g.cat_id = c.cat_id ' .
+                    "WHERE c.parent_id = '$tree_id' AND c.is_show = 1 GROUP BY c.cat_id ORDER BY c.sort_order ASC, c.cat_id ASC";
             $res = $this->query($child_sql);
             foreach ($res AS $row) {
                 if ($row['is_show'])
                     $three_arr[$row['cat_id']]['id'] = $row['cat_id'];
                 $three_arr[$row['cat_id']]['name'] = $row['cat_name'];
-                $three_arr[$row['cat_id']]['cat_image'] = get_image_path(0,$row['cat_image'],false);
+                $three_arr[$row['cat_id']]['img'] = get_image_path(0,$row['cat_img'],false);
                 $three_arr[$row['cat_id']]['url'] = url('category/index', array('id' => $row['cat_id']));
 
                 if (isset($row['cat_id']) != NULL) {
