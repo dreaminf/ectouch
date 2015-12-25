@@ -265,7 +265,7 @@ header.bonus-header h1{
 	display: block;
 }
 .bonus-detail-price:first-letter{
-	font-size: 4.8rem;
+	font-size: 4rem;
 }
 .bonus-detail div.fr{
 	padding-left: 1rem;
@@ -275,7 +275,7 @@ header.bonus-header h1{
 }
 .bonus-detail div.fr h1{
 	font-weight: 900;
-	font-size: 2rem;
+	font-size: 1.6rem;
 	padding-bottom: 0.8rem;
 	color:#666666;
 }
