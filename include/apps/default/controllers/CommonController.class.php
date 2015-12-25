@@ -171,6 +171,17 @@ class CommonController extends BaseController
             $keywords = explode(',', $search_keywords);
             $this->assign('hot_search_keywords', $keywords);
         }
+
+        if (!empty($_COOKIE['ECS']['keywords'])) {
+            $histroy = explode(',',$_COOKIE['ECS']['keywords']);
+            foreach ($histroy as $key=>$val) {
+                if($key < 10){
+                    $histroy_list[$key] = $val;
+                }
+            }
+            $this->assign('search_histroy', $histroy_list);
+        }
+
         // 模板替换
         defined('__TPL__') or define('__TPL__', __ROOT__ . '/themes/' . C('template'));
         $stylename = C('stylename');

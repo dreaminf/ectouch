@@ -116,11 +116,11 @@ class CategoryController extends CommonController {
      * 处理关键词
      */
     public function keywords() {
-        $keywords = I('request.keywords');
-        if ($keywords != '') {
+        $keyword = I('request.keywords');
+        if ($keyword != '') {
             $this->keywords = 'AND (';
             $goods_ids = array();
-            $val = mysql_like_quote(trim($keywords));
+            $val = mysql_like_quote(trim($keyword));
             $this->keywords .= "(goods_name LIKE '%$val%' OR goods_sn LIKE '%$val%' OR keywords LIKE '%$val%' )";
 
             $sql = 'SELECT DISTINCT goods_id FROM ' . $this->model->pre . "tag WHERE tag_words LIKE '%$val%' ";
@@ -149,6 +149,15 @@ class CategoryController extends CommonController {
                 $this->keywords .= 'OR g.goods_id ' . db_create_in($tag_id);
             }
             $this->assign('keywords', $keywords);
+            /*记录搜索历史记录*/
+            if (!empty($_COOKIE['ECS']['keywords'])) {
+                $history = explode(',', $_COOKIE['ECS']['keywords']);
+                array_unshift($history, $keyword); //在数组开头插入一个或多个元素
+                $history = array_unique($history);  //移除数组中的重复的值，并返回结果数组。
+                setcookie('ECS[keywords]', implode(',', $history), gmtime() + 3600 * 24 * 30);
+            }else{
+                setcookie('ECS[keywords]', $keyword, gmtime() + 3600 * 24 * 30);
+            }
         }
     }
 
