@@ -35,7 +35,7 @@
   <div class="dpgl_list3">
    <a href="{:url('store/index')}">
 		<div class="dpgl_list" > 
-		<i class="iconfont icon-quanbushangpin"></i><span class="dpgl_list2">我的店铺</span><i class="iconfont icon-huise icon-jiantou1"></i></div>
+		<i class="iconfont icon-quanbushangpin"></i><span class="dpgl_list2">我的微店</span><i class="iconfont icon-huise icon-jiantou1"></i></div>
 		<div class="dpxq_border"></div>
    </a> 
    
