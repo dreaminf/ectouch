@@ -430,7 +430,7 @@ class WechatController extends CommonController
                         $artids = explode(',', $mediaInfo['article_id']);
                         foreach ($artids as $key => $val) {
                             $artinfo = $this->model->table('wechat_media')
-                                ->field('id, title, file, content, link')
+                                ->field('id, title, digest, file, content, link')
                                 ->where('id = ' . $val)
                                 ->find();
                             //$artinfo['content'] = strip_tags(html_out($artinfo['content']));

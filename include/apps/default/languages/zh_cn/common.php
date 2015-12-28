@@ -391,7 +391,7 @@ $_LANG['pay_success'] = '您此次的支付操作已成功！';
 $_LANG['pay_fail'] = '支付操作失败，请返回重试！';
 
 /* 文章部分 */
-$_LANG['shophelp'] = '服务中心';
+$_LANG['shophelp'] = '文章频道';
 $_LANG['new_article'] = '最新文章';
 $_LANG['shop_notice'] = '商店公告';
 $_LANG['order_already_received'] = '此订单已经确认过了，感谢您在本站购物，欢迎再次光临。';

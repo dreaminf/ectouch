@@ -119,8 +119,9 @@ class ArticleController extends CommonController {
     public function wechat_news_info() {
         /* 文章详情 */
         $news_id = intval(I('get.id'));
-        $data = $this->model->table('wechat_media')->field('title, content')->where('id = ' . $news_id)->find();
+        $data = $this->model->table('wechat_media')->field('title, content,file,is_show')->where('id = ' . $news_id)->find();
         $data['content'] = htmlspecialchars_decode($data['content']);
+        $data['image'] =  $data['is_show'] ? __URL__ . '/' . $data['file'] : '';
         $this->assign('article', $data);
         $this->display('article_info.dwt');
     }
