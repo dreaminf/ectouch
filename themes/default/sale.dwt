@@ -1,7 +1,17 @@
 <!-- #BeginLibraryItem "/library/sale_header.lbi" --><!-- #EndLibraryItem -->
+<style>
+	.index_image2,.index_image1{width:7rem; height:7rem;}
+	.content{height:auto; padding:2.6rem 1.6rem;  overflow:hidden; position:relative;}
+	.content1{ padding-top:0;}
+	.content1 .index_image1{margin-top:0;}
+	.content2{margin-left:1rem; margin-top:.3rem;}
+	.content2 li{text-align:left;}
+	.content2 .dpxq_p{padding-top:0;}
+	.dpxq_h6{position: absolute; right: 2rem;color: #fff;bottom: 8.5rem;font-size: 1.75rem;font-weight: bold;}
+</style>
 <div id="box">
   <div class="content">
-    <div class="content1">
+    <div class="content1" style="float:left">
       <div class="index_image1">
       <a href="{:url('sale/shop_config')}">
               {if $info.avatar}
@@ -12,13 +22,14 @@
               </a>
       </div>
     </div>
-    <div class="content2">
+    <div class="content2" style="float:left;">
       <ul>
-        <li class="dpxq_p">{$info.name|truncate:10}&nbsp;<span class="dpgl_content">(分销用户)</span></li>
+        <li class="dpxq_p">{$info.name|truncate:10}&nbsp;<span class="dpgl_content"></span></li>
         <li class="dpxq_h5">{$sale.shop_name}</li>
+		<li class="dpxq_h5"> 开店时间：{$sale.time}</li>
       </ul>
-    </div>
-    <div class="dpgl_time1"> <span class="dpgl_time">开店时间：{$sale.time}</span> </div>
+    </div> 
+		<a class="dpxq_h6" href="{:url('sale/shop_config')}"><span>设置</span></a>
   </div>
   <div class="dpgl_nav">
     <ul>
