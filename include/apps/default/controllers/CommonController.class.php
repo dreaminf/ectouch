@@ -38,10 +38,15 @@ class CommonController extends BaseController
                 /*DRP_END*/
             }
         }
-		//是否显示关注按钮
-        $condition['openid'] = !empty($_SESSION['openid']) ? $_SESSION['openid'] : 0;		
-        $userinfo = $this->model->table('wechat_user')->field('subscribe')->where($condition)->find();
-        $this->assign('subscribe', $userinfo['subscribe']);
+        if(is_wechat_browser()){
+            //是否显示关注按钮
+            $condition['openid'] = !empty($_SESSION['openid']) ? $_SESSION['openid'] : 0;       
+            $userinfo = $this->model->table('wechat_user')->field('subscribe')->where($condition)->find();
+            $this->assign('subscribe', $userinfo['subscribe']);
+            // 设置默认分享图片
+            $share_img = '<div style="margin:0 auto;width:0px;height:0px;overflow:hidden;"><img src="__TPL__/images/share.png"></div>';
+            $this->assign('share_img', $share_img);
+        }
 
         /* 语言包 */
         $this->assign('lang', L());
