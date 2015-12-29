@@ -19,7 +19,7 @@ bady{background-color: #f7f7f7}
     -moz-border-radius: 0.4em 0 0 0.4em;
     border-radius: 0.4em 0 0 0.4em;}
 .input-search span input{width:100%; height:2.4em; font-size:1em; border:1px solid #fcfcfc; padding:0 0.6em; box-sizing:border-box; border-radius:0; border:none; border-radius:0.4em 0 0 0.4em;}
-.input-search button{width:2.8em; background:#e6e6e6; display:block; position:absolute; right:0em; border-radius: 0 0.4em 0.4em 0; border:none;}
+.input-search button{width:2.8em;height: 2.5em; background:#e6e6e6; display:block; position:absolute; right:0em; border-radius: 0 0.4em 0.4em 0; border:none;}
 .input-search button i{color:#999; font-size:1.5em;}
 .hot-search{margin-top:0.4em; display:table; width:100%;}
 .hot-search p{margin-top:0.5em;}
