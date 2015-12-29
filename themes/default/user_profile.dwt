@@ -62,12 +62,13 @@
   </ul>
 </section>
 
-<!-- <section class="flow-consignee ect-bg-colorf">
+{if $is_not_wechat}
+<section class="flow-consignee ect-bg-colorf">
   <ul>
     <li><a href="{:url('user/logout')}">注销退出</a></li>
   </ul>
-</section> -->
-
+</section>
+{/if}
 </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 </body>

@@ -252,6 +252,10 @@ class UserController extends CommonController {
                     $extend_info_list[$key]['content'] = empty($temp_arr[$val['id']]) ? '' : $temp_arr[$val['id']];
             }
         }
+        // 增加是否是微信的判断
+        if(is_wechat_browser() == false){
+            $this->assign('is_not_wechat',1);
+        }
 
         $this->assign('title', L('profile'));
         $this->assign('extend_info_list', $extend_info_list);
