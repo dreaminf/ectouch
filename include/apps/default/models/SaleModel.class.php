@@ -489,7 +489,7 @@ class SaleModel extends BaseModel {
             $where.=",".$val['order_id'];
         }
         // 本店利润
-        $data['profit'] = M()->getRow("select sum(user_money) as money from {pre}drp_log where order_id in(".$where.") and user_id = ".$user_id ." and user_money > 0 ");
+       $data['profit'] = M()->getRow("select sum(a.user_money) as money from {pre}drp_log as a left join {pre}order_info as o on a.order_id=o.order_id where a.order_id in(".$where.") and a.user_id = ".$user_id ." and a.user_money > 0 and o.pay_status = 2 ");
         $data['profit'] = $data['profit']['money'] ? $data['profit']['money'] : 0;
 
         //一级分店
@@ -508,7 +508,7 @@ class SaleModel extends BaseModel {
                     $where.=",".$val['order_id'];
                 }
                 // 一级分店利润
-                $data['profit1'] = M()->getRow("select sum(user_money) as money from {pre}drp_log where order_id in(".$where.") and user_id = ".$user_id ." and user_money > 0 ");
+                $data['profit1'] = M()->getRow("select sum(a.user_money) as money from {pre}drp_log as a left join {pre}order_info as o on a.order_id=o.order_id where a.order_id in(".$where.") and a.user_id = ".$user_id ." and a.user_money > 0 and o.pay_status = 2 ");
                 $data['profit1'] = $data['profit1']['money'] ? $data['profit1']['money'] : 0;
 
                 //一级用户
@@ -534,7 +534,7 @@ class SaleModel extends BaseModel {
                         foreach($order_id as $key=>$val){
                             $where.=",".$val['order_id'];
                         }
-                        $data['profit2'] = M()->getRow("select sum(user_money) as money from {pre}drp_log where order_id in(".$where.") and user_id = ".$user_id ." and user_money > 0 ");
+                       $data['profit2'] = M()->getRow("select sum(a.user_money) as money from {pre}drp_log as a left join {pre}order_info as o on a.order_id=o.order_id where order_id in(".$where.") and user_id = ".$user_id ." and user_money > 0  and o.pay_status = 2 ");
                         $data['profit2'] = $data['profit2']['money'] ? $data['profit2']['money'] : 0;
 
                     }
