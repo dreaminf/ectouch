@@ -664,8 +664,8 @@ class WechatController extends CommonController
     }
 
     public static function snsapi_base(){
-        $_SESSION['openid'] = isset($_COOKIE['openid']) ? addslashes($_COOKIE['openid']) : '';
         if(is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid']))){
+            $_SESSION['openid'] = isset($_COOKIE['openid']) ? decrypt(addslashes($_COOKIE['openid'])) : '';
             $wxinfo = model('Base')->model->table('wechat')->field('token, appid, appsecret, status')->find();
             if($wxinfo['status']){
                 self::snsapi_userinfo();
@@ -674,6 +674,7 @@ class WechatController extends CommonController
             if(isset($_GET['code']) && $_GET['state'] == 'repeat'){
                 $token = $this->weObj->getOauthAccessToken();
                 $_SESSION['openid'] = $token['openid'];
+                setcookie('openid', encrypt($token['openid']), gmtime() + 86400 * 7);
             }
             // 生成请求链接
             if (! empty($wxinfo['oauth_redirecturi'])) {

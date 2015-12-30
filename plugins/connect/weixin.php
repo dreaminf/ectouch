@@ -220,8 +220,8 @@ class weixin {
             ECTouch::user()->set_cookie($new_user_name);
             model('Users')->update_user_info();
         }
-		$_SESSION['openid'] = $userinfo['openid'];
-        setcookie('openid', $userinfo['openid'], gmtime() + 86400 * 7);
+        $_SESSION['openid'] = $userinfo['openid'];
+        setcookie('openid', encrypt($userinfo['openid']), gmtime() + 86400 * 7);
     }
 
 }

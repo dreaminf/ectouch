@@ -268,14 +268,13 @@ switch ($step) {
 		}
 
 		$appid = get_appid();
-		$version_file = ROOT_PATH . '../data/certificate/appkey.php';
+		$version_file = ROOT_PATH . '../include/config/constant.php';
 		require $version_file;
-		$version_content = "<?php\ndefine('AUTH_KEY', '".$appid."');";
-		if(AUTH_KEY == ''){
+		if(AUTH_KEY == 'key'){
 			define('IN_ECTOUCH', true);
 			require dirname(ROOT_PATH) . '/include/vendor/Http.class.php';
 			require dirname(ROOT_PATH) . '/include/vendor/Cloud.class.php';
-			@file_put_contents($version_file, $version_content);
+			@file_put_contents($version_file, str_replace("'AUTH_KEY', '".AUTH_KEY."'", "'AUTH_KEY', '".$appid."'", file_get_contents($version_file)));
 			$cloud = Cloud::getInstance();
 			$site_info = get_site_info($appid);
 			$cloud->data($site_info)->act('post.install');
