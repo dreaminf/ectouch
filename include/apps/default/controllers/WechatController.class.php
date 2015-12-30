@@ -669,21 +669,22 @@ class WechatController extends CommonController
             $wxinfo = model('Base')->model->table('wechat')->field('token, appid, appsecret, status')->find();
             if($wxinfo['status']){
                 self::snsapi_userinfo();
-            }
-            // 用code换token
-            if(isset($_GET['code']) && $_GET['state'] == 'repeat'){
+            }else{
+              // 用code换token
+              if(isset($_GET['code']) && $_GET['state'] == 'repeat'){
                 $token = $this->weObj->getOauthAccessToken();
                 $_SESSION['openid'] = $token['openid'];
                 setcookie('openid', encrypt($token['openid']), gmtime() + 86400 * 7);
-            }
-            // 生成请求链接
-            if (! empty($wxinfo['oauth_redirecturi'])) {
+              }
+              // 生成请求链接
+              if (! empty($wxinfo['oauth_redirecturi'])) {
                 $callback = rtrim($wxinfo['oauth_redirecturi'], '/')  .'/'. $_SERVER['REQUEST_URI'];
-            }
-            if (! isset($callback)) {
+              }
+              if (! isset($callback)) {
                 $callback = __HOST__ . $_SERVER['REQUEST_URI'];
+              }
+              $this->weObj->getOauthRedirect($callback, 'repeat', 'snsapi_base');			
             }
-            $this->weObj->getOauthRedirect($callback, 'repeat', 'snsapi_base');
         }
     }
 
