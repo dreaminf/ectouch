@@ -16,6 +16,9 @@
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 header("Content-Type:text/html;charset=utf-8");
+define('APPNAME', 'ECTouch');
+define('VERSION', '2.2.30');
+define('RELEASE', '20151230');
 defined('BASE_PATH') or define('BASE_PATH', dirname(__FILE__) . '/');
 defined('ROOT_PATH') or define('ROOT_PATH', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/');
 defined('APP_PATH') or define('APP_PATH', BASE_PATH . 'apps/');
@@ -37,8 +40,6 @@ C('DB', load_file(ROOT_PATH . 'data/config.php'));
 date_default_timezone_set(C('DEFAULT_TIMEZONE'));
 /* 调试配置 */
 defined('APP_DEBUG') or define('APP_DEBUG', C('DEBUG'));
-/* 版本信息 */
-load_file(ROOT_PATH . 'data/version.php');
 /* 错误和异常处理 */
 register_shutdown_function('fatalError');
 
