@@ -267,11 +267,11 @@ switch ($step) {
 			filewrite(ROOT_PATH . $config['installFile']);
 		}
 
+		define('IN_ECTOUCH', true);
 		$appid = get_appid();
 		$version_file = ROOT_PATH . '../include/config/constant.php';
 		require $version_file;
 		if(AUTH_KEY == 'key'){
-			define('IN_ECTOUCH', true);
 			require dirname(ROOT_PATH) . '/include/vendor/Http.class.php';
 			require dirname(ROOT_PATH) . '/include/vendor/Cloud.class.php';
 			@file_put_contents($version_file, str_replace("'AUTH_KEY', '".AUTH_KEY."'", "'AUTH_KEY', '".$appid."'", file_get_contents($version_file)));
