@@ -72,7 +72,7 @@ class wxpay
      */
     function callback($data)
     {
-        if ($data['status'] == 1) {
+        if ($_GET['status'] == 1) {
             return true;
         } else {
             return false;
