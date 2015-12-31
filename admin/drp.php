@@ -142,8 +142,8 @@ if ($_REQUEST['act'] == 'users')
     $smarty->assign('page_count',   $list['page_count']);
 
     $smarty->assign('keyword', 'novice');
-    $smarty->assign('fil', date("Y-m-d H:i:s"));
-    $smarty->assign('fill', date("Y-m-d H:i:s",time()-86400*7));
+    $smarty->assign('etime', date("Y-m-d H:i:s"));
+    $smarty->assign('stime', date("Y-m-d H:i:s",time()-86400*7));
     $smarty->assign('ur_here', $_LANG['drp_profit']);
     $smarty->display('drp_users.htm');
 }
@@ -166,8 +166,8 @@ if ($_REQUEST['act'] == 'users_audit')
     $smarty->assign('page_count',   $list['page_count']);
 
     $smarty->assign('keyword', 'novice');
-    $smarty->assign('fil', date("Y-m-d H:i:s"));
-    $smarty->assign('fill', date("Y-m-d H:i:s",time()-86400*7));
+    $smarty->assign('etime', date("Y-m-d H:i:s"));
+    $smarty->assign('stime', date("Y-m-d H:i:s",time()-86400*7));
     $smarty->assign('ur_here', $_LANG['drp_profit']);
     $smarty->display('drp_users.htm');
 }
@@ -324,8 +324,8 @@ if($_REQUEST['act'] == 'drp_log'){
         $smarty->assign('full_page', 1);
     }
     $list = get_drp_log();
-    $smarty->assign('fil', date("Y-m-d H:i:s"));
-    $smarty->assign('fill', date("Y-m-d H:i:s",time()-86400*7));    
+    $smarty->assign('etime', date("Y-m-d H:i:s"));
+    $smarty->assign('stime', date("Y-m-d H:i:s",time()-86400*7));    
     $smarty->assign('list',         $list['list']);
     $smarty->assign('filter',       $list['filter']);
     $smarty->assign('record_count', $list['record_count']);

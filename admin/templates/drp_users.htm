@@ -26,9 +26,9 @@
 <div>
     
     <form action="drp.php?act=export&from={$smarty.get.act}" method="post" name="listForm">
-      <input name="start_time" type="text" id="start_time" size="22" value='{$fill}' readonly="readonly" />
+      <input name="start_time" type="text" id="start_time" size="22" value='{$stime}' readonly="readonly" />
       <input name="selbtn1" type="button" id="selbtn1" onclick="return showCalendar('start_time', '%Y-%m-%d %H:%M', '24', false, 'selbtn1');" value="{$lang.btn_select}" class="button"/>
-      <input name="end_time" type="text" id="end_time" size="22" value='{$fil}' readonly="readonly" />
+      <input name="end_time" type="text" id="end_time" size="22" value='{$etime}' readonly="readonly" />
       <input name="selbtn2" type="button" id="selbtn2" onclick="return showCalendar('end_time', '%Y-%m-%d %H:%M', '24', false, 'selbtn2');" value="{$lang.btn_select}" class="button"/>  
       <input type="submit" value="{$lang.download}" class='button' onclick="this.form.target = '_blank'"/>
     </form>
