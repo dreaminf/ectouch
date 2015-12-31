@@ -61,7 +61,7 @@ class EcsIconv {
      */
 
     function __construct($dir = './') {
-        $this->config['codetable_dir'] = $dir . "includes/codetable/";
+        $this->config['codetable_dir'] = $dir . "data/codetable/";
 
         if (function_exists('iconv')) {
             $this->iconv_enabled = true;
