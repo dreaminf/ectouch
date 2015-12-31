@@ -142,8 +142,8 @@ if ($_REQUEST['act'] == 'users')
     $smarty->assign('page_count',   $list['page_count']);
 
     $smarty->assign('keyword', 'novice');
-    $smarty->assign('filter', date("Y-m-d H:i:s"));
-    $smarty->assign('filters', date("Y-m-d H:i:s",time()-86400*7));
+    $smarty->assign('fil', date("Y-m-d H:i:s"));
+    $smarty->assign('fill', date("Y-m-d H:i:s",time()-86400*7));
     $smarty->assign('ur_here', $_LANG['drp_profit']);
     $smarty->display('drp_users.htm');
 }
@@ -166,8 +166,8 @@ if ($_REQUEST['act'] == 'users_audit')
     $smarty->assign('page_count',   $list['page_count']);
 
     $smarty->assign('keyword', 'novice');
-    $smarty->assign('filter', date("Y-m-d H:i:s"));
-    $smarty->assign('filters', date("Y-m-d H:i:s",time()-86400*7));
+    $smarty->assign('fil', date("Y-m-d H:i:s"));
+    $smarty->assign('fill', date("Y-m-d H:i:s",time()-86400*7));
     $smarty->assign('ur_here', $_LANG['drp_profit']);
     $smarty->display('drp_users.htm');
 }
@@ -324,8 +324,8 @@ if($_REQUEST['act'] == 'drp_log'){
         $smarty->assign('full_page', 1);
     }
     $list = get_drp_log();
-    $smarty->assign('filterss', date("Y-m-d H:i:s"));
-    $smarty->assign('filters', date("Y-m-d H:i:s",time()-86400*7));    
+    $smarty->assign('fil', date("Y-m-d H:i:s"));
+    $smarty->assign('fill', date("Y-m-d H:i:s",time()-86400*7));    
     $smarty->assign('list',         $list['list']);
     $smarty->assign('filter',       $list['filter']);
     $smarty->assign('record_count', $list['record_count']);
@@ -766,6 +766,9 @@ function drp_log_change($user_id, $user_money = 0, $pay_points = 0)
         " WHERE user_id = '$user_id' LIMIT 1";
     $GLOBALS['db']->query($sql);
 }
+
+
+
 //导出分销商
 if($_REQUEST['act'] == 'export'){
    if(!empty($_POST['start_time']) || !empty($_POST['end_time'])){
