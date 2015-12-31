@@ -31,16 +31,15 @@ if (DIRECTORY_SEPARATOR == '\\'){
 $base_path = str_replace('\\','/', dirname(dirname(getcwd()))).'/';
 $base_config = $base_path . 'data/config.php';
 defined('IS_ECSHOP') or define('IS_ECSHOP', file_exists($base_config));
-
-if (file_exists('../data/config.php')){
-    $db_config = require('../data/config.php');
-}else{
-    $db_config = require('../includes/config.php');
-}
-
 /* 取得当前ecshop所在的根目录 */
 defined('ADMIN_PATH') or define('ADMIN_PATH', 'admin');
-define('ROOT_PATH', str_replace(ADMIN_PATH . '/includes/init.php', '', str_replace('\\', '/', __FILE__)));
+defined('ROOT_PATH') or define('ROOT_PATH', str_replace(ADMIN_PATH . '/includes/init.php', '', str_replace('\\', '/', __FILE__)));
+
+if (file_exists(ROOT_PATH . 'data/config.php')){
+    $db_config = require(ROOT_PATH . 'data/config.php');
+}else{
+    $db_config = require(ROOT_PATH . 'includes/config.php');
+}
 
 if (defined('DEBUG_MODE') == false){
     define('DEBUG_MODE', 0);
@@ -320,7 +319,7 @@ if ((!isset($_SESSION['admin_id']) || intval($_SESSION['admin_id']) <= 0) &&
 $smarty->assign('token', $_CFG['token']);
 
 if ($_REQUEST['act'] != 'login' && $_REQUEST['act'] != 'signin' &&
-    $_REQUEST['act'] != 'forget_pwd' && $_REQUEST['act'] != 'reset_pwd' && $_REQUEST['act'] != 'check_order')
+    $_REQUEST['act'] != 'forget_pwd' && $_REQUEST['act'] != 'reset_pwd' && $_REQUEST['act'] != 'check_order' && (isset($_GET['item']) && $_GET['item'] != 'goods_desc'))
 {
     $admin_path = preg_replace('/:\d+/', '', $ecs->url()) . ADMIN_PATH;
     if (!empty($_SERVER['HTTP_REFERER']) &&
