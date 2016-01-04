@@ -2,8 +2,6 @@
 	var target = null;
 	var template = null;
 	var lock = false;
-	var is_stop = true; 
-	var cur_last = 0;
 	var variables = {
 		'last': 0
 	}
@@ -104,18 +102,18 @@
 			else {
 				ile = settings.amount;
 			}
-			if(variables.last >= cur_last){
-			$.post(settings.address, {
-				last: variables.last,
-				amount: ile
-			}, function(data) {
-				$(settings.trigger).css('display', 'block')
-				methods.add_elements(data)
-				lock = false;
-			}, settings.format)
-				cur_last  = cur_last+6;
-			}
-		
+			$.ajax({
+				type : "post",
+				dataType: settings.format,
+				url : settings.address,
+				data : "last=" + variables.last + '&amount=' + ile,
+				async : false,
+				success : function(data){
+					$(settings.trigger).css('display', 'block')
+					methods.add_elements(data)
+					lock = false;
+				}
+			});
 		}
 	};
 	$.fn.more = function(method) {
@@ -130,14 +128,10 @@
 	}
 
 	$(window).scroll(function() {
-		if (is_stop) {
 			var scrollTop = $(window).scrollTop() + 100;
 			var documentHeight = $(document).height() - $(window).height();
-			if (scrollTop >= documentHeight && is_stop == true) {
-				is_stop == false;
+			if (scrollTop >= documentHeight && lock == false) {
 				$('.get_more').click();
-				is_stop == true;
 			}
-		}
 	});
 })(jQuery)
