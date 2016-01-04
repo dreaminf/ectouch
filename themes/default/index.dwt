@@ -17,12 +17,11 @@
 <div class="index-max-box">
 {if !$subscribe}
 <div class="ect-attention dis-box" >
-	<div class="attention-img"><img src="__TPL__/images/attention-logo.png"></div>
 	<div class="attention-text box-flex">
 		<p style="font-size: 1rem;"><span style="color:#fff">欢迎进入</span><span style="color:#57C850"> 微商城</span></p>
 		<p style="font-size: 1rem;"><span style="color:#fff">关注公众号,享专属服务</span></p>
 	</div>
-	<div class="attention-button" style="  padding-top:0.8rem;">
+	<div class="attention-button" style="padding-top:0.8rem;">
 		<a class='lizhuanz'><button class="button">立即关注</button></a>
 	</div>
 </div>
