@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<title>{$page_title}</title>
+	<title>{if $drp_info.shop_name}{$drp_info.shop_name}{else}{$page_title}{/if}</title>
 	<link rel="stylesheet" type="text/css" href="__TPL__/css/index.css"/>
 	<link rel="stylesheet" type="text/css" href="__TPL__/css/search_index.css"/>
 	<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
@@ -23,21 +23,13 @@
 </div>
 {/if}
 </div>
-<!--立即关注弹出窗-->
-<div class="index-guanz-t"> 
-	<div class="index-guanz-show">		
-		<img src="__TPL__/images/guanzm.png">
-		<p><span class="left">长按二维码关注公众号</span><span class="right index-show-close">关闭</span></p>
-	</div>
-	<div class="index-guanz-bg"></div>
-</div>
+
 <div class="index-main comWidth" >
 <div class="share-div">
     <Img src="__TPL__/sale/images/share-index.png"></Img>
 </div>
 
 <div class="ect-index-header">
-
     <div class="ect-index-info ">
         <a href="{:url('user/index')}" class="ect-index-detail">
             <img src="{$drp_info.headimgurl}" />
@@ -48,7 +40,15 @@
     </div>
     <img src="{if $drp_info.shop_img}{$drp_info.shop_img}{else}__TPL__/sale/images/index_bg.jpg{/if}" class="fl"/>
 </div>
-
+<!--立即关注弹出窗 start-->
+<div class="index-guanz-t"> 
+    <div class="index-guanz-show">      
+        <img src="__TPL__/images/guanzm.png">
+        <p><span class="left">长按二维码关注公众号</span><span class="right index-show-close">关闭</span></p>
+    </div>
+    <div class="index-guanz-bg"></div>
+</div>
+<!--立即关注弹出窗 end-->
 <div class="ect-index-menu">
     <ul>
         <li></li>
