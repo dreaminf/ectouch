@@ -633,30 +633,6 @@ class UserController extends CommonController {
     }
 
     /**
-     * 订单跟踪
-     */
-    public function order_tracking() {
-        $order_id = I('get.order_id', 0);
-        $ajax = I('get.ajax', 0);
-
-        $where['user_id'] = $this->user_id;
-        $where['order_id'] = $order_id;
-        $orders = $this->model->table('order_info')
-                ->field('order_id, order_sn, invoice_no, shipping_name, shipping_id')
-                ->where($where)
-                ->find();
-        // 生成快递100查询接口链接
-        $shipping = get_shipping_object($orders['shipping_id']);
-        $query_link = $shipping->kuaidi100($orders['invoice_no']);
-
-        $get_content = Http::doGet($query_link);
-
-        $this->assign('title', L('order_tracking'));
-        $this->assign('trackinfo', $get_content);
-        $this->display('user_order_tracking.dwt');
-    }
-
-    /**
      * 订单详情
      */
     public function order_detail() {
@@ -756,7 +732,7 @@ class UserController extends CommonController {
         $order['order_status'] = L('os.' . $order['order_status']);
         $order['pay_status'] = L('ps.' . $order['pay_status']);
         $order['shipping_status'] = L('ss.' . $order['shipping_status']);
-		
+
         $this->assign('title', L('order_detail'));
         $this->assign('order', $order);
         $this->assign('goods_list', $goods_list);

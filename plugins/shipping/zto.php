@@ -77,14 +77,7 @@ class zto
      */
     function query($invoice_sn)
     {
-        $str = '<form style="margin:0px" methods="post" '.
-            'action="http://www.zto.cn/bill.asp" name="queryForm_' .$invoice_sn. '" target="_blank">'.
-            '<input type="hidden" name="ID" value="' .str_replace("<br>","\n",$invoice_sn). '" />'.
-            '<a href="javascript:document.forms[\'queryForm_' .$invoice_sn. '\'].submit();">' .$invoice_sn. '</a>'.
-            '<input type="hidden" name="imageField.x" value="26" />'.
-            '<input type="hidden" name="imageField.x" value="43" />'.
-            '</form>';
-
+        $str = 'http://m.kuaidi100.com/index_all.html?type=zhongtong&postid=' .$invoice_sn;
         return $str;
     }
 
@@ -99,30 +92,14 @@ class zto
      */
     function calculate_insure ($goods_amount, $insure)
     {
-        if ($goods_amount > 10000)
-        {
+        if ($goods_amount > 10000) {
             $goods_amount = 10000;
         }
-
         $fee = $goods_amount * $insure;
 
-        if ($fee < 100)
-        {
+        if ($fee < 100) {
             $fee = 100;
         }
-
         return $fee;
     }
-    
-    /**
-     * 返回快递100查询链接 by wang 
-     * URL：https://code.google.com/p/kuaidi-api/wiki/Open_API_Chaxun_URL
-     */
-    function kuaidi100($invoice_sn){
-        $url = 'http://m.kuaidi100.com/query?type=zhongtong&id=1&postid=' .$invoice_sn. '&temp='.time();
-        return $url;
-    }
-
 }
-
-?>

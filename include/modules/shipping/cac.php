@@ -101,14 +101,4 @@ class cac
     {
         return $invoice_sn;
     }
-     /**
-     * 返回快递100查询链接 by wang 
-     * URL：https://code.google.com/p/kuaidi-api/wiki/Open_API_Chaxun_URL
-     */
-    function kuaidi100($invoice_sn){
-        $url = 'http://m.kuaidi100.com/query?type=zhongtong&id=1&postid=' .$invoice_sn. '&temp='.time();
-        return $invoice_sn;
-    }
 }
-
-?>

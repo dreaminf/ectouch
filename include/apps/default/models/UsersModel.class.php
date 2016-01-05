@@ -915,11 +915,12 @@ class UsersModel extends BaseModel {
             $sql = "SELECT shipping_code FROM " . $this->pre . "shipping WHERE shipping_id = '$order[shipping_id]'";
             $res = $this->row($sql);
             $shipping_code = $res['shipping_code'];
-            $plugin = BASE_PATH . 'modules/shipping/' . $shipping_code . '.php';
+            $plugin = ADDONS_PATH . 'shipping/' . $shipping_code . '.php';
             if (file_exists($plugin)) {
                 include_once($plugin);
                 $shipping = new $shipping_code;
-                $order['invoice_no'] = $shipping->query($order['invoice_no']);
+                $order_tracking = $shipping->query($order['invoice_no']);
+                $order['order_tracking'] = ($order_tracking == $order['invoice_no']) ? '':$order_tracking;
             }
         }
 

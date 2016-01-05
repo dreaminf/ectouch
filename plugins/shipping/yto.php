@@ -79,24 +79,7 @@ class yto
     function query($invoice_sn)
     {
         //圆通快递查询会判断链接来源，目前的查询无法生效。
-        $str = '<form style="margin:0px" methods="post" '.
-            'action="http://www.yto.net.cn/service/sql.aspx" name="queryForm_' .$invoice_sn. '" target="_blank">'.
-            '<input type="hidden" name="NumberText" value="' .$invoice_sn. '" />'.
-            '<a href="javascript:document.forms[\'queryForm_' .$invoice_sn. '\'].submit();">' .$invoice_sn. '</a>'.
-            '</form>';
-
+        $str = 'http://m.kuaidi100.com/index_all.html?type=yuantong&postid=' .$invoice_sn;
         return $str;
-
-    }
-    
-    /**
-     * 返回快递100查询链接 by wang 
-     * URL：https://code.google.com/p/kuaidi-api/wiki/Open_API_Chaxun_URL
-     */
-    function kuaidi100($invoice_sn){
-        $url = 'http://m.kuaidi100.com/query?type=yuantong&id=1&postid=' .$invoice_sn. '&temp='.time();
-        return $url;
     }
 }
-
-?>
