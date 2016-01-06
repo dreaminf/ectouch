@@ -23,7 +23,7 @@
 </div>
 
 <div class="yhk_content2">
-	<a href="{:url('store/index')}"><span class="yhk_content">进入我的微店</span></a>
+	<a href="{:url('sale/index')}"><span class="yhk_content">进入我的微店</span></a>
 </div>
 </body>
 </html>
