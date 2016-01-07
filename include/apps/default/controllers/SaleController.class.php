@@ -288,10 +288,11 @@ class SaleController extends CommonController {
         $ew_img = ROOT_PATH.'data/attached/drp/tg-ewm-'.$id.'.png';//二维码
         $dp_img = ROOT_PATH.'data/attached/drp/tg-dp-'.$id.'.png';//店铺二维码
         $wx_img = ROOT_PATH.'data/attached/drp/tg-wx-'.$id.'.png';//微信头像
-        $filesize = filesize($dp_img);
-        if(!file_exists($dp_img) || empty($filesize)){
-            if(!file_exists($ew_img)){
-                $b = call_user_func(array('WechatController', 'rec_qrcode'), session('user_name'),session('user_id'));
+        $dp_img_size = filesize($dp_img);
+        $ew_img_size = filesize($ew_img);
+        if(!file_exists($dp_img) || empty($dp_img_size)){
+            if(!file_exists($ew_img) || empty($ew_img_size)){
+                $b = call_user_func(array('WechatController', 'rec_qrcode'), $_SESSION['user_name'], $_SESSION['user_id']);
                 $b = preg_replace('/https/','http',$b,1);
                 if(empty($b)){
                     $b = call_user_func(array('WechatController', 'rec_qrcode'), session('user_name'),session('user_id'));
