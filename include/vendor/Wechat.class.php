@@ -7,7 +7,7 @@ class Wechat extends WechatAbstract {
     }
 
     /**
-     * 日志记录，可被重载。
+     * 日志记录
      * @param mixed $log 输入日志
      * @return mixed
      */
@@ -17,7 +17,7 @@ class Wechat extends WechatAbstract {
     }
 
 	/**
-	 * 设置缓存，按需重载
+	 * 设置缓存
 	 * @param string $cachename
 	 * @param mixed $value
 	 * @param int $expired
@@ -28,7 +28,7 @@ class Wechat extends WechatAbstract {
 	}
 
 	/**
-	 * 获取缓存，按需重载
+	 * 获取缓存
 	 * @param string $cachename
 	 * @return mixed
 	 */
@@ -37,7 +37,7 @@ class Wechat extends WechatAbstract {
 	}
 
 	/**
-	 * 清除缓存，按需重载
+	 * 清除缓存
 	 * @param string $cachename
 	 * @return boolean
 	 */
