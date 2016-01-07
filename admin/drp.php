@@ -233,7 +233,7 @@ if ($_REQUEST['act'] == 'user_edit')
         exit;
     }
     // 获取店铺信息
-    $info = $db->getRow("SELECT d.id,d.shop_name,d.real_name,d.shop_mobile,d.user_id,d.cat_id,d.open,d.audit,u.user_name FROM " . $ecs->table("drp_shop") . " as d join " . $ecs->table("users") . " as u on d.user_id=u.user_id where d.id = $id");
+    $info = $db->getRow("SELECT d.id,d.shop_name,d.real_name,d.shop_mobile,d.shop_qq,d.user_id,d.cat_id,d.open,d.audit,u.user_name FROM " . $ecs->table("drp_shop") . " as d join " . $ecs->table("users") . " as u on d.user_id=u.user_id where d.id = $id");
     $smarty->assign('info', $info);
 
     $catArr = explode(',',$info['cat_id']);
@@ -789,7 +789,7 @@ if($_REQUEST['act'] == 'export'){
         $objPhpExcel->getActiveSheet()->getColumnDimension('I')->setWidth(15);
         $objPhpExcel->getActiveSheet()->getColumnDimension('J')->setWidth(20);
         //设置标题
-        $rowVal = array(0=>'编号',1=>'店铺名', 2=>'真实姓名', 3=>'手机号码', 4=>'分销id', 5=>'开店时间', 6=>'店铺是否审核', 7=>'店铺状态');
+        $rowVal = array(0=>'编号',1=>'店铺名', 2=>'真实姓名', 3=>'手机号码', 4=>'分销id', 5=>'开店时间', 6=>'店铺是否审核', 7=>'店铺状态',8=>'QQ号');
         foreach ($rowVal as $k=>$r){
             $objPhpExcel->getActiveSheet()->getStyleByColumnAndRow($k,1)->getFont()->setBold(true);//字体加粗
             $objPhpExcel->getActiveSheet()->getStyleByColumnAndRow($k,1)->getAlignment(); //->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//文字居中
@@ -815,6 +815,7 @@ if($_REQUEST['act'] == 'export'){
             ->setCellValue('F'.$num, date("Y-m-d H:i:s",$v['create_time']))
             ->setCellValue('G'.$num, $v['audit'])
             ->setCellValue('H'.$num, $v['open'])
+            ->setCellValue('I'.$num, $v['shop_qq'])
             ;
         }
         $name = date('Y-m-d'); //设置文件名
