@@ -80,7 +80,7 @@ class CategoryBaseModel extends BaseModel {
         if ($this->row($sql) || $tree_id == 0) {
             $child_sql = 'SELECT c.cat_id, c.cat_name, c.parent_id, c.is_show, g.goods_thumb as cat_img ' .
                     'FROM ' . $this->pre . 'category as c ' .
-                    'left join ' . $this->pre . 'goods as g on g.cat_id = c.cat_id ' .
+                    'left join ' . $this->pre . 'goods as g on g.cat_id = c.cat_id AND g.is_delete = 0 ' .
                     "WHERE c.parent_id = '$tree_id' AND c.is_show = 1 GROUP BY c.cat_id ORDER BY c.sort_order ASC, c.cat_id ASC";
             $res = $this->query($child_sql);
             foreach ($res AS $row) {
