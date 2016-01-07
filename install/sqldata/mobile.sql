@@ -206,6 +206,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_shop` (
   `shop_name` varchar(20) DEFAULT NULL COMMENT '微店名称',
   `real_name` varchar(20) DEFAULT NULL COMMENT '真实姓名',
   `shop_mobile` varchar(20) DEFAULT NULL COMMENT '手机号',
+  `shop_qq` varchar(20) DEFAULT NULL COMMENT 'qq号',
   `shop_img` text COMMENT '店铺头像',
   `user_id` int(10) NOT NULL DEFAULT '0',
   `cat_id` text COMMENT '分销分类id',
