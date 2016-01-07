@@ -135,7 +135,7 @@ class wxpay
                         ->data('openid = "' . $postdata['openid'] . '", transid = "' . $postdata['transaction_id'] . '"')
                         ->where('log_id = ' . $log_id)
                         ->update();
-                    if(method_exists('WechatController', 'do_oauth')){
+                    if(method_exists('WechatController', 'snsapi_base')){
                         /* 如果需要，微信通知 wanglu */
                         $order_id = model('Base')->model->table('order_info')
                             ->field('order_id')

@@ -328,11 +328,11 @@ class MY_FlowController extends FlowController {
             $sms->send(C('sms_shop_mobile'), sprintf($msg, $order ['consignee'], $order ['mobile']), '', 13, 1);
         }
         /* 如果需要，微信通知 by wanglu */
-//         if (method_exists('WechatController', 'do_oauth')) {
-//             $order_url = __HOST__ . url('user/order_detail', array('order_id' => $order ['order_id']));
-//             $order_url = urlencode(base64_encode($order_url));
-//             send_wechat_message('order_remind', '', $order['order_sn'] . L('order_effective'), $order_url, $order['order_sn']);
-//         }
+        if (method_exists('WechatController', 'snsapi_base')) {
+            $order_url = __HOST__ . url('user/order_detail', array('order_id' => $order ['order_id']));
+            $order_url = urlencode(base64_encode($order_url));
+            send_wechat_message('order_remind', '', $order['order_sn'] . L('order_effective'), $order_url, $order['order_sn']);
+        }
 
         // 推送消息
         $message_status = M()->table('drp_config')->field('value')->where('keyword = "msg_open"')->getOne();
