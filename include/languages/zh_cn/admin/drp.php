@@ -75,6 +75,7 @@ $_LANG['user']['money'] = '分销佣金';
 $_LANG['user']['sale_money'] = '销售佣金';
 $_LANG['user']['shop_name'] = '店铺名';
 $_LANG['user']['shop_mobile'] = '手机号';
+$_LANG['user']['shop_qq'] = 'QQ号';
 $_LANG['user']['audit'] = '审核状态';
 $_LANG['user']['audit_true'] = '已审核';
 $_LANG['user']['audit_false'] = '未审核';
