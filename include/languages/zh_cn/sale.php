@@ -45,6 +45,7 @@ $_LANG['can_not_empty'] = '不能为空';
 $_LANG['shop_name_empty'] = '商店名称不能为空';
 $_LANG['real_name_empty'] = '真实名称不能为空';
 $_LANG['shop_mobile_empty'] = '手机号不能为空';
+$_LANG['shop_qq_empty'] = 'QQ号不能为空';
 $_LANG['sale_set'] = '微店设置';
 $_LANG['sale_set_category'] = '分销分类选择';
 $_LANG['next_step'] = '下一步';
