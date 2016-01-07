@@ -241,7 +241,6 @@ class WechatAbstract
 		$this->appsecret = isset($options['appsecret'])?$options['appsecret']:'';
 		$this->debug = isset($options['debug'])?$options['debug']:false;
 		$this->logcallback = isset($options['logcallback'])?$options['logcallback']:false;
-		$this->cache = new Cache();
 	}
 
 	/**
