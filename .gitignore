@@ -6,7 +6,7 @@ data/install.lock
 # IDE Files
 #-------------------------
 /nbproject/
-.idea/*
+.idea
 
 ## Sublime Text cache files
 *.tmlanguage.cache
