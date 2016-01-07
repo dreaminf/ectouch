@@ -510,8 +510,12 @@ class SaleController extends CommonController {
             if (empty($data['shop_mobile'])){
                 show_message(L('shop_mobile_empty'));
             }
+            if (empty($data['shop_qq'])){
+                show_message(L('shop_qq_empty'));
+            }
             $data['shop_name'] = $data['shop_name'];
             $data['user_id'] = $_SESSION['user_id'];
+            $data['create_time'] = gmtime();
             if($this->model->table('drp_shop')->data($data)->insert()){
                 redirect(url('sale/sale_set_category'));
             }else{
