@@ -3,7 +3,8 @@ class Wechat extends WechatAbstract {
 
     public function __construct($options){
         parent::__construct($options);
-        $this->cache = new Cache();
+        $options = array('temp' => ROOT_PATH .'data/caches/access_token');
+        $this->cache = new Cache($options);
     }
 
     /**
@@ -11,10 +12,14 @@ class Wechat extends WechatAbstract {
      * @param mixed $log 输入日志
      * @return mixed
      */
-    protected function log($log){
+    public function log($log){
         $log = is_array($log) ? var_export($log, true) : $log;
     		logResult($log);
     }
+
+	public function clearCache(){
+		return $this->cache->clear();
+	}
 
 	/**
 	 * 设置缓存
