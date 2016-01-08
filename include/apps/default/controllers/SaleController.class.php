@@ -292,18 +292,29 @@ class SaleController extends CommonController {
         $ew_img_size = filesize($ew_img);
         if(!file_exists($dp_img) || empty($dp_img_size)){
             if(!file_exists($ew_img) || empty($ew_img_size)){
-                $b = call_user_func(array('WechatController', 'rec_qrcode'), $_SESSION['user_name'], $_SESSION['user_id']);
+                $b = call_user_func(array('WechatController', 'rec_qrcode'), $_SESSION['user_name'],$_SESSION['user_id']);
                 $b = preg_replace('/https/','http',$b,1);
+                logResult('Local:1');
                 if(empty($b)){
-                    $b = call_user_func(array('WechatController', 'rec_qrcode'), session('user_name'),session('user_id'));
+                    $b = call_user_func(array('WechatController', 'rec_qrcode'), $_SESSION['user_name'],$_SESSION['user_id'],0,'',true);
                     $b = preg_replace('/https/','http',$b,1);
-                    if(empty($b)){
-                        $b = call_user_func(array('WechatController', 'rec_qrcode'), session('user_name'),session('user_id'));
-                        $b = preg_replace('/https/','http',$b,1);
-                    }
+                    logResult('Local:2');
+                    //logResult(var_export($_SESSION, true));                    
                 }
-                $img = @file_get_contents($b);
-                file_put_contents($ew_img,$img);
+                if(empty($b)){
+                    $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$id)->getOne();
+	                // 二维码
+	                $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?u='.$id.'&drp_id='.$drp_id;
+	                // 纠错级别：L、M、Q、H
+	                $errorCorrectionLevel = 'M';
+	                // 点的大小：1到10
+	                $matrixPointSize = 13;
+	                @QRcode::png($url, $ew_img, $errorCorrectionLevel, $matrixPointSize, 2);
+                    logResult('Local:3');
+                }else{
+	                $img = Http::doGet($b);
+	                file_put_contents($ew_img,$img);
+                }
                 Image::thumb($ew_img, $ew_img,'','330','330'); // 将图片重新设置大小
             }
             // 获取微信头像
@@ -313,15 +324,8 @@ class SaleController extends CommonController {
                 }
             }
             if($info['avatar']){
-                $ch = curl_init();
-                $timeout = 5;
                 $info['avatar']=preg_replace('/https/','http',$info['avatar'],1);
-                curl_setopt ($ch, CURLOPT_URL, $info['avatar']);
-                curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en; rv:1.9.2) Gecko/20100115 Firefox/3.6 GTBDFff GTB7.0');
-                curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-                $thumb = curl_exec($ch);
-                curl_close($ch);
+                $thumb = Http::doGet($info['avatar']);
                 file_put_contents($wx_img,$thumb);
 
                 Image::thumb($wx_img, $wx_img,'','100','100'); // 将图片重新设置大小
@@ -389,16 +393,8 @@ class SaleController extends CommonController {
                 }
             }
             if($info['avatar']){
-                $ch = curl_init();
-                $timeout = 5;
                 $info['avatar']=preg_replace('/https/','http',$info['avatar'],1);
-
-                curl_setopt ($ch, CURLOPT_URL, $info['avatar']);
-                curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en; rv:1.9.2) Gecko/20100115 Firefox/3.6 GTBDFff GTB7.0');
-                curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-                $thumb = curl_exec($ch);
-                curl_close($ch);
+                $thumb = Http::doGet($info['avatar']);
                 file_put_contents($wx_img,$thumb);
                 Image::thumb($wx_img, $wx_img,'','100','100'); // 将图片重新设置大小
             }
