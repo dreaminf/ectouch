@@ -53,7 +53,6 @@ class WechatController extends CommonController
         // 事件类型
         $type = $this->weObj->getRev()->getRevType();
         $wedata = $this->weObj->getRev()->getRevData();
-        //logResult(var_export($wedata, true));
         $keywords = '';
         if ($type == Wechat::MSGTYPE_TEXT) {
             $keywords = $wedata['Content'];
@@ -151,7 +150,6 @@ class WechatController extends CommonController
             if (empty($info)) {
                 $info = array();
             }
-            
             // 查找用户是否存在
             $where['openid'] = $openid;
             $rs = $this->model->table('wechat_user')
@@ -829,7 +827,7 @@ class WechatController extends CommonController
      * @param  string  $fun       [description]
      * @return [type]             [description]
      */
-    static function rec_qrcode($user_name = '', $user_id = 0, $expire_seconds = 0, $fun = ''){
+    static function rec_qrcode($user_name = '', $user_id = 0, $expire_seconds = 0, $fun = '', $force = false){
         if(empty($user_id)){
             return false;
         }
@@ -842,6 +840,10 @@ class WechatController extends CommonController
             $config['appsecret'] = $wxinfo['appsecret'];
             // 微信通验证
             $weObj = new Wechat($config);
+            if($force){
+                $weObj->clearCache();
+                model('Base')->model->table('wechat_qrcode')->where(array('scene_id'=>$user_id, 'wechat_id'=>$wxinfo['id']))->delete();
+            }
 
             $qrcode = model('Base')->model->table('wechat_qrcode')->field('id, scene_id, type, expire_seconds, qrcode_url')->where(array('scene_id'=>$user_id, 'wechat_id'=>$wxinfo['id']))->find();
             if($qrcode['id'] && !empty($qrcode['qrcode_url'])){
