@@ -290,7 +290,7 @@ class SaleController extends CommonController {
         $wx_img = ROOT_PATH.'data/attached/drp/tg-wx-'.$id.'.png';//微信头像
         $dp_img_size = filesize($dp_img);
         $ew_img_size = filesize($ew_img);
-        if(!file_exists($dp_img) || empty($dp_img_size)){
+        if(!file_exists($dp_img) || empty($dp_img_size) || !file_exists($ew_img) || empty($ew_img_size)){
             if(!file_exists($ew_img) || empty($ew_img_size)){
                 $b = call_user_func(array('WechatController', 'rec_qrcode'), $_SESSION['user_name'],$_SESSION['user_id']);
                 $b = preg_replace('/https/','http',$b,1);
@@ -299,21 +299,21 @@ class SaleController extends CommonController {
                     $b = call_user_func(array('WechatController', 'rec_qrcode'), $_SESSION['user_name'],$_SESSION['user_id'],0,'',true);
                     $b = preg_replace('/https/','http',$b,1);
                     logResult('Local:2');
-                    //logResult(var_export($_SESSION, true));                    
+                    //logResult(var_export($_SESSION, true));
                 }
                 if(empty($b)){
                     $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$id)->getOne();
-	                // 二维码
-	                $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?u='.$id.'&drp_id='.$drp_id;
-	                // 纠错级别：L、M、Q、H
-	                $errorCorrectionLevel = 'M';
-	                // 点的大小：1到10
-	                $matrixPointSize = 13;
-	                @QRcode::png($url, $ew_img, $errorCorrectionLevel, $matrixPointSize, 2);
+                    // 二维码
+                    $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?u='.$id.'&drp_id='.$drp_id;
+                    // 纠错级别：L、M、Q、H
+                    $errorCorrectionLevel = 'M';
+                    // 点的大小：1到10
+                    $matrixPointSize = 13;
+                    @QRcode::png($url, $ew_img, $errorCorrectionLevel, $matrixPointSize, 2);
                     logResult('Local:3');
                 }else{
-	                $img = Http::doGet($b);
-	                file_put_contents($ew_img,$img);
+                    $img = Http::doGet($b);
+                    file_put_contents($ew_img,$img);
                 }
                 Image::thumb($ew_img, $ew_img,'','330','330'); // 将图片重新设置大小
             }
@@ -372,8 +372,8 @@ class SaleController extends CommonController {
         $dp_img = ROOT_PATH.'data/attached/drp/dp-dp-'.$id.'.png';//店铺二维码
         $wx_img = ROOT_PATH.'data/attached/drp/dp-wx-'.$id.'.png';//微信头像
         $filesize = filesize($dp_img);
-        if(!file_exists($dp_img) || empty($filesize)){
-            if(!file_exists($ew_img) || empty($filesize)){
+        if(!file_exists($dp_img) || empty($filesize) || !file_exists($ew_img)){
+            if(!file_exists($ew_img)){
                 $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$id)->getOne();
                 // 二维码
                 $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?u='.$id.'&drp_id='.$drp_id;
