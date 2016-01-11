@@ -3,10 +3,10 @@ $(function($) {
 		$(this).toggleClass('active').siblings().removeClass('active');
 		
 	});
+	var header = $('.main-left').outerWidth();
 	$('.sidemenu-header').click(function() {
-		//		$(this).toggleClass('active');
 		$('.main-left').toggleClass('active');
-		var header = $('.main-left').outerWidth();
+		header = $('.main-left').outerWidth();
 		$.cookie("menuheader", header);
 		if ($(this).parent().hasClass('active')) {
 			$('.main-content').addClass('active');
@@ -24,22 +24,15 @@ $(function($) {
 		$('.main-content-content').toggleClass("select");
 		$(this).toggleClass("active");
 	});
-});
-
-//cookie
-$(function($) {
+	//cookie
 	//menu-state
-	var header = $('.main-left').outerWidth();
+//	var header = $('.main-left').outerWidth();
 	if($.cookie("menuheader") != undefined){
 		//cookie记录的index
-		if ($.cookie("menuheader") > 50) {
-			$('.main-left').addClass('active');
-			$('.main-content').addClass('active');
-		} else {
+		if ($.cookie("menuheader") <= 50) {
 			$('.main-left').removeClass('active');
 			$('.main-content').removeClass('active');
 		}
-		$.cookie("menuheader", header);
 	}
 	else{
 		$.cookie("menuheader", header);
@@ -57,9 +50,8 @@ $(function($) {
 		$('.main-left').find('.nav-list li').eq(num).addClass('active').siblings().removeClass('active');
 	}
 });
-
-//pjax
-$(function() {
+$(function($) {
+	//pjax
 	$('#loading').hide();
 	$(document).pjax('a', '#pjax-container');
 });
