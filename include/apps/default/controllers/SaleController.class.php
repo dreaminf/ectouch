@@ -669,7 +669,7 @@ class SaleController extends CommonController {
         if(IS_POST){
             $data = I('data');
             if(empty($data['bank_name'])){
-                show_message('请输入银行名称，如：建设银行/支付宝等');
+                show_message('请输入银行名称，如：建设银行等');
             }
             if(empty($data['bank_card'])){
                 show_message('请输入帐号');
@@ -690,6 +690,7 @@ class SaleController extends CommonController {
         $this->assign('title', '添加银行卡');
         $this->display('sale_add_bank.dwt');
     }
+
     public function select_bank(){
         if(IS_POST){
             $bank = I('bank') ? I('bank') : 0;
