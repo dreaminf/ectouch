@@ -1,4 +1,11 @@
 $(function($) {
+	function openMune() {
+		if ($('.ect-nav').is(":visible")) {
+			$('.ect-nav').hide();
+		} else {
+			$('.ect-nav').show();
+		}
+	}
 	var handler = function(e) {
 		e.preventDefault();
 	};
@@ -13,7 +20,7 @@ $(function($) {
 	}
 
 	function d_messages(m_text) {
-		x //弹出消息
+		//弹出消息
 		$(".div-messages").text(m_text);
 		m_marginLeft = $(".div-messages").innerWidth() / 2;
 		$(".div-messages").css("margin-left", -m_marginLeft);
@@ -298,9 +305,9 @@ $(function($) {
 	});
 
 	/*商品详情 红心*/
-	$(".j-heart").click(function() {
-		$(this).toggleClass("active");
-	});
+	//	$(".j-heart").click(function() {
+	//		$(this).toggleClass("active");
+	//	});
 	/*点击弹出搜索层*/
 	$(".j-search-input").click(function() {
 		$("body").addClass("show-search-div");
@@ -453,6 +460,7 @@ $(function($) {
 			prevTop = currTop
 		}, 0);
 	});
+
 })
 
 $(function() {

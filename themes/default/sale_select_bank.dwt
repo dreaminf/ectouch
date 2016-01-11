@@ -2,7 +2,7 @@
 <div id="box">
 <div class="header">
     <div class="yjfd_content10">
-        <a href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a><span class="tltle">{$title}</span>
+        <a href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a><span class="tltle">{$title}</span> <a href="{:url('sale/add_bank')}"><span class="wdyj_content11">添加银行卡</span></a>
     </div>
 </div>
 {if $list}

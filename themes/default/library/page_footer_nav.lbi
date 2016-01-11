@@ -1,7 +1,7 @@
 <style type="text/css"> 
-	.dis-box{display:-moz-box; display:-webkit-box; display:box; color:#FFF;}
-	.dis-box a{ display:block;  -moz-box-flex:1; -webkit-box-flex:1; box-flex:1; text-align:center;color: #fff;}
-	.dis-box a.a-heart,.dis-box a.a-flow-cart{width:3rem;}	
+	tbl-type-div.dis-box{display:-moz-box; display:-webkit-box; display:box;}
+	tbl-type-div.dis-box a{ display:block;  -moz-box-flex:1; -webkit-box-flex:1; box-flex:1; text-align:center;color: #fff;}
+	tbl-type-div.dis-box a.a-heart,.dis-box a.a-flow-cart{width:3rem;}	
 	.tbl-type{background:#333333; height:auto;  padding:0; position: fixed; bottom:0; width:100%; max-width:640px;}
 	.tbl-type a img {height: 2rem;width: auto;}	
 	.tbl-type  a img{display:block; margin:0; margin-bottom:0.1rem; }
