@@ -253,8 +253,33 @@ class WechatController extends CommonController
                     //记录用户操作信息
                     $this->record_msg($openid, $template . $bonus_msg, 1);
                 }
-            }
-            else {
+            } else {
+                $uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where('openid = "'.$openid.'"')->getOne();
+                if(!empty($uid)){
+                    $bonus_num = model('Base')->model->table('user_bonus')->where('user_id = "'.$uid.'"')->count();
+                    if($bonus_num <= 0){
+                        // 红包信息
+                        $content = $this->send_message($openid, 'bonus', $this->weObj, 1);
+                        $bonus_msg = '';
+                        if (! empty($content)) {
+                            $bonus_msg = $content['content'];
+                        }
+                        if(!empty($bonus_msg)){
+                            // 微信端发送消息
+                            $msg = array(
+                                'touser' => $openid,
+                                'msgtype' => 'text',
+                                'text' => array(
+                                    'content' => $bonus_msg
+                                )
+                            );
+                            $this->weObj->sendCustomMessage($msg);
+                            //记录用户操作信息
+                            $this->record_msg($openid, $bonus_msg, 1);
+                        }
+                    }
+                }
+
                 // 获取用户所在分组ID
                 $data['group_id'] = isset($info['groupid']) ? $info['groupid'] : $this->weObj->getUserGroup($openid);
                 // 获取被关注公众号信息
