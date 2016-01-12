@@ -254,6 +254,7 @@ class WechatController extends CommonController
                     $this->record_msg($openid, $template . $bonus_msg, 1);
                 }
             } else {
+                //授权用户送红包
                 $uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where('openid = "'.$openid.'"')->getOne();
                 if(!empty($uid)){
                     $bonus_num = model('Base')->model->table('user_bonus')->where('user_id = "'.$uid.'"')->count();
