@@ -16,7 +16,7 @@
 		<div class="container ">
 			<nav class="navbar navbar-default header">
 				<div class="navbar-brand">
-					<a href="index.html"><img src="img/ectouch_logo.png"/></a>
+					<a href="index.html"><img src="img/ectouch_logo.png" /></a>
 				</div>
 				<!-- menu-->
 				<div class="topbar-wrapper">
@@ -52,7 +52,7 @@
 									</li>
 								</ul>
 							</li>
-							
+
 						</ul>
 					</div>
 					<div class="topbar-right">
@@ -74,7 +74,7 @@
 								</a>
 								<ul class="dropdown-menu">
 									<li class="">
-										<img src="img/qrcode.png"/>
+										<img src="img/qrcode.png" />
 										<p>扫码关注官方微信</p>
 									</li>
 								</ul>
@@ -338,34 +338,30 @@
 										</div>
 										<label class="form-label col-sm-2 ">评论开始日期：</label>
 										<div class="formControls col-sm-2 ">
-											<input type="text " onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss',maxDate: '#F{$dp.$D(\'datemax\ ')||\'%y-%M-%d\ '}'}) " id="datemin " class="input-text Wdate form-control">
+											<input type="text " onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss',maxDate: '#F{$dp.$D(\'datemax\ ')||\'%y-%M-%d\ '}'}) " id="datemin " class="input-text Wdate form-control ">
 										</div>
 										<label class="form-label col-sm-2 ">评论结束日期：</label>
 										<div class="formControls col-sm-2 ">
-											<input type="text " onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate: '#F{$dp.$D(\'datemin\ ')}'}) " id="datemax " class="input-text Wdate form-control">
+											<input type="text " onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate: '#F{$dp.$D(\'datemin\ ')}'}) " id="datemax " class="input-text Wdate form-control ">
 										</div>
 									</div>
-									<div class="row cl">
-										<label class="form-label col-sm-2">上传文件：</label>
-										<div class="formControls col-sm-3">
-											<div class="uploader-thum-container">
-												<div id="fileList" class="uploader-list"></div>
-												<div id="filePicker" class="webuploader-container">
-													<div class="webuploader-pick">选择文件</div>
-												<div id="file" style="position: absolute; top: 0px; left: 0px; width: 80px; height: 30px; overflow: hidden; bottom: auto; right: auto;">
-													<input type="file" name="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*">
-													<label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label>
-												</div>
-												</div>
-												<button id="btn-star" class="btn btn-default btn-uploadstar radius ml-10">开始上传</button>
-											</div>
-										</div>
-										<label class="form-label col-sm-2">输入文件地址：</label>
-										<div class="formControls col-sm-3">
-											<input type="text " class="input-text form-control " value=" " placeholder=" " id=" " name=" ">
+									<div class="row cl ">
+										<label class="form-label col-sm-2 ">上传文件：</label>
+										<div class="formControls col-sm-4 ">
+											<a class="btn btn-blue btn-primary btn-default fl br-4" href="javascript:void(0);">
+												<span>+ 选择图片</span>
+												<input class="filePrew" title="支持jpg、jpeg、gif、png格式，文件小于5M" tabIndex="3" type="file" size="3" name="pic">
+											</a>
+											<button id="" class="btn btn-default btn-grey">开始上传</button>
 										</div>
 									</div>
-									
+									<div class="row cl ">
+										<label class="form-label col-sm-2 ">文章内容：</label>
+										<div class="formControls col-sm-10 ">
+											<iframe src="ueditor.html" class="box" style="height: 500px;z-index: 99;"></iframe>
+											
+										</div>
+									</div>
 									
 									
 									
@@ -391,8 +387,6 @@
 		<script type="text/javascript " src="js/jquery.cookie.js "></script>
 		<script type="text/javascript " src="js/jquery.pjax.js "></script>
 		<script type="text/javascript " src="js/comm.js "></script>
-		<script type="text/javascript ">
-		</script>
 	</body>
 
 </html>

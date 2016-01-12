@@ -38,6 +38,9 @@ a:hover { text-decoration:underline;text-decoration:none; }
 .br-10{
 	border-radius: 10px;
 }
+.br-4{
+	border-radius: 4px;
+}
 .box{
 	width: 100%;
     box-sizing: border-box;
@@ -46,6 +49,7 @@ a:hover { text-decoration:underline;text-decoration:none; }
 .ml-5{
 	margin-left: 5px;
 }
+
 body{
 	font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, "Microsoft YaHei";
 }
@@ -68,10 +72,48 @@ body{
 	-webkit-text-stroke-width: 0.2px;
 	-moz-osx-font-smoothing: grayscale;
 }
-
+/*btn*/
 .btn-default{
 	border: none;
 }
+.btn-blue{
+	background: #1b9ad5;
+    color: #fff;
+}
+
+.btn-blue:link{
+	background: #1b9ad5;
+    color: #fff;
+}
+.btn-blue:visited{
+	background: #1b9ad5;
+    color: #fff;
+}
+.btn-blue:hover{
+	background: #00a2d4;
+    color: #fff;
+}
+.btn-blue:active{
+	background: #1b9ad5;
+    color: #fff;
+}
+.btn-blue{
+	background-color: #e6e6e6;
+    border-color: #e6e6e6;
+}
+.btn-grey{
+	background-color: #e6e6e6;
+    border-color: #e6e6e6;
+}
+.btn-grey:hover, .btn-grey:focus, .btn-grey:active, .btn-grey.active{
+	color: #333;
+    background-color: #c7c7c7;
+    border-color: #c7c7c7;
+}
+
+
+
+
 .text-c{
 	text-align: center;
 }
@@ -237,7 +279,7 @@ body{
     background: #008fbf;
 }
 .navbar-nav .open .dropdown-menu{
-	padding: 0;
+	/*padding:0;*/
 	position: absolute;
 	background: #fff;
 }
@@ -287,13 +329,13 @@ body{
     border-radius: 3px;
     font-weight: normal;
     text-align: center;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 /*.header-product li.select a i.iconfont{
 	color: #0087b4;
 }*/
 .header-product li a p{
-	margin-top: 10px;
+	margin-top: 5px;
 }
 .header-product li a:hover{
 	background: none;
@@ -328,7 +370,7 @@ body{
     top: 50%;
     width: 20px;
     height: 50px;
-    z-index: 3;
+    z-index: 999;
     -o-transition: all 0.2s ease;
     -ms-transition: all 0.2s ease;
     -moz-transition: all 0.2s ease;
@@ -448,6 +490,7 @@ body{
 	color: #fff;
 }
 .secondmenu li.active a{
+	background: #0099cc !important;
 	color: #fff;
 }
 .main-left a.nav-header.sidemenu-header {
@@ -607,6 +650,7 @@ body{
 	background: #fff !important;
 }
 .main-sidemenu-list li.active a{
+	background: #fff !important;
 	color: #333;
 }
 .main-content-content h1 {
@@ -1107,7 +1151,7 @@ table.dataTable {
 .layer-content{
 	padding:10px 15px;
 	background: #fff;
-	z-index: 99999;
+	z-index: 9;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -1152,10 +1196,42 @@ table.dataTable {
     font-size: 14px;
     padding: 4px;
 }
-.formControls>* {
+/*.formControls>* {
     vertical-align: middle;
+}*/
+.btn-addPic{
+	display: block;
+	position: relative;
+	width: 140px;
+	height: 39px;
+	overflow: hidden;
+	border: 1px solid #EBEBEB;
+	background: none repeat scroll 0 0 #3bb4f2;
+	color: #fff;
+	cursor: pointer;
+	text-align: center;
 }
-.icheckbox-blue, .icheckbox-blue.static:hover {
+.btn-addPic span{
+	display: block;
+	line-height: 39px;
+}
+.btn-addPic:hover{
+	cursor: pointer;
+	color: #fff;
+}
+.filePrew {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 140px;
+	height: 39px;
+	font-size: 100px; /* 增大不同浏览器的可点击区域 */
+	opacity: 0; /* 实现的关键点 */
+	filter:alpha(opacity=0);/* 兼容IE */
+}
+
+/*.icheckbox-blue, .icheckbox-blue.static:hover {
     background-position: 0 0;
 }
 .icheckbox-blue, .iradio-blue {
@@ -1190,13 +1266,18 @@ table.dataTable {
     border-radius: 3px;
     overflow: hidden;
 }
-.webuploader-element-invisible {
+.webuploader-invisible {
     position: absolute !important;
     clip: rect(1px 1px 1px 1px);
     clip: rect(1px,1px,1px,1px);
 }
-
-
+.btn-uploadstar {
+    vertical-align: top;
+}
+.btn-default {
+    background-color: #e6e6e6;
+    border-color: #e6e6e6;
+}*/
 
 
 
