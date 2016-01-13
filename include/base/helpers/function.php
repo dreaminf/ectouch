@@ -545,6 +545,7 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
         parse_str($info['query'],$params);
         $vars = array_merge($params,$vars);
     }
+    $share_vars = $vars;
     
     // URL组装
     $depr       =   C('URL_PATHINFO_DEPR');
@@ -641,10 +642,12 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
             }
         }
     }
-    if(isset($_GET['u']) && !empty($_GET['u'])){
-        $url  .= '&u='.intval($_GET['u']);
-    }else{
-        $url  .= '&u='.$_SESSION['user_id'];
+    if(!isset($share_vars['u'])){    
+        if(isset($_GET['u']) && !empty($_GET['u'])){
+            $url  .= '&u='.intval($_GET['u']);
+        }else{
+            $url  .= '&u='.$_SESSION['user_id'];
+        }
     }
     /*DRP_START*/
     $drp_id = isset($_SESSION['drp_shop']['drp_id']) ? intval($_SESSION['drp_shop']['drp_id']) : 0;
