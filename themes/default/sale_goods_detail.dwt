@@ -77,20 +77,20 @@
 					<li class="box-flex f-goods-num">{$item.shop_mobile}</li>
 				</ul>
 			</div>
-			<div class="f-goods-cont-box">
-				<!--{foreach from=$item.goods item=goods_info}-->
+			<!--{foreach from=$item.goods item=goods_info}-->
+			<div class="f-goods-cont-box">				
 				<ul class="dis-box">
 					<li class="f-shop-list"><img src="{$goods_info.goods_thumb}"></li>
-					
 					<li class="box-flex f-shop-content">
-						<h3>{$goods_info.goods_name}<h3>
-		    	<h4><span>价格：</span>{$goods_info.goods_price}<span class="f-y-num">数量：</span>{$goods_info.goods_number}<h4>
-		        <h5 class="f-yongjin-color"><span>佣金比例：</span>{$goods_info.profit}%<span class="f-y-num">佣金金额：</span>{$goods_info.money}<h5>
+						<h3>{$goods_info.goods_name}</h3>
+		    	<h4><span>价格：</span>{$goods_info.goods_price}<span class="f-y-num">数量：</span>{$goods_info.goods_number}</h4>
+				<h5><span>销售佣金总额：</span>{$goods_info.touch_sale}</h5>
+		        <h5 class="f-yongjin-color"><span>佣金比例：</span>{$goods_info.profit}%<span class="f-y-num">佣金金额：</span>{$goods_info.money}</h5>
 		    </li>
 			
-		</ul>
-		<!--{/foreach}-->
+		</ul>		
 		</div>
+		<!--{/foreach}-->
 		<div class="f-goods-cont-box">	
 		<h2>合计:{$item.log.user_money}元</h2>
 			</div>
