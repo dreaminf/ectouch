@@ -81,7 +81,7 @@
           </li>
           <!-- {/if} -->
           <li>
-            <input name="inv_payee" type="text"  placeholder="{$lang.please_invoice_title}" class="input" id="ECS_INVPAYEE" size="20" value="{$order.inv_payee}" onblur="changeNeedInv()" />
+            <input name="inv_content" type="text"  placeholder="{$lang.please_invoice_title}" class="input" id="ECS_INVPAYEE" size="20" value="{$order.inv_payee}" onblur="changeNeedInv()" />
           </li>
           <li> <span class="pull-left select-span">{$lang.invoice_content}</span>
             <div class="form-select pull-left"> <i class="fa fa-sort"></i>

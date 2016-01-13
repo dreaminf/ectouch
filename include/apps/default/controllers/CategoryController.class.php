@@ -120,6 +120,7 @@ class CategoryController extends CommonController {
         $this->assign('show_marketprice', C('show_marketprice'));
         $this->page = I('post.page');
         $goodslist = $this->category_get_goods();
+
         die(json_encode(array('list' => $goodslist)));
         exit();
     }

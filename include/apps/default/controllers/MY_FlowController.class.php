@@ -73,7 +73,7 @@ class MY_FlowController extends FlowController {
             'need_inv' => empty($_POST ['need_inv']) ? 0 : 1,
             'inv_type' => $_POST ['inv_type'],
             'inv_payee' => trim($_POST ['inv_payee']),
-            'inv_content' => $_POST ['inv_content'],
+            'inv_content' => $_POST['inv_content'],
             'postscript' => trim($_POST ['postscript']),
             'how_oos' => isset($oos) ? addslashes("$oos") : '',
             'need_insure' => isset($_POST ['need_insure']) ? intval($_POST ['need_insure']) : 0,
@@ -89,7 +89,6 @@ class MY_FlowController extends FlowController {
                 $consignee ['district']
             ))
         );
-
         /* 扩展信息 */
         if (isset($_SESSION ['flow_type']) && intval($_SESSION ['flow_type']) != CART_GENERAL_GOODS) {
             $order ['extension_code'] = $_SESSION ['extension_code'];
