@@ -44,7 +44,6 @@ class FlowController extends CommonController {
 
         // 取得优惠活动
         $favourable_list = model('Flow')->favourable_list_flow($_SESSION ['user_rank']);
-
         usort($favourable_list, array("FlowModel", "cmp_favourable"));
         $this->assign('favourable_list', $favourable_list);
 
@@ -338,8 +337,8 @@ class FlowController extends CommonController {
 
             $this->model->query($sql);
             /* 删除所有赠品 */
-            $sql = "DELETE FROM " . $this->model->pre . "cart WHERE session_id = '" . SESS_ID . "' AND is_gift <> 0";
-            $this->model->query($sql);
+            //$sql = "DELETE FROM " . $this->model->pre . "cart WHERE session_id = '" . SESS_ID . "' AND is_gift <> 0";
+            //$this->model->query($sql);
 
             $result ['rec_id'] = $key;
             $result ['goods_number'] = $val;
@@ -474,7 +473,7 @@ class FlowController extends CommonController {
         $insure_disabled = true;
         $cod_disabled = true;
 
-        // 查看购物车中是否全为免运费商品，若是则把运费赋为零 
+        // 查看购物车中是否全为免运费商品，若是则把运费赋为零
         $condition = "`session_id` = '" . SESS_ID . "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0";
         $shipping_count = $this->model->table('cart')->field('count(*)')->where($condition)->getOne();
         foreach ($shipping_list as $key => $val) {
@@ -993,6 +992,7 @@ class FlowController extends CommonController {
             /* 用户没有登录且没有选定匿名购物，转向到登录页面 */
             ecs_header("Location: " . url('user/login') . "\n");
         }
+
         // 获取收货人信息
         $consignee = model('Order')->get_consignee($_SESSION ['user_id']);
         /* 检查收货人信息是否完整 */
@@ -1081,7 +1081,7 @@ class FlowController extends CommonController {
             $bonus = model('Order')->bonus_info(0, $bonus_sn);
             $now = gmtime();
             if (empty($bonus) || $bonus ['user_id'] > 0 || $bonus ['order_id'] > 0 || $bonus ['min_goods_amount'] > model('Order')->cart_amount(true, $flow_type) || $now > $bonus ['use_end_date']) {
-                
+
             } else {
                 if ($user_id > 0) {
                     $sql = "UPDATE " . $this->model->pre . "user_bonus SET user_id = '$user_id' WHERE bonus_id = '$bonus[bonus_id]' LIMIT 1";
@@ -1397,7 +1397,7 @@ class FlowController extends CommonController {
         }
 
 
-        
+
         /* 订单信息 */
         $this->assign('order', $order);
         $this->assign('total', $total);
@@ -1414,7 +1414,6 @@ class FlowController extends CommonController {
         $this->assign('step', ACTION_NAME);
 
         $this->assign('title', L('order_submit'));
-
         $this->display('flow.dwt');
     }
 

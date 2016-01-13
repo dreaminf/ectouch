@@ -32,10 +32,10 @@ class ArticleController extends CommonController {
     //-- 文章分类
     /* ------------------------------------------------------ */
     public function index() {
-        $cat_id = I('get.id', 3, 'intval');
-        $sql = 'SELECT cat_id, cat_name, sort_order ' .
+        $cat_id = I('get.id', 0, 'intval');
+        $sql = 'SELECT cat_id, cat_name' .
             ' FROM {pre}article_cat ' .
-            ' WHERE cat_type = 5 AND parent_id = '. $cat_id .
+            ' WHERE cat_type = 1 AND parent_id = '. $cat_id .
             ' ORDER BY sort_order ASC';
         $data = $this->model->query($sql);
         foreach($data as $key=>$vo){
