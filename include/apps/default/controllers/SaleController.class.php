@@ -277,9 +277,9 @@ class SaleController extends CommonController {
      */
     public function spread(){
         $id = I('u') ? I('u') : $this->user_id;
-        if(!$id){
-            redirect(url('index/index'));
-        }
+        if(!isset($_GET['u'])){ 
+			redirect(url('sale/spread',array('u'=>$id)));
+		}
         $filename  = ROOT_PATH.'data/attached/drp';
         if(!file_exists($filename)){
             mkdir($filename);
@@ -457,7 +457,8 @@ class SaleController extends CommonController {
             foreach($orders as $key=>$val){
                 foreach($val['goods'] as $k=>$v){
                     $orders[$key]['goods'][$k]['profit'] = model('Sale')->get_drp_order_profit($val['order_id'],$v['goods_id']);
-					$orders[$key]['goods'][$k]['money'] = $v['touch_sale']/100*$orders[$key]['goods'][$k]['profit']*$v['goods_number'];
+					$orders[$key]['goods'][$k]['money'] = price_format($v['touch_sale']/100*$orders[$key]['goods'][$k]['profit']*$v['goods_number'],false);
+					$orders[$key]['goods'][$k]['touch_sale'] = price_format($v['touch_sale'],false);
                 }
             }
         }
