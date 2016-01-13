@@ -414,7 +414,9 @@ class SaleController extends CommonController {
         $this->assign('title',L('store'));
         $this->display('sale_store.dwt');
     }
-
+	/**
+     * 本店订单
+     */
     public function order_list(){
         $user_id = I('user_id') > 0 ? I('user_id') : $_SESSION['user_id'];
         $drp_id = $this->model->table('drp_shop')->field('id')->where("user_id=".$user_id)->getOne();
@@ -438,13 +440,30 @@ class SaleController extends CommonController {
                 }
             }
         }
-
         $this->assign('orders_list', $orders);
         $this->assign('title', L('order_list'));
         $dwt = $orders ? 'sale_order_list.dwt' : 'sale_show_message.dwt';
         $this->display($dwt);
     }
-
+	/**
+     * 订单详情
+     */
+	public function goods_detai(){
+		$order_id = I('order_id') > 0 ? I('order_id') :'';
+		$where = 'd.order_id = '.$order_id;
+		$user_id = I('user_id') > 0 ? I('user_id') : $_SESSION['user_id'];
+		$orders = model('Sale')->get_sale_goods_detai($where, $user_id);
+		if($orders){
+            foreach($orders as $key=>$val){
+                foreach($val['goods'] as $k=>$v){
+                    $orders[$key]['goods'][$k]['profit'] = model('Sale')->get_drp_order_profit($val['order_id'],$v['goods_id']);
+					$orders[$key]['goods'][$k]['money'] = $v['touch_sale']/100*$orders[$key]['goods'][$k]['profit']*$v['goods_number'];
+                }
+            }
+        }
+		$this->assign('orders_list', $orders);
+		$this->display('sale_goods_detail.dwt');
+	}
     public function my_shop_info(){
 
         // 总销售额

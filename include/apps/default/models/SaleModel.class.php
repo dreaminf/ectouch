@@ -231,7 +231,51 @@ class SaleModel extends BaseModel {
 
         return $arr;
     }
+	
+	function get_sale_goods_detai($where, $user_id) {
+        /* 取得订单列表 */
+        $arr = array();
+        $sql = "SELECT o.order_id, o.order_sn, o.user_id, o.shipping_id, o.order_status, o.shipping_status, o.pay_status, o.add_time, o.is_separate, " .
+            "(o.goods_amount + o.shipping_fee + o.insure_fee + o.pay_fee + o.pack_fee + o.card_fee + o.tax - o.discount) AS total_fee, d.shop_separate " .
+            " FROM {pre}order_info as o right join {pre}drp_order_info as d on o.order_id=d.order_id " .
+            " WHERE  " . $where . " ORDER BY add_time DESC ";
+        $res = M()->query($sql);
+        if($res){
+            foreach ($res as $key => $value) {
 
+				
+                $value['shipping_status'] = ($value['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $value['shipping_status'];
+                $value['order_status'] = L('os.' . $value['order_status']) . ',' . L('ps.' . $value['pay_status']) . ',' . L('ss.' . $value['shipping_status']);
+                $goods_list = $this->get_order_goods($value['order_id']);
+                foreach ($goods_list as $key => $val) {
+                    $goods_list[$key]['price'] = $val['goods_price'];
+                    $goods_list[$key]['goods_price'] = price_format($val['goods_price'], false);
+                    $goods_list[$key]['subtotal'] = price_format($value['total_fee'], false);
+                    $goods_list[$key]['goods_number'] = $val['goods_number'];
+                    $goods_list[$key]['touch_fencheng'] = $val['touch_fencheng'];
+                    $goods_list[$key]['touch_sale'] = $val['touch_sale'];
+                    $goods_list[$key]['goods_thumb'] = get_image_path($val['goods_id'],$val['goods_thumb']);
+                }
+
+                $arr[] = array('order_id' => $value['order_id'],
+                    'user_name' => M()->table('users')->field('user_name')->where("user_id=".$value[user_id])->getOne(),
+					'shop_mobile' => M()->table('drp_shop')->field('shop_mobile')->where("user_id=".$value[user_id])->getOne(),
+                    'order_sn' => $value['order_sn'],
+                    'img' => get_image_path(0, model('Order')->get_order_thumb($value['order_id'])),
+                    'order_time' => local_date(C('time_format'), $value['add_time']),
+                    'order_status' => $value['order_status'],
+                    'shipping_id' => $value['shipping_id'],
+                    'total_fee' => price_format($value['total_fee'], false),
+                    'url' => url('user/order_detail', array('order_id' => $value['order_id'])),
+                    'is_separate' => $value['shop_separate'] > 0 ? "<span style='font-weight:bold'>已分成</span>" : "<span style='color:red;font-weight:bold'>未分成</span>",
+                    'goods'=>$goods_list,
+                    'log' => $this->model->getRow("select * from {pre}drp_log where order_id=".$value['order_id']),//table('drp_log')->where('order_id=90')->getRow(),
+                );
+            }
+        }
+
+        return $arr;
+    }
     /**
      * 获取用户列表信息
      */
@@ -464,7 +508,6 @@ class SaleModel extends BaseModel {
         $id = M()->table('goods')->field('cat_id')->where("goods_id=$goods_id")->getOne();
         $id = $this->get_goods_cat($id);
         $profit = M()->table('drp_profit')->where('cate_id='.$id)->select();
-
         return $profit['0'][$key];
     }
 
