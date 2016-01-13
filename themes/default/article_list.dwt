@@ -36,6 +36,6 @@
 </div><footer class="logo"><a href="http://www.ectouch.cn" title="ECTouch官网" target="_blank"><img src="__TPL__/images/copyright.png" width="176" height="60"></a></footer>
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
 <script type="text/javascript">
-//get_asynclist("{:url('article/asynclist', array('id'=>$this->_var['id'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'keywords'=>$this->_var['keywords']))}" , '__TPL__/images/loader.gif');
+get_asynclist("{:url('article/asynclist', array('id'=>$this->_var['id'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'keywords'=>$this->_var['keywords']))}" , '__TPL__/images/loader.gif');
 </script>
 </body></html>

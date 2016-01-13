@@ -53,25 +53,7 @@ a:hover { text-decoration:underline;text-decoration:none; }
 body{
 	font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, "Microsoft YaHei";
 }
-@font-face {
-	font-family: 'iconfont';
-	src: url('../fonts/iconfont.eot');
-	/* IE9*/
-	src: url('../fonts/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-	url('../fonts/iconfont.woff') format('woff'), /* chrome、firefox */
-	url('../fonts/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-	url('../fonts/iconfont.svg#iconfont') format('svg');
-	/* iOS 4.1- */
-}
 
-.iconfont {
-	font-family: "iconfont" !important;
-	font-size: 16px;
-	font-style: normal;
-	-webkit-font-smoothing: antialiased;
-	-webkit-text-stroke-width: 0.2px;
-	-moz-osx-font-smoothing: grayscale;
-}
 /*btn*/
 .btn-default{
 	border: none;
@@ -1149,6 +1131,7 @@ table.dataTable {
     min-width: 260px;
 }
 .layer-content{
+	display: none;
 	padding:10px 15px;
 	background: #fff;
 	z-index: 9;
@@ -1230,7 +1213,17 @@ table.dataTable {
 	opacity: 0; /* 实现的关键点 */
 	filter:alpha(opacity=0);/* 兼容IE */
 }
-
+.date{
+	background: url(../img/datePicker.gif) no-repeat right center content-box;
+    cursor: pointer;
+	position: relative;
+}
+.date.form-control[readonly]{
+	background-color:#fff;
+}
+.cxcalendar_bd .days .selected, .cxcalendar_bd .days .selected:hover{
+	background:#1b9ad5;
+}
 /*.icheckbox-blue, .icheckbox-blue.static:hover {
     background-position: 0 0;
 }

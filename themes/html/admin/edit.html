@@ -9,6 +9,9 @@
 		<meta name="keyword" content="">
 		<title>内容</title>
 		<link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="fonts/iconfont.css" />
+		<link rel="stylesheet" href="css/jquery.cxcalendar.css" />
+		<!--<link rel="stylesheet" href="css/layer.css" />-->
 		<link rel="stylesheet" href="css/style.css" />
 	</head>
 
@@ -133,8 +136,8 @@
 						<span class=" glyphicon glyphicon-chevron-toggle"></span>管理中心
 					</a>
 					<ul id="user" class="nav nav-list collapse secondmenu">
-						<li class=""><a href="goods.html"><i class="iconfont">&#xe618;</i> 商品</a></li>
-						<li><a href="orderlist.html"><i class="iconfont">&#xe61b;</i> 订单</a></li>
+						<li class=""><a href="goods.html"><i class="iconfont icon-iconfontshangpineps"></i> 商品</a></li>
+						<li><a href="orderlist.html"><i class="iconfont ">&#xe61b;</i> 订单</a></li>
 						<li><a href="member.html"><i class="iconfont">&#xe619;</i> 会员</a></li>
 						<li class=""><a href="edit.html"><i class="iconfont">&#xe617;</i> 内容</a></li>
 						<li><a href="advertise.html"><i class="iconfont">&#xe61f;</i> 营销</a></li>
@@ -181,8 +184,8 @@
 											<option value="2">系统分类</option>
 										</select>
 									</span> 日期范围：
-									<input type="text" onfocus="" id="logmin" class="input-text Wdate form-control" style="width:120px;"> -
-									<input type="text" onfocus="" id="logmax" class="input-text Wdate form-control" style="width:120px;">
+									<input type="text " id="datemin" class="input-text date form-control datemin" data-position="" readonly="" size="16" value="" style="width: 120px;">-
+									<input type="text " id="datemax" class="input-text date form-control datemax" data-position="" readonly="" size="16" value="" style="width: 120px;">
 									<input type="text" name="" id="" placeholder=" 资讯名称" style="width:250px" class="input-text form-control">
 									<button name="" id="" class="btn btn-success" type="submit"><i class="iconfont">&#xe627;</i> 搜资讯</button>
 								</div>
@@ -239,8 +242,8 @@
 													<td class="">21212</td>
 													<td class="f-14 td-manage">
 														<a style="text-decoration:none" class="ml-5" onclick="" href="javascript:;" title="查看" id="table-"><i class="iconfont">&#xe626;</i></a>
-														<a style="text-decoration:none" class="ml-5" onclick="" href="javascript:;" title="编辑"><i class="iconfont">&#xe600;</i></a>
-														<a style="text-decoration:none" class="ml-5" onclick="" href="javascript:;" title="删除"><i class="iconfont">&#xe62d;</i></a>
+														<a style="text-decoration:none" class="ml-5 edit" onclick="" href="javascript:;" title="编辑"><i class="iconfont">&#xe600;</i></a>
+														<a style="text-decoration:none" class="ml-5 delete-btn" onclick="" href="javascript:;" title="删除"><i class="iconfont">&#xe62d;</i></a>
 													</td>
 												</tr>
 											</tbody>
@@ -266,7 +269,7 @@
 							<div class="bk-common br-10 box">
 								<div class="comm-title box">
 									<p class="index-distributor-title fl">文章内容编辑</p>
-									<i class="iconfont fr">&#xe62b;</i>
+									<i class="iconfont fr layer-close">&#xe62f;</i>
 								</div>
 								<form action="" method="post" class="pd-20 form form-horizontal text-c">
 									<div class="row cl">
@@ -336,39 +339,37 @@
 												<label for="checkbox-pinglun " class=" ">&nbsp;</label>
 											</div>
 										</div>
+										
+									</div>
+									<div class="row cl ">
 										<label class="form-label col-sm-2 ">评论开始日期：</label>
-										<div class="formControls col-sm-2 ">
-											<input type="text " onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss',maxDate: '#F{$dp.$D(\'datemax\ ')||\'%y-%M-%d\ '}'}) " id="datemin " class="input-text Wdate form-control ">
+										<div class="formControls col-sm-4 ">
+											<input type="text "id="datemin " class="input-text date form-control datemin " data-position=" " readonly=" " size="16 " value=" ">
 										</div>
 										<label class="form-label col-sm-2 ">评论结束日期：</label>
-										<div class="formControls col-sm-2 ">
-											<input type="text " onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate: '#F{$dp.$D(\'datemin\ ')}'}) " id="datemax " class="input-text Wdate form-control ">
+										<div class="formControls col-sm-4 ">
+											<input type="text " id="datemax " class="input-text date form-control datemax ">
 										</div>
 									</div>
 									<div class="row cl ">
 										<label class="form-label col-sm-2 ">上传文件：</label>
 										<div class="formControls col-sm-4 ">
-											<a class="btn btn-blue btn-primary btn-default fl br-4" href="javascript:void(0);">
+											<a class="btn btn-blue btn-primary btn-default fl br-4 " href="javascript:void(0); ">
 												<span>+ 选择图片</span>
-												<input class="filePrew" title="支持jpg、jpeg、gif、png格式，文件小于5M" tabIndex="3" type="file" size="3" name="pic">
+												<input class="filePrew " title="支持jpg、jpeg、gif、png格式，文件小于5M " tabIndex="3 " type="file " size="3 " name="pic ">
 											</a>
-											<button id="" class="btn btn-default btn-grey">开始上传</button>
+											<button id=" " class="btn btn-default btn-grey ">开始上传</button>
 										</div>
 									</div>
 									<div class="row cl ">
 										<label class="form-label col-sm-2 ">文章内容：</label>
 										<div class="formControls col-sm-10 ">
-											<iframe src="ueditor.html" class="box" style="height: 500px;z-index: 99;"></iframe>
-											
+											<iframe src="ueditor.html " class="box " style="height: 500px;z-index: 99; "></iframe>
 										</div>
 									</div>
 									
 									
 									
-									
-									
-									
-
 								</form>
 							</div>
 
@@ -376,6 +377,10 @@
 
 					</div>
 					<div class="layer-shade "></div>
+				</div>
+				<!--delete-layer-->
+				<div class="delete-layer ">
+					小小提示层
 				</div>
 
 			</div>
@@ -386,7 +391,23 @@
 		<script type="text/javascript " src="css/bootstrap/js/bootstrap.min.js "></script>
 		<script type="text/javascript " src="js/jquery.cookie.js "></script>
 		<script type="text/javascript " src="js/jquery.pjax.js "></script>
+		<script type="text/javascript " src="js/jquery.cxcalendar.min.js " ></script>
+		<script type="text/javascript " src="js/layer.js " ></script>
 		<script type="text/javascript " src="js/comm.js "></script>
+		<script type="text/javascript ">
+			$('.delete-btn').on('click', function(){
+			    layer.open({
+			        type: 1,
+			        area: ['260px', '150px'],
+			        shadeClose: true, //点击遮罩关闭
+			        content: '\<\div style="padding:20px;">确定要删除吗？\<\/div>'
+			    });
+			});
+//			$(function($) {
+//				
+//				
+//			});
+		</script>
 	</body>
 
 </html>

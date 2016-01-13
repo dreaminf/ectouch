@@ -328,7 +328,7 @@ class MY_FlowController extends FlowController {
             $sms->send(C('sms_shop_mobile'), sprintf($msg, $order ['consignee'], $order ['mobile']), '', 13, 1);
         }
         /* 如果需要，微信通知 by wanglu */
-        if (method_exists('WechatController', 'snsapi_base')) {
+        if (method_exists('WechatController', 'snsapi_base') && is_wechat_browser()) {
             $order_url = __HOST__ . url('user/order_detail', array('order_id' => $order ['order_id']));
             $order_url = urlencode(base64_encode($order_url));
             send_wechat_message('order_remind', '', $order['order_sn'] . L('order_effective'), $order_url, $order['order_sn']);
@@ -449,7 +449,6 @@ class MY_FlowController extends FlowController {
             include_once (ROOT_PATH . 'plugins/payment/' . $payment ['pay_code'] . '.php');
 
             $pay_obj = new $payment ['pay_code'] ();
-
             $pay_online = $pay_obj->get_code($order, unserialize_config($payment ['pay_config']));
 
             $order ['pay_desc'] = $payment ['pay_desc'];

@@ -19,8 +19,31 @@ defined('IN_ECTOUCH') or die('Deny Access');
 /**
  * 类
  */
-class paypal
-{
+class paypal {
+    var	$API_UserName = '';
+    var	$API_Password = '';
+    var	$API_Signature= '';
+		var	$API_Endpoint = '';
+		var	$PAYPAL_URL   = '';
+
+		var	$version='65.1';
+		var	$nvpHeader = "";
+
+    public function __construct(){
+      $payment = model('Payment')->get_payment('paypal');
+      $this->API_UserName    = $payment['paypal_username'];
+      $this->API_Password    = $payment['paypal_password'];
+      $this->API_Signature    = $payment['paypal_signature'];
+			if($payment['paypal_sandbox']==1){
+          $this->API_Endpoint    = 'https://api-3t.paypal.com/nvp';
+          $this->PAYPAL_URL    = 'https://www.paypal.com/cgi-bin/webscr&cmd=_express-checkout&useraction=commit&token=';
+			}else{
+          $this->API_Endpoint    = 'https://api-3t.sandbox.paypal.com/nvp';
+          $this->PAYPAL_URL    = 'https://www.sandbox.paypal.com/cgi-bin/webscr&cmd=_express-checkout&useraction=commit&token=';
+			}
+    	$this->nvpHeader = "&VERSION=".urlencode($this->version)."&PWD=".urlencode($this->API_Password)."&USER=".urlencode($this->API_UserName)."&SIGNATURE=".urlencode($this->API_Signature);
+    }
+
     /**
      * 生成支付代码
      * @param   array   $order  订单信息
@@ -28,114 +51,50 @@ class paypal
      */
     function get_code($order, $payment)
     {
-        $data_order_id      = $order['log_id'];
-        $data_amount        = $order['order_amount'];
-        $data_return_url    = return_url(basename(__FILE__, '.php'));
-        $data_pay_account   = $payment['paypal_account'];
-        $currency_code      = $payment['paypal_currency'];
-        $data_notify_url    = return_url(basename(__FILE__, '.php'), true);
-        $cancel_return      = __URL__;
+        $token = '';
+        $serverName = $_SERVER['SERVER_NAME'];
+        $serverPort = $_SERVER['SERVER_PORT'];
+        $url=dirname('http://'.$serverName.':'.$serverPort.$_SERVER['REQUEST_URI']);
+        $nvpstr = "";
+        $paymentAmount=$order['order_amount'];
+	      $currencyCodeType=$payment['paypal_currency']; //币种
+        $paymentType='Sale';
+        $data_order_id	= $order['log_id'];
 
-        $def_url  = '<br /><form style="text-align:center;" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">' .   // 不能省略
-            "<input type='hidden' name='cmd' value='_xclick'>" .                             // 不能省略
-            "<input type='hidden' name='business' value='$data_pay_account'>" .                 // 贝宝帐号
-            "<input type='hidden' name='item_name' value='$order[order_sn]'>" .                 // payment for
-            "<input type='hidden' name='amount' value='$data_amount'>" .                        // 订单金额
-            "<input type='hidden' name='currency_code' value='$currency_code'>" .            // 货币
-            "<input type='hidden' name='return' value='$data_return_url'>" .                    // 付款后页面
-            "<input type='hidden' name='invoice' value='$data_order_id'>" .                      // 订单号
-            "<input type='hidden' name='charset' value='utf-8'>" .                              // 字符集
-            "<input type='hidden' name='no_shipping' value='1'>" .                              // 不要求客户提供收货地址
-            "<input type='hidden' name='no_note' value=''>" .                                  // 付款说明
-            "<input type='hidden' name='notify_url' value='$data_notify_url'>" .
-            "<input type='hidden' name='rm' value='2'>" .
-            "<input type='hidden' name='cancel_return' value='$cancel_return'>" .
-            "<input type='submit' value='去付款' class='btn btn-info ect-btn-info ect-colorf ect-bg' style='width:100%'>" .                      // 按钮
-            "</form><br />";
-        return $def_url;
+        $nvpstr.="&PAYMENTREQUEST_0_AMT=".$paymentAmount;
+        $nvpstr.="&PAYMENTREQUEST_0_PAYMENTACTION=".$paymentType;
+        $nvpstr.="&PAYMENTREQUEST_0_CURRENCYCODE=".$currencyCodeType;
+        $nvpstr.="&PAYMENTREQUEST_0_INVNUM=".$data_order_id;
+        $nvpstr.="&ButtonSource=ECTouch";
+        $nvpstr.="&NOSHIPPING=1";
+
+        $returnURL =urlencode($url.'/respond.php?code=paypal');
+        $cancelURL =urlencode($url.'/respond.php?code=paypal');
+				$nvpstr.= "&ReturnUrl=".$returnURL ;
+				$nvpstr.= "&CANCELURL=".$cancelURL ;
+	      $nvpstr.= "&SolutionType=Sole";
+	      $nvpstr.= "&LandingPage=Billing";
+				$resArray=$this->hash_call("SetExpressCheckout",$nvpstr);
+
+        $_SESSION['reshash']=$resArray;
+        if(isset($resArray["ACK"])){
+            $ack = strtoupper($resArray["ACK"]);
+        }
+
+        if (isset($resArray["TOKEN"])){
+            $token = urldecode($resArray["TOKEN"]);
+        }
+        $payPalURL = $this->PAYPAL_URL.$token;
+        $button = '<div style="text-align:center"><input type="submit" onclick="window.open(\''.$payPalURL. '\')" value="跳转到PAYPAL支付" class="btn btn-info ect-btn-info ect-colorf ect-bg" /></div>';
+        return $button;
     }
 
     /**
      * 响应操作
      */
-    function callback($data)
+    public function callback($data)
     {
-        $payment        = model('Payment')->get_payment($data['code']);
-        $merchant_id    = $payment['paypal_account'];               ///获取商户编号
-
-        // read the post from PayPal system and add 'cmd'
-        $req = 'cmd=_notify-validate';
-        foreach ($_POST as $key => $value)
-        {
-            $value = urlencode(stripslashes($value));
-            $req .= "&$key=$value";
-        }
-
-        // post back to PayPal system to validate
-        $header = "POST /cgi-bin/webscr HTTP/1.0\r\n";
-        $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-        $header .= "Content-Length: " . strlen($req) ."\r\n\r\n";
-        $fp = stream_socket_client("tcp://www.paypal.com:80", $errno, $errstr, 5);
-
-        // assign posted variables to local variables
-        $item_name = $_POST['item_name'];
-        $item_number = $_POST['item_number'];
-        $payment_status = $_POST['payment_status'];
-        $payment_amount = $_POST['mc_gross'];
-        $payment_currency = $_POST['mc_currency'];
-        $txn_id = $_POST['txn_id'];
-        $receiver_email = $_POST['receiver_email'];
-        $payer_email = $_POST['payer_email'];
-        $order_sn = $_POST['invoice'];
-        $memo = !empty($_POST['memo']) ? $_POST['memo'] : '';
-        $action_note = $txn_id . '（' . L('paypal_txn_id') . '）' . $memo;
-		
-		// check that txn_id has not been previously processed
-		$count = model('Base')->model->table('order_action')->where("action_note LIKE '" . mysql_like_quote($txn_id) . "%'")->count();
-		if($count > 0){
-			fclose($fp);
-			return true;
-		}
-
-        if ($fp) {
-            fputs($fp, $header . $req);
-            while (!feof($fp)) {
-                $res = fgets($fp, 1024);
-                if (strcmp($res, 'VERIFIED') == 0) {
-                    // check the payment_status is Completed
-                    if ($payment_status != 'Completed' && $payment_status != 'Pending') {
-						fclose($fp);
-                        return false;
-                    }
-                    // check that receiver_email is your Primary PayPal email
-                    if ($receiver_email != $merchant_id) {
-						fclose($fp);
-                        return false;
-                    }
-                    // check that payment_amount/payment_currency are correct
-					$order_amount = model('Base')->model->table('pay_log')->field('order_amount')->where("log_id = '$order_sn'")->getOne();
-                    if ($order_amount != $payment_amount){
-						fclose($fp);
-                        return false;
-                    }
-                    if ($payment['paypal_currency'] != $payment_currency) {
-						fclose($fp);
-                        return false;
-                    }
-                    // process payment
-					model('Payment')->order_paid($order_sn, PS_PAYED, $action_note);
-					fclose($fp);
-                    return true;
-                } elseif (strcmp($res, 'INVALID') == 0) {
-                    // log for manual investigation
-					fclose($fp);
-                    return false;
-                }
-            }
-        }else{
-			fclose($fp);
-            return false;
-		}
+        return $this->notify();
     }
     
     /**
@@ -145,6 +104,84 @@ class paypal
      */
     public function notify($data)
     {
-        $this->callback($data);
+        $token = urlencode($_REQUEST["token"]);
+        $nvpstr="&TOKEN=".$token;
+        $resArray=$this->hash_call("GetExpressCheckoutDetails",$nvpstr);
+        $_SESSION['reshash']=$resArray;
+        $ack = strtoupper($resArray["ACK"]);
+
+        if($ack=="SUCCESS"){
+						$payerID = urlencode($resArray["PAYERID"]);
+						$currCodeType	=	urlencode($resArray["PAYMENTREQUEST_0_CURRENCYCODE"]);
+						$paymentType	=	urlencode($resArray["PAYMENTREQUEST_0_PAYMENTACTION"]);
+						$paymentAmount= urlencode($resArray["PAYMENTREQUEST_0_AMT"]);
+						$order_sn= urlencode($resArray["PAYMENTREQUEST_0_INVNUM"]);
+	          $serverName = urlencode($_SERVER["SERVER_NAME"]);
+
+						$nvpstr ="&TOKEN=".$token;
+						$nvpstr.="&PAYERID=".$payerID;
+						$nvpstr.="&PAYMENTREQUEST_0_PAYMENTACTION=".$paymentType;
+						$nvpstr.="&PAYMENTREQUEST_0_AMT=".$paymentAmount;
+						$nvpstr.="&PAYMENTREQUEST_0_CURRENCYCODE=".$currCodeType;
+		        $nvpstr.="&PAYMENTREQUEST_0_INVNUM=".$order_sn;
+						$nvpstr.="&IPADDRESS=".$serverName ;
+        		$nvpstr.="&ButtonSource=";
+
+            $resArray=$this->hash_call("DoExpressCheckoutPayment",$nvpstr);
+            $ack = strtoupper($resArray["ACK"]);
+						if($ack != "SUCCESS" && $ack != "SUCCESSWITHWARNING"){
+                return false;
+	          }else{
+                model('Payment')->order_paid($order_sn, 2);
+                return true;
+            }
+        }else{
+            return false;
+        }
+    }
+    
+    private function hash_call($methodName,$nvpStr)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,$this->API_Endpoint);
+        curl_setopt($ch, CURLOPT_VERBOSE, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+
+        $nvpreq="METHOD=".urlencode($methodName).$this->nvpHeader.$nvpStr;
+
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$nvpreq);
+        $response = curl_exec($ch);
+        $nvpResArray=$this->deformatNVP($response);
+        $nvpReqArray=$this->deformatNVP($nvpreq);
+        $_SESSION['nvpReqArray']=$nvpReqArray;
+        if (curl_errno($ch)){
+            $_SESSION['curl_error_no']=curl_errno($ch) ;
+            $_SESSION['curl_error_msg']=curl_error($ch);
+        }else{
+            curl_close($ch);
+        }
+        return $nvpResArray;
+    }
+
+		//格式化
+    private function deformatNVP($nvpstr)
+    {
+        $intial=0;
+        $nvpArray = array();
+
+        while(strlen($nvpstr))
+        {
+            $keypos= strpos($nvpstr,'=');
+            $valuepos = strpos($nvpstr,'&') ? strpos($nvpstr,'&'): strlen($nvpstr);
+            $keyval=substr($nvpstr,$intial,$keypos);
+            $valval=substr($nvpstr,$keypos+1,$valuepos-$keypos-1);
+            $nvpArray[urldecode($keyval)] =urldecode( $valval);
+            $nvpstr=substr($nvpstr,$valuepos+1,strlen($nvpstr));
+        }
+
+        return $nvpArray;
     }
 }
