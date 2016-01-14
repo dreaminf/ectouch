@@ -49,7 +49,9 @@ a:hover { text-decoration:underline;text-decoration:none; }
 .ml-5{
 	margin-left: 5px;
 }
-
+.ml-10{
+	margin-left: 10px;
+}
 body{
 	font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, "Microsoft YaHei";
 }
@@ -59,29 +61,14 @@ body{
 	border: none;
 }
 .btn-blue{
-	background: #1b9ad5;
-    color: #fff;
+	color: #fff;
+	background-color: #3bb4f2;
+	border-color: #3bb4f2;
 }
-
-.btn-blue:link{
-	background: #1b9ad5;
-    color: #fff;
-}
-.btn-blue:visited{
-	background: #1b9ad5;
-    color: #fff;
-}
-.btn-blue:hover{
-	background: #00a2d4;
-    color: #fff;
-}
-.btn-blue:active{
-	background: #1b9ad5;
-    color: #fff;
-}
-.btn-blue{
-	background-color: #e6e6e6;
-    border-color: #e6e6e6;
+.btn-blue:hover, .btn-blue:focus, .btn-blue:link, .btn-blue:active,.btn-blue.active {
+	color: #fff;
+	background-color: #0f9ae0;
+	border-color: #0f9ae0;
 }
 .btn-grey{
 	background-color: #e6e6e6;
@@ -1131,7 +1118,7 @@ table.dataTable {
     min-width: 260px;
 }
 .layer-content{
-	display: none;
+	display: block;
 	padding:10px 15px;
 	background: #fff;
 	z-index: 9;
@@ -1207,11 +1194,14 @@ table.dataTable {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 140px;
+	width: 94px;
 	height: 39px;
 	font-size: 100px; /* 增大不同浏览器的可点击区域 */
 	opacity: 0; /* 实现的关键点 */
 	filter:alpha(opacity=0);/* 兼容IE */
+}
+label.file{
+	margin-bottom: 0;
 }
 .date{
 	background: url(../img/datePicker.gif) no-repeat right center content-box;
