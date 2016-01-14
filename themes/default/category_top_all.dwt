@@ -5,7 +5,7 @@
 		<div class="menu-left scrollbar-none" id="sidebar">
 			<ul>
 				{foreach from=$category item="vo" name="vo"}
-				<li {if $smarty.foreach.vo.index == 0} class="active"{/if}>{$vo.name}</li>
+				<li {if $smarty.foreach.vo.index == 0} class="active"{/if}>{if count($vo.cat_id)>0}{$vo.name}{else}<a href="{$vo.url}">{$vo.name}</a>{/if}</li>
 				{/foreach}
 			</ul>
 		</div>
