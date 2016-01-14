@@ -277,7 +277,7 @@ class SaleController extends CommonController {
      */
     public function spread(){
         $id = I('u') ? I('u') : $this->user_id;
-        if(!isset($_GET['u'])){ 
+        if(!isset($_GET['u'])){
 			redirect(url('sale/spread',array('u'=>$id)));
 		}
         $filename  = ROOT_PATH.'data/attached/drp';
@@ -292,11 +292,11 @@ class SaleController extends CommonController {
         $ew_img_size = filesize($ew_img);
         if(!file_exists($dp_img) || empty($dp_img_size) || !file_exists($ew_img) || empty($ew_img_size)){
             if(!file_exists($ew_img) || empty($ew_img_size)){
-                $b = call_user_func(array('WechatController', 'rec_qrcode'), $_SESSION['user_name'],$_SESSION['user_id']);
+                $b = call_user_func(array('WechatController', 'rec_qrcode'), $_SESSION['user_name'],$id);
                 $b = preg_replace('/https/','http',$b,1);
                 logResult('Local:1');
                 if(empty($b)){
-                    $b = call_user_func(array('WechatController', 'rec_qrcode'), $_SESSION['user_name'],$_SESSION['user_id'],0,'',true);
+                    $b = call_user_func(array('WechatController', 'rec_qrcode'), $_SESSION['user_name'],$id,0,'',true);
                     $b = preg_replace('/https/','http',$b,1);
                     logResult('Local:2');
                     //logResult(var_export($_SESSION, true));

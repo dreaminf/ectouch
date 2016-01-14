@@ -90,8 +90,8 @@
     <div class="dpgl_list" id="dpg1_list1">
      <i class="iconfont icon-mingpian a_left"></i><a href="javascript:;"  class="sale_list"  mce_href="#"><span class="dpgl_list2">我的名片</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
       <ul class="index_nav" style="display:none;"> 
-        <li class="index_nav1"><a href="{:url('sale/spread',array('u'=>$this->_var['user_id']))}" ><span class="index_list1">推广二维码</span></a></li>
-        <li class="index_nav1"><a href="{:url('sale/store',array('u'=>$this->_var['user_id']))}" ><span class="index_list1">店铺二维码</span></a></li>
+        <li class="index_nav1"><a href="{:url('sale/spread')}" ><span class="index_list1">推广二维码</span></a></li>
+        <li class="index_nav1"><a href="{:url('sale/store')}" ><span class="index_list1">店铺二维码</span></a></li>
       </ul>
     </div>
     <div class="dpxq_border"></div>

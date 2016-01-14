@@ -1970,7 +1970,7 @@ class UserController extends CommonController {
                 'referer' => urlencode($this->back_act)
                     )), 'error');
         }
-        $url = __URL__ . '/index.php?m=default&c=user&a=third_login&type=' . $type;
+        $url = __URL__ . '/index.php?m=default&c=user&a=third_login&type=' . $type . '&u='.$_GET['u'];
         $info = model('ClipsBase')->get_third_user_info($type);
         // 判断是否安装
         if (!$info) {
