@@ -156,27 +156,35 @@
 					<div class="main-content-sidemenu">
 						<div class="main-sidemenu-title">云订货</div>
 						<!--内容-->
-						<div class="main-sidemenu-cont">
+						<div class="main-sidemenu-cont" id="test">
 							<ul class="nav nav-list collapse main-sidemenu-list">
 								<li class="active"><a href="#">订单列表</a></li>
 								<li><a href="#">代客下单</a></li>
-								<a href="#submenu" class="nav-header collapsed main-sidemenu-subtitle" data-toggle="collapse">
-									<span class=" glyphicon glyphicon-chevron-toggle"></span><tt>交易管理</tt>
-								</a>
-								<ul id="submenu" class="nav nav-list collapse main-sidemenu-list">
-									<li class=""><a href="#">订单列表</a></li>
-									<li><a href="#">代客下单</a></li>
-									<li><a href="#">退货退款申请</a></li>
-									<li><a href="#">单据管理</a></li>
-								</ul>
-
+							</ul>
+							<a href="#submenu" class="nav-header collapsed main-sidemenu-subtitle" data-toggle="collapse">
+								<span class=" glyphicon glyphicon-chevron-toggle"></span><tt>交易管理</tt>
+							</a>
+							<ul class="nav nav-list collapse main-sidemenu-list">
+								<li class=""><a href="#">订单列表</a></li>
+								<li><a href="#">代客下单</a></li>
+								<li><a href="#">退货退款申请</a></li>
+								<li><a href="#">单据管理</a></li>
 							</ul>
 
 						</div>
 					</div>
+					<!--<script>-->
+						<!--var li=document.getElementById("test").getElementsByTagName("li");-->
+						<!--for(i = 0 ; i<li.length;i++){-->
+							<!--(function(k){-->
+								<!--li[i].onclick=function(){-->
+									<!--alert("你点击的是"+k+"个li");-->
+								<!--}})(i+1);-->
+						<!--}-->
+					<!--</script>-->
 					<!--navbar-collapse-->
 					<div class="main-collapse active">
-						<i class="iconfont icon-fenlei"></i>
+						<i class="iconfont">&#xe605;</i>
 					</div>
 					<!--right-->
 					<div class="main-content-content active">

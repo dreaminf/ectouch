@@ -336,10 +336,10 @@ body{
 .main-collapse{
 	position: absolute;
     left:0;
-    top: 50%;
+    top: 45%;
     width: 20px;
     height: 50px;
-    z-index: 999;
+    z-index: 19891030;
     -o-transition: all 0.2s ease;
     -ms-transition: all 0.2s ease;
     -moz-transition: all 0.2s ease;
@@ -1099,16 +1099,19 @@ table.dataTable {
 }*/
 .layer-shade{
 	display: none;
-	top: 0;
-    left: 180px;
+	top: 50px;
+    left: 200px;
     width: 100%;
     height: 100%;
     position: fixed;
     _position: absolute;
     pointer-events: auto;
-    z-index: 19891021;
+    z-index: 999;
     background-color: #000;
     opacity: 0.3;
+}
+.layer-shade.active{
+	left:50px;
 }
 /*comm-modal*/
 .modal{
@@ -1190,12 +1193,13 @@ table.dataTable {
 	color: #fff;
 }
 .filePrew {
-	display: block;
+	overflow: hidden;
+	display: inline;
 	position: absolute;
 	top: 0;
-	left: 0;
+	left:15px;
 	width: 94px;
-	height: 39px;
+	height: 35px;
 	font-size: 100px; /* 增大不同浏览器的可点击区域 */
 	opacity: 0; /* 实现的关键点 */
 	filter:alpha(opacity=0);/* 兼容IE */
@@ -1203,7 +1207,7 @@ table.dataTable {
 label.file{
 	margin-bottom: 0;
 }
-.date{
+.date,.datemin,.datemax{
 	background: url(../img/datePicker.gif) no-repeat right center content-box;
     cursor: pointer;
 	position: relative;
@@ -1214,53 +1218,7 @@ label.file{
 .cxcalendar_bd .days .selected, .cxcalendar_bd .days .selected:hover{
 	background:#1b9ad5;
 }
-/*.icheckbox-blue, .icheckbox-blue.static:hover {
-    background-position: 0 0;
-}
-.icheckbox-blue, .iradio-blue {
-    display: block;
-    margin: 0;
-    padding: 0;
-    width: 18px;
-    height: 18px;
-    background: url(../img/blue.png) no-repeat;
-    border: none;
-    cursor: pointer;
-}
-.form-horizontal .formControls {
-    padding-right: 10px;
-}
-.uploader-list {
-    width: 100%;
-    overflow: hidden;
-}
-#filePicker {
-    display: inline-block;
-    float: left;
-}
-.webuploader-pick {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    background: #3bb4f2;
-    padding: 4px 12px;
-    color: #fff;
-    text-align: center;
-    border-radius: 3px;
-    overflow: hidden;
-}
-.webuploader-invisible {
-    position: absolute !important;
-    clip: rect(1px 1px 1px 1px);
-    clip: rect(1px,1px,1px,1px);
-}
-.btn-uploadstar {
-    vertical-align: top;
-}
-.btn-default {
-    background-color: #e6e6e6;
-    border-color: #e6e6e6;
-}*/
+
 
 
 
