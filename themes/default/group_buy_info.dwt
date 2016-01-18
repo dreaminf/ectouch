@@ -138,7 +138,21 @@
 </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
+<script type="text/javascript" src="__TPL__/js/TouchSlide.1.1.js"></script> 
 <script type="text/javascript">
+/*banner滚动图片*/
+TouchSlide({
+  slideCell : "#focus",
+  titCell : ".hd ul", // 开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+  mainCell : ".bd ul",
+  effect : "leftLoop",
+  autoPlay : true, // 自动播放
+  autoPage : true, // 自动分页
+  delayTime: 200, // 毫秒；切换效果持续时间（执行一次效果用多少毫秒）
+  interTime: 2500, // 毫秒；自动运行间隔（隔多少毫秒后执行下一个效果）
+  switchLoad : "_src" // 切换加载，真实图片路径为"_src"
+});
+
 $(function() {
 /*判断user-tab内容高度不够时撑开*/
 	var user_tab_height = $(".group-buy-infos");
