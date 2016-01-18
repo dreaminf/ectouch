@@ -97,6 +97,7 @@ class CategoryController extends CommonController {
      */
     public function asynclist() {
         $this->parameter();
+        $this->ajax_parameter();
 		$this->assign('show_marketprice', C('show_marketprice'));
         $asyn_last = intval(I('post.last')) + 1;
         $this->size = I('post.amount');
@@ -116,13 +117,12 @@ class CategoryController extends CommonController {
      * 异步加载商品列表
      */
     public function async_list() {
-        $this->parameter();
+        //$this->parameter();
         $this->assign('show_marketprice', C('show_marketprice'));
-        $this->page = I('post.page');
-        $goodslist = $this->category_get_goods();
-
+        //$this->page = I('post.page');
+        //$goodslist = $this->category_get_goods();
+        $goodslist = $this->ajax_parameter();
         die(json_encode(array('list' => $goodslist)));
-        exit();
     }
 
     /**
@@ -635,6 +635,59 @@ class CategoryController extends CommonController {
         $sql = "select sum(goods_number) as num from {pre}order_goods WHERE goods_id = " . $goods_id ;
         $res = $this->model->query($sql);
         return intval($res[0]['num']);
+    }
+    public function ajax_parameter(){
+        $sort = I("sort");
+        $page = I("page");
+        if($sort == 1){
+            if(empty($_SESSION['sort']['goods_id'])){
+                $orderby = " goods_id  DESC";
+                $_SESSION['sort']['goods_id'] = "DESC";
+            }else{
+                $orderby = " goods_id  ASC";
+                $_SESSION['sort']['goods_id'] = "";
+            }
+        }
+        if($sort == 2){
+            if(empty($_SESSION['sort']['sales_volume'])){
+                $orderby = " sales_volume  DESC";
+                $_SESSION['sort']['sales_volume'] = "DESC";
+            }else{
+                $orderby = " sales_volume  ASC";
+                $_SESSION['sort']['sales_volume'] = "";
+            }
+        }
+        if($sort == 3){
+            if(empty($_SESSION['sort']['click_count'])){
+                $orderby = " click_count  DESC";
+                $_SESSION['sort']['click_count'] = "DESC";
+            }else{
+                $orderby = " click_count  ASC";
+                $_SESSION['sort']['click_count'] = "";
+            }
+        }
+        if($sort == 4){
+            if(empty($_SESSION['sort']['shop_price'])){
+                $orderby = " shop_price  DESC";
+                $_SESSION['sort']['shop_price'] = "DESC";
+            }else{
+                $orderby = " shop_price  ASC";
+                $_SESSION['sort']['shop_price'] = "";
+            }
+        }
+
+        $start = ($page - 1) * $this->size;
+        $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
+
+        /* 获得商品列表 */
+        $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, g.goods_number, " .
+            'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img, xl.sales_volume ' . 'FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' . ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " . "WHERE $where ORDER BY $orderby LIMIT $start , $this->size";
+        $res = $this->model->query($sql);
+        foreach($res as $key => $val){
+            $res[$key]['goods_img'] = get_image_path($val['goods_id'],$val['goods_img']);
+            $res[$key]['goods_img'] = get_image_path($val['goods_id'],$val['goods_thumb']);
+        }
+        return $res;
     }
 
 }
