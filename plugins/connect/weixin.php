@@ -178,7 +178,7 @@ class weixin {
                 }
                 // 会员注册
                 $domain = get_top_domain();
-                if (model('Users')->register($username, $password, $username . '@' . $domain ,array('parent_id'=>$_GET['u'])) !== false) {
+                if (model('Users')->register($username, $password, $username . '@' . $domain, array('parent_id'=>intval($_GET['u']))) !== false) {
                     model('Users')->update_user_info();
                 } else {
                     die('授权失败，如重试一次还未解决问题请联系管理员');
