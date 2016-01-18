@@ -337,8 +337,8 @@ class FlowController extends CommonController {
 
             $this->model->query($sql);
             /* 删除所有赠品 */
-            //$sql = "DELETE FROM " . $this->model->pre . "cart WHERE session_id = '" . SESS_ID . "' AND is_gift <> 0";
-            //$this->model->query($sql);
+            $sql = "DELETE FROM " . $this->model->pre . "cart WHERE session_id = '" . SESS_ID . "' AND is_gift <> 0";
+            $this->model->query($sql);
 
             $result ['rec_id'] = $key;
             $result ['goods_number'] = $val;
