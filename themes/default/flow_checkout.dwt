@@ -52,7 +52,7 @@
         <!--{else}-->
         <input name = "payment" type="radio" value = "-1" checked="checked"  style="display:none"/>
         <!--{/if}--> 
-        <!-- {if !$can_invoice} 能否开发票 --> 
+        <!-- {if $inv_content_list} 能否开发票 --> 
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo1">
         <p><b>{$lang.invoice}</b></p>
         <i class="fa fa-angle-down"></i></a>
