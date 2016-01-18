@@ -64,6 +64,8 @@ del {color: #aaa; font-size:1.2rem;}
 @media only screen and (max-width: 640px) and (min-width: 570px) {html {font-size: 15.83333px}}
 @media only screen and (max-width: 640px) and (min-width: 630px) {html {font-size: 17.77778px}}
 @media only screen and (max-width: 710px) and (min-width: 640px) {html {font-size: 17.77778px}}
+
+
 /*动画*/
 
 
@@ -515,7 +517,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
  * 商品详情页 － 共用样式
  * */
 /*共用*/
-.goods,.flow-have-cart,.flow-checkout,.flow-consignee-list,.flow-receipt,.flow-site{margin-bottom:6.1rem;}
+.goods,.flow-have-cart,.flow-checkout,.flow-consignee-list,.flow-receipt,.flow-site{margin-bottom:5rem;}
 .show-goods-img{position:fixed; left:0; top:0; right:0; bottom:0;}
 .show-goods-img .j-show-goods-img{background:rgba(0,0,0,1); z-index: 111; left:0; right:0; top:0; bottom:0; position:fixed !important;}
 .goods-min-icon{font-size:1.5rem; color:#bbb;   padding-left:.4rem; }
@@ -995,7 +997,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 /*ico白色*/
 .icon-write .ect-icon-mune{background-position:-10.36em -2.6em;}
 /*导航*/
-nav.ect-nav{color:#999; background:#fcfcfc; height:4.2em; width:100%; max-width:640px; border-top:1px solid #e3e3e3;}
+nav.ect-nav{color:#999; background:#fcfcfc; height:auto; width:100%; max-width:640px; border-top:1px solid #e3e3e3;}
 footer nav.ect-nav{position:fixed; bottom:0;}
 nav.ect-nav a{color:#999;}
 nav.ect-nav ul li{padding:0.3em 0; width:20%; }
@@ -1083,7 +1085,31 @@ footer.logo img {
 }
 .goods-info-attr li span:first-of-type{max-width: 30%;}
 .goods-info-attr li span:last-of-type{max-width: 66%;}
-
-
+/*.goods{margin-bottom: 0;}*/
+@media only screen and (min-width: 300px) and (max-width: 350px) {
+	.ect-header{
+		margin: 0.4em 0.6em;
+		height: 2.2em;
+	}
+	.ect-header a{
+		width: 2.2em;
+		height: 2.2em;
+	}
+	.ect-header span{
+		font-size: 1.2em;
+	}
+	.ect-icon1 {
+		background-size: 17em;
+	}
+	.icon-write .ect-icon-mune {
+		background-position: -10.0em -2.6em;
+	}
+	.icon-write .ect-icon-history {
+		background-position: -5em -2.7em;
+	}
+	nav.ect-nav ul li a{
+		font-size: 0.8em;
+	}
+}
 
 
