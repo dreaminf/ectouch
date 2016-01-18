@@ -117,7 +117,7 @@ class CategoryController extends CommonController {
      * 异步加载商品列表
      */
     public function async_list() {
-        //$this->parameter();
+        $this->parameter();
         $this->assign('show_marketprice', C('show_marketprice'));
         //$this->page = I('post.page');
         //$goodslist = $this->category_get_goods();
@@ -676,8 +676,14 @@ class CategoryController extends CommonController {
             }
         }
 
+
         $start = ($page - 1) * $this->size;
         $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
+        if ($this->keywords != '') {
+            $where .= " AND (( 1 " . $this->keywords . " ) ) ";
+        } else {
+            $where.=" AND ($this->children OR " . model('Goods')->get_extension_goods($this->children) . ') ';
+        }
         if ($this->type) {
             switch ($this->type) {
                 case 'best':

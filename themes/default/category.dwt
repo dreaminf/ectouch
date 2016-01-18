@@ -137,9 +137,12 @@
 				});
 				$("#slider-range-amount").text($("#slider-range").slider("values", 0) + " ~ " + $("#slider-range").slider("values", 1));
 			}();
-
-
-
+           var url = '{:url('category/async_list', array('id'=>$this->_var['id'], 'type'=>$this->_var['type'], 'brand'=>$this->_var['brand_id'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keywords'=>$this->_var['keywords']))}';
+           var page = 1;
+             $.post(url, {page: page}, function(data){
+                        var html = template('j-product', data);
+                        $("#j-product-box").html(html);
+                    }, 'json');
 			$(window).scroll(function () {
 		        var scrollTop = $(this).scrollTop();
 		        var scrollHeight = $(document).height();
