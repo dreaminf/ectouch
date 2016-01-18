@@ -337,8 +337,8 @@ class FlowController extends CommonController {
 
             $this->model->query($sql);
             /* 删除所有赠品 */
-            //$sql = "DELETE FROM " . $this->model->pre . "cart WHERE session_id = '" . SESS_ID . "' AND is_gift <> 0";
-            //$this->model->query($sql);
+            $sql = "DELETE FROM " . $this->model->pre . "cart WHERE session_id = '" . SESS_ID . "' AND is_gift <> 0";
+            $this->model->query($sql);
 
             $result ['rec_id'] = $key;
             $result ['goods_number'] = $val;
@@ -440,7 +440,6 @@ class FlowController extends CommonController {
         // 取得订单信息
         $order = model('Order')->flow_order_info();
         $this->assign('order', $order);
-
         /* 计算折扣 */
         if ($flow_type != CART_EXCHANGE_GOODS && $flow_type != CART_GROUP_BUY_GOODS) {
             $discount = model('Order')->compute_discount();
