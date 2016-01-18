@@ -678,6 +678,25 @@ class CategoryController extends CommonController {
 
         $start = ($page - 1) * $this->size;
         $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
+        if ($this->type) {
+            switch ($this->type) {
+                case 'best':
+                    $where .= ' AND g.is_best = 1';
+                    break;
+                case 'new':
+                    $where .= ' AND g.is_new = 1';
+                    break;
+                case 'hot':
+                    $where .= ' AND g.is_hot = 1';
+                    break;
+                case 'promotion':
+                    $time = gmtime();
+                    $where .= " AND g.promote_price > 0 AND g.promote_start_date <= '$time' AND g.promote_end_date >= '$time'";
+                    break;
+                default:
+                    $where .= '';
+            }
+        }
 
         /* 获得商品列表 */
         $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, g.goods_number, " .
