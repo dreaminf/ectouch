@@ -711,6 +711,8 @@ class CategoryController extends CommonController {
         foreach($res as $key => $val){
             $res[$key]['goods_img'] = get_image_path($val['goods_id'],$val['goods_img']);
             $res[$key]['goods_img'] = get_image_path($val['goods_id'],$val['goods_thumb']);
+            $res[$key]['url'] = url('goods/index', array(
+                'id' => $val['goods_id']));
         }
         return $res;
     }
