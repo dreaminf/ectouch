@@ -727,7 +727,35 @@ class SaleController extends CommonController {
         $this->assign('title','选择默认银行卡');
         $this->display('sale_select_bank.dwt');
     }
-
+	/**
+     * 修改银行卡
+     */
+    public function edit_bank(){
+        if(IS_POST){			
+            $data = I('data');
+            if(empty($data['bank_name'])){
+                show_message('请输入银行名称，如：建设银行等');
+            }
+            if(empty($data['bank_card'])){
+                show_message('请输入帐号');
+            }
+			if(empty($data['bank_region'])){
+                show_message('请输入开户所在地');
+            }
+			if(empty($data['bank_user_name'])){
+                show_message('请输开户名');
+            }
+            $this->model->table('drp_bank')
+                ->data($data)->where(array('id'=>$data['id']))
+                ->update();
+            redirect(url('sale/select_bank'));
+        }
+		$id = I('id') ? I('id') : 0;
+		$bank_info = $this->model->table('drp_bank')->where(array("id"=>$id))->find();
+		$this->assign('title', '修改银行卡');
+        $this->assign('bank', $bank_info);
+        $this->display('sale_edit_bank.dwt');
+    }
     /**
      * 删除银行卡
      */

@@ -2,7 +2,7 @@
 <div id="box">
 <div class="header">
     <div class="yjfd_content10">
-        <a href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a><span class="tltle">{$title}</span> <a href="{:url('sale/add_bank')}"><span class="wdyj_content11">添加银行卡</span></a>
+        <a href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a><span class="tltle">{$title}</span> <a href="{:url('sale/add_bank')}"><span class="wdyj_content11">添加</span></a>
     </div>
 </div>
 {if $list}
@@ -22,7 +22,11 @@
     </ul>
 
 </div>
-<div class="t-a-center"><input type="submit" value="确定" class="set-4-submit"><input type="button" onclick="del()" value="删除" class="set-4-submit"></div>
+<div class="t-a-center">
+	<input type="submit" value="确定" class="set-4-submit">
+	<input type="button" onclick="del()" value="删除" class="set-4-submit">
+	<input type="button" onclick="updata()" value="修改" class="set-4-submit">
+</div>
         </form>
 {else}
 <div class="t-a-center"><input type="button" value="添加银行卡" onclick="location.href='{:url('sale/add_bank')}'" class="set-4-submit"></div>
@@ -32,6 +36,12 @@
             if(confirm('确实要删除吗?')){
                 var id = $("input[name='bank']:checked").val();
                 location='{:url("sale/del_bank")}'+'&id='+id;
+            }
+        }
+		function updata(){
+            if(confirm('确实要修改吗?')){
+                var id = $("input[name='bank']:checked").val();
+                location='{:url("sale/edit_bank")}'+'&id='+id;
             }
         }
     </script>
@@ -58,7 +68,7 @@
     .jg-text-input input[type=text]{width:100%; font-size:1.4rem; border:0;}
     .jg-text label{color:#303030;}
     .jg-text span{color:#7a7a7a; margin-left:.2rem;}
-    .t-a-center input {width:40%;margin:1rem;}
+    .t-a-center input {width:25%;margin:1rem;}
 
 </style>
 </body>
