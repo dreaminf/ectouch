@@ -704,7 +704,7 @@ class SaleController extends CommonController {
             $this->model->table('drp_bank')
                 ->data($data)
                 ->insert();
-            redirect(url('sale/account_raply'));
+            redirect(url('sale/select_bank'));
         }
 
         $this->assign('title', '添加银行卡');
@@ -765,7 +765,7 @@ class SaleController extends CommonController {
             show_message('请选择要删除的银行卡号');
         }
         $this->model->table('drp_bank')->where("id=".$id)->delete();
-        redirect(url('sale/account_raply'));
+        redirect(url('sale/select_bank'));
     }
 
     /**
