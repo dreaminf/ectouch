@@ -74,22 +74,21 @@ class CategoryBaseModel extends BaseModel {
     }
 
     function get_child_tree($tree_id = 0) {
-
         $three_arr = array();
         $sql = 'SELECT count(*) FROM ' . $this->pre . "category WHERE parent_id = '$tree_id' AND is_show = 1 ";
         if ($this->row($sql) || $tree_id == 0) {
             $child_sql = 'SELECT c.cat_id, c.cat_name, c.parent_id, c.is_show, g.goods_thumb as cat_img ' .
                     'FROM ' . $this->pre . 'category as c ' .
-                    'left join ' . $this->pre . 'goods as g on g.cat_id = c.cat_id AND g.is_delete = 0 ' .
+                    'left join ' . $this->pre . 'goods as g on g.cat_id = c.cat_id AND g.is_on_sale = 1 ' .
                     "WHERE c.parent_id = '$tree_id' AND c.is_show = 1 GROUP BY c.cat_id ORDER BY c.sort_order ASC, c.cat_id ASC";
             $res = $this->query($child_sql);
             foreach ($res AS $row) {
-                if ($row['is_show'])
+                if ($row['is_show']) {
                     $three_arr[$row['cat_id']]['id'] = $row['cat_id'];
-                $three_arr[$row['cat_id']]['name'] = $row['cat_name'];
-                $three_arr[$row['cat_id']]['img'] = get_image_path(0,$row['cat_img'],false);
-                $three_arr[$row['cat_id']]['url'] = url('category/index', array('id' => $row['cat_id']));
-
+                    $three_arr[$row['cat_id']]['name'] = $row['cat_name'];
+                    $three_arr[$row['cat_id']]['img'] = get_image_path(0,$row['cat_img'],false);
+                    $three_arr[$row['cat_id']]['url'] = url('category/index', array('id' => $row['cat_id']));
+                }
                 if (isset($row['cat_id']) != NULL) {
                     $three_arr[$row['cat_id']]['cat_id'] = $this->get_child_tree($row['cat_id']);
                 }
