@@ -103,7 +103,7 @@
 						<a class="num-plus"></a>
 					</div>
 					</div>
-					
+
 					</div>
 					<div class="swiper-scrollbar"></div>
 				</section>
@@ -113,7 +113,7 @@
 			</div>
 			<!--商品属性弹出层end-->
 		<div class="div-messages"></div>
-		
+
 		<!--引用js-->
 		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript" src="__TPL__/statics/js/swiper-3.2.5.min.js"></script>

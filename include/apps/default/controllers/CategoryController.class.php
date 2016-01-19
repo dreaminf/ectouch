@@ -199,8 +199,7 @@ class CategoryController extends CommonController {
         $this->price_max = $price_max > 0 ? $price_max : 0;
         $this->price_min = $price_min > 0 ? $price_min : 0;
         // $this->filter_attr_str = $filter_attr > 0 ? $filter_attr : '0';
-        $this->filter_attr_str = !empty($filter_attr) ? $filter_attr : 0 ; //by hnllyrp 
-        
+        $this->filter_attr_str = !empty($filter_attr) ? $filter_attr : 0 ; //by hnllyrp
         $this->filter_attr_str = trim(urldecode($this->filter_attr_str));
         $this->filter_attr_str = preg_match('/^[\d\.]+$/', $this->filter_attr_str) ? $this->filter_attr_str : '';
         $filter_attr = empty($this->filter_attr_str) ? '' : explode('.', $this->filter_attr_str);
@@ -380,7 +379,6 @@ class CategoryController extends CommonController {
             'filter_attr' => $filter_attr
         ));
         $brands[0]['selected'] = empty($brand) ? 1 : 0;
-
         ksort($brands);
         $this->assign('brands', $brands);
         /* 属性筛选 */
@@ -639,30 +637,32 @@ class CategoryController extends CommonController {
     public function ajax_parameter(){
         $sort = I("sort");
         $page = I("page");
+        $slider = I("slider");
+        $brand = I("brand");
         if($sort == 1){
             if(empty($_SESSION['sort']['goods_id'])){
-                $orderby = " goods_id  DESC";
+                $orderby = " g.goods_id  DESC";
                 $_SESSION['sort']['goods_id'] = "DESC";
             }else{
-                $orderby = " goods_id  ASC";
+                $orderby = " g.goods_id  ASC";
                 $_SESSION['sort']['goods_id'] = "";
             }
         }
         if($sort == 2){
             if(empty($_SESSION['sort']['sales_volume'])){
-                $orderby = " sales_volume  DESC";
+                $orderby = " xl.sales_volume  DESC";
                 $_SESSION['sort']['sales_volume'] = "DESC";
             }else{
-                $orderby = " sales_volume  ASC";
+                $orderby = " xl.sales_volume  ASC";
                 $_SESSION['sort']['sales_volume'] = "";
             }
         }
         if($sort == 3){
             if(empty($_SESSION['sort']['click_count'])){
-                $orderby = " click_count  DESC";
+                $orderby = " g.click_count  DESC";
                 $_SESSION['sort']['click_count'] = "DESC";
             }else{
-                $orderby = " click_count  ASC";
+                $orderby = " g.click_count  ASC";
                 $_SESSION['sort']['click_count'] = "";
             }
         }
@@ -684,28 +684,19 @@ class CategoryController extends CommonController {
         } else {
             $where.=" AND ($this->children OR " . model('Goods')->get_extension_goods($this->children) . ') ';
         }
-        if ($this->type) {
-            switch ($this->type) {
-                case 'best':
-                    $where .= ' AND g.is_best = 1';
-                    break;
-                case 'new':
-                    $where .= ' AND g.is_new = 1';
-                    break;
-                case 'hot':
-                    $where .= ' AND g.is_hot = 1';
-                    break;
-                case 'promotion':
-                    $time = gmtime();
-                    $where .= " AND g.promote_price > 0 AND g.promote_start_date <= '$time' AND g.promote_end_date >= '$time'";
-                    break;
-                default:
-                    $where .= '';
-            }
+        if(!empty($brand)){
+            $where .= " AND g.brand_id = '".$brand."' ";
+        }
+        $slider = explode("~",$slider);
+        $max = $slider[1];
+        $main = $slider[0];
+        if(!empty($max) && $max > 0){
+            $where .= " AND g.shop_price >= '".$main."' AND g.shop_price <= '".$max."'";
+
         }
 
         /* 获得商品列表 */
-        $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, g.goods_number, " .
+       $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, g.goods_number, " .
             'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img, xl.sales_volume ' . 'FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' . ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " . "WHERE $where ORDER BY $orderby LIMIT $start , $this->size";
         $res = $this->model->query($sql);
         foreach($res as $key => $val){
@@ -716,5 +707,4 @@ class CategoryController extends CommonController {
         }
         return $res;
     }
-
 }

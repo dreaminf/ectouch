@@ -38,8 +38,8 @@
 						<li class="ect-select">
 							<label class="ts-1">{$brand.brand_name|escape:html}<i class="fr iconfont icon-gou ts-1"></i></label>
 						</li>
+						<input type="hidden" id="brand" name="brand" value="{$brands.brand_id}" />
 						<!--{/foreach}-->
-						<input type="hidden" name="brand" value="{$brand_id}" />
 					</ul>
 					<!--{foreach from=$filter_attr_list item=filter name=filter}-->
 					<a class="select-title padding-all j-menu-select">
@@ -64,14 +64,29 @@
 				</div>
 				<div class="ect-button-more dis-box padding-all">
 					<a class="box-flex btn-reset j-filter-reset" onclick="javascript:clear_filter();">清空选项</a>
-					<button type="submit" class="box-flex btn-submit">确定</button>
+					<button type="button" onclick="but_submit();" class="box-flex btn-submit">确定</button>
 				</div>
 			</div>
 		</div>
 		</form>
 	</section>
 </div>
+<script type="text/javascript">
+function but_submit(){
+	var brand = $("#but_submit").val();
+	var slider = $("#slider-range-amount").html();
+	var sort = 1;
+	var page = 1;
+	$.post("{:url('category/async_list')}",{slider:slider,brand:brand,sort:sort,page:page},function(data){
+        var html = template('j-product', data);
+        $("#j-product-box").html(html);
+	},'json');
 
+	$("body").removeClass("show-filter-div");
+}
+
+
+</script>
 <script type="text/javascript">
 function clear_filter(){
  $(".touchweb-com_listType .range").text("全部");
