@@ -1746,7 +1746,7 @@ function exception_handler($errno, $errstr, $errfile, $errline) {
  */
 function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods', $del = false) {
     $url = C('no_picture');
-    $shop_url = C('SHOP_URL') == '' ? __URL__:C('SHOP_URL');
+    $shop_url = C('SHOP_URL') == '' ? str_replace('/mobile', '', __URL__):C('SHOP_URL');
     if(!empty($image)){
         $base_url = substr($shop_url, -1) == '/' ? $shop_url : $shop_url . '/';
         if(strtolower(substr($image, 0, 4)) == 'http'){
@@ -1760,7 +1760,7 @@ function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods',
     if(IS_ECSHOP){
         return $url;
     }else{
-        return str_replace('mobile/', '/', $url);
+        return str_replace('/mobile', '/', $url);
     }
 }
 
