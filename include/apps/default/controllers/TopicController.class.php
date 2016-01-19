@@ -31,7 +31,7 @@ class TopicController extends CommonController {
      * 专题详情
      */
     public function index() {
-        $topic = $this->model->table('touch_topic')->where('topic_id =' . $this->id)->find();
+        $topic = $this->model->table('topic')->where('topic_id =' . $this->id)->find();
         if(empty($topic))
         {
             /* 如果没有找到任何记录则跳回到首页 */
