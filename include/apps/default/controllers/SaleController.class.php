@@ -410,7 +410,7 @@ class SaleController extends CommonController {
                 Image::water($dp_img, $wx_img, 11);
             }
         }
-        $this->assign('mobile_qr', __ROOT__.'data/attached/drp/dp-dp-'.$id.'.png');
+        $this->assign('mobile_qr', 'data/attached/drp/dp-dp-'.$id.'.png');
         $this->assign('title',L('store'));
         $this->display('sale_store.dwt');
     }
