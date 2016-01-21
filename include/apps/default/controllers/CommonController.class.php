@@ -36,6 +36,7 @@ class CommonController extends BaseController
                 /*DRP_START*/
                 $this->drp();
                 /*DRP_END*/
+                $this->wechatJsSdk();
             }
         }
         if(is_wechat_browser()){
@@ -239,6 +240,34 @@ class CommonController extends BaseController
         }
     } 
     /*DRP_END*/
+    
+    /*
+     * 微信jsSDK
+     */
+    public function wechatJsSdk(){
+        $config = model('Base')->model->table('wechat')->field('token, appid, appsecret, status')->find();
+        if ($config['status']) {
+            //微信店信息
+            $js_sdk_data['title'] = C('shop_name');
+            $js_sdk_data['desc']  = C('shop_desc');
+            $js_sdk_data['url']   = __URL__ . $_SERVER['REQUEST_URI']; //__URL__ . '/index.php?u=' . $_SESSION['user_id'] . '&drp_id='.$drp_id;
+            $js_sdk_data['pic']   = __URL__ . '/images/logo.png';
+
+            //商品信息
+            if(CONTROLLER_NAME == 'Goods' && isset($_GET['id'])){
+                $goods_id = I('id', 0);
+                $goods = model('Goods')->get_goods_info($goods_id);
+                $js_sdk_data['title'] = $goods['goods_name'];
+                $js_sdk_data['desc']  = $goods['goods_name'];
+                $js_sdk_data['pic']   = $goods['goods_thumb'];
+            }
+
+            $wechat = new Wechat($config);
+            $js_sdk_sign = $wechat->getJsSign($js_sdk_data['url']);
+            $this->assign('js_sdk_sign', $js_sdk_sign);
+            $this->assign('js_sdk_data', $js_sdk_data);
+        }
+    }
 }
 
 class_alias('CommonController', 'ECTouch');
