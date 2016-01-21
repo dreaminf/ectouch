@@ -298,21 +298,19 @@ body{
     border-radius: 3px;
     font-weight: normal;
     text-align: center;
-    /*overflow: hidden;*/
 }
-/*.header-product li.select a i.iconfont{
+.header-product li:hover a{
+	background: none;
+}
+.header-product li:hover a i.iconfont{
 	color: #0087b4;
-}*/
+}
+.header-product li:hover a p{
+	color: #0087b4;
+}
 .header-product li a p{
 	margin-top: 5px;
 }
-.header-product li a:hover{
-	background: none;
-}
-.header-product li a:hover>p{
-	color: red;
-}
-
 .main {
 	position: absolute;
 	width: 100%;

@@ -1,307 +1,477 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="utf-8">
-		<meta name="renderer" content="webkit">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<meta name="keyword" content="">
-		<title>内容</title>
-		<link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="fonts/iconfont.css" />
-		<link rel="stylesheet" href="css/jquery.cxcalendar.css" />
-		<!--<link rel="stylesheet" href="css/layer.css" />-->
-		<link rel="stylesheet" href="css/style.css" />
-	</head>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keyword" content="">
+    <title>内容</title>
+    <link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="fonts/iconfont.css"/>
+    <link rel="stylesheet" href="css/jquery.cxcalendar.css"/>
+    <!--<link rel="stylesheet" href="css/layer.css" />-->
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
 
-	<body>
-		<div class="container ">
-			<nav class="navbar navbar-default header">
-				<div class="navbar-brand">
-					<a href="index.html"><img src="img/ectouch_logo.png" /></a>
-				</div>
-				<!-- menu-->
-				<div class="topbar-wrapper">
-					<div class="topbar-left">
-						<ul class="navbar-nav">
-							<li class=""><a href="#">管理控制台 </a></li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">产品与服务<span class="caret"></span></a>
-								<ul class="dropdown-menu header-product">
-									<li class="select">
-										<a href="javascript:;">
-											<i class="iconfont icon-aliyun"></i>
-											<p>云订货</p>
-										</a>
-									</li>
-									<li>
-										<a href="javascript:;">
-											<i class="iconfont icon-aliyun"></i>
-											<p>云商城</p>
-										</a>
-									</li>
-									<li>
-										<a href="javascript:;">
-											<i class="iconfont icon-aliyun"></i>
-											<p>云供货</p>
-										</a>
-									</li>
-									<li>
-										<a href="javascript:;">
-											<i class="iconfont icon-aliyun"></i>
-											<p>云资源</p>
-										</a>
-									</li>
-								</ul>
-							</li>
+<body>
+<div class="container ">
+    <nav class="navbar navbar-default header">
+        <div class="navbar-brand">
+            <a href="index.html"><img src="img/ectouch_logo.png"/></a>
+        </div>
+        <!-- menu-->
+        <div class="topbar-wrapper">
+            <div class="topbar-left">
+                <ul class="navbar-nav">
+                    <li class=""><a href="#">管理控制台 </a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">产品与服务<span class="caret"></span></a>
+                        <ul class="dropdown-menu header-product">
+                            <li class="select">
+                                <a href="javascript:;">
+                                    <i class="iconfont icon-shangcheng"></i>
+                                    <p>微商城</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <i class="iconfont icon-fenxiao"></i>
+                                    <p>微分销</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <i class="iconfont icon-shanghu"></i>
+                                    <p>多商户</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
-						</ul>
-					</div>
-					<div class="topbar-right">
-						<ul class="navbar-nav">
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle dropdown-search" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-									<span class="glyphicon glyphicon-search"></span>搜索
-								</a>
-								<ul class="dropdown-menu header-search">
-									<li class="">
-										<input type="text" class="form-control fl" placeholder="搜索内容" aria-describedby="basic-addon2">
-										<span class="iconfont fr icon-iconfontenter"></span>
-									</li>
-								</ul>
-							</li>
-							<li class="dropdown dropdown-phone">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-									<span class="glyphicon glyphicon-phone"></span>手机版
-								</a>
-								<ul class="dropdown-menu">
-									<li class="">
-										<img src="img/qrcode.png" />
-										<p>扫码关注官方微信</p>
-									</li>
-								</ul>
-							</li>
-							<li class="dropdown dropdown-msg">
-								<a href="#" class="dropdown-toggle dropdown-search" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-									<span class="glyphicon glyphicon-bell"></span>
-									<span class="dropdown-number">0</span>
-								</a>
-								<ul class="dropdown-menu">
-									<li class="">
-										<div class="dropdown-msg-title">站内消息通知</div>
-										<div class="dropdown-msg-body">
-											<p>您暂时没有公告消息</p>
-										</div>
-										<div class="dropdown-msg-footer"><a href="javascript:;">查看更多</a></div>
-									</li>
-								</ul>
-							</li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">帮助与支持<span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li><a href="http://wiki.ectouch.cn/index.php" target="_blank">技术文档</a></li>
-									<li><a href="http://club.ectouch.cn/index.php" target="_blank">交流社区</a></li>
-								</ul>
-							</li>
-							<li class=""><a href="#">站内留言 </a></li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">用户姓名<span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li><a href="#">基本信息</a></li>
-									<li><a href="#">修改密码</a></li>
-									<li><a href="#">安全设置</a></li>
-									<li><a href="#">系统信息</a></li>
-									<li><a href="#">退出</a></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-			<!--main-->
-			<div class="main">
-				<!--left-->
-				<div class="main-left active" id="pjax-container">
-					<a class="nav-header sidemenu-header">
-						<i class="glyphicon glyphicon-menu-hamburger"></i>
-					</a>
-					<a href="#product" class="nav-header collapsed" data-toggle="collapse">
-						<span class=" glyphicon glyphicon-chevron-toggle"></span>产品与服务产品与服务
-					</a>
-					<ul id="product" class="nav nav-list collapse secondmenu">
-						<li class=""><a href="#"><i class="iconfont icon-xiadan"></i> 云订货云订货云订货云订货云订货云订货</a></li>
-					</ul>
-					<a href="#user" class="nav-header collapsed" data-toggle="collapse">
-						<span class=" glyphicon glyphicon-chevron-toggle"></span>管理中心
-					</a>
-					<ul id="user" class="nav nav-list collapse secondmenu">
-						<li class=""><a href="goods.html"><i class="iconfont icon-iconfontshangpineps"></i> 商品</a></li>
-						<li><a href="orderlist.html"><i class="iconfont icon-dingdan"></i> 订单</a></li>
-						<li><a href="member.html"><i class="iconfont icon-huiyuan"></i> 会员</a></li>
-						<li class="active"><a href="edit.html"><i class="iconfont icon-icon13"></i> 内容</a></li>
-						<li><a href="advertise.html"><i class="iconfont icon-huodong"></i> 营销</a></li>
-						<li><a href="analyse.html"><i class="iconfont icon-baobiao"></i> 报表</a></li>
-						<li><a href="template.html"><i class="iconfont icon-iconfontmoban2"></i> 模版</a></li>
-						<li><a href="database.html"><i class="iconfont icon-iconfontshujuku"></i> 数据库</a></li>
-						<li><a href="toolbox.html"><i class="iconfont icon-gongju"></i> 工具箱</a></li>
-						<li><a href="distribution.html"><i class="iconfont icon-fenxiao"></i> 微分销</a></li>
-						<li><a href="wechat.html"><i class="iconfont icon-weixin"></i> 微信通</a></li>
-					</ul>
-				</div>
+                </ul>
+            </div>
+            <div class="topbar-right">
+                <ul class="navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle dropdown-search" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-search"></span>搜索
+                        </a>
+                        <ul class="dropdown-menu header-search">
+                            <li class="">
+                                <input type="text" class="form-control fl" placeholder="搜索内容"
+                                       aria-describedby="basic-addon2">
+                                <span class="iconfont fr icon-iconfontenter"></span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown dropdown-phone">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <span class="glyphicon glyphicon-phone"></span>手机版
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="">
+                                <img src="img/qrcode.png"/>
+                                <p>扫码关注官方微信</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown dropdown-msg">
+                        <a href="#" class="dropdown-toggle dropdown-search" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-bell"></span>
+                            <span class="dropdown-number">0</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="">
+                                <div class="dropdown-msg-title">站内消息通知</div>
+                                <div class="dropdown-msg-body">
+                                    <p>您暂时没有公告消息</p>
+                                </div>
+                                <div class="dropdown-msg-footer"><a href="javascript:;">查看更多</a></div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">帮助与支持<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://wiki.ectouch.cn/index.php" target="_blank">技术文档</a></li>
+                            <li><a href="http://club.ectouch.cn/index.php" target="_blank">交流社区</a></li>
+                        </ul>
+                    </li>
+                    <li class=""><a href="#">站内留言 </a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">用户姓名<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">基本信息</a></li>
+                            <li><a href="#">修改密码</a></li>
+                            <li><a href="#">安全设置</a></li>
+                            <li><a href="#">系统信息</a></li>
+                            <li><a href="#">退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--main-->
+    <div class="main">
+        <!--left-->
+        <div class="main-left active" id="pjax-container">
+            <a class="nav-header sidemenu-header">
+                <i class="glyphicon glyphicon-menu-hamburger"></i>
+            </a>
+            <a href="#user" class="nav-header collapsed" data-toggle="collapse">
+                <span class=" glyphicon glyphicon-chevron-toggle"></span>管理中心
+            </a>
+            <ul id="user" class="nav nav-list collapse secondmenu">
+                <li class=""><a href="goods.html"><i class="iconfont icon-iconfontshangpineps"></i> 商品</a></li>
+                <li><a href="orderlist.html"><i class="iconfont icon-dingdan"></i> 订单</a></li>
+                <li><a href="member.html"><i class="iconfont icon-huiyuan"></i> 会员</a></li>
+                <li class="active"><a href="edit.html"><i class="iconfont icon-icon13"></i> 内容</a></li>
+                <li><a href="advertise.html"><i class="iconfont icon-huodong"></i> 营销</a></li>
+                <li><a href="analyse.html"><i class="iconfont icon-baobiao"></i> 报表</a></li>
+                <li><a href="template.html"><i class="iconfont icon-iconfontmoban2"></i> 模版</a></li>
+                <li><a href="database.html"><i class="iconfont icon-iconfontshujuku"></i> 数据库</a></li>
+                <li><a href="toolbox.html"><i class="iconfont icon-gongju"></i> 工具箱</a></li>
+                <li><a href="distribution.html"><i class="iconfont icon-fenxiao"></i> 微分销</a></li>
+                <li><a href="wechat.html"><i class="iconfont icon-weixin"></i> 微信通</a></li>
+            </ul>
+        </div>
 
-				<!--right-->
-				<div class="main-content active">
-					<!--left-->
-					<div class="main-content-sidemenu">
-						<div class="main-sidemenu-title">内容</div>
-						<!--内容-->
-						<div class="main-sidemenu-cont">
-							<ul class="nav nav-list collapse main-sidemenu-list">
-								<li class="active"><a href="#">文章内容</a></li>
-								<li><a href="#">文章列表</a></li>
-								<li><a href="#">广告列表</a></li>
-								<li><a href="#">广告位置</a></li>
-							</ul>
-						</div>
-					</div>
-					<!--navbar-collapse-->
-					<div class="main-collapse active">
-						<i class="iconfont">&#xe605;</i>
-					</div>
-					<!--right-->
-					<div class="main-content-content active">
-						<div class="box bk-common br-10">
-							<div class="comm-title box">
-								<p class="index-distributor-title fl">文章内容</p>
-							</div>
-							<form class="comm-form">
-								<div class="text-c form-search">
+        <!--right-->
+        <div class="main-content active">
+            <!--left-->
+            <div class="main-content-sidemenu">
+                <div class="main-sidemenu-title">内容</div>
+                <!--内容-->
+                <div class="main-sidemenu-cont">
+                    <ul class="nav nav-list collapse main-sidemenu-list">
+                        <li class="active"><a href="#">文章列表</a></li>
+                        <li><a href="#">文章分类</a></li>
+                        <li><a href="#">广告列表</a></li>
+                        <li><a href="#">广告位置</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--navbar-collapse-->
+            <div class="main-collapse active">
+                <i class="iconfont">&#xe605;</i>
+            </div>
+            <!--right-->
+            <div class="main-content-content active">
+                <div class="box bk-common br-10">
+                    <div class="comm-title box">
+                        <p class="index-distributor-title fl">文章列表</p>
+                    </div>
+                    <form class="comm-form">
+                        <div class="text-c form-search">
 									<span class="select-box inline">
 										<select name="" class="select form-control">
-											<option value="0">全部分类</option>
-											<option value="1">手机促销</option>
-											<option value="2">系统分类</option>
-										</select>
+                                            <option value="0">文章分类</option>
+                                            <option value="1">手机促销</option>
+                                            <option value="2">系统分类</option>
+                                        </select>
 									</span> 日期范围：
-									<input type="text " id="datemin" class="input-text date form-control datemin" data-position="" readonly="" size="16" value="" style="width: 120px;">-
-									<input type="text " id="datemax" class="input-text date form-control datemax" data-position="" readonly="" size="16" value="" style="width: 120px;">
-									<input type="text" name="" id="" placeholder=" 资讯名称" style="width:250px" class="input-text form-control">
-									<button name="" id="" class="btn btn-success" type="submit"><i class="iconfont icon-sousuo1"></i> 搜资讯</button>
-								</div>
-								<div class="form-operation dark-bg bk-gray mt-20 pd-5">
+                            <input type="text " id="datemin" class="input-text date form-control datemin"
+                                   data-position="" readonly="" size="16" value="" style="width: 120px;">-
+                            <input type="text " id="datemax" class="input-text date form-control datemax"
+                                   data-position="" readonly="" size="16" value="" style="width: 120px;">
+                            <input type="text" name="" id="" placeholder=" 资讯名称" style="width:250px"
+                                   class="input-text form-control">
+                            <button name="" id="" class="btn btn-success" type="submit"><i
+                                    class="iconfont icon-sousuo1"></i> 搜索
+                            </button>
+                        </div>
+                        <div class="form-operation dark-bg bk-gray mt-20 pd-5">
 									<span class="fl">
-										<a href="javascript:;" onclick="" class="btn btn-primary radius"><i class="iconfont icon-delete"></i> 批量删除</a>
-										<a class="btn btn-primary radius" data-title="批量隐藏" -href="article-add.html" onclick="" href="javascript:;"><i class="iconfont icon-iconsuo"></i> 批量隐藏</a>
-										<a class="btn btn-primary radius" data-title="批量显示" -href="article-add.html" onclick="" href="javascript:;"><i class="iconfont icon-kaisuo"></i> 批量显示</a>
-										<a class="btn btn-danger radius" data-title="添加新文章" -href="article-add.html" onclick="" href="javascript:;"><i class="iconfont icon-jia"></i> 添加新文章</a>
+										<a href="javascript:;" onclick="" class="btn btn-primary radius"><i
+                                                class="iconfont icon-delete"></i> 批量删除</a>
+										<a class="btn btn-primary radius" data-title="批量隐藏" href="javascript:;"
+                                           onclick="" href="javascript:;"><i class="iconfont icon-iconsuo"></i> 批量隐藏</a>
+										<a class="btn btn-primary radius" data-title="批量显示" href="javascript:;"
+                                           onclick="" href="javascript:;"><i class="iconfont icon-kaisuo"></i> 批量显示</a>
+										<a class="btn btn-danger radius btn-addArticle" data-title="添加新文章"
+                                           href="javascript:;" onclick="" href="javascript:;"><i
+                                                class="iconfont icon-jia"></i> 添加新文章</a>
 									</span>
-									<span class="fr">共有数据：<strong>54</strong> 条</span>
-								</div>
-								<div class="mt-20">
-									<div class="comm-table">
-										<div class="table-length fl mb-10">
-											<label>显示
-												<select name="" aria-controls="table-Table-0" class="select form-control">
-													<option value="10">10</option>
-													<option value="25">25</option>
-													<option value="50">50</option>
-													<option value="100">100</option>
-												</select> 条</label>
-										</div>
-										<div class="table-filter fr">
-											<label>从当前数据中检索:
-												<input type="search" class="input-text form-control" aria-controls="table-Table-0">
-											</label>
-										</div>
-										<table class="table table-border table-bordered table-bg table-hover table-sort dataTable no-footer" id="table-Table-0" role="grid" aria-describedby="table-Table-0-info">
-											<thead>
-												<tr class="text-c" role="row">
-													<th width="25" class="sorting-disabled text-c" rowspan="1" colspan="1" aria-label="" style="width: 25px;">
-														<input type="checkbox" name="" value="">
-													</th>
-													<th width="120" class="sorting text-c" tabindex="0" aria-controls="table-Table-0" rowspan="1" colspan="1" aria-label="ID: 升序排列" style="width: 80px;">ID</th>
-													<th class="sorting text-c" tabindex="0" aria-controls="table-Table-0" rowspan="1" colspan="1" style="width: 120px;">标题</th>
-													<th width="80" class="sorting text-c" tabindex="0" aria-controls="table-Table-0" rowspan="1" colspan="1" style="width: 80px;">文章分类</th>
-													<th width="80" class="sorting text-c" tabindex="0" aria-controls="table-Table-0" rowspan="1" colspan="1" style="width: 80px;">是否显示</th>
-													<th width="120" class="sorting text-c" tabindex="0" aria-controls="table-Table-0" rowspan="1" colspan="1" style="width: 120px;">添加日期</th>
-													<th width="75" class="sorting text-c" tabindex="0" aria-controls="table-Table-0" rowspan="1" colspan="1" style="width: 75px;">浏览次数</th>
-													<th width="120" class="sorting-disabled text-c" rowspan="1" colspan="1" style="width: 120px;">操作</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr class="text-c odd" role="row">
-													<td>
-														<input type="checkbox" value="" name="">
-													</td>
-													<td class="">10002</td>
-													<td class="text-l"><a style="cursor:pointer" class="text-primary" onclick="" title="查看">800万像素超强拍照机 LG Viewty Smart再曝光</a></td>
-													<td class="">行业动态</td>
-													<td class="">H-ui</td>
-													<td class="">2014-6-11 11:11:42</td>
-													<td class="">21212</td>
-													<td class="f-14 td-manage">
-														<a style="text-decoration:none" class="ml-5" onclick="" href="javascript:;" title="查看" id="table-"><i class="iconfont icon-sousuo"></i></a>
-														<a style="text-decoration:none" class="ml-5 edit" onclick="" href="javascript:;" title="编辑"><i class="iconfont icon-fmypencil"></i></a>
-														<a style="text-decoration:none" class="ml-5 delete-btn" onclick="" href="javascript:;" title="删除"><i class="iconfont icon-delete"></i></a>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
+                            <span class="fr">共有数据：<strong>54</strong> 条</span>
+                        </div>
+                        <div class="mt-20">
+                            <div class="comm-table">
+                                <div class="table-length fl mb-10">
+                                    <label>显示
+                                        <select name="" aria-controls="table-Table-0" class="select form-control">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select> 条</label>
+                                </div>
+                                <div class="table-filter fr">
+                                    <label>从当前数据中检索:
+                                        <input type="search" class="input-text form-control"
+                                               aria-controls="table-Table-0">
+                                    </label>
+                                </div>
+                                <table class="table table-border table-bordered table-bg table-hover table-sort dataTable no-footer"
+                                       id="table-Table-0" role="grid" aria-describedby="table-Table-0-info">
+                                    <thead>
+                                    <tr class="text-c" role="row">
+                                        <th width="25" class="sorting-disabled text-c" rowspan="1" colspan="1"
+                                            aria-label="" style="width: 25px;">
+                                            <input type="checkbox" name="" value="">
+                                        </th>
+                                        <th width="120" class="sorting text-c" tabindex="0"
+                                            aria-controls="table-Table-0" rowspan="1" colspan="1" aria-label="ID: 升序排列"
+                                            style="width: 80px;">ID
+                                        </th>
+                                        <th class="sorting text-c" tabindex="0" aria-controls="table-Table-0"
+                                            rowspan="1" colspan="1" style="width: 120px;">标题
+                                        </th>
+                                        <th width="80" class="sorting text-c" tabindex="0" aria-controls="table-Table-0"
+                                            rowspan="1" colspan="1" style="width: 80px;">文章分类
+                                        </th>
+                                        <th width="80" class="sorting text-c" tabindex="0" aria-controls="table-Table-0"
+                                            rowspan="1" colspan="1" style="width: 80px;">是否显示
+                                        </th>
+                                        <th width="120" class="sorting text-c" tabindex="0"
+                                            aria-controls="table-Table-0" rowspan="1" colspan="1" style="width: 120px;">
+                                            添加日期
+                                        </th>
+                                        <th width="75" class="sorting text-c" tabindex="0" aria-controls="table-Table-0"
+                                            rowspan="1" colspan="1" style="width: 75px;">浏览次数
+                                        </th>
+                                        <th width="120" class="sorting-disabled text-c" rowspan="1" colspan="1"
+                                            style="width: 120px;">操作
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="text-c odd" role="row">
+                                        <td>
+                                            <input type="checkbox" value="" name="">
+                                        </td>
+                                        <td class="">10002</td>
+                                        <td class="text-l"><a style="cursor:pointer" class="text-primary" onclick=""
+                                                              title="查看">800万像素超强拍照机 LG Viewty Smart再曝光</a></td>
+                                        <td class="">行业动态</td>
+                                        <td class="iconfont icon-iconchoose color-blue"></td>
+                                        <td class="">2014-6-11 11:11:42</td>
+                                        <td class="">21212</td>
+                                        <td class="f-14 td-manage">
+                                            <a style="text-decoration:none" class="ml-5" onclick="" href="javascript:;"
+                                               title="查看" id="table-"><i class="iconfont icon-sousuo"></i></a>
+                                            <a style="text-decoration:none" class="ml-5 edit" onclick=""
+                                               href="javascript:;" title="编辑"><i
+                                                    class="iconfont icon-fmypencil"></i></a>
+                                            <a style="text-decoration:none" class="ml-5 delete-btn" onclick=""
+                                               href="javascript:;" title="删除"><i class="iconfont icon-delete"></i></a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
 
-								<nav class="comm-page">
-									<ul class="pagination fr">
-										<li class=""><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-										<li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-										<li class=""><a href="#">2 <span class="sr-only">(current)</span></a></li>
-										<li class=""><a href="#" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a></li>
-										<input type="text" class="form-control fl" name="" id="" value="" />
-										<input type="button" class="btn btn-default fl" aria-haspopup="true" aria-expanded="false" value="跳转"></input>
-									</ul>
-								</nav>
-							</form>
-						</div>
-					</div>
-					<div class="layer-shade"></div>
-					<!--文本编辑处-->
-					<div class="comm-edit" >
+                        <nav class="comm-page">
+                            <ul class="pagination fr">
+                                <li class=""><a href="#" aria-label="Previous"><span
+                                        aria-hidden="true">&laquo;</span></a></li>
+                                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                                <li class=""><a href="#">2 <span class="sr-only">(current)</span></a></li>
+                                <li class=""><a href="#" aria-label="Previous"><span
+                                        aria-hidden="true">&raquo;</span></a></li>
+                                <input type="text" class="form-control fl" name="" id="" value=""/>
+                                <input type="button" class="btn btn-default fl" aria-haspopup="true"
+                                       aria-expanded="false" value="跳转"></input>
+                            </ul>
+                        </nav>
+                    </form>
+                </div>
+            </div>
+            <!--right2-->
+            <div class="main-content-content">
+                <div class="box bk-common br-10">
+                    <div class="comm-title box">
+                        <p class="index-distributor-title fl">文章分类</p>
+                    </div>
+                    <form class="comm-form">
+                        <div class="text-c form-search">
+									<span class="select-box inline">
+										<select name="" class="select form-control">
+                                            <option value="0">全部分类</option>
+                                            <option value="1">普通分类</option>
+                                            <option value="2">系统分类</option>
+                                            <option value="3">网店信息</option>
+                                            <option value="4">帮助分类</option>
+                                            <option value="5">网店帮助</option>
+                                        </select>
+									</span> 日期范围：
+                            <input type="text " id="datemin" class="input-text date form-control datemin"
+                                   data-position="" readonly="" size="16" value="" style="width: 120px;">-
+                            <input type="text " id="datemax" class="input-text date form-control datemax"
+                                   data-position="" readonly="" size="16" value="" style="width: 120px;">
+                            <input type="text" name="" id="" placeholder=" 资讯名称" style="width:250px"
+                                   class="input-text form-control">
+                            <button name="" id="" class="btn btn-success" type="submit"><i
+                                    class="iconfont icon-sousuo1"></i> 搜索
+                            </button>
+                        </div>
+                        <div class="form-operation dark-bg bk-gray mt-20 pd-5">
+									<span class="fl">
+										<a href="javascript:;" onclick="" class="btn btn-primary radius"><i
+                                                class="iconfont icon-delete"></i> 批量删除</a>
+										<a class="btn btn-primary radius" data-title="批量隐藏" href="javascript:;"
+                                           onclick="" href="javascript:;"><i class="iconfont icon-iconsuo"></i> 批量隐藏</a>
+										<a class="btn btn-primary radius" data-title="批量显示" href="javascript:;"
+                                           onclick="" href="javascript:;"><i class="iconfont icon-kaisuo"></i> 批量显示</a>
+										<a class="btn btn-danger radius btn-addArticle" data-title="添加新文章"
+                                           href="javascript:;" onclick="" href="javascript:;"><i
+                                                class="iconfont icon-jia"></i> 添加新分类</a>
+									</span>
+                            <span class="fr">共有数据：<strong>54</strong> 条</span>
+                        </div>
+                        <div class="mt-20">
+                            <div class="comm-table">
+                                <div class="table-length fl mb-10">
+                                    <label>显示
+                                        <select name="" aria-controls="table-Table-0" class="select form-control">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select> 条</label>
+                                </div>
+                                <div class="table-filter fr">
+                                    <label>从当前数据中检索:
+                                        <input type="search" class="input-text form-control"
+                                               aria-controls="table-Table-0">
+                                    </label>
+                                </div>
+                                <table class="table table-border table-bordered table-bg table-hover table-sort dataTable no-footer"
+                                       id="table-Table-0" role="grid" aria-describedby="table-Table-0-info">
+                                    <thead>
+                                    <tr class="text-c" role="row">
+                                        <th width="25" class="sorting-disabled text-c" rowspan="1" colspan="1"
+                                            aria-label="" style="width: 25px;">
+                                            <input type="checkbox" name="" value="">
+                                        </th>
+                                        <th class="sorting text-c" tabindex="0" aria-controls="table-Table-0"
+                                            rowspan="1" colspan="1" style="width: 120px;">文章分类名称
+                                        </th>
+                                        <th width="80" class="sorting text-c" tabindex="0" aria-controls="table-Table-0"
+                                            rowspan="1" colspan="1" style="width: 80px;">分类类型
+                                        </th>
+                                        <th width="80" class="sorting text-c" tabindex="0" aria-controls="table-Table-0"
+                                            rowspan="1" colspan="1" style="width: 80px;">描述
+                                        </th>
+                                        <th width="75" class="sorting text-c" tabindex="0" aria-controls="table-Table-0"
+                                            rowspan="1" colspan="1" style="width: 75px;">是否显示在导航栏
+                                        </th>
+                                        <th width="120" class="sorting-disabled text-c" rowspan="1" colspan="1"
+                                            style="width: 120px;">操作
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="text-c odd" role="row">
+                                        <td>
+                                            <input type="checkbox" value="" name="">
+                                        </td>
+                                        <td class="text-l"><a style="cursor:pointer" class="" onclick=""
+                                                              title="查看">手机促销</a></td>
+                                        <td class="">普通分类</td>
+                                        <td class="">系统保留分类</td>
+                                        <td class="iconfont icon-iconchoose color-blue"></td>
+                                        <td class="f-14 td-manage">
+                                            <a style="text-decoration:none" class="ml-5" onclick="" href="javascript:;"
+                                               title="查看" id="table-"><i class="iconfont icon-sousuo"></i></a>
+                                            <a style="text-decoration:none" class="ml-5 edit" onclick=""
+                                               href="javascript:;" title="编辑"><i
+                                                    class="iconfont icon-fmypencil"></i></a>
+                                            <a style="text-decoration:none" class="ml-5 delete-btn" onclick=""
+                                               href="javascript:;" title="删除"><i class="iconfont icon-delete"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr class="text-c odd" role="row">
+                                        <td>
+                                            <input type="checkbox" value="" name="">
+                                        </td>
+                                        <td class="text-l"><a style="cursor:pointer" class="" onclick=""
+                                                              title="查看">主分类2</a></td>
+                                        <td class="">系统分类</td>
+                                        <td class="">系统保留分类</td>
+                                        <td class="iconfont icon-iconfailure color-red"></td>
+                                        <td class="f-14 td-manage">
+                                            <a style="text-decoration:none" class="ml-5" onclick="" href="javascript:;"
+                                               title="查看" id="table-"><i class="iconfont icon-sousuo"></i></a>
+                                            <a style="text-decoration:none" class="ml-5 edit" onclick=""
+                                               href="javascript:;" title="编辑"><i
+                                                    class="iconfont icon-fmypencil"></i></a>
+                                            <a style="text-decoration:none" class="ml-5 delete-btn" onclick=""
+                                               href="javascript:;" title="删除"><i class="iconfont icon-delete"></i></a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
 
-					</div>
-				</div>
-				<!--delete-layer-->
-				<div class="delete-layer ">
-					小小提示层
-				</div>
+                        <nav class="comm-page">
+                            <ul class="pagination fr">
+                                <li class=""><a href="#" aria-label="Previous"><span
+                                        aria-hidden="true">&laquo;</span></a></li>
+                                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                                <li class=""><a href="#">2 <span class="sr-only">(current)</span></a></li>
+                                <li class=""><a href="#" aria-label="Previous"><span
+                                        aria-hidden="true">&raquo;</span></a></li>
+                                <input type="text" class="form-control fl" name="" id="" value=""/>
+                                <input type="button" class="btn btn-default fl" aria-haspopup="true"
+                                       aria-expanded="false" value="跳转"></input>
+                            </ul>
+                        </nav>
+                    </form>
+                </div>
+            </div>
 
-			</div>
-			<!--layer-->
-		</div>
-		<script type="text/javascript " src="js/jquery-1.9.1.min.js "></script>
-		<script type="text/javascript " src="css/bootstrap/js/bootstrap.min.js "></script>
-		<script type="text/javascript " src="js/jquery.cookie.js "></script>
-		<script type="text/javascript " src="js/jquery.pjax.js "></script>
-		<script type="text/javascript " src="js/jquery.cxcalendar.min.js " ></script>
-		<script type="text/javascript " src="js/layer.js " ></script>
-		<script type="text/javascript " src="js/comm.js "></script>
-		<script type="text/javascript ">
-			$('.delete-btn').on('click', function(){
-				layer.confirm('确认要删除吗？', {
-				    btn: ['确定','取消'] //按钮
-				}, function(){
-				    layer.msg('删除成功', {icon: 1});
-				}, function(){
-				});
-			});
-			// 双联动日期示例
-			(function(){
-				var dateFirst = $('.datemin');
-				var dateLast = $('.datemax');
-				var dateFirstApi;
-				var dateLastApi;
+
+        </div>
+
+
+    </div>
+    <!--layer-->
+</div>
+<script type="text/javascript " src="js/jquery-1.9.1.min.js "></script>
+<script type="text/javascript " src="css/bootstrap/js/bootstrap.min.js "></script>
+<script type="text/javascript " src="js/jquery.cookie.js "></script>
+<script type="text/javascript " src="js/jquery.pjax.js "></script>
+<script type="text/javascript " src="js/jquery.cxcalendar.min.js "></script>
+<script type="text/javascript " src="js/layer.js "></script>
+<script type="text/javascript " src="js/comm.js "></script>
+<script type="text/javascript ">
+    $('.delete-btn').on('click', function () {
+        layer.confirm('确认要删除吗？', {
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            layer.msg('删除成功', {icon: 1});
+        }, function () {
+        });
+    });
+    // 双联动日期示例
+    (function () {
+        var dateFirst = $('.datemin');
+        var dateLast = $('.datemax');
+        var dateFirstApi;
+        var dateLastApi;
 
 //				dateFirst.cxCalendar(function(api){
 //					dateFirstApi = api;
@@ -311,22 +481,23 @@
 //					dateLastApi = api;
 //				});
 
-				dateFirst.bind('change',function(){
-					var firstTime = parseInt(dateFirstApi.getDate('TIME'), 10);
-					var lastTime = parseInt(dateLastApi.getDate('TIME'), 10);
+        dateFirst.bind('change', function () {
+            var firstTime = parseInt(dateFirstApi.getDate('TIME'), 10);
+            var lastTime = parseInt(dateLastApi.getDate('TIME'), 10);
 
-					if (lastTime < firstTime) {
-						dateLastApi.clearDate();
-					};
+            if (lastTime < firstTime) {
+                dateLastApi.clearDate();
+            }
+            ;
 
-					dateLastApi.setOptions({
-						startDate: firstTime
-					});
-					dateLastApi.show();
-				});
-			})();
+            dateLastApi.setOptions({
+                startDate: firstTime
+            });
+            dateLastApi.show();
+        });
+    })();
 
-		</script>
-	</body>
+</script>
+</body>
 
 </html>

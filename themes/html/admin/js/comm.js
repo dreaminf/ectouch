@@ -15,6 +15,7 @@ $(function($) {
 	$('.main-sidemenu-cont li').bind('click',function() {
 		$('.main-sidemenu-cont li').removeClass('active');
 		$(this).addClass('active');
+		$('.main-content-content').hide().eq($('.main-sidemenu-list li').index(this)).show();
 	})
 	$(".main-collapse").click(function() {
 		$('.main-content-sidemenu').toggleClass("active");
@@ -50,7 +51,7 @@ $(function($) {
 		$('.main-left').find('.nav-list li').eq(num).addClass('active').siblings().removeClass('active');
 	}
 	//编辑
-	$('.edit').click(function() {
+	$('.edit,.btn-addArticle').click(function() {
 		//$('.layer-shade').show();
 		layer.open({
 			type: 2,
@@ -61,11 +62,14 @@ $(function($) {
 			area: ['893px', '600px'],
 			content: 'comm-edit.html'
 		});
+
 	});
 	//datapicker
+	$.cxCalendar.defaults.type = "datetime";
+	$.cxCalendar.defaults.format = "YYYY-MM-DD HH:mm:ss";
 	$('.date ').cxCalendar({
-		type: 'datetime',
-		format: 'YYYY-MM-DD HH:mm:ss',
+		//type: 'datetime',
+		//format: 'YYYY-MM-DD HH:mm:ss',
 	});
 });
 
