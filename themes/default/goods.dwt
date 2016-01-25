@@ -52,13 +52,13 @@
 				<!--{else}-->
 				{$goods.shop_price_formated}
 				<!--{/if}--></span>
-					<em class="em-promotion">5.8折</em></p>
+					<!-- <em class="em-promotion">5.8折</em></p> -->
 				<p class="p-market">
 					市场价<del><!-- {if $cfg.show_marketprice} 市场价格-->{$goods.market_price} <!-- {/if} --></del>
 				</p>
 				<p class=" dis-box g-p-tthree m-top06">
 					<span class="box-flex text-left">{$lang.sort_sales}：{$sales_count}</span>
-					<span class="box-flex text-right">库存 1880</span>
+					<span class="box-flex text-right">库存 {$goods.goods_number}</span>
 				</p>
 			</section>
 			<!-- {if $promotion} 优惠活动 -->
@@ -126,7 +126,7 @@
 										{$goods.shop_price_formated}
 										<!--{/if}--></span>
 									</p>
-									<p class="dis-box p-t-remark"><span class="box-flex">库存:12800</span></p>
+									<p class="dis-box p-t-remark"><span class="box-flex">库存:{$goods.goods_number}</span></p>
 								</div>
 							</div>
 						</section>
