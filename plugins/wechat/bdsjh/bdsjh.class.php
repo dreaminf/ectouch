@@ -178,7 +178,9 @@ class bdsjh extends PluginWechatController
             $ect_uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where('openid = "'.$_SESSION['openid'].'"')->getOne();
             $mobile_phone = model('Base')->model->table('users')->field('mobile_phone')->where('user_id = "'.$ect_uid.'"')->getOne();
 
-            if(empty($mobile_phone) && $ect_uid == $_SESSION['user_id']){
+            $mobile_count = model('Base')->model->table('users')->where('mobile_phone = "'.$data['username'].'"')->count();
+
+            if(empty($mobile_phone) && $ect_uid == $_SESSION['user_id'] && $mobile_count < 1){
                 model('Base')->model->table('users')->data('mobile_phone = '.$data['username'])->where('user_id = '.$ect_uid)->update();
                 model('Users')->update_user_info();
                 model('Users')->recalculate_price();
