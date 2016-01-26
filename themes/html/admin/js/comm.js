@@ -64,12 +64,61 @@ $(function($) {
 		});
 
 	});
+	$('.delete-btn').on('click', function () {
+		layer.confirm('确认要删除吗？', {
+			btn: ['确定', '取消'] //按钮
+		}, function () {
+			layer.msg('删除成功', {icon: 1});
+		}, function () {
+		});
+	});
 	//datapicker
 	$.cxCalendar.defaults.type = "datetime";
 	$.cxCalendar.defaults.format = "YYYY-MM-DD HH:mm:ss";
 	$('.date ').cxCalendar({
 		//type: 'datetime',
 		//format: 'YYYY-MM-DD HH:mm:ss',
+	});
+//	select:multiple
+	//移到右边
+	$('.add').click(function(){
+		//先判断是否有选中
+		if(!$(".selectLeft option").is(":selected")){
+			alert("请选择需要移动的选项")
+		}
+		//获取选中的选项，删除并追加给对方
+		else{
+			$('.selectLeft option:selected').appendTo('.selectRight');
+		}
+	});
+
+	//移到左边
+	$('.remove').click(function(){
+		//先判断是否有选中
+		if(!$(".selectRight option").is(":selected")){
+			alert("请选择需要移动的选项")
+		}
+		else{
+			$('.selectRight option:selected').appendTo('.selectLeft');
+		}
+	});
+	//全部移到右边
+	$('.add_all').click(function(){
+		$('.selectLeft option').appendTo('.selectRight');
+	});
+
+	//全部移到左边
+	$('.remove_all').click(function(){
+		$('.selectRight option').appendTo('.selectLeft');
+	});
+
+	//双击选项
+	$('.selectLeft').dblclick(function(){
+		$("option:selected",this).appendTo('.selectRight');
+	});
+	//双击选项
+	$('.selectRight').dblclick(function(){
+		$("option:selected",this).appendTo('.selectLeft');
 	});
 });
 

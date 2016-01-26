@@ -22,12 +22,14 @@
 .icon-analysisiconyingxiao:before { content: "\e611"; }
 .icon-gongju:before { content: "\e622"; }
 .icon-fangke:before { content: "\e612"; }
+.icon-send:before { content: "\e637"; }
 .icon-wenhao1:before { content: "\e613"; }
 .icon-iconbottommanagemoneyhighlighted:before { content: "\e614"; }
 .icon-iconfontmoban2:before { content: "\e615"; }
 .icon-shangcheng:before { content: "\e634"; }
 .icon-shezhi:before { content: "\e601"; }
 .icon-baocun:before { content: "\e631"; }
+.icon-xiazai:before { content: "\e639"; }
 .icon-feiyong:before { content: "\e602"; }
 .icon-jia:before { content: "\e62b"; }
 .icon-xiadan:before { content: "\e616"; }
@@ -39,6 +41,7 @@
 .icon-iconfontqiandai:before { content: "\e604"; }
 .icon-iconfailure:before { content: "\e633"; }
 .icon-kaisuo:before { content: "\e62c"; }
+.icon-xiangzuo:before { content: "\e63a"; }
 .icon-sousuo:before { content: "\e626"; }
 .icon-bianji:before { content: "\e628"; }
 .icon-fenlei:before { content: "\e605"; }
@@ -56,6 +59,7 @@
 .icon-xinfeng:before { content: "\e60a"; }
 .icon-weixin:before { content: "\e61c"; }
 .icon-shousuo:before { content: "\e624"; }
+.icon-hongbao:before { content: "\e638"; }
 .icon-aliyun:before { content: "\e60b"; }
 .icon-iconfonthuiyuan:before { content: "\e60e"; }
 .icon-iconfontenter:before { content: "\e625"; }
@@ -69,4 +73,6 @@
 .icon-sousuo1:before { content: "\e627"; }
 .icon-staff:before { content: "\e620"; }
 .icon-money2:before { content: "\e621"; }
+.icon-baobiao1:before { content: "\e63b"; }
 .icon-iconsuo:before { content: "\e62e"; }
+.icon-xiangyou:before { content: "\e63c"; }
