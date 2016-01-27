@@ -35,7 +35,6 @@ class CommentController extends CommonController {
     }
 
     public function index() {
-
         $result = array('error' => 0, 'message' => '', 'content' => '');
         if (empty($this->act)) {
 
@@ -244,7 +243,7 @@ class CommentController extends CommonController {
             }
             //$result['rank'] = $rank;
             $result['message'] = C('comment_check') ? L('cmt_submit_wait') : L('cmt_submit_done');
-            $result['content'] = ECTouch::$view->fetch("library/comments_list.lbi");
+            $result['content'] = ECTouch::$view->fetch("library/new_comments_list.lbi");
         }
         echo json_encode($result);
     }

@@ -208,4 +208,38 @@ class CommentModel extends BaseModel {
         return $round;
     }
 
+
+    /**
+     * 获取商品的评论列表
+     */
+    function get_comment($goods_id,$type,$pay = 1, $num = 10, $start = 0){
+        if(empty($goods_id)){
+            return false;
+        }
+        switch($type){
+            case 1:
+            $where = " AND comment_rank > 0";
+            break;
+            case 2:
+            $where = " AND comment_rank IN (4,5)";
+            break;
+            case 3:
+            $where = " AND comment_rank IN (2,3)";
+            break;
+            case 4:
+            $where = " AND comment_rank IN (0,1)";
+            break;
+        }
+        if(!empty($limit)){
+            $limit = " LIMIT $limit";
+        }
+        $sql = "SELECT comment_id,email,user_name,content,comment_rank,add_time FROM ". $this->pre ."comment WHERE ".
+               "comment_type = 0 AND id_value = '".$goods_id."' AND status = 1 $where ORDER BY comment_id DESC LIMIT $start , $num";
+        $comment_list = $this->query($sql);
+        foreach($comment_list as $k => $v){
+            $comment_list[$k]['add_time'] = date('Y-m-d H:i:m',$v['add_time']);
+        }
+        return $comment_list;
+    }
+
 }

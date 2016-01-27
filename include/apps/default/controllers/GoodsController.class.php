@@ -15,14 +15,16 @@
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
-class GoodsController extends CommonController {
+class GoodsController extends CommonController
+{
 
     protected $goods_id;
 
     /**
      * 构造函数   加载user.php的语言包 并映射到模版
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->goods_id = isset($_REQUEST ['id']) ? intval($_REQUEST ['id']) : 0;
     }
@@ -30,12 +32,13 @@ class GoodsController extends CommonController {
     /**
      *  商品详情页
      */
-    public function index() {
+    public function index()
+    {
         // 获得商品的信息
         $goods = model('Goods')->get_goods_info($this->goods_id);
-		//购物车商品数量
-		$cart_goods = insert_cart_info_number();
-        $this->assign('seller_cart_total_number', $cart_goods); 	
+        //购物车商品数量
+        $cart_goods = insert_cart_info_number();
+        $this->assign('seller_cart_total_number', $cart_goods);
         // 如果没有找到任何记录则跳回到首页
         if ($goods === false) {
             ecs_header("Location: ./\n");
@@ -44,7 +47,7 @@ class GoodsController extends CommonController {
                 $goods ['goods_brand_url'] = url('brand/index', array('id' => $goods ['brand_id']));
             }
             $shop_price = $goods ['shop_price'];
-            $linked_goods = model('Goods')->get_related_goods($this->goods_id); 
+            $linked_goods = model('Goods')->get_related_goods($this->goods_id);
             $goods ['goods_style_name'] = add_style($goods ['goods_name'], $goods ['goods_name_style']);
 
             // 购买该商品可以得到多少钱的红包
@@ -58,7 +61,7 @@ class GoodsController extends CommonController {
                     $goods ['bonus_money'] = price_format($goods ['bonus_money']);
                 }
             }
-            $comments = model('Comment')->get_comment_info($this->goods_id,0);
+            $comments = model('Comment')->get_comment_info($this->goods_id, 0);
             $this->assign('goods', $goods);
             $this->assign('comments', $comments);
             $this->assign('goods_id', $goods ['goods_id']);
@@ -112,10 +115,12 @@ class GoodsController extends CommonController {
         } else {
             setcookie('ECS[history]', $this->goods_id, gmtime() + 3600 * 24 * 30);
         }
+        $comment_list = model('Comment')->get_comment($this->goods_id, 1,4);
+        $this->assign('comment_list', $comment_list);
         // 更新点击次数
         $data = 'click_count = click_count + 1';
         $this->model->table('goods')->data($data)->where('goods_id = ' . $this->goods_id)->update();
-           
+
         // 当前系统时间
         $this->assign('now_time', gmtime());
         $this->assign('sales_count', model('GoodsBase')->get_sales_count($this->goods_id));
@@ -130,26 +135,27 @@ class GoodsController extends CommonController {
         /* 页面标题 */
         $page_info = get_page_title($goods['cat_id'], $goods['goods_name']);
         /* meta */
-        $this->assign('meta_keywords',           htmlspecialchars($goods['keywords']));
-        $this->assign('meta_description',        htmlspecialchars($goods['goods_brief']));
+        $this->assign('meta_keywords', htmlspecialchars($goods['keywords']));
+        $this->assign('meta_description', htmlspecialchars($goods['goods_brief']));
         $this->assign('ur_here', $page_info['ur_here']);
         $this->assign('page_title', $page_info['title']);
         $this->display('goods.dwt');
     }
 
     /**
-     * 商品信息 
+     * 商品信息
      */
-    public function info() {
+    public function info()
+    {
         /* 获得商品的信息 */
         $goods = model('Goods')->get_goods_info($this->goods_id);
 
         /* 页面标题 */
         $page_info = get_page_title($goods['cat_id'], $goods['goods_name']);
-        $this->assign('page_title',           htmlspecialchars($page_info['title']));
+        $this->assign('page_title', htmlspecialchars($page_info['title']));
         /* meta */
-        $this->assign('meta_keywords',           htmlspecialchars($goods['keywords']));
-        $this->assign('meta_description',        htmlspecialchars($goods['goods_brief']));
+        $this->assign('meta_keywords', htmlspecialchars($goods['keywords']));
+        $this->assign('meta_description', htmlspecialchars($goods['goods_brief']));
 
         $this->assign('goods', $goods);
         $properties = model('Goods')->get_goods_properties($this->goods_id);  // 获得商品的规格和属性
@@ -162,14 +168,23 @@ class GoodsController extends CommonController {
     /**
      * 商品评论
      */
-    public function comment_list() {
+    public function comment_list()
+    {
         $cmt = new stdClass();
         $cmt->id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
         $cmt->type = !empty($_GET['type']) ? intval($_GET['type']) : 0;
         $cmt->page = isset($_GET['page']) && intval($_GET['page']) > 0 ? intval($_GET['page']) : 1;
-        $this->assign('comments_info', model('Comment')->get_comment_info($cmt->id, $cmt->type));
-        $this->assign('id', $cmt->id);
-        $this->assign('type', $cmt->type);
+        $com = model('Comment')->get_comment_info($cmt->id,0);
+        $this->assign('comments_info', $com);
+        $pay = 0;
+        $size = I(C('page_size'), 10);
+        $this->assign('show_asynclist', C('show_asynclist'));
+        $count = $com['count'];
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('goods/comment_list', $filter), $size);
+        $offset_page = explode(',', $offset);
+        $comment_list = model('Comment')->get_comment($cmt->id, $cmt->type, $pay, $offset_page[1], $offset_page[0]);
+        $this->assign('comment_list', $comment_list);
         $this->assign('username', $_SESSION['user_name']);
         $this->assign('email', $_SESSION['email']);
         /* 验证码相关设置 */
@@ -178,6 +193,12 @@ class GoodsController extends CommonController {
             $this->assign('rand', mt_rand());
         }
         $result['message'] = C('comment_check') ? L('cmt_submit_wait') : L('cmt_submit_done');
+        $this->assign('id', $cmt->id);
+        $this->assign('type', $cmt->type);
+        if(count($comment_list)/$size < $cmt->page){
+            $this->assign('is_page', 1);
+        }
+        $this->assign('pager', $cmt->page);
         $this->assign('title', L('goods_comment'));
         $this->display('goods_comment_list.dwt');
     }
@@ -185,7 +206,8 @@ class GoodsController extends CommonController {
     /**
      * 改变属性、数量时重新计算商品价格
      */
-    public function price() {
+    public function price()
+    {
         //格式化返回数组
         $res = array(
             'err_msg' => '',
