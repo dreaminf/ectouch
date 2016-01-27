@@ -973,7 +973,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .ect-text-left{text-align:left;}
 .ect-border-none{border:none;}
 .ect-margin-lr{margin-left:0.6em; margin-right:0.6em;}
-.ect-margin-tb{margin-top:0.6em; margin-bottom:0.6em;}
+.ect-margin-tb{ margin-bottom:0.6em;}
 .ect-padding-lr{padding-left:0.6em; padding-right:0.6em;}
 .ect-padding-tb{padding-top:0.6em; padding-bottom:0.6em;}
 .ect-border-radius100{ border-radius: 100%; -moz-border-radius: 100%; -webkit-border-radius: 100%; -o-border-radius: 100%;}
