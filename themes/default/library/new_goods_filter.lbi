@@ -72,12 +72,13 @@
 	</section>
 </div>
 <script type="text/javascript">
+ 
 function but_submit(){
+    var slider = $("#slider-range-amount").html();
 	var brand = $("#but_submit").val();
-	var slider = $("#slider-range-amount").html();
 	var sort = 1;
 	var page = 1;
-	$.post("{:url('category/async_list')}",{slider:slider,brand:brand,sort:sort,page:page},function(data){
+	$.post("{:url('category/async_list')}",{slider:slider,brand:brand,sort:sort,page:page,id:{$id}},function(data){
         var html = template('j-product', data);
         $("#j-product-box").html(html);
 	},'json');
