@@ -170,7 +170,7 @@
 				<div class="dis-box padding-all b-color-f  g-evaluation-title">
 					<label class="t-remark g-t-temark">用户评价</label>
 					<div class="box-flex t-goods1">好评率 <em class="t-first">97%</em></div>
-					<div class="t-goods1"><em class="t-first">{$goods.comment_count}</em><span class="t-jiantou">人评论<i class="iconfont icon-jiantou tf-180"></i></span></div>
+					<div class="t-goods1"><em class="t-first">{$goods.comment_count}</em><span class="t-jiantou">{$comments.count}人评论<i class="iconfont icon-jiantou tf-180"></i></span></div>
 				</div>
 			</a>
 			<div class="padding-all m-top1px b-color-f g-evaluation-con">
