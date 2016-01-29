@@ -96,7 +96,7 @@ class SaleController extends CommonController {
             $this->model->table('drp_shop')->data($data)->where($where)->update();
             show_message(L('success'),'分销中心',url('sale/index'));
         }
-        $drp_info = $this->model->table('drp_shop')->field('shop_name,real_name,shop_mobile,shop_img')->where('user_id='.session('user_id'))->select();
+        $drp_info = $this->model->table('drp_shop')->field('shop_name,real_name,shop_mobile,shop_img,shop_qq')->where('user_id='.session('user_id'))->select();
         $this->assign('drp_info',$drp_info['0']);
         $this->assign('title', L('shop_config'));
         $this->display('sale_shop_config.dwt');
@@ -527,9 +527,9 @@ class SaleController extends CommonController {
             if (empty($data['shop_mobile'])){
                 show_message(L('shop_mobile_empty'));
             }
-            if (empty($data['shop_qq'])){
-                show_message(L('shop_qq_empty'));
-            }
+            // if (empty($data['shop_qq'])){
+            //     show_message(L('shop_qq_empty'));
+            // }
             $data['shop_name'] = $data['shop_name'];
             $data['user_id'] = $_SESSION['user_id'];
             $data['create_time'] = gmtime();

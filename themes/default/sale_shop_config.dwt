@@ -12,6 +12,9 @@
         <div class="set4_box"> <b class="set4_contentm">手机号：</div></br>
         <div class="set4_box2"><input  type="text"  name="data[shop_mobile]" id="shop_mobile" placeholder="手机号码" value="{$drp_info.shop_mobile}" class="set-4-input" /></div>
 
+        <div class="set4_box"> <b class="set4_contentm">QQ号：</div></br>
+    <div class="set4_box2"><input  type="text"  name="data[shop_qq]" id="shop_qq" placeholder="QQ号" value="{$drp_info.shop_qq}" class="set-4-input" /></div>
+
         <div class="set4_box"> <b class="set4_contentm">店铺图片：</div></br>
         <div class="set4_box2"><input type="file" name="shop_img" id="shop_img"></div>
 
