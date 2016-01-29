@@ -262,13 +262,12 @@
 	var goodsId = {$goods_id};
 	var now_time = {$now_time};
 	var use_how_oos = {:C('use_how_oos')};
-	onload = function() {
-		changePrice(2);
-		fixpng();
-		try {
-			onload_leftTime();
-		} catch (e) {}
-	}
+$(function() {
+  changePrice(2);
+  //fixpng();
+  try {onload_leftTime();}
+  catch (e) {}
+});
 
 	function back_goods_number() {
 		var goods_number = document.getElementById('goods_number').value;
@@ -312,18 +311,7 @@
 				document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result;
 		}
 	}
-	<!-- {/literal} -->
-	/**
-	 * 接收返回的信息
-	 */
-	function changePriceResponse(res) {
-		if (res.err_msg.length > 0) {
-			alert(res.err_msg);
-		} else {
-			if (document.getElementById('ECS_GOODS_AMOUNT'))
-				document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result;
-		}
-	}
+
 	
 </script>
 <script>
