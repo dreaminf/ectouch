@@ -241,7 +241,7 @@ if ($_REQUEST['act'] == 'user_edit')
         unset($catArr[(count($catArr)-1)]);
     }
     // 获取所有一级分类
-    $category = $db->getAll("select cat_id,cat_name from " . $ecs->table("category") . " where parent_id =0");
+    $category = $db->getAll("select cat_id,cat_name from " . $ecs->table("category") . " where parent_id = 0 and is_show = 1");
     if($category){
         foreach($category as $key=>$val){
             if(in_array($val['cat_id'],$catArr)){
