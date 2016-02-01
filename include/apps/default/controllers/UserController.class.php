@@ -1819,6 +1819,11 @@ class UserController extends CommonController {
             $this->back_act = strpos($GLOBALS['_SERVER']['HTTP_REFERER'], 'c=user') ? url('index/index') : $GLOBALS['_SERVER']['HTTP_REFERER'];
             $this->back_act = urlencode($this->back_act);
         }
+		// 验证码相关设置
+        if (intval(C('captcha')) & CAPTCHA_REGISTER) {
+            $this->assign('enabled_captcha', 1);
+            $this->assign('rand', mt_rand());
+        }
         $this->assign('back_act', $this->back_act);
         $this->assign('title', '绑定');
         $this->display('user_bind.dwt');
