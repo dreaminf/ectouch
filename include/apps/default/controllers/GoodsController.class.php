@@ -149,7 +149,9 @@ class GoodsController extends CommonController
     {
         /* 获得商品的信息 */
         $goods = model('Goods')->get_goods_info($this->goods_id);
-
+		//购物车商品数量
+        $cart_goods = insert_cart_info_number();
+        $this->assign('seller_cart_total_number', $cart_goods);
         /* 页面标题 */
         $page_info = get_page_title($goods['cat_id'], $goods['goods_name']);
         $this->assign('page_title', htmlspecialchars($page_info['title']));
