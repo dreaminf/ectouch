@@ -249,6 +249,10 @@ class template
         {
             $this->_current_file = $filename;
             $source = $this->fetch_str(file_get_contents($filename));
+            
+            if(!is_dir($this->compile_dir)){
+                mkdir($this->compile_dir);
+            }
 
             if (file_put_contents($name, $source, LOCK_EX) === false)
             {

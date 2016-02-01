@@ -241,6 +241,9 @@ class mysql
         {
             $logfilename = $this->root_path . 'data/caches/logs/mysql_query_' . $this->dbhash . '_' . date('Y_m_d') . '.log';
             $str = $sql . "\n\n";
+            if(!is_dir(dirname($logfilename))){
+                mkdir(dirname($logfilename));
+            }
 
             file_put_contents($logfilename, $str, FILE_APPEND);
         }
