@@ -126,7 +126,7 @@ class SaleController extends CommonController {
         if($catArr){
             unset($catArr[(count($catArr)-1)]);
         }
-        $category = $this->model->table('category')->field("cat_id,cat_name")->where(array("parent_id"=>0,"is_show"=>1))->select();
+        $category = $this->model->table('category')->field("cat_id,cat_name")->where(array("parent_id"=>0,"is_show"=>1))->order('sort_order ASC, cat_id ASC')->select();
         if($category){
             foreach($category as $key=>$val){
                 $category[$key]['profit1'] = $this->model->table('drp_profit')->field("profit1")->where(array("cate_id"=>$val['cat_id']))->getOne();
@@ -567,7 +567,7 @@ class SaleController extends CommonController {
         }
         $apply = $this->model->table('drp_config')->field("value")->where(array("keyword"=>'apply'))->getOne();
         $this->assign('apply',$apply);
-        $category = $this->model->table('category')->field("cat_id,cat_name")->where(array("parent_id"=>0,"is_show"=>1))->select();
+        $category = $this->model->table('category')->field("cat_id,cat_name")->where(array("parent_id"=>0,"is_show"=>1))->order('sort_order ASC, cat_id ASC')->select();
         if($category){
             foreach($category as $key=>$val){
                 $category[$key]['profit1'] = $this->model->table('drp_profit')->field("profit1")->where(array("cate_id"=>$val['cat_id']))->getOne();

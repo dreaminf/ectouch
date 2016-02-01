@@ -22,7 +22,7 @@ require(dirname(__FILE__) . '/includes/init.php');
 if ($_REQUEST['act'] == 'list')
 {
     /* 获取分类列表 */
-    $cate_list = $db->getAll("SELECT c.cat_name, c.cat_id, p.profit_id, p.cate_id, p.profit1, p.profit2, p.profit3 FROM " . $ecs->table("category") . "as c left join " . $ecs->table('drp_profit') . " as p on c.cat_id=p.cate_id WHERE parent_id= 0 and is_show = 1");
+    $cate_list = $db->getAll("SELECT c.cat_name, c.cat_id, p.profit_id, p.cate_id, p.profit1, p.profit2, p.profit3 FROM " . $ecs->table("category") . "as c left join " . $ecs->table('drp_profit') . " as p on c.cat_id=p.cate_id WHERE parent_id= 0 and is_show = 1 ORDER BY c.sort_order ASC, c.cat_id ASC");
 
     foreach($cate_list as $key=>$val){
         $cate_list[$key]['profit1'] = $val['profit1'] > 0 ? $val['profit1'] : 0;
@@ -241,7 +241,7 @@ if ($_REQUEST['act'] == 'user_edit')
         unset($catArr[(count($catArr)-1)]);
     }
     // 获取所有一级分类
-    $category = $db->getAll("select cat_id,cat_name from " . $ecs->table("category") . " where parent_id = 0 and is_show = 1");
+    $category = $db->getAll("select cat_id,cat_name from " . $ecs->table("category") . " where parent_id = 0 and is_show = 1 ORDER BY sort_order ASC, cat_id ASC");
     if($category){
         foreach($category as $key=>$val){
             if(in_array($val['cat_id'],$catArr)){
