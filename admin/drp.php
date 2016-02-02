@@ -147,7 +147,19 @@ if ($_REQUEST['act'] == 'users')
     $smarty->assign('ur_here', $_LANG['drp_profit']);
     $smarty->display('drp_users.htm');
 }
+/*------------------------------------------------------ */
+//-- 排序、分页、查询
+/*------------------------------------------------------ */
+elseif ($_REQUEST['act'] == 'query')
+{
+    $list = get_user_list();
+    $smarty->assign('list',         $list['list']);
+    $smarty->assign('filter',       $list['filter']);
+    $smarty->assign('record_count', $list['record_count']);
+    $smarty->assign('page_count',   $list['page_count']);
 
+    make_json_result($smarty->fetch('drp_users.htm'), '',array('filter' => $list['filter'], 'page_count' => $list['page_count']));
+}
 /*------------------------------------------------------ */
 //-- 分销商审核管理
 /*------------------------------------------------------ */
@@ -169,22 +181,22 @@ if ($_REQUEST['act'] == 'users_audit')
     $smarty->assign('etime', date("Y-m-d H:i:s"));
     $smarty->assign('stime', date("Y-m-d H:i:s",time()-86400*7));
     $smarty->assign('ur_here', $_LANG['drp_profit']);
-    $smarty->display('drp_users.htm');
+    $smarty->display('drp_users_audit.htm');
 }
-
 /*------------------------------------------------------ */
 //-- 排序、分页、查询
 /*------------------------------------------------------ */
-elseif ($_REQUEST['act'] == 'query')
+elseif ($_REQUEST['act'] == 'users_audit_query')
 {
-    $list = get_user_list();
+    $list = get_user_list(0);
     $smarty->assign('list',         $list['list']);
     $smarty->assign('filter',       $list['filter']);
     $smarty->assign('record_count', $list['record_count']);
     $smarty->assign('page_count',   $list['page_count']);
 
-    make_json_result($smarty->fetch('drp_users.htm'), '',array('filter' => $list['filter'], 'page_count' => $list['page_count']));
+    make_json_result($smarty->fetch('drp_users_audit.htm'), '',array('filter' => $list['filter'], 'page_count' => $list['page_count']));
 }
+
 /*------------------------------------------------------ */
 //-- 修改店铺状态
 /*------------------------------------------------------ */
@@ -201,7 +213,63 @@ if ($_REQUEST['act'] == 'user_change')
     ecs_header("Location: drp.php?act=users\n");
     exit;
 }
+/*------------------------------------------------------ */
+//-- 编辑店铺审核信息
+/*------------------------------------------------------ */
+if ($_REQUEST['act'] == 'user_audit_edit')
+{
+    // 修改店铺信息
+    if($_POST){
+        $id = $_POST['id'] ? $_POST['id'] : 0;
+        if($id == 0){
+            sys_msg($_LANG['sale_cate_not_empty']);
+        }
+        $data = $_POST['data'];
+        $cat_id = '';
+        if($data['cat_id']){
+            foreach($data['cat_id'] as $key=>$val){
+                $cat_id.=$val.',';
+            }
+        }else{
+            sys_msg($_LANG['sale_cate_not_empty']);
+        }
+        $data['cat_id'] = $cat_id;
+        $db->autoExecute($ecs->table('drp_shop'), $data, 'UPDATE', "id = '$id'");
+        ecs_header("Location: drp.php?act=users_audit\n");
+        exit;
+    }
+    $id = $_GET['id'] ? $_GET['id'] : 0;
+    if($id == 0){
+        ecs_header("Location: drp.php?act=users\n");
+        exit;
+    }
+    // 获取店铺信息
+    $info = $db->getRow("SELECT d.id,d.shop_name,d.real_name,d.shop_mobile,d.shop_qq,d.user_id,d.cat_id,d.open,d.audit,u.user_name FROM " . $ecs->table("drp_shop") . " as d join " . $ecs->table("users") . " as u on d.user_id=u.user_id where d.id = $id");
+    $smarty->assign('info', $info);
 
+    $catArr = explode(',',$info['cat_id']);
+    if($catArr){
+        unset($catArr[(count($catArr)-1)]);
+    }
+    // 获取所有一级分类
+    $category = $db->getAll("select cat_id,cat_name from " . $ecs->table("category") . " where parent_id =0");
+    if($category){
+        foreach($category as $key=>$val){
+            if(in_array($val['cat_id'],$catArr)){
+                $category[$key]['is_select'] = 1;
+            }
+        }
+    }
+    $smarty->assign('category', $category);
+    assign_query_info();
+    if (empty($_REQUEST['is_ajax']))
+    {
+        $smarty->assign('full_page', 1);
+    }
+    $smarty->assign('keyword', 'novice');
+    $smarty->assign('ur_here', $_LANG['drp_user_edit']);
+    $smarty->display('drp_users_edit.htm');
+}
 /*------------------------------------------------------ */
 //-- 编辑店铺信息
 /*------------------------------------------------------ */
