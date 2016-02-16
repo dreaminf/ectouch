@@ -12,7 +12,7 @@
 <script type="text/javascript" src="ueditor.config.js"></script>
 <script type="text/javascript" src="ueditor.all.min.js"></script>
 <script type="text/javascript" src="lang/<?php echo $lang;?>/<?php echo $lang;?>.js"></script>
-<script type="text/javascript" src="<?php echo $root_url;?>data/common/js/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo $root_url;?>data/assets/js/jquery.min.js"></script>
 <style type="text/css">
 body {margin:0px; padding:0px;}
 #container {width:640px; height:400px;}

@@ -1044,6 +1044,7 @@ class template
                 $scripts[] = $val;
                 if ($val{0} == '.')
                 {
+                    $val = str_replace('../js', '../data/assets/js', $val);
                     $str .= '<script type="text/javascript" src="' . $val . '"></script>';
                 }
                 else

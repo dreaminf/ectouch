@@ -871,7 +871,7 @@ function ecs_geoip($ip) {
     }
 
     if ($fp === NULL) {
-        $fp = fopen(ROOT_PATH . 'data/common/ipdata.dat', 'rb');
+        $fp = fopen(ROOT_PATH . 'data/ipdata/ipdata.dat', 'rb');
         if ($fp === false) {
             return 'Invalid IP data file';
         }

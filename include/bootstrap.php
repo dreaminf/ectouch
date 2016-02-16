@@ -64,7 +64,7 @@ try {
     defined('__ROOT__') or define('__ROOT__', rtrim(dirname($_SERVER["SCRIPT_NAME"]), '\\/'));
     defined('__URL__') or define('__URL__', __HOST__ . __ROOT__);
     defined('__ADDONS__') or define('__ADDONS__', __ROOT__ . '/plugins');
-    defined('__PUBLIC__') or define('__PUBLIC__', __ROOT__ . '/data/common');
+    defined('__PUBLIC__') or define('__PUBLIC__', __ROOT__ . '/data/assets');
     defined('__ASSETS__') or define('__ASSETS__', __ROOT__ . '/data/assets/' . APP_NAME);
     /* 安装检测 */
     if (! file_exists(ROOT_PATH . 'data/install.lock')) {
