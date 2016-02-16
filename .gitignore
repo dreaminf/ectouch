@@ -1,5 +1,6 @@
 .DS_Store
 
+data/caches
 data/config.php
 data/install.lock
 
