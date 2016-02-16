@@ -1,5 +1,22 @@
 /* $Id : common.js 4865 2007-01-31 14:04:10Z paulgao $ */
 
+
+$(function(){
+    // 微信内隐藏头部工具栏
+    if(isWeiXin()){
+        // $('.ect-header').hide();
+    }
+})
+
+function isWeiXin(){
+    var ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 function get_asynclist(url, src) {
     $('#J_ItemList').more({'address': url, 'spinner_code': '<div style="text-align:center; margin:10px;"><img src="' + src + '" /></div>'})
     $(window).scroll(function() {
@@ -113,6 +130,8 @@ function addToCartResponse(result) {
                 default :
                     break;
             }
+            //showDiv();
+			document.getElementById('total_number').innerHTML = result.cart_number;//更新数量
         }
     }
 }
@@ -1027,8 +1046,7 @@ function addToCartResponse_quick(result) {
         if (result.error == 1) {
 			if(use_how_oos == 1){
         		if (confirm(result.message)) {
-    				location.href = 'index.php?m=default&c=user&a=add_booking&id='
-    						+ result.goods_id + '&spec=' + result.product_spec;
+    				location.href = 'index.php?m=default&c=user&a=add_booking&id=' + result.goods_id + '&spec=' + result.product_spec;
     			}
         	}else{
         		alert(result.message);
@@ -1043,15 +1061,16 @@ function addToCartResponse_quick(result) {
         }
     } else {
         var cartInfo = document.getElementById('ECS_CARTINFO');
-        var cart_url = 'index.php?m=default&c=flow&a=cart';
+        var cart_url = 'index.php?c=flow&a=cart';
+        //var cart_url = 'flow.php?step=cart';
         if (cartInfo) {
             cartInfo.innerHTML = result.content;
         }
-
-        var returnVal = window.confirm("商品已成功加入购物车\n是否去购物车查看？", "标题");
-        if (returnVal) {
+		document.getElementById('total_number').innerHTML = result.cart_number;//更新数量
+        if (result.one_step_buy == '1') {
             location.href = cart_url;
+        } else {
+			location.href = cart_url;
         }
-
     }
 }

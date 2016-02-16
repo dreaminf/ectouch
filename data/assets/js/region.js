@@ -102,7 +102,7 @@ region.response = function(result, text_result)
 
 region.getFileName = function()
 {
-  return "index.php?m=default&c=common&a=region";
+  return "index.php?m=default&c=public&a=region";
   /*if (region.isAdmin)
   {
     return "../region.php";

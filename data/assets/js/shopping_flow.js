@@ -622,6 +622,13 @@ function checkConsignee(frm)
 {
   var msg = new Array();
   var err = false;
+  
+  if (frm.elements['country'] && frm.elements['country'].value == 0 && frm.elements['country'].length > 1)
+  {
+    err = true;
+    msg.push(country_not_null);
+  }
+
 
   if (frm.elements['province'] && frm.elements['province'].value == 0 && frm.elements['province'].length > 1)
   {
@@ -697,3 +704,26 @@ function selectAddress(obj)
     orderSelectedResponse(data);
   }, 'json');
 }
+$("#inv").click(function(){
+	
+	var v=$("#ECS_NEEDINV").is(":checked");
+	var show1=$("#inv_show1");
+	var show2=$("#inv_show2");
+	var none1=$("#inv_none1");
+	var none2=$("#inv_none2");
+	if(v==false){
+		show1.css("display","none");
+		show2.css("display","none");
+		none1.css("display","block");
+		none2.css("display","block");
+		$("#need_inv").html("<input name='need_inv' type='checkbox'  checked='checked' class='input' id='ECS_NEEDINV'  value='1' style='display:none' >");
+		
+	}else{
+		
+		none1.css("display","none");
+		none2.css("display","none");
+		show1.css("display","block");
+		show2.css("display","block");
+		$("#need_inv").html("<input name='need_inv' type='checkbox'  class='input' id='ECS_NEEDINV'  value='1' style='display:none' >");
+	}
+})
