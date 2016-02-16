@@ -33,6 +33,7 @@ class Controller {
         define('IS_PUT', REQUEST_METHOD == 'PUT' ? true : false );
         define('IS_DELETE', REQUEST_METHOD == 'DELETE' ? true : false );
         define('IS_AJAX', (isset($_SERVER ['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER ['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'));
+        load_file(ROOT_PATH . 'data/certificate/appkey.php');
     }
 
     public function __get($name) {

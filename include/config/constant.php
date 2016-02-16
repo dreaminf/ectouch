@@ -5,8 +5,6 @@ defined('IN_ECTOUCH') or die('Deny Access');
 
 /* ECTouch 常量 */
 define('EC_CHARSET', 'utf-8');
-define('AUTH_KEY', '39AC18DD851BC2C9393164EE816ED339');
-define('OLD_AUTH_KEY', '');
 
 /* 图片处理相关常数 */
 define('ERR_INVALID_IMAGE', 1);

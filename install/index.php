@@ -269,9 +269,9 @@ switch ($step) {
 
 		define('IN_ECTOUCH', true);
 		$appid = get_appid();
-		$version_file = ROOT_PATH . '../include/config/constant.php';
+		$version_file = ROOT_PATH . '../data/certificate/appkey.php';
 		require $version_file;
-		if(AUTH_KEY == 'key'){
+		if(AUTH_KEY == ''){
 			require dirname(ROOT_PATH) . '/include/vendor/Http.class.php';
 			require dirname(ROOT_PATH) . '/include/vendor/Cloud.class.php';
 			@file_put_contents($version_file, str_replace("'AUTH_KEY', '".AUTH_KEY."'", "'AUTH_KEY', '".$appid."'", file_get_contents($version_file)));
