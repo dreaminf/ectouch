@@ -113,7 +113,7 @@ if ($_REQUEST['act'] == '')
     $smarty->assign('admin_id', $_SESSION['admin_id']);
 
     $smarty->assign('shop_url', urlencode($ecs->url()));
-    $smarty->display('2016_index.htm');
+    $smarty->display('2016/index.htm');
 }
 
 /*------------------------------------------------------ */
