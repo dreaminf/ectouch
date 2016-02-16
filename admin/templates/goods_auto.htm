@@ -1,13 +1,13 @@
 {if $full_page}
 {include file="pageheader.htm"}
 {insert_scripts files="../js/utils.js,listtable.js"}
-<script type="text/javascript" src="../js/calendar.php?lang={$cfg_lang}"></script>
+<script type="text/javascript" src="../data/assets/js/calendar.php?lang={$cfg_lang}"></script>
 <script>
 var thisfile = '{$thisfile}';
 var deleteck = '{$lang.deleteck}';
 var deleteid = '{$lang.delete}';
 </script>
-<link href="../js/calendar/calendar.css" rel="stylesheet" type="text/css" />
+<link href="../data/assets/js/calendar/calendar.css" rel="stylesheet" type="text/css" />
 <div class="form-div">
 {if !$crons_enable}
 <ul style="padding:0; margin: 0; list-style-type:none; color: #CC0000;">
