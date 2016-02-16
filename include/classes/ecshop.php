@@ -168,7 +168,7 @@ class ecshop
     {
         if (empty($sid))
         {
-            $s = 'images';
+            $s = 'data/assets/images';
         }
         else
         {
