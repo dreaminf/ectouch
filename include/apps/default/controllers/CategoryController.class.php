@@ -685,7 +685,11 @@ class CategoryController extends CommonController {
             $where.=" AND ($this->children OR " . model('Goods')->get_extension_goods($this->children) . ') ';
         }
         if(!empty($brand)){
-            $where .= " AND g.brand_id = '".$brand."' ";
+			if($brand == 0){
+				$where .= " AND g.brand_id > 0";
+			}else{
+				$where .= " AND g.brand_id = '".$brand."' ";
+			}
         }
         $slider = explode("~",$slider);
         $max = $slider[1];
@@ -694,14 +698,13 @@ class CategoryController extends CommonController {
             $where .= " AND g.shop_price >= '".$main."' AND g.shop_price <= '".$max."'";
 
         }
-
         /* 获得商品列表 */
-       $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, g.goods_number, " .
+      $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, g.goods_number, " .
             'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img, xl.sales_volume ' . 'FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' . ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " . "WHERE $where ORDER BY $orderby LIMIT $start , $this->size";
         $res = $this->model->query($sql);
         foreach($res as $key => $val){
             $res[$key]['goods_img'] = get_image_path($val['goods_id'],$val['goods_img']);
-            $res[$key]['goods_img'] = get_image_path($val['goods_id'],$val['goods_thumb']);
+            $res[$key]['goods_thumb'] = get_image_path($val['goods_id'],$val['goods_thumb']);
             $res[$key]['url'] = url('goods/index', array(
                 'id' => $val['goods_id']));
         }

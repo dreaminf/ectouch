@@ -36,9 +36,11 @@
 					<ul class="j-sub-menu padding-all j-get-one" data-istrue="true">
 						<!--{foreach from=$brands item=brand name=brands}-->
 						<li class="ect-select">
-							<label class="ts-1">{$brand.brand_name|escape:html}<i class="fr iconfont icon-gou ts-1"></i></label>
+							<label class="ts-1">{$brand.brand_name|escape:html}
+								<i class="fr iconfont icon-gou ts-1"></i>
+								<input type="hidden" class="brand_list_id" name="brand" value="{$brand.brand_id}" />
+							</label>
 						</li>
-						<input type="hidden" id="brand" name="brand" value="{$brands.brand_id}" />
 						<!--{/foreach}-->
 					</ul>
 					<!--{foreach from=$filter_attr_list item=filter name=filter}-->

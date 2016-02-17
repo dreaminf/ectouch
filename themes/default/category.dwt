@@ -160,7 +160,7 @@ var sliders = null;
 function but_submit(){
     var slider = $("#slider-range-amount").html();
 	sliders = slider;
-	var brand = $("#but_submit").val();
+	var brand = $(".ect-select .active input").val();
 	var sort = 1;
 	var page = 1;
 	$.post("{:url('category/async_list')}",{slider:slider,brand:brand,sort:sort,page:page,id:{$id}},function(data){
