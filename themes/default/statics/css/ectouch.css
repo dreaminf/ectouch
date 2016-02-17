@@ -654,7 +654,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .goods-evaluation-page .tab-title ul li{padding:1.2rem 0; padding-bottom:.8rem;  font-size:1.5rem; text-align: center;}
 .goods-evaluation-page .tab-title ul li em{font-size:1.2rem;}
 .goods-evaluation-page .tab-title .active{color:#1CBB7F;}
-.goods-evaluation-page .tab-con{margin-top:5.8rem;}
+.goods-evaluation-page .tab-con{margin-top:9.8rem;}
 .goods-evaluation-page .evaluation-list{border-bottom:1px solid #F6F6F9; box-sizing: border-box; width:100%;}
 .goods-evaluation-page .g-e-p-pic li{width:30%; margin-right:.4rem;}
 .goods-evaluation-page .g-e-p-pic li:last-of-type{margin-right:0;}
@@ -1067,12 +1067,8 @@ nav.ect-nav-list{border-top:none; border-bottom:1px solid #e3e3e3; position:rela
     width: 100%;
     z-index: 75;
 }
-.comment-con .goods-evaluation-page .tab-title{
-	top: 3.7em;
-}
-.comment-con .goods-evaluation-page .tab-con{
-	margin-top: 11.5rem;
-}
+
+
 footer.logo {
     text-align: center;
     border-top: 1px solid #e3e3e3;

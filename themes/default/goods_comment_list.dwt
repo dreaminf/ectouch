@@ -17,7 +17,7 @@
   </div>
 
   <div class="goods-evaluation-page of-hidden ect-tab j-ect-tab">
-	<div class="hd j-tab-title tab-title b-color-f of-hidden">
+	<div class="hd j-tab-title tab-title b-color-f of-hidden" style="margin-top:4rem;">
 		<ul class="dis-box">
 			<li class="box-flex {if $type == 1}active{/if}"><a href="{:url('goods/comment_list',array('type'=>1,'id'=>$this->_var['id'],'page'=>1))}">{$lang.all_comment}</a><em class="dis-block m-top04">{$comments_info.count}</em></li>
 			<li class="box-flex {if $type == 2}active{/if}"><a href="{:url('goods/comment_list',array('type'=>2,'id'=>$this->_var['id'],'page'=>1))}">{$lang.favorable_comment}</a><em class="dis-block m-top04">{$comments_info.favorable_count}</em></li>
@@ -29,7 +29,7 @@
 	<div id="j-tab-con" class="b-color-f tab-con m-top06">
 	<div id="content"></div>
 		<div class="swiper-wrapper">
-			
+
 			<section class="swiper-slide of-hidden">
 			<!--{if $comment_list}-->
 			<!--{foreach from=$comment_list item="list" name="com"}-->
@@ -50,10 +50,10 @@
 				<!--{/foreach}-->
 				<!--{/if}-->
 			</section>
-			
+
 		</div>
 	</div>
-	
+
 </div>
  <ul class="pager ect-margin-lr ect-page">
 	  <li class="pull-left"><a href="{:url('goods/comment_list',array('type'=>$this->_var['type'],'id'=>$this->_var['id'],'page'=>($this->_var['pager']-1 && $this->_var['pager'] !== 0 )))}">上一页</a></li>
@@ -65,11 +65,11 @@
 	  <!-- {if $is_page neq 1} -->
 	  <li class="pull-right"><a href="{:url('goods/comment_list',array('type'=>$this->_var['type'],'id'=>$this->_var['id'],'page'=>($this->_var['pager']+1)))}">下一页</a></li>
 	 <!-- {/if} -->
-</ul> 
+</ul>
 </div>
   <footer class="logo"><a href="http://www.ectouch.cn" title="ECTouch官网" target="_blank"><img src="__TPL__/images/copyright.png" width="176" height="60"></a></footer>
 
-<script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script> 
+<script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
 <!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/new_page_footer.lbi" --><!-- #EndLibraryItem -->
 <script>
 
@@ -109,6 +109,6 @@
 
 
 </script>
-	
+
 </div>
 </body></html>
