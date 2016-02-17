@@ -155,7 +155,21 @@
 		        }
 		    });
 		</script>
-		<script>
+<script> 
+var sliders = null;
+function but_submit(){
+    var slider = $("#slider-range-amount").html();
+	sliders = slider;
+	var brand = $("#but_submit").val();
+	var sort = 1;
+	var page = 1;
+	$.post("{:url('category/async_list')}",{slider:slider,brand:brand,sort:sort,page:page,id:{$id}},function(data){
+        var html = template('j-product', data);
+        $("#j-product-box").html(html);
+	},'json');
+
+	$("body").removeClass("show-filter-div");
+}
 		$(function(){
            var url = '{:url('category/async_list', array('id'=>$this->_var['id'], 'type'=>$this->_var['type'], 'brand'=>$this->_var['brand_id'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keywords'=>$this->_var['keywords']))}';
            var page = 1;
@@ -184,13 +198,12 @@
                     $(this).removeClass('active');
                 }
             })
-            $.post(url, {page: page,sort:sort}, function(data){
+            $.post(url, {page: page,sort:sort,slider:sliders}, function(data){
                 var html = template('j-product', data);
                 $("#j-product-box").html(html);
             }, 'json');
         })
-
-		</script>
+</script>
 	</body>
 
 </html>

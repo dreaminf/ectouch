@@ -71,23 +71,7 @@
 		</form>
 	</section>
 </div>
-<script type="text/javascript">
- 
-function but_submit(){
-    var slider = $("#slider-range-amount").html();
-	var brand = $("#but_submit").val();
-	var sort = 1;
-	var page = 1;
-	$.post("{:url('category/async_list')}",{slider:slider,brand:brand,sort:sort,page:page,id:{$id}},function(data){
-        var html = template('j-product', data);
-        $("#j-product-box").html(html);
-	},'json');
 
-	$("body").removeClass("show-filter-div");
-}
-
-
-</script>
 <script type="text/javascript">
 function clear_filter(){
  $(".touchweb-com_listType .range").text("全部");
