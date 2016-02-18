@@ -28,17 +28,12 @@
 				</div>
 			</div>
 		</div>
-		<!-- #BeginLibraryItem "/library/new_page_footer_nav.lbi" -->
-<!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/search.lbi" -->
 <!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
 <!-- #EndLibraryItem -->
 		</div>
 		<!--引用js-->
-		<script type="text/javascript" src="statics/js/jquery-2.1.4.min.js"></script>
-		<script type="text/javascript" src="statics/js/swiper-3.2.5.min.js"></script>
-		<script type="text/javascript" src="statics/js/ectouch.js"></script>
 		<script>
 			/*切换*/
 			var tabsSwiper = new Swiper('#j-tab-con', {
