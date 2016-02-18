@@ -77,15 +77,15 @@ class CategoryBaseModel extends BaseModel {
         $three_arr = array();
         $sql = 'SELECT count(*) FROM ' . $this->pre . "category WHERE parent_id = '$tree_id' AND is_show = 1 ";
         if ($this->row($sql) || $tree_id == 0) {
-            $child_sql = 'SELECT c.cat_id, c.cat_name, c.parent_id, c.is_show, g.goods_thumb as cat_img ' .
+            $child_sql = 'SELECT c.cat_id, c.cat_name, c.parent_id, c.is_show ' .
                     'FROM ' . $this->pre . 'category as c ' .
-                    'left join ' . $this->pre . 'goods as g on g.cat_id = c.cat_id AND g.is_on_sale = 1 ' .
-                    "WHERE c.parent_id = '$tree_id' AND c.is_show = 1 GROUP BY c.cat_id ORDER BY c.sort_order ASC, c.cat_id ASC";
+                    " WHERE c.parent_id = '$tree_id' AND c.is_show = 1 GROUP BY c.cat_id ORDER BY c.sort_order ASC, c.cat_id ASC";
             $res = $this->query($child_sql);
             foreach ($res AS $row) {
                 if ($row['is_show']) {
                     $three_arr[$row['cat_id']]['id'] = $row['cat_id'];
                     $three_arr[$row['cat_id']]['name'] = $row['cat_name'];
+                    $row['cat_img'] =  $this->get_cat_goods_img($row['cat_id']);
                     $three_arr[$row['cat_id']]['img'] = get_image_path(0,$row['cat_img'],false);
                     $three_arr[$row['cat_id']]['url'] = url('category/index', array('id' => $row['cat_id']));
                 }
@@ -97,6 +97,20 @@ class CategoryBaseModel extends BaseModel {
         return $three_arr;
     }
 
+    /**
+     * 调用指定分类下子分类的商品的缩略图，条件:精品，排序规则:按推荐排序，默认按最大商品ID
+     * @param  [type] $cat_id 　add by 20160204
+     * @return [type]
+     */
+    function get_cat_goods_img($cat_id){
+        $children = get_children($cat_id);
+        $sql = 'SELECT c.cat_id, c.cat_name, c.parent_id, c.is_show, g.goods_thumb as cat_img ' .
+                    'FROM ' . $this->pre . 'category as c ' .
+                    'left join ' . $this->pre . 'goods as g on g.cat_id = c.cat_id AND g.is_best = 1 AND g.is_on_sale = 1 ' .
+                    "WHERE $children AND c.is_show = 1 ORDER BY g.sort_order ASC, g.goods_id DESC";// GROUP BY c.cat_id ORDER BY c.sort_order ASC, c.cat_id ASC";
+        $res = $this->row($sql);
+        return $res['cat_img'];
+    }
     /**
      * 获取一级分类信息
      */
