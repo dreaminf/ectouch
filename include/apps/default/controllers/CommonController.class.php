@@ -220,7 +220,6 @@ class CommonController extends BaseController
             if($drp_info['open'] == 1){
                 $drp_info['cat_id'] = substr($drp_info['cat_id'], 0, -1);
                 $_SESSION['drp_shop'] = $drp_info;
-
             }else{
                 $parent_id = $this->model->table('users')->field('parent_id')->where("user_id=".$_SESSION['user_id'])->getOne();
                 if($parent_id){
