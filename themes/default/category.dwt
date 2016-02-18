@@ -12,7 +12,11 @@
 		<link rel="stylesheet" href="__TPL__/statics/css/jquery-ui-1.10.1.custom.min.css" />
 		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
 	</head>
-
+	<style>
+	.pull-left{float:left;width:6rem;text-align:center;border:1px solid #ddd;}
+	.pull-right{float:right;width:6rem;text-align:center;border:1px solid #ddd;}
+	.ect-margin-lr{margin-top:1rem;}
+	</style>
 	<body class="">
 		<div id="loading"><img src="__TPL__/statics/img/loading.gif" /></div>
 		<div class="con">
@@ -111,6 +115,10 @@
 					<a class="btn-cart box-flex" type="button">加入购物车</a>
 				</section>
 			</div>
+	<ul class="pager ect-margin-lr ect-page">
+	  <li class="pull-left"><a href="#" onclick="pages(0)">上一页</a></li>
+	  <li class="pull-right"><a href="#" onclick="pages(1)">下一页</a></li>
+	</ul>
 			<!--商品属性弹出层end-->
 		<div class="div-messages"></div>
 
@@ -122,45 +130,45 @@
 		<script type="text/javascript" src="__TPL__/statics/js/jquery.scrollUp.min.js"></script>
 		<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
 		<script type="text/javascript" src="__PUBLIC__/js/template.js"></script>
-		<script type="text/javascript">
-			var sliders = function() {
-				// 筛选价格区间 js
-				$("#slider-range").slider({
-					range: true,
-					min: 0,
-					max: 1000,
-					step: 100,
-					values: [0, 300],
-					slide: function(event, ui) {
-						$("#slider-range-amount").text(ui.values[0] + " ~ " + ui.values[1]);
-					}
-				});
-				$("#slider-range-amount").text($("#slider-range").slider("values", 0) + " ~ " + $("#slider-range").slider("values", 1));
-			}();
-           var url = '{:url('category/async_list', array('id'=>$this->_var['id'], 'type'=>$this->_var['type'], 'brand'=>$this->_var['brand_id'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keywords'=>$this->_var['keywords']))}';
-           var page = 1;
-             $.post(url, {page: page}, function(data){
-                        var html = template('j-product', data);
-                        $("#j-product-box").html(html);
-                    }, 'json');
-			$(window).scroll(function () {
-		        var scrollTop = $(this).scrollTop();
-		        var scrollHeight = $(document).height();
-		        var windowHeight = $(this).height();
-		        if (scrollTop + windowHeight == scrollHeight) {
-		        	$.post(url, {page: ++page}, function(data){
-						var html = template("j-product", data);
-						$('#j-product-box').append(html);
-					}, 'json');
-		        }
-		    });
-		</script>
+<script type="text/javascript">
+	var sliders = function() {
+		// 筛选价格区间 js
+		$("#slider-range").slider({
+			range: true,
+			min: 0,
+			max: 1000,
+			step: 100,
+			values: [0, 300],
+			slide: function(event, ui) {
+				$("#slider-range-amount").text(ui.values[0] + " ~ " + ui.values[1]);
+			}
+		});
+		$("#slider-range-amount").text($("#slider-range").slider("values", 0) + " ~ " + $("#slider-range").slider("values", 1));
+	}();
+   var url = '{:url('category/async_list', array('id'=>$this->_var['id'], 'type'=>$this->_var['type'], 'brand'=>$this->_var['brand_id'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keywords'=>$this->_var['keywords']))}';
+   var page = 1;
+	 $.post(url, {page: page}, function(data){
+				var html = template('j-product', data);
+				$("#j-product-box").html(html);
+			}, 'json');
+	$(window).scroll(function () {
+		var scrollTop = $(this).scrollTop();
+		var scrollHeight = $(document).height();
+		var windowHeight = $(this).height();
+		if (scrollTop + windowHeight == scrollHeight) {
+			$.post(url, {page: ++page}, function(data){
+				var html = template("j-product", data);
+				$('#j-product-box').append(html);
+			}, 'json');
+		}
+	});
+</script>
 <script> 
 var sliders = null;
 function but_submit(){
     var slider = $("#slider-range-amount").html();
 	sliders = slider;
-	var brand = $(".ect-select .active input").val();
+	var brand = $("#but_submit").val();
 	var sort = 1;
 	var page = 1;
 	$.post("{:url('category/async_list')}",{slider:slider,brand:brand,sort:sort,page:page,id:{$id}},function(data){
@@ -172,7 +180,7 @@ function but_submit(){
 }
 		$(function(){
            var url = '{:url('category/async_list', array('id'=>$this->_var['id'], 'type'=>$this->_var['type'], 'brand'=>$this->_var['brand_id'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keywords'=>$this->_var['keywords']))}';
-           var page = 1;
+           var page = {$page};
            var sort = 1;
            $.post(url, {page: page,sort:sort}, function(data){
                var html = template('j-product', data);
@@ -204,6 +212,29 @@ function but_submit(){
             }, 'json');
         })
 </script>
+<script>
+var page = 1;
+function pages(a)
+{
+	var count = $("#countaa").val();
+	var url = '{:url('category/async_list', array('id'=>$this->_var['id'], 'type'=>$this->_var['type'], 'brand'=>$this->_var['brand_id'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keywords'=>$this->_var['keywords']))}';
+	if(a == 0){
+		page = {$page} > 1 ? {$page} -1 : 1;
+	}else{
+		if((count / 10) > page){
+			page = page + 1;
+		}else{
+			page = page - 1;
+		}
+	}
+	var sort = 1;
+	$.post(url, {page: page,sort:sort}, function(data){
+	   var html = template('j-product', data);
+	   $("#j-product-box").html(html);
+	}, 'json');
+}
+</script>
+
 	</body>
 
 </html>

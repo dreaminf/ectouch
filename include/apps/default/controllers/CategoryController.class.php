@@ -122,7 +122,8 @@ class CategoryController extends CommonController {
         //$this->page = I('post.page');
         //$goodslist = $this->category_get_goods();
         $goodslist = $this->ajax_parameter();
-        die(json_encode(array('list' => $goodslist)));
+		$count = count($goodslist);	
+        die(json_encode(array('list' => $goodslist,'count'=>$count)));
     }
 
     /**
