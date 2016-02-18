@@ -15,7 +15,7 @@
 
 define('IN_ECTOUCH', true);
 require(dirname(__FILE__) . '/includes/init.php');
-
+    
 /*------------------------------------------------------ */
 //-- 分成管理页
 /*------------------------------------------------------ */
@@ -844,20 +844,20 @@ if($_REQUEST['act'] == 'export'){
         $start_time =strtotime($_POST['start_time']);
         $end_time =strtotime($_POST['end_time']);
         $sql = "SELECT *  FROM " . $ecs->table('drp_shop') .
-                " WHERE `create_time` >= '".$start_time."' AND `create_time` <= '".$end_time."' ". $condition ." ORDER BY id DESC ";
-        $res = $db->query($sql);
-        $list[]=mysql_fetch_assoc($res);
+                " WHERE `create_time` >= '".$start_time."' AND `create_time` <= '".$end_time."'  ORDER BY id DESC ";
+        $list = $db->getAll($sql);
         include_once (ROOT_PATH . 'include/vendor/PHPExcel.php');
          //创建处理对象实例
         $objPhpExcel = new PHPExcel();
         $objPhpExcel->getActiveSheet()->getDefaultColumnDimension()->setAutoSize(true);//设置单元格宽度
         //设置表格的宽度  手动
+        $objPhpExcel->getActiveSheet()->getColumnDimension('D')->setWidth(20);
         $objPhpExcel->getActiveSheet()->getColumnDimension('G')->setWidth(20);
-        $objPhpExcel->getActiveSheet()->getColumnDimension('H')->setWidth(15);
+        $objPhpExcel->getActiveSheet()->getColumnDimension('H')->setWidth(25);
         $objPhpExcel->getActiveSheet()->getColumnDimension('I')->setWidth(15);
         $objPhpExcel->getActiveSheet()->getColumnDimension('J')->setWidth(20);
         //设置标题
-        $rowVal = array(0=>'编号',1=>'店铺名', 2=>'真实姓名', 3=>'手机号码', 4=>'分销id', 5=>'开店时间', 6=>'店铺是否审核', 7=>'店铺状态',8=>'QQ号');
+        $rowVal = array(0=>'编号',1=>'店铺名', 2=>'真实姓名', 3=>'手机号码',4=>'开店时间', 5=>'店铺是否审核（1为已审核，0为未审核）', 6=>'店铺状态（1为开启，0为关闭）',7=>'QQ号');
         foreach ($rowVal as $k=>$r){
             $objPhpExcel->getActiveSheet()->getStyleByColumnAndRow($k,1)->getFont()->setBold(true);//字体加粗
             $objPhpExcel->getActiveSheet()->getStyleByColumnAndRow($k,1)->getAlignment(); //->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//文字居中
@@ -879,11 +879,10 @@ if($_REQUEST['act'] == 'export'){
             ->setCellValue('B'.$num, $v['shop_name'])
             ->setCellValue('C'.$num, $v['real_name'])
             ->setCellValue('D'.$num, $v['shop_mobile'])
-            ->setCellValue('E'.$num, $v['cat_id'])
-            ->setCellValue('F'.$num, date("Y-m-d H:i:s",$v['create_time']))
-            ->setCellValue('G'.$num, $v['audit'])
-            ->setCellValue('H'.$num, $v['open'])
-            ->setCellValue('I'.$num, $v['shop_qq'])
+            ->setCellValue('E'.$num, date("Y-m-d H:i:s",$v['create_time']))
+            ->setCellValue('F'.$num, $v['audit'])
+            ->setCellValue('G'.$num, $v['open'])
+            ->setCellValue('H'.$num, $v['shop_qq'])
             ;
         }
         $name = date('Y-m-d'); //设置文件名
@@ -906,19 +905,17 @@ if($_REQUEST['act'] == 'drplogexport'){
    if(!empty($_POST['start_time']) ||!empty($_POST['end_time'])){
        $start_time =strtotime($_POST['start_time']);
        $end_time =strtotime($_POST['end_time']);
-     $sql="select dl.*,ds.shop_name,u.user_name  FROM ".$ecs->table('drp_log').
+       $sql="select dl.*,ds.shop_name,u.user_name  FROM ".$ecs->table('drp_log').
           " as dl left join ".$ecs->table('drp_shop').
           " as ds on dl.user_id=ds.user_id left join ".
           $ecs->table('users').
           " as u on dl.user_id=u.user_id ".
-          " WHERE `change_time` >="
+          " WHERE dl.change_time >="
           .$start_time.
-          " AND `change_time` <='"
+          " AND dl.change_time <="
           .$end_time.
-          "' ORDER BY log_id DESC " ;
-        $res = $db->query($sql);
-        $list[]=mysql_fetch_assoc($res);
-    
+          " ORDER BY dl.log_id DESC " ;
+        $list = $db->getAll($sql); 
         include_once (ROOT_PATH . 'include/vendor/PHPExcel.php');
          //创建处理对象实例
         $objPhpExcel = new PHPExcel();
@@ -929,7 +926,7 @@ if($_REQUEST['act'] == 'drplogexport'){
         $objPhpExcel->getActiveSheet()->getColumnDimension('I')->setWidth(15);
         $objPhpExcel->getActiveSheet()->getColumnDimension('J')->setWidth(20);
         //设置标题
-        $rowVal = array(0=>'编号',1=>'店铺名', 2=>'会员名称', 3=>'操作日期', 4=>'提现金额', 5=>'提现信息', 6=>'佣金状态(1为已支付0为未支付)');
+        $rowVal = array(0=>'编号',1=>'店铺名', 2=>'会员名称', 3=>'操作日期', 4=>'提现金额', 5=>'提现信息', 6=>'佣金状态(1为已支付,0为未支付)');
         foreach ($rowVal as $k=>$r){
             $objPhpExcel->getActiveSheet()->getStyleByColumnAndRow($k,1)->getFont()->setBold(true);//字体加粗
             $objPhpExcel->getActiveSheet()->getStyleByColumnAndRow($k,1)->getAlignment(); //->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//文字居中
