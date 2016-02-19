@@ -269,7 +269,7 @@ switch ($step) {
 
 		define('IN_ECTOUCH', true);
 		$appid = get_appid();
-		$version_file = ROOT_PATH . '../data/certificate/appkey.php';
+		$version_file = dirname(ROOT_PATH) . '/data/certificate/appkey.php';
 		require $version_file;
 		if(AUTH_KEY == ''){
 			require dirname(ROOT_PATH) . '/include/vendor/Http.class.php';
