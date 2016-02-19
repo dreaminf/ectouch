@@ -196,14 +196,14 @@ class IndexModel extends CommonModel {
                 $where   = 'AND g.is_hot = 1';
                 break;
             default:
-                $where   = '1';
+                $where   = 'AND 1';
         }
 		/*DRP_START*/ 
 		if($_SESSION['drp_shop']){
 			//获取分销商所选分类
 			$cat_id = $this->category_cat();		
 			if($cat_id){		
-				$where = " and g.cat_id in($cat_id)";				
+				$where .= " and g.cat_id in($cat_id)";				
 			}
 		}
 		/*DRP_END*/
