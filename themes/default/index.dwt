@@ -55,7 +55,8 @@
     <div class="index-menu">
     <ul class="index-menu-ul">
     <!--{foreach from=$navigator item=nav}-->
-    <li class="fl"><a href="{$nav.url}"><img src="{$nav.pic}" /></a><a class="index-menu-text" href="{$nav.url}">{$nav.name}</a></li>
+    <li class="fl"><a href="{$nav.url}" {if $nav.opennew eq 1}target = "_blank"{/if}><img src="{$nav.pic}" /></a><a class="index-menu-text" href="{$nav.url}" {if $nav.opennew eq 1}target = "_blank"{/if}>{$nav.name}</a>
+	</li>
     <!--{/foreach}-->
     </ul>
     </div>
