@@ -150,4 +150,30 @@ if (!defined('IN_ECTOUCH'))
     $purview['magazine_list']        = 'magazine_list';
     $purview['view_sendlist']        = 'view_sendlist';
 
-?>
+// 微分销
+    $purview['ext_fenxiao'] = 'ext_fenxiao';
+    $purview['01_drp_config'] = 'drp_config';
+    $purview['02_drp_audit'] = 'drp_audit';
+    $purview['02_drp_users'] = 'drp_users';
+    $purview['03_drp'] = 'drp_yongjin';
+    $purview['04_order_list'] = 'drp_order_list';
+    $purview['05_affiliate'] = 'drp_affiliate';
+    $purview['06_affiliate_ck'] = 'drp_affiliate_ck';
+    $purview['07_ranking'] = 'drp_ranking';
+    $purview['08_drp_log'] = 'drp_log';
+
+// 微信通
+    $purview['ext_wechat'] = 'ext_wechat';
+    $purview['01_wechat_config'] = 'wechat_config';
+    $purview['02_wechat_masssend'] = 'wechat_masssend';
+    $purview['03_wechat_autoreply'] = 'wechat_autoreply';
+    $purview['04_wechat_selfmenu'] = 'wechat_selfmenu';
+    /*DRP_START*/
+    $purview['05_wechat_tmplmsg'] = 'wechat_tmplmsg';
+    /*DRP_END*/
+    $purview['06_wechat_contactmanage'] = 'wechat_contactmanage';
+    $purview['07_wechat_appmsg'] = 'wechat_appmsg';
+    $purview['08_wechat_qrcode'] = 'wechat_qrcode';
+    $purview['09_wechat_extends'] = 'wechat_extends';
+    $purview['10_wechat_remind'] = 'wechat_remind';
+    $purview['11_wechat_customer'] = 'wechat_customer';

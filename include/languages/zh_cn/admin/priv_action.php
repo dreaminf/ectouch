@@ -151,4 +151,30 @@ $_LANG['sms_charge']      = '短信充值';
 $_LANG['send_history']    = '发送记录';
 $_LANG['charge_history']  = '充值记录 ';
 
-?>
+
+$_LANG['ext_fenxiao'] = '微分销';
+$_LANG['drp_config'] = '微分销设置';
+$_LANG['drp_audit'] = '分销商审核';
+$_LANG['drp_users'] = '分销商管理';
+$_LANG['drp_yongjin'] = '销售佣金设置';
+$_LANG['drp_order_list'] = '销售订单管理';
+$_LANG['drp_affiliate'] = '分成佣金设置';
+$_LANG['drp_affiliate_ck'] = '分成订单管理';
+$_LANG['drp_ranking'] = '分销商排行榜';
+$_LANG['drp_log'] = '佣金提现管理';
+
+
+$_LANG['ext_wechat'] = '微信通';
+$_LANG['wechat_config'] = '公众号设置';
+$_LANG['wechat_masssend'] = '群发消息';
+$_LANG['wechat_autoreply'] = '自动回复';
+$_LANG['wechat_selfmenu'] = '自定义菜单';
+/*DRP_START*/
+$_LANG['wechat_tmplmsg'] = '模板消息';
+/*DRP_END*/
+$_LANG['wechat_contactmanage'] = '用户管理';
+$_LANG['wechat_appmsg'] = '素材管理';
+$_LANG['wechat_qrcode'] = '扫码引荐';
+$_LANG['wechat_extends'] = '扩展功能';
+$_LANG['wechat_remind'] = '提醒设置';
+$_LANG['wechat_customer'] = '多客服设置';
