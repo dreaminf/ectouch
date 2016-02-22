@@ -44,7 +44,7 @@ class CategoryController extends CommonController {
             $page = I('page');
             $goodslist = $this->category_get_goods($this->cat_id,$this->brand, $this->price_min, $this->price_max,$size, $page, $this->sort, $this->order, $this->region_id, $this->area_id, $this->ubrand, $this->hasgoods, $this->promotion);
             $count = $this->get_goods_count($this->cat_id,$this->brand, $this->price_min, $this->price_max);
-            $count = $count / $size +1;
+            $count = ceil($count / $size);
             die(json_encode(array('list'=>$goodslist, 'totalPage'=>$count)));
         }
         $this->assign('id', $this->cat_id);
@@ -359,10 +359,11 @@ class CategoryController extends CommonController {
         if(!empty($brand) && $brand !== 0){
             $where .= " AND g.brand_id = '".$brand."' ";
         }
+        $page = ($page - 1) * 10;
         /* 获得商品列表 */
        $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, g.goods_number, " .
             'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img, xl.sales_volume ' . 'FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' .
-            ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " . "WHERE $where GROUP BY g.goods_id ORDER BY $sort $order LIMIT $page , $size";
+            ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id " . "WHERE $where GROUP BY g.goods_id ORDER BY $sort $order LIMIT $page , $size";
         $res = $this->model->query($sql);
         foreach($res as $key => $val){
             $res[$key]['url'] = url('goods/index',array('id'=>$val['goods_id']));
@@ -375,16 +376,11 @@ class CategoryController extends CommonController {
         if($cat_id !== 0){
             $where .= "AND  g.cat_id = '".$cat_id."'";
         }
-        if(isset($min) && !empty($max)){
-            $where .= " AND g.shop_price >= '".$min."' AND g.shop_price <= '".$max."'";
-            $page = 0;
-            $size = 20;
-        }
         if(!empty($brand) && $brand !== 0){
             $where .= " AND g.brand_id = '".$brand."' ";
         }
-        $sql = 'SELECT COUNT(*) AS count FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' .
-            ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " . "WHERE $where ";
+        $sql = 'SELECT COUNT(g.goods_id) AS count FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' .
+             "WHERE $where";
         $count = $this->model->getRow($sql);
         return $count['count'];
     }
