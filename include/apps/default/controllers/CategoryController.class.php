@@ -359,7 +359,7 @@ class CategoryController extends CommonController {
         if(!empty($brand) && $brand !== 0){
             $where .= " AND g.brand_id = '".$brand."' ";
         }
-        $page = ($page - 1) * 10;
+        $page = $page > 1 ? ($page - 1) * 10 : 0;
         /* 获得商品列表 */
        $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, g.goods_number, " .
             'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img, xl.sales_volume ' . 'FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' .
@@ -378,6 +378,9 @@ class CategoryController extends CommonController {
         }
         if(!empty($brand) && $brand !== 0){
             $where .= " AND g.brand_id = '".$brand."' ";
+        }
+        if(isset($min) && !empty($max)){
+            $where .= " AND g.shop_price >= '".$min."' AND g.shop_price <= '".$max."'";
         }
         $sql = 'SELECT COUNT(g.goods_id) AS count FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' .
              "WHERE $where";
