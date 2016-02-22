@@ -42,10 +42,12 @@ class CategoryController extends CommonController {
         if(IS_AJAX){
             $size = I('size');
             $page = I('page');
-            $goodslist = $this->category_get_goods($this->brand, $this->price_min, $this->price_max,$size, $page, $this->sort, $this->order, $this->region_id, $this->area_id, $this->ubrand, $this->hasgoods, $this->promotion);
-            $count = count($goodslist) / $size;
+            $goodslist = $this->category_get_goods($this->cat_id,$this->brand, $this->price_min, $this->price_max,$size, $page, $this->sort, $this->order, $this->region_id, $this->area_id, $this->ubrand, $this->hasgoods, $this->promotion);
+            $count = count($goodslist) / $size +1;
             die(json_encode(array('list'=>$goodslist, 'totalPage'=>$count)));
         }
+        dump($this->brand);
+        $this->assign('id', $this->cat_id);
         $this->assign('show_marketprice', C('show_marketprice'));
         $this->display('category.dwt');
     }
@@ -63,7 +65,8 @@ class CategoryController extends CommonController {
         $cat = model('Category')->get_cat_info($this->cat_id);
         $this->assign('show_asynclist', C('show_asynclist'));
         // 初始化分页信息
-        $brand = I('request.id', 0, 'intval');
+        $this->cat_id = I('request.id', 0, 'intval');
+        $brand = I('request.brand_id', 0, 'intval');
         $price_max = trim(I('request.price_max'));
         $price_min = trim(I('request.price_min'));
         $filter_attr = I('request.filter_attr');
@@ -103,7 +106,9 @@ class CategoryController extends CommonController {
         $this->assign('display', $display);
         $this->assign('sort',$this->sort);
         $this->assign('order',$this->order);
+        $this->assign('brand',$this->brand);
         $this->assign('price_min',$price_min);
+        $this->assign('filter_attr', $this->filter_attr_str);
         $this->assign('price_max',$price_max);
         setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
         $this->children = get_children($this->cat_id);
@@ -341,18 +346,22 @@ class CategoryController extends CommonController {
         }
     }
     //获取商品
-    private function category_get_goods($brand, $min, $max,$size, $page, $sort, $order){
-        $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 AND  g.brand_id = '".$brand."' ";
+    private function category_get_goods($cat_id,$brand, $min, $max,$size, $page, $sort, $order){
+
+        $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
+        if($cat_id !== 0){
+            $where .= "AND  g.cat_id = '".$cat_id."'";
+        }
         if(isset($min) && !empty($max)){
             $where .= " AND g.shop_price >= '".$min."' AND g.shop_price <= '".$max."'";
             $page = 0;
             $size = 20;
         }
-        if(!empty($brand)){
+        if(!empty($brand) && $brand !== 0){
             $where .= " AND g.brand_id = '".$brand."' ";
         }
         /* 获得商品列表 */
-        $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, g.goods_number, " .
+       $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, g.goods_number, " .
             'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img, xl.sales_volume ' . 'FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' .
             ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " . "WHERE $where ORDER BY $sort $order LIMIT $page , $size";
         $res = $this->model->query($sql);
