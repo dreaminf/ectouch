@@ -17,7 +17,7 @@
 				<h5>{$vo.name}</h5>
 				<ul>
 				{foreach from=$vo.cat_id item="v"}
-					<li class="w-3"><a href="{:url('category/index',array('id'=>$this->_var['v']['id']))}"></a>
+					<li class="w-3"><a href="{:url('category/async_list',array('id'=>$this->_var['v']['id']))}"></a>
 					<img src="{$v.img}" /><span>{$v.name}</span></li>
 				{/foreach}
 				</ul>
@@ -26,7 +26,7 @@
 				<h5>{$val.name}</h5>
 				<ul>
 				{foreach from=$val.cat_id item="v"}
-					<li class="w-3"><a href="{:url('category/index',array('id'=>$this->_var['v']['id']))}"></a>
+					<li class="w-3"><a href="{:url('category/async_list',array('id'=>$this->_var['v']['id']))}"></a>
 					<img src="{$v.img}" /><span>{$v.name}</span></li>
 				{/foreach}
 				</ul>
