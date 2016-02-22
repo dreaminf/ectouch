@@ -43,10 +43,10 @@ class CategoryController extends CommonController {
             $size = I('size');
             $page = I('page');
             $goodslist = $this->category_get_goods($this->cat_id,$this->brand, $this->price_min, $this->price_max,$size, $page, $this->sort, $this->order, $this->region_id, $this->area_id, $this->ubrand, $this->hasgoods, $this->promotion);
-            $count = count($goodslist) / $size +1;
+            $count = $this->get_goods_count($this->cat_id,$this->brand, $this->price_min, $this->price_max);
+            $count = $count / $size +1;
             die(json_encode(array('list'=>$goodslist, 'totalPage'=>$count)));
         }
-        dump($this->brand);
         $this->assign('id', $this->cat_id);
         $this->assign('show_marketprice', C('show_marketprice'));
         $this->display('category.dwt');
@@ -347,7 +347,6 @@ class CategoryController extends CommonController {
     }
     //获取商品
     private function category_get_goods($cat_id,$brand, $min, $max,$size, $page, $sort, $order){
-
         $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
         if($cat_id !== 0){
             $where .= "AND  g.cat_id = '".$cat_id."'";
@@ -369,6 +368,25 @@ class CategoryController extends CommonController {
             $res[$key]['url'] = url('goods/index',array('id'=>$val['goods_id']));
         }
         return $res;
+    }
+    //获取商品总条数
+    private function get_goods_count($cat_id,$brand, $min, $max){
+        $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
+        if($cat_id !== 0){
+            $where .= "AND  g.cat_id = '".$cat_id."'";
+        }
+        if(isset($min) && !empty($max)){
+            $where .= " AND g.shop_price >= '".$min."' AND g.shop_price <= '".$max."'";
+            $page = 0;
+            $size = 20;
+        }
+        if(!empty($brand) && $brand !== 0){
+            $where .= " AND g.brand_id = '".$brand."' ";
+        }
+        $sql = 'SELECT COUNT(*) AS count FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' .
+            ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " . "WHERE $where ";
+        $count = $this->model->getRow($sql);
+        return $count['count'];
     }
 
 
