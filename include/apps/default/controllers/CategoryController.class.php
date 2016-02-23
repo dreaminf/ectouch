@@ -37,6 +37,16 @@ class CategoryController extends CommonController {
     /**
      * 分类产品信息列表
      */
+    public function index(){
+        $this->parameter();
+        $this->assign('id', $this->cat_id);
+        $this->assign('show_marketprice', C('show_marketprice'));
+        $this->display('category.dwt');
+
+    }
+    /**
+     * ajax获取子分类
+     */
     public function async_list() {
         $this->parameter();
         if(IS_AJAX){
@@ -50,9 +60,6 @@ class CategoryController extends CommonController {
             }
             die(json_encode(array('list'=>$goodslist, 'totalPage'=>$count)));
         }
-        $this->assign('id', $this->cat_id);
-        $this->assign('show_marketprice', C('show_marketprice'));
-        $this->display('category.dwt');
     }
 
 
@@ -370,7 +377,7 @@ class CategoryController extends CommonController {
         }
         $page = $page > 1 ? ($page - 1) * 10 : 0;
         /* 获得商品列表 */
-       $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, g.goods_number, " .
+       $sql = 'SELECT g.goods_id, g.goods_name,g.market_price, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, g.goods_number, " .
             'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img, xl.sales_volume ' . 'FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' .
             ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id " . "WHERE $where GROUP BY g.goods_id ORDER BY $sort $order LIMIT $page , $size";
         $res = $this->model->query($sql);

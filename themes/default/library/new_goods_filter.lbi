@@ -7,7 +7,7 @@
 		</div>
 	</section>
 	<section class="con-filter-div">
-		<form class="hold-height" method="post" id="filter" action="{:url('category/async_list', array('id'=>$this->_var['id']))}">
+		<form class="hold-height" method="post" id="filter" action="{:url('category/index', array('id'=>$this->_var['id']))}">
 		<input type="hidden" name="id" class="cat" value="{$id}" />
 		<div class="swiper-wrapper">
 			<div class="swiper-slide">
