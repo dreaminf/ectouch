@@ -10,6 +10,7 @@ class CategoryController extends CommonController {
     private $sort = 'last_update';
     private $order = 'ASC'; // 排序方式
     private $filter_attr_str;
+    private $keywords;
 
     /**
      * 构造函数
@@ -52,7 +53,7 @@ class CategoryController extends CommonController {
         if(IS_AJAX){
             $size = I('size');
             $page = I('page');
-            $goodslist = $this->category_get_goods($this->cat_id,$this->brand, $this->price_min, $this->price_max,$size, $page, $this->sort, $this->order, $this->region_id, $this->area_id, $this->ubrand, $this->hasgoods, $this->promotion);
+            $goodslist = $this->category_get_goods($this->cat_id,$this->brand, $this->price_min, $this->price_max,$size, $page, $this->sort, $this->order,$this->keywords);
             $count = $this->get_goods_count($this->cat_id,$this->brand, $this->price_min, $this->price_max);
             $count = ceil($count / $size);
             if($this->price_max >0){
@@ -62,7 +63,53 @@ class CategoryController extends CommonController {
         }
     }
 
+    /**
+     * 处理关键词
+     */
+    public function keywords() {
+        $keyword = I('request.keywords');
+        if ($keyword != '') {
+            $this->keywords = 'AND (';
+            $goods_ids = array();
+            $val = mysql_like_quote(trim($keyword));
+            $this->keywords .= "(goods_name LIKE '%$val%' OR goods_sn LIKE '%$val%' OR keywords LIKE '%$val%' )";
+            $sql = 'SELECT DISTINCT goods_id FROM ' . $this->model->pre . "tag WHERE tag_words LIKE '%$val%' ";
+            $row = $this->model->query($sql);
+            foreach ($row as $vo) {
+                $goods_ids[] = $vo['goods_id'];
+            }
+            /**
+             * 处理关键字查询次数
+             */
+            $sql = 'INSERT INTO ' . $this->model->pre . "keywords (date , searchengine,keyword ,count) VALUES ('" . local_date('Y-m-d') . "', '" . ECTouch . "', '" . addslashes(str_replace('%', '', $val)) . "', '1')";
+            $condition = 'keyword = "' . addslashes(str_replace('%', '', $val)) . '"';
+            $set = $this->model->table('keywords')
+                ->where($condition)
+                ->find();
 
+            if (!empty($set)) {
+                $sql .= ' ON DUPLICATE KEY UPDATE count = count+1';
+            }
+            $this->model->query($sql);
+            $this->keywords .= ')';
+            $goods_ids = array_unique($goods_ids);
+            // 拼接商品id
+            $tag_id = implode(',', $goods_ids);
+            if (!empty($tag_id)) {
+                $this->keywords .= 'OR g.goods_id ' . db_create_in($tag_id);
+            }
+            $this->assign('keywords', $keyword);
+            /*记录搜索历史记录*/
+            if (!empty($_COOKIE['ECS']['keywords'])) {
+                $history = explode(',', $_COOKIE['ECS']['keywords']);
+                array_unshift($history, $keyword); //在数组开头插入一个或多个元素
+                $history = array_unique($history);  //移除数组中的重复的值，并返回结果数组。
+                setcookie('ECS[keywords]', implode(',', $history), gmtime() + 3600 * 24 * 30);
+            }else{
+                setcookie('ECS[keywords]', $keyword, gmtime() + 3600 * 24 * 30);
+            }
+        }
+    }
     /**
      * 处理参数便于搜索商品信息
      */
@@ -74,7 +121,7 @@ class CategoryController extends CommonController {
         // 获得分类的相关信息
         $cat = model('Category')->get_cat_info($this->cat_id);
         $this->assign('show_asynclist', C('show_asynclist'));
-        // 初始化分页信息
+        $this->keywords();
         $this->cat_id = I('request.id', 0, 'intval');
         $this->brand = I('request.brand', 0, 'intval');
         $this->price_max = trim(I('request.price_max'));
@@ -88,7 +135,6 @@ class CategoryController extends CommonController {
         $this->filter_attr_str = trim(urldecode($this->filter_attr_str));
         $this->filter_attr_str = preg_match('/^[\d\.]+$/', $this->filter_attr_str) ? $this->filter_attr_str : '';
         $filter_attr = empty($this->filter_attr_str) ? '' : explode('.', $this->filter_attr_str);
-
         /* 排序、显示方式以及类型 */
         $default_display_type = C('show_order_type') == '0' ? 'list' : (C('show_order_type') == '1' ? 'grid' : 'album');
         $default_sort_order_method = C('sort_order_method') == '0' ? 'DESC' : 'ASC';
@@ -362,7 +408,7 @@ class CategoryController extends CommonController {
         }
     }
     //获取商品
-    private function category_get_goods($cat_id,$brand, $price_min, $price_max,$size, $page, $sort, $order){
+    private function category_get_goods($cat_id,$brand, $price_min, $price_max,$size, $page, $sort, $order,$keywords){
         $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
         if($cat_id !== 0){
             $where .= "AND  g.cat_id = '".$cat_id."'";
@@ -374,6 +420,9 @@ class CategoryController extends CommonController {
         }
         if(!empty($brand) && $brand !== 0){
             $where .= " AND g.brand_id = '".$brand."' ";
+        }
+        if(!empty($keywords)){
+            $where .= $keywords;
         }
         $page = $page > 1 ? ($page - 1) * 10 : 0;
         /* 获得商品列表 */
