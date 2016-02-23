@@ -33,6 +33,7 @@ class BaseController extends Controller {
         }
         $this->_initialize();
         $this->_common();
+        Migrate::init();
     }
 
     public function __destruct() {
