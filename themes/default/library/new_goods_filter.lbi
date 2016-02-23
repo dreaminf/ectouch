@@ -7,7 +7,7 @@
 		</div>
 	</section>
 	<section class="con-filter-div">
-		<form class="hold-height" method="post" id="form" action="{:url('category/index')}">
+		<form class="hold-height" method="post" id="filter" action="{:url('category/index', array('id'=>$this->_var['id']))}">
 		<input type="hidden" name="id" class="cat" value="{$id}" />
 		<div class="swiper-wrapper">
 			<div class="swiper-slide">
@@ -19,8 +19,8 @@
 							<span id="slider-range-amount"></span>
 						</div>
 					</div>
-					<input type="hidden" name="price_min" value="{$price_min}" />
-					<input type="hidden" name="price_max" value="{$price_max}" />
+                        <input type="hidden" name="price_min" value="{$price_min}" />
+                        <input type="hidden" name="price_max" value="{$price_max}" />
 				</div>
 				<div class="select-two">
 					<a class="select-title padding-all j-menu-select">
@@ -66,7 +66,7 @@
 				</div>
 				<div class="ect-button-more dis-box padding-all">
 					<a class="box-flex btn-reset j-filter-reset" onclick="javascript:clear_filter();">清空选项</a>
-					<button type="button" onclick="but_submit();" class="box-flex btn-submit">确定</button>
+					<button type="button"  onclick="$('#filter').submit()" class="box-flex btn-submit">确定</button>
 				</div>
 			</div>
 		</div>

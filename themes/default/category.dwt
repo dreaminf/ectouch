@@ -46,33 +46,21 @@
 		$("#slider-range").slider({
 			range: true,
 			min: 0,
-			max: 1000,
+			max: {$max_price},
 			step: 100,
 			values: [0, 300],
 			slide: function(event, ui) {
 				$("#slider-range-amount").text(ui.values[0] + " ~ " + ui.values[1]);
+				$("input[name=price_min]").val(ui.values[0]);
+                $("input[name=price_max]").val(ui.values[1]);
 			}
 		});
 		$("#slider-range-amount").text($("#slider-range").slider("values", 0) + " ~ " + $("#slider-range").slider("values", 1));
 	}();
-	
-	function but_submit()
-	{
-		 var url = '{:url('category/async_list', array('id'=>$this->_var['id'], 'type'=>$this->_var['type'], 'brand'=>$this->_var['brand_id'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keywords'=>$this->_var['keywords']))}';
-		 var slider = $("#slider-range-amount").html();
-		 slider = slider.split("~");
-		 var brand = $(".ect-select .active input").val();
-		$.post("{:url('category/async_list')}",{price_min:slider[0],price_max:slider[1],brand_id:brand},function(data){
-			var html = template('j-product', data);
-			$("#j-product-box").html(html);
-			$("body").removeClass("show-filter-div");
-		},'json');
-	}
 </script>
 <script>
 $(function(){
    var url = '{:url('category/async_list', array('id'=>$this->_var['id'], 'type'=>$this->_var['type'], 'brand'=>$this->_var['brand_id'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keywords'=>$this->_var['keywords']))}';
-   var sort = 1;
    $('.product-list').infinite({url: url, template:'j-product'});
 })
 </script>
