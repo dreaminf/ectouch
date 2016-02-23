@@ -12,7 +12,7 @@ defined('IN_ECTOUCH') or die('Deny Access');
 /**
  * 境外支付插件类
  */
-class alipay{
+class aliforex{
 	/**
      * 生成支付代码
      *
@@ -33,30 +33,76 @@ class alipay{
         // 请求业务数据
         $parameter = array(
 			'service' => 'create_forex_trade_wap', // 接口名称
-+            'partner' => trim($payment['alipay_partner']), // 合作者身份ID
-+			"out_trade_no"  => $order['order_sn'] . $order['log_id'],   //商户网站唯一订单号
-+			//"currency"    => $order['currency'],    //币种
-+			//"subject"     => $order['subject'],     //商品名称
-+            "_input_charset" => trim(strtolower($payment['input_charset']))  //编码格式
+            'partner' => trim($payment['aliforex_partner']), // 合作者身份ID
+			"_input_charset" => $charset,  //编码格式
+			"sign_type"  => strtoupper('MD5'),  //签名方式
+			"notify_url" => return_url(basename(__FILE__, '.php'),true),
+			"return_url" => return_url(basename(__FILE__, '.php')),
+			"out_trade_no"  => $order['order_sn'],   //商户网站唯一订单号
+			"currency"    => strtoupper($payment['aliforex_currency']),    //币种
+			"show_url"    =>  $_SERVER['SERVER_NAME'],   //返回商户链接
+			"subject"     => $order['order_sn'] . 'B' . $order['log_id'],     //商品名称
+			"rmb_fee"     =>  $order['order_amount'],   //商品总价RMB
         );
-
         ksort($parameter);
         reset($parameter);
         $param = '';
         $sign = '';
 
         foreach ($parameter as $key => $val) {
-            $param .= "$key=" . urlencode($val) . "&";
-            $sign .= "$key=$val&";
+			if($key == 'sign' || $key == 'sign_type' || $key == '') {
+				$param .= "$key=" . urlencode($val) . "&";
+			}else{
+				$param .= "$key=" . urlencode($val) . "&";
+				$sign .= "$key=$val&";
+			}
         }
 
         $param = substr($param, 0, - 1);
-        $sign = substr($sign, 0, - 1) . $payment['alipay_key'];
+        $sign = substr($sign, 0, - 1) . $payment['aliforex_key'];
 
         /* 生成支付按钮 */
         $button = '<script type="text/javascript" src="'.__PUBLIC__.'/js/ap.js"></script><div><input type="button" class="btn btn-info ect-btn-info ect-colorf ect-bg" onclick="javascript:_AP.pay(\'' . $gateway . $param . '&sign=' . md5($sign) . '\')" value="去付款" class="c-btn3" /></div>';
         return $button;
     }
+	 /**
+     * 手机支付宝同步响应操作
+     * 
+     * @return boolean
+     */
+    public function callback($data)
+    {
+		if (! empty($_GET)) {
+			$out_trade_no = explode('B', $_GET['subject']);
+			$log_id = $out_trade_no[1];
+			$payment = model('Payment')->get_payment($data['code']);
+
+			/* 检查数字签名是否正确 */
+			ksort($_GET);
+			reset($_GET);
+
+			$sign = '';
+			foreach ($_GET as $key => $val) {
+				if ($key != 'sign' && $key != 'sign_type' && $key != 'code') {
+					$sign .= "$key=$val&";
+				}
+			}
+			$sign = substr($sign, 0, - 1) . $payment['alipay_key'];
+			if (md5($sign) != $_GET['sign']) {
+				return false;
+			}
+
+			if ($_GET['result'] == 'success') {
+				/* 改变订单状态 */
+				model('Payment')->order_paid($log_id, 2);
+				return true;
+			} else {
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
 	/**
      * 手机支付宝异步通知
      * 
@@ -70,6 +116,7 @@ class alipay{
             // 生成签名字符串
             $sign = '';
             foreach ($_POST as $key => $val) {
+				if($key == 'sign' || $key == 'sign_type' || $key == '') continue;
                 $sign .= "$key=$val&";
             }
             $sign = substr($sign, 0, - 1) . $payment['alipay_key'];
