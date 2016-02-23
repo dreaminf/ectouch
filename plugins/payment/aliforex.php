@@ -28,59 +28,74 @@ class alipay{
         } else {
             $charset = EC_CHARSET;
         }
-		
-		//合作身份者id，以2088开头的16位纯数字
-		$alipay_config['partner']		= '2088111956092332';
 
-		//安全检验码，以数字和字母组成的32位字符
-		$alipay_config['alipay_key']			= '136nflj7uu24i7v6cheubmpy0uav4tdx';
-
-
-		//↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
-
-
-		//签名方式 不需修改
-		$alipay_config['sign_type']    = strtoupper('MD5');
-
-		//字符编码格式 目前支持 gbk 或 utf-8
-		$alipay_config['input_charset']= strtolower('utf-8');
-
-		//ca证书路径地址，用于curl中ssl校验
-		//请保证cacert.pem文件在当前文件夹目录中
-		$alipay_config['cacert']    = getcwd().'\\cacert.pem';
-
-		//访问模式,根据自己的服务器是否支持ssl访问，若支持请选择https；若不支持请选择http
-		$alipay_config['transport']    = 'http';
-		
         $gateway = 'https://mapi.alipay.com/gateway.do?';
         // 请求业务数据
         $parameter = array(
             'service' => 'create_forex_trade_wap', // 接口名称
-            'partner' => trim($alipay_config['partner']), // 合作者身份ID
-            "_input_charset" => trim(strtolower($alipay_config['input_charset']))
+            'partner' => trim($payment['alipay_partner']), // 合作者身份ID
+			"out_trade_no"  => $order['order_sn'] . $order['log_id'],   //商户网站唯一订单号
+			//"currency"    => $order['currency'],    //币种
+			//"subject"     => $order['subject'],     //商品名称
+            "_input_charset" => trim(strtolower($payment['input_charset']))  //编码格式
         );
-        
+
         ksort($parameter);
         reset($parameter);
         $param = '';
         $sign = '';
-        
+
         foreach ($parameter as $key => $val) {
             $param .= "$key=" . urlencode($val) . "&";
             $sign .= "$key=$val&";
         }
-        
+
         $param = substr($param, 0, - 1);
         $sign = substr($sign, 0, - 1) . $alipay_config['alipay_key'];
-        
-       
+
         /* 生成支付按钮 */
         $button = '<script type="text/javascript" src="'.__PUBLIC__.'/js/ap.js"></script><div><input type="button" class="btn btn-info ect-btn-info ect-colorf ect-bg" onclick="javascript:_AP.pay(\'' . $gateway . $param . '&sign=' . md5($sign) . '\')" value="去付款" class="c-btn3" /></div>';
         return $button;
-		/* 生成支付按钮 */
-        return $html_text;
     }
-	
+
+    /**
+     * 手机支付宝异步通知
+     * 
+     * @return string
+     */
+    public function notify()
+    {
+        if (! empty($_POST)) {
+			$payment = model('Payment')->get_payment($_POST['code']);
+           
+            // 生成签名字符串
+            $sign = '';
+            foreach ($_POST as $key => $val) {
+                $sign .= "$key=$val&";
+            }
+            $sign = substr($sign, 0, - 1) . $payment['alipay_key'];
+            // 验证签名
+            if (md5($sign) != $_POST['sign']) {
+                exit("fail");
+            }
+            // 解析notify_data
+            $data = (array) simplexml_load_string($parameter['notify_data']);
+            // 交易状态
+            $trade_status = $data['trade_status'];
+            // 获取支付订单号log_id
+            $out_trade_no = explode('B', $data['subject']);
+            $log_id = $out_trade_no[1]; // 订单号log_id
+            if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
+                /* 改变订单状态 */
+                model('Payment')->order_paid($log_id, 2);
+                exit("success");
+            } else {
+                exit("fail");
+            }
+        } else {
+            exit("fail");
+        }
+    }
  }
  
  
