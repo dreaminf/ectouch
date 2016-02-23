@@ -6,7 +6,10 @@ region.isAdmin = false;
 
 region.loadRegions = function(parent, type, target)
 {
-  Ajax.call(region.getFileName(), 'type=' + type + '&target=' + target + "&parent=" + parent , region.response, "GET", "JSON");
+  $.get(region.getFileName(), {type:type, target:target, parent:parent}, function(data){
+    region.response(data, '');
+  }, 'json');
+  //Ajax.call(region.getFileName(), 'type=' + type + '&target=' + target + "&parent=" + parent , region.response, "GET", "JSON");
 }
 
 /* *
@@ -68,6 +71,10 @@ region.response = function(result, text_result)
   sel.length = 1;
   sel.selectedIndex = 0;
   sel.style.display = (result.regions.length == 0 && ! region.isAdmin && result.type + 0 == 3) ? "none" : '';
+  if( result.type + 0 == 3){
+      var sel_box = document.getElementById(result.target + '_box');
+      sel_box.style.display = (result.regions.length == 0 && ! region.isAdmin && result.type + 0 == 3) ? "none" : 'block';
+  }
 
   if (document.all)
   {
@@ -95,12 +102,13 @@ region.response = function(result, text_result)
 
 region.getFileName = function()
 {
-  if (region.isAdmin)
+  return "index.php?m=default&c=public&a=region";
+  /*if (region.isAdmin)
   {
-    return "../index.php?c=public&a=region";
+    return "../region.php";
   }
   else
   {
-    return "index.php?c=public&a=region";
-  }
+    return "region.php";
+  }*/
 }

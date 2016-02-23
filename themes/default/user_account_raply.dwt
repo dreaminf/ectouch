@@ -27,7 +27,7 @@
 </form>
 </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
-<script type="text/javascript" src="__PUBLIC__/js/region.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/script/region.js"></script> 
 <script type="text/javascript" src="__PUBLIC__/js/shopping_flow.js"></script> 
 <script type="text/javascript">
 	region.isAdmin = false;
