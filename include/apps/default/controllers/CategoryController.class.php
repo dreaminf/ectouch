@@ -141,7 +141,7 @@ class CategoryController extends CommonController {
         $default_sort_order_type = C('sort_order_type') == '0' ? 'goods_id' : (C('sort_order_type') == '1' ? 'shop_price' : 'last_update');
         $this->type = (isset($_REQUEST['type']) && in_array(trim(strtolower($_REQUEST['type'])), array('best', 'hot', 'new', 'promotion'))) ? trim(strtolower($_REQUEST['type'])) : '';
         $this->sort = (isset($_REQUEST['sort']) && in_array(trim(strtolower($_REQUEST['sort'])), array(
-                'goods_id',
+                'sort_order',
                 'shop_price',
                 'last_update',
                 'click_count',

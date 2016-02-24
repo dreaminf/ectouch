@@ -1,10 +1,10 @@
 <section class="product-sequence dis-box">
-	{if $order == 'ASC' && $sort == 'goods_id'}
-	<a class="box-flex a-change active" href="{:url('index', array('id'=>$this->_var['id'], 'display'=>$display, 'brand'=>$brand_id, 'price_min'=>$price_min, 'price_max'=>$price_max, 'filter_attr'=>$filter_attr, 'page'=>$page, 'sort'=>'goods_id', 'order'=>'DESC', 'keyword'=>$keywords))}#goods_list">综合<i class="iconfont icon-xiajiantou"></i></a>
-	{elseif $order == 'DESC' && $sort == 'goods_id'}
-	<a class="box-flex active" href="{:url('index', array('id'=>$this->_var['id'], 'display'=>$display, 'brand'=>$brand_id, 'price_min'=>$price_min, 'price_max'=>$price_max, 'filter_attr'=>$filter_attr, 'page'=>$page, 'sort'=>'goods_id', 'order'=>'ASC', 'keyword'=>$keywords))}#goods_list">综合<i class="iconfont icon-xiajiantou"></i></a>
+	{if $order == 'ASC' && $sort == 'sort_order'}
+	<a class="box-flex a-change active" href="{:url('index', array('id'=>$this->_var['id'], 'display'=>$display, 'brand'=>$brand_id, 'price_min'=>$price_min, 'price_max'=>$price_max, 'filter_attr'=>$filter_attr, 'page'=>$page, 'sort'=>'sort_order', 'order'=>'DESC', 'keyword'=>$keywords))}#goods_list">综合<i class="iconfont icon-xiajiantou"></i></a>
+	{elseif $order == 'DESC' && $sort == 'sort_order'}
+	<a class="box-flex active" href="{:url('index', array('id'=>$this->_var['id'], 'display'=>$display, 'brand'=>$brand_id, 'price_min'=>$price_min, 'price_max'=>$price_max, 'filter_attr'=>$filter_attr, 'page'=>$page, 'sort'=>'sort_order', 'order'=>'ASC', 'keyword'=>$keywords))}#goods_list">综合<i class="iconfont icon-xiajiantou"></i></a>
 	{else}
-	<a class="box-flex" href="{:url('index', array('id'=>$this->_var['id'], 'display'=>$display, 'brand'=>$brand_id, 'price_min'=>$price_min, 'price_max'=>$price_max, 'filter_attr'=>$filter_attr, 'page'=>$page, 'sort'=>'goods_id', 'order'=>'DESC', 'keyword'=>$keywords))}#goods_list">综合<i class="iconfont icon-xiajiantou"></i></a>
+	<a class="box-flex" href="{:url('index', array('id'=>$this->_var['id'], 'display'=>$display, 'brand'=>$brand_id, 'price_min'=>$price_min, 'price_max'=>$price_max, 'filter_attr'=>$filter_attr, 'page'=>$page, 'sort'=>'sort_order', 'order'=>'DESC', 'keyword'=>$keywords))}#goods_list">综合<i class="iconfont icon-xiajiantou"></i></a>
 	{/if}
 	<a class="box-flex {if $sort == 'last_update'}active{/if}" href="{:url('index', array('id'=>$this->_var['id'], 'display'=>$display, 'brand'=>$brand_id, 'price_min'=>$price_min, 'price_max'=>$price_max, 'filter_attr'=>$filter_attr, 'page'=>$page, 'sort'=>'last_update', 'order'=>'DESC', 'keyword'=>$keywords))}#goods_list">新品</a>
 	<a class="box-flex {if $sort == 'sales_volume'}active{/if}" href="{:url('index', array('id'=>$this->_var['id'], 'display'=>$display, 'brand'=>$brand_id, 'price_min'=>$price_min, 'price_max'=>$price_max, 'filter_attr'=>$filter_attr, 'page'=>$page, 'sort'=>'sales_volume', 'order'=>'DESC', 'keyword'=>$keywords))}#goods_list">销量</a>
