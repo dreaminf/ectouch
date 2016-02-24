@@ -1761,34 +1761,6 @@ function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods',
 }
 
 /**
- * 获取touch新增图片地址
- * @param type $img
- * @return type
- */
-function get_banner_path($img) {
-    if(IS_ECSHOP){
-        $img = empty($img) ? C('no_picture') : $img;
-    }else{
-        $img = empty($img) ? C('no_picture') : __ROOT__ . '/data/attached/brandbanner/' .$img;
-    }
-    return $img;
-}
-
-/**
- * 获取品牌logo图片
- * @param type $img
- * @return type
- */
-function get_brand_logo($img) {
-    if(IS_ECSHOP){
-        $img = empty($img) ? C('no_picture') : '../../data/brandlogo/' .$img;
-    }else{
-        $img = empty($img) ? C('no_picture') : __ROOT__ . '/data/attached/brandlogo/' .$img;
-    }
-    return $img;
-}
-
-/**
  * 调用使用UCenter插件时的函数
  *
  * @param   string  $func

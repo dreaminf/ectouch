@@ -19,9 +19,11 @@ function is_wechat_browser()
 /**
  * 图片兼容地址
  */
-function get_data_url($imgage = '', $prefix = ''){
-    $imgPrefix = (strpos($imgage, 'http://') === false && strpos($imgage, 'https://') === false && IS_ECSHOP) ? '../data/'. $prefix .'/' : __URL__ .'/data/attached/'. $prefix .'/';
-    return $imgPrefix . $imgage;
+function get_data_url($imgage = '', $prefix = '')
+{
+    $prefix = IS_ECSHOP ? $prefix : 'attached/' . $prefix;
+    $imgPrefix = 'data/' . $prefix . '/';
+    return get_image_path(0, $imgPrefix . $imgage);
 }
 
 /**
