@@ -16,6 +16,8 @@ class Migrate
     public static $version = 0;
     public static $migrate_path = '';
     public static $migrate_files = array();
+    private static $conn = '';
+    private static $link = '';
 
 
     static public function setPath() {
@@ -33,7 +35,9 @@ class Migrate
         }
         self::update_db();
     }
-
+/*
+ * 获取到migrate文件夹中的所有文件
+ */
     // Find all the migration files in the directory and return the sorted.
     public static function get_migrations()
     {
@@ -45,10 +49,12 @@ class Migrate
         }
         asort(self::$migrate_files);
     }
-
+/*
+ * 根据文件名
+ */
     public static function get_version_from_file($file)
     {
-        return intval(substr($file, strlen(MIGRATE_FILE_PREFIX)));
+        return floatval(substr($file, strlen(MIGRATE_FILE_PREFIX)));
     }
 
     public static function update_db()
@@ -83,11 +89,26 @@ class Migrate
                 continue;
             }
 
-            echo "Running: $file\n";
+            self::connect();
+            $fp = @fopen(self::$migrate_path . $file, 'r');
+            $str = null;
+            $num = 1;
             self::query('BEGIN');
-            include(self::$migrate_path . $file);
-            self::query('COMMIT');
-            echo "Done.\n";
+            if($fp){
+                while(!feof($fp)){
+                    if($str = fgets($fp)){
+                        self::query($str);
+                    }else{
+                        $num = 0;
+                    }
+                }
+                fclose($fp);
+            }
+            if($num == 0){
+                self::query('ROLLBACK');
+            }elseif ($num == 1) {
+                self::query('COMMIT');
+            }
 
             $version = $file_version;
 
@@ -101,10 +122,15 @@ class Migrate
             }
         }
     }
-
     public static function query($str)
     {
-        echo $str;
+        mysql_query($str,self::$conn) or die('Error:fail to query this sql!!!'.mysql_error());
     }
-
+    /*
+     * 连接数据库方法
+     */
+    public static function connect(){
+        self::$conn = mysql_connect(C('DB_HOST'),C('DB_USER'),C('DB_PWD')) or die('Error:cannot connect to database!!!'.mysql_error());
+        self::$link = mysql_select_db(C('DB_NAME'),self::$conn) or die('Error:fail to select!!!'.mysql_error());
+    }
 }
