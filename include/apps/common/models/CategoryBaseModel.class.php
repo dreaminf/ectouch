@@ -106,8 +106,9 @@ class CategoryBaseModel extends BaseModel {
         $children = get_children($cat_id);
         $sql = 'SELECT c.cat_id, c.cat_name, c.parent_id, c.is_show, g.goods_thumb as cat_img ' .
                     'FROM ' . $this->pre . 'category as c ' .
-                    'left join ' . $this->pre . 'goods as g on g.cat_id = c.cat_id AND g.is_best = 1 AND g.is_on_sale = 1 ' .
+                    'left join ' . $this->pre . 'goods as g on g.cat_id = c.cat_id ' .
                     "WHERE $children AND c.is_show = 1 ORDER BY g.sort_order ASC, g.goods_id DESC";// GROUP BY c.cat_id ORDER BY c.sort_order ASC, c.cat_id ASC";
+//        exit($sql);
         $res = $this->row($sql);
         return $res['cat_img'];
     }
