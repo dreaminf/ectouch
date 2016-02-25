@@ -48,6 +48,7 @@ class CategoryController extends CommonController
         $this->parameter();
         $this->assign('id', $this->cat_id);
         $this->assign('show_marketprice', C('show_marketprice'));
+        $this->async_list();
         $this->display('category.dwt');
 
     }
@@ -57,10 +58,10 @@ class CategoryController extends CommonController
      */
     public function async_list()
     {
-        $this->parameter();
         if (IS_AJAX) {
             $size = I('size');
             $page = I('page');
+            $this->parameter();
             $goodslist = $this->category_get_goods($this->cat_id, $this->brand, $this->price_min, $this->price_max, $size, $page, $this->sort, $this->order, $this->keywords);
             $count = $this->get_goods_count($this->cat_id, $this->brand, $this->price_min, $this->price_max);
             $count = ceil($count / $size);
@@ -134,7 +135,7 @@ class CategoryController extends CommonController
         $this->assign('show_asynclist', C('show_asynclist'));
         $this->keywords();
         $this->cat_id = I('request.id', 0, 'intval');
-        $this->brand = I('brand', 0, 'intval');
+        $this->brand = I('brand');
         $this->price_max = trim(I('price_max'));
         $this->price_min = trim(I('price_min'));
         $filter_attr = I('request.filter_attr');
@@ -169,6 +170,7 @@ class CategoryController extends CommonController
             ))) ? trim($_REQUEST['display']) : (isset($_COOKIE['ECS']['display']) ? $_COOKIE['ECS']['display'] : $default_display_type);
         $this->assign('display', $display);
         $this->assign('sort', $this->sort);
+        $this->assign('type', $this->type);
         $this->assign('order', $this->order);
         $this->assign('brand', $this->brand);
         $this->assign('price_min', $this->price_min);
@@ -283,10 +285,10 @@ class CategoryController extends CommonController
             $price_grade[0]['price_range'] = L('all_attribute');
             $price_grade[0]['url'] = url('category/index', array(
                 'cid' => $this->cat_id,
-                'bid' => $brand,
-                'price_min' => 0,
-                'price_max' => 0,
-                'filter_attr' => $filter_attr
+                'bid' => $this->brand,
+                'price_min' => $this->price_min,
+                'price_max' => $this->price_max,
+                'filter_attr' => $this->filter_attr
             ));
             $price_grade[0]['selected'] = empty($price_max) ? 1 : 0;
             $this->assign('price_grade', $price_grade);
@@ -310,13 +312,13 @@ class CategoryController extends CommonController
             $brands[$temp_key]['url'] = url('category/index', array(
                 'id' => $this->cat_id,
                 'bid' => $val['brand_id'],
-                'price_min' => $price_min,
-                'price_max' => $price_max,
-                'filter_attr' => $filter_attr
+                'price_min' => $this->price_min,
+                'price_max' => $this->price_max,
+                'filter_attr' => $this->filter_attr
             ));
 
             /* 判断品牌是否被选中 */
-            if ($brand == $val['brand_id']) {             // 修正当前品牌的ID
+            if ($this->brand == $val['brand_id']) {             // 修正当前品牌的ID
                 $brands[$temp_key]['selected'] = 1;
             } else {
                 $brands[$temp_key]['selected'] = 0;

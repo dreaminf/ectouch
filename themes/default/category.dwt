@@ -61,7 +61,7 @@
 <script>
 $(function(){
    var url = '{:url('category/async_list', array('id'=>$this->_var['id'], 'type'=>$this->_var['type'], 'brand'=>$this->_var['brand'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keywords'=>$this->_var['keywords']))}';
-   $('.product-list').infinite({url: url, template:'j-product'});
+   $('.product-list').infinite({url: url,params:"brand={$brand}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&keywords={$keywords}&type={$type}", template:'j-product'});
 })
 </script>
 </body>
