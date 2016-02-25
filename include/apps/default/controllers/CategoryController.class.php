@@ -159,6 +159,7 @@ class CategoryController extends CommonController {
         $this->assign('display', $display);
         $this->assign('sort',$this->sort);
         $this->assign('order',$this->order);
+
         $this->assign('brand',$this->brand);
         $this->assign('price_min',$this->price_min);
         $this->assign('filter_attr', $this->filter_attr_str);
@@ -182,7 +183,6 @@ class CategoryController extends CommonController {
         if ($cat['grade'] == 0 && $cat['parent_id'] != 0) {
             $cat['grade'] = model('Category')->get_parent_grade($this->cat_id); // 如果当前分类级别为空，取最近的上级分类
         }
-        $cat['grade'] = 2;
         if ($cat['grade'] > 1) {
             /* 需要价格分级 */
 
@@ -292,7 +292,6 @@ class CategoryController extends CommonController {
             ), array_keys(cat_list($this->cat_id, 0, false))))) . ") AND b.is_show = 1 " .
             " AND g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 " .
             "GROUP BY b.brand_id HAVING goods_num > 0 ORDER BY b.sort_order, b.brand_id ASC";
-
         $brands = $this->model->query($sql);
         foreach ($brands as $key => $val) {
             $temp_key = $key + 1;
