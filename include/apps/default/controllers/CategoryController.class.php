@@ -139,8 +139,6 @@ class CategoryController extends CommonController
         $this->price_max = trim(I('price_max'));
         $this->price_min = trim(I('price_min'));
         $filter_attr = I('request.filter_attr');
-        $this->size = intval($page_size) > 0 ? intval($page_size) : 10;
-        $this->page = I('request.page') > 0 ? intval(I('request.page')) : 1;
         $this->type = I('request.type');
         // $this->filter_attr_str = $filter_attr > 0 ? $filter_attr : '0';
         $this->filter_attr_str = !empty($filter_attr) ? $filter_attr : 0; //by hnllyrp
@@ -150,7 +148,7 @@ class CategoryController extends CommonController
         /* 排序、显示方式以及类型 */
         $default_display_type = C('show_order_type') == '0' ? 'list' : (C('show_order_type') == '1' ? 'grid' : 'album');
         $default_sort_order_method = C('sort_order_method') == '0' ? 'DESC' : 'ASC';
-        $default_sort_order_type = C('sort_order_type') == '0' ? 'goods_id' : (C('sort_order_type') == '1' ? 'shop_price' : 'last_update');
+        $default_sort_order_type = C('sort_order_type') == '0' ? 'sort_order' : (C('sort_order_type') == '1' ? 'shop_price' : 'last_update');
         $this->type = (isset($_REQUEST['type']) && in_array(trim(strtolower($_REQUEST['type'])), array('best', 'hot', 'new', 'promotion'))) ? trim(strtolower($_REQUEST['type'])) : '';
         $this->sort = (isset($_REQUEST['sort']) && in_array(trim(strtolower($_REQUEST['sort'])), array(
                 'sort_order',
