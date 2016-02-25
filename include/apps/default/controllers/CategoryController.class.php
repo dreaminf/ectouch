@@ -134,7 +134,7 @@ class CategoryController extends CommonController
         $this->assign('show_asynclist', C('show_asynclist'));
         $this->keywords();
         $this->cat_id = I('request.id', 0, 'intval');
-        $this->brand = I('request.brand', 0, 'intval');
+        $this->brand = I('brand', 0, 'intval');
         $this->price_max = trim(I('request.price_max'));
         $this->price_min = trim(I('request.price_min'));
         $filter_attr = I('request.filter_attr');
@@ -170,7 +170,6 @@ class CategoryController extends CommonController
         $this->assign('display', $display);
         $this->assign('sort', $this->sort);
         $this->assign('order', $this->order);
-
         $this->assign('brand', $this->brand);
         $this->assign('price_min', $this->price_min);
         $this->assign('filter_attr', $this->filter_attr_str);
