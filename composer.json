@@ -1,0 +1,19 @@
+{
+    "name": "ecmoban/ectouch",
+    "description": "the mobile mall.",
+    "keywords": ["ectouch","ecshop","ecmall","wemall"],
+    "homepage": "http://ectouch.cn/",
+    "type": "project",
+    "require": {
+        "php": ">=5.3.0",
+        "aliyuncs/oss-sdk-php": "^2.0"
+    },
+    "license": "Apache2",
+    "authors": [
+        {
+            "name": "carson",
+            "email": "wanganlin@ecmoban.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
