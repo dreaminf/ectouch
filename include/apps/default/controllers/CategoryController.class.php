@@ -48,7 +48,6 @@ class CategoryController extends CommonController
         $this->parameter();
         $this->assign('id', $this->cat_id);
         $this->assign('show_marketprice', C('show_marketprice'));
-        $this->async_list();
         $this->display('category.dwt');
 
     }
