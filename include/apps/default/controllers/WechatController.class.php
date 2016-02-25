@@ -701,7 +701,7 @@ class WechatController extends CommonController
                     if(isset($_GET['code']) && $_GET['state'] == 'repeat'){
                         $token = $obj->getOauthAccessToken();
                         $_SESSION['openid'] = $token['openid'];
-                        setcookie('openid', encrypt($token['openid']), gmtime() + 86400 * 7);
+                        setcookie('openid', $token['openid'], gmtime() + 86400 * 7);
                     }
                     // 生成请求链接
                     if (! empty($wxinfo['oauth_redirecturi'])) {
