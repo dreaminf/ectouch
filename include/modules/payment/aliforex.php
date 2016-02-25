@@ -31,7 +31,7 @@ if (isset($set_modules) && $set_modules == TRUE){
         array('name' => 'aliforex_account',           'type' => 'text',   'value' => ''),
         array('name' => 'aliforex_key',               'type' => 'text',   'value' => ''),
         array('name' => 'aliforex_partner',           'type' => 'text',   'value' => ''),
-		array('name' => 'aliforex_currency',          'type' => 'text',   'value' => ''),
+		array('name' => 'aliforex_currency',          'type' => 'select',  'value' => ''),
         // array('name' => 'alipay_pay_method',        'type' => 'select', 'value' => '')
     );
     return;
