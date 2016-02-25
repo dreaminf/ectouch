@@ -7,7 +7,7 @@
 		</div>
 	</section>
 	<section class="con-filter-div">
-		<form class="hold-height" method="post" id="filter" action="{:url('index', array('id'=>$this->_var['id'], 'display'=>$this->_var['display'],'brand'=>$this->_var['brand'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keyword'=>$this->_var['keywords']))}#goods_list"">
+		<form class="hold-height" method="post" id="filter" action="{:url('index', array('id'=>$this->_var['id'], 'display'=>$this->_var['display'], 'brand'=>$this->_var['brand'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keyword'=>$this->_var['keywords']))}#goods_list"">
 		<input type="hidden" name="id" class="cat" value="{$id}" />
 		<div class="swiper-wrapper">
 			<div class="swiper-slide">
@@ -38,7 +38,7 @@
 						<li class="ect-select" id="brand-select">
 							<label class="ts-1">{$brand.brand_name|escape:html}
 								<i class="fr iconfont icon-gou ts-1"></i>
-								<input type="hidden" value="{$brand.brand_id}" />
+								<input name="brand" type="hidden" value="{$brand.brand_id}" />
 							</label>
 						</li>
 						<!--{/foreach}-->
@@ -64,7 +64,6 @@
 					</ul>
 					<!--{/foreach}-->
 				</div>
-				<input type="hidden" class="brand_list_id" name="brand" value="" />
 				<div class="ect-button-more dis-box padding-all">
 					<a class="box-flex btn-reset j-filter-reset" onclick="javascript:clear_filter();">清空选项</a>
 					<button type="button"  onclick="formSubmit()" class="box-flex btn-submit">确定</button>
