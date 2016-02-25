@@ -167,9 +167,7 @@ class IndexModel extends CommonModel {
                     'cat_name' => $cat_recommend_data['cat_name'],
                     'url' => url('category/index', array('id' => $cat_recommend_data['cat_id'])), 
                     'child_id' => model('Category')->get_parent_id_tree($cat_recommend_data['cat_id']), 
-                    'goods_list' => model('Category')->assign_cat_goods($cat_recommend_data['cat_id'], $goods_num),
-                    'cat_image' => get_banner_path(model('Category')->get_cat_image($cat_recommend_data['cat_id'])),
-					
+                    'goods_list' => model('Category')->assign_cat_goods($cat_recommend_data['cat_id'], $goods_num)					
                 );
             }
             return $cat_rec;

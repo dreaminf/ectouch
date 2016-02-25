@@ -221,7 +221,7 @@ class weixin {
             model('Users')->update_user_info();
         }
         $_SESSION['openid'] = $userinfo['openid'];
-        setcookie('openid', encrypt($userinfo['openid']), gmtime() + 86400 * 7);
+        setcookie('openid', $userinfo['openid'], gmtime() + 86400 * 7);
     }
 
 }
