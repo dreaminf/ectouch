@@ -135,8 +135,8 @@ class CategoryController extends CommonController
         $this->keywords();
         $this->cat_id = I('request.id', 0, 'intval');
         $this->brand = I('brand', 0, 'intval');
-        $this->price_max = trim(I('request.price_max'));
-        $this->price_min = trim(I('request.price_min'));
+        $this->price_max = trim(I('price_max'));
+        $this->price_min = trim(I('price_min'));
         $filter_attr = I('request.filter_attr');
         $this->size = intval($page_size) > 0 ? intval($page_size) : 10;
         $this->page = I('request.page') > 0 ? intval(I('request.page')) : 1;
