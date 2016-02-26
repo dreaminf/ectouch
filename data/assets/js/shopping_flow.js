@@ -91,6 +91,12 @@ function orderShippingSelectedResponse(result)
  */
 function selectPayment(obj)
 {
+	/*var iPaymentId = document.getElementById("ECS_SURPLUS");
+	alert(obj.value);
+	if(obj.value !== 1){
+		iPaymentId.readOnly="readOnly";
+	}*/
+
   if (selectedPayment == obj)
   {
     return;
@@ -272,20 +278,24 @@ function orderSelectedResponse(result)
     alert(result.error);
     location.href = './';
   }
-
+	
   try
   {
     var layer = document.getElementById("ECS_ORDERTOTAL");
+	var iBalance = document.getElementById("ECS_SURPLUS");
 
     layer.innerHTML = (typeof result == "object") ? result.content : result;
 
     if (result.payment != undefined)
     {
       var surplusObj = document.forms['theForm'].elements['surplus'];
-      if (surplusObj != undefined)
+      if (result.pay_code != "balance")
       {
-        surplusObj.disabled = result.pay_code == 'balance';
+        surplusObj.disabled = result.pay_code != 'balance';
       }
+	  if(result.pay_code == "balance"){
+		  iBalance.disabled = "";
+	  }
     }
   }
   catch (ex) { }
