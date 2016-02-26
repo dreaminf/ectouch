@@ -1,4 +1,5 @@
 <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem --> 
+<link rel="stylesheet" href="__TPL__/css/member.css">
 <script type="text/javascript">
 	  {foreach from=$lang.profile_js item=item key=key}
 		var {$key} = "{$item}";
@@ -54,10 +55,10 @@
 <section class="flow-consignee ect-bg-colorf">
   <ul>
    <a href="{:url('user/edit_password')}">
-    <li>修改密码</li>
+    <li style="border-bottom:1px solid #e3e3e3;">修改密码<i class="iconfont" style="float:right;font-size:1.5rem;">&#xe60c;</i></li>
    </a>
    <a href="{:url('user/address_list')}">
-    <li>收货地址</li>
+    <li>收货地址<i class="iconfont" style="float:right;line-height:2rem;font-size:1.5rem;">&#xe60c;</i></li>
    </a>
   </ul>
 </section>
