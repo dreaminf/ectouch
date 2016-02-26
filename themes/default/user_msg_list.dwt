@@ -1,5 +1,9 @@
 <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
+<style>
+.user-account-message{font-size:2.5rem;margin-left:30%;margin-top:30%;}
 
+
+</style>
 {if $message_list}
     <div class="user-account-detail" >
       <ul class="ect-bg-colorf" >
@@ -24,6 +28,9 @@
 
 {else}
 <div class="user-account-detail" >
+	<div class="user-account-message">
+		目前还没有消息
+	</div>
   <ul class="ect-bg-colorf" id="J_ItemList">
     <li class="single_item"></li>
     <a href="javascript:;" style="text-align:center" class="get_more"></a>
