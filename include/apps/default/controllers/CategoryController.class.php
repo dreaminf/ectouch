@@ -135,6 +135,9 @@ class CategoryController extends CommonController
         $this->keywords();
         $this->cat_id = I('request.id', 0, 'intval');
         $this->brand = I('brand');
+        if($this->brand == ""){
+            $this->brand = I('request.brand');
+        }
         $this->price_max = trim(I('price_max'));
         $this->price_min = trim(I('price_min'));
         $filter_attr = I('request.filter_attr');
@@ -290,7 +293,6 @@ class CategoryController extends CommonController
             $price_grade[0]['selected'] = empty($price_max) ? 1 : 0;
             $this->assign('price_grade', $price_grade);
         }
-
         /* 品牌筛选 */
         $sql = "SELECT b.brand_id, b.brand_name, COUNT(*) AS goods_num " .
             "FROM " . $this->model->pre . 'brand' . " AS b, " . $this->model->pre . 'goods' .
