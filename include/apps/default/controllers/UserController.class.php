@@ -1754,21 +1754,6 @@ class UserController extends CommonController {
             $password = I('post.password');
             $this->back_act = urldecode(I('post.back_act'));
 
-            $captcha = intval(C('captcha'));
-            if (($captcha & CAPTCHA_LOGIN) && (!($captcha & CAPTCHA_LOGIN_FAIL) || (($captcha & CAPTCHA_LOGIN_FAIL) && $_SESSION['login_fail'] > 2))) {
-                if (empty($_POST['captcha'])) {
-                    show_message(L('invalid_captcha'), L('relogin_lnk'), url('login', array(
-                        'referer' => urlencode($this->back_act)
-                            )), 'error');
-                }
-                // 检查验证码
-                if ($_SESSION['ectouch_verify'] !== strtoupper($_POST['captcha'])) {
-                    show_message(L('invalid_captcha'), L('relogin_lnk'), url('login', array(
-                        'referer' => urlencode($this->back_act)
-                            )), 'error');
-                }
-            }
-
             // 用户名是邮箱格式
             if (is_email($username)) {
                 $where['email'] = $username;
@@ -1819,11 +1804,7 @@ class UserController extends CommonController {
             $this->back_act = strpos($GLOBALS['_SERVER']['HTTP_REFERER'], 'c=user') ? url('index/index') : $GLOBALS['_SERVER']['HTTP_REFERER'];
             $this->back_act = urlencode($this->back_act);
         }
-		// 验证码相关设置
-        if (intval(C('captcha')) & CAPTCHA_REGISTER) {
-            $this->assign('enabled_captcha', 1);
-            $this->assign('rand', mt_rand());
-        }
+
         $this->assign('back_act', $this->back_act);
         $this->assign('title', '绑定');
         $this->display('user_bind.dwt');
