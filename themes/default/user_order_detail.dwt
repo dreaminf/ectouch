@@ -2,7 +2,7 @@
 <section class="user-order-detail" style="border-top:none;">
   <div class="user-order">
     <p>{$lang.order_status}：<span>{$order.order_status} {$order.pay_status} {$order.shipping_status}</span></p>
-    <p>{$lang.order_number}：<span>{$order.order_sn}</span></p>
+    <p>{$lang.order_number}：<span>{$order.order_sn}</span> <a href="{:url('user/msg_list', array('order_id'=>$this->_var['order']['order_id']))}" type="button" class="btn btn-info" style="font-size:12px;padding:3px;">[{$lang.business_message}]</a></p>
     <p>{$lang.order_money}：<span>{$order.formated_total_fee}</span></p>
     <p>{$lang.order_addtime}：<span>{$order.formated_add_time}</span></p>
     <!-- {if $order.invoice_no}--><p>{$lang.consignment}：<span>{$order.invoice_no}</span></p>{/if}

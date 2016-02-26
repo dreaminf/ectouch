@@ -1122,7 +1122,7 @@ class UserController extends CommonController {
             if ($order_id) {
                 $sql = "SELECT COUNT(*) as count FROM " . $this->model->pre .
                         "feedback WHERE parent_id = 0 AND order_id = '$order_id' AND user_id = '$this->user_id'";
-                $order_info = $this->row("SELECT * FROM " . $this->model->pre . "order_info WHERE order_id = '$order_id' AND user_id = '$this->user_id'");
+                $order_info = $this->model->getRow("SELECT * FROM " . $this->model->pre . "order_info WHERE order_id = '$order_id' AND user_id = '$this->user_id'");
                 $order_info['url'] = url('user/order_detail', array('order_id' => $order_id));
             } else {
                 $sql = "SELECT COUNT(*) as count FROM " . $this->model->pre .
@@ -1135,6 +1135,7 @@ class UserController extends CommonController {
             // 获取信息
             $message_list = model('ClipsBase')->get_message_list($this->user_id, $_SESSION['user_name'], $offset_page[1], $offset_page[0], $order_id);
             $this->assign('pager', $this->pageShow($count['count']));
+            $this->assign('order_id', $order_id);
             $this->assign('message_list', $message_list);
         }
         $this->assign('title', L('user_service_list'));
