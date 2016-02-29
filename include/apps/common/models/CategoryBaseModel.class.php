@@ -103,14 +103,15 @@ class CategoryBaseModel extends BaseModel {
      * @return [type]
      */
     function get_cat_goods_img($cat_id){
-        $children = get_children($cat_id);
-        $sql = 'SELECT c.cat_id, c.cat_name, c.parent_id, c.is_show, g.goods_thumb as cat_img ' .
-                    'FROM ' . $this->pre . 'category as c ' .
-                    'left join ' . $this->pre . 'goods as g on g.cat_id = c.cat_id ' .
-                    "WHERE $children AND c.is_show = 1 ORDER BY g.sort_order ASC, g.goods_id DESC";// GROUP BY c.cat_id ORDER BY c.sort_order ASC, c.cat_id ASC";
-//        exit($sql);
-        $res = $this->row($sql);
-        return $res['cat_img'];
+	$where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
+        if ($cat_id !== 0) {
+            $where .= "AND(g.cat_id = $cat_id OR " .model('Goods')->get_extension_goods($cat_id) .")";
+        }
+        /* 获得商品列表 */
+        $sql = 'SELECT g.goods_id,  g.goods_thumb as cat_img , g.goods_img ' . 'FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' .
+            ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id " . "WHERE $where GROUP BY g.goods_id ORDER BY g.sort_order DESC";
+        $res = $this->model->query($sql);
+        return $res[0]['cat_img'];
     }
     /**
      * 获取一级分类信息
