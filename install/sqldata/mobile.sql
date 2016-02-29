@@ -2,28 +2,28 @@
 -- 后台权限控制
 --
 
-INSERT INTO `ecs_admin_action` VALUES ('500', '0', 'ext_fenxiao', '');
-INSERT INTO `ecs_admin_action` VALUES ('501', '0', 'ext_wechat', '');
-INSERT INTO `ecs_admin_action` VALUES ('138', '500', 'drp_config', '');
-INSERT INTO `ecs_admin_action` VALUES ('139', '500', 'drp_audit', '');
-INSERT INTO `ecs_admin_action` VALUES ('140', '500', 'drp_users', '');
-INSERT INTO `ecs_admin_action` VALUES ('141', '500', 'drp_yongjin', '');
-INSERT INTO `ecs_admin_action` VALUES ('142', '500', 'drp_order_list', '');
-INSERT INTO `ecs_admin_action` VALUES ('143', '500', 'drp_affiliate', '');
-INSERT INTO `ecs_admin_action` VALUES ('144', '500', 'drp_affiliate_ck', '');
-INSERT INTO `ecs_admin_action` VALUES ('145', '500', 'drp_ranking', '');
-INSERT INTO `ecs_admin_action` VALUES ('146', '500', 'drp_log', '');
-INSERT INTO `ecs_admin_action` VALUES ('147', '501', 'wechat_config', '');
-INSERT INTO `ecs_admin_action` VALUES ('148', '501', 'wechat_masssend', '');
-INSERT INTO `ecs_admin_action` VALUES ('149', '501', 'wechat_autoreply', '');
-INSERT INTO `ecs_admin_action` VALUES ('150', '501', 'wechat_selfmenu', '');
-INSERT INTO `ecs_admin_action` VALUES ('151', '501', 'wechat_tmplmsg', '');
-INSERT INTO `ecs_admin_action` VALUES ('152', '501', 'wechat_contactmanage', '');
-INSERT INTO `ecs_admin_action` VALUES ('153', '501', 'wechat_appmsg', '');
-INSERT INTO `ecs_admin_action` VALUES ('154', '501', 'wechat_qrcode', '');
-INSERT INTO `ecs_admin_action` VALUES ('155', '501', 'wechat_extends', '');
-INSERT INTO `ecs_admin_action` VALUES ('156', '501', 'wechat_remind', '');
-INSERT INTO `ecs_admin_action` VALUES ('157', '501', 'wechat_customer', '');
+INSERT INTO `ecs_admin_action` VALUES ('200', '0', 'ext_fenxiao', '');
+INSERT INTO `ecs_admin_action` VALUES ('201', '0', 'ext_wechat', '');
+INSERT INTO `ecs_admin_action` VALUES ('138', '200', 'drp_config', '');
+INSERT INTO `ecs_admin_action` VALUES ('139', '200', 'drp_audit', '');
+INSERT INTO `ecs_admin_action` VALUES ('140', '200', 'drp_users', '');
+INSERT INTO `ecs_admin_action` VALUES ('141', '200', 'drp_yongjin', '');
+INSERT INTO `ecs_admin_action` VALUES ('142', '200', 'drp_order_list', '');
+INSERT INTO `ecs_admin_action` VALUES ('143', '200', 'drp_affiliate', '');
+INSERT INTO `ecs_admin_action` VALUES ('144', '200', 'drp_affiliate_ck', '');
+INSERT INTO `ecs_admin_action` VALUES ('145', '200', 'drp_ranking', '');
+INSERT INTO `ecs_admin_action` VALUES ('146', '200', 'drp_log', '');
+INSERT INTO `ecs_admin_action` VALUES ('147', '201', 'wechat_config', '');
+INSERT INTO `ecs_admin_action` VALUES ('148', '201', 'wechat_masssend', '');
+INSERT INTO `ecs_admin_action` VALUES ('149', '201', 'wechat_autoreply', '');
+INSERT INTO `ecs_admin_action` VALUES ('150', '201', 'wechat_selfmenu', '');
+INSERT INTO `ecs_admin_action` VALUES ('151', '201', 'wechat_tmplmsg', '');
+INSERT INTO `ecs_admin_action` VALUES ('152', '201', 'wechat_contactmanage', '');
+INSERT INTO `ecs_admin_action` VALUES ('153', '201', 'wechat_appmsg', '');
+INSERT INTO `ecs_admin_action` VALUES ('154', '201', 'wechat_qrcode', '');
+INSERT INTO `ecs_admin_action` VALUES ('155', '201', 'wechat_extends', '');
+INSERT INTO `ecs_admin_action` VALUES ('156', '201', 'wechat_remind', '');
+INSERT INTO `ecs_admin_action` VALUES ('157', '201', 'wechat_customer', '');
 
 --
 -- 表的结构 `ecs_touch_activity`
