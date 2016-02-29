@@ -5,7 +5,7 @@
     <nav class="ect-nav ect-nav-list" style="display:none;"> <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --> </nav>
   </div>
   <div  style="text-align:center; margin-top:2em; font-size:1.3em;">
-<p>{$message.content}</p>
+<p style="padding:1rem">{$message.content}</p>
 <!-- {if $message.url_info} -->
 <div> 
   <!--{foreach from=$message.url_info key=info item=url}-->
