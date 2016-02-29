@@ -161,7 +161,8 @@ elseif ($_REQUEST['act'] == 'post')
                 }
                 elseif ($code == 'watermark')
                 {
-                    $ext = array_pop(explode('.', $file['name']));
+                    $ext_arr = explode('.', $file['name']);
+                    $ext = array_pop($ext_arr);
                     $file_name = $file_var_list[$code]['store_dir'] . 'watermark.' . $ext;
                     if (file_exists($file_var_list[$code]['value']))
                     {
@@ -170,7 +171,8 @@ elseif ($_REQUEST['act'] == 'post')
                 }
                 elseif($code == 'wap_logo')
                 {
-                    $ext = array_pop(explode('.', $file['name']));
+                    $ext_arr = explode('.', $file['name']);
+                    $ext = array_pop($ext_arr);
                     $file_name = $file_var_list[$code]['store_dir'] . 'wap_logo.' . $ext;
                     if (file_exists($file_var_list[$code]['value']))
                     {
