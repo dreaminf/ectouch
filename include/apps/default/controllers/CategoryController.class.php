@@ -423,7 +423,7 @@ class CategoryController extends CommonController
     {
         $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
         if ($cat_id !== 0) {
-            $where .= "AND(go.cat_id = $cat_id OR " .model('Goods')->get_extension_goods($cat_id) .")";
+            $where .= "AND(g.cat_id = $cat_id OR " .model('Goods')->get_extension_goods($cat_id) .")";
         }
         if (isset($price_min) && !empty($price_max)) {
             $where .= " AND g.shop_price >= '" . $price_min . "' AND g.shop_price <= '" . $price_max . "'";
@@ -455,7 +455,7 @@ class CategoryController extends CommonController
     {
         $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
         if ($cat_id !== 0) {
-            $where .= "AND(go.cat_id = $cat_id OR " .model('Goods')->get_extension_goods($cat_id) .")";
+            $where .= "AND(g.cat_id = $cat_id OR " .model('Goods')->get_extension_goods($cat_id) .")";
         }
         if (!empty($brand) && $brand !== 0) {
             $where .= " AND g.brand_id = '" . $brand . "' ";
