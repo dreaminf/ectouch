@@ -1751,11 +1751,7 @@ function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods',
             return $image;
         }
         $base_url = IS_ECSHOP ? dirname(__URL__) : __URL__;
-        if(IS_ECSHOP){
-            $url = $base_url . '/' . $image;
-        }else{
-            $url = $base_url . '/data/assets/' . $image;
-        }
+        $url = $base_url . '/' . $image;
     }
     return $url;
 }
