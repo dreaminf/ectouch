@@ -103,10 +103,21 @@ class CategoryBaseModel extends BaseModel {
      * @return [type]
      */
     function get_cat_goods_img($cat_id){
+	$extension_goods_array = '';
+	$sql = 'SELECT goods_id FROM ' . $this->model->pre. "goods_cat AS g WHERE g.cat_id  IN ('".$cat_id."')";
+	$res = $this->model->query($sql);
+	if ($res !== false) {
+		$arr = array();
+		foreach ($res as $key => $value) {
+			$arr[] = $value['goods_id'];
+		}
+	}
+	$extension_goods_array =  db_create_in($arr, 'g.goods_id');
 	$where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
-        if ($cat_id !== 0) {
-            $where .= "AND(g.cat_id = $cat_id OR " .model('Goods')->get_extension_goods($cat_id) .")";
-        }
+	if ($cat_id !== 0) {
+		$where .= "AND(g.cat_id = $cat_id OR " .$extension_goods_array .")";
+		//$where .= "AND(g.cat_id = $cat_id OR " .model('Goods')->get_extension_goods($cat_id) .")";
+	}
         /* 获得商品列表 */
         $sql = 'SELECT g.goods_id,  g.goods_thumb as cat_img , g.goods_img ' . 'FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' .
             ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id " . "WHERE $where GROUP BY g.goods_id ORDER BY g.sort_order DESC";

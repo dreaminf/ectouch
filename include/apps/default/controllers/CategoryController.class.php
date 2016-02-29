@@ -33,6 +33,7 @@ class CategoryController extends CommonController
         $cache_id = sprintf('%X', crc32($_SERVER['REQUEST_URI'] . C('lang') . time()));
         if (!ECTouch::view()->is_cached('category_top_all.dwt', $cache_id)) {
             $category = model('CategoryBase')->get_categories_tree();
+			//dump($category);exit;
             $this->assign('category', $category);
             /* 页面标题 */
             $this->assign('page_title', L('catalog'));
@@ -420,11 +421,24 @@ class CategoryController extends CommonController
 
     //获取商品
     private function category_get_goods($cat_id, $brand, $price_min, $price_max, $size, $page, $sort, $order, $keywords)
-    {
+    { 
+
+        $extension_goods_array = '';
+        $sql = 'SELECT goods_id FROM ' . $this->model->pre. "goods_cat AS g WHERE g.cat_id  IN ('".$cat_id."')";
+        $res = $this->model->query($sql);
+        if ($res !== false) {
+            $arr = array();
+            foreach ($res as $key => $value) {
+                $arr[] = $value['goods_id'];
+            }
+        }
+        $extension_goods_array =  db_create_in($arr, 'g.goods_id');
         $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
         if ($cat_id !== 0) {
-            $where .= "AND(g.cat_id = $cat_id OR " .model('Goods')->get_extension_goods($cat_id) .")";
+            $where .= "AND(g.cat_id = $cat_id OR " .$extension_goods_array .")";
+			//$where .= "AND(g.cat_id = $cat_id OR " .model('Goods')->get_extension_goods($cat_id) .")";
         }
+		
         if (isset($price_min) && !empty($price_max)) {
             $where .= " AND g.shop_price >= '" . $price_min . "' AND g.shop_price <= '" . $price_max . "'";
             $page = 0;
@@ -438,7 +452,7 @@ class CategoryController extends CommonController
         }
         $page = $page > 1 ? ($page - 1) * 10 : 0;
         /* 获得商品列表 */
-        $sql = 'SELECT g.goods_id, g.goods_name,g.market_price, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, g.goods_number, " .
+       $sql = 'SELECT g.goods_id, g.goods_name,g.market_price, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, g.goods_number, " .
             'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img, xl.sales_volume ' . 'FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' .
             ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id " . "WHERE $where GROUP BY g.goods_id ORDER BY $sort $order LIMIT $page , $size";
         $res = $this->model->query($sql);
@@ -455,7 +469,7 @@ class CategoryController extends CommonController
     {
         $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
         if ($cat_id !== 0) {
-            $where .= "AND(g.cat_id = $cat_id OR " .model('Goods')->get_extension_goods($cat_id) .")";
+            $where .= "AND($cat_id OR " .model('Goods')->get_extension_goods($cat_id) .")";
         }
         if (!empty($brand) && $brand !== 0) {
             $where .= " AND g.brand_id = '" . $brand . "' ";
