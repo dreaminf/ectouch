@@ -97,8 +97,8 @@ class BrandModel extends BaseModel {
             $brand['brand_id'] = $row['brand_id'];
             $brand['brand_name'] = trim($row['brand_name']);
             $brand['url'] = url('brand/goods_list', array('id' => $row['brand_id']));
-            $brand['brand_logo'] = get_data_url($row['brand_logo'], 'brandlogo');
-            $brand['brand_banner'] = get_data_url($row['brand_banner'], 'brandbanner');
+            $brand['brand_logo'] = get_data_path($row['brand_logo'], 'brandlogo');
+            $brand['brand_banner'] = get_data_path($row['brand_banner'], 'brandbanner');
             $brand['goods_num'] = model('Brand')->goods_count_by_brand($row['brand_id']);
             $brand['brand_desc'] = htmlspecialchars($row['brand_desc'], ENT_QUOTES);
             $first = $this->getLetter($brand['brand_name']);
@@ -152,32 +152,32 @@ class BrandModel extends BaseModel {
                 $arr['top'][$row['brand_id']]['brand_id']   =   $row['brand_id'];
                 $arr['top'][$row['brand_id']]['brand_name'] =   $row['brand_name'];
                 $arr['top'][$row['brand_id']]['url']    =   url('brand/goods_list', array('id' => $row['brand_id']));
-                $arr['top'][$row['brand_id']]['brand_logo'] =  get_data_url($row['brand_logo'], 'brandlogo');
-                $arr['top'][$row['brand_id']]['brand_banner']   =  get_data_url($row['brand_banner'], 'brandbanner');
+                $arr['top'][$row['brand_id']]['brand_logo'] =  get_data_path($row['brand_logo'], 'brandlogo');
+                $arr['top'][$row['brand_id']]['brand_banner']   =  get_data_path($row['brand_banner'], 'brandbanner');
                 $arr['top'][$row['brand_id']]['goods_num']  =   model('Brand')->goods_count_by_brand($row['brand_id']);
                 $arr['top'][$row['brand_id']]['brand_desc'] =   htmlspecialchars($row['brand_desc'], ENT_QUOTES);
             }elseif($key == 1 ){
                 $arr['center'][$row['brand_id']]['brand_id']   =   $row['brand_id'];
                 $arr['center'][$row['brand_id']]['brand_name'] =   $row['brand_name'];
                 $arr['center'][$row['brand_id']]['url']    =   url('brand/goods_list', array('id' => $row['brand_id']));
-                $arr['center'][$row['brand_id']]['brand_logo'] =   get_data_url($row['brand_logo'], 'brandlogo');
-                $arr['center'][$row['brand_id']]['brand_banner']   =  get_data_url($row['brand_banner'], 'brandbanner');
+                $arr['center'][$row['brand_id']]['brand_logo'] =   get_data_path($row['brand_logo'], 'brandlogo');
+                $arr['center'][$row['brand_id']]['brand_banner']   =  get_data_path($row['brand_banner'], 'brandbanner');
                 $arr['center'][$row['brand_id']]['goods_num']  =   model('Brand')->goods_count_by_brand($row['brand_id']);
                 $arr['center'][$row['brand_id']]['brand_desc'] =   htmlspecialchars($row['brand_desc'], ENT_QUOTES);
             }elseif($key > 1 && $key < 6){
                 $arr['list1'][$row['brand_id']]['brand_id']   =   $row['brand_id'];
                 $arr['list1'][$row['brand_id']]['brand_name'] =   $row['brand_name'];
                 $arr['list1'][$row['brand_id']]['url']    =   url('brand/goods_list', array('id' => $row['brand_id']));
-                $arr['list1'][$row['brand_id']]['brand_logo'] =   get_data_url($row['brand_logo'], 'brandlogo');
-                $arr['list1'][$row['brand_id']]['brand_banner']   = get_data_url($row['brand_banner'], 'brandbanner');
+                $arr['list1'][$row['brand_id']]['brand_logo'] =   get_data_path($row['brand_logo'], 'brandlogo');
+                $arr['list1'][$row['brand_id']]['brand_banner']   = get_data_path($row['brand_banner'], 'brandbanner');
                 $arr['list1'][$row['brand_id']]['goods_num']  =   model('Brand')->goods_count_by_brand($row['brand_id']);
                 $arr['list1'][$row['brand_id']]['brand_desc'] =   htmlspecialchars($row['brand_desc'], ENT_QUOTES);
             }else{
                 $arr['list2'][$row['brand_id']]['brand_id']   =   $row['brand_id'];
                 $arr['list2'][$row['brand_id']]['brand_name'] =   $row['brand_name'];
                 $arr['list2'][$row['brand_id']]['url']    =   url('brand/goods_list', array('id' => $row['brand_id']));
-                $arr['list2'][$row['brand_id']]['brand_logo'] =  get_data_url($row['brand_logo'], 'brandlogo');
-                $arr['list2'][$row['brand_id']]['brand_banner']   =  get_data_url($row['brand_banner'], 'brandbanner');
+                $arr['list2'][$row['brand_id']]['brand_logo'] =  get_data_path($row['brand_logo'], 'brandlogo');
+                $arr['list2'][$row['brand_id']]['brand_banner']   =  get_data_path($row['brand_banner'], 'brandbanner');
                 $arr['list2'][$row['brand_id']]['goods_num']  =   model('Brand')->goods_count_by_brand($row['brand_id']);
                 $arr['list2'][$row['brand_id']]['brand_desc'] =   htmlspecialchars($row['brand_desc'], ENT_QUOTES);
             }

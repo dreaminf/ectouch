@@ -98,7 +98,7 @@ class GroupbuyModel extends BaseModel {
             if (!empty($group_buy['goods_thumb'])) {
                 $group_buy['goods_thumb'] = get_image_path($group_buy['goods_id'], $group_buy['goods_thumb'], true);
             }
-            $group_buy['act_banner'] = get_data_url($group_buy['touch_img'], 'groupbuy');
+            $group_buy['act_banner'] = get_data_path($group_buy['touch_img'], 'groupbuy');
             /* 处理链接 */
             $group_buy['url'] = url('groupbuy/info', array('id' => $group_buy ['group_buy_id']));
             /* 加入数组 */

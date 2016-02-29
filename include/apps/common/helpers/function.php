@@ -1747,14 +1747,38 @@ function exception_handler($errno, $errstr, $errfile, $errline) {
 function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods', $del = false) {
     $url = C('no_picture');
     if (!empty($image)) {
-        $base_url = rtrim(__URL__, '/');
-        $base_url = IS_ECSHOP ? dirname($base_url) : $base_url;
         if (strtolower(substr($image, 0, 4)) == 'http') {
-            $url = $image;
-        } else if (strtolower(substr($image, 0, 13)) == 'data/attached') {
-            $url = __URL__ . '/' . $image;
-        } else {
+            return $image;
+        }
+        $base_url = IS_ECSHOP ? dirname(__URL__) : __URL__;
+        if(IS_ECSHOP){
             $url = $base_url . '/' . $image;
+        }else{
+            $url = $base_url . '/data/assets/' . $image;
+        }
+    }
+    return $url;
+}
+
+/**
+ * 重新获得非商品图片地址
+ *
+ * @param string $image 图片地址
+ * @param string $folder 图片目录
+ *
+ * @return string   $url
+ */
+function get_data_path($image = '', $folder = ''){
+    $url = C('no_picture');
+    if (!empty($image)) {
+        if (strtolower(substr($image, 0, 4)) == 'http') {
+            return $image;
+        }
+        $base_url = IS_ECSHOP ? dirname(__URL__) : __URL__;
+        if(IS_ECSHOP){
+            $url = $base_url . '/data/' . $folder . '/' . $image;
+        }else{
+            $url = $base_url . '/data/attached/' . $folder . '/' . $image;
         }
     }
     return $url;

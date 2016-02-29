@@ -27,8 +27,8 @@ class BrandBaseModel extends BaseModel {
     function get_brand_info($id) {
         $sql = 'SELECT * FROM ' . $this->pre . "brand WHERE brand_id = '$id'";
         $res = $this->row($sql);
-        $res['brand_logo'] = get_data_url($res['brand_logo'], 'brandlogo');
-        $res['brand_banner'] = get_data_url($res['brand_banner'], 'brandbanner');
+        $res['brand_logo'] = get_data_path($res['brand_logo'], 'brandlogo');
+        $res['brand_banner'] = get_data_path($res['brand_banner'], 'brandbanner');
         return $res;
     }
 
