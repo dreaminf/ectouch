@@ -653,9 +653,9 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         elseif ($_POST['goods_img_url'])
         {
             
-            if(preg_match('/(.jpg|.png|.gif|.jpeg)$/',$_POST['goods_img_url']) && copy(trim($_POST['goods_img_url']), ROOT_PATH . 'data/attached/' . basename($_POST['goods_img_url'])))
+            if(preg_match('/(.jpg|.png|.gif|.jpeg)$/',$_POST['goods_img_url']) && copy(trim($_POST['goods_img_url']), ROOT_PATH . 'data/caches/' . basename($_POST['goods_img_url'])))
             {
-                  $original_img = 'data/attached/' . basename($_POST['goods_img_url']);
+                  $original_img = 'data/caches/' . basename($_POST['goods_img_url']);
             }
             
         }

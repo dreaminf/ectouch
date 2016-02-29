@@ -17,8 +17,8 @@ class image
 {
     var $error_no    = 0;
     var $error_msg   = '';
-    var $images_dir  = 'images';
-    var $data_dir    = 'data';
+    var $images_dir  = 'data/assets/images';
+    var $data_dir    = 'data/attached';
     var $bgcolor     = '';
     var $type_maping = array(1 => 'image/gif', 2 => 'image/jpeg', 3 => 'image/png');
 
@@ -55,7 +55,7 @@ class image
         else
         {
             /* 创建目录 */
-            $dir = ROOT_PATH . $this->data_dir . '/attached/' . $dir . '/';
+            $dir = ROOT_PATH . $this->data_dir . '/' . $dir . '/';
             if ($img_name)
             {
                 $img_name = $dir . $img_name; // 将图片定位到正确地址
