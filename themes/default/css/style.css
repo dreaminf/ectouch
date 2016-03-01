@@ -170,7 +170,7 @@ select{-webkit-appearance:none; border:0; color:#555; padding-left:0; border:1px
 .two-btn .btn:nth-child(2){margin-left:0.6em;}
 /*输入框样式*/
 .input-text{position:relative; font-size:1.1em;}
-.input-text b{display:block; float:left; width:6m;}
+.input-text b{display:block; float:left; width:6m;font-weight:400;}
 .input-text span{ position: absolute; left: 6.2em; right: 0em; }
 .input-text input[type=text],.input-text textarea,.input-text input[type=password]{border:none; width:100%; padding:0;}
 .input-text textarea{width:100%; margin-top:0.6em; height:6em;}
