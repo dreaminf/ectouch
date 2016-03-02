@@ -898,6 +898,28 @@ elseif ($_REQUEST['act'] == 'delivery_ship')
         }
     }
 
+    /* 微信通 发货提醒微信用户 start  by wanglu */
+    $file = ROOT_PATH . 'mobile/include/apps/default/controller/WechatController.class.php';
+    if(file_exists($file) && $order['user_id'] > 0){
+        $sql = 'SELECT name, config FROM '.$GLOBALS['ecs']->table('wechat_extend').' where enable = 1 and command = "send_remind" limit 1';
+        $remind = $GLOBALS['db']->getRow($sql);
+        $remind_title = $remind['name'] ? $remind['name'] : '发货提醒';
+        $content = '';
+        if($remind['config']){
+            $config = unserialize($remind['config']);
+            $content = str_replace('[$order_id]', $order['order_sn'], $config['template']);
+        }
+        $sql1 = 'SELECT openid FROM '.$GLOBALS['ecs']->table('wechat_user').' where ect_uid = '.$order['user_id'];
+        $openid = $GLOBALS['db']->getOne($sql1);
+        if(!empty($remind_title) && !empty($openid)){
+            $order_url = $GLOBALS['ecs']->url() . 'mobile/index.php?c=user&a=order_detail&order_id='.$order['order_id'];
+            $order_url = urlencode(base64_encode($order_url));
+            $url = $GLOBALS['ecs']->url() . 'mobile/index.php?c=api&openid='.$openid.'&title='.urlencode($remind_title).'&msg='.urlencode($content).'&url='.$order_url;
+            curlGet($url);
+        }
+    }
+    /* 微信通 发货提醒微信用户 end  by wanglu */
+
     /* 清除缓存 */
     clear_cache_files();
 
@@ -6591,4 +6613,25 @@ function get_site_root_url()
     return 'http://' . $_SERVER['HTTP_HOST'] . str_replace('/' . ADMIN_PATH . '/order.php', '', PHP_SELF);
 
 }
-?>
+
+/**
+ * curl 获取
+ */
+function curlGet($url, $timeout = 5, $header = "") {
+    $defaultHeader = '$header = "User-Agent:Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.2.12) Gecko/20101026 Firefox/3.6.12\r\n";
+        $header.="Accept:text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n";
+        $header.="Accept-language: zh-cn,zh;q=0.5\r\n";
+        $header.="Accept-Charset: GB2312,utf-8;q=0.7,*;q=0.7\r\n";';
+    $header = empty($header) ? $defaultHeader : $header;
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);    // https请求 不验证证书和hosts
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array($header)); //模拟的header头
+    $result = curl_exec($ch);
+    curl_close($ch);
+    return $result;
+}
