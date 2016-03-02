@@ -34,6 +34,7 @@ return array(
 
     // 函数和类文件
     'core'   => array(
+        VENDOR_PATH . 'autoload.php',
         THINK_PATH . 'Common/functions.php',
         COMMON_PATH . 'Common/function.php',
         CORE_PATH . 'Hook' . EXT,
