@@ -40,11 +40,11 @@ C('DB', load_file(ROOT_PATH . 'data/config.php'));
 date_default_timezone_set(C('DEFAULT_TIMEZONE'));
 /* 调试配置 */
 defined('APP_DEBUG') or define('APP_DEBUG', C('DEBUG'));
-/* 错误和异常处理 */
-register_shutdown_function('fatalError');
 
 /* 错误等级 */
 if (APP_DEBUG) {
+    /* 错误和异常处理 */
+    register_shutdown_function('fatalError');
     @ini_set("display_errors", 1);
     error_reporting(E_ALL ^ E_NOTICE); // 除了notice提示，其他类型的错误都报告
     debug(); // system 运行时间，占用内存开始计算
