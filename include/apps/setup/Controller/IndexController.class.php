@@ -146,7 +146,7 @@ class IndexController extends Controller
             $conn ? alert(1, '数据库链接成功！', 'dbpw') : alert(0, '数据库链接失败！', 'dbpw');
         }
         // 自动读取PC端数据库连接信息
-        $config = require ROOT_PATH . 'config/db.php';
+        $config = require ROOT_PATH . 'data/config.php';
         $this->assign('config', $config);
         $this->display('install_step3');
     }
