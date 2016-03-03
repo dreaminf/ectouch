@@ -1,0 +1,1 @@
+如果在安装的过程中提示“安装已停止”，请修改mysql的配置文件my.ini，将mode中的“STRICT_TRANS_TABLES”移除，保存后重启mysql服务。
