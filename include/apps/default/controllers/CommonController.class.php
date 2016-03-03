@@ -206,8 +206,15 @@ class CommonController extends BaseController
      * 分销店铺信息
      */
     private function drp(){
-
-        if($_GET['drp_id'] > 0){
+		$drp_id = $this->model->table('drp_shop')->field('id')->where("user_id=".$_SESSION['user_id'])->getOne();
+		if($drp_id > 0){
+			 $drp_info = model('Sale')->get_drp($drp_id,'1');
+            if($drp_info['open'] == 1){
+                $drp_info['cat_id'] = substr($drp_info['cat_id'], 0, -1);
+                $_SESSION['drp_shop'] = $drp_info;
+            }			
+		}       
+        elseif($_GET['drp_id'] > 0){
             $drp_info = model('Sale')->get_drp($_GET['drp_id'],'1');
             if($drp_info['open'] == 1){
                 $drp_info['cat_id'] = substr($drp_info['cat_id'], 0, -1);
