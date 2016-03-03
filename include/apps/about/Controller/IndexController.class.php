@@ -1,12 +1,20 @@
 <?php
 namespace about\Controller;
 
-use Think\Controller;
+use base\Controller\FrontendController;
 
-class IndexController extends Controller
+class IndexController extends FrontendController
 {
-    public function indexAction()
+    public function mapAction()
     {
-        $this->show('test','utf-8');
+        $address = I('get.address', '');
+        if(empty($address)){
+        	$province = get_region_name(C('SHOP_PROVINCE'));
+        	$city = get_region_name(C('SHOP_CITY'));
+            $address = C('SHOP_ADDRESS');
+        }
+        $this->assign('city', $city);
+        $this->assign('address', $city . $address);
+        $this->display('about_map.dwt');
     }
 }
