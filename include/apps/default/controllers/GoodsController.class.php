@@ -39,11 +39,6 @@ class GoodsController extends CommonController
         //购物车商品数量
         $cart_goods = insert_cart_info_number();
         $this->assign('seller_cart_total_number', $cart_goods);
-		$shop_qq = $this->model->table('shop_config')->field('value')->where(array("code"=>qq))->getOne();
-		if($shop_qq){
-			$infoqq['centent'] = explode(',',$shop_qq);
-		}
-		$this->assign('shop_qq', $infoqq);
         // 如果没有找到任何记录则跳回到首页
         if ($goods === false) {
             ecs_header("Location: ./\n");
