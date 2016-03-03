@@ -402,7 +402,7 @@ class Dispatcher
                 return '';
             }
         }
-        return strip_tags(ucfirst($module));
+        return strip_tags(strtolower($module));
     }
 
 }
