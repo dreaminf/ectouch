@@ -477,7 +477,7 @@ class CategoryController extends CommonController
             $where .= $keywords;
         }
         $sql = 'SELECT COUNT(g.goods_id) AS count FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' .
-            "WHERE $where";
+            "WHERE $where GROUP BY g.goods_id";
         $count = $this->model->getRow($sql);
         return $count['count'];
     }
