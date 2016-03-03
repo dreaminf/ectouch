@@ -66,7 +66,7 @@ class passport
         $this->need_sync = false;
         $this->is_ecshop = 1;
 
-        $this->db = new Model();
+        $this->db = M();
     }
     /**
      * 用户登录
