@@ -92,16 +92,7 @@
 				<section class="goods-more-a">
 					<!--  <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_brief}</span> <span class="pull-right"><i class="fa fa-chevron-right"></i></span></a> 
       <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_comment}</span> <span class="pull-right"><span class="ect-color">{$comments.count}</span>{$lang.comment_num} <span class="ect-color">{$comments.favorable}%</span>{$lang.favorable_comment} <i class="fa fa-chevron-right"></i></span></a>  -->
-				</section>
-				<section class="m-top04 padding-all b-color-f goods-promotion">
-					<div class="dis-box">
-						<label class="t-remark g-t-temark">促销</label>
-						<div class="box-flex g-promotion-con">
-							<p><em class="em-promotion">返</em><span class="">购买返200积分</span><i class="iconfont icon-yiwen goods-min-icon"></i></p>
-							<p><em class="em-promotion">满减</em><span class="">满300立减50元</span></p>
-						</div>
-					</div>
-				</section>
+				</section>				
 				<section class="m-top1px padding-all b-color-f goods-attr j-goods-attr j-show-div">
 					<div class="dis-box">
 						<label class="t-remark g-t-temark">已选</label>
