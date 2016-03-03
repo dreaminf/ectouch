@@ -9,8 +9,10 @@
 .index-kefu-t{display:none;transition: width 2s;-moz-transition: width 2s;-webkit-transition: width 2s;-o-transition: width 2s;  text-align: center;  max-width: 640px; min-width: 320px;}
 .index-kefu-t.active{display:block; transition: width 2s;-moz-transition: width 2s;-webkit-transition: width 2s;-o-transition: width 2s;}	
 .index-guanz-bg{background:rgba(0,0,0,0.7); position:fixed; top:0; left:0; right:0;bottom:0; z-index:1000;}
-.index-kefu-show{ position:fixed; left:50%;  margin-left: -9.5rem; top:30%; background:#fff; z-index:1001; overflow:hidden; width: 19rem; height: 19rem; padding: 0.5rem;}
-.index-kefu-show p{color:#4C4D51;font-size: 1.5rem;height:2rem}
+.index-kefu-show{ position:fixed; left:50%;  margin-left: -9.5rem; top:30%; background:#fff; z-index:1001; overflow:hidden; width: 19rem; height: auto; border-radius: 4px;}
+#kefu_title {background:#1CBB7F;text-align:center;color:#fff;font-size: 1.5rem;height:3rem; line-height:3rem;}
+.index-kefu-center p{color:#4C4D51;font-size: 1.5rem;height:3.5rem; min-height:3.5rem; line-height:3.5rem;}
+
 .index-kefu-show img{ width: 16rem;}
 .index-kefu-show .right{float:right}clear:both;
 .index-kefu-center{clear:both;}
@@ -19,12 +21,12 @@
 <!--弹出窗 start-->
 <div class="index-kefu-t"> 
     <div class="index-kefu-show">
-        <p><span class="right index-show-close">关闭</span></p>
+        <p id="kefu_title"><span>联系客服</span></p>
 		<div class="index-kefu-center" >
 		<!-- {foreach  from=$shop_qq.centent item=shop_qq}-->
 		<p>
 			<a id="scrollqq" href="http://wpa.qq.com/msgrd?v=3&uin={$shop_qq}&site=qq&menu=yes" ><i class="iconfont icon-kefu"></i>{$shop_qq}</a>
-		<p>	
+		</p>	
 		<!-- {/foreach}-->		
 		</div>
     </div>
