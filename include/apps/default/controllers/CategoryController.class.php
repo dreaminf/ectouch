@@ -33,7 +33,6 @@ class CategoryController extends CommonController
         $cache_id = sprintf('%X', crc32($_SERVER['REQUEST_URI'] . C('lang') . time()));
         if (!ECTouch::view()->is_cached('category_top_all.dwt', $cache_id)) {
             $category = model('CategoryBase')->get_categories_tree();
-			//dump($category);exit;
             $this->assign('category', $category);
             /* 页面标题 */
             $this->assign('page_title', L('catalog'));
@@ -63,11 +62,8 @@ class CategoryController extends CommonController
             $page = I('page');
             $this->parameter();
             $goodslist = $this->category_get_goods($this->cat_id, $this->brand, $this->price_min, $this->price_max, $size, $page, $this->sort, $this->order, $this->keywords);
-            $count = $this->get_goods_count($this->cat_id, $this->brand, $this->price_min, $this->price_max);
-            $count = ceil($count / $size);
-            if ($this->price_max > 0) {
-                $count = $count - 1;
-            }
+            $count = $this->get_goods_count($this->cat_id, $this->brand, $this->price_min, $this->price_max,$this->keywords);
+            $count = ceil($count / $size) - 1;
             die(json_encode(array('list' => $goodslist, 'totalPage' => $count)));
         }
     }
@@ -476,6 +472,9 @@ class CategoryController extends CommonController
         }
         if (isset($price_min) && !empty($price_max)) {
             $where .= " AND g.shop_price >= '" . $price_min . "' AND g.shop_price <= '" . $price_max . "'";
+        }
+		if (!empty($keywords)) {
+            $where .= $keywords;
         }
         $sql = 'SELECT COUNT(g.goods_id) AS count FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' .
             "WHERE $where";
