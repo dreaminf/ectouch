@@ -16,18 +16,19 @@
 .index-kefu-show img{ width: 16rem;}
 .index-kefu-show .right{float:right}clear:both;
 .index-kefu-center{clear:both;}
+.index-kefu-center .icon-kefu{font-size: 2rem;}
 .index-kefu-center p{clear:both; font-size: 2rem;}
 </style>
 <!--弹出窗 start-->
-<div class="index-kefu-t"> 
+<div class="index-kefu-t" id="single"> 
     <div class="index-kefu-show">
         <p id="kefu_title"><span>联系客服</span></p>
 		<div class="index-kefu-center" >
-		<!-- {foreach  from=$shop_qq.centent item=shop_qq}-->
-		<p>
-			<a id="scrollqq" href="http://wpa.qq.com/msgrd?v=3&uin={$shop_qq}&site=qq&menu=yes" ><i class="iconfont icon-kefu"></i>{$shop_qq}</a>
-		</p>	
-		<!-- {/foreach}-->		
+			<!-- {foreach  from=$shop_qq.centent item=shop_qq}-->
+			<p>
+				<a id="scrollqq" href="http://wpa.qq.com/msgrd?v=3&uin={$shop_qq}&site=qq&menu=yes" ><i class="iconfont icon-kefu"></i>{$shop_qq}</a>
+			</p>	
+			<!-- {/foreach}-->		
 		</div>
     </div>
     <div class="index-guanz-bg"></div>
@@ -40,8 +41,11 @@
 	  $(".filter-btn-kefu").click(function(){
 		 $(".index-kefu-t").addClass("active");
 	  });
-	  $(".index-show-close").click(function()	{
+	  $(".index-guanz-bg").click(function()	{
 		 $(".index-kefu-t").removeClass("active");
 	  });
+	  
 	});
+	 
+
 </script>
