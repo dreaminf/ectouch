@@ -964,16 +964,15 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 	float: right;
 }
 /*颜色版本*/
-.ect-bg{background:#1CBB7F !important; color:#fff !important; height:auto; overflow:hidden;}
+.ect-bg{  background: #1CBB7F !important;color: #fff !important;height: auto;overflow: hidden;}}
 /*顶部高度*/
 .ect-header{height:2.5em; position:relative;}
-.ect-header span{/* font-size:1.4em;  */font-size:1.2em;position:absolute; left:2.4em; right:3em; top:0.14em}
-.ect-header a{width:2.5em; height:2.5em;display: block;  font-size: 1.3rem;}
-
+.ect-header span{font-size: 1.4em;position: absolute;left: 2.4em;right: 3em;top: 0.64em;}
+.ect-header a{  width: 2.5em;height: 2.5em;}
 .ect-text-left{text-align:left;}
 .ect-border-none{border:none;}
 .ect-margin-lr{margin-left:0.6em; margin-right:0.6em;}
-.ect-margin-tb{ /* margin-bottom:0.6em; */margin-top: 0.45em;}
+.ect-margin-tb{  margin-top: 0.6em;margin-bottom: 0.6em;}
 .ect-padding-lr{padding-left:0.6em; padding-right:0.6em;}
 .ect-padding-tb{padding-top:0.6em; padding-bottom:0.6em;}
 .ect-border-radius100{ border-radius: 100%; -moz-border-radius: 100%; -webkit-border-radius: 100%; -o-border-radius: 100%;}

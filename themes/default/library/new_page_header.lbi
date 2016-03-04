@@ -11,7 +11,8 @@
 <link rel="stylesheet" href="__TPL__/statics/css/swiper-3.2.5.min.css" />
 <link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
 
+
 </head>
 
-<body style="max-width:640px;">
+<body style="max-width:640px;font-size: 14px;">
 <div id="loading"><img src="__TPL__/statics/img/loading.gif" /></div>
