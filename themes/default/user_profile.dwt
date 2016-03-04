@@ -1,5 +1,5 @@
 <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem --> 
-<link rel="stylesheet" href="__TPL__/css/member.css">
+
 <script type="text/javascript">
 	  {foreach from=$lang.profile_js item=item key=key}
 		var {$key} = "{$item}";
