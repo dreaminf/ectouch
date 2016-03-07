@@ -203,10 +203,7 @@ class GoodsController extends CommonController
         $result['message'] = C('comment_check') ? L('cmt_submit_wait') : L('cmt_submit_done');
         $this->assign('id', $cmt->id);
         $this->assign('type', $cmt->type);
-        if(count($comment_list)/$size < $cmt->page){
-            $this->assign('is_page', 1);
-        }
-        $this->assign('pager', $cmt->page);
+        $this->assign('pager', $this->pageShow($count));
         $this->assign('title', L('goods_comment'));
         $this->display('goods_comment_list.dwt');
     }

@@ -55,17 +55,7 @@
 	</div>
 
 </div>
- <ul class="pager ect-margin-lr ect-page">
-	  <li class="pull-left"><a href="{:url('goods/comment_list',array('type'=>$this->_var['type'],'id'=>$this->_var['id'],'page'=>($this->_var['pager']-1 && $this->_var['pager'] !== 0 )))}">上一页</a></li>
-	  <!-- {if $pager.page_number} -->
-	  <li class="form-select">
-		<i class="fa fa-sort-desc"></i>
-	  </li>
-	  <!-- {/if} -->
-	  <!-- {if $is_page neq 1} -->
-	  <li class="pull-right"><a href="{:url('goods/comment_list',array('type'=>$this->_var['type'],'id'=>$this->_var['id'],'page'=>($this->_var['pager']+1)))}">下一页</a></li>
-	 <!-- {/if} -->
-</ul>
+ {include file='library/page.lbi '}
 </div>
   <footer class="logo"><a href="http://www.ectouch.cn" title="ECTouch官网" target="_blank"><img src="__TPL__/images/copyright.png" width="176" height="60"></a></footer>
 
