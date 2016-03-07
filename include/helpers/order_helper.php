@@ -3028,3 +3028,616 @@ function judge_package_stock($package_id, $package_num = 1)
 
     return false;
 }
+
+
+/**退换货原因
+ * by ECTouch Leah
+ * @param $cause_id
+ */
+function get_service_cause_name($cause_id)
+{
+    $sql = 'SELECT cause_id,cause_name ,parent_id,is_show ' .
+        'FROM ' . $GLOBALS['ecs']->table('return_cause') .
+        "WHERE cause_id = '$cause_id' AND is_show = 1";
+    $res = $GLOBALS['db']->getRow($sql);
+    return $res['cause_name'];
+
+}
+
+/**获取退换货原因 后期升级
+ * by ECTouch Leah
+ * @param $causer_id
+ * @return mixed
+ */
+function get_service_cause($cause_id)
+{
+    if ($cause_id > 0) {
+        $sql = 'SELECT parent_id FROM ' . $GLOBALS['ecs']->table('return_cause') . " WHERE cause_id = '$cause_id'";
+        $parent_id = $GLOBALS['db']->getOne($sql);
+    } else {
+        $parent_id = 0;
+    }
+    /*
+     判断当前分类中全是是否是底级分类，
+     如果是取出底级分类上级分类，
+     如果不是取当前分类及其下的子分类
+    */
+    $sql = 'SELECT count(*) FROM ' . $GLOBALS['ecs']->table('return_cause') . " WHERE parent_id = '$parent_id' AND is_show = 1 ";
+    if ($GLOBALS['db']->getOne($sql) || $parent_id == 0) {
+        /* 获取当前分类及其子分类 */
+        $sql = 'SELECT cause_id,cause_name ,parent_id,is_show ' .
+            'FROM ' . $GLOBALS['ecs']->table('return_cause') .
+            "WHERE parent_id = '$parent_id' AND is_show = 1";
+        $res = $GLOBALS['db']->getRow($sql);
+
+        $cat_arr[$res['cause_id']]['id'] = $res['cause_id'];
+        $cat_arr[$res['cause_id']]['name'] = $res['cause_name'];
+        $cat_arr[$res['cause_id']]['cause_id'] = get_child_cause($res['cause_id']);
+    }
+    if (isset($cat_arr)) {
+        return $cat_arr;
+    }
+}
+
+/**
+ *获取服务订单详情
+ * by ECTouch Leah
+ * @param $ret_id
+ * @return mix
+ */
+function aftermarket_info($ret_id, $order_sn = '')
+{
+    $ret_id = intval($ret_id);
+    if ($ret_id > 0) {
+        $sql = "SELECT r.ret_id, r.rec_id, r.service_sn, r.goods_id, r.user_id, r.order_id, r.order_sn, r.cause_id, r.service_id, r.add_time,r.remark ,
+            r.return_status, r.refund_status, r.seller_id, r.is_check, r.should_return, r.back_shipping_name, r.back_other_shipping, r.back_invoice_no, r.out_shipping_name, r.out_invoice_no, r.to_buyer,
+            g.goods_thumb, g.goods_name, o.order_sn ,o.add_time,r.addressee,r.phone, r.address, d.delivery_sn, d.update_time, d.how_oos ,d.shipping_fee, d.insure_fee , d.invoice_no,
+            d.email, d.sign_building , d.best_time , d.country , d.province , d.city , d.district, rg.back_num " .
+            "  FROM " . $GLOBALS['ecs']->table('order_return') .
+            " as r LEFT JOIN  " . $GLOBALS['ecs']->table('goods_attr') . " as ga ON r.goods_id = ga.goods_id " .
+            " LEFT JOIN ". $GLOBALS['ecs']->table('return_goods'). " as rg ON r.rec_id = rg.rec_id ".
+            " LEFT JOIN " . $GLOBALS['ecs']->table('goods') . " as g ON g.goods_id=r.goods_id " .
+            " LEFT JOIN " . $GLOBALS['ecs']->table('order_info') . " as o ON o.order_id = r.order_id" .
+            " LEFT JOIN " . $GLOBALS['ecs']->table('delivery_order') . " as d ON d.order_id = o.order_id " .
+            " WHERE r.ret_id = '$ret_id'";
+    } else {
+        $sql = "SELECT *  FROM " . $GLOBALS['ecs']->table('order_return') .
+            " WHERE order_sn = '$order_sn'";
+    }
+    $order = $GLOBALS['db']->getRow($sql);
+    $order['apply_time'] = local_date($GLOBALS['_CFG']['time_format'], $order['apply_time']);
+    $order['service_id'] = $order['service_id'];
+    $order['service_name'] = get_service_type_name($order['service_id']);
+    $order['return_cause'] = get_service_cause_name($order['cause_id']);
+    $order['seller_name'] = get_suppliers_name($order['seller_id']);
+    $order['cert_img'] = get_cert_img($order['rec_id']);
+    $order['should_return'] = $order['should_return'];
+    $order['return_status'] = $order['return_status'];
+    $order['refund_status'] = $order['refund_status'];
+    $order['back_num'] = $order['back_num'];
+    $order['formated_add_time'] = local_date($GLOBALS['_CFG']['time_format'], $order['add_time']);
+    $order['formated_should_return'] = price_format($order['should_return'], false);
+    $order['formated_refund_status'] = $GLOBALS['_LANG']['ff'][$order['refund_status']];
+    $order['formated_check_status'] = $GLOBALS['_LANG']['rc'][$order['is_check']];
+    $order['region'] = get_consignee_info($order['ret_id']);;
+
+    /* 服务订单 订单状态 退款状态 审核状态 语言项 */
+    if ($order['return_status'] == RF_APPLICATION && $order['is_check'] == RC_APPLY_FALSE) {
+        /* 状态 ： 待审核 */
+        $order['formated_return_status'] = $GLOBALS['_LANG']['wait_check'];
+    } elseif ($order['return_status'] == RF_APPLICATION && $order['is_check'] == RC_APPLY_SUCCESS) {
+        /* 状态 ： 审核成功 */
+        $order['formated_return_status'] = $GLOBALS['_LANG']['check_success'];
+    } elseif ($order['return_status'] == RF_APPLY_FALSE && $order['is_check'] == RC_APPLY_FALSE) {
+        /* 状态 ： 审核失败 */
+        $order['formated_return_status'] = $GLOBALS['_LANG']['check_false'];
+    } elseif ($order['return_status'] == RF_CANCELED) {
+        /* 状态 ： 撤销申请 */
+        $order['formated_return_status'] = $GLOBALS['_LANG']['cancel'];
+    } elseif ($order['refund_status'] == FF_REFUND && $order['is_check'] == RC_APPLY_SUCCESS) {
+        /* 状态 ： 已退款 */
+        $order['formated_return_status'] = $GLOBALS['_LANG']['refund_success'];
+    } else {
+        $order['formated_return_status'] = $GLOBALS['_LANG']['rf'][$order['return_status']];
+    }
+    return $order;
+}
+
+/**
+ * 获取地址 by ECTouch Leah
+ * @param type $country
+ * @param type $province
+ * @param type $city
+ * @param type $district
+ * @return type
+ */
+function get_consignee_info($ret_id)
+{
+    /* 取得区域名 */
+    $sql = "SELECT concat(IFNULL(c.region_name, ''), '  ', IFNULL(p.region_name, ''), " .
+            "'  ', IFNULL(t.region_name, ''), '  ', IFNULL(d.region_name, '')) AS region " .
+            "FROM " . $GLOBALS['ecs']->table('order_return') . " AS o " .
+            "LEFT JOIN " . $GLOBALS['ecs']->table('region') . " AS c ON o.country = c.region_id " .
+            "LEFT JOIN " . $GLOBALS['ecs']->table('region') . " AS p ON o.province = p.region_id " .
+            "LEFT JOIN " . $GLOBALS['ecs']->table('region') . " AS t ON o.city = t.region_id " .
+            "LEFT JOIN " . $GLOBALS['ecs']->table('region') . " AS d ON o.district = d.region_id " .
+            "WHERE o.ret_id = '" . $ret_id . "'";
+    $address_detail = $GLOBALS['db']->getOne($sql);
+    
+    return $address_detail;
+}
+
+/**
+ * 取的退换货表单里的商品
+ * by ECTouch Leah
+ * @param type $rec_id
+ * @return type
+ */
+function get_return_order_goods_list($rec_id)
+{
+
+    $sql = "select * FROM " . $GLOBALS['ecs']->table('order_goods') . " WHERE rec_id =" . $rec_id;
+    $goods_list = $GLOBALS['db']->getAll($sql);
+
+    return $goods_list;
+}
+
+/**
+ * 取的订单上商品中的某一商品
+ * by ECTouch Leah
+ * @param type $rec_id
+ */
+function get_return_order_goods($rec_id)
+{
+    $sql = "select * FROM " . $GLOBALS['ecs']->table('return_goods') . " WHERE rec_id =" . $rec_id;
+    $goods_list = $GLOBALS['db']->getRow($sql);
+
+    return $goods_list;
+}
+
+/**
+ * 获得退换货商品
+ * by ECTouch Leah
+ */
+function get_return_goods($ret_id)
+{
+
+    $ret_id = intval($ret_id);
+    $sql = "SELECT rg.* FROM " . $GLOBALS['ecs']->table('return_goods') .
+        " as rg  LEFT JOIN " . $GLOBALS['ecs']->table('order_return') . "as r ON rg.rec_id = r.rec_id " .
+        " WHERE r.ret_id = " . $ret_id;
+
+    $res = $GLOBALS['db']->query($sql);
+
+    while ($row = $GLOBALS['db']->fetchRow($res)) {
+        if ($row['return_type'] == ST_RETURN_GOODS) {
+            //退货退款
+            $row['service_type'] = $GLOBALS['_LANG']['st'][$row['return_type']];
+            $row['subtotal'] = price_format(($row['goods_price'] * $row['back_num']), false);
+            $goods_list = array('return_goods' => $row);
+
+        } elseif ($row['return_type'] == ST_EXCHANGE) {
+            //换货
+            $row['service_type'] = $GLOBALS['_LANG']['st'][$row['return_type']];
+            $row['subtotal'] = price_format(($row['goods_price'] * $row['back_num']), false);
+            $goods_list = array('exchange' => $row);
+
+        }
+    }
+    return $goods_list;
+}
+
+/**
+ * 获得退换货操作log
+ * by ECTouch Leah
+ * @param type $ret_id
+ */
+function get_return_action($ret_id) {
+    $act_list = array();
+    $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('return_action') . " WHERE ret_id = '" . $ret_id . "'  ORDER BY log_time DESC,ret_id DESC";
+    $res = $GLOBALS['db']->query($sql);
+    while ($row = $GLOBALS['db']->fetchRow($res)) {
+        if ($row['return_status'] == RF_APPLICATION && $row['is_check'] == RC_APPLY_FALSE) {
+            /* 状态 ： 待审核 */
+            $row['return_status'] = $GLOBALS['_LANG']['wait_check'];
+        } elseif ($row['return_status'] == RF_APPLICATION && $row['is_check'] == RC_APPLY_SUCCESS) {
+            /* 状态 ： 审核成功 */
+            $row['return_status'] = $GLOBALS['_LANG']['check_success'];
+        } elseif ($row['return_status'] == RF_APPLY_FALSE && $row['is_check'] == RC_APPLY_FALSE) {
+            /* 状态 ： 审核失败 */
+            $row['return_status'] = $GLOBALS['_LANG']['check_false'];
+        } elseif ($row['return_status'] == RF_CANCELED) {
+            /* 状态 ： 撤销申请 */
+            $row['return_status'] = $GLOBALS['_LANG']['cancel'];
+        } elseif ($row['refund_status'] == FF_REFUND && $row['is_check'] == RC_APPLY_SUCCESS) {
+            /* 状态 ： 已退款 */
+            $row['return_status'] = $GLOBALS['_LANG']['refund_success'];
+        } else {
+            $row['return_status'] = $GLOBALS['_LANG']['rf'][$row['return_status']];
+        }
+        $row['refund_status'] = $GLOBALS['_LANG']['ff'][$row['refund_status']];
+        $row['is_check'] = ($row['return_status'] == RF_APPLICATION && $row['is_check'] == RC_APPLY_FALSE) ? $GLOBALS['_LANG']['wait_check'] : $GLOBALS['_LANG']['rc'][$row['is_check']];
+        $row['action_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['log_time']);
+        $act_list[] = $row;
+    }
+    return $act_list;
+}
+
+/**
+ * 相同商品退换货单 by ECTouch leah
+ * @param type $ret_id
+ * @param type $order_sn
+ */
+function return_order_info_byId($order_id, $refund = true)
+{
+    if (!$refund) {
+        //获得唯一一个订单下申请了全部退换货的退换货订单
+        $sql = " SELECT count(*) FROM " . $GLOBALS['ecs']->table('order_return') . " WHERE order_id=" . $order_id . " AND refund_status = 0";
+        $res = $GLOBALS['db']->getOne($sql);
+    } else {
+        $sql = " SELECT * FROM " . $GLOBALS['ecs']->table('order_return') . " WHERE order_id=" . $order_id;
+        $res = $GLOBALS['db']->getAll($sql);
+    }
+
+    return $res;
+}
+
+
+/**
+ * 退货单信息
+ * by  leah
+ */
+function return_order_info($ret_id, $order_sn = '')
+{
+    $ret_id = intval($ret_id);
+    if ($ret_id > 0) {
+        $sql = "SELECT r.* , g.goods_thumb , g.goods_name ,rg.back_num , rg.out_num, o.order_sn ,o.add_time ,  d.delivery_sn , d.update_time , d.how_oos ,d.shipping_fee, d.insure_fee , d.invoice_no,
+                     d.email, d.sign_building , d.best_time , d.country , d.province , d.city , d.district " .
+            "  FROM" . $GLOBALS['ecs']->table('order_return') .
+            " as r LEFT JOIN  " . $GLOBALS['ecs']->table('goods_attr') . " as ga ON r.goods_id = ga.goods_id " .
+            " LEFT JOIN " . $GLOBALS['ecs']->table('return_goods') . " as rg ON rg.rec_id = r.rec_id " .
+            " LEFT JOIN " . $GLOBALS['ecs']->table('goods') . " as g ON g.goods_id=r.goods_id " .
+            " LEFT JOIN " . $GLOBALS['ecs']->table('order_info') . " as o ON o.order_id = r.order_id" .
+            " LEFT JOIN " . $GLOBALS['ecs']->table('delivery_order') . " as d ON d.order_id = o.order_id " .
+            " WHERE r.ret_id = '$ret_id'";
+    } else {
+        $sql = "SELECT *  FROM " . $GLOBALS['ecs']->table('order_return') .
+            " WHERE order_sn = '$order_sn'";
+    }
+    $order = $GLOBALS['db']->getRow($sql);
+    if ($order) {
+        $order['attr_val'] = unserialize($order['attr_val']);
+        $sql = " SELECT rg.out_num FROM " . $GLOBALS['ecs']->table('return_goods') . " as rg LEFT JOIN " .
+            $GLOBALS['ecs']->table('order_return') . " as r ON rg.rec_id = r.rec_id  WHERE r.ret_id = '$ret_id' AND rg.return_type = 2";
+        $back_num = $GLOBALS['db']->getAll($sql);
+        if ($order['attr_val']) {
+            foreach ($order['attr_val'] as $key => $value) {
+                $order['attr_val'][$key]['out_num'] = $back_num [$key]['out_num'];
+            }
+        }
+        $order['cause_id'] = $order['cause_id'];
+        $order['back_num'] = $order['back_num'];
+        $order['apply_time'] = local_date($GLOBALS['_CFG']['time_format'], $order['apply_time']);
+        $order['formated_update_time'] = local_date($GLOBALS['_CFG']['time_format'], $order['update_time']);
+        $order['formated_add_time'] = local_date($GLOBALS['_CFG']['time_format'], $order['add_time']);
+        $order['insure_yn'] = empty($order['insure_fee']) ? 0 : 1;
+        $order['should_return'] = $order['should_return'] * $order['back_num'];
+        $order['formated_should_return'] = price_format($order['should_return']);
+        $order['return_status'] = $order['return_status'];
+        $order['formated_return_status'] = $GLOBALS['_LANG']['rf'][$order['return_status']];
+        $order['refund_status'] = $order['refund_status'];
+        $order['formated_refund_status'] = $GLOBALS['_LANG']['ff'][$order['refund_status']];
+        $order['address_detail'] = get_consignee_info($order['ret_id']);
+        $order['return_cause'] = '';
+        if ($order['cause_id']) {
+            $sql = "SELECT cause_name " . 'FROM ' . $GLOBALS['ecs']->table('return_cause') . " WHERE cause_id=( SELECT parent_id FROM  " . $GLOBALS['ecs']->table('return_cause') . " WHERE cause_id = '" . $order['cause_id'] . "')";
+            $parent = $GLOBALS['db']->getOne($sql);
+            $sql = "SELECT c.cause_name " . 'FROM ' . $GLOBALS['ecs']->table('return_cause') . " AS c " .
+                "LEFT JOIN " . $GLOBALS['ecs']->table('return_cause') . " AS s ON s.parent_id=c.cause_id WHERE c.cause_id=" . $order['cause_id'];
+            $child = $GLOBALS['db']->getOne($sql);
+            $order['return_cause'] = $parent . " " . $child;
+        }
+        return $order;
+    }
+}
+
+/**
+ * 退换货退款 by ECToch Leah
+ * @param $order 订单信息
+ * @param $refund_type 退款类型 线上/线下
+ * @param $rerefund_amount 退款金额
+ * @param $refund_note 操作备注
+ * @param int $refund_amount
+ * @return bool
+ */
+function aftermarket_refund($order, $refund_type, $refund_amount, $refund_note)
+{
+    /* 检查参数 */
+    $user_id = $order['user_id'];
+    if ($user_id == 0 && $refund_type == 1) {
+        die('anonymous, cannot return to account balance');
+    }
+    $refund_amount = $refund_amount > 0 ? $refund_amount : 0;
+    if ($refund_amount <= 0) {
+        return true;
+    }
+    if (!in_array($refund_type, array(1, 2, 3))) {
+        die('invalid params');
+    }
+    /* 备注信息 */
+    if ($refund_note) {
+        $change_desc = $refund_note;
+    } else {
+        include_once(ROOT_PATH . 'languages/' . $GLOBALS['_CFG']['lang'] . '/admin/aftermarket.php');
+        $change_desc = sprintf($GLOBALS['_LANG']['order_refund'], $order['order_sn']);
+    }
+
+    /* 处理退款 */
+    if (1 == $refund_type) {
+        
+        log_account_change($user_id, $refund_amount, 0, 0, 0, $change_desc);
+        return true;
+        
+    } elseif (2 == $refund_type) {
+        //线下
+        return true;
+
+    } else {
+        return true;
+    }
+}
+/**
+ * 退换货 用户积分退还
+ * by Leah
+ */
+function return_surplus_integral_bonus($user_id, $return_goods_price)
+{
+
+    $sql = " SELECT pay_points  FROM " . $GLOBALS['ecs']->table('users') . " WHERE user_id=" . $user_id;
+    $pay = $GLOBALS['db']->getOne($sql);
+    $pay = $pay - $return_goods_price; //用户总积分-本次商品
+
+    if ($pay > 0) {
+        $sql = "UPDATE " . $GLOBALS['ecs']->table('users') . " SET pay_points =" . $pay . " WHERE user_id=" . $user_id;
+
+        $GLOBALS['db']->query($sql);
+    }
+}
+
+/**
+ *  by　　Leah
+ * @param type $shipping_config
+ * @return type
+ */
+function free_price($shipping_config)
+{
+    $shipping_config = unserialize($shipping_config);
+
+    $arr = array();
+
+    if (is_array($shipping_config)) {
+
+        foreach ($shipping_config as $key => $value) {
+
+            foreach ($value as $k => $v) {
+
+                $arr['configure'][$value['name']] = $value['value'];
+            }
+        }
+    }
+    return $arr;
+}
+/**
+ * 获取凭证
+ */
+function get_cert_img($rec_id) {
+    
+    $sql = 'SELECT * FROM ' . $GLOBALS['ecs']->table('aftermarket_attachments') . " WHERE rec_id = $rec_id";
+    $res = $GLOBALS['db']->query($sql);
+    
+    $list = array();
+    while ($row = $GLOBALS['db']->fetchRow($res)) {
+        $row['img_id'] = $row['img_id'];
+        $row['img_url'] = $row['img_url'];
+        $row['goods_id'] =$row['free_money'];
+        $list[] = $row;
+    }
+    return $list;
+}
+//pc begin
+/**
+ * 查询订单商品是否已申请过服务
+ * @param type $rec_id
+ * @return type
+ */
+function check_aftermarket($rec_id)
+{
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_return') . " WHERE rec_id = " . $rec_id;
+    return ($GLOBALS['db']->getOne($sql));
+}
+/**
+ * 获取订单所对应的服务类型数组
+ * @param $order
+ * @return array
+ */
+function get_service_opt($order) {
+    $service_return = get_service_info(ST_RETURN_GOODS); //退货退款
+    $service_exchange = get_service_info(ST_EXCHANGE); //换货
+
+    $time = gmtime();
+    $type_list = array();
+    if ($order['pay_status'] == PS_PAYED) {
+        //订单已付款
+        if ($order['order_status'] == OS_SPLITED) {
+            //已分单
+            if ($order['shipping_status'] == SS_SHIPPED) {
+                //已发货 退款
+                $sql = 'SELECT log_time FROM ' . $GLOBALS['ecs']->table('order_action') . " WHERE  shipping_status = " . SS_SHIPPED . " AND order_id = " . $order['order_id'];
+                $action_time = $GLOBALS['db']->getOne($sql); //获取发货时间
+
+                /* 退货退款 现在时间-发货时时间 得到天数 */
+                $days = (($time - $action_time) / 3600 / 24);
+                if ($days <= $service_return['unreceived_days']) {
+                    $type_list[]= ST_RETURN_GOODS;
+                } else {
+                    show_message($GLOBALS['_LANG']['time_out']);
+                }
+                if ($days <= $service_exchange['unreceived_days']) {
+                    $type_list[]= ST_EXCHANGE;
+                } else {
+                    show_message($GLOBALS['_LANG']['time_out']);
+                }
+               
+            } elseif ($order['shipping_status'] == SS_RECEIVED) {
+                //已收货 退货换货，退款, 换货, 维修
+                $sql = 'SELECT log_time FROM ' . $GLOBALS['ecs']->table('order_action') . " WHERE  shipping_status = " . SS_RECEIVED . " AND order_id = " . $order['order_id'];
+                $action_time = $GLOBALS['db']->getOne($sql);
+
+                /* 退货退款 现在时间-发货时时间 得到天数 */
+                $days = (($time - $action_time) / 3600 / 24);
+                if ($days <= $service_return['unreceived_days']) {
+                    $type_list[]= ST_RETURN_GOODS;
+                } else {
+                    show_message($GLOBALS['_LANG']['time_out']);
+                }
+                if ($days <= $service_exchange['unreceived_days']) {
+                    $type_list[]= ST_EXCHANGE;
+                } else {
+                    show_message($GLOBALS['_LANG']['time_out']);
+                }
+            } else {
+                //其他 
+            }
+        }
+    }
+    return $type_list;
+}
+/*
+ * 根据类型获得退换货类型详情
+ */
+function get_service_info( $service_type)
+{
+    $sql = "SELECT * " .
+        "FROM " . $GLOBALS['ecs']->table('service_type') . " WHERE service_type = $service_type";
+    
+    $result = $GLOBALS['db']->GetRow($sql);
+    if( $result['service_type'] == ST_EXCHANGE){
+        /*换货*/
+        $result['exchange'] = 1;
+    }elseif( $result['service_type'] == ST_RETURN_GOODS ){
+        /*退货*/
+        $result['return_goods'] = 1;
+    }
+    return $result;
+}
+/**
+ * 获取服务类型
+ * by ECTouch Leah TODO delete
+ * @return mix
+ */
+function get_service_type($service_id , $service_name = 0)
+{
+    $sql = "SELECT * " .
+        "FROM " . $GLOBALS['ecs']->table('service_type') . " WHERE service_type='$service_id'";
+    $result = $GLOBALS['db']->GetRow($sql);
+    if($service_name){
+         return $result['service_name'];
+    }else{
+        return $result;
+    } 
+}
+/**
+ * 获取服务类型名称
+ * @param type $service_id
+ * @return type
+ */
+function get_service_type_name($type_id)
+{
+    $sql = "SELECT * " .
+        "FROM " . $GLOBALS['ecs']->table('service_type') . " WHERE service_type='$type_id'";
+    $result = $GLOBALS['db']->GetRow($sql);
+    
+    return $result['service_name'];
+ 
+}
+/** 获取所有服务类型列表
+ * @param $service_type
+ * @return array
+ */
+function get_service_type_list($service_id = array())
+{
+    $where =  '';
+    if(!empty($service_id)){
+        $where = " AND service_type in(" . implode(',', $service_id) . ")";
+    }
+    $sql = 'SELECT service_id, service_name, service_desc,received_days, unreceived_days, service_type FROM ' . $GLOBALS['ecs']->table('service_type') . 'service_type' . ' WHERE  is_show = 1 ' . $where . ' ORDER BY sort_order, service_id';
+
+    $res = $GLOBALS['db']->query($sql);
+    $service_type = array();
+    while ($row = $GLOBALS['db']->fetchRow($res)) {
+        $service_type[$row['service_id']]['service_name'] = $row['service_name'];
+        $service_type[$row['service_id']]['service_id'] = $row['service_id'];
+        $service_type[$row['service_id']]['received_days'] = $row['received_days'];
+        $service_type[$row['service_id']]['unreceived_days'] = $row['unreceived_days'];
+        $service_type[$row['service_id']]['service_desc'] = $row['service_desc'];
+    }
+    return $service_type;
+}
+/**
+ * 取得订单商品 退换货
+ * @param   int $rec_id 订单商品自增id
+ * @return  array   订单商品数组
+ */
+function order_goods_info($rec_id)
+{
+    $sql = "SELECT og.rec_id, og.goods_id, og.goods_name, og.goods_sn, og.market_price, og.goods_number, " .
+        "og.goods_price, og.goods_attr, og.is_real, og.parent_id, og.is_gift, g.goods_thumb ,g.suppliers_id," .
+        "og.goods_price * og.goods_number AS subtotal, og.extension_code " .
+        " FROM " . $GLOBALS['ecs']->table('order_goods') .
+        " og LEFT JOIN ".$GLOBALS['ecs']->table('goods') ." g ON og.goods_id = g.goods_id ".
+        " WHERE og.rec_id = '$rec_id'";
+    $goods = $GLOBALS['db']->getRow($sql);
+    if ($goods['extension_code'] == 'package_buy') {
+        $goods['package_goods_list'] = get_package_goods($goods['goods_id']);
+    }
+    return $goods;
+}
+
+/**
+ * 得到新退换货单号
+ * @return  string
+ */
+function get_service_sn()
+{
+    /* 选择一个随机的方案 */
+    mt_srand((double) microtime() * 1000000);
+
+    return date('Ymd') . str_pad(mt_rand(1, 99999), 3, '0',STR_PAD_LEFT);
+}
+/**
+ * 获取商家地址
+ */
+function get_business_address($suppliers_id) {
+    
+    $address = '';
+    
+    if ($suppliers_id) {
+        $address = '';
+    } else {
+        $sql = 'SELECT  region_name FROM ' . $GLOBALS['ecs']->table('region') .
+            " WHERE region_id = '" . $GLOBALS['_CFG']['shop_country'] . "'";
+        $address .= $GLOBALS['db']->getOne($sql) . ' ';
+  
+        $sql = 'SELECT region_name FROM ' . $GLOBALS['ecs']->table('region') .
+            " WHERE region_id = '".$GLOBALS['_CFG']['shop_province']."'";
+        $address .= $GLOBALS['db']->getOne($sql) . ' ';
+
+        $sql = 'SELECT region_name FROM ' . $GLOBALS['ecs']->table('region') .
+            " WHERE region_id = '".$GLOBALS['_CFG']['shop_city']."'";
+        $address .= $GLOBALS['db']->getOne($sql) . ' ';
+
+        $address.= $GLOBALS['_CFG']['shop_address'] . '收件人：' . $GLOBALS['_CFG']['shop_name'] . '联系电话：' . $GLOBALS['_CFG']['service_phone'];
+    }
+    return $address;
+}
+

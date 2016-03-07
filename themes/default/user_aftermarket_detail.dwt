@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8">
+<meta name="charset" content="utf-8">
+<title>{$title}</title>
+<link rel="prefetch" href="http://assets.alicdn.com/mw/base/styles/component/more/images/loading.gif">
+<link rel="prefetch" href="http://at.alicdn.com/t/font_1427779172_5609531.woff">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta id="stopUsePullRefresh" value="true">
+<LINK rel=stylesheet type=text/css href="__TPL__/css/aftermarket.css">
+<link rel="stylesheet" href="__TPL__/css/index-min.css" charset="utf-8">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.json.js" ></script>
+</head>
+<body class="iscroll">
+<div style="top: 0px; min-height: 567px; opacity: 1;" id="page">
+  <div style="left: 0px; top: -40px; position: fixed;" class="pullup"><span class="icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <path fill="none" stroke="#ddd" stroke-width="5"  />
+      <path fill="none" stroke="#f40" stroke-dasharray="298.495,298.495" stroke-dashoffset="298.495" stroke-width="5"/>
+    </svg>
+    </span><span class="label">上拉刷新页面</span></div>
+  <div style="bottom: 40px;" id="wrapper">
+    <div style="min-height: 528px; -webkit-transform: translate(0px, -1px) translateZ(0px); -webkit-transition: 0.001s cubic-bezier(0.1, 0.57, 0.1, 1); transition: 0.001s cubic-bezier(0.1, 0.57, 0.1, 1);" id="scroller">
+      <div class="panel panel-detail">
+        <div class="panel-body" id="panel-body">
+            <div class="m_msg J_Status show">
+              <div class="msg-item msg-lst" style="left: 0px; opacity: 1;">
+                <div class="p-info">
+                  <div class="other">{$title}</div>
+                </div>
+                <div class="msg-info"> <s class="arrow"></s>
+                  <div class="p-img"> <a href="{:url('goods/index', array('id'=>$this->_var['goods']['goods_id']))}" target="_blank"><img src="{$goods.goods_thumb}"></a>
+                    <dl>
+                      <dt>
+                        <h4 class="title"><a href="{:url('goods/index', array('id'=>$this->_var['goods']['goods_id']))}">{$goods.goods_name}{$goods.goods_attr}</a></h4>
+                      </dt>
+                      <dd class="dd-price"><b>{$lang.shop_price}{$goods.goods_price} {$lang.number_to}：{$goods.goods_number}</b></dd>
+                      <dd class="dd-price"><b class="pull-left">{$lang.ws_subtotal}：<span class="ect-colory">{$goods.subtotal}</span></b></dd>
+                    </dl>
+                  </div>
+                  <div class="cutoff-line"></div>
+                  <div class="desc">
+                    <div class="desc-i">{$lang.aftermarket_type}：<span>{$return.service_name}</span></div>
+                    <div class="desc-i">{$lang.aftermarket_status}：<b>{$return.return_status}</b></div>
+                    <div class="desc-i">{$lang.refund_status}：<b>{$return.refund_status}</b></div>
+                    <div class="desc-i">{$lang.aftermarket_number}：<span>{$return.service_sn}</span> </div>
+                    <div class="desc-i">{$lang.order_addtime}：<span>{$return.formated_add_time}</span></div>
+                    <div class="cutoff-line cutoff-line2"></div>
+                    <div class="additional"> {$lang.return_num}：<b>{$goods.back_num}</b>: {$lang.should_return}：<b class="ect-colory">{$return.formated_should_return}</b> </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="m_msg J_Status show">
+              <div class="msg-item msg-lst" style="left: 0px; opacity: 1;">
+
+                <div class="ect-padding-tb">
+                    <!--{if $return.handler}-->
+                        {$return.handler}
+                    <!--{/if}-->
+                    <a href="{:url('user/aftermarket_done', array('rec_id'=>$this->_var['return']['rec_id']))}" class="btn btn-info ect-colorf">{$lang.aftermarket_action}</a>
+                </div>
+                
+                
+              </div>
+            </div>
+
+            <!--{if $return.back_shipping_name}-->
+            <div class="m_msg J_Status show">
+              <div style="left: 0px; opacity: 1;" class="msg-item msg-lst">
+                <div class="msg-info">
+                 <div class="title">买家寄出</div>
+                  <div class="desc">
+                    <div class="desc-i">{$lang.shipping_method}：<span>{$return.back_shipping_name}</span></div>
+                    <div class="desc-i">{$lang.shipping_number}：<span>{$return.back_invoice_no}</span></div>
+                  </div>
+                  <div class="cutoff-line cutoff-line2"></div>
+                   <div class="title">商家寄出</div>
+                  <div class="desc">
+                    <div class="desc-i">{$lang.shipping_method}：<span>{$return.out_shipping_name}</span></div>
+                    <div class="desc-i">{$lang.shipping_number}：<span>{$return.out_invoice_no}</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--{/if}-->
+          
+            
+            <!--{if $return.cert}-->
+            <div class="m_msg conversation">
+              <div class="msg-item  msg-itm-img">
+                <div class="p-info">
+                  <div class="title">{$lang.cert_img}</div>
+                  <div class="p-img"> 
+                    <ul>
+                      <!-- {foreach from=$return.cert item=cert} -->
+                      <li> <img src="{$cert.img_url}"></li>
+                      <!-- {/foreach} -->
+                    </ul>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <!--{/if}-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="mask"></div>
+<div id="popup" class="bottom-side"></div>
+</body>

@@ -98,6 +98,87 @@ $_LANG['booking_js']['email_empty'] = '请输入联系人的电子邮件地址�
 $_LANG['booking_js']['email_error'] = '您输入的电子邮件地址格式不正确！';
 $_LANG['booking_js']['contact_phone_empty'] = '请输入联系人的电话！';
 
+
+/**
+ * 售后服务申请 */
+$_LANG['rf'][RF_APPLICATION] = '买家发起了申请';
+$_LANG['rf'][RF_SEND_OUT] = '买家退回商品';
+$_LANG['rf'][RF_RECEIVE] =  '收到退换货';
+$_LANG['rf'][RF_SWAPPED_OUT] =  '换出商品寄出';
+$_LANG['rf'][RF_COMPLETE] =  '完成';
+$_LANG['rf'][RF_CANCELED] =  '买家撤销了申请';
+$_LANG['rf'][RF_APPLY_FALSE] =  '审核失败';
+$_LANG['ff'][FF_REFUND] = '已退款';
+$_LANG['ff'][FF_NOREFUND] = '未退款';
+
+$_LANG['st'][ST_RETURN_GOODS] = '退货退款';
+$_LANG['st'][ST_REFUND] = '仅退款';
+$_LANG['st'][ST_EXCHANGE] = '换货';
+$_LANG['st'][ST_REPAIR] = '维修';
+
+$_LANG['rd'][RF_APPLICATION] = "发起了%s， 原因：%s。";
+$_LANG['rd'][RF_CANCELED] = "买家主动撤销了本次售后服务申请";
+
+$_LANG['return_info'] = "退换货申请已提交";
+$_LANG['cancel_service'] = '卖家撤销了申请';
+$_LANG['cancel_service_mess'] = '买家主动撤销了本次售后服务申请。';
+
+$_LANG['return_not_null'] = '发货信息不全';
+
+//退换货语言 by ECTouch Leah begin
+$_LANG['aftermarket_apply'] ="申请服务";
+$_LANG['return_reason'] = '退货原因';
+$_LANG['exchange_reason'] = '换货原因';
+$_LANG['refund_amount'] = '退款金额';
+$_LANG['return_explain'] = '问题描述';
+$_LANG['aftermarket_type'] ="退换货类型";
+$_LANG['aftermarket_list_lnk'] = '退换货订单';
+$_LANG['aftermarket_status'] = '退换货单状态';
+$_LANG['service_desc'] = '服务类型描述';
+$_LANG['refund_status'] = '退款状态';
+$_LANG['aftermarket_number'] = '服务单号';
+$_LANG['should_return'] = '应退款';
+$_LANG['return_num'] = '退货数量';
+$_LANG['back_num'] = '退回数量';
+$_LANG['aftermarket_addtime'] = '申请时间';
+$_LANG['aftermarket_detail'] = '服务单信息';
+$_LANG['aftermarket_action'] = '操作记录';
+$_LANG['cancel_service'] = '撤销申请';
+$_LANG['cancel'] = '撤销申请';
+$_LANG['send_out'] = '退回商品寄出';
+$_LANG['apply_goods'] ="申请售后商品:";
+$_LANG['shipping_number'] = '发货单';
+$_LANG['cert_img'] = '凭证图片';
+
+$_LANG['max_num'] = '最多';
+$_LANG['include_shipping_free'] = '元，含发货邮费';
+$_LANG['yuan'] = '元';
+$_LANG['service_param_err'] = "参数不完整";
+$_LANG['service_no_exist'] = "服务类型不存在";
+
+/**退换货提交显示语言**/
+$_LANG['aftermarket_apply_error'] = '该商品已经申请过，请核实后申请';
+$_LANG['wait_check'] ="待审核";
+$_LANG['check_false'] ="审核不通过";
+$_LANG['check_success'] ="审核成功,待退货";
+$_LANG['refund_success'] ="已退款";
+$_LANG['send_out_repeat'] = '已经发货，请勿重复提交！';
+$_LANG['no_service'] ="当前还不能提交售后服务";
+
+$_LANG['explain_desc'] = '此处为商品问题描述，更新完成后由客服联系您核实';
+$_LANG['process_info'] = '备注';
+$_LANG['process_user'] = '操作人';
+$_LANG['aftermarket_info'] = '售后服务详情';
+$_LANG['aftermarket_progress'] = '售后服务进度条' ;  
+$_LANG['aftermarket_operate'] = '售后服务操作' ;  
+$_LANG['progress_desc'] = '进度说明';
+
+$_LANG['confirm_cancel_aftermarket'] = '您确认要取消该服务订单吗？取消后此订单将视为无效订单';
+$_LANG['confirm_to_return'] = '您确认要去退货么？';
+$_LANG['current_rc_apply_success'] = '当前服务订单状态已审核通过。';
+
+$_LANG['time_out'] = '申请服务已关闭，申请超过设定时间';
+$_LANG['edit_shipping_success'] = '退货成功';
 /* 个人资料 */
 $_LANG['confirm_submit'] = '　确 定　';
 $_LANG['member_rank'] = '会员等级';

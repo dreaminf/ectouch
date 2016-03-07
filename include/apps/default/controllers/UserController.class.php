@@ -678,6 +678,14 @@ class UserController extends CommonController {
             $goods_list[$key]['subtotal'] = price_format($value['subtotal'], false);
             $goods_list[$key]['tags'] = model('ClipsBase')->get_tags($value['goods_id']);
             $goods_list[$key]['goods_thumb'] = get_image_path($order_id, $value['goods_thumb']);
+             /*退换货 start*/
+            $goods_list[$key]['ret_id'] = $this->model->table('order_return')->field('ret_id')->where('rec_id =' . $value['rec_id'])->getOne();
+            $goods_list[$key]['aftermarket'] = model('Users')->check_aftermarket($value['rec_id']); //查询是否申请过售后服务
+            if ($order['pay_status'] == PS_PAYED) {
+                /*只有已付款订单才能申请售后服务*/
+                $goods_list[$key]['service_apply'] = true;
+            }
+            /*退换货 end*/
         }
 
         // 设置能否修改使用余额数
@@ -2396,7 +2404,8 @@ class UserController extends CommonController {
 	/**
      * 待评价订单商品评论
      */
-    public function order_comment_list() {
+    public function order_comment_list() 
+    {
         $cmt = new stdClass();
         $cmt->id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
         $cmt->type = !empty($_GET['type']) ? intval($_GET['type']) : 0;
@@ -2415,4 +2424,400 @@ class UserController extends CommonController {
         $this->assign('title', L('goods_comment'));
         $this->display('user_order_goods_comment_list.dwt');
     }
+
+
+
+        /**
+     * 售后服务类型
+     */
+    public function aftermarket() {
+        $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
+        $order = model('Users')->get_order_detail($order_id, $this->user_id);
+
+        $type_list = model('Users')->get_service_opt($order); 
+        $rec_id = isset($_GET['rec_id']) ? intval($_GET['rec_id']) : 0;
+        $service_type = array();
+        //查询所对应的可用服务类型
+        if (!empty($type_list)) {
+            $service_type = model('Users')->get_service_type_list($order_id, $rec_id, $type_list);
+        }
+        if(empty($service_type)){
+            //没有任何售后服务可选  返回
+            show_message(L('no_service'));
+        }
+        $this->assign('service_type', $service_type);
+        
+
+        $this->display('user_aftermarket.dwt');
+    }
+
+
+    /**
+     * 改变服务类型
+     */
+    public function change_service() {
+        //格式化返回数组
+        $result = array(
+            'error' => 0,
+            'message' => ''
+        );
+        if (isset($_GET['id']) && isset($_GET['order_id']) && isset($_GET['rec_id'])) {
+            $id = isset($_GET['id']) ? intval($_GET['id']) : 0; //类型id
+            $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
+            $rec_id = isset($_GET['rec_id']) ? intval($_GET['rec_id']) : 0;
+            $count = $this->model->table('service_type')->where('service_id = ' . $id)->count();
+            if ($count > 0) {
+                $result['error'] = 0;
+                $result['message'] = L('collect_success');
+                $result['url'] = url('user/returns_apply', array('id' => $id, 'order_id' => $order_id, 'rec_id' => $rec_id));
+                die(json_encode($result));
+            } else {
+                $result['error'] = 2;
+                $result['message'] = L('service_no_exist');
+            }
+        } else {
+            $result['error'] = 1;
+            $result['message'] = L('service_param_err');
+        }
+
+        die(json_encode($result));
+        exit();
+    }
+
+    /**
+     * 服务类型
+     */
+    public function returns_apply() {
+        $id = isset($_GET['id']) ? intval($_GET['id']) : 0; //类型id
+        $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
+        $rec_id = isset($_GET['rec_id']) ? intval($_GET['rec_id']) : 0;
+        $order = model('Users')->get_order_detail($order_id, $this->user_id); //订单详情
+
+        
+        $type_list = model('Users')->get_service_opt($order);
+        
+        $goods = model('Order')->order_goods_info($rec_id); /*获取订单商品*/
+        $service_type = model('Users')->get_service_type_list($order_id, $rec_id, $type_list);
+        $this->assign('service_type', $service_type); //退换货类型
+        $this->assign('cause_list', model('Users')->get_parent_cause()); //退换货原因
+        $this->assign('order', $order);
+        $this->assign('goods', $goods);
+        if ($id == ST_EXCHANGE) {
+            /*换货时商品信息*/ 
+            $goods_info = model('Goods')->get_goods_info($goods['goods_id']);
+
+            if ($goods_info === false) {
+                show_message('此商品已下架，请选择退货');
+            } else {
+                // 获得商品的规格和属性
+                $properties = model('Goods')->get_goods_properties($goods_info['goods_id']);
+                // 商品属性
+                $this->assign('properties', $properties ['pro']);
+                // 商品规格
+                $this->assign('specification', $properties ['spe']);
+
+                $this->assign('goods_info', $goods_info);
+            
+            }
+        }
+        //$id= model('Users')->get_order_detail($order_id, $this->user_id)->field('user_id')->select();
+        //dump($id);exit;
+         $id = isset($_GET['id']) ? intval($_GET['id']) : '';
+         
+        // 获得用户对应收货人信息
+        $consignee = model('Users')->get_consignee_list($_SESSION['user_id'], $id);
+       
+        $province_list = model('RegionBase')->get_regions(1, $order['country']);
+        $city_list = model('RegionBase')->get_regions(2, $order['province']);
+        $district_list = model('RegionBase')->get_regions(3, $order['city']);
+        $this->assign('title', L('edit_address'));
+        $this->assign('consignee', $consignee);
+        // 取得国家列表、商店所在国家、商店所在国家的省列表
+        $this->assign('country_list', model('RegionBase')->get_regions());
+        
+        $this->assign('shop_province_list', model('RegionBase')->get_regions(1, C('shop_country')));
+        $this->assign('province_list', $province_list);
+        //dump($province_list);
+        $this->assign('city_list', $city_list);
+        $this->assign('district_list', $district_list);
+        //分割
+        $adress=model('Users')->get_business_address($goods_info['suppliers_id']);
+        $this->assign('business_address',$adress);
+        $service = $this->model->table('service_type')->field('service_type')->where('service_id = ' . $id)->find(); //查询服务类型
+        $type = model('Users')->get_aftermarket_operate($service['service_type']);
+        $this->assign('rec_id', $rec_id);
+        $this->assign('service_id', $id);
+        $this->assign('type', $type); // 选择售后类型
+        $this->assign('order_id', $order_id);
+        $sql = 'SELECT service_id,service_name,service_desc FROM ' . M()->pre . 'service_type' . ' WHERE is_show = 1 and service_id=' . $id;
+        $result = M()->query($sql);
+        $this->assign('info', $result['0']);
+        $this->assign('title', $result['0']['service_name']);
+        
+        $this->display('user_aftermarket_apply.dwt');
+    }
+
+    /**
+     * 上传售后服务凭证（功能并每有实现）
+     */
+    public function upload_file() {
+        if ($_REQUEST["name"]) {
+            $result = ectouchUpload('', 'service_image');
+            if ($result['error'] > 0) {
+                $this->message($result['message'], NULL, 'error');
+            }
+            /* 生成logo链接 */
+            $attachments = substr($result['message']['file']['savepath'], 2) . $result['message']['file']['savename'];
+            //保存图片到数据库/aftermarket_attachments
+            $img['img_url'] = __URL__ . '/' . $attachments;
+            $img['goods_id'] = intval(I('request.goods_id'));
+            $img['rec_id'] = intval(I('request.rec_id'));
+            $this->model->table('aftermarket_attachments ')->data($img)->insert();
+        } else {
+            echo "no picture";
+        }
+    }
+
+    /**
+     * 获取全部服务订单
+     * by ECTouch Leah
+     */
+    public function aftermarket_list() {
+        $size = I(C('page_size'), 10);
+        $count = $this->model->table('order_return ')->where('user_id = ' . $this->user_id)->count();
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('aftermarket_list', $filter), $size);
+        $offset_page = explode(',', $offset);
+        $orders = model('Users')->get_user_aftermarket($this->user_id, $offset_page[1], $offset_page[0]);
+        $this->assign('show_asynclist', C('show_asynclist'));
+        $this->assign('title', L('aftermarket_list_lnk'));
+        $this->assign('pager', $this->pageShow($count));
+        $this->assign('aftermarket_list', $orders);
+        $this->display('user_aftermarket_list.dwt');
+    }
+
+    /**
+     * 售后服务申请
+     */
+    public function aftermarket_done() {
+
+        /* 判断是否重复提交申请退换货 */
+        $rec_id = empty($_REQUEST['rec_id']) ? '' : $_REQUEST['rec_id'];
+        $order_id = empty($_REQUEST['order_id']) ? '' : $_REQUEST['order_id'];
+        $num = 0;
+
+        if ($rec_id) {
+            $num = $this->model->table('order_return')
+                    ->field('COUNT(*)')
+                    ->where(array('rec_id' => $rec_id))
+                    ->getOne();
+        } else {
+            show_message(L('aftermarket_apply_error'), '', '', 'info', true);
+        }
+        $goods = model('Order')->order_goods_info($rec_id); /* 订单商品 */
+        $claim = $this->model->table('service_type')->field('service_name,service_type')->where('service_id = ' . intval(I('post.service_id')))->find(); /* 查询服务类型 */
+        $reason = $this->model->table('return_cause')->field('cause_name')->where('cause_id = ' . intval(I('post.reason')))->find(); /* 退换货原因 */
+        $order = model('Users')->get_order_detail($order_id, $this->user_id); /* 订单详情 */
+        if (($num > 0)) {
+            /* 已经添加 查询服务订单 */
+            $order_return = $this->model->table('order_return')
+                    ->field('ret_id, rec_id, add_time, service_sn, return_status, should_return,is_check,service_id')
+                    ->where('rec_id = ' . $rec_id)
+                    ->find();
+            $ret_id = $order_return['ret_id'];
+        } else {
+            $order_return = array(
+                'service_sn' => get_service_sn(),
+                'rec_id' => $rec_id,
+                'goods_id' => $goods['goods_id'],
+                'order_id' => $order_id,
+                'order_sn' => $goods['goods_sn'],
+                'service_id' => intval(I('post.service_id')), /*服务类型*/
+                'user_id' => $this->user_id,
+                'addressee' => $order['consignee'], /*联系人*/
+                //'phone' => $order['mobile'], /*联系方式*/
+                'remark' => empty($_REQUEST['description']) ? '' : $_REQUEST['description'], /*退款说明*/
+                'should_return' => 0, /*应退金额*/
+                'cause_id' => intval(I('post.reason')), /*退换货原因*/
+                'add_time' => gmtime(),
+                'return_status' => RF_APPLICATION,
+                'refund_status' => FF_NOREFUND,
+                'province'=>intval(I('province')),
+                'city'=>intval(I('city')),
+                'district'=>intval(I('district')),
+                'address'=>I('address')
+
+            );
+            
+            if ($claim['service_type'] == ST_RETURN_GOODS) {
+                $regin =  model('RegionBase')->get_regions();
+                $order_return['country'] =  $regin['region_id'] ;
+                $order_return['province'] = $order['province'];
+                $order_return['city'] = $order['city'];
+                $order_return['district'] = $order['district'];
+                $order_return['address'] = $order['address'];
+                $order_return['should_return'] = intval(I('post.back_num')) * $goods['goods_price'];/*应退金额*/
+            };
+            /* 插入退换货表 */
+            $this->model->table('order_return ')->data($order_return)->insert();
+            $ret_id = M()->insert_id();
+            /* 记录log */
+            //dump(L('rd.' . $order_return['return_status']));exit;
+            $action_info = sprintf(L('rd.' . $order_return['return_status']), $claim['service_name'], $reason['cause_name']);
+            
+            model('Order')->return_action($ret_id, RF_APPLICATION, $order_return['return_status'], FF_NOREFOUND, $order_return['remark'], L('buyer'), '', $action_info);
+            
+            /* 添加到换货退货表 */
+            $return_goods['rec_id'] = $rec_id;
+            $return_goods['goods_id'] = $goods['goods_id'];
+            $return_goods['goods_name'] = $goods['goods_name'];
+            $return_goods['goods_sn'] = $goods['goods_sn'];
+            $return_goods['return_type'] = intval(I('post.service_id'));
+            $return_goods['back_num'] = intval(I('post.back_num'));
+            
+            /* 添加退货表 */
+            $this->model->table('return_goods')->data($return_goods)->insert();
+            $order_return = model('Users')->get_aftermarket_detail($ret_id, $this->user_id);
+        }
+        
+        $action_list = model('Order')->get_return_action($ret_id);
+        $this->assign('action_list', $action_list);
+        //dump($action_list);exit;
+         /* 操作记录 */
+
+        if ($order_return['return_status'] == RF_APPLICATION && $order_return['is_check'] == OS_UNCONFIRMED) {
+            $order_return['is_cancel'] = true;
+        }
+        $this->assign('claim', $claim);
+
+        $this->assign('reason', $reason);
+
+        $this->assign('return', $order_return); /* 服务订单 */
+        $this->display('user_aftermarket_done.dwt');
+    }
+   
+
+   
+
+    /**
+     * 服务订单详情
+     */
+    public function aftermarket_detail() {
+
+        $ret_id = isset($_GET['ret_id']) ? intval($_GET['ret_id']) : 0;
+        /* 订单详情 */
+        $order = model('Users')->get_aftermarket_detail($ret_id, $this->user_id);
+        $order['handler'] = model('Order')->get_return_operate($order);
+        /* 订单商品 */
+        $goods = model('Order')->aftermarket_goods($order['rec_id']);
+        $goods['market_price'] = price_format($goods['market_price'], false);
+        $goods['goods_price'] = price_format($goods['goods_price'], false);
+        $goods['subtotal'] = price_format($goods['subtotal'], false);
+        $goods['tags'] = model('ClipsBase')->get_tags($goods['goods_id']);
+        $goods['goods_thumb'] = get_image_path($goods['goods_id'], $goods['goods_thumb']);
+
+        /*服务订单 订单状态 退款状态 审核状态 语言项*/ 
+        if ($order['return_status'] == RF_APPLICATION && $order['is_check'] == RC_APPLY_FALSE) {
+            /* 状态 ： 待审核 */
+            $order['return_status'] = L('wait_check');
+        } elseif ($order['return_status'] == RF_APPLICATION && $order['is_check'] == RC_APPLY_SUCCESS) {
+            /* 状态 ： 审核成功 */
+            $order['return_status'] = L('check_success');
+        } elseif ($order['return_status'] == RF_APPLY_FALSE && $order['is_check'] == RC_APPLY_FALSE) {
+            /* 状态 ： 审核失败 */
+            $order['return_status'] = L('check_false');
+        } elseif ($order['return_status'] == RF_CANCELED) {
+            /* 状态 ： 撤销申请 */
+            $order['return_status'] = L('cancel');
+        } elseif ($order['refund_status'] == FF_REFUND && $order['is_check'] == RC_APPLY_SUCCESS) {
+            /* 状态 ： 已退款 */
+            $order['return_status'] = L('refund_success');
+        } else {
+            $order['return_status'] = L('rf.' . $order['return_status']);
+        }
+        $order['refund_status'] = L('ff.' . $order['refund_status']);
+        $order['verify_status'] = L('rc.' . $order['is_check']);
+        $this->assign('title', L('aftermarket_detail'));
+        $this->assign('return', $order);
+        $this->assign('goods', $goods);
+        $this->display('user_aftermarket_detail.dwt');
+    }
+
+    /**
+     * 取消服务请求
+     */
+    public function cancel_service() {
+
+        $ret_id = intval(I('ret_id'));
+        $where['ret_id'] = $ret_id;
+        /*取消提交服务订单*/ 
+        $this->model->table('order_return')
+                ->data('return_status = ' . RF_CANCELED)
+                ->where($where)
+                ->update();      
+        $note = $action_info = L('cancel_service_mess');
+        model('Order')->return_action($ret_id, RF_CANCELED, FF_NOREFOUND, RC_APPLY_FALSE, $note, L('buyer'), '', $action_info);
+        $this->redirect(url('user/aftermarket_detail', array('ret_id' => $ret_id)));
+    }
+
+    /**
+     * 去退货
+     */
+    public function to_return() {
+        $ret_id = intval(I('ret_id'));
+        if (empty($ret_id)) {
+            show_message('退货出现异常，请稍后重试', '', '', 'info', true);
+        }
+        /*查看是否是重复操作*/
+        $return = model('Users')->get_aftermarket_detail($ret_id, $this->user_id);
+        if ($return['return_status'] == RF_SEND_OUT) {
+            show_message(L('send_out_repeat'), L('back_page_up'), '', 'error');
+        }
+        $consignee = model('Order')->get_consignee($_SESSION ['user_id']);
+        /* 取得配送列表 */
+        $region = array(
+            $consignee ['country'],
+            $consignee ['province'],
+            $consignee ['city'],
+            $consignee ['district']
+        );
+        $shipping_list = model('Shipping')->available_shipping_list($region);
+        /*处理退货信息*/ 
+        if (IS_POST) {
+            $invoice_no = I('post.back_invoice_no');
+            $shipping_id = I('post.back_other_shipping');
+            if (empty($invoice_no) || empty($shipping_id)) {
+                show_message(L('return_not_null'), '', '', 'info', true);
+            }
+            /* 获取快递信息 */
+            $region['country'] = $consignee['country'];
+            $region['province'] = $consignee['province'];
+            $region['city'] = $consignee['city'];
+            $region['district'] = $consignee['district'];
+            $shipping_info = model('Shipping')->shipping_area_info($shipping_id, $region);
+           
+            /* 更新数据 */
+            $data_u['back_invoice_no'] = $invoice_no;
+            $data_u['back_shipping_name'] = $shipping_info['shipping_name'];
+            $data_u['return_status'] = RF_SEND_OUT;
+            $where_u['ret_id'] = $ret_id;
+            $this->model->table('order_return')
+                    ->data($data_u)
+                    ->where($where_u)
+                    ->update();
+
+            $info = M()->table('order_return')->field('rec_id,order_id')->where($where_u)->select();
+            /* 记录log */
+            $action_info = "退回商品已寄出，快递名称：" . $shipping_info['shipping_name'] . " ，快递单号： " . $invoice_no;
+            $note = "退回商品已寄出，快递名称：" . $shipping_info['shipping_name'] . " ，快递单号： " . $invoice_no;
+            model('Order')->return_action($ret_id, RF_SEND_OUT, FF_NOREFOUND, RC_APPLY_SUCCESS, $note, L('buyer'), '', $action_info);
+            ecs_header("Location: " . url('User/aftermarket_done', array('rec_id' => $info['0']['rec_id'], 'order_id' => $info['0']['order_id'])));
+            exit;
+        }
+        $this->assign('shipping_list', $shipping_list);
+        $this->assign('ret_id', $ret_id);
+        $this->assign('title', L('send_out'));
+        $this->display('user_aftermarket_return.dwt');
+    }
+    //退换货end
 }
