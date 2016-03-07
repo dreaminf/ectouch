@@ -136,8 +136,8 @@ class Check {
         if (empty($str)) {
             return true;
         }
-        //return preg_match('#^13[\d]{9}$|14^[0-9]\d{8}|^15[0-9]\d{8}$|^18[0-9]\d{8}$#', $str);
-        return preg_match('/^1[0-9]{10}$/', $str);
+
+        return preg_match('#^13[\d]{9}$|14^[0-9]\d{8}|^15[0-9]\d{8}$|^17[0-9]\d{8}$|^18[0-9]\d{8}$#', $str);
     }
 
     /**
