@@ -134,8 +134,14 @@ if ($_REQUEST['act'] == 'users')
     {
         $smarty->assign('full_page', 1);
     }
-
-    $list = get_user_list();
+	if($_POST){
+		$username = $_POST['username'] ? $_POST['username'] : '';
+		$user_name = $_POST['user_name'] ? $_POST['user_name'] : '';
+		$shop_mobile = $_POST['shop_mobile'] ? $_POST['shop_mobile'] : '';
+		$drp_name = $_POST['drp_name'] ? $_POST['drp_name'] : '';		
+	}
+	
+    $list = get_user_list(1,$username,$user_name, $shop_mobile, $drp_name);
     $smarty->assign('list',         $list['list']);
     $smarty->assign('filter',       $list['filter']);
     $smarty->assign('record_count', $list['record_count']);
@@ -152,7 +158,7 @@ if ($_REQUEST['act'] == 'users')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'query')
 {
-    $list = get_user_list();
+    $list = get_user_list(1,$username,$user_name, $shop_mobile, $drp_name);
     $smarty->assign('list',         $list['list']);
     $smarty->assign('filter',       $list['filter']);
     $smarty->assign('record_count', $list['record_count']);
@@ -160,6 +166,8 @@ elseif ($_REQUEST['act'] == 'query')
 
     make_json_result($smarty->fetch('drp_users.htm'), '',array('filter' => $list['filter'], 'page_count' => $list['page_count']));
 }
+
+/*-
 /*------------------------------------------------------ */
 //-- 分销商审核管理
 /*------------------------------------------------------ */
@@ -170,8 +178,14 @@ if ($_REQUEST['act'] == 'users_audit')
     {
         $smarty->assign('full_page', 1);
     }
+	if($_POST){
+		$username = $_POST['username'] ? $_POST['username'] : '';
+		$user_name = $_POST['user_name'] ? $_POST['user_name'] : '';
+		$shop_mobile = $_POST['shop_mobile'] ? $_POST['shop_mobile'] : '';
+		$drp_name = $_POST['drp_name'] ? $_POST['drp_name'] : '';		
+	}
 
-    $list = get_user_list(0);
+    $list = get_user_list(0,$username,$user_name, $shop_mobile, $drp_name);
     $smarty->assign('list',         $list['list']);
     $smarty->assign('filter',       $list['filter']);
     $smarty->assign('record_count', $list['record_count']);
@@ -188,7 +202,7 @@ if ($_REQUEST['act'] == 'users_audit')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'users_audit_query')
 {
-    $list = get_user_list(0);
+    $list = get_user_list(0,$username,$user_name, $shop_mobile, $drp_name);
     $smarty->assign('list',         $list['list']);
     $smarty->assign('filter',       $list['filter']);
     $smarty->assign('record_count', $list['record_count']);
@@ -574,30 +588,45 @@ if ($_REQUEST['act'] == 'ranking_query')
  *                  frozen_money表示冻结资金，rank_points表示等级积分，pay_points表示消费积分
  * @return  array
  */
-function get_user_list($type = '1')
+function get_user_list($type ,$username,$user_name, $shop_mobile, $drp_name)
 {
     
     /* 初始化分页参数 */
     $filter = array(
 
     );
+	$conditioin = ' where `audit` = "'.$type.'" '; // 是否审核
+	
+    $where = 'where audit = "'.$type.'"';
 
-    $conditioin = ' where `audit` = "'.$type.'" '; // 是否审核
+	if ($user_name != '') {
+            $where .= " and d.real_name like '%$user_name%'  ";
+        } 
+	if ($shop_mobile != '') {
+            $where .= "and d.shop_mobile like '%$shop_mobile%' ";
+        } 
+	if ($username != '') {
+            $where .= "and u.user_name like '%$username%' ";
+        } 
+	if ($drp_name != '') {
+            $where .= "and d.shop_name like '%$drp_name%' ";
+        }
 
+    
     /* 查询记录总数，计算分页数 */
-    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('drp_shop') . $conditioin;
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('drp_shop') . " as d left join " . $GLOBALS['ecs']->table('users') ." as u on  d.user_id=u.user_id".
+        " $where ";
     $filter['record_count'] = $GLOBALS['db']->getOne($sql);
     $filter = page_and_size($filter);
-
     /* 查询记录 */
-    $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('drp_shop') . $conditioin .
-        " ORDER BY id DESC";
+    $sql = "SELECT *, u.user_name FROM " . $GLOBALS['ecs']->table('drp_shop') . " as d left join " . $GLOBALS['ecs']->table('users') ." as u on  d.user_id=u.user_id".
+        " $where ORDER BY id DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
     $arr = array();
     while ($row = $GLOBALS['db']->fetchRow($res))
     {
         $row['create_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['create_time']);
-        $row['user_name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$row['user_id']);
+        /* $row['user_name'] = $GLOBALS['db']->getOne("select user_name from ".$GLOBALS['ecs']->table('users') ." where user_id = ".$row['user_id']); */
         $arr[] = $row;
     }
     return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);

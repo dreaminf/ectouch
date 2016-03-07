@@ -34,6 +34,20 @@
     </form>
     
 </div>
+<div class="form-div">
+  <form action="drp.php?act=users_audit" method="post" name="searchForm"> 
+    <img src="images/icon_search.gif" width="26" height="22" border="0" alt="SEARCH" />  
+    &nbsp;用户名&nbsp;
+	<input type="text" name="username" size="8" />&nbsp;	
+    &nbsp;真实姓名&nbsp;
+	<input type="text" name="user_name" size="8" />&nbsp;
+	&nbsp;店铺名称&nbsp;
+	<input type="text" name="drp_name" size="8" />&nbsp;
+	手机号&nbsp;
+	<input type="text" name="shop_mobile" size="10" />&nbsp;&nbsp;
+	<input type="submit" value="{$lang.button_search}" />
+  </form>
+</div>
 
 <form method="post" action="" name="listForm">
 <div class="list-div" id="listDiv">
