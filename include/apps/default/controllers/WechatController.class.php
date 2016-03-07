@@ -877,7 +877,6 @@ class WechatController extends CommonController
 
             $qrcode = model('Base')->model->table('wechat_qrcode')->field('id, scene_id, type, expire_seconds, qrcode_url')->where(array('scene_id'=>$user_id, 'wechat_id'=>$wxinfo['id']))->find();
             if($qrcode['id'] && !empty($qrcode['qrcode_url'])){
-
                 return $qrcode['qrcode_url'];
             }
             elseif($qrcode['id'] && empty($qrcode['qrcode_url'])){

@@ -81,4 +81,12 @@ class ApiController extends CommonController
         }
 		return $rs;
     }
+
+    public function qrcode(){
+        $username = I('username', '');
+        $userid = I('userid', '');
+        if(!empty($userid) && !empty($username)){
+            call_user_func(array('WechatController', 'rec_qrcode'), $username, $userid);
+        }
+    }
 }
