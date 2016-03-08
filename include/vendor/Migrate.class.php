@@ -31,7 +31,7 @@ class Migrate
         // Find the latest version or star0t at 0.
         $f = @fopen(self::$migrate_path . MIGRATE_VERSION_FILE, 'r');
         if ($f) {
-            self::$version = intval(fgets($f));
+            self::$version = floatval(fgets($f));
             fclose($f);
         }
         self::update_db();
@@ -92,19 +92,20 @@ class Migrate
             }
 
             self::connect();
-            $fp = @fopen(self::$migrate_path . $file, 'r');
+//            $fp = @fopen(self::$migrate_path . $file, 'r');
+            $sqls = file_get_contents(self::$migrate_path . $file);
+            $sqls = self::selectsql($sqls);
             $str = null;
             $num = 1;
+            self::query('set names utf8');
             self::query('BEGIN');
-            if ($fp) {
-                while (!feof($fp)) {
-                    if ($str = fgets($fp)) {
-                        self::query($str);
-                    } else {
+            foreach ($sqls as $val) {
+                if (empty($val)) continue;
+                if (is_string($val)) {
+                    if(!self::query($val)){
                         $num = 0;
                     }
                 }
-                fclose($fp);
             }
             if ($num == 0) {
                 self::query('ROLLBACK');
@@ -127,7 +128,12 @@ class Migrate
 
     public static function query($str)
     {
-        mysql_query($str, self::$conn) or die('Error:fail to query this sql!!!' . mysql_error());
+        if(mysql_query($str, self::$conn)){
+            return true;
+        }else{
+            return false;
+        }
+        return false;
     }
 
     /*
@@ -137,5 +143,42 @@ class Migrate
     {
         self::$conn = mysql_connect(C('DB_HOST'), C('DB_USER'), C('DB_PWD')) or die('Error:cannot connect to database!!!' . mysql_error());
         self::$link = mysql_select_db(C('DB_NAME'), self::$conn) or die('Error:fail to select!!!' . mysql_error());
+    }
+    /**
+     * 判断是否是注释
+     * @param $sql   获取到的sql文件内容
+     */
+    public static function selectsql($sqls){
+        $statement = null;
+        $newStatement=null;
+        $commenter = array('#','--');
+        $sqls = explode(';',trim($sqls));//按sql语句分开
+        foreach($sqls as $sql){
+            if (preg_match('/^(\/\*)(.)+/i',$sql)) {
+                $sql = preg_replace('/(\/\*){1}([.|\s|\S])*(\*\/){1}/','',$sql);
+            }
+            $sentence = explode('/n',$sql);
+            foreach ($sentence as $subSentence) {
+                $subSentence = str_replace('ecs_',C('DB_PREFIX'),$subSentence);
+                if('' != trim($subSentence)){
+                    //判断是否注释
+                    $isComment = false;
+
+                    foreach($commenter as $comer){
+                        if(eregi("^(".$comer.")",trim($subSentence)))
+                        {
+                            $isComment = true;
+                            break;
+                        }
+
+                    }
+                    //不是注释就是sql语句
+                    if(!$isComment)
+                        $newStatement[] = $subSentence;
+                }
+            }
+            $statement = $newStatement;
+        }
+        return $statement;
     }
 }
