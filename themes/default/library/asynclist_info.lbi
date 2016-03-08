@@ -154,7 +154,8 @@
   </dt>
   <dd>{$lang.fittings_price}<font class="ect-colory">{$fittings.fittings_price}</font></dd>
   <dd>
-    <div class="flow-del text-center"><a onclick="addToCart_quick({$fittings.goods_id})" href="javascript:;">{$lang.btn_add_to_cart}</a></div>
+    <div class="flow-del text-center">
+	<a onclick="addToCart({$fittings.goods_id})" href="javascript:;">{$lang.btn_add_to_cart}</a></div>
   </dd>
 </dl>
 
