@@ -36,7 +36,7 @@ class CategoryController extends CommonController {
      */
     public function __construct() {
         parent::__construct();
-        $this->cat_id = I('id');
+        $this->cat_id = $_GET['id'];
     }
 
     /**
@@ -523,20 +523,19 @@ class CategoryController extends CommonController {
                     $where .= '';
             }
         }
-        if ($this->brand > 0) {
-            $where .= "AND g.brand_id=$this->brand ";
-        }
+
         if ($this->price_min > 0) {
             $where .= " AND g.shop_price >= $this->price_min ";
         }
         if ($this->price_max > 0) {
             $where .= " AND g.shop_price <= $this->price_max ";
         }
+
         $start = ($this->page - 1) * $this->size;
         $sort = $this->sort == 'sales_volume' ? 'xl.sales_volume' : $this->sort;
         /* 获得商品列表 */
         $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, g.goods_number, " .
-            'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img, xl.sales_volume ' . 'FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' . ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " . "WHERE $where $this->ext ORDER BY $sort $this->order LIMIT $start , $this->size";
+            'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img, xl.sales_volume ' . 'FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' . ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " . "WHERE $where $this->ext ORDER BY g.$sort $this->order LIMIT $start , $this->size";
         $res = $this->model->query($sql);
         $arr = array();
         foreach ($res as $row) {
