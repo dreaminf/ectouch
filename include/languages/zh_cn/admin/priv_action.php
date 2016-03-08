@@ -178,13 +178,3 @@ $_LANG['wechat_qrcode'] = '扫码引荐';
 $_LANG['wechat_extends'] = '扩展功能';
 $_LANG['wechat_remind'] = '提醒设置';
 $_LANG['wechat_customer'] = '多客服设置';
-
-/* 售后服务权限 by ECTOUCH Leah*/
-$_LANG['service_manage'] = '退换货管理';
-$_LANG['service_type'] = '售后服务类型';
-$_LANG['back_cause_list'] = '退换货原因';
-$_LANG['aftermarket_list'] = '退换货列表';
-$_LANG['aftermarket_rf_edit'] = '编辑退换货订单状态';
-$_LANG['aftermarket_rc_edit'] = '编辑退换货订单审核状态';
-$_LANG['aftermarket_ff_edit'] = '编辑退换货订单退款状态';
-$_LANG['aftermarket_edit'] = '添加编辑退换货订单';//by Leah E

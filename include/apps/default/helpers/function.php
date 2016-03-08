@@ -1591,14 +1591,3 @@ function get_goods_count($goods_id)
     $result = M()->getRow($sql);
     return $result['count'];
 }
-
-/**
- * 得到新服务单号
- * @return  string
- */
-function get_service_sn() {
-    /* 选择一个随机的方案 */
-    mt_srand((double) microtime() * 1000000);
-
-    return date('Ymd') . str_pad(mt_rand(1, 99999), 3, '0',STR_PAD_LEFT);
-}
