@@ -1,7 +1,7 @@
 User-agent: *
 
 Disallow: /admin/
-Disallow: /api/
+Disallow: /apis/
 Disallow: /data/
 Disallow: /include/
 Disallow: /plugins/
