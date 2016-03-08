@@ -1,431 +1,431 @@
 <?php
 
 /**
- * ¹ÜÀíÖĞĞÄ¹²ÓÃÓïÑÔÎÄ¼ş
+ * ç®¡ç†ä¸­å¿ƒå…±ç”¨è¯­è¨€æ–‡ä»¶
 */
 
 $_LANG['app_name'] = 'ECTouch';
-$_LANG['cp_home'] = 'ECTouch¹ÜÀíÖĞĞÄ';
+$_LANG['cp_home'] = 'ECTouchç®¡ç†ä¸­å¿ƒ';
 $_LANG['copyright'] = '';
-$_LANG['query_info'] = '¹²Ö´ĞĞ %d ¸ö²éÑ¯£¬ÓÃÊ± %s Ãë';
-$_LANG['memory_info'] = '£¬ÄÚ´æÕ¼ÓÃ %0.3f MB';
-$_LANG['gzip_enabled'] = '£¬Gzip ÒÑÆôÓÃ';
-$_LANG['gzip_disabled'] = '£¬Gzip ÒÑ½ûÓÃ';
-$_LANG['loading'] = 'ÕıÔÚ´¦ÀíÄúµÄÇëÇó...';
-$_LANG['js_languages']['process_request'] = 'ÕıÔÚ´¦ÀíÄúµÄÇëÇó...';
-$_LANG['js_languages']['todolist_caption'] = '¼ÇÊÂ±¾';
-$_LANG['js_languages']['todolist_autosave'] = '×Ô¶¯±£´æ';
-$_LANG['js_languages']['todolist_save'] = '±£´æ';
-$_LANG['js_languages']['todolist_clear'] = 'Çå³ı';
-$_LANG['js_languages']['todolist_confirm_save'] = 'ÊÇ·ñ½«¸ü¸Ä±£´æµ½¼ÇÊÂ±¾£¿';
-$_LANG['js_languages']['todolist_confirm_clear'] = 'ÊÇ·ñÇå¿ÕÄÚÈİ£¿';
-$_LANG['auto_redirection'] = 'Èç¹ûÄú²»×ö³öÑ¡Ôñ£¬½«ÔÚ <span id="spanSeconds">3</span> ÃëºóÌø×ªµ½µÚÒ»¸öÁ´½ÓµØÖ·¡£';
-$_LANG['password_rule'] = 'ÃÜÂëÓ¦Ö»°üº¬Ó¢ÎÄ×Ö·û¡¢Êı×Ö.³¤¶ÈÔÚ6--16Î»Ö®¼ä';
-$_LANG['username_rule'] = 'ÓÃ»§ÃûÓ¦Îªºº×Ö¡¢Ó¢ÎÄ×Ö·û¡¢Êı×Ö×éºÏ£¬3µ½15Î»';
-$_LANG['plugins_not_found'] = '²å¼ş %s ÎŞ·¨¶¨Î»';
-$_LANG['no_records'] = 'Ã»ÓĞÕÒµ½ÈÎºÎ¼ÇÂ¼';
-$_LANG['role_describe'] = '½ÇÉ«ÃèÊö';
+$_LANG['query_info'] = 'å…±æ‰§è¡Œ %d ä¸ªæŸ¥è¯¢ï¼Œç”¨æ—¶ %s ç§’';
+$_LANG['memory_info'] = 'ï¼Œå†…å­˜å ç”¨ %0.3f MB';
+$_LANG['gzip_enabled'] = 'ï¼ŒGzip å·²å¯ç”¨';
+$_LANG['gzip_disabled'] = 'ï¼ŒGzip å·²ç¦ç”¨';
+$_LANG['loading'] = 'æ­£åœ¨å¤„ç†æ‚¨çš„è¯·æ±‚...';
+$_LANG['js_languages']['process_request'] = 'æ­£åœ¨å¤„ç†æ‚¨çš„è¯·æ±‚...';
+$_LANG['js_languages']['todolist_caption'] = 'è®°äº‹æœ¬';
+$_LANG['js_languages']['todolist_autosave'] = 'è‡ªåŠ¨ä¿å­˜';
+$_LANG['js_languages']['todolist_save'] = 'ä¿å­˜';
+$_LANG['js_languages']['todolist_clear'] = 'æ¸…é™¤';
+$_LANG['js_languages']['todolist_confirm_save'] = 'æ˜¯å¦å°†æ›´æ”¹ä¿å­˜åˆ°è®°äº‹æœ¬ï¼Ÿ';
+$_LANG['js_languages']['todolist_confirm_clear'] = 'æ˜¯å¦æ¸…ç©ºå†…å®¹ï¼Ÿ';
+$_LANG['auto_redirection'] = 'å¦‚æœæ‚¨ä¸åšå‡ºé€‰æ‹©ï¼Œå°†åœ¨ <span id="spanSeconds">3</span> ç§’åè·³è½¬åˆ°ç¬¬ä¸€ä¸ªé“¾æ¥åœ°å€ã€‚';
+$_LANG['password_rule'] = 'å¯†ç åº”åªåŒ…å«è‹±æ–‡å­—ç¬¦ã€æ•°å­—.é•¿åº¦åœ¨6--16ä½ä¹‹é—´';
+$_LANG['username_rule'] = 'ç”¨æˆ·ååº”ä¸ºæ±‰å­—ã€è‹±æ–‡å­—ç¬¦ã€æ•°å­—ç»„åˆï¼Œ3åˆ°15ä½';
+$_LANG['plugins_not_found'] = 'æ’ä»¶ %s æ— æ³•å®šä½';
+$_LANG['no_records'] = 'æ²¡æœ‰æ‰¾åˆ°ä»»ä½•è®°å½•';
+$_LANG['role_describe'] = 'è§’è‰²æè¿°';
 
 $_LANG['require_field'] = '<span class="require-field">*</span>';
-$_LANG['yes'] = 'ÊÇ';
-$_LANG['no'] = '·ñ';
-$_LANG['record_id'] = '±àºÅ';
-$_LANG['handler'] = '²Ù×÷';
-$_LANG['install'] = '°²×°';
-$_LANG['uninstall'] = 'Ğ¶ÔØ';
-$_LANG['list'] = 'ÁĞ±í';
-$_LANG['add'] = 'Ìí¼Ó';
-$_LANG['edit'] = '±à¼­';
-$_LANG['view'] = '²é¿´';
-$_LANG['remove'] = 'ÒÆ³ı';
-$_LANG['drop'] = 'É¾³ı';
-$_LANG['confirm_delete'] = 'ÄúÈ·¶¨ÒªÉ¾³ıÂğ£¿';
-$_LANG['disabled'] = '½ûÓÃ';
-$_LANG['enabled'] = 'ÆôÓÃ';
-$_LANG['setup'] = 'ÉèÖÃ';
-$_LANG['success'] = '³É¹¦';
-$_LANG['sort_order'] = 'ÅÅĞò';
-$_LANG['trash'] = '»ØÊÕÕ¾';
-$_LANG['restore'] = '»¹Ô­';
-$_LANG['close_window'] = '¹Ø±Õ´°¿Ú';
-$_LANG['btn_select'] = 'Ñ¡Ôñ';
-$_LANG['operator'] = '²Ù×÷ÈË';
-$_LANG['cancel'] = 'È¡Ïû';
+$_LANG['yes'] = 'æ˜¯';
+$_LANG['no'] = 'å¦';
+$_LANG['record_id'] = 'ç¼–å·';
+$_LANG['handler'] = 'æ“ä½œ';
+$_LANG['install'] = 'å®‰è£…';
+$_LANG['uninstall'] = 'å¸è½½';
+$_LANG['list'] = 'åˆ—è¡¨';
+$_LANG['add'] = 'æ·»åŠ ';
+$_LANG['edit'] = 'ç¼–è¾‘';
+$_LANG['view'] = 'æŸ¥çœ‹';
+$_LANG['remove'] = 'ç§»é™¤';
+$_LANG['drop'] = 'åˆ é™¤';
+$_LANG['confirm_delete'] = 'æ‚¨ç¡®å®šè¦åˆ é™¤å—ï¼Ÿ';
+$_LANG['disabled'] = 'ç¦ç”¨';
+$_LANG['enabled'] = 'å¯ç”¨';
+$_LANG['setup'] = 'è®¾ç½®';
+$_LANG['success'] = 'æˆåŠŸ';
+$_LANG['sort_order'] = 'æ’åº';
+$_LANG['trash'] = 'å›æ”¶ç«™';
+$_LANG['restore'] = 'è¿˜åŸ';
+$_LANG['close_window'] = 'å…³é—­çª—å£';
+$_LANG['btn_select'] = 'é€‰æ‹©';
+$_LANG['operator'] = 'æ“ä½œäºº';
+$_LANG['cancel'] = 'å–æ¶ˆ';
 
-$_LANG['empty'] = '²»ÄÜÎª¿Õ';
-$_LANG['repeat'] = 'ÒÑ´æÔÚ';
-$_LANG['is_int'] = 'Ó¦¸ÃÎªÕûÊı';
+$_LANG['empty'] = 'ä¸èƒ½ä¸ºç©º';
+$_LANG['repeat'] = 'å·²å­˜åœ¨';
+$_LANG['is_int'] = 'åº”è¯¥ä¸ºæ•´æ•°';
 
-$_LANG['button_submit'] = ' È·¶¨ ';
-$_LANG['button_save'] = ' ±£´æ ';
-$_LANG['button_reset'] = ' ÖØÖÃ ';
-$_LANG['button_search'] = ' ËÑË÷ ';
+$_LANG['button_submit'] = ' ç¡®å®š ';
+$_LANG['button_save'] = ' ä¿å­˜ ';
+$_LANG['button_reset'] = ' é‡ç½® ';
+$_LANG['button_search'] = ' æœç´¢ ';
 
-$_LANG['priv_error'] = '¶Ô²»Æğ,ÄúÃ»ÓĞÖ´ĞĞ´ËÏî²Ù×÷µÄÈ¨ÏŞ!';
-$_LANG['drop_confirm'] = 'ÄúÈ·ÈÏÒªÉ¾³ıÕâÌõ¼ÇÂ¼Âğ?';
-$_LANG['form_notice'] = 'µã»÷´Ë´¦²é¿´ÌáÊ¾ĞÅÏ¢';
-$_LANG['upfile_type_error'] = 'ÉÏ´«ÎÄ¼şµÄÀàĞÍ²»ÕıÈ·!';
-$_LANG['upfile_error'] = 'ÉÏ´«ÎÄ¼şÊ§°Ü!';
-$_LANG['no_operation'] = 'ÄúÃ»ÓĞÑ¡ÔñÈÎºÎ²Ù×÷';
+$_LANG['priv_error'] = 'å¯¹ä¸èµ·,æ‚¨æ²¡æœ‰æ‰§è¡Œæ­¤é¡¹æ“ä½œçš„æƒé™!';
+$_LANG['drop_confirm'] = 'æ‚¨ç¡®è®¤è¦åˆ é™¤è¿™æ¡è®°å½•å—?';
+$_LANG['form_notice'] = 'ç‚¹å‡»æ­¤å¤„æŸ¥çœ‹æç¤ºä¿¡æ¯';
+$_LANG['upfile_type_error'] = 'ä¸Šä¼ æ–‡ä»¶çš„ç±»å‹ä¸æ­£ç¡®!';
+$_LANG['upfile_error'] = 'ä¸Šä¼ æ–‡ä»¶å¤±è´¥!';
+$_LANG['no_operation'] = 'æ‚¨æ²¡æœ‰é€‰æ‹©ä»»ä½•æ“ä½œ';
 
-$_LANG['go_back'] = '·µ»ØÉÏÒ»Ò³';
-$_LANG['back'] = '·µ»Ø';
-$_LANG['continue'] = '¼ÌĞø';
-$_LANG['system_message'] = 'ÏµÍ³ĞÅÏ¢';
-$_LANG['check_all'] = 'È«Ñ¡';
-$_LANG['select_please'] = 'ÇëÑ¡Ôñ...';
-$_LANG['all_category'] = 'ËùÓĞ·ÖÀà';
-$_LANG['all_brand'] = 'ËùÓĞÆ·ÅÆ';
-$_LANG['refresh'] = 'Ë¢ĞÂ';
-$_LANG['update_sort'] = '¸üĞÂÅÅĞò';
-$_LANG['modify_failure'] = 'ĞŞ¸ÄÊ§°Ü!';
-$_LANG['attradd_succed'] = '²Ù×÷³É¹¦!';
-$_LANG['todolist'] = '¼ÇÊÂ±¾';
+$_LANG['go_back'] = 'è¿”å›ä¸Šä¸€é¡µ';
+$_LANG['back'] = 'è¿”å›';
+$_LANG['continue'] = 'ç»§ç»­';
+$_LANG['system_message'] = 'ç³»ç»Ÿä¿¡æ¯';
+$_LANG['check_all'] = 'å…¨é€‰';
+$_LANG['select_please'] = 'è¯·é€‰æ‹©...';
+$_LANG['all_category'] = 'æ‰€æœ‰åˆ†ç±»';
+$_LANG['all_brand'] = 'æ‰€æœ‰å“ç‰Œ';
+$_LANG['refresh'] = 'åˆ·æ–°';
+$_LANG['update_sort'] = 'æ›´æ–°æ’åº';
+$_LANG['modify_failure'] = 'ä¿®æ”¹å¤±è´¥!';
+$_LANG['attradd_succed'] = 'æ“ä½œæˆåŠŸ!';
+$_LANG['todolist'] = 'è®°äº‹æœ¬';
 $_LANG['n_a'] = 'N/A';
 
-/* ÌáÊ¾ */
-$_LANG['sys']['wrong'] = '´íÎó£º';
+/* æç¤º */
+$_LANG['sys']['wrong'] = 'é”™è¯¯ï¼š';
 
-/* ±àÂë */
-$_LANG['charset']['utf8'] = '¹ú¼Ê»¯±àÂë£¨utf8£©';
-$_LANG['charset']['zh_cn'] = '¼òÌåÖĞÎÄ';
-$_LANG['charset']['zh_tw'] = '·±ÌåÖĞÎÄ';
-$_LANG['charset']['en_us'] = 'ÃÀ¹úÓ¢Óï';
-$_LANG['charset']['en_uk'] = 'Ó¢ÎÄ';
+/* ç¼–ç  */
+$_LANG['charset']['utf8'] = 'å›½é™…åŒ–ç¼–ç ï¼ˆutf8ï¼‰';
+$_LANG['charset']['zh_cn'] = 'ç®€ä½“ä¸­æ–‡';
+$_LANG['charset']['zh_tw'] = 'ç¹ä½“ä¸­æ–‡';
+$_LANG['charset']['en_us'] = 'ç¾å›½è‹±è¯­';
+$_LANG['charset']['en_uk'] = 'è‹±æ–‡';
 
-/* ĞÂ¶©µ¥Í¨Öª */
-$_LANG['order_notify'] = 'ĞÂ¶©µ¥Í¨Öª';
-$_LANG['new_order_1'] = 'ÄúÓĞ ';
-$_LANG['new_order_2'] = ' ¸öĞÂ¶©µ¥ÒÔ¼° ';
-$_LANG['new_order_3'] = ' ¸öĞÂ¸¶¿îµÄ¶©µ¥';
-$_LANG['new_order_link'] = 'µã»÷²é¿´ĞÂ¶©µ¥';
+/* æ–°è®¢å•é€šçŸ¥ */
+$_LANG['order_notify'] = 'æ–°è®¢å•é€šçŸ¥';
+$_LANG['new_order_1'] = 'æ‚¨æœ‰ ';
+$_LANG['new_order_2'] = ' ä¸ªæ–°è®¢å•ä»¥åŠ ';
+$_LANG['new_order_3'] = ' ä¸ªæ–°ä»˜æ¬¾çš„è®¢å•';
+$_LANG['new_order_link'] = 'ç‚¹å‡»æŸ¥çœ‹æ–°è®¢å•';
 
-/*ÓïÑÔÏî*/
-$_LANG['chinese_simplified'] = '¼òÌåÖĞÎÄ';
-$_LANG['english'] = 'Ó¢ÎÄ';
+/*è¯­è¨€é¡¹*/
+$_LANG['chinese_simplified'] = 'ç®€ä½“ä¸­æ–‡';
+$_LANG['english'] = 'è‹±æ–‡';
 
-/* ·ÖÒ³ */
-$_LANG['total_records'] = '×Ü¼Æ ';
-$_LANG['total_pages'] = '¸ö¼ÇÂ¼·ÖÎª';
-$_LANG['page_size'] = 'Ò³£¬Ã¿Ò³';
-$_LANG['page_current'] = 'Ò³µ±Ç°µÚ';
-$_LANG['page_first'] = 'µÚÒ»Ò³';
-$_LANG['page_prev'] = 'ÉÏÒ»Ò³';
-$_LANG['page_next'] = 'ÏÂÒ»Ò³';
-$_LANG['page_last'] = '×îÄ©Ò³';
-$_LANG['admin_home'] = 'ÆğÊ¼Ò³';
+/* åˆ†é¡µ */
+$_LANG['total_records'] = 'æ€»è®¡ ';
+$_LANG['total_pages'] = 'ä¸ªè®°å½•åˆ†ä¸º';
+$_LANG['page_size'] = 'é¡µï¼Œæ¯é¡µ';
+$_LANG['page_current'] = 'é¡µå½“å‰ç¬¬';
+$_LANG['page_first'] = 'ç¬¬ä¸€é¡µ';
+$_LANG['page_prev'] = 'ä¸Šä¸€é¡µ';
+$_LANG['page_next'] = 'ä¸‹ä¸€é¡µ';
+$_LANG['page_last'] = 'æœ€æœ«é¡µ';
+$_LANG['admin_home'] = 'èµ·å§‹é¡µ';
 
-/* ÖØÁ¿ */
-$_LANG['gram'] = '¿Ë';
-$_LANG['kilogram'] = 'Ç§¿Ë';
+/* é‡é‡ */
+$_LANG['gram'] = 'å…‹';
+$_LANG['kilogram'] = 'åƒå…‹';
 
-/* ²Ëµ¥·ÖÀà²¿·Ö */
-$_LANG['02_cat_and_goods'] = 'ÉÌÆ·¹ÜÀí';
-$_LANG['03_promotion'] = '´ÙÏú¹ÜÀí';
-$_LANG['04_order'] = '¶©µ¥¹ÜÀí';
-$_LANG['05_banner'] = '¹ã¸æ¹ÜÀí';
-$_LANG['06_stats'] = '±¨±íÍ³¼Æ';
-$_LANG['07_content'] = 'ÎÄÕÂ¹ÜÀí';
-$_LANG['08_members'] = '»áÔ±¹ÜÀí';
-$_LANG['09_others'] = 'ÔÓÏî¹ÜÀí';
-$_LANG['10_priv_admin'] = 'È¨ÏŞ¹ÜÀí';
-$_LANG['11_system'] = 'ÏµÍ³ÉèÖÃ';
-$_LANG['12_template'] = 'Ä£°å¹ÜÀí';
-$_LANG['13_backup'] = 'Êı¾İ¿â¹ÜÀí';
-$_LANG['14_sms'] = '¶ÌĞÅ¹ÜÀí';
-$_LANG['15_rec'] = 'ÍÆ¼ö¹ÜÀí';
-$_LANG['16_email_manage'] = 'ÓÊ¼şÈº·¢¹ÜÀí';
+/* èœå•åˆ†ç±»éƒ¨åˆ† */
+$_LANG['02_cat_and_goods'] = 'å•†å“ç®¡ç†';
+$_LANG['03_promotion'] = 'ä¿ƒé”€ç®¡ç†';
+$_LANG['04_order'] = 'è®¢å•ç®¡ç†';
+$_LANG['05_banner'] = 'å¹¿å‘Šç®¡ç†';
+$_LANG['06_stats'] = 'æŠ¥è¡¨ç»Ÿè®¡';
+$_LANG['07_content'] = 'æ–‡ç« ç®¡ç†';
+$_LANG['08_members'] = 'ä¼šå‘˜ç®¡ç†';
+$_LANG['09_others'] = 'æ‚é¡¹ç®¡ç†';
+$_LANG['10_priv_admin'] = 'æƒé™ç®¡ç†';
+$_LANG['11_system'] = 'ç³»ç»Ÿè®¾ç½®';
+$_LANG['12_template'] = 'æ¨¡æ¿ç®¡ç†';
+$_LANG['13_backup'] = 'æ•°æ®åº“ç®¡ç†';
+$_LANG['14_sms'] = 'çŸ­ä¿¡ç®¡ç†';
+$_LANG['15_rec'] = 'æ¨èç®¡ç†';
+$_LANG['16_email_manage'] = 'é‚®ä»¶ç¾¤å‘ç®¡ç†';
 
-/* ÉÌÆ·¹ÜÀí */
-$_LANG['01_goods_list'] = 'ÉÌÆ·ÁĞ±í';
-$_LANG['02_goods_add'] = 'Ìí¼ÓĞÂÉÌÆ·';
-$_LANG['03_category_list'] = 'ÉÌÆ··ÖÀà';
-$_LANG['04_category_add'] = 'Ìí¼Ó·ÖÀà';
-$_LANG['05_comment_manage'] = 'ÓÃ»§ÆÀÂÛ';
-$_LANG['06_goods_brand_list'] = 'ÉÌÆ·Æ·ÅÆ';
-$_LANG['07_brand_add'] = 'Ìí¼ÓÆ·ÅÆ';
-$_LANG['08_goods_type'] = 'ÉÌÆ·ÀàĞÍ';
-$_LANG['09_attribute_list'] = 'ÉÌÆ·ÊôĞÔ';
-$_LANG['10_attribute_add'] = 'Ìí¼ÓÊôĞÔ';
-$_LANG['11_goods_trash'] = 'ÉÌÆ·»ØÊÕÕ¾';
-$_LANG['12_batch_pic'] = 'Í¼Æ¬ÅúÁ¿´¦Àí';
-$_LANG['13_batch_add'] = 'ÉÌÆ·ÅúÁ¿ÉÏ´«';
-$_LANG['15_batch_edit'] = 'ÉÌÆ·ÅúÁ¿ĞŞ¸Ä';
-$_LANG['16_goods_script'] = 'Éú³ÉÉÌÆ·´úÂë';
-$_LANG['17_tag_manage'] = '±êÇ©¹ÜÀí';
-$_LANG['18_product_list'] = '»õÆ·ÁĞ±í';
-$_LANG['52_attribute_add'] = '±à¼­ÊôĞÔ';
-$_LANG['53_suppliers_goods'] = '¹©»õÉÌÉÌÆ·¹ÜÀí';
+/* å•†å“ç®¡ç† */
+$_LANG['01_goods_list'] = 'å•†å“åˆ—è¡¨';
+$_LANG['02_goods_add'] = 'æ·»åŠ æ–°å•†å“';
+$_LANG['03_category_list'] = 'å•†å“åˆ†ç±»';
+$_LANG['04_category_add'] = 'æ·»åŠ åˆ†ç±»';
+$_LANG['05_comment_manage'] = 'ç”¨æˆ·è¯„è®º';
+$_LANG['06_goods_brand_list'] = 'å•†å“å“ç‰Œ';
+$_LANG['07_brand_add'] = 'æ·»åŠ å“ç‰Œ';
+$_LANG['08_goods_type'] = 'å•†å“ç±»å‹';
+$_LANG['09_attribute_list'] = 'å•†å“å±æ€§';
+$_LANG['10_attribute_add'] = 'æ·»åŠ å±æ€§';
+$_LANG['11_goods_trash'] = 'å•†å“å›æ”¶ç«™';
+$_LANG['12_batch_pic'] = 'å›¾ç‰‡æ‰¹é‡å¤„ç†';
+$_LANG['13_batch_add'] = 'å•†å“æ‰¹é‡ä¸Šä¼ ';
+$_LANG['15_batch_edit'] = 'å•†å“æ‰¹é‡ä¿®æ”¹';
+$_LANG['16_goods_script'] = 'ç”Ÿæˆå•†å“ä»£ç ';
+$_LANG['17_tag_manage'] = 'æ ‡ç­¾ç®¡ç†';
+$_LANG['18_product_list'] = 'è´§å“åˆ—è¡¨';
+$_LANG['52_attribute_add'] = 'ç¼–è¾‘å±æ€§';
+$_LANG['53_suppliers_goods'] = 'ä¾›è´§å•†å•†å“ç®¡ç†';
 
-$_LANG['14_goods_export'] = 'ÉÌÆ·ÅúÁ¿µ¼³ö';
+$_LANG['14_goods_export'] = 'å•†å“æ‰¹é‡å¯¼å‡º';
 
-$_LANG['50_virtual_card_list'] = 'ĞéÄâÉÌÆ·ÁĞ±í';
-$_LANG['51_virtual_card_add'] = 'Ìí¼ÓĞéÄâÉÌÆ·';
-$_LANG['52_virtual_card_change'] = '¸ü¸Ä¼ÓÃÜ´®';
-$_LANG['goods_auto'] = 'ÉÌÆ·×Ô¶¯ÉÏÏÂ¼Ü';
-$_LANG['article_auto'] = 'ÎÄÕÂ×Ô¶¯·¢²¼';
-$_LANG['navigator'] = $_LANG['01_navigator'] = 'µ¼º½ÉèÖÃ';
+$_LANG['50_virtual_card_list'] = 'è™šæ‹Ÿå•†å“åˆ—è¡¨';
+$_LANG['51_virtual_card_add'] = 'æ·»åŠ è™šæ‹Ÿå•†å“';
+$_LANG['52_virtual_card_change'] = 'æ›´æ”¹åŠ å¯†ä¸²';
+$_LANG['goods_auto'] = 'å•†å“è‡ªåŠ¨ä¸Šä¸‹æ¶';
+$_LANG['article_auto'] = 'æ–‡ç« è‡ªåŠ¨å‘å¸ƒ';
+$_LANG['navigator'] = $_LANG['01_navigator'] = 'å¯¼èˆªè®¾ç½®';
 
-/* ´ÙÏú¹ÜÀí */
-$_LANG['02_snatch_list'] = '¶á±¦Ææ±ø';
-$_LANG['snatch_add'] = 'Ìí¼Ó¶á±¦Ææ±ø';
-$_LANG['04_bonustype_list'] = 'ºì°üÀàĞÍ';
-$_LANG['bonustype_add'] = 'Ìí¼Óºì°üÀàĞÍ';
-$_LANG['05_bonus_list'] = 'ÏßÏÂºì°ü';
-$_LANG['bonus_add'] = 'Ìí¼Ó»áÔ±ºì°ü';
-$_LANG['06_pack_list'] = 'ÉÌÆ·°ü×°';
-$_LANG['07_card_list'] = '×£¸£ºØ¿¨';
-$_LANG['pack_add'] = 'Ìí¼ÓĞÂ°ü×°';
-$_LANG['card_add'] = 'Ìí¼ÓĞÂºØ¿¨';
-$_LANG['08_group_buy'] = 'ÍÅ¹º»î¶¯';
-$_LANG['09_topic'] = '×¨Ìâ¹ÜÀí';
-$_LANG['topic_add'] = 'Ìí¼Ó×¨Ìâ';
-$_LANG['topic_list'] = '×¨ÌâÁĞ±í';
-$_LANG['10_auction'] = 'ÅÄÂô»î¶¯';
-$_LANG['12_favourable'] = 'ÓÅ»İ»î¶¯';
-$_LANG['13_wholesale'] = 'Åú·¢¹ÜÀí';
-$_LANG['ebao_commend'] = 'Ò×±¦ÍÆ¼ö';
-$_LANG['14_package_list'] = '³¬ÖµÀñ°ü';
-$_LANG['package_add'] = 'Ìí¼Ó³¬ÖµÀñ°ü';
+/* ä¿ƒé”€ç®¡ç† */
+$_LANG['02_snatch_list'] = 'å¤ºå®å¥‡å…µ';
+$_LANG['snatch_add'] = 'æ·»åŠ å¤ºå®å¥‡å…µ';
+$_LANG['04_bonustype_list'] = 'çº¢åŒ…ç±»å‹';
+$_LANG['bonustype_add'] = 'æ·»åŠ çº¢åŒ…ç±»å‹';
+$_LANG['05_bonus_list'] = 'çº¿ä¸‹çº¢åŒ…';
+$_LANG['bonus_add'] = 'æ·»åŠ ä¼šå‘˜çº¢åŒ…';
+$_LANG['06_pack_list'] = 'å•†å“åŒ…è£…';
+$_LANG['07_card_list'] = 'ç¥ç¦è´ºå¡';
+$_LANG['pack_add'] = 'æ·»åŠ æ–°åŒ…è£…';
+$_LANG['card_add'] = 'æ·»åŠ æ–°è´ºå¡';
+$_LANG['08_group_buy'] = 'å›¢è´­æ´»åŠ¨';
+$_LANG['09_topic'] = 'ä¸“é¢˜ç®¡ç†';
+$_LANG['topic_add'] = 'æ·»åŠ ä¸“é¢˜';
+$_LANG['topic_list'] = 'ä¸“é¢˜åˆ—è¡¨';
+$_LANG['10_auction'] = 'æ‹å–æ´»åŠ¨';
+$_LANG['12_favourable'] = 'ä¼˜æƒ æ´»åŠ¨';
+$_LANG['13_wholesale'] = 'æ‰¹å‘ç®¡ç†';
+$_LANG['ebao_commend'] = 'æ˜“å®æ¨è';
+$_LANG['14_package_list'] = 'è¶…å€¼ç¤¼åŒ…';
+$_LANG['package_add'] = 'æ·»åŠ è¶…å€¼ç¤¼åŒ…';
 
-/* ¶©µ¥¹ÜÀí */
-$_LANG['02_order_list'] = '¶©µ¥ÁĞ±í';
-$_LANG['03_order_query'] = '¶©µ¥²éÑ¯';
-$_LANG['04_merge_order'] = 'ºÏ²¢¶©µ¥';
-$_LANG['05_edit_order_print'] = '¶©µ¥´òÓ¡';
-$_LANG['06_undispose_booking'] = 'È±»õµÇ¼Ç';
-$_LANG['08_add_order'] = 'Ìí¼Ó¶©µ¥';
-$_LANG['09_delivery_order'] = '·¢»õµ¥ÁĞ±í';
-$_LANG['10_back_order'] = 'ÍË»õµ¥ÁĞ±í';
+/* è®¢å•ç®¡ç† */
+$_LANG['02_order_list'] = 'è®¢å•åˆ—è¡¨';
+$_LANG['03_order_query'] = 'è®¢å•æŸ¥è¯¢';
+$_LANG['04_merge_order'] = 'åˆå¹¶è®¢å•';
+$_LANG['05_edit_order_print'] = 'è®¢å•æ‰“å°';
+$_LANG['06_undispose_booking'] = 'ç¼ºè´§ç™»è®°';
+$_LANG['08_add_order'] = 'æ·»åŠ è®¢å•';
+$_LANG['09_delivery_order'] = 'å‘è´§å•åˆ—è¡¨';
+$_LANG['10_back_order'] = 'é€€è´§å•åˆ—è¡¨';
 
-/* ¹ã¸æ¹ÜÀí */
-$_LANG['ad_position'] = '¹ã¸æÎ»ÖÃ';
-$_LANG['ad_list'] = '¹ã¸æÁĞ±í';
+/* å¹¿å‘Šç®¡ç† */
+$_LANG['ad_position'] = 'å¹¿å‘Šä½ç½®';
+$_LANG['ad_list'] = 'å¹¿å‘Šåˆ—è¡¨';
 
-/* ±¨±íÍ³¼Æ */
-$_LANG['flow_stats'] = 'Á÷Á¿·ÖÎö';
-$_LANG['searchengine_stats'] = 'ËÑË÷ÒıÇæ';
-$_LANG['report_order'] = '¶©µ¥Í³¼Æ';
-$_LANG['report_sell'] = 'ÏúÊÛ¸Å¿ö';
-$_LANG['sell_stats'] = 'ÏúÊÛÅÅĞĞ';
-$_LANG['sale_list'] = 'ÏúÊÛÃ÷Ï¸';
-$_LANG['report_guest'] = '¿Í»§Í³¼Æ';
-$_LANG['report_users'] = '»áÔ±ÅÅĞĞ';
-$_LANG['visit_buy_per'] = '·ÃÎÊ¹ºÂòÂÊ';
-$_LANG['z_clicks_stats'] = 'Õ¾ÍâÍ¶·ÅJS';
+/* æŠ¥è¡¨ç»Ÿè®¡ */
+$_LANG['flow_stats'] = 'æµé‡åˆ†æ';
+$_LANG['searchengine_stats'] = 'æœç´¢å¼•æ“';
+$_LANG['report_order'] = 'è®¢å•ç»Ÿè®¡';
+$_LANG['report_sell'] = 'é”€å”®æ¦‚å†µ';
+$_LANG['sell_stats'] = 'é”€å”®æ’è¡Œ';
+$_LANG['sale_list'] = 'é”€å”®æ˜ç»†';
+$_LANG['report_guest'] = 'å®¢æˆ·ç»Ÿè®¡';
+$_LANG['report_users'] = 'ä¼šå‘˜æ’è¡Œ';
+$_LANG['visit_buy_per'] = 'è®¿é—®è´­ä¹°ç‡';
+$_LANG['z_clicks_stats'] = 'ç«™å¤–æŠ•æ”¾JS';
 
-/* ÎÄÕÂ¹ÜÀí */
-$_LANG['02_articlecat_list'] = 'ÎÄÕÂ·ÖÀà';
-$_LANG['articlecat_add'] = 'Ìí¼ÓÎÄÕÂ·ÖÀà';
-$_LANG['03_article_list'] = 'ÎÄÕÂÁĞ±í';
-$_LANG['article_add'] = 'Ìí¼ÓĞÂÎÄÕÂ';
-$_LANG['shop_article'] = 'ÍøµêÎÄÕÂ';
-$_LANG['shop_info'] = 'ÍøµêĞÅÏ¢';
-$_LANG['shop_help'] = 'Íøµê°ïÖú';
-$_LANG['vote_list'] = 'ÔÚÏßµ÷²é';
+/* æ–‡ç« ç®¡ç† */
+$_LANG['02_articlecat_list'] = 'æ–‡ç« åˆ†ç±»';
+$_LANG['articlecat_add'] = 'æ·»åŠ æ–‡ç« åˆ†ç±»';
+$_LANG['03_article_list'] = 'æ–‡ç« åˆ—è¡¨';
+$_LANG['article_add'] = 'æ·»åŠ æ–°æ–‡ç« ';
+$_LANG['shop_article'] = 'ç½‘åº—æ–‡ç« ';
+$_LANG['shop_info'] = 'ç½‘åº—ä¿¡æ¯';
+$_LANG['shop_help'] = 'ç½‘åº—å¸®åŠ©';
+$_LANG['vote_list'] = 'åœ¨çº¿è°ƒæŸ¥';
 
-/* »áÔ±¹ÜÀí */
-$_LANG['08_unreply_msg'] = '»áÔ±ÁôÑÔ';
-$_LANG['03_users_list'] = '»áÔ±ÁĞ±í';
-$_LANG['04_users_add'] = 'Ìí¼Ó»áÔ±';
-$_LANG['05_user_rank_list'] = '»áÔ±µÈ¼¶';
-$_LANG['06_list_integrate'] = '»áÔ±ÕûºÏ';
-$_LANG['09_user_account'] = '³äÖµºÍÌáÏÖÉêÇë';
-$_LANG['10_user_account_manage'] = '×Ê½ğ¹ÜÀí';
+/* ä¼šå‘˜ç®¡ç† */
+$_LANG['08_unreply_msg'] = 'ä¼šå‘˜ç•™è¨€';
+$_LANG['03_users_list'] = 'ä¼šå‘˜åˆ—è¡¨';
+$_LANG['04_users_add'] = 'æ·»åŠ ä¼šå‘˜';
+$_LANG['05_user_rank_list'] = 'ä¼šå‘˜ç­‰çº§';
+$_LANG['06_list_integrate'] = 'ä¼šå‘˜æ•´åˆ';
+$_LANG['09_user_account'] = 'å……å€¼å’Œæç°ç”³è¯·';
+$_LANG['10_user_account_manage'] = 'èµ„é‡‘ç®¡ç†';
 
-/* È¨ÏŞ¹ÜÀí */
-$_LANG['admin_list'] = '¹ÜÀíÔ±ÁĞ±í';
-$_LANG['admin_list_role'] = '½ÇÉ«ÁĞ±í';
-$_LANG['admin_role'] = '½ÇÉ«¹ÜÀí';
-$_LANG['admin_add'] = 'Ìí¼Ó¹ÜÀíÔ±';
-$_LANG['admin_add_role'] = 'Ìí¼Ó½ÇÉ«';
-$_LANG['admin_edit_role'] = 'ĞŞ¸Ä½ÇÉ«';
-$_LANG['admin_logs'] = '¹ÜÀíÔ±ÈÕÖ¾';
-$_LANG['agency_list'] = '°ìÊÂ´¦ÁĞ±í';
-$_LANG['suppliers_list'] = '¹©»õÉÌÁĞ±í';
+/* æƒé™ç®¡ç† */
+$_LANG['admin_list'] = 'ç®¡ç†å‘˜åˆ—è¡¨';
+$_LANG['admin_list_role'] = 'è§’è‰²åˆ—è¡¨';
+$_LANG['admin_role'] = 'è§’è‰²ç®¡ç†';
+$_LANG['admin_add'] = 'æ·»åŠ ç®¡ç†å‘˜';
+$_LANG['admin_add_role'] = 'æ·»åŠ è§’è‰²';
+$_LANG['admin_edit_role'] = 'ä¿®æ”¹è§’è‰²';
+$_LANG['admin_logs'] = 'ç®¡ç†å‘˜æ—¥å¿—';
+$_LANG['agency_list'] = 'åŠäº‹å¤„åˆ—è¡¨';
+$_LANG['suppliers_list'] = 'ä¾›è´§å•†åˆ—è¡¨';
 
-/* ÏµÍ³ÉèÖÃ */
-$_LANG['01_shop_config'] = 'ÉÌµêÉèÖÃ';
-$_LANG['shop_authorized'] = 'ÊÚÈ¨Ö¤Êé';
-$_LANG['shp_webcollect'] = 'ÍøÂŞÌìÏÂ';
-$_LANG['02_payment_list'] = 'Ö§¸¶·½Ê½';
-$_LANG['03_shipping_list'] = 'ÅäËÍ·½Ê½';
-$_LANG['04_mail_settings'] = $_LANG['03_mail_settings'] = 'ÓÊ¼ş·şÎñÆ÷ÉèÖÃ';
-$_LANG['05_area_list'] = 'µØÇøÁĞ±í';
-$_LANG['07_cron_schcron'] = '¼Æ»®ÈÎÎñ';
-$_LANG['08_friendlink_list'] = 'ÓÑÇéÁ´½Ó';
-$_LANG['shipping_area_list'] = 'ÅäËÍÇøÓò';
-$_LANG['sitemap'] = 'Õ¾µãµØÍ¼';
-$_LANG['check_file_priv'] = 'ÎÄ¼şÈ¨ÏŞ¼ì²â';
-$_LANG['captcha_manage'] = $_LANG['05_captcha_manage'] = 'ÑéÖ¤Âë¹ÜÀí';
-$_LANG['fckfile_manage'] = 'FckÉÏ´«ÎÄ¼ş¹ÜÀí';
-$_LANG['ucenter_setup'] = 'UCenterÉèÖÃ';
-$_LANG['file_check'] = 'ÎÄ¼şĞ£Ñé';
-$_LANG['021_reg_fields'] = '»áÔ±×¢²áÏîÉèÖÃ';
+/* ç³»ç»Ÿè®¾ç½® */
+$_LANG['01_shop_config'] = 'å•†åº—è®¾ç½®';
+$_LANG['shop_authorized'] = 'æˆæƒè¯ä¹¦';
+$_LANG['shp_webcollect'] = 'ç½‘ç½—å¤©ä¸‹';
+$_LANG['02_payment_list'] = 'æ”¯ä»˜æ–¹å¼';
+$_LANG['03_shipping_list'] = 'é…é€æ–¹å¼';
+$_LANG['04_mail_settings'] = $_LANG['03_mail_settings'] = 'é‚®ä»¶æœåŠ¡å™¨è®¾ç½®';
+$_LANG['05_area_list'] = 'åœ°åŒºåˆ—è¡¨';
+$_LANG['07_cron_schcron'] = 'è®¡åˆ’ä»»åŠ¡';
+$_LANG['08_friendlink_list'] = 'å‹æƒ…é“¾æ¥';
+$_LANG['shipping_area_list'] = 'é…é€åŒºåŸŸ';
+$_LANG['sitemap'] = 'ç«™ç‚¹åœ°å›¾';
+$_LANG['check_file_priv'] = 'æ–‡ä»¶æƒé™æ£€æµ‹';
+$_LANG['captcha_manage'] = $_LANG['05_captcha_manage'] = 'éªŒè¯ç ç®¡ç†';
+$_LANG['fckfile_manage'] = 'Fckä¸Šä¼ æ–‡ä»¶ç®¡ç†';
+$_LANG['ucenter_setup'] = 'UCenterè®¾ç½®';
+$_LANG['file_check'] = 'æ–‡ä»¶æ ¡éªŒ';
+$_LANG['021_reg_fields'] = 'ä¼šå‘˜æ³¨å†Œé¡¹è®¾ç½®';
 
-/* Ä£°å¹ÜÀí */
-$_LANG['02_template_select'] = 'Ä£°åÑ¡Ôñ';
-$_LANG['03_template_setup'] = 'ÉèÖÃÄ£°å';
-$_LANG['04_template_library'] = '¿âÏîÄ¿¹ÜÀí';
-$_LANG['mail_template_manage'] = 'ÓÊ¼şÄ£°å';
-$_LANG['05_edit_languages'] = 'ÓïÑÔÏî±à¼­';
-$_LANG['06_template_backup'] = 'Ä£°åÉèÖÃ±¸·İ';
-/* Êı¾İ¿â¹ÜÀí */
-$_LANG['02_db_manage'] = 'Êı¾İ±¸·İ';
-$_LANG['03_db_optimize'] = 'Êı¾İ±íÓÅ»¯';
-$_LANG['04_sql_query'] = 'SQL²éÑ¯';
-$_LANG['05_synchronous'] = 'Í¬²½Êı¾İ';
-$_LANG['convert'] = '×ª»»Êı¾İ';
+/* æ¨¡æ¿ç®¡ç† */
+$_LANG['02_template_select'] = 'æ¨¡æ¿é€‰æ‹©';
+$_LANG['03_template_setup'] = 'è®¾ç½®æ¨¡æ¿';
+$_LANG['04_template_library'] = 'åº“é¡¹ç›®ç®¡ç†';
+$_LANG['mail_template_manage'] = 'é‚®ä»¶æ¨¡æ¿';
+$_LANG['05_edit_languages'] = 'è¯­è¨€é¡¹ç¼–è¾‘';
+$_LANG['06_template_backup'] = 'æ¨¡æ¿è®¾ç½®å¤‡ä»½';
+/* æ•°æ®åº“ç®¡ç† */
+$_LANG['02_db_manage'] = 'æ•°æ®å¤‡ä»½';
+$_LANG['03_db_optimize'] = 'æ•°æ®è¡¨ä¼˜åŒ–';
+$_LANG['04_sql_query'] = 'SQLæŸ¥è¯¢';
+$_LANG['05_synchronous'] = 'åŒæ­¥æ•°æ®';
+$_LANG['convert'] = 'è½¬æ¢æ•°æ®';
 
-/* ¶ÌĞÅ¹ÜÀí */
-$_LANG['02_sms_my_info'] = 'ÕËºÅĞÅÏ¢';
-$_LANG['03_sms_send'] = '·¢ËÍ¶ÌĞÅ';
-$_LANG['04_sms_charge'] = 'ÕË»§³äÖµ';
-$_LANG['05_sms_send_history'] = '·¢ËÍ¼ÇÂ¼';
-$_LANG['06_sms_charge_history'] = '³äÖµ¼ÇÂ¼';
-
-
-
-
-$_LANG['affiliate'] = 'ÍÆ¼öÉèÖÃ';
-$_LANG['affiliate_ck'] = '·Ö³É¹ÜÀí';
-$_LANG['flashplay'] = 'Ê×Ò³Ö÷¹ã¸æ¹ÜÀí';
-$_LANG['search_log'] = 'ËÑË÷¹Ø¼ü×Ö';
-$_LANG['email_list'] = 'ÓÊ¼ş¶©ÔÄ¹ÜÀí';
-$_LANG['magazine_list'] = 'ÔÓÖ¾¹ÜÀí';
-$_LANG['attention_list'] = '¹Ø×¢¹ÜÀí';
-$_LANG['view_sendlist'] = $_LANG['04_view_sendlist'] = 'ÓÊ¼ş¶ÓÁĞ¹ÜÀí';
-
-/* »ı·Ö¶Ò»»¹ÜÀí */
-$_LANG['15_exchange_goods'] = '»ı·ÖÉÌ³ÇÉÌÆ·';
-$_LANG['15_exchange_goods_list'] = '»ı·ÖÉÌ³ÇÉÌÆ·ÁĞ±í';
-$_LANG['exchange_goods_add'] = 'Ìí¼ÓĞÂÉÌÆ·';
-
-/* cls_imageÀàµÄÓïÑÔÏî */
-$_LANG['directory_readonly'] = 'Ä¿Â¼ % ²»´æÔÚ»ò²»¿ÉĞ´';
-$_LANG['invalid_upload_image_type'] = '²»ÊÇÔÊĞíµÄÍ¼Æ¬¸ñÊ½';
-$_LANG['upload_failure'] = 'ÎÄ¼ş %s ÉÏ´«Ê§°Ü¡£';
-$_LANG['missing_gd'] = 'Ã»ÓĞ°²×°GD¿â';
-$_LANG['missing_orgin_image'] = 'ÕÒ²»µ½Ô­Ê¼Í¼Æ¬ %s ';
-$_LANG['nonsupport_type'] = '²»Ö§³Ö¸ÃÍ¼Ïñ¸ñÊ½ %s ';
-$_LANG['creating_failure'] = '´´½¨Í¼Æ¬Ê§°Ü';
-$_LANG['writting_failure'] = 'Í¼Æ¬Ğ´ÈëÊ§°Ü';
-$_LANG['empty_watermark'] = 'Ë®Ó¡ÎÄ¼ş²ÎÊı²»ÄÜÎª¿Õ';
-$_LANG['missing_watermark'] = 'ÕÒ²»µ½Ë®Ó¡ÎÄ¼ş%s';
-$_LANG['create_watermark_res'] = '´´½¨Ë®Ó¡Í¼Æ¬×ÊÔ´Ê§°Ü¡£Ë®Ó¡Í¼Æ¬ÀàĞÍÎª%s';
-$_LANG['create_origin_image_res'] = '´´½¨Ô­Ê¼Í¼Æ¬×ÊÔ´Ê§°Ü£¬Ô­Ê¼Í¼Æ¬ÀàĞÍ%s';
-$_LANG['invalid_image_type'] = 'ÎŞ·¨Ê¶±ğË®Ó¡Í¼Æ¬ %s ';
-$_LANG['file_unavailable'] = 'ÎÄ¼ş %s ²»´æÔÚ»ò²»¿É¶Á';
-
-/* ÓÊ¼ş·¢ËÍ´íÎóĞÅÏ¢ */
-$_LANG['smtp_setting_error'] = 'ÓÊ¼ş·şÎñÆ÷ÉèÖÃĞÅÏ¢²»ÍêÕû';
-$_LANG['smtp_connect_failure'] = 'ÎŞ·¨Á¬½Óµ½ÓÊ¼ş·şÎñÆ÷ %s';
-$_LANG['smtp_login_failure'] = 'ÓÊ¼ş·şÎñÆ÷ÑéÖ¤ÕÊºÅ»òÃÜÂë²»ÕıÈ·';
-$_LANG['sendemail_false'] = 'ÓÊ¼ş·¢ËÍÊ§°Ü£¬Çë¼ì²éÄúµÄÓÊ¼ş·şÎñÆ÷ÉèÖÃ£¡';
-$_LANG['smtp_refuse'] = '·şÎñÆ÷¾Ü¾ø·¢ËÍ¸ÃÓÊ¼ş';
-$_LANG['disabled_fsockopen'] = '·şÎñÆ÷ÒÑ½ûÓÃ fsocketopen º¯Êı¡£';
-
-/* ĞéÄâ¿¨ */
-$_LANG['virtual_card_oos'] = 'ĞéÄâ¿¨ÒÑÈ±»õ';
-
-$_LANG['span_edit_help'] = 'µã»÷ĞŞ¸ÄÄÚÈİ';
-$_LANG['href_sort_help'] = 'µã»÷¶ÔÁĞ±íÅÅĞò';
-
-$_LANG['catname_exist'] = 'ÒÑ´æÔÚÏàÍ¬µÄ·ÖÀàÃû³Æ!';
-$_LANG['brand_name_exist'] = 'ÒÑ´æÔÚÏàÍ¬µÄÆ·ÅÆÃû³Æ!';
-
-$_LANG['alipay_login'] = '<a href="https://www.alipay.com/user/login.htm?goto=https%3A%2F%2Fwww.alipay.com%2Fhimalayas%2Fpracticality_profile_edit.htm%3Fmarket_type%3Dfrom_agent_contract%26customer_external_id%3D%2BC4335319945672464113" target="_blank">Á¢¼´Ãâ·ÑÉêÇëÖ§¸¶½Ó¿ÚÈ¨ÏŞ</a>';
-$_LANG['alipay_look'] = '<a href=\"https://www.alipay.com/himalayas/practicality.htm\" target=\"_blank\">ÇëÉêÇë³É¹¦ºóµÇÂ¼Ö§¸¶±¦ÕË»§²é¿´</a>';
+/* çŸ­ä¿¡ç®¡ç† */
+$_LANG['02_sms_my_info'] = 'è´¦å·ä¿¡æ¯';
+$_LANG['03_sms_send'] = 'å‘é€çŸ­ä¿¡';
+$_LANG['04_sms_charge'] = 'è´¦æˆ·å……å€¼';
+$_LANG['05_sms_send_history'] = 'å‘é€è®°å½•';
+$_LANG['06_sms_charge_history'] = 'å……å€¼è®°å½•';
 
 
 
-$_LANG['04_sms_sign'] = '¶ÌĞÅÇ©Ãû';
+
+$_LANG['affiliate'] = 'æ¨èè®¾ç½®';
+$_LANG['affiliate_ck'] = 'åˆ†æˆç®¡ç†';
+$_LANG['flashplay'] = 'é¦–é¡µä¸»å¹¿å‘Šç®¡ç†';
+$_LANG['search_log'] = 'æœç´¢å…³é”®å­—';
+$_LANG['email_list'] = 'é‚®ä»¶è®¢é˜…ç®¡ç†';
+$_LANG['magazine_list'] = 'æ‚å¿—ç®¡ç†';
+$_LANG['attention_list'] = 'å…³æ³¨ç®¡ç†';
+$_LANG['view_sendlist'] = $_LANG['04_view_sendlist'] = 'é‚®ä»¶é˜Ÿåˆ—ç®¡ç†';
+
+/* ç§¯åˆ†å…‘æ¢ç®¡ç† */
+$_LANG['15_exchange_goods'] = 'ç§¯åˆ†å•†åŸå•†å“';
+$_LANG['15_exchange_goods_list'] = 'ç§¯åˆ†å•†åŸå•†å“åˆ—è¡¨';
+$_LANG['exchange_goods_add'] = 'æ·»åŠ æ–°å•†å“';
+
+/* cls_imageç±»çš„è¯­è¨€é¡¹ */
+$_LANG['directory_readonly'] = 'ç›®å½• % ä¸å­˜åœ¨æˆ–ä¸å¯å†™';
+$_LANG['invalid_upload_image_type'] = 'ä¸æ˜¯å…è®¸çš„å›¾ç‰‡æ ¼å¼';
+$_LANG['upload_failure'] = 'æ–‡ä»¶ %s ä¸Šä¼ å¤±è´¥ã€‚';
+$_LANG['missing_gd'] = 'æ²¡æœ‰å®‰è£…GDåº“';
+$_LANG['missing_orgin_image'] = 'æ‰¾ä¸åˆ°åŸå§‹å›¾ç‰‡ %s ';
+$_LANG['nonsupport_type'] = 'ä¸æ”¯æŒè¯¥å›¾åƒæ ¼å¼ %s ';
+$_LANG['creating_failure'] = 'åˆ›å»ºå›¾ç‰‡å¤±è´¥';
+$_LANG['writting_failure'] = 'å›¾ç‰‡å†™å…¥å¤±è´¥';
+$_LANG['empty_watermark'] = 'æ°´å°æ–‡ä»¶å‚æ•°ä¸èƒ½ä¸ºç©º';
+$_LANG['missing_watermark'] = 'æ‰¾ä¸åˆ°æ°´å°æ–‡ä»¶%s';
+$_LANG['create_watermark_res'] = 'åˆ›å»ºæ°´å°å›¾ç‰‡èµ„æºå¤±è´¥ã€‚æ°´å°å›¾ç‰‡ç±»å‹ä¸º%s';
+$_LANG['create_origin_image_res'] = 'åˆ›å»ºåŸå§‹å›¾ç‰‡èµ„æºå¤±è´¥ï¼ŒåŸå§‹å›¾ç‰‡ç±»å‹%s';
+$_LANG['invalid_image_type'] = 'æ— æ³•è¯†åˆ«æ°´å°å›¾ç‰‡ %s ';
+$_LANG['file_unavailable'] = 'æ–‡ä»¶ %s ä¸å­˜åœ¨æˆ–ä¸å¯è¯»';
+
+/* é‚®ä»¶å‘é€é”™è¯¯ä¿¡æ¯ */
+$_LANG['smtp_setting_error'] = 'é‚®ä»¶æœåŠ¡å™¨è®¾ç½®ä¿¡æ¯ä¸å®Œæ•´';
+$_LANG['smtp_connect_failure'] = 'æ— æ³•è¿æ¥åˆ°é‚®ä»¶æœåŠ¡å™¨ %s';
+$_LANG['smtp_login_failure'] = 'é‚®ä»¶æœåŠ¡å™¨éªŒè¯å¸å·æˆ–å¯†ç ä¸æ­£ç¡®';
+$_LANG['sendemail_false'] = 'é‚®ä»¶å‘é€å¤±è´¥ï¼Œè¯·æ£€æŸ¥æ‚¨çš„é‚®ä»¶æœåŠ¡å™¨è®¾ç½®ï¼';
+$_LANG['smtp_refuse'] = 'æœåŠ¡å™¨æ‹’ç»å‘é€è¯¥é‚®ä»¶';
+$_LANG['disabled_fsockopen'] = 'æœåŠ¡å™¨å·²ç¦ç”¨ fsocketopen å‡½æ•°ã€‚';
+
+/* è™šæ‹Ÿå¡ */
+$_LANG['virtual_card_oos'] = 'è™šæ‹Ÿå¡å·²ç¼ºè´§';
+
+$_LANG['span_edit_help'] = 'ç‚¹å‡»ä¿®æ”¹å†…å®¹';
+$_LANG['href_sort_help'] = 'ç‚¹å‡»å¯¹åˆ—è¡¨æ’åº';
+
+$_LANG['catname_exist'] = 'å·²å­˜åœ¨ç›¸åŒçš„åˆ†ç±»åç§°!';
+$_LANG['brand_name_exist'] = 'å·²å­˜åœ¨ç›¸åŒçš„å“ç‰Œåç§°!';
+
+$_LANG['alipay_login'] = '<a href="https://www.alipay.com/user/login.htm?goto=https%3A%2F%2Fwww.alipay.com%2Fhimalayas%2Fpracticality_profile_edit.htm%3Fmarket_type%3Dfrom_agent_contract%26customer_external_id%3D%2BC4335319945672464113" target="_blank">ç«‹å³å…è´¹ç”³è¯·æ”¯ä»˜æ¥å£æƒé™</a>';
+$_LANG['alipay_look'] = '<a href=\"https://www.alipay.com/himalayas/practicality.htm\" target=\"_blank\">è¯·ç”³è¯·æˆåŠŸåç™»å½•æ”¯ä»˜å®è´¦æˆ·æŸ¥çœ‹</a>';
 
 
-/* ºóÌ¨¹ÜÀí²Ëµ¥ */
-$_LANG['00_menu_dashboard'] = '¿ØÖÆÌ¨';
-$_LANG['01_menu_system'] = 'ÉèÖÃ';
-$_LANG['02_menu_goods'] = 'ÉÌÆ·';
-$_LANG['03_menu_order'] = '¶©µ¥';
-$_LANG['031_menu_aftermarket'] = 'ÊÛºó·şÎñ';
-$_LANG['04_menu_members'] = '»áÔ±';
-$_LANG['05_menu_content'] = 'ÄÚÈİ';
-$_LANG['06_menu_promotion'] = 'ÓªÏú';
-$_LANG['07_menu_stats'] = '±¨±í';
-$_LANG['08_menu_template'] = 'Ä£°å';
-$_LANG['09_menu_backup'] = 'Êı¾İ¿â';
-$_LANG['10_menu_tools'] = '¹¤¾ßÏä';
-$_LANG['11_menu_rec'] = 'Î¢·ÖÏú';
-$_LANG['12_menu_wechat'] = 'Î¢ĞÅÍ¨';
 
-// ¿ØÖÆÌ¨
-$_LANG['01_dashboard_welcome'] = '»¶Ó­Ò³Ãæ';
-//$_LANG['02_favorite'] = '³£ÓÃ¹¦ÄÜ';
-//$_LANG['03_notepad'] = '¼ÇÊÂ±¾';
-//$_LANG['04_calc'] = '¼ÆËãÆ÷';
-
-// ÉèÖÃ
-$_LANG['01_shop_config'] = 'ÉÌµêÉèÖÃ';
-$_LANG['02_payment_list'] = 'Ö§¸¶·½Ê½';
-$_LANG['03_shipping_list'] = 'ÅäËÍ·½Ê½';
-$_LANG['04_area_list'] = 'µØÇøÁĞ±í';
-$_LANG['05_admin_list'] = '¹ÜÀíÔ±ÁĞ±í';
-$_LANG['06_admin_role'] = '½ÇÉ«¹ÜÀí';
-$_LANG['07_admin_logs'] = '¹ÜÀíÔ±ÈÕÖ¾';
-$_LANG['08_agency_list'] = '°ìÊÂ´¦ÁĞ±í';
-$_LANG['09_suppliers_list'] = '¹©»õÉÌÁĞ±í';
-$_LANG['10_shop_authorized'] = 'ÊÚÈ¨Ö¤Êé';
-
-// ÉÌÆ·
+$_LANG['04_sms_sign'] = 'çŸ­ä¿¡ç­¾å';
 
 
-// ¶©µ¥
+/* åå°ç®¡ç†èœå• */
+$_LANG['00_menu_dashboard'] = 'æ§åˆ¶å°';
+$_LANG['01_menu_system'] = 'è®¾ç½®';
+$_LANG['02_menu_goods'] = 'å•†å“';
+$_LANG['03_menu_order'] = 'è®¢å•';
+$_LANG['031_menu_aftermarket'] = 'å”®åæœåŠ¡';
+$_LANG['04_menu_members'] = 'ä¼šå‘˜';
+$_LANG['05_menu_content'] = 'å†…å®¹';
+$_LANG['06_menu_promotion'] = 'è¥é”€';
+$_LANG['07_menu_stats'] = 'æŠ¥è¡¨';
+$_LANG['08_menu_template'] = 'æ¨¡æ¿';
+$_LANG['09_menu_backup'] = 'æ•°æ®åº“';
+$_LANG['10_menu_tools'] = 'å·¥å…·ç®±';
+$_LANG['11_menu_rec'] = 'å¾®åˆ†é”€';
+$_LANG['12_menu_wechat'] = 'å¾®ä¿¡é€š';
+
+// æ§åˆ¶å°
+$_LANG['01_dashboard_welcome'] = 'æ¬¢è¿é¡µé¢';
+//$_LANG['02_favorite'] = 'å¸¸ç”¨åŠŸèƒ½';
+//$_LANG['03_notepad'] = 'è®°äº‹æœ¬';
+//$_LANG['04_calc'] = 'è®¡ç®—å™¨';
+
+// è®¾ç½®
+$_LANG['01_shop_config'] = 'å•†åº—è®¾ç½®';
+$_LANG['02_payment_list'] = 'æ”¯ä»˜æ–¹å¼';
+$_LANG['03_shipping_list'] = 'é…é€æ–¹å¼';
+$_LANG['04_area_list'] = 'åœ°åŒºåˆ—è¡¨';
+$_LANG['05_admin_list'] = 'ç®¡ç†å‘˜åˆ—è¡¨';
+$_LANG['06_admin_role'] = 'è§’è‰²ç®¡ç†';
+$_LANG['07_admin_logs'] = 'ç®¡ç†å‘˜æ—¥å¿—';
+$_LANG['08_agency_list'] = 'åŠäº‹å¤„åˆ—è¡¨';
+$_LANG['09_suppliers_list'] = 'ä¾›è´§å•†åˆ—è¡¨';
+$_LANG['10_shop_authorized'] = 'æˆæƒè¯ä¹¦';
+
+// å•†å“
 
 
-// »áÔ±
+// è®¢å•
 
 
-// ÄÚÈİ
+// ä¼šå‘˜
 
 
-// ÓªÏú
+// å†…å®¹
 
 
-// ±¨±í
+// è¥é”€
 
 
-// Ä£°å
+// æŠ¥è¡¨
 
 
-// Êı¾İ¿â
+// æ¨¡æ¿
 
 
-// ¹¤¾ßÏä
-$_LANG['02_authorization'] = 'µÇÂ¼²å¼ş';
-$_LANG['99_upgrade'] = 'ÔÚÏß¸üĞÂ';
+// æ•°æ®åº“
+
+
+// å·¥å…·ç®±
+$_LANG['02_authorization'] = 'ç™»å½•æ’ä»¶';
+$_LANG['99_upgrade'] = 'åœ¨çº¿æ›´æ–°';
 
 /*DRP_START*/
-// Î¢·ÖÏú
-$_LANG['01_drp_config'] = 'Î¢·ÖÏúÉèÖÃ';
-$_LANG['02_drp_audit'] = '·ÖÏúÉÌÉóºË';
-$_LANG['02_drp_users'] = '·ÖÏúÉÌ¹ÜÀí';
-$_LANG['03_drp'] = 'ÏúÊÛÓ¶½ğÉèÖÃ';
-$_LANG['04_order_list'] = 'ÏúÊÛ¶©µ¥¹ÜÀí';
-$_LANG['05_affiliate'] = '·Ö³ÉÓ¶½ğÉèÖÃ';
-$_LANG['06_affiliate_ck'] = '·Ö³É¶©µ¥¹ÜÀí';
-$_LANG['07_ranking'] = '·ÖÏúÉÌÅÅĞĞ°ñ';
-$_LANG['08_drp_log'] = 'Ó¶½ğÌáÏÖ¹ÜÀí';
+// å¾®åˆ†é”€
+$_LANG['01_drp_config'] = 'å¾®åˆ†é”€è®¾ç½®';
+$_LANG['02_drp_audit'] = 'åˆ†é”€å•†å®¡æ ¸';
+$_LANG['02_drp_users'] = 'åˆ†é”€å•†ç®¡ç†';
+$_LANG['03_drp'] = 'é”€å”®ä½£é‡‘è®¾ç½®';
+$_LANG['04_order_list'] = 'é”€å”®è®¢å•ç®¡ç†';
+$_LANG['05_affiliate'] = 'åˆ†æˆä½£é‡‘è®¾ç½®';
+$_LANG['06_affiliate_ck'] = 'åˆ†æˆè®¢å•ç®¡ç†';
+$_LANG['07_ranking'] = 'åˆ†é”€å•†æ’è¡Œæ¦œ';
+$_LANG['08_drp_log'] = 'ä½£é‡‘æç°ç®¡ç†';
 /*DRP_END*/
 
-// Î¢ĞÅÍ¨
-$_LANG['01_wechat_config'] = '¹«ÖÚºÅÉèÖÃ';
-$_LANG['02_wechat_masssend'] = 'Èº·¢ÏûÏ¢';
-$_LANG['03_wechat_autoreply'] = '×Ô¶¯»Ø¸´';
-$_LANG['04_wechat_selfmenu'] = '×Ô¶¨Òå²Ëµ¥';
-$_LANG['05_wechat_tmplmsg'] = 'Ä£°åÏûÏ¢';
-$_LANG['06_wechat_contactmanage'] = 'ÓÃ»§¹ÜÀí';
-$_LANG['07_wechat_appmsg'] = 'ËØ²Ä¹ÜÀí';
-$_LANG['08_wechat_qrcode'] = 'É¨ÂëÒı¼ö';
-$_LANG['09_wechat_extends'] = 'À©Õ¹¹¦ÄÜ';
-$_LANG['10_wechat_remind'] = 'ÌáĞÑÉèÖÃ';
-$_LANG['11_wechat_customer'] = '¶à¿Í·şÉèÖÃ';
+// å¾®ä¿¡é€š
+$_LANG['01_wechat_config'] = 'å…¬ä¼—å·è®¾ç½®';
+$_LANG['02_wechat_masssend'] = 'ç¾¤å‘æ¶ˆæ¯';
+$_LANG['03_wechat_autoreply'] = 'è‡ªåŠ¨å›å¤';
+$_LANG['04_wechat_selfmenu'] = 'è‡ªå®šä¹‰èœå•';
+$_LANG['05_wechat_tmplmsg'] = 'æ¨¡æ¿æ¶ˆæ¯';
+$_LANG['06_wechat_contactmanage'] = 'ç”¨æˆ·ç®¡ç†';
+$_LANG['07_wechat_appmsg'] = 'ç´ æç®¡ç†';
+$_LANG['08_wechat_qrcode'] = 'æ‰«ç å¼•è';
+$_LANG['09_wechat_extends'] = 'æ‰©å±•åŠŸèƒ½';
+$_LANG['10_wechat_remind'] = 'æé†’è®¾ç½®';
+$_LANG['11_wechat_customer'] = 'å¤šå®¢æœè®¾ç½®';
