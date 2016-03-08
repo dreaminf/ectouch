@@ -24,7 +24,7 @@
     </div>
     <div class="content2" style="float:left;">
       <ul>
-        <li class="dpxq_p">{$info.name|truncate:10}&nbsp;<span class="dpgl_content"></span></li>
+        <li class="dpxq_p">{$info.name}&nbsp;<span class="dpgl_content"></span></li>
         <li class="dpxq_h5">{$sale.shop_name}</li>
 		<li class="dpxq_h5"> 开店时间：{$sale.time}</li>
       </ul>
