@@ -276,7 +276,7 @@ class SaleController extends CommonController {
      * 推广二维码
      */
     public function spread(){
-        $id = I('u') ? I('u') : $this->user_id;
+        $id = $this->user_id;
         if(!isset($_GET['u'])){
 			redirect(url('sale/spread',array('u'=>$id)));
 		}
