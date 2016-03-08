@@ -347,6 +347,7 @@ $_LANG['00_menu_dashboard'] = '控制台';
 $_LANG['01_menu_system'] = '设置';
 $_LANG['02_menu_goods'] = '商品';
 $_LANG['03_menu_order'] = '订单';
+$_LANG['031_menu_aftermarket'] = '售后服务';
 $_LANG['04_menu_members'] = '会员';
 $_LANG['05_menu_content'] = '内容';
 $_LANG['06_menu_promotion'] = '营销';
@@ -428,3 +429,11 @@ $_LANG['08_wechat_qrcode'] = '扫码引荐';
 $_LANG['09_wechat_extends'] = '扩展功能';
 $_LANG['10_wechat_remind'] = '提醒设置';
 $_LANG['11_wechat_customer'] = '多客服设置';
+/* by ECTouch leah begin*/
+$_LANG['01_service_type'] = '售后服务类型';
+$_LANG['02_add_service_type'] = '添加售后服务类型';
+$_LANG['04_aftermarket'] = '售后服务';
+$_LANG['10_cause_add'] = '添加退换货原因';
+$_LANG['11_back_cause'] = '退换货原因列表';
+$_LANG['12_back_apply'] = '退换货列表';
+/* by Leah end*/

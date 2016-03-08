@@ -1160,3 +1160,241 @@ function deleteRepeat($array){
     }
     return $array;
 }
+
+/**
+ * 供货商信息 服务订单  ECTouch Leah
+ *
+ * @param       string      $conditions
+ * @return      array
+ */
+function get_suppliers_name($seller_id)
+{
+    $where = '';
+    if (!empty($seller_id))
+    {
+        $where .= 'WHERE ';
+        $where .= " suppliers_id = ".$seller_id;
+    }
+    if( $seller_id == 0){
+        return $GLOBALS['_CFG']['shop_name'];
+    }
+    /* 查询 */
+    $sql = "SELECT suppliers_id, suppliers_name, suppliers_desc
+            FROM " . $GLOBALS['ecs']->table("suppliers") . "
+            $where";
+    $result = $GLOBALS['db']->getRow($sql);
+    
+    return $result['suppliers_name'];
+}
+
+/**
+ *  获取用户服务订单列表
+ *
+ * @access  public
+ * @param   int $user_id 用户ID号
+ * @param   int $num 列表最大数量
+ * @param   int $start 列表起始位置
+ * @return  array       $after_list     订单列表
+ */
+function get_user_aftermarket($user_id, $num = 10, $start = 0) {
+    /* 取得订单列表 */
+    $arr = array();
+
+    $sql = "SELECT ret_id ,rec_id, goods_id, service_sn, order_sn, order_id,add_time, should_return, return_status, refund_status, is_check, service_id, cause_id, seller_id " .
+            " FROM " . $GLOBALS['ecs']->table('order_return') .
+            " WHERE user_id = '$user_id'  ORDER BY add_time DESC ";
+    $res = $GLOBALS['db']->SelectLimit($sql, $num, $start);
+
+    while ($row = $GLOBALS['db']->fetchRow($res)){
+        if ($row['order_status'] == RF_APPLICATION) {
+           $row['handler'] = "<a href=\"user.php?act=cancel_aftermarket&ret=" .$row['ret_id']. "\" onclick=\"if (!confirm('".$GLOBALS['_LANG']['confirm_cancel']."')) return false;\">".$GLOBALS['_LANG']['cancel']."</a>";
+        } else if ($row['is_check'] == RC_APPLY_SUCCESS) {
+            /* 对配送状态的处理 */
+            if ($row['shipping_status'] == SS_SHIPPED) {
+                 @$row['handler'] = "<a href=\"user.php?act=affirm_received&order_id=" .$row['order_id']. "\" onclick=\"if (!confirm('".$GLOBALS['_LANG']['confirm_received']."')) return false;\">".$GLOBALS['_LANG']['received']."</a>";
+            } elseif ($row['shipping_status'] == SS_RECEIVED) {
+                @$row['handler'] = '<span style="color:red">' . L('ss_received') . '</span>';
+            } else {
+                if ($row['pay_status'] == PS_UNPAYED) {
+                    @$row['handler'] = "<a href=\"user.php?act=cancel_order&order_id=" .$row['order_id']. '">' .$GLOBALS['_LANG']['pay_money']. '</a>';
+                } else {
+                    @$row['handler'] = "<a href=\"user.php?act=cancel_order&order_id=" .$row['order_id']. '">' .$GLOBALS['_LANG']['pay_money']. '</a>';
+                }
+            }
+        } else {
+            $row['handler'] = '<span>' .$GLOBALS['_LANG']['os'][$row['order_status']]. '</span>';
+        }
+
+        $row['shipping_status'] = ($row['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $row['shipping_status'];
+        $row['order_status'] = $GLOBALS['_LANG']['os'][$row['order_status']] . ',' . $GLOBALS['_LANG']['ps'][$row['pay_status']] . ',' . $GLOBALS['_LANG']['ss'][$row['shipping_status']];
+
+        $arr[] = array(
+            'ret_id' => $row['ret_id'],
+            'order_id' => $row['order_id'],
+            'service_sn' => $row['service_sn'],
+            'order_sn' => $row['order_sn'],
+            'add_time' => local_date($GLOBALS['_CFG']['time_format'], $row['add_time']),
+            'seller_name' => get_suppliers_name($row['seller_id']),
+            'service_type' => get_service_type($row['service_id'], true),
+            'cause_name'   =>get_service_cause_name($row['cause_id']),
+            'return_status' => $GLOBALS['_LANG']['rf'][$row['return_status']],
+            'refund_status' => $GLOBALS['_LANG']['ff'][$row['refund_status']],
+            'total_fee' => price_format($row['total_fee'], false),
+            'handler' => $row['handler']);
+    }
+    return $arr;
+}
+/**
+ * 售后服务订单详情
+ *
+ * @param       string      $conditions
+ * @return      array
+ */
+function get_aftermarket_detail($ret_id, $user_id = 0) {
+    $ret_id = intval($ret_id);
+    if ($ret_id <= 0) {
+        $GLOBALS['err']->add($GLOBALS['_LANG']['invalid_order_id']);
+        return false;
+    }
+    $order = aftermarket_info($ret_id);
+
+    //检查订单是否属于该用户
+    if ($user_id > 0 && $user_id != $order['user_id']) {
+        $GLOBALS['err']->add($GLOBALS['_LANG']['no_priv']);
+        return false;
+    }
+    return $order;
+}
+
+/**
+ * 取消一个用户订单
+ *
+ * @access  public
+ * @param   int         $ret_id       订单ID
+ * @param   int         $user_id        用户ID
+ *
+ * @return void
+ */
+function cancel_service($ret_id, $user_id = 0) {
+    /* 查询订单信息，检查状态 */
+    $sql = "SELECT user_id, order_sn ,return_status, refund_status, is_check FROM " . $GLOBALS['ecs']->table('order_return') . " WHERE ret_id = '$ret_id'";
+    $order = $GLOBALS['db']->GetRow($sql);
+
+    if (empty($order)) {
+        $GLOBALS['err']->add($GLOBALS['_LANG']['order_exist']);
+        return false;
+    }
+
+    // 如果用户ID大于0，检查订单是否属于该用户
+    if ($user_id > 0 && $order['user_id'] != $user_id) {
+        $GLOBALS['err']->add($GLOBALS['_LANG']['no_priv']);
+        return false;
+    }
+    // 服务订单状态是 已审核
+    if ($order['is_check'] == RC_APPLY_SUCCESS) {
+        $GLOBALS['err']->add($GLOBALS['_LANG']['current_rc_apply_success']);
+
+        return false;
+    }
+
+    //将用户订单设置为取消
+    $sql = "UPDATE " . $GLOBALS['ecs']->table('order_return') . " SET return_status = '" . RF_CANCELED . "' WHERE ret_id = '$ret_id'";
+
+    if ($GLOBALS['db']->query($sql)) {
+        /* 记录log */
+        return_action($ret_id, RF_CANCELED, FF_NOREFUND, RC_APPLY_FALSE, $GLOBALS['_LANG']['cancel_service_mess'], $GLOBALS['_LANG']['buyer'], '', $GLOBALS['_LANG']['cancel_service_mess']);
+        return true;
+    } else {
+        die($GLOBALS['db']->errorMsg());
+    }
+}
+
+/**
+ * 获得服务订单可执行操作
+ * @param $service_type  服务订单类型
+ * @param $return_staus  服务订单状态
+ * @param is_check  审核是否通过
+ * */
+function get_return_operate($order) {
+    if ($order['is_check'] == RC_APPLY_FALSE && $order['return_status'] == RF_APPLICATION) {
+        //申请 未审核 可以取消申请服务
+        @$handler = "<a href=\"user.php?act=cancel_service&ret_id=" . $order['ret_id'] . "\" class=\"btn btn-5\" onclick=\"if (!confirm('" . $GLOBALS['_LANG']['confirm_cancel_aftermarket'] . "')) return false;\">" . $GLOBALS['_LANG']['cancel'] . "</a>";
+    } else {
+        /* 审核通过 */
+        $server = get_service_type($order['service_id']);
+        /* 快递公司 */
+        $consignee = get_consignee($_SESSION['user_id']);
+        $region = array($consignee['country'], $consignee['province'], $consignee['city'], $consignee['district']);
+        $shipping_list = available_shipping_list($region);
+        foreach ($shipping_list AS $key => $val) {
+            $shipping_cfg = unserialize_config($val['configure']);
+            $shipping_fee = ($shipping_count == 0 AND $cart_weight_price['free_shipping'] == 1) ? 0 : shipping_fee($val['shipping_code'], unserialize($val['configure']), $cart_weight_price['weight'], $cart_weight_price['amount'], $cart_weight_price['number']);
+
+            $shipping_list[$key]['format_shipping_fee'] = price_format($shipping_fee, false);
+            $shipping_list[$key]['shipping_fee'] = $shipping_fee;
+            $shipping_list[$key]['free_money'] = price_format($shipping_cfg['free_money'], false);
+            $shipping_list[$key]['insure_formated'] = strpos($val['insure'], '%') === false ? price_format($val['insure'], false) : $val['insure'];
+        }
+        /* 退货退款 */
+        if ($server['service_type'] == ST_RETURN_GOODS) {
+            if ($order['return_status'] == RF_APPLICATION) {
+                
+                $goods_info = order_goods_info($order['rec_id']);
+                
+                $GLOBALS['smarty']->assign('ret_id', $order['ret_id']);
+                $GLOBALS['smarty']->assign('shipping_list', $shipping_list);
+                $GLOBALS['smarty']->assign('business_address', get_business_address($goods_info['suppliers_id']));
+                
+                @$handler = $GLOBALS['smarty']->fetch('library/send_info.lbi');
+            }
+        }
+        /* 换货 */ elseif ($server['service_type'] == ST_EXCHANGE) {
+            if ($order['return_status'] == RF_APPLICATION) {
+                
+                $goods_info = order_goods_info($order['rec_id']);
+                
+                $GLOBALS['smarty']->assign('ret_id', $order['ret_id']);
+                $GLOBALS['smarty']->assign('shipping_list', $shipping_list);
+                $GLOBALS['smarty']->assign('business_address', get_business_address($goods_info['suppliers_id']));
+                
+                @$handler = $GLOBALS['smarty']->fetch('library/send_info.lbi');
+            }
+        }
+    }
+    return $handler;
+}
+/**
+ * 服务订单进程
+ * @param type $order
+ */
+function  get_aftermarket_progress( $order ){
+    
+   if ( $order['return_status'] == RF_APPLICATION) {
+        //申请
+        $list['apply'] = 1;
+    }
+    elseif($order['return_status'] == RF_SEND_OUT){
+        $list['send_out'] = 1;
+    }
+    elseif($order['return_status'] == RF_RECEIVE ){  
+        $list['receive'] = 1;
+    }
+    elseif($order['return_status'] == RF_SWAPPED_OUT ){
+ 
+        $list['swapped_out'] = 1;
+    }
+    elseif($order['return_status'] == RF_COMPLETE ){
+        
+        $list['complete'] = 1;
+    }
+    elseif($order['return_status'] == RF_CANCELED ){
+        
+        $list['apply'] =  1;
+        $list['canceled'] = 1;
+    }
+    elseif($order['return_status'] == RF_APPLY_FALSE ){
+        
+       $list['apply_false'] = 1; 
+    }
+    return $list;
+}

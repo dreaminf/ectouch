@@ -477,10 +477,8 @@ if ($_REQUEST['act'] == 'order_list')
     }
     $is_separate = $_GET['is_separate'] ? $_GET['is_separate'] : 0;
     $smarty->assign('is_separate', $is_separate);
-	if($_POST){
-		$order_sn = $_POST['order_sn'] ? $_POST['order_sn'] : '';
-	}
-    $list = get_order_list($is_separate,$order_sn);
+
+    $list = get_order_list($is_separate);
     $smarty->assign('list',         $list['list']);
     $smarty->assign('filter',       $list['filter']);
     $smarty->assign('record_count', $list['record_count']);
@@ -497,7 +495,7 @@ elseif ($_REQUEST['act'] == 'order_list_query')
 {
     $is_separate = $_POST['is_separate'] ? $_POST['is_separate'] : 0;
     $smarty->assign('is_separate', $is_separate);
-    $list = get_order_list($is_separate,$order_id);
+    $list = get_order_list($is_separate);
     $smarty->assign('list',         $list['list']);
     $smarty->assign('filter',       $list['filter']);
     $smarty->assign('record_count', $list['record_count']);
@@ -712,21 +710,19 @@ function get_user_log_list($user_id)
  *                  frozen_money表示冻结资金，rank_points表示等级积分，pay_points表示消费积分
  * @return  array
  */
-function get_order_list($is_separate,$order_sn)
+function get_order_list($is_separate)
 {
     /* 初始化分页参数 */
     $filter = array(
         'is_separate'=>$is_separate,
     );
-	if ($order_sn != '') {
-		$where .= " and o.order_sn like '%$order_sn%'  ";
-    } 
     /* 查询记录总数，计算分页数 */
-    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 $where and  d.shop_separate = ".$is_separate;
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 and  d.shop_separate = ".$is_separate;
     $filter['record_count'] = $GLOBALS['db']->getOne($sql);
     $filter = page_and_size($filter);
+
     /* 查询记录 */
-    $sql = "SELECT o.*,d.drp_id as drp FROM " .  $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 and  d.shop_separate = $is_separate $where" .
+    $sql = "SELECT o.*,d.drp_id as drp FROM " .  $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 and  d.shop_separate = $is_separate" .
         " ORDER BY order_id DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 

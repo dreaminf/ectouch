@@ -90,6 +90,7 @@
 			<div class="member-serve">
 				<ul>
 					<li onclick="window.location = '{:url('user/service')}';"><i class="iconfont fl member-serve-li-oi">&#xe61a;</i><p class="fl">客户服务</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
+					<li onclick="window.location = '{:url('user/aftermarket_list')}';"><i class="iconfont fl member-serve-li-di">&#xe61c;</i><p class="fl">退换货订单</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
 					<li onclick="window.location = '{:url('user/share')}'"><i class="iconfont fl member-serve-li-ti">&#xe61e;</i><p class="fl">我的分享</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
 					<!--/*DRP_START*/-->
 					<li onclick="window.location = '{:url('store/check_store')}'" style="border-bottom:none"><i class="iconfont fl member-serve-li-ti">&#xe625;</i><p class="fl">我的微店</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
