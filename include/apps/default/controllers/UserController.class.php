@@ -1535,7 +1535,7 @@ class UserController extends CommonController {
                     die(json_encode($result));
                 } else {
                     $result['error'] = 0;
-                    $result['message'] = L('collect_success');
+                    $result['message'] = L('collect_error');
                     die(json_encode($result));
                 }
             } else {

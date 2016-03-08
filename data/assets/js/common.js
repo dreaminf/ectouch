@@ -152,12 +152,10 @@ function collect(goodsId) {
  */
 function collectResponse(result) {
     if (result.error == 0) {
-        if ($('#ECS_COLLECT').hasClass("ect-colory") > 0) {
-            $('#ECS_COLLECT').removeClass("ect-colory")
-            $('#ECS_COLLECT i').addClass("fa-heart-o").removeClass("fa-heart");
+        if ($('#ECS_COLLECT').hasClass("active") > 0) {
+         $('#ECS_COLLECT').removeClass("active");
         } else {
-            $('#ECS_COLLECT').addClass("ect-colory")
-            $('#ECS_COLLECT i').addClass("fa-heart").removeClass("fa-heart-o");
+            $('#ECS_COLLECT').addClass("active")
         }
     }
     if (result.error == 2) {
