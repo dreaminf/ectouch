@@ -101,7 +101,8 @@ class CategoryController extends CommonController {
         if (IS_AJAX) {
             $size = I('size');
             $this->parameter();
-            $goodslist = $this->category_get_goods($this->cat_id, $this->brand, $this->price_min, $this->price_max, $size, $this->page, $this->sort, $this->order, $this->keywords);
+            $goodslist = $this->category_get_goods($this->cat_id, $this->brand, $this->price_min, $this->price_max, $size, $this->page, 
+			$this->sort, $this->order, $this->keywords);
             $count = $this->get_goods_count($this->cat_id, $this->brand, $this->price_min, $this->price_max,$this->keywords);
 			$count = ceil($count / $size);
 			$count = $count - 1; 
@@ -531,7 +532,6 @@ class CategoryController extends CommonController {
         if ($this->price_max > 0) {
             $where .= " AND g.shop_price <= $this->price_max ";
         }
-
         $start = ($this->page - 1) * $this->size;
         $sort = $this->sort == 'sales_volume' ? 'xl.sales_volume' : $this->sort;
         /* 获得商品列表 */
