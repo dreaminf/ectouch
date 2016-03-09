@@ -297,10 +297,10 @@ div{
 	text-align:center;
 	}		
 .dpgl_list{
-	width:96%;
-	
-	margin-top:1.25rem;
+	padding:1.3rem;
 	}
+.dpgl_list-n{font-size:1.8rem;color:#444;margin-left:0.5rem;}	
+.sale-bor-box{border-bottom: 1px solid #f6f6f9;}	
 .dpgl_lista{
 	width:90%;
 	overflow:hidden;
@@ -313,7 +313,7 @@ div{
 	
 		
 .dpgl_list1,.index_list1{	
-	font-size:1.25rem;
+	font-size:1.7rem;
 	line-height:4rem;
 	margin-left:3.1rem;	
 	color:#666;
@@ -440,16 +440,22 @@ div{
     font-size:1.25rem;
 	}
 .bdda2_list2{
-	font-size:1.25rem;
-	line-height:3rem;
-	}	
+	font-size:1.6rem;
+	color: #444;
+	}
+.fx-new-box{float:left;}	
+.new-w{width:5.5rem;}	
+.new-w1{width:6.8rem;padding-top:1.2rem}
+.new-w2{padding-top:1.2rem;}
+	.new-max-box{border-bottom: 1px solid #f6f6f9;}
 .bdda2_list{
-	text-align:right;
 	color:#999;
 	font-size:1rem;
-	display:block;
-	margin-top:-2.2rem;	
+    float:right;	
 	}
+.dis-box {display: -webkit-box;display: -moz-box;display: -ms-box;display: box;}
+.box-flex {-webkit-box-flex: 1;-moz-box-flex: 1;-ms-box-flex: 1;box-flex: 1;display: block;width: 100%;}	
+
 .bdda2_list4,.bdda2_list3{text-align:left;
 color:#000;}
 .bdda2_list4{color:#999;font-size:1rem;margin-top:1rem; }
