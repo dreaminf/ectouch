@@ -21,7 +21,7 @@ class IndexController extends CommonController {
      * 首页信息
      */
     public function index() {
-        $cache_id = sprintf('%X', crc32($_SESSION['user_rank'] . '-' . C('lang')));
+        $cache_id = sprintf('%X', crc32($_SESSION['user_rank'] . '-subscribe' . $this->subscribe . '-' . C('lang')));
         if (!ECTouch::view()->is_cached('index.dwt', $cache_id))
         {
             // 自定义导航栏
