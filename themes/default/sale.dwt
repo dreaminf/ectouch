@@ -52,7 +52,7 @@
    
    <a href="{:url('sale/my_goods')}">
         <div class="dpgl_list" >
-        <i class="iconfont icon-quanbushangpin"></i><span class="dpgl_list2">我的商品</span><i class="iconfont icon-huise icon-jiantou1"></i> </div>
+        <i class="iconfont icon-quanbushangpin2"></i><span class="dpgl_list2">我的商品</span><i class="iconfont icon-huise icon-jiantou1"></i> </div>
         <div class="dpxq_border"></div>
    </a>
    
@@ -98,7 +98,7 @@
 	
    <a href="{:url('sale/ranking_list')}">
       <div class="dpgl_list" >
-          <i class="iconfont icon-quanbushangpin"></i><span class="dpgl_list2">分销排行榜</span><i class="iconfont icon-huise icon-jiantou1"></i></div>
+          <i class="iconfont icon-quanbushangpin3"></i><span class="dpgl_list2">分销排行榜</span><i class="iconfont icon-huise icon-jiantou1"></i></div>
       <div class="dpxq_border"></div>
    </a> 
     <br>
