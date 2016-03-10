@@ -7,7 +7,7 @@
 		</div>
 	</section>
 	<section class="con-filter-div">
-		<form class="hold-height" method="post" id="filter" action="{:url('index', array('id'=>$this->_var['id'], 'display'=>$this->_var['display'],'brand'=>$this->_var['brand'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keyword'=>$this->_var['keywords']))}#goods_list"">
+		<form class="hold-height" method="post" id="form" action="{:url('category/index')}">
 		<input type="hidden" name="id" class="cat" value="{$id}" />
 		<div class="swiper-wrapper">
 			<div class="swiper-slide">
@@ -19,8 +19,8 @@
 							<span id="slider-range-amount"></span>
 						</div>
 					</div>
-                        <input type="hidden" name="price_min" value="{$price_min}" />
-                        <input type="hidden" name="price_max" value="{$price_max}" />
+					<input type="hidden" name="price_min" value="{$price_min}" />
+					<input type="hidden" name="price_max" value="{$price_max}" />
 				</div>
 				<div class="select-two">
 					<a class="select-title padding-all j-menu-select">
@@ -35,13 +35,11 @@
 					</a>
 					<ul class="j-sub-menu padding-all j-get-one" data-istrue="true">
 						<!--{foreach from=$brands item=brand name=brands}-->
-						<li class="ect-select" id="brand-select">
-							<label class="ts-1">{$brand.brand_name|escape:html}
-								<i class="fr iconfont icon-gou ts-1"></i>
-								<input type="hidden" value="{$brand.brand_id}" />
-							</label>
+						<li class="ect-select">
+							<label class="ts-1">{$brand.brand_name|escape:html}<i class="fr iconfont icon-gou ts-1"></i></label>
 						</li>
 						<!--{/foreach}-->
+						<input type="hidden" name="brand" value="{$brand_id}" />
 					</ul>
 					<!--{foreach from=$filter_attr_list item=filter name=filter}-->
 					<a class="select-title padding-all j-menu-select">
@@ -64,25 +62,16 @@
 					</ul>
 					<!--{/foreach}-->
 				</div>
-				<input type="hidden" name="brand" class="brand_list_id" value="{$brand}" />
 				<div class="ect-button-more dis-box padding-all">
 					<a class="box-flex btn-reset j-filter-reset" onclick="javascript:clear_filter();">清空选项</a>
-					<button type="button"  onclick="formSubmit()" class="box-flex btn-submit">确定</button>
+					<button type="submit" class="box-flex btn-submit">确定</button>
 				</div>
 			</div>
 		</div>
 		</form>
 	</section>
 </div>
-<script type="text/javascript">
-function formSubmit()
-{
-	var brand = $("#brand-select .active input").val();
-	$(".brand_list_id").val(brand);
-	$('#filter').submit()
-}
 
-</script>
 <script type="text/javascript">
 function clear_filter(){
  $(".touchweb-com_listType .range").text("全部");
