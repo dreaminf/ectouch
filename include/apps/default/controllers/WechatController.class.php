@@ -723,13 +723,13 @@ class WechatController extends CommonController
         if(is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid'])) && ACTION_NAME != 'third_login'){
             $wxinfo   = model('Base')->model->table('wechat')->field('token, appid, appsecret, status')->find();
             if(!$wxinfo['status']){return false;}
-            $url = url('user/third_login', array('type'=>'weixin'));
             if (! empty($wxinfo['oauth_redirecturi'])) {
-                $_SESSION['redirect_url'] = rtrim($wxinfo['oauth_redirecturi'], '/')  .'/'. $_SERVER['REQUEST_URI'];
+                $callback = rtrim($wxinfo['oauth_redirecturi'], '/')  .'/'. $_SERVER['REQUEST_URI'];
             }
             if (! isset($_SESSION['redirect_url'])) {
-                $_SESSION['redirect_url'] = __HOST__ . $_SERVER['REQUEST_URI'];
+                $callback = __HOST__ . $_SERVER['REQUEST_URI'];
             }
+            $url = url('user/third_login', array('type'=>'weixin', 'backurl'=> $callback));
             header("Location: ".$url);
             exit;
         }

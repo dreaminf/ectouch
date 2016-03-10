@@ -129,7 +129,7 @@ class sina {
             $user->set_cookie($userinfo['user_name']);
             model('Users')->update_user_info();
             model('Users')->recalculate_price();
-            return true;
+            return $url;
         } else {
             // echo "授权失败";
             return false;

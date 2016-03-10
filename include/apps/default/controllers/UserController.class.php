@@ -1957,7 +1957,7 @@ class UserController extends CommonController {
                 'referer' => urlencode($this->back_act)
                     )), 'error');
         }
-        $url = __URL__ . '/index.php?m=default&c=user&a=third_login&type=' . $type . '&u='.$_GET['u'];
+        $url = __URL__ . '/index.php?m=default&c=user&a=third_login&type=' . $type . '&backurl=' . urlencode($_GET['backurl']) . '&u='.$_GET['u'];
         $info = model('ClipsBase')->get_third_user_info($type);
         // 判断是否安装
         if (!$info) {
@@ -1968,12 +1968,9 @@ class UserController extends CommonController {
         $obj = new $type($info);
         if ($_GET['code'] && $_GET['code'] != '') {
             // 授权成功 返回登录
-            if ($rs = $obj->call_back($info, $url, $_GET['code'], $type)) {
-                $jump_url = empty($this->back_act) ? url('index/index') : $this->back_act;
-                if(is_array($rs)){
-                    $jump_url = $rs['url'];
-                }
-                $this->redirect($jump_url);
+            if ($url = $obj->call_back($info, $_GET['backurl'], $_GET['code'], $type)) {
+                $url = empty($url) ? url('index/index') : $url;
+                $this->redirect($url);
             } else {
                 show_message(L('process_false'), L('relogin_lnk'), url('login', array(
                     'referer' => urlencode($this->back_act)

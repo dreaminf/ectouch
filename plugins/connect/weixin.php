@@ -103,22 +103,21 @@ class weixin {
     /**
      * 登录处理
      */
-    public function call_back($info, $url, $code, $type){
+    public function call_back($info, $url, $code, $type)
+    {
         if (!empty($code)) {
             $token = $this->weObj->getOauthAccessToken();
             $userinfo = $this->weObj->getOauthUserinfo($token['access_token'], $token['openid']);
             $_SESSION['wechat_user'] = empty($userinfo) ? array() : $userinfo;
-			if(!empty($userinfo)){
-				//公众号信息
-				$wechat = model('Base')->model->table('wechat')->field('id, oauth_status')->where(array('type'=>2, 'status'=>1, 'default_wx'=>1))->find();
-				$this->update_weixin_user($userinfo, $wechat['id'], $this->weObj);
-			}else{
-				return false;
-			}
-            if(!empty($_SESSION['redirect_url'])){
-                return array('url'=>$_SESSION['redirect_url']);
+            if (!empty($userinfo)) {
+                //公众号信息
+                $wechat = model('Base')->model->table('wechat')->field('id, oauth_status')->where(array('type' => 2, 'status' => 1, 'default_wx' => 1))->find();
+                $this->update_weixin_user($userinfo, $wechat['id'], $this->weObj);
+                return $url;
+            } else {
+                return false;
             }
-            return true;
+
         } else {
             return false;
         }
