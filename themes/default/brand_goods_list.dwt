@@ -1,7 +1,7 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 <link rel="stylesheet" href="__TPL__/css/brand_list.css">
     <div class="con">
-        <div class="group-logo">
+        <div class="group-logo" style="display:none;">
             <img src="{$brand_info.brand_banner}" alt="" />
             <ul>
                 <li><p id="all">{$brand_goods_count}</p><span>全部商品</span></li>
