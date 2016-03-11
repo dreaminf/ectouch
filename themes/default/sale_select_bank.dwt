@@ -29,7 +29,7 @@
 </div>
         </form>
 {else}
-<div class="t-a-center"><input type="button" value="添加银行卡" onclick="location.href='{:url('sale/add_bank')}'" class="set-4-submit"></div>
+<div class="t-a-center-1"><div class="m-sale-box"><input type="button" value="添加银行卡" onclick="location.href='{:url('sale/add_bank')}'" class="set-4-submit"></div></div>
 {/if}
     <script>
         function del(){
@@ -69,7 +69,9 @@
     .jg-text label{color:#303030;}
     .jg-text span{color:#7a7a7a; margin-left:.2rem;}
     .t-a-center input {width:25%;margin:1rem;}
-
+    .m-sale-box{width:90%;margin:0 auto;margin-top:2rem;}
+    .t-a-center-1 input {width:100%;}
+    
 </style>
 </body>
 
