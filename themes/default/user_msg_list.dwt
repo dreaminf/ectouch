@@ -32,7 +32,7 @@
 		目前还没有消息
 	</div>
   <ul class="ect-bg-colorf" id="J_ItemList">
-    <li class="single_item"></li>
+    
     <a href="javascript:;" style="text-align:center" class="get_more"></a>
   </ul>
 </div>
