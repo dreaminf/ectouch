@@ -288,7 +288,7 @@ h4.title-hrbg hr {background: #f6f6f9;height: 1px;border: 0;position: absolute;l
 .select-one .ect-select:last-child{margin-right:0;}
 .select-one .ect-select label{ padding:.6rem 1rem;  display: block; text-align: center;  border:1px solid #efefef; border-radius: 4px; color:#666;}
 .select-one .ect-select label.active{border-color:#1CBB7F; color:#1CBB7F;}
-.select-one .ect-select radio{display: none;}
+.select-one .ect-select input[type="radio"]{display: none;}
 
 /*单选复选通用样式 － 2 列表打勾显示*/
 .select-two{background:#fff; overflow: hidden; padding-top:0; padding-bottom:0;}
