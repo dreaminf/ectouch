@@ -1,0 +1,1 @@
+ALTER TABLE `ecs_drp_bank` ADD COLUMN `bank_region` varchar(255) NULL AFTER `id`;
