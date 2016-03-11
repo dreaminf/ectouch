@@ -35,7 +35,7 @@
                  </div>
               </div>
                <div class="dpxq_border"></div>  
-             <div class="yhk_content2"><a href="{:url('sale/account_raply')}"><span class="yhk_content">申请提现</span></a></div>             
+             <div class="yhk_content2"><a href="{:url('sale/account_raply')}"><span class="yhk_content tixian">申请提现</span></a></div>             
           </div>
              
             
