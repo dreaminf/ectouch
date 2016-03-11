@@ -567,7 +567,7 @@ class CategoryController extends CommonController
             'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img, xl.sales_volume ' . 'FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' . ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " . "WHERE $where $this->ext ORDER BY $sort $this->order LIMIT $start , $this->size";
         $res = $this->model->query($sql);
         $arr = array();
-        foreach ($res as $row) {
+        foreach ($res as $key=>$row) {
             // 销量统计
             $sales_volume = (int)$row['sales_volume'];
             if (mt_rand(0, 3) == 3) {
@@ -594,30 +594,30 @@ class CategoryController extends CommonController
             }
 
             if ($watermark_img != '') {
-                $arr[$row['goods_id']]['watermark_img'] = $watermark_img;
+                $arr[$key]['watermark_img'] = $watermark_img;
             }
 
-            $arr[$row['goods_id']]['goods_id'] = $row['goods_id'];
+            $arr[$key]['goods_id'] = $row['goods_id'];
             if ($display == 'grid') {
-                $arr[$row['goods_id']]['goods_name'] = C('goods_name_length') > 0 ? sub_str($row['goods_name'], C('goods_name_length')) : $row['goods_name'];
+                $arr[$key]['goods_name'] = C('goods_name_length') > 0 ? sub_str($row['goods_name'], C('goods_name_length')) : $row['goods_name'];
             } else {
-                $arr[$row['goods_id']]['goods_name'] = $row['goods_name'];
+                $arr[$key]['goods_name'] = $row['goods_name'];
             }
-            $arr[$row['goods_id']]['name'] = $row['goods_name'];
-            $arr[$row['goods_id']]['goods_brief'] = $row['goods_brief'];
-            $arr[$row['goods_id']]['goods_style_name'] = add_style($row['goods_name'], $row['goods_name_style']);
-            $arr[$row['goods_id']]['market_price'] = price_format($row['market_price']);
-            $arr[$row['goods_id']]['shop_price'] = price_format($row['shop_price']);
-            $arr[$row['goods_id']]['type'] = $row['goods_type'];
-            $arr[$row['goods_id']]['promote_price'] = ($promote_price > 0) ? price_format($promote_price) : '';
-            $arr[$row['goods_id']]['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
-            $arr[$row['goods_id']]['goods_img'] = get_image_path($row['goods_id'], $row['goods_img']);
-            $arr[$row['goods_id']]['url'] = url('goods/index', array(
+            $arr[$key]['name'] = $row['goods_name'];
+            $arr[$key]['goods_brief'] = $row['goods_brief'];
+            $arr[$key]['goods_style_name'] = add_style($row['goods_name'], $row['goods_name_style']);
+            $arr[$key]['market_price'] = price_format($row['market_price']);
+            $arr[$key]['shop_price'] = price_format($row['shop_price']);
+            $arr[$key]['type'] = $row['goods_type'];
+            $arr[$key]['promote_price'] = ($promote_price > 0) ? price_format($promote_price) : '';
+            $arr[$key]['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
+            $arr[$key]['goods_img'] = get_image_path($row['goods_id'], $row['goods_img']);
+            $arr[$key]['url'] = url('goods/index', array(
                 'id' => $row['goods_id']
             ));
-            $arr[$row['goods_id']]['sales_count'] = $sales_volume;
-            $arr[$row['goods_id']]['sc'] = model('GoodsBase')->get_goods_collect($row['goods_id']);
-            $arr[$row['goods_id']]['mysc'] = 0;
+            $arr[$key]['sales_count'] = $sales_volume;
+            $arr[$key]['sc'] = model('GoodsBase')->get_goods_collect($row['goods_id']);
+            $arr[$key]['mysc'] = 0;
             // 检查是否已经存在于用户的收藏夹
             if ($_SESSION['user_id']) {
                 unset($where);
@@ -627,14 +627,14 @@ class CategoryController extends CommonController
                 $rs = $this->model->table('collect_goods')
                     ->where($where)
                     ->count();
-                $arr[$row['goods_id']]['mysc'] = $rs;
+                $arr[$key]['mysc'] = $rs;
             }
 
-            $arr[$row['goods_id']]['goods_sales'] = $this->get_goods_sales($row['goods_id']);
-            $arr[$row['goods_id']]['goods_number'] = $row['goods_number'];
-            $arr[$row['goods_id']]['promotion'] = model('GoodsBase')->get_promotion_show($row['goods_id']);
-            $arr[$row['goods_id']]['comment_count'] = model('Comment')->get_goods_comment($row['goods_id'], 0);  //商品总评论数量
-            $arr[$row['goods_id']]['favorable_count'] = model('Comment')->favorable_comment($row['goods_id'], 0);  //获得商品好评百分比
+            $arr[$key]['goods_sales'] = $this->get_goods_sales($row['goods_id']);
+            $arr[$key]['goods_number'] = $row['goods_number'];
+            $arr[$key]['promotion'] = model('GoodsBase')->get_promotion_show($row['goods_id']);
+            $arr[$key]['comment_count'] = model('Comment')->get_goods_comment($row['goods_id'], 0);  //商品总评论数量
+            $arr[$key]['favorable_count'] = model('Comment')->favorable_comment($row['goods_id'], 0);  //获得商品好评百分比
         }
         return $arr;
     }
