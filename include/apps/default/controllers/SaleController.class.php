@@ -251,6 +251,11 @@ class SaleController extends CommonController {
      * 我的佣金
      */
     public function my_commission(){
+
+      
+        $info = $this->model->getRow("SELECT * FROM " .$this->model->pre ."drp_config WHERE id = '3'");
+        $this->assign('info',$info);
+    
         $saleMoney_surplus =  model('Sale')->saleMoney_surplus();
         $this->assign('saleMoney_surplus',$saleMoney_surplus);
         $saleMoney =  model('Sale')->saleMoney();
