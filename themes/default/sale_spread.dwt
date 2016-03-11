@@ -6,7 +6,7 @@
     <img src="__TPL__/images/member-photo-img2.jpeg" />
     {/if}
     <div class="spread-info-text">
-        <h4>我是<span class="info-color">[{$info.name|truncate:10}]</span></h4>
+        <h4>我是<span class="info-color">[{$info.name}]</span></h4>
         <p>我为<span class="info-color">{:C('shop_name')}</span>代言</p>
     </div>
 </div>
