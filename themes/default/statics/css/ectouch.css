@@ -188,7 +188,7 @@ a.btn-reset,a.btn-default{color:#555;}
 
 .btn-submit {background: #1CBB7F;border:1px solid #13AB53}/*主提交按钮*/
 .btn-submit:active,
-.btn-submit:hover {background: #13AB53;border:1px solid #13AB53}/*主提交按钮按下颜色*/
+.btn-submit:hover {background: #1CBB7F;border:1px solid #13AB53}/*主提交按钮按下颜色13AB53*/
 .btn-cart {background: #f4a213;border:1px solid #e19511}/*加入购物车*/
 .btn-cart:active,
 .btn-cart:hover {background: #e19511;border:1px solid #e19511}/*按下颜色*/
