@@ -1,5 +1,6 @@
 <!-- {if $pager} -->
 <ul class="pager ect-margin-lr ect-page">
+      <li class="pull-right"><a href="{$pager.page_next|default:#}" style='border-radius: 0px !important;'>下一页</a></li>
 	  <li class="pull-left"><a href="{$pager.page_prev|default:#}">上一页</a></li>
 	  <!-- {if $pager.page_number} -->
 	  <li class="form-select">
@@ -11,6 +12,6 @@
 		</select>
 	  </li>
 	  <!-- {/if} -->
-	  <li class="pull-right"><a href="{$pager.page_next|default:#}">下一页</a></li>
+	  
 </ul> 
 <!-- {/if} -->
