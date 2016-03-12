@@ -144,7 +144,7 @@ footer.logo img{width:8em; height:auto; display:block; margin:0.8em auto;}
 .user-tab .tab-content .ect-pro-list ul li{padding:0.6em 0;}
 .user-tab .tab-content .ect-pro-list a{padding:0;}
 .user-tab .tab-content .ect-pro-list img{width:6em; height:6em;}
-.user-tab .tab-content .ect-pro-list dl{margin-left:6.4em;}	
+.user-tab .tab-content .ect-pro-list dl{margin-left:6.4em;}
 .user-tab .tab-content .ect-pro-list i{color:#999; vertical-align:-0.1em;}
 .user-tab .tab-content ul li{border-right:none;}
 .user-tab .tab-content .pinglun-list dl{margin-left:inherit; padding:0 0.4em;}
@@ -264,7 +264,7 @@ select{-webkit-appearance:none; border:0; color:#555; padding-left:0; border:1px
                                                transform: rotate(45deg);}
 .ect-wrapper div a i.ect-icon-cate3,.ect-wrapper a i.ect-icon-min{display:inline-block; vertical-align:-0.5em; margin-right:0.3em; width:1.7em; height:1.7em; background-position:-0.16em -0.1em;}
 .ect-wrapper div a i.ect-icon-min{ background:url(../images/yspic.png) no-repeat; background-size:200%;  vertical-align:middle; margin:0 auto; }
-.ect-wrapper div i{font-size:0.8em;} 
+.ect-wrapper div i{font-size:0.8em;}
 .ect-wrapper .category-list-show{display:none;}
 /*点击下拉*/
 .ect-wrapper.select div{border-bottom:none;}
@@ -281,8 +281,8 @@ select{-webkit-appearance:none; border:0; color:#555; padding-left:0; border:1px
 ==================*/
 .flow-price{background:#f7f7f7;}
 .wrap.input-group{border:1px solid #e3e3e3; width:10em;}
-.wrap .input-group-addon{width:2.3em; font-size:1em; line-height:2.3em; padding:0; border-radius:0; border:none;}
-.wrap .form-contro{height:2.3em; text-align:center; padding:0 0.4em; width:100%; background:none; border:none; border-radius:0; box-shadow:inset 0 0 0;}
+.wrap .input-group-addon{width:2.3em; font-size:1em; line-height:2.3em; padding:0; border-radius:0; border:none;cursor:pointer;}
+.wrap .form-contro{height:2.3em; text-align:center; padding:0 0.4em; width:100%; background:none; border-left-color:#e5e5e5;border-top:none;border-bottom:none;border-right-color:#e5e5e5; border-radius:0; box-shadow:inset 0 0 0;}
 .wrap p.bg-warning a{display:block; width:100%; padding:0.8em 0;}
 .flow-num-del{clear:both; margin-top:0.6em; overflow:hidden; height:auto;}
 .flow-del{float:left; border:1px #e3e3e3 solid;}
@@ -519,9 +519,9 @@ border: 1px solid transparent;border-radius: 4px;cursor: pointer;display: inline
 .popGeneral .tit {background-color:#ea4b35;line-height: 3rem;height:3rem; }
 .popGeneral .tit  h4 {font-size: 0.8rem; line-height: 3rem;height:3rem;color:#FFF;text-align: center;}
 .popGeneral .tit .ico_08 {cursor: pointer;display: inline-block;position: absolute;right: 0.8rem;top:0.5rem;}
-.popGeneral #main{  display:table;  border-collapse:collapse; width:100%;    }   
-.popGeneral #left{  display:table-cell;  width:30%; padding:0.3rem 0;  text-align:center; vertical-align:top  }   
-.popGeneral #right{  display:table-cell;  width:50%; padding:0.3rem 0;text-align:left;vertical-align:top  }   
+.popGeneral #main{  display:table;  border-collapse:collapse; width:100%;    }
+.popGeneral #left{  display:table-cell;  width:30%; padding:0.3rem 0;  text-align:center; vertical-align:top  }
+.popGeneral #right{  display:table-cell;  width:50%; padding:0.3rem 0;text-align:left;vertical-align:top  }
 .popGeneral #right p{ display: block;height:2rem; color:#333;line-height:1rem; padding-bottom:0.8rem; padding-right:0.8rem;   }
 .popGeneral #right span {color: #666;display: block;margin-bottom:0.4rem;}
 .popGeneral .popbtn { font-size:0.9rem; height:2rem; width: auto; /*padding:0.5rem 0.5rem;*/ background:#e1e1e1;display: -webkit-box}
