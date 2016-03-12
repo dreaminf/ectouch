@@ -37,11 +37,11 @@
             <input type="hidden" id="back_number{$goods.rec_id}" value="{$goods.goods_number}" />
             <input type="text" class="form-num form-contro"  name="{$goods.rec_id}" id="goods_number{$goods.rec_id}" autocomplete="off" value="{$goods.goods_number}" onFocus="back_goods_number({$goods.rec_id})"  onblur="change_goods_number('2',{$goods.rec_id})" />
             <span class="input-group-addon" onClick="change_goods_number('3',{$goods.rec_id})">+</span> </div>
-         
+
          <!-- {else} -->
           	<input type="text" class="txtnum" readonly value="{$goods.goods_number}"/>
           <!-- {/if} --> 
-           <div class="pull-right flow-del text-center"> <a href="javascript:if (confirm('{$lang.drop_goods_confirm}')) location.href='{:url('flow/drop_goods',array('id'=>$this->_var['goods']['rec_id']))}';" style="padding: 2px 5px;">{$lang.drop}</a> </div>
+           <div class="pull-right flow-del text-center"> <a href="javascript:if (confirm('{$lang.drop_goods_confirm}')) location.href='{:url('flow/drop_goods',array('id'=>$this->_var['goods']['rec_id']))}';">{$lang.drop}</a> </div>
         </div>
       </li>
       <!-- {/foreach} -->
@@ -56,7 +56,7 @@
         <a class="btn btn-info ect-bg-colory" type="button"  href="{:url('flow/checkout')}">{$lang.check_out}</a>
 	</div>
   <!-- {else} -->
-  	<div class="flow-jiesuan ect-padding-lr ect-padding-tb">
+  	<div class="flow-jiesuan ect-padding-lr ect-padding-tb" style="background: #f7f7f7;">
   	<a href="{:url('flow/checkout')}" type="button" class="btn btn-info ect-btn-info ect-bg">{$lang.check_out}</a>
   </div>
   <!-- {/if} -->
