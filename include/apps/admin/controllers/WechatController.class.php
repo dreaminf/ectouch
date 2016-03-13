@@ -1549,7 +1549,7 @@ class WechatController extends AdminController
         if (IS_POST) {
             $group_id = I('post.group_id', '', 'intval');
             $media_id = I('post.media_id');
-            if((empty($group_id) && $group !== 0) || empty($media_id)){
+            if(empty($media_id)){
               $this->message('请选择用户分组或者选择要发送的信息', NULL, 'error');
             }
             
@@ -1614,6 +1614,7 @@ class WechatController extends AdminController
             // 根据分组进行群发sendGroupMassMessage
             $massmsg = array(
                 'filter' => array(
+                    'is_to_all' => empty($group_id) ? true:false,
                     'group_id' => $group_id
                 ),
                 'mpnews' => array(
