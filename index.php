@@ -14,4 +14,4 @@
  */
 
 define('IN_ECTOUCH', true);
-require ('include/bootstrap.php');
+require dirname(__FILE__) . '/include/bootstrap.php';

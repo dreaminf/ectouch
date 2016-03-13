@@ -15,8 +15,8 @@
 
 define('IN_ECTOUCH', true);
 define('CONTROLLER_NAME', 'Respond');
-if(!isset($_REQUEST['code'])){
-    header('location: ./index.php?'.$_SERVER['QUERY_STRING']);
-    exit;
+if(!isset($_GET['code'])){
+    header('location: index.php?'.$_SERVER['QUERY_STRING']);
+    exit();
 }
-require ('include/bootstrap.php');
+require dirname(__FILE__) . '/include/bootstrap.php';
