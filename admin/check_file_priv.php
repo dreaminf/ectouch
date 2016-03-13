@@ -24,7 +24,7 @@ if ($_REQUEST['act']== 'check')
 
     /* 要检查目录文件列表 */
     $goods_img_dir = array();
-    $folder = opendir(ROOT_PATH . 'images');
+    $folder = opendir(ROOT_PATH . 'data/attachment/images');
     while ($dir = readdir($folder))
     {
         if (is_dir(ROOT_PATH . IMAGE_DIR . '/' . $dir) && preg_match('/^[0-9]{6}$/', $dir))

@@ -79,7 +79,7 @@ class GroupbuyController extends AdminController {
         if (IS_POST) {
             $info = I('data');
             if ($_FILES['act_banner']['name']) {
-                $result = $this->ectouchUpload('act_banner', 'banner_image');
+                $result = $this->ectouchUpload('act_banner', 'group_buy');
                 if ($result['error'] > 0) {
                     $this->message($result['message'], NULL, 'error');
                 }

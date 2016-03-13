@@ -36,13 +36,13 @@ class AuctionController extends AdminController {
     }
 
     /**
-     * 编辑团购banner
+     * 编辑banner
      */
     public function edit() {
         $id = I('id');
         if (IS_POST) {
             if ($_FILES['act_banner']['name']) {
-                $result = $this->ectouchUpload('act_banner', 'banner_image');
+                $result = $this->ectouchUpload('act_banner', 'auction');
                 if ($result['error'] > 0) {
                     $this->message($result['message'], NULL, 'error');
                 }
