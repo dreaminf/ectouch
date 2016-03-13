@@ -49,8 +49,8 @@ if ($_REQUEST['act']== 'check')
     $dir_subdir['data'][]      = DATA_DIR . '/attached/cardimg';
     $dir_subdir['data'][]      = DATA_DIR . '/attached/feedbackimg';
     $dir_subdir['data'][]      = DATA_DIR . '/attached/packimg';
-    $dir_subdir['data'][]      = DATA_DIR . '/attached/sqldata';
-    $dir_subdir['temp'][]      = DATA_DIR . '/attached/backup';
+    $dir_subdir['data'][]      = DATA_DIR . '/sqldata';
+    $dir_subdir['temp'][]      = DATA_DIR . '/backup';
     $dir_subdir['temp'][]      = DATA_DIR . '/attached/caches';
     $dir_subdir['temp'][]      = DATA_DIR . '/attached/compiled';
     $dir_subdir['temp'][]      = DATA_DIR . '/attached/compiled/admin';

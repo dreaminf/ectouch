@@ -28,7 +28,7 @@ if ($_REQUEST['act'] == 'backup')
     $allow_max_size = $allow_max_size / 1024; // 转换单位为 KB
 
     /* 权限检查 */
-    $path = ROOT_PATH . DATA_DIR . '/attached/sqldata';
+    $path = ROOT_PATH . DATA_DIR . '/sqldata';
     $mask = file_mode_info($path);
     if ($mask === false)
     {
@@ -73,7 +73,7 @@ if ($_REQUEST['act'] == 'restore')
     admin_priv('db_renew');
 
     $list = array();
-    $path = ROOT_PATH . DATA_DIR . '/attached/sqldata/';
+    $path = ROOT_PATH . DATA_DIR . '/sqldata/';
 
     /* 检查目录 */
     $mask = file_mode_info($path);
@@ -144,7 +144,7 @@ if ($_REQUEST['act'] == 'dumpsql')
     admin_priv('db_backup');
 
     /* 检查目录权限 */
-    $path = ROOT_PATH . DATA_DIR . '/attached/sqldata';
+    $path = ROOT_PATH . DATA_DIR . '/sqldata';
     $mask = file_mode_info($path);
     if ($mask === false)
     {
@@ -178,7 +178,7 @@ if ($_REQUEST['act'] == 'dumpsql')
 
     /* 初始化 */
     $dump = new cls_sql_dump($db);
-    $run_log = ROOT_PATH . DATA_DIR . '/attached/sqldata/run.log';
+    $run_log = ROOT_PATH . DATA_DIR . '/sqldata/run.log';
 
     /* 初始化输入变量 */
     if (empty($_REQUEST['sql_file_name']))
@@ -274,14 +274,14 @@ if ($_REQUEST['act'] == 'dumpsql')
         if ($vol > 1)
         {
             /* 有多个文件 */
-            if (!@file_put_contents(ROOT_PATH . DATA_DIR . '/attached/sqldata/' . $sql_file_name . '_' . $vol . '.sql', $dump->dump_sql))
+            if (!@file_put_contents(ROOT_PATH . DATA_DIR . '/sqldata/' . $sql_file_name . '_' . $vol . '.sql', $dump->dump_sql))
             {
                 sys_msg(sprintf($_LANG['fail_write_file'], $sql_file_name . '_' . $vol . '.sql'), 1, array(array('text'=>$_LANG['02_db_manage'], 'href'=>'database.php?act=backup')), false);
             }
             $list = array();
             for ($i = 1; $i <= $vol; $i++)
             {
-                $list[] = array('name'=>$sql_file_name . '_' . $i . '.sql', 'href'=>'../' . DATA_DIR . '/attached/sqldata/' . $sql_file_name . '_' . $i . '.sql');
+                $list[] = array('name'=>$sql_file_name . '_' . $i . '.sql', 'href'=>'../' . DATA_DIR . '/sqldata/' . $sql_file_name . '_' . $i . '.sql');
             }
 
             $smarty->assign('list',  $list);
@@ -291,12 +291,12 @@ if ($_REQUEST['act'] == 'dumpsql')
         else
         {
             /* 只有一个文件 */
-            if (!@file_put_contents(ROOT_PATH . DATA_DIR . '/attached/sqldata/' . $sql_file_name . '.sql', $dump->dump_sql))
+            if (!@file_put_contents(ROOT_PATH . DATA_DIR . '/sqldata/' . $sql_file_name . '.sql', $dump->dump_sql))
             {
                 sys_msg(sprintf($_LANG['fail_write_file'], $sql_file_name . '_' . $vol . '.sql'), 1, array(array('text'=>$_LANG['02_db_manage'], 'href'=>'database.php?act=backup')), false);
             };
 
-            $smarty->assign('list',  array(array('name' => $sql_file_name . '.sql', 'href' => '../' . DATA_DIR . '/attached/sqldata/' . $sql_file_name . '.sql')));
+            $smarty->assign('list',  array(array('name' => $sql_file_name . '.sql', 'href' => '../' . DATA_DIR . '/sqldata/' . $sql_file_name . '.sql')));
             $smarty->assign('title', $_LANG['backup_success']);
             $smarty->display('sql_dump_msg.htm');
         }
@@ -304,7 +304,7 @@ if ($_REQUEST['act'] == 'dumpsql')
     else
     {
         /* 下一个页面处理 */
-        if (!@file_put_contents(ROOT_PATH . DATA_DIR . '/attached/sqldata/' . $sql_file_name . '_' . $vol . '.sql', $dump->dump_sql))
+        if (!@file_put_contents(ROOT_PATH . DATA_DIR . '/sqldata/' . $sql_file_name . '_' . $vol . '.sql', $dump->dump_sql))
         {
             sys_msg(sprintf($_LANG['fail_write_file'], $sql_file_name . '_' . $vol . '.sql'), 1, array(array('text'=>$_LANG['02_db_manage'], 'href'=>'database.php?act=backup')), false);
         }
@@ -328,7 +328,7 @@ if ($_REQUEST['act'] == 'remove')
         $m_file = array(); //多卷文件
         $s_file = array(); //单卷文件
 
-        $path = ROOT_PATH . DATA_DIR . '/attached/sqldata/';
+        $path = ROOT_PATH . DATA_DIR . '/sqldata/';
 
         foreach ($_POST['file'] AS $file)
         {
@@ -388,7 +388,7 @@ if ($_REQUEST['act'] == 'import')
 
     $is_confirm = empty($_GET['confirm']) ? false : true;
     $file_name = empty($_GET['file_name']) ? '': trim($_GET['file_name']);
-    $path = ROOT_PATH . DATA_DIR . '/attached/sqldata/';
+    $path = ROOT_PATH . DATA_DIR . '/sqldata/';
 
     /* 设置最长执行时间为5分钟 */
     @set_time_limit(300);

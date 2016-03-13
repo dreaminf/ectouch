@@ -1005,7 +1005,7 @@ class WechatController extends AdminController
             $pic_path = I('post.file_path');
             // 封面处理
             if ($_FILES['pic']['name']) {
-                $result = $this->ectouchUpload('pic', 'article_pic');
+                $result = $this->ectouchUpload('pic', 'wechat');
                 if ($result['error'] > 0) {
                     $this->message($result['message'], NULL, 'error');
                 }
@@ -1193,7 +1193,7 @@ class WechatController extends AdminController
     {
         if (IS_POST) {
             if ($_FILES['pic']['name']) {
-                $result = $this->ectouchUpload('pic', 'article_pic', true);
+                $result = $this->ectouchUpload('pic', 'wechat', true);
                 if ($result['error'] > 0) {
                     $this->message($result['message'], NULL, 'error');
                 }
