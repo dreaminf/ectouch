@@ -1,8 +1,3 @@
-
-<!-- {if $step eq "cart"} 购物车列表-->
-<!-- #BeginLibraryItem "/flow_cart.dwt" --><!-- #EndLibraryItem -->
-<!-- {/if} -->
-
 <!-- {if $step eq "label_favourable"} 购物车中的优惠活动 -->
 <!-- #BeginLibraryItem "/flow_label_favourable.dwt" --><!-- #EndLibraryItem -->
 <!-- {/if} -->
@@ -21,46 +16,8 @@
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <script type="text/javascript" src="__PUBLIC__/js/shopping_flow.js"></script>
-
-<script>
-function back_goods_number(id){
- var goods_number = document.getElementById('goods_number'+id).value;
-  document.getElementById('back_number'+id).value = goods_number;
-}
-function change_goods_number(type, id)
-{
-  var goods_number = document.getElementById('goods_number'+id).value;
-  if(type != 2){  back_goods_number(id) }
-  if(type == 1){  goods_number--;  }
-  if(type == 3){  goods_number++;  }
-  if(goods_number <=0 ){ goods_number=1; }
-  if(!/^[0-9]*$/.test(goods_number)){ goods_number = document.getElementById('back_number'+id).value; }
-  document.getElementById('goods_number'+id).value = goods_number;
-	$.post('{:url("flow/ajax_update_cart")}', {
-		rec_id : id,goods_number : goods_number
-	}, function(data) {
-		change_goods_number_response(data,id);
-	}, 'json');
-}
-// 处理返回信息并显示
-function change_goods_number_response(result,id)
-{
-	if (result.error == 0){
-		var rec_id = result.rec_id;
-		$("#goods_number_"+rec_id).val(result.goods_number);
-		document.getElementById('total_number').innerHTML = result.total_number;//更新数量
-		document.getElementById('goods_subtotal').innerHTML = result.total_desc;//更新小计
-		if (document.getElementById('ECS_CARTINFO')){
-			//更新购物车数量
-			document.getElementById('ECS_CARTINFO').innerHTML = result.cart_info;
-		}
-	}else if (result.message != ''){
-		alert(result.message);
-		var goods_number = document.getElementById('back_number'+id).value;
- 		document.getElementById('goods_number'+id).value = goods_number;
-	}
-}
-
+<script type="text/javascript">
+	
 	/*点击下拉手风琴效果*/
 	$('.collapse').collapse()
 	$(".checkout-select a").click(function(){
@@ -72,6 +29,5 @@ function change_goods_number_response(result,id)
 	});
 
 </script>
-
 </body>
 </html>
