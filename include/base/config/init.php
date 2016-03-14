@@ -47,15 +47,15 @@ if ('/' == substr($php_self, -1))
 define('PHP_SELF', $php_self);
 
 require(ROOT_PATH . 'includes/inc_constant.php');
-require(ROOT_PATH . 'includes/cls_ecshop.php');
-require(ROOT_PATH . 'includes/cls_error.php');
-require(ROOT_PATH . 'includes/lib_time.php');
-require(ROOT_PATH . 'includes/lib_base.php');
-require(ROOT_PATH . 'includes/lib_common.php');
-require(ROOT_PATH . 'includes/lib_main.php');
-require(ROOT_PATH . 'includes/lib_insert.php');
-require(ROOT_PATH . 'includes/lib_goods.php');
-require(ROOT_PATH . 'includes/lib_article.php');
+require(ROOT_PATH . 'include/base/classes/cls_ecshop.php');
+require(ROOT_PATH . 'include/base/classes/cls_error.php');
+require(ROOT_PATH . 'include/base/helpers/lib_time.php');
+require(ROOT_PATH . 'include/base/helpers/lib_base.php');
+require(ROOT_PATH . 'include/base/helpers/lib_common.php');
+require(ROOT_PATH . 'include/base/helpers/lib_main.php');
+require(ROOT_PATH . 'include/base/helpers/lib_insert.php');
+require(ROOT_PATH . 'include/base/helpers/lib_goods.php');
+require(ROOT_PATH . 'include/base/helpers/lib_article.php');
 
 /* 对用户传入的变量进行转义操作。*/
 if (!get_magic_quotes_gpc())
@@ -79,7 +79,7 @@ define('DATA_DIR', $ecs->data_dir());
 define('IMAGE_DIR', $ecs->image_dir());
 
 /* 初始化数据库类 */
-require(ROOT_PATH . 'includes/cls_mysql.php');
+require(ROOT_PATH . 'include/base/classes/cls_mysql.php');
 $db = new cls_mysql($db_host, $db_user, $db_pass, $db_name);
 $db->set_disable_cache_tables(array($ecs->table('sessions'), $ecs->table('sessions_data'), $ecs->table('cart')));
 $db_host = $db_user = $db_pass = $db_name = NULL;
@@ -124,7 +124,7 @@ if (is_spider())
 if (!defined('INIT_NO_USERS'))
 {
     /* 初始化session */
-    include(ROOT_PATH . 'includes/cls_session.php');
+    include(ROOT_PATH . 'include/base/classes/cls_session.php');
 
     $sess = new cls_session($db, $ecs->table('sessions'), $ecs->table('sessions_data'));
 
@@ -140,13 +140,13 @@ if (!defined('INIT_NO_SMARTY'))
     header('Content-type: text/html; charset='.EC_CHARSET);
 
     /* 创建 Smarty 对象。*/
-    require(ROOT_PATH . 'includes/cls_template.php');
+    require(ROOT_PATH . 'include/base/classes/cls_template.php');
     $smarty = new cls_template;
 
     $smarty->cache_lifetime = $_CFG['cache_time'];
     $smarty->template_dir   = ROOT_PATH . 'themes/' . $_CFG['template'];
-    $smarty->cache_dir      = ROOT_PATH . 'temp/caches';
-    $smarty->compile_dir    = ROOT_PATH . 'temp/compiled';
+    $smarty->cache_dir      = ROOT_PATH . 'data/caches/caches';
+    $smarty->compile_dir    = ROOT_PATH . 'data/caches/compiled';
 
     if ((DEBUG_MODE & 2) == 2)
     {

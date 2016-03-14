@@ -13,7 +13,7 @@
  * $Id: lib_payment.php 17218 2011-01-24 04:10:41Z yehuaixiao $
  */
 
-if (!defined('IN_ECS'))
+if (!defined('IN_ECTOUCH'))
 {
     die('Hacking attempt');
 }
@@ -182,7 +182,7 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '')
                 /* 如果需要，发短信 */
                 if ($GLOBALS['_CFG']['sms_order_payed'] == '1' && $GLOBALS['_CFG']['sms_shop_mobile'] != '')
                 {
-                    include_once(ROOT_PATH.'includes/cls_sms.php');
+                    include_once(ROOT_PATH.'include/base/classes/cls_sms.php');
                     $sms = new sms();
                     $sms->send($GLOBALS['_CFG']['sms_shop_mobile'],
                         sprintf($GLOBALS['_LANG']['order_payed_sms'], $order_sn, $order['consignee'], $order['tel']),'', 13,1);

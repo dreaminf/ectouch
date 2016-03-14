@@ -2,8 +2,8 @@
 
 define('SOURCE_TOKEN', 'b11983d30cb6821158744d5d065d0f70');
 define('SOURCE_ID', '620386');
-require_once(ROOT_PATH . 'includes/cls_transport.php');
-require_once(ROOT_PATH . 'includes/cls_json.php');
+require_once(ROOT_PATH . 'include/base/classes/cls_transport.php');
+require_once(ROOT_PATH . 'include/base/classes/cls_json.php');
 
 /* 短信模块主类 */
 class sms

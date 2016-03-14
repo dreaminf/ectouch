@@ -13,7 +13,7 @@
  * $Id: lib_base.php 17217 2011-01-19 06:29:08Z liubo $
 */
 
-if (!defined('IN_ECS'))
+if (!defined('IN_ECTOUCH'))
 {
     die('Hacking attempt');
 }
@@ -283,7 +283,7 @@ function send_mail($name, $email, $subject, $content, $type = 0, $notification=f
                 return false;
             }
 
-            include_once(ROOT_PATH . 'includes/cls_smtp.php');
+            include_once(ROOT_PATH . 'include/base/classes/cls_smtp.php');
             static $smtp;
 
             $send_params['recipients'] = $email;
@@ -341,7 +341,7 @@ function send_mail($name, $email, $subject, $content, $type = 0, $notification=f
  */
 function gd_version()
 {
-    include_once(ROOT_PATH . 'includes/cls_image.php');
+    include_once(ROOT_PATH . 'include/base/classes/cls_image.php');
 
     return cls_image::gd_version();
 }
@@ -1014,7 +1014,7 @@ function ecs_iconv($source_lang, $target_lang, $source_string = '')
 
     if ($chs === NULL)
     {
-        require_once(ROOT_PATH . 'includes/cls_iconv.php');
+        require_once(ROOT_PATH . 'include/base/classes/cls_iconv.php');
         $chs = new Chinese(ROOT_PATH);
     }
 
@@ -1038,7 +1038,7 @@ function ecs_geoip($ip)
 
     if ($fp === NULL)
     {
-        $fp = fopen(ROOT_PATH . 'includes/codetable/ipdata.dat', 'rb');
+        $fp = fopen(ROOT_PATH . 'data/ipdata/ipdata.dat', 'rb');
         if ($fp === false)
         {
             return 'Invalid IP data file';
@@ -1261,7 +1261,7 @@ function read_static_cache($cache_name)
     {
         return $result[$cache_name];
     }
-    $cache_file_path = ROOT_PATH . '/temp/static_caches/' . $cache_name . '.php';
+    $cache_file_path = ROOT_PATH . 'data/caches/static_caches/' . $cache_name . '.php';
     if (file_exists($cache_file_path))
     {
         include_once($cache_file_path);
@@ -1288,7 +1288,7 @@ function write_static_cache($cache_name, $caches)
     {
         return false;
     }
-    $cache_file_path = ROOT_PATH . '/temp/static_caches/' . $cache_name . '.php';
+    $cache_file_path = ROOT_PATH . 'data/caches/static_caches/' . $cache_name . '.php';
     $content = "<?php\r\n";
     $content .= "\$data = " . var_export($caches, true) . ";\r\n";
     $content .= "?>";

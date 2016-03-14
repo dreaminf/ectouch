@@ -13,7 +13,7 @@
  * $Id: lib_article.php 16336 2009-06-24 07:09:13Z liubo $
 */
 
-if (!defined('IN_ECS'))
+if (!defined('IN_ECTOUCH'))
 {
     die('Hacking attempt');
 }
@@ -85,8 +85,8 @@ function exchange_shop_license($certi, $license, $use_lib = 0)
         return array();
     }
 
-    include_once(ROOT_PATH . 'includes/cls_transport.php');
-    include_once(ROOT_PATH . 'includes/cls_json.php');
+    include_once(ROOT_PATH . 'include/base/classes/cls_transport.php');
+    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
 
     $params = '';
     foreach ($certi as $key => $value)

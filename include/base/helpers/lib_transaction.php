@@ -13,7 +13,7 @@
  * $Id: lib_transaction.php 17217 2011-01-19 06:29:08Z liubo $
 */
 
-if (!defined('IN_ECS'))
+if (!defined('IN_ECTOUCH'))
 {
     die('Hacking attempt');
 }
@@ -610,7 +610,7 @@ function update_address($address)
  */
 function get_order_detail($order_id, $user_id = 0)
 {
-    include_once(ROOT_PATH . 'includes/lib_order.php');
+    include_once(ROOT_PATH . 'include/base/helpers/lib_order.php');
 
     $order_id = intval($order_id);
     if ($order_id <= 0)
@@ -784,7 +784,7 @@ function get_order_detail($order_id, $user_id = 0)
  */
 function get_user_merge($user_id)
 {
-    include_once(ROOT_PATH . 'includes/lib_order.php');
+    include_once(ROOT_PATH . 'include/base/helpers/lib_order.php');
     $sql  = "SELECT order_sn FROM ".$GLOBALS['ecs']->table('order_info') .
             " WHERE user_id  = '$user_id' " . order_query_sql('unprocessed') .
                 "AND extension_code = '' ".

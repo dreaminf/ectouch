@@ -198,6 +198,10 @@ class cls_template
             error_reporting($this->_errorlevel);
         }
 
+        /* 增加模板标签 */
+        $out = preg_replace('/__ROOT__/', __ROOT__, $out);
+        $out = preg_replace('/__PUBLIC__/', __PUBLIC__, $out);
+        $out = preg_replace('/__TPL__/', __TPL__, $out);
         return $out; // 返回html数据
     }
 

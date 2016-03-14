@@ -13,7 +13,7 @@
  * $Id: lib_clips.php 17217 2011-01-19 06:29:08Z liubo $
  */
 
-if (!defined('IN_ECS'))
+if (!defined('IN_ECTOUCH'))
 {
     die('Hacking attempt');
 }
@@ -456,7 +456,7 @@ function get_online_payment_list($include_balance = true)
 
     $modules = $GLOBALS['db']->getAll($sql);
 
-    include_once(ROOT_PATH.'includes/lib_compositor.php');
+    include_once(ROOT_PATH.'include/base/helpers/lib_compositor.php');
 
     return $modules;
 }
@@ -592,7 +592,7 @@ function get_user_default($user_id)
             " WHERE user_id = '" .$user_id. "' AND add_time > '" .local_strtotime('-1 months'). "'";
     $info['order_count'] = $GLOBALS['db']->getOne($sql);
 
-    include_once(ROOT_PATH . 'includes/lib_order.php');
+    include_once(ROOT_PATH . 'include/base/helpers/lib_order.php');
     $sql = "SELECT order_id, order_sn ".
             " FROM " .$GLOBALS['ecs']->table('order_info').
             " WHERE user_id = '" .$user_id. "' AND shipping_time > '" .$last_time. "'". order_query_sql('shipped');

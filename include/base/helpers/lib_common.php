@@ -13,7 +13,7 @@
  * $Id: lib_common.php 17217 2011-01-19 06:29:08Z liubo $
 */
 
-if (!defined('IN_ECS'))
+if (!defined('IN_ECTOUCH'))
 {
     die('Hacking attempt');
 }
@@ -659,7 +659,7 @@ function get_brands($cat = 0, $app = 'brand')
     global $page_libs;
     $template = basename(PHP_SELF);
     $template = substr($template, 0, strrpos($template, '.'));
-    include_once(ROOT_PATH . ADMIN_PATH . '/includes/lib_template.php');
+    include_once(ROOT_PATH . ADMIN_PATH . '/include/base/helpers/lib_template.php');
     static $static_page_libs = null;
     if ($static_page_libs == null)
     {
@@ -1054,7 +1054,7 @@ function virtual_goods_ship(&$virtual_goods, &$msg, $order_sn, $return_result = 
 function virtual_card_shipping ($goods, $order_sn, &$msg, $process = 'other')
 {
     /* 包含加密解密函数所在文件 */
-    include_once(ROOT_PATH . 'includes/lib_code.php');
+    include_once(ROOT_PATH . 'include/base/helpers/lib_code.php');
 
     /* 检查有没有缺货 */
     $sql = "SELECT COUNT(*) FROM ".$GLOBALS['ecs']->table('virtual_card')." WHERE goods_id = '$goods[goods_id]' AND is_saled = 0 ";
@@ -1174,7 +1174,7 @@ function virtual_card_shipping ($goods, $order_sn, &$msg, $process = 'other')
 function virtual_card_result($order_sn, $goods)
 {
     /* 包含加密解密函数所在文件 */
-    include_once(ROOT_PATH . 'includes/lib_code.php');
+    include_once(ROOT_PATH . 'include/base/helpers/lib_code.php');
 
     /* 获取已经发送的卡片数据 */
     $sql = "SELECT card_sn, card_password, end_date, crc32 FROM ".$GLOBALS['ecs']->table('virtual_card')." WHERE goods_id= '$goods[goods_id]' AND order_sn = '$order_sn' ";
@@ -2206,7 +2206,7 @@ function user_uc_call($func, $params = null)
         restore_error_handler();
         if (!function_exists($func))
         {
-            include_once(ROOT_PATH . 'includes/lib_uc.php');
+            include_once(ROOT_PATH . 'include/base/helpers/lib_uc.php');
         }
 
         $res = call_user_func_array($func, $params);
