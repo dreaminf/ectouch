@@ -86,12 +86,12 @@
       <div id="is-nav-tabs" style="height:3.15em; display:none;"></div>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs text-center">
-          <li class="col-xs-6 active"><a href="#one" role="tab" data-toggle="tab">{$lang.goods_attr}</a></li>
-          <li class="col-xs-6"><a href="#two" role="tab" data-toggle="tab">{$lang.goods_brief}</a></li>
+          <li class="col-xs-6 active"><a href="#two" role="tab" data-toggle="tab">{$lang.goods_brief}</a></li>
+          <li class="col-xs-6"><a href="#one" role="tab" data-toggle="tab">{$lang.goods_attr}</a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
-          <div class="tab-pane tab-info active" id="one"><table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#dddddd">
+          <div class="tab-pane tab-info" id="one"><table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#dddddd">
                   <!-- {foreach from=$properties item=property_group key=key} -->
                   <tr>
                     <th colspan="2" bgcolor="#FFFFFF">{$key|escape}</th>
@@ -104,7 +104,7 @@
                   <!-- {/foreach}--> 
                   <!-- {/foreach}-->
                 </table></div>
-          <div class="tab-pane tab-att" id="two">
+          <div class="tab-pane tab-att active" id="two">
            {$goods.goods_desc}
           </div>
         </div>
