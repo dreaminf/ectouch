@@ -1,108 +1,200 @@
-<!-- #BeginLibraryItem "/library/sale_header.lbi" --><!-- #EndLibraryItem -->
-<style>
-	.index_image2,.index_image1{width:7rem; height:7rem;}
-	.content{height:auto; padding:2.6rem 1.6rem;  overflow:hidden; position:relative;}
-	.content1{ padding-top:0;}
-	.content1 .index_image1{margin-top:0;}
-	.content2{margin-left:1rem; margin-top:.3rem;}
-	.content2 li{text-align:left;}
-	.content2 .dpxq_p{padding-top:0;}
-	.dpxq_h6{position: absolute; right: 2rem;color: #fff;bottom: 8.5rem;font-size: 1.75rem;font-weight: bold;}
-</style>
+<!-- #BeginLibraryItem "/library/sale_header.lbi" -->
+<!-- #EndLibraryItem -->
+
 <div id="box">
-  <div class="content">
-    <div class="content1" style="float:left">
-      <div class="index_image1">
-      <a href="{:url('sale/shop_config')}">
+	<div class="n-sale-bg">
+		<header class="p-bt padding-all ">
+			<ul class="dis-box">
+				<li class="n-sale-left-box">
+					<div class="n-sale-headerimg-box"> <a href="{:url('sale/shop_config')}">
               {if $info.avatar}
               <img class="index_image2" src="{$info.avatar}" />
               {else}
               <img class="index_image2" src="__TPL__/images/member-photo-img2.jpeg" />
               {/if}
-              </a>
-      </div>
-    </div>
-    <div class="content2" style="float:left;">
-      <ul>
-        <li class="dpxq_p">{$info.name}&nbsp;<span class="dpgl_content"></span></li>
-        <li class="dpxq_h5">{$sale.shop_name}</li>
-		<li class="dpxq_h5"> 开店时间：{$sale.time}</li>
-      </ul>
-    </div> 
-		<a class="dpxq_h6" href="{:url('sale/shop_config')}"><span>设置</span></a>
-  </div>
-  <div class="dpgl_nav">
-    <ul>
-      <li class="dpgl_nav1">总销售额（元）</li>
-      <li class="dpgl_nav2">佣金总额（元）</li>
-      <li class="dpgl_nav3">今日收入（元）</li>
-    </ul>
-    <ul>
-      <li class="dpgl_sum1">{$sale_money_order}</li>
-      <li class="dpgl_sum2">{$sale_money}</li>
-      <li class="dpgl_sum3">{$sale_money_today}</li>
-    </ul>
-  </div>
-  <div class="dpgl_list3">
-   <a href="{:url('store/index')}">
-		<div class="dpgl_list sale-bor-box" > 
-		<i class="iconfont icon-dianpu"></i><span class="dpgl_list-n">我的微店</span><i class="iconfont icon-huise icon-jiantou1"></i></div>
+             </a></div>
+				</li>
+				<li class="box-flex">
+					<div class="n-sale-right-box">
+						<h4>{$info.name}</h4>
+						<p>{$sale.shop_name}</p>
 
-   </a> 
-   
-   <a href="{:url('sale/my_goods')}">
-        <div class="dpgl_list sale-bor-box" >
-        <i class="iconfont icon-quanbushangpin"></i><span class="dpgl_list-n">我的商品</span><i class="iconfont icon-huise icon-jiantou1"></i> </div>
-
-   </a>
-   
-        <div class="dpgl_list sale-bor-box" id="dpg1_list1">
-        <i class="iconfont icon-fenxiao a_left"></i><a href="javascript:;" class="sale_list" ><span class="dpgl_list-n">我的分销</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
-        <ul class="index_nav">
-          <li class="index_nav1"><a href="{:url('sale/order_list')}" ><span class="index_list1">本店订单</span></a></li>
-          <li class="index_nav1"><a href="{:url('sale/my_shop_info')}"><span class="index_list1">我的分店</span></a></li>
-        </ul>
-        </div>
- 
-		
-		<div class="dpgl_list sale-bor-box" id="dpg1_list1">
-		 <i class="iconfont icon-gonggaofuzhi a_left"></i><a href="javascript:;" class="sale_list"  ><span class="dpgl_list-n">我的会员</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
-		 
-		  <ul class="index_nav">
-			<li class="index_nav1" ><a href="{:url('sale/user_list',array('key'=>'wfk'))}"><span class="index_list1">下单未付款会员</span></a></li>
-			<li class="index_nav1"><a href="{:url('sale/user_list',array('key'=>'yfk'))}" ><span class="index_list1">下单已付款会员</span></a></li>
-			<li class="index_nav1"><a href="{:url('sale/user_list',array('key'=>'gz'))}" ><span class="index_list1">关注公众号会员</span></a></li>
-			<li class="index_nav1"><a href="{:url('sale/user_list',array('key'=>'fk'))}" ><span class="index_list1">访客</span></a></li>
-		  </ul>
+				</li>
+				<li class="sale-right-width">
+					<a href="{:url('sale/shop_config')}">
+						<div class="n-sale-icon-size"><span><i class="iconfont icon-shezhi is-n-sezhi-size"></i></span></div>
+					</a>
+				</li>
+			</ul>
+			<div class="n-sale-time">
+				<time class="f-r">开店时间：{$sale.time}</time>
+			</div>
+		</header>
+		<div class="padding-all n-sale-nav">
+			<ul class="dis-box">
+				<li class="box-flex">
+					<p>总销售额（元）</p>
+					<h4>{$sale_money_order}</h4>
+				</li>
+				<li class="box-flex">
+					<p>佣金总额（元）</p>
+					<h4>{$sale_money}</h4>
+				</li>
+				<li class="box-flex">
+					<p>今日收入（元）</p>
+					<h4>{$sale_money_today}</h4>
+				</li>
+			</ul>
 		</div>
-      
-		 
-    <div class="dpgl_list sale-bor-box" id="dpg1_list1">
-     <i class="iconfont icon-jinbichongzhi a_left"></i><a href="javascript:;"  class="sale_list"  mce_href="#"><span class="dpgl_list-n">我的佣金</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
-      <ul class="index_nav" style="display:none;">
-          <li class="index_nav1"><a href="{:url('sale/my_commission')}" ><span class="index_list1">我的佣金</span></a></li>
-        <li class="index_nav1"><a href="{:url('sale/account_detail')}"><span class="index_list1">佣金明细</span></a></li>
-        <li class="index_nav1"><a href="{:url('sale/account_raply')}" ><span class="index_list1">佣金提现</span></a></li>
-      </ul>
-    </div>
- 
-	
-    <div class="dpgl_list sale-bor-box" id="dpg1_list1">
-     <i class="iconfont icon-mingpian a_left"></i><a href="javascript:;"  class="sale_list"  mce_href="#"><span class="dpgl_list-n">我的名片</span><i class="iconfont icon-huise icon-jiantou2"></i></a>
-      <ul class="index_nav" style="display:none;"> 
-        <li class="index_nav1"><a href="{:url('sale/spread')}" ><span class="index_list1">推广二维码</span></a></li>
-        <li class="index_nav1"><a href="{:url('sale/store')}" ><span class="index_list1">店铺二维码</span></a></li>
-      </ul>
-    </div>
+		</div>
 
-	
-   <a href="{:url('sale/ranking_list')}">
-      <div class="dpgl_list sale-bor-box" >
-          <i class="iconfont icon-iconfontpaihangbang"></i><span class="dpgl_list-n">分销排行榜</span><i class="iconfont icon-huise icon-jiantou1"></i></div>
- 
-   </a> 
-    <br>
-  </div>
-</div>
-</body>
-</html>
+		<section class="n-sale-list-box">
+			<!--分类1-->
+			<a href="{:url('store/index')}">
+				<ul class="int-nav-box-1 my-new-m padding-all shop-b">
+					<li>
+						<label class="cate-shop-box"><i class="iconfont icon-dianpu"></i><span>我的微店</span></label>
+						<span class="t-jiantou f-r"><i class="iconfont icon-jiantou1 tf-180 jian-top"></i></span>
+					</li>
+				</ul>
+			</a>
+			<!--分类2-->
+			<a href="{:url('store/index')}">
+				<ul class="int-nav-box-1 my-new-m padding-all shop-b">
+					<li>
+						<label class="cate-shop-box"><i class="iconfont icon-quanbushangpin"></i><span>我的商品</span></label>
+						<span class="t-jiantou f-r"><i class="iconfont icon-jiantou1 tf-180 jian-top"></i></span>
+					</li>
+				</ul>
+			</a>
+			<!--分类3-->
+			<ul class="int-nav-box-a my-new-m padding-all shop-b">
+				<li>
+					<label class="cate-shop-box"><i class="iconfont icon-fenxiao a_left"></i><span>我的分销</span></label>
+					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+				</li>
+			</ul>
+			<a href="{:url('sale/order_list')}">
+				<div class="int-cont-a padding-all shop-b" style="display: none;">
+					<lable class="two-shop-tit">本店订单</lable>
+					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+				</div>
+			</a>
+			<a href="{:url('sale/my_shop_info')}">
+				<div class="int-cont-a padding-all shop-b" style="display: none;">
+					<lable class="two-shop-tit">我的分店</lable>
+					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+				</div>
+			</a>
+			<!--分类4-->
+			<ul class="int-nav-box-b my-new-m padding-all shop-b">
+				<li>
+					<label class="cate-shop-box"><i class="iconfont icon-gonggaofuzhi a_left"></i><span>我的会员</span></label>
+					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+				</li>
+			</ul>
+			<a href="{:url('sale/user_list',array('key'=>'wfk'))}">
+				<div class="int-cont-b padding-all shop-b" style="display: none;">
+					<lable class="two-shop-tit">下单未付款会员</lable>
+					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+				</div>
+			</a>
+			<a href="{:url('sale/user_list',array('key'=>'yfk'))}">
+				<div class="int-cont-b padding-all shop-b" style="display: none;">
+					<lable class="two-shop-tit">下单已付款会员</lable>
+					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+				</div>
+			</a>
+			<a href="{:url('sale/user_list',array('key'=>'gz'))}">
+				<div class="int-cont-b padding-all shop-b" style="display: none;">
+					<lable class="two-shop-tit">关注公众号会员</lable>
+					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+				</div>
+			</a>
+			<a href="{:url('sale/user_list',array('key'=>'fk'))}">
+				<div class="int-cont-b padding-all shop-b" style="display: none;">
+					<lable class="two-shop-tit">访客</lable>
+					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+				</div>
+			</a>
+
+			<!--分类5-->
+			<ul class="int-nav-box-c my-new-m padding-all shop-b">
+				<li>
+					<label class="cate-shop-box"><i class="iconfont icon-jinbichongzhi a_left"></i><span>我的佣金</span></label>
+					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+				</li>
+			</ul>
+			<a href="{:url('sale/my_commission')}">
+				<div class="int-cont-c padding-all shop-b" style="display: none;">
+					<lable class="two-shop-tit">我的佣金</lable>
+					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+				</div>
+			</a>
+			<a href="{:url('sale/account_detail')}">
+				<div class="int-cont-c padding-all shop-b" style="display: none;">
+					<lable class="two-shop-tit">佣金明细</lable>
+					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+				</div>
+			</a>
+			<a href="{:url('sale/account_raply')}">
+				<div class="int-cont-c padding-all shop-b" style="display: none;">
+					<lable class="two-shop-tit">佣金提现</lable>
+					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+				</div>
+			</a>
+
+			<!--分类6-->
+			<ul class="int-nav-box-d my-new-m padding-all shop-b">
+				<li>
+					<label class="cate-shop-box"><i class="iconfont icon-mingpian a_left"></i><span>我的名片</span></label>
+					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+				</li>
+			</ul>
+			<a href="{:url('sale/spread')}">
+				<div class="int-cont-d padding-all shop-b" style="display: none;">
+					<lable class="two-shop-tit">推广二维码</lable>
+					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+				</div>
+			</a>
+			<a href="{:url('sale/store')}">
+				<div class="int-cont-d padding-all shop-b" style="display: none;">
+					<lable class="two-shop-tit">店铺二维码</lable>
+					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+				</div>
+			</a>
+			<!--分类7-->
+			<a href="{:url('sale/ranking_list')}">
+				<ul class="int-nav-box-1 my-new-m padding-all shop-b">
+					<li>
+						<label class="cate-shop-box"><i class="iconfont icon-iconfontpaihangbang"></i><span>分销排行榜</span></label>
+						<span class="t-jiantou f-r"><i class="iconfont icon-jiantou1 tf-180 jian-top"></i></span>
+					</li>
+				</ul>
+			</a>
+		</section>		
+	</div>
+	</body>
+	<script>
+		/*个人店铺手风琴*/
+		$(function($) {
+			$(".int-nav-box-a").click(function() {
+				$(this).find(".int-jt-box").toggleClass("current");
+				$(this).parent().find(".int-cont-a").slideToggle();
+			});
+			$(".int-nav-box-b").click(function() {
+				$(this).find(".int-jt-box").toggleClass("current");
+				$(this).parent().find(".int-cont-b").slideToggle();
+			});
+			$(".int-nav-box-c").click(function() {
+				$(this).find(".int-jt-box").toggleClass("current");
+				$(this).parent().find(".int-cont-c").slideToggle();
+			});
+			$(".int-nav-box-d").click(function() {
+				$(this).find(".int-jt-box").toggleClass("current");
+				$(this).parent().find(".int-cont-d").slideToggle();
+			});
+		})
+	</script>
+
+	</html>
