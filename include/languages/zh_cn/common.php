@@ -496,7 +496,7 @@ $_LANG['logout'] = '退出';
 $_LANG['user_logout'] = '退出';
 $_LANG['welcome'] = '欢迎光临本店';
 $_LANG['user_login'] = '会员登陆';
-$_LANG['login_now'] = '立即登陆';
+$_LANG['login_now'] = '立即登录';
 $_LANG['reg_now'] = '立即注册';
 
 /* 商品品牌页 */

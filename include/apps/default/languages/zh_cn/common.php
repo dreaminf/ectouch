@@ -539,7 +539,7 @@ $_LANG['edit_user_info'] = '进入用户中心';
 $_LANG['logout'] = '退出';
 $_LANG['user_logout'] = '退出';
 $_LANG['welcome'] = '欢迎光临本店';
-$_LANG['user_login'] = '会员登陆';
+$_LANG['user_login'] = '会员登录';
 $_LANG['login_now'] = '立即登陆';
 $_LANG['reg_now'] = '立即注册';
 

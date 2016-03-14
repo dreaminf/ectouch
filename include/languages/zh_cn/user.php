@@ -675,7 +675,7 @@ $_LANG['passwd_questions']['favorite_novel']  = '我最喜欢的小说？';
 $_LANG['passwd_questions']['favorite_equipe'] = '我最喜欢的运动队？';
 
 
-$_LANG['now_landing'] = '立即登陆';
+$_LANG['now_landing'] = '立即登录';
 
 $_LANG['apply_sale_wait'] = '您的申请已提交，请等待管理员同意';
 $_LANG['sale_center'] = '分销中心';
