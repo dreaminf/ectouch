@@ -8,6 +8,7 @@
 <section class="product-list j-product-list product-list-medium" data="1">
 	<ul id="j-product-box">
 		<script id="j-product" type="text/html">
+		<if list>
 		{{each list as vo i}}
 		<li>
 			<div class="product-div">
@@ -22,6 +23,15 @@
 			</div>
 		</li>
 		{{/each}}
+		<else>
+		<div>
+		<style>
+		
+		</style>
+		<div class="box-flex not-goods">
+			暂无商品信息
+		</div>
+		</if>
 		</script>
 	</ul>
 </section>
