@@ -22,7 +22,7 @@
   </div>
   <div class="two-btn ect-padding-tb ect-padding-lr ect-margin-tb text-center">
   <input type="hidden" name="surplus_type" value="1" />
-    <input type="submit" name="submit"  class="btn btn-info ect-bg-colory"  value="{$lang.submit_request}"/>
+    <input type="submit" name="submit" style="margin-left:0em"  class="btn btn-info ect-bg-colory input001"  value="{$lang.submit_request}"/>
   </div>
 </form>
 </div>
