@@ -16,8 +16,8 @@
 define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-require_once(BASE_PATH . 'helpers/order_helper.php');
-require_once(BASE_PATH . 'languages/' .$_CFG['lang']. '/admin/statistic.php');
+require_once(ROOT_PATH . 'include/base/helpers/lib_order.php');
+require_once(ROOT_PATH . 'include/languages/' .$_CFG['lang']. '/admin/statistic.php');
 $smarty->assign('lang', $_LANG);
 
 if (isset($_REQUEST['act']) && ($_REQUEST['act'] == 'query' ||  $_REQUEST['act'] == 'download'))
@@ -40,22 +40,22 @@ if (isset($_REQUEST['act']) && ($_REQUEST['act'] == 'query' ||  $_REQUEST['act']
         header("Content-Disposition: attachment; filename=$file_name.xls");
 
         /* 文件标题 */
-        echo ecs_iconv(CHARSET, 'GB2312', $_REQUEST['start_date']. $_LANG['to'] .$_REQUEST['end_date']. $_LANG['sales_list']) . "\t\n";
+        echo ecs_iconv(EC_CHARSET, 'GB2312', $_REQUEST['start_date']. $_LANG['to'] .$_REQUEST['end_date']. $_LANG['sales_list']) . "\t\n";
 
         /* 商品名称,订单号,商品数量,销售价格,销售日期 */
-        echo ecs_iconv(CHARSET, 'GB2312', $_LANG['goods_name']) . "\t";
-        echo ecs_iconv(CHARSET, 'GB2312', $_LANG['order_sn']) . "\t";
-        echo ecs_iconv(CHARSET, 'GB2312', $_LANG['amount']) . "\t";
-        echo ecs_iconv(CHARSET, 'GB2312', $_LANG['sell_price']) . "\t";
-        echo ecs_iconv(CHARSET, 'GB2312', $_LANG['sell_date']) . "\t\n";
+        echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['goods_name']) . "\t";
+        echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['order_sn']) . "\t";
+        echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['amount']) . "\t";
+        echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['sell_price']) . "\t";
+        echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['sell_date']) . "\t\n";
 
         foreach ($goods_sales_list['sale_list_data'] AS $key => $value)
         {
-            echo ecs_iconv(CHARSET, 'GB2312', $value['goods_name']) . "\t";
-            echo ecs_iconv(CHARSET, 'GB2312', '[ ' . $value['order_sn'] . ' ]') . "\t";
-            echo ecs_iconv(CHARSET, 'GB2312', $value['goods_num']) . "\t";
-            echo ecs_iconv(CHARSET, 'GB2312', $value['sales_price']) . "\t";
-            echo ecs_iconv(CHARSET, 'GB2312', $value['sales_time']) . "\t";
+            echo ecs_iconv(EC_CHARSET, 'GB2312', $value['goods_name']) . "\t";
+            echo ecs_iconv(EC_CHARSET, 'GB2312', '[ ' . $value['order_sn'] . ' ]') . "\t";
+            echo ecs_iconv(EC_CHARSET, 'GB2312', $value['goods_num']) . "\t";
+            echo ecs_iconv(EC_CHARSET, 'GB2312', $value['sales_price']) . "\t";
+            echo ecs_iconv(EC_CHARSET, 'GB2312', $value['sales_time']) . "\t";
             echo "\n";
         }
         exit;

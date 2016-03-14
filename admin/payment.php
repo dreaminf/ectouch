@@ -60,13 +60,13 @@ if ($_REQUEST['act'] == 'list')
             $modules[$i]['desc'] = $_LANG[$modules[$i]['desc']];
             $modules[$i]['install'] = '0';
         }
-        if ($modules[$i]['pay_code'] == 'tenpayc2c')
-        {
+       if ($modules[$i]['pay_code'] == 'tenpayc2c')
+       {
             $tenpayc2c = $modules[$i];
-        }
+       }
     }
 
-    include_once(BASE_PATH.'helpers/compositor.php');
+    include_once(ROOT_PATH.'include/base/helpers/lib_compositor.php');
 
     assign_query_info();
 
@@ -86,7 +86,7 @@ elseif ($_REQUEST['act'] == 'install')
 
     /* 取相应插件信息 */
     $set_modules = true;
-    include_once(BASE_PATH.'modules/payment/' . $_REQUEST['code'] . '.php');
+    include_once(ROOT_PATH.'include/modules/payment/' . $_REQUEST['code'] . '.php');
 
     $data = $modules[0];
     /* 对支付费用判断。如果data['pay_fee']为false无支付费用，为空则说明以配送有关，其它可以修改 */
@@ -135,7 +135,7 @@ elseif ($_REQUEST['act'] == 'get_config')
 
     /* 取相应插件信息 */
     $set_modules = true;
-    include_once(BASE_PATH.'modules/payment/' . $code . '.php');
+    include_once(ROOT_PATH.'include/modules/payment/' . $code . '.php');
     $data = $modules[0]['config'];
     $config = '<table>';
     $range = '';
@@ -207,7 +207,7 @@ elseif ($_REQUEST['act'] == 'edit')
 
     /* 取相应插件信息 */
     $set_modules = true;
-    include_once(BASE_PATH . 'modules/payment/' . $_REQUEST['code'] . '.php');
+    include_once(ROOT_PATH . 'include/modules/payment/' . $_REQUEST['code'] . '.php');
     $data = $modules[0];
 
     /* 取得配置信息 */

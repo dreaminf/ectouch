@@ -44,7 +44,7 @@ if ($_REQUEST['act']== 'list')
     $group_list = array(
         'sys' => array('text' => $_LANG['system_set'], 'url' => ''),
         'cus' => array('text' => $_LANG['custom_set'], 'url' => 'flashplay.php?act=custom_list')
-    );
+                       );
 
     assign_query_info();
     $flash_dir = ROOT_PATH . 'data/flashdata/';
@@ -129,10 +129,10 @@ elseif ($_REQUEST['act'] == 'add')
                 $name .= chr(mt_rand(97, 122));
             }
             $name .= '.' . end(explode('.', $_FILES['img_file_src']['name']));
-            $target = ROOT_PATH . DATA_DIR . '/attached/afficheimg/' . $name;
+            $target = ROOT_PATH . DATA_DIR . '/afficheimg/' . $name;
             if (move_upload_file($_FILES['img_file_src']['tmp_name'], $target))
             {
-                $src = DATA_DIR . '/attached/afficheimg/' . $name;
+                $src = DATA_DIR . '/afficheimg/' . $name;
             }
         }
         elseif (!empty($_POST['img_src']))
@@ -236,11 +236,11 @@ elseif ($_REQUEST['act'] == 'edit')
                 $name .= chr(mt_rand(97, 122));
             }
             $name .= '.' . end(explode('.', $_FILES['img_file_src']['name']));
-            $target = ROOT_PATH . DATA_DIR . '/attached/afficheimg/' . $name;
+            $target = ROOT_PATH . DATA_DIR . '/afficheimg/' . $name;
 
             if (move_upload_file($_FILES['img_file_src']['tmp_name'], $target))
             {
-                $src = DATA_DIR . '/attached/afficheimg/' . $name;
+                $src = DATA_DIR . '/afficheimg/' . $name;
             }
         }
         else if (!empty($_POST['img_src']))
@@ -448,11 +448,11 @@ elseif ($_REQUEST['act'] == 'custom_insert')
             $name .= chr(mt_rand(97, 122));
         }
         $name .= '.' . end(explode('.', $ad_img['ad_img']['name']));
-        $target = ROOT_PATH . DATA_DIR . '/attached/afficheimg/' . $name;
+        $target = ROOT_PATH . DATA_DIR . '/afficheimg/' . $name;
 
         if (move_upload_file($ad_img['ad_img']['tmp_name'], $target))
         {
-            $src = DATA_DIR . '/attached/afficheimg/' . $name;
+            $src = DATA_DIR . '/afficheimg/' . $name;
         }
     }
     else if (!empty($filter['content']['url']))
@@ -675,11 +675,11 @@ elseif ($_REQUEST['act'] == 'custom_update')
             $name .= chr(mt_rand(97, 122));
         }
         $name .= '.' . end(explode('.', $ad_img['ad_img']['name']));
-        $target = ROOT_PATH . DATA_DIR . '/attached/afficheimg/' . $name;
+        $target = ROOT_PATH . DATA_DIR . '/afficheimg/' . $name;
 
         if (move_upload_file($ad_img['ad_img']['tmp_name'], $target))
         {
-            $src = DATA_DIR . '/attached/afficheimg/' . $name;
+            $src = DATA_DIR . '/afficheimg/' . $name;
         }
     }
     else if (!empty($filter['content']['url']))
@@ -734,13 +734,13 @@ elseif ($_REQUEST['act'] == 'custom_update')
 function get_flash_xml()
 {
     $flashdb = array();
-    if (file_exists(ROOT_PATH . DATA_DIR . '/attached/flash_data.xml'))
+    if (file_exists(ROOT_PATH . DATA_DIR . '/flash_data.xml'))
     {
 
         // 兼容v2.7.0及以前版本
-        if (!preg_match_all('/item_url="([^"]+)"\slink="([^"]+)"\stext="([^"]*)"\ssort="([^"]*)"/', file_get_contents(ROOT_PATH . DATA_DIR . '/attached/flash_data.xml'), $t, PREG_SET_ORDER))
+        if (!preg_match_all('/item_url="([^"]+)"\slink="([^"]+)"\stext="([^"]*)"\ssort="([^"]*)"/', file_get_contents(ROOT_PATH . DATA_DIR . '/flash_data.xml'), $t, PREG_SET_ORDER))
         {
-            preg_match_all('/item_url="([^"]+)"\slink="([^"]+)"\stext="([^"]*)"/', file_get_contents(ROOT_PATH . DATA_DIR . '/attached/flash_data.xml'), $t, PREG_SET_ORDER);
+            preg_match_all('/item_url="([^"]+)"\slink="([^"]+)"\stext="([^"]*)"/', file_get_contents(ROOT_PATH . DATA_DIR . '/flash_data.xml'), $t, PREG_SET_ORDER);
         }
 
         if (!empty($t))
@@ -759,17 +759,17 @@ function put_flash_xml($flashdb)
 {
     if (!empty($flashdb))
     {
-        $xml = '<?xml version="1.0" encoding="' . CHARSET . '"?><bcaster>';
+        $xml = '<?xml version="1.0" encoding="' . EC_CHARSET . '"?><bcaster>';
         foreach ($flashdb as $key => $val)
         {
             $xml .= '<item item_url="' . $val['src'] . '" link="' . $val['url'] . '" text="' . $val['text'] . '" sort="' . $val['sort'] . '"/>';
         }
         $xml .= '</bcaster>';
-        file_put_contents(ROOT_PATH . DATA_DIR . '/attached/flash_data.xml', $xml);
+        file_put_contents(ROOT_PATH . DATA_DIR . '/flash_data.xml', $xml);
     }
     else
     {
-        @unlink(ROOT_PATH . DATA_DIR . '/attached/flash_data.xml');
+        @unlink(ROOT_PATH . DATA_DIR . '/flash_data.xml');
     }
 }
 
@@ -787,9 +787,9 @@ function get_url_image($url)
         $name .= chr(mt_rand(97, 122));
     }
     $name .= '.' . $ext;
-    $target = ROOT_PATH . DATA_DIR . '/attached/afficheimg/' . $name;
+    $target = ROOT_PATH . DATA_DIR . '/afficheimg/' . $name;
 
-    $tmp_file = DATA_DIR . '/attached/afficheimg/' . $name;
+    $tmp_file = DATA_DIR . '/afficheimg/' . $name;
     $filename = ROOT_PATH . $tmp_file;
 
     $img = file_get_contents($url);
@@ -904,8 +904,8 @@ function set_flash_data($tplname, &$msg)
 
 function set_flash_uproll($tplname, $flashdata)
 {
-    $data_file = ROOT_PATH . DATA_DIR . '/attached/flashdata/' . $tplname . '/data.xml';
-    $xmldata = '<?xml version="1.0" encoding="' . CHARSET . '"?><myMenu>';
+    $data_file = ROOT_PATH . DATA_DIR . '/flashdata/' . $tplname . '/data.xml';
+    $xmldata = '<?xml version="1.0" encoding="' . EC_CHARSET . '"?><myMenu>';
     foreach ($flashdata as $data)
     {
         $xmldata .= '<myItem pic="' . $data['src'] . '" url="' . $data['url'] . '" />';
@@ -917,7 +917,7 @@ function set_flash_uproll($tplname, $flashdata)
 
 function set_flash_focus($tplname, $flashdata)
 {
-    $data_file = ROOT_PATH . DATA_DIR . '/attached/flashdata/' . $tplname . '/data.js';
+    $data_file = ROOT_PATH . DATA_DIR . '/flashdata/' . $tplname . '/data.js';
     $jsdata = '';
     $jsdata2 = array('url' => 'var pics=', 'txt' => 'var texts=', 'link' => 'var links=');
     $count = 1;
@@ -942,8 +942,8 @@ function set_flash_focus($tplname, $flashdata)
 
 function set_flash_default($tplname, $flashdata)
 {
-    $data_file = ROOT_PATH . DATA_DIR . '/attached/flashdata/' . $tplname . '/data.xml';
-    $xmldata = '<?xml version="1.0" encoding="' . CHARSET . '"?><bcaster>';
+    $data_file = ROOT_PATH . DATA_DIR . '/flashdata/' . $tplname . '/data.xml';
+    $xmldata = '<?xml version="1.0" encoding="' . EC_CHARSET . '"?><bcaster>';
     foreach ($flashdata as $data)
     {
         $xmldata .= '<item item_url="' . $data['src'] . '" link="' . $data['url'] . '" />';

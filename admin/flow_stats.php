@@ -16,7 +16,7 @@
 define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-require_once(BASE_PATH . 'languages/' .$_CFG['lang']. '/admin/statistic.php');
+require_once(ROOT_PATH . 'include/languages/' .$_CFG['lang']. '/admin/statistic.php');
 $smarty->assign('lang', $_LANG);
 
 /* act操作项的初始化 */
@@ -415,9 +415,9 @@ elseif ($act = 'download')
         $data .= ($val['referer_domain'] == "" ? $_LANG['input_url'] : $val['referer_domain']) . "\t";
         $data .= $val['access_count'] . "\t\n";
     }
-    if (CHARSET != 'gbk')
+    if (EC_CHARSET != 'gbk')
     {
-        echo ecs_iconv(CHARSET, 'gbk', $data) . "\t";
+        echo ecs_iconv(EC_CHARSET, 'gbk', $data) . "\t";
     }
     else
     {

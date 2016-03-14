@@ -24,7 +24,7 @@ if ($_REQUEST['act']== 'check')
 
     /* 要检查目录文件列表 */
     $goods_img_dir = array();
-    $folder = opendir(ROOT_PATH . 'data/attachment/images');
+    $folder = opendir(ROOT_PATH . 'images');
     while ($dir = readdir($folder))
     {
         if (is_dir(ROOT_PATH . IMAGE_DIR . '/' . $dir) && preg_match('/^[0-9]{6}$/', $dir))
@@ -44,18 +44,19 @@ if ($_REQUEST['act']== 'check')
     $dir_subdir['images'][]    = IMAGE_DIR . '/upload/Flash';
     $dir_subdir['images'][]    = IMAGE_DIR . '/upload/Media';
     $dir_subdir['data'][]      = DATA_DIR;
-    $dir_subdir['data'][]      = DATA_DIR . '/attached/afficheimg';
-    $dir_subdir['data'][]      = DATA_DIR . '/attached/brandlogo';
-    $dir_subdir['data'][]      = DATA_DIR . '/attached/cardimg';
-    $dir_subdir['data'][]      = DATA_DIR . '/attached/feedbackimg';
-    $dir_subdir['data'][]      = DATA_DIR . '/attached/packimg';
+    $dir_subdir['data'][]      = DATA_DIR . '/afficheimg';
+    $dir_subdir['data'][]      = DATA_DIR . '/brandlogo';
+    $dir_subdir['data'][]      = DATA_DIR . '/cardimg';
+    $dir_subdir['data'][]      = DATA_DIR . '/feedbackimg';
+    $dir_subdir['data'][]      = DATA_DIR . '/packimg';
     $dir_subdir['data'][]      = DATA_DIR . '/sqldata';
-    $dir_subdir['temp'][]      = DATA_DIR . '/backup';
-    $dir_subdir['temp'][]      = DATA_DIR . '/attached/caches';
-    $dir_subdir['temp'][]      = DATA_DIR . '/attached/compiled';
-    $dir_subdir['temp'][]      = DATA_DIR . '/attached/compiled/admin';
-    $dir_subdir['temp'][]      = DATA_DIR . '/attached/query_caches';
-    $dir_subdir['temp'][]      = DATA_DIR . '/attached/static_caches';
+    $dir_subdir['temp'][] = 'temp';
+    $dir_subdir['temp'][] = 'temp/backup';
+    $dir_subdir['temp'][] = 'temp/caches';
+    $dir_subdir['temp'][] = 'temp/compiled';
+    $dir_subdir['temp'][] = 'temp/compiled/admin';
+    $dir_subdir['temp'][] = 'temp/query_caches';
+    $dir_subdir['temp'][] = 'temp/static_caches';
 
     /* 将商品图片目录加入检查范围 */
     foreach ($goods_img_dir as $val)

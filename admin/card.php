@@ -16,8 +16,8 @@
 define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-// include_once(ROOT_PATH . 'includes/cls_image.php');
-$image = new image($_CFG['bgcolor']);
+include_once(ROOT_PATH . 'include/base/classes/cls_image.php');
+$image = new cls_image($_CFG['bgcolor']);
 
 $exc = new exchange($ecs->table("card"), $db, 'card_id', 'card_name');
 
@@ -75,7 +75,7 @@ elseif ($_REQUEST['act'] == 'remove')
         /* 删除图片 */
         if (!empty($img))
         {
-             @unlink('../' . DATA_DIR . '/attached/cardimg/'.$img);
+             @unlink('../' . DATA_DIR . '/cardimg/'.$img);
         }
         admin_log(addslashes($name),'remove','card');
 
@@ -214,7 +214,7 @@ elseif ($_REQUEST['act'] == 'drop_card_img')
 
     if (!empty($img_name))
     {
-        @unlink(ROOT_PATH . DATA_DIR . '/attached/cardimg/' .$img_name);
+        @unlink(ROOT_PATH . DATA_DIR . '/cardimg/' .$img_name);
         $sql = "UPDATE " .$ecs->table('card'). " SET card_img = '' WHERE card_id = '$card_id'";
         $db->query($sql);
     }

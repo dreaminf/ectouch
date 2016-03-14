@@ -217,7 +217,7 @@ function put_affiliate($config)
 {
     $temp = serialize($config);
     $sql = "UPDATE " . $GLOBALS['ecs']->table('shop_config') .
-           "SET  value = '$temp' " .
+           "SET  value = '$temp'" .
            "WHERE code = 'affiliate'";
     $GLOBALS['db']->query($sql);
     clear_all_files();

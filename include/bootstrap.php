@@ -35,7 +35,7 @@ require(BASE_PATH . 'base/helpers/function.php');
 /* 默认配置 */
 C(load_file(BASE_PATH . 'config/global.php'));
 /* 数据库配置 */
-C('DB', load_file(ROOT_PATH . 'data/config.php'));
+C('DB', load_file(BASE_PATH . 'config/database.php'));
 /* 设置时区 */
 date_default_timezone_set(C('DEFAULT_TIMEZONE'));
 /* 调试配置 */

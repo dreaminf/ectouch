@@ -29,9 +29,9 @@ else
 
 $sess_id = $GLOBALS['sess']->get_session_id();
 
-$auth = time();
+$auth = mktime();
 $ac = md5($certi_id.'SHOPEX_SMS'.$auth);
-$url = 'http://service.ectouch.cn/sms/index.php?certificate_id='.$certi_id.'&sess_id='.$sess_id.'&auth='.$auth.'&ac='.$ac;
+$url = 'http://service.shopex.cn/sms/index.php?certificate_id='.$certi_id.'&sess_id='.$sess_id.'&auth='.$auth.'&ac='.$ac;
 
 /*------------------------------------------------------ */
 //-- 列表编辑 ?act=list_edit
@@ -241,7 +241,7 @@ elseif ($_REQUEST['act'] == 'post')
     $spt .= "&qq=$_CFG[qq]&ww=$_CFG[ww]&ym=$_CFG[ym]&msn=$_CFG[msn]";
     $spt .= "&email=$_CFG[service_email]&phone=$_CFG[service_phone]&icp=".urlencode($_CFG['icp_number']);
     $spt .= "&version=".VERSION."&language=$_CFG[lang]&php_ver=" .PHP_VERSION. "&mysql_ver=" .$db->version();
-    $spt .= "&charset=".CHARSET;
+    $spt .= "&charset=".EC_CHARSET;
     $spt .= '"></script>';
 
     if ($type == 'mail_setting')

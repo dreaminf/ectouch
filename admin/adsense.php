@@ -16,8 +16,8 @@
 define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-require_once(BASE_PATH . 'helpers/order_helper.php');
-require_once(BASE_PATH . 'languages/' .$_CFG['lang']. '/admin/ads.php');
+require_once(ROOT_PATH . 'include/base/helpers/lib_order.php');
+require_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/admin/ads.php');
 
 /* act操作项的初始化 */
 if (empty($_REQUEST['act']))
@@ -89,7 +89,7 @@ if ($_REQUEST['act'] == 'list' || $_REQUEST['act'] == 'download')
         {
             $data .= "$row[ad_name]\t$row[referer]\t$row[clicks]\t$row[order_confirm]\t$row[order_num]\n";
         }
-        echo ecs_iconv(CHARSET, 'GB2312', $data);
+        echo ecs_iconv(EC_CHARSET, 'GB2312', $data);
         exit;
     }
     $smarty->assign('goods_stats', $goods_stats);

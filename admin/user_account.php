@@ -210,7 +210,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     //如果是预付款并且未确认，向pay_log插入一条记录
     if ($process_type == 0 && $is_paid == 0)
     {
-        include_once(BASE_PATH . 'helpers/order_helper.php');
+        include_once(ROOT_PATH . 'include/base/helpers/lib_order.php');
 
         /* 取支付方式信息 */
         $payment_info = array();

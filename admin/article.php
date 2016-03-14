@@ -17,7 +17,7 @@ define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 // require_once(ROOT_PATH . "includes/fckeditor/fckeditor.php");
-// require_once(ROOT_PATH . 'includes/cls_image.php');
+require_once(ROOT_PATH . 'include/base/classes/cls_image.php');
 
 /*初始化数据交换对象 */
 $exc   = new exchange($ecs->table("article"), $db, 'article_id', 'title');
@@ -403,7 +403,7 @@ elseif ($_REQUEST['act'] == 'remove')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'add_link_goods')
 {
-    // include_once(ROOT_PATH . 'includes/cls_json.php');
+    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('article_manage');
@@ -443,7 +443,7 @@ elseif ($_REQUEST['act'] == 'add_link_goods')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'drop_link_goods')
 {
-    // include_once(ROOT_PATH . 'includes/cls_json.php');
+    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('article_manage');
@@ -480,7 +480,7 @@ elseif ($_REQUEST['act'] == 'drop_link_goods')
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'get_goods_list')
 {
-    // include_once(ROOT_PATH . 'includes/cls_json.php');
+    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
     $json = new JSON;
 
     $filters = $json->decode($_GET['JSON']);
@@ -683,18 +683,18 @@ function get_articleslist()
 /* 上传文件 */
 function upload_article_file($upload)
 {
-    if (!make_dir("../" . DATA_DIR . "/attached/article"))
+    if (!make_dir("../" . DATA_DIR . "/article"))
     {
         /* 创建目录失败 */
         return false;
     }
 
-    $filename = image::random_filename() . substr($upload['name'], strpos($upload['name'], '.'));
-    $path     = ROOT_PATH. DATA_DIR . "/attached/article/" . $filename;
+    $filename = cls_image::random_filename() . substr($upload['name'], strpos($upload['name'], '.'));
+    $path     = ROOT_PATH. DATA_DIR . "/article/" . $filename;
 
     if (move_upload_file($upload['tmp_name'], $path))
     {
-        return DATA_DIR . "/attached/article/" . $filename;
+        return DATA_DIR . "/article/" . $filename;
     }
     else
     {

@@ -248,7 +248,7 @@ elseif ($_REQUEST['act'] == 'edit_package_name')
 
 elseif ($_REQUEST['act'] == 'search_goods')
 {
-    // include_once(ROOT_PATH . 'includes/cls_json.php');
+    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
     $json = new JSON;
 
     $filters = $json->decode($_GET['JSON']);
@@ -274,7 +274,7 @@ elseif ($_REQUEST['act'] == 'search_goods')
 
 //elseif ($_REQUEST['act'] == 'get_goods_list')
 //{
-//    include_once(ROOT_PATH . 'includes/cls_json.php');
+//    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
 //    $json = new JSON;
 //
 //    $filters = $json->decode($_GET['JSON']);
@@ -300,7 +300,7 @@ elseif ($_REQUEST['act'] == 'search_goods')
 
 elseif ($_REQUEST['act'] == 'add_package_goods')
 {
-    // include_once(ROOT_PATH . 'includes/cls_json.php');
+    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('package_manage');
@@ -343,7 +343,7 @@ elseif ($_REQUEST['act'] == 'add_package_goods')
 
 elseif ($_REQUEST['act'] == 'drop_package_goods')
 {
-    // include_once(ROOT_PATH . 'includes/cls_json.php');
+    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('package_manage');

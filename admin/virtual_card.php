@@ -17,7 +17,7 @@ define('IN_ECTOUCH', true);
 
 /* 包含文件 */
 require(dirname(__FILE__) . '/includes/init.php');
-require_once(BASE_PATH . 'helpers/code_helper.php');
+require_once(ROOT_PATH . 'include/base/helpers/lib_code.php');
 
 /*------------------------------------------------------ */
 //-- 补货处理

@@ -75,7 +75,7 @@ if ($_REQUEST['act'] == 'remove_msg')
         {
             if ($row['message_img'])
             {
-                @unlink(ROOT_PATH. DATA_DIR . '/attached/feedbackimg/' . $row['message_img']);
+                @unlink(ROOT_PATH. DATA_DIR . '/feedbackimg/' . $row['message_img']);
             }
             $sql = "DELETE FROM " . $ecs->table('feedback') . " WHERE msg_id=$msg_id LIMIT 1";
             $db->query($sql);
@@ -169,7 +169,7 @@ elseif ($_REQUEST['act'] == 'remove')
         /* 删除图片 */
         if (!empty($img))
         {
-             @unlink(ROOT_PATH. DATA_DIR . '/attached/feedbackimg/'.$img);
+             @unlink(ROOT_PATH. DATA_DIR . '/feedbackimg/'.$img);
         }
         $sql = "DELETE FROM " . $ecs->table('feedback') . " WHERE parent_id = '$msg_id' LIMIT 1";
         $db->query($sql, 'SILENT');
@@ -305,7 +305,7 @@ elseif ($_REQUEST['act'] == 'drop_file')
     /* 删除上传的文件 */
     $file = $_GET['file'];
     $file = str_replace('/','',$file);
-    @unlink('../' . DATA_DIR . '/attached/feedbackimg/'.$file);
+    @unlink('../' . DATA_DIR . '/feedbackimg/'.$file);
 
     /* 更新数据库 */
     $db->query("UPDATE ".$ecs->table('feedback')." SET message_img = '' WHERE msg_id = '$_GET[id]'");

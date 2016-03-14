@@ -65,7 +65,7 @@ if ($_REQUEST['act'] == 'list')
     $tmp_bak_dir = @opendir(ROOT_PATH . 'data/backup/library/');
     while ($file = readdir($tmp_bak_dir))
     {
-        if ($file != '.' && $file != '..' && $file != '.svn' && $file != 'index.htm' && $file != '.gitignore' && is_file(ROOT_PATH .'data/backup/library/' . $file) == true)
+        if ($file != '.' && $file != '..' && $file != '.svn' && $file != 'index.htm' && is_file(ROOT_PATH .'data/backup/library/' . $file) == true)
         {
             $code = substr($file, 0, strpos($file, '-'));
             if (!in_array($code, $available_code))

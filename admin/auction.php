@@ -15,7 +15,7 @@
 
 define('IN_ECTOUCH', true);
 require(dirname(__FILE__) . '/includes/init.php');
-require(BASE_PATH . 'helpers/goods_helper.php');
+require(ROOT_PATH . 'include/base/helpers/lib_goods.php');
 
 $exc = new exchange($ecs->table('goods_activity'), $db, 'act_id', 'act_name');
 
@@ -394,7 +394,7 @@ elseif ($_REQUEST['act'] == 'search_goods')
 {
     check_authz_json('auction');
 
-    // include_once(ROOT_PATH . 'includes/cls_json.php');
+    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
 
     $json   = new JSON;
     $filter = $json->decode($_GET['JSON']);
@@ -414,7 +414,7 @@ elseif ($_REQUEST['act'] == 'search_goods')
 
 elseif ($_REQUEST['act'] == 'search_products')
 {
-    // include_once(ROOT_PATH . 'includes/cls_json.php');
+    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
     $json = new JSON;
 
     $filters = $json->decode($_GET['JSON']);
