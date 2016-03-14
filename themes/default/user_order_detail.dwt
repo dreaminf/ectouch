@@ -24,7 +24,7 @@
     <!--{/foreach}-->
     </p>
     <!-- {/if} -->
-    <p><a href="{:url('user/msg_list', array('order_id'=>$this->_var['order']['order_id']))}">[{$lang.business_message}]</a></p>
+    <p style="display:none;"><a href="{:url('user/msg_list', array('order_id'=>$this->_var['order']['order_id']))}">[{$lang.business_message}]</a></p>
   </div>
   {if $order.order_amount gt 0}
 	<section class="ect-padding-lr ect-padding-tb ect-margin-tb ect-margin-bottom0">{$order.pay_online}</section>
