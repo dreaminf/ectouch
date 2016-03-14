@@ -107,12 +107,12 @@ if ($_REQUEST['act'] == 'install')
 if ($_REQUEST['act'] == 'view_install_log')
 {
     $code = empty($_GET['code']) ? '' : trim($_GET['code']);
-    if (empty($code) || file_exists(ROOT_PATH . DATA_DIR . '/integrate_' . $code . '_log.php' ))
+    if (empty($code) || file_exists(ROOT_PATH . DATA_DIR . '/attached/integrate_' . $code . '_log.php' ))
     {
         sys_msg($_LANG['lost_intall_log'], 1);
     }
 
-    include(ROOT_PATH . DATA_DIR . '/integrate_' . $code . '_log.php');
+    include(ROOT_PATH . DATA_DIR . '/attached/integrate_' . $code . '_log.php');
     if (isset($del_list) || isset($rename_list) || isset($ignore_list))
     {
         if (isset($del_list))
@@ -414,15 +414,15 @@ if ($_REQUEST['act'] == 'save_uc_config_first')
 if ($_REQUEST['act'] == 'check_user')
 {
     $code = $_SESSION['code'];
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
-    include_once(ROOT_PATH . "include/modules/integrates/".$code.".php");
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
+    include_once(BASE_PATH."modules/integrates/".$code.".php");
     $cls_user = new $code ($_SESSION['cfg']);
     $json = new JSON();
 
     $start = empty($_GET['start']) ? 0 : intval($_GET['start']);
     $size = empty($_GET['size']) ? 100 : intval($_GET['size']);
     $method = empty($_GET['method']) ? 1 : intval($_GET['method']);
-    $domain = empty($_GET['domain']) ? '@ecmoban' : trim($_GET['domain']);
+    $domain = empty($_GET['domain']) ? '@ectouch' : trim($_GET['domain']);
     if ($size <2)
     {
         $size = 2;
@@ -523,8 +523,8 @@ if ($_REQUEST['act'] == 'check_user')
 if ($_REQUEST['act'] == 'import_user')
 {
     $cfg = $_SESSION['cfg'];
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
-    $ucdb = new cls_mysql($cfg['db_host'], $cfg['db_user'], $cfg['db_pass'], $cfg['db_name'], $cfg['db_charset']);
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
+    $ucdb = new mysql($cfg['db_host'], $cfg['db_user'], $cfg['db_pass'], $cfg['db_name'], $cfg['db_charset']);
     $json = new JSON();
     $result = array('error' => 0, 'message' => '');
     $query = $db->query("SHOW TABLE STATUS LIKE '" . $GLOBALS['prefix'] . 'users' . "'");
@@ -781,7 +781,7 @@ if ($_REQUEST['act'] == 'sync')
     $tasks[] = array('task_name'=>$_LANG['task_save'],'task_status'=>'<span id="task_save">' . $_LANG['task_uncomplete'] . '</span>');
 
     /* 保存修改日志 */
-    $fp = @fopen(ROOT_PATH . DATA_DIR . '/integrate_' . $_SESSION['code'] . '_log.php', 'wb');
+    $fp = @fopen(ROOT_PATH . DATA_DIR . '/attached/integrate_' . $_SESSION['code'] . '_log.php', 'wb');
     $log = '';
     if (isset($del_list))
     {
@@ -818,7 +818,7 @@ if ($_REQUEST['act'] == 'task')
         $size = intval($_GET['size']);
     }
 
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON();
     $result = array('message'=>'', 'error'=>0, 'content'=>'', 'id'=>'', 'end'=>0, 'size'=>$size);
 
@@ -934,16 +934,16 @@ if ($_REQUEST['act'] == 'task')
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'setup_ucenter')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
-    include_once(ROOT_PATH . 'include/base/classes/cls_transport.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_transport.php');
     $json = new JSON();
     $result = array('error' => 0, 'message' => '');
 
-    $app_type   = 'ECSHOP';
+    $app_type   = 'ECTouch';
     $app_name   = $db->getOne('SELECT value FROM ' . $ecs->table('shop_config') . " WHERE code = 'shop_name'");
     $app_url    = $GLOBALS['ecs']->url();
-    $app_charset = EC_CHARSET;
-    $app_dbcharset = strtolower((str_replace('-', '', EC_CHARSET)));
+    $app_charset = CHARSET;
+    $app_dbcharset = strtolower((str_replace('-', '', CHARSET)));
     $ucapi = !empty($_POST['ucapi']) ? trim($_POST['ucapi']) : '';
     $ucip = !empty($_POST['ucip']) ? trim($_POST['ucip']) : '';
     $dns_error = false;

@@ -26,11 +26,11 @@ if ($_REQUEST['act'] == 'main')
     admin_priv('convert');
 
     /* 取得插件文件中的转换程序 */
-    $modules = read_modules('../include/modules/convert');
+    $modules = read_modules('../includes/modules/convert');
     for ($i = 0; $i < count($modules); $i++)
     {
         $code = $modules[$i]['code'];
-        $lang_file = ROOT_PATH.'include/languages/' . $_CFG['lang'] . '/convert/' . $code . '.php';
+        $lang_file = BASE_PATH.'languages/' . $_CFG['lang'] . '/convert/' . $code . '.php';
         if (file_exists($lang_file))
         {
             include_once($lang_file);
@@ -69,18 +69,18 @@ elseif ($_REQUEST['act'] == 'check')
     check_authz_json('convert');
 
     /* 取得参数 */
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 //    $_POST['JSON'] = '{"host":"localhost","db":"shopex","user":"root","pass":"123456","prefix":"sdb_","code":"shopex48","path":"../shopex","charset":"UTF8"}';
     $config = $json->decode($_POST['JSON']);
 
     /* 测试连接数据库 */
-    $sdb = new cls_mysql($config->host, $config->user, $config->pass, $config->db);
+    $sdb = new mysql($config->host, $config->user, $config->pass, $config->db);
 
     /* 检查必需的表是否存在 */
     $sprefix = $config->prefix;
     $config->path = rtrim(str_replace('\\', '/', $config->path), '/');  // 把斜线替换为反斜线，去掉结尾的反斜线
-    include_once(ROOT_PATH . 'include/modules/convert/' . $config->code . '.php');
+    include_once(ROOT_PATH . 'includes/modules/convert/' . $config->code . '.php');
     $convert = new $config->code($sdb, $sprefix, $config->path);
     $required_table_list = $convert->required_tables();
 
@@ -126,7 +126,7 @@ elseif ($_REQUEST['act'] == 'check')
     $to_dir_list = array(
         ROOT_PATH . IMAGE_DIR . '/upload/',
         $img_dir,
-        ROOT_PATH . DATA_DIR . '/afficheimg/',
+        ROOT_PATH . DATA_DIR . '/attached/afficheimg/',
         ROOT_PATH . 'cert/'
     );
 
@@ -148,7 +148,7 @@ elseif ($_REQUEST['act'] == 'check')
     $_SESSION['convert_config'] = $config;
 
     /* 包含插件语言文件 */
-    include_once(ROOT_PATH . 'languages/' . $_CFG['lang'] . '/convert/' . $config->code . '.php');
+    include_once(BASE_PATH . 'languages/' . $_CFG['lang'] . '/convert/' . $config->code . '.php');
 
     /* 取得第一步操作 */
     $step = $convert->next_step('');
@@ -175,15 +175,15 @@ elseif ($_REQUEST['act'] == 'process')
     /* 连接原数据库 */
     $config = $_SESSION['convert_config'];
 
-    $sdb = new cls_mysql($config->host, $config->user, $config->pass, $config->db);
+    $sdb = new mysql($config->host, $config->user, $config->pass, $config->db);
     $sdb->set_mysql_charset($config->charset);
 
     /* 创建插件对象 */
-    include_once(ROOT_PATH . 'include/modules/convert/' . $config->code . '.php');
+    include_once(BASE_PATH . 'include/modules/convert/' . $config->code . '.php');
     $convert = new $config->code($sdb, $config->prefix, $config->path, $config->charset);
 
     /* 包含插件语言文件 */
-    include_once(ROOT_PATH . 'include/languages/' . $_CFG['lang'] . '/convert/' . $config->code . '.php');
+    include_once(BASE_PATH . 'languages/' . $_CFG['lang'] . '/convert/' . $config->code . '.php');
 
     /* 执行步骤 */
     $result = $convert->process($step);

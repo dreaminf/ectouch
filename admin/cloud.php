@@ -16,8 +16,8 @@
 define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-require(ROOT_PATH . 'include/base/classes/cls_transport.php');
-require(ROOT_PATH . 'include/base/classes/cls_json.php');
+// require(ROOT_PATH . 'includes/cls_transport.php');
+// require(ROOT_PATH . 'includes/cls_json.php');
 
 // require(ROOT_PATH . 'includes/shopex_json.php');
 
@@ -26,7 +26,7 @@ $data['version'] = VERSION;
 $data['patch'] = file_get_contents(ROOT_PATH.ADMIN_PATH."/patch_num");
 $data['ecs_lang'] = $_CFG['lang'];
 $data['release'] = RELEASE;
-$data['charset'] = strtoupper(EC_CHARSET);
+$data['charset'] = strtoupper(CHARSET);
 $data['certificate_id'] = $_CFG['certificate_id'];
 $data['token'] = md5($_CFG['token']);
 $data['certi'] = $_CFG['certi'];
@@ -35,7 +35,7 @@ $data['mysql_ver'] = $db->version();
 $data['shop_url'] = urlencode($ecs->url());
 $data['admin_url'] = urlencode($ecs->url().ADMIN_PATH);
 $data['sess_id'] = $GLOBALS['sess']->get_session_id();
-$data['stamp'] = mktime();
+$data['stamp'] = time();
 $data['ent_id'] = $_CFG['ent_id'];
 $data['ent_ac'] = $_CFG['ent_ac'];
 $data['ent_sign'] = $_CFG['ent_sign'];
@@ -61,7 +61,7 @@ if($act =='menu_api')
         $api_str = $api_comment["body"];
         if (!empty($api_str))
         {
-            $json = new JSON;
+            $json = new Services_JSON;
             $api_arr = @$json->decode($api_str,1);
             if (!empty($api_arr) && $api_arr['error'] == 0 && md5($api_arr['content']) == $api_arr['hash'])
             {
@@ -140,7 +140,7 @@ elseif($act == 'close_remind')
     $api_comment = $t->request('http://cloud.ecshop.com/cloud_remind.php', $apiget);
 
     $api_str = $api_comment["body"];
-    $json = new JSON;
+    $json = new Services_JSON;
     $api_arr = array();
     $api_arr = @$json->decode($api_str,1);
     if(!empty($api_str))

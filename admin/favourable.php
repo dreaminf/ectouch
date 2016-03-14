@@ -15,8 +15,8 @@
 
 define('IN_ECTOUCH', true);
 require(dirname(__FILE__) . '/includes/init.php');
-require(ROOT_PATH . 'include/base/helpers/lib_goods.php');
-
+require(BASE_PATH . 'helpers/goods_helper.php');
+$image = new image($_CFG['bgcolor']);
 $exc = new exchange($ecs->table('favourable_activity'), $db, 'act_id', 'act_name');
 
 /*------------------------------------------------------ */
@@ -177,7 +177,8 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit')
             'max_amount'    => 0,
             'act_type'      => FAT_GOODS,
             'act_type_ext'  => 0,
-            'gift'          => array()
+            'gift'          => array(),
+            'touch_img'     => '',
         );
     }
     else
@@ -305,6 +306,9 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         }
     }
 
+    /*处理图片*/
+    $img_name = basename($image->upload_image($_FILES['touch_img'],'favourable'));
+
     /* 提交值 */
     $favourable = array(
         'act_id'        => intval($_POST['id']),
@@ -318,7 +322,8 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         'max_amount'    => floatval($_POST['max_amount']),
         'act_type'      => intval($_POST['act_type']),
         'act_type_ext'  => floatval($_POST['act_type_ext']),
-        'gift'          => serialize($gift)
+        'gift'          => serialize($gift),
+        'touch_img'     => $img_name,
     );
     if ($favourable['act_type'] == FAT_GOODS)
     {
@@ -368,6 +373,31 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
 }
 
 /*------------------------------------------------------ */
+//-- 删除品牌图片
+/*------------------------------------------------------ */
+elseif ($_REQUEST['act'] == 'drop_img')
+{
+    /* 权限判断 */
+    admin_priv('favourable');
+    $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+    /* 取得logo名称 */
+    $sql = "SELECT touch_img FROM " .$ecs->table('favourable_activity'). " WHERE act_id = '$id'";
+    $img_name = $db->getOne($sql);
+
+    if (!empty($img_name))
+    {
+        @unlink(ROOT_PATH . DATA_DIR . '/attached/favourable/' .$img_name);
+        $sql = "UPDATE " .$ecs->table('favourable_activity'). " SET touch_img = '' WHERE act_id = '$id'";
+        $db->query($sql);
+    }
+    $links = array(
+        array('href' => 'favourable.php?act=list&' . list_link_postfix(), 'text' => $_LANG['back_favourable_list'])
+    );
+    sys_msg($_LANG['edit_favourable_ok'], 0, $links);
+}
+
+/*------------------------------------------------------ */
 //-- 搜索商品
 /*------------------------------------------------------ */
 
@@ -376,7 +406,7 @@ elseif ($_REQUEST['act'] == 'search')
     /* 检查权限 */
     check_authz_json('favourable');
 
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
 
     $json   = new JSON;
     $filter = $json->decode($_GET['JSON']);

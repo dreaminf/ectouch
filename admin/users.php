@@ -662,6 +662,71 @@ elseif ($_REQUEST['act'] == 'aff_list')
     $smarty->display('affiliate_list.htm');
 }
 
+//会员导出
+elseif ($_REQUEST['act'] == 'userexport'){
+	$list=($_SESSION['user_list']);
+        include_once (ROOT_PATH . 'include/vendor/PHPExcel.php');
+         //创建处理对象实例
+        $objPhpExcel = new PHPExcel();
+        $objPhpExcel->getActiveSheet()->getDefaultColumnDimension()->setAutoSize(true);//设置单元格宽度
+        //设置表格的宽度  手动
+        $objPhpExcel->getActiveSheet()->getColumnDimension('G')->setWidth(20);
+        $objPhpExcel->getActiveSheet()->getColumnDimension('H')->setWidth(15);
+        $objPhpExcel->getActiveSheet()->getColumnDimension('I')->setWidth(15);
+        $objPhpExcel->getActiveSheet()->getColumnDimension('J')->setWidth(20);
+        //设置标题
+        $rowVal = array(0=>'编号',1=>'会员名', 2=>'性别', 3=>'生日', 4=>'手机号码', 5=>'邮箱', 6=>'状态',7=>'可用资金',8=>'冻结资金',9=>'等级积分',10=>'消费积分',11=>'注册时间',);
+        foreach ($rowVal as $k=>$r){
+            $objPhpExcel->getActiveSheet()->getStyleByColumnAndRow($k,1)->getFont()->setBold(true);//字体加粗
+            $objPhpExcel->getActiveSheet()->getStyleByColumnAndRow($k,1)->getAlignment(); //->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//文字居中
+            $objPhpExcel->getActiveSheet()->setCellValueByColumnAndRow($k,1,$r);
+        }
+        //设置当前的sheet索引 用于后续内容操作
+        $objPhpExcel->setActiveSheetIndex(0);
+        $objActSheet=$objPhpExcel->getActiveSheet();
+        //设置当前活动的sheet的名称
+        $title="会员管理";
+        $objActSheet->setTitle($title);
+        //设置单元格内容
+        foreach($list as $k => $v)
+        {
+            $num = $k+2;
+            $objPhpExcel->setActiveSheetIndex(0)
+            //Excel的第A列，uid是你查出数组的键值，下面以此类推
+            ->setCellValue('A'.$num, $v['user_id'])
+            ->setCellValue('B'.$num, $v['user_name'])
+            ->setCellValue('C'.$num, $v['sex'])
+            ->setCellValue('D'.$num, $v['birthday'])
+            ->setCellValue('E'.$num, $v['mobile_phone'])
+            ->setCellValue('F'.$num, $v['email'])
+            ->setCellValue('G'.$num, $v['is_validated'])
+            ->setCellValue('H'.$num, $v['user_money'])
+            ->setCellValue('I'.$num, $v['frozen_money'])
+            ->setCellValue('J'.$num, $v['rank_points'])
+            ->setCellValue('K'.$num, $v['pay_points'])
+            ->setCellValue('L'.$num, $v['reg_time'])
+             ;
+        }
+       
+        ob_end_clean();//清除缓冲区,避免乱码
+        $name = date('Y-m-d'); //设置文件名
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header("Content-Transfer-Encoding:utf-8");
+        header("Pragma: no-cache");
+        header('Content-Type: application/vnd.ms-e xcel');
+        header('Content-Disposition: attachment;filename="'.$title.'_'.urlencode($name).'.xls"');
+        header('Cache-Control: max-age=0');
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPhpExcel, 'Excel5');
+        $objWriter->save('php://output');
+   }
+
+
+
+
+
+
 /**
  *  返回用户列表数据
  *
@@ -687,7 +752,7 @@ function user_list()
 
         $filter['sort_by']    = empty($_REQUEST['sort_by'])    ? 'user_id' : trim($_REQUEST['sort_by']);
         $filter['sort_order'] = empty($_REQUEST['sort_order']) ? 'DESC'     : trim($_REQUEST['sort_order']);
-
+        
         $ex_where = ' WHERE 1 ';
         if ($filter['keywords'])
         {
@@ -720,11 +785,10 @@ function user_list()
 
         /* 分页大小 */
         $filter = page_and_size($filter);
-        $sql = "SELECT user_id, user_name, email, is_validated, user_money, frozen_money, rank_points, pay_points, reg_time ".
+        $sql = "SELECT user_id, user_name,sex,birthday,mobile_phone,email, is_validated, user_money, frozen_money, rank_points, pay_points, reg_time ".
                 " FROM " . $GLOBALS['ecs']->table('users') . $ex_where .
                 " ORDER by " . $filter['sort_by'] . ' ' . $filter['sort_order'] .
                 " LIMIT " . $filter['start'] . ',' . $filter['page_size'];
-
         $filter['keywords'] = stripslashes($filter['keywords']);
         set_filter($filter, $sql);
     }
@@ -741,11 +805,11 @@ function user_list()
     {
         $user_list[$i]['reg_time'] = local_date($GLOBALS['_CFG']['date_format'], $user_list[$i]['reg_time']);
     }
-
     $arr = array('user_list' => $user_list, 'filter' => $filter,
-        'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
-
+    'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
+    $_SESSION['user_list'] = $user_list;  
     return $arr;
+   
 }
 
 ?>

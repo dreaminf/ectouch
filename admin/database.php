@@ -475,7 +475,7 @@ if ($_REQUEST['act'] == 'upload_sql')
     /* 权限判断 */
     admin_priv('db_renew');
 
-    $sql_file = ROOT_PATH . DATA_DIR . '/upload_database_bak.sql';
+    $sql_file = ROOT_PATH . DATA_DIR . '/attached/upload_database_bak.sql';
 
     if (empty($_GET['mysql_ver_confirm']))
     {
@@ -646,10 +646,10 @@ function sql_import($sql_file)
             $ret[$i] = trim($ret[$i], " \r\n;"); //剔除多余信息
             if (!empty($ret[$i]))
             {
-                if ((strpos($ret[$i], 'CREATE TABLE') !== false) && (strpos($ret[$i], 'DEFAULT CHARSET='. str_replace('-', '', EC_CHARSET) )=== false))
+                if ((strpos($ret[$i], 'CREATE TABLE') !== false) && (strpos($ret[$i], 'DEFAULT CHARSET='. str_replace('-', '', CHARSET) )=== false))
                 {
                     /* 建表时缺 DEFAULT CHARSET=utf8 */
-                    $ret[$i] = $ret[$i] . 'DEFAULT CHARSET='. str_replace('-', '', EC_CHARSET);
+                    $ret[$i] = $ret[$i] . 'DEFAULT CHARSET='. str_replace('-', '', CHARSET);
                 }
                 $GLOBALS['db']->query($ret[$i]);
             }
@@ -660,9 +660,9 @@ function sql_import($sql_file)
         for($i = 0; $i < $ret_count; $i++)
         {
             $ret[$i] = trim($ret[$i], " \r\n;"); //剔除多余信息
-            if ((strpos($ret[$i], 'CREATE TABLE') !== false) && (strpos($ret[$i], 'DEFAULT CHARSET='. str_replace('-', '', EC_CHARSET) )!== false))
+            if ((strpos($ret[$i], 'CREATE TABLE') !== false) && (strpos($ret[$i], 'DEFAULT CHARSET='. str_replace('-', '', CHARSET) )!== false))
             {
-                $ret[$i] = str_replace('DEFAULT CHARSET='. str_replace('-', '', EC_CHARSET), '', $ret[$i]);
+                $ret[$i] = str_replace('DEFAULT CHARSET='. str_replace('-', '', CHARSET), '', $ret[$i]);
             }
             if (!empty($ret[$i]))
             {

@@ -16,9 +16,9 @@
 define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-include_once(ROOT_PATH . 'include/base/classes/cls_image.php');
+// include_once(ROOT_PATH . 'includes/cls_image.php');
 include_once(ROOT_PATH . '/' . ADMIN_PATH . '/includes/lib_goods.php');
-$image = new cls_image($_CFG['bgcolor']);
+$image = new image($_CFG['bgcolor']);
 
 /* 权限检查 */
 admin_priv('picture_batch');
@@ -33,7 +33,7 @@ if (empty($_GET['is_ajax']))
 }
 elseif (!empty($_GET['get_goods']))
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON();
     $brand_id = intval($_GET['brand_id']);
     $cat_id = intval($_GET['cat_id']);
@@ -54,7 +54,7 @@ elseif (!empty($_GET['get_goods']))
 }
 else
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON();
     $proc_thumb = (isset($GLOBALS['shop_id']) && $GLOBALS['shop_id'] > 0);
     $do_album = empty($_GET['do_album']) ? 0 : 1;
@@ -283,6 +283,16 @@ function process_image($page = 1, $page_size = 100, $type = 0, $thumb= true, $wa
             $goods_thumb = '';
             $image = '';
 
+            // 处理远程图片
+            $is_remote_img = false;
+            if(preg_match("/^http/", $row['original_img']) && @fopen($row['original_img'], 'r')){
+                if(preg_match('/(.jpg|.png|.gif|.jpeg)$/',$row['original_img']) && @copy(trim($row['original_img']), ROOT_PATH . 'data/attached/' . basename($row['original_img'])))
+                {
+                    $is_remote_img = true;
+                    $row['original_img'] = $row['goods_img'] = 'data/attached/' . basename($row['original_img']);
+                }
+            }
+
             /* 水印 */
             if ($watermark)
             {
@@ -402,6 +412,10 @@ function process_image($page = 1, $page_size = 100, $type = 0, $thumb= true, $wa
                     replace_image($goods_thumb, $row['goods_thumb'], $row['goods_id'], $silent);
                 }
             }
+            //删除远程临时文件
+            if($is_remote_img){
+                unlink(ROOT_PATH . $row['original_img']);
+            }
         }
     }
     else
@@ -427,8 +441,8 @@ function process_image($page = 1, $page_size = 100, $type = 0, $thumb= true, $wa
                     $dir = dirname(ROOT_PATH . $row['img_url']) . '/';
                 }
 
-                $file_name  = cls_image::unique_name($dir);
-                $file_name .= cls_image::get_filetype(empty($row['img_url']) ? $row['img_original']: $row['img_url']);
+                $file_name  = image::unique_name($dir);
+                $file_name .= image::get_filetype(empty($row['img_url']) ? $row['img_original']: $row['img_url']);
 
                 copy(ROOT_PATH . $row['img_original'], $dir . $file_name);
                 $image = $GLOBALS['image']->add_watermark($dir . $file_name ,'',$GLOBALS['_CFG']['watermark'], $GLOBALS['_CFG']['watermark_place'], $GLOBALS['_CFG']['watermark_alpha']);

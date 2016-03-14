@@ -16,9 +16,9 @@
 define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-require_once('includes/lib_goods.php');
-include_once(ROOT_PATH . 'include/base/classes/cls_image.php');
-$image = new cls_image($_CFG['bgcolor']);
+require_once(ROOT_PATH . '/admin/includes/lib_goods.php');
+// include_once(ROOT_PATH . '/includes/cls_image.php');
+$image = new image($_CFG['bgcolor']);
 $exc = new exchange($ecs->table('goods'), $db, 'goods_id', 'goods_name');
 
 /*------------------------------------------------------ */
@@ -1676,7 +1676,7 @@ elseif ($_REQUEST['act'] == 'drop_image')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'get_goods_list')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     $filters = $json->decode($_GET['JSON']);
@@ -1699,7 +1699,7 @@ elseif ($_REQUEST['act'] == 'get_goods_list')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'add_link_goods')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('goods_manage');
@@ -1743,7 +1743,7 @@ elseif ($_REQUEST['act'] == 'add_link_goods')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'drop_link_goods')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('goods_manage');
@@ -1799,7 +1799,7 @@ elseif ($_REQUEST['act'] == 'drop_link_goods')
 
 elseif ($_REQUEST['act'] == 'add_group_goods')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('goods_manage');
@@ -1836,7 +1836,7 @@ elseif ($_REQUEST['act'] == 'add_group_goods')
 
 elseif ($_REQUEST['act'] == 'drop_group_goods')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('goods_manage');
@@ -1874,7 +1874,7 @@ elseif ($_REQUEST['act'] == 'drop_group_goods')
 
 elseif ($_REQUEST['act'] == 'get_article_list')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     $filters =(array) $json->decode(json_str_iconv($_GET['JSON']));
@@ -1905,7 +1905,7 @@ elseif ($_REQUEST['act'] == 'get_article_list')
 
 elseif ($_REQUEST['act'] == 'add_goods_article')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('goods_manage');
@@ -1940,7 +1940,7 @@ elseif ($_REQUEST['act'] == 'add_goods_article')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'drop_goods_article')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('goods_manage');

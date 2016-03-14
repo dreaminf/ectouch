@@ -16,7 +16,7 @@
 define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-require_once(ROOT_PATH . 'include/languages/' .$_CFG['lang']. '/admin/statistic.php');
+require_once(BASE_PATH . 'languages/' .$_CFG['lang']. '/admin/statistic.php');
 
 /* act操作项的初始化 */
 if (empty($_REQUEST['act']))
@@ -172,7 +172,7 @@ elseif ($_REQUEST['act'] == 'download')
             }
         }
     }
-    echo ecs_iconv(EC_CHARSET, 'GB2312', $data) . "\t";
+    echo ecs_iconv(CHARSET, 'GB2312', $data) . "\t";
 }
 
 ?>

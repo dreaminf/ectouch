@@ -538,7 +538,7 @@ if ($_REQUEST['act'] == 'send_mail')
     }
 
     /* 取得红包信息 */
-    include_once(ROOT_PATH . 'include/base/helpers/lib_order.php');
+    include_once(BASE_PATH . 'helpers/order_helper.php');
     $bonus = bonus_info($bonus_id);
     if (empty($bonus))
     {
@@ -604,7 +604,7 @@ if ($_REQUEST['act'] == 'gen_excel')
 
     /* 文件名称 */
     $bonus_filename = $type_name .'_bonus_list';
-    if (EC_CHARSET != 'gbk')
+    if (CHARSET != 'gbk')
     {
         $bonus_filename = ecs_iconv('UTF8', 'GB2312',$bonus_filename);
     }
@@ -613,7 +613,7 @@ if ($_REQUEST['act'] == 'gen_excel')
     header("Content-Disposition: attachment; filename=$bonus_filename.xls");
 
     /* 文件标题 */
-    if (EC_CHARSET != 'gbk')
+    if (CHARSET != 'gbk')
     {
         echo ecs_iconv('UTF8', 'GB2312', $_LANG['bonus_excel_file']) . "\t\n";
         /* 红包序列号, 红包金额, 类型名称(红包名称), 使用结束日期 */
@@ -645,7 +645,7 @@ if ($_REQUEST['act'] == 'gen_excel')
         echo $val['type_money'] . "\t";
         if (!isset($code_table[$val['type_name']]))
         {
-            if (EC_CHARSET != 'gbk')
+            if (CHARSET != 'gbk')
             {
                 $code_table[$val['type_name']] = ecs_iconv('UTF8', 'GB2312', $val['type_name']);
             }
@@ -665,7 +665,7 @@ if ($_REQUEST['act'] == 'gen_excel')
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'get_goods_list')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     $filters = $json->decode($_GET['JSON']);
@@ -688,7 +688,7 @@ if ($_REQUEST['act'] == 'get_goods_list')
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'add_bonus_goods')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('bonus_manage');
@@ -722,7 +722,7 @@ if ($_REQUEST['act'] == 'add_bonus_goods')
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'drop_bonus_goods')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('bonus_manage');

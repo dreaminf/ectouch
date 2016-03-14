@@ -17,8 +17,8 @@ define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 require_once(ROOT_PATH . '/' . ADMIN_PATH . '/includes/lib_goods.php');
-include_once(ROOT_PATH . 'include/base/classes/cls_image.php');
-$image = new cls_image($_CFG['bgcolor']);
+// include_once(ROOT_PATH . '/includes/cls_image.php');
+$image = new image($_CFG['bgcolor']);
 $exc = new exchange($ecs->table('goods'), $db, 'goods_id', 'goods_name');
 
 /*------------------------------------------------------ */
@@ -167,6 +167,10 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
             'other_cat'     => array(), // 扩展分类
             'goods_type'    => 0,       // 商品类型
             'shop_price'    => 0,
+            /*DRP_START*/
+            'touch_sale'    => 0,
+            'touch_fencheng'    => 0,
+            /*DRP_END*/
             'promote_price' => 0,
             'market_price'  => 0,
             'integral'      => 0,
@@ -235,6 +239,10 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
                 'other_cat'     => array(), // 扩展分类
                 'goods_type'    => 0,       // 商品类型
                 'shop_price'    => 0,
+                /*DRP_START*/
+                'touch_sale'    => 0,
+                'touch_fencheng'    => 0,
+                /*DRP_END*/
                 'promote_price' => 0,
                 'market_price'  => 0,
                 'integral'      => 0,
@@ -412,7 +420,14 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
 
     /* 创建 html editor */
     create_html_editor('goods_desc', $goods['goods_desc']);
-
+    
+    /*DRP_START*/
+    $sql = "SELECT touch_sale,touch_fencheng FROM " . $ecs->table('drp_goods') . " WHERE goods_id = '$_REQUEST[goods_id]'";
+    $goods_sale = $db->getRow($sql);
+    $goods['touch_sale'] = $goods_sale['touch_sale'];
+    $goods['touch_fencheng'] = $goods_sale['touch_fencheng'];
+    /*DRP_END*/
+    
     /* 模板赋值 */
     $smarty->assign('code',    $code);
     $smarty->assign('ur_here', $is_add ? (empty($code) ? $_LANG['02_goods_add'] : $_LANG['51_virtual_card_add']) : ($_REQUEST['act'] == 'edit' ? $_LANG['edit_goods'] : $_LANG['copy_goods']));
@@ -925,6 +940,23 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
 
     /* 商品编号 */
     $goods_id = $is_insert ? $db->insert_id() : $_REQUEST['goods_id'];
+
+    /*DRP_START*/
+    // 分销
+    $touch_sale = !empty($_POST['touch_sale']) ? $_POST['touch_sale'] : 0;
+    $touch_fencheng = !empty($_POST['touch_fencheng']) ? $_POST['touch_fencheng'] : 0;
+    $sql="SELECT count(*) FROM ". $ecs->table('drp_goods')."WHERE goods_id='$goods_id'";
+    if($db->getOne($sql) > 0){
+        $sql = "UPDATE " . $ecs->table('drp_goods') . " SET " .
+            "touch_sale = '$touch_sale', " .
+            "touch_fencheng = '$touch_fencheng' " .
+            "WHERE goods_id = '$goods_id' LIMIT 1";
+    }else{
+        $sql = "INSERT INTO " . $ecs->table('drp_goods') . " (goods_id, touch_sale, touch_fencheng)" .
+            "VALUES ('$_REQUEST[goods_id]', '$touch_sale', '$touch_fencheng')";
+    }
+    $db->query($sql);
+    /*DRP_END*/
 
     /* 记录日志 */
     if ($is_insert)
@@ -1852,7 +1884,7 @@ elseif ($_REQUEST['act'] == 'drop_image')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'get_goods_list')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     $filters = $json->decode($_GET['JSON']);
@@ -1875,7 +1907,7 @@ elseif ($_REQUEST['act'] == 'get_goods_list')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'add_link_goods')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('goods_manage');
@@ -1919,7 +1951,7 @@ elseif ($_REQUEST['act'] == 'add_link_goods')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'drop_link_goods')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('goods_manage');
@@ -1975,7 +2007,7 @@ elseif ($_REQUEST['act'] == 'drop_link_goods')
 
 elseif ($_REQUEST['act'] == 'add_group_goods')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('goods_manage');
@@ -2012,7 +2044,7 @@ elseif ($_REQUEST['act'] == 'add_group_goods')
 
 elseif ($_REQUEST['act'] == 'drop_group_goods')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('goods_manage');
@@ -2050,7 +2082,7 @@ elseif ($_REQUEST['act'] == 'drop_group_goods')
 
 elseif ($_REQUEST['act'] == 'get_article_list')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     $filters =(array) $json->decode(json_str_iconv($_GET['JSON']));
@@ -2081,7 +2113,7 @@ elseif ($_REQUEST['act'] == 'get_article_list')
 
 elseif ($_REQUEST['act'] == 'add_goods_article')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('goods_manage');
@@ -2116,7 +2148,7 @@ elseif ($_REQUEST['act'] == 'add_goods_article')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'drop_goods_article')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON;
 
     check_authz_json('goods_manage');

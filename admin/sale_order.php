@@ -16,8 +16,8 @@
 define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-require_once(ROOT_PATH . 'include/base/helpers/lib_order.php');
-require_once(ROOT_PATH . 'include/languages/' .$_CFG['lang']. '/admin/statistic.php');
+require_once(BASE_PATH . 'helpers/order_helper.php');
+require_once(BASE_PATH . 'languages/' .$_CFG['lang']. '/admin/statistic.php');
 $smarty->assign('lang', $_LANG);
 
 if (isset($_REQUEST['act']) && ($_REQUEST['act'] == 'query' ||  $_REQUEST['act'] == 'download'))
@@ -50,9 +50,9 @@ if (isset($_REQUEST['act']) && ($_REQUEST['act'] == 'query' ||  $_REQUEST['act']
             $data .= "$order_by\t$row[goods_name]\t$row[goods_sn]\t$row[goods_num]\t$row[turnover]\t$row[wvera_price]\n";
         }
 
-        if (EC_CHARSET == 'utf-8')
+        if (CHARSET == 'utf-8')
         {
-            echo ecs_iconv(EC_CHARSET, 'GB2312', $data);
+            echo ecs_iconv(CHARSET, 'GB2312', $data);
         }
         else
         {

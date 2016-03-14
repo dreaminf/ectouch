@@ -15,7 +15,7 @@
 
 define('IN_ECTOUCH', true);
 require(dirname(__FILE__) . '/includes/init.php');
-include_once(ROOT_PATH . 'include/base/helpers/lib_goods.php');
+include_once(BASE_PATH . 'helpers/goods_helper.php');
 
 /*------------------------------------------------------ */
 //-- 活动列表页
@@ -605,7 +605,7 @@ elseif ($_REQUEST['act'] == 'search_goods')
 {
     check_authz_json('whole_sale');
 
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
 
     $json   = new JSON;
     $filter = $json->decode($_GET['JSON']);
@@ -627,7 +627,7 @@ elseif ($_REQUEST['act'] == 'search_goods')
 
 elseif ($_REQUEST['act'] == 'get_goods_info')
 {
-    include_once(ROOT_PATH . 'include/base/classes/cls_json.php');
+    // include_once(ROOT_PATH . 'includes/cls_json.php');
     $json = new JSON();
 
     $goods_id = intval($_REQUEST['goods_id']);

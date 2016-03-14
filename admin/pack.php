@@ -16,8 +16,8 @@
 define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-include_once(ROOT_PATH . 'include/base/classes/cls_image.php');
-$image = new cls_image($_CFG['bgcolor']);
+// include_once(ROOT_PATH . 'includes/cls_image.php');
+$image = new image($_CFG['bgcolor']);
 
 $exc = new exchange($ecs->table("pack"), $db, 'pack_id', 'pack_name');
 
@@ -198,7 +198,7 @@ if ($_REQUEST['act'] == 'drop_pack_img')
 
     if (!empty($img_name))
     {
-        @unlink(ROOT_PATH . DATA_DIR . '/packimg/' .$img_name);
+        @unlink(ROOT_PATH . DATA_DIR . '/attached/packimg/' .$img_name);
         $sql = "UPDATE " .$ecs->table('pack'). " SET pack_img = '' WHERE pack_id = '$pack_id'";
         $db->query($sql);
     }
@@ -288,7 +288,7 @@ if ($_REQUEST['act'] == 'remove')
         /* 删除图片 */
         if (!empty($img))
         {
-             @unlink('../' . DATA_DIR . '/packimg/'.$img);
+             @unlink('../' . DATA_DIR . '/attached/packimg/'.$img);
         }
         admin_log(addslashes($name),'remove','pack');
 

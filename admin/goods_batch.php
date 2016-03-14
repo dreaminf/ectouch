@@ -39,7 +39,7 @@ if ($_REQUEST['act'] == 'add')
     $download_list = array();
     while (@$file = readdir($dir))
     {
-        if ($file != '.' && $file != '..' && $file != ".svn" && $file != "_svn" && is_dir('../languages/' .$file) == true)
+        if ($file != '.' && $file != '..' && $file != ".svn" && $file != "_svn" && is_dir('../include/languages/' .$file) == true)
         {
             $download_list[$file] = sprintf($_LANG['download_file'], isset($_LANG['charset'][$file]) ? $_LANG['charset'][$file] : $file);
         }
@@ -92,7 +92,7 @@ elseif ($_REQUEST['act'] == 'upload')
             }
 
             // 转换编码
-            if (($_POST['charset'] != 'UTF8') && (strpos(strtolower(EC_CHARSET), 'utf') === 0))
+            if (($_POST['charset'] != 'UTF8') && (strpos(strtolower(CHARSET), 'utf') === 0))
             {
                 $line = ecs_iconv($_POST['charset'], 'UTF8', $line);
             }
@@ -309,7 +309,7 @@ elseif ($_REQUEST['act'] == 'upload')
                 $line_number++;
                 continue;
             }
-            if (($_POST['charset'] == 'UTF8') && (strpos(strtolower(EC_CHARSET), 'utf') == 0))
+            if (($_POST['charset'] == 'UTF8') && (strpos(strtolower(CHARSET), 'utf') == 0))
             {
                 $line = ecs_iconv($_POST['charset'], 'GBK', $line);
             }
@@ -372,8 +372,8 @@ elseif ($_REQUEST['act'] == 'insert')
 
     if (isset($_POST['checked']))
     {
-        include_once(ROOT_PATH . 'include/base/classes/cls_image.php');
-        $image = new cls_image($_CFG['bgcolor']);
+        // include_once(ROOT_PATH . 'includes/cls_image.php');
+        $image = new image($_CFG['bgcolor']);
 
         /* 字段默认值 */
         $default_value = array(
@@ -899,7 +899,7 @@ elseif ($_REQUEST['act'] == 'download')
         if ($_GET['charset'] == 'zh_cn' || $_GET['charset'] == 'zh_tw')
         {
             $to_charset = $_GET['charset'] == 'zh_cn' ? 'GB2312' : 'BIG5';
-            echo ecs_iconv(EC_CHARSET, $to_charset, join(',', $_LANG['upload_goods']));
+            echo ecs_iconv(CHARSET, $to_charset, join(',', $_LANG['upload_goods']));
         }
         else
         {
@@ -918,7 +918,7 @@ elseif ($_REQUEST['act'] == 'download')
 
 elseif ($_REQUEST['act'] == 'get_goods')
 {
-    $filter = &new stdclass;
+    $filter = new stdclass;
 
     $filter->cat_id = intval($_GET['cat_id']);
     $filter->brand_id = intval($_GET['brand_id']);

@@ -16,7 +16,7 @@
 define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-require_once(ROOT_PATH . 'include/base/classes/cls_sms.php');
+// require_once(ROOT_PATH . 'includes/cls_sms.php');
 // require_once(ROOT_PATH . 'includes/prism-php/lib/client.php');
 
 
@@ -198,7 +198,7 @@ switch ($action)
                 $data['passwd']=$_CFG['ent_ac'];
 
                 $content_t=$content_y=trim($_POST['sms_sign']);
-                if(EC_CHARSET != 'utf-8')
+                if(CHARSET != 'utf-8')
                 {
                     $content_t= iconv('gb2312','utf-8',$content_y);
                 }
@@ -232,7 +232,7 @@ switch ($action)
                 else
                 {
                     $error_smg=$result['data'];
-                    if(EC_CHARSET != 'utf-8')
+                    if(CHARSET != 'utf-8')
                     {
                         $error_smg= iconv('utf-8','gb2312',$error_smg);
                     }
@@ -282,7 +282,7 @@ switch ($action)
                 {
                       sys_msg($_LANG['error_smg'], 1, array(), false);
                 }
-                if(EC_CHARSET != 'utf-8')
+                if(CHARSET != 'utf-8')
                 {
                     $content_t= iconv('gb2312','utf-8',$content_y);
                     $new_content_t= iconv('gb2312','utf-8',$new_content_y);
@@ -321,7 +321,7 @@ switch ($action)
                 else
                 {
                     $error_smg=$result['data'];
-                    if(EC_CHARSET != 'utf-8')
+                    if(CHARSET != 'utf-8')
                     {
                         $error_smg= iconv('utf-8','gb2312',$error_smg);
                     }

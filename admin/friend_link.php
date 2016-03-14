@@ -16,8 +16,8 @@
 define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-include_once(ROOT_PATH . 'include/base/classes/cls_image.php');
-$image = new cls_image($_CFG['bgcolor']);
+// include_once(ROOT_PATH . 'includes/cls_image.php');
+$image = new image($_CFG['bgcolor']);
 
 $exc = new exchange($ecs->table('friend_link'), $db, 'link_id', 'link_name');
 
@@ -109,7 +109,7 @@ elseif ($_REQUEST['act'] == 'insert')
         if ((isset($_FILES['link_img']['error']) && $_FILES['link_img']['error'] == 0) || (!isset($_FILES['link_img']['error']) && isset($_FILES['link_img']['tmp_name']) && $_FILES['link_img']['tmp_name'] != 'none'))
         {
             $img_up_info = @basename($image->upload_image($_FILES['link_img'], 'afficheimg'));
-            $link_logo   = DATA_DIR . '/afficheimg/' .$img_up_info;
+            $link_logo   = DATA_DIR . '/attached/afficheimg/' .$img_up_info;
         }
 
         /* 使用远程的LOGO图片 */
@@ -223,7 +223,7 @@ elseif ($_REQUEST['act'] == 'update')
     if ((isset($_FILES['link_img']['error']) && $_FILES['link_img']['error'] == 0) || (!isset($_FILES['link_img']['error']) && isset($_FILES['link_img']['tmp_name']) && $_FILES['link_img']['tmp_name'] != 'none'))
     {
         $img_up_info = @basename($image->upload_image($_FILES['link_img'], 'afficheimg'));
-        $link_logo   = ", link_logo = ".'\''. DATA_DIR . '/afficheimg/'.$img_up_info.'\'';
+        $link_logo   = ", link_logo = ".'\''. DATA_DIR . '/attached/afficheimg/'.$img_up_info.'\'';
     }
     elseif (!empty($_POST['url_logo']))
     {
@@ -243,7 +243,7 @@ elseif ($_REQUEST['act'] == 'update')
         if ((strpos($old_logo, 'http://') === false) && (strpos($old_logo, 'https://') === false))
         {
             $img_name = basename($old_logo);
-            @unlink(ROOT_PATH . DATA_DIR . '/afficheimg/' . $img_name);
+            @unlink(ROOT_PATH . DATA_DIR . '/attached/afficheimg/' . $img_name);
         }
     }
 
@@ -324,7 +324,7 @@ elseif ($_REQUEST['act'] == 'remove')
     if ((strpos($link_logo, 'http://') === false) && (strpos($link_logo, 'https://') === false))
     {
         $img_name = basename($link_logo);
-        @unlink(ROOT_PATH. DATA_DIR . '/afficheimg/'.$img_name);
+        @unlink(ROOT_PATH. DATA_DIR . '/attached/afficheimg/'.$img_name);
     }
 
     $exc->drop($id);

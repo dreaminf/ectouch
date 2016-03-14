@@ -16,7 +16,7 @@
 define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-require_once(ROOT_PATH . 'include/languages/' . $_CFG['lang'] . '/admin/statistic.php');
+require_once(BASE_PATH . 'languages/' . $_CFG['lang'] . '/admin/statistic.php');
 $smarty->assign('lang', $_LANG);
 
 /* 权限判断 */
@@ -138,18 +138,18 @@ elseif ($_REQUEST['act'] == 'download')
     header("Content-Disposition: attachment; filename=$filename.xls");
 
     /* 文件标题 */
-    echo ecs_iconv(EC_CHARSET, 'GB2312', $filename . $_LANG['sales_statistics']) . "\t\n";
+    echo ecs_iconv(CHARSET, 'GB2312', $filename . $_LANG['sales_statistics']) . "\t\n";
 
     /* 订单数量, 销售出商品数量, 销售金额 */
-    echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['period']) ."\t";
-    echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['order_count_trend']) ."\t";
-    echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['order_amount_trend']) . "\t\n";
+    echo ecs_iconv(CHARSET, 'GB2312', $_LANG['period']) ."\t";
+    echo ecs_iconv(CHARSET, 'GB2312', $_LANG['order_count_trend']) ."\t";
+    echo ecs_iconv(CHARSET, 'GB2312', $_LANG['order_amount_trend']) . "\t\n";
 
     foreach ($data_list AS $data)
     {
-        echo ecs_iconv(EC_CHARSET, 'GB2312', $data['period']) . "\t";
-        echo ecs_iconv(EC_CHARSET, 'GB2312', $data['order_count']) . "\t";
-        echo ecs_iconv(EC_CHARSET, 'GB2312', $data['order_amount']) . "\t";
+        echo ecs_iconv(CHARSET, 'GB2312', $data['period']) . "\t";
+        echo ecs_iconv(CHARSET, 'GB2312', $data['order_count']) . "\t";
+        echo ecs_iconv(CHARSET, 'GB2312', $data['order_amount']) . "\t";
         echo "\n";
     }
 }
