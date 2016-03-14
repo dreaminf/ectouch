@@ -1,4 +1,4 @@
-<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
 <!-- {if $step eq "cart"} 购物车列表-->
 <!-- #BeginLibraryItem "/flow_cart.dwt" --><!-- #EndLibraryItem -->
 <!-- {/if} -->
