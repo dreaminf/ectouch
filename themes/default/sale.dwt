@@ -71,7 +71,7 @@
 			<ul class="int-nav-box-a my-new-m padding-all shop-b">
 				<li>
 					<label class="cate-shop-box"><i class="iconfont icon-fenxiao a_left"></i><span>我的分销</span></label>
-					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+					<span class="t-jiantou fr n-sect-i"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
 				</li>
 			</ul>
 			<a href="{:url('sale/order_list')}">
@@ -88,7 +88,7 @@
 			<ul class="int-nav-box-b my-new-m padding-all shop-b">
 				<li>
 					<label class="cate-shop-box"><i class="iconfont icon-gonggaofuzhi a_left"></i><span>我的会员</span></label>
-					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+					<span class="t-jiantou fr n-sect-i"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
 				</li>
 			</ul>
 			<a href="{:url('sale/user_list',array('key'=>'wfk'))}">
@@ -116,7 +116,7 @@
 			<ul class="int-nav-box-c my-new-m padding-all shop-b">
 				<li>
 					<label class="cate-shop-box"><i class="iconfont icon-jinbichongzhi a_left"></i><span>我的佣金</span></label>
-					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+					<span class="t-jiantou fr n-sect-i"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
 				</li>
 			</ul>
 			<a href="{:url('sale/my_commission')}">
@@ -140,7 +140,7 @@
 			<ul class="int-nav-box-d my-new-m padding-all shop-b">
 				<li>
 					<label class="cate-shop-box"><i class="iconfont icon-mingpian a_left"></i><span>我的名片</span></label>
-					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+					<span class="t-jiantou fr n-sect-i"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
 				</li>
 			</ul>
 			<a href="{:url('sale/spread')}">
