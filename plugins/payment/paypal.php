@@ -85,7 +85,7 @@ class paypal {
             $token = urldecode($resArray["TOKEN"]);
         }
         $payPalURL = $this->PAYPAL_URL.$token;
-        $button = '<div style="text-align:center"><input type="submit" onclick="window.open(\''.$payPalURL. '\')" value="跳转到PAYPAL支付" class="btn btn-info ect-btn-info ect-colorf ect-bg" /></div>';
+        $button = '<div style="text-align:center"><input type="submit" onclick="window.open(\''.$payPalURL. '\')" value="PAYPAL支付" class="btn btn-info ect-btn-info ect-colorf ect-bg" /></div>';
         return $button;
     }
 
