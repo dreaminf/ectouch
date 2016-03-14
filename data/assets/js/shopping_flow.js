@@ -5,17 +5,10 @@ function isinv()
 				var isinv = $("input[name=invinput]").val();
 				if(isinv == '0'){
 				$("input[name=invinput]").val('1');	
-				  $('#inv_show1').css('display','none');
-				  $('#inv_show2').css('display','none');
-				  $('#inv_none1').css('display','block');
-				  $('#inv_none2').css('display','block');
 				  
 				}else{
 				$("input[name=invinput]").val('0');
-				  $('#inv_show1').css('display','block');
-				  $('#inv_show2').css('display','block');
-				  $('#inv_none1').css('display','none');
-				  $('#inv_none2').css('display','none');
+				
 				}
 				  var obj        = document.getElementById('ECS_NEEDINV');
 				  var objType    = document.getElementById('ECS_INVTYPE');
