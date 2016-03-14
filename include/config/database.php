@@ -22,7 +22,7 @@ if (file_exists($global_config)) {
 }
 
 return array(
-    'DB_TYPE' => 'mysqli',
+    'DB_TYPE' => 'mysql',
     'DB_HOST' => $db_host,
     'DB_USER' => $db_user,
     'DB_PWD' => $db_pass,
