@@ -1139,6 +1139,7 @@ input[type=submit]{
 .n-bs-f{background:#fff;}
 .hs-bg{background:#999;}
 .huang-bg{background:#fcf8e3;}
+.col-lv{color:#1CBB7F}
 .col-3{color:#333;}
 .col-4{color:#444;}
 .col-7{color:#777;}
@@ -1159,6 +1160,7 @@ input[type=submit]{
 .p-t{padding-bottom:0.5rem}
 .m-t{margin-top:1rem;}
 .m-t05{margin-top:1.5rem;}
+.m-t006{margin-top:0.6rem;}
 .f-r{float:right;}
 .m-b1{margin-bottom:1rem}
 .m-l-05{margin-left:0.5rem;}
@@ -1237,7 +1239,7 @@ textarea, input {border:none;}
 /*分类样式*/
 .cate-shop-box{font-size:1.7rem;}
 .cate-shop-box span{margin-left:0.5rem;color:#555;font-size:1.6rem;}
-.t-jiantou i{font-size:1.5rem;position:absolute; right: 1.3rem;top: 35%;color: #999;}
+.t-jiantou i{font-size:1.5rem;position:absolute; right: 1.3rem;top: 33%;color: #999;}
 .shop-b{ border-bottom: 1px solid #F6F6F9;position:relative;}
 .two-shop-tit{margin-left:2.5rem; font-size:1.4rem;color:#777;}	
 span.t-jiantou i.icon-jiantou1.current{
@@ -1262,16 +1264,33 @@ span.t-jiantou i.icon-jiantou1.current{
 .n-shop-but{background:#dfdfe8;}
 .n-z-col input{color:#777;}
 .shop-img-box{padding:1rem;}
+/*佣金提现*/
 
+.wdyj_content11{margin-top:-1.7rem}
+.a-raply-info{background:#FCF8E3;padding:1rem 0;text-align:center;font-size:1.5rem;color:#494949;border-bottom:1px solid #f6f6f9}
+.bank-card ul{margin-top:0.8rem;border-top:1px solid #f6f6f9;border-bottom:1px solid #f6f6f9}
+.bank-card ul li{position:relative;padding:1.6rem;background:#fff;border-bottom:1px solid #fd6f6f9}
+.bank-card ul li:last-child{border-bottom:none}
+.bank-card ul li label{position:absolute;left:0;right:0;top:0;bottom:0}
+.bank-card ul li label i{position:absolute;right:1.6rem;top:50%;margin-top:-1rem;display:block;height:2rem;width:3rem}
+.bank-card input:checked+label i{background:url(../images/check_ok_03.png) center center no-repeat;background-size:cover}
+.bank-card input[type=radio]{display:none}
+.bank-card ul li h4{font-size:1.7rem;color:#444;font-weight:400}
+.bank-card ul li span{font-size:1.2rem;color:#a4a4a4;margin-top:0.2rem;display:block}
+.jg-text{margin:0;padding:1.4rem;border-bottom:1px solid #f6f6ff9;border-top:1px solid #f6f6f9;font-size:1.5rem;position:relative;background:#fff;margin-top:1rem}
+.jg-text-input{position:absolute;left:7rem;right:1.6rem;top:1.3rem;color:#303030}
+.jg-text-input input[type=text]{width:100%;font-size:1.4rem;border:0;padding-bottom:0.5rem}
+.jg-text label{color:#303030}
+.jg-text span{color:#7a7a7a;margin-left:.2rem}
+.n-rap-box p{}
+.shop-money-box p{padding-top:1.5rem}
+.shop-money-box span{padding-bottom:1.5rem;display:block;}
+.shop-money-box h4{font-size:5rem;}
 
-
-
-
-
-
-
-
-
-
-
+.t-jiantou-1 i {font-size: 1.5rem;/* position: absolute; */right: 1.3rem;top: 35%;color: #999;
+}
+.n-right-box{width:4rem;width: 4.5rem;padding-top: 0.25rem;}
+.sale-right-tit{margin-right: 2rem;}
+.weui_msg_desc{font-size:1.2rem;}
+.header-title span{display:block;}
 
