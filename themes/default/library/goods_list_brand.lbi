@@ -35,5 +35,8 @@
   </ul>
 </div>
 {include file='library/page.lbi '}
+
 {/if}
+<!--{else}-->
+<p class="text-center ect-margin-tb ect-padding-tb">暂无数据</p>
 <!--{/if} --> 
