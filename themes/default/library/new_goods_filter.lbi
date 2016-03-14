@@ -80,5 +80,7 @@ function clear_filter(){
 			$(this).val("");
 		}
 	});
+	$(".ui-slider-handle").css("left","0");
+	$(".ui-slider-range").css({left:0,width:0});
 }
 </script>
