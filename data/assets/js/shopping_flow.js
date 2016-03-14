@@ -1,5 +1,47 @@
 /* $Id : shopping_flow.js 4865 2007-01-31 14:04:10Z paulgao $ */
 
+function isinv()
+{
+				var isinv = $("input[name=invinput]").val();
+				if(isinv == '0'){
+				$("input[name=invinput]").val('1');	
+				  $('#inv_show1').css('display','none');
+				  $('#inv_show2').css('display','none');
+				  $('#inv_none1').css('display','block');
+				  $('#inv_none2').css('display','block');
+				  
+				}else{
+				$("input[name=invinput]").val('0');
+				  $('#inv_show1').css('display','block');
+				  $('#inv_show2').css('display','block');
+				  $('#inv_none1').css('display','none');
+				  $('#inv_none2').css('display','none');
+				}
+				  var obj        = document.getElementById('ECS_NEEDINV');
+				  var objType    = document.getElementById('ECS_INVTYPE');
+				  var objPayee   = document.getElementById('ECS_INVPAYEE');
+				  var objContent = document.getElementById('ECS_INVCONTENT');
+				if(isinv == '0'){
+					var needInv = 1;
+				}else{
+					var needInv = 0;
+				}
+				  var invType    = obj.checked ? (objType != undefined ? objType.value : '') : '';
+				  var invPayee   = obj.checked ? objPayee.value : '';
+				  var invContent = obj.checked ? objContent.value : '';
+			  objType.disabled = objPayee.disabled = objContent.disabled = ! obj.checked;
+			  if(objType != null)
+			  {
+				objType.disabled = ! obj.checked;
+			  }
+
+			  $.get('index.php?m=default&c=flow&a=change_needinv', {need_inv:needInv, inv_type:encodeURIComponent(invType), inv_payee:encodeURIComponent(invPayee), inv_content:encodeURIComponent(invContent)}, function(data){
+				orderSelectedResponse(data);
+			  });
+		  
+}
+			
+
 var selectedShipping = null;
 var selectedPayment  = null;
 var selectedAddress  = null;
@@ -704,26 +746,4 @@ function selectAddress(obj)
     orderSelectedResponse(data);
   }, 'json');
 }
-$("#inv").click(function(){
-	
-	var v=$("#ECS_NEEDINV").is(":checked");
-	var show1=$("#inv_show1");
-	var show2=$("#inv_show2");
-	var none1=$("#inv_none1");
-	var none2=$("#inv_none2");
-	if(v==false){
-		show1.css("display","none");
-		show2.css("display","none");
-		none1.css("display","block");
-		none2.css("display","block");
-		$("#need_inv").html("<input name='need_inv' type='checkbox'  checked='checked' class='input' id='ECS_NEEDINV'  value='1' style='display:none' >");
-		
-	}else{
-		
-		none1.css("display","none");
-		none2.css("display","none");
-		show1.css("display","block");
-		show2.css("display","block");
-		$("#need_inv").html("<input name='need_inv' type='checkbox'  class='input' id='ECS_NEEDINV'  value='1' style='display:none' >");
-	}
-})
+

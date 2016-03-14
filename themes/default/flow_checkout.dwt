@@ -53,21 +53,20 @@
         <input name = "payment" type="radio" value = "-1" checked="checked"  style="display:none"/>
         <!--{/if}--> 
         <!-- {if $inv_content_list} 能否开发票 --> 
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo1">
-        <p><b>{$lang.invoice}</b></p>
+        <a onclick="isinv()" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo1">
+        <p><b>{$lang.invoice}</b></p><input id="invinput" type="hidden"  name="invinput" value="0" />
         <i class="fa fa-angle-down"></i></a>
         <div id="collapseTwo1" class="panel-collapse collapse in" style="overflow:hidden;">
           
 		  <div id="inv">
-		     <div  id="inv_show1" style="border-radius: .5rem;text-align:center;float:left;width:2rem;height:2rem;background:#CBC5C5"><span  style="color:#CBC5C5">.</span></div>
-		     <div  id="inv_show2" style="border-radius: .5rem;text-align:center;float:left;width:2rem;height:2rem;background:#1CBB7F"><span  style="color:#fff">否</span></div>
-			 <div  id="inv_none1" style="display:none;border-radius: .5rem;text-align:center;float:left;width:2rem;height:2rem;background:#1CBB7F"><span  style="color:#fff">是</span></div>
-		     <div  id="inv_none2" style="display:none;border-radius: .5rem;text-align:center;float:left;width:2rem;height:2rem;background:#CBC5C5"><span  style="color:#CBC5C5"></span></div>
+		     <div  id="inv_show1" style="border-radius: .5rem;text-align:center;float:left;width:3rem;height:3rem;background:#CBC5C5"><span  style="color:#CBC5C5">.</span></div>
+		     <div  id="inv_show2" style="border-radius: .5rem;text-align:center;float:left;width:3rem;height:3rem;background:#1CBB7F"><span class="label ect-bg-colory">否</span></div>
+			 <div  id="inv_none1" style="display:none;border-radius: .5rem;text-align:center;float:left;width:3rem;height:3rem;background:#1CBB7F"><span  class="label ect-bg-colory">是</span></div>
+		     <div  id="inv_none2" style="display:none;border-radius: .5rem;text-align:center;float:left;width:3rem;height:3rem;background:#CBC5C5"><span  style="color:#CBC5C5"></span></div>
 		  </div>
           <div id="need_inv">
-		  <input name="need_inv" type="checkbox"  class="input" id="ECS_NEEDINV" onclick="changeNeedInv()" value="1"  {if $order.need_inv}checked="true"{/if} style="display:none"/>
+		  <input name="need_inv" type="checkbox"  class="input" id="ECS_NEEDINV" onclick="changeNeedInv()" value="1"  checked="true" style="display:none"/>
           </div>
-        </li>
           <li> 
             <!-- {if $inv_type_list} --> 
             <span class="pull-left select-span">{$lang.invoice_type}</span>
@@ -95,8 +94,7 @@
             </div>
           </li>
         </div>
-        <!--{/if}--> 
-        
+        <!--{/if}-->
       </section>
       <!-- {if $pack_list || $card_list} 是否有包装 或贺卡 -->
       <section class="ect-margin-tb ect-padding-lr checkout-select"> 
@@ -141,7 +139,6 @@
       </section>
       <!-- {/if} 是否使用贺卡 --> 
       <!-- {/if} 是否有包装 或贺卡 -->
-      
       <section class="ect-margin-tb ect-padding-lr checkout-select"> 
 	  <!-- {if $allow_use_bonus and $bonus_list} 是否使用红包 -->
 	 	<a data-toggle="collapse" data-parent="#accordion" href="#collapseBonus">

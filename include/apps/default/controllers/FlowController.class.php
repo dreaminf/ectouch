@@ -439,7 +439,7 @@ class FlowController extends CommonController {
         $this->assign('config', C('CFG'));
         // 取得订单信息
         $order = model('Order')->flow_order_info();
-        $this->assign('order', $order);
+
         /* 计算折扣 */
         if ($flow_type != CART_EXCHANGE_GOODS && $flow_type != CART_GROUP_BUY_GOODS) {
             $discount = model('Order')->compute_discount();
@@ -643,7 +643,6 @@ class FlowController extends CommonController {
         if ((!isset($can_invoice) || $can_invoice == '1') && isset($invoice_content) && trim($invoice_content) != '' && $flow_type != CART_EXCHANGE_GOODS) {
             $inv_content_list = explode("\n", str_replace("\r", '', C('invoice_content')));
             $this->assign('inv_content_list', $inv_content_list);
-
             $inv_type_list = array();
             $invoice_type = C('invoice_type');
             foreach ($invoice_type['type'] as $key => $type) {
@@ -653,8 +652,9 @@ class FlowController extends CommonController {
             }
             $this->assign('inv_type_list', $inv_type_list);
         }
-        // print_r($inv_type_list);
 
+        // print_r($inv_type_list);
+        $this->assign('order', $order);
         /* 保存 session */
         $_SESSION ['flow_order'] = $order;
         $this->assign('currency_format', C('currency_format'));
@@ -1399,6 +1399,7 @@ class FlowController extends CommonController {
 
         /* 订单信息 */
         $this->assign('order', $order);
+
         $this->assign('total', $total);
         $this->assign('goods_list', $cart_goods);
         $this->assign('order_submit_back', sprintf(L('order_submit_back'), L('back_home'), L('goto_user_center'))); // 返回提示
