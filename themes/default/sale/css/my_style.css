@@ -1,4 +1,96 @@
-/
+@media only screen and (max-width:310px) and (min-width:300px){html{font-size:8.33333px}.viewport{max-width:300px}}
+@media only screen and (max-width:320px) and (min-width:310px){html{font-size:8.88889px}.viewport{max-width:320px}}
+@media only screen and (max-width:360px) and (min-width:320px){html{font-size:8.88889px}.viewport{max-width:360px}}
+@media only screen and (max-width:360px) and (min-width:350px){html{font-size:10px}.viewport{max-width:360px}}
+@media only screen and (max-width:480px) and (min-width:360px){html{font-size:10px}.viewport{max-width:480px}}
+@media only screen and (max-width:480px) and (min-width:470px){html{font-size:13.33333px}.viewport{max-width:480px}}
+@media only screen and (max-width:560px) and (min-width:480px){html{font-size:13.33333px}.viewport{max-width:560px}}
+@media only screen and (max-width:570px) and (min-width:560px){html{font-size:15.83333px}.viewport{max-width:570px}}
+@media only screen and (max-width:640px) and (min-width:570px){html{font-size:15.83333px}.viewport{max-width:640px}}
+@media only screen and (max-width:640px) and (min-width:630px){html{font-size:17.77778px}.viewport{max-width:640px}}
+@media only screen and (max-width:710px) and (min-width:640px){html{font-size:17.77778px}.viewport{max-width:710px}}
+/*==============================================
+                 内部样式
+==================================================*/
+.box{max-width:100%; margin:0 auto;background-image:url("../images/1.jpg");background-repeat: no-repeat;background-color: #fff;background-size: 100% 100%;}
+.header-box{width:100%; background-color: rgba(0, 0, 0, 0.6);height:6.875rem;}
+.header-color{width:95%; margin:0 auto;}
+.logo img{width:5.375rem;height:5.375rem; border:2px solid #fff;margin-top:0.6rem;}
+.logo{width:24%;}
+.header-coltent{overflow: hidden;}
+.header-coltent li{float:left;}
+.rem img{width:5rem;height:5rem; padding-top:0.8rem;float:right;}
+.rem{width:30%;}
+.name{width:45.5%; margin-top:1.6rem;}
+.title{font-size:1.5rem;line-height:2rem; color:#fff;font-weight:bold;}
+.content{font-size:1rem;color:#fff;}
+html,textarea, input,button{font-family: Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", STXihei, STHeiti, "Microsoft YaHei", Heiti, SimSun, sans-serif;-webkit-font-smoothing: antialiased;}
+body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em,  ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video{margin:0;padding:0;border:0;vertical-align:baseline; font-weight:400;}
+blockquote, q{quotes:none;}
+blockquote:before, blockquote:after, q:before, q:after{content:"";content:none;}
+a { text-decoration:none; }
+ul li{list-style:none;
+}
+.sale_list{
+	display:block;
+}
+.a_left{
+	float:left;
+}
+.icon-pos,icon-jiantou1{color:#858585;float:right;font-size:1.5rem; margin-top:-2.5rem; }
+.icon-jiantou{color:#FFF;font-size:1.5rem;}
+.icon-huise,icon-jiantou1{color:#858585;float:right;font-size:1.5rem; }
+.dpgl_list3 .icon-huise ,icon-jiantou2{ float:right; line-height:2rem;font-size:1.8rem;}
+.icon-quanbushangpin,.icon-dianpu,.icon-iconfontpaihangbang,.icon-fenxiao,.icon-gonggaofuzhi,.icon-861erweima,.icon-weixin,.icon-mingpian,.icon-jinbichongzhi,.icon-qianbao,.icon-zhifubao,.icon-yinxingqia{
+	color:#1CBB7F;
+	font-size:2.2rem;
+	
+	}
+	
+.icon-weixin,.icon-qqkongjianline,.icon-renren,.icon-tengxunweibo,.icon-xinlangweibo{
+	font-size:6rem;
+	color:#41a28e;
+	width:33%;
+	}
+.icon-fenxiang{
+	float:right;
+	color:#FFF;
+	margin-top:-1.8rem;
+	font-size:1.6rem;
+	}	
+.icon-huiyuan	{
+	font-size:6rem;
+	color:#999;
+	
+	}
+.icon-jiaoyichenggong{
+	font-size:10rem;
+	color:#999;	}
+.icon-beise,icon-hao{ margin-top:-1.8rem;color:#FFF; float:right; font-size:2rem;}	
+.icon-huangse,icon-hao{color:#C60;font-size:2rem;}	
+.icon-duihao1{color:#41a28e;font-size:2rem;}
+.icon-gongshangyinxingsolid,.nongyeyinxingsolid{font-size:6.75rem}
+.icon-gongshangyinxingsolid{ color:#ba1f27; line-height:14rem; }
+.nongyeyinxingsolid{	
+	 color:#063; 
+	}
+margin-top:1.8rem; font-size:1.8rem;	
+.icon-hao{color:#C60; float:left;}
+.icon-nongyeyinxingsolid{font-size:6.75rem;margin-top:12rem;color:#009959;}
+icon-weizhi,icon-duihao{
+	color:#41a28e;font-size:6rem;
+	
+	}
+.icon-lvse,icon-duihao{font-size:2.5rem;color:#41a28e;margin-left:0.2rem;}
+.icon-luse,icon-duihao{font-size:4.5rem;color:#41a28e;}
+
+.button-background-color{
+    background-color: #41A28E !important;
+}
+.icon-color:before{
+    color:#A7A7A7 !important;
+}
+
 /*#box{
 	margin:0 auto;
 	max-width:640px;
@@ -1128,10 +1220,10 @@ textarea, input {border:none;}
 .n-sale-headerimg-box{width:7rem;height:7rem; border-radius:100%;overflow: hidden;border: 3px solid #18a470;}
 .n-sale-headerimg-box img{width:100%;height:100%;}
 .n-sale-right-box{padding-left:1rem;}
-.n-sale-right-box h4{font-size:1.9rem;color:#fff;margin-top:1.5rem;}
-.n-sale-right-box p{color:#fff;font-size:1.3rem;}
+.n-sale-right-box h4{font-size:2rem;color:#fff;margin-top:1.5rem;}
+.n-sale-right-box p{color:#fff;font-size:1.2rem;}
 .n-sale-time time{font-size:1rem; color:#fff;}
-.n-sale-nav h4{color:#fff;text-align:center;font-size:1.9rem;}
+.n-sale-nav h4{color:#fff;text-align:center;font-size:1.8rem;}
 .n-sale-nav p{color:#fff;font-size:1.2rem; text-align:center;padding-bottom: 0.2rem;}
 .n-sale-nav{background:rgba(0, 0, 0, 0.1);margin-top:1rem;}
 .sale-right-width{width:3rem;}
@@ -1144,10 +1236,10 @@ textarea, input {border:none;}
 
 /*分类样式*/
 .cate-shop-box{font-size:1.7rem;}
-.cate-shop-box span{margin-left:0.5rem;color:#444;font-size:1.7rem;}
-.t-jiantou i{font-size:1.5rem;position:absolute; right: 1.3rem;top: 35%;color: #777;}
+.cate-shop-box span{margin-left:0.5rem;color:#555;font-size:1.6rem;}
+.t-jiantou i{font-size:1.5rem;position:absolute; right: 1.3rem;top: 35%;color: #999;}
 .shop-b{ border-bottom: 1px solid #F6F6F9;position:relative;}
-.two-shop-tit{margin-left:2rem; font-size:1.6rem;color:#777;}	
+.two-shop-tit{margin-left:2.5rem; font-size:1.4rem;color:#777;}	
 span.t-jiantou i.icon-jiantou1.current{
 	transform: rotate(90deg); 
 	-ms-transform:rotate(90deg); 

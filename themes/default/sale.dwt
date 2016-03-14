@@ -76,14 +76,12 @@
 			</ul>
 			<a href="{:url('sale/order_list')}">
 				<div class="int-cont-a padding-all shop-b" style="display: none;">
-					<lable class="two-shop-tit">本店订单</lable>
-					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+					<lable class="two-shop-tit">本店订单</lable>				
 				</div>
 			</a>
 			<a href="{:url('sale/my_shop_info')}">
 				<div class="int-cont-a padding-all shop-b" style="display: none;">
-					<lable class="two-shop-tit">我的分店</lable>
-					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+					<lable class="two-shop-tit">我的分店</lable>				
 				</div>
 			</a>
 			<!--分类4-->
@@ -95,26 +93,22 @@
 			</ul>
 			<a href="{:url('sale/user_list',array('key'=>'wfk'))}">
 				<div class="int-cont-b padding-all shop-b" style="display: none;">
-					<lable class="two-shop-tit">下单未付款会员</lable>
-					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+					<lable class="two-shop-tit">下单未付款会员</lable>				
 				</div>
 			</a>
 			<a href="{:url('sale/user_list',array('key'=>'yfk'))}">
 				<div class="int-cont-b padding-all shop-b" style="display: none;">
-					<lable class="two-shop-tit">下单已付款会员</lable>
-					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+					<lable class="two-shop-tit">下单已付款会员</lable>				
 				</div>
 			</a>
 			<a href="{:url('sale/user_list',array('key'=>'gz'))}">
 				<div class="int-cont-b padding-all shop-b" style="display: none;">
-					<lable class="two-shop-tit">关注公众号会员</lable>
-					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+					<lable class="two-shop-tit">关注公众号会员</lable>				
 				</div>
 			</a>
 			<a href="{:url('sale/user_list',array('key'=>'fk'))}">
 				<div class="int-cont-b padding-all shop-b" style="display: none;">
-					<lable class="two-shop-tit">访客</lable>
-					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+					<lable class="two-shop-tit">访客</lable>				
 				</div>
 			</a>
 
@@ -128,19 +122,17 @@
 			<a href="{:url('sale/my_commission')}">
 				<div class="int-cont-c padding-all shop-b" style="display: none;">
 					<lable class="two-shop-tit">我的佣金</lable>
-					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+					
 				</div>
 			</a>
 			<a href="{:url('sale/account_detail')}">
 				<div class="int-cont-c padding-all shop-b" style="display: none;">
-					<lable class="two-shop-tit">佣金明细</lable>
-					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+					<lable class="two-shop-tit">佣金明细</lable>					
 				</div>
 			</a>
 			<a href="{:url('sale/account_raply')}">
 				<div class="int-cont-c padding-all shop-b" style="display: none;">
-					<lable class="two-shop-tit">佣金提现</lable>
-					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+					<lable class="two-shop-tit">佣金提现</lable>				
 				</div>
 			</a>
 
@@ -153,14 +145,12 @@
 			</ul>
 			<a href="{:url('sale/spread')}">
 				<div class="int-cont-d padding-all shop-b" style="display: none;">
-					<lable class="two-shop-tit">推广二维码</lable>
-					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+					<lable class="two-shop-tit">推广二维码</lable>				
 				</div>
 			</a>
 			<a href="{:url('sale/store')}">
 				<div class="int-cont-d padding-all shop-b" style="display: none;">
-					<lable class="two-shop-tit">店铺二维码</lable>
-					<span class="t-jiantou fr"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+					<lable class="two-shop-tit">店铺二维码</lable>				
 				</div>
 			</a>
 			<!--分类7-->
