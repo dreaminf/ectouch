@@ -19,8 +19,8 @@
 							<span id="slider-range-amount"></span>
 						</div>
 					</div>
-					<input type="hidden" name="price_min" value="{$price_min}" />
-					<input type="hidden" name="price_max" value="{$price_max}" />
+					<input type="hidden" id="min" name="price_min" value="{$price_min}" />
+					<input type="hidden" id="max" name="price_max" value="{$price_max}" />
 				</div>
 				<div class="select-two">
 					<a class="select-title padding-all j-menu-select">
@@ -82,5 +82,7 @@ function clear_filter(){
 	});
 	$(".ui-slider-handle").css("left","0");
 	$(".ui-slider-range").css({left:0,width:0});
+	$("#slider-range-amount").html(0);
+	$("#min ,#max").val(0);
 }
 </script>
