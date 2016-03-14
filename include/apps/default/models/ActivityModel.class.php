@@ -34,7 +34,7 @@ class ActivityModel extends BaseModel {
             $arr[$row['act_id']]['url'] = url('activity/goods_list', array('id' => $row['act_id']));
             $arr[$row['act_id']]['act_name'] = $row['act_name'];
             $arr[$row['act_id']]['act_id'] = $row['act_id'];
-            $arr[$row['act_id']]['act_banner'] = get_data_path($row['touch_img'], 'activity');
+            $arr[$row['act_id']]['act_banner'] = get_data_path($row['touch_img'], 'favourable');
         }
         return $arr;
     }
