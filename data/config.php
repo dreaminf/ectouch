@@ -1,35 +1,11 @@
 <?php
-// database host
-$db_host   = "localhost:3306";
-
-// database name
-$db_name   = "ecshop_db";
-
-// database username
-$db_user   = "root";
-
-// database password
-$db_pass   = "root";
-
-// table prefix
-$prefix    = "ecs_";
-
-$timezone    = "Asia/Shanghai";
-
-$cookie_path    = "/";
-
-$cookie_domain    = "";
-
-$session = "1440";
-
-define('EC_CHARSET','utf-8');
-
-define('ADMIN_PATH','admin');
-
-define('AUTH_KEY', 'this is a key');
-
-define('OLD_AUTH_KEY', '');
-
-define('API_TIME', '2016-03-07 19:32:14');
-
-?>
+return array(
+    'DB_TYPE' => 'mysql',
+    'DB_HOST' => 'localhost',
+    'DB_USER' => 'root',
+    'DB_PWD' => 'root',
+    'DB_NAME' => 'ectouch_db',
+    'DB_PREFIX' => 'ecs_',
+    'DB_PORT' => '3306',
+    'DB_CHARSET' => 'utf8'
+);
