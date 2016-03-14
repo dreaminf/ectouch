@@ -80,7 +80,7 @@
 						<i class="label mj">{$lang.favourable_mj}</i>
 						<!--{elseif $item.act_type eq 2}-->
 						<i class="label zk">{$lang.favourable_zk}</i>
-						<!--{/if}-->{$item.act_name} <i class="pull-right fa fa-angle-right"></i></a>
+						<!--{/if}-->{$item.act_name}{$item.time} <i class="pull-right fa fa-angle-right"></i></a>
 					<!-- {/if} -->
 					<!-- {/foreach} -->
 				</p>
