@@ -85,7 +85,7 @@ icon-weizhi,icon-duihao{
 .icon-luse,icon-duihao{font-size:4.5rem;color:#41a28e;}
 
 .button-background-color{
-    background-color: #41A28E !important;
+    background-color: #1CBB7F !important;
 }
 .icon-color:before{
     color:#A7A7A7 !important;
@@ -1043,7 +1043,7 @@ margin-top:2rem;
 .index_nav li{border-top:1px solid #eee;}
 
 
-.set-4-submit{margin-top: 2rem;font-size: 1.8rem;text-align: center;line-height: 3.8rem;background-color: #41A28E;width: 90%;color: #fff;border:none;}
+.set-4-submit{margin-top: 2rem;font-size: 1.8rem;text-align: center;line-height: 3.8rem;background-color: #1CBB7F;width: 90%;color: #fff;border:none;}
 
 
 
@@ -1083,7 +1083,7 @@ input[type=submit]{
     line-height: 4rem;
     font-size: 2rem;
     color: #fff;
-    background-color: #41A28E;
+    background-color: #1CBB7F;
     
 }
 
@@ -1107,7 +1107,7 @@ input[type=submit]{
     float:left;
 }
 
-.set-4-submit{margin-top: 2rem;font-size: 1.8rem;text-align: center;line-height: 3.8rem;background-color: #41A28E;width: 90%;color: #fff;border:none;}
+.set-4-submit{margin-top: 2rem;font-size: 1.8rem;text-align: center;line-height: 3.8rem;background-color: #1CBB7F;width: 90%;color: #fff;border:none;}
 
 /*微分销更新*/
 
