@@ -57,16 +57,9 @@ class ExchangeController extends CommonController {
     public function asynclist_list() {
         $this->parameter();
         $asyn_last = intval(I('post.last')) + 1;
-        $this->size = I('post.amount');
-        $this->page = ($asyn_last > 0) ? ceil($asyn_last / $this->size) : 1;
+		$this->page = I('post.page');
         $list = model('Exchange')->exchange_get_goods($this->children, $this->integral_min, $this->integral_max, $this->ext, $this->size, $this->page, $this->sort, $this->order);
-        foreach ($list as $key => $value) {
-            $this->assign('exchange', $value);
-            $sayList [] = array(
-                'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
-            );
-        }
-        die(json_encode($sayList));
+        die(json_encode(array('list' => $list)));
         exit();
     }
 

@@ -11,10 +11,26 @@
 </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> 
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
+<script type="text/javascript" src="__TPL__/statics/js/jquery.scrollUp.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/template.js"></script>
 <script type="text/javascript">
-<!--{if $show_asynclist}-->
-get_asynclist("{:url('exchange/asynclist_list', array('page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order']))}" , '__TPL__/images/loader.gif');
-<!--{/if}-->
+var url = '{:url('exchange/asynclist_list', array('page'=>$this->_var['page'],'size'=>$this->_val['size'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order']))}';
+var page = 1;
+$.post(url, {page: page}, function(data){
+	var html = template('j-product', data);
+	$('#j-product-box').append(html);
+}, 'json');
+$(window).scroll(function () {
+	var scrollTop = $(this).scrollTop();
+	var scrollHeight = $(document).height();
+	var windowHeight = $(this).height();
+	if (scrollTop + windowHeight == scrollHeight) {
+		$.post(url, {page: ++page}, function(data){
+			var html = template('j-product', data);
+			$('#j-product-box').append(html);
+		}, 'json');
+	}
+});
 </script>
 </body>
 </html>
