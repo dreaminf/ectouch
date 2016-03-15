@@ -57,9 +57,10 @@ class ExchangeController extends CommonController {
     public function asynclist_list() {
         $this->parameter();
         $asyn_last = intval(I('post.last')) + 1;
-		$this->page = I('post.page');
-        $list = model('Exchange')->exchange_get_goods($this->children, $this->integral_min, $this->integral_max, $this->ext, $this->size, $this->page, $this->sort, $this->order);
-        die(json_encode(array('list' => $list)));
+		$this->page = I('post.page');	
+        $list = model('Exchange')->exchange_get_goods($this->children, $this->integral_min, $this->integral_max, $this->ext, $this->size, 
+		$this->page, $this->sort, $this->order);
+		die(json_encode(array('list' => $list)));
         exit();
     }
 

@@ -47,26 +47,26 @@ class ExchangeModel extends BaseModel {
                 " WHERE $where $ext ORDER BY $sort $order LIMIT $start ,$size ";
         $res = $this->query($sql);
         $arr = array();
-        foreach ($res as $row) {
+        foreach ($res as $key => $row) {
             $arr[$row['goods_id']]['goods_id'] = $row['goods_id'];
             if ($display == 'grid') {
                 $arr[$row['goods_id']]['goods_name'] = C('goods_name_length') > 0 ? sub_str($row['goods_name'], C('goods_name_length')) : $row['goods_name'];
             } else {
                 $arr[$row['goods_id']]['goods_name'] = $row['goods_name'];
             }
-            $arr[$row['goods_id']]['name'] = $row['goods_name'];
-            $arr[$row['goods_id']]['goods_brief'] = $row['goods_brief'];
-            $arr[$row['goods_id']]['goods_style_name'] = add_style($row['goods_name'], $row['goods_name_style']);
-            $arr[$row['goods_id']]['market_price'] = price_format($row ['market_price']);
-            $arr[$row['goods_id']]['exchange_integral'] = $row['exchange_integral'];
-            $arr[$row['goods_id']]['click_count'] = $row['click_count'];
-            $arr[$row['goods_id']]['type'] = $row['goods_type'];
-            $arr[$row['goods_id']]['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
-            $arr[$row['goods_id']]['goods_img'] = get_image_path($row['goods_id'], $row['goods_img']);
-            $arr[$row['goods_id']]['url'] = url('exchange_goods', array('gid' => $row['goods_id']));
-            $arr[$row['goods_id']]['sc'] = model('GoodsBase')->get_goods_collect($row['goods_id']);
-			$arr[$row['goods_id']]['sales_count'] = model('GoodsBase')->get_sales_count($row['goods_id']); // 销售数量
-            $arr[$row['goods_id']]['mysc'] = 0;
+            $arr[$key]['name'] = $row['goods_name'];
+            $arr[$key]['goods_brief'] = $row['goods_brief'];
+            $arr[$key]['goods_style_name'] = add_style($row['goods_name'], $row['goods_name_style']);
+            $arr[$key]['market_price'] = price_format($row ['market_price']);
+            $arr[$key]['exchange_integral'] = $row['exchange_integral'];
+            $arr[$key]['click_count'] = $row['click_count'];
+            $arr[$key]['type'] = $row['goods_type'];
+            $arr[$key]['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
+            $arr[$key]['goods_img'] = get_image_path($row['goods_id'], $row['goods_img']);
+            $arr[$key]['url'] = url('exchange_goods', array('gid' => $row['goods_id']));
+            $arr[$key]['sc'] = model('GoodsBase')->get_goods_collect($row['goods_id']);
+			$arr[$key]['sales_count'] = model('GoodsBase')->get_sales_count($row['goods_id']); // 销售数量
+            $arr[$key]['mysc'] = 0;
             // 检查是否已经存在于用户的收藏夹
             if ($_SESSION ['user_id']) {
                 unset($where);
