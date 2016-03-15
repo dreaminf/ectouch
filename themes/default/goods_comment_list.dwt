@@ -80,7 +80,7 @@
 						<header class="of-hidden ">
 							<p class="fl">
 								<span class="grade-star g-star-{$list.comment_rank} fl"></span>
-								<em class="t-remark fl">{$list.user_name}</em>
+								<em class="t-remark fl"><!--{if $list.user_name}-->{$list.user_name}<!--{else}-->{$lang.anonymous}<!--{/if}--></em>
 							</p>
 							<p class="fr t-remark">{$list.add_time}</p>
 						</header>
@@ -103,7 +103,7 @@
 </div>
 
 
-		<p class="daifukan-ts">暂无内容</p>
+		<!--<p class="daifukan-ts">暂无内容</p>-->
 
 <script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
 <!-- #BeginLibraryItem "/library/new_search.lbi" -->

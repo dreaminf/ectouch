@@ -557,7 +557,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 
 /*评价列表*/
 .evaluation-list .t-remark{font-size:1.3rem;}
-.evaluation-list em.t-remark{margin-left:.8rem; display:inline-block; width:4rem; overflow: hidden; white-space: nowrap;overflow: hidden; text-overflow: ellipsis;}
+.evaluation-list em.t-remark{margin-left:.8rem; display:inline-block; width:7rem; overflow: hidden; white-space: nowrap;overflow: hidden; text-overflow: ellipsis;}
 .evaluation-list .t-goods1{font-size:1.3rem;} 
 .grade-star{display:inline-block; position: relative; width:9rem; height:1.3rem; background:url(../img/grade_star.png)  no-repeat; background-position-y: 100%; background-size:9rem auto;}
 .grade-star:before{position:absolute; content: " "; display:block; left:0; top:0; right:0;bottom:0; background:url(../img/grade_star.png)  no-repeat;  background-size:9rem auto;}
