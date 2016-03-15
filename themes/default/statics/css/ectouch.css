@@ -438,7 +438,8 @@ transform: rotate(135deg);background:#fff; bottom:-.6rem; z-index: -1; left:50%;
 /*商品列表购物车按钮*/
 .icon-flow-cart{ background:#1CBB7F; border-radius: 50%;  text-align: center; position: absolute; z-index: 3;}
 .icon-flow-cart i.icon-gouwuche{color:#fff; }
-.product-div img{width:100%; display: block;}
+.product-div img{width:100%; display: block;    max-width: 294px;
+    max-height: 294px;}
 .product-text h4{ display: block;overflow: hidden;}
 .product-text p{padding-top:.6rem; padding-bottom:.4rem;}
 .product-text .p-t-remark{color:#999;padding-bottom:0rem;}
