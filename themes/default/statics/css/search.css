@@ -74,7 +74,7 @@ a.btn-reset,a.btn-default{color:#555;}
 .text-all .text-all-span{height:3rem; line-height: 3rem; font-size:1.6rem; color:#666;}
 .text-all span.t-jiantou{margin-top:.8rem;}
 .input-text {position: relative;}
-.input-text input {border: 0;height: 3rem;line-height: 2rem;padding: .5rem 0;box-sizing: border-box;width: 100%;color: #555;font-size: 1.6rem;padding-right: 3rem;}
+.input-text input {border: 0;height: 2rem;line-height: 2rem;padding: .5rem 0;box-sizing: border-box;width: 100%;color: #555;font-size: 1.6rem;padding-right: 3rem;}
 .text-area1{width:100%; border:0; font-size:1.6rem; min-height: 3rem; line-height:2rem; padding: .5rem 0;  box-sizing:border-box; border-bottom:1px solid #F6F6F9; color:#555;}
 /*文本下拉*/
 .text-all-selec{position:relative;}
