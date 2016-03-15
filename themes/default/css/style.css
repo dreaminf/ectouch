@@ -539,3 +539,4 @@ border: 1px solid transparent;border-radius: 4px;cursor: pointer;display: inline
 .dis-box {display: -webkit-box;display: -moz-box;display: -ms-box;display: box;}
 .box-flex {-webkit-box-flex: 1;-moz-box-flex: 1;-ms-box-flex: 1;box-flex: 1; display: block; width:100%;}
 #search_histroy li a span{line-height:0;margin:0;padding:0;}
+.n-but-width{width:35%;}
