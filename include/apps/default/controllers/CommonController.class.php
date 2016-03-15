@@ -48,6 +48,7 @@ class CommonController extends BaseController
             if(!$this->subscribe){
                 $subscribe = '__TPL__/images/guanzm.png';
             }
+            echo '<img src="'.$subscribe.'" />';
             $this->assign('subscribe', $subscribe);
             // 设置默认分享图片
             $share_img = '<div style="margin:0 auto;width:0px;height:0px;overflow:hidden;"><img src="__TPL__/images/share.png"></div>';
