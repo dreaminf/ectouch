@@ -194,7 +194,7 @@ a.btn-reset,a.btn-default{color:#555;}
 .btn-cart:hover {background: #e19511;border:1px solid #e19511}/*按下颜色*/
 .btn-reset{background:#fff;color:#555;border:1px solid #efefef}/*清空按钮*/
 .btn-reset:active,
-.btn-reset:hover {background:#fbfbfb;border:1px solid #fbfbfb}/*按下颜色*/
+.btn-reset:hover {background:#fff;border:1px solid #efefef}/*按下颜色*/
 .btn-default{background:#fff;color:#555; border:1px solid #efefef}/*默认*/
 .btn-default:active,
 .btn-default:hover {color:#666}/*按下颜色*/
