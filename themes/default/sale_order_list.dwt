@@ -20,7 +20,7 @@
 						<li class="box-flex f-shop-content">
 							<h3 class="f-05 col-4 n-order-list-tit">{$goods_info.goods_name}</h3>
 							<h5><span>销售佣金总额：</span>{$goods_info.touch_sale}<span class="f-y-num">数量：</span>{$goods_info.goods_number}</h5>
-							<h5 class="f-yongjin-color"><span>佣金比例：</span>{$goods_info.profit}%</h5>
+							<h5 class="f-yongjin-color col-lv"><span>佣金比例：</span>{$goods_info.profit}%</h5>
 							<h5 class="f-yongjin-color"><span class="bdda_nav2">{$item.fencheng}</span></h5>
 						</li>
 					</ul>
@@ -35,7 +35,7 @@
 						<p class="col-4 f-06">{$item.is_separate}</p>
 					</li>
 					<li class="box-flex">
-						<h2 class="f-r col-lv f-2">合计：{$item.log.user_money}元</h2></li>
+						<h2 class="f-r col-lv f-08">合计：{$item.log.user_money}元</h2></li>
 				</ul>
 			</a>
 		</div>
