@@ -15,7 +15,7 @@
 <body>
 <div class="con">
 <div class="index-max-box">
-{if $subscribe}
+{if !$subscribe}
 <div class="ect-attention dis-box" >
 	<div class="attention-text box-flex">
 		<p style="font-size: 1rem;"><span style="color:#fff">欢迎进入</span><span style="color:#57C850"> 微商城</span></p>
