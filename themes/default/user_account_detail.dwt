@@ -8,12 +8,16 @@
   
  <div class="user-account-detail">
   	<ul class=" ect-bg-colorf">
+    <!--{if $account_log}-->
      <!--{foreach from=$account_log item=item}-->
     	<li>
         	<p class="title"><span class="pull-left">{$item.change_time}</span> <span class="pull-right">{$item.amount}</span></p>
             <p class="content"><span class="remark pull-left">{$item.short_change_desc}</span> <span class="pull-right text-right type">{$item.type}</span></p>
         </li>
 <!--{/foreach}-->
+<!--{else}-->
+<p class="text-center ect-margin-tb ect-padding-tb">暂无数据</p>
+<!--{/if}-->
     </ul>
     <p class="pull-right count" style="background-color: bisque;">{$lang.current_surplus}<b class="ect-colory">{$surplus_amount}</b></p>
   </div>
