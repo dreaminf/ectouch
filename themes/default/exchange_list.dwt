@@ -1,4 +1,7 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<style>
+.ect-pro-list ul li{background:#fff;}
+</style>
 <div class="con">
 <div style="height:7.2em;"></div>
   <header>
