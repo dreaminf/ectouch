@@ -105,7 +105,8 @@ i.pm{background: #1CBB7F;}
 .ect-border-bottom0{border-bottom:none !important;}
 /*商品列表*/
 h4.title{font-size:1.2em; line-height:1.3em; display:block; height:2.4em; overflow:hidden;}
-.ect-pro-list{background:#fff; border-top:1px #e3e3e3 solid; border-bottom:1px #e3e3e3 solid;}
+.ect-pro-list{ border-bottom:1px #e3e3e3 solid;}
+.n-tishi-tit{font-size:1.7rem; color:#555;padding-top:2rem;}
 .ect-pro-list:last-child{border-bottom:0;}
 .ect-pro-list ul li{clear:both; width:100%; height:auto; overflow:hidden; padding:0.6em; border-bottom:1px #e3e3e3 dotted;}
 .ect-pro-list ul li:last-child{border-bottom:none;}
