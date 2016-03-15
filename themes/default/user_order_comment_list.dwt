@@ -30,7 +30,7 @@
  {include file='library/page.lbi '}
 {/if}
 </div>
-<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <footer class="logo">
 	<p class="daifukan-ts">暂无内容</p>

@@ -25,6 +25,6 @@
   	var bonus_sn_error = "{$lang.bonus_sn_error}";
   </script>
   <script type="text/javascript" src="__PUBLIC__/js/user.js"></script>
-<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 </body>
 </html>

@@ -39,7 +39,7 @@
 {/if}
 
 </div>
-<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
 {if empty($order_id)}
 <script type="text/javascript">

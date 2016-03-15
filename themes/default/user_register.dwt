@@ -93,7 +93,7 @@
   </div>
   <!--  {/if} -->
 </div>
-<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem --><!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <script type="text/javascript">
 /*点击更换密码框为文本框*/
 function clickText(){

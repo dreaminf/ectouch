@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="__TPL__/css/style.css">
 <script type="text/javascript" src="__TPL__/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="__TPL__/js/ectouch.js"></script>
+<link rel="stylesheet" href="__TPL__/statics/css/search.css" />
 </head>
 <body>
 {$share_img}
