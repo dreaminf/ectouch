@@ -109,6 +109,16 @@ class ExchangeController extends CommonController {
         $this->assign('goods_id', $goods_id);
         $this->assign('pictures', model('GoodsBase')->get_goods_gallery($goods_id));
         $this->assign('cfg', C('CFG'));
+        //更新团购商品点击次数
+        $count = $this->model->table('goods')->field('COUNT(*)')->where('goods_id =' . $goods['goods_id'])->getOne();
+        if ($count) {
+            $this->model->table('goods')->data('click_count = click_count + 1')->where('goods_id = ' . $goods['goods_id'])->update();
+        } else {
+            $data['goods_id'] = $goods['goods_id'];
+            $data['click_count'] = 1;
+            $this->model->table('goods')->data($data)->insert();
+        }
+        //
         $this->display('exchange_info.dwt');
     }
 
