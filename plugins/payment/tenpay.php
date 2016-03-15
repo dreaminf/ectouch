@@ -65,9 +65,9 @@ class tenpay
         // 交易初始化
         $result = Http::doPost($init_url, $data);
         $xml = (array)simplexml_load_string($result);
-        if (isset($xml['err_info'])) {
-            return '<script>alert("'.$xml['err_info'].'");</script>';
-        }
+        // if (isset($xml['err_info'])) {
+        //     return '<script>alert("'.$xml['err_info'].'");</script>';
+        // }
         /* 生成支付按钮 */
         $button = '<div><input type="button" class="btn btn-info ect-btn-info ect-colorf ect-bg" onclick="window.open(\'' . $gateway . '?token_id=' . $xml['token_id'] . '\')" value="立即付款" /></div>';
         return $button;
