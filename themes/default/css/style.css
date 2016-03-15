@@ -164,7 +164,8 @@ footer.logo img{width:8em; height:auto; display:block; margin:0.8em auto;}
 select{-webkit-appearance:none; border:0; color:#555; padding-left:0; border:1px solid #e3e3e3; border-radius:5px; padding:0.2em 0.4em; padding-right:1.2em; font-size:1.1em;}
 /*按钮*/
 .btn-info{border:none; background:#aaa; padding:0.5em 0; font-size:1.3em;}
-.btn-info:hover{background:#aaa;}
+.btn-info-a{border:none; border:1px solid #1CBB7F; padding:0.5em 0; font-size:1.3em;}
+.tit-shanchu{color:#1CBB7F}
 .two-btn{display: -webkit-box;display: -moz-box;display: -ms-box;display: box; }
 .two-btn .btn{-webkit-box-flex: 1;-moz-box-flex: 1;-ms-box-flex: 1;box-flex: 1; display:block; width:100%;}
 .two-btn .btn:nth-child(2){margin-left:0.6em;}
