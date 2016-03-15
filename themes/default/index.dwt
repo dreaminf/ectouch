@@ -83,7 +83,7 @@
 
 	<div class="index-more">
   	<div class="index-more-icon">
-      	<span>更多惊喜</span>
+      	<span>猜你喜欢</span>
       </div>
       <ul class="index-more-list" id="J_ItemList">
         <div class="single_item"></div>
