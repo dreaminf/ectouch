@@ -45,8 +45,8 @@ class CommonController extends BaseController
             //是否显示关注按钮
             $condition['openid'] = !empty($_SESSION['openid']) ? $_SESSION['openid'] : 0;
             $_SESSION['subscribe'] = $this->model->table('wechat_user')->field('subscribe')->where($condition)->find();
-            if(!$this->subscribe){
-                $subscribe = __TPL__ . '/images/guanzm.png';
+            if(!$_SESSION['subscribe']){
+                $subscribe = __TPL__.'/images/guanzm.png';
             }
             $this->assign('subscribe', $subscribe);
             // 设置默认分享图片
