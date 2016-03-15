@@ -48,11 +48,11 @@ class ExchangeModel extends BaseModel {
         $res = $this->query($sql);
         $arr = array();
         foreach ($res as $key => $row) {
-            $arr[$row['goods_id']]['goods_id'] = $row['goods_id'];
+            $arr[$key]['goods_id'] = $row['goods_id'];
             if ($display == 'grid') {
-                $arr[$row['goods_id']]['goods_name'] = C('goods_name_length') > 0 ? sub_str($row['goods_name'], C('goods_name_length')) : $row['goods_name'];
+                $arr[$key]['goods_name'] = C('goods_name_length') > 0 ? sub_str($row['goods_name'], C('goods_name_length')) : $row['goods_name'];
             } else {
-                $arr[$row['goods_id']]['goods_name'] = $row['goods_name'];
+                $arr[$key]['goods_name'] = $row['goods_name'];
             }
             $arr[$key]['name'] = $row['goods_name'];
             $arr[$key]['goods_brief'] = $row['goods_brief'];
@@ -74,7 +74,7 @@ class ExchangeModel extends BaseModel {
                 $where['goods_id'] = $row ['goods_id'];
                 $where['user_id'] = $_SESSION ['user_id'];
                 $rs = $this->model->table('collect_goods')->where($where)->count();
-                $arr[$row['goods_id']]['mysc'] = $rs;
+                $arr[$key]['mysc'] = $rs;
             }
         }
         return $arr;
