@@ -127,7 +127,8 @@ header nav.ect-nav a{color:#fff;}
 /*内页导航*/
 nav.ect-nav-list{border-top:none; border-bottom:1px solid #e3e3e3; position:inherit;}
 /*底部*/
-footer.logo{text-align:center; border-top:1px solid #e3e3e3;}
+.daifukan-ts{text-align:#center;font-size:1.7rem; color:#555;margin-top:2rem;}
+footer.logo{text-align:center;}
 footer.logo img{width:8em; height:auto; display:block; margin:0.8em auto;}
 /*tab*/
 .user-tab{background:#FFF; border-bottom:1px solid #e3e3e3;}

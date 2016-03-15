@@ -58,7 +58,8 @@
       </li>
     </ul>
   </div>
-  <div class="two-btn ect-padding-tb ect-padding-lr ect-margin-tb text-center"> <a class="btn btn-info ect-colorf" href="{:url('user/del_address_list', array('id'=>$this->_var['consignee']['address_id']))}" >{$lang.drop}</a>
+  <div class="two-btn ect-padding-tb ect-padding-lr ect-margin-tb text-center">
+  	<a class="btn btn-info-a" href="{:url('user/del_address_list', array('id'=>$this->_var['consignee']['address_id']))}" ><span class="tit-shanchu">{$lang.drop}</span></a>
     <button type="submit" name="submit"  class="btn btn-info ect-bg-colory">{$lang.confirm_edit}</button>
     <input name="address_id" type="hidden" value="{$consignee.address_id}" />
   </div>
