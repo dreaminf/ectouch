@@ -1378,14 +1378,14 @@ span.t-jiantou i.icon-jiantou1.current{
 .l-line-1{top:1rem;bottom:1rem;right:2.2rem;width:.5rem;background:#ffb251;z-index:-1}
 .rank-cont ul li h2{font-size:1.5rem;padding-top:1.5%;color:#525252}
 @media only screen and (max-width:360px) and (min-width:310px){.rank-height{min-height: 6rem;
-    max-height: 24rem;}
+    max-height: 31.2rem;}
 .r-headerimg{width:4.3rem;height:4.3rem}
-.rank-cont ul li h2{font-size:1.45rem;padding-top:4%;color:#525252}
+.rank-cont ul li h2{font-size:1.45rem;padding-top:2%;color:#525252}
 .ranklist{width:2.5rem;padding:25% 0 0 12%}
-.rank-two{width:5rem}
+.rank-two{width:6rem}
 .rank-jt{width:2.2rem;margin-top:42%}
 }@media only screen and (max-width:480px) and (min-width:360px){.rank-height{    min-height: 6rem;
-    max-height: 33.3rem;}
+    max-height: 33.2rem;}
 .r-headerimg{width:4.7rem;height:4.7rem}
 .rank-cont ul li h2{font-size:1.45rem;padding-top:3.5%;color:#525252}
 .ranklist{width:2.5rem;padding:30% 0 0 12%}
