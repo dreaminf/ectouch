@@ -3,8 +3,9 @@
 
 <body class="n-hs-bg">
 	<div id="box">
-		<!--{foreach from=$orders_list item=item}-->
-		<div>
+		<div class="n-list-box">
+		<!--{foreach from=$orders_list item=item}-->		
+		<section>
 			<a href="{:url('sale/goods_detai',array('order_id'=>$this->_var['item']['order_id']))}">
 				<ul class="dis-box padding-all order-list-b n-bs-f">
 					<li class="box-flex">
@@ -19,7 +20,7 @@
 						<li class="f-shop-list"><img src="{$goods_info.goods_thumb}"></li>
 						<li class="box-flex f-shop-content">
 							<h3 class="f-05 col-4 n-order-list-tit">{$goods_info.goods_name}</h3>
-							<h5><span>销售佣金总额：</span>{$goods_info.touch_sale}<span class="f-y-num">数量：</span>{$goods_info.goods_number}</h5>
+							<h5><span>销售佣金总额：</span><label class="col-lv">{$goods_info.touch_sale}</label><span class="f-y-num">数量：</span><label class="col-lv">{$goods_info.goods_number}</label></h5>
 							<h5 class="f-yongjin-color col-lv"><span>佣金比例：</span>{$goods_info.profit}%</h5>
 							<h5 class="f-yongjin-color"><span class="bdda_nav2">{$item.fencheng}</span></h5>
 						</li>
@@ -38,9 +39,10 @@
 						<h2 class="f-r col-lv f-08">合计：{$item.log.user_money}元</h2></li>
 				</ul>
 			</a>
-		</div>
+		</section>
+		
 		<!--{/foreach}-->
-
+</div>
 		{include file='library/sale_page.lbi '}
 	</div>
 </body>

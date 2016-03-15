@@ -1392,4 +1392,5 @@ span.t-jiantou i.icon-jiantou1.current{
 .rank-two{width:5.9rem}
 .rank-jt{width:2.2rem;margin-top:50%}
 }
-
+.n-list-box section{margin-top:1rem;}
+.n-list-box section:first-child{margin-top:0rem;}
