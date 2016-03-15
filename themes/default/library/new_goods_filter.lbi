@@ -35,7 +35,7 @@
 					</a>
 					<ul class="j-sub-menu padding-all j-get-one" data-istrue="true">
 						<!--{foreach from=$brands item=brand name=brands}-->
-						<li class="ect-select">
+						<li class="ect-select" data-attr="{$brand.brand_id}">
 							<label class="ts-1">{$brand.brand_name|escape:html}<i class="fr iconfont icon-gou ts-1"></i></label>
 						</li>
 						<!--{/foreach}-->
@@ -53,8 +53,8 @@
 						</em><i class="iconfont icon-jiantou tf-180 ts-2"></i></span>
 					</a>
 					<ul class="j-sub-menu padding-all j-get-one" data-istrue="true">
-					<!--{foreach from=$filter.attr_list item=attr name=attr}-->
-						<li class="ect-select">
+						<!--{foreach from=$filter.attr_list item=attr name=attr}-->
+						<li class="ect-select" data-attr="{$attr.attr_value}">
 							<label class="ts-1">{$attr.attr_value|escape:html}<i class="fr iconfont icon-gou ts-1"></i></label>
 						</li>
 						<!--{/foreach}-->
@@ -85,4 +85,10 @@ function clear_filter(){
 	$("#slider-range-amount").html(0);
 	$("#min ,#max").val(0);
 }
+$(function(){
+	$('.ect-select').click(function(){
+		var data = $(this).attr('data-attr');
+		$(this).siblings('input[type="hidden"]').val(data);
+	})
+})
 </script>

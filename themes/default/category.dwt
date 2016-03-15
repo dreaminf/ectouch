@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="__TPL__/statics/css/swiper-3.2.5.min.css" />
 		<link rel="stylesheet" href="__TPL__/statics/css/jquery-ui-1.10.1.custom.min.css" />
 		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
+		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
 	</head>
 
 	<body class="">
@@ -115,7 +116,6 @@
 		<div class="div-messages"></div>
 		
 		<!--引用js-->
-		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript" src="__TPL__/statics/js/swiper-3.2.5.min.js"></script>
 		<script type="text/javascript" src="__TPL__/statics/js/jquery-ui-1.10.1.custom.min.js"></script>
 		<script type="text/javascript" src="__TPL__/statics/js/jquery.ui.touch-punch.min.js"></script>
