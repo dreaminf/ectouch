@@ -8,7 +8,7 @@
 			<div class="n-dis-box"></div>
 			<div class="header-dis-p-img">
 				<div class="rank-img-box"><img src="__TPL__/sale/images/fx-peihangbao.png" /></div>
-				<div class="rank-list-cont f-03">您的排名:<span>1</span>名</div>
+				<div class="rank-list-cont f-03" style="display:none">您的排名:<span>1</span>名</div>
 				<div class="hsse-bg">
 					<div class="rank-list"><img src="__TPL__/sale/images/fx-list.png"></div>
 					<div class="huangse-bg">
@@ -28,7 +28,7 @@
 													<h2>{$li.shop_name}</h2>
 													<p>总销售佣金:<span>{$li.sum_money}</span></p>
 												</li>
-												<li class="rank-stree">
+												<li class="rank-stree" style="display:none">
 													<div class="rank-jt"><img src="__TPL__/sale/images/fx-four.png"></div>
 												</li>
 											</ul>
