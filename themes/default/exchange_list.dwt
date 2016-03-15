@@ -1,4 +1,5 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
 <style>
 .ect-pro-list ul li{background:#fff;}
 </style>
@@ -12,7 +13,8 @@
 <!-- #BeginLibraryItem "/library/goods_list_exchange.lbi" --><!-- #EndLibraryItem -->
 </div>
 </div>
-<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> 
+<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
+<!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem --> 
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
 <script type="text/javascript" src="__TPL__/statics/js/jquery.scrollUp.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/template.js"></script>
