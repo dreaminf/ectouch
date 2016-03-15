@@ -71,7 +71,7 @@ class FlowController extends CommonController {
         $this->assign('integral_scale', C('integral_scale'));
         $this->assign('step', 'cart');
         $this->assign('title', L('shopping_cart'));
-        $this->display('flow_cart.dwt');
+        $this->display('flow.dwt');
     }
 
     /**
