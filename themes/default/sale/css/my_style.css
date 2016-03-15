@@ -1368,22 +1368,24 @@ span.t-jiantou i.icon-jiantou1.current{
 .huangse-bg-1{border-radius:0.5rem;background:#6bb490;padding:0.7rem;z-index:1}
 .ranklist span{font-size:2.5rem;color:#e0a810;margin-left:25%}
 .rank-xian1{width:2%;height:5rem;background:#ffa637;z-index:5555;position:absolute;left:12%;top:10%}
-.rank-height{height:33.3rem;overflow:hidden;overflow-y:scroll}
+.rank-height{min-height: 6rem;max-height: 33.3rem;overflow:hidden;overflow-y:scroll}
 .rank-list-cont{text-align:center;color:#790303;margin-top:-2.7rem}
 .rank-list-cont span{font-weight:700;font-size:2rem;padding:0 0.3rem}
-.rank-list{position:absolute;right:1%;top:-15%;width:5.5rem;z-index:7}
+.rank-list{position:absolute;right:1%;top:-50%;width:5.5rem;z-index:7}
 .rank-list img{width:100%}
 .rank-cont span{color:#ec5151}
 .l-line{top:1rem;bottom:1rem;left:2.2rem;width:.5rem;background:#ffb251;z-index:-1}
 .l-line-1{top:1rem;bottom:1rem;right:2.2rem;width:.5rem;background:#ffb251;z-index:-1}
 .rank-cont ul li h2{font-size:1.5rem;padding-top:1.5%;color:#525252}
-@media only screen and (max-width:360px) and (min-width:310px){.rank-height{height:24rem}
+@media only screen and (max-width:360px) and (min-width:310px){.rank-height{min-height: 6rem;
+    max-height: 24rem;}
 .r-headerimg{width:4.3rem;height:4.3rem}
-.rank-cont ul li h2{font-size:1.7rem;padding-top:1%;color:#525252}
+.rank-cont ul li h2{font-size:1.45rem;padding-top:4%;color:#525252}
 .ranklist{width:2.5rem;padding:25% 0 0 12%}
 .rank-two{width:5rem}
 .rank-jt{width:2.2rem;margin-top:42%}
-}@media only screen and (max-width:480px) and (min-width:360px){.rank-height{height:33.3rem}
+}@media only screen and (max-width:480px) and (min-width:360px){.rank-height{    min-height: 6rem;
+    max-height: 33.3rem;}
 .r-headerimg{width:4.7rem;height:4.7rem}
 .rank-cont ul li h2{font-size:1.45rem;padding-top:3.5%;color:#525252}
 .ranklist{width:2.5rem;padding:30% 0 0 12%}
