@@ -255,7 +255,7 @@ a.btn-reset,a.btn-default{color:#555;}
 .search .search-check{ position: absolute; box-sizing: border-box; line-height: 2rem; padding:.5rem 0; padding-left:1rem;  color:#666;}
 .search-check i.icon-xiajiantou{ position:absolute; font-size:1.2rem;}
 a.s-filter{display:block; font-size:1.6rem; text-align:center; padding:.8rem 0; line-height:2rem; box-sizing: border-box; padding-left:1.2rem;}/*搜索筛选*/
-.search .btn-submit{display: block; width:6rem; height:3.6rem;box-sizing: border-box; border-radius: 0px 4px 4px 0;}
+.search .btn-submit{display: block; width:6rem; height:3.6rem;box-sizing: border-box; border-radius: 0px 4px 4px 0;    line-height: 1rem;}
 
 /*span靠边对齐带箭头*/
 span.t-jiantou{position: relative; font-size:1.4rem;margin-top: 0.1rem; color:#555;}
