@@ -16,7 +16,7 @@
 				</li>
 				<li class="box-flex">
 					<div class="n-sale-right-box">
-						<h4>模板堂 @ 石许云</h4>
+						<h4>{$info.name}</h4>
 						<p>{$sale.shop_name}</p>
 						<time class="color-whie f-03">开店时间：{$sale.time}</time>
 				</li>
