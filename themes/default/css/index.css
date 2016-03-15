@@ -3393,6 +3393,8 @@ h3 {
 	white-space: normal !important;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
+	    height: 3.8rem;
+    line-height: 1.9rem;
 }
     .index-more-list li span {
       font-size: 1.3rem;

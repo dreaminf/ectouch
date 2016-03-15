@@ -333,7 +333,7 @@ border: 1px solid transparent;border-radius: 4px;cursor: pointer;display: inline
 /*评论*/
 .goods-info .tab-msg ul.msg li{border-bottom:1px dotted #e3e3e3; padding:0.4em 0;}
 .goods-info .tab-msg ul.msg li:last-child{border-bottom:1px solid #e3e3e3;}
-.goods-info ul.comment-radio li{border-bottom:none !important; margin-right:1em;}
+.goods-info ul.comment-radio li{border-bottom:none !important; width:20%;}
 .goods-info .tab-msg h4.title{margin-bottom:0.1em; height:auto;}
 .goods-info .tab-msg p{color:#666; padding:0.2em 0;}
 .goods-info .tab-msg p span{color:#888;}
@@ -354,7 +354,7 @@ border: 1px solid transparent;border-radius: 4px;cursor: pointer;display: inline
 /*提交评论FROM表单*/
 .submit-comments{background:#FFF; overflow:hidden;}
 .submit-comments h4{font-size:1.2em; margin-top:0.8em;}
-.submit-comments ul li{float:left; margin-right:0.3em;}
+.submit-comments ul li{float:left;}
 .submit-comments input[type=text]{height:2.8em;}
 .submit-comments input[type=text],.submit-comments p textarea{width:100%; padding:0.5em;}
 .submit-comments textarea{height:8em;}
@@ -535,3 +535,6 @@ border: 1px solid transparent;border-radius: 4px;cursor: pointer;display: inline
 .n-td-left td{text-align:left;}
 .n-but-col{margin-bottom:2rem;}
 .ect-pro-list li{background:#fff;}
+/*display盒子*/
+.dis-box {display: -webkit-box;display: -moz-box;display: -ms-box;display: box;}
+.box-flex {-webkit-box-flex: 1;-moz-box-flex: 1;-ms-box-flex: 1;box-flex: 1; display: block; width:100%;}
