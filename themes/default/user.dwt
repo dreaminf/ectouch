@@ -115,16 +115,13 @@
 					<p class="fl">{$lang.user_history}</p><i class="iconfont fr member-order-i" style="display:none">&#xe60c;</i>
 				</div>
 				
-				
-				
-				
 				<section class="goods-shop-pic m-top1px of-hidden padding-all b-color-f">
 				<div style="cursor: grab;" class="g-s-p-con product-one-list of-hidden scrollbar-none j-g-s-p-con swiper-container-horizontal swiper-container-android">
 					<div class="swiper-wrapper ">
 						<!-- {foreach from=$history item=val} -->
 						<li class="swiper-slide swiper-slide-active">
 							<div class="product-div">
-								<a class="product-div-link" href="goods.html"></a>
+								<a class="product-div-link" href="{$val.url}"></a>
 								<img class="product-list-img" src="{$val.goods_thumb}">
 								<div class="product-text m-top06">
 									<h4>{$val.goods_name}</h4>
