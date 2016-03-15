@@ -15,7 +15,7 @@
 <body>
 <div class="con">
 <div class="index-max-box">
-{if $subscribe}
+{if !$subscribe}
 <div class="ect-attention dis-box" >
 	<div class="attention-text box-flex">
 		<p style="font-size: 1rem;"><span style="color:#fff">欢迎进入</span><span style="color:#57C850"> 微商城</span></p>
@@ -28,7 +28,7 @@
 <!--立即关注-->
 <div class="index-guanz-t"> 
   <div class="index-guanz-show">    
-    <img src="{$subscribe}">
+    <img src="__TPL__/images/guanzm.png">
     <p><span class="left">长按二维码关注公众号</span><span class="right index-show-close">关闭</span></p>
   </div>
   <div class="index-guanz-bg"></div>
