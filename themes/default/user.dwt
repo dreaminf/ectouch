@@ -10,9 +10,20 @@
 		<link rel="stylesheet" href="__TPL__/css/member.css">
 		<link rel="stylesheet" type="text/css" href="__TPL__/css/search_index.css"/>
 		<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="__TPL__/statics/css/swiper-3.2.5.min.css"/>
 	</head>
+	<style>
+	.padding-all{padding:1.3rem}.t-first{color:#1CBB7F}.product-one-list{overflow-x:scroll;width:100%;position:relative}
+	.product-one-list li{width:36%;margin-right:.8rem;float:left}.product-one-list li:last-of-type{margin-right:0}
+	.product-one-list li h4{font-size:1.25rem;line-height:1.5rem;overflow:hidden;padding-top:0.5rem;color:#555;font-weight:400;padding-right:15px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+	.product-one-list li .p-price{font-size:1.25rem}.product-list{}.product-list ul{overflow:hidden;width:100%}.product-list ul li{box-sizing:border-box}
+	.product-div{background:#fff;position:relative;overflow:hidden}.product-div-link{position:absolute;left:0;right:0;top:0;bottom:0;z-index:1}
+	.icon-flow-cart{background:#1CBB7F;border-radius:50%;text-align:center;position:absolute;z-index:3}
+	.icon-flow-cart i.icon-gouwuche{color:#fff}.product-div img{width:100%;display:block;max-width:100px;max-height:100px}
+	.product-text h4{display:block;overflow:hidden}.product-text p{padding-top:.6rem;padding-bottom:.4rem}.product-text 
+	.p-t-remark{color:#999;padding-bottom:0rem}
+	</style>
 	<body>
-
 	    <div class="con" style="margin-bottom: 4rem;">
 		<div class="member-main">
 			<div class="member-photo">
@@ -103,19 +114,28 @@
 					<i class="iconfont fl member-record-title-i">&#xe624;</i>
 					<p class="fl">{$lang.user_history}</p><i class="iconfont fr member-order-i" style="display:none">&#xe60c;</i>
 				</div>
-				<div class="member-record-silde">
-					<div class="member-record-silde-div">
-						<ul class="fl">
-							<!-- {foreach from=$history item=val} -->
-							<li class="fl">
-								<a href="{:url('goods/index', array('id'=>$this->_var[val]['goods_id']))}"><img src="{$val.goods_thumb}" /></a>
-								<p>{$val.goods_name}</p>
-								<span style="font-size: 0.9375rem;">{$lang.sort_price}：{$val.shop_price}</span>
-							</li>
-							<!-- {/foreach} -->
-						</ul>
+				
+				
+				
+				
+				<section class="goods-shop-pic m-top1px of-hidden padding-all b-color-f">
+				<div style="cursor: grab;" class="g-s-p-con product-one-list of-hidden scrollbar-none j-g-s-p-con swiper-container-horizontal swiper-container-android">
+					<div class="swiper-wrapper ">
+						<!-- {foreach from=$history item=val} -->
+						<li class="swiper-slide swiper-slide-active">
+							<div class="product-div">
+								<a class="product-div-link" href="goods.html"></a>
+								<img class="product-list-img" src="{$val.goods_thumb}">
+								<div class="product-text m-top06">
+									<h4>{$val.goods_name}</h4>
+									<p><span class="p-price t-first ">{$lang.sort_price}：{$val.shop_price}</span></p>
+								</div>
+							</div>
+						</li>
+						<!-- {/foreach} -->
 					</div>
 				</div>
+			</section>						
 			</div>
 			<!--{/if}-->
 		</div>
