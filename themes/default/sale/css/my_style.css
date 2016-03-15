@@ -1371,7 +1371,7 @@ span.t-jiantou i.icon-jiantou1.current{
 .rank-height{min-height: 6rem;max-height: 33.3rem;overflow:hidden;overflow-y:scroll}
 .rank-list-cont{text-align:center;color:#790303;margin-top:-2.7rem}
 .rank-list-cont span{font-weight:700;font-size:2rem;padding:0 0.3rem}
-.rank-list{position:absolute;right:1%;top:-50%;width:5.5rem;z-index:7}
+.rank-list{position: absolute;right: 3%;  width: 5.5rem;z-index: 7;bottom: -10%;}
 .rank-list img{width:100%}
 .rank-cont span{color:#ec5151}
 .l-line{top:1rem;bottom:1rem;left:2.2rem;width:.5rem;background:#ffb251;z-index:-1}
