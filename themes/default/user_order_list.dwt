@@ -32,8 +32,7 @@
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <footer class="logo">
-	<p class="daifukan-ts">暂无内容</p>
-	<a href="http://www.ectouch.cn" title="ECTouch官网" target="_blank"><img src="__TPL__/images/copyright.png" width="176" height="60"></a>
+	<p class="daifukan-ts">暂无内容</p>	
 </footer>
 <script type="text/javascript">
 {foreach from=$lang.merge_order_js item=item key=key}
