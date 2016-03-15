@@ -5,7 +5,7 @@
 	<li><a href="{:url('User/account_deposit')}" >{$lang.surplus_type_0}</a></li>
 	<li><a href="{:url('User/account_raply')}" >{$lang.surplus_type_1}</a></li>
   </ul>
-<table width="100%" class="table table-bordered">
+<table width="100%" class="table table-bordered n-td-left">
           <tr>
             <td width="25%" align="right" bgcolor="#ffffff">{$lang.surplus_amount}</td>
             <td width="80%" bgcolor="#ffffff">{$amount}</td>
