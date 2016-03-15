@@ -1307,3 +1307,38 @@ span.t-jiantou i.icon-jiantou1.current{
 -webkit-transform:rotate(90deg); 
 -o-transform:rotate(90deg); 
 	position: absolute;}
+/*本店订单*/
+.order-list-b{border-bottom:1px solid #f6f6f9;}
+.order-list-b span{padding-top:0.45rem;}
+.n-ord-width{width:35%;}
+	/*订单样式*/
+		.f-bg{background:#f0f0f6;margin:0 auto;}
+		.f-goods-cont-box{padding:1.3rem;border-bottom: 1px solid #f6f6f9;font-size:1.6rem;font-weight:400;margin:0 auto;background: #fff;}
+		.f-goods-detail-box header{background:#41a28e;text-align:center;color:#fff;}
+		.f-goods-detail-box p{padding-top:5rem;font-size:1.4rem;}
+		.f-goods-detail-box h1{font-size:4rem;padding-bottom:4rem;padding-top:1rem;}
+		.dis-box{display:-webkit-box;display:-moz-box;display:-ms-box;display:box}
+		.box-flex{-webkit-box-flex:1;-moz-box-flex:1;-ms-box-flex:1;box-flex:1;display:block;width:100%}
+		.f-goods-detail-list{font-size:1.5rem;margin-top: 0.5rem;}
+		.f-goods-name-box{width:7.5rem;color:#979797;}
+		.f-goods-num{color:#3b3b3b;margin-left: 0.6rem;}
+		.f-goods-cont-box span{color:#979797;} 
+		.f-goods-detail-box h3,.f-goods-detail-box h4{font-size:1.3rem;font-weight:400;color:#3b3b3b;}
+		.f-shop-list{width:10rem;padding-right:1rem;}
+		.f-shop-list img{width:100%;}
+		.f-goods-detail-box h4{padding-top:0.5rem;}
+		.f-goods-detail-box h5{font-size:1.3rem;font-weight:400;}
+		.f-goods-cont-box h2{text-align:right;font-size:1.7rem;color:#40a28e;}
+		.f-yongjin-color{color:#1CBB7F;}
+		.f-y-num{margin-left:0.8rem;}
+
+.n-order-list-tit{
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	white-space: normal !important;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+
+}
