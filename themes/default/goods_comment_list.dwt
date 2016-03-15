@@ -23,7 +23,6 @@
 			<li class="box-flex {if $type == 2}active{/if}"><a href="{:url('goods/comment_list',array('type'=>2,'id'=>$this->_var['id'],'page'=>1))}">{$lang.favorable_comment}</a><em class="dis-block m-top04">{$comments_info.favorable_count}</em></li>
 			<li class="box-flex {if $type == 3}active{/if}"><a href="{:url('goods/comment_list',array('type'=>3,'id'=>$this->_var['id'],'page'=>1))}">{$lang.medium_comment}</a><em class="dis-block m-top04">{$comments_info.medium_count}</em></li>
 			<li class="box-flex {if $type == 4}active{/if}"><a href="{:url('goods/comment_list',array('type'=>4,'id'=>$this->_var['id'],'page'=>1))}">{$lang.bad_comment}</a><em class="dis-block m-top04">{$comments_info.bad_count}</em></li>
-			<li class="box-flex {if $type == 5}active{/if}">有图<em class="dis-block m-top04">0</em></li>
 		</ul>
 	</div>
 	<div id="j-tab-con" class="b-color-f tab-con m-top06">
