@@ -102,9 +102,6 @@
 	{include file='library/page.lbi '}
 </div>
 
-
-		<!--<p class="daifukan-ts">暂无内容</p>-->
-
 <script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
 <!-- #BeginLibraryItem "/library/new_search.lbi" -->
 <!-- #EndLibraryItem -->

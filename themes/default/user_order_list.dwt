@@ -31,9 +31,6 @@
 </div>
 <!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
-<footer class="logo">
-	<p class="daifukan-ts">暂无内容</p>	
-</footer>
 <script type="text/javascript">
 {foreach from=$lang.merge_order_js item=item key=key}
     var {$key} = "{$item}";
