@@ -1,4 +1,5 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
 <!-- {if $step eq "cart"} 购物车列表-->
 <!-- #BeginLibraryItem "/flow_cart.dwt" --><!-- #EndLibraryItem -->
 <!-- {/if} -->
@@ -18,6 +19,7 @@
 <!-- {if $step eq "consignee"} 开始收货人信息填写界面 -->
 <!-- #BeginLibraryItem "/flow_consignee.dwt" --><!-- #EndLibraryItem -->
 <!-- {/if} -->
+
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <script type="text/javascript" src="__PUBLIC__/js/shopping_flow.js"></script>
