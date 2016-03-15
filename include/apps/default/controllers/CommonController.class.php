@@ -46,9 +46,9 @@ class CommonController extends BaseController
             $condition['openid'] = !empty($_SESSION['openid']) ? $_SESSION['openid'] : 0;
             $_SESSION['subscribe'] = $this->model->table('wechat_user')->field('subscribe')->where($condition)->find();
             if(!$_SESSION['subscribe']){
-                $subscribe = '1';
+                $subscribe = 1;
             }
-            $this->assign('subscribe', $subscribe);
+            $this->assign('subscribe', 1);
             // 设置默认分享图片
             $share_img = '<div style="margin:0 auto;width:0px;height:0px;overflow:hidden;"><img src="__TPL__/images/share.png"></div>';
             $this->assign('share_img', $share_img);
