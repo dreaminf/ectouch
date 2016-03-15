@@ -25,6 +25,14 @@
 		<a class='lizhuanz'><button class="button">立即关注</button></a>
 	</div>
 </div>
+<!--立即关注-->
+<div class="index-guanz-t"> 
+  <div class="index-guanz-show">    
+    <img src="__TPL__/images/guanzm.png">
+    <p><span class="left">长按二维码关注公众号</span><span class="right index-show-close">关闭</span></p>
+  </div>
+  <div class="index-guanz-bg"></div>
+</div>
 {/if}
 <header class="index-header comWidth">
   <i class="index-header-menu iconfont fl" onclick="window.location = '{:url('category/top_all')}'">&#xe627;</i>
@@ -34,14 +42,6 @@
   </div>
   <a href="javascript:openSearch()"><i class="index-header-right iconfont fr">&#xe603;</i></a>
 </header>
-</div>
-<!--立即关注-->
-<div class="index-guanz-t"> 
-	<div class="index-guanz-show">		
-		<img src="__TPL__/images/guanzm.png">
-		<p><span class="left">长按二维码关注公众号</span><span class="right index-show-close">关闭</span></p>
-	</div>
-	<div class="index-guanz-bg"></div>
 </div>
 
 </script>
