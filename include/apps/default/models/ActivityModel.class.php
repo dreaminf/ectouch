@@ -133,7 +133,7 @@ class ActivityModel extends BaseModel {
             $arr[$row['goods_id']]['url'] = url('goods/index', array(
                 'id' => $row['goods_id']
             ));
-            $arr[$row['goods_id']]['sales_count'] = $this->get_sales_volume($row['goods_id']);
+            $arr[$row['goods_id']]['sales_count'] = model('GoodsBase')->get_sales_count($row['goods_id']);
             $arr[$row['goods_id']]['sc'] = model('GoodsBase')->get_goods_collect($row['goods_id']);
             $arr[$row['goods_id']]['mysc'] = 0;
             // 检查是否已经存在于用户的收藏夹
