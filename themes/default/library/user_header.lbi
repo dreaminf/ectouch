@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="{$ecs_css_path}">
 <link rel="stylesheet" href="__TPL__/css/user.css">
 <link rel="stylesheet" href="__TPL__/css/photoswipe.css">
+<link rel="stylesheet" href="__TPL__/statics/css/search.css" />
 </head>
 
 <body>
