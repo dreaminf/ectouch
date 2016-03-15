@@ -42,7 +42,7 @@
          <!-- {else} -->
           	<input type="text" class="txtnum" readonly value="{$goods.goods_number}"/>
           <!-- {/if} --> 
-           <div class="pull-right"> <a href="javascript:if (confirm('{$lang.drop_goods_confirm}')) location.href='{:url('flow/drop_goods',array('id'=>$this->_var['goods']['rec_id']))}';"><img class="n-shanchutupian" src=__TPL__/images/iconfont-xiao1.png style="width:2rem;height:2rem;"></a> </div>
+           <div class="pull-right"> <a href="javascript:if (confirm('{$lang.drop_goods_confirm}')) location.href='{:url('flow/drop_goods',array('id'=>$this->_var['goods']['rec_id']))}';"><img class="n-shanchutupian" src=__TPL__/images/iconfont-xiao1.png style="width:1.5rem;height:1.5rem;"></a> </div>
         </div>
       </li>
       <!-- {/foreach} -->
