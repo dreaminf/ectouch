@@ -8,7 +8,6 @@
 <section class="product-list j-product-list product-list-medium" data="1">
 	<ul id="j-product-box">
 		<script id="j-product" type="text/html">
-		<if list>
 		{{each list as vo i}}
 		<li>
 			<div class="product-div">
@@ -23,15 +22,13 @@
 			</div>
 		</li>
 		{{/each}}
-		<else>
-		<div>
-		<style>
-		
-		</style>
-		<div class="box-flex not-goods">
-			暂无商品信息
-		</div>
-		</if>
 		</script>
+		{if $is_show eq 1}
+		<div class="no-div-message">
+			<i class="iconfont icon-biaoqingleiben"></i>
+			<p><img src="__TPL__/images/not_goods.png" /></p>
+			<p>亲，此处没有内容～！</p>
+		</div>
+		{/if}
 	</ul>
 </section>

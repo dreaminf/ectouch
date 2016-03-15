@@ -78,6 +78,10 @@ class CategoryController extends CommonController
         $this->assign('goods_list', $goodslist);
         $this->pageLimit(url('index', array('id' => $this->cat_id, 'brand' => $this->brand, 'type' => $this->type, 'price_max' => $this->price_max, 'price_min' => $this->price_min, 'filter_attr' => $this->filter_attr_str, 'sort' => $this->sort, 'order' => $this->order, 'keywords' => I('request.keywords'))), $this->size);
         $this->assign('pager', $this->pageShow($count));
+		//当页面无数据时显示
+		if(empty($goodslist) && $this->page == 1 && empty($count)){
+			$this->assign("is_show",1);
+		}
         /* 页面标题 */
         $page_info = get_page_title($this->cat_id);
         $this->assign('ur_here', $page_info['ur_here']);

@@ -1116,5 +1116,8 @@ footer.logo img {
 .jian001{
         margin-right: 1.5rem;
 }
-.not-goods{margin:32% 32%;font-size:2rem;}
+.no-div-message{text-align: center; padding-top:6rem; color:#999}
+.no-div-message .icon-biaoqingleiben{font-size:7rem; color:#a6a6a6;}
+.no-div-message p{margin-top:1.8rem; font-size:1.6rem;}
+.no-div-message a{font-size:1.5rem; margin-top:.5rem; display:block; color:#EC5151}
 
