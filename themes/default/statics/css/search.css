@@ -141,9 +141,9 @@ h4.title-hrbg hr {background: #f6f6f9;height: 1px;border: 0;position: absolute;l
 /*
  * 弹出搜索框
 */
-.show-search-div .search-div{top:0; visibility:visible;}
+.show-search-div .search-div{top:0;  visibility:visible;}
 .show-search-div .mask-search-div{ display: inherit;}
-.search-div{background:#fff; position:fixed; height:100%; width:100%; left: 0; top: 100%; right: 0; visibility:hidden; bottom:0; z-index: 112;}
+.search-div{background:#fff; position:fixed; height:100%; width:100%;visibility: hidden; left: 0; top: 100%; right: 0; bottom:0; z-index: 112;}
 .search-div .search{background:#F6F6F9;}
 .search-con{padding:2rem 1rem; padding-bottom:0; background:#fff;}
 .search-con ul{overflow: hidden; color:#555}
