@@ -32,10 +32,10 @@
 
 		<section class="padding-all">
 			<div class="n-t-a-center">
-				<button type="submit" class="n-set-4-submit"><a href="{:url('sale/my_shop_list',array('key'=>'1'))}"><span class="n-wdfd_content5">查看我的分店</span></a></button>
+				<a href="{:url('sale/my_shop_list',array('key'=>'1'))}"><button type="submit" class="n-set-4-submit"><span class="n-wdfd_content5">查看我的分店</span></button></a>
 			</div>
 			<div class="n-t-a-center">
-				<button type="submit" class="n-set-4-submit n-shop-but"><a href="{:url('sale/my_user_list',array('key'=>'1'))}"><span class="col-8">查看本店会员</span></a></button>
+				<a href="{:url('sale/my_user_list',array('key'=>'1'))}"><button type="submit" class="n-set-4-submit n-shop-but"><span class="col-lv">查看本店会员</span></button>
 			</div>
 		</section>
 	</div>
