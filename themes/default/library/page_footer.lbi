@@ -33,5 +33,8 @@
         autoplay : 2000
     });
 	/*弹出评论层并隐藏其他层*/
-
+	function openSearch(){
+		$("body").addClass("show-search-div");
+		$(".search-div").css("z-index","999999");
+	}
 </script>
