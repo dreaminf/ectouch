@@ -174,4 +174,4 @@ h4.title-hrbg hr {background: #f6f6f9;height: 1px;border: 0;position: absolute;l
 address, cite, dfn, em, var {
 	font-style: normal;
 }
-/*   over     */
+.swiper-slide-active p label{font-weight:normal;}
