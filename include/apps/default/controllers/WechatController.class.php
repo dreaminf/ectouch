@@ -858,7 +858,7 @@ class WechatController extends CommonController
      * @return [type]             [description]
      */
     static function rec_qrcode($user_id = 0, $type = 1, $expire_seconds = 604800){
-        if(empty($user_id)){exit('1');
+        if(empty($user_id)){
             return false;
         }
         // 默认公众号信息
@@ -871,6 +871,9 @@ class WechatController extends CommonController
             // 微信通验证
             $weObj = new Wechat($config);
             //生成二维码
+            dump($user_id);
+            dump($type);
+            dump($expire_seconds);
             $ticket = $weObj->getQRCode($user_id, $type, $expire_seconds);
             if (empty($ticket)) {exit('12');
                 return false;
