@@ -1,47 +1,6 @@
 <div class="filter-btn dis-box">
-	<a class="filter-btn-kefu filter-btn-a"><i class="iconfont icon-kefu"></i><em>客服</em></a>
+	<a class="filter-btn-kefu filter-btn-a" href="http://meiqia.com/chat/3421"><i class="iconfont icon-kefu"></i><em>客服</em></a>
 	<a href="{:url('flow/cart')}" class="filter-btn-flow filter-btn-a"><i class="iconfont icon-gouwuche"></i><sup class="b-color" id='total_number'><!--{if $seller_cart_total_number }-->{$seller_cart_total_number}<!--{else}-->0<!--{/if}--></sup><em>购物车</em></a>
 	<a type="button" class="btn-cart box-flex" onClick="addToCart({$goods.goods_id});">加入购物车</a>
 	<a type="button" class="btn-submit box-flex" onClick="addToCart_quick({$goods.goods_id});">立即购买</a>
 </div>
-<style>
-/*弹出层样式*/
-.index-kefu-t{display:none;transition: width 2s;-moz-transition: width 2s;-webkit-transition: width 2s;-o-transition: width 2s;  <!-- text-align: center; -->  max-width: 640px; min-width: 320px;}
-.index-kefu-t.active{display:block; transition: width 2s;-moz-transition: width 2s;-webkit-transition: width 2s;-o-transition: width 2s;}	
-.index-guanz-bg{background:rgba(0,0,0,0.7); position:fixed; top:0; left:0; right:0;bottom:0; z-index:1000;}
-.index-kefu-show{ position:fixed; left:50%;  margin-left: -9.5rem; top:30%; background:#fff; z-index:1001; overflow:hidden; width: 19rem; height: auto; border-radius: 4px;}
-#kefu_title {background:#1CBB7F;text-align:center;color:#fff;font-size: 1.5rem;height:3rem; line-height:3rem;}
-.index-kefu-center p{color:#4C4D51;font-size: 1.5rem;height:3.5rem; min-height:3.5rem; line-height:3.5rem; font-size: 2rem; margin-left:22%}
-.index-kefu-center .icon-kefu{font-size: 2rem;}
-
-</style>
-<!--弹出窗 start-->
-<div class="index-kefu-t" id="single"> 
-    <div class="index-kefu-show">
-        <p id="kefu_title"><span>联系客服</span></p> 
-		<div class="index-kefu-center" >
-			<!-- {foreach  from=$shop_qq.centent item=shop_qq}-->
-			<p>
-				<a id="scrollqq" href="http://wpa.qq.com/msgrd?v=3&uin={$shop_qq}&site=qq&menu=yes" ><i class="iconfont icon-kefu"></i> {$shop_qq}</a>
-			</p>	
-			<!-- {/foreach}-->		
-		</div>
-    </div>
-    <div class="index-guanz-bg"></div>
-</div>
-<!--弹出窗 end-->
-<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js" ></script> 
-<script>
-	/*弹出窗js*/
-	$(function($) {
-	  $(".filter-btn-kefu").click(function(){
-		 $(".index-kefu-t").addClass("active");
-	  });
-	  $(".index-guanz-bg").click(function()	{
-		 $(".index-kefu-t").removeClass("active");
-	  });
-	  
-	});
-	 
-
-</script>
