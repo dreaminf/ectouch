@@ -313,7 +313,9 @@ class SaleController extends CommonController {
         file_put_contents($qrcode_file, $qrcode);
 
         $image = new EcsImage();
-        $image->add_watermark($qrcode_bg, ROOT_PATH . $qrcode_exp, $qrcode_file, '', 1, array(10, 22));
+        if($image->add_watermark($qrcode_bg, ROOT_PATH . $qrcode_exp, $qrcode_file, '', 1, array(10, 22))){
+            exit('22');
+        }
 
         $this->assign('info', $userinfo);
         $this->assign('mobile_qr', __ROOT__ . $qrcode_exp);
