@@ -49,7 +49,7 @@ class StoreController extends CommonController {
      */
     public function check(){
 		$action = ACTION_NAME;
-        $drp_show = $this->model->table('drp_shop')->where(array('id'=>$_GET['drp_id']))->field('id, open, audit')->find();
+        $drp_show = $this->model->table('drp_shop')->where(array('user_id'=>$_SESSION['user_id']))->field('id, open, audit')->find();
         if($action == 'index' && $drp_show['audit'] != 1){
             show_message('请等待管理员审核','进入商城',url('index/index'));
         }
