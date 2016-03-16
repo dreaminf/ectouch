@@ -126,7 +126,11 @@ get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}" , '__TPL__/ima
     $(".share-div").click(function(){
         $(".share-div").removeClass("active");
     })
-
+	
+	function openSearch(){
+		$("body").addClass("show-search-div");
+		$(".search-div").css("z-index","999999");
+	}
 </script>
 </body>
 </html>
