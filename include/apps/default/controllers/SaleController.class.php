@@ -47,7 +47,7 @@ class SaleController extends CommonController {
 
 
     /**
-     * 会员中心欢迎页
+     * 店铺详情欢迎页
      */
     public function index() {
         $shop = $this->model->table('drp_shop')->where(array('user_id'=>$_SESSION['user_id']))->field('create_time,shop_name')->find();
