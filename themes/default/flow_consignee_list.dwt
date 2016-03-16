@@ -9,7 +9,7 @@
 </div>
 <div class="ect-padding-lr ect-padding-tb ect-margin-tb"> <a href="{:url('flow/consignee')}" type="botton" class="btn btn-info ect-btn-info ect-colorf ect-bg">{$lang.add_address}</a> </div>
 </div>
-<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
+<!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
 <script type="text/javascript" src="__PUBLIC__/js/jquery.more.js"></script> 
 <script type="text/javascript">
 get_asynclist('index.php?m=default&c=flow&a=consignee_list' , '__TPL__/images/loader.gif');</script>
