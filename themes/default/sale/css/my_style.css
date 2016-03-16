@@ -1147,6 +1147,7 @@ input[type=submit]{
 .col-6{color:#666;}
 .col-8{color:#888;}
 .col-9{color:#999;}
+.f-01{font-size:1.1rem}
 .f-02{font-size:1.2rem}
 .f-03{font-size:1.3rem}
 .f-04{font-size:1.4rem}
@@ -1165,7 +1166,11 @@ input[type=submit]{
 .f-r{float:right;}
 .m-b1{margin-bottom:1rem}
 .m-l-05{margin-left:0.5rem;}
+.p-t1{padding-top:1rem;}
+.p-t05{padding-top:0.5rem;}
 .b-r{border-radius: 0.5rem;}
+
+.n-b-b{border-bottom:1px solid #f6f6f9}
 .n-fixed-box{bottom: 0rem;position: fixed;border-top: 1px solid #F5F5F9;background-color: #FFF;left: 0;right: 0;}
 /*过渡时间*/
 .ts-1{-webkit-transition: all .1s; -moz-transition: all .1s; -o-transition: all .1s; transition: all .1s;}
@@ -1394,3 +1399,25 @@ span.t-jiantou i.icon-jiantou1.current{
 }
 .n-list-box section{margin-top:1rem;}
 .n-list-box section:first-child{margin-top:0rem;}
+/*我的会员*/
+.n-user-box{}
+.is-user-jt{padding-top:0.8rem;}
+/*会员详情*/
+.n-shop-deta-img{width:8.5rem;height:8.5rem;margin:0 auto;border:3px solid #11b577;border-radius:100%;overflow: hidden;}
+.n-shop-deta-header{padding-top:3rem;padding-bottom:2.5rem;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

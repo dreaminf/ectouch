@@ -1,47 +1,47 @@
-<!-- #BeginLibraryItem "/library/sale_header.lbi" --><!-- #EndLibraryItem -->
-<div id="box">
-    <div class="content">
-        <div class="content1">
-            <div class="content1">
-                <div class="index_image1"><a href="">
+<!-- #BeginLibraryItem "/library/sale_header.lbi" -->
+<!-- #EndLibraryItem -->
+
+<body class="n-hs-bg">
+	<div id="box">
+
+		<header class="n-lv-bg n-shop-deta-header">
+			<div class="n-shop-deta-img">
+				<a href="">
                     {if $shop_user.headimgurl}
                     <img class="index_image2" src="{$shop_user.headimgurl}" />
                     {else}
                     <img class="index_image2" src="__TPL__/images/member-photo-img2.jpeg" />
                     {/if}
-                    </a></div>
-            </div>
-        </div>
-        <div class="content2">
-            <ul>
-                <li class="dpxq_p">{$shop_user.shop_name}</li>
-                <li class="dpxq_h5">{$shop_user.username|truncate:10}</li>
-                <li class="dpxq_h6">{$shop_user.shop_mobile}</li>
-            </ul>
-        </div>
-    </div>
-    <p class="time">分销时间：{$shop_user.time}</p>
-    <div class="dpxq_border"></div>
-    <div class="dpxq_content5">
-        <div class="dpxq_nav10">
-            <ul>
-                <li class="dpxq_content10">累计销售佣金</li>
-                <div class="dpxq1_border"></div>
+                    </a>
+			</div>
+			<h4 class="f-07 color-whie text-c p-t1">{$shop_user.shop_name}</h4>
+			<p class="f-03 color-whie text-c p-t05">{$shop_user.username|truncate:10}</p>
+			<p class="f-03 color-whie text-c">{$shop_user.shop_mobile}</p>
+		</header>
+		<div class="padding-alla text-c col-7 f-01  n-b-b">
+			<time>分销时间：{$shop_user.time}</time>
+		</div>
+		<section>
+			<ul class="dis-box padding-all n-bs-f n-b-b">
+				<li class="box-flex"><span class="f-07 col-6">累计销售佣金</span></li>
+				<li class="box-flex"><span class="f-r col-lv f-06">{$money}元</span></li>
+			</ul>
+		</section>	
+		<section class="m-t006">
+			<ul class="dis-box padding-all n-bs-f n-b-b">
+				<li class="box-flex"><span class="f-07 col-6">累计订单</span></li>
+				<li class="box-flex"><span class="f-r col-lv f-06">{$order_count}</span></li>
+			</ul>
+			<ul class="dis-box padding-all n-bs-f n-b-b">
+				<li class="box-flex"><span class="f-07 col-6">累计分店</span></li>
+				<li class="box-flex"><span class="f-r col-lv f-06">{$shop_count}</span></li>
+			</ul>
+			<ul class="dis-box padding-all n-bs-f n-b-b">
+				<li class="box-flex"><span class="f-07 col-6">累计会员</span></li>
+				<li class="box-flex"><span class="f-r col-lv f-06">{$shop_count}</span></li>
+			</ul>
+			</section>	
+	</div>
+</body>
 
-                <li class="dpxq_content10">累计订单</li>
-                <li class="dpxq_content10">累计分店</li>
-                <li class="dpxq_content10">累计会员</li>
-            </ul>
-        </div>
-        <div class="dpxq_nav11">
-            <ul>
-                <li class="dpxq_content11">{$money}元</li>
-                <div class="dpxq1_border"></div>
-                <li class="dpxq_content11">{$order_count}</li>
-                <li class="dpxq_content11">{$shop_count}</li>
-                <li class="dpxq_content11">{$user_count}</li>
-            </ul>
-        </div>
-    </div>
-</div>
-        </body></html>
+</html>
