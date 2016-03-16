@@ -645,17 +645,9 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
     }
 	if(intval($share['u']) > 0){
 		$url  .= '&u='.$share['u'];
-	}elseif(isset($_GET['u'])){
-		$url  .= '&u='.intval($_GET['u']);
 	}else{
 		$url  .= '&u='.$_SESSION['user_id'];
 	}
-    /*DRP_START*/
-    $drp_id = isset($_SESSION['drp_shop']['drp_id']) ? intval($_SESSION['drp_shop']['drp_id']) : 0;
-    if($drp_id > 0){
-        $url  .= '&drp_id='.$drp_id;
-    }
-    /*DRP_END*/
     if(isset($anchor)){
         $url  .= '#'.$anchor;
     }
