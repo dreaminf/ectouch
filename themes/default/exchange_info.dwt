@@ -1,4 +1,5 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
 <div class="con">
 <div class="ect-bg">
      <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$lang.goods_detail}</span> <a href="javascript:;"  onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a></header>
@@ -13,12 +14,12 @@
     <div class="bd">
       <ul id="Gallery">
        <li><a href="#"><img alt="{$goods.goods_name}" src="{$goods.original_img}"/></a></li>
-        <!--{if $pictures}--> 
-        <!-- {foreach from=$pictures item=picture name=no}--> 
+        <!--{if $pictures}-->
+        <!-- {foreach from=$pictures item=picture name=no}-->
         <!-- {if $smarty.foreach.no.iteration > 1}  -->
         <li><a href="#"><img alt="{$goods.goods_name}" src="{$picture.img_url}"/></a></li>
-        <!-- {/if}--> 
-        <!--{/foreach}--> 
+        <!-- {/if}-->
+        <!--{/foreach}-->
         <!--{/if}-->
       </ul>
     </div>
@@ -27,10 +28,11 @@
   <div class="goods-info ect-padding-tb">
   	<section class="ect-margin-tb ect-margin-lr goods-title">
       <h4 class="title pull-left"><!--{if $goods.goods_style_name}-->{$goods.goods_name} <!--{else}-->{$goods.goods_name}<!--{/if}--></h4>
-      <span class="pull-right text-center <!--{if $sc eq 1}-->ect-colory<!--{/if}--> ect-padding-lr" onClick="collect({$goods.goods_id})" id='ECS_COLLECT'> <i class="fa <!--{if $sc eq 1}-->fa-heart<!--{else}-->fa-heart-o<!--{/if}-->"></i><br>
-      {$lang.btn_collect} </span> </section>
+
+      <span class="pull-right text-center heart <!--{if $sc eq 1}-->active<!--{/if}-->" onClick="collect({$goods.goods_id})" id='ECS_COLLECT' style="padding-left:0.6em;padding-right:0.6em;width:5rem;"><i class="ts-2"></i><em class="ts-2">{$lang.btn_collect}</em></span>
+      </section>
     <section class="ect-margin-tb ect-margin-lr ">
-      
+
   	 <p> <span> {$lang.exchange_integral}: <strong class="ect-colory"> {$goods.exchange_integral} </strong></span> </p>
     <!-- {if $cfg.show_goodssn} 显示商品货号-->
     <p> <span>{$lang.goods_sn}<strong class="ect-colory">{$goods.goods_sn}</strong></span> </p>
@@ -46,14 +48,14 @@
         <input type="hidden" name="valid_goods" value="{$group_buy.valid_goods}" />
         <input type="hidden" name="group_buy_id" value="{$group_buy.group_buy_id}" />
       <section class="ect-padding-lr ect-padding-tb goods-option">
-        <div class="goods-optionc"> 
+        <div class="goods-optionc">
           <!-- {foreach name=spec from=$specification item=spec key=spec_key} -->
           <div class="goods-option-con"> <span>{$spec.name}：</span>
-            <div class="goods-option-conr"> 
-            
-             <!-- {* 判断属性是复选还是单选 *} --> 
-                        <!-- {if $spec.attr_type eq 1} --> 
-                        <!-- {if $cfg.goodsattr_style eq 1} --> 
+            <div class="goods-option-conr">
+
+             <!-- {* 判断属性是复选还是单选 *} -->
+                        <!-- {if $spec.attr_type eq 1} -->
+                        <!-- {if $cfg.goodsattr_style eq 1} -->
                         <!-- {foreach from=$spec.values item=value key=key} -->
                         <input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if} onclick="changePrice()" />
                                <label for="spec_value_{$value.id}">{$value.label}</label>
@@ -66,23 +68,23 @@
                             <!-- {/foreach} -->
                         </select>
                         <input type="hidden" name="spec_list" value="{$key}" />
-                        <!-- {/if} --> 
-                        <!-- {else} --> 
+                        <!-- {/if} -->
+                        <!-- {else} -->
                         <!-- {foreach from=$spec.values item=value key=key} -->
                         <input type="checkbox" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" onclick="changePrice()" />
                         <label for="spec_value_{$value.id}">{$value.label} [{if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if} {$value.format_price|abs}]</label>
-                        <!-- {/foreach} --> 
-                        <!-- {/if} --> 
+                        <!-- {/foreach} -->
+                        <!-- {/if} -->
             </div>
           </div>
-          <!-- {/foreach} --> 
+          <!-- {/foreach} -->
         </div>
       </section>
       <input type="hidden" name="goods_id" value="{$goods.goods_id}" />
       <div class="ect-padding-lr">
      	 <button type="submit" class="btn btn-info ect-btn-info ect-colorf ect-bg n-but-col" >{$lang.exchange_goods}</button>
       </div>
-      <section class="user-tab ect-border-bottom0"> 
+      <section class="user-tab ect-border-bottom0">
       <div id="is-nav-tabs" style="height:3.15em; display:none;"></div>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs text-center">
@@ -101,7 +103,7 @@
                     <td bgcolor="#FFFFFF" align="left" width="30%" class="f1">[{$property.name|escape:html}]</td>
                     <td bgcolor="#FFFFFF" align="left" width="70%">{$property.value}</td>
                   </tr>
-                  <!-- {/foreach}--> 
+                  <!-- {/foreach}-->
                   <!-- {/foreach}-->
                 </table></div>
           <div class="tab-pane tab-att active" id="two">
@@ -113,6 +115,6 @@
   </div>
 </div>
 <!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem -->
-<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 </body>
 </html>
