@@ -871,15 +871,12 @@ class WechatController extends CommonController
             // 微信通验证
             $weObj = new Wechat($config);
             //生成二维码
-            dump($user_id);
-            dump($type);
-            dump($expire_seconds);
             $ticket = $weObj->getQRCode($user_id, $type, $expire_seconds);
-            if (empty($ticket)) {exit('12');
+            if (empty($ticket)) {
                 return false;
             }
             return $weObj->getQRUrl($ticket['ticket']);
-        }exit('123');
+        }
         return false;
     }
 

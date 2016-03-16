@@ -242,7 +242,7 @@ class EcsImage {
      * @param       int         $watermark_place    水印位置代码
      * @return      mix         如果成功则返回文件路径，否则返回false
      */
-    function add_watermark($filename, $target_file = '', $watermark = '', $watermark_place = '', $watermark_alpha = 0.65) {
+    function add_watermark($filename, $target_file = '', $watermark = '', $watermark_place = '', $watermark_alpha = 0.65, $position = array()) {
         // 是否安装了GD
         $gd = $this->gd_version();
         if ($gd == 0) {
@@ -312,6 +312,11 @@ class EcsImage {
             default:
                 $x = $source_info[0] / 2 - $watermark_info[0] / 2;
                 $y = $source_info[1] / 2 - $watermark_info[1] / 2;
+        }
+
+        if(!empty($position)){
+            $x = $position[0];
+            $y = $position[1];
         }
 
         if (strpos(strtolower($watermark_info['mime']), 'png') !== false) {

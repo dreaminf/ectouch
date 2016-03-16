@@ -252,10 +252,10 @@ class SaleController extends CommonController {
      */
     public function my_commission(){
 
-      
+
         $info = $this->model->getRow("SELECT * FROM " .$this->model->pre ."drp_config WHERE id = '3'");
         $this->assign('info',$info);
-    
+
         $saleMoney_surplus =  model('Sale')->saleMoney_surplus();
         $this->assign('saleMoney_surplus',$saleMoney_surplus);
         $saleMoney =  model('Sale')->saleMoney();
@@ -303,9 +303,20 @@ class SaleController extends CommonController {
             );
         }
         // 生成二维码
-        $userinfo['qrcode'] = call_user_func(array('WechatController', 'rec_qrcode'), $user_id);
-dump($userinfo);
+        $qrcode_url = call_user_func(array('WechatController', 'rec_qrcode'), $user_id);
+        $qrcode = Http::doGet($qrcode_url);
+
+        $qrcode_bg   = ROOT_PATH . 'data/attached/drp/tg-bg.png';
+        $qrcode_file = ROOT_PATH . 'data/attached/drp/tg-ewm-'.$user_id.'.png';
+        $qrcode_exp  = 'data/attached/drp/tg-tg-'.$user_id.'.png';
+
+        file_put_contents($qrcode_file, $qrcode);
+
+        $image = new EcsImage();
+        $image->add_watermark($qrcode_bg, ROOT_PATH . $qrcode_exp, $qrcode_file, '', 1, array(10, 22));
+
         $this->assign('info', $userinfo);
+        $this->assign('mobile_qr', __ROOT__ . $qrcode_exp);
         $this->assign('title', L('spread'));
         $this->display('sale_spread.dwt');
     }
@@ -370,7 +381,7 @@ dump($userinfo);
         $this->assign('title',L('store'));
         $this->display('sale_store.dwt');
     }
-	/**
+    /**
      * 本店订单
      */
     public function order_list(){
@@ -401,26 +412,26 @@ dump($userinfo);
         $dwt = $orders ? 'sale_order_list.dwt' : 'sale_show_message.dwt';
         $this->display($dwt);
     }
-	/**
+    /**
      * 订单详情
      */
-	public function goods_detai(){
-		$order_id = I('order_id') > 0 ? I('order_id') :'';
-		$where = 'd.order_id = '.$order_id;
-		$user_id = I('user_id') > 0 ? I('user_id') : $_SESSION['user_id'];
-		$orders = model('Sale')->get_sale_goods_detai($where, $user_id);
-		if($orders){
+    public function goods_detai(){
+        $order_id = I('order_id') > 0 ? I('order_id') :'';
+        $where = 'd.order_id = '.$order_id;
+        $user_id = I('user_id') > 0 ? I('user_id') : $_SESSION['user_id'];
+        $orders = model('Sale')->get_sale_goods_detai($where, $user_id);
+        if($orders){
             foreach($orders as $key=>$val){
                 foreach($val['goods'] as $k=>$v){
                     $orders[$key]['goods'][$k]['profit'] = model('Sale')->get_drp_order_profit($val['order_id'],$v['goods_id']);
-					$orders[$key]['goods'][$k]['money'] = price_format($v['touch_sale']/100*$orders[$key]['goods'][$k]['profit']*$v['goods_number'],false);
-					$orders[$key]['goods'][$k]['touch_sale'] = price_format($v['touch_sale'],false);
+                    $orders[$key]['goods'][$k]['money'] = price_format($v['touch_sale']/100*$orders[$key]['goods'][$k]['profit']*$v['goods_number'],false);
+                    $orders[$key]['goods'][$k]['touch_sale'] = price_format($v['touch_sale'],false);
                 }
             }
         }
-		$this->assign('orders_list', $orders);
-		$this->display('sale_goods_detail.dwt');
-	}
+        $this->assign('orders_list', $orders);
+        $this->display('sale_goods_detail.dwt');
+    }
     public function my_shop_info(){
 
         // 总销售额
@@ -598,7 +609,7 @@ dump($userinfo);
                 redirect(url('sale/sale_set'));
                 exit;
             }
-    
+
             // 增加判断
             $examine = $this->model->table('drp_config')->field('value')->where('keyword = "examine"')->getOne();
             if($examine == 'open' && $this->action !='apply'){
@@ -650,10 +661,10 @@ dump($userinfo);
             if(empty($data['bank_card'])){
                 show_message('请输入帐号');
             }
-			if(empty($data['bank_region'])){
+            if(empty($data['bank_region'])){
                 show_message('请输入开户所在地');
             }
-			if(empty($data['bank_user_name'])){
+            if(empty($data['bank_user_name'])){
                 show_message('请输开户名');
             }
             $data['user_id'] = $this->user_id;
@@ -683,11 +694,11 @@ dump($userinfo);
         $this->assign('title','选择默认银行卡');
         $this->display('sale_select_bank.dwt');
     }
-	/**
+    /**
      * 修改银行卡
      */
     public function edit_bank(){
-        if(IS_POST){			
+        if(IS_POST){
             $data = I('data');
             if(empty($data['bank_name'])){
                 show_message('请输入银行名称，如：建设银行等');
@@ -695,10 +706,10 @@ dump($userinfo);
             if(empty($data['bank_card'])){
                 show_message('请输入帐号');
             }
-			if(empty($data['bank_region'])){
+            if(empty($data['bank_region'])){
                 show_message('请输入开户所在地');
             }
-			if(empty($data['bank_user_name'])){
+            if(empty($data['bank_user_name'])){
                 show_message('请输开户名');
             }
             $this->model->table('drp_bank')
@@ -706,9 +717,9 @@ dump($userinfo);
                 ->update();
             redirect(url('sale/select_bank'));
         }
-		$id = I('id') ? I('id') : 0;
-		$bank_info = $this->model->table('drp_bank')->where(array("id"=>$id))->find();
-		$this->assign('title', '修改银行卡');
+        $id = I('id') ? I('id') : 0;
+        $bank_info = $this->model->table('drp_bank')->where(array("id"=>$id))->find();
+        $this->assign('title', '修改银行卡');
         $this->assign('bank', $bank_info);
         $this->display('sale_edit_bank.dwt');
     }
@@ -775,7 +786,7 @@ dump($userinfo);
             foreach($list as $key=>$val){
                 $list[$key]['sum_money'] = $val['sum_money'] ? $val['sum_money'] : 0.00;
                 $list[$key]['shop_name'] = C('shop_name').$val['shop_name'];
-				$list[$key]['user_img'] = $this->wechat_iheadimgurl($val['user_id']);
+                $list[$key]['user_img'] = $this->wechat_iheadimgurl($val['user_id']);
             }
         }
         $this->assign('list', $list);
@@ -783,11 +794,11 @@ dump($userinfo);
         $this->display('sale_ranking_list.dwt');
     }
 
-	public function wechat_iheadimgurl($user_id){
-		 $sql = "select headimgurl from {pre}wechat_user where ect_uid = '$user_id'";
-		 $res = $this->model->query($sql);
-		 return $res[0]['headimgurl'];		 
-	 }
+    public function wechat_iheadimgurl($user_id){
+        $sql = "select headimgurl from {pre}wechat_user where ect_uid = '$user_id'";
+        $res = $this->model->query($sql);
+        return $res[0]['headimgurl'];
+    }
 
 
     /**
@@ -885,9 +896,9 @@ dump($userinfo);
 
             $sql = "SELECT * FROM {pre}payment WHERE pay_code = 'wxpay' AND enabled = 1";
             $payment = $this->model->getRow($sql);
-			if(!$payment ['pay_code']){
-				show_message('因商家暂未开通微信支付，此功能暂未开发');exit;
-			}
+            if(!$payment ['pay_code']){
+                show_message('因商家暂未开通微信支付，此功能暂未开发');exit;
+            }
             include_once (ROOT_PATH . 'plugins/payment/' . $payment ['pay_code'] . '.php');
 
             $pay_obj = new $payment ['pay_code'] ();
