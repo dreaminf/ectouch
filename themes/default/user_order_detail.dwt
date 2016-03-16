@@ -58,7 +58,7 @@
     <!-- {if $order.exist_real_goods} -->
     <li>{$lang.detailed_address}：<b>{$order.address}</b></li>
     <!-- {/if}--> 
-    <!-- {if $order.exist_real_goods} -->
+    <!-- {if $order.exist_real_goods && 0} 不显示最佳送货时间 -->
     <li>{$lang.deliver_goods_time}：<b>{$order.best_time}</b></li>
     <!--{/if}-->
     <li class="text-right">
