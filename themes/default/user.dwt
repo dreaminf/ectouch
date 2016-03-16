@@ -11,15 +11,17 @@
 		<link rel="stylesheet" type="text/css" href="__TPL__/css/search_index.css"/>
 		<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="__TPL__/statics/css/swiper-3.2.5.min.css"/>
-	</head>
-	<style>
+	</head>	
+	<style>   
+    .product-one-list li .p-price{font-size:1.5rem;}
 	.padding-all{padding:1.3rem}.t-first{color:#1CBB7F}.product-one-list{overflow-x:scroll;width:100%;position:relative}
-	.product-one-list li{width:36%;margin-right:.8rem;float:left}.product-one-list li:last-of-type{margin-right:0}
+	.product-one-list li{width:36%;margin-right:.8rem;float:left}
+	.product-one-list li:last-of-type{margin-right:0}
 	.product-one-list li h4{font-size:1.25rem;line-height:1.5rem;overflow:hidden;padding-top:0.5rem;color:#555;font-weight:400;padding-right:15px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 	.product-one-list li .p-price{font-size:1.25rem}.product-list{}.product-list ul{overflow:hidden;width:100%}.product-list ul li{box-sizing:border-box}
 	.product-div{background:#fff;position:relative;overflow:hidden}.product-div-link{position:absolute;left:0;right:0;top:0;bottom:0;z-index:1}
 	.icon-flow-cart{background:#1CBB7F;border-radius:50%;text-align:center;position:absolute;z-index:3}
-	.icon-flow-cart i.icon-gouwuche{color:#fff}.product-div img{width:100%;display:block;max-width:100px;max-height:100px}
+	.icon-flow-cart i.icon-gouwuche{color:#fff}.product-div img{width:100%;display:block;}
 	.product-text h4{display:block;overflow:hidden}.product-text p{padding-top:.6rem;padding-bottom:.4rem}.product-text 
 	.p-t-remark{color:#999;padding-bottom:0rem}
 	</style>
@@ -142,5 +144,16 @@
 		</div>
 		<!-- #BeginLibraryItem "/library/search_index.lbi" --><!-- #EndLibraryItem -->
         <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+        <script type="text/javascript" src="__TPL__/statics/js/swiper-3.2.5.min.js"></script>
+        <script>
+			/*店铺信息商品滚动*/
+			var swiper = new Swiper('.j-g-s-p-con', {
+				scrollbarHide: true,
+				slidesPerView: 'auto',
+				centeredSlides: false,
+				grabCursor: true
+			});
+		</script>
+
 	</body>
 </html>
