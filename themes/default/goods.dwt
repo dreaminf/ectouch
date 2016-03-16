@@ -168,15 +168,15 @@
 ">{$comments.count}人评论<i class="iconfont icon-jiantou tf-180"></i></span></div>
 				</div>
 			</a>
-			<div class="padding-all m-top1px b-color-f g-evaluation-con">
+			<div class="m-top1px b-color-f g-evaluation-con">
 				<!--{foreach from=$comment_list item="comment" name="com"}-->
 				<!--{if $smarty.foreach.com.index<5}-->
-				<div class="of-hidden evaluation-list">
-					<div class="of-hidden ">
+				<div class="of-hidden evaluation-list padding-all-1 n-list-pl">
+					<div class="of-hidden">
 						<p class="fl"><span class="grade-star g-star-{$comment.rank} fl"></span><em class="t-remark fl"><!--{if $comment.user_name}-->{$comment.user_name|escape:html}<!--{else}-->{$lang.anonymous}<!--{/if}--></em></p>
 						<p class="fr t-remark">{$comment.add_time}</p>
 					</div>
-					<p class="clear m-top10 t-goods1">{$comment.content}</p>
+					<p class="clear m-top06 t-goods1">{$comment.content}</p>
 					<!-- {if $comment.re_content} -->
 						  <p><font class="f1">{$lang.admin_username}</font>{$comment.re_content}</p>
 					<!-- {/if} -->
