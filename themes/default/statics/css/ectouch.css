@@ -393,9 +393,9 @@ transform: rotate(135deg);background:#fff; bottom:-.6rem; z-index: -1; left:50%;
 /*
  * 弹出搜索框
 */
-.show-search-div .search-div{top:0;}
+.show-search-div .search-div{top:0; visibility:visible;}
 .show-search-div .mask-search-div{ display: inherit;}
-.search-div{background:#fff; position:fixed; height:100%; width:100%; left: 0; top: 100%; right: 0; bottom:0; z-index: 112;}
+.search-div{background:#fff; position:fixed; height:100%; width:100%; left: 0; top: 100%; right: 0; visibility:hidden; bottom:0; z-index: 112;}
 .search-div .search{background:#F6F6F9;}
 .search-con{padding:2rem 1rem; padding-bottom:0; background:#fff;}
 .search-con ul{overflow: hidden; color:#555}
@@ -622,7 +622,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .show-goods-coupon,
 .show-goods-service,
 .show-goods-dist,
-.show-time-con{position:fixed; left: 0; bottom:-100%; right:0; z-index: 13;}
+.show-time-con{position:fixed; left: 0; bottom:-100%; right:0; z-index: 13; visibility: hidden;}
 .show-goods-attr .product-div{padding:1.3rem;}
 .show-attr-div .mask-filter-div,
 .show-coupon-div .mask-filter-div,
@@ -633,7 +633,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .show-coupon-div .show-goods-coupon,
 .show-service-div .show-goods-service,
 .show-dist-div .show-goods-dist,
-.show-time-div .show-time-con{bottom:0;}
+.show-time-div .show-time-con{bottom:0; visibility: visible;}
 .s-g-attr-con{max-height: 14rem; overflow:hidden;}
 .s-g-attr-con .ect-select{margin: 0; margin-right:1rem; margin-bottom:1rem;}
 
