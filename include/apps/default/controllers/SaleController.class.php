@@ -47,7 +47,7 @@ class SaleController extends CommonController {
 
 
     /**
-     * 店铺详情欢迎页
+     * 会员中心欢迎页
      */
     public function index() {
         $shop = $this->model->table('drp_shop')->where(array('user_id'=>$_SESSION['user_id']))->field('create_time,shop_name')->find();
@@ -281,45 +281,81 @@ class SaleController extends CommonController {
      * 推广二维码
      */
     public function spread(){
-        // 获取参数
-        $user_id = I('get.user_id', 0, 'intval');
-        if(empty($user_id)){
-            $this->redirect(url('spread', array('user_id'=> $this->user_id)));
+        $id = I('u') ? I('u') : $this->user_id;
+        if(!isset($_GET['u'])){
+            redirect(url('sale/spread',array('u'=>$id)));
         }
-        // 获取用户数据
-        $condition = array(
-            'ect_uid' => $user_id
-        );
-        $userinfo = $this->model->table('wechat_user')->where($condition)->find();
-        if(empty($userinfo)){
-            $userinfo = array(
-                'name' => $_SESSION['user_name'],
-                'avatar' => ''
-            );
-        }else{
-            $userinfo = array(
-                'name' => $userinfo['nickname'],
-                'avatar' => $userinfo['headimgurl']
-            );
+        $filename  = ROOT_PATH.'data/attached/drp';
+        if(!file_exists($filename)){
+            mkdir($filename);
         }
-        // 生成二维码
-        $qrcode_url = call_user_func(array('WechatController', 'rec_qrcode'), $user_id);
-        $qrcode = Http::doGet($qrcode_url);
+        $bg_img = ROOT_PATH.'data/attached/drp/tg-bg.png';//背景图
+        $ew_img = ROOT_PATH.'data/attached/drp/tg-ewm-'.$id.'.png';//二维码
+        $dp_img = ROOT_PATH.'data/attached/drp/tg-dp-'.$id.'.png';//店铺二维码
+        $wx_img = ROOT_PATH.'data/attached/drp/tg-wx-'.$id.'.png';//微信头像
+        $dp_img_size = filesize($dp_img);
+        $ew_img_size = filesize($ew_img);
+        if(!file_exists($dp_img) || empty($dp_img_size) || !file_exists($ew_img) || empty($ew_img_size)){
+            if(!file_exists($ew_img) || empty($ew_img_size)){
+                $b = call_user_func(array('WechatController', 'rec_qrcode'), $_SESSION['user_name'],$id);
+                $b = preg_replace('/https/','http',$b,1);
+                logResult('Local:1');
+                if(empty($b)){
+                    $b = call_user_func(array('WechatController', 'rec_qrcode'), $_SESSION['user_name'],$id,0,'',true);
+                    $b = preg_replace('/https/','http',$b,1);
+                    logResult('Local:2');
+                    //logResult(var_export($_SESSION, true));
+                }
+                if(empty($b)){
+                    $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$id)->getOne();
+                    // 二维码
+                    $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?u='.$id.'&drp_id='.$drp_id;
+                    // 纠错级别：L、M、Q、H
+                    $errorCorrectionLevel = 'M';
+                    // 点的大小：1到10
+                    $matrixPointSize = 13;
+                    @QRcode::png($url, $ew_img, $errorCorrectionLevel, $matrixPointSize, 2);
+                    logResult('Local:3');
+                }else{
+                    $img = Http::doGet($b);
+                    file_put_contents($ew_img,$img);
+                }
+                Image::thumb($ew_img, $ew_img,'','330','330'); // 将图片重新设置大小
+            }
+            // 获取微信头像
+            if(class_exists('WechatController')){
+                if (method_exists('WechatController', 'get_avatar')) {
+                    $info = call_user_func(array('WechatController', 'get_avatar'), $id);
+                }
+            }
+            if($info['avatar']){
+                $info['avatar']=preg_replace('/https/','http',$info['avatar'],1);
+                $thumb = Http::doGet($info['avatar']);
+                file_put_contents($wx_img,$thumb);
 
-        $qrcode_bg   = ROOT_PATH . 'data/attached/drp/tg-bg.png';
-        $qrcode_file = ROOT_PATH . 'data/attached/drp/tg-ewm-'.$user_id.'.png';
-        $qrcode_exp  = 'data/attached/drp/tg-tg-'.$user_id.'.png';
+                Image::thumb($wx_img, $wx_img,'','100','100'); // 将图片重新设置大小
+            }
 
-        file_put_contents($qrcode_file, $qrcode);
+            // 生成海报图片
+            $img = file_get_contents($bg_img);
+            file_put_contents($dp_img,$img);
+            chmod(ROOT_PATH.$dp_img, 0777);
 
-        $image = new EcsImage();
-        if($image->add_watermark($qrcode_bg, ROOT_PATH . $qrcode_exp, $qrcode_file, '', 1, array(10, 22))){
-            exit('22');
+            // 添加二维码水印
+            if(file_get_contents($ew_img)){
+                Image::water($dp_img,$ew_img,12);
+            }
+
+            // 添加微信头像水印
+            if($info['avatar']){
+                Image::water($dp_img,$wx_img,13);
+            }
         }
 
-        $this->assign('info', $userinfo);
-        $this->assign('mobile_qr', __ROOT__ . $qrcode_exp);
-        $this->assign('title', L('spread'));
+        // 销售二维码
+        $this->assign('mobile_qr', 'data/attached/drp/tg-dp-'.$id.'.png');
+
+        $this->assign('title',L('spread'));
         $this->display('sale_spread.dwt');
     }
 
