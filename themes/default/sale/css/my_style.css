@@ -1251,7 +1251,7 @@ textarea, input {border:none;}
 .cate-shop-box span{margin-left:0.5rem;color:#555;font-size:1.7rem;}
 .t-jiantou i{font-size:1.5rem;position:absolute; right: 1.3rem;top: 33%;color: #999;}
 .shop-b{ border-bottom: 1px solid #F6F6F9;position:relative;}
-.two-shop-tit{margin-left:2.5rem; font-size:1.4rem;color:#777;}	
+.two-shop-tit{margin-left:2.8rem; font-size:1.52rem;color:#777;}	
 span.t-jiantou i.icon-jiantou1.current{
 	transform: rotate(270deg); 
 	-ms-transform:rotate(270deg); 
@@ -1303,7 +1303,7 @@ span.t-jiantou i.icon-jiantou1.current{
 .t-jiantou-1 i {font-size: 1.5rem;/* position: absolute; */right: 1.3rem;top: 35%;color: #999;
 }
 .n-right-box{width:4rem;width: 4.5rem;padding-top: 0.25rem;}
-.sale-right-tit{margin-right: 2rem;}
+.sale-right-tit{margin-right: 2.3rem;}
 .weui_msg_desc{font-size:1.2rem;}
 .header-title span{display:block;}
 .n-sect-i i{transform: rotate(90deg); 
@@ -1410,8 +1410,8 @@ span.t-jiantou i.icon-jiantou1.current{
 .n-user-box2 h4{padding-top:0.5rem;}
 .n-user-headerimg-box img{width:100%;}
 .user-cont-right-box{margin-left:0.5rem;}
-
-
+.n-dd-color{color:#ff4646;}
+.n-money-box2{padding-top:0.4rem;}
 
 
 
