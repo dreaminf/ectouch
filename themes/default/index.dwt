@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="__TPL__/css/index.css"/>
 <link rel="stylesheet" type="text/css" href="__TPL__/css/search_index.css"/>
+<link rel="stylesheet" href="__TPL__/statics/css/search-index.css" />
 <style type="text/css">
   .swiper-wrapper .swiper-pagination-bullet-active {background: #1CBB7F;}
 </style>
@@ -37,8 +38,8 @@
 <header class="index-header comWidth">
   <i class="index-header-menu iconfont fl" onclick="window.location = '{:url('category/top_all')}'">&#xe627;</i>
   <div class="index-search-box fl">
-    <input type="text" class="index-search-input" placeholder="商品搜索" onclick="openSearch();">
-    <a href="javascript:void(0)" id="translateVoice" style="display:None;"><i class="index-search-sound iconfont fr">&#xe623;</i></a>
+    <input type="text" class="index-search-input j-search-input" placeholder="商品搜索" onclick="openSearch();">
+    <a href="javascript:void(0);" class="j-search-input"><i class="index-search-sound iconfont fr">&#xe623;</i></a>
   </div>
   <a href="javascript:openSearch()"><i class="index-header-right iconfont fr">&#xe603;</i></a>
 </header>

@@ -311,6 +311,7 @@ $(function($) {
 	/*点击弹出搜索层*/
 	$(".j-search-input").click(function() {
 		$("body").addClass("show-search-div");
+		$(".search-div").css("z-index","999999");
 		//$('input[name="keywords"]').focus()
 	});
 	/*关闭搜索层*/

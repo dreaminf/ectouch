@@ -73,7 +73,7 @@
     </div>
 </div>
     <!--{/if}-->
-<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 </body></html>
 <script type="text/javascript" src="__TPL__/js/TouchSlide.1.1.js"></script>

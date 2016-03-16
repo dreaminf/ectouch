@@ -33,16 +33,5 @@
         autoplay : 2000
     });
 	/*弹出评论层并隐藏其他层*/
-	function openSearch(){
-		if($(".con").is(":visible")){
-			$(".con").hide();	
-			$(".search").show();
-		}
-	}
-	function closeSearch(){
-		if($(".con").is(":hidden")){
-			$(".con").show();	
-			$(".search").hide();
-		}
-	}
+
 </script>
