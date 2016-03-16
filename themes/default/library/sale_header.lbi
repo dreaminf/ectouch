@@ -15,7 +15,6 @@
 <link href="__TPL__/sale/css/my_style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="__TPL__/sale/js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="__TPL__/sale/js/my_js.js"></script>
-<link rel="stylesheet" href="__TPL__/statics/css/search.css" />
     {$wechat_js_sdk}
 </head>
 
