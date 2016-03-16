@@ -299,6 +299,7 @@ class SaleController extends CommonController {
 
         $this->assign('userinfo', $userinfo);
 
+        dump($_SESSION);
         dump($userinfo);exit;
 
         $this->assign('title',L('spread'));
