@@ -282,6 +282,8 @@ class SaleController extends CommonController {
      */
     public function spread(){
         $id = $this->user_id;
+
+        echo call_user_func(array('WechatController', 'rec_qrcode'), $id);exit;
         if(!isset($_GET['u'])){
 			redirect(url('sale/spread',array('u'=>$id)));
 		}
