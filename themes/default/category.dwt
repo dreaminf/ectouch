@@ -12,6 +12,7 @@
 		<link rel="stylesheet" href="__TPL__/statics/css/jquery-ui-1.10.1.custom.min.css" />
 		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
 		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
+		<link rel="stylesheet" href="__TPL__/statics/css/search.css" />
 	</head>
 
 	<body class="">
