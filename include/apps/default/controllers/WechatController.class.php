@@ -857,7 +857,7 @@ class WechatController extends CommonController
      * @param  string  $fun       [description]
      * @return [type]             [description]
      */
-    static function rec_qrcode($user_name = '', $user_id = 0, $expire_seconds = 0, $fun = '', $force = false){
+    static function rec_qrcode($user_id = 0, $type = 1, $expire_seconds = 604800){
         if(empty($user_id)){
             return false;
         }
@@ -870,53 +870,12 @@ class WechatController extends CommonController
             $config['appsecret'] = $wxinfo['appsecret'];
             // 微信通验证
             $weObj = new Wechat($config);
-            if($force){
-                $weObj->clearCache();
-                model('Base')->model->table('wechat_qrcode')->where(array('scene_id'=>$user_id, 'wechat_id'=>$wxinfo['id']))->delete();
+            //生成二维码
+            $ticket = $weObj->getQRCode($user_id, $type, $expire_seconds);
+            if (empty($ticket)) {
+                return false;
             }
-
-            $qrcode = model('Base')->model->table('wechat_qrcode')->field('id, scene_id, type, expire_seconds, qrcode_url')->where(array('scene_id'=>$user_id, 'wechat_id'=>$wxinfo['id']))->find();
-            if($qrcode['id'] && !empty($qrcode['qrcode_url'])){
-                return $qrcode['qrcode_url'];
-            }
-            elseif($qrcode['id'] && empty($qrcode['qrcode_url'])){
-                $ticket = $weObj->getQRCode((int)$qrcode['scene_id'], $qrcode['type'], $qrcode['expire_seconds']);
-                if (empty($ticket)) {
-                    //$weObj->errCode, $weObj->errMsg
-                    return false;
-                }
-                $data['ticket'] = $ticket['ticket'];
-                $data['expire_seconds'] = $ticket['expire_seconds'];
-                $data['endtime'] = time() + $ticket['expire_seconds'];
-                // 二维码地址
-                $data['qrcode_url'] = $weObj->getQRUrl($ticket['ticket']);
-                M()->table('wechat_qrcode')->data($data)->where(array('id'=>$qrcode['id']))->update();
-
-                return $data['qrcode_url'];
-            }
-            else{
-                $data['function'] = $fun;
-                $data['scene_id'] = $user_id;
-                $data['username'] = $user_name;
-                $data['type'] = empty($expire_seconds) ? 1 : 0;
-                $data['wechat_id'] = $wxinfo['id'];
-                $data['status'] = 1;
-                //生成二维码
-                $ticket = $weObj->getQRCode((int)$data['scene_id'], $data['type'], $expire_seconds);
-                if (empty($ticket)) {
-                    //$weObj->errCode, $weObj->errMsg
-                    return false;
-                }
-                $data['ticket'] = $ticket['ticket'];
-                $data['expire_seconds'] = $ticket['expire_seconds'];
-                $data['endtime'] = time() + $ticket['expire_seconds'];
-                // 二维码地址
-                $data['qrcode_url'] = $weObj->getQRUrl($ticket['ticket']);
-
-                M()->table('wechat_qrcode')->data($data)->insert();
-
-                return $data['qrcode_url'];
-            }
+            return $weObj->getQRUrl($ticket['ticket']);
         }
         return false;
     }

@@ -297,11 +297,11 @@ class SaleController extends CommonController {
         $ew_img_size = filesize($ew_img);
         if(!file_exists($dp_img) || empty($dp_img_size) || !file_exists($ew_img) || empty($ew_img_size)){
             if(!file_exists($ew_img) || empty($ew_img_size)){
-                $b = call_user_func(array('WechatController', 'rec_qrcode'), $_SESSION['user_name'],$id);
+                $b = call_user_func(array('WechatController', 'rec_qrcode'), $id);
                 $b = preg_replace('/https/','http',$b,1);
                 logResult('Local:1');
                 if(empty($b)){
-                    $b = call_user_func(array('WechatController', 'rec_qrcode'), $_SESSION['user_name'],$id,0,'',true);
+                    $b = call_user_func(array('WechatController', 'rec_qrcode'), $id);
                     $b = preg_replace('/https/','http',$b,1);
                     logResult('Local:2');
                     //logResult(var_export($_SESSION, true));
