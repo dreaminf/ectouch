@@ -1389,13 +1389,20 @@ span.t-jiantou i.icon-jiantou1.current{
 .ranklist{width:2.5rem;padding:25% 0 0 12%}
 .rank-two{width:6rem}
 .rank-jt{width:2.2rem;margin-top:42%}
-}@media only screen and (max-width:480px) and (min-width:360px){.rank-height{    min-height: 6rem;
+.n-is--icont-1{margin-top:-0.8rem;}
+.n-is--icont-2{margin-top:-0.6rem;}
+.n-is--icont-3{margin-top:-0.65rem;}
+}
+@media only screen and (max-width:480px) and (min-width:360px){.rank-height{    min-height: 6rem;
     max-height: 33.2rem;}
 .r-headerimg{width:4.7rem;height:4.7rem}
 .rank-cont ul li h2{font-size:1.45rem;padding-top:3.5%;color:#525252}
 .ranklist{width:2.5rem;padding:30% 0 0 12%}
 .rank-two{width:5.9rem}
-.rank-jt{width:2.2rem;margin-top:50%}
+.rank-jt{width:2.2rem;margin-top:50%;}
+.n-is--icont-1{margin-top:0rem;}
+.n-is--icont-2{margin-top:0rem;}
+.n-is--icont-3{margin-top:0rem;}
 }
 .n-list-box section{margin-top:1rem;}
 .n-list-box section:first-child{margin-top:0rem;}
@@ -1412,9 +1419,6 @@ span.t-jiantou i.icon-jiantou1.current{
 .user-cont-right-box{margin-left:0.5rem;}
 .n-dd-color{color:#ff4646;}
 .n-money-box2{padding-top:0.4rem;}
-
-
-
 
 
 

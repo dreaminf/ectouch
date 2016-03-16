@@ -67,7 +67,7 @@
 			<!--分类3-->
 			<ul class="int-nav-box-a my-new-m padding-all shop-b">
 				<li>
-					<label class="cate-shop-box"><i class="iconfont icon-fenxiao a_left"></i><span>我的分销</span></label>
+					<label class="cate-shop-box"><i class="iconfont icon-fenxiao a_left n-is--icont-1"></i><span>我的分销</span></label>
 					<span class="t-jiantou fr n-sect-i"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
 				</li>
 			</ul>
@@ -84,7 +84,7 @@
 			<!--分类4-->
 			<ul class="int-nav-box-b my-new-m padding-all shop-b">
 				<li>
-					<label class="cate-shop-box"><i class="iconfont icon-gonggaofuzhi a_left"></i><span>我的会员</span></label>
+					<label class="cate-shop-box"><i class="iconfont icon-gonggaofuzhi a_left n-is--icont-1"></i><span>我的会员</span></label>
 					<span class="t-jiantou fr n-sect-i"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
 				</li>
 			</ul>
@@ -112,7 +112,7 @@
 			<!--分类5-->
 			<ul class="int-nav-box-c my-new-m padding-all shop-b">
 				<li>
-					<label class="cate-shop-box"><i class="iconfont icon-jinbichongzhi a_left"></i><span>我的佣金</span></label>
+					<label class="cate-shop-box"><i class="iconfont icon-jinbichongzhi a_left n-is--icont-2"></i><span>我的佣金</span></label>
 					<span class="t-jiantou fr n-sect-i"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
 				</li>
 			</ul>
@@ -136,7 +136,7 @@
 			<!--分类6-->
 			<ul class="int-nav-box-d my-new-m padding-all shop-b">
 				<li>
-					<label class="cate-shop-box"><i class="iconfont icon-mingpian a_left"></i><span>我的名片</span></label>
+					<label class="cate-shop-box"><i class="iconfont icon-mingpian a_left n-is--icont-3"></i><span>我的名片</span></label>
 					<span class="t-jiantou fr n-sect-i"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
 				</li>
 			</ul>
