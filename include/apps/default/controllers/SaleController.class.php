@@ -292,7 +292,10 @@ class SaleController extends CommonController {
         );
         $userinfo = $this->model->table('wechat_user')->where($condition)->find();
         if(empty($userinfo)){
-            $this->redirect(url('index'));
+            //$this->redirect(url('index'));
+        }else{
+            $userinfo['name'] = $userinfo['nickname'];
+            $userinfo['avatar'] = $userinfo['headimgurl'];
         }
         // 生成二维码
         $userinfo['qrcode'] = call_user_func(array('WechatController', 'rec_qrcode'), $user_id);
