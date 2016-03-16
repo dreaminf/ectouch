@@ -173,6 +173,13 @@ label.admin-text{color:#999;}
     margin-top: 0.5rem;
     margin-bottom: 5.5rem;
 }
+.xiangqing-1{
+    padding-bottom: 1rem;
+    line-height: 2rem;
+    background-color: #FFFFFF;
+    margin-top: 0.5rem;
+    margin-bottom: 6.5rem;
+}
 /*按钮色调*/
 .btn-submit,
 .btn-disab,

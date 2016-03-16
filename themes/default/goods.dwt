@@ -198,7 +198,7 @@
 				</div>-->
 			</div>
 		</section>
-		<section class="padding-all text-center t-remark2 xiangqing ">
+		<section class="padding-all text-center t-remark2 xiangqing-1 ">
 			<a href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}" class="j-goodsinfo-div">点击查看商品详情</a>
 		</section>
 
