@@ -23,7 +23,7 @@
 								<div class="rank-cont-box">
 									<!--{foreach from=$list item=li}-->
 									<section class="rank-cont">
-										<a href="distribution_user.html">
+										<a href="javascript:void(0);">
 											<ul class="dis-box">
 												<li class="rank-two">
                           {if $li.user_img}
