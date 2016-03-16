@@ -4,7 +4,7 @@
 <div id="box">
 
 	<div class="a-raply-info n-rap-box">
-		<p class="f-02 col-7">24小时内到账，法定节假日3天到账,最低提现{$txxz}元</p>
+		<p class="f-05 col-7">24小时内到账，法定节假日3天到账,最低提现{$txxz}元</p>
 	</div>
 	<form action="{:url('Sale/act_account')}" method="post" name="theForm">
 		<div class="bank-card">
