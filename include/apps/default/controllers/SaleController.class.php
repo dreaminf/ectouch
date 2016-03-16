@@ -304,7 +304,7 @@ class SaleController extends CommonController {
         }
         // 生成二维码
         $userinfo['qrcode'] = call_user_func(array('WechatController', 'rec_qrcode'), $user_id);
-
+dump($userinfo);
         $this->assign('info', $userinfo);
         $this->assign('title', L('spread'));
         $this->display('sale_spread.dwt');
