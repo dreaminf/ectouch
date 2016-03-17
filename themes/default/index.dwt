@@ -39,7 +39,7 @@
   <i class="index-header-menu iconfont fl" onclick="window.location = '{:url('category/top_all')}'">&#xe627;</i>
   <div class="index-search-box fl">
     <input type="text" class="index-search-input j-search-input" placeholder="商品搜索" onclick="openSearch();">
-    <a href="javascript:void(0);" class="j-search-input"><i class="index-search-sound iconfont fr">&#xe623;</i></a>
+    <a href="javascript:void(0);" class="j-search-input"><i class="index-search-sound iconfont fr"><!-- &#xe623; --></i></a>
   </div>
   <a href="javascript:openSearch()"><i class="index-header-right iconfont fr">&#xe603;</i></a>
 </header>
