@@ -5,10 +5,12 @@
 	<a class="box-flex{if $sort =='shop_price'} active{/if}{if $sort =='shop_price' && $order == 'ASC'} a-change{/if}" href="{:url('category/index#goods_list',array('id'=>$this->_var['id'],'display'=>$this->_var['display'],'brand'=>$this->_var['brand_id'],'type'=>$this->_var['type'],'price_min'=>$this->_var['price_min'],'price_max'=>$this->_var['price_max'],'filter_attr'=>$this->_var['filter_attr'], 'sort'=>'shop_price', 'order'=> ($this->_var['sort']=='shop_price' && $this->_var['order']=='ASC')?'DESC':'ASC', 'keywords'=>$this->_var['keywords']))}">{$lang.sort_price}<i class="iconfont icon-xiajiantou"></i></a>
 	<a class="a-sequence j-a-sequence"><i class="iconfont icon-pailie" data="1"></i></a>
 </section>
-<div class="n-cate-box-1">
+{if $not_keyword eq 1}
+<div id="hide-div" class="n-cate-box-1">
 	<p>您没有输入有效关键字</p>		
 	<span>以下是为您推荐的商品</span>
 </div>
+{/if}
 <section class="product-list j-product-list product-list-medium" data="1">
 	<ul id="j-product-box">
 		<script id="j-product" type="text/html">
