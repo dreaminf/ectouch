@@ -1014,8 +1014,8 @@ class UserController extends CommonController {
 			$token = md5(serialize($address));
 			$_SESSION[$token] = 1;
 			if(isset($_SESSION[$token])){
-				$url = url('user/address_list')
-				ecs_header("Location: $url\n");
+				$url = url('user/address_list');
+				ecs_header("Location: $url");
 			}
             if (model('Users')->update_address($address)) {
                 show_message(L('edit_address_success'), L('address_list_lnk'), url('address_list'));
