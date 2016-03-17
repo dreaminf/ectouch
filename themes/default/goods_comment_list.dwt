@@ -1,5 +1,6 @@
 <!-- #BeginLibraryItem "/library/new_page_header.lbi" -->
 <!-- #EndLibraryItem -->
+
 <style>
 	/*page 分页样式 - 数字*/
 	
@@ -29,13 +30,53 @@
 	
 	.ect-page .form-select select {
 		padding: 0.9em 5em;
-		margin-left: 4rem;
 	}
 	
 	.ect-page .form-select i.fa {
 		margin-top: -0.6em;
 	}
-	
+	.form-select i.fa {
+  display: block;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  margin-top: -0.65em;
+  right: 0.6em;
+  z-index: 1;
+  color: #aaa;
+}
+select {
+  -webkit-appearance: none;
+  border: 0;
+  color: #555;
+  padding-left: 0;
+  border: 1px solid #e3e3e3;
+  border-radius: 5px;
+  padding: 0.2em 0.4em;
+  padding-right: 1.2em;
+  font-size: 1.1em;
+}
+.form-select {
+  position: relative;
+  overflow: hidden;
+  height: auto;
+  text-align: center;
+  margin-top: 0.1em;
+  height: 2.5em;
+}
+.form-select select	{ position: relative;}
+.ect-page .form-select select {
+  padding: 0.4em 5em;
+  position: relative;
+}
+.pager li {
+  display: inline;
+}
+.pager {
+  margin: 20px 0;
+  text-align: center;
+  list-style: none;
+}
 	.n-nav-box{}
 	.goods-evaluation-page .tab-title-1 ul li {
     padding: 1.2rem 0;
