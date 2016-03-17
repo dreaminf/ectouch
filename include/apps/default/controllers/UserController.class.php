@@ -1011,9 +1011,9 @@ class UserController extends CommonController {
                 'consignee' => I('post.consignee'),
                 'mobile' => I('post.mobile')
             );
-			$token = serialize($address);
-			$_SESSION['token'] = $token;
-			if(serialize($address) == $_SESSION['token']){
+			$token = md5(serialize($address));
+			$_SESSION[$token] = 1;
+			if(isset($_SESSION[$token])){
 				$url = url('user/address_list')
 				ecs_header("Location: $url\n");
 			}
