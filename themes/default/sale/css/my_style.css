@@ -1422,9 +1422,10 @@ span.t-jiantou i.icon-jiantou1.current{
 
 /*分页*/
 .n-page-box-m{background: #FFF;border-radius: 0.5rem !important;padding: 1.55rem 0.8rem;font-size: 1.5rem;border: 1px solid #e3e3e3;display: block;color:#444;	}
+.n-page-box-m1{background:#fff; border:1px solid #eee; color:#888;}
 .pagination{width:100%; overflow: hidden; position: relative;  padding: 2rem; box-sizing: border-box;line-height: 0.3rem;}
 .p-select{ position: absolute;left: 6rem; right:6rem; text-align: center ;}
-.p-select select{border: 1px solid #e3e3e3; background:#fff;      width: 8rem;height: 3.6rem;  padding:1.5rem 0.8rem;  border-radius: 0.5rem !important;font-size: 1.5rem;}
+.p-select select{border: 1px solid #e3e3e3; background:#fff;      width: 8rem;height: 3.6rem;   border-radius: 0.5rem !important;font-size: 1.5rem;}
 
 
 
