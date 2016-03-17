@@ -9,6 +9,10 @@
 	<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
 	<link rel="stylesheet" href="__TPL__/statics/css/search.css" />
 </head>
+<style>
+.search {position: relative;padding:0;}
+.text-all{padding:1rem;}
+</style>
 <body>
 <div class="con">
 <div class="index-max-box">
