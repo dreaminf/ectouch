@@ -30,8 +30,9 @@ header{line-height:2rem}
 /*==================
     关注
 =============*/
-.dis-box{ display:-moz-box; display:-webkit-box; display:box; width:100%; margin-top:0rem; left: 0; right: 0;background-color: rgba(0, 0, 0, 0.8);
-  z-index: 4; overflow: hidden; margin: 0 auto; height: 4rem;  padding: 0 1.3rem; max-width: 640px;  min-width: 320px;}
+.ect-attention{height: 4rem;background-color: rgba(0, 0, 0, 0.8); padding: 0 1.3rem;}
+.dis-box{ display:-moz-box; display:-webkit-box; display:box; width:100%; margin-top:0rem; left: 0; right: 0;
+  z-index: 4; overflow: hidden; margin: 0 auto;   max-width: 640px;  min-width: 320px;}
 .box-flex{ -moz-box-flex:1; -webkit-box-flex:1; box-flex:1;   line-height: 1.5555rem;padding-top: 0.5rem;} 
 .dis-box .attention-img {width: 4rem;}
 .dis-box .attention-button  {width: 8rem;} 

@@ -175,3 +175,15 @@ address, cite, dfn, em, var {
 	font-style: normal;
 }
 .swiper-slide-active p label{font-weight:normal;    margin-bottom: 5px;}
+/*new hooter*/
+.new-footer-box{padding:0.2rem 0;}
+.new-footer-box i{font-size:1.7rem;color:#D7D7D7;display:block;text-align:center}
+.new-footer-box span{color:#D7D7D7;font-size:1rem;display:block;text-align:center;padding-top:0.1rem;}
+.new-index-footer{ background-color: rgba(50, 50, 50, 0.96);   left: 0;
+    right: 0;
+    position: fixed;
+    z-index: 4;
+    overflow: hidden;
+    margin: 0 auto;
+    bottom: 0;
+    z-index: 4;}

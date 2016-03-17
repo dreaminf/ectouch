@@ -27,7 +27,7 @@
 	.p-t-remark{color:#999;padding-bottom:0rem}
 	</style>
 	<body>
-	    <div class="con" style="margin-bottom: 4rem;">
+	    <div class="con" style="margin-bottom: 4.5rem;">
 		<div class="member-main">
 			<div class="member-photo">
 				<div class="member-photo-left fl" onclick="window.location = '{:url('user/collection_list')}'">
@@ -138,9 +138,7 @@
 			</div>
 			<!--{/if}-->
 		</div>
-		<footer class="member-footer">
 			<!-- #BeginLibraryItem "/library/page_user_menu.lbi" --><!-- #EndLibraryItem -->
-		</footer>
 		</div>
 		<!-- #BeginLibraryItem "/library/search_index.lbi" --><!-- #EndLibraryItem -->
         <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
