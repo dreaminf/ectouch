@@ -581,7 +581,7 @@ class UserController extends CommonController {
      */
     public function order_list() {
         $pay = 1;
-        $size = I(C('page_size'), 10);
+        $size = I(C('page_size'),10);
         $count = $this->model->table('order_info')->where('user_id = ' . $this->user_id)->count();
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('order_list', $filter), $size);
@@ -607,7 +607,7 @@ class UserController extends CommonController {
         $count = $this->model->table('order_info')->where($where)->count();
 		//dump($count);exit;
         $filter['page'] = '{page}';
-        $offset = $this->pageLimit(url('order_list', $filter), $size);
+        $offset = $this->pageLimit(url('not_shoushuo', $filter), $size);
         $offset_page = explode(',', $offset);
         $orders = model('Users')->not_shouhuo_orders($this->user_id, $pay, $offset_page[1], $offset_page[0]);
 		if(!$orders){
