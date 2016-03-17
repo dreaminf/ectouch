@@ -60,7 +60,7 @@
           
 		  
           <div id="need_inv">
-		  <input name="need_inv" type="checkbox"  class="input" id="ECS_NEEDINV" onclick="changeNeedInv()" value="1"  checked="true" style="display:none"/>
+		  <input name="need_inv" type="checkbox"  class="input" id="ECS_NEEDINV" onclick="changeNeedInv()" value="0"  checked="true" style="display:none"/>
           </div>
           <li> 
             <!-- {if $inv_type_list} --> 

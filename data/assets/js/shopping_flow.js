@@ -1,13 +1,17 @@
 /* $Id : shopping_flow.js 4865 2007-01-31 14:04:10Z paulgao $ */
-
+/* *
+ * 改变发票的方式
+ */
 function isinv()
 {
 				var isinv = $("input[name=invinput]").val();
 				if(isinv == '0'){
 				$("input[name=invinput]").val('1');	
+				$("input[name=need_inv]").val('1');	
 				  
 				}else{
 				$("input[name=invinput]").val('0');
+				$("input[name=need_inv]").val('0');	
 				
 				}
 				  var obj        = document.getElementById('ECS_NEEDINV');
@@ -495,23 +499,30 @@ if (obj.error)
  */
 function changeNeedInv()
 {
-  var obj        = document.getElementById('ECS_NEEDINV');
-  var objType    = document.getElementById('ECS_INVTYPE');
-  var objPayee   = document.getElementById('ECS_INVPAYEE');
-  var objContent = document.getElementById('ECS_INVCONTENT');
-  var needInv    = obj.checked ? 1 : 0;
-  var invType    = obj.checked ? (objType != undefined ? objType.value : '') : '';
-  var invPayee   = obj.checked ? objPayee.value : '';
-  var invContent = obj.checked ? objContent.value : '';
-  objType.disabled = objPayee.disabled = objContent.disabled = ! obj.checked;
-  if(objType != null)
-  {
-    objType.disabled = ! obj.checked;
-  }
+	var isinv = $("input[name=invinput]").val();
+				if(isinv == '1'){
+					 var obj        = document.getElementById('ECS_NEEDINV');
+					  var objType    = document.getElementById('ECS_INVTYPE');
+					  var objPayee   = document.getElementById('ECS_INVPAYEE');
+					  var objContent = document.getElementById('ECS_INVCONTENT');
+					  var needInv    = obj.checked ? 1 : 0;
+					  var invType    = obj.checked ? (objType != undefined ? objType.value : '') : '';
+					  var invPayee   = obj.checked ? objPayee.value : '';
+					  var invContent = obj.checked ? objContent.value : '';
+					  objType.disabled = objPayee.disabled = objContent.disabled = ! obj.checked;
+					  if(objType != null)
+					  {
+						objType.disabled = ! obj.checked;
+					  }
 
-  $.get('index.php?m=default&c=flow&a=change_needinv', {need_inv:needInv, inv_type:encodeURIComponent(invType), inv_payee:encodeURIComponent(invPayee), inv_content:encodeURIComponent(invContent)}, function(data){
-    orderSelectedResponse(data);
-  });
+					  $.get('index.php?m=default&c=flow&a=change_needinv', {need_inv:needInv, inv_type:encodeURIComponent(invType), inv_payee:encodeURIComponent(invPayee), inv_content:encodeURIComponent(invContent)}, function(data){
+						orderSelectedResponse(data);
+					  });
+				  
+				}else{
+				
+				}
+ 
   //Ajax.call('flow.php?step=change_needinv', 'need_inv=' + needInv + '&inv_type=' + encodeURIComponent(invType) + '&inv_payee=' + encodeURIComponent(invPayee) + '&inv_content=' + encodeURIComponent(invContent), orderSelectedResponse, 'GET');
 }
 
