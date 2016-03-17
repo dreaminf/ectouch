@@ -42,8 +42,9 @@
 		</section>
 		
 		<!--{/foreach}-->
+			{include file='library/sale_page.lbi '}
 </div>
-		{include file='library/sale_page.lbi '}
+	
 	</div>
 </body>
 

@@ -2,9 +2,9 @@
 <div class="pagination">
     <p style="float:left">
         <!-- {if $pager.page_prev} -->
-        <a class="pagination-left" href="{$pager.page_prev}" >&lt;上一页</a>
+        <a class="pagination-left" href="{$pager.page_prev}" ><span>上一页</span></a>
         <!-- {else} -->
-        <a class="no pagination-left">&lt;上一页</a>
+        <a class="no pagination-left"><span class="n-page-box-m">上一页</span></a>
         <!-- {/if} -->
     </p>
     <p class="p-select">
@@ -19,16 +19,11 @@
 	</p>
     <p  style="float:right  ">
 		<!-- {if $pager.page_next} -->
-              <a  class="pagination-right" href="{$pager.page_next}" >下一页&gt;</a>
+              <a  class="pagination-right" href="{$pager.page_next}" ><span class="n-page-box-m">下一页</span></a>
               <!-- {else} -->
-              <a class="no pagination-right">下一页&gt;</a> 
+              <a class="no pagination-right"><span class="n-page-box-m">下一页</span></a> 
               <!-- {/if} -->
     </p>
 </div>
-    <style>
-    .pagination{width:100%; overflow: hidden; position: relative; height:3rem; padding: 2rem; box-sizing: border-box;line-height: 0.3rem;}
-    .p-select{ position: absolute;left: 6rem; right:6rem; text-align: center ;top: 1.2rem;}
-    .p-select select{border:none; background:none;}
-    </style>
 <!--{/if}-->
  
