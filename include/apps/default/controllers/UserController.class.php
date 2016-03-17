@@ -566,6 +566,9 @@ class UserController extends CommonController {
         $offset = $this->pageLimit(url('not_pay_order_list', $filter), $size);
         $offset_page = explode(',', $offset);
         $orders = model('Users')->get_user_orders($this->user_id, $pay, $offset_page[1], $offset_page[0]);
+		if(!$orders){
+			show_message('暂无内容');
+		}
         $this->assign('pay', $pay);
         $this->assign('title', L('not_pay_list'));
         $this->assign('pager', $this->pageShow($count));
@@ -584,6 +587,9 @@ class UserController extends CommonController {
         $offset = $this->pageLimit(url('order_list', $filter), $size);
         $offset_page = explode(',', $offset);
         $orders = model('Users')->get_user_orders($this->user_id, $pay, $offset_page[1], $offset_page[0]);
+		if(!$orders){
+			show_message('暂无内容');
+		}
         $this->assign('pay', $pay);
         $this->assign('title', L('order_list_lnk'));
         $this->assign('pager', $this->pageShow($count));
@@ -604,6 +610,9 @@ class UserController extends CommonController {
         $offset = $this->pageLimit(url('order_list', $filter), $size);
         $offset_page = explode(',', $offset);
         $orders = model('Users')->not_shouhuo_orders($this->user_id, $pay, $offset_page[1], $offset_page[0]);
+		if(!$orders){
+			show_message('暂无内容');
+		}
         $this->assign('pay', $pay);
         $this->assign('title', '待收货');
         $this->assign('pager', $this->pageShow($count));
@@ -2389,6 +2398,9 @@ class UserController extends CommonController {
             $goods[$key]['url'] = url('goods/index', array('id' => $vo['goods_id']));
 		}
 		//dump($goods);
+		if(!$goods){
+			show_message('暂无内容');
+		}
 		$this->assign('title','待评价');
 		$this->assign('goods_list',$goods);
         $this->display('user_order_comment_list.dwt');
