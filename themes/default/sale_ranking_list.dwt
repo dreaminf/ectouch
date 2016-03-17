@@ -12,7 +12,7 @@
 					<img src="__TPL__/sale/images/fx-peihangbao.png" />
 					<div class="rank-list"><img src="__TPL__/sale/images/fx-list.png"></div>
 				</div>
-				<div class="rank-list-cont f-03" style="display:none">您的排名:<span>1</span>名</div>
+				<div class="rank-list-cont f-03">您的排名:<span>{if $pm}{$pm}{else}{/if}</span>名</div>
 				
 				<div class="hsse-bg">					
 					<div class="huangse-bg">
