@@ -75,7 +75,7 @@
           </li>
           <!-- {/if} -->
           <li>
-            <input name="inv_payee" type="text"  placeholder="{$lang.please_invoice_title}" class="input" id="ECS_INVPAYEE" size="20" value="{$order.inv_payee}" onblur="changeNeedInv()" />
+            <input name="inv_payee" type="text"  placeholder="{$lang.please_invoice_title}" class="input" id="ECS_INVPAYEE" size="20" maxlength="22" value="{$order.inv_payee}" onblur="changeNeedInv()" />
           </li>
           <li> <span class="pull-left select-span">{$lang.invoice_content}</span>
             <div class="form-select pull-left"> <i class="fa fa-sort"></i>
@@ -129,7 +129,7 @@
             </li>
             <!-- {/foreach} 循环贺卡 -->
           </ul>
-          <input name="" type="text" placeholder="{$lang.bless_note}">
+          <input name="card_message" maxlength="22" type="text" placeholder="{$lang.bless_note}">
         </div>
       </section>
       <!-- {/if} 是否使用贺卡 --> 
@@ -178,7 +178,7 @@
         <p><b> {$lang.order_postscript} </b></p>
         <i class="fa fa-angle-down"></i> </a>
         <div id="collapseFive" class="panel-collapse collapse in">
-          <input name="postscript" type="text" class="fuyan" placeholder="{$lang.please_order_postscript}">
+          <input name="postscript" type="text" class="fuyan" maxlength="22" placeholder="{$lang.please_order_postscript}">
         </div>
       </section>
       <section class="ect-margin-tb ect-margin-bottom0 ect-padding-lr checkout-select checkout-pro-list">
