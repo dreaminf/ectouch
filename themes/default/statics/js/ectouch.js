@@ -467,3 +467,22 @@ $(function($) {
 $(function() {
 	$('#loading').hide();
 })
+
+$(function(){
+	$(".del").click(function(){
+		if(!confirm('您确定要删除吗？')){
+			return false;
+		}					
+		var url = 'index.php?m=default&c=user&a=clear_history';
+		$.get(url, '', function(data){
+			if(1 == data.status){
+				location.reload();
+				
+			}
+			else{
+				alert("删除失败");
+			}
+		}, 'json');
+		return false;
+	});
+})

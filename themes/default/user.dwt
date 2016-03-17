@@ -115,7 +115,7 @@
 			<div class="member-record">
 				<div class="member-record-title">
 					<i class="iconfont fl member-record-title-i">&#xe624;</i>
-					<p class="fl">{$lang.user_history}</p><i class="fr"><img class="n-shanchutupian" src=__TPL__/images/iconfont-xiao1.png style="width:1.5rem;height:1.5rem;margin-right:0.5rem;margin-top:0rem;"></i>
+					<p class="fl">{$lang.user_history}</p><i class="fr"><img class="n-shanchutupian del" src="__TPL__/images/iconfont-xiao1.png" style="width:1.5rem;height:1.5rem;margin-right:0.5rem;margin-top:0rem;"></i>
 				</div>				
 				<section class="goods-shop-pic m-top1px of-hidden padding-all b-color-f">
 				<div style="cursor: grab;" class="g-s-p-con product-one-list of-hidden scrollbar-none j-g-s-p-con swiper-container-horizontal swiper-container-android">
@@ -154,6 +154,5 @@
 				grabCursor: true
 			});
 		</script>
-
 	</body>
 </html>
