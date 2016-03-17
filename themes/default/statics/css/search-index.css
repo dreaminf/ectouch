@@ -68,7 +68,7 @@ a.btn-reset,a.btn-default{color:#555;}
 .text-all .text-all-span{height:3rem; line-height: 3rem; font-size:1.6rem; color:#666;}
 .text-all span.t-jiantou{margin-top:.8rem;}
 .input-texts {position: relative;}
-.input-texts input {border: 0;height: 3rem;line-height: 2rem;padding: .5rem 0;box-sizing: border-box;width: 100%;color: #555;font-size: 1.6rem;padding-right: 3rem;}
+.input-texts input {border: 0;height: 3rem;line-height: 3rem;padding: .5rem 0;box-sizing: border-box;width: 100%;color: #555;font-size: 1.6rem;padding-right: 3rem;}
 .text-area1{width:100%; border:0; font-size:1.6rem; min-height: 3rem; line-height:2rem; padding: .5rem 0;  box-sizing:border-box; border-bottom:1px solid #F6F6F9; color:#555;}
 /*文本下拉*/
 .text-all-selec{position:relative;}
@@ -149,7 +149,7 @@ h4.title-hrbg hr {background: #f6f6f9;height: 1px;border: 0;position: absolute;l
 .search-con ul{overflow: hidden; color:#555}
 .search-con ul a{color:#666;}
 .search-con p{overflow:hidden;padding:.8rem 0; padding-top:0; clear: both; color:#999;}
-.search-con p.hos-search{margin-top:1.3rem; }
+.search-con p.hos-search{margin-top:1.7rem; }
 .search-con p.hos-search i.icon-xiao10{font-size:1.8rem;}
 .close-search{height:4.6rem; line-height: 4.6rem; color:#999; position: absolute; bottom:0; text-align: center; width:100%;}
 .history-search{position: absolute !important; bottom: 5rem;overflow: hidden;left:0;top: 6.8rem; right: 0; padding:0 1.3rem;}
@@ -163,5 +163,5 @@ h4.title-hrbg hr {background: #f6f6f9;height: 1px;border: 0;position: absolute;l
 .icon-write .ect-icon-history {
     background-position: -5.4em -2.7em;
 }
-.box-flex input{height:3rem;font-size: 1.2rem;}
+.box-flex input{height:3rem;font-size: 1.4rem;}
 .swiper-slide-active p label{font-weight:normal;}
