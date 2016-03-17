@@ -828,16 +828,15 @@ class SaleController extends CommonController {
      * 分销商排行榜
      */
     public function ranking_list(){
-
-        $size = I(C('page_size'), 10);
-        $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
+        $size = 5;
+//        $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
         $sql = "select COUNT(*) as count from {pre}drp_shop";
         $count = $this->model->query($sql);
         $count = $count['0']['count'];
         $this->pageLimit(url('sale/ranking_list'), $size);
         $this->assign('pager', $this->pageShow($count));
 
-        $sql = "select *, (select sum(user_money) from {pre}drp_log WHERE user_money > 0 and status=1 and  {pre}drp_log.user_id= {pre}drp_shop.user_id) as sum_money from {pre}drp_shop order by sum_money desc, user_id asc limit  ".($page-1)*$size.','.$size;
+        $sql = "select *, (select sum(user_money) from {pre}drp_log WHERE user_money > 0 and status=1 and  {pre}drp_log.user_id= {pre}drp_shop.user_id) as sum_money from {pre}drp_shop order by sum_money desc, user_id asc limit  ".$size;
         $list = $this->model->query($sql);
         if($list){
             foreach($list as $key=>$val){
@@ -848,39 +847,18 @@ class SaleController extends CommonController {
         }
         $this->assign('list', $list);
         $this->assign('title', L('ranking_list'));
-        //获取我的排名   robot
+        //获取我的排名
         $pm = null;
-//        $sql = 'SELECT d.id ,
-//(
-//    select (select sum(user_money) from {pre}drp_log WHERE user_money > 0 and status=1 and  {pre}drp_log.user_id= {pre}drp_shop.user_id) from {pre}drp_shop where {pre}drp_shop.user_id = d.user_id
-//) as sum_money,
-//(
-//	SELECT COUNT(id)
-//	FROM `{pre}drp_shop` s where
-//	(
-//	 select (select sum(user_money) from {pre}drp_log WHERE user_money > 0 and status=1 and  {pre}drp_log.user_id= {pre}drp_shop.user_id) from {pre}drp_shop  WHERE user_id = s.user_id
-//	)
-//	  >
-//	sum_money
-//)
-//+
-//(
-//	SELECT COUNT(id)
-//	FROM `{pre}drp_shop` es where
-//	(
-//	 select (select sum(user_money) from {pre}drp_log WHERE user_money > 0 and status=1 and  {pre}drp_log.user_id= {pre}drp_shop.user_id) from {pre}drp_shop  WHERE user_id = es.user_id
-//	)
-//	  =
-//	sum_money  AND  es.user_id <d.user_id
-//)
-//+1 as pm
-//FROM `{pre}drp_shop` d
-//WHERE  d.user_id = '.$_SESSION['user_id'];
-//
-//        $list = $this->model->query($sql);
-//        if ($list) {
-//            $pm = $list[0]['pm'];
-//        }
+        $sql = "select user_id, (select sum(user_money) from {pre}drp_log WHERE user_money > 0 and status=1 and  {pre}drp_log.user_id= {pre}drp_shop.user_id) as sum_money from {pre}drp_shop order by sum_money desc, user_id asc limit 50000";
+
+        $list = $this->model->query($sql);
+
+        foreach ($list as $key => $val) {
+            if ($val['user_id'] == I('u')) {
+                $pm = $key+1;
+                break;
+            }
+        }
         //
         $this->assign('pm', $pm);
         $this->display('sale_ranking_list.dwt');
