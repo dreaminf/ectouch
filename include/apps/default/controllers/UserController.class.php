@@ -1365,11 +1365,15 @@ class UserController extends CommonController {
     public function bonus() {
         if (IS_POST) {
             $bonus_sn = I('post.bonus_sn', '', 'intval');
-            if (model('Users')->add_bonus($this->user_id, $bonus_sn)) {
-                show_message(L('add_bonus_sucess'), L('back_up_page'), url('bonus'), 'info');
-            } else {
-                ECTouch::err()->show(L('back_up_page'), url('bonus'));
-            }
+			if($bonus_sn ==''){
+				show_message('请输入红包序列号', L('back_up_page'), url('bonus'), 'info');
+			}else{				
+				if (model('Users')->add_bonus($this->user_id, $bonus_sn)) {
+					show_message(L('add_bonus_sucess'), L('back_up_page'), url('bonus'), 'info');
+				} else {
+					ECTouch::err()->show(L('back_up_page'), url('bonus'));
+				}				
+			}
         }
         // 分页
         $filter['page'] = '{page}';
