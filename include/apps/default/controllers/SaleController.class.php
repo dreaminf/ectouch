@@ -850,37 +850,37 @@ class SaleController extends CommonController {
         $this->assign('title', L('ranking_list'));
         //获取我的排名   robot
         $pm = null;
-        $sql = 'SELECT d.id ,
-(
-    select (select sum(user_money) from {pre}drp_log WHERE user_money > 0 and status=1 and  {pre}drp_log.user_id= {pre}drp_shop.user_id) from {pre}drp_shop where {pre}drp_shop.user_id = d.user_id
-) as sum_money,
-(
-	SELECT COUNT(id)
-	FROM `{pre}drp_shop` s where
-	(
-	 select (select sum(user_money) from {pre}drp_log WHERE user_money > 0 and status=1 and  {pre}drp_log.user_id= {pre}drp_shop.user_id) from {pre}drp_shop  WHERE user_id = s.user_id
-	)
-	  >
-	sum_money
-)
-+
-(
-	SELECT COUNT(id)
-	FROM `{pre}drp_shop` es where
-	(
-	 select (select sum(user_money) from {pre}drp_log WHERE user_money > 0 and status=1 and  {pre}drp_log.user_id= {pre}drp_shop.user_id) from {pre}drp_shop  WHERE user_id = es.user_id
-	)
-	  =
-	sum_money  AND  es.user_id <d.user_id
-)
-+1 as pm
-FROM `{pre}drp_shop` d
-WHERE  d.user_id = '.$_SESSION['user_id'];
-
-        $list = $this->model->query($sql);
-        if ($list) {
-            $pm = $list[0]['pm'];
-        }
+//        $sql = 'SELECT d.id ,
+//(
+//    select (select sum(user_money) from {pre}drp_log WHERE user_money > 0 and status=1 and  {pre}drp_log.user_id= {pre}drp_shop.user_id) from {pre}drp_shop where {pre}drp_shop.user_id = d.user_id
+//) as sum_money,
+//(
+//	SELECT COUNT(id)
+//	FROM `{pre}drp_shop` s where
+//	(
+//	 select (select sum(user_money) from {pre}drp_log WHERE user_money > 0 and status=1 and  {pre}drp_log.user_id= {pre}drp_shop.user_id) from {pre}drp_shop  WHERE user_id = s.user_id
+//	)
+//	  >
+//	sum_money
+//)
+//+
+//(
+//	SELECT COUNT(id)
+//	FROM `{pre}drp_shop` es where
+//	(
+//	 select (select sum(user_money) from {pre}drp_log WHERE user_money > 0 and status=1 and  {pre}drp_log.user_id= {pre}drp_shop.user_id) from {pre}drp_shop  WHERE user_id = es.user_id
+//	)
+//	  =
+//	sum_money  AND  es.user_id <d.user_id
+//)
+//+1 as pm
+//FROM `{pre}drp_shop` d
+//WHERE  d.user_id = '.$_SESSION['user_id'];
+//
+//        $list = $this->model->query($sql);
+//        if ($list) {
+//            $pm = $list[0]['pm'];
+//        }
         //
         $this->assign('pm', $pm);
         $this->display('sale_ranking_list.dwt');
