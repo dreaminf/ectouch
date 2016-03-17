@@ -2,7 +2,7 @@
 <div class="pagination">
     <p style="float:left">
         <!-- {if $pager.page_prev} -->
-        <a class="pagination-left" href="{$pager.page_prev}" ><span>上一页</span></a>
+        <a class="pagination-left" href="{$pager.page_prev}" ><span class="n-page-box-m">上一页</span></a>
         <!-- {else} -->
         <a class="no pagination-left"><span class="n-page-box-m">上一页</span></a>
         <!-- {/if} -->
