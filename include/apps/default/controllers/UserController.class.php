@@ -1011,7 +1011,12 @@ class UserController extends CommonController {
                 'consignee' => I('post.consignee'),
                 'mobile' => I('post.mobile')
             );
-
+			$token = serialize($address);
+			$_SESSION['token'] = $token;
+			if(serialize($address) == $_SESSION['token']){
+				$url = url('user/address_list')
+				ecs_header("Location: $url\n");
+			}
             if (model('Users')->update_address($address)) {
                 show_message(L('edit_address_success'), L('address_list_lnk'), url('address_list'));
             }

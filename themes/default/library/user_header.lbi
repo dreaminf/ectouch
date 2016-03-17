@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta http-equiv="expires" content="" />
 <title>{$page_title}</title>
 <link rel="stylesheet" href="__TPL__/css/member.css">
 <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.min.css">
