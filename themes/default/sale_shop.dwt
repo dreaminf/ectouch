@@ -12,6 +12,13 @@
 <style>
 .search {position: relative;padding:0;}
 .text-all{padding:1rem;}
+.input-texts input {font-size: 1.4rem;}
+.search-con p {font-size: 1.4rem;}
+.close-search {font-size: 1.5rem;}
+.btn-submit {font-size: 1.42rem;}
+.history-search {padding: 0.8rem 1.3rem;}
+.search .btn-submit {height: 3.6rem;}
+.input-texts input {height: 3rem;line-height: 3rem;}
 </style>
 <body>
 <div class="con">

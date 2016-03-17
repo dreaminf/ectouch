@@ -1,7 +1,7 @@
 <div class="search-div j-search-div ts-3">
 	<section class="search">
 		<form action="{:url('category/index')}<!-- {if $id} -->&id={$id}<!-- {/if} -->" method="post">
-		<div class="text-all new-dis-box j-text-all">
+		<div class="text-all new-dis-box j-text-all" style="z-index: 4999;">
 			<div class="box-flex input-texts">
 				<input class="j-input-text" type="text" name="keywords" placeholder="{$lang.no_keywords}" />
 				<i class="iconfont icon-guanbi is-null j-is-null"></i>
