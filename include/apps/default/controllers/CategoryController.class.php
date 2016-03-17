@@ -180,7 +180,7 @@ class CategoryController extends CommonController
             } else {
                 setcookie('ECS[keywords]', $keyword, gmtime() + 3600 * 24 * 30);
             }
-        }elseif($keyword == '' && empty($this->cat_id)){
+        }elseif($keyword == '' && ($this->cat_id == 0) && I('request.filter_attr') == ""){
 			$this->assign('not_keyword', 1);
 		}
     }
