@@ -311,7 +311,7 @@ class mysql
         return mysql_ping($this->link_id);
     }
 
-    function escape_string($unescaped_string)
+    static function escape_string($unescaped_string)
     {
         return mysql_real_escape_string($unescaped_string);
     }
