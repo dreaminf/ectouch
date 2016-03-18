@@ -1,5 +1,5 @@
 <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
-<form action="{:url('user/add_address')}" method="post" name="theForm" onsubmit="return checkConsignee(this)">
+<form action="{:url('user/add_address',array('token'=>$this->_var['token']))}" method="post" name="theForm" onsubmit="return checkConsignee(this)">
   <div class="ect-bg-colorf flow-consignee">
     <ul class="o-info">
       <li>

@@ -1011,9 +1011,7 @@ class UserController extends CommonController {
                 'consignee' => I('post.consignee'),
                 'mobile' => I('post.mobile')
             );
-			$token = md5(serialize($address));
-			$_SESSION[$token] = 1;
-			if(isset($_SESSION[$token])){
+			if(I('token') == md5(uniqid())){
 				$url = url('user/address_list');
 				ecs_header("Location: $url");
 			}
@@ -1022,11 +1020,11 @@ class UserController extends CommonController {
             }
             exit();
         }
-
+		
         $province_list = model('RegionBase')->get_regions(1, 1);
         $city_list = model('RegionBase')->get_regions(2);
         $district_list = model('RegionBase')->get_regions(3);
-
+		$this->assign("token",md5(uniqid()));
         $this->assign('title', L('add_address'));
         // 取得国家列表、商店所在国家、商店所在国家的省列表
         $this->assign('country_list', model('RegionBase')->get_regions());
