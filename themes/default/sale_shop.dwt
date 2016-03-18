@@ -20,7 +20,8 @@
 .search .btn-submit {height: 3.6rem;}
 .input-texts input {height: 3rem;line-height: 3rem;}
 .a-text-more span {font-size: 1.4rem;}
-.a-text-more span {line-height: 0rem;}
+.a-text-more span {line-height: 2.6rem;}
+.a-text-one span {line-height: 0rem;}
 </style>
 <body>
 <div class="con">
