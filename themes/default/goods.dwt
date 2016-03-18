@@ -1,5 +1,39 @@
 <!-- #BeginLibraryItem "/library/new_page_header.lbi" -->
 <!-- #EndLibraryItem -->
+<style>
+	.filter-btn a.box-flex {
+   line-height:2.5rem;
+   height:2.5rem;
+   }
+@media only screen and (min-width: 300px) and (max-width: 350px) {
+	.ect-header{
+		margin: 0.4em 0.6em;
+		height: 2.2em;
+	}
+	.ect-header a{
+	  width: 2.06em;
+    height: 2.06em;
+	}
+	.ect-header span{
+		font-size: 1.2em;
+	}
+	.ect-icon1 {
+		 background-size: 15.45em;
+	}
+	.icon-write .ect-icon-mune {
+		 background-position: -8.825em -2.1em;
+	}
+	.icon-write .ect-icon-history {
+		background-position: -4.71em -2.22em;
+	}
+	nav.ect-nav ul li a{
+		font-size: 0.8em;
+	}
+}
+.jian001{
+        margin-right: 1.5rem;
+}
+</style>
 <div class="con">
 	<!--style="margin-bottom: 50px;"-->
 	<div class="goods">
