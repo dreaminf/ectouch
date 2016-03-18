@@ -54,7 +54,7 @@ class BaseController extends Controller {
 
     private function _initialize() {
         //初始化设置
-        @ini_set('memory_limit', '64M');
+        @ini_set('memory_limit', '128M');
         @ini_set('session.cache_expire', 180);
         @ini_set('session.use_cookies', 1);
         @ini_set('session.auto_start', 0);
