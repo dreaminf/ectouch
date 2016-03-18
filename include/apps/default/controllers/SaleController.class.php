@@ -936,6 +936,10 @@ class SaleController extends CommonController {
 
         $apply_info = $this->model->table('drp_apply')->where("user_id=".session('user_id'))->find();
         $price = $this->model->table('drp_config')->where("keyword='money'")->field('value')->getOne();
+		$examine = $this->model->table('drp_config')->field('value')->where('keyword = "examine"')->getOne();
+		if($examine != 'open'){
+            redirect(url('sale/sale_set'));exit;
+        }
 
         if($apply_info['apply'] == 2){
             redirect(url('sale/index'));exit;
