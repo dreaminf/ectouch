@@ -1011,7 +1011,7 @@ class UserController extends CommonController {
                 'consignee' => I('post.consignee'),
                 'mobile' => I('post.mobile')
             );
-			if(I('token') == md5(uniqid())){
+			if($_GET['token'] == md5(uniqid())){
 				$url = url('user/address_list');
 				ecs_header("Location: $url");
 			}
