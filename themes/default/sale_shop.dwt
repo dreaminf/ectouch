@@ -16,9 +16,11 @@
 .search-con p {font-size: 1.4rem;}
 .close-search {font-size: 1.5rem;}
 .btn-submit {font-size: 1.42rem;}
-.history-search {padding: 0.8rem 1.3rem;}
+.history-search {padding:0 1.3rem;}
 .search .btn-submit {height: 3.6rem;}
 .input-texts input {height: 3rem;line-height: 3rem;}
+.a-text-more span {font-size: 1.4rem;}
+.a-text-more span {line-height: 0rem;}
 </style>
 <body>
 <div class="con">
