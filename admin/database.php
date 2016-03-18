@@ -18,7 +18,7 @@ define('IN_ECTOUCH', true);
 require(dirname(__FILE__) . '/includes/init.php');
 require_once(ROOT_PATH . ADMIN_PATH . '/includes/cls_sql_dump.php');
 
-@ini_set('memory_limit', '128M');
+@ini_set('memory_limit', '512M');
 
 /* 备份页面 */
 if ($_REQUEST['act'] == 'backup')

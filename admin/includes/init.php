@@ -15,7 +15,7 @@ if (__FILE__ == '')
 }
 
 /* 初始化设置 */
-@ini_set('memory_limit',          '128M');
+@ini_set('memory_limit',          '512M');
 @ini_set('session.cache_expire',  180);
 @ini_set('session.use_trans_sid', 0);
 @ini_set('session.use_cookies',   1);
