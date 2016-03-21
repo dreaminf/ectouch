@@ -738,7 +738,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 
 .menu-left{background:#F6F6F9;}
 .menu-left ul li{padding:1.3rem .8rem; box-sizing: border-box;  font-size:1.5rem; width:8.6rem; text-align: center;}
-.menu-left ul li.active{background:#fff; position:relative;}
+.menu-left ul li.active{background:#fff; position:relative;color: #1CBB7F;}
 .menu-left ul li.active:before{content: " "; position: absolute;display: block; width:2px; height:100%; background:#1CBB7F; top:0; left:0;}
 .menu-right{background:#fff; position:inherit; margin-left:8.6rem; margin-top: 5.7rem; right:0; bottom:0; left: 8.6rem}
 .menu-right h5{font-size:1.3rem; color:#666; margin-top:1rem; margin-bottom:.4rem;}
