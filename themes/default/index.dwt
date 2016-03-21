@@ -137,6 +137,7 @@
 		<!-- #EndLibraryItem -->
 		<!-- #BeginLibraryItem "/library/page_footer.lbi" -->
 		<!-- #EndLibraryItem -->
+		<!-- #BeginLibraryItem "/library/js_sdk.lbi" --><!-- #EndLibraryItem -->
 		<script type="text/javascript">
 			get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}", '__TPL__/images/loader.gif');
 		</script>
