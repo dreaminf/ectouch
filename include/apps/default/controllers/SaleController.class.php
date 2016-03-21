@@ -486,6 +486,7 @@ class SaleController extends CommonController {
                 }
             }
         }
+		$this->assign('title', '订单详情');
         $this->assign('orders_list', $orders);
         $this->display('sale_goods_detail.dwt');
     }
