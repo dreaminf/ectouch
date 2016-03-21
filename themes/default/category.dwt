@@ -14,7 +14,10 @@
 		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
 		<link rel="stylesheet" href="__TPL__/statics/css/search.css" />
 	</head>
-
+	<style>
+            a.a-sequence {width: 3.5rem;height: 0rem;line-height: 3rem;margin-left:0.5rem;}
+            a.s-filter {line-height: 3rem;padding-left: 0rem;}
+    </style>
 	<body class="">
 		<div id="loading"><img src="__TPL__/statics/img/loading.gif" /></div>
 		<div class="con">
@@ -26,7 +29,7 @@
 							<input class="j-input-text" type="text" placeholder="商品搜索" />
 							<i class="iconfont icon-guanbi is-null j-is-null"></i>
 						</div>
-						<a href="#j-filter-div" class="s-filter j-s-filter">筛选</a>
+						<a class="a-sequence j-a-sequence"><i class="iconfont icon-pailie" data="1"></i></a>
 					</div>
 				</section>
 				<!-- #BeginLibraryItem "/library/new_goods_list.lbi" --><!-- #EndLibraryItem -->
@@ -166,5 +169,4 @@ $('#hide-div').delay(1500).hide(0);
 	});
 </script>
 	</body>
-
 </html>
