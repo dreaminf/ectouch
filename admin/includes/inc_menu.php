@@ -96,7 +96,7 @@ $modules['06_menu_promotion']['12_favourable']           = 'favourable.php?act=l
 $modules['06_menu_promotion']['15_exchange_goods']       = 'exchange_goods.php?act=list';
 
 // 报表
-$modules['07_menu_stats']['flow_stats']                  = 'flow_stats.php?act=view';
+// $modules['07_menu_stats']['flow_stats']                  = 'flow_stats.php?act=view';
 //$modules['07_menu_stats']['searchengine_stats']          = 'searchengine_stats.php?act=view';
 //$modules['07_menu_stats']['z_clicks_stats']              = 'adsense.php?act=list';
 $modules['07_menu_stats']['report_guest']                = 'guest_stats.php?act=list';
