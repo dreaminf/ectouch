@@ -56,13 +56,12 @@
 			</div>
 			<span class="goods-num" id="goods-num"><span id="g-active-num"></span>/<span id="g-all-num"></span></span>
 			<ul class="swiper-wrapper">
-				<li class="swiper-slide tb-lr-center"><img src="{$goods.goods_img}" alt="{$goods.goods_name}" /></li>
 				<!--{if $pictures}-->
 				<!-- {foreach from=$pictures item=picture name=no}-->
-				<!--{if $smarty.foreach.no.index > 0}-->
 				<li class="swiper-slide tb-lr-center"><img src="{$picture.img_url}" alt="{$picture.img_desc}" /></li>
-				<!--{/if}-->
 				<!--{/foreach}-->
+				<!--{else}-->
+				<li class="swiper-slide tb-lr-center"><img src="{$goods.goods_img}" alt="{$goods.goods_name}" /></li>
 				<!--{/if}-->
 			</ul>
 			<div class="swiper-pagination"></div>
