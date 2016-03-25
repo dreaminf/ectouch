@@ -732,7 +732,7 @@ function get_order_list($is_separate,$order_sn)
 
     $arr = array();
     // 获取分销天数
-    $fxts = $GLOBALS['db']->getOne("select centent from " . $GLOBALS['ecs']->table('drp_config') ." where keyword = 'fxts'");
+    $fxts = $GLOBALS['db']->getOne("select value from " . $GLOBALS['ecs']->table('drp_config') ." where keyword = 'fxts'");
     $fxts = $fxts*3600*24;
     $nowTime = gmtime();
     while ($row = $GLOBALS['db']->fetchRow($res))
