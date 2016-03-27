@@ -951,7 +951,7 @@ function set_affiliate($u = '') {
  */
 function license_info() {
     if (C('licensed') > 0) {
-        $license = '<a href="http://www.ecshop.com/license.php?product=ectouch_free&url=' . urlencode(__URL__) . '" target="_blank"
+        $license = '<a href="http://www.ectouch.cn/license.php?product=ectouch_free&url=' . urlencode(__URL__) . '" target="_blank"
 >&nbsp;&nbsp;Licensed</a>';
         return $license;
     } else {

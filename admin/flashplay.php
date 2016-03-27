@@ -870,8 +870,8 @@ function set_flash_data($tplname, &$msg)
     {
         $flashdata[] = array(
                                 'src' => 'data/afficheimg/20081027angsif.jpg',
-                                'text' => 'ECShop',
-                                'url' =>'http://www.ecshop.com'
+                                'text' => 'ECTouch',
+                                'url' =>'http://www.ectouch.cn'
                             );
         $flashdata[] = array(
                                 'src' => 'data/afficheimg/20081027wdwd.jpg',
@@ -880,8 +880,8 @@ function set_flash_data($tplname, &$msg)
                             );
         $flashdata[] = array(
                                 'src' => 'data/afficheimg/20081027xuorxj.jpg',
-                                'text' => 'ECShop',
-                                'url' =>'http://help.ecshop.com/index.php?doc-view-108.htm'
+                                'text' => 'ECTouch',
+                                'url' =>'http://help.ectouch.cn/index.php?doc-view-108.htm'
                             );
     }
     switch($tplname)

@@ -16,6 +16,6 @@ define('IN_ECTOUCH', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 $backUrl=$ecs->url() . ADMIN_PATH . '/receive.php';
-header("location:http://cloud.ecshop.com/payment_apply.php?mod=kuaiqian&par=$backUrl");
+header("location:http://cloud.ectouch.cn/payment_apply.php?mod=kuaiqian&par=$backUrl");
 exit;
 ?>

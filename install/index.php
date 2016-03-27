@@ -271,10 +271,10 @@ switch ($step) {
 		$appid = get_appid();
 		$version_file = dirname(ROOT_PATH) . '/data/certificate/appkey.php';
 		require $version_file;
-		if(AUTH_KEY == ''){
+		if(EC_APPID == ''){
 			require dirname(ROOT_PATH) . '/include/vendor/Http.class.php';
 			require dirname(ROOT_PATH) . '/include/vendor/Cloud.class.php';
-			@file_put_contents($version_file, str_replace("'AUTH_KEY', '".AUTH_KEY."'", "'AUTH_KEY', '".$appid."'", file_get_contents($version_file)));
+			@file_put_contents($version_file, str_replace("'EC_APPID', '".EC_APPID."'", "'EC_APPID', '".$appid."'", file_get_contents($version_file)));
 			$cloud = Cloud::getInstance();
 			$site_info = get_site_info($appid);
 			$cloud->data($site_info)->act('post.install');
@@ -462,7 +462,7 @@ function get_appid(){
  * 站点数据
  * @param string $appid
  */
-function get_site_info($appid = AUTH_KEY){
+function get_site_info($appid = EC_APPID){
 	$db_config = require '../data/config.php';
     $conn = mysql_connect($db_config['DB_HOST'], $db_config['DB_USER'], $db_config['DB_PWD']);
     mysql_query("SET NAMES 'utf8'");

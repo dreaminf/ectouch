@@ -43,7 +43,7 @@ class IndexController extends AdminController
             if ($msg !== true) {
                 $this->message($msg, NULL, 'error');
             }
-            $data = array('license'=>$license, 'appid' => AUTH_KEY);
+            $data = array('license'=>$license, 'appid' => EC_APPID);
             $result = $this->cloud->data($data)->act('post.dolicense');
             if ($result['error'] > 0) {
                 $this->message($result['msg'], NULL, 'error');
@@ -52,7 +52,7 @@ class IndexController extends AdminController
             }
         } else {
             // 检测是否授权
-            $data = array('appid' => AUTH_KEY);
+            $data = array('appid' => EC_APPID);
             $empower = $this->cloud->data($data)->act('get.licenseInfo');
             if($empower){
                 $this->assign('empower',$empower);

@@ -1,2 +1,2 @@
 <?php
-define('AUTH_KEY', '');
+define('EC_APPID', '');
