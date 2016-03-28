@@ -2065,7 +2065,6 @@ class WechatController extends AdminController
             }
             if (! empty($config)) {
                 $data['config'] = serialize($config);
-                $data['config'] = str_replace("\\\\r\\\\n","\\r\\n",$data['config']);
             }
             $data['wechat_id'] = $this->wechat_id;
             $num = $this->model->table('wechat_extend')
