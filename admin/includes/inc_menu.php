@@ -26,7 +26,7 @@ $modules['01_menu_system']['admin_list']             = 'privilege.php?act=list';
 //$modules['01_menu_system']['agency_list']            = 'agency.php?act=list';
 //$modules['01_menu_system']['suppliers_list']         = 'suppliers.php?act=list';
 //$modules['01_menu_system']['shop_authorized']             = 'license.php?act=list_edit';
-$modules['01_menu_system']['shop_authorized']             = '../index.php?m=admin&a=license';
+// $modules['01_menu_system']['shop_authorized']             = '../index.php?m=admin&a=license';
 
 // 商品
 $modules['02_menu_goods']['01_goods_list']       = 'goods.php?act=list'; // 商品列表
