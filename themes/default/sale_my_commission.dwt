@@ -39,7 +39,7 @@
 			<ul class="int-nav-box-b my-new-m padding-all shop-b">
 				<li>
 					<label class="cate-shop-box"><i class="iconfont icon-jinbichongzhi"></i><span>已分成订单佣金</span></label>
-					<span class="t-jiantou f-r f-02 n-right-box n-sect-i"><label class="n-right-tit f-05 col-lv">{$sale_no_money_num}元<label><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
+					<span class="t-jiantou f-r f-02 n-right-box n-sect-i"><label class="n-right-tit f-05 col-lv">{$sale_money_num}元<label><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
 				</li>
 			</ul>
 			<a href="{:url('sale/order_list')}">
