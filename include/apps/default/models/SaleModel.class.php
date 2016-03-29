@@ -577,7 +577,7 @@ class SaleModel extends BaseModel {
                         foreach($order_id as $key=>$val){
                             $where.=",".$val['order_id'];
                         }
-                       $data['profit2'] = M()->getRow("select sum(a.user_money) as money from {pre}drp_log as a left join {pre}order_info as o on a.order_id=o.order_id where a.order_id in(".$where.") and a.user_id = ".$user_id ." and user_money > 0  and o.pay_status = 2 ");
+                       $data['profit2'] = M()->getRow("select sum(a.user_money) as money from {pre}drp_log as a left join {pre}order_info as o on a.order_id=o.order_id where a.order_id in(".$where.") and a.user_id = ".$user_id ." and a.user_money > 0  and o.pay_status = 2 ");
                         $data['profit2'] = $data['profit2']['money'] ? $data['profit2']['money'] : 0;
 
                     }
