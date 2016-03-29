@@ -30,6 +30,7 @@ defined('DEFAULT_ACTION') or define('DEFAULT_ACTION', 'index');
 $base_path = str_replace('\\','/', dirname(getcwd())).'/';
 $base_config = $base_path . 'data/config.php';
 defined('IS_ECSHOP') or define('IS_ECSHOP', file_exists($base_config));
+require BASE_PATH . 'vendor/autoload.php';
 /* 系统函数 */
 require(BASE_PATH . 'base/helpers/function.php');
 /* 默认配置 */
@@ -43,11 +44,10 @@ defined('APP_DEBUG') or define('APP_DEBUG', C('DEBUG'));
 
 /* 错误等级 */
 if (APP_DEBUG) {
-    /* 错误和异常处理 */
-    register_shutdown_function('fatalError');
-    @ini_set("display_errors", 1);
     error_reporting(E_ALL ^ E_NOTICE); // 除了notice提示，其他类型的错误都报告
-    debug(); // system 运行时间，占用内存开始计算
+    $whoops = new \Whoops\Run;
+    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+    $whoops->register();
 } else {
     @ini_set("display_errors", 0);
     error_reporting(0); // 把错误报告，全部屏蔽
@@ -97,5 +97,5 @@ try {
         E(APP_NAME . '/' . $controller . '.class.php的' . $action . '() 方法没有访问权限', 404);
     }
 } catch (Exception $e) {
-    EcError::show($e->getMessage(), $e->getCode());
+    E($e->getMessage(), $e->getCode());
 }

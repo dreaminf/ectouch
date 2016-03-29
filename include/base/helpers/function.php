@@ -776,7 +776,7 @@ function load_ext_file($path) {
  * @param string $parse 配置解析方法 有些格式需要用户自己解析
  * @return array
  */
-function load_config($file,$parse=CONF_PARSE){
+function load_config($file,$parse=''){
     $ext  = pathinfo($file,PATHINFO_EXTENSION);
     switch($ext){
         case 'php':
@@ -988,9 +988,7 @@ function load_file($file) {
  * @return void
  */
 function E($msg, $code = 0) {
-    //throw new Exception($msg, $code);
-    //exit($msg);
-    include(ROOT_PATH. 'data/template/404.html');
+    throw new Exception($msg, $code);
     exit();
 }
 
