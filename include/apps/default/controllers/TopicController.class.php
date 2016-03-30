@@ -109,10 +109,11 @@ class TopicController extends CommonController {
                 }
             }
         }
+		$topic['topic_img'] = get_image_topic($topic['topic_img'], true);
         $this->assign('sort_goods_arr', $sort_goods_arr);          // 商品列表
         $this->assign('topic', $topic);                   // 专题信息
         $this->assign('tile', $topic['title']);
-        $this->assign('show_asynclist', C('show_asynclist'));
+        //$this->assign('show_asynclist', C('show_asynclist'));
         $templates = empty($topic['template']) ? 'topic.dwt' : $topic['template'];
         $this->display($templates);
     }

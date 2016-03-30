@@ -1756,6 +1756,17 @@ function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods',
     return $url;
 }
 
+function get_image_topic($image = '', $thumb = false, $call = 'goods', $del = false) {
+    $url = C('no_picture');
+    if (!empty($image)) {
+        if (strtolower(substr($image, 0, 4)) == 'http') {
+            return $image;
+        }
+        $base_url = IS_ECSHOP ? dirname(__URL__) : __URL__;
+        $url = $base_url . '/' . $image;
+    }
+    return $url;
+}
 /**
  * 重新获得非商品图片地址
  *
