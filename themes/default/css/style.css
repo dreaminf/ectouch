@@ -540,9 +540,13 @@ border: 1px solid transparent;border-radius: 4px;cursor: pointer;display: inline
 .box-flex {-webkit-box-flex: 1;-moz-box-flex: 1;-ms-box-flex: 1;box-flex: 1; display: block; width:100%;}
 #search_histroy li a span{line-height:0;margin:0;padding:0;}
 .fr{float:right;}
+/*购物车复选按钮
 .n-flow1-box{overflow:hidden;position:relative;}
 .n-flow-right-sum{width:90%;float:left;box-sizing: border-box;}
 .chack-input-box label{height:2.2rem;width:2.2rem;border-radius:100%;border:1px solid #ccc;margin-top:70%;}
 .chack-input-box label.active{background:url(../../default/images/radio.png) center center #1CBB7F no-repeat;background-size:cover;border:1px solid #1CBB7F;}
 .j-chack-box{width:10%;float:left;box-sizing: border-box;}
+.chack-input-box input{opacity: 0;height:3rem;width:3rem;margin-top:-20%;}
+.n-close-box{position:absolute;right:0.5rem; bottom:0.5rem;z-index:4999;}
+*/
 

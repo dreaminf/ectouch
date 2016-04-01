@@ -15,11 +15,11 @@
 		<ul>
 			<!-- {foreach from=$goods_list item=goods key=k} -->
 			<li class="n-flow1-box">
-				<div class="j-chack-box n-flow-ckecked">
+				<!--<div class="j-chack-box n-flow-ckecked">
 					<div class="chack-input-box">
-						<label></label>
+						<label><input type="checkbox" name="bike" /></label>
 					</div>
-				</div>
+				</div>-->
 				<div class="n-flow-right-sum">
 					<div class="ect-clear-over">
 						<a href="{:url('goods/index',array('id'=>$this->_var['goods']['goods_id']))}"><img src="{$goods.goods_thumb}" title="{$goods.goods_name|escape:html}"></a>
