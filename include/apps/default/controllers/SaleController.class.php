@@ -531,16 +531,35 @@ class SaleController extends CommonController {
      * 微店设置
      */
     public function sale_set(){
-        $info = $this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->select();
-        if($info){
-            if($info['0']['cat_id']==''){
-                redirect(url('sale/sale_set_category'));
-            }
-            else{
-                redirect(url('sale/index'));
-            }
-
-        }
+		$buy_money = $this->model->table('drp_config')->field("value")->where(array("keyword"=>'buy_money'))->getOne();//是否开启		
+		if($buy_money == open){
+			$buy = $this->model->table('drp_config')->field("value")->where(array("keyword"=>'buy'))->getOne();//设置金额
+			$sql ="select sum(goods_amount) as money from {pre}order_info where pay_status= 2 and user_id = ".$_SESSION['user_id'] ;
+			$money = $this->model->getRow($sql);
+			if($money['money'] >= $buy){
+				$info = $this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->select();
+				if($info){
+					if($info['0']['cat_id']==''){
+						redirect(url('sale/sale_set_category'));
+					}
+					else{
+						redirect(url('sale/index'));
+					}
+				}				
+			}else{
+				show_message('您的累计消费金额未达到开店要求，再接再厉','返回商城',url('user/index'));				
+			}
+		}else{
+			$info = $this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->select();
+			if($info){
+				if($info['0']['cat_id']==''){
+					redirect(url('sale/sale_set_category'));
+				}
+				else{
+					redirect(url('sale/index'));
+				}
+			}			
+		}
         if (IS_POST){
             $data = I('data');
             if (empty($data['shop_name'])){
