@@ -133,7 +133,7 @@ class weixin {
     {
         $time = time();
         $ret = model('Base')->model->table('wechat_user')->field('openid, ect_uid')->where('openid = "' . $userinfo['openid'] . '"')->find();
-        if (empty($ret)) {
+        if (empty($ret) || empty($ret['ect_uid'])) {
             //微信用户绑定会员id
             $ect_uid = 0;
             //查看公众号是否绑定
