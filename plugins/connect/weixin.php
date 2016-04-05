@@ -133,6 +133,9 @@ class weixin {
     {
         $time = time();
         $ret = model('Base')->model->table('wechat_user')->field('openid, ect_uid')->where('openid = "' . $userinfo['openid'] . '"')->find();
+        if(isset($ret['ect_uid']) && $ret['ect_uid'] == 0){
+            model('Base')->model->table('wechat_user')->where('openid = "' . $userinfo['openid'] . '"')->delete();
+        }
         if (empty($ret) || empty($ret['ect_uid'])) {
             //微信用户绑定会员id
             $ect_uid = 0;
