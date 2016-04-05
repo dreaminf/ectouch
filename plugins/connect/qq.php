@@ -172,8 +172,7 @@ class qq {
             'state' => '',
             'redirect_uri' => $callback_url
         );
-        $url = 'https://graph.qq.com/oauth2.0/token?' . http_build_query($params);
-        $url = str_replace('&amp;', '&', $url);
+        $url = 'https://graph.qq.com/oauth2.0/token?' . http_build_query($params, '', '&');
         $result_str = $this->http($url);
         $json_r = array();
         if ($result_str != '')
@@ -265,12 +264,10 @@ class qq {
         $params['oauth_consumer_key'] = $this->appid;
         $params['format'] = 'json';
         if ($method == 'GET') {
-            $query_url = $url . '?' . http_build_query($params);
-            $query_url = str_replace('&amp;', '&', $query_url);
+            $query_url = $url . '?' . http_build_query($params, '', '&');
             $result_str = $this->http($query_url);
         } else {
-            $query = http_build_query($params);
-            $query = str_replace('&amp;', '&', $query);
+            $query = http_build_query($params, '', '&');
             $result_str = $this->http($url, $query, 'POST');
         }
         $result = array();
