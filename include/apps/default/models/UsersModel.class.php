@@ -1828,6 +1828,8 @@ class UsersModel extends BaseModel {
             //$touch_data['user_id'] = $_SESSION['user_id'];
             $touch_data['aite_id'] = $info['aite_id'];
             $this->insert($touch_data);
+            // 兼容pc端登录
+            // $this->model->table('users')->data($touch_data)->where(array('user_id'=>$uid))->update();
             return true;
         } else {
             return false;
