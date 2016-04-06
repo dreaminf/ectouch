@@ -14,6 +14,7 @@
 			.swiper-wrapper .swiper-pagination-bullet-active {
 				background: #1CBB7F;
 			}
+			.n-index-input{font-size:1.2rem; color:#999;}
 		</style>
 	</head>
 
@@ -43,8 +44,8 @@
 				{/if}
 				<header class="index-header comWidth">
 					<i class="index-header-menu iconfont fl" onclick="window.location = '{:url('category/top_all')}'">&#xe627;</i>
-					<div class="index-search-box fl">
-						<input type="text" class="index-search-input j-search-input" placeholder="商品搜索" onclick="openSearch();">
+					<div class="index-search-box j-search-input fl">						
+							<span class="n-index-input">商品搜索</span>
 						<a href="javascript:void(0);" class="j-search-input"><i class="index-search-sound iconfont fr"><!-- &#xe623; --></i></a>
 					</div>
 					<a href="javascript:openSearch()"><i class="index-header-right iconfont fr">&#xe603;</i></a>
