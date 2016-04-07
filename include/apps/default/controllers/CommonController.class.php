@@ -38,7 +38,6 @@ class CommonController extends BaseController
                 /*DRP_START*/
                 $this->drp();
                 /*DRP_END*/
-                $this->wechatJsSdk();
             }
         }
         if(is_wechat_browser()){
