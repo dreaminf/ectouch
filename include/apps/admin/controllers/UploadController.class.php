@@ -24,11 +24,16 @@ class UploadController extends AdminController {
         parent::__construct();
         $this->content = file_get_contents(ROOT_PATH . "plugins/editor/config.json");
         $this->conf = json_decode(preg_replace("/\/\*[\s\S]+?\*\//", "", str_replace(array('__ROOT__', '__HOST__'), array(__ROOT__, __HOST__), $this->content)), true);
+        // 微信配置
+        $condition['id'] = 1;
+        $wechat = $this->model->table('wechat')->field('token, appid, appsecret')->where($where)->find();
+        $this->weObj = new Wechat($wechat);
     }
 
     // 上传方法
     public function index() {
         $action = I('get.action');
+        $tag = I('get.tag');
 
         switch ($action) {
             case 'config' :
@@ -43,7 +48,7 @@ class UploadController extends AdminController {
             case 'uploadvideo' :
             /* 上传文件 */
             case 'uploadfile' :
-                $result = $this->uploads();
+                $result = $this->uploads($tag);
                 break;
 
             /* 列出图片 */
@@ -82,7 +87,7 @@ class UploadController extends AdminController {
     }
 
     // 上传附件和上传视频
-    private function uploads() {
+    private function uploads($tag = '') {
         /* 上传配置 */
         $base64 = "upload";
         switch (htmlspecialchars($_GET['action'])) {
@@ -125,6 +130,18 @@ class UploadController extends AdminController {
 
         /* 生成上传实例对象并完成上传 */
         $up = new Uploader($fieldName, $config, $base64);
+
+        $res = $up->getFileInfo();
+
+        /**
+        $media = '@' . rtrim(ROOT_PATH, '/') . $res['url'];
+        exit($media);
+        if(!empty($tag)){
+            $res = $this->weObj->uploadImg("{'media': '". $media ."'}");
+            dump($res);
+            exit('xx');
+        }
+        */
 
         /**
          * 得到上传文件所对应的各个参数,数组结构

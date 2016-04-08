@@ -21,6 +21,8 @@
      */
     var URL = window.UEDITOR_HOME_URL || getUEBasePath();
     var sURL = URL.toLowerCase().replace('plugins/editor/', 'index.php?m=admin&c=upload');
+    var sTag = GetQueryString("tag");
+    sURL = (sTag != null) ? sURL + '&tag=' + sTag : sURL;
 
     /**
      * 配置项主体。注意，此处所有涉及到路径的配置别遗漏URL变量。
@@ -342,6 +344,12 @@
         //webAppKey 百度应用的APIkey，每个站长必须首先去百度官网注册一个key后方能正常使用app功能，注册介绍，http://app.baidu.com/static/cms/getapikey.html
         //, webAppKey: ""
     };
+
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
+    }
 
     function getUEBasePath(docUrl, confUrl) {
 

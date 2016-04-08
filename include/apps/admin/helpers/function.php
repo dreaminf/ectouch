@@ -257,10 +257,10 @@ function get_position_list()
  * @param   string  input_name  输入框名称
  * @param   string  input_value 输入框值
  */
-function create_html_editor($input_name, $input_value = '')
+function create_html_editor($input_name, $input_value = '', $append = array())
 {
     $editor = '<input type="hidden" id="'.$input_name.'" name="'.$input_name.'" value="'.htmlspecialchars($input_value).'" />
-    <iframe id="'.$input_name.'_frame" src="plugins/editor/editor.php?item='.$input_name.'" width="642" height="482" frameborder="0" scrolling="no"></iframe>';
+    <iframe id="'.$input_name.'_frame" src="plugins/editor/editor.php?item='.$input_name . '&' . http_build_query($append, '', '&') .'" width="642" height="482" frameborder="0" scrolling="no"></iframe>';
     return $editor;
 }
 
