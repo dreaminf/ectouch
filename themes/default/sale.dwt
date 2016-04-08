@@ -6,18 +6,23 @@
 		<header class="p-bt  n-m-b">
 			<ul class="dis-box">
 				<li class="n-sale-left-box">
-					<div class="n-sale-headerimg-box"> <a href="{:url('sale/shop_config')}">
-              {if $info.avatar}
-              <img class="index_image2" src="{$info.avatar}" />
-              {else}
-              <img class="index_image2" src="__TPL__/images/member-photo-img2.jpeg" />
-              {/if}
-             </a></div>
+					<div class="n-sale-headerimg-box"> 
+						<a href="{:url('sale/shop_config')}">
+						{if $info.avatar}
+						<img class="index_image2" src="{$info.avatar}" />
+						{else}
+						<img class="index_image2" src="__TPL__/images/member-photo-img2.jpeg" />
+						{/if}
+						</a>
+					</div>
 				</li>
 				<li class="box-flex">
 					<div class="n-sale-right-box">
 						<h4>{$info.name}</h4>
 						<p>{$sale.shop_name}</p>
+						<!--{if $info.parent_name}-->
+						<p>推荐人：{$info.parent_name}</p>
+						<!--{/if}-->
 						<time class="color-whie f-03">开店时间：{$sale.time}</time>
 				</li>
 				<li class="sale-right-width">

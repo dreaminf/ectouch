@@ -536,9 +536,14 @@ class ClipsBaseModel extends BaseModel {
     public function get_user_default($user_id) {
         $user_bonus = $this->get_user_bonus();
 
-        $sql = "SELECT pay_points, user_money, credit_line, last_login, is_validated FROM " . $this->pre . "users WHERE user_id = '$user_id'";
-        $row = $this->row($sql);
+        $sql = "SELECT pay_points, user_money, credit_line,parent_id, last_login, is_validated FROM " . $this->pre . "users WHERE user_id = '$user_id'";
+        $row = $this->row($sql);		
         $info = array();
+		if($row['parent_id'] > 0){
+			$sql = "SELECT user_name FROM " . $this->pre . "users WHERE user_id = ".$row['parent_id'];
+			$rows = $this->row($sql);
+			$info['parent_name'] =stripslashes($rows['user_name']);
+		}
         $info['username'] = stripslashes($_SESSION['user_name']);
         $info['shop_name'] = C('shop_name');
         $info['integral'] = $row['pay_points'] . C('integral_name');
