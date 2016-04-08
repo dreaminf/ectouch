@@ -46,7 +46,6 @@ class BrandController extends CommonController {
                     $list['list1'][$key]['goods'] =  model('Brand')->brand_get_goods_img($val['brand_id'],'','goods_id','desc','1','1');
                 }
             }
-
         }
         $this->assign('list', $list);
         $this->assign('page_title', L('brand_hj'));
