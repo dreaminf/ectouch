@@ -183,7 +183,7 @@ class weixin {
                 if (model('Users')->register($username, $password, $username . '@' . $domain, array('parent_id'=>intval($_GET['u']))) !== false) {
                     model('Users')->update_user_info();
                 } else {
-                    die('授权失败，如重试一次还未解决问题请联系管理员');
+                    die('授权失败，可能需要联系管理员开放会员注册。');
                 }
                 $data1['ect_uid'] = $_SESSION['user_id'];
             }
