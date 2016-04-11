@@ -132,17 +132,11 @@ class UploadController extends AdminController {
         $up = new Uploader($fieldName, $config, $base64);
 
         $res = $up->getFileInfo();
-
-        /**
-        $media = '@' . rtrim(ROOT_PATH, '/') . $res['url'];
-        exit($media);
         if(!empty($tag)){
-            $res = $this->weObj->uploadImg("{'media': '". $media ."'}");
-            dump($res);
-            exit('xx');
+            $wechat_res = $this->weObj->uploadImg(array('media' => '@' . ROOT_PATH . $res['url']));
+            $res['url'] = $wechat_res['url'];
         }
-        */
-
+        
         /**
          * 得到上传文件所对应的各个参数,数组结构
          * array(
@@ -155,7 +149,7 @@ class UploadController extends AdminController {
          * )
          */
         /* 返回数据 */
-        return json_encode($up->getFileInfo());
+        return json_encode($res);
     }
 
     // 显示文件列表
