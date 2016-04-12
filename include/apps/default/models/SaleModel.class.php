@@ -172,11 +172,27 @@ class SaleModel extends BaseModel {
             $res[$k]['short_change_desc'] = sub_str($v['change_desc'], 60);
             $res[$k]['amount'] = $v['user_money'];
             $res[$k]['change_type'] = $v['change_type'] == DRP_SEPARATE ? '佣金分成' : '佣金提现';
+			if($v['order_id'] > 0){
+				$res[$k]['order_status'] = $this->get_order_status($v['order_id']);				
+			}
         }
-
         return $res;
-
-
+    }
+	//取得订单状态
+	 function get_order_status($order_id) {
+        /* 取得订单列表 */
+        $arr = array();
+        $sql = "SELECT order_status, shipping_status, pay_status " .               
+                " FROM " . $this->pre . "order_info WHERE order_id = $order_id ". $pay  ;
+        $res = M()->query($sql);
+        foreach ($res as $key => $value) {          
+			$value['shipping_status'] = ($value['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $value['shipping_status'];	
+			$value['order_status'] = L('os.' . $value['order_status']) . ',' . L('ps.' . $value['pay_status']) . ',' . L('ss.' . $value['shipping_status']);
+            $arr[] = array(               
+                'order_status' => $value['order_status']
+             );
+        }
+        return $arr;
     }
     /**
      *  获取用户的分销订单列表
