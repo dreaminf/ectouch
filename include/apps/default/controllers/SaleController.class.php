@@ -577,11 +577,8 @@ class SaleController extends CommonController {
             $data['shop_name'] = $data['shop_name'];
             $data['user_id'] = $_SESSION['user_id'];
             $data['create_time'] = gmtime();
-            if($this->model->table('drp_shop')->data($data)->insert()){
-                redirect(url('sale/sale_set_category'));
-            }else{
-                show_message(L('set_error'));
-            }
+            $_SESSION['enable_drp_shop'] = $data;
+            redirect(url('sale/sale_set_category'));
         }
         $this->assign('title',L('sale_set'));
         $this->display('sale_set.dwt');
@@ -591,9 +588,9 @@ class SaleController extends CommonController {
      * 设置分销商品的分类
      */
     public function sale_set_category(){
-        if($this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id'],"open"=>1,'cat_id'=>''))->count() > 0){
-            redirect(url('sale/index'));
-        }
+        // if($this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id'],"open"=>1,'cat_id'=>''))->count() > 0){
+        //     redirect(url('sale/index'));
+        // }
         if(IS_POST){
             $cateArr = I('cate');
             $cat_id = '';
@@ -604,9 +601,9 @@ class SaleController extends CommonController {
             }else{
                 show_message(L('sale_cate_not_empty'));
             }
-            $data['cat_id'] = $cat_id;
+            $_SESSION['enable_drp_shop']['cat_id'] = $cat_id;
             $where['user_id'] = $_SESSION['user_id'];
-            $this->model->table('drp_shop')->data($data)->where($where)->update();
+            // $this->model->table('drp_shop')->data($data)->where($where)->update();
             redirect(url('sale/sale_set_end'));
         }
         $apply = $this->model->table('drp_config')->field("value")->where(array("keyword"=>'apply'))->getOne();
@@ -622,7 +619,6 @@ class SaleController extends CommonController {
                 $category[$key]['profit3'] = $category[$key]['profit3'] ? $category[$key]['profit3'] : 0;
             }
         }
-
         $this->assign('category',$category);
         $this->assign('title',L('sale_set_category'));
         $this->display('sale_set_category.dwt');
@@ -638,11 +634,11 @@ class SaleController extends CommonController {
         }
         // 设置为分销商
         $audit = $this->model->table('drp_config')->field("value")->where(array("keyword"=>'audit'))->getOne();
-        $data['create_time'] = gmtime();
-        $data['audit'] = ($audit == 'open') ? 0:1;
-        $data['open'] = ($audit == 'open') ? 0:1;
+        $_SESSION['enable_drp_shop']['create_time'] = gmtime();
+        $_SESSION['enable_drp_shop']['audit'] = ($audit == 'open') ? 0:1;
+        $_SESSION['enable_drp_shop']['open'] = ($audit == 'open') ? 0:1;
         $where['user_id'] = $_SESSION['user_id'];
-        $this->model->table('drp_shop')->data($data)->where($where)->update();
+        $this->model->table('drp_shop')->data($_SESSION['enable_drp_shop'])->insert();
 
         $novice = $this->model->table('drp_config')->field("value")->where(array("keyword"=>'novice'))->getOne();
         $this->assign('novice',$novice);
