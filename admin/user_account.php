@@ -532,38 +532,40 @@ function account_list()
         {
             $where .= "AND paid_time >= " . $filter['start_date']. " AND paid_time < '" . $filter['end_date'] . "'";
         }
-
-        $sql = "SELECT COUNT(*) FROM " .$GLOBALS['ecs']->table('user_account'). " AS ua, ".
-                   $GLOBALS['ecs']->table('users') . " AS u " . $where;
-        $filter['record_count'] = $GLOBALS['db']->getOne($sql);
-
+        
+         $sql = "SELECT COUNT(*) FROM " .$GLOBALS['ecs']->table('user_account'). " AS ua, ".
+                   $GLOBALS['ecs']->table('users') . " AS u " . $where;    
+         
+      
+         $filter['record_count'] =  intval($GLOBALS['db']->getOne($sql))/3 ;   
+       
         /* 分页大小 */
-        $filter = page_and_size($filter);
+        $filter = page_and_size($filter);     
 
         /* 查询数据 */
         $sql  = 'SELECT ua.*, u.user_name FROM ' .
             $GLOBALS['ecs']->table('user_account'). ' AS ua LEFT JOIN ' .
             $GLOBALS['ecs']->table('users'). ' AS u ON ua.user_id = u.user_id'.
             $where . "ORDER by " . $filter['sort_by'] . " " .$filter['sort_order']. " LIMIT ".$filter['start'].", ".$filter['page_size'];
-
+   
         $filter['keywords'] = stripslashes($filter['keywords']);
-        set_filter($filter, $sql);
+        set_filter($filter, $sql);    
     }
     else
     {
         $sql    = $result['sql'];
         $filter = $result['filter'];
     }
-
-    $list = $GLOBALS['db']->getAll($sql);
+      
+    $list = $GLOBALS['db']->getAll($sql);  
     foreach ($list AS $key => $value)
     {
         $list[$key]['surplus_amount']       = price_format(abs($value['amount']), false);
         $list[$key]['add_date']             = local_date($GLOBALS['_CFG']['time_format'], $value['add_time']);
         $list[$key]['process_type_name']    = $GLOBALS['_LANG']['surplus_type_' . $value['process_type']];
-     }
+     }     
     $arr = array('list' => $list, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
-
+   
     return $arr;
 }
 
