@@ -253,6 +253,28 @@ class WechatController extends CommonController
                     //记录用户操作信息
                     $this->record_msg($openid, $template . $bonus_msg, 1);
                 }
+				/* 下线扫码关注成功，给上级发送消息提示 by han */
+				if (!empty($register)) {
+					if($scene_user_id > 0){
+						$openid = $this->model->table("wechat_user")->field('openid')->where(array('ect_uid'=>$scene_user_id))->getOne();
+						$template = '亲:'. "\r\n" . '用户名：' . $username . "\r\n" . '微信昵称：' . $info['nickname'] ."\r\n" . '已成为您的下线';
+						 if(!empty($template)){
+							// 微信端发送消息
+							$msg = array(
+								'touser' => $openid,
+								'msgtype' => 'text',
+								'text' => array(
+									'content' => $template 
+								)
+							);
+							$this->weObj->sendCustomMessage($msg);
+
+							//记录用户操作信息
+							$this->record_msg($openid, $template , 1);
+						}
+					}
+				}
+				/* by han */
             } else {
                 //授权用户送红包
                 $uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where('openid = "'.$openid.'"')->getOne();
@@ -279,6 +301,35 @@ class WechatController extends CommonController
                             $this->record_msg($openid, $bonus_msg, 1);
                         }
                     }
+					/* 下线扫码关注成功，给上级发送消息提示 by han */
+					// 设置的用户注册信息
+                    $register = $this->model->table('wechat_extend')
+                        ->field('config')
+                        ->where('enable = 1 and command = "register_remind" and wechat_id = '.$this->wechat_id)
+                        ->find();
+					if (!empty($register)) {
+						$result = $this->model->table("users")->field('user_name, parent_id')->where(array('user_id'=>$uid))->find();
+						if($result['parent_id'] > 0){
+							$openid = $this->model->table("wechat_user")->field('openid')->where(array('ect_uid'=>$result['parent_id']))->getOne();
+							$template = '亲:'. "\r\n" . '用户名：' . $result['user_name'] . "\r\n" . '微信昵称：' . $info['nickname'] ."\r\n" . '已成为您的下线';
+							 if(!empty($template)){
+								// 微信端发送消息
+								$msg = array(
+									'touser' => $openid,
+									'msgtype' => 'text',
+									'text' => array(
+										'content' => $template 
+									)
+								);
+								$this->weObj->sendCustomMessage($msg);
+
+								//记录用户操作信息
+								$this->record_msg($openid, $template , 1);
+							}
+						}
+				}
+				/* by han */	
+					
                 }
 
                 // 获取用户所在分组ID
