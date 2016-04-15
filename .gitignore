@@ -2,7 +2,6 @@
 html
 test
 data/caches
-data/config.php
 data/install.lock
 
 # IDE Files

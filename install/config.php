@@ -13,7 +13,7 @@ return array(
 	//数据库文件
 	'sqlFileName'=>array('structure.sql', 'data.sql', 'mobile.sql', 'wechat.sql'),
 	//数据库配置文件
-	'dbConfig'=>'../data/config.php',
+	'dbConfig'=>'../include/config/db.php',
 	//数据库名
 	'dbName' => 'ectouch_db',
 	//数据库表前缀
