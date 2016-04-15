@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1534bef39ef39e2a695014db4d4d8247",
-    "content-hash": "b3335f77ca2d4fa1216bd25c961a87bd",
+    "hash": "8dc2025c04229e9bb5c5402855dc470d",
+    "content-hash": "b96979a1bf0a54ae58eef93da105641a",
     "packages": [
         {
             "name": "filp/whoops",
@@ -64,6 +64,52 @@
                 "zf2"
             ],
             "time": "2015-06-29 05:42:04"
+        },
+        {
+            "name": "overtrue/wechat",
+            "version": "2.1.36",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/overtrue/wechat.git",
+                "reference": "b7e93f4768d0b6e1d0dd858b18a619a1b4bbc35c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packagist.phpcomposer.com/files/overtrue/wechat/b7e93f4768d0b6e1d0dd858b18a619a1b4bbc35c.zip",
+                "reference": "b7e93f4768d0b6e1d0dd858b18a619a1b4bbc35c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mcrypt": "*",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Overtrue\\Wechat\\": "src/Wechat/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "overtrue",
+                    "email": "anzhengchao@gmail.com"
+                }
+            ],
+            "description": "微信SDK",
+            "keywords": [
+                "sdk",
+                "wechat",
+                "weixin",
+                "weixin-sdk"
+            ],
+            "time": "2016-03-21 01:57:20"
         }
     ],
     "packages-dev": [],

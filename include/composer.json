@@ -1,5 +1,6 @@
 {
     "require": {
-        "filp/whoops": "^1.1"
+        "filp/whoops": "^1.1",
+        "overtrue/wechat": "^2.1"
     }
 }

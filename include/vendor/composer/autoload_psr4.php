@@ -6,4 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Overtrue\\Wechat\\' => array($vendorDir . '/overtrue/wechat/src/Wechat'),
 );
