@@ -106,5 +106,79 @@
             "weixin",
             "weixin-sdk"
         ]
+    },
+    {
+        "name": "snowair/think-hookagent",
+        "version": "v0.4",
+        "version_normalized": "0.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/snowair/think-hookagent.git",
+            "reference": "238b8838b8dcdfedee4bad0b9d5b4e15ab934d1e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://packagist.phpcomposer.com/files/snowair/think-hookagent/238b8838b8dcdfedee4bad0b9d5b4e15ab934d1e.zip",
+            "reference": "238b8838b8dcdfedee4bad0b9d5b4e15ab934d1e",
+            "shasum": ""
+        },
+        "time": "2015-09-12 13:26:13",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Snowair\\Think\\Behavior\\": "."
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "朱亚杰",
+                "email": "xcoolcc@gmail.com"
+            }
+        ],
+        "description": "ThinkPHP3.2 composer扩展包开发工具"
+    },
+    {
+        "name": "snowair/think-whoops",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/snowair/think-whoops.git",
+            "reference": "ff2ff5fa7c08e255b92d547fe4f6fd72fcab719d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://packagist.phpcomposer.com/files/snowair/think-whoops/ff2ff5fa7c08e255b92d547fe4f6fd72fcab719d.zip",
+            "reference": "ff2ff5fa7c08e255b92d547fe4f6fd72fcab719d",
+            "shasum": ""
+        },
+        "require": {
+            "filp/whoops": "^1.1",
+            "snowair/think-hookagent": ">=0.4"
+        },
+        "time": "2015-09-15 10:48:16",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "files": [
+                "whoops.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "朱亚杰",
+                "email": "xcoolcc@gmail.com"
+            }
+        ],
+        "description": "ThinkPHP3.2 集成Whoops"
     }
 ]
