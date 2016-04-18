@@ -148,7 +148,8 @@ class WechatController extends CommonController
             // 用户信息
             $info = $this->weObj->getUserInfo($openid);
             if (empty($info)) {
-                $info = array();
+                $this->weObj->resetAuth();
+                exit('null');
             }
             // 查找用户是否存在
             $where['openid'] = $openid;
@@ -935,6 +936,7 @@ class WechatController extends CommonController
             elseif($qrcode['id'] && empty($qrcode['qrcode_url'])){
                 $ticket = $weObj->getQRCode((int)$qrcode['scene_id'], $qrcode['type'], $qrcode['expire_seconds']);
                 if (empty($ticket)) {
+                    $weObj->resetAuth();
                     //$weObj->errCode, $weObj->errMsg
                     return false;
                 }
@@ -956,6 +958,7 @@ class WechatController extends CommonController
                 //生成二维码
                 $ticket = $weObj->getQRCode((int)$data['scene_id'], $data['type'], $expire_seconds);
                 if (empty($ticket)) {
+                    $weObj->resetAuth();
                     //$weObj->errCode, $weObj->errMsg
                     return false;
                 }
