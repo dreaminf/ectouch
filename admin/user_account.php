@@ -533,11 +533,11 @@ function account_list()
             $where .= "AND paid_time >= " . $filter['start_date']. " AND paid_time < '" . $filter['end_date'] . "'";
         }
         
-         $sql = "SELECT COUNT(*) FROM " .$GLOBALS['ecs']->table('user_account'). " AS ua, ".
-                   $GLOBALS['ecs']->table('users') . " AS u " . $where;    
+         $sql = "SELECT COUNT(*) FROM " .$GLOBALS['ecs']->table('user_account'). " AS ua   LEFT JOIN ".
+                   $GLOBALS['ecs']->table('users') . " AS u on ua.user_id = u.user_id " . $where;    
          
       
-         $filter['record_count'] =  intval($GLOBALS['db']->getOne($sql))/3 ;   
+         $filter['record_count'] =  intval($GLOBALS['db']->getOne($sql))  ;    
        
         /* 分页大小 */
         $filter = page_and_size($filter);     
