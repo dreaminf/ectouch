@@ -1314,7 +1314,7 @@ class UserController extends CommonController {
                         // 在affiliate_log有记录
                         if ($v['separate_type'] == - 1 || $v['separate_type'] == - 2) {
                             // 已被撤销
-                            $v['is_separate'] = 3;
+                            $rt[$k]['is_separate'] = 3;
                         }
                     }
                     $rt[$k]['order_sn'] = substr($v['order_sn'], 0, strlen($v['order_sn']) - 5) . "***" . substr($v['order_sn'], - 2, 2);
@@ -1323,7 +1323,6 @@ class UserController extends CommonController {
                 $rt = array();
             }
             $pager = $this->pageShow($count);
-
             $this->assign('pager', $pager);
             $this->assign('affiliate_type', $share['config']['separate_by']);
             $this->assign('logdb', $rt);
