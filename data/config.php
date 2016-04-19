@@ -34,6 +34,6 @@ if (file_exists($global_config)) {
 // 独立运行环境
 define('AUTH_KEY', 'this is a key');
 define('OLD_AUTH_KEY', '');
-define('API_TIME', '2016-03-25 21:36:12');
+define('API_TIME', '2016-04-19 15:29:29');
 define('RUN_ON_ECS', false);
-return require(BASE_PATH . 'config/db.php');
+return require(ROOT_PATH . 'include/config/db.php');

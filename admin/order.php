@@ -3324,10 +3324,11 @@ elseif ($_REQUEST['act'] == 'operate')
         //水平居中
         $PHPExcel->getActiveSheet()->getStyle('A1:T'.$hang)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="order_'.date('Y-m-d').'.xls"');
+        header('Cache-Control: max-age=0');
         $Writer = PHPExcel_IOFactory::createWriter($PHPExcel, 'Excel5');
-        $Writer->save(str_replace('.php', '.xls', __FILE__));
-        $url = "order.xls";
-        ecs_header("Location: $url\n");
+        $Writer->save("php://output");
         exit;
     }
     /* 导出订单功能结束 */
