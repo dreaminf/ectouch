@@ -6,6 +6,4 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Snowair\\Think\\Behavior\\' => array($vendorDir . '/snowair/think-hookagent'),
-    'Overtrue\\Wechat\\' => array($vendorDir . '/overtrue/wechat/src/Wechat'),
 );

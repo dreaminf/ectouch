@@ -36,4 +36,4 @@ define('AUTH_KEY', 'this is a key');
 define('OLD_AUTH_KEY', '');
 define('API_TIME', '2016-03-25 21:36:12');
 define('RUN_ON_ECS', false);
-return require(ROOT_PATH . 'include/config/db.php');
+return require(BASE_PATH . 'config/db.php');

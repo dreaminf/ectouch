@@ -1,6 +1,5 @@
 {
     "require": {
-        "snowair/think-whoops": "dev-master",
-        "overtrue/wechat": "^2.1"
+        "filp/whoops": "^1.1"
     }
 }
