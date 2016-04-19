@@ -116,7 +116,7 @@ class sina {
                 model('Users')->update_user_info();
                 model('Users')->recalculate_price();
 
-                return true;
+                return $url;
             }
             $userinfo['user_name'] = substr(strtoupper($userinfo['aite_id']), 0, 8);
             if ($user->check_user($userinfo['user_name'])) {

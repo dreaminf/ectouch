@@ -1998,6 +1998,7 @@ class UserController extends CommonController {
                 'referer' => urlencode($this->back_act)
                     )), 'error');
         }
+		$_GET['backurl'] = empty($_GET['backurl']) ? __URL__ : $_GET['backurl'];
         $url = __URL__ . '/index.php?m=default&c=user&a=third_login&type=' . $type . '&backurl=' . urlencode($_GET['backurl']) . '&u='.$_GET['u'];
         $info = model('ClipsBase')->get_third_user_info($type);
         // 判断是否安装
