@@ -26,43 +26,48 @@ class CategoryBaseModel extends BaseModel {
      * @return  array
      */
     function get_categories_tree($cat_id = 0) {
-        if ($cat_id > 0) {
-                $sql = 'SELECT parent_id FROM ' . $this->pre . "category  WHERE cat_id = '$cat_id'";
-            $result = $this->row($sql);
-            $parent_id = $result['parent_id'];
-        } else {
-            $parent_id = 0;
-        }
+        $data = read_static_cache('categories_tree');
+        if ($data === false) {
+            if ($cat_id > 0) {
+                    $sql = 'SELECT parent_id FROM ' . $this->pre . "category  WHERE cat_id = '$cat_id'";
+                $result = $this->row($sql);
+                $parent_id = $result['parent_id'];
+            } else {
+                $parent_id = 0;
+            }
 
-        /*
-          判断当前分类中全是是否是底级分类，
-          如果是取出底级分类上级分类，
-          如果不是取当前分类及其下的子分类
-         */
-        $sql = 'SELECT count(*) FROM ' . $this->pre . "category WHERE parent_id = '$parent_id' AND is_show = 1 ";
-        if ($this->row($sql) || $parent_id == 0) {
-            /* 获取当前分类及其子分类 */
+            /*
+              判断当前分类中全是是否是底级分类，
+              如果是取出底级分类上级分类，
+              如果不是取当前分类及其下的子分类
+             */
+            $sql = 'SELECT count(*) FROM ' . $this->pre . "category WHERE parent_id = '$parent_id' AND is_show = 1 ";
+            if ($this->row($sql) || $parent_id == 0) {
+                /* 获取当前分类及其子分类 */
 
-             $sql = 'SELECT c.cat_id,c.cat_name,c.parent_id,c.is_show ' .
-                    'FROM ' . $this->pre . 'category as c ' .
-                    "WHERE c.parent_id = 0 AND c.is_show = 1 ORDER BY c.sort_order ASC, c.cat_id ASC";
+                 $sql = 'SELECT c.cat_id,c.cat_name,c.parent_id,c.is_show ' .
+                        'FROM ' . $this->pre . 'category as c ' .
+                        "WHERE c.parent_id = 0 AND c.is_show = 1 ORDER BY c.sort_order ASC, c.cat_id ASC";
 
-            $res = $this->query($sql);
-            foreach ($res AS $row) {
-                if ($row['is_show']) {
-                    $cat_arr[$row['cat_id']]['id'] = $row['cat_id'];
-                    $cat_arr[$row['cat_id']]['name'] = $row['cat_name'];
-                    $cat_arr[$row['cat_id']]['img'] = empty($row['cat_img']) ? '':$row['cat_img'];
-                    $cat_arr[$row['cat_id']]['url'] = url('category/index', array('id' => $row['cat_id']));
-                    if (isset($row['cat_id']) == isset($row['parent_id'])) {
-                        $cat_arr[$row['cat_id']]['cat_id'] = $this->get_child_tree($row['cat_id']);
+                $res = $this->query($sql);
+                foreach ($res AS $row) {
+                    if ($row['is_show']) {
+                        $cat_arr[$row['cat_id']]['id'] = $row['cat_id'];
+                        $cat_arr[$row['cat_id']]['name'] = $row['cat_name'];
+                        $cat_arr[$row['cat_id']]['img'] = empty($row['cat_img']) ? '':$row['cat_img'];
+                        $cat_arr[$row['cat_id']]['url'] = url('category/index', array('id' => $row['cat_id']));
+                        if (isset($row['cat_id']) == isset($row['parent_id'])) {
+                            $cat_arr[$row['cat_id']]['cat_id'] = $this->get_child_tree($row['cat_id']);
+                        }
                     }
                 }
             }
+            if (isset($cat_arr)) {
+                write_static_cache('categories_tree', $cat_arr);
+                return $cat_arr;
+            }
         }
-        if (isset($cat_arr)) {
-            return $cat_arr;
-        }
+        return $data;
     }
 
     function get_child_tree($tree_id = 0) {
