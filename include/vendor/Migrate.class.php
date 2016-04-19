@@ -76,10 +76,10 @@ class Migrate
             $last_file = $file;
         }
         if (count($errors) > 0) {
-            echo "Error: You have multiple files using the same version. " .
-                "To resolve, move some of the files up so each one gets a unique version.\n";
+            echo "Error: You have multiple files using the same version.  <br>" .
+                "To resolve, move some of the files up so each one gets a unique version. <br>";
             foreach ($errors as $error) {
-                echo "  $error\n";
+                echo "  $error <br>";
             }
             exit;
         }
@@ -92,18 +92,19 @@ class Migrate
             }
 
             self::connect();
-//            $fp = @fopen(self::$migrate_path . $file, 'r');
-            $sqls = file_get_contents(self::$migrate_path . $file);
-            $sqls = self::selectsql($sqls);
+            $sqls = self::selectSql(self::$migrate_path . $file, '{pre}', C('DB_PREFIX'));
+
             $str = null;
             $num = 1;
             self::query('set names utf8');
             self::query('BEGIN');
-            foreach ($sqls as $val) {
-                if (empty($val)) continue;
-                if (is_string($val)) {
-                    if(!self::query($val)){
-                        $num = 0;
+            if(is_array($sqls)) {
+                foreach ($sqls as $val) {
+                    if (empty($val)) continue;
+                    if (is_string($val)) {
+                        if(!self::query($val)){
+                            $num = 0;
+                        }
                     }
                 }
             }
@@ -114,13 +115,8 @@ class Migrate
             }
 
             $version = $file_version;
-
             // Output the new version number.
-            $f = @fopen(self::$migrate_path . MIGRATE_VERSION_FILE, 'w');
-            if ($f) {
-                fputs($f, $version);
-                fclose($f);
-            } else {
+            if(!file_put_contents(self::$migrate_path . MIGRATE_VERSION_FILE, $version)){
                 echo "Failed to output new version to " . MIGRATION_VERSION_FILE . "\n";
             }
         }
@@ -130,8 +126,6 @@ class Migrate
     {
         if(mysql_query($str, self::$conn)){
             return true;
-        }else{
-            return false;
         }
         return false;
     }
@@ -148,37 +142,50 @@ class Migrate
      * 判断是否是注释
      * @param $sql   获取到的sql文件内容
      */
-    public static function selectsql($sqls){
-        $statement = null;
-        $newStatement=null;
-        $commenter = array('#','--');
-        $sqls = explode(';',trim($sqls));//按sql语句分开
-        foreach($sqls as $sql){
-            if (preg_match('/^(\/\*)(.)+/i',$sql)) {
-                $sql = preg_replace('/(\/\*){1}([.|\s|\S])*(\*\/){1}/','',$sql);
-            }
-            $sentence = explode('/n',$sql);
-            foreach ($sentence as $subSentence) {
-                $subSentence = str_replace('ecs_',C('DB_PREFIX'),$subSentence);
-                if('' != trim($subSentence)){
-                    //判断是否注释
-                    $isComment = false;
+    public static function selectSql($sql_path, $old_prefix = "", $new_prefix = "", $separator = ";\n") {
+        $commenter = array('#', '--');
+        //判断文件是否存在
+        if (!file_exists($sql_path))
+            return false;
 
-                    foreach($commenter as $comer){
-                        if(eregi("^(".$comer.")",trim($subSentence)))
-                        {
+        $content = file_get_contents($sql_path);   //读取sql文件
+        $content = str_replace(array($old_prefix, "\r"), array($new_prefix, "\n"), $content); //替换前缀
+        //通过sql语法的语句分割符进行分割
+        $segment = explode($separator, trim($content));
+
+        //去掉注释和多余的空行
+        $data = array();
+        foreach ($segment as $statement) {
+            $sentence = explode("\n", $statement);
+            $newStatement = array();
+            foreach ($sentence as $subSentence) {
+                if ('' != trim($subSentence)) {
+                    //判断是会否是注释
+                    $isComment = false;
+                    foreach ($commenter as $comer) {
+                        if (preg_match("/^(" . $comer . ")/is", trim($subSentence))) {
                             $isComment = true;
                             break;
                         }
-
                     }
-                    //不是注释就是sql语句
-                    if(!$isComment)
+                    //如果不是注释，则认为是sql语句
+                    if (!$isComment)
                         $newStatement[] = $subSentence;
                 }
             }
-            $statement = $newStatement;
+            $data[] = $newStatement;
         }
-        return $statement;
+
+        //组合sql语句
+        foreach ($data as $statement) {
+            $newStmt = '';
+            foreach ($statement as $sentence) {
+                $newStmt = $newStmt . trim($sentence) . "\n";
+            }
+            if (!empty($newStmt)) {
+                $result[] = $newStmt;
+            }
+        }
+        return $result;
     }
 }
