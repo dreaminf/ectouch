@@ -2204,20 +2204,13 @@ function exception_handler($errno, $errstr, $errfile, $errline)
  */
 function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods', $del = false) {
     $url = C('no_picture');
-    $shop_url = C('SHOP_URL');
-    if(!empty($image)){
-        $shop_url = substr(C('SHOP_URL'), -1) == '/' ? $shop_url : $shop_url . '/';
-        if(strtolower(substr($image, 0, 4)) == 'http'){
-            $url = $image;
-        }else if(strtolower(substr($image, 0, 6)) == 'images'){
-            if(function_exists('base_url')){
-                $url = base_url($image);
-            }else{
-                $url = __ROOT__ . '/' . $image;
-            }
-        }else{
-            $url = $shop_url . $image;
+    if (!empty($image)) {
+        if (strtolower(substr($image, 0, 4)) == 'http') {
+            return $image;
         }
+        $shop_url = rtrim(C('shop_url'));
+        $base_url = IS_ECSHOP ? (empty($shop_url) ? dirname(__URL__):$shop_url) : __URL__;
+        $url = $base_url . '/' . $image;
     }
     return $url;
 }

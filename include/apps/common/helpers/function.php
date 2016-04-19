@@ -1750,7 +1750,8 @@ function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods',
         if (strtolower(substr($image, 0, 4)) == 'http') {
             return $image;
         }
-        $base_url = IS_ECSHOP ? dirname(__URL__) : __URL__;
+        $shop_url = rtrim(C('shop_url'));
+        $base_url = IS_ECSHOP ? (empty($shop_url) ? dirname(__URL__):$shop_url) : __URL__;
         $url = $base_url . '/' . $image;
     }
     return $url;
@@ -1762,7 +1763,8 @@ function get_image_topic($image = '', $thumb = false, $call = 'goods', $del = fa
         if (strtolower(substr($image, 0, 4)) == 'http') {
             return $image;
         }
-        $base_url = IS_ECSHOP ? dirname(__URL__) : __URL__;
+        $shop_url = rtrim(C('shop_url'));
+        $base_url = IS_ECSHOP ? (empty($shop_url) ? dirname(__URL__):$shop_url) : __URL__;
         $url = $base_url . '/' . $image;
     }
     return $url;
@@ -1781,7 +1783,8 @@ function get_data_path($image = '', $folder = ''){
         if (strtolower(substr($image, 0, 4)) == 'http') {
             return $image;
         }
-        $base_url = IS_ECSHOP ? dirname(__URL__) : __URL__;
+        $shop_url = rtrim(C('shop_url'));
+        $base_url = IS_ECSHOP ? (empty($shop_url) ? dirname(__URL__):$shop_url) : __URL__;
         if(IS_ECSHOP){
             $url = $base_url . '/data/' . $folder . '/' . $image;
         }else{

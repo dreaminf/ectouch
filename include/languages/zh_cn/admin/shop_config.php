@@ -71,6 +71,7 @@ $_LANG['cfg_name']['can_invoice'] = '能否开发票';
 $_LANG['cfg_name']['user_notice'] = '用户中心公告';
 $_LANG['cfg_name']['shop_notice'] = '商店公告';
 $_LANG['cfg_name']['shop_reg_closed'] = '是否关闭注册';
+$_LANG['cfg_name']['shop_url'] = 'PC端网址';
 $_LANG['cfg_name']['send_mail_on'] = '是否开启自动发送邮件';
 $_LANG['cfg_name']['auto_generate_gallery'] = '上传商品是否自动生成相册图';
 $_LANG['cfg_name']['retain_original_img'] = '上传商品时是否保留原图';
