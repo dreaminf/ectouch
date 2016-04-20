@@ -953,7 +953,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
             "WHERE goods_id = '$goods_id' LIMIT 1";
     }else{
         $sql = "INSERT INTO " . $ecs->table('drp_goods') . " (goods_id, touch_sale, touch_fencheng)" .
-            "VALUES ('$_REQUEST[goods_id]', '$touch_sale', '$touch_fencheng')";
+            "VALUES ( '$goods_id', '$touch_sale', '$touch_fencheng')";    
     }
     $db->query($sql);
     /*DRP_END*/
