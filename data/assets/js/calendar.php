@@ -14,7 +14,7 @@
 */
 
 $lang = (!empty($_GET['lang'])) ? trim($_GET['lang']) : 'zh_cn';
-define('ROOT_PATH', dirname(dirname(dirname(dirname(__FILE__)))));
+define('ROOT_PATH', dirname(dirname(dirname(dirname(__FILE__)))) . '/');
 if (!file_exists(ROOT_PATH . 'include/languages/' . $lang . '/calendar.php') || strrchr($lang,'.'))
 {
     $lang = 'zh_cn';
@@ -32,5 +32,3 @@ foreach ($_LANG['calendar_lang'] AS $cal_key => $cal_data)
 }
 
 include_once('./calendar/calendar.js');
-
-?>
