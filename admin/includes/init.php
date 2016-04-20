@@ -33,7 +33,7 @@ $base_config = $base_path . 'data/config.php';
 defined('IS_ECSHOP') or define('IS_ECSHOP', file_exists($base_config));
 /* 取得当前ecshop所在的根目录 */
 defined('ADMIN_PATH') or define('ADMIN_PATH', 'admin');
-defined('ROOT_PATH') or define('ROOT_PATH', str_replace(ADMIN_PATH . '/includes/init.php', '', str_replace('\\', '/', __FILE__)));
+defined('ROOT_PATH') or define('ROOT_PATH', str_replace(ADMIN_PATH . '/includes/init.php', '', str_replace('\\', '/', __FILE__)) . '/');
 
 if (file_exists(ROOT_PATH . 'data/config.php')){
     $db_config = require(ROOT_PATH . 'data/config.php');
