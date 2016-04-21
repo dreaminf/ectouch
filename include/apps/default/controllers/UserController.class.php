@@ -2242,11 +2242,7 @@ class UserController extends CommonController {
                                 ), empty($code) ? 0 : 1)) {
                     $data['ec_salt'] = 0;
                     $where['user_id'] = $user_id;
-                    $this->model->table('users')
-                            ->data($data)
-                            ->where($where)
-                            ->update();
-
+                    $this->model->table('users')->data($data)->where($where)->update();
                     self::$user->logout();
                     show_message(L('edit_password_success'), L('relogin_lnk'), url('login'), 'info');
                 } else {
