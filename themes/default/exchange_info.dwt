@@ -1,29 +1,35 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
-
+<style>
+	/*商品图片滑动*/
+.goods-photo {position: relative;  width: 100%; height: 100%; overflow: hidden;}
+.goods-photo img{width:100%; height:auto; display: block;}
+.goods-photo .goods-num{position: absolute; font-size:1.5rem; color:#fff; height:2.6rem; line-height:2.6rem; padding:0 1rem; border-radius: 1.3rem; right:1.3rem; bottom:1.3rem; background:rgba(0,0,0,0.5); z-index: 5;}
+.goods-photo li{width:3rem;}
+</style>
 <div class="con">
 <div class="ect-bg">
      <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$lang.goods_detail}</span> <a href="javascript:;"  onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a></header>
     <nav class="ect-nav ect-nav-list" style="display:none;"> <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --> </nav>
   </div>
   <!--商品图片相册-->
-  <div id="focus" class="focus goods-focus">
-    <div class="hd">
-      <ul>
-      </ul>
-    </div>
-    <div class="bd">
-      <ul id="Gallery">
-       <li><a href="#"><img alt="{$goods.goods_name}" src="{$goods.original_img}"/></a></li>
-        <!--{if $pictures}-->
-        <!-- {foreach from=$pictures item=picture name=no}-->
-        <!-- {if $smarty.foreach.no.iteration > 1}  -->
-        <li><a href="#"><img alt="{$goods.goods_name}" src="{$picture.img_url}"/></a></li>
-        <!-- {/if}-->
-        <!--{/foreach}-->
-        <!--{/if}-->
-      </ul>
-    </div>
-  </div>
+  	<div class="goods-photo j-show-goods-img">
+			<div class="hd">
+				<ul>
+				</ul>
+			</div>
+			<span class="goods-num" id="goods-num"><span id="g-active-num"></span>/<span id="g-all-num"></span></span>
+			<ul class="swiper-wrapper">
+				<!--{if $pictures}-->
+				<!-- {foreach from=$pictures item=picture name=no}-->
+				<li class="swiper-slide tb-lr-center"><img src="{$picture.img_url}" alt="{$picture.img_desc}" /></li>
+				<!--{/foreach}-->
+				<!--{else}-->
+				<li class="swiper-slide tb-lr-center"><img src="{$goods.goods_img}" alt="{$goods.goods_name}" /></li>
+				<!--{/if}-->
+			</ul>
+			<div class="swiper-pagination"></div>
+		</div>
+
   <!--商品属性介绍-->
   <div class="goods-info ect-padding-tb">
   	<section class="ect-margin-tb ect-margin-lr goods-title">
@@ -116,5 +122,18 @@
 </div>
 <!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+<script>
+	/*商品详情相册切换*/
+		var swiper = new Swiper('.goods-photo', {
+			paginationClickable: true,
+			onInit: function(swiper) {
+				document.getElementById("g-active-num").innerHTML = swiper.activeIndex + 1;
+				document.getElementById("g-all-num").innerHTML = swiper.slides.length;
+			},
+			onSlideChangeStart: function(swiper) {
+				document.getElementById("g-active-num").innerHTML = swiper.activeIndex + 1;
+			}
+		});
+</script>
 </body>
 </html>

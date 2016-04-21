@@ -1046,7 +1046,10 @@ nav.ect-nav-list{border-top:none; border-bottom:1px solid #e3e3e3; position:rela
 
 .show-goods-coupon.show, .show-goods-attr.show, .show-goods-service.show, .show-goods-dist.show, .show-time-con.show{
 	bottom:0 ;
+	
 }
+.show-goods-attr .swiper-wrapper{display:block;}
+
 .mask-filter-div.show {
     display: inherit;
 }
