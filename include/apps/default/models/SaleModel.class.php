@@ -209,7 +209,7 @@ class SaleModel extends BaseModel {
         $arr = array();
         $sql = "SELECT o.order_id, o.order_sn, o.user_id, o.shipping_id, o.order_status, o.shipping_status, o.pay_status, o.add_time, o.is_separate, " .
             "(o.goods_amount + o.shipping_fee + o.insure_fee + o.pay_fee + o.pack_fee + o.card_fee + o.tax - o.discount) AS total_fee, d.shop_separate " .
-            " FROM {pre}order_info as o right join {pre}drp_order_info as d on o.order_id=d.order_id " .
+            " FROM {pre}order_info as o inner join {pre}drp_order_info as d on o.order_id=d.order_id " .
             " WHERE  " . $where . " ORDER BY add_time DESC LIMIT $start , $num";
         $res = M()->query($sql);
         if($res){
