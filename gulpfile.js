@@ -1,6 +1,6 @@
+// author: carson
 // install
 // npm install gulp gulp-compass gulp-clean-css gulp-minify-css gulp-concat gulp-uglify gulp-rename del --save-dev
-
 
 var gulp = require('gulp'),
     // compass = require('gulp-compass'),
@@ -9,6 +9,7 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
     del = require('del');
+    smushit = require('node-smushit');
 
 var paths = {
     'src': 'themes/blue/src',
@@ -34,12 +35,17 @@ gulp.task('minifyjs', function() {
         .pipe(gulp.dest(paths.dist + '/js')); //输出
 });
 
+//优化一个目录下的所有图片（包括子目录中的图片）
+gulp.task('minifyimg', function(){
+    return smushit.smushit(paths.dist + '/img', {recursive: true});
+});
+
 // 执行压缩前，先删除文件夹里的内容
 gulp.task('clean', function(cb) {
     del([paths.dist + '/css', paths.dist + '/js'], cb)
 });
 
-gulp.task('default', ['clean', 'minifycss', 'minifyjs']);
+gulp.task('default', ['clean', 'minifycss', 'minifyjs', 'minifyimg']);
 
 
 
