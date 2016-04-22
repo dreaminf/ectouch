@@ -1,6 +1,7 @@
 .DS_Store
 html
 test
+node_modules
 data/caches
 data/install.lock
 
