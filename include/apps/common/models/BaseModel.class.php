@@ -126,7 +126,7 @@ class BaseModel extends Model {
             }
 
             if(IS_ECSHOP){
-                $arr['shop_url'] = dirname(__URL__);
+                $arr['shop_url'] = isset($arr['shop_url']) ? $arr['shop_url'] : dirname(__URL__);
             }
 			
             write_static_cache('shop_config', $arr);
