@@ -28,6 +28,7 @@ return array(
 	'dirAccess' => array(
 		'/',
 		'/data',
+		'/data/migrates',
 		'/themes',
 	),
 	/* ------写入数据库完成后处理的文件------ */
