@@ -545,9 +545,11 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
         parse_str($info['query'],$params);
         $vars = array_merge($params,$vars);
     }
-	$share['u'] = $vars['u'];
-	unset($vars['u']);
-    
+
+    if(!isset($vars['u'])){
+        $vars['u'] = $_SESSION['user_id'];
+    }
+
     // URL组装
     $depr       =   C('URL_PATHINFO_DEPR');
     $urlCase    =   C('URL_CASE_INSENSITIVE');
@@ -643,11 +645,7 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
             }
         }
     }
-	if(intval($share['u']) > 0){
-		$url  .= '&u='.$share['u'];
-	}else{
-		$url  .= '&u='.$_SESSION['user_id'];
-	}
+
     if(isset($anchor)){
         $url  .= '#'.$anchor;
     }
