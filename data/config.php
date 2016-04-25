@@ -36,6 +36,12 @@ define('EC_CHARSET', 'utf-8');
 define('ADMIN_PATH', 'admin');
 define('AUTH_KEY', 'this is a key');
 define('OLD_AUTH_KEY', '');
-define('API_TIME', '2016-04-19 15:29:29');
+define('API_TIME', '2016-04-25 10:58:55');
 define('RUN_ON_ECS', false);
-return require(ROOT_PATH . 'include/config/db.php');
+$db_config = ROOT_PATH . 'data/database.php';
+if (file_exists($db_config)) {
+    return require($db_config);
+}else{
+    header('location: ./install');
+    exit();
+}

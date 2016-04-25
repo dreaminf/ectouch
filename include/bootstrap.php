@@ -26,10 +26,6 @@ defined('ADDONS_PATH') or define('ADDONS_PATH', ROOT_PATH . 'plugins/');
 defined('DEFAULT_APP') or define('DEFAULT_APP', 'default');
 defined('DEFAULT_CONTROLLER') or define('DEFAULT_CONTROLLER', 'Index');
 defined('DEFAULT_ACTION') or define('DEFAULT_ACTION', 'index');
-/* 是否基于ecshop */
-$base_path = str_replace('\\','/', dirname(getcwd())).'/';
-$base_config = $base_path . 'data/config.php';
-defined('IS_ECSHOP') or define('IS_ECSHOP', file_exists($base_config));
 require BASE_PATH . 'vendor/autoload.php';
 /* 系统函数 */
 require(BASE_PATH . 'base/helpers/function.php');
@@ -41,6 +37,8 @@ C('DB', load_file(ROOT_PATH . 'data/config.php'));
 date_default_timezone_set(C('DEFAULT_TIMEZONE'));
 /* 调试配置 */
 defined('APP_DEBUG') or define('APP_DEBUG', C('DEBUG'));
+/* 基于ecshop */
+defined('IS_ECSHOP') or define('IS_ECSHOP', RUN_ON_ECS);
 
 /* 错误等级 */
 if (APP_DEBUG) {
