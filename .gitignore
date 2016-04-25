@@ -4,6 +4,7 @@ test
 node_modules
 data/caches
 data/install.lock
+data/database.php
 
 # IDE Files
 #-------------------------
