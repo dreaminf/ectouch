@@ -201,6 +201,11 @@ class CommonController extends BaseController
 
         // 设置parent_id
         session('parent_id',$_SESSION['user_id'] ? 0 : $_GET['u'] ? $_GET['u'] : 0);
+
+        // 设置rewrite
+        if(C('rewrite') > 0){
+            C('URL_MODEL', 2);
+        }
     }
     
     /*DRP_START*/
