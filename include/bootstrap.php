@@ -42,13 +42,15 @@ defined('IS_ECSHOP') or define('IS_ECSHOP', RUN_ON_ECS);
 
 /* 错误等级 */
 if (APP_DEBUG) {
-    error_reporting(E_ALL ^ E_NOTICE); // 除了notice提示，其他类型的错误都报告
+    // 除了notice提示，其他类型的错误都报告
+    error_reporting(E_ALL ^ E_NOTICE);
     $whoops = new \Whoops\Run;
     $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
     $whoops->register();
 } else {
     @ini_set("display_errors", 0);
-    error_reporting(0); // 把错误报告，全部屏蔽
+    // 把错误报告，全部屏蔽
+    error_reporting(0);
 }
 
 /* 自动注册类文件 */
