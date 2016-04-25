@@ -153,7 +153,7 @@ class EcsSms {
 
     // 检测手机号码是否正确
     function is_moblie($moblie) {
-        return preg_match("/^0?1((3|7|8)[0-9]|5[0-35-9]|4[57])\d{8}$/", $moblie);
+        return preg_match("/^13[0-9]{9}|15[012356789][0-9]{8}|18[0-9]{9}|14[579][0-9]{8}|17[0-9]{9}$/", $moblie);
     }
 
     //打印日志
