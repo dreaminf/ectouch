@@ -109,6 +109,9 @@ class GoodsModel extends BaseModel {
             $row['goods_thumb'] = get_image_path($goods_id, $row['goods_thumb'], true);
             $row['original_img'] = get_image_path($goods_id, $row['original_img'], true);
 
+            /* 修正商品详情图片 */
+            $row['goods_desc'] = str_replace('src="/images', 'src="'. C('shop_url') .'/images', $row['goods_desc']);
+
             return $row;
         } else {
             return false;

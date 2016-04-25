@@ -124,11 +124,10 @@ class BaseModel extends Model {
             if (empty($arr['integrate_code'])) {
                 $arr['integrate_code'] = 'ecshop'; // 默认的会员整合插件为 ecshop
             }
+            
+            // 电脑端URL
+            $arr['shop_url'] = isset($arr['shop_url']) ? $arr['shop_url'] : dirname(__URL__);
 
-            if(IS_ECSHOP){
-                $arr['shop_url'] = isset($arr['shop_url']) ? $arr['shop_url'] : dirname(__URL__);
-            }
-			
             write_static_cache('shop_config', $arr);
         } else {
             $arr = $data;
