@@ -72,42 +72,75 @@ $('#hide-div').delay(1500).hide(0);
 	var url = '{:url('category/async_list', array('id'=>$this->_var['id'], 'type'=>$this->_var['type'], 'brand'=>$this->_var['brand_id'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keywords'=>$this->_var['keywords']))}';
 	var total = 0;
 	var page = localData.get('cat_{$id}_page');
-	// var minPage = localData.get('cat_{$id}_page_min');
-	// var maxPage = localData.get('cat_{$id}_page_max');
-	page = (page === null) ? 1:page;
-	// minPage = (minPage === null) ? 1:minPage;
-	// maxPage = (maxPage === null) ? 1:maxPage;
+	page = (page === null) ? 1:parseInt(page);
 	// first request
-	$.post(url, {page: page}, function(data){
-		var html = template('j-product', data);
-		$('#j-product-box').append(html);
-		// total = data.total;
-		// localData.set('cat_{$id}_page_min', minPage);
-		// localData.set('cat_{$id}_page_max', maxPage);
-	}, 'json');
+	get_data(page);
+	localData.set('cat_{$id}_page', page);
+	if(page == 1){
+    localData.set('cat_{$id}_page_min', 1);
+    localData.set('cat_{$id}_page_max', 1);
+	}
+	if(page > 1){
+    localData.set('cat_{$id}_page_min', page);
+    localData.set('cat_{$id}_page_max', page);
+	}
+	var minPage = localData.get('cat_{$id}_page_max');
+	var maxPage = localData.get('cat_{$id}_page_max');
+	minPage = (minPage === null) ? 1:parseInt(minPage);
+	maxPage = (maxPage === null) ? 1:parseInt(maxPage);
 
 	$(window).scroll(function () {
 		var scrollTop = $(this).scrollTop();
 		var scrollHeight = $(document).height();
 		var windowHeight = $(this).height();
+		// 下拉
 		if (scrollTop + windowHeight == scrollHeight) {
-			$.post(url, {page: page + 1}, function(data){
+			if(page >= maxPage){
+				$.post(url, {page: page + 1}, function(data){
+					var html = template('j-product', data);
+					$('#j-product-box').append(html);
+					//rug
+					if(!isEmpty(data.list)){
+						page++;
+						localData.set('cat_{$id}_page', page);
+						if(page > maxPage){
+							localData.set('cat_{$id}_page_max', page);
+						}
+					}
+				}, 'json');
+			}
+		}
+		// 上拉
+		if(scrollTop == 0 && minPage > 1){
+			$.post(url, {page: page - 1}, function(data){
 				var html = template('j-product', data);
-				$('#j-product-box').append(html);
-				//rug
-				alert(data);
-				page++;
+				$('#j-product-box').prepend(html);
+				page--;
 				localData.set('cat_{$id}_page', page);
+				if(page < minPage){
+					localData.set('cat_{$id}_page_min', page);
+				}
 			}, 'json');
-		// }else if(scrollTop == 0){
-		// 	--page;
-		// 	localData.set('cat_1_page', page);
-		// 	$.post(url, {page: page}, function(data){
-		// 		var html = template('j-product', data);
-		// 		$('#j-product-box').before(html);
-		// 	}, 'json');
 		}
 	});
+
+	function get_data(page){
+		$.post(url, {page: page}, function(data){
+			var html = template('j-product', data);
+			$('#j-product-box').append(html);
+		}, 'json');
+	}
+	
+	/*
+   * 检测对象是否是空对象(不包含任何可读属性)。
+   * 方法既检测对象本身的属性，也检测从原型继承的属性(因此没有使hasOwnProperty)。
+   */
+  function isEmpty(obj) {
+      for (var name in obj) {
+          return false;
+      }
+      return true;
+  }
 
 </script>
 	</body>
