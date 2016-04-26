@@ -39,7 +39,7 @@ $query = "INSERT INTO `{$dbPrefix}wechat_menu` (`id`, `wechat_id`, `pid`, `name`
 mysql_query($query);
 
 //读取配置文件，并替换真实配置数据
-$strConfig = file_get_contents(ROOT_PATH . $config['dbSetFile']);
+$strConfig = file_get_contents(INSTALL_PATH . $config['dbSetFile']);
 $strConfig = str_replace('#DB_HOST#', $dbHost, $strConfig);
 $strConfig = str_replace('#DB_NAME#', $dbName, $strConfig);
 $strConfig = str_replace('#DB_USER#', $dbUser, $strConfig);

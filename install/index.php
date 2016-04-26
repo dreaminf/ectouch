@@ -2,14 +2,15 @@
 header("Content-type: text/html; charset=utf-8");
 //开启session
 if (!session_id()) session_start();
-define('ROOT_PATH', str_replace('\\', '/', dirname(__FILE__)) . '/');
+define('INSTALL_PATH', str_replace('\\', '/', dirname(__FILE__)) . '/');
+define('ROOT_PATH', dirname(INSTALL_PATH) . '/');
 //配置信息
-$config = include ROOT_PATH . 'config.php';
+$config = include INSTALL_PATH . 'config.php';
 if(empty($config)){
 	exit(get_tip_html('安装配置信息不存在，无法继续安装！'));
 }
 //本地安装环境验证，获取相应判断信息
-require ROOT_PATH . 'localhost.php';
+require INSTALL_PATH . 'localhost.php';
 
 //限制最大的执行时间
 set_time_limit(1000);
@@ -21,12 +22,12 @@ if($phpversion < '5.3.0' || $phpversion > '5.5.0'){
 }
 //数据库文件
 foreach ($config['sqlFileName'] as $sqlFile) {
-	if(!file_exists(ROOT_PATH . 'sqldata/'.$sqlFile)){
+	if(!file_exists(INSTALL_PATH . 'sqldata/'.$sqlFile)){
 		exit(get_tip_html('数据库文件不存在，无法继续安装！'));
 	}
 }
 //写入数据库完成后处理的文件
-if (!file_exists(ROOT_PATH . ''.$config['handleFile'])) {
+if (!file_exists(INSTALL_PATH . $config['handleFile'])) {
 	exit(get_tip_html('处理文件不存在，无法继续安装！'));
 }
 //设置报错级别并返回当前级别。
@@ -50,8 +51,8 @@ foreach ($steps as $key => $value) {
 switch ($step) {
 	//安装许可协议
 	case '1':
-		$license = file_get_contents(ROOT_PATH . 'license.txt');
-		include (ROOT_PATH . "templates/1.php");
+		$license = file_get_contents(INSTALL_PATH . 'license.txt');
+		include (INSTALL_PATH . "templates/1.php");
 		break;
 	//运行环境检测	
 	case '2':
@@ -91,9 +92,8 @@ switch ($step) {
 		}
 		//需要读写权限的目录
 		$folder = $config['dirAccess'];
-		$install_path = str_replace('\\','/',getcwd()).'/';
-		$site_path = str_replace('install/', '', $install_path);
-		include (ROOT_PATH . "templates/2.php");
+		$site_path = ROOT_PATH;
+		include (INSTALL_PATH . "templates/2.php");
 		$_SESSION['INSTALLSTATUS'] = $error == 0?'SUCCESS':$error;
 		break;
 	//安装参数设置
@@ -138,7 +138,7 @@ switch ($step) {
 			$config['dbPass'] = '';
 			$config['dbPrefix'] = 'ecs_';
 		}
-		include (ROOT_PATH . "templates/3.php");
+		include (INSTALL_PATH . "templates/3.php");
 		break;
 	//安装详细过程
 	case '4':
@@ -196,10 +196,10 @@ switch ($step) {
 				if(!$independent && in_array($sqlFile, $rest)){
 					continue;
 				}
-				$sqldata .= file_get_contents(ROOT_PATH . 'sqldata/'.$sqlFile);
+				$sqldata .= file_get_contents(INSTALL_PATH . 'sqldata/'.$sqlFile);
 			}
 			//主题SQL文件
-			$themesSql = ROOT_PATH . 'sqldata/themes.sql';
+			$themesSql = INSTALL_PATH . 'sqldata/themes.sql';
 			if(is_file($themesSql)){
 				$sqldata .= file_get_contents($themesSql);
 			}
@@ -213,9 +213,9 @@ switch ($step) {
 					$row = mysql_fetch_assoc($result);
 					$newThemes = $row['value'];
 					$sqldata = str_replace('/default/', '/'.$newThemes.'/', $sqldata);
-					$oldThemes = ROOT_PATH . '../themes/default';
+					$oldThemes = ROOT_PATH . 'themes/default';
 					if(is_dir($oldThemes)){
-						rename($oldThemes, ROOT_PATH . '../themes/'.$newThemes);
+						rename($oldThemes, ROOT_PATH . 'themes/'.$newThemes);
 					}
 				}
 			}
@@ -252,28 +252,28 @@ switch ($step) {
 			}
 
 			//处理
-			$data = include ROOT_PATH . $config['handleFile'];
+			$data = include INSTALL_PATH . $config['handleFile'];
 			$_SESSION['INSTALLOK'] = $data['status']?1:0;
 			alert($data['status'],$data['info']);
 		}
-		include (ROOT_PATH . "templates/4.php");
+		include (INSTALL_PATH . "templates/4.php");
 		break;
 	//安装完成
 	case '5':
 		verify(5);
-		include (ROOT_PATH . "templates/5.php");
+		include (INSTALL_PATH . "templates/5.php");
 		//安装完成,生成.lock文件
 		if(isset($_SESSION['INSTALLOK']) && $_SESSION['INSTALLOK'] == 1){
-			filewrite(ROOT_PATH . $config['installFile']);
+			filewrite(INSTALL_PATH . $config['installFile']);
 		}
 
 		define('IN_ECTOUCH', true);
 		$appid = get_appid();
-		$version_file = dirname(ROOT_PATH) . '/data/certificate/appkey.php';
+		$version_file = ROOT_PATH . 'data/certificate/appkey.php';
 		require $version_file;
 		if(EC_APPID == ''){
-			require dirname(ROOT_PATH) . '/include/vendor/Http.class.php';
-			require dirname(ROOT_PATH) . '/include/vendor/Cloud.class.php';
+			require ROOT_PATH . 'include/vendor/Http.class.php';
+			require ROOT_PATH . 'include/vendor/Cloud.class.php';
 			@file_put_contents($version_file, str_replace("'EC_APPID', '".EC_APPID."'", "'EC_APPID', '".$appid."'", file_get_contents($version_file)));
 			$cloud = Cloud::getInstance();
 			$site_info = get_site_info($appid);
@@ -463,7 +463,7 @@ function get_appid(){
  * @param string $appid
  */
 function get_site_info($appid = EC_APPID){
-	$db_config = require '../data/config.php';
+	$db_config = require ROOT_PATH . 'data/config.php';
     $conn = mysql_connect($db_config['DB_HOST'], $db_config['DB_USER'], $db_config['DB_PWD']);
     mysql_query("SET NAMES 'utf8'");
     mysql_select_db($db_config['DB_NAME'], $conn);

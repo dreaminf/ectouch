@@ -1,4 +1,4 @@
-<?php require ROOT_PATH . 'templates/header.php';?>
+<?php require INSTALL_PATH . 'templates/header.php';?>
 	<div class="section">
 		<div class="main server">
 			<table width="100%">
@@ -85,4 +85,4 @@
 			<button href="#" class="btn error" disabled>当前有误</button>
 		<?php } ?>
 		</div>
-<?php require ROOT_PATH . 'templates/footer.php';?>
+<?php require INSTALL_PATH . 'templates/footer.php';?>

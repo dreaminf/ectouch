@@ -1,4 +1,4 @@
-<?php require ROOT_PATH . 'templates/header.php';?>
+<?php require INSTALL_PATH . 'templates/header.php';?>
 	<div class="section">
 		<div class="main">
 			<div class="success_tip cc"> 
@@ -11,4 +11,4 @@
 		<a href="../index.php" class="btn">进入前台</a>
 		<a href="../admin" class="btn">进入后台</a>
 	</div>
-<?php require ROOT_PATH . 'templates/footer.php';?>
+<?php require INSTALL_PATH . 'templates/footer.php';?>
