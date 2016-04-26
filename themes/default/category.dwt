@@ -72,18 +72,18 @@ $('#hide-div').delay(1500).hide(0);
 	var url = '{:url('category/async_list', array('id'=>$this->_var['id'], 'type'=>$this->_var['type'], 'brand'=>$this->_var['brand_id'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keywords'=>$this->_var['keywords']))}';
 	var total = 0;
 	var page = localData.get('cat_{$id}_page');
-	var minPage = localData.get('cat_{$id}_page_min');
-	var maxPage = localData.get('cat_{$id}_page_max');
+	// var minPage = localData.get('cat_{$id}_page_min');
+	// var maxPage = localData.get('cat_{$id}_page_max');
 	page = (page === null) ? 1:page;
-	minPage = (minPage === null) ? 1:minPage;
-	maxPage = (maxPage === null) ? 1:maxPage;
+	// minPage = (minPage === null) ? 1:minPage;
+	// maxPage = (maxPage === null) ? 1:maxPage;
 	// first request
 	$.post(url, {page: page}, function(data){
 		var html = template('j-product', data);
 		$('#j-product-box').append(html);
 		// total = data.total;
-		localData.set('cat_{$id}_page_min', minPage);
-		localData.set('cat_{$id}_page_max', maxPage);
+		// localData.set('cat_{$id}_page_min', minPage);
+		// localData.set('cat_{$id}_page_max', maxPage);
 	}, 'json');
 
 	$(window).scroll(function () {
