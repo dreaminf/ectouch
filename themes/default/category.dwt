@@ -77,12 +77,12 @@ $('#hide-div').delay(1500).hide(0);
 	get_data(page);
 	localData.set('cat_{$id}_page', page);
 	if(page == 1){
-    localData.set('cat_{$id}_page_min', 1);
-    localData.set('cat_{$id}_page_max', 1);
+		localData.set('cat_{$id}_page_min', 1);
+		localData.set('cat_{$id}_page_max', 1);
 	}
 	if(page > 1){
-    localData.set('cat_{$id}_page_min', page);
-    localData.set('cat_{$id}_page_max', page);
+		localData.set('cat_{$id}_page_min', page);
+		localData.set('cat_{$id}_page_max', page);
 	}
 	var minPage = localData.get('cat_{$id}_page_max');
 	var maxPage = localData.get('cat_{$id}_page_max');
@@ -96,41 +96,62 @@ $('#hide-div').delay(1500).hide(0);
 		// 下拉
 		if (scrollTop + windowHeight == scrollHeight) {
 			if(page >= maxPage){
-				$.post(url, {page: page + 1}, function(data){
-					var html = template('j-product', data);
-					$('#j-product-box').append(html);
-					//rug
-					if(!isEmpty(data.list)){
-						page++;
-						localData.set('cat_{$id}_page', page);
-						if(page > maxPage){
-							localData.set('cat_{$id}_page_max', page);
+				$.ajax({
+					type : "post",
+					url : url,
+					data : 'page=' + (page + 1),
+					dataType: 'json',
+					async : false,
+					success : function(data){
+						var html = template('j-product', data);
+						$('#j-product-box').append(html);
+						//rug
+						if(!isEmpty(data.list)){
+							page++;
+							localData.set('cat_{$id}_page', page);
+							if(page > maxPage){
+								localData.set('cat_{$id}_page_max', page);
+							}
 						}
 					}
-				}, 'json');
+				});
 			}
 		}
 		// 上拉
 		if(scrollTop == 0 && minPage > 1){
-			$.post(url, {page: page - 1}, function(data){
-				var html = template('j-product', data);
-				$('#j-product-box').prepend(html);
-				page--;
-				localData.set('cat_{$id}_page', page);
-				if(page < minPage){
-					localData.set('cat_{$id}_page_min', page);
+			$.ajax({
+				type : "post",
+				url : url,
+				data : 'page=' + (page - 1),
+				dataType: 'json',
+				async : false,
+				success : function(data){
+					var html = template('j-product', data);
+					$('#j-product-box').prepend(html);
+					page--;
+					localData.set('cat_{$id}_page', page);
+					if(page < minPage){
+						localData.set('cat_{$id}_page_min', page);
+					}
 				}
-			}, 'json');
+			});
 		}
 	});
 
 	function get_data(page){
-		$.post(url, {page: page}, function(data){
-			var html = template('j-product', data);
-			$('#j-product-box').append(html);
-		}, 'json');
+		$.ajax({
+			type : "post",
+			url : url,
+			data : 'page=' + page,
+			dataType: 'json',
+			async : false,
+			success : function(data){
+				var html = template('j-product', data);
+				$('#j-product-box').append(html);
+			}
+		});
 	}
-	
+
 	/*
    * 检测对象是否是空对象(不包含任何可读属性)。
    * 方法既检测对象本身的属性，也检测从原型继承的属性(因此没有使hasOwnProperty)。
