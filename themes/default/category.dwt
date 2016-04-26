@@ -95,6 +95,7 @@ $('#hide-div').delay(1500).hide(0);
 				var html = template('j-product', data);
 				$('#j-product-box').append(html);
 				//rug
+				alert(data);
 				page++;
 				localData.set('cat_{$id}_page', page);
 			}, 'json');
