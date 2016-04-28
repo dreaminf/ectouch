@@ -44,9 +44,9 @@
 					<div class="b-r {if $li.is_select eq 1}sp_box2{else}sp_box1{/if} clear check" id="cate_{$li.cat_id}" onClick="select_cate('{$li.cat_id}')">
 						<input type="checkbox" name="cate[]" value="{$li.cat_id}" id="input_{$li.cat_id}" class="elecheck display-none" {if $li.is_select eq 1}checked="checked" {/if} />
 						<h4 class="sp_title text-c  f-08">{$li.cat_name}</h4>
-						<span>本店销售佣金：{$li.profit1}%</span>
-						<span>一级分店佣金：{$li.profit2}%</span>
-						<span>二级分店佣金：{$li.profit3}%</span>
+						<span>一级分店佣金：{$li.profit1}%</span>
+						<span>二级分店佣金：{$li.profit2}%</span>
+						<span>三级分店佣金：{$li.profit3}%</span>
 					</div>
 				</div>
 				<!-- {/foreach} -->
