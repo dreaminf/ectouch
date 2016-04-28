@@ -42,7 +42,7 @@
 						<input type="hidden" name="brand" value="{$brand_id}" />
 					</ul>
 					<!--{foreach from=$filter_attr_list item=filter name=filter}-->
-					<a class="select-title padding-all j-menu-select">
+					<a class="select-title padding-all j-menu-select" id="filter_attr_25544">
 						<label class="fl">{$filter.filter_attr_name}</label>
 						<span class="fr t-jiantou j-t-jiantou"><em class="fl">
 						<!--{foreach from=$filter.attr_list item=attr name=attr}--> 
@@ -52,15 +52,15 @@
 						<!--{/foreach}-->
 						</em><i class="iconfont icon-jiantou tf-180 ts-2"></i></span>
 					</a>
-					<ul class="j-sub-menu padding-all j-get-one" data-istrue="true">
+					<ul class="j-sub-menu padding-all j-get-one j-sub-menu-attr">
 						<!--{foreach from=$filter.attr_list item=attr name=attr}-->
 						<li class="ect-select" data-attr="{$attr.attr_value}">
-							<label class="ts-1">{$attr.attr_value|escape:html}<i class="fr iconfont icon-gou ts-1"></i></label>
+							<label class="ts-1 <!--{if $attr.selected}-->active<!--{/if}--> " id="brand_{$attr.attr_id}" value="{$attr.attr_id}">{$attr.attr_value|escape:html}<i class="fr iconfont icon-gou ts-1"></i></label>
 						</li>
-						<!--{/foreach}-->
-						<input type="hidden" name="filter_attr" value="{$filter_attr}" />
+						<!--{/foreach}-->						
 					</ul>
 					<!--{/foreach}-->
+					<input type="hidden" name="filter_attr" value="{$filter_attr}" />
 				</div>
 				<div class="ect-button-more dis-box padding-all">
 					<a class="box-flex btn-reset j-filter-reset" onclick="javascript:clear_filter();">清空选项</a>
@@ -91,4 +91,22 @@ $(function(){
 		$(this).siblings('input[type="hidden"]').val(data);
 	})
 })
+//属性
+$(function() {
+    $('.j-sub-menu-attr li').click(function() {
+		$(this).addClass('active').siblings('li').removeClass('active');
+		var i = 0;
+		var new_attr = new Array();
+		$(".j-sub-menu-attr li").each(function(){
+			if ($(this).hasClass('active')) {
+				 new_attr[i] = $(this).find('label').attr('value');
+				 i = i + 1;
+			 }
+		});
+		var new_attr_str = new_attr.join('.');
+        //属性参数具体值
+        $('input[name=filter_attr]').val(new_attr_str);
+    })
+})
+
 </script>
