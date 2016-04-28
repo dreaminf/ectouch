@@ -68,7 +68,7 @@ class wlcx extends PluginWechatController
                     $articles['type'] = 'news';
                     $articles['content'][0]['Title'] = '物流信息';
                     $articles['content'][0]['Description'] = '快递公司：'. $order['shipping_name'] ."\r\n". '物流单号：' . $order['invoice_no'];
-                    $articles['content'][0]['Url'] = __HOST__ . url('user/order_tracking', array('order_id'=>$order['order_id']));
+                    $articles['content'][0]['Url'] = __HOST__ . url('user/order_detail', array('order_id'=>$order['order_id']));
                 }
             }
             // 积分赠送
