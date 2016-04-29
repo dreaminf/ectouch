@@ -1,3 +1,6 @@
+var handler = function(e) { //禁止浏览器默认行为
+		e.preventDefault();
+	};
 $(function($) {
 	function openMune() {
 		if ($('.ect-nav').is(":visible")) {
@@ -310,12 +313,14 @@ $(function($) {
 	//	});
 	/*点击弹出搜索层*/
 	$(".j-search-input").click(function() {
+		document.addEventListener("touchmove", handler, false);
 		$("body").addClass("show-search-div");
 		$(".search-div").css("z-index","999999");
 		//$('input[name="keywords"]').focus()
 	});
 	/*关闭搜索层*/
 	$(".j-close-search").click(function() {
+		document.removeEventListener("touchmove", handler, false);
 		$("body").removeClass("show-search-div");
 	});
 
