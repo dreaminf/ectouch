@@ -50,12 +50,20 @@ class image
         {
             /* 创建当月目录 */
             $dir = date('Ym');
-            $dir = ROOT_PATH . $this->images_dir . '/' . $dir . '/';
+            if (IS_ECSHOP) {
+                $dir = dirname(ROOT_PATH) . '/images/' . $dir . '/';
+            }else{
+                $dir = ROOT_PATH . $this->images_dir . '/' . $dir . '/';
+            }
         }
         else
         {
             /* 创建目录 */
-            $dir = ROOT_PATH . $this->data_dir . '/' . $dir . '/';
+            if (IS_ECSHOP) {
+                $dir = dirname(ROOT_PATH) . '/data/' . $dir . '/';        
+            }else{
+                $dir = ROOT_PATH . $this->data_dir . '/' . $dir . '/';
+            }
             if ($img_name)
             {
                 $img_name = $dir . $img_name; // 将图片定位到正确地址
@@ -96,7 +104,11 @@ class image
 
         if ($this->move_file($upload, $img_name))
         {
-            return str_replace(ROOT_PATH, '', $img_name);
+            if (IS_ECSHOP) {
+                return str_replace(dirname(ROOT_PATH) . '/', '', $img_name);
+            }else{
+                return str_replace(ROOT_PATH, '', $img_name);
+            }
         }
         else
         {

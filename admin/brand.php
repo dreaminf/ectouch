@@ -390,17 +390,18 @@ function get_brandlist()
     }
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 
+    $data_dir = IS_ECSHOP ? '../data' : DATA_DIR . '/attached';
     $arr = array();
     while ($rows = $GLOBALS['db']->fetchRow($res))
     {
         $brand_logo = empty($rows['brand_logo']) ? '' :
-            '<a href="../' . DATA_DIR . '/attached/brandlogo/'.$rows['brand_logo'].'" target="_brank"><img src="images/picflag.gif" width="16" height="16" border="0" alt='.$GLOBALS['_LANG']['brand_logo'].' /></a>';
+            '<a href="../' . $data_dir . '/brandlogo/'.$rows['brand_logo'].'" target="_brank"><img src="images/picflag.gif" width="16" height="16" border="0" alt='.$GLOBALS['_LANG']['brand_logo'].' /></a>';
         $site_url   = empty($rows['site_url']) ? 'N/A' : '<a href="'.$rows['site_url'].'" target="_brank">'.$rows['site_url'].'</a>';
 
         $rows['brand_logo'] = $brand_logo;
 
         $brand_banner = empty($rows['brand_banner']) ? '' :
-            '<a href="../' . DATA_DIR . '/attached/brandbanner/'.$rows['brand_banner'].'" target="_brank"><img src="images/picflag.gif" alt="banner" width="16" height="16" border="0" alt='.$GLOBALS['_LANG']['brand_logo'].' /></a>';
+            '<a href="../' . $data_dir . '/brandbanner/'.$rows['brand_banner'].'" target="_brank"><img src="images/picflag.gif" alt="banner" width="16" height="16" border="0" alt='.$GLOBALS['_LANG']['brand_logo'].' /></a>';
         $site_url   = empty($rows['site_url']) ? 'N/A' : '<a href="'.$rows['site_url'].'" target="_brank">'.$rows['site_url'].'</a>';
 
         $rows['brand_banner'] = $brand_banner;
