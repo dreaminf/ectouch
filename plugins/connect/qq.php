@@ -111,6 +111,7 @@ class qq {
             $userinfo = $this->get_user_info($openid);
             // 处理数据
             $userinfo['aite_id'] = $type . '_' . $openid; // 添加登录标示
+            $_SESSION['avatar'] = $userinfo['figureurl_qq_1']; // 保存头像
             $user = init_users();
             if ($userinfo['user_name'] = model('Users')->get_one_user($userinfo['aite_id'])) {
                 // 已有记录

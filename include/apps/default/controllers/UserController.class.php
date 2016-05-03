@@ -33,6 +33,10 @@ class UserController extends CommonController {
         $this->check_login();
         // 用户信息
         $info = model('ClipsBase')->get_user_default($this->user_id);
+        // 显示第三方API的头像
+        if(isset($_SESSION['avatar'])){
+            $info['avatar'] = $_SESSION['avatar'];
+        }
         // 如果是显示页面，对页面进行相应赋值
         assign_template();
         $this->assign('action', $this->action);
