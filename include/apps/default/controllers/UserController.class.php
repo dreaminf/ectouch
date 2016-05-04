@@ -1764,7 +1764,7 @@ class UserController extends CommonController {
 
         // 登录页面显示
         if (isset($_GET['referer']) && !empty($_GET['referer'])) {
-            $this->back_act = $_GET['referer'];
+            $this->back_act = I('get.referer');
         }
 
         if (empty($this->back_act) && isset($GLOBALS['_SERVER']['HTTP_REFERER'])) {
