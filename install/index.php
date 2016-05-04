@@ -1,9 +1,10 @@
 <?php
 header("Content-type: text/html; charset=utf-8");
-//开启session
-if (!session_id()) session_start();
 define('INSTALL_PATH', str_replace('\\', '/', dirname(__FILE__)) . '/');
 define('ROOT_PATH', dirname(INSTALL_PATH) . '/');
+//开启session
+session_save_path(ROOT_PATH . 'data/session');
+if (!session_id()) session_start();
 //配置信息
 $config = include INSTALL_PATH . 'config.php';
 if(empty($config)){
