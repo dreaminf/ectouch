@@ -270,12 +270,13 @@ switch ($step) {
 
 		define('IN_ECTOUCH', true);
 		$appid = get_appid();
-		$version_file = ROOT_PATH . 'data/certificate/appkey.php';
-		require $version_file;
-		if(EC_APPID == ''){
+		$appkey_file = ROOT_PATH . 'data/certificate/appkey.php';
+		if(!file_exists($appkey_file)){
 			require ROOT_PATH . 'include/vendor/Http.class.php';
 			require ROOT_PATH . 'include/vendor/Cloud.class.php';
-			@file_put_contents($version_file, str_replace("'EC_APPID', '".EC_APPID."'", "'EC_APPID', '".$appid."'", file_get_contents($version_file)));
+			$contents = "<?php\n\rdefine('EC_APPID', '".$appid."');";
+			@file_put_contents($appkey_file, $contents);
+			// 推送API
 			$cloud = Cloud::getInstance();
 			$site_info = get_site_info($appid);
 			$cloud->data($site_info)->act('post.install');
