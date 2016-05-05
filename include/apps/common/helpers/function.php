@@ -1487,8 +1487,10 @@ function price_format($price, $change_price = true) {
     } else {
         $price = number_format($price, 2, '.', '');
     }
+    
+    $price = sprintf(C('currency_format'), $price);
 
-    return sprintf(C('currency_format'), $price);
+    return $price = strip_tags($price);
 }
 
 /**
