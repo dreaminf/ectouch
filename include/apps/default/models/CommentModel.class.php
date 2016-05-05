@@ -108,10 +108,10 @@ class CommentModel extends BaseModel {
 
         $result = $this->query($sql);
         if($result){
-            $sql = "select comment_id from ".$this->pre."comment where add_time = ".gmtime();
-            $res = $this->query($sql);
+            $sql = "SELECT comment_id FROM ".$this->pre."comment WHERE user_id = ".$user_id." AND id_value = ".$cmt->id." ORDER BY comment_id DESC";
+            $res = $this->query($sql); 
             $comment_id = $res[0]['comment_id'];
-            $sql = "INSERT INTO " . $this->pre ."order_rec_comment (rec_id ,comment_id) VALUES (".$recId." ,".$comment_id.")";
+            $sql = "INSERT INTO " . $this->pre ."order_goods_comment (rec_id ,comment_id) VALUES (".$recId." ,".$comment_id.")";
             $result = $this->query($sql);
         }
         clear_cache_files('comments_list.lbi');

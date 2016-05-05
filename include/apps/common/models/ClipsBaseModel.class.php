@@ -939,7 +939,7 @@ class ClipsBaseModel extends BaseModel {
      */
 	public function not_pingjia($user_id) {
 	    /*$sql="select count(id_value) from ". $this->pre ."comment where user_id='$user_id' and id_value not in(select b.goods_id from " .$this->pre."order_info as a  LEFT JOIN " .$this->pre. "order_goods  as b on a.order_id=b.order_id where a.user_id='$user_id')"; */
-        $sql = "select rc.rec_id from ".$this->pre."order_rec_comment as rc left join ".$this->pre."order_goods as g on g.rec_id = rc.rec_id".
+        $sql = "select rc.rec_id from ".$this->pre."order_goods_comment as rc left join ".$this->pre."order_goods as g on g.rec_id = rc.rec_id".
             " left join " .$this->pre."order_info as i on g.order_id = i.order_id";
         $res = $this->query($sql);
         $v = '';

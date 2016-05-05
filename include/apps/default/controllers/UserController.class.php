@@ -2401,7 +2401,7 @@ class UserController extends CommonController {
      */
     public function order_comment() {
         $user_id = $this->user_id;
-        $sql = "select rc.rec_id from ".$this->model->pre."order_rec_comment as rc left join ".$this->model->pre."order_goods as g on g.rec_id = rc.rec_id".
+        $sql = "select rc.rec_id from ".$this->model->pre."order_goods_comment as rc left join ".$this->model->pre."order_goods as g on g.rec_id = rc.rec_id".
             " left join " .$this->model->pre."order_info as i on g.order_id = i.order_id";
         $res = $this->model->query($sql);
         $v = '';

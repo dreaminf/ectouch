@@ -5,7 +5,7 @@
 -- ------------------------------------------------------------
 
 
-CREATE TABLE IF NOT EXISTS `{pre}order_rec_comment` (
-  `rec_id` mediuint(8)  NOT NULL ,
+CREATE TABLE IF NOT EXISTS `{pre}order_goods_comment` (
+  `rec_id` mediumint(8)  NOT NULL ,
   `comment_id` int(10)  NOT NULL  
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8  ;
