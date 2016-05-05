@@ -939,13 +939,28 @@ class ClipsBaseModel extends BaseModel {
      */
 	public function not_pingjia($user_id) {
 	    /*$sql="select count(id_value) from ". $this->pre ."comment where user_id='$user_id' and id_value not in(select b.goods_id from " .$this->pre."order_info as a  LEFT JOIN " .$this->pre. "order_goods  as b on a.order_id=b.order_id where a.user_id='$user_id')"; */
-		$sql="select count(b.goods_id) from " . $this->pre . "order_info as o  LEFT JOIN " .$this->pre. "order_goods  as b on o.order_id=b.order_id  where user_id='$user_id' ".  
-        " AND o.shipping_status " . db_create_in(array( SS_RECEIVED)) . 
-        " AND b.goods_id not in(select id_value from ". $this->pre . "comment where user_id='$user_id')";
-
+        $sql = "select rc.rec_id from ".$this->pre."order_rec_comment as rc left join ".$this->pre."order_goods as g on g.rec_id = rc.rec_id".
+            " left join " .$this->pre."order_info as i on g.order_id = i.order_id";
         $res = $this->query($sql);
-	    $row = $res[0]['count(b.goods_id)'];
-	    return $row;
+        $v = '';
+        foreach($res as $key =>$val){
+            if($val['rec_id']){
+                $t = $val['rec_id'];
+                $v .= $t.",";
+            }
+        }
+        $v = substr($v,0,-1) ;
+        $sql="select  count(b.goods_id)  from " . $this->pre . "order_info as o  LEFT JOIN " .$this->pre. "order_goods  as b on o.order_id=b.order_id  where user_id='$user_id' ".
+            " AND o.shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)).
+            " AND o.order_status " . db_create_in(array(OS_CONFIRMED, OS_SPLITED)).
+            " AND o.pay_status " . db_create_in(array(PS_PAYED, PS_PAYING));
+
+        if ($v) {
+            $sql .= ' AND b.rec_id NOT IN ( '. $v .' )';
+        }
+        $res = $this->query($sql);
+        $row = $res[0]['count(b.goods_id)'];
+        return $row;
     }
 
 }
