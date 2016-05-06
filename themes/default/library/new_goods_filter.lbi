@@ -54,13 +54,13 @@
 					</a>
 					<ul class="j-sub-menu padding-all j-get-one j-sub-menu-attr">
 						<!--{foreach from=$filter.attr_list item=attr name=attr}-->
-						<li class="ect-select" data-attr="{$attr.attr_value}">
+						<li class="ect-select <!--{if $attr.selected}-->active<!--{/if}-->" data-attr="{$attr.attr_value}">
 							<label class="ts-1 <!--{if $attr.selected}-->active<!--{/if}--> " id="brand_{$attr.attr_id}" value="{$attr.attr_id}">{$attr.attr_value|escape:html}<i class="fr iconfont icon-gou ts-1"></i></label>
 						</li>
 						<!--{/foreach}-->						
 					</ul>
 					<!--{/foreach}-->
-					<input type="hidden" name="filter_attr" value="{$filter_attr}" />
+					<input type="hidden" id="filter_attr" name="filter_attr" value="{$filter_attr}" />
 				</div>
 				<div class="ect-button-more dis-box padding-all">
 					<a class="box-flex btn-reset j-filter-reset" onclick="javascript:clear_filter();">清空选项</a>
@@ -84,6 +84,7 @@ function clear_filter(){
 	$(".ui-slider-range").css({left:0,width:0});
 	$("#slider-range-amount").html(0);
 	$("#min ,#max").val(0);
+	$("#filter_attr").val(0);
 }
 $(function(){
 	$('.ect-select').click(function(){
