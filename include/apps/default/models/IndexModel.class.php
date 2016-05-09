@@ -216,7 +216,8 @@ class IndexModel extends CommonModel {
      */
     function category_cat(){ 
 	    //获取店铺所选分类id
-        $sql = "select cat_id from " . $this->pre . "drp_shop where user_id= $_SESSION[user_id] ";
+		$drp_id = $_SESSION['drp_shop']['drp_id'];
+        $sql = "select cat_id from " . $this->pre . "drp_shop where id= $drp_id ";
 		$res = $this->row($sql);		
 		if($res){
 			$cat = $res['cat_id'];
