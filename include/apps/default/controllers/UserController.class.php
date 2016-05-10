@@ -178,7 +178,7 @@ class UserController extends CommonController {
             if (!empty($qq) && !preg_match('/^\d+$/', $qq)) {
                 show_message(L('passport_js.qq_invalid'));
             }
-            if (!empty($mobile_phone) && !preg_match('/^[\d-\s]+$/', $mobile_phone)) {
+            if (!empty($mobile_phone) && !preg_match('/^1[3|4|5|8|7][0-9]\d{4,8}$/', $mobile_phone)) {
                 show_message(L('passport_js.mobile_phone_invalid'));
             }
 
