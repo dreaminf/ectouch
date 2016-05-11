@@ -17,7 +17,7 @@
 				<h5>{$vo.name}</h5>
 				<ul>
 				{foreach from=$vo.cat_id item="v"}
-					<li class="w-3"><a href="{:url('category/index',array('id'=>$this->_var['v']['id']))}"></a>
+					<li class="w-3"><a href="javascript:void(0);" onclick='javascript:redirect_list({$v.id});'></a>
 					<img src="{$v.img}" /><span>{$v.name}</span></li>
 				{/foreach}
 				</ul>
@@ -26,7 +26,7 @@
 				<h5>{$val.name}</h5>
 				<ul>
 				{foreach from=$val.cat_id item="v"}
-					<li class="w-3"><a href="{:url('category/index',array('id'=>$this->_var['v']['id']))}"></a>
+					<li class="w-3"><a href="javascript:void(0);" onclick='javascript:redirect_list({$v.id});'></a>
 					<img src="{$v.img}" /><span>{$v.name}</span></li>
 				{/foreach}
 				</ul>
@@ -46,6 +46,13 @@
 			$('.j-content').eq(index).show().siblings('.j-content').hide();
 		})
 	})
+	
+	function redirect_list(id){
+		localData.remove('cat_'+ id +'_page');
+		localData.remove('cat_'+ id +'_page_min');
+		localData.remove('cat_'+ id +'_page_max');
+		window.location.href = 'index.php?c=category&id=' + id;
+	}
 </script>
 </body>
 </html>
