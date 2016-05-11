@@ -125,14 +125,14 @@ switch ($step) {
 		if($independent == 0){
 			require_once $base_path . 'data/config.php';
 			$db = explode(':',$db_host);
-			$config['dbHost'] = empty($db[0]) ? 'localhost': $db[0];
+			$config['dbHost'] = empty($db[0]) ? '127.0.0.1': $db[0];
 			$config['dbPort'] = empty($db[1]) ? '3306' : $db[1];
 			$config['dbName'] = $db_name;
 			$config['dbUser'] = $db_user;
 			$config['dbPass'] = $db_pass;
 			$config['dbPrefix'] = empty($prefix) ? 'ecs_' : $prefix;
 		}else{
-			$config['dbHost'] = 'localhost';
+			$config['dbHost'] = '127.0.0.1';
 			$config['dbPort'] = '3306';
 			$config['dbName'] = '';
 			$config['dbUser'] = '';
