@@ -36,5 +36,6 @@
 	function openSearch(){
 		$("body").addClass("show-search-div");
 		$(".search-div").css("z-index","4999");
+		$("input[name='keywords']").focus();
 	}
 </script>

@@ -316,7 +316,7 @@ $(function($) {
 		document.addEventListener("touchmove", handler, false);
 		$("body").addClass("show-search-div");
 		$(".search-div").css("z-index","999999");
-		//$('input[name="keywords"]').focus()
+		$('input[name="keywords"]').focus();
 	});
 	/*关闭搜索层*/
 	$(".j-close-search").click(function() {
