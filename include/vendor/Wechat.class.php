@@ -14,7 +14,7 @@ class Wechat extends WechatAbstract {
      */
     public function log($log){
         $log = is_array($log) ? var_export($log, true) : $log;
-    		logResult($log);
+    		//logResult($log);
     }
 
 	public function clearCache(){
