@@ -104,14 +104,16 @@
           <!--/*DRP_START*/-->
             <tr>
                 <td class="label">{$lang.lab_shop_profit}</td>
-                <td><input type="text" name="touch_sale" value="{$goods.touch_sale}" size="20" onblur="priceSetted()"/>
+                <td><input type="text" name="touch_sale" value="{$goods.touch_sale}" size="20" />
                     </td>
             </tr>
+        <!--隐藏分成框
             <tr>
                 <td class="label">{$lang.touch_fencheng}</td>
                 <td><input type="text" name="touch_fencheng" value="{$goods.touch_fencheng}" size="20" onblur="priceSetted()"/>
                 </td>
             </tr>
+            -->
           <!--/*DRP_END*/-->
           {if $user_rank_list}
           <tr>
