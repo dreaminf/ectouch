@@ -66,7 +66,7 @@ select {
 }
 .form-select select	{ position: relative;}
 .ect-page .form-select select {
-  padding: 0.4em 5em;
+  padding: 0.4em 3em;
   position: relative;
 }
 .pager li {
