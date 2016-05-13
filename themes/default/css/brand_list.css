@@ -12,6 +12,6 @@ body{position: relative;}
 .clear{clear:both;}
 .brand-status{background-color: #F3F5F7 !important; padding-left:1rem !important;}
 
-.ect-brand-list-nav li a{padding:0.2rem 0.1rem; text-align:center; }
+.ect-brand-list-nav li a{padding:0.1rem 0.1rem; text-align:center; }
 .ect-brand-list-nav li a:hover{background:none; padding:0.2rem 0.1rem;}
 .ect-brand-list-nav li.active a{color:#1CBB7F;}
