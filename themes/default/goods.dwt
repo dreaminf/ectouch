@@ -206,7 +206,7 @@
 				<!--{if $smarty.foreach.com.index<5}-->
 				<div class="of-hidden evaluation-list padding-all-1 n-list-pl">
 					<div class="of-hidden">
-						<p class="fl"><span class="grade-star g-star-{$comment.rank} fl"></span><em class="t-remark fl"><!--{if $comment.user_name}-->{$comment.user_name|escape:html}<!--{else}-->{$lang.anonymous}<!--{/if}--></em></p>
+						<p class="fl"><span class="grade-star g-star-{$comment.comment_rank} fl"></span><em class="t-remark fl"><!--{if $comment.user_name}-->{$comment.user_name|escape:html}<!--{else}-->{$lang.anonymous}<!--{/if}--></em></p>
 						<p class="fr t-remark">{$comment.add_time}</p>
 					</div>
 					<p class="clear m-top06 t-goods1">{$comment.content}</p>
