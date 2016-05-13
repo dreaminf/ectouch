@@ -277,7 +277,7 @@ switch ($step) {
 		if(!file_exists($appkey_file)){
 			require ROOT_PATH . 'include/vendor/Http.class.php';
 			require ROOT_PATH . 'include/vendor/Cloud.class.php';
-			$contents = "<?php\n\rdefine('EC_APPID', '".$appid."');";
+			$contents = "<?php define('EC_APPID', '".$appid."');";
 			@file_put_contents($appkey_file, $contents);
 			// 推送API
 			$cloud = Cloud::getInstance();
