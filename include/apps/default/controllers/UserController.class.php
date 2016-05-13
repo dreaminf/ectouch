@@ -542,6 +542,7 @@ class UserController extends CommonController {
             $payment_info['pay_button'] = $pay_obj->get_code($order, $payment);
     
             /* 模板赋值 */
+			$this->assign('title', L('label_user_surplus'));
             $this->assign('payment', $payment_info);
             $this->assign('order',   $order);
             $this->assign('pay_fee', price_format($payment_info['pay_fee'], false));
@@ -551,7 +552,7 @@ class UserController extends CommonController {
         /* 重新选择支付方式 */
         else
         {
-    
+			$this->assign('title', L('label_user_surplus'));
             $this->assign('payment', model('ClipsBase')->get_online_payment_list());
             $this->assign('order',   $order);
             $this->display('user_account_deposit.dwt');
