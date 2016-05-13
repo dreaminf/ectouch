@@ -160,9 +160,7 @@ h4.title-hrbg hr {background: #f6f6f9;height: 1px;border: 0;position: absolute;l
 .mask-filter-div.show {
     display: inherit;
 }
-.icon-write .ect-icon-history {
-    background-position: -5em -2.7em;
-}
+
 /*积分商城样式添加  robot*/
 .heart{padding-left:0.6em;padding-right:0.6em;width:5rem;}
 .heart i{display:block; width: 2.8rem; height:2.8rem; margin:0 auto; background:url(../img/heart_03.png) 0 100% no-repeat; background-size:2.7rem 5.4rem;}
