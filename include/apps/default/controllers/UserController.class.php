@@ -2413,7 +2413,8 @@ class UserController extends CommonController {
         }
         $v = substr($v,0,-1) ;
         $sql = "select g.goods_name,g.goods_id,g.rec_id,i.add_time from ".$this->model->pre ."order_info as i left join ".
-            $this->model->pre."order_goods as g on i.order_id = g.order_id ".
+            $this->model->pre."order_goods as g on i.order_id = g.order_id  left join ".
+            $this->model->pre."goods as gg on g.goods_id = gg.goods_id ".
             "where user_id='$user_id' ".
             " AND i.shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)).
             " AND i.order_status " . db_create_in(array(OS_CONFIRMED, OS_SPLITED)).
