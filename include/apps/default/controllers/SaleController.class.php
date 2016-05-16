@@ -284,25 +284,7 @@ class SaleController extends CommonController {
         $id = I('u') ? I('u') : $this->user_id;
         if(!isset($_GET['u'])){
             redirect(url('sale/spread',array('u'=>$id)));
-        }
-        // 查询推广用户信息
-        $shopuser = $this->model->table('users')->where(array('user_id'=> $id))->find();
-        if(empty($shopuser)){
-            redirect(url('sale/index'));
-        }else{
-            $info = array(
-                'name' => $shopuser['user_name'],
-                'avatar' => ''
-            );
-        }
-        // 查询微信用户信息
-        $wechatuser = $this->model->table('wechat_user')->where(array('ect_uid'=>$id))->find();
-        if(!empty($wechatuser)){
-            $info = array(
-                'name' => $wechatuser['nickname'],
-                'avatar' => $wechatuser['headimgurl']
-            );
-        }
+        }        
         // 创建目录
         $filename  = ROOT_PATH.'data/attached/drp';
         if(!file_exists($filename)){
@@ -370,7 +352,24 @@ class SaleController extends CommonController {
                 Image::water($dp_img,$wx_img,13);
             }
         }
-
+		// 查询推广用户信息
+        $shopuser = $this->model->table('users')->where(array('user_id'=> $id))->find();
+        if(empty($shopuser)){
+            redirect(url('sale/index'));
+        }else{
+            $info = array(
+                'name' => $shopuser['user_name'],
+                'avatar' => ''
+            );
+        }
+        // 查询微信用户信息
+        $wechatuser = $this->model->table('wechat_user')->where(array('ect_uid'=>$id))->find();
+        if(!empty($wechatuser)){
+            $info = array(
+                'name' => $wechatuser['nickname'],
+                'avatar' => $wechatuser['headimgurl']
+            );
+        }
         // 销售二维码
         $this->assign('mobile_qr', 'data/attached/drp/tg-dp-'.$id.'.png');
         $this->assign('info', $info);
