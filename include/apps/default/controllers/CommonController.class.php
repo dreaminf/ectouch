@@ -213,7 +213,7 @@ class CommonController extends BaseController
         }else{
             $condition = array('user_id'=>$_SESSION['user_id']);
         }
-		$drp_id = $this->model->table('drp_shop')->field('id')->where($condition)->getOne();		
+		$drp_id = $this->model->table('drp_shop')->field('id')->where($condition)->getOne();	
 		//$drp_id = $this->model->table('drp_shop')->field('id')->where("user_id=".$_SESSION['user_id'])->getOne();
 		if($drp_id > 0){
 			$drp_info = model('Sale')->get_drp($drp_id,'1');
@@ -230,22 +230,16 @@ class CommonController extends BaseController
                 model('Sale')->drp_visiter($_GET['drp_id']);
 
             }
-        }elseif($_SESSION['user_id'] && !$_SESSION['drp_shop']){
-            $drp_info = model('Sale')->get_drp($_SESSION['user_id']);
-            if($drp_info['open'] == 1){
-                $drp_info['cat_id'] = substr($drp_info['cat_id'], 0, -1);
-                $_SESSION['drp_shop'] = $drp_info;
-            }else{
-                $parent_id = $this->model->table('users')->field('parent_id')->where("user_id=".$_SESSION['user_id'])->getOne();
-                if($parent_id){
-                    $drp_info = model('Sale')->get_drp($parent_id);
-                    if($drp_info['open'] == 1) {
-                        $drp_info['cat_id'] = substr($drp_info['cat_id'], 0, -1);
-                        $_SESSION['drp_shop'] = $drp_info;
-                    }
-                }
-            }
-        }
+        }else{
+			$parent_id = $this->model->table('users')->field('parent_id')->where("user_id=".$_SESSION['user_id'])->getOne();
+			if($parent_id){
+				$drp_info = model('Sale')->get_drp($parent_id);
+				if($drp_info['open'] == 1) {
+					$drp_info['cat_id'] = substr($drp_info['cat_id'], 0, -1);
+					$_SESSION['drp_shop'] = $drp_info;
+				}
+			}
+		}
     } 
     /*DRP_END*/
     
