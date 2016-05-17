@@ -254,6 +254,7 @@ class WechatController extends CommonController
                     //记录用户操作信息
                     $this->record_msg($openid, $template . $bonus_msg, 1);
                 }
+				/*DRP_START*/
 				/* 下线扫码关注成功，给上级发送消息提示 by han */
 				if (!empty($register)) {
 					if($scene_user_id > 0){
@@ -277,6 +278,7 @@ class WechatController extends CommonController
 					}
 				}
 				/* by han */
+				/*DRP_END*/
             } else {
                 //授权用户送红包
                 $uid = model('Base')->model->table('wechat_user')->field('ect_uid')->where('openid = "'.$openid.'"')->getOne();
@@ -303,6 +305,7 @@ class WechatController extends CommonController
                             $this->record_msg($openid, $bonus_msg, 1);
                         }
                     }
+					/*DRP_START*/
 					/* 下线扫码关注成功，给上级发送消息提示 by han */
 					// 设置的用户注册信息
                     $register = $this->model->table('wechat_extend')
@@ -332,6 +335,7 @@ class WechatController extends CommonController
 						}
 				}
 				/* by han */	
+				/*DRP_END*/
 					
                 }
 
