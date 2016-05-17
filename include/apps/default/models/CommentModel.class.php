@@ -244,7 +244,7 @@ class CommentModel extends BaseModel {
                "comment_type = 0 AND id_value = '".$goods_id."' AND status = 1 $where ORDER BY comment_id DESC LIMIT $start , $num";
         $comment_list = $this->query($sql);
         foreach($comment_list as $k => $v){
-            $comment_list[$k]['add_time'] = date('Y-m-d H:i:m',$v['add_time']);
+			$comment_list[$k]['add_time'] = local_date(C('time_format'), $v['add_time']);
         }
         return $comment_list;
     }
