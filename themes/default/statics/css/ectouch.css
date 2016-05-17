@@ -1,6 +1,6 @@
 /*初始样式*/
 
-html {font-size: 18px; font-family: Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", STXihei, STHeiti, "Microsoft YaHei", Heiti, SimSun, sans-serif;
+html,input,button{font-size: 18px; font-family: Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", STXihei, STHeiti, "Microsoft YaHei", Heiti, SimSun, sans-serif;
 -webkit-font-smoothing: antialiased;}
 body,
 ul,

@@ -121,7 +121,7 @@ h4.title-hrbg hr {background: #f6f6f9;height: 1px;border: 0;position: absolute;l
  * a链接样式1
  */
 .a-text-more a{display:block; width:100%; text-align: center; box-sizing: border-box;}
-.a-text-more span{height:2.6rem; line-height: 2.6rem;  display: block; border:1px solid #efefef;  border-radius: 4px;}
+.a-text-more span{height:2.6rem; line-height: 2.6rem;  display: block; border:1px solid #efefef;  border-radius: 4px;font-size: 1.4rem;}
 /*a链接样式2-横向，一行一个*/
 .a-text-one a{text-align: left;}
 .a-text-one span{border:0; border-radius: 0; border-bottom:1px solid #efefef; padding:.8rem 0;line-height:0;}
