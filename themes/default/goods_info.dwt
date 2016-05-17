@@ -1,5 +1,7 @@
-<div class="con">
-		<div class="goods-info of-hidden ect-tab b-color-f j-goods-info j-ect-tab ts-3" style="margin-bottom: 5rem;">
+<!-- #BeginLibraryItem "/library/new_page_header.lbi" -->
+<!-- #EndLibraryItem -->
+		<div class="con">
+		<div class="goods-info of-hidden ect-tab b-color-f j-goods-info j-ect-tab ts-3">
 			<div class="hd j-tab-title tab-title b-color-f of-hidden">
 				<ul class="dis-box">
 					<li class="box-flex active">{$lang.goods_brief}</li>
@@ -44,7 +46,11 @@
 				</div>
 			</div>
 		</div>
-
+<!-- #BeginLibraryItem "/library/new_search.lbi" -->
+<!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
+<!-- #EndLibraryItem -->
+		</div>
 		<!--引用js-->
 		<script>
 			/*切换*/

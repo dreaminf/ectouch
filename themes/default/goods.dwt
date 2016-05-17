@@ -36,7 +36,7 @@
 </style>
 <div class="con">
 	<!--style="margin-bottom: 50px;"-->
-	<div class="goods" style="margin-bottom: 0rem;">
+	<div class="goods">
 		<div class="ect-bg">
 			<header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg">
 				<a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span>
@@ -231,9 +231,9 @@
 				</div>-->
 			</div>
 		</section>
-		<!-- <section class="padding-all text-center t-remark2 xiangqing-1 ">
+		<section class="padding-all text-center t-remark2 xiangqing-1 ">
 			<a href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}" class="j-goodsinfo-div">点击查看商品详情</a>
-		</section> -->
+		</section>
 
 		</form>
 		
@@ -265,8 +265,6 @@
 <!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
 <!-- #EndLibraryItem -->
 </div>
-<!-- #BeginLibraryItem "/goods_info.dwt" -->
-<!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/new_search.lbi" -->
 <!-- #EndLibraryItem -->
 <script type="text/javascript" src="__TPL__/js/lefttime.js"></script>
