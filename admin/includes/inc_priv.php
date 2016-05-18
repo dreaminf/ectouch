@@ -150,6 +150,7 @@ if (!defined('IN_ECTOUCH'))
     $purview['magazine_list']        = 'magazine_list';
     $purview['view_sendlist']        = 'view_sendlist';
 
+/*DRP_START*/
 // 微分销
     $purview['ext_fenxiao'] = 'ext_fenxiao';
     $purview['01_drp_config'] = 'drp_config';
@@ -161,7 +162,7 @@ if (!defined('IN_ECTOUCH'))
     $purview['06_affiliate_ck'] = 'drp_affiliate_ck';
     $purview['07_ranking'] = 'drp_ranking';
     $purview['08_drp_log'] = 'drp_log';
-
+/*DRP_END*/
 // 微信通
     $purview['ext_wechat'] = 'ext_wechat';
     $purview['01_wechat_config'] = 'wechat_config';

@@ -151,7 +151,7 @@ $_LANG['sms_charge']      = '短信充值';
 $_LANG['send_history']    = '发送记录';
 $_LANG['charge_history']  = '充值记录 ';
 
-
+/*DRP_START*/
 $_LANG['ext_fenxiao'] = '微分销';
 $_LANG['drp_config'] = '微分销设置';
 $_LANG['drp_audit'] = '分销商审核';
@@ -162,7 +162,7 @@ $_LANG['drp_affiliate'] = '分成佣金设置';
 $_LANG['drp_affiliate_ck'] = '分成订单管理';
 $_LANG['drp_ranking'] = '分销商排行榜';
 $_LANG['drp_log'] = '佣金提现管理';
-
+/*DRP_END*/
 
 $_LANG['ext_wechat'] = '微信通';
 $_LANG['wechat_config'] = '公众号设置';

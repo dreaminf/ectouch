@@ -355,7 +355,9 @@ $_LANG['07_menu_stats'] = '报表';
 $_LANG['08_menu_template'] = '模板';
 $_LANG['09_menu_backup'] = '数据库';
 $_LANG['10_menu_tools'] = '工具箱';
+/*DRP_START*/
 $_LANG['11_menu_rec'] = '微分销';
+/*DRP_END*/
 $_LANG['12_menu_wechat'] = '微信通';
 
 // 控制台
@@ -422,7 +424,9 @@ $_LANG['01_wechat_config'] = '公众号设置';
 $_LANG['02_wechat_masssend'] = '群发消息';
 $_LANG['03_wechat_autoreply'] = '自动回复';
 $_LANG['04_wechat_selfmenu'] = '自定义菜单';
+/*DRP_START*/
 $_LANG['05_wechat_tmplmsg'] = '模板消息';
+/*DRP_END*/
 $_LANG['06_wechat_contactmanage'] = '用户管理';
 $_LANG['07_wechat_appmsg'] = '素材管理';
 $_LANG['08_wechat_qrcode'] = '扫码引荐';
