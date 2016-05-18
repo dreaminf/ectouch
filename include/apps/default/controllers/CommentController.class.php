@@ -53,20 +53,10 @@ class CommentController extends CommonController {
 
                 $cmt->page = 1;
                 $cmt->id = !empty($cmt->id) ? intval($cmt->id) : 0;
-                $sql = "select goods_id from ".$this->model->pre."order_goods where rec_id = ".$cmt->id;
-                $goodsId = $this->model->query($sql);
-
-                $recId = $cmt->id;
-                $cmt->id = $goodsId[0]["goods_id"];
                 $cmt->type = !empty($cmt->type) ? intval($cmt->type) : 0;
 				$this->user_id = $_SESSION['user_id'];
 				$where['user_id'] = $this->user_id;
 				$where['id_value'] = $cmt->id;
-                $sql = "select * from ".$this->model->pre."order_goods_comment where rec_id = ".$recId;
-                $row = $this->model->query($sql);
-                if(empty($row)){
-                    $row = 0;
-                }
 				if($row>0){
 					$result ['error'] = 1;
                     $result ['message'] = '此商品您已评论，只能评论一次哦';
@@ -125,7 +115,7 @@ class CommentController extends CommonController {
 
                             /* 无错误就保存留言 */
                             if (empty($result ['error'])) {
-                                model('Comment')->add_comment($cmt,$recId);
+                                model('Comment')->add_comment($cmt);
                             }
 
                     } else {
@@ -181,7 +171,7 @@ class CommentController extends CommonController {
                             }
                             /* 无错误就保存留言 */
                             if (empty($result ['error'])) {
-                                model('Comment')->add_comment($cmt,$recId);
+                                model('Comment')->add_comment($cmt);
                                 $_SESSION ['send_time'] = $cur_time;
                             }
                         }
