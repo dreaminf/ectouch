@@ -763,12 +763,13 @@ elseif ($_REQUEST['act'] == 'second')
             if($area_id <= 0)
             {
                 $config = array();
+                if(is_array($modules[0]['configure'])){
                 foreach ($modules[0]['configure'] AS $key => $val)
                 {
                     $config[$key]['name']   = $val['name'];
                     $config[$key]['value']  = $val['value'];
                 }
-
+                }
                 $count = count($config);
                 $config[$count]['name']     = 'free_money';
                 $config[$count]['value']    = 0;
