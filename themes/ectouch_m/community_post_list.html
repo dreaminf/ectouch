@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>ECTouch微商城</title>
+		<style type="text/css">
+			@import"css/jquery-ui-1.10.1.custom.min.css";@import"fonts/iconfont.css";@import"css/swiper-3.2.5.min.css";@import"css/ectouch.css"
+		</style>
+	</head>
+
+	<body class=" ">
+		<div class="con mb-7">
+			<div id="loading"><img src="images/loading.gif" /></div>
+			<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-arrow-left-copy"></i></a>
+				<h3 class="box-flex">关联商品</h3>
+				<a class="" href="javascript:;"><i class="iconfont icon-pailie j-nav-box"></i></a>
+			</header>
+			<div class="j-nav-content">
+				<ul class="dis-box new-footer-box">
+					<li class="box-flex">
+						<a href="index.html"><i class="iconfont icon-home"></i><span>首页</span></a>
+					</li>
+					<li class="box-flex">
+						<a href="catalog.html"><i class="iconfont icon-caidan"></i><span>分类</span></a>
+					</li>
+					<li class="box-flex"><a href="javascript:openSearch();" class="j-search-input"><i class="iconfont icon-sousuo"></i><span>搜索</span></a></li>
+					<li class="box-flex"><a href="flow_cart.html"><i class="iconfont icon-gouwuche"></i><span>购物车</span></a></li>
+					<li class="box-flex"><a href="user.html"><i class="iconfont icon-geren"></i><span>用户中心</span></a></li>
+				</ul>
+			</div>
+			<!--头部导航-->
+			<div class="padding-all select-one-1">
+				<ul class="dis-box j-get-one">
+					<li class="ect-select box-flex list-select promotion my-but-pre">
+						<label class="ts-1 dis-block active">已购买</label>
+					</li>
+					<li class="ect-select box-flex my-but-pre">
+						<label class="ts-1 dis-block">购物车</label>
+					</li>
+					<li class="ect-select box-flex list-select hasgoods my-but-pre">
+						<label class="ts-1 dis-block">已关注</label>
+					</li>
+					<li class="ect-select box-flex list-select promotion my-but-pre">
+						<label class="ts-1 dis-block">已浏览</label>
+					</li>
+				</ul>
+			</div>
+			<!--menu-->
+			<nav class="index-nav-1 com-post-box-1 com-post-box select-com padding-all">
+				<ul class="box ul-4 text-c ">
+					<li class="com-post-adr">
+						<div class="ect-select fr">
+							<label class="dis-box active">
+								<i class="select-btn"></i>
+							</label>
+						</div>
+						<div class="my-com-nav1">
+							<img src="images/category_top_13.png">
+						</div>
+
+					</li>
+					<li class="com-post-adr">
+						<div class="ect-select fr ">
+							<label class="dis-box">
+								<i class="select-btn"></i>
+							</label>
+						</div>
+						<div class="my-com-nav1">
+							<img src="images/category_top_19.png">
+						</div>
+					</li>
+					<li class="com-post-adr">
+						<div class="ect-select fr">
+							<label class="dis-box">
+								<i class="select-btn"></i>
+							</label>
+						</div>
+						<div class="my-com-nav1">
+							<img src="images/category_top_23.png">							
+						</div>
+					</li>
+					<li class="com-post-adr">
+						<div class="ect-select fr">
+							<label class="dis-box">
+								<i class="select-btn"></i>
+							</label>
+						</div>
+						<div class="my-com-nav1">
+							<img src="images/category_top_25.png">							
+						</div>
+					</li>
+					<li class="com-post-adr">
+						<div class="ect-select fr">
+							<label class="dis-box">
+								<i class="select-btn"></i>
+							</label>
+						</div>
+						<div class="my-com-nav1">
+							<img src="images/category_top_13.png">
+						</div>
+
+					</li>
+					<li class="com-post-adr">
+						<div class="ect-select fr ">
+							<label class="dis-box">
+								<i class="select-btn"></i>
+							</label>
+						</div>
+						<div class="my-com-nav1">
+							<img src="images/category_top_19.png">
+						</div>
+					</li>
+					<li class="com-post-adr">
+						<div class="ect-select fr">
+							<label class="dis-box">
+								<i class="select-btn"></i>
+							</label>
+						</div>
+						<div class="my-com-nav1">
+							<img src="images/category_top_23.png">							
+						</div>
+					</li>
+					<li class="com-post-adr">
+						<div class="ect-select fr">
+							<label class="dis-box">
+								<i class="select-btn"></i>
+							</label>
+						</div>
+						<div class="my-com-nav1">
+							<img src="images/category_top_25.png">							
+						</div>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<!--悬浮btn star-->
+		<section class="filter-btn dis-box">
+			<a class="btn-submit box-flex">确定</a>
+		</section>
+		<!--悬浮btn end-->
+		<!--引用js-->
+		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="js/swiper-3.2.5.min.js"></script>
+		<script type="text/javascript" src="js/ectouch.js"></script>
+		<script>
+			/*店铺信息商品滚动*/
+			var swiper = new Swiper('.j-g-s-p-con', {
+				scrollbarHide: true,
+				slidesPerView: 'auto',
+				centeredSlides: false,
+				grabCursor: true
+			});
+		</script>
+	</body>
+
+</html>

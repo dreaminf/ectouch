@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>ECTouch微商城</title>
+		<style type="text/css">
+			@import"css/jquery-ui-1.10.1.custom.min.css";
+			@import"fonts/iconfont.css";
+			@import"css/swiper-3.2.5.min.css";
+			@import"css/ectouch.css"
+		</style>
+	</head>
+
+	<body>
+		<div class="con">
+			<div id="loading"><img src="images/loading.gif" /></div>
+			<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-arrow-left-copy"></i></a>
+				<h3 class="box-flex">商品详情</h3>
+				<a class="" href="javascript:;"><i class="iconfont icon-pailie j-nav-box"></i></a>
+			</header>
+			<div class="j-nav-content">
+				<ul class="dis-box new-footer-box">
+					<li class="box-flex">
+						<a href="index.html"><i class="iconfont icon-home"></i><span>首页</span></a>
+					</li>
+					<li class="box-flex">
+						<a href="catalog.html"><i class="iconfont icon-caidan"></i><span>分类</span></a>
+					</li>
+					<li class="box-flex"><a href="javascript:openSearch();" class="j-search-input"><i class="iconfont icon-sousuo"></i><span>搜索</span></a></li>
+					<li class="box-flex"><a href="flow_cart.html"><i class="iconfont icon-gouwuche"></i><span>购物车</span></a></li>
+					<li class="box-flex"><a href="user.html"><i class="iconfont icon-geren"></i><span>用户中心</span></a></li>
+				</ul>
+			</div>
+			<div class="goods">
+				<div class="goods-photo j-show-goods-img">
+					<span class="goods-num" id="goods-num"><span id="g-active-num"></span>/<span id="g-all-num"></span></span>
+					<div class="swiper-wrapper">
+						<li class="swiper-slide tb-lr-center"><img src="images/T1nbXxFfRjXXXXXXXX_!!0-item_pic.jpg" /></li>
+						<li class="swiper-slide tb-lr-center"><img src="images/T1v1naFKxXXXXXXXXX_!!0-item_pic.jpg" /></li>
+						<li class="swiper-slide tb-lr-center"><img src="images/T1vyCzFJVXXXXXXXXX_!!0-item_pic.jpg" /></li>
+						<li class="swiper-slide tb-lr-center"><img src="images/T1nbXxFfRjXXXXXXXX_!!0-item_pic.jpg" /></li>
+					</div>
+					<!-- Add Pagination -->
+					<div class="swiper-pagination"></div>
+				</div>
+
+				<section class="goods-title b-color-f padding-all ">
+					<div class="dis-box">
+						<h3 class="box-flex">太平鸟女装2015秋冬新品 菱格印花欧根纱拼接连衣女宽松衬衫裙</h3>
+						<span class="heart j-heart"><i class="ts-2"></i><em class="ts-2">收藏</em></span>
+					</div>
+				</section>
+				<section class="goods-price padding-all b-color-f">
+					<p class="p-price"><span class="t-first">¥238.00</span><em class="em-promotion">5.8折</em></p>
+					<p class="p-market">市场价 <del>¥598.00</del></p>
+					<p class=" dis-box g-p-tthree m-top06">
+						<span class="box-flex text-left">销量 1280</span>
+						<span class="box-flex text-right">库存 1880</span>
+					</p>
+				</section>
+				<section class="m-top1px padding-all b-color-f touch-none goods-attr j-goods-attr j-show-div">
+					<div class="dis-box">
+						<label class="t-remark g-t-temark">已选</label>
+						<div class="box-flex t-goods1 ">请选择</div>
+						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180"></i></span>
+					</div>
+					<!--商品属性弹出层star-->
+					<div class="mask-filter-div"></div>
+					<div class="show-goods-attr j-filter-show-div ts-3 b-color-1">
+						<section class="s-g-attr-title b-color-1  product-list-small">
+							<div class="product-div">
+								<img class="product-list-img" src="images/T1nbXxFfRjXXXXXXXX_!!0-item_pic.jpg">
+								<div class="product-text">
+									<div class="dis-box position-rel">
+										<h4 class="box-flex">韩版2015冬装新款女装拼接羽绒服GW4509</h4>
+										<i class="iconfont icon-guanbi2 show-div-guanbi"></i>
+									</div>
+									<p><span class="p-price t-first ">¥1789.00</span></p>
+									<p class="dis-box p-t-remark"><span class="box-flex">库存:12800</span></p>
+								</div>
+							</div>
+						</section>
+						<section class="s-g-attr-con swiper-scroll b-color-f padding-all m-top1px">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide">
+									<h4 class="t-remark">颜色</h4>
+									<ul class="select-one j-get-one m-top10">
+										<li class="ect-select dis-flex fl">
+											<label class="ts-1">蓝色</label>
+										</li>
+										<li class="ect-select dis-flex fl">
+											<label class="ts-1">红色</label>
+										</li>
+										<li class="ect-select dis-flex fl">
+											<label class="ts-1">卡其色</label>
+										</li>
+										<li class="ect-select dis-flex fl">
+											<label class="ts-1">咖啡色</label>
+										</li>
+										<li class="ect-select dis-flex fl">
+											<label class="ts-1">卡其色</label>
+										</li>
+										<li class="ect-select dis-flex fl">
+											<label class="ts-1">咖啡色</label>
+										</li>
+										<li class="ect-select dis-flex fl">
+											<label class="ts-1">卡其色</label>
+										</li>
+										<li class="ect-select dis-flex fl">
+											<label class="ts-1">咖啡色</label>
+										</li>
+									</ul>
+									<h4 class="t-remark">尺寸</h4>
+									<ul class="select-one j-get-one m-top10">
+										<li class="ect-select dis-flex fl">
+											<label class="ts-1">S</label>
+										</li>
+										<li class="ect-select dis-flex fl">
+											<label class="ts-1">X</label>
+										</li>
+										<li class="ect-select dis-flex fl">
+											<label class="ts-1">XL</label>
+										</li>
+										<li class="ect-select dis-flex fl">
+											<label class="ts-1">XXL</label>
+										</li>
+										<li class="ect-select dis-flex fl">
+											<label class="ts-1">XXXL</label>
+										</li>
+									</ul>
+
+									<h4 class="t-remark">数量</h4>
+									<div class="div-num dis-box m-top08">
+										<a class="num-less"></a>
+										<input class="box-flex" type="number" value="1" />
+										<a class="num-plus"></a>
+									</div>
+								</div>
+							</div>
+							<div class="swiper-scrollbar"></div>
+						</section>
+						<section class="ect-button-more dis-box padding-all">
+							<a class="btn-cart box-flex">加入购物车</a>
+							<a class="btn-submit box-flex">立即购买</a>
+						</section>
+					</div>
+					<!--商品属性弹出层end-->
+				</section>
+
+				<section class="m-top04 goods-evaluation touch-none">
+					<a href="comment.html">
+						<div class="dis-box padding-all b-color-f  g-evaluation-title">
+							<label class="t-remark g-t-temark">用户评价</label>
+							<div class="box-flex t-goods1">好评率 <em class="t-first">97%</em></div>
+							<div class="t-goods1"><em class="t-first">3092</em><span class="t-jiantou">人评论<i class="iconfont icon-jiantou tf-180"></i></span></div>
+						</div>
+					</a>
+					<div class="padding-all m-top1px b-color-f g-evaluation-con">
+						<div class="of-hidden evaluation-list">
+							<div class="of-hidden ">
+								<p class="fl"><span class="grade-star g-star-5 fl"></span><em class="t-remark fl">s****y</em></p>
+								<p class="fr t-remark">2015-08-09 10:46:43</p>
+							</div>
+							<p class="clear m-top10 t-goods1">很好看，大小刚刚好 很好看</p>
+							<p class="clear t-remark">颜色分类：70cm、5144蓝色</p>
+						</div>
+					</div>
+					<div class="padding-all m-top1px b-color-f g-evaluation-con">
+						<div class="of-hidden evaluation-list">
+							<div class="of-hidden ">
+								<p class="fl"><span class="grade-star g-star-5 fl"></span><em class="t-remark fl">s****y</em></p>
+								<p class="fr t-remark">2015-08-09 10:46:43</p>
+							</div>
+							<p class="clear m-top10 t-goods1">很好看，大小刚刚好 很好看</p>
+							<p class="clear  t-remark">颜色分类：70cm、5144蓝色</p>
+						</div>
+					</div>
+				</section>
+				<div class="goods-info of-hidden ect-tab b-color-f j-goods-info j-ect-tab ts-3 p-t0 m-top04">
+					<div class="hd j-tab-title tab-title b-color-f of-hidden n-fixed-none">
+						<ul class="dis-box">
+							<li class="box-flex active">商品详情</li>
+							<li class="box-flex">规格参数</li>
+						</ul>
+					</div>
+					<div id="j-tab-con" class="b-color-f m-top1px tab-con ">
+						<div class="swiper-wrapper">
+							<section class="swiper-slide ">
+								<div class="padding-all">
+									fsadf
+									<br />gdf
+									<br />gdf
+									<br />gdf
+								</div>
+							</section>
+							<section class="swiper-slide goods-info-attr">
+								<ul class="t-remark">
+									<li class="of-hidden"><span class="fl">材质成分</span><span class="fr">聚酯纤维95% 聚氨酯弹性纤</span></li>
+									<li class="of-hidden"><span class="fl">品牌</span><span class="fr">太平鸟</span></li>
+									<li class="of-hidden"><span class="fl">货号</span><span class="fr">DS1502</span></li>
+									<li class="of-hidden"><span class="fl">产地</span><span class="fr">杭州</span></li>
+									<li class="of-hidden"><span class="fl">默认快递</span><span class="fr">圆通</span></li>
+									<li class="of-hidden"><span class="fl">服务信息</span><span class="fr">由品牌商从浙江杭州发货</span></li>
+									<li class="of-hidden"><span class="fl">产地</span><span class="fr">杭州</span></li>
+									<li class="of-hidden"><span class="fl">默认快递</span><span class="fr">圆通</span></li>
+									<li class="of-hidden"><span class="fl">服务信息</span><span class="fr">由品牌商从浙江杭州发货</span></li>
+									<li class="of-hidden"><span class="fl">产地</span><span class="fr">杭州</span></li>
+									<li class="of-hidden"><span class="fl">默认快递</span><span class="fr">圆通</span></li>
+									<li class="of-hidden"><span class="fl">服务信息</span><span class="fr">由品牌商从浙江杭州发货</span></li>
+									<li class="of-hidden"><span class="fl">产地</span><span class="fr">杭州</span></li>
+									<li class="of-hidden"><span class="fl">默认快递</span><span class="fr">圆通</span></li>
+									<li class="of-hidden"><span class="fl">服务信息</span><span class="fr">由品牌商从浙江杭州发货</span></li>
+									<li class="of-hidden"><span class="fl">产地</span><span class="fr">杭州</span></li>
+									<li class="of-hidden"><span class="fl">默认快递</span><span class="fr">圆通</span></li>
+									<li class="of-hidden"><span class="fl">服务信息</span><span class="fr">由品牌商从浙江杭州发货</span></li>
+									<li class="of-hidden"><span class="fl">产地</span><span class="fr">杭州</span></li>
+									<li class="of-hidden"><span class="fl">默认快递</span><span class="fr">圆通</span></li>
+									<li class="of-hidden"><span class="fl">服务信息</span><span class="fr">由品牌商从浙江杭州发货</span></li>
+									<li class="of-hidden"><span class="fl">产地</span><span class="fr">杭州</span></li>
+									<li class="of-hidden"><span class="fl">默认快递</span><span class="fr">圆通</span></li>
+									<li class="of-hidden"><span class="fl">服务信息</span><span class="fr">由品牌商从浙江杭州发货</span></li>
+								</ul>
+							</section>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<!--悬浮btn star-->
+			<section class="filter-btn dis-box">
+				<a class="filter-btn-kefu filter-btn-a"><i class="iconfont icon-kefu-copy"></i><em>客服</em></a>
+				<a href="flow_cart.html" class="filter-btn-flow filter-btn-a"><i class="iconfont icon-gouwuche"></i><sup class="b-color">9</sup><em>购物车</em></a>
+				<a href="flow_cart.html" class="btn-cart box-flex">加入购物车</a>
+				<a href="flow_cart.html" class="btn-submit box-flex">立即购买</a>
+			</section>
+			<!--悬浮btn end-->
+		</div>
+		<!--仓库e-->
+		<!--悬浮菜单s-->
+		<div class="filter-top" id="scrollUp	">
+			<i class="iconfont icon-jiantou "></i>
+		</div>
+		<!--搜索弹框-->
+		<div class="search-div j-search-div ts-3">
+			<section class="search">
+				<div class="text-all dis-box j-text-all text-all-back">
+					<a class="a-icon-back j-close-search" href="javascript:history.go(-1)"><i class="iconfont icon-arrow-left-copy"></i></a>
+					<div class="box-flex input-text">
+						<label class="search-check j-search-check" data="1"><span>店铺</span><i class="iconfont icon-xiajiantou"></i></label>
+						<input class="j-input-text" type="text" placeholder="商品搜索" />
+						<i class="iconfont icon-guanbi1 is-null j-is-null"></i>
+					</div>
+					<a type="button" class="btn-submit">搜索</a>
+				</div>
+			</section>
+			<section class="search-con">
+				<div class="swiper-scroll history-search">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<p>
+								<label class="fl">热门搜索</label>
+							</p>
+							<ul class="hot-search a-text-more">
+								<li class="w-3"><a><span class="onelist-hidden">雪地靴</span></a></li>
+								<li class="w-3"><a><span class="onelist-hidden">溜溜车</span></a></li>
+								<li class="w-3"><a><span class="onelist-hidden">登山鞋</span></a></li>
+								<li class="w-3"><a><span class="onelist-hidden">微单相机</span></a></li>
+								<li class="w-3"><a><span class="onelist-hidden">海尔空调</span></a></li>
+								<li class="w-3"><a><span class="onelist-hidden">PPTV电视</span></a></li>
+							</ul>
+							<p class="hos-search">
+								<label class="fl">最近搜索</label>
+								<span class="fr"><i class="iconfont icon-xiao10"></i></span>
+							</p>
+
+							<div class="no-div-message">
+								<p>近期没有浏览记录</p>
+							</div>
+							</ul>
+						</div>
+					</div>
+					<div class="swiper-scrollbar"></div>
+				</div>
+			</section>
+			<footer class="close-search j-close-search">
+				点击关闭
+			</footer>
+		</div>
+		<!--悬浮菜单e-->
+		<!--引用js-->
+		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="js/swiper-3.2.5.min.js"></script>
+		<script type="text/javascript" src="js/layer.js"></script>
+		<script type="text/javascript" src="js/ectouch.js"></script>
+		<script>
+			/*商品详情切换*/
+			var tabsSwiper = new Swiper('#j-tab-con', {
+				speed: 100,
+				noSwiping: true,
+				autoHeight: true,
+				onSlideChangeStart: function() {
+					$(".j-tab-title .active").removeClass('active')
+					$(".j-tab-title li").eq(tabsSwiper.activeIndex).addClass('active')
+				}
+			})
+			$(".j-tab-title li").on('touchstart mousedown', function(e) {
+				e.preventDefault()
+				$(".j-tab-title .active").removeClass('active')
+				$(this).addClass('active')
+				tabsSwiper.slideTo($(this).index())
+			})
+			$(".j-tab-title li").click(function(e) {
+					e.preventDefault()
+				})
+				/*商品详情相册切换*/
+			var swiper = new Swiper('.goods-photo', {
+				paginationClickable: true,
+				onInit: function(swiper) {
+					document.getElementById("g-active-num").innerHTML = swiper.activeIndex + 1;
+					document.getElementById("g-all-num").innerHTML = swiper.slides.length;
+				},
+				onSlideChangeStart: function(swiper) {
+					document.getElementById("g-active-num").innerHTML = swiper.activeIndex + 1;
+				}
+			});
+			/*店铺信息商品滚动*/
+			var swiper = new Swiper('.j-g-s-p-con', {
+				scrollbarHide: true,
+				slidesPerView: 'auto',
+				centeredSlides: false,
+				grabCursor: true
+			});
+		</script>
+	</body>
+
+</html>

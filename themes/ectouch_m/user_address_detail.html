@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>ECTouch微商城</title>
+		<style type="text/css">
+			@import"css/jquery-ui-1.10.1.custom.min.css";@import"fonts/iconfont.css";@import"css/swiper-3.2.5.min.css";@import"css/ectouch.css"
+		</style>
+	</head>
+
+	<body class="b-color-f">
+		<div id="loading"><img src="images/loading.gif" /></div>
+		<div class="con">
+			<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-arrow-left-copy"></i></a>
+				<h3 class="box-flex">新增地址</h3>
+				<a class="" href="javascript:;"><i class="iconfont icon-pailie j-nav-box"></i></a>
+			</header>
+			<div class="j-nav-content">
+				<ul class="dis-box new-footer-box">
+					<li class="box-flex">
+						<a href="index.html"><i class="iconfont icon-home"></i><span>首页</span></a>
+					</li>
+					<li class="box-flex">
+						<a href="catalog.html"><i class="iconfont icon-caidan"></i><span>分类</span></a>
+					</li>
+					<li class="box-flex"><a href="javascript:openSearch();" class="j-search-input"><i class="iconfont icon-sousuo"></i><span>搜索</span></a></li>
+					<li class="box-flex"><a href="flow_cart.html"><i class="iconfont icon-gouwuche"></i><span>购物车</span></a></li>
+					<li class="box-flex"><a href="user.html"><i class="iconfont icon-geren"></i><span>用户中心</span></a></li>
+				</ul>
+			</div>
+			<div class="flow-consignee margin-lr">
+				<div class="text-all dis-box j-text-all">
+					<label>收货人</label>
+					<div class="box-flex input-text">
+						<input class="j-input-text" type="text" placeholder="请输入收货人姓名" />
+						<i class="iconfont icon-guanbi1 is-null j-is-null"></i>
+					</div>
+				</div>
+				<div class="text-all dis-box j-text-all">
+					<label>手机号码</label>
+					<div class="box-flex input-text">
+						<input class="j-input-text" type="tel" placeholder="请输入联系电话" />
+						<i class="iconfont icon-guanbi1 is-null j-is-null"></i>
+					</div>
+				</div>
+				<div class="text-all j-filter-city">
+					<label class="fl">所在地区</label>
+					<span class="fl text-all-span">上海市普陀区</span>
+					<span class="t-jiantou fr"><i class="iconfont icon-jiantou tf-180"></i></span>
+				</div>
+				<div class="text-all">
+					<label>详细信息</label>
+					<div class="box-flex input-text">
+						<input class="j-input-text" type="text" placeholder="详细地址" />
+						<i class="iconfont icon-guanbi1 is-null j-is-null"></i>
+					</div>
+				</div>
+				<div class="ect-button-more dis-box m-top12">
+					<a class="btn-reset box-flex">删除</a>
+					<a class="btn-submit box-flex">保存</a>
+				</div>
+			</div>
+		</div>
+		<div class="filter-city-div ts-5 c-filter-div c-city-div">
+			
+			<section class="close-filter-div j-close-filter-div">
+					<div class="close-f-btn">
+						<i class="iconfont icon-fanhui"></i>
+						<span>关闭</span>
+					</div>
+				</section>
+			<section class="con-filter-div">
+					<aside>
+					<div class="menu-left j-city-left scrollbar-none" id="sidebar">
+						<ul >
+							<li>上海</li>
+							<li>浙江</li>
+							<li class="active">江苏</li>
+							<li>内蒙古</li>
+							<li>北京</li>
+							<li>广州</li>
+							<li>四川</li>
+							<li>江西</li>
+							<li>陕西</li>
+							<li>辽宁</li>
+							<li>黑龙江</li>
+							<li>山东</li>
+							<li>黑龙江</li>
+							<li>吉林</li>
+							<li>河北</li>
+							<li>湖南</li>
+							<li>湖北</li>
+							<li>天津</li>
+						</ul>
+				</aside>
+				<section class="menu-right j-city-right">
+					<div class="select-two j-get-city-one">
+						<a class="select-title padding-all j-menu-select">
+							<label class="fl">南京</label>
+							<span class="fr t-jiantou j-t-jiantou" id="j-t-jiantou"><i class="iconfont icon-jiantou tf-180 ts-2"></i></span>
+						</a>
+						<ul class="padding-all j-sub-menu">
+							<li class="ect-select">
+								<label class="ts-1 active">玄武区<i class="fr iconfont icon-gou ts-1"></i></label>
+							</li>
+							<li class="ect-select">
+								<label class="ts-1">浦口区<i class="fr iconfont icon-gou ts-1"></i></label>
+							</li>
+							<li class="ect-select">
+								<label class="ts-1">秦淮区<i class="fr iconfont icon-gou ts-1"></i></label>
+							</li>
+							<li class="ect-select">
+								<label class="ts-1">鼓楼区<i class="fr iconfont icon-gou ts-1"></i></label>
+							</li>
+						</ul>
+						<a class="select-title padding-all j-menu-select">
+							<label class="fl">南通</label>
+							<span class="fr t-jiantou j-t-jiantou" id="j-t-jiantou"><i class="iconfont icon-jiantou tf-180 ts-2"></i></span>
+						</a>
+						<ul class="padding-all j-sub-menu">
+							<li class="ect-select">
+								<label class="ts-1">南通1<i class="fr iconfont icon-gou ts-1"></i></label>
+							</li>
+							<li class="ect-select">
+								<label class="ts-1">南通2<i class="fr iconfont icon-gou ts-1"></i></label>
+							</li>
+							<li class="ect-select">
+								<label class="ts-1">南通3<i class="fr iconfont icon-gou ts-1"></i></label>
+							</li>
+							<li class="ect-select">
+								<label class="ts-1">南通4<i class="fr iconfont icon-gou ts-1"></i></label>
+							</li>
+						</ul>
+					</div>
+					</section>
+				</div>
+			</section>
+		</div>
+		<!--搜索弹框-->
+		<div class="search-div j-search-div ts-3">
+			<section class="search">
+				<div class="text-all dis-box j-text-all text-all-back">
+					<a class="a-icon-back j-close-search" href="javascript:history.go(-1)"><i class="iconfont icon-arrow-left-copy"></i></a>
+					<div class="box-flex input-text">
+						<label class="search-check j-search-check" data="1"><span>店铺</span><i class="iconfont icon-xiajiantou"></i></label>
+						<input class="j-input-text" type="text" placeholder="商品搜索" />
+						<i class="iconfont icon-guanbi is-null j-is-null"></i>
+					</div>
+					<a type="button" class="btn-submit">搜索</a>
+				</div>
+			</section>
+			<section class="search-con">
+				<div class="swiper-scroll history-search">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<p>
+								<label class="fl">热门搜索</label>
+							</p>
+							<ul class="hot-search a-text-more">
+								<li class="w-3"><a><span class="onelist-hidden">雪地靴</span></a></li>
+								<li class="w-3"><a><span class="onelist-hidden">溜溜车</span></a></li>
+								<li class="w-3"><a><span class="onelist-hidden">登山鞋</span></a></li>
+								<li class="w-3"><a><span class="onelist-hidden">微单相机</span></a></li>
+								<li class="w-3"><a><span class="onelist-hidden">海尔空调</span></a></li>
+								<li class="w-3"><a><span class="onelist-hidden">PPTV电视</span></a></li>
+							</ul>
+							<p class="hos-search">
+								<label class="fl">最近搜索</label>
+								<span class="fr"><i class="iconfont icon-xiao10"></i></span>
+							</p>
+
+							<div class="no-div-message">
+								<p>近期没有浏览记录</p>
+							</div>
+							</ul>
+						</div>
+					</div>
+					<div class="swiper-scrollbar"></div>
+				</div>
+			</section>
+			<footer class="close-search j-close-search">
+				点击关闭
+			</footer>
+		</div>
+		<!--引用js-->
+		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="js/swiper-3.2.5.min.js"></script>
+		<script type="text/javascript" src="js/ectouch.js"></script>
+		
+	</body>
+
+</html>

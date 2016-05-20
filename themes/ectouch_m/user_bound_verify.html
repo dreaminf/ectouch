@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>ECTouch微商城</title>
+	<style type="text/css">
+			@import"css/jquery-ui-1.10.1.custom.min.css";@import"fonts/iconfont.css";@import"css/swiper-3.2.5.min.css";@import"css/ectouch.css"
+		</style>
+	</head>
+
+	<body class="b-color-f">
+		<div id="loading"><img src="images/loading.gif" /></div>
+		<div class="con">
+			<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-arrow-left-copy"></i></a>
+				<h3 class="box-flex">手机绑定</h3>
+				<a class="" href="javascript:;"><i class="iconfont icon-pailie j-nav-box"></i></a>
+			</header>
+			<div class="j-nav-content">
+				<ul class="dis-box new-footer-box">
+					<li class="box-flex">
+						<a href="index.html"><i class="iconfont icon-home"></i><span>首页</span></a>
+					</li>
+					<li class="box-flex">
+						<a href="catalog.html"><i class="iconfont icon-caidan"></i><span>分类</span></a>
+					</li>
+					<li class="box-flex"><a href="javascript:openSearch();" class="j-search-input"><i class="iconfont icon-sousuo"></i><span>搜索</span></a></li>
+					<li class="box-flex"><a href="flow_cart.html"><i class="iconfont icon-gouwuche"></i><span>购物车</span></a></li>
+					<li class="box-flex"><a href="user.html"><i class="iconfont icon-geren"></i><span>用户中心</span></a></li>
+				</ul>
+			</div>
+			<!--根据手机找回-->
+			<form action="user_bound_end.html">
+				<section class="user-center user-forget-tel margin-lr">
+					<p class="fl t-remark2">您的手机号：+86 13764926337</p>
+					<div class="text-all dis-box j-text-all">
+						<div class="input-text input-check  box-flex">
+							<input class="j-input-text" type="text" placeholder="请输入验证码" />
+							<i class="iconfont icon-guanbi1 is-null j-is-null"></i>
+						</div>
+						<a type="button" class="ipt-check-btn disabled" href="#">重新发送(60)</a>
+					</div>
+					<input type="hidden" name="u-h-forget" value="u-f-tel" />
+					<button class="btn-submit">下一步</button>
+				</section>
+			</form>			
+		</div>
+
+		<!--引用js-->
+		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="js/ectouch.js"></script>
+
+	</body>
+
+</html>
