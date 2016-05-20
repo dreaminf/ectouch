@@ -26,11 +26,14 @@ defined('ADDONS_PATH') or define('ADDONS_PATH', ROOT_PATH . 'plugins/');
 defined('DEFAULT_APP') or define('DEFAULT_APP', 'default');
 defined('DEFAULT_CONTROLLER') or define('DEFAULT_CONTROLLER', 'Index');
 defined('DEFAULT_ACTION') or define('DEFAULT_ACTION', 'index');
+/* 加载vendor */
 require BASE_PATH . 'vendor/autoload.php';
 /* 系统函数 */
 require(BASE_PATH . 'base/helpers/function.php');
 /* 默认配置 */
 C(load_file(BASE_PATH . 'config/global.php'));
+/* 应用配置 */
+C('APP', load_file(BASE_PATH . 'config/app.php'));
 /* 数据库配置 */
 C('DB', load_file(ROOT_PATH . 'data/config.php'));
 /* 设置时区 */
