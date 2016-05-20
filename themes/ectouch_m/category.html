@@ -8,9 +8,11 @@
 		<meta name="format-detection" content="telephone=no" />
 		<meta charset="utf-8">
 		<title>商品列表</title>
-		<style type="text/css">
+
+			<style type="text/css">
 			@import"css/jquery-ui-1.10.1.custom.min.css";@import"fonts/iconfont.css";@import"css/swiper-3.2.5.min.css";@import"css/ectouch.css"
 		</style>
+
 	</head>
 
 	<body class="">
@@ -19,11 +21,11 @@
 			<div class="category">
 				<section class="search">
 					<div class="text-all dis-box j-text-all text-all-back">
-						<a class="a-icon-back j-close-search" href="javascript:history.go(-1)"><i class="iconfont icon-arrow-left-copy"></i></a>
+						<a class="a-icon-back j-close-search" href="catalog.html"><i class="iconfont icon-arrow-left-copy"></i></a>
 						<div class="box-flex input-text n-input-text i-search-input">
 							<a class="a-search-input j-search-input" href="javascript:void(0)"></a>
 							<i class="iconfont icon-sousuo"></i>
-							<input class="j-input-text" type="text" placeholder="商品搜索" />
+							<input class="j-input-text" type="text" placeholder="商品/店铺搜索" />
 							<i class="iconfont icon-guanbi1 is-null j-is-null"></i>
 						</div>
 						<a class="a-sequence j-a-sequence"><i class="iconfont icon-pailie" data="1"></i></a>
@@ -47,7 +49,7 @@
 									<h4>韩版2015冬装新款女装拼接羽绒服GW4509</h4>
 									<p class="dis-box p-t-remark"><span class="box-flex">库存:12800</span></p>
 									<p><span class="p-price t-first ">¥1789.00<small><del>¥2299.00</del></small></span></p>
-									<a href="javascript:void(0)" class="icon-flow-cart fr j-goods-attr "><i class="iconfont icon-gouwuche"></i></a>
+									<a href="javascript:void(0)" class="icon-flow-cart fr j-goods-attr"><i class="iconfont icon-gouwuche"></i></a>
 								</div>
 							</div>
 						</li>
@@ -242,10 +244,10 @@
 		<div class="search-div j-search-div ts-3">
 			<section class="search">
 				<div class="text-all dis-box j-text-all text-all-back">
-					<a class="a-icon-back j-close-search" href="javascript:;"><i class="iconfont icon-arrow-left-copy"></i></a>
+					<a class="a-icon-back j-close-search" href="javascript:history.go(-1)"><i class="iconfont icon-arrow-left-copy"></i></a>
 					<div class="box-flex input-text">
 						<label class="search-check j-search-check" data="1"><span>店铺</span><i class="iconfont icon-xiajiantou"></i></label>
-						<input class="j-input-text" type="text" placeholder="商品/店铺搜索" />
+						<input class="j-input-text" type="text" placeholder="商品搜索" />
 						<i class="iconfont icon-guanbi1 is-null j-is-null"></i>
 					</div>
 					<a type="button" class="btn-submit">搜索</a>
@@ -358,7 +360,7 @@
 		<div class="show-goods-attr ts-3 b-color-1">
 			<section class="s-g-attr-title b-color-1  product-list-small">
 				<div class="product-div">
-					<img class="product-list-img" src="img/product_01.png">
+					<img class="product-list-img" src="images/TB1BW3hFFXXXXbjbXXXXXXXXXXX_!!0-item_pic.jpg">
 					<div class="product-text">
 						<div class="dis-box">
 							<h4 class="box-flex">韩版2015冬装新款女装拼接羽绒服GW4509</h4>
@@ -462,36 +464,6 @@
 		<!--script for this page only-->
 		<script type="text/javascript" src="js/swiper-3.2.5.min.js"></script>
 		<script type="text/javascript" src="js/ectouch.js"></script>
-		<script type="text/javascript" src="http://libs.useso.com/js/jquery/1.7.2/jquery.min.js"></script>
-<script src="jquery.fly.min.js"></script>
-<script>
-$(function() {
-	var offset = $("#end").offset();
-	$(".addcar").click(function(event){
-		var addcar = $(this);
-		var img = addcar.parent().find('img').attr('src');
-		var flyer = $('<img class="u-flyer" src="'+img+'">');
-		flyer.fly({
-			start: {
-				left: event.pageX,
-				top: event.pageY
-			},
-			end: {
-				left: offset.left+10,
-				top: offset.top+10,
-				width: 0,
-				height: 0
-			},
-			onEnd: function(){
-				$("#msg").show().animate({width: '250px'}, 200).fadeOut(1000);
-				addcar.css("cursor","default").removeClass('orange').unbind('click');
-				this.destory();
-			}
-		});
-	});
-  
-});
-</script>
 		<script type="text/javascript">
 			var Sliders = function() {
 				// 筛选价格区间 js
