@@ -38,6 +38,7 @@
             <textarea name="content" placeholder="{$lang.comment_content}"></textarea>
             <input type="hidden" name="cmt_type" value="{$comment_type}" />
             <input type="hidden" name="id" value="{$id}" />
+            <input type="hidden" name="order_id" value="{$order_id}" />
           </p>
           <!-- 判断是否启用验证码{if $enabled_captcha_comments} -->
           <p class="ect-padding-tb code"><span>
@@ -71,6 +72,7 @@ function submitComment(frm)
   cmt.content         = frm.elements['content'].value;
   cmt.type            = frm.elements['cmt_type'].value;
   cmt.id              = frm.elements['id'].value;
+  cmt.order_id        = frm.elements['order_id'].value;
   cmt.enabled_captcha = frm.elements['enabled_captcha'] ? frm.elements['enabled_captcha'].value : '0';
   cmt.captcha         = frm.elements['captcha'] ? frm.elements['captcha'].value : '';
   cmt.rank            = 0;

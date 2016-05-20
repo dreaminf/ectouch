@@ -2402,26 +2402,37 @@ class UserController extends CommonController {
      */
     public function order_comment() {
         $user_id = $this->user_id;
-        $sql="select b.goods_id from " . $this->model->pre . "order_info as o  LEFT JOIN " .$this->model->pre. "order_goods  as b on o.order_id=b.order_id  where user_id='$user_id' ".        
-        " AND o.shipping_status " . db_create_in(array( SS_RECEIVED)) .        
-        " AND b.goods_id not in(select id_value from ". $this->model->pre . "comment where user_id='$user_id')";
+          /*$sql = "select rc.rec_id from ".$this->model->pre."order_goods_comment as rc left join ".$this->model->pre."order_goods as g on g.rec_id = rc.rec_id".
+               " left join " .$this->model->pre."order_info as i on g.order_id = i.order_id";*/
+        $sql = "select comment_id from ".$this->model->pre."comment";
+
         $res = $this->model->query($sql);
-        foreach($res as $k =>$value)
-             {
-                 $str.=$value['goods_id'].',';
-             }
-        $reb = substr($str,0,-1) ;  
-        if(empty($reb)) {
-             $rebb= 0;
-         }  else{            
-             $rebb=$reb;
-         }
-        $sql = 'SELECT g.goods_id, g.goods_name, g.goods_img ' .
-                'FROM ' . $this->model->pre . 'goods AS g ' .  "WHERE g.goods_id in (".$rebb.")"  ; 
+        $v = '';
+        foreach($res as $key =>$val){
+              if($val['comment_id']){
+                $t = $val['comment_id'];
+                $v .= $t.",";
+            }
+
+        }
+        $v = substr($v,0,-1) ;
+       $sql = "select g.goods_name,g.goods_id,g.rec_id,i.add_time,g.order_id,gg.goods_img from ".$this->model->pre ."order_info as i left join ".
+                $this->model->pre."order_goods as g on i.order_id = g.order_id left join ".$this->model->pre."goods as gg on g.goods_id = gg.goods_id ".
+                "where user_id='$user_id' ".
+                " AND i.shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)).
+                " AND i.order_status " . db_create_in(array(OS_CONFIRMED, OS_SPLITED)).
+                " AND i.pay_status " . db_create_in(array(PS_PAYED, PS_PAYING));
+
+        if(!empty($v)){
+            $sql .= ' AND g.rec_id NOT IN ( '. $v .' )';
+        }
         $result = $this->model->query($sql);
-        foreach ($result as $key => $vo) {           
+        foreach ($result as $key => $vo) {
             $goods[$key]['goods_id'] = $vo['goods_id'];
-            $goods[$key]['name'] = $vo['goods_name'];            
+            $goods[$key]['rec_id'] = $vo['rec_id'];
+            $goods[$key]['order_id'] = $vo['order_id'];
+            $goods[$key]['name'] = $vo['goods_name'];
+            $goods[$key]['add_time'] = date('Y-m-d H:i', $vo['add_time']);
             $goods[$key]['goods_img'] = get_image_path($vo['goods_id'], $vo['goods_img']);
             $goods[$key]['url'] = url('goods/index', array('id' => $vo['goods_id']));
         }
@@ -2432,7 +2443,8 @@ class UserController extends CommonController {
         $this->assign('title','待评价');
         $this->assign('goods_list',$goods);
         $this->display('user_order_comment_list.dwt');
-	}
+    }
+
 	
 	/**
      * 待评价订单商品评论
@@ -2440,11 +2452,13 @@ class UserController extends CommonController {
     public function order_comment_list() {
         $cmt = new stdClass();
         $cmt->id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
+        $cmt->order_id = !empty($_GET['order_id']) ? intval($_GET['order_id']) : 0;
         $cmt->type = !empty($_GET['type']) ? intval($_GET['type']) : 0;
         $cmt->page = isset($_GET['page']) && intval($_GET['page']) > 0 ? intval($_GET['page']) : 1;
         $this->assign('comments_info', model('Comment')->get_comment_info($cmt->id, $cmt->type));
         $this->assign('id', $cmt->id);
         $this->assign('type', $cmt->type);
+        $this->assign('order_id', $cmt->order_id);
         $this->assign('username', $_SESSION['user_name']);
         $this->assign('email', $_SESSION['email']);
         /* 验证码相关设置 */

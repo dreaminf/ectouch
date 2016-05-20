@@ -11,14 +11,15 @@
 		<ul id="J_ItemList">
 		 <!--{foreach name=goods_list from=$goods_list item=orders}-->
 			<li>
-			<a href="{:url('user/order_comment_list', array('id'=>$this->_var['orders']['goods_id']))}">
+			<a href="{:url('user/order_comment_list', array('id'=>$this->_var['orders']['rec_id'],'order_id'=>$this->_var['orders']['order_id']))}">
+
 			<img src="{$orders.goods_img}" class="pull-left" />
 			<dl>
-			   <dd>{$orders.name}</dd></br>			   
+			   <dd>{$orders.name}</dd></br>	{$orders.add_time}		   
 			</dl>
 			
 			<dd>
-				 <a  style="" href="{:url('user/order_comment_list',array('id'=>$this->_var['orders']['goods_id']))}">
+				 <a  style="" href="{:url('user/order_comment_list',array('id'=>$this->_var['orders']['rec_id'],'order_id'=>$this->_var['orders']['order_id']))}">
 					  <button style="  border: 0px;  position: absolute;  top: 67px;  right: 10px;}">去评价</button>
 				 </a> 				
 		    </dd>
