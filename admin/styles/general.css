@@ -7,16 +7,15 @@ body {
   padding: 0px;
   color: #192E32;
   /*font: 12px "sans-serif", "Arial", "Verdana";*/
-  font-family: '微软雅黑';
+  font-family: '微软雅黑', 'Microsoft Yahei';
 }
 
 p, td, div {
-  font: 12px "sans-serif", "Arial", "Verdana";
+  font-size: 12px;
 }
 
 th {
-  font: 12px "sans-serif", "Arial", "Verdana";
-  font-weight: bold;
+  font-size: 12px;
 }
 
 form {

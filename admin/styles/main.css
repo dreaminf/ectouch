@@ -136,6 +136,7 @@ h1 .action-span1 {
 }
 
 .list-div th {
+  font-size: 13px; 
   line-height: 28px;
   background: #E2E3E5;
   white-space: nowrap;
@@ -204,6 +205,7 @@ h1 .action-span1 {
 }
 
 .tab-front {
+  font-size: 14px;
   line-height: 28px;
   font-weight: bold;
   padding: 5px 15px 5px 18px;
@@ -212,6 +214,7 @@ h1 .action-span1 {
 }
 
 .tab-back {
+  font-size: 14px;
   color: #192E32;
   line-height: 28px;
   padding: 5px 15px 5px 18px;
@@ -220,6 +223,7 @@ h1 .action-span1 {
 }
 
 .tab-hover {
+  font-size: 14px;
   line-height: 28px;
   padding: 5px 15px 5px 18px;
   cursor: hand;
