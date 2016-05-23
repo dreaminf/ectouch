@@ -21,8 +21,8 @@ set_time_limit(1000);
 //php版本
 $phpversion = phpversion();
 //php版本过低提示
-if($phpversion < '5.3.0' || $phpversion > '5.5.0'){
-	exit(get_tip_html('您当前php版本('.$phpversion.')，不能安装本软件，请切换到5.3或5.4版本再安装，谢谢！'));
+if($phpversion < '5.3.0' || $phpversion > '7.0.0'){
+	exit(get_tip_html('您当前php版本('.$phpversion.')，不能安装本软件，请切换到5.3至5.6版本再安装，谢谢！'));
 }
 //数据库文件
 foreach ($config['sqlFileName'] as $sqlFile) {
