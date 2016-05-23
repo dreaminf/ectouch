@@ -47,8 +47,10 @@ class StoreController extends CommonController {
         if(empty($shop_info)){
             show_message('店铺已关闭或等待审核中', '进入商城', url('index/index'));
         }
+        $wechat_user = $this->model->table('wechat_user')->where(array('ect_uid'=>$shop_info['user_id']))->field('headimgurl')->find();
         $_SESSION['drp_shop'] = $shop_info;
         $_SESSION['drp_shop']['drp_id'] = $shop_info['id'];
+        $_SESSION['drp_shop']['headimgurl'] = $wechat_user['headimgurl'];
         return $_SESSION['drp_shop'];
     }
 

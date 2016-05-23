@@ -49,7 +49,6 @@
     <div class="ect-index-info ">
         <a href="{:url('user/index')}" class="ect-index-detail">
             <img src="{$drp_info.headimgurl}" />
-
         </a><div class="ect-index-name">
         <a> <h1>{$drp_info.shop_name}</h1></a>
     </div>
