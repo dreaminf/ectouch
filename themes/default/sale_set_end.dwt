@@ -36,7 +36,7 @@
 		</div>
 
 		<div class="n-but-box n-lv-bg  b-r">
-			<a href="{:url('store/index')}"><span class="text-c color-whie f-08">进入我的微店</span></a>
+			<a href="{:url('store/index', array('drp_id'=>$this->_var['drp_id']))}"><span class="text-c color-whie f-08">进入我的微店</span></a>
 		</div>
 	</section>
 	</body>
