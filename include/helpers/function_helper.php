@@ -100,7 +100,7 @@ function url($route=null, $params=array()) {
         }
     }
     $route = ($controller == 'index') ? 'c=welcome' : 'c='.$controller;
-	$route .= ($action != 'index') ? '&a='.$action : '';
+    $route .= ($action != 'index') ? '&a='.$action : '';
     $paramStr = empty($params) ? '' : '&' . http_build_query($params, '', '&');
     $url = $_SERVER["SCRIPT_NAME"] . '?' . $route . $paramStr;
     return $url;

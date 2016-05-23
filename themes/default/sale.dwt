@@ -52,7 +52,7 @@
 
 		<section class="n-sale-list-box">
 			<!--分类1-->
-			<a href="{:url('store/indx', array('drp_id'=> $this->_var['sale']['id']))}">
+			<a href="{:url('store/index', array('drp_id'=> $this->_var['sale']['id']))}">
 				<ul class="int-nav-box-1 my-new-m padding-all shop-b">
 					<li>
 						<label class="cate-shop-box"><i class="iconfont icon-dianpu"></i><span>我的微店</span></label>
