@@ -29,6 +29,7 @@ class StoreController extends CommonController {
         $this->assign('cat_best', $cat_rec[1]);
         $this->assign('cat_new', $cat_rec[2]);
         $this->assign('cat_hot', $cat_rec[3]);
+        $this->assign('is_drp', 1);
         $this->display('sale_shop.dwt');
     }
 
