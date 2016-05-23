@@ -43,11 +43,12 @@ class StoreController extends CommonController {
         }
         $condition['audit'] = 1;
         $condition['open'] = 1;
-        $_SESSION['drp_shop'] = $this->model->table('drp_shop')->where($condition)->find();
-        $_SESSION['drp_shop']['drp_id'] = $_SESSION['id'];
+        $shop_info = $this->model->table('drp_shop')->where($condition)->find();
         if(empty($shop_info)){
             show_message('店铺已关闭或等待审核中', '进入商城', url('index/index'));
         }
+        $_SESSION['drp_shop'] = $shop_info;
+        $_SESSION['drp_shop']['drp_id'] = $shop_info['id'];
         return $_SESSION['drp_shop'];
     }
 
