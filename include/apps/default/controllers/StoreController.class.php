@@ -18,23 +18,10 @@ defined('IN_ECTOUCH') or die('Deny Access');
 class StoreController extends CommonController {
 
     /**
-     * 构造函数
-     */
-    public function __construct() {
-        parent::__construct();
-        $this->check();
-    }
-
-    /**
      * 首页信息
      */
     public function index() {
-        $shop_id = I('drp_id', 0, 'intval');
-        $condition = array('id'=> $shop_id, 'open'=> 1);
-        $drp_shop = $this->model->table('drp_shop')->where($condition)->find();
-        if(empty($drp_shop)){
-            show_message('店铺已关闭或等待审核中', '进入商城', url('index/index'));
-        }
+        $drp_shop = $this->check();
         $this->assign('drp_info', $drp_shop);
         $this->assign('news_goods_num',model('Index')->get_pro_goods('new'));
         $this->assign('promotion_goods_num', count(model('Index')->get_promote_goods()));
@@ -48,20 +35,20 @@ class StoreController extends CommonController {
     /**
      * 检测店铺权限
      */
-    public function check(){
-		$action = ACTION_NAME;
+    private function check(){
         if (isset($_GET['drp_id'])) {
             $condition = array('id' => I('drp_id', 0, 'intval'));
         }else{
-            $condition = array('user_id'=>$_SESSION['user_id']);
+            $condition = array('user_id'=> I('u', 0, 'intval'));
         }
-        $drp_show = $this->model->table('drp_shop')->where($condition)->field('id, open, audit')->find(); 
-        if($action == 'index' && $drp_show['audit'] != 1){
-            show_message('请等待管理员审核','进入商城',url('index/index'));
+        $condition['audit'] = 1;
+        $condition['open'] = 1;
+        $_SESSION['drp_shop'] = $this->model->table('drp_shop')->where($condition)->find();
+        $_SESSION['drp_shop']['drp_id'] = $_SESSION['id'];
+        if(empty($shop_info)){
+            show_message('店铺已关闭或等待审核中', '进入商城', url('index/index'));
         }
-        if($action == 'index' && $drp_show['open'] != 1){
-            show_message('店铺还未开启！','进入商城',url('index/index'));
-        }
+        return $_SESSION['drp_shop'];
     }
 
     /**
