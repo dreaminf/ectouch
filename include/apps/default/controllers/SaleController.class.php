@@ -51,9 +51,9 @@ class SaleController extends CommonController {
      */
     public function index() {
         $shop = $this->model->table('drp_shop')->where(array('user_id'=>$_SESSION['user_id']))->field('create_time,shop_name')->find();
-        $sale['time'] = local_date('Y-m-d H:i:s',$shop['create_time']);
-        $sale['shop_name'] = C('shop_name').$shop['shop_name'];
-        $this->assign('sale',$sale);
+        $shop['time'] = local_date('Y-m-d H:i:s',$shop['create_time']);
+        $shop['shop_name'] = C('shop_name').$shop['shop_name'];
+        $this->assign('sale', $shop);
         // 总销售额
         $sale_money = model('Sale')->get_sale_money_total();
         $this->assign('sale_money_order',$sale_money ? $sale_money : '0.00');
