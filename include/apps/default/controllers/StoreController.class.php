@@ -29,18 +29,19 @@ class StoreController extends CommonController {
      * 首页信息
      */
     public function index() {
-        $drp_shop = $_SESSION['drp_shop'];
-        $this->assign('drp_info',$drp_shop);
+        $shop_id = I('drp_id', 0, 'intval');
+        $condition = array('id'=> $shop_id, 'open'=> 1);
+        $drp_shop = $this->model->table('drp_shop')->where($condition)->find();
+        if(empty($drp_shop)){
+            show_message('店铺已关闭或等待审核中', '进入商城', url('index/index'));
+        }
+        $this->assign('drp_info', $drp_shop);
         $this->assign('news_goods_num',model('Index')->get_pro_goods('new'));
         $this->assign('promotion_goods_num', count(model('Index')->get_promote_goods()));
         $cat_rec = model('Index')->get_recommend_res(10,4);
         $this->assign('cat_best', $cat_rec[1]);
         $this->assign('cat_new', $cat_rec[2]);
         $this->assign('cat_hot', $cat_rec[3]);
-        if($_SESSION['user_id']){
-            $drp_id = $this->model->table('drp_shop')->where(array('user_id'=>$_SESSION['user_id']))->field('id')->find();
-            $this->assign('is_drp', $drp_id ? 1 : 0);
-        }
         $this->display('sale_shop.dwt');
     }
 
