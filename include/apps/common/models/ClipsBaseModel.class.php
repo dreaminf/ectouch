@@ -949,7 +949,7 @@ class ClipsBaseModel extends BaseModel {
         }
         $v = substr($v,0,-1) ;
         $sql="select  count(b.goods_id)  from " . $this->pre . "order_info as o  LEFT JOIN " .$this->pre. "order_goods  as b on o.order_id=b.order_id  where user_id='$user_id' ".
-            " AND o.shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)).
+            " AND o.shipping_status " . db_create_in(array(SS_RECEIVED)).
             " AND o.order_status " . db_create_in(array(OS_CONFIRMED, OS_SPLITED)).
             " AND o.pay_status " . db_create_in(array(PS_PAYED, PS_PAYING));
 
