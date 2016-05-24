@@ -715,9 +715,7 @@ class SaleModel extends BaseModel {
                 $data['drp_id'] = $drp_id;
                 $data['user_id'] = session('user_id');
                 $data['visit_time'] = gmtime();
-                $this->model->table('drp_visiter')
-                    ->data($data)
-                    ->insert();
+                $this->model->table('drp_visiter')->data($data)->insert();
             }
         }
     }
