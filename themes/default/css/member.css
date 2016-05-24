@@ -3333,8 +3333,8 @@ html.active {
 
 .member-photo-img {
   display: block;
-  width: 30%;
-  height: auto;
+  width: 6.6rem;
+  height: 6.6rem;
   margin: 0.625rem auto; }
   .member-photo-img img {
     -webkit-transition: all 1.5s;
