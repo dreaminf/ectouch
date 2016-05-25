@@ -550,3 +550,4 @@ border: 1px solid transparent;border-radius: 4px;cursor: pointer;display: inline
 .n-close-box{position:absolute;right:0.5rem; bottom:0.5rem;z-index:4999;}
 */
 
+.n-address-box span{top:-0.5rem;}

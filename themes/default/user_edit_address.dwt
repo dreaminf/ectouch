@@ -4,12 +4,12 @@
     <ul>
       <li>
         <div class="input-text"><b class="pull-left">{$lang.consignee_name}：</b><span>
-          <input name="consignee" placeholder="{$lang.consignee_name}{$lang.require_field}" type="text" class="inputBg" value="{$consignee.consignee|escape}" />
+          <input name="consignee" maxlength="10" placeholder="{$lang.consignee_name}{$lang.require_field}" type="text" class="inputBg" value="{$consignee.consignee|escape}" />
           </span></div>
       </li>
       <li>
         <div class="input-text"><b class="pull-left">{$lang.mobile}：</b><span>
-          <input placeholder="{$lang.mobile}{$lang.require_field}" name="mobile" type="text" class="inputBg_touch" value="{$consignee.mobile|escape}" />
+          <input maxlength="11" placeholder="{$lang.mobile}{$lang.require_field}" name="mobile" type="text" class="inputBg_touch" value="{$consignee.mobile|escape}" />
           </span></div>
       </li>
       <li style="display:none">
@@ -23,7 +23,7 @@
       </div>
     </li>
     <li>
-        <div class="input-text"><b class="pull-left">省/直辖市：</b><span>
+        <div class="input-text  n-address-box"><b class="pull-left">省/直辖市：</b><span>
         <select name="province" id="selProvinces_{$sn}" onchange="region.changed(this, 2, 'selCities_{$sn}')">
           <option value="0">{$lang.please_select}{$name_of_region[1]}</option>
           <!-- {foreach from=$province_list item=province} -->
@@ -33,7 +33,7 @@
       </div>
     </li>
     <li>
-        <div class="input-text"><b class="pull-left">城市：</b><span>
+        <div class="input-text  n-address-box"><b class="pull-left">城市：</b><span>
         <select name="city" id="selCities_{$sn}" onchange="region.changed(this, 3, 'selDistricts_{$sn}')">
           <option value="0">{$lang.please_select}{$name_of_region[2]}</option>
           <!-- {foreach from=$city_list item=city} -->
@@ -43,7 +43,7 @@
       </div>
     </li>
     <li id="selDistricts_{$sn}_box" {if !$district_list.$sn}style=""{/if}>
-        <div class="input-text"><b class="pull-left">区/县：</b><span>
+        <div class="input-text  n-address-box"><b class="pull-left">区/县：</b><span>
         <select name="district" id="selDistricts_{$sn}">
           <option value="0">{$lang.please_select}{$name_of_region[3]}</option>
           <!-- {foreach from=$district_list item=district} -->
