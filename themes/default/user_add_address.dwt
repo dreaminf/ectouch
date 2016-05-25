@@ -4,15 +4,15 @@
     <ul class="o-info">
       <li>
         <div class="input-text"><b class="pull-left">{$lang.consignee_name}：</b><span>
-          <input name="consignee" placeholder="{$lang.consignee_name}{$lang.require_field}" type="text" class="inputBg_touch" value="{$consignee.consignee|escape}" />
+          <input name="consignee" maxlength="10" placeholder="{$lang.consignee_name}{$lang.require_field}" type="text" class="inputBg_touch" value="{$consignee.consignee|escape}" />
           </span></div>
       </li>
       <li>
         <div class="input-text"><b class="pull-left">{$lang.mobile}：</b><span>
-          <input placeholder="{$lang.mobile}{$lang.require_field}" name="mobile" type="text" class="inputBg_touch" value="{$consignee.mobile|escape}" />
+          <input maxlength="11" placeholder="{$lang.mobile}{$lang.require_field}" name="mobile" type="text" class="inputBg_touch" value="{$consignee.mobile|escape}" />
           </span></div>
       </li>
-      <li style="display:none">
+      <li>
         <div class="input-text"><b class="pull-left">{$lang.city_district}：</b><span>
         <select name="country" id="selCountries_{$sn}" onchange="region.changed(this, 1, 'selProvinces_{$sn}')">
           <option value="0">{$lang.please_select}{$name_of_region[0]}</option>
