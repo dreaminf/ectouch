@@ -106,13 +106,13 @@ class post_express
     function query($invoice_sn)
     {
         $url = 'http://m.kuaidi100.com/query?type=youzhengguonei&id=1&postid=' .$invoice_sn. '&temp='.time();
-        return $str;
+        return $url;
     }
 
     function third_party($invoice_sn)
     {
-        $str = 'http://m.kuaidi100.com/index_all.html?type=youzhengguonei&postid=' .$invoice_sn;
-        return $str;
+        $url = 'http://m.kuaidi100.com/index_all.html?type=youzhengguonei&postid=' .$invoice_sn;
+        return $url;
     }
 
     /**
