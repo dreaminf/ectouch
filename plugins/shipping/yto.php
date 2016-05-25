@@ -78,8 +78,14 @@ class yto
      */
     function query($invoice_sn)
     {
-        //圆通快递查询会判断链接来源，目前的查询无法生效。
+        $url = 'http://m.kuaidi100.com/query?type=yuantong&id=1&postid=' .$invoice_sn. '&temp='.time();
+        return $str;
+    }
+
+    function third_party($invoice_sn)
+    {
         $str = 'http://m.kuaidi100.com/index_all.html?type=yuantong&postid=' .$invoice_sn;
         return $str;
     }
+    
 }

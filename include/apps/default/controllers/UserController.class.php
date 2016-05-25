@@ -658,14 +658,18 @@ class UserController extends CommonController {
         $orders = $this->model->table('order_info')->field('order_id, order_sn, invoice_no, shipping_name, shipping_id')->where($where)->find();
         // 生成快递100查询接口链接
         $shipping = get_shipping_object($orders['shipping_id']);
-        $query_link = $shipping->kuaidi100($orders['invoice_no']);
-        // 直接跳转到快递100
-        header('location:'.$query_link);
-        exit();
-
-        // 快递100商业客户可以使用接口获取
+        // 接口模式
+        $query_link = $shipping->query($orders['invoice_no']);
         $get_content = Http::doGet($query_link);
-
+        $get_content_data = json_decode($get_content, 1);
+        if($get_content_data['status'] != '200'){
+            // 跳转模式
+            $query_link = $shipping->third_party($orders['invoice_no']);
+            if($query_link){
+                header('Location: '.$query_link);
+                exit();
+            }
+        }
         $this->assign('title', L('order_tracking'));
         $this->assign('trackinfo', $get_content);
         $this->display('user_order_tracking.dwt');

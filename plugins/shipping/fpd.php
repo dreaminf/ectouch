@@ -53,4 +53,9 @@ class fpd
     {
         return $invoice_sn;
     }
+
+    function third_party($invoice_sn)
+    {
+        return false;
+    }
 }

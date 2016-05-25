@@ -85,6 +85,12 @@ class ems
      */
     function query($invoice_sn)
     {
+        $url = 'http://m.kuaidi100.com/query?type=ems&id=1&postid=' .$invoice_sn. '&temp='.time();
+        return $str;
+    }
+
+    function third_party($invoice_sn)
+    {
         $str = 'http://m.kuaidi100.com/index_all.html?type=ems&postid=' .$invoice_sn;
         return $str;
     }
