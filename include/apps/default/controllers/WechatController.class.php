@@ -260,7 +260,7 @@ class WechatController extends CommonController
 					if($scene_user_id > 0){
 						$time = date("Y-m-d H:i:s");
 						$openid = $this->model->table("wechat_user")->field('openid')->where(array('ect_uid'=>$scene_user_id))->getOne();
-						$template = '亲：您有新会员加入'. "\r\n" . '用户名：' . $username . "\r\n" . '微信昵称：' . $info['nickname'] . "\r\n" . '加入时间：' .$time ;
+						$template = '您有新会员加入'. "\r\n" . '用户名：' . $username . "\r\n" . '微信昵称：' . $info['nickname'] . "\r\n" . '加入时间：' .$time ;
 						 if(!empty($template)){
 							// 微信端发送消息
 							$msg = array(
@@ -317,7 +317,7 @@ class WechatController extends CommonController
 						if($result['parent_id'] > 0){
 							$time = date("Y-m-d H:i:s");
 							$openid = $this->model->table("wechat_user")->field('openid')->where(array('ect_uid'=>$result['parent_id']))->getOne();
-							$template = '亲：您有新会员加入'. "\r\n" . '用户名：' . $result['user_name'] . "\r\n" . '微信昵称：' . $info['nickname'] . "\r\n" . '加入时间：' .$time ;
+							$template = '您有新会员加入'. "\r\n" . '用户名：' . $result['user_name'] . "\r\n" . '微信昵称：' . $info['nickname'] . "\r\n" . '加入时间：' .$time ;
 							 if(!empty($template)){
 								// 微信端发送消息
 								$msg = array(
