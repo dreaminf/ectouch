@@ -68,7 +68,7 @@ switch ($step) {
 		);
 		$error = 0;
 		//数据库
-		if (function_exists('mysql_connect')) {
+		if (function_exists('mysqli_connect')) {
 			$server['mysql'] = '<span class="correct_span">&radic;</span> 已安装';
 		} else {
 			$server['mysql'] = '<span class="correct_span error_span">&radic;</span> 出现错误';
@@ -110,7 +110,7 @@ switch ($step) {
 			empty($_POST['dbname'])?alert(0,'数据库名不能为空！','dbname'):'';
 			empty($_POST['dbport'])?alert(0,'数据库端口不能为空！','dbport'):'';
 			$dbHost = $_POST['dbhost'] . ':' . $_POST['dbport'];
-			$conn = mysql_connect($dbHost, $_POST['dbuser'], $_POST['dbpw']);
+			$conn = mysqli_connect($dbHost, $_POST['dbuser'], $_POST['dbpw']);
 			$conn?alert(1,'数据库链接成功！','dbpw'):alert(0,'数据库链接失败！','dbpw');
 		}
 		//域名+路径
@@ -166,7 +166,6 @@ switch ($step) {
 			$dbPort = trim($_POST['dbport']);
 			//数据库名
 			$dbName = trim($_POST['dbname']);
-			$dbHost = empty($dbPort) || $dbPort == 3306 ? $dbHost : $dbHost . ':' . $dbPort;
 			//数据库用户名
 			$dbUser = trim($_POST['dbuser']);
 			//数据库密码
@@ -174,21 +173,21 @@ switch ($step) {
 			//表前缀
 			$dbPrefix = empty($_POST['dbprefix']) ? 'db_' : trim($_POST['dbprefix']);
 			//链接数据库
-			$conn =  mysql_connect($dbHost, $dbUser, $dbPwd);
+			$conn = mysqli_connect($dbHost, $dbUser, $dbPwd, $dbName, $dbPort);
 			if (!$conn) {
 				alert(0,'连接数据库失败!');
 			}
 			//设置数据库编码
-			mysql_query("SET NAMES 'utf8'"); //,character_set_client=binary,sql_mode='';
+			mysqli_query($conn, "SET NAMES 'utf8'"); //,character_set_client=binary,sql_mode='';
 			//获取数据库版本信息
-			$version = mysql_get_server_info($conn);
+			$version = mysqli_get_server_info($conn);
 			if ($version < 5.0) {
 				alert(0,'数据库版本太低!');
 			}
 			//选择数据库
-			if (!mysql_select_db($dbName, $conn)) {
+			if (!mysqli_select_db($conn, $dbName)) {
 				//创建数据时同时设置编码
-				if (!mysql_query("CREATE DATABASE IF NOT EXISTS `" . $dbName . "` DEFAULT CHARACTER SET utf8;", $conn)) {
+				if (!mysqli_query($conn, "CREATE DATABASE IF NOT EXISTS `" . $dbName . "` DEFAULT CHARACTER SET utf8;")) {
 					alert(0,'<li><span class="correct_span error_span">&radic;</span>数据库 ' . $dbName . ' 不存在，也没权限创建新的数据库！<span style="float: right;">'.date('Y-m-d H:i:s').'</span></li>');
 				} else {
 					alert(1,"<li><span class='correct_span'>&radic;</span>成功创建数据库:{$dbName}<span style='float: right;''>".date('Y-m-d H:i:s')."</span></li>",0);
@@ -212,9 +211,9 @@ switch ($step) {
 			}
 			if(!$independent){
 				//获得默认主题名称
-				$result = mysql_query('select `value` from '.$dbPrefix.'shop_config where `code` = "template"', $conn);
+				$result = mysqli_query($conn, 'select `value` from '.$dbPrefix.'shop_config where `code` = "template"');
 				if($result){
-					$row = mysql_fetch_assoc($result);
+					$row = mysqli_fetch_assoc($result);
 					$newThemes = $row['value'];
 					$sqldata = str_replace('/default/', '/'.$newThemes.'/', $sqldata);
 					$oldThemes = ROOT_PATH . 'themes/default';
@@ -238,10 +237,10 @@ switch ($step) {
 						preg_match('/CREATE TABLE IF NOT EXISTS `([^ ]*)`/', $sql, $matches);
 					}
 					if(!empty($matches[1])){
-						mysql_query("DROP TABLE IF EXISTS `$matches[1]",$conn);
-						$ret = mysql_query($sql,$conn);
+						mysqli_query($conn, "DROP TABLE IF EXISTS `$matches[1]");
+						$ret = mysqli_query($conn, $sql);
 						$i++;
-						if(mysql_query($sql,$conn)){
+						if(mysqli_query($conn, $sql)){
 							$info = '<li><span class="correct_span">&radic;</span>创建数据表' . $matches[1] . '，完成！<span style="float: right;">'.date('Y-m-d H:i:s').'</span></li> ';
 							alert(1,$info,$i);
 						} else {
@@ -251,7 +250,7 @@ switch ($step) {
 					}
 				} else {
 					//插入数据
-					$ret = mysql_query($sql);
+					$ret = mysqli_query($conn, $sql);
 				}
 			}
 
@@ -469,14 +468,14 @@ function get_appid(){
  */
 function get_site_info($appid = EC_APPID){
 	$db_config = require ROOT_PATH . 'data/config.php';
-    $conn = mysql_connect($db_config['DB_HOST'], $db_config['DB_USER'], $db_config['DB_PWD']);
-    mysql_query("SET NAMES 'utf8'");
-    mysql_select_db($db_config['DB_NAME'], $conn);
+    $conn = mysqli_connect($db_config['DB_HOST'], $db_config['DB_USER'], $db_config['DB_PWD']);
+    mysqli_query($conn, "SET NAMES 'utf8'");
+    mysqli_select_db($conn, $db_config['DB_NAME']);
 	$sql = 'SELECT `code`, `value` FROM ' . $db_config['DB_PREFIX'] . 'shop_config';
-    $result = mysql_query($sql, $conn);
+    $result = mysqli_query($conn, $sql);
 
     $config = array();
-    while ($row = mysql_fetch_array($result)) {
+    while ($row = mysqli_fetch_array($result)) {
     	$config[$row['code']] = $row['value'];
     }
 
@@ -484,7 +483,7 @@ function get_site_info($appid = EC_APPID){
     $shop_province = get_region_name($config['shop_province'], $conn, $db_config);
     $shop_city = get_region_name($config['shop_city'], $conn, $db_config);
 
-    $mysql_ver = (!$conn) ? '未知':mysql_get_server_info($conn);
+    $mysql_ver = (!$conn) ? '未知':mysqli_get_server_info($conn);
     $data = array(
         'appid'    => $appid,
         'domain'   =>  empty($_SERVER['HTTP_HOST']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'],
@@ -515,11 +514,11 @@ function get_site_info($appid = EC_APPID){
 
 function get_region_name($region_id, $conn, $db_config){
 	$sql = 'SELECT `region_name` FROM ' . $db_config['DB_PREFIX'] . 'region WHERE region_id = '. intval($region_id);
-    $result = mysql_query($sql, $conn);
+    $result = mysqli_query($conn, $sql);
 
     if ($result !== false)
     {
-        $row = mysql_fetch_row($result);
+        $row = mysqli_fetch_row($result);
         return $row[0];
     }else{
     	return '';

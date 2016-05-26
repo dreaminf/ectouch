@@ -12,12 +12,12 @@ if($independent){
 	//关键词
 	$seo_keywords = trim($_POST['sitekeywords']);
 	//更新配置信息
-	mysql_query("UPDATE `{$dbPrefix}shop_config` SET  `value` = '$site_name' WHERE code='shop_name'");
-	mysql_query("UPDATE `{$dbPrefix}shop_config` SET  `value` = '$site_name' WHERE code='shop_title' ");
-	mysql_query("UPDATE `{$dbPrefix}shop_config` SET  `value` = '$seo_description' WHERE code='shop_desc'");
-	mysql_query("UPDATE `{$dbPrefix}shop_config` SET  `value` = '$seo_keywords' WHERE code='shop_keywords'");
-	mysql_query("UPDATE `{$dbPrefix}shop_config` SET  `value` = 'default' WHERE code='template'");
-	mysql_query("UPDATE `{$dbPrefix}shop_config` SET  `value` = '".time()."' WHERE code='install_date'");
+	mysqli_query($conn, "UPDATE `{$dbPrefix}shop_config` SET  `value` = '$site_name' WHERE code='shop_name'");
+	mysqli_query($conn, "UPDATE `{$dbPrefix}shop_config` SET  `value` = '$site_name' WHERE code='shop_title' ");
+	mysqli_query($conn, "UPDATE `{$dbPrefix}shop_config` SET  `value` = '$seo_description' WHERE code='shop_desc'");
+	mysqli_query($conn, "UPDATE `{$dbPrefix}shop_config` SET  `value` = '$seo_keywords' WHERE code='shop_keywords'");
+	mysqli_query($conn, "UPDATE `{$dbPrefix}shop_config` SET  `value` = 'default' WHERE code='template'");
+	mysqli_query($conn, "UPDATE `{$dbPrefix}shop_config` SET  `value` = '".time()."' WHERE code='install_date'");
 }
 
 //插入微信菜单
@@ -36,7 +36,7 @@ $query = "INSERT INTO `{$dbPrefix}wechat_menu` (`id`, `wechat_id`, `pid`, `name`
 (12, 1, 3, '订单查询', 'click', 'ddcx', '', 2, 1),
 (13, 1, 3, '积分查询', 'click', 'jfcx', '', 3, 1),
 (14, 1, 3, '签到送积分', 'click', 'sign', '', 4, 1)";
-mysql_query($query);
+mysqli_query($conn, $query);
 
 //读取配置文件，并替换真实配置数据
 $strConfig = file_get_contents(INSTALL_PATH . $config['dbSetFile']);
@@ -56,7 +56,7 @@ if($independent){
 	$password = md5(md5($password).$verify);
 	$email = trim($_POST['manager_email']);
 	$query = "INSERT INTO `{$dbPrefix}admin_user` (user_name, password, ec_salt, email, add_time, last_ip, action_list) VALUES ('{$username}', '{$password}', '{$verify}', '{$email}', '{$time}', '{$ip}', 'all')";
-	if(mysql_query($query)){
+	if(mysqli_query($conn, $query)){
 		return array('status'=>2,'info'=>'成功添加管理员<br />成功写入配置文件<br>安装完成...');
 	}
 }else{
