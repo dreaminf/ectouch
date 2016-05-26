@@ -921,7 +921,7 @@ class UsersModel extends BaseModel {
                 include_once($plugin);
                 $shipping = new $shipping_code;
                 $order_tracking = $shipping->query($order['invoice_no']);
-                $order['order_tracking'] = ($order_tracking == $order['invoice_no']) ? '':$order_tracking;
+                $order['order_tracking'] = ($order_tracking == $order['invoice_no']) ? 0:1;
             }
         }
 
