@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -7,14 +8,20 @@
 		<title>{$page_title}</title>
 		<link rel="stylesheet" type="text/css" href="__PUBLIC__/swiper/css/swiper.min.css" />
 		<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
+				<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
 		<link rel="stylesheet" type="text/css" href="__TPL__/css/index.css" />
 		<link rel="stylesheet" type="text/css" href="__TPL__/css/search_index.css" />
 		<link rel="stylesheet" href="__TPL__/statics/css/search-index.css" />
+
 		<style type="text/css">
 			.swiper-wrapper .swiper-pagination-bullet-active {
 				background: #1CBB7F;
 			}
-			.n-index-input{font-size:1.2rem; color:#999;}
+			
+			.n-index-input {
+				font-size: 1.2rem;
+				color: #999;
+			}
 		</style>
 	</head>
 
@@ -42,14 +49,14 @@
 					<div class="index-guanz-bg"></div>
 				</div>
 				{/if}
-				<header class="index-header comWidth">
+               <header class="index-header comWidth">
 					<i class="index-header-menu iconfont fl" onclick="window.location = '{:url('category/top_all')}'">&#xe627;</i>
-					<div class="index-search-box j-search-input fl">						
-							<span class="n-index-input">商品搜索</span>
-						<a href="javascript:void(0);" class="j-search-input"><i class="index-search-sound iconfont fr"><!-- &#xe623; --></i></a>
+					<div class="index-search-box j-search-input fl">
+						<span class="n-index-input">请输入您搜索的关键词!</span>
+						<a href="javascript:;" class="a-search-input j-search-input"><i class="index-search-sound iconfont fr"><!-- &#xe623;--></i></a>
 					</div>
 					<a href="javascript:openSearch()"><i class="index-header-right iconfont fr">&#xe603;</i></a>
-				</header>
+				</header> 
 			</div>
 
 			</script>
@@ -170,6 +177,8 @@
 			})
 		</script>
 
-		<!-- #BeginLibraryItem "/library/meiqia.lbi" --><!-- #EndLibraryItem -->
+		<!-- #BeginLibraryItem "/library/meiqia.lbi" -->
+		<!-- #EndLibraryItem -->
 	</body>
+
 </html>

@@ -25,6 +25,9 @@
 <script type="text/javascript" src="__PUBLIC__/js/validform.js" ></script>
 <script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
 <script language="javascript">
+var handler = function(e) { //禁止浏览器默认行为
+		e.preventDefault();
+	};
 	/*banner滚动图片*/
 	var swiper = new Swiper('.swiper-container', {
         pagination: '.swiper-pagination',
@@ -34,6 +37,7 @@
     });
 	/*弹出评论层并隐藏其他层*/
 	function openSearch(){
+		document.addEventListener("touchmove", handler, false);
 		$("body").addClass("show-search-div");
 		$(".search-div").css("z-index","4999");
 		$("input[name='keywords']").focus();
