@@ -11,8 +11,8 @@
     {else}
     <li class="fl" style="background-color: #FFFFFF;">
     {/if}
-      <a href="{$cat_goods.url}"><img src="{$cat_goods.thumb}" alt="{$cat_goods.name}" /></a>
-      <a href="{$cat_goods.url}"><p>{$cat_goods.name}</p></a>
+      <a href="{$cat_goods.url}"><img src="{$cat_goods.goods_thumb}" alt="{$cat_goods.goods_name}" /></a>
+      <a href="{$cat_goods.url}"><p>{$cat_goods.goods_name}</p></a>
       <span><!--{if $cat_goods.promote_price}-->{$cat_goods.promote_price}<!--{else}-->{$cat_goods.shop_price}<!--{/if}--></span>
     </li>
     </div>

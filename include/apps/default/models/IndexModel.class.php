@@ -66,6 +66,7 @@ class IndexModel extends CommonModel {
             }
             $goods[$key]['id'] = $vo['goods_id'];
             $goods[$key]['name'] = $vo['goods_name'];
+            $goods[$key]['goods_name'] = $vo['goods_name'];
             $goods[$key]['brief'] = $vo['goods_brief'];
             $goods[$key]['goods_style_name'] = add_style($vo['goods_name'], $vo['goods_name_style']);
             $goods[$key]['short_name'] = C('goods_name_length') > 0 ? sub_str($vo['goods_name'], C('goods_name_length')) : $vo['goods_name'];
@@ -73,6 +74,7 @@ class IndexModel extends CommonModel {
             $goods[$key]['market_price'] = price_format($vo['market_price']);
             $goods[$key]['shop_price'] = price_format($vo['shop_price']);
             $goods[$key]['thumb'] = get_image_path($vo['goods_id'], $vo['goods_thumb'], true);
+            $goods[$key]['goods_thumb'] = get_image_path($vo['goods_id'], $vo['goods_thumb'], true);
             $goods[$key]['goods_img'] = get_image_path($vo['goods_id'], $vo['goods_img']);
             $goods[$key]['url'] = url('goods/index', array('id' => $vo['goods_id']));
             $goods[$key]['sales_count'] = model('GoodsBase')->get_sales_count($vo['goods_id']);
