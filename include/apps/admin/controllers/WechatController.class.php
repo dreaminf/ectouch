@@ -2251,7 +2251,7 @@ class WechatController extends AdminController
             }
 
             if($template_id){
-                $data['switch'] = I('value');
+                $data['switch'] = I('value', 0);
                 $data['template_id'] = $template_id;
                 $data['add_time'] = gmtime();
                 $where['open_id'] = $open_id;
@@ -2260,6 +2260,7 @@ class WechatController extends AdminController
                     ->where($where)
                     ->update();
             }
+            echo json_encode(array('status'=> 200, 'message'=>'ok'));
         }
 
     }
