@@ -185,4 +185,7 @@ address, cite, dfn, em, var {
     margin: 0 auto;
     bottom: 0;
     z-index: 4;}
- .n-but-bor{border:1px solid #1CBB7F;background:#fff;color:#1CBB7F}   
+ .n-but-bor{border:1px solid #1CBB7F;background:#fff;color:#1CBB7F}  
+.btn-info11{color:#1CBB7F;background-color:#f6f6f9;border-color:#1CBB7F;padding: 0.5em 0;font-size: 1.3em;}
+.btn-info11.focus,.btn-info11:focus{color:#1CBB7F;background-color:#f6f6f9;border-color:#1CBB7F}
+.btn-info11:hover{color:#1CBB7F;background-color:#f6f6f9;border-color:#1CBB7F}
