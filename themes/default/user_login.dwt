@@ -41,7 +41,9 @@
   	<p>
     	<a href="{:url('user/third_login',array('type'=>'qq'))}"><img src="__TPL__/images/qq.png"></a>
     	<a href="{:url('user/third_login',array('type'=>'sina'))}"><img src="__TPL__/images/weibo.png"></a>
+      {if $is_wechat}
       <a href="{:url('user/third_login',array('type'=>'weixin'))}"><img src="__TPL__/images/wechat.png"></a>
+      {/if}
     </p>
   </div>
   </div>

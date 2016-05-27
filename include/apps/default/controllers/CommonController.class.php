@@ -189,6 +189,7 @@ class CommonController extends BaseController
             }
             $this->assign('search_histroy', $histroy_list);
         }
+        $this->assign('is_wechat', (int) is_wechat_browser());
 
         // 模板替换
         defined('__TPL__') or define('__TPL__', __ROOT__ . '/themes/' . C('template'));
