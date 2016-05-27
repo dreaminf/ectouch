@@ -19,7 +19,7 @@
         <li><a href="{$picture.img_url}"><img src="{$picture.img_url}" alt="{$picture.img_desc}" /></a></li>
         <!--{/foreach}--> 
 		<!--{else}-->
-		<li><a href="{$goods.goods_img}"><img src="{$goods.goods_img}" alt="{$goods.goods_name}" /></a></li>
+		<li><a href="{$gb_goods.goods_img}"><img src="{$gb_goods.goods_img}" alt="{$gb_goods.goods_name}" /></a></li>
         <!--{/if}-->
       </ul>
     </div>
