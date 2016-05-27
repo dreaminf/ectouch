@@ -36,7 +36,7 @@
 					</div>
 					<div class="attention-button" style="padding-top:0.8rem;">
 						<a class='lizhuanz'>
-							<button class="button">立即关注</button>
+							<button class="button" style="font-size:1.2rem">立即关注</button>
 						</a>
 					</div>
 				</div>

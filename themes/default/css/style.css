@@ -117,7 +117,7 @@ h4.title{font-size:1.2em; line-height:1.3em; display:block; height:2.4em; overfl
 .ect-pro-list ul li dl dd.dd-price small{font-size:0.9em;}
 .ect-pro-list ul li dl dd.dd-num span{margin-right:0.3em; color:#888;}
 /*导航*/
-nav.ect-nav{color:#999; background:#fcfcfc; height:4.2em; width:100%; max-width:640px; border-top:1px solid #e3e3e3;}
+nav.ect-nav{color:#999; background:#fcfcfc;  width:100%; max-width:640px; border-top:1px solid #e3e3e3;}
 footer nav.ect-nav{position:fixed; bottom:0;}
 nav.ect-nav a{color:#999;}
 nav.ect-nav ul li{padding:0.3em 0; width:20%; }
