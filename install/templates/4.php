@@ -1,6 +1,6 @@
 <?php require INSTALL_PATH . 'templates/header.php';?>
 	<div class="section">
-		<div class="main install">
+		<div class="main install" id="logbox">
 			<ul id="loginner"></ul>
 		</div>
 	</div>
@@ -23,6 +23,8 @@
 				dataType: 'json',
 				success: function(data){
 					$('#loginner').append(data.info);
+					var logbox = document.getElementById("logbox");
+					logbox.scrollTop = logbox.scrollHeight;						
 					if(data.status == 1){
 						reloads(data.type);
 					}
@@ -36,7 +38,7 @@
 						$('#installloading').removeClass('btn_old').addClass('btn').attr('href','./index.php?step=5').html('安装完成...');
 						setTimeout(function(){
 							window.location.href='./index.php?step=5';
-						},5000);
+						},3000);
 					}
 				}
 			});
