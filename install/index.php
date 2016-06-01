@@ -110,7 +110,7 @@ switch ($step) {
 			empty($_POST['dbname'])?alert(0,'数据库名不能为空！','dbname'):'';
 			empty($_POST['dbport'])?alert(0,'数据库端口不能为空！','dbport'):'';
 			$dbHost = $_POST['dbhost'] . ':' . $_POST['dbport'];
-			$conn = mysqli_connect($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpw'], $_POST['dbname'], $_POST['dbport']);
+			$conn = mysqli_connect($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpw']);
 			$conn?alert(1,'数据库链接成功！','dbpw'):alert(0,'数据库链接失败！','dbpw');
 		}
 		//域名+路径
@@ -173,7 +173,7 @@ switch ($step) {
 			//表前缀
 			$dbPrefix = empty($_POST['dbprefix']) ? 'db_' : trim($_POST['dbprefix']);
 			//链接数据库
-			$conn = mysqli_connect($dbHost, $dbUser, $dbPwd, $dbName, $dbPort);
+			$conn = mysqli_connect($dbHost, $dbUser, $dbPwd);
 			if (!$conn) {
 				alert(0,'连接数据库失败!');
 			}
