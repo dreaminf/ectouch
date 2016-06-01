@@ -98,8 +98,8 @@ a.btn-reset,a.btn-default{color:#555;}
 .search{padding:0 1rem; position:relative;}
 .search a.a-search-input{display:block; position: absolute; left:0; bottom:0; right:0; top:0; z-index: 2;}
 .search .text-all{border-bottom:0;}
-.search .input-texts{padding:.3rem 0; border-bottom:0; background:#fff; background:#FFFFFF; border-radius: 4px; overflow: hidden;  position:relative;}
-.search .input-texts input{padding-left:1rem;}
+.search .input-texts{padding:.3rem 0; border-bottom:0; background:#fff; background:#FFFFFF; border-radius: 4px; overflow: hidden;  position:relative;    outline: 0 none;}
+.search .input-texts input{margin-left:1rem;border:0;height:3rem;line-height:2rem;padding:.5rem 0;box-sizing:border-box;width:100%;color:#555;font-size:1.38rem;padding-right:1rem}
 .search .is-null{right:.6rem;}
 .search .search-check{ position: absolute; box-sizing: border-box; line-height: 2rem; padding:.5rem 0; padding-left:1rem;  color:#666;}
 .search-check i.icon-xiajiantou{ position:absolute; font-size:1.2rem;}
@@ -138,9 +138,21 @@ h4.title-hrbg hr {background: #f6f6f9;height: 1px;border: 0;position: absolute;l
 	-o-transition-delay: .2s;}
 .show-city-div .cate-filter-city{left:3.8rem; right:0; width:inherit;}
 .show-city-div .cate-filter-city .con-filter-div{left:0;}
+input:required, input:valid, input:invalid {
+    border: 0 none;
+    outline: 0 none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    -o-box-shadow: none;
+    box-shadow: none;
+}
 /*
  * 弹出搜索框
 */
+.new-search-div{background:#fff; position:fixed; height:100%; width:100%; left: 0; top: 0; right: 0; bottom:0; z-index: 1120;display:none;}
+.new-search-div.active{display:block;}
+body.show-search-div-new,.new-search-div .search{background:#F6F6F9}
 .show-search-div .search-div{top:0;opacity:1;}
 .show-search-div .mask-search-div{ display: inherit;}
 .search-div{background:#fff; position:fixed; height:100%; width:100%; left: 0; top: 100%; right: 0; bottom:0; z-index: 112;opacity:0;}

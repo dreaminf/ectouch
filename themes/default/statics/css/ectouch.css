@@ -1138,3 +1138,7 @@ footer.logo img {
 .n-cate-box-1 p{font-size:1.55rem; color:#888;text-align:center;}
 .n-cate-box-1 span{background:#fff; padding:0.8rem;border:1px solid #efefef;text-align: center;display:block;margin:0 auto;font-size:1.5rem;color:#555;border-radius:0.5rem;    width: 45%;margin-top: 0.8rem;}
 .s-g-attr-con .swiper-wrapper,.goods-big-service .swiper-wrapper,.s-g-list-con .swiper-wrapper,.goods-show-con .swiper-wrapper,.menu-left .swiper-wrapper{display:block;}
+.new-search-div{background:#fff; position:fixed; height:100%; width:100%; left: 0; top: 0; right: 0; bottom:0; z-index: 1120;display:none;}
+.new-search-div.active{display:block;}
+body.show-search-div-new,.new-search-div .search{background:#F6F6F9}
+.show-search-div .search-div{top:0;opacity:1;}

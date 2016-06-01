@@ -6,7 +6,7 @@
 	<li class="box-flex">
 		<a href="{:url('category/top_all')}"><i class="iconfont">&#xe627;</i><span>{$lang.category}</span></a>
 	</li>
-	<li class="box-flex"><a href="javascript:openSearch();" class="j-search-input"><i class="iconfont">&#xe617;</i><span>{$lang.search}</span></a></li>
+	<li class="box-flex"><a href="javascript:;" class="j-search-input-new"><i class="iconfont">&#xe617;</i><span>{$lang.search}</span></a></li>
 	<li class="box-flex"><a href="{:url('flow/cart')}"><i class="iconfont">&#xe626;</i><span>{$lang.shopping_cart}</span></a></li>
 	{if $is_drp}
 	<li class="box-flex"><a href="{:url('sale/index')}"><i class="iconfont">&#xe625;</i><span>微店管理</span></a></li>

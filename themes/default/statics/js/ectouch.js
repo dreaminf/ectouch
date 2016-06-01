@@ -315,13 +315,28 @@ $(function($) {
 	$(".j-search-input").click(function() {
 		document.addEventListener("touchmove", handler, false);
 		$("body").addClass("show-search-div");
-		$(".search-div").css("z-index","999999");
+		$(".search-div").css("z-index","49999");
 		$('input[name="keywords"]').focus();
 	});
 	/*关闭搜索层*/
 	$(".j-close-search").click(function() {
 		document.removeEventListener("touchmove", handler, false);
 		$("body").removeClass("show-search-div");
+	});
+    /*new*/
+	/*点击弹出搜索层*/
+	$(".j-search-input-new").click(function() {
+		document.addEventListener("touchmove", handler, false);
+		$(".new-search-div,.new-maxbox").addClass("active");
+		$('#newinput').focus();
+			$("body").addClass("show-search-div-new");
+	});
+
+	/*关闭搜索层*/
+	$(".j-close-search-new").click(function() {
+		document.removeEventListener("touchmove", handler, false)
+		$(".new-search-div,.new-maxbox").removeClass("active");
+			$("body").removeClass("show-search-div-new");
 	});
 
 	/*弹出配送方式*/

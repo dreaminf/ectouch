@@ -68,7 +68,6 @@ a.btn-reset,a.btn-default{color:#555;}
 .text-all .text-all-span{height:3rem; line-height: 3rem; font-size:1.6rem; color:#666;}
 .text-all span.t-jiantou{margin-top:.8rem;}
 .input-texts {position: relative;}
-.input-texts input {border: 0;height: 3rem;line-height: 3rem;padding: .5rem 0;box-sizing: border-box;width: 100%;color: #555;font-size: 1.57rem;padding-right: 3rem;}
 .text-area1{width:100%; border:0; font-size:1.6rem; min-height: 3rem; line-height:2rem; padding: .5rem 0;  box-sizing:border-box; border-bottom:1px solid #F6F6F9; color:#555;}
 /*文本下拉*/
 .text-all-selec{position:relative;}
@@ -95,11 +94,15 @@ a.btn-reset,a.btn-default{color:#555;}
 	transition: all 0.1s;}
 .is-yanjing.disabled{color:#ddd;}
 /*搜索框*/
+.new-search-div{background:#fff; position:fixed; height:100%; width:100%; left: 0; top: 0; right: 0; bottom:0; z-index: 1120;display:none;}
+.new-search-div.active{display:block;}
+body.show-search-div-new,.new-search-div .search{background:#F6F6F9}
+.show-search-div .search-div{top:0;opacity:1;}
 .search{padding:0 1rem; position:relative;}
 .search a.a-search-input{display:block; position: absolute; left:0; bottom:0; right:0; top:0; z-index: 2;}
 .search .text-all{border-bottom:0;}
 .search .input-texts{padding:.3rem 0; border-bottom:0; background:#fff; background:#FFFFFF; border-radius: 4px; overflow: hidden;  position:relative;}
-.search .input-texts input{padding-left:1rem;}
+.search .input-texts input{outline: 0 none;margin-left:1rem;border:0;height:3rem;line-height:2rem;padding:.5rem 0;box-sizing:border-box;width:100%;color:#555;font-size:1.3rem;padding-right:1rem}
 .search .is-null{right:.6rem;}
 .search .search-check{ position: absolute; box-sizing: border-box; line-height: 2rem; padding:.5rem 0; padding-left:1rem;  color:#666;}
 .search-check i.icon-xiajiantou{ position:absolute; font-size:1.2rem;}

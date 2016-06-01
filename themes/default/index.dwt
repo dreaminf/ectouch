@@ -8,7 +8,6 @@
 		<title>{$page_title}</title>
 		<link rel="stylesheet" type="text/css" href="__PUBLIC__/swiper/css/swiper.min.css" />
 		<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
-				<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
 		<link rel="stylesheet" type="text/css" href="__TPL__/css/index.css" />
 		<link rel="stylesheet" type="text/css" href="__TPL__/css/search_index.css" />
 		<link rel="stylesheet" href="__TPL__/statics/css/search-index.css" />
@@ -26,7 +25,7 @@
 	</head>
 
 	<body>
-		<div class="con">
+		<div class="con new-maxbox">
 			<div class="index-max-box">
 				{if !$subscribe}
 				<div class="ect-attention dis-box">
@@ -51,11 +50,11 @@
 				{/if}
                <header class="index-header comWidth">
 					<i class="index-header-menu iconfont fl" onclick="window.location = '{:url('category/top_all')}'">&#xe627;</i>
-					<div class="index-search-box j-search-input fl">
+					<div class="index-search-box j-search-input-new fl">
 						<span class="n-index-input">请输入您搜索的关键词!</span>
 						<a href="javascript:;" class="a-search-input j-search-input"><i class="index-search-sound iconfont fr"><!-- &#xe623;--></i></a>
 					</div>
-					<a href="javascript:openSearch()"><i class="index-header-right iconfont fr">&#xe603;</i></a>
+					<a href="javascript:;"><i class="index-header-right iconfont fr j-search-input-new">&#xe603;</i></a>
 				</header> 
 			</div>
 

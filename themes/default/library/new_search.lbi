@@ -1,9 +1,9 @@
-<div class="search-div j-search-div ts-3">
+<div class="new-search-div ts-3">
 	<section class="search">
 		<form action="{:url('category/index')}<!-- {if $id} -->&id={$id}<!-- {/if} -->" method="post">
 		<div class="text-all dis-box j-text-all">
 			<div class="box-flex input-texts">
-				<input class="j-input-text" type="text" name="name" placeholder="{$lang.no_keywords}" />
+				<input class="j-input-text" type="text" name="name" placeholder="{$lang.no_keywords}" id="newinput" autofocus="autofocus"/ style="font-size:1.56rem;">
 				<i class="iconfont icon-guanbi is-null j-is-null"></i>
 			</div>
 			<button type="submit" class="btn-submit">搜索</button>
@@ -37,7 +37,7 @@
 			<div class="swiper-scrollbar"></div>
 		</div>
 	</section>
-	<footer class="close-search j-close-search">
+	<footer class="close-search j-close-search-new">
 		点击关闭
 	</footer>
 </div>

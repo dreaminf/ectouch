@@ -1,12 +1,12 @@
-<div class="search-div j-search-div ts-3">
+<div class="new-search-div ts-3">
 	<section class="search">
 		<form action="{:url('category/index')}<!-- {if $id} -->&id={$id}<!-- {/if} -->" method="post">
 		<div class="text-all new-dis-box j-text-all" style="z-index: 4999;">
 			<div class="box-flex input-texts">
-				<input class="j-input-text" type="text" name="name" placeholder="{$lang.no_keywords}" />
+				<input class="j-input-text" type="text" name="name" placeholder="{$lang.no_keywords}" id="newinput" autofocus="autofocus" />
 				<i class="iconfont icon-guanbi is-null j-is-null"></i>
 			</div>
-			<button type="submit" class="btn-submit" style="font-size:1.45rem">搜索</button>
+			<button type="submit" class="btn-submit">搜索</button>
 		</div>
 		</form>
 	</section>
@@ -15,7 +15,7 @@
 			<div class="swiper-wrapper">
 			<div class="swiper-slide">
 		<p>
-			<label class="fl" style="font-size:1.45rem">{$lang.hot_search}</label>
+			<label class="fl">{$lang.hot_search}</label>
 		</p>
 		<ul class="hot-search a-text-more">
 			<!-- {foreach from=$hot_search_keywords item=keyword} -->
@@ -23,7 +23,7 @@
 			<!-- {/foreach} -->
 		</ul>
 		<p class="hos-search">
-			<label class="fl" style="font-size:1.4rem">最近搜索</label>
+			<label class="fl">最近搜索</label>
 			<span class="fr" onclick="javascript:clearHistroy();"><i class="fr"><img class="n-shanchutupian" src=__TPL__/images/iconfont-xiao1.png style="width:1.5rem;height:1.5rem;margin-right:0.5rem;margin-top:0rem;"></i></span>
 		</p>
 		
@@ -37,7 +37,7 @@
 			<div class="swiper-scrollbar"></div>
 		</div>
 	</section>
-	<footer class="close-search j-close-search" onclick="closeSearch()"style="font-size:1.4rem">
+	<footer class="close-search j-close-search-new">
 		点击关闭
 	</footer>
 </div>
