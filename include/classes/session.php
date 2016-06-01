@@ -116,7 +116,7 @@ class session
             $ip = substr($this->_ip, 0, strrpos($this->_ip, '.'));
         }
 
-        return sprintf('%08x', crc32(dirname(ROOT_PATH) . '/' . $ip . $session_id));
+        return sprintf('%08x', crc32(dirname(strtolower(ROOT_PATH)) . '/' . $ip . $session_id));
     }
 
     function insert_session()
