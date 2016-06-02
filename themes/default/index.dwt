@@ -42,8 +42,10 @@
 				<!--立即关注-->
 				<div class="index-guanz-t">
 					<div class="index-guanz-show">
+						<div class="index-show-close-box index-show-close"><img src="__TPL__/images/colse.png"></div>
 						<img src="__TPL__/images/guanzm.png">
-						<p><span class="left">长按二维码关注公众号</span><span class="right index-show-close">关闭</span></p>
+						<h5>ECTouch微信，欢迎您！</h5>
+						<p><span>长按二维码关注公众微信</span></p>
 					</div>
 					<div class="index-guanz-bg"></div>
 				</div>
@@ -153,9 +155,9 @@
 				$(".lizhuanz").click(function() {
 					$(".index-guanz-t").addClass("active");
 				});
-				$(".index-show-close").click(function() {
+				$(".index-show-close,.index-guanz-bg").click(function() {
 					$(".index-guanz-t").removeClass("active");
-				});
+				});			
 			});
 			if ($(".ect-attention").hasClass("ect-attention")) {
 				$(".index-main").css({
