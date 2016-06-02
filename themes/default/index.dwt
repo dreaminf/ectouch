@@ -20,6 +20,7 @@
 			.n-index-input {
 				font-size: 1.2rem;
 				color: #999;
+				margin-left:0.2rem;
 			}
 		</style>
 	</head>
@@ -29,13 +30,16 @@
 			<div class="index-max-box">
 				{if !$subscribe}
 				<div class="ect-attention dis-box">
-					<div class="attention-text box-flex">
-						<p style="font-size: 1rem;"><span style="color:#fff">欢迎进入</span><span style="color:#57C850"> 微商城</span></p>
-						<p style="font-size: 1rem;"><span style="color:#fff">关注公众号,享专属服务</span></p>
+					<div class="attention-left-img">
+					     <img src="__TPL__/images/more_icon.png">
 					</div>
-					<div class="attention-button" style="padding-top:0.8rem;">
+					<div class="attention-text box-flex">
+						<p style="font-size: 1.26rem;"><span style="color:#fff">欢迎进入</span><span style="color:#05af10"> [ 微商城 ]</span></p>
+						<p style="font-size: 1.1rem;"><span style="color:#d6d6d6">关注公众号,享专属服务</span></p>
+					</div>
+					<div class="attention-button">
 						<a class='lizhuanz'>
-							<button class="button" style="font-size:1.2rem">立即关注</button>
+							<button class="button">立即关注</button>
 						</a>
 					</div>
 				</div>
@@ -161,11 +165,11 @@
 			});
 			if ($(".ect-attention").hasClass("ect-attention")) {
 				$(".index-main").css({
-					"marginTop": "8rem"
+					"marginTop": "8.4rem"
 				})
 			} else {
 				$(".index-main").css({
-					"marginTop": "4rem"
+					"marginTop": "4.4rem"
 				})
 			}
 			$(function($) {

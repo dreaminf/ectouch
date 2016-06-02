@@ -26,19 +26,19 @@ bady{background-color: #f7f7f7}
 .hot-search h4{height:1.6em;}
 .hot-search a{display:table-cell; float:left;  background:#fff; margin-right:0.6em; margin-bottom:0.6em; border-radius:0.4em;}
 header{line-height:2rem}
-
+/*display盒子*/
+.dis-box {display: -webkit-box;display: -moz-box;display: -ms-box;display: box;}
+.box-flex {-webkit-box-flex: 1;-moz-box-flex: 1;-ms-box-flex: 1;box-flex: 1; display: block; width:100%;}
 /*==================
     关注
 =============*/
-.ect-attention{height: 4rem;background-color: rgba(0, 0, 0, 0.8); padding: 0 1.3rem;}
-.dis-box{ display:-moz-box; display:-webkit-box; display:box; width:100%; margin-top:0rem; left: 0; right: 0;
-  z-index: 4; overflow: hidden; margin: 0 auto;   max-width: 640px;  min-width: 320px;}
-.box-flex{ -moz-box-flex:1; -webkit-box-flex:1; box-flex:1;   line-height: 1.5555rem;padding-top: 0.5rem;} 
-.dis-box .attention-img {width: 4rem;}
-.dis-box .attention-button  {width: 8rem;} 
-.dis-box img{width: 4rem;height: 4rem; margin-left: -1.3rem;}
-.button{  border: 0px;background: #57C850; width: 8rem; height: 2.5rem; border-radius: 5px;color: #fff;
-} 
+.attention-left-img{width: 3.6rem;padding-right: 0.7rem;padding-top:0.76rem;}
+.attention-left-img img{width:100%;}
+.ect-attention{height: 4.4rem;background-color: rgba(0, 0, 0, 0.8); padding: 0 1.3rem;}
+.attention-text{padding-top:0.6rem;}
+.attention-img {width: 4rem;}
+.attention-button{width:6rem;padding-top:0.88rem;} 
+.attention-button .button{  border: 0px;background: #05af10; width: 6rem; height: 2.5rem; border-radius: 5px;color: #fff;font-size:1.2rem} 
 .index-max-box{position: fixed;z-index: 1000;top: 0;width: 100%; max-width: 640px;min-width: 320px;}
 .index-header{position:relative;}
 
