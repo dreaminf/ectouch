@@ -1,17 +1,26 @@
 <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
 <style>
 .user-account-message{text-align:center;font-size:1.7rem; margin-top:2rem;color:#555;}
-
+.dis-box {display: -webkit-box;display: -moz-box;display: -ms-box;display: box;}
+.box-flex {-webkit-box-flex: 1;-moz-box-flex: 1;-ms-box-flex: 1;box-flex: 1; display: block; width:100%;}
 
 </style>
 {if $message_list}
     <div class="user-account-detail" >
-      <ul class="ect-bg-colorf" >
+      <ul>
         <!--{foreach name=message_list from=$message_list item=msg}-->
-        <li class="single_item">
-            <p> 
-            <a style="color:#1CA2E1; float:right; font-weight:normal;" onclick="if (!confirm('{$lang.confirm_remove_msg}')) return false;" href="{$msg.url}">{$lang.drop}</a>{$msg.msg_type}:{$msg.msg_title} - {$msg.msg_time} </p>
-            <p style="color:#999;"> {$msg.msg_content} </p>
+        <li class="single_item">       
+        	<div class="dis-box new-msg-title">
+        		<div class="box-flex">
+        			<h4>{$msg.msg_type}:</h4>
+        			<span>{$msg.msg_time}</span>
+        		</div>
+        		<div class="box-flex">
+        			<label><a onclick="if (!confirm('{$lang.confirm_remove_msg}')) return false;" href="{$msg.url}">{$lang.drop}</a></label>
+        		</div>
+            </div>
+            <h5> {$msg.msg_title}</h5>
+            <p> {$msg.msg_content} </p>
             <!--{if $msg.re_msg_content}-->
             <table>
               <tr>
