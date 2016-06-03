@@ -1166,7 +1166,7 @@ body.show-search-div-new,.new-search-div .search{background:#F6F6F9}
  * ========================================*/
 /*shi - star*/
 /*用户中心*/
-.my-user-box{padding-bottom:1.6rem;padding-top: 1.6rem;border-bottom:1px solid rgba(255,255,255,0.1)}
+.my-user-box{padding-bottom:0rem;padding-top: 0rem;border-bottom:1px solid rgba(150,150,150,0.1)}
 .user-admin-size{color:#fff;font-size:1.8rem}
 .g-s-i-title-a{padding-left: 1.3rem;padding-top: 1.35rem;}
 .user-right-maxbox,.my-user-box,.user-ing-list li{position:relative;z-index: 1;}
@@ -1184,10 +1184,10 @@ body.show-search-div-new,.new-search-div .search{background:#F6F6F9}
 .user-right-box{padding-top:0rem;}
 .is-shezi{font-size: 1.8rem;padding-top: 0.15rem;}
 .my-t-remark{font-size:1.5rem;}
-.user-nav-box a {border-left:1px solid rgba(255,255,255,0.1);}
+.user-nav-box a {border-left:1px solid rgba(150,150,150,0.1);}
 .user-nav-box a:first-child{border:none;}
 .g-s-i-title-1 h4 {font-size: 1.8rem;color:#555555;}
-.g-s-i-title-1,.n-g-s-i-title-1 {padding: 1rem 0}  
+.g-s-i-title-1,.n-g-s-i-title-1 {padding: 0.8rem 0}  
 .email-box{  width: 0.8rem;height: 0.8rem;background: #1CBB7F;border-radius: 0.4rem;right: 0rem;bottom: 0.5rem;}  
 .user-ing-list{padding:1.8rem 1.3rem;} 
 .user-list-num{  background: #1CBB7F;box-sizing:border-box; border-radius: .9rem;left: 50%;margin-left: .2rem;top: -0.35rem;color: #fff;font-size: 1.3rem;min-width: 1.8rem;padding: 0 .4rem;height: 1.8rem;line-height: 1.8rem;}

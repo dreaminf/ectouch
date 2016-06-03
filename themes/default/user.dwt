@@ -38,7 +38,7 @@
 										<p class="my-user-right-cont"><span class="my-t-remark color-whie">设置</span></p>
 									</div>
 								</a>
-								<a onclick="window.location = '{:url('user/msg_list')}'">
+								<a href= "{:url('user/msg_list')}">
 									<div class="email-box" style="display:none;"></div>
 									<i class="iconfont icon-youxiang is-youxiang j-yanjing disabled"></i>
 								</a>
@@ -50,11 +50,11 @@
 				</div>
 				<div class="my-nav-box my-shoucang-bg">
 					<div class="user-nav-box n-g-s-i-title-1 dis-box text-center">
-						<a onclick="window.location = '{:url('user/collection_list')}'" class="box-flex">
+						<a href="{:url('user/collection_list')}" class="box-flex">
 							<h4 class="color-whie ellipsis-one"><!--{if $list.goods_nums neq ''}--> {$list.goods_nums}<!--{else}-->0<!--{/if}--></h4>
 							<p class="color-whie t-remark3">收藏</p>
 						</a>
-						<a onclick="window.location = '{:url('user/msg_list')}'" class="box-flex">
+						<a href="{:url('user/msg_list')}" class="box-flex">
 							<h4 class="color-whie ellipsis-one"><!--{if $list.msg_list neq ''}--> {$list.msg_list}<!--{else}-->0<!--{/if}--></h4>
 							<p class="color-whie t-remark3">消息</p>
 						</a>
@@ -62,7 +62,7 @@
 				</div>
 			</div>
 			<section class="b-color-f my-nav-box m-top10">
-				<a onclick="window.location = '{:url('user/order_list')}'">
+				<a href="{:url('user/order_list')}">
 					<div class="dis-box padding-all my-bottom">
 						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-quanbudingdan is-user-size t-first"></i>我的订单</h3>
 						<div class="box-flex t-goods1 text-right onelist-hidden jian-top">全部订单</div>
@@ -106,7 +106,7 @@
 				</ul>
 			</section>
 			<section class="m-top10 my-nav-box b-color-f">
-				<a onclick="window.location = '{:url('user/account_detail')}';">
+				<a href="{:url('user/account_detail')};">
 					<div class="dis-box padding-all my-bottom">
 						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-qianbao is-user-size my-qianbao-color"></i>我的钱包</h3>
 						<div class="box-flex t-goods1 text-right onelist-hidden jian-top">资金管理</div>
@@ -135,20 +135,20 @@
 				</ul>
 			</section>
 			<section class="m-top10 my-nav-box b-color-f">
-				<a onclick="window.location = '{:url('user/service')}';">
+				<a href="{:url('user/service')};">
 					<div class="dis-box padding-all my-bottom">
 						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-kefu is-user-size color-kf"></i>客服服务</h3>
 						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
 					</div>
 				</a>
-				<a onclick="window.location = '{:url('user/share')}'">
+				<a href="{:url('user/share')}">
 					<div class="dis-box padding-all my-bottom">
 						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-fenxiang is-user-size my-fengxiang-color"></i>我的分享</h3>
 						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
 					</div>
 				</a>
 				<!--/*DRP_START*/-->
-				<a onclick="window.location = '{:url('store/check_store')}'">
+				<a href="{:url('store/check_store')}">
 					<div class="dis-box padding-all my-bottom">
 						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-dianpuzhuye is-user-size color-ls"></i>我的微店</h3>
 						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
