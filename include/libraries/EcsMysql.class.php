@@ -90,7 +90,7 @@ class EcsMysql {
 
         if ($this->max_cache_time && $this->starttime > $this->mysql_config_cache_file_time + $this->max_cache_time) {
             if ($dbhost != '.') {
-                $result = mysql_query($this->link_id, "SHOW VARIABLES LIKE 'basedir'");
+                $result = mysqli_query($this->link_id, "SHOW VARIABLES LIKE 'basedir'");
                 $row = mysqli_fetch_assoc($result);
                 if (!empty($row['Value']{1}) && $row['Value']{1} == ':' && !empty($row['Value']{2}) && $row['Value']{2} == "\\") {
                     $this->platform = 'WINDOWS';
