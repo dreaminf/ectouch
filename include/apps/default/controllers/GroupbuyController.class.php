@@ -82,12 +82,17 @@ class GroupbuyController extends CommonController {
     public function info() {
         /* 取得参数：团购活动id */
         $group_buy_id = isset($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
+        $sql= "select goods_id from ecs_goods_activity where act_id = " . $group_buy_id;
+        $res=$this->model->query($sql);
+        
+        $goods_id = $res[0]["goods_id"];
         if ($group_buy_id <= 0) {
             ecs_header("Location: ./\n");
             exit;
         }
         /* 取得团购活动信息 */
         $group_buy = model('GroupBuyBase')->group_buy_info($group_buy_id);
+        
         if (empty($group_buy)) {
             ecs_header("Location: ./\n");
             exit;
@@ -95,6 +100,9 @@ class GroupbuyController extends CommonController {
 
         $group_buy['gmt_end_date'] = $group_buy['end_date'];
         $this->assign('group_buy', $group_buy);
+        $this->assign('sales_count', model('GoodsBase')->get_sales_count(1));
+
+        
         /* 取得团购商品信息 */
         $goods_id = $group_buy['goods_id'];
         $goods = model('Goods')->goods_info($goods_id);

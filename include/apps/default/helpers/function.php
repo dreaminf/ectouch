@@ -1581,6 +1581,8 @@ function get_goods_count($goods_id)
         $ext = " AND o . add_time > '" . local_strtotime(' - 1 months') . "'";
     }
   /* 查询该商品销量 */
+      
+
     $sql = 'SELECT IFNULL(SUM(g.goods_number), 0) as count ' .
         'FROM '. M()->pre .'order_info AS o, '. M()->pre .'order_goods AS g ' .
         "WHERE o . order_id = g . order_id " .
@@ -1588,6 +1590,15 @@ function get_goods_count($goods_id)
         " AND o . shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)) .
         " AND o . pay_status " . db_create_in(array(PS_PAYED, PS_PAYING)) .
         " AND g . goods_id = '$goods_id'";
-    $result = M()->getRow($sql);
+    $result = M()->getRow($sql);  
+    $sql_goods = "SELECT virtual_sales FROM " . M()->pre .'goods' . " WHERE goods_id = '$goods_id'";
+    $rs = M()->getRow($sql_goods); 
+    $virtual_sales = $rs["virtual_sales"];
+        
+     $result["count"] += $virtual_sales;
+    //$result += M()->getRow($sql_goods);
+    //dump($result);exit;
     return $result['count'];
 }
+ 
+    

@@ -30,7 +30,7 @@
       <h4 class="title pull-left" style="position:static;">{$gb_goods.goods_name}</h4>
       </section>
     <section class="ect-margin-tb ect-margin-lr ">
-      <p><span class="pull-left">{$lang.gb_cur_price}<strong class="ect-colory">{$group_buy.formated_cur_price}</strong></span><span class="pull-right">{$lang.sort_sales}：{$group_buy.sales_count} 件</span></p>
+      <p><span class="pull-left">{$lang.gb_cur_price}<strong class="ect-colory">{$group_buy.formated_cur_price}</strong></span><span class="pull-right">{$lang.sort_sales}：{$sales_count} 件</span></p>
        <!-- {if $cfg.show_goodssn && 0} -->
         <p> {$lang.goods_sn}<strong>{$gb_goods.goods_sn}</strong></p>
        <!-- {/if} --> 
@@ -181,7 +181,8 @@ function changeNum( type ){
     if(type == 1){qty--; }
     if(type == 3){qty++; }
     if(qty <=0 ){ qty=1; }
-	if(qty > valid){ qty--;}
+  	
+   
     if(!/^[0-9]*$/.test(qty)){ qty = document.getElementById('back_number').value; }
     document.getElementById('goods_number').value = qty;
   }

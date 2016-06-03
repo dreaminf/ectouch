@@ -64,6 +64,7 @@ $_LANG['is_hot'] = '热销';
 $_LANG['is_promote'] = '特价';
 $_LANG['all_type'] = '全部推荐';
 $_LANG['sort_order'] = '推荐排序';
+$_LANG['virtual_sales'] = '虚拟销量';
 
 $_LANG['goods_name'] = '商品名称';
 $_LANG['goods_sn'] = '货号';
@@ -116,6 +117,7 @@ $_LANG['lab_market_price'] = '市场售价：';
 $_LANG['lab_user_price'] = '会员价格：';
 $_LANG['lab_promote_price'] = '促销价：';
 $_LANG['lab_promote_date'] = '促销日期：';
+$_LANG['lab_virtual_sales'] = '虚拟销量：';
 $_LANG['lab_picture'] = '上传商品图片：';
 $_LANG['lab_thumb'] = '上传商品缩略图：';
 $_LANG['auto_thumb'] = '自动生成商品缩略图';
@@ -261,7 +263,7 @@ $_LANG['card'] = '查看虚拟卡信息';
 $_LANG['replenish'] = '补货';
 $_LANG['batch_card_add'] = '批量补货';
 $_LANG['add_replenish'] = '添加虚拟卡卡密';
-
+$_LANG['virtual_sales_error'] = '商品虚拟销售数量错误';
 $_LANG['goods_number_error'] = '商品库存数量错误';
 
 /*------------------------------------------------------ */
