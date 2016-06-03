@@ -23,7 +23,7 @@
 					<div class="box-flex reg-left-input"><input placeholder="用户名/手机号" name="username" type="text" id="username" maxlength="20"></div>
 				</li>
 				<li class="dis-box user-register-box input-text item-password">
-					<input class="txt-password" type="password" autocomplete="off" placeholder="请输入密码" />
+					<input class="txt-password" type="password" name="password" autocomplete="off" placeholder="请输入密码" />
 					<b class="tp-btn btn-off"></b>
 				</li>
 				<!-- 判断是否启用验证码{if $enabled_captcha} -->
