@@ -31,16 +31,16 @@
 								</div>
 								{/if}
 							</div>
-							<div class="user-right-maxbox">
-								<a onclick="window.location = '{:url('user/msg_list')}'">
-									<div class="email-box"></div>
-									<i class="iconfont icon-youxiang is-youxiang j-yanjing disabled"></i>
-								</a>
+							<div class="user-right-maxbox">								
 								<a href="{:url('user/profile')}">
 									<div class="user-right-box">
-										<i class="iconfont icon-shezhi is-shezi my-user-right-cont"></i>
+										<i class="iconfont icon-shezhi is-shezi my-user-right-cont" style="display:block;"></i>
 										<p class="my-user-right-cont"><span class="my-t-remark color-whie">设置</span></p>
 									</div>
+								</a>
+								<a onclick="window.location = '{:url('user/msg_list')}'">
+									<div class="email-box" style="display:none;"></div>
+									<i class="iconfont icon-youxiang is-youxiang j-yanjing disabled"></i>
 								</a>
 							</div>
 							</ul>

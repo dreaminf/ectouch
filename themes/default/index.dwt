@@ -34,7 +34,7 @@
 				<li class="box-flex n-input-index-box">
 					<div class="index-search-box j-search-input-new" id="j-input-focus"><i class="iconfont icon-sousuo"></i>请输入您搜索的关键词!</div>
 				</li>
-				<li class="index-right-box"><a class="j-search-input-new"><i class="iconfont icon-sousuo color-whie n-xiaoxi-size"></i></a></li>
+				<li class="index-right-box"><a onclick="window.location = '{:url('user/msg_list')}'"><i class="iconfont icon-xiaoxi color-whie n-xiaoxi-size"></i></a></li>
 			</ul>
 		</div>
 	</header>
