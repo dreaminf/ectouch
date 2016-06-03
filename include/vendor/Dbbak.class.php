@@ -53,12 +53,12 @@ class Dbbak {
         $this->dbuser = $dbuser;
         $this->dbpw = $dbpw;
         $this->dbname = $dbname;
-        if (!$conn = mysql_connect($dbhost, $dbuser, $dbpw)) {
+        if (!$conn = mysqli_connect($dbhost, $dbuser, $dbpw)) {
             $this->error('无法连接数据库服务器');
             return false;
         }
-        mysql_select_db($this->dbname) or $this->error('选择数据库失败');
-        mysql_query("set names $charset");
+        mysqli_select_db($this->dbname) or $this->error('选择数据库失败');
+        mysqli_query("set names $charset");
         return true;
     }
 
@@ -69,9 +69,9 @@ class Dbbak {
      */
     public function getTables($database = '') {
         $database = empty($database) ? $this->dbname : $database;
-        $result = mysql_query("SHOW TABLES FROM `$database`") or die(mysql_error());
+        $result = mysqli_query("SHOW TABLES FROM `$database`") or die(mysqli_error());
         //	$result = mysql_list_tables($database);//mysql_list_tables函数不建议使用
-        while ($tmpArry = mysql_fetch_row($result)) {
+        while ($tmpArry = mysqli_fetch_row($result)) {
             $dbArry[] = $tmpArry[0];
         }
         return $dbArry;
@@ -165,8 +165,8 @@ class Dbbak {
         foreach ($sqls as $sql) {
             if (empty($sql))
                 continue;
-            if (!mysql_query(trim($sql))) {
-                $this->error('恢复失败：' . mysql_error());
+            if (!mysqli_query(trim($sql))) {
+                $this->error('恢复失败：' . mysqli_error());
                 return false;
             }
         }
@@ -180,23 +180,23 @@ class Dbbak {
      */
     protected function _setSql($table, $subsection = 0, &$tableDom = '') {
         $tableDom .= "DROP TABLE IF EXISTS $table\n";
-        $createtable = mysql_query("SHOW CREATE TABLE $table");
-        $create = mysql_fetch_row($createtable);
+        $createtable = mysqli_query("SHOW CREATE TABLE $table");
+        $create = mysqli_fetch_row($createtable);
         $create[1] = str_replace("\n", "", $create[1]);
         $create[1] = str_replace("\t", "", $create[1]);
 
         $tableDom .= $create[1] . ";\n";
 
-        $rows = mysql_query("SELECT * FROM $table");
-        $numfields = mysql_num_fields($rows);
-        $numrows = mysql_num_rows($rows);
+        $rows = mysqli_query("SELECT * FROM $table");
+        $numfields = mysqli_num_fields($rows);
+        $numrows = mysqli_num_rows($rows);
         $n = 1;
         $sqlArry = array();
-        while ($row = mysql_fetch_row($rows)) {
+        while ($row = mysqli_fetch_row($rows)) {
             $comma = "";
             $tableDom .= "INSERT INTO $table VALUES(";
             for ($i = 0; $i < $numfields; $i++) {
-                $tableDom .= $comma . "'" . mysql_escape_string($row[$i]) . "'";
+                $tableDom .= $comma . "'" . mysqli_escape_string($row[$i]) . "'";
                 $comma = ",";
             }
             $tableDom .= ")\n";

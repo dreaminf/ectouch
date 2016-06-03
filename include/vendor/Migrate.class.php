@@ -124,7 +124,7 @@ class Migrate
 
     public static function query($str)
     {
-        if(mysql_query($str, self::$conn)){
+        if(mysqli_query(self::$conn, $str)){
             return true;
         }
         return false;
@@ -135,8 +135,8 @@ class Migrate
      */
     public static function connect()
     {
-        self::$conn = mysql_connect(C('DB_HOST'), C('DB_USER'), C('DB_PWD')) or die('Error:cannot connect to database!!!' . mysql_error());
-        self::$link = mysql_select_db(C('DB_NAME'), self::$conn) or die('Error:fail to select!!!' . mysql_error());
+        self::$conn = mysqli_connect(C('DB_HOST'), C('DB_USER'), C('DB_PWD')) or die('Error:cannot connect to database!!!' . mysqli_error());
+        self::$link = mysqli_select_db(self::$conn, C('DB_NAME')) or die('Error:fail to select!!!' . mysqli_error());
     }
     /**
      * 判断是否是注释
