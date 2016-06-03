@@ -1,150 +1,195 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-		<meta name="format-detection" content="telephone=no">
-		<title>会员中心</title>
-		<meta name="keywords" content="" />
-		<meta name="description" content="" />
-		<link rel="stylesheet" href="__TPL__/css/member.css">
-		<link rel="stylesheet" type="text/css" href="__TPL__/css/search_index.css"/>
-		<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
-		<link rel="stylesheet" type="text/css" href="__TPL__/statics/css/swiper-3.2.5.min.css"/>
-		<link rel="stylesheet" href="__TPL__/statics/css/search-index.css" />
-	</head>	
-	<style>   
-    .product-one-list li .p-price{font-size:1.5rem;}
-	.padding-all{padding:1.3rem}.t-first{color:#1CBB7F}.product-one-list{overflow-x:scroll;width:100%;position:relative}
-	.product-one-list li{width:36%;margin-right:.8rem;float:left}
-	.product-one-list li:last-of-type{margin-right:0}
-	.product-one-list li h4{font-size:1.25rem;line-height:1.5rem;overflow:hidden;padding-top:0.5rem;color:#555;font-weight:400;padding-right:15px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-	.product-one-list li .p-price{font-size:1.1rem}.product-list{}.product-list ul{overflow:hidden;width:100%}.product-list ul li{box-sizing:border-box}
-	.product-div{background:#fff;position:relative;overflow:hidden}.product-div-link{position:absolute;left:0;right:0;top:0;bottom:0;z-index:1}
-	.icon-flow-cart{background:#1CBB7F;border-radius:50%;text-align:center;position:absolute;z-index:3}
-	.icon-flow-cart i.icon-gouwuche{color:#fff}.product-div img{width:100%;display:block;}
-	.product-text h4{display:block;overflow:hidden}.product-text p{padding-top:.6rem;padding-bottom:.4rem}.product-text 
-	.p-t-remark{color:#999;padding-bottom:0rem}
-	</style>
-	<body>
-	    <div class="con" style="margin-bottom: 4.5rem;">
-		<div class="member-main">
-			<div class="member-photo">
-				<div class="member-photo-left fl" onclick="window.location = '{:url('user/collection_list')}'">
-					<i class="iconfont">&#xe62e;</i>
-					<p><!--{if $list.goods_nums neq ''}--> {$list.goods_nums}<!--{else}-->0<!--{/if}--></p><span>收藏</span>
-				</div>
-				<div class="member-photo-right fr" onclick="window.location = '{:url('user/msg_list')}'">
-					<i class="iconfont">&#xe62d;</i>
-					<p><!--{if $list.msg_list neq ''}--> {$list.msg_list}<!--{else}-->0<!--{/if}--></p><span>消息</span>
-				</div>
-				<div class="member-photo-img">
-					<a href="{:url('user/profile')}">
-						{if $info.avatar}
-						<img src="{$info.avatar}" />
-						{else}
-						<img src="__TPL__/images/member-photo-img2.jpeg" />
-						{/if}
-					</a>
-				</div>
-				<div class="member-photo-name">
-					<p>{$info.name}</p><span>{$rank_name}</span>
-				</div>
-				{if !$isbind}
-				<div class="member-photo-address" style="left:1rem;">
-					<a href="{:url('user/bind')}"><span>电脑端账号绑定</span></a>
-				</div>
-				{/if}
-				<div class="member-photo-address">
-					<a href="{:url('user/profile')}"><span>账户管理、收货地址 </span><i class="iconfont">&#xe60c;</i></a>
-				</div>
-			</div>
-			<div class="member-order">
-				<div class="member-order-title" onclick="window.location = '{:url('user/order_list')}'">
-					<i class="iconfont fl member-order-title-i">&#xe61b; </i><span>我的订单</span><i class="iconfont fr member-order-i">&#xe60c;</i><span class="tip">全部订单</span>
-				</div>
-				<ul class="member-order-list">
-					<li class="fl" id="payment">
-						<span class="member-order-list-num"><!--{if $list.not_pays neq ''}--> {$list.not_pays}<!--{else}-->0<!--{/if}--></span>
-						<a href="{:url('user/not_pay_order_list')}"><i class="iconfont">&#xe61d; </i><span>待付款</span></a>
-					</li>
-					<li class="fl" id="goods">
-						<span class="member-order-list-num"><!--{if $list.not_shouhuos neq ''}--> {$list.not_shouhuos}<!--{else}-->0<!--{/if}--></span>
-						<a href="{:url('user/not_shoushuo')}"><i class="iconfont">&#xe61c; </i><span>待收货</span></a>
-					</li>
-					<li class="fl" id="comment">
-						<span class="member-order-list-num"><!--{if $list.not_comment neq ''}--> {$list.not_comment}<!--{else}-->0<!--{/if}--></span>
-						<a href="{:url('user/order_comment')}"><i class="iconfont">&#xe619; </i><span>待评价</span></a>
-					</li>
-					<!-- <li class="fl" id="repick">
-						<span class="member-order-list-num">0</span>
-						<a href="member-serve1.htm"><i class="iconfont">&#xe61f; </i><span>返修/退货</span></a>
-					</li> -->
-				</ul>
-			</div>
-			<div class="member-purse">
-				<div class="member-purse-title" onclick="window.location = '{:url('user/account_detail')}';">
-					<i class="iconfont fl member-purse-title-i">&#xe61b; </i><span>我的钱包</span><i class="iconfont fr member-order-i">&#xe60c;</i><span class="tip">资金管理</span>
-				</div>
-				<ul class="member-purse-list">
-					<li class="fl"><span><!--{if $list.user_money neq ''}--> {$list.user_money}<!--{else}-->0<!--{/if}--></span>
-						<p>余额</p>
-					</li>
-					<a href="{:url('user/bonus')}">
-					<li class="fl"><span><!--{if $list.bonus neq ''}--> {$list.bonus}<!--{else}-->0<!--{/if}--></span>
-						<p>红包</p>
-					</li>
-					</a>
-					<li class="fl"><span><!--{if $list.user_points neq ''}--> {$list.user_points}<!--{else}-->0<!--{/if}--></span>
-						<p>积分</p>
-					</li>
-				</ul>
-			</div>
-			<div class="clearfix">
-			</div>
-			<div class="member-serve">
-				<ul>
-					<li onclick="window.location = '{:url('user/service')}';"><i class="iconfont fl member-serve-li-oi">&#xe61a;</i><p class="fl">客户服务</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
-					<li onclick="window.location = '{:url('user/share')}'"><i class="iconfont fl member-serve-li-ti">&#xe61e;</i><p class="fl">我的分享</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
-					<!--/*DRP_START*/-->
-					<li onclick="window.location = '{:url('store/check_store')}'" style="border-bottom:none"><i class="iconfont fl member-serve-li-ti">&#xe625;</i><p class="fl">我的微店</p><i class="iconfont fr member-order-i">&#xe60c;</i></li>
-					<!--/*DRP_END*/-->
-				</ul>
-			</div>
-			<!--{if $history}-->
-			<div class="member-record">
-				<div class="member-record-title">
-					<i class="iconfont fl member-record-title-i">&#xe624;</i>
-					<p class="fl">{$lang.user_history}</p><i class="fr"><img class="n-shanchutupian del" src="__TPL__/images/iconfont-xiao1.png" style="width:1.5rem;height:1.5rem;margin-right:0.5rem;margin-top:0rem;"></i>
-				</div>				
-				<section class="goods-shop-pic m-top1px of-hidden padding-all b-color-f">
-				<div style="cursor: grab;" class="g-s-p-con product-one-list of-hidden scrollbar-none j-g-s-p-con swiper-container-horizontal swiper-container-android">
-					<div class="swiper-wrapper ">
-						<!-- {foreach from=$history item=val} -->
-						<li class="swiper-slide swiper-slide-active">
-							<div class="product-div">
-								<a class="product-div-link" href="{$val.url}"></a>
-								<img class="product-list-img" src="{$val.goods_thumb}">
-								<div class="product-text m-top06">
-									<h4>{$val.goods_name}</h4>
-									<p><span class="p-price t-first ">{$lang.sort_price}：&#165;{$val.shop_price}</span></p>
-								</div>
+<!-- #BeginLibraryItem "/library/new_page_header.lbi" -->
+<!-- #EndLibraryItem -->
+		<div class="con m-b7">
+			<div class="my-admin-header-box">
+				<div class="admin-bg-box">
+					<div class="my-user-box com-header">
+						<div class="padding-all dis-box">
+							<div class="user-head-img-box">
+								<a href="{:url('user/profile')}">
+									{if $info.avatar}
+									<img src="{$info.avatar}" />
+									{else}
+									<img src="__TPL__/images/member-photo-img2.jpeg" />
+									{/if}
+								</a>
 							</div>
-						</li>
-						<!-- {/foreach} -->
+							<div class="user-bg-box"><img src="__TPL__/statics/img/user-1.png"></div>
+							<div class="user-bg2-box"><img src="__TPL__/statics/img/user-2.png"></div>
+							<div class="box-flex">
+								<div class="g-s-i-title-a">
+									<a href="javascript:;"><h4 class="ellipsis-one user-admin-size">{$info.name}</h4></a>
+									<a href="javascript:;">
+										<p class="user-reg-top color-whie f-03">{$rank_name}</p>
+									</a>
+								</div>
+								{if !$isbind}
+								<div class="g-s-i-title-a">
+									<a href="{:url('user/bind')}">
+										<p class="user-reg-top color-whie f-03">电脑端账号绑定 </p>
+									</a>
+								</div>
+								{/if}
+							</div>
+							<div class="user-right-maxbox">
+								<a onclick="window.location = '{:url('user/msg_list')}'">
+									<div class="email-box"></div>
+									<i class="iconfont icon-youxiang is-youxiang j-yanjing disabled"></i>
+								</a>
+								<a href="{:url('user/profile')}">
+									<div class="user-right-box">
+										<i class="iconfont icon-shezhi is-shezi my-user-right-cont"></i>
+										<p class="my-user-right-cont"><span class="my-t-remark color-whie">设置</span></p>
+									</div>
+								</a>
+							</div>
+							</ul>
+						</div>
+						</a>
 					</div>
 				</div>
-			</section>						
+				<div class="my-nav-box my-shoucang-bg">
+					<div class="user-nav-box n-g-s-i-title-1 dis-box text-center">
+						<a onclick="window.location = '{:url('user/collection_list')}'" class="box-flex">
+							<h4 class="color-whie ellipsis-one"><!--{if $list.goods_nums neq ''}--> {$list.goods_nums}<!--{else}-->0<!--{/if}--></h4>
+							<p class="color-whie t-remark3">收藏</p>
+						</a>
+						<a onclick="window.location = '{:url('user/msg_list')}'" class="box-flex">
+							<h4 class="color-whie ellipsis-one"><!--{if $list.msg_list neq ''}--> {$list.msg_list}<!--{else}-->0<!--{/if}--></h4>
+							<p class="color-whie t-remark3">消息</p>
+						</a>
+					</div>
+				</div>
 			</div>
+			<section class="b-color-f my-nav-box m-top10">
+				<a onclick="window.location = '{:url('user/order_list')}'">
+					<div class="dis-box padding-all my-bottom">
+						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-quanbudingdan is-user-size t-first"></i>我的订单</h3>
+						<div class="box-flex t-goods1 text-right onelist-hidden jian-top">全部订单</div>
+						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
+					</div>
+				</a>
+				<ul class="user-money-list g-s-i-title-2 dis-box text-center my-dingdan">
+					<a href="{:url('user/not_pay_order_list')}" class="box-flex">
+						<li>
+							<h4 class="ellipsis-one"><i class="iconfont icon-daifukuan my-img-size"></i></h4>
+							<p class="t-remark3">待付款</p>
+							<div class="user-list-num">
+								<!--{if $list.not_pays neq ''}-->{$list.not_pays}
+								<!--{else}-->0
+								<!--{/if}-->
+							</div>
+						</li>
+					</a>
+					<a href="{:url('user/not_shoushuo')}" class="box-flex">
+						<li>
+							<h4 class="ellipsis-one"><i class="iconfont icon-daifahuo my-img-size"></i></h4>
+							<p class="t-remark3">待发货</p>
+							<div class="user-list-num">
+								<!--{if $list.not_shouhuos neq ''}-->{$list.not_shouhuos}
+								<!--{else}-->0
+								<!--{/if}-->
+							</div>
+						</li>
+					</a>
+					<a href="{:url('user/order_comment')}" class="box-flex">
+						<li>
+							<h4 class="ellipsis-one"><i class="iconfont icon-daipingjia my-img-size"></i></h4>
+							<p class="t-remark3">待评价</p>
+							<div class="user-list-num">
+								<!--{if $list.not_comment neq ''}-->{$list.not_comment}
+								<!--{else}-->0
+								<!--{/if}-->
+							</div>
+						</li>
+					</a>
+				</ul>
+			</section>
+			<section class="m-top10 my-nav-box b-color-f">
+				<a onclick="window.location = '{:url('user/account_detail')}';">
+					<div class="dis-box padding-all my-bottom">
+						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-qianbao is-user-size my-qianbao-color"></i>我的钱包</h3>
+						<div class="box-flex t-goods1 text-right onelist-hidden jian-top">资金管理</div>
+						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
+					</div>
+				</a>
+				<ul class="user-money-list g-s-i-title-1 dis-box text-center">
+					<a href="javascript:;" class="box-flex">
+						<li>
+							<h4 class="ellipsis-one"><!--{if $list.user_money neq ''}--> {$list.user_money}<!--{else}-->0<!--{/if}--></h4>
+							<p class="t-remark3">余额</p>
+						</li>
+					</a>
+					<a href="{:url('user/bonus')}" class="box-flex">
+						<li>
+							<h4 class="ellipsis-one"><!--{if $list.bonus neq ''}--> {$list.bonus}<!--{else}-->0<!--{/if}--></h4>
+							<p class="t-remark3">红包</p>
+						</li>
+					</a>
+					<a href="javascript:;" class="box-flex">
+						<li>
+							<h4 class="ellipsis-one"><!--{if $list.user_points neq ''}--> {$list.user_points}<!--{else}-->0<!--{/if}--></h4>
+							<p class="t-remark3">积分</p>
+						</li>
+					</a>
+				</ul>
+			</section>
+			<section class="m-top10 my-nav-box b-color-f">
+				<a onclick="window.location = '{:url('user/service')}';">
+					<div class="dis-box padding-all my-bottom">
+						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-kefu is-user-size color-kf"></i>客服服务</h3>
+						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
+					</div>
+				</a>
+				<a onclick="window.location = '{:url('user/share')}'">
+					<div class="dis-box padding-all my-bottom">
+						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-fenxiang is-user-size my-fengxiang-color"></i>我的分享</h3>
+						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
+					</div>
+				</a>
+				<!--/*DRP_START*/-->
+				<a onclick="window.location = '{:url('store/check_store')}'">
+					<div class="dis-box padding-all my-bottom">
+						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-dianpuzhuye is-user-size color-ls"></i>我的微店</h3>
+						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
+					</div>
+				</a>
+				<!--/*DRP_END*/-->
+			</section>
+			<!--{if $history}-->
+			<section class="m-top10 my-nav-box">
+				<div class="dis-box padding-all b-color-f">
+					<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-shijian is-user-size my-shijian-color"></i>{$lang.user_history}</h3>
+					<span class="jian-top n-shanchutupian del"><i class="iconfont icon-xiao10 is-xiao10 jian-top"></i><span class="q-title jian-top">清空</span>
+				</div>
+				<section class="goods-shop-pic m-top1px of-hidden padding-all b-color-f">
+					<div style="cursor: grab;" class="g-s-p-con product-one-list1 of-hidden scrollbar-none j-g-s-p-con swiper-container-horizontal">
+						<div class="swiper-wrapper ">
+							<!-- {foreach from=$history item=val} -->
+							<li class="swiper-slide swiper-slide-active">
+								<div class="product-div">
+									<a class="product-div-link" href="{$val.url}"></a>
+									<img class="product-list-img" src="{$val.goods_thumb}">
+									<div class="product-text m-top06">
+										<h4>{$val.goods_name}</h4>
+										<p><span class="p-price t-first ">{$lang.sort_price}：&#165;{$val.shop_price}</span></p>
+									</div>
+								</div>
+							</li>
+							<!-- {/foreach} -->
+						</div>
+					</div>
+				</section>
+			</section>
 			<!--{/if}-->
 		</div>
-			<!-- #BeginLibraryItem "/library/page_user_menu.lbi" --><!-- #EndLibraryItem -->
-		</div>
-		<!-- #BeginLibraryItem "/library/search_index.lbi" --><!-- #EndLibraryItem -->
-        <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
-        <script type="text/javascript" src="__TPL__/statics/js/swiper-3.2.5.min.js"></script>
-        <script>
+		<!-- #BeginLibraryItem "/library/page_user_menu.lbi" -->
+		<!-- #EndLibraryItem -->
+		<!-- #BeginLibraryItem "/library/new_search.lbi" -->
+		<!-- #EndLibraryItem -->
+		<!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
+		<!-- #EndLibraryItem -->
+		<script>
 			/*店铺信息商品滚动*/
 			var swiper = new Swiper('.j-g-s-p-con', {
 				scrollbarHide: true,
@@ -154,4 +199,5 @@
 			});
 		</script>
 	</body>
+
 </html>

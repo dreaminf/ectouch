@@ -15,7 +15,6 @@
 							<!--{else}-->
 							<div class="no-div-message">
 			<i class="iconfont icon-biaoqingleiben"></i>
-			<p><img src="__TPL__/images/not_goods.png" /></p>
 			<p>亲，此处没有内容～！</p>
 		</div>
 							<!--{/if}-->
@@ -34,7 +33,6 @@
 							<!--{else}-->
 							<div class="no-div-message">
 			<i class="iconfont icon-biaoqingleiben"></i>
-			<p><img src="__TPL__/images/not_goods.png" /></p>
 			<p>亲，此处没有内容～！</p>
 		</div>
 							<!--{/if}-->
