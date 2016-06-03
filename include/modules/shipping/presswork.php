@@ -73,7 +73,7 @@ class presswork
      *
      * @return null
      */
-    function presswork($cfg=array())
+    function __construct($cfg=array())
     {
         foreach ($cfg AS $key=>$val)
         {

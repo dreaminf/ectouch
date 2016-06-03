@@ -70,7 +70,7 @@ class fpd
      *
      * @return null
      */
-    function fpd($cfg=array())
+    function __construct($cfg=array())
     {
     }
 

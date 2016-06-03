@@ -72,7 +72,7 @@ class city_express
      *
      * @return null
      */
-    function city_express($cfg=array())
+    function __construct($cfg=array())
     {
         foreach ($cfg AS $key=>$val)
         {
