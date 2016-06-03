@@ -36,6 +36,8 @@
 	</section>
 	{/foreach}
 </div>
+<!-- #BeginLibraryItem "/library/page_user_menu.lbi" -->
+<!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/new_page_footer.lbi" --><!-- #EndLibraryItem -->
 <script type="text/javascript">

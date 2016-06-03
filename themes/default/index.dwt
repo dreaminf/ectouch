@@ -1,189 +1,192 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<meta name="format-detection" content="telephone=no">
-		<title>{$page_title}</title>
-		<link rel="stylesheet" type="text/css" href="__PUBLIC__/swiper/css/swiper.min.css" />
-		<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
-		<link rel="stylesheet" type="text/css" href="__TPL__/css/index.css" />
-		<link rel="stylesheet" type="text/css" href="__TPL__/css/search_index.css" />
-		<link rel="stylesheet" href="__TPL__/statics/css/search-index.css" />
-
-		<style type="text/css">
-			.swiper-wrapper .swiper-pagination-bullet-active {
-				background: #1CBB7F;
-			}
-			
-			.n-index-input {
-				font-size: 1.2rem;
-				color: #999;
-				margin-left:0.2rem;
-			}
-		</style>
-	</head>
-
-	<body>
-		<div class="con new-maxbox">
-			<div class="index-max-box">
-				{if !$subscribe}
-				<div class="ect-attention dis-box">
-					<div class="attention-left-img">
-					     <img src="__TPL__/images/more_icon.png">
-					</div>
-					<div class="attention-text box-flex">
-						<p style="font-size: 1.26rem;"><span style="color:#fff">欢迎进入</span><span style="color:#05af10"> [ 微商城 ]</span></p>
-						<p style="font-size: 1.1rem;"><span style="color:#d6d6d6">关注公众号,享专属服务</span></p>
-					</div>
-					<div class="attention-button">
-						<a class='lizhuanz'>
-							<button class="button">立即关注</button>
-						</a>
-					</div>
-				</div>
-				<!--立即关注-->
-				<div class="index-guanz-t">
-					<div class="index-guanz-show">
-						<div class="index-show-close-box index-show-close"><img src="__TPL__/images/colse.png"></div>
-						<img src="__TPL__/images/guanzm.png">
-						<h5>ECTouch微信，欢迎您！</h5>
-						<p><span>长按二维码关注公众微信</span></p>
-					</div>
-					<div class="index-guanz-bg"></div>
-				</div>
-				{/if}
-               <header class="index-header comWidth">
-					<i class="index-header-menu iconfont fl" onclick="window.location = '{:url('category/top_all')}'">&#xe627;</i>
-					<div class="index-search-box j-search-input-new fl">
-						<span class="n-index-input">请输入您搜索的关键词!</span>
-						<a href="javascript:;" class="a-search-input j-search-input"><i class="index-search-sound iconfont fr"><!-- &#xe623;--></i></a>
-					</div>
-					<a href="javascript:;"><i class="index-header-right iconfont fr j-search-input-new">&#xe603;</i></a>
-				</header> 
+<!-- #BeginLibraryItem "/library/new_page_header.lbi" -->
+<!-- #EndLibraryItem -->
+<div class="con m-b7 new-maxbox">
+	<header class="header-max-box">
+		{if !$subscribe}
+		<div class="ect-attention dis-box">
+			<div class="attention-left-img">
+				<img src="__TPL__/images/more_icon.png">
 			</div>
-
-			</script>
-			<div class="index-main comWidth">
-				<div class="swiper-container">
-					<div class="swiper-wrapper">
-						{insert name='ads' id=255 num=3}
-					</div>
-					<div class="swiper-pagination"></div>
-				</div>
-				<div class="index-menu">
-					<ul class="index-menu-ul">
-						<!--{foreach from=$navigator item=nav}-->
-						<li class="fl">
-							<a href="{$nav.url}" {if $nav.opennew eq 1}target="_blank" {/if}><img src="{$nav.pic}" /></a><a class="index-menu-text" href="{$nav.url}" {if $nav.opennew eq 1}target="_blank" {/if}>{$nav.name}</a>
-						</li>
-						<!--{/foreach}-->
-					</ul>
-				</div>
-
-				<div class="index-recom">
-					<div class="index-recom-left fl">
-						{insert name='ads' id=257 num=1}
-					</div>
-					<div class="index-recom-right fr">
-						{insert name='ads' id=258 num=2}
-					</div>
-				</div>
-				<div class="index-theme">
-					<ul>
-						{insert name='ads' id=256 num=4}
-					</ul>
-				</div>
-
-				<div class="index-theme" style="display:none">
-					<ul class="index-more-list">
-						<!-- #BeginLibraryItem "/library/cat_goods.lbi" -->
-						<!-- #EndLibraryItem -->
-					</ul>
-				</div>
-
-				<div class="index-more">
-					<div class="index-more-icon">
-						<span>猜你喜欢</span>
-					</div>
-					<ul class="index-more-list" id="J_ItemList">
-						<div class="single_item"></div>
-						<a href="javascript:;" style="text-align:center" class="get_more"></a>
-					</ul>
-
-				</div>
-				<div class="n-footer-box">
-					<ul class="n-footer-minbox">
-						<li>
-							<a href="http://m.ecmoban.com/index.php?m=touch&amp;c=index&amp;a=download">
-								<div class="n-footer-img-box"><img src="__TPL__/images/footer-a.png"></div>
-								<p class="footer-tit1">客户端</p>
-							</a>
-						</li>
-						<li>
-							<a href="javascript:;">
-								<div class="n-footer-img-box"><img src="__TPL__/images/footer-c.png"></div>
-								<p class="footer-tit">触屏版</p>
-							</a>
-						</li>
-						<li>
-							<a href="http://www.ecmoban.com/?pc">
-								<div class="n-footer-img-box"><img src="__TPL__/images/footer-b.png"></div>
-								<p class="footer-tit1">电脑版</p>
-							</a>
-						</li>
-					</ul>
-
-				</div>
-				<div class="n-fonoer-tit3-box">
-					<p class="n-fonter-tit3">上海商创网络科技有限公司 版权所有
-						<br>地址：上海市普陀区中山北路3553号伸大厦3层</p>
-				</div>
+			<div class="attention-text box-flex">
+				<p style="font-size: 1.4rem;"><span style="color:#fff">欢迎进入</span><span style="color:#05af10"> [ 微商城 ]</span></p>
+				<p style="font-size: 1.3rem;"><span style="color:#d6d6d6">关注公众号,享专属服务</span></p>
 			</div>
-
-			<!-- #BeginLibraryItem "/library/page_index_menu.lbi" -->
-			<!-- #EndLibraryItem -->
-
+			<div class="attention-button">
+				<a class='lizhuanz'>
+					<button class="button">立即关注</button>
+				</a>
+			</div>
 		</div>
-		<!-- #BeginLibraryItem "/library/search_index.lbi" -->
-		<!-- #EndLibraryItem -->
-		<!-- #BeginLibraryItem "/library/page_footer.lbi" -->
-		<!-- #EndLibraryItem -->
-		<script type="text/javascript">
-			get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}", '__TPL__/images/loader.gif');
-		</script>
-		<script>
-			/*立即关注*/
-			$(function($) {
-				$(".lizhuanz").click(function() {
-					$(".index-guanz-t").addClass("active");
-				});
-				$(".index-show-close,.index-guanz-bg").click(function() {
-					$(".index-guanz-t").removeClass("active");
-				});			
-			});
-			if ($(".ect-attention").hasClass("ect-attention")) {
-				$(".index-main").css({
-					"marginTop": "8.4rem"
-				})
-			} else {
-				$(".index-main").css({
-					"marginTop": "4.4rem"
-				})
-			}
-			$(function($) {
-				$(".ect-index-share").click(function() {
-					$(".share-div").addClass("active");
-				});
-			});
-			$(".share-div").click(function() {
-				$(".share-div").removeClass("active");
-			})
-		</script>
+		<!--立即关注-->
+		<div class="index-guanz-t">
+			<div class="index-guanz-show">
+				<div class="index-show-close-box index-show-close"><img src="__TPL__/images/colse.png"></div>
+				<img src="__TPL__/images/guanzm.png">
+				<h5>ECTouch微信，欢迎您！</h5>
+				<p><span>长按二维码关注公众微信</span></p>
+			</div>
+			<div class="index-guanz-bg"></div>
+		</div>
+		{/if}
+		<div class="index-nav-box">
+			<ul class="dis-box">
+				<li class="index-left-box"><a href="{:url('category/top_all')}"><i class="iconfont icon-caidan color-whie"></i></a></li>
+				<li class="box-flex n-input-index-box">
+					<div class="index-search-box j-search-input-new" id="j-input-focus"><i class="iconfont icon-sousuo"></i>请输入您搜索的关键词!</div>
+				</li>
+				<li class="index-right-box"><a class="j-search-input-new"><i class="iconfont icon-sousuo color-whie n-xiaoxi-size"></i></a></li>
+			</ul>
+		</div>
+	</header>
+	<div class="index-banner swiper-container box position-rel banner-first">
+		<div class="swiper-wrapper">
+			{insert name='ads' id=255 num=3}
+		</div>
+		<!-- 分页器 -->
+		<div class="swiper-pagination banner-first-pagination"></div>
+		<!--linear-->
+		<div class="linear"></div>
+	</div>
+	<!--menu-->
+	<nav class="bg-white ptb-1 index-nav mb-1">
+		<ul class="box ul-4 text-c bg-white">
+			<!--{foreach from=$navigator item=nav}-->
+			<li class="fl">
+				<a href="{$nav.url}" {if $nav.opennew eq 1}target="_blank" {/if}><img src="{$nav.pic}" /></a><a class="index-menu-text" href="{$nav.url}" {if $nav.opennew eq 1}target="_blank" {/if}>{$nav.name}</a>
+			</li>
+			<!--{/foreach}-->
 
-		<!-- #BeginLibraryItem "/library/meiqia.lbi" -->
-		<!-- #EndLibraryItem -->
-	</body>
+		</ul>
+	</nav>
+	<!--discount-->
+	<div class="box mb-1 title inx-ms">
+		<div class="dis-box m-top1px b-color-f">
+			<div class="box-flex title text-c bd bd-top-none pt-1 position-rel">
+				{insert name='ads' id=257 num=1}
+			</div>
+			<div class="box-flex ">
+				<ul class="index-discount">
+					<li class="">
+						{insert name='ads' id=258 num=2}
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<ul class="index-cate-box">
+		{insert name='ads' id=256 num=4}
+	</ul>
+	<!--like-->
+	<p class="index-title padding-all text-c">猜你喜欢</p>
+	<section class="product-list j-product-list n-index-box " data="1">
+
+		<ul class="index-more-list" id="J_ItemList">
+			<div class="single_item"></div>
+			<a href="javascript:;" style="text-align:center" class="get_more"></a>
+		</ul>
+	</section>
+	<div class="n-footer-box">
+		<ul class="n-footer-minbox">
+			<li>
+				<a href="http://m.ecmoban.com/index.php?m=touch&amp;c=index&amp;a=download">
+					<div class="n-footer-img-box"><i class="iconfont icon-qunfengshangjiazhushouapperweimafuben is-ban-fize"></i></div>
+					<p class="footer-tit1">客户端</p>
+				</a>
+			</li>
+			<li>
+				<a href="index.html">
+					<div class="n-footer-img-box"><i class="iconfont icon-shoujiyanzheng is-ban-fize active"></i></div>
+					<p class="footer-tit">触屏版</p>
+				</a>
+			</li>
+			<li>
+				<a href="http://www.ecmoban.com/?pc">
+					<div class="n-footer-img-box"><i class="iconfont icon-pc is-ban-fize jian-top-2"></i></div>
+					<p class="footer-tit1">电脑版</p>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<footer class="padding-all text-center t-remark">
+		上海商创网络科技有限公司 版权所有
+		<br/>地址：上海市普陀区中山北路3553号伸大厦3层
+	</footer>
+</div>
+
+<!--悬浮菜单e-->
+
+<div class="index-weixin-box">
+	<label><i class="iconfont icon-guanbi j-ewm-close"></i></label>
+	<div><img src="__TPL__/statics/img/ewm.png"></div>
+	<h3>ECTouch微信，欢迎您！</h3>
+	<p class="text-c">长按二维码关注公众微信</p>
+</div>
+<div class="index-bg-box"></div>
+
+<!-- #BeginLibraryItem "/library/page_user_menu.lbi" -->
+<!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/new_search.lbi" -->
+<!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
+<!-- #EndLibraryItem -->
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.more.js"></script>
+<script type="text/javascript">
+	get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}", '__TPL__/images/loader.gif');
+</script>
+<script type="text/javascript ">
+	$(function($) {
+		$(".lizhuanz").click(function() {
+			$(".index-guanz-t").addClass("active");
+		});
+		$(".index-show-close,.index-guanz-bg").click(function() {
+			$(".index-guanz-t").removeClass("active");
+		});
+		var mySwiper = new Swiper('.banner-first', {
+			pagination: '.banner-first-pagination',
+		});
+		var mySwiper = new Swiper('.banner-second', {
+			pagination: '.banner-second-pagination',
+		});
+		var mySwiper = new Swiper('.banner-third', {
+			pagination: '.banner-third-pagination',
+		});
+		var mySwiper = new Swiper('.recom-container', {
+			pagination: '.recom-pagination',
+			slidesPerView: 1,
+			paginationClickable: true,
+		});
+		var mySwiper = new Swiper('.brand-container', {
+			pagination: '.brand-pagination',
+			slidesPerView: 1,
+			paginationClickable: true,
+		});
+		var mySwiper = new Swiper('.hot-container', {
+			slidesPerView: 4,
+			paginationClickable: true,
+		});
+	});
+	/*立即关注*/
+	if ($(".ect-attention").hasClass("ect-attention")) {
+		$(".index-banner").css({
+			"marginTop": "9.2rem"
+		})
+	} else {
+		$(".index-banner").css({
+			"marginTop": "4.2rem"
+		})
+	}
+	$(function($) {
+		$(".ect-index-share").click(function() {
+			$(".share-div").addClass("active");
+		});
+	});
+	$(".share-div").click(function() {
+		$(".share-div").removeClass("active");
+	})
+</script>
+</script>
+
+</body>
 
 </html>
