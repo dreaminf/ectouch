@@ -23,6 +23,8 @@ class SmsController extends CommonController {
     protected $mobile_code;
     //安全码
     protected $sms_code;
+    //验证码
+    protected $captcha;
 
     public function __construct() {
         parent::__construct();
@@ -30,12 +32,20 @@ class SmsController extends CommonController {
         $this->mobile = in($_POST['mobile']);
         $this->mobile_code = in($_POST['mobile_code']);
         $this->sms_code = in($_POST['sms_code']);
+        $this->captcha = in($_POST['captcha']);
     }
 
     //发送
     public function send() {
         if (empty($this->sms_code) || $_SESSION['sms_code'] != $this->sms_code) {
-            exit(json_encode(array('msg' => '验证码不匹配')));
+            exit(json_encode(array('msg' => '请重新访问页面')));
+        }
+        // 检查验证码
+        if (empty($this->captcha)) {
+            exit(json_encode(array('msg' => '请输入图片验证码')));
+        }
+        if ($_SESSION['ectouch_verify'] !== strtoupper($this->captcha)) {
+            exit(json_encode(array('msg' => '图片验证码不正确')));
         }
         if (empty($this->mobile)) {
             exit(json_encode(array('msg' => '手机号码不能为空')));
@@ -48,7 +58,7 @@ class SmsController extends CommonController {
 
         if ($_SESSION['sms_mobile']) {
             if (strtotime($this->read_file($this->mobile)) > (time() - 60)) {
-                exit(json_encode(array('msg' => '获取验证码太过频繁，一分钟之内只能获取一次。')));
+                exit(json_encode(array('msg' => '获取验证码过于频繁')));
             }
         }
 
@@ -57,7 +67,7 @@ class SmsController extends CommonController {
         if ($_GET['flag'] == 'register') {
             //手机注册
             if (!empty($user_id)) {
-                exit(json_encode(array('msg' => '手机号码已存在，请更换手机号码')));
+                exit(json_encode(array('msg' => '手机号码已经注册')));
             }
         } elseif ($_GET['flag'] == 'forget') {
             //找回密码
@@ -76,9 +86,9 @@ class SmsController extends CommonController {
         if ($send_result === true) {
             $_SESSION['sms_mobile'] = $this->mobile;
             $_SESSION['sms_mobile_code'] = $this->mobile_code;
-            exit(json_encode(array('code' => 2, 'mobile_code' => $this->mobile_code)));
+            exit(json_encode(array('code' => 2)));
         } else {
-            exit(json_encode(array('msg' => $send_result)));
+            exit(json_encode(array('msg' => '验证码发送失败')));
         }
     }
 

@@ -2,14 +2,15 @@ function sendSms(){
 	var mobile = $('#mobile_phone').val();
 	var flag = $('#flag').val();
 	var code = $("#sms_code").val();
+	var captcha = $("#captcha").val();
 	if(mobile.length == ''){
 		alert('请填写手机号码');
 		return false;
 	}
 	RemainTime();
-	$.post("index.php?m=default&c=sms&a=send&flag="+flag, { "mobile": mobile, "sms_code": code },function(result){
+	$.post("index.php?m=default&c=sms&a=send&flag="+flag, { "mobile": mobile, "sms_code": code, "captcha": captcha },function(result){
 		if (result.code==2){
-			alert('验证码已成功发送到您的手机');
+			alert('验证码已成功发送');
 		}else{
 			if(result.msg){
 				alert(result.msg);
@@ -24,12 +25,17 @@ function register2(){
 	var status = true;
 	var mobile = $('#mobile_phone').val();
 	var mobile_code = $('#mobile_code').val();
+	var password = $('#password').val();
 	if(mobile.length == ''){
 		alert('请填写手机号码');
 		return false;
 	}
 	if(mobile_code.length == ''){
 		alert('请填写手机验证码');
+		return false;
+	}
+	if(password.length == ''){
+		alert('请填写登录密码');
 		return false;
 	}
 	if(!$("#agreement").attr("checked")){

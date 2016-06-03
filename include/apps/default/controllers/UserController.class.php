@@ -1875,6 +1875,7 @@ class UserController extends CommonController {
                 // 数据处理
                 $username = isset($_POST['username']) ? in($_POST['username']) : '';
                 $password = isset($_POST['password']) ? in($_POST['password']) : '';
+                $email = isset($_POST['email']) ? in($_POST['email']) : ''; //substr(md5($username), 0, 3) . time() . '@qq.com';
                 $other = array();
 
                 // 验证码检查
@@ -1910,7 +1911,8 @@ class UserController extends CommonController {
                 $username = isset($_POST['mobile']) ? in($_POST['mobile']) : '';
                 $password = isset($_POST['password']) ? in($_POST['password']) : '';
                 $sms_code = isset($_POST['sms_code']) ? in($_POST['sms_code']) : '';
-                $other['mobile_phone'] = isset($_POST['mobile']) ? in($_POST['mobile']) : '';
+                $email = $username . '@139.com'; // 设置一个默认的邮箱
+                $other['mobile_phone'] = $username;
 
                 if (empty($username)) {
                     show_message(L('msg_mobile_blank'), L('register_back'), url('register'), 'error');
@@ -1920,12 +1922,15 @@ class UserController extends CommonController {
                     show_message(L('sms_code_error'), L('register_back'), url('register'), 'error');
                 }
 
-                if ($password != $_POST['repassword']) {
-                    show_message('两次输入密码不一致', L('register_back'), url('register'), 'error');
+                // if ($password != $_POST['repassword']) {
+                //     show_message('两次输入密码不一致', L('register_back'), url('register'), 'error');
+                // }
+
+                if (empty($password)) {
+                    show_message('请输入密码', L('register_back'), url('register'), 'error');
                 }
 
                 // 验证手机号重复
-                // $where['mobile_phone'] = $username;
                 $user_id = $this->model->table('users')->field('user_id')->where($other)->getOne();
                 if ($user_id) {
                     show_message(L('msg_mobile_exists'), L('register_back'), url('register'), 'error');
@@ -1934,10 +1939,9 @@ class UserController extends CommonController {
                 ECTouch::err()->show(L('sign_up'), url('register'));
             }
 
-            // 设置一个默认的邮箱
-            $email = substr(md5($username), 0, 3) . time() . '@qq.com';
             $other['parent_id'] = $_SESSION['parent_id'] ? $_SESSION['parent_id'] : 0;
             if (model('Users')->register($username, $password, $email, $other) !== false) {
+
                 //微信用户绑定
                 /*if(!empty($_SESSION['wechat_user']) &&class_exists('WechatController') && method_exists('WechatController', 'do_bind')){
                     call_user_func(array('WechatController', 'do_bind'));
