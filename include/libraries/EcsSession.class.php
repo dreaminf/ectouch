@@ -49,6 +49,25 @@ class EcsSession {
         $this->db = &$db;
         $this->_ip = real_ip();
 
+        // 防御cc或DDOS lite
+        $enable_firewall = false;
+        $cc_nowtime = time(); 
+        $black_path = ROOT_PATH . 'data/caches/black_ip/';
+        if($enable_firewall){
+            if(!is_dir($black_path)){
+                mkdir($black_path, 755);
+            }
+            // 如果是黑名单IP，禁止访问
+            if(file_exists($black_path . $this->_ip)){
+                $cc_lasttime = file_get_contents($black_path . $this->_ip);
+                if(($cc_nowtime - $cc_lasttime) < 10){
+                    header('HTTP/1.1 404 Not Found');
+                    header("status: 404 Not Found");
+                    exit();
+                }
+            }
+        }
+
         if ($session_id == '' && !empty($_COOKIE[$this->session_name])) {
             $this->session_id = $_COOKIE[$this->session_name];
         } else {
@@ -72,6 +91,38 @@ class EcsSession {
             $this->gen_session_id();
 
             setcookie($this->session_name, $this->session_id . $this->gen_session_key($this->session_id), 0, $this->session_cookie_path, $this->session_cookie_domain, $this->session_cookie_secure);
+        }
+
+        // 防御cc或DDOS lite
+        if($enable_firewall){
+            if (isset($_SESSION['cc_lasttime'])){
+                $cc_lasttime = $_SESSION['cc_lasttime'];
+                $cc_times = $_SESSION['cc_times'] + 1;
+                $_SESSION['cc_times'] = $cc_times;
+            }else{
+                $cc_lasttime = $cc_nowtime;
+                $cc_times = 1;
+                $_SESSION['cc_times'] = $cc_times;
+                $_SESSION['cc_lasttime'] = $cc_lasttime;
+            }
+            // 当前ip的用户数量
+            $cc_users = $this->db->getOne('SELECT count(*) FROM ' . $this->session_table . " WHERE ip = '". $this->_ip ."'");
+            // handler
+            if (($cc_nowtime - $cc_lasttime) < 5 || $cc_users >= 3){
+                if ($cc_times >= 10 || $cc_users >= 3){
+                    // 回收游客数据
+                    $this->db->query('DELETE FROM ' . $this->session_table . " WHERE userid = 0 AND ip = '" . $this->_ip . "'");
+                    // 记录黑名单IP
+                    file_put_contents($black_path . $this->_ip, $cc_lasttime);
+                    header('HTTP/1.1 404 Not Found');
+                    header("status: 404 Not Found");
+                    exit();
+                }
+            }else{
+                $cc_times = 0;
+                $_SESSION['cc_lasttime'] = $cc_nowtime;
+                $_SESSION['cc_times'] = $cc_times;
+            }
         }
 
         register_shutdown_function(array(&$this, 'close_session'));
