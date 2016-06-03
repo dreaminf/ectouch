@@ -68,7 +68,7 @@
 /*user资金管理*/
 .user-account-detail { overflow: hidden; }
 .user-account-detail ul li { border-bottom: 1px solid #e3e3e3; overflow: hidden; padding: 0.6em; }
-.user-account-detail ul li p { clear: both; overflow: hidden; font-size: 1.1em; word-wrap: break-word; word-break: break-all;}
+.user-account-detail ul li p { clear: both; overflow: hidden; font-size: 1.1em; word-wrap: break-word;}
 .user-account-detail ul li p.title { font-size: 1.4em; }
 .user-account-detail ul li p.content { position: relative; margin-top: 0.1em; }
 .user-account-detail ul li p.content span.remark { right: 4em; left: 0; position: absolute; height: 1.6em; overflow: clip; text-overflow: ellipsis; }
