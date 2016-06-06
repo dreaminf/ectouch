@@ -29,7 +29,7 @@ if (isset($set_modules) && $set_modules == TRUE) {
     $modules[$i]['config'] = array(
         array('name' => 'tenpay_account',   'type' => 'text', 'value' => ''),
         array('name' => 'tenpay_key',       'type' => 'text', 'value' => ''),
-        //array('name' => 'magic_string',     'type' => 'text', 'value' => '')
+        array('name' => 'magic_string',     'type' => 'text', 'value' => '')
     );
 
     return;

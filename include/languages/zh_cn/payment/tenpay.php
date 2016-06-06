@@ -16,8 +16,9 @@
 
 $_LANG['tenpay'] = '财付通';
 $_LANG['tenpay_desc'] = '财付通网站(www.tenpay.com)是国内先进的网上支付平台。';
-$_LANG['bargainor_id'] = '财付通商户号';
+$_LANG['tenpay_account'] = '财付通商户号';
 $_LANG['tenpay_key'] = '财付通密钥';
+$_LANG['magic_string'] = '财付通签名';
 $_LANG['pay_button'] = '立即使用财付通支付';
 
 return $_LANG;
