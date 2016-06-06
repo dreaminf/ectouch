@@ -20,7 +20,6 @@
 		<!--立即关注-->
 		<div class="index-guanz-t">
 			<div class="index-guanz-show">
-				<div class="index-show-close-box index-show-close"><img src="__TPL__/images/colse.png"></div>
 				<img src="__TPL__/images/guanzm.png">
 				<h5>ECTouch微信，欢迎您！</h5>
 				<p><span>长按二维码关注公众微信</span></p>

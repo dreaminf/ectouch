@@ -200,6 +200,7 @@ label.admin-text{color:#999;}
 }
 /*按钮色调*/
 .btn-submit,
+.btn-submit1,
 .btn-disab,
 .btn-cart,
 .btn-reset,
@@ -208,34 +209,35 @@ label.admin-text{color:#999;}
 .btn-wechat{font-size: 1.7rem;color: #fff;border: 0;text-align: center;padding: .84rem 0;border-radius: 4px;width: 100%;}
 a.btn-submit,
 a.btn-disab,
-a.btn-cart{color: #fff;}
+a.btn-cart,
+a.btn-alipay,
+a.btn-wechat{color: #fff;}
 a.btn-reset,a.btn-default{color:#555;}
-
-.btn-submit {background: #1CBB7F;border:1px solid #13AB53}/*主提交按钮*/
+.btn-submit {background: #1CBB7F;border:1px solid #1CBB7F}/*主提交按钮*/
 .btn-submit:active,
-.btn-submit:hover {background: #1CBB7F;border:1px solid #13AB53}/*主提交按钮按下颜色13AB53*/
+.btn-submit:hover {border:1px solid #1aad76;background:#1aad76;}/*主提交按钮按下颜色*/
+.btn-submit1,a.btn-submit1 {color:#1CBB7F; background:none;  border:1px solid #1CBB7F}/*主提交按钮1*/
+.btn-submit1:active,
+.btn-submit1:hover{background: none; border:1px solid #1CBB7F}/*主提交按钮按下颜色1*/
 .btn-cart {background: #f4a213;border:1px solid #e19511}/*加入购物车*/
 .btn-cart:active,
 .btn-cart:hover {background: #e19511;border:1px solid #e19511}/*按下颜色*/
 .btn-reset{background:#fff;color:#555;border:1px solid #efefef}/*清空按钮*/
 .btn-reset:active,
-.btn-reset:hover {background:#fff;border:1px solid #efefef}/*按下颜色*/
+.btn-reset:hover {background:#fff;border:1px solid #fbfbfb}/*按下颜色*/
 .btn-default{background:#fff;color:#555; border:1px solid #efefef}/*默认*/
 .btn-default:active,
 .btn-default:hover {color:#666}/*按下颜色*/
 .btn-alipay {background: #43afea;border:1px solid #35a0db}/*支付宝按钮*/
 .btn-alipay:active,
-.btn-wechat:hover {background: #35a0db;border:1px solid #1dbc20}/*支付宝按钮按下颜色*/
+.btn-alipay:hover {background: #35a0db;border:1px solid #329cd6}/*支付宝按钮按下颜色*/
 .btn-wechat {background: #1dbc20;border:1px solid #1dbc20}/*微信按钮*/
 .btn-wechat:active,
-.btn-wechat:hover {background: #35a0db;border:1px solid #35a0db}/*微信按钮按下颜色*/
-
-.btn-disab {background: #bbb;border:1px solid #1CBB7F}/*禁用按钮*/
-
-.ect-button-more a,.ect-button-more button{margin:0 .65rem;}
-.ect-button-more a:first-child,.ect-button-more button:first-child{margin-left:0;}
+.btn-wechat:hover {background: #1BA91D;border:1px solid #1BA91D}/*微信按钮按下颜色*/
+.btn-disab {background: #bbb;border:1px solid #bbb}/*禁用按钮*/
+a.btn-disab{background: #bbb;border:1px solid #bbb}
+.ect-button-more a,.ect-button-more button{margin-right:.6rem;}
 .ect-button-more a:last-child,.ect-button-more button:last-child{margin-right:0;}
-
 
 /*文本框*/
 .text-all {border-bottom: 1px solid #F6F6F9;padding: 1rem 0;width: 100%;overflow: hidden;}
@@ -448,8 +450,34 @@ transform: rotate(135deg);background:#fff; bottom:-.6rem; z-index: -1; left:50%;
  */
 .filter-city{background:#fff; overflow: hidden; font-size: 1.6rem;}
 .filter-city span{}
-
-
+/*头部*/
+ .header-menu{height:4.6rem; line-height: 4.6rem; padding: 0 0.5rem;}
+ .header-menu a{color:#fff;}
+ .header-menu i{font-size:2.6rem; }
+ .header-menu i.icon-back{font-size:3rem}
+ .header-menu i.icon-13caidan{}
+ .header-menu h3{font-size:2rem; text-align: center;}
+/*共用背景颜色*/
+.red-bg{background:#1CBB7F;}
+.hs-bg{background:#999;}
+.col-3{color:#333;}
+.col-4{color:#444;}
+.col-7{color:#777;}
+.col-6{color:#666;}
+.col-8{color:#888;}
+.col-9{color:#999;}
+.f-02{font-size:1.3rem}
+.f-03{font-size:1.3rem}
+.f-04{font-size:1.5rem}
+.f-06{font-size:1.6rem}
+.f-05{font-size:1.5rem}
+.f-07{font-size:1.7rem}
+.f-08{font-size:1.8rem}
+.f-2{font-size:2rem}
+.o-h{overflow:hidden;width:100%;}
+.p-a{position:absolute;}
+.p-r{position:relative;}
+.p-t{padding-bottom:0.5rem}
 /*
  * 三种模式商品列表
  * [备注：]库存销量,加入购物车按钮，市场价默认全部显示，如需隐藏/显示在对应图片列表代码中设置即可
@@ -671,6 +699,8 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .g-c-title-h3{font-size:1.6rem;}
 .goods-show-con{max-height:26rem; min-height: 10rem; overflow-y: scroll;}
 
+.product-div{background:#fff;  position: relative;  overflow: hidden;}
+.product-div-link{ position: absolute;  left: 0; right: 0; top: 0; bottom: 0; z-index: 1;}
 /*商品详情页 － tab*/
 .goods-info .tab-title,.flow-coupon .tab-title{font-size:1.5rem; position: relative; text-align: center; border-bottom:1px solid #f6f6f9;}
 .goods-info .tab-title,.flow-coupon .tab-title{padding:1.4rem 0;}
@@ -870,7 +900,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
  .flow-checkout-pro .product-list-small ul li{padding-bottom:0;}
  .flow-checkout-pro .product-list-small .product-div{padding:1.3rem 0; border-bottom:1px solid #F6F6F9}
  .flow-checkout-pro .product-list-small ul li:last-of-type .product-div{border-bottom:0;}
- .flow-checkout-smallpic{overflow:hidden; padding-top:1.3rem; margin-bottom:1.3rem}
+ .flow-checkout-smallpic{overflow:hidden;}
  .flow-checkout-smallpic li{margin-left:1rem; float:left; width:29% !important; text-align: center;}
  .flow-checkout-smallpic li img{width:100% !important;}
  .flow-checkout-smallpic li:first-of-type{margin-left:0;}
@@ -1054,7 +1084,6 @@ nav.ect-nav-list{border-top:none; border-bottom:1px solid #e3e3e3; position:rela
         商品详情页面
 =============*/
 .goods-info{border-top:1px #f6f6f9 solid;  width:100%; padding-bottom:0; border-bottom:0;}
-.goods-info p{overflow:hidden;}
 .goods-info section{position:relative; overflow:hidden;}
 .tab-pane img{width:100% ; height: auto;}
 .goods-info section.goods-title h4{position:absolute; right:3em; left:0em;}
@@ -1216,7 +1245,7 @@ body.show-search-div-new,.new-search-div .search{background:#F6F6F9}
 .new-footer-box{padding:0.3rem 0;}
 .new-footer-box i{font-size:2rem;display:block;text-align:center;}
 .new-footer-box span{font-size:1.3rem;display:block;text-align:center;padding-top:0rem;}
-.new-index-footer{ background-color: rgba(50, 50, 50, 0.96);   left: 0;right: 0;position: fixed;z-index: 4;overflow: hidden;margin: 0 auto;bottom: 0;z-index: 4;box-shadow: 1px 0px 6px rgba(50,50,50,0.3);}
+.new-index-footer{ background-color: rgba(50, 50, 50, 0.96);   left: 0;right: 0;position: fixed;z-index: 4;overflow: hidden;margin: 0 auto;bottom: 0;z-index: 4;max-width:640px; box-shadow: 1px 0px 6px rgba(50,50,50,0.3);}
 .new-index-header{ background-color: rgba(50, 50, 50, 0.6);   left: 0;right: 0;position: fixed;z-index: 4;overflow: hidden;margin: 0 auto;top: 0rem;z-index: 5;}
 .new-footer-box li .nav-cont {color: #D7D7D7;}
 /*搜索框*/
@@ -1240,7 +1269,7 @@ a.s-filter{display:block; font-size:1.6rem; text-align:center; padding:.8rem 0; 
 .img{width:100%;height:auto;display:block}
 .bg-white{background: #fff;}
 .color-red{color:#1CBB7F}
-.header-max-box{position:fixed;top:0;width:100%;z-index: 12;}
+.header-max-box{position:fixed;top:0;width: 100%;z-index: 12;max-width: 640px;}
 .ect-header-banner{background:rgba(53,53,53,1); height:5.4rem; line-height:5.4rem; width:100%; color: #fff;display:block;moz-transition : 0.5s ease ;-o-transition: 0.5s ease;-webkit-transition :0.5s ease;    padding: 0 0.6 rem;}
 .ect-header-banner img{width:3.4rem; height:auto; margin-left:2rem; margin-top:1rem;}
 .ect-header-banner .ect-header-text{padding-left:1.1rem; margin-top:1.3rem;}
@@ -1335,3 +1364,26 @@ a.s-filter{display:block; font-size:1.6rem; text-align:center; padding:.8rem 0; 
 .index-show-close{color:#777;}
 .index-guanz-show h5{color:#1CBB7F;font-size:1.3rem}
 .index-show-close-box{background:rgba(255,255,255,0.6);position:absolute;right:-2rem;top:-5rem;width: 2.6rem;height:2.6rem;border-radius:100%;padding: 0.8rem}
+
+/*文本下拉*/
+.text-all-select{position:relative;}
+.text-all-select-div{background:#fafafa; position: absolute; left:0; right:0; display: none; font-size:1.5rem; z-index: 11;}
+.text-all-select-div ul li{border-bottom:1px solid #efefef; padding:1.3rem 0; color:#444;}
+.text-all-select-div ul li:first-of-type{padding-top:0;}
+.text-all-select-div ul li:last-of-type{border-bottom:none; padding-bottom:0;}
+
+.f-c-p-orderid{border-bottom:1px solid #f6f6f9;}
+.n-order-more{float: right;margin-top: 0.6rem;color: #999;font-size: 2rem;}
+.flow-checkout-pro footer .ect-button-more button, .flow-checkout-pro footer .ect-button-more a {
+    padding: .3rem .8rem;
+    font-size: 1.6rem;
+    width: auto;
+}
+.btn-submit1, a.btn-submit1 {
+    color: #1CBB7F;
+    background: none;
+    border: 1px solid #1CBB7F;
+}
+.flow-checkout-pro header, .flow-checkout-pro footer {
+    font-size: 1.7rem;
+}
