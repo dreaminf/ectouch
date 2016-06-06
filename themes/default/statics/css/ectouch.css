@@ -1177,7 +1177,7 @@ body.show-search-div-new,.new-search-div .search{background:#F6F6F9}
 .my-admin-header-box{background:url(../img/uer_header_bg.png);background-repeat:no-repeat;background-size:cover;}
 .user-head-img-box img,.user-bg-box img,.user-bg2-box,.user-bg-box-1 img,.user-bg2-box-1 img{width: 100%;}
 .is-shezi,.my-dingdan-color{color: #fff;}
-.user-head-img-box{width:6.25rem;height:6.25rem;border-radius:4rem;overflow:hidden;  border: 3px solid rgba(255,255,255,0.8);}
+.user-head-img-box{width:6.25rem;height:6.25rem;border-radius:100%;overflow:hidden;  border: 2px solid rgba(255,255,255,0.8);}
 .is-youxiang,.my-img-size{font-size: 2.4rem;  color: #555;}
 .is-youxiang{padding: 0.2rem;color: #fff;height: 3rem;line-height: 6rem;float: right;}
 .my-user-right-cont{float:left;margin-left:0.3rem;margin-top: 0rem;}
@@ -1204,7 +1204,7 @@ body.show-search-div-new,.new-search-div .search{background:#F6F6F9}
 .user-bg-box{right: 0rem;width: 4.8rem;top: 2.4rem;}
 .user-bg2-box{left: 1rem;bottom: 1rem; width: 2.8rem;}
 .user-reg-top{padding-top:0.25rem;} 
-.g-s-i-title-2{padding: 1.8rem 0;}
+.g-s-i-title-2{padding: 1rem 0;}
 .color-whie{color:#fff;}
 .color-kf {color: #d48b40;}
 .color-ls{color:#ec5151}
