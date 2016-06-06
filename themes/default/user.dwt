@@ -84,7 +84,7 @@
 					<a href="{:url('user/not_shoushuo')}" class="box-flex">
 						<li>
 							<h4 class="ellipsis-one"><i class="iconfont icon-daifahuo my-img-size"></i></h4>
-							<p class="t-remark3">待发货</p>
+							<p class="t-remark3">待收货</p>
 							<div class="user-list-num">
 								<!--{if $list.not_shouhuos neq ''}-->{$list.not_shouhuos}
 								<!--{else}-->0
