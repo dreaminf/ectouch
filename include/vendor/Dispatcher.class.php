@@ -129,7 +129,9 @@ class Dispatcher {
             if(C('URL_PARAMS_BIND') && 1 == C('URL_PARAMS_BIND_TYPE')){
                 $var = $paths; // URL参数按顺序绑定变量
             }else{
-                preg_replace('@(\w+)\/([^\/]+)@e', '$var[\'\\1\']=strip_tags(\'\\2\');', implode('/',$paths));
+                preg_replace_callback('/(\w+)\/([^\/]+)/', function ($match) use (&$var) {
+                    $var[$match[1]] = strip_tags($match[2]);
+                }, implode('/', $paths));
             }
             $_GET = array_merge($var,$_GET);
         }

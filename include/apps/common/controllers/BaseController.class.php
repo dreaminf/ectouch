@@ -84,6 +84,10 @@ class BaseController extends Controller {
         //载入系统参数
         C('CFG', model('Base')->load_config());
 
+        if(C('rewrite') > 0){
+            C('URL_MODEL', 2);
+        }
+
         $this->load = new Loader();
     }
 
