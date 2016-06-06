@@ -27,16 +27,9 @@ if (isset($set_modules) && $set_modules == TRUE) {
     $modules[$i]['version'] = '1.0.0';
     /* 配置信息 */
     $modules[$i]['config'] = array(
-        array(
-            'name' => 'bargainor_id',
-            'type' => 'text',
-            'value' => ''
-        ),
-        array(
-            'name' => 'tenpay_key',
-            'type' => 'text',
-            'value' => ''
-        )
+        array('name' => 'tenpay_account',   'type' => 'text', 'value' => ''),
+        array('name' => 'tenpay_key',       'type' => 'text', 'value' => ''),
+        //array('name' => 'magic_string',     'type' => 'text', 'value' => '')
     );
 
     return;

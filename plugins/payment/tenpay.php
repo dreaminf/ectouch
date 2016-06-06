@@ -39,7 +39,7 @@ class tenpay
             'bank_type' => 0, // 必填 银行类型:财付通支付填 0;目前只能为 0
             'desc' => $order['order_sn'], // 必填 商品描述,32 个字符以内
             //'purchaser_id' => '', // 可选 用户(买方)的财付通帐户(QQ 或 EMAIL)。若商户没有传该参数则在财付通支付页面;买家需要输入其财付通帐户。
-            'bargainor_id' => $payment['bargainor_id'], // 必填 商户号,由财付通统一分配的 10 位正整数(120XXXXXXX)号
+            'bargainor_id' => $payment['tenpay_account'], // 必填 商户号,由财付通统一分配的 10 位正整数(120XXXXXXX)号
             'sp_billno' => $order['order_sn'] . 'A' . ($order['order_amount'] * 100) . 'B' . $order['log_id'], // 必填 商户系统内部的定单号,32 个字符内、可包含字母
             'total_fee' => $order['order_amount'] * 100, // 必填 总金额,以分为单位,不允许包含任何字母、符号
             'fee_type' => 1, // 可选 现金支付币种,目前只支持人民币,默认值是 1-人民币
