@@ -11,9 +11,6 @@
 					<div class="goods-left-jiat"><i class="iconfont icon-jiantou is-con"></i></div>
 				</a>
 				<h3 class="box-flex"></h3>
-				<a class="" href="{:url('flow/cart')}">
-					<div class="goods-left-jiat"><i class="iconfont icon-gouwuche j-nav-box is-con"></i></div>
-				</a>
 				<a class="" href="javascript:;" onClick="openMune()">
 					<div class="goods-left-jiat"><i class="iconfont icon-gengduo j-nav-box is-con"></i></div>
 				</a>
