@@ -63,24 +63,27 @@
 			<section class="goods-price padding-all b-color-f">
 				<p class="p-price">
 					<span class="t-first">
-				<!--{if $goods.is_promote and $goods.gmt_end_time } 促销-->
-				{$goods.promote_price}
-				<!--{else}-->
-				{$goods.shop_price_formated}
-				<!--{/if}--></span>
-					 <em class="em-promotion">积分可抵现</em></p>
-					<p class="p-market">
-						市场价<del><!-- {if $cfg.show_marketprice} 市场价格-->{$goods.market_price} <!-- {/if} --></del>
-					</p>
-					<p class=" dis-box g-p-tthree m-top04">
-						<span class="box-flex text-left">{$lang.sort_sales}：{$sales_count}</span>
-						<span class="box-flex text-center">库存: {$goods.goods_number}</span>
-						<span class="box-flex text-right">上海 </span>
-					</p>
-					<p class=" dis-box g-p-tthree m-top04">
-		
-					</p>
-					
+						<!--{if $goods.is_promote and $goods.gmt_end_time } 促销-->
+						{$goods.promote_price}
+						<!--{else}-->
+						{$goods.shop_price_formated}
+						<!--{/if}-->				
+					</span>
+					<em class="em-promotion">积分可抵现</em>
+				</p>
+				<!-- {if $cfg.show_marketprice} 市场价格-->
+				<p class="p-market">
+					市场价 <del>{$goods.market_price}</del>
+				</p>
+				<!-- {/if} -->
+				<p class=" dis-box g-p-tthree m-top04">
+					<span class="box-flex text-left">{$lang.sort_sales}：{$sales_count}</span>
+					<span class="box-flex text-center">库存: {$goods.goods_number}</span>
+					<span class="box-flex text-right"> </span>
+				</p>
+				<p class=" dis-box g-p-tthree m-top04">
+	
+				</p>
 			</section>
 			<!-- {if $promotion} 优惠活动 -->
 			<section class="ect-margin-tb ect-margin-bottom0 ect-padding-tb goods-promotion ect-padding-lr ">
@@ -112,7 +115,7 @@
 				<div class="dis-box">
 					<div class="box-flex">
 						<div class="dis-box">
-							<p class="box-flex t-goods2">本服务由ECTouch微商城提供售后服务与产品支持</p>
+							<p class="box-flex t-goods2">本服务由{$shop_name}提供售后服务与产品支持</p>
 							<i class="iconfont icon-102 goods-min-icon"></i>							
 						</div>
 						<div class="dis-box m-top08 g-r-rule">
