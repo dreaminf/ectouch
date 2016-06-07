@@ -2025,9 +2025,7 @@ class UserController extends CommonController {
         $info = model('ClipsBase')->get_third_user_info($type);
         // 判断是否安装
         if (!$info) {
-            show_message(L('no_register_auth'), L('relogin_lnk'), url('login', array(
-                'referer' => urlencode($this->back_act)
-                    )), 'error');
+            show_message(L('no_register_auth'), L('relogin_lnk'), url('login', array('referer' => urlencode($this->back_act))), 'error');
         }
         $obj = new $type($info);
         if ($_GET['code'] && $_GET['code'] != '') {
@@ -2036,9 +2034,7 @@ class UserController extends CommonController {
                 $url = empty($url) ? url('index/index') : $url;
                 $this->redirect($url);
             } else {
-                show_message(L('process_false'), L('relogin_lnk'), url('login', array(
-                    'referer' => urlencode($this->back_act)
-                        )), 'error');
+                show_message(L('process_false'), L('relogin_lnk'), url('login', array('referer' => urlencode($this->back_act))), 'error');
             }
         } else {
             // 开始授权登录  
