@@ -1686,7 +1686,7 @@ class UsersModel extends BaseModel {
         
         $res = $this->query('DESC ' . $this->pre . $this->table);
         
-        while ($row = mysql_fetch_row($res)) {
+        while ($row = mysqli_fetch_row($res)) {
             $field_names[] = $row[0];
         }
         foreach ($field_names as $value) {
