@@ -36,7 +36,20 @@
         <dl>
           <dt>
             <h4 class="title"><a href="{:url('goods/index', array('id'=>$this->_var['goods']['goods_id']))}">{$goods.goods_name}{$goods.goods_attr}</a></h4>
-          </dt>
+          </dt><dd class="dd-price">
+            <!--{if $goods.aftermarket eq 1}-->
+          <b class="service">
+              <a href="{:url('user/aftermarket_done',array('rec_id'=>$this->_var['goods']['rec_id'],'order_id'=>$this->_var['order']['order_id']))}" >查看申请记录</a>
+              <a href="{:url('user/aftermarket_detail',array('ret_id'=>$this->_var['goods']['ret_id']))}" >退换货详情</a>
+          </b>
+          <!--{else}-->
+              <!--{if $goods.service_apply}-->
+              <b class="service"><a href="{:url('user/aftermarket',array('rec_id'=>$this->_var['goods']['rec_id'],'order_id'=>$this->_var['order']['order_id']))}" >申请售后</a></b>
+              <!--{/if}-->
+          <!--{/if}-->
+          
+          </dd>
+
           <dd class="dd-price"><b>{$goods.goods_attr}</b></dd>
           <dd class="dd-price"><b>{$lang.ws_subtotal}：<span class="ect-colory">{$goods.subtotal}</span> {$lang.number_to}：{$goods.goods_number}</b></dd>
         </dl>

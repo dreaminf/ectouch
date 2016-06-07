@@ -226,4 +226,27 @@ define('DRP_WITHDRAW',1); // 佣金提现
 define('DRP_NOT_MANAGE',0); // 未处理
 define('DRP_MANAGE',1); // 已处理
 
+/* 服务订单审核状态 by ECTouch Leah */
+define('RC_APPLY_FALSE', 0); // 申请失败
+define('RC_APPLY_SUCCESS', 1); // 申请成功
+
+/*服务订单状态*/
+define('RF_APPLICATION', 0); // 申请
+define('RF_SEND_OUT', 1); // 退回商品寄出
+define('RF_RECEIVE', 2); // 收到退回商品
+define('RF_SWAPPED_OUT', 3); // 换出商品寄出
+define('RF_COMPLETE', 4); // 完成退换货
+define('RF_CANCELED', 5); // 已取消
+define('RF_APPLY_FALSE', 6); // 审核失败
+
+/* 退款状态*/
+define( 'FF_NOREFUND', 0 ) ;//未退款
+define( 'FF_REFUND', 1 ) ;//已退款
+
+/**服务类型**/
+define('ST_RETURN_GOODS', 1); //退货退款
+define('ST_REFUND', 2); //仅退款
+define('ST_EXCHANGE', 3); //换货
+define('ST_REPAIR', 4); //维修
+
 

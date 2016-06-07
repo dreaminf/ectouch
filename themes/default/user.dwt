@@ -147,6 +147,12 @@
 						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
 					</div>
 				</a>
+				<a href="{:url('user/aftermarket_list')}">
+					<div class="dis-box padding-all my-bottom">
+						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-tuihuanhuo is-user-size "></i>退换货订单</h3>
+						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
+					</div>
+				</a>
 				<!--/*DRP_START*/-->
 				<a href="{:url('store/check_store')}">
 					<div class="dis-box padding-all my-bottom">

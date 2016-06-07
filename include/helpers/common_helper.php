@@ -2812,3 +2812,325 @@ if (!function_exists('array_combine')) {
         return $combined;
     }
 }
+
+/**
+ * 记录订单操作记录
+ * by　ECTouch　Leah
+ * @access  public
+ * @param   string $ret_id 服务订单号
+ * @param   integer $return_status 服务订单状态
+ * @param   integer $refund_status 退款状态
+ * @param   string $note 备注
+ * @param   string $username 用户名，用户自己的操作则为 buyer
+ * @param   integer $place
+ * @param   string $action_info
+ * @return  void
+ */
+function return_action($ret_id, $return_status = 0, $refund_status = 0, $is_check = 0, $note = '', $username = null, $place = 0, $action_info = null) {
+    if (is_null($username)) {
+        $username = $_SESSION['admin_name'];
+    }
+    $sql = 'INSERT INTO ' . $GLOBALS['ecs']->table('return_action') .
+            ' (ret_id, action_user, return_status, refund_status, is_check, action_place, action_note, log_time,action_info) ' .
+            'SELECT ' .
+            "ret_id, '$username', '$return_status', '$refund_status', '$is_check', '$place', '$note', '" . gmtime() . "' ,'" . $action_info . "' " .
+            'FROM ' . $GLOBALS['ecs']->table('order_return') . " WHERE ret_id = '$ret_id'";
+    $GLOBALS['db']->query($sql);
+}
+/**
+ * 获取服务类型列表
+ * @by ECTouch Leah
+ * @access  public
+ * @return  array
+ */
+function service_type_list()
+{
+    $result = get_filter();
+    if ($result === false) {
+        /* 分页大小 */
+        $filter = array();
+
+        /* 记录总数以及页数 */
+        if (isset($_POST['service_name'])) {
+            $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('service_type') . ' WHERE service_name = \'' . $_POST['service_name'] . '\'';
+        } else {
+            $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('service_type');
+        }
+
+        $filter['record_count'] = $GLOBALS['db']->getOne($sql);
+
+        $filter = page_and_size($filter);
+
+        /* 查询记录 */
+        if (isset($_POST['service_name'])) {
+            if (strtoupper(EC_CHARSET) == 'GBK') {
+                $keyword = iconv("UTF-8", "gb2312", $_POST['brand_name']);
+            } else {
+                $keyword = $_POST['service_name'];
+            }
+            $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('service_type') . " WHERE service_name like '%{$keyword}%' ORDER BY sort_order ASC";
+        } else {
+            $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('service_type') . " ORDER BY sort_order ASC";
+        }
+
+        set_filter($filter, $sql);
+    } else {
+        $sql = $result['sql'];
+        $filter = $result['filter'];
+    }
+    $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
+
+    $arr = array();
+    while ($rows = $GLOBALS['db']->fetchRow($res)) {
+        $arr[] = $rows;
+    }
+    return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
+}
+
+/**
+ *
+ * 退货原因列表
+ * @by ECTouch Leah
+ * @param type $cause_id 自增id
+ * @param type $re_type 返回的类型: 值为真时返回下拉列表,否则返回数组
+ * @param type $level 限定返回的级数。为0时返回所有级数
+ * @param type $is_show_all 如果为true显示所有分类，如果为false隐藏不可见分类。
+ * @return string
+ */
+function cause_list($cause_id = 0, $selected = 0, $re_type = true, $level = 0, $is_show_all = true)
+{
+
+    static $res = NULL;
+
+    if ($res === NULL) {
+        $sql = "SELECT c.cause_id, c.cause_name, c.sort_order, c.is_show ,c.parent_id , COUNT(s.cause_id) AS has_children " .
+            'FROM ' . $GLOBALS['ecs']->table('return_cause') . " AS c " .
+            "LEFT JOIN " . $GLOBALS['ecs']->table('return_cause') . " AS s ON s.parent_id=c.cause_id " .
+            "GROUP BY c.cause_id " .
+            'ORDER BY c.parent_id, c.sort_order ASC';
+        $res = $GLOBALS['db']->getAll($sql);
+        //如果数组过大，不采用静态缓存方式
+        if (count($res) <= 1000) {
+            write_static_cache('cause_pid_releate', $res);
+        }
+    }
+
+    if (empty($res) == true) {
+        return $re_type ? '' : array();
+    }
+
+    $options = cause_options($cause_id, $res); // 获得指定分类下的子分类的数组
+
+    $children_level = 99999; //大于这个分类的将被删除
+    if ($is_show_all == false) {
+        foreach ($options as $key => $val) {
+            if ($val['level'] > $children_level) {
+                unset($options[$key]);
+            } else {
+                if ($val['is_show'] == 0) {
+                    unset($options[$key]);
+                    if ($children_level > $val['level']) {
+                        $children_level = $val['level']; //标记一下，这样子分类也能删除
+                    }
+                } else {
+                    $children_level = 99999; //恢复初始值
+                }
+            }
+        }
+    }
+    /* 截取到指定的缩减级别 */
+    if ($level > 0) {
+        if ($cause_id == 0) {
+            $end_level = $level;
+        } else {
+            $first_item = reset($options); // 获取第一个元素
+            $end_level = $first_item['level'] + $level;
+        }
+
+        /* 保留level小于end_level的部分 */
+        foreach ($options AS $key => $val) {
+            if ($val['level'] >= $end_level) {
+                unset($options[$key]);
+            }
+        }
+    }
+
+    if ($re_type == true) {
+        $select = '';
+        foreach ($options AS $var) {
+            $select .= '<option value="' . $var['cause_id'] . '" ';
+            $select .= ($selected == $var['cause_id']) ? "selected='ture'" : '';
+            $select .= '>';
+            if ($var['level'] > 0) {
+                $select .= str_repeat('&nbsp;', $var['level'] * 4);
+            }
+            $select .= htmlspecialchars(addslashes($var['cause_name']), ENT_QUOTES) . '</option>';
+        }
+
+        return $select;
+    } else {
+        foreach ($options AS $key => $value) {
+            $options[$key]['url'] = build_uri('reutrn_cause', array('cid' => $value['cause_id']), $value['cause_name']);
+        }
+
+        return $options;
+    }
+}
+
+/**
+ * @by ECTouch Leah
+ * 获取顶部退换货原因
+ */
+function get_parent_cause()
+{
+    $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('return_cause') . " WHERE parent_id = 0  AND is_show = 1  ORDER BY sort_order";
+    $result = $GLOBALS['db']->getAll($sql);
+    if (is_array($result)) {
+        $select = '';
+        foreach ($result AS $var) {
+            $select .= '<option value="' . $var['cause_id'] . '" ';
+            $select .= '>';
+            if ($var['level'] > 0) {
+                $select .= str_repeat('&nbsp;', $var['level'] * 4);
+            }
+            $select .= htmlspecialchars(addslashes($var['cause_name']), ENT_QUOTES) . '</option>';
+        }
+
+        return $select;
+    } else {
+        return array();
+    }
+}
+
+/**
+ * 获取退换货原因列表 by ECTouch Leah
+ * @staticvar array $cat_options
+ * @param type $spec_cat_id
+ * @param type $arr
+ * @return array
+ */
+function cause_options($spec_cat_id, $arr)
+{
+    static $cat_options = array();
+
+    if (isset($cat_options[$spec_cat_id])) {
+        return $cat_options[$spec_cat_id];
+    }
+
+    if (!isset($cat_options[0])) {
+        $level = $last_cat_id = 0;
+        $options = $cat_id_array = $level_array = array();
+        //$data = read_static_cache('cause_option_static');
+        //$data = array();
+//        if ($data === false)
+//        {
+        while (!empty($arr)) {
+
+            foreach ($arr AS $key => $value) {
+                $cat_id = $value['cause_id'];
+                if ($level == 0 && $last_cat_id == 0) {
+                    if ($value['parent_id'] > 0) {
+                        break;
+                    }
+
+                    $options[$cat_id] = $value;
+                    $options[$cat_id]['level'] = $level;
+                    $options[$cat_id]['id'] = $cat_id;
+                    $options[$cat_id]['name'] = $value['cause_name'];
+                    unset($arr[$key]);
+
+                    if ($value['has_children'] == 0) {
+                        continue;
+                    }
+                    $last_cat_id = $cat_id;
+                    $cat_id_array = array($cat_id);
+                    $level_array[$last_cat_id] = ++$level;
+                    continue;
+                }
+
+                if ($value['parent_id'] == $last_cat_id) {
+                    $options[$cat_id] = $value;
+                    $options[$cat_id]['level'] = $level;
+                    $options[$cat_id]['id'] = $cat_id;
+                    $options[$cat_id]['name'] = $value['cause_name'];
+                    unset($arr[$key]);
+
+                    if ($value['has_children'] > 0) {
+                        if (end($cat_id_array) != $last_cat_id) {
+                            $cat_id_array[] = $last_cat_id;
+                        }
+                        $last_cat_id = $cat_id;
+                        $cat_id_array[] = $cat_id;
+                        $level_array[$last_cat_id] = ++$level;
+                    }
+                } elseif ($value['parent_id'] > $last_cat_id) {
+                    break;
+                }
+            }
+
+            $count = count($cat_id_array);
+            if ($count > 1) {
+                $last_cat_id = array_pop($cat_id_array);
+            } elseif ($count == 1) {
+                if ($last_cat_id != end($cat_id_array)) {
+                    $last_cat_id = end($cat_id_array);
+                } else {
+                    $level = 0;
+                    $last_cat_id = 0;
+                    $cat_id_array = array();
+                    continue;
+                }
+            }
+
+            if ($last_cat_id && isset($level_array[$last_cat_id])) {
+                $level = $level_array[$last_cat_id];
+            } else {
+                $level = 0;
+            }
+        }
+        //如果数组过大，不采用静态缓存方式
+        if (count($options) <= 2000) {
+            // write_static_cache('cause_option_static', $options);
+        }
+//        }
+//        else
+//        {
+//            $options = $data;
+//        }
+        $cat_options[0] = $options;
+    } else {
+        $options = $cat_options[0];
+    }
+
+    if (!$spec_cat_id) {
+        return $options;
+    } else {
+        if (empty($options[$spec_cat_id])) {
+            return array();
+        }
+
+        $spec_cat_id_level = $options[$spec_cat_id]['level'];
+
+        foreach ($options AS $key => $value) {
+            if ($key != $spec_cat_id) {
+                unset($options[$key]);
+            } else {
+                break;
+            }
+        }
+
+        $spec_cat_id_array = array();
+        foreach ($options AS $key => $value) {
+            if (($spec_cat_id_level == $value['level'] && $value['cause_id'] != $spec_cat_id) ||
+                ($spec_cat_id_level > $value['level'])
+            ) {
+                break;
+            } else {
+                $spec_cat_id_array[$key] = $value;
+            }
+        }
+        $cat_options[$spec_cat_id] = $spec_cat_id_array;
+
+        return $spec_cat_id_array;
+    }
+}

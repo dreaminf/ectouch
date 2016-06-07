@@ -57,6 +57,10 @@ $modules['03_menu_order']['06_undispose_booking']        = 'goods_booking.php?ac
 $modules['03_menu_order']['08_add_order']                = 'order.php?act=add';
 $modules['03_menu_order']['09_delivery_order']           = 'order.php?act=delivery_list';
 $modules['03_menu_order']['10_back_order']               = 'order.php?act=back_list';
+//by ECTouch Leah
+$modules['03_menu_order']['13_service_type']               = 'aftermarket_type.php?act=service_type';//by Leah
+$modules['03_menu_order']['11_back_cause']               = 'aftermarket_cause.php?act=back_cause_list'; //by Leah
+$modules['03_menu_order']['12_back_apply']               = 'aftermarket.php?act=aftermarket_list';//by Leah
 
 // 会员
 $modules['04_menu_members']['03_users_list']             = 'users.php?act=list';

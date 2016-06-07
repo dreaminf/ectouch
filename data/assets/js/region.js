@@ -6,7 +6,10 @@ region.isAdmin = false;
 
 region.loadRegions = function(parent, type, target)
 {
-  Ajax.call(region.getFileName(), 'type=' + type + '&target=' + target + "&parent=" + parent , region.response, "GET", "JSON");
+  $.get(region.getFileName(), {type:type, target:target, parent:parent}, function(data){
+    region.response(data, '');
+  }, 'json');
+
 }
 
 /* *

@@ -1900,4 +1900,252 @@ class UsersModel extends BaseModel {
        
     }
 
+    
+    // 退换货 start
+    /**
+     * 获取订单所对应的服务类型数组
+     * @param $order
+     * @return array
+     */
+    public function get_service_opt($order) {
+
+        $service_return = $this->model->table('service_type')->where("service_type = " . ST_RETURN_GOODS)->find();
+        $service_exchange = $this->model->table('service_type')->where("service_type = " . ST_EXCHANGE)->find();
+
+        $time = gmtime();
+        $type_list = array();
+        if ($order['pay_status'] == PS_PAYED) {
+            //订单已付款
+            if ($order['order_status'] == OS_SPLITED) {
+                //已分单
+                if ($order['shipping_status'] == SS_SHIPPED) {
+                    //已发货 退款
+                    $action = $this->model->table('order_action')->field('log_time')->where(array('shipping_status' => SS_SHIPPED, 'order_id' => $order['order_id']))->find(); //获取发货时间
+                    /* 退货退款 现在时间-发货时时间 得到天数 */
+                    $days = (($time - $action['log_time']) / 3600 / 24);
+                    if ($days <= $service_return['unreceived_days']) {
+                        $type_list[] = ST_RETURN_GOODS;
+                    } else {
+                        show_message(L('time_out'));
+                    }
+                    if ($days <= $service_exchange['unreceived_days']) {
+                        $type_list[] = ST_EXCHANGE;
+                    } else {
+                        show_message(L('time_out'));
+                    }
+                } elseif ($order['shipping_status'] == SS_RECEIVED) {
+                    //已收货 退货换货，退款, 换货, 维修
+                    $action = $this->model->table('order_action')->field('log_time')->where(array('shipping_status' => SS_RECEIVED, 'order_id' => $order['order_id']))->find(); //获取发货时间
+                    /* 退货退款 现在时间-发货时时间 得到天数 */
+                    $days = (($time - $action['log_time']) / 3600 / 24);
+                    if ($days <= $service_return['unreceived_days']) {
+                        $type_list[] = ST_RETURN_GOODS;
+                    } else {
+                        show_message(L('time_out'));
+                    }
+                    if ($days <= $service_exchange['unreceived_days']) {
+                        $type_list[] = ST_EXCHANGE;
+                    } else {
+                        show_message(L('time_out'));
+                    }
+                } else {
+                    //其他 
+                }
+            }
+        }
+        return $type_list;
+    }
+
+    /** 获取所有服务类型列表
+     * @param $order_id
+     * @param $rec_id
+     * @param $service_type
+     * @return array
+     */
+    public function get_service_type_list($order_id, $rec_id, $service_type) {
+        $where = " service_type in(" . implode(',', $service_type) . ")";
+        $sql = 'SELECT service_id, service_name, service_desc, service_type FROM ' . $this->pre . 'service_type' . ' WHERE  is_show = 1 AND' . $where . ' ORDER BY sort_order, service_id';
+        $result = $this->query($sql);
+        $service_type = array();
+        foreach ($result as $row) {
+            $service_type[$row['service_id']]['service_name'] = $row['service_name'];
+            $service_type[$row['service_id']]['service_id'] = $row['service_id'];
+            $service_type[$row['service_id']]['service_desc'] = $row['service_desc'];
+            $service_type[$row['service_id']]['received_days'] = $row['received_days'];
+            $service_type[$row['service_id']]['unreceived_days'] = $row['unreceived_days'];
+            $service_type[$row['service_id']]['url'] = url('user/returns_apply', array('id' => $row['service_id'], 'order_id' => $order_id, 'rec_id' => $rec_id));
+        }
+        return $service_type;
+    }
+
+    /**
+     * 获取顶级退换货原因 by ECTouch Leah
+     */
+    public function get_parent_cause() {
+        $sql = "SELECT * FROM " . $this->pre . "return_cause WHERE parent_id = 0  AND is_show = 1  ORDER BY sort_order";
+        $result = $this->query($sql);
+        if (is_array($result)) {
+            $select = '';
+            foreach ($result AS $var) {
+                $select .= '<option value="' . $var['cause_id'] . '" ';
+                $select .= ($selected == $var['cause_id']) ? "selected='ture'" : '';
+                $select .= '>';
+                if ($var['level'] > 0) {
+                    $select .= str_repeat('&nbsp;', $var['level'] * 4);
+                }
+                $select .= htmlspecialchars(addslashes($var['cause_name']), ENT_QUOTES) . '</option>';
+            }
+            return $select;
+        } else {
+            return array();
+        }
+    }
+
+    /**
+     * 查询订单商品是否已申请过服务
+     * @param type $rec_id
+     * @return type
+     */
+    public function check_aftermarket($rec_id) {
+
+        $service = $this->model->table('order_return')->field('COUNT(*) as count')->where('rec_id = ' . $rec_id)->find();
+        return $service['count'];
+    }
+
+    /**
+     * 当前可执行售后操作
+     * @param $service_type
+     * @return array
+     */
+    public function get_aftermarket_operate($service_type) {
+
+        $operate = array();
+        /**
+         * 退货退款
+         */
+        if ($service_type == ST_RETURN_GOODS) {
+            $operate['return_gods'] = true;
+        } /* 仅退款* */ elseif ($service_type == ST_REFUND) {
+            $operate['refund'] = true;
+        } /* 退货退款* */ elseif ($service_type == ST_EXCHANGE) {
+
+            $operate['exchange'] = true;
+        } /* 维修* */ elseif ($service_type == ST_REPAIR) {
+            $operate['repair'] = true;
+        }
+        return $operate;
+    }
+
+    /**
+     *  获取用户指定范围的订单列表
+     *
+     * @access  public
+     * @param   int $user_id 用户ID号
+     * @param   int $num 列表最大数量
+     * @param   int $start 列表起始位置
+     * @return  array       $order_list     订单列表
+     */
+    function get_user_aftermarket($user_id, $num = 10, $start = 0) {
+        /* 取得订单列表 */
+        $arr = array();
+
+        $sql = "SELECT ret_id ,rec_id, goods_id, service_sn, order_sn, order_id,add_time, should_return, return_status, refund_status, is_check " .
+                " FROM " . $this->pre .
+                "order_return WHERE user_id = '$user_id'  ORDER BY add_time DESC LIMIT $start , $num";
+        $res = M()->query($sql);
+        foreach ($res as $key => $value) {
+            if ($value['order_status'] == RF_APPLICATION) {
+                $value['handler'] = "<a href=\"" . url('user/cancel_order', array('order_id' => $value['order_id'])) . "\" onclick=\"if (!confirm('" . L('confirm_cancel') . "')) return false;\">" . L('cancel') . "</a>";
+            } else if ($value['is_check'] == RC_APPLY_SUCCESS) {
+                /* 对配送状态的处理 */
+                if ($value['shipping_status'] == SS_SHIPPED) {
+                    @$value['handler'] = "<a href=\"" . url('user/affirm_received', array('order_id' => $value['order_id'])) . "\" onclick=\"if (!confirm('" . L('confirm_received') . "')) return false;\">" . L('received') . "</a>";
+                } elseif ($value['shipping_status'] == SS_RECEIVED) {
+                    @$value['handler'] = '<span style="color:red">' . L('ss_received') . '</span>';
+                } else {
+                    if ($value['pay_status'] == PS_UNPAYED) {
+                        @$value['handler'] = "<a href=\"" . url('user/cancel_order', array('order_id' => $value['order_id'])) . "\">" . L('pay_money') . "</a>";
+                    } else {
+                        @$value['handler'] = "<a href=\"" . url('user/cancel_order', array('order_id' => $value['order_id'])) . "\">" . L('view_order') . "</a>";
+                    }
+                }
+            } else {
+                $value['handler'] = '<span>' . L('os.' . $value['order_status']) . '</span>';
+            }
+
+            $value['shipping_status'] = ($value['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $value['shipping_status'];
+            $value['order_status'] = L('os.' . $value['order_status']) . ',' . L('ps.' . $value['pay_status']) . ',' . L('ss.' . $value['shipping_status']);
+
+            $arr[] = array(
+                'ret_id' => $value['ret_id'],
+                'order_id' => $value['order_id'],
+                'service_sn' => $value['service_sn'],
+                'img' => get_image_path(0, model('Order')->get_order_thumb($value['order_id'])),
+                'order_time' => local_date(C('time_format'), $value['add_time']),
+                'return_status' => L('rf.' . $value['return_status']),
+                'refund_status' => L('ff.' . $value['refund_status']),
+                'total_fee' => price_format($value['total_fee'], false),
+                'url' => url('user/order_detail', array('order_id' => $value['order_id'])),
+                'goods_count' => model('Users')->get_order_goods_count($value['order_id']),
+                'handler' => $value['handler']);
+        }
+        return $arr;
+    }
+
+    /**
+     *  获取指服务订单的详情
+     *
+     * @access  public
+     * @param   int $ret_id 订单ID
+     * @param   int $user_id 用户ID
+     *
+     * @return   arr        $order          订单所有信息的数组
+     */
+    function get_aftermarket_detail($ret_id, $user_id = 0) {
+
+        $ret_id = intval($ret_id);
+        if ($ret_id <= 0) {
+            ECTouch::err()->add(L('invalid_order_id'));
+
+            return false;
+        }
+        $aftermarket = model('Order')->aftermarket_info($ret_id);
+
+        //检查订单是否属于该用户
+        if ($user_id > 0 && $user_id != $aftermarket['user_id']) {
+            ECTouch::err()->add(L('no_priv'));
+
+            return false;
+        }
+        return $aftermarket;
+    }
+    
+    /**
+ * 获取商家地址
+ */
+function get_business_address($suppliers_id) {
+
+   
+    $address = '';
+    if ($suppliers_id) {
+        $address = '';
+    } else {
+        $sql = "SELECT region_name FROM " . $this->pre .
+            "region WHERE region_id = '".C('shop_country')."'";
+        $adress = $this->query($sql); 
+        //dump($adress);exit;
+        $sql = "SELECT region_name FROM " . $this->pre .
+            "region WHERE region_id = '".C('shop_province')."'";
+        $adress = $this->query($sql);
+        //dump($adress);exit;
+        $sql = "SELECT region_name FROM " . $this->pre .
+            "region WHERE region_id = '".C('shop_city')."'";
+        $adress = $this->query($sql);
+
+        $address.= C('shop_address') . '收件人：' . C('shop_name') . '联系电话：' . C('service_phone');
+    }
+    return $address;
+}
+
+
 }
