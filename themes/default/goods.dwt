@@ -1,51 +1,34 @@
 <!-- #BeginLibraryItem "/library/new_page_header.lbi" -->
 <!-- #EndLibraryItem -->
-<style>
-	.filter-btn a.box-flex {
-   line-height:2.5rem;
-   height:2.5rem;
-   }
-@media only screen and (min-width: 300px) and (max-width: 350px) {
-	.ect-header{
-		margin: 0.4em 0.6em;
-		height: 2.2em;
-	}
-	.ect-header a{
-	  width: 2.06em;
-    height: 2.06em;
-	}
-	.ect-header span{
-		font-size: 1.2em;
-	}
-	.ect-icon1 {
-		 background-size: 15.45em;
-	}
-	.icon-write .ect-icon-mune {
-		 background-position: -8.825em -2.1em;
-	}
-	.icon-write .ect-icon-history {
-		background-position: -4.71em -2.22em;
-	}
-	nav.ect-nav ul li a{
-		font-size: 0.8em;
-	}
-}
-.jian001{
-        margin-right: 1.5rem;
-}
-</style>
+
+
 <div class="con">
 	<!--style="margin-bottom: 50px;"-->
 	<div class="goods" style="margin-bottom: 0rem;">
 		<div class="ect-bg">
-			<header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg">
-				<a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span>
-				<a href="javascript:;" onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a>
+			<header class="dis-box header-menu-1 b-color color-whie goods-fixed">
+				<a class="" href="javascript:history.go(-1)">
+					<div class="goods-left-jiat"><i class="iconfont icon-jiantou is-con"></i></div>
+				</a>
+				<h3 class="box-flex"></h3>
+				<a class="" href="{:url('flow/cart')}">
+					<div class="goods-left-jiat"><i class="iconfont icon-gouwuche j-nav-box is-con"></i></div>
+				</a>
+				<a class="" href="javascript:;" onClick="openMune()">
+					<div class="goods-left-jiat"><i class="iconfont icon-gengduo j-nav-box is-con"></i></div>
+				</a>
+				<div class="goods-nav">
+
+					<div class="s-jiantou tf-45"></div>
+					<ul class="goods-nav-box">
+						<a href="{:url('user/msg_list')}"><li><i class="iconfont icon-xiaoxi j-nav-box"></i>消息</li></a>
+						<a href="{:url('index/index')}"><li><i class="iconfont icon-home j-nav-box"></i>首页</li></a>
+						<a href="{:url('user/index')}"><li><i class="iconfont icon-geren j-nav-box"></i>用户中心</li></a>
+						<a href="{:url('user/index')}"><li style="border:none"><i class="iconfont icon-fenxiang j-nav-box"></i>分享</li></a>
+					</ul>
+				</div>
+
 			</header>
-			<nav class="ect-nav ect-nav-list" style="display:none;">
-				<!-- #BeginLibraryItem "/library/page_menu.lbi" -->
-				<!-- #EndLibraryItem -->
-			</nav>
 		</div>
 
 		<!--商品图片相册-->
@@ -72,11 +55,11 @@
 			<section class="goods-title b-color-f padding-all ">
 				<div class="dis-box">
 					<h3 class="box-flex">{$goods.goods_style_name}</h3>
-		<!--点击收藏-->
-		<span class="heart j-heart <!--{if $sc eq 1}-->active<!--{/if}-->" onClick="collect({$goods.goods_id})" id='ECS_COLLECT'><i class="ts-2"></i><em class="ts-2">{$lang.btn_collect}</em></span>
+					<!--点击收藏-->
+					<span class="heart j-heart <!--{if $sc eq 1}-->active<!--{/if}-->" onClick="collect({$goods.goods_id})" id='ECS_COLLECT'><i class="ts-2"></i><em class="ts-2">{$lang.btn_collect}</em></span>
 				</div>
 			</section>
-  
+
 			<section class="goods-price padding-all b-color-f">
 				<p class="p-price">
 					<span class="t-first">
@@ -85,14 +68,19 @@
 				<!--{else}-->
 				{$goods.shop_price_formated}
 				<!--{/if}--></span>
-					<!-- <em class="em-promotion">5.8折</em></p> -->
-				<p class="p-market">
-					市场价<del><!-- {if $cfg.show_marketprice} 市场价格-->{$goods.market_price} <!-- {/if} --></del>
-				</p>
-				<p class=" dis-box g-p-tthree m-top06">
-					<span class="box-flex text-left">{$lang.sort_sales}：{$sales_count}</span>
-					<span class="box-flex text-right">库存 {$goods.goods_number}</span>
-				</p>
+					 <em class="em-promotion">积分可抵现</em></p>
+					<p class="p-market">
+						市场价<del><!-- {if $cfg.show_marketprice} 市场价格-->{$goods.market_price} <!-- {/if} --></del>
+					</p>
+					<p class=" dis-box g-p-tthree m-top04">
+						<span class="box-flex text-left">{$lang.sort_sales}：{$sales_count}</span>
+						<span class="box-flex text-center">库存: {$goods.goods_number}</span>
+						<span class="box-flex text-right">上海 </span>
+					</p>
+					<p class=" dis-box g-p-tthree m-top04">
+		
+					</p>
+					
 			</section>
 			<!-- {if $promotion} 优惠活动 -->
 			<section class="ect-margin-tb ect-margin-bottom0 ect-padding-tb goods-promotion ect-padding-lr ">
@@ -120,13 +108,32 @@
 			</section>
 			<!-- {/if} -->
 			<!--商品评价-->
-
+			<section class="padding-all b-color-f1 goods-service">
+				<div class="dis-box">
+					<div class="box-flex">
+						<div class="dis-box">
+							<p class="box-flex t-goods2">本服务由ECTouch微商城提供售后服务与产品支持</p>
+							<i class="iconfont icon-102 goods-min-icon"></i>							
+						</div>
+						<div class="dis-box m-top08 g-r-rule">
+							<p class="box-flex t-remark3">
+								<em class="fl em-promotion"><i class="iconfont icon-weibiaoti1"></i></em><span class="fl">正品保证</span></p>
+							<p class="box-flex t-remark3">
+								<em class="fl em-promotion"><i class="iconfont icon-daifukuan"></i></em><span class="fl">货到付款</span></p>
+							<p class="box-flex t-remark3">
+								<em class="fl em-promotion"><i class="iconfont icon-7tianwuliyoutuihuo"></i></em><span class="fl">7天退货</span></p>
+							<p class="box-flex t-remark3">
+								<em class="fl em-promotion"><i class="iconfont icon-taobaojisutuikuan"></i></em><span class="fl">极速达</span></p>
+						</div>
+					</div>
+				</div>
+			</section>
 			<form action="javascript:addToCart({$goods.goods_id})" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY">
 				<section class="goods-more-a">
 					<!--  <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_brief}</span> <span class="pull-right"><i class="fa fa-chevron-right"></i></span></a> 
       <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_comment}</span> <span class="pull-right"><span class="ect-color">{$comments.count}</span>{$lang.comment_num} <span class="ect-color">{$comments.favorable}%</span>{$lang.favorable_comment} <i class="fa fa-chevron-right"></i></span></a>  -->
-				</section>				
-				<section class="m-top1px padding-all b-color-f goods-attr j-goods-attr j-show-div">
+				</section>
+				<section class="m-top10 padding-all b-color-f goods-attr j-goods-attr j-show-div">
 					<div class="dis-box">
 						<label class="t-remark g-t-temark">已选</label>
 						<div class="box-flex t-goods1 ">请选择</div>
@@ -141,7 +148,7 @@
 								<div class="product-text">
 									<div class="dis-box">
 										<h4 class="box-flex">{$goods.goods_style_name}</h4>
-										<i class="iconfont icon-guanbi1 show-div-guanbi"></i>
+										<i class="iconfont icon-guanbi show-div-guanbi"></i>
 									</div>
 									<p><span class="p-price t-first" id="ECS_GOODS_AMOUNT">
 										<!--{if $goods.is_promote and $goods.gmt_end_time } 促销-->
@@ -161,14 +168,14 @@
 									<h4 class="t-remark">{$spec.name}：</h4>
 									<ul class="select-one  <!-- {if $spec.attr_type eq 1} -->j-get-one<!-- {else} -->j-get-more<!-- {/if} --> m-top10">
 										<!-- {foreach from=$spec.values item=value key=key} -->
-										<li class="ect-select dis-flex fl" >
+										<li class="ect-select dis-flex fl">
 											<input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if} onclick="changePrice()" />
 											<label class="ts-1 {if $key eq 0}active{/if}" for="spec_value_{$value.id}">{$value.label}</label>
 										</li>
-										 <!-- {/foreach} -->
+										<!-- {/foreach} -->
 									</ul>
-									 <input type="hidden" name="spec_list" value="{$key}" />
-									 <!-- {/foreach} --> 
+									<input type="hidden" name="spec_list" value="{$key}" />
+									<!-- {/foreach} -->
 
 									<h4 class="t-remark">数量</h4>
 									<div class="div-num dis-box m-top08">
@@ -184,36 +191,37 @@
 							<a class="btn-cart box-flex" type="button" onClick="addToCart({$goods.goods_id});">加入购物车</a>
 							<a class="btn-submit box-flex" type="button" onClick="addToCart_quick({$goods.goods_id});">立即购买</a>
 						</section>
-						</form>
-					</div>
-					<!--商品属性弹出层end-->
+			</form>
+			</div>
+			<!--商品属性弹出层end-->
 			</section>
 			<!--comment-->
-		<section class="m-top04 goods-evaluation">
-			<a href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}">
-				<div class="dis-box padding-all b-color-f  g-evaluation-title">
-					<label class="t-remark g-t-temark">用户评价</label>
-					<div class="box-flex t-goods1">好评率 <em class="t-first">{$comments.favorable}%</em></div>
-					<div class="t-goods1"><em class="t-first">{$goods.comment_count}</em><span class="t-jiantou">{$comments.count}人评论<i class="iconfont icon-jiantou tf-180"></i></span></div>
-				</div>
-			</a>
-			<div class="m-top1px b-color-f g-evaluation-con">
-				<!--{foreach from=$comment_list item="comment" name="com"}-->
-				<!--{if $smarty.foreach.com.index<5}-->
-				<div class="of-hidden evaluation-list padding-all-1 n-list-pl">
-					<div class="of-hidden">
-						<p class="fl"><span class="grade-star g-star-{$comment.comment_rank} fl"></span><em class="t-remark fl"><!--{if $comment.user_name}-->{$comment.user_name|escape:html}<!--{else}-->{$lang.anonymous}<!--{/if}--></em></p>
-						<p class="fr t-remark">{$comment.add_time}</p>
+			<section class="m-top10 goods-evaluation">
+				<a href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}">
+					<div class="dis-box padding-all b-color-f  g-evaluation-title">
+						<label class="t-remark g-t-temark">用户评价</label>
+						<div class="box-flex t-goods1">好评率 <em class="t-first">{$comments.favorable}%</em></div>
+						<div class="t-goods1"><em class="t-first">{$goods.comment_count}</em><span class="t-jiantou">{$comments.count}人评论<i class="iconfont icon-jiantou tf-180"></i></span></div>
 					</div>
-					<p class="clear m-top06 t-goods1">{$comment.content}</p>
-					<!-- {if $comment.re_content} -->
-						  <p><font class="f1">{$lang.admin_username}</font>{$comment.re_content}</p>
-					<!-- {/if} -->
-					<p style="display:none;" class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p>
-				</div>
-				<!--{/if}-->
-				<!--{/foreach}-->
-				<!--<div class="of-hidden evaluation-list">
+				</a>
+				<div class="m-top1px b-color-f g-evaluation-con">
+					<!--{foreach from=$comment_list item="comment" name="com"}-->
+					<!--{if $smarty.foreach.com.index<5}-->
+					<div class="of-hidden evaluation-list padding-all-1 n-list-pl">
+						<div class="of-hidden">
+							<p class="fl"><span class="grade-star g-star-{$comment.comment_rank} fl"></span><em class="t-remark fl"><!--{if $comment.user_name}-->{$comment.user_name|escape:html}<!--{else}-->{$lang.anonymous}<!--{/if}--></em></p>
+							<p class="fr t-remark">{$comment.add_time}</p>
+						</div>
+						<p class="clear m-top06 t-goods1">{$comment.content}</p>
+						<!-- {if $comment.re_content} -->
+						<p>
+							<font class="f1">{$lang.admin_username}</font>{$comment.re_content}</p>
+						<!-- {/if} -->
+						<p style="display:none;" class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p>
+					</div>
+					<!--{/if}-->
+					<!--{/foreach}-->
+					<!--<div class="of-hidden evaluation-list">
 					<div class="of-hidden ">
 						<p class="fl"><span class="grade-star g-star-5 fl"></span><em class="t-remark fl">s****y</em></p>
 						<p class="fr t-remark">2015-08-09 10:46:43</p>
@@ -225,58 +233,60 @@
 						<a href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}" class="box-flex btn-default">全部评价</a>
 					</div>
 				</div>-->
-			</div>
-		</section>
-		<!-- <section class="padding-all text-center t-remark2 xiangqing-1 ">
+				</div>
+			</section>
+			<!-- <section class="padding-all text-center t-remark2 xiangqing-1 ">
 			<a href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}" class="j-goodsinfo-div">点击查看商品详情</a>
 		</section> -->
 
-		</form>
-		
+			</form>
+
+		</div>
+		<!--商品属性弹出层star-->
+		<div class="mask-filter-div"></div>
+		<!--加入购物车弹出层 S-->
+		<script type="text/javascript">
+			function showDiv() {
+				document.getElementById('popDiv').style.display = 'block';
+				document.getElementById('hidDiv').style.display = 'block';
+				document.getElementById('cartNum').innerHTML = document.getElementById('goods_number').value;
+				document.getElementById('cartPrice').innerHTML = document.getElementById('ECS_GOODS_AMOUNT').innerHTML;
+			}
+
+			function closeDiv() {
+				document.getElementById('popDiv').style.display = 'none';
+				document.getElementById('hidDiv').style.display = 'none';
+			}
+		</script>
+		<div class="tipMask" id="hidDiv" style="display:none"></div>
+
+		<!--加入购物车弹出层 E-->
+
 	</div>
-	<!--商品属性弹出层star-->
-	<div class="mask-filter-div"></div>
-	<!--加入购物车弹出层 S-->
-	<script type="text/javascript">
-		function showDiv() {
-			document.getElementById('popDiv').style.display = 'block';
-			document.getElementById('hidDiv').style.display = 'block';
-			document.getElementById('cartNum').innerHTML = document.getElementById('goods_number').value;
-			document.getElementById('cartPrice').innerHTML = document.getElementById('ECS_GOODS_AMOUNT').innerHTML;
-		}
+	<!-- #BeginLibraryItem "/library/new_page_footer_nav.lbi" -->
+	<!-- #EndLibraryItem -->
 
-		function closeDiv() {
-			document.getElementById('popDiv').style.display = 'none';
-			document.getElementById('hidDiv').style.display = 'none';
-		}
-	</script>
-	<div class="tipMask" id="hidDiv" style="display:none"></div>
-
-	<!--加入购物车弹出层 E-->
-
-</div>
-<!-- #BeginLibraryItem "/library/new_page_footer_nav.lbi" -->
-<!-- #EndLibraryItem -->
-
-<!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
-<!-- #EndLibraryItem -->
+	<!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
+	<!-- #EndLibraryItem -->
 </div>
 <!-- #BeginLibraryItem "/goods_info.dwt" -->
 <!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/new_search.lbi" -->
 <!-- #EndLibraryItem -->
 <script type="text/javascript" src="__TPL__/js/lefttime.js"></script>
-<script type="text/javascript">	
+<script type="text/javascript">
 	/*点击下拉菜单*/
 	function openMune() {
-	    if ($(".ect-nav").is(":visible")) {
-	        $(".ect-nav").hide();
-	    } else {
-	        $(".ect-nav").show();
-	    }
+		if ($(".ect-nav").is(":visible")) {
+			$(".ect-nav").hide();
+		} else {
+			$(".ect-nav").show();
+		}
 	}
 	/*倒计时*/
-	var goods_id = {$goods_id};
+	var goods_id = {
+		$goods_id
+	};
 	var goodsattr_style = 1;
 	var gmt_end_time = 0;
 	var day = "天";
@@ -284,15 +294,21 @@
 	var minute = "分钟";
 	var second = "秒";
 	var end = "结束";
-	var goodsId = {$goods_id};
-	var now_time = {$now_time};
-	var use_how_oos = {:C('use_how_oos')};
-$(function() {
-  changePrice(2);
-  //fixpng();
-  try {onload_leftTime();}
-  catch (e) {}
-});
+	var goodsId = {
+		$goods_id
+	};
+	var now_time = {
+		$now_time
+	};
+	var use_how_oos = {: C('use_how_oos')
+	};
+	$(function() {
+		changePrice(2);
+		//fixpng();
+		try {
+			onload_leftTime();
+		} catch (e) {}
+	});
 
 	function back_goods_number() {
 		var goods_number = document.getElementById('goods_number').value;
@@ -335,13 +351,18 @@ $(function() {
 			if (document.getElementById('ECS_GOODS_AMOUNT'))
 				document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result;
 		}
-	}
-
-	
+	};
 </script>
 <script>
 	$(function($) {
-	
+		if ($(window).scrollTop() > 0) {
+			$(".goods-fixed").addClass("hover");
+		} else {
+			$(".goods-fixed").removeClass("hover");
+		};
+		$(".icon-gengduo").click(function() {
+			$(".goods-nav").fadeToggle();
+		});
 		var handler = function(e) { //禁止浏览器默认行为
 			e.preventDefault();
 		};
@@ -371,6 +392,7 @@ $(function() {
 		});
 	});
 </script>
+
 </body>
 
 </html>

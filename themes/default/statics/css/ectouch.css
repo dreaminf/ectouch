@@ -151,7 +151,7 @@ label.admin-text{color:#999;}
 
 /*旋转*/
 .tf-180{ -moz-transform: rotate(-180deg);-webkit-transform: rotate(-180deg);-ms-transform: rotate(-180deg);-o-transform: rotate(-180deg);transform: rotate(-180deg);}
-
+.tf-45{transform: rotate(45deg);-ms-transform: rotate(45deg);		/* IE 9 */-webkit-transform: rotate(45deg);	/* Safari and Chrome */-o-transform: rotate(45deg);		/* Opera */-moz-transform: rotate(45deg);	}
 /*促销图标*/
 .em-promotion{font-size:1.2rem; vertical-align: middle;  padding:.1rem .4rem;  background:#1CBB7F; border-radius: 1.2rem;color:#fff;}
 .em-p-center{background:#f447c9;}
@@ -638,19 +638,19 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .goods-photo li{width:3rem;}
 /*标题*/
 .goods-title{padding-bottom:.8rem;}
-.goods-title h3{font-size:1.8rem; height:4.3rem; overflow: hidden; line-height: 1.3; padding-right:1.3rem;}
+.goods-title h3{font-size:1.7rem; height:3.8rem; overflow: hidden; line-height: 2rem; padding-right:1.3rem;}
 .heart{display:block; width:4rem; height:4rem; padding-left:1.3rem;}
-.heart i{display:block; width: 2.8rem; height:2.8rem; margin:0 auto; background:url(../img/heart_03.png) 0 100% no-repeat; background-size:2.7rem 5.4rem;}
-.heart em{font-size:1.3rem; display:block; text-align: center; margin-top:.2rem; color:#555;}
+.heart i{display:block; width: 2.6rem; height:2.6rem; margin:0 auto; background:url(../img/heart_03.png) 0 100% no-repeat; background-size:2.5rem 5rem;}
+.heart em{font-size:1.1rem; display:block; text-align: center; margin-top:.2rem; color:#555;}
 .heart.active em{color:#1CBB7F}
-.heart.active i{ background:url(../img/heart_03.png) 0 0 no-repeat; background-size:2.7rem 5.4rem;}
+.heart.active i{ background:url(../img/heart_03.png) 0 0 no-repeat; background-size:2.5rem 5rem;}
 /*价格*/
 .goods-price{padding-top:0; }
 .g-p-tthree{font-size:1.4rem; color:#999;}
 .p-price{clear: both; overflow: hidden;}
 .p-price span{font-size:2.1rem;  vertical-align: middle;}
-.p-price .em-promotion{ margin-left:.6rem; margin-top:.2rem}
-.p-market{color:#888; font-size:1.6rem; clear: both; margin-top:.6rem;}
+.p-price .em-promotion{ margin-left:.4rem; margin-top:.2rem}
+.p-market{color:#888; font-size:1.3rem; clear: both; margin-top:.6rem;}
 .p-market del{font-size:1.6rem; margin-left:.6rem;}
 /*促销*/
 .g-promotion-con p{margin-bottom:.6rem; clear: both; padding:.3rem 0; font-size:1.4rem; color:#777;}
@@ -665,7 +665,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .goods-service .goods-min-icon{display:box; display:-webkit-box;  margin-top:.2rem;}
 .g-r-rule .em-promotion{border-radius: 100%; vertical-align: middle; padding: 0; width:1.8rem; height:1.8rem; line-height: 1.8rem; text-align: center; margin-right:.4rem;}
 .g-r-rule .em-promotion i{font-size:1.2rem;}
-.g-r-rule span{display:inline-block; font-size:1.4rem; height:1.8rem; line-height: 2rem;}
+.g-r-rule span{display:inline-block; font-size:1.2rem; height:1.8rem; line-height: 2rem;}
 /*评价*/
 .g-evaluation-title .t-first{margin-left:.6rem; margin-right:.6rem;}
 /*评价 － 店铺信息button*/
@@ -934,7 +934,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
  /*悬浮菜单*/ 
  .f-checkout-filter-btn span{margin-right:1rem; font-size:1.6rem; box-sizing: border-box; padding-top:.8rem;}
  .f-checkout-filter-btn span em{font-size:1.9rem;}
- .f-checkout-filter-btn .btn-submit{width:auto; padding:.84rem 1.2rem; display:block;}
+ .f-checkout-filter-btn .btn-submit{width:auto; padding:.84rem 1.2rem; display:block;margin-right: 0.5rem;}
 
  .s-g-list-con{overflow:hidden; max-height: 20rem;}
  .s-g-list-con ul li{padding:0;}
@@ -1027,10 +1027,10 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 	float: right;
 }
 /*颜色版本*/
-.ect-bg{  background: #1CBB7F !important;color: #fff !important;height: auto;overflow: hidden;}}
+.ect-bg{  background: #1CBB7F !important;color: #fff !important;height: auto;overflow: hidden;}
 /*顶部高度*/
 .ect-header{height:2.5em; position:relative;}
-.ect-header span{font-size: 1.4em;position: absolute;left: 2.4em;right: 3em;top: 0.54em;}
+.ect-header span{font-size: 1.4em;position: absolute;left: 2.4em;right: 3em;top: 0.3em;}
 .ect-header a{  width: 2.5em;height: 2.5em;}
 .ect-text-left{text-align:left;}
 .ect-border-none{border:none;}
@@ -1335,7 +1335,7 @@ a.s-filter{display:block; font-size:1.6rem; text-align:center; padding:.8rem 0; 
 .index-footer-list{padding:0;width:20%;text-align:center}
 .index-footer-list i{font-size:1.6rem;color:#D7D7D7;display:block;line-height:1.6rem}
 .index-footer-list span{font-size:0.9rem;color:#D7D7D7}
-.index-more-list h4{font-size:1.65rem; height:3.8rem; line-height: 1.9rem; overflow: hidden;padding: 0.8rem 0.8rem 0 0.8rem;}
+.index-more-list h4{font-size:1.6rem; height:3.8rem; line-height: 1.9rem; overflow: hidden;padding: 0.8rem 0.8rem 0 0.8rem;}
 .index-title{color:#777;font-size:1.6rem}
 .bd-top-none{border-right:1px solid #f6f6f9;}
 
@@ -1387,3 +1387,36 @@ a.s-filter{display:block; font-size:1.6rem; text-align:center; padding:.8rem 0; 
 .flow-checkout-pro header, .flow-checkout-pro footer {
     font-size: 1.7rem;
 }
+
+
+/*goods*/
+.goods-fixed{position:fixed;top:0;z-index:9;width:100%;max-width:640px;background:rgba(28,187,127,0);}
+.goods-fixed h3{    text-align: center;
+    line-height: 4.6rem;
+    font-size: 2rem;
+}
+.goods-fixed.hover{background: rgba(28,187,127, 0.9);}
+.header-menu-1 .is-con {
+    font-size: 2rem;
+    color:#fff;
+    text-align:center;
+    display: block;
+    line-height: 3.6rem;
+}
+.goods-left-jiat{background:rgba(0,0,0,0.3);height:3.6rem;width:3.6rem; border-radius:100%;margin:0.6rem 0.6rem 0.6rem 0.6rem;}
+.goods-nav{width:36%;border-radius:0.5rem;position:absolute;background:#333;z-index:49999;    right: 0.5rem;top:5rem;display: none;}
+.goods-nav.active{display:block;}
+
+.s-jiantou{background:#333;height:1.7rem;width:1.7rem;   right: 1rem;top: -0.7rem;position: absolute;}
+.goods-nav li{padding:1.1rem 1.3rem;border-bottom:1px solid rgba(100,100,100,0.5);}
+
+.goods-nav-box{font-size:1.6rem;}
+.goods-nav-box i{margin-right:0.8rem;}
+.goods-nav-box a{color:#fff;}
+.goods-money{background:rgba(28,187,127,0.04);padding:0.6rem 1.3rem;}
+.n-goods-box{padding:0.6rem 1.3rem 0.8rem 1.3rem;}
+.t-goods2{font-size:1.3rem;color:#888;}
+.b-color-f1{background:rgba(255,255,255,0.5)}
+.n-goods-bg{background:rgba(0,0,0,1);position:fixed;top:0;bottom:0;left:0;right:0;z-index:9;display:none;}
+.n-goods-bg.active{display:block;}
+.goods-photo.active{position:fixed;top:20%;left:0;right:0;z-index:10;width:100%;display:block;}
