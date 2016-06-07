@@ -793,14 +793,15 @@ transition:all .3s;
 	background:#B7A9F6
 }
 .entrance li .title {
-	color:#000;
+	color:#666;
 	padding:0 0 0 1rem;
 	overflow:hidden;
 	font-size:1.8rem;
-	font-weight:lighter;
+	font-weight:400;
 	line-height:30px
 }
 .entrance li .desc {
+		font-weight:400;
 	color:#999;
 	padding-top:1rem;
 	font-size:1.4rem;

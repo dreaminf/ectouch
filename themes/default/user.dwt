@@ -103,6 +103,17 @@
 							</div>
 						</li>
 					</a>
+							<a href="{:url('user/aftermarket_list')}" class="box-flex">
+						<li>
+							<h4 class="ellipsis-one"><i class="iconfont icon-p-return my-img-size"></i></h4>
+							<p class="t-remark3">退/换货</p>
+							<div class="user-list-num" style="display:block">
+								<!--{if $list.not_comment neq ''}-->{$list.not_comment}
+								<!--{else}-->0
+								<!--{/if}-->
+							</div>
+						</li>
+					</a>
 				</ul>
 			</section>
 			<section class="m-top10 my-nav-box b-color-f">
@@ -144,12 +155,6 @@
 				<a href="{:url('user/share')}">
 					<div class="dis-box padding-all my-bottom">
 						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-fenxiang is-user-size my-fengxiang-color"></i>我的分享</h3>
-						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
-					</div>
-				</a>
-				<a href="{:url('user/aftermarket_list')}">
-					<div class="dis-box padding-all my-bottom">
-						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-tuihuanhuo is-user-size "></i>退换货订单</h3>
 						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
 					</div>
 				</a>
