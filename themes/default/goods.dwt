@@ -75,11 +75,7 @@
 				<!-- {/if} -->
 				<p class=" dis-box g-p-tthree m-top04">
 					<span class="box-flex text-left">{$lang.sort_sales}：{$sales_count}</span>
-					<span class="box-flex text-center">库存: {$goods.goods_number}</span>
-					<span class="box-flex text-right"> </span>
-				</p>
-				<p class=" dis-box g-p-tthree m-top04">
-	
+					<span class="box-flex text-right">库存: {$goods.goods_number}</span>
 				</p>
 			</section>
 			<!-- {if $promotion} 优惠活动 -->
