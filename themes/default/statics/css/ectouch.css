@@ -750,9 +750,10 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .other-login ul li span {display: block;width: 5rem;height: 5rem;line-height: 5rem;border-radius: 50%;margin: 0 auto;margin-bottom: .4rem;}
 .other-login ul li span.qq {background: #36aaf4}
 .other-login ul li span.weixin {background: #2cbf19;}
-.other-login ul li span.xinlang {background: #ec4353;}
+.other-login ul li span.weibo {background: #ec4353;}
 .other-login ul li i {display: block;color: #fff;font-size: 3.4rem;}
 .other-login ul li a:link {text-decoration: none !important;}
+
 
 /*=======================================
 		用户密码找回页
@@ -1503,3 +1504,53 @@ a.n-but-ls{color:#1CBB7F}
 .m_msg .msg-item .msg-info .p-img dl{margin-left:11.2rem}
 .m_msg .msg-item .msg-info .p-img a{float:left}
 .m_msg .msg-item .msg-info .p-img{position:relative;word-break:break-all;z-index:2}
+/*logo*/
+.ect-checkbox label i {
+    border-radius: 4px !important;
+}
+.ect-radio input:checked+label i, .ect-checkbox input:checked+label i {
+    color: #F00;
+    background: url(../img/radio.png) center center #1CBB7F no-repeat;
+    background-size: 80%;
+    border: none;
+        width: 1.6rem;
+    height: 1.6rem;
+}
+.ect-checkbox label i {
+    border-radius: 4px !important;
+}
+.ect-radio label i, .ect-checkbox label i {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-right: 0.3em;
+    display: block;
+    float: left;
+    margin-top: 0.1em;
+    border-radius: 100%;
+    background: rgba(255,255,255,0);
+    border: 2px solid #bbb;
+}
+
+
+.ect-radio input[type=radio], .ect-checkbox input[type=checkbox] {
+    display: none;
+}
+.ect-checkbox label {
+    display: inline-block;
+    max-width: 100%;
+    color:#666;
+}
+.ect-margin-bottom0 a{color:#777;}
+
+/*login*/
+.dis-box{display:-webkit-box;display:-moz-box;display:-ms-box;display:box}
+.box-flex{-webkit-box-flex:1;-moz-box-flex:1;-ms-box-flex:1;box-flex:1;display:block;width:100%}
+.user-register-list{width:7rem;height:3rem;line-height:3rem;border-left:1px solid #f6f6f9;margin-left:1rem;padding-left:1rem;text-align:center;font-size:1.4rem}
+.user-register-list2{width:13rem;height:3rem;line-height:3rem;border-left:1px solid #f6f6f9;margin-left:1rem;padding-left:1rem;text-align:center;font-size:1.5rem;color:#666}
+.user-register-box{padding:1rem 0rem;border-radius:0.5rem;border-bottom:1px solid #f6f6f9}
+.user-register-box input{padding-left:1rem;border:0;outline:0 none;height:3rem;line-height:2rem;padding:.5rem 0;box-sizing:border-box;width:100%;font-size:1.6rem;padding-right:1rem;background:#fff}
+.code-register{font-family:Arial,宋体;font-style:italic;color:#1CBB7F;border:0;padding:2px 3px;letter-spacing:3px;font-weight:bolder}
+.unchanged{border:0}
+.item-password .tp-btn{display:block;position:absolute;right:0;top:0.9rem;width:5rem;height:3.5rem}
+.item-password .btn-off{background:url(../img/as.png)no-repeat;background-size:5rem 3.5rem}
+.item-password .btn-on{background:url(../img/ab.png)no-repeat;background-size:5rem 3.5rem}
