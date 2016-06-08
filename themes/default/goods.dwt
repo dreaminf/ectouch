@@ -14,7 +14,7 @@
 				<a class="" href="javascript:;" onClick="openMune()">
 					<div class="goods-left-jiat"><i class="iconfont icon-gengduo j-nav-box is-con"></i></div>
 				</a>
-				<div class="goods-nav">
+				<div class="goods-nav ts-2">
 
 					<div class="s-jiantou tf-45"></div>
 					<ul class="goods-nav-box">
@@ -265,6 +265,7 @@
 	<!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
 	<!-- #EndLibraryItem -->
 </div>
+<div class="n-goods-bg-box"></div>
 <!-- #BeginLibraryItem "/goods_info.dwt" -->
 <!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/new_search.lbi" -->
@@ -349,13 +350,9 @@ $(function() {
 		var handler = function(e) { //禁止浏览器默认行为
 			e.preventDefault();
 		};
-		if ($(window).scrollTop() > 0) {
-			$(".goods-fixed").addClass("hover");
-		} else {
-			$(".goods-fixed").removeClass("hover");
-		};
+
 		$(".icon-gengduo").click(function() {
-			$(".goods-nav").fadeToggle();
+			$(".goods-nav").toggleClass("active");
 		});
 
 		/*弹出层方式*/

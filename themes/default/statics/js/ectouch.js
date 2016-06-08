@@ -505,6 +505,19 @@ $(function(){
 		}, 'json');
 		return false;
 	});
+	
+	/*头部导航*/
+	$(".j-nav-box").click(function() {
+		$(".j-nav-content").toggleClass("active");
+	});	
+      /*goods弹框*/        
+	$(".n-goods-bg-box,.j-show-goods-img").click(function() {
+		$(".goods-photo").toggleClass("active");
+		$(".n-goods-bg-box").toggleClass("active");	
+	});
+	
+      
+
 })
 
 // 本地存储
