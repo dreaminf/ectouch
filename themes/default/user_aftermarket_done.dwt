@@ -1,60 +1,53 @@
-<!DOCTYPE html>
-<head>
-<meta charset="UTF-8">
-<meta name="charset" content="utf-8">
-<title>协商退货退款</title>
-<link rel="prefetch" href="http://assets.alicdn.com/mw/base/styles/component/more/images/loading.gif">
-<link rel="prefetch" href="http://at.alicdn.com/t/font_1427779172_5609531.woff">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<meta name="apple-touch-fullscreen" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="format-detection" content="telephone=no">
-<meta id="stopUsePullRefresh" value="true">
-<LINK rel=stylesheet type=text/css href="__TPL__/css/aftermarket.css">
-<link rel="stylesheet" href="__TPL__/css/index-min.css" charset="utf-8">
-<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js" ></script>
-<script type="text/javascript" src="__PUBLIC__/js/jquery.json.js" ></script>
-</head>
-<body class="iscroll">
-<div style="top: 0px; min-height: 567px; opacity: 1;" id="page">
-  <div style="left: 0px; top: -40px; position: fixed;" class="pullup"><span class="icon">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-      <path fill="none" stroke="#ddd" stroke-width="5"  />
-      <path fill="none" stroke="#f40" stroke-dasharray="298.495,298.495" stroke-dashoffset="298.495" stroke-width="5"/>
-    </svg>
-    </span><span class="label">上拉刷新页面</span></div>
-  <div style="bottom: 40px;" id="wrapper">
-    <div style="min-height: 528px; -webkit-transform: translate(0px, -1px) translateZ(0px); -webkit-transition: 0.001s cubic-bezier(0.1, 0.57, 0.1, 1); transition: 0.001s cubic-bezier(0.1, 0.57, 0.1, 1);" id="scroller">
-      <div class="panel panel-detail">
-        <div class="panel-body" id="panel-body">
-          <!-- #BeginLibraryItem "/Library/aftermarket_item.lbi" --><!-- #EndLibraryItem -->
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="panel panel-actionbar J_Actionbar">
-    <div id="J_ModId_7">
-      <div class="btn-box bar-main">
-      
-        
-        <!--<div class="bar-item">
+<!-- #BeginLibraryItem "/library/new_page_header.lbi" -->
+<!-- #EndLibraryItem -->
+<div class="con m-b7">
+<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
+	<h3 class="box-flex">协商退货退款</h3>
+	<a class="" href="javascript:;"><i class="iconfont icon-pailie j-nav-box"></i></a>
+</header>
+<div class="j-nav-content">
+	<ul class="dis-box new-footer-box">
+		<li class="box-flex">
+			<a href="{:url('index/index')}"><i class="iconfont icon-home"></i><span>首页</span></a>
+		</li>
+		<li class="box-flex">
+			<a href="{:url('category/top_all')}"><i class="iconfont icon-caidan"></i><span>分类</span></a>
+		</li>
+		<li class="box-flex"><a href="javascript:;" class="j-search-input-new"><i class="iconfont icon-sousuo"></i><span>搜索</span></a></li>
+		<li class="box-flex"><a href="{:url('flow/cart')}"><i class="iconfont icon-gouwuche"></i><span>购物车</span></a></li>
+		<li class="box-flex"><a href="{:url('user/index')}"><i class="iconfont icon-geren"></i><span>用户中心</span></a></li>
+	</ul>
+</div>
+<div id="page">
+	<div class="pullup"><span class="icon">
+</span><span class="label"></span></div>
+	<div id="wrapper">
+		<div  id="scroller">
+			<div class="panel panel-detail">
+				<div class="panel-body" id="panel-body">
+					<!-- #BeginLibraryItem "/Library/aftermarket_item.lbi" -->
+					<!-- #EndLibraryItem -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-actionbar J_Actionbar">
+		<div id="J_ModId_7">
+			<div class="btn-box bar-main">
+
+				<!--<div class="bar-item">
           <button class="J_Btn " type="button" onClick="editapplication()" data-param=''>修改申请</button>
         </div>-->
-        
-        <!-- {if $return.is_cancel} -->
-        <div class="bar-item">
-        <a href="{:url('user/cancel_service', array('ret_id'=>$this->_var['return']['ret_id']))}" onclick="if (!confirm('{$lang.confirm_cancel}？')) return false;"><button class="J_Btn " type="button" onClick="cancellations()" data-param=''>{$lang.cancel_service}</button></a>
-        </div>
-        <!-- {/if} -->
-        <div class="bar-item">
-          <a href="{:url('user/aftermarket_detail', array('ret_id'=>$this->_var['return']['ret_id']))}"><button class="J_Btn " type="button" onClick="message()"data-param=''>{$lang.aftermarket_detail}</button></a>
-        </div>
-        
-      </div>
-    </div>
-  </div>
-  <div style="left: 0px; bottom: 0px; position: fixed;" class="pulldown"><span class="icon">
+				<div class="filter-btn dis-box">
+					<!-- {if $return.is_cancel} -->
+					<a href="{:url('user/cancel_service', array('ret_id'=>$this->_var['return']['ret_id']))}" onclick="if (!confirm('{$lang.confirm_cancel}？'))" return false; onClick="cancellations()" data-param='' type="button" class="btn-cart n-but-ls box-flex n-iphone5-top1 j-goods-attr j-show-div">{$lang.cancel_service}</a>
+					<!-- {/if} -->
+					<a href="{:url('user/aftermarket_detail', array('ret_id'=>$this->_var['return']['ret_id']))}" type="button" onClick="message()" data-param='' class="btn-submit box-flex n-iphone5-top1 j-goods-attr j-show-div">{$lang.aftermarket_detail}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="left: 0px; bottom: 0px; position: fixed;" class="pulldown"><span class="icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
       <path fill="none" stroke="#ddd" stroke-width="5" />
       <path fill="none" stroke="#f40" stroke-width="5"/>
@@ -64,41 +57,50 @@
 <div id="mask"></div>
 <div id="popup" class="bottom-side"></div>
 <div id="load-layer">
-  <div class="load-icon hidden">
-    <div class="load-outer">
-      <div class="load-inner"></div>
-    </div>
-    <div class="load-msg hidden">正在加载</div>
-  </div>
+	<div class="load-icon hidden">
+		<div class="load-outer">
+			<div class="load-inner"></div>
+		</div>
+		<div class="load-msg hidden">正在加载</div>
+	</div>
 </div>
 <div id="error-layer">
-  <div class="iconfont icon-wifi"></div>
-  <p class="error-msg">资源加载失败，请稍候重试</p>
-  <button class="retry-btn" onclick="javascript:location.reload();" type="button">重新加载</button>
+	<div class="iconfont icon-wifi"></div>
+	<p class="error-msg">资源加载失败，请稍候重试</p>
+	<button class="retry-btn" onclick="javascript:location.reload();" type="button">重新加载</button>
 </div>
 <div style="top: 0px; width: 344px; font-size: 1.2rem; visibility: hidden; position: absolute; z-index: -1;">一</div>
+</div>
+<!-- #BeginLibraryItem "/library/new_search.lbi" -->
+<!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
+<!-- #EndLibraryItem -->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.json.js"></script>
 <script>
-/**
- 撤销申请
-*/
-function cancellations(){
-  var rec_id = {$return.rec_id};
-  var ret_id = {$return.ret_id};
-  $.get('{:url("user/cancel_service")}', {
-    rec_id : rec_id,ret_id : ret_id
-  }, function(result) {
-    if (result.error)
-      {
-      alert(result.error);
-      location.href = './';
-      }
-      if(result.error == ''){
-        var panel_body = document.getElementById("panel-body");
-          panel_body.innerHTML = (typeof result == "object") ? result.content : result; 
-    }
-  
-  
-  }, 'json');  
-}
+	/**
+		 撤销申请
+		*/
+	function cancellations() {
+		var rec_id = {
+			$return.rec_id
+		};
+		var ret_id = {
+			$return.ret_id
+		};
+		$.get('{:url("user/cancel_service")}', {
+			rec_id: rec_id,
+			ret_id: ret_id
+		}, function(result) {
+			if (result.error) {
+				alert(result.error);
+				location.href = './';
+			}
+			if (result.error == '') {
+				var panel_body = document.getElementById("panel-body");
+				panel_body.innerHTML = (typeof result == "object") ? result.content : result;
+			}
+		}, 'json');
+	}
 </script>
 </body>

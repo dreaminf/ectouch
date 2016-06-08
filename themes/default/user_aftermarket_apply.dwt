@@ -332,16 +332,11 @@
         </form>
       </div>
     </div>
-  </div>
-  <div class="panel panel-actionbar J_Actionbar">
-    <div>
-      <div class="btn-box bar-main">
-        <div class="bar-item">  
-          <button class="J_Btn attention-btn" id="diyStart" type="button"  onclick="check_service()">提交申请</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  </div>  
+  <div class="filter-btn dis-box">
+	<a type="button" class="btn-submit box-flex n-iphone5-top1 j-goods-attr j-show-div" id="diyStart" onclick="check_service()">提交申请</a>
+</div>
+  
 </div>
 <div id="mask"></div>
 <div id="popup" class="bottom-side"></div>
