@@ -1,33 +1,32 @@
 <!-- #BeginLibraryItem "/library/new_page_header.lbi" -->
 <!-- #EndLibraryItem -->
-
-				<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
-				<h3 class="box-flex">服务选择</h3>
-				<a class="" href="javascript:;"><i class="iconfont icon-pailie j-nav-box"></i></a>
-			</header>
-		<!--	<div class="j-nav-content">
-				<ul class="dis-box new-footer-box">
-					<li class="box-flex">
-						<a href="index.html"><i class="iconfont icon-home"></i><span>首页</span></a>
-					</li>
-					<li class="box-flex">
-						<a href="catalog.html"><i class="iconfont icon-caidan"></i><span>分类</span></a>
-					</li>
-					<li class="box-flex"><a href="javascript:;" class="j-search-input"><i class="iconfont icon-sousuo"></i><span>搜索</span></a></li>
-					<li class="box-flex"><a href="flow_cart.html"><i class="iconfont icon-gouwuche"></i><span>购物车</span></a></li>
-					<li class="box-flex"><a href="user.html"><i class="iconfont icon-geren"></i><span>用户中心</span></a></li>
-				</ul>
-		</div>-->		
+<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
+	<h3 class="box-flex">服务选择</h3>
+	<a class="" href="javascript:;"><i class="iconfont icon-pailie j-nav-box"></i></a>
+</header>
+<div class="j-nav-content">
+	<ul class="dis-box new-footer-box">
+		<li class="box-flex">
+			<a href="{:url('index/index')}"><i class="iconfont icon-home"></i><span>首页</span></a>
+		</li>
+		<li class="box-flex">
+			<a href="{:url('category/top_all')}"><i class="iconfont icon-caidan"></i><span>分类</span></a>
+		</li>
+		<li class="box-flex"><a href="javascript:;" class="j-search-input-new"><i class="iconfont icon-sousuo"></i><span>搜索</span></a></li>
+		<li class="box-flex"><a href="{:url('flow/cart')}"><i class="iconfont icon-gouwuche"></i><span>购物车</span></a></li>
+		<li class="box-flex"><a href="{:url('user/index')}"><i class="iconfont icon-geren"></i><span>用户中心</span></a></li>
+	</ul>
+</div>
 <div style="top: 0px; min-height: 567px; opacity: 1;" id="page">
-  <div id="wrapper">
-    <div id="scroller">
-      <div class="panel panel-entrance m-top10">
-        <div class="panel-body">
-          <div id="J_ModId_1">
-            <ul id="J_Entrance" class="entrance show">
-      <!-- {foreach from=$service_type item=service name=service_type} -->
-              <li class="arrow J_ListItem"  data-value="3"> 
-              	<a href="{$service.url}"> 
+	<div id="wrapper">
+		<div id="scroller">
+			<div class="panel panel-entrance m-top10">
+				<div class="panel-body">
+					<div id="J_ModId_1">
+						<ul id="J_Entrance" class="entrance show">
+							<!-- {foreach from=$service_type item=service name=service_type} -->
+							<li class="arrow J_ListItem" data-value="3">
+								<a href="{$service.url}"> 
                    {if $smarty.foreach.service_type.index == 0}
                   <span class="iconfont icon-7tianwuliyoutuihuo n-user-lanbg"></span>
                   {elseif $smarty.foreach.service_type.index == 1}
@@ -40,29 +39,31 @@
                 <h5 class="title">{$service.service_name}</h5>
                 <div class="desc">{$service.service_desc}</div>
                 </a> </li>
-            <!-- {/foreach} --> 
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+							<!-- {/foreach} -->
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <div id="mask"></div>
 <div id="popup" class="bottom-side"></div>
 <div id="load-layer">
-  <div class="load-icon hidden">
-    <div class="load-outer">
-      <div class="load-inner"></div>
-    </div>
-    <div class="load-msg hidden">正在加载</div>
-  </div>
+	<div class="load-icon hidden">
+		<div class="load-outer">
+			<div class="load-inner"></div>
+		</div>
+		<div class="load-msg hidden">正在加载</div>
+	</div>
 </div>
 <div id="error-layer">
-  <div class="iconfont icon-wifi"></div>
-  <p class="error-msg">资源加载失败，请稍候重试</p>
-  <button class="retry-btn" onclick="javascript:location.reload();" type="button">重新加载</button>
+	<div class="iconfont icon-wifi"></div>
+	<p class="error-msg">资源加载失败，请稍候重试</p>
+	<button class="retry-btn" onclick="javascript:location.reload();" type="button">重新加载</button>
 </div>
-		<!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
-		<!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/new_search.lbi" -->
+<!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
+<!-- #EndLibraryItem -->
 </body>
