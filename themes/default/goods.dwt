@@ -270,19 +270,17 @@
 <!-- #BeginLibraryItem "/library/new_search.lbi" -->
 <!-- #EndLibraryItem -->
 <script type="text/javascript" src="__TPL__/js/lefttime.js"></script>
-<script type="text/javascript">
+<script type="text/javascript">	
 	/*点击下拉菜单*/
 	function openMune() {
-		if ($(".ect-nav").is(":visible")) {
-			$(".ect-nav").hide();
-		} else {
-			$(".ect-nav").show();
-		}
+	    if ($(".ect-nav").is(":visible")) {
+	        $(".ect-nav").hide();
+	    } else {
+	        $(".ect-nav").show();
+	    }
 	}
 	/*倒计时*/
-	var goods_id = {
-		$goods_id
-	};
+	var goods_id = {$goods_id};
 	var goodsattr_style = 1;
 	var gmt_end_time = 0;
 	var day = "天";
@@ -290,21 +288,15 @@
 	var minute = "分钟";
 	var second = "秒";
 	var end = "结束";
-	var goodsId = {
-		$goods_id
-	};
-	var now_time = {
-		$now_time
-	};
-	var use_how_oos = {: C('use_how_oos')
-	};
-	$(function() {
-		changePrice(2);
-		//fixpng();
-		try {
-			onload_leftTime();
-		} catch (e) {}
-	});
+	var goodsId = {$goods_id};
+	var now_time = {$now_time};
+	var use_how_oos = {:C('use_how_oos')};
+$(function() {
+  changePrice(2);
+  //fixpng();
+  try {onload_leftTime();}
+  catch (e) {}
+});
 
 	function back_goods_number() {
 		var goods_number = document.getElementById('goods_number').value;
@@ -347,10 +339,16 @@
 			if (document.getElementById('ECS_GOODS_AMOUNT'))
 				document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result;
 		}
-	};
+	}
+
+	
 </script>
 <script>
 	$(function($) {
+	
+		var handler = function(e) { //禁止浏览器默认行为
+			e.preventDefault();
+		};
 		if ($(window).scrollTop() > 0) {
 			$(".goods-fixed").addClass("hover");
 		} else {
@@ -359,9 +357,7 @@
 		$(".icon-gengduo").click(function() {
 			$(".goods-nav").fadeToggle();
 		});
-		var handler = function(e) { //禁止浏览器默认行为
-			e.preventDefault();
-		};
+
 		/*弹出层方式*/
 		$(".j-show-div").click(function() {
 			document.addEventListener("touchmove", handler, false);
@@ -388,6 +384,7 @@
 		});
 	});
 </script>
+
 
 </body>
 
