@@ -1407,8 +1407,8 @@ a.s-filter{display:block; font-size:1.6rem; text-align:center; padding:.8rem 0; 
     line-height: 3.6rem;
 }
 .goods-left-jiat{background:rgba(0,0,0,0.3);height:3.6rem;width:3.6rem; border-radius:100%;margin:0.6rem 0.6rem 0.6rem 0.6rem;}
-.goods-nav{width:40%; height:0;border-radius:0.5rem;position:absolute;background:#333;z-index:49999;right: -3.2rem;top:3.4rem; -webkit-transform: scale(0.0);}
-.goods-nav.active{height:inherit;  right: 0rem; top:4.6rem;  -webkit-transform: scale(1.0);}
+.goods-nav{width:40%; height:0;border-radius:0.5rem;position:absolute;background:#333;z-index:49999;right: 0rem;top:5rem;display:none; /*-webkit-transform: scale(0.0);*/}
+/*.goods-nav.active{height:inherit; -webkit-transform: scale(1.0);display:block}*/
 .goods-nav-box{font-size:1.6rem;border-radius:0.5rem;position:absolute;background:#333;right:0.8rem}
 .s-jiantou{background:#333;height:1.7rem;width:1.7rem;   right: 1.5rem;top: -0.7rem;position: absolute;}
 .goods-nav li{padding:1.1rem 1.3rem;border-bottom:1px solid rgba(100,100,100,0.5);}
@@ -1420,9 +1420,9 @@ a.s-filter{display:block; font-size:1.6rem; text-align:center; padding:.8rem 0; 
 .b-color-f1{background:rgba(255,255,255,0.5)}
 .n-goods-bg{background:rgba(0,0,0,1);position:fixed;top:0;bottom:0;left:0;right:0;z-index:9;display:none;}
 .n-goods-bg.active{display:block;}
-.n-goods-bg-box{background:rgba(0,0,0,0.8);position:fixed;top:0;bottom:0;right:0;left:0;z-index:20;display:none;}
+.n-goods-bg-box{background:rgba(0,0,0,0.95);position:fixed;top:0;bottom:0;right:0;left:0;z-index:20;display:none;}
 .n-goods-bg-box.active{display:block;}
-.goods-photo.active{position:absolute;top:0%;z-index:21;}
+.goods-photo.active{position:fixed;top:0%;z-index:21;}
 /*退货页面*/
 .panel-form .row .f-label{width:10rem;line-height:4rem;padding-left:1.4rem;padding-right:0;color:#B8B8B8;position:relative;float:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #page{position:relative;z-index:5;width:100%;max-width:640px;overflow:hidden;margin:0 auto}

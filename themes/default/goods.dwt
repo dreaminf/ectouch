@@ -14,7 +14,7 @@
 				<a class="" href="javascript:;" onClick="openMune()">
 					<div class="goods-left-jiat"><i class="iconfont icon-gengduo j-nav-box is-con"></i></div>
 				</a>
-				<div class="goods-nav ts-2">
+				<div class="goods-nav">
 
 					<div class="s-jiantou tf-45"></div>
 					<ul class="goods-nav-box">
@@ -352,7 +352,7 @@ $(function() {
 		};
 
 		$(".icon-gengduo").click(function() {
-			$(".goods-nav").toggleClass("active");
+			$(".goods-nav").fadeToggle("2000");
 		});
 
 		/*弹出层方式*/
