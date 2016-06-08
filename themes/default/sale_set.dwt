@@ -28,7 +28,7 @@
 	<form action="{:url('sale/sale_set')}" method="post" id="formSub" onsubmit="return submit_saleSet();">
 		<section class="padding-all m-t">
 		<div class="n-sale-set-box">
-			<h4 class="f-07 col-3">店铺名称:<span class="f-02 col-8">例：{:C('SHOP_NAME')}xx微店</span></h4>
+			<h4 class="f-07 col-3">店铺名称:<span class="f-02 col-8">例：天使试衣间</span></h4>
 			<div class="n-sale-input">
 				<input type="text" name="data[shop_name]" id="shop_name" placeholder="请输入您的店名" value="" class="set-4-input" />
 			</div>
