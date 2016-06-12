@@ -13,6 +13,15 @@
 
 // 部署模式(0:单机|1:分布式)
 define('DEPLOY_MODE', 0);
+$GLOBALS['DEPLOY_CONF'] = array(
+    /* 上传设置 */
+    'UPLOAD_CONF' => array(
+        'OSS_ACCESS_ID' => 'vml6ns7R1i65cd88', //您从OSS获得的AccessKeyId
+        'OSS_ACCESS_KEY' => 'SFxvHBQTWHwVZSFD1EPy36eTz3RWwt', //您从OSS获得的AccessKeySecret
+        'OSS_ENDPOINT' => 'oss-cn-hangzhou.aliyuncs.com', //您选定的OSS数据中心访问域名
+        'OSS_BUCKET' => 'cn-ectouch', //空间名称
+    )
+);
 // 兼容运行环境
 $global_config = dirname(ROOT_PATH) . '/data/config.php';
 if (file_exists($global_config)) {
@@ -38,7 +47,7 @@ define('EC_CHARSET', 'utf-8');
 define('ADMIN_PATH', 'admin');
 define('AUTH_KEY', 'this is a key');
 define('OLD_AUTH_KEY', '');
-define('API_TIME', '2016-06-03 18:01:22');
+define('API_TIME', '2016-06-12 14:15:02');
 define('RUN_ON_ECS', false);
 $db_config = ROOT_PATH . 'data/database.php';
 if (file_exists($db_config)) {
