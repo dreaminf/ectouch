@@ -17,7 +17,7 @@ class image
 {
     var $error_no    = 0;
     var $error_msg   = '';
-    var $images_dir  = 'data/assets/images';
+    var $images_dir  = 'data/attached/images';
     var $data_dir    = 'data/attached';
     var $bgcolor     = '';
     var $type_maping = array(1 => 'image/gif', 2 => 'image/jpeg', 3 => 'image/png');
