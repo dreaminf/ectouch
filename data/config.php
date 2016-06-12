@@ -11,6 +11,8 @@
  * ----------------------------------------------------------------------------
  */
 
+// 部署模式(0:单机|1:分布式)
+define('DEPLOY_MODE', 0);
 // 兼容运行环境
 $global_config = dirname(ROOT_PATH) . '/data/config.php';
 if (file_exists($global_config)) {
@@ -36,7 +38,7 @@ define('EC_CHARSET', 'utf-8');
 define('ADMIN_PATH', 'admin');
 define('AUTH_KEY', 'this is a key');
 define('OLD_AUTH_KEY', '');
-define('API_TIME', '2016-04-25 10:58:55');
+define('API_TIME', '2016-06-03 18:01:22');
 define('RUN_ON_ECS', false);
 $db_config = ROOT_PATH . 'data/database.php';
 if (file_exists($db_config)) {

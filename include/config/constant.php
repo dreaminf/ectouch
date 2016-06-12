@@ -1,5 +1,5 @@
 <?php
-define('DEPLOY_MODE', 0); // 部署模式(0:单机|1:分布式)
+
 /* 图片处理相关常数 */
 define('ERR_INVALID_IMAGE',         1);
 define('ERR_NO_GD',                 2);
