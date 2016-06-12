@@ -204,7 +204,6 @@ label.admin-text{color:#999;}
 .btn-disab,
 .btn-cart,
 .btn-reset,
-.btn-reset-lv,
 .btn-default,
 .btn-alipay,
 .btn-wechat{font-size: 1.7rem;color: #fff;border: 0;text-align: center;padding: .84rem 0;border-radius: 4px;width: 100%;}
@@ -239,7 +238,7 @@ a.btn-reset,a.btn-default{color:#555;}
 a.btn-disab{background: #bbb;border:1px solid #bbb}
 .ect-button-more a,.ect-button-more button{margin-right:.6rem;}
 .ect-button-more a:last-child,.ect-button-more button:last-child{margin-right:0;}
-.btn-reset-lv{background:#fff;color:#1CBB7F;border:1px solid #1CBB7F}
+.btn-reset-lv{margin-top:0.22rem;background:#fff;color:#1CBB7F;border:1px solid #1CBB7F;font-size: 1.7rem;color: #1CBB7F;text-align: center;padding: .84rem 0;border-radius: 4px;width: 100%;}
 a.btn-reset-lv{color: #1CBB7F;}
 /*文本框*/
 .text-all {border-bottom: 1px solid #F6F6F9;padding: 1rem 0;width: 100%;overflow: hidden;}
@@ -1546,7 +1545,7 @@ a.n-but-ls{color:#1CBB7F}
 .profile-left-name{width:12rem;}
 .t-goods1 input{font-size:1.5rem;color:#666;    }
 .n-pro-name{line-height:2.6rem;    margin-left: 1.9rem;}
-.flow-consignee ul li{padding:1.3rem 0rem;overflow:hidden;height:auto;clear:both;border-bottom:1px solid #f6f6f9;position:relative;}
+.flow-consignee ul li{padding:1.3rem 0rem;overflow:hidden;height:auto;clear:both;position:relative;}
 .input-text{position:relative;font-size:1.7rem}
 .input-text b{display:block;float:left;width:6m;font-weight:400}
 .input-text span{position:absolute;left:6.2em;right:0em}

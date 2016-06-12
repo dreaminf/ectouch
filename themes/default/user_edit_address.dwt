@@ -73,16 +73,17 @@
 			        </select>
 				</div>
 			</li>
-			<li class="input-text s-xian-box s-user-top-1"><b class="pull-left">{$lang.detailed_address}：</b>
+			<li class="input-text  s-user-top-1"><b class="pull-left">{$lang.detailed_address}：</b>
 				<textarea name="address" placeholder="{$lang.detailed_address}{$lang.require_field}" type="text">{$consignee.address|escape}</textarea>
 			</li>
 		</ul>
-	</section>
-	<div class="ect-button-more dis-box m-top12 padding-all">
-		<a href="{:url('user/del_address_list', array('id'=>$this->_var['consignee']['address_id']))}" class="btn-reset-lv box-flex">{$lang.drop}</a>
+
+	<div class="ect-button-more dis-box ect-padding-tb">
+		<a href="{:url('user/del_address_list', array('id'=>$this->_var['consignee']['address_id']))}" class="box-flex"><div class="btn-reset-lv">{$lang.drop}</div></a>
 		<button type="submit" name="submit" class="btn-submit box-flex">{$lang.confirm_edit}</a>
 		<input name="address_id" type="hidden" value="{$consignee.address_id}" />
   </div>
+  	</section>
   
   
 </form>
