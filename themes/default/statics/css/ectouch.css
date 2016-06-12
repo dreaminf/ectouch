@@ -1584,3 +1584,22 @@ a.n-but-ls{color:#1CBB7F}
     border:1px solid #f6f6f9;
     font-size:1.5rem;color:#777;
 }
+
+
+/*消息*/
+.user-account-detail{overflow:hidden}
+.user-account-detail ul li{overflow:hidden;padding:1.3rem;background:#fff;margin-bottom:0.6rem}
+.new-msg-title{padding:1.3rem;background:#fff;border-bottom:1px solid #f6f6f9;padding:0.8rem 0}
+.user-account-detail ul li h4{font-size:1.7rem;color:#666;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.new-msg-title span{color:#999;font-size:1.3rem}
+.new-msg-title label{border:1px solid #1CBB7F;border-radius:0.5rem;float:right;margin-top:0.3rem}
+.new-msg-title label a{color:#1CBB7F;padding:0.6rem 1rem;font-weight:400;font-size:1.5rem}
+.user-account-detail ul li h5{font-size:1.5rem;color:#444;word-wrap:break-word;margin:1rem 0 0.6rem 0}
+.user-account-detail ul li p{clear:both;overflow:hidden;font-size:1.4rem;word-wrap:break-word;color:#888}
+.user-account-message{text-align:center;font-size:1.7rem;margin-top:2rem;color:#555}
+
+/*page*/
+.n-page-but{width:7rem;}
+.n-page-but .page-but{padding:.7rem;border-radius:0.5rem;font-size:1.5rem; color:#555;text-align:center;    background: #fff;border:1px solid #eee;height:2.2rem;line-height:2.2rem}
+.page-num{padding:0 1rem;}
+.page-num select{padding: .7rem;padding-left:40%;border-radius:0.5rem;width:100%;background:#fff;border:1px solid #eee;font-size:1.7rem; color:#777;height:3.8rem;line-height:1.9rem}
