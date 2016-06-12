@@ -1504,6 +1504,7 @@ a.n-but-ls{color:#1CBB7F}
 .m_msg .msg-item .msg-info .p-img dl{margin-left:11.2rem}
 .m_msg .msg-item .msg-info .p-img a{float:left}
 .m_msg .msg-item .msg-info .p-img{position:relative;word-break:break-all;z-index:2}
+.hidden{display:none}
 /*logo*/
 .ect-checkbox label i {
     border-radius: 4px !important;
