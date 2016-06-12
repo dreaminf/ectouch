@@ -725,6 +725,7 @@ function autoload($className) {
         APP_PATH . C('_APP_NAME') . '/models/' . $className . '.class.php',
         APP_PATH . C('_APP_NAME') . '/controllers/' . $className . '.class.php',
         BASE_PATH . 'base/' . $className . '.class.php',
+        BASE_PATH . 'classes/' . $className . '.class.php',
         BASE_PATH . 'libraries/' . $className . '.class.php',
         BASE_PATH . 'vendor/' . $className . '.class.php'
     );
