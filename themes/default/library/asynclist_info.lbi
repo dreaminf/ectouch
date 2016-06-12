@@ -137,12 +137,22 @@
 <!-- 用户订单end--> 
 
 <!-- 配送地址 start--> 
-<!--{if $consignee}--> 
-<a href="{$consignee.url}">
-<p class="title">{$consignee.consignee} <span class="ect-colory">{$consignee.mobile}</span></p>
-<p>{$consignee.address}</p>
-<i class="fa fa-angle-right"></i> </a> 
-<!-- {/if}--> 
+<!--{if $consignee}-->
+					<div class="flow-set-adr of-hidden padding-all ">
+						<div class="ect-select fl">
+							<label class="dis-box">
+								<i class="select-btn"></i>
+								<span class="box-flex">设为默认</span>
+							</label>
+						</div>
+						<div class="fr"><a href="{$consignee.url}"><i class="iconfont icon-bianji"></i>编辑</a><a href="{:url('user/del_address_list', array('id'=>$this->_var['consignee']['address_id']))}"><i class="iconfont icon-xiao10"></i>删除</a></div>
+					</div>
+					<div class="flow-have-adr padding-all">
+						<p class="f-h-adr-title">
+							<label>{$consignee.consignee}</label><span class="ect-colory">{$consignee.mobile}</span></p>
+						<p class="f-h-adr-con t-remark m-top04">{$consignee.address}</p>
+					</div>
+				<!-- {/if}-->
 <!-- 配送地址end--> 
 
 <!-- 产品配件 start--> 

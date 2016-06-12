@@ -204,6 +204,7 @@ label.admin-text{color:#999;}
 .btn-disab,
 .btn-cart,
 .btn-reset,
+.btn-reset-lv,
 .btn-default,
 .btn-alipay,
 .btn-wechat{font-size: 1.7rem;color: #fff;border: 0;text-align: center;padding: .84rem 0;border-radius: 4px;width: 100%;}
@@ -238,7 +239,8 @@ a.btn-reset,a.btn-default{color:#555;}
 a.btn-disab{background: #bbb;border:1px solid #bbb}
 .ect-button-more a,.ect-button-more button{margin-right:.6rem;}
 .ect-button-more a:last-child,.ect-button-more button:last-child{margin-right:0;}
-
+.btn-reset-lv{background:#fff;color:#1CBB7F;border:1px solid #1CBB7F}
+a.btn-reset-lv{color: #1CBB7F;}
 /*文本框*/
 .text-all {border-bottom: 1px solid #F6F6F9;padding: 1rem 0;width: 100%;overflow: hidden;}
 .text-all.active{border-bottom:1px solid #1CBB7F;}
@@ -739,7 +741,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 /*=======================================
 		用户登录页
   =======================================*/
-.user-center {margin-top: 2rem; font-size:1.6rem;}
+.user-center {margin-top:1.6rem; font-size:1.6rem;}
 .user-center .t-remark{margin-top:1.6rem;}
 .user-center .btn-submit {margin-top: 2.2rem}
 .u-l-register {font-size: 1.6rem;text-align: center;margin-top: 2.2rem;display: block;}
@@ -961,7 +963,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
  .flow-consignee-list .flow-checkout-adr{padding:0;}
  .flow-consignee-list .flow-checkout-adr a{position:static; font-size:1.5rem; color:#777; margin-left:1rem;}
  .flow-consignee-list .flow-checkout-adr a i{font-size:1.9rem; margin-right:.8rem;}
- .flow-consignee-list .flow-have-adr{padding:2rem 1.6rem;}
+ .flow-consignee-list .flow-have-adr{padding:1.3rem;}
  .flow-set-adr{border-bottom:1px solid #F6F6F9; font-size:1.3rem;}
  .flow-set-adr .ect-select label span{font-size:1.5rem; color:#666}
  /*填写－修改收货人信息*/
@@ -1376,7 +1378,6 @@ a.s-filter{display:block; font-size:1.6rem; text-align:center; padding:.8rem 0; 
 .text-all-select-div ul li{border-bottom:1px solid #efefef; padding:1.3rem 0; color:#444;}
 .text-all-select-div ul li:first-of-type{padding-top:0;}
 .text-all-select-div ul li:last-of-type{border-bottom:none; padding-bottom:0;}
-
 .f-c-p-orderid{border-bottom:1px solid #f6f6f9;}
 .n-order-more{float: right;margin-top: 0.6rem;color: #999;font-size: 2rem;}
 .flow-checkout-pro footer .ect-button-more button, .flow-checkout-pro footer .ect-button-more a {
@@ -1505,45 +1506,14 @@ a.n-but-ls{color:#1CBB7F}
 .m_msg .msg-item .msg-info .p-img a{float:left}
 .m_msg .msg-item .msg-info .p-img{position:relative;word-break:break-all;z-index:2}
 .hidden{display:none}
-/*logo*/
-.ect-checkbox label i {
-    border-radius: 4px !important;
-}
-.ect-radio input:checked+label i, .ect-checkbox input:checked+label i {
-    color: #F00;
-    background: url(../img/radio.png) center center #1CBB7F no-repeat;
-    background-size: 80%;
-    border: none;
-        width: 1.6rem;
-    height: 1.6rem;
-}
-.ect-checkbox label i {
-    border-radius: 4px !important;
-}
-.ect-radio label i, .ect-checkbox label i {
-    width: 1.2rem;
-    height: 1.2rem;
-    margin-right: 0.3em;
-    display: block;
-    float: left;
-    margin-top: 0.1em;
-    border-radius: 100%;
-    background: rgba(255,255,255,0);
-    border: 2px solid #bbb;
-}
-
-
-.ect-radio input[type=radio], .ect-checkbox input[type=checkbox] {
-    display: none;
-}
-.ect-checkbox label {
-    display: inline-block;
-    max-width: 100%;
-    color:#666;
-}
-.ect-margin-bottom0 a{color:#777;}
-
 /*login*/
+.ect-checkbox label i{border-radius:4px !important}
+.ect-radio input:checked+label i,.ect-checkbox input:checked+label i{color:#F00;background:url(../img/radio.png) center center #1CBB7F no-repeat;background-size:80%;border:none;width:1.6rem;height:1.6rem}
+.ect-checkbox label i{border-radius:4px !important}
+.ect-radio label i,.ect-checkbox label i{width:1.2rem;height:1.2rem;margin-right:0.3em;display:block;float:left;margin-top:0.1em;border-radius:100%;background:rgba(255,255,255,0);border:2px solid #bbb}
+.ect-radio input[type=radio],.ect-checkbox input[type=checkbox]{display:none}
+.ect-checkbox label{display:inline-block;max-width:100%;color:#666;font-size: 1.3rem;}
+.ect-margin-bottom0 a{color:#777}
 .dis-box{display:-webkit-box;display:-moz-box;display:-ms-box;display:box}
 .box-flex{-webkit-box-flex:1;-moz-box-flex:1;-ms-box-flex:1;box-flex:1;display:block;width:100%}
 .user-register-list{width:7rem;height:3rem;line-height:3rem;border-left:1px solid #f6f6f9;margin-left:1rem;padding-left:1rem;text-align:center;font-size:1.4rem}
@@ -1555,3 +1525,63 @@ a.n-but-ls{color:#1CBB7F}
 .item-password .tp-btn{display:block;position:absolute;right:0;top:0.9rem;width:5rem;height:3.5rem}
 .item-password .btn-off{background:url(../img/as.png)no-repeat;background-size:5rem 3.5rem}
 .item-password .btn-on{background:url(../img/ab.png)no-repeat;background-size:5rem 3.5rem}
+.n-login-x a{font-size:1.3rem;clear:both}
+/*资料设置*/
+.user-head-img-box-1 img{width:4.5rem;height:4.5rem;border-radius:2.5rem;border:2px solid #eee;}  
+.s-user-img{line-height:5.2rem;}  
+.s-xian-box{border-bottom:1px solid #F6F6F9;} 
+.s-user-top-1{padding:1.3rem 0}
+.s-user-top{padding:0 1.3rem;position: relative;}
+.jian-top-1{position:absolute;top:1.5rem;}  
+.user-bg-box-1,.user-bg2-box-1{position: absolute;width: 3.8rem;}
+.user-bg-box-1 {right: 0;top: 1rem;}  
+.user-bg2-box-1{bottom:0;left:1rem;}
+.updata-top{padding-top:3rem;}
+.g-s-i-title-3 .active{color:#3fc6ff;}
+.g-s-i-title-3 .sex-nv.active{color:#f36ab7;}
+.my-sex-size{font-size:6.5rem;}
+.g-s-i-title-3{  padding: 2.8rem 0;}
+.sex-default-color a{color:#b2b2b2;position:relative;}
+.sex-default-color input{  position: absolute;top: -4.5rem;left: -16%;width: 9rem;height: 12rem;opacity:0}
+.profile-left-name{width:12rem;}
+.t-goods1 input{font-size:1.5rem;color:#666;    }
+.n-pro-name{line-height:2.6rem;    margin-left: 1.9rem;}
+.flow-consignee ul li{padding:1.3rem 0rem;overflow:hidden;height:auto;clear:both;border-bottom:1px solid #f6f6f9;position:relative;}
+.input-text{position:relative;font-size:1.7rem}
+.input-text b{display:block;float:left;width:6m;font-weight:400}
+.input-text span{position:absolute;left:6.2em;right:0em}
+.flow-consignee{margin-top:0.6em}
+.ect-bg-colorf{background:#fff;}
+.ect-colory {color: #1CBB7F !important;}
+.n-addr-edit{position:absolute;right:0;    top: 1.5rem;color:#999;font-size:1.8rem;}
+
+.n-address-box span {
+    top: -0.5rem;
+}
+.input-text span {
+    position: absolute;
+    left: 6.2em;
+    right: 0em;
+}
+.n-edit-box {
+    -webkit-appearance: none;
+    border: 0;
+    color: #555;
+    padding-left: 0;
+    border-radius: 5px;
+    padding: 0.4rem;
+    font-size: 1.5rem;
+        position: absolute;
+    background: none;
+    right:0.5rem;
+    top: 1rem;
+        width: 58%;
+
+}
+.input-text textarea {
+    width: 98%;
+    margin-top: 0.6em;
+    height: 6em;
+    border:1px solid #f6f6f9;
+    font-size:1.5rem;color:#777;
+}

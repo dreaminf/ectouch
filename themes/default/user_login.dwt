@@ -52,7 +52,7 @@
 		</div>
 
 	</form>
-	<p class="text-right ect-margin-bottom0" style="clear:both">
+	<p class="text-right ect-margin-bottom0 n-login-x">
 		<a href="{:url('user/get_password_phone')}">{$lang.forgot_password}</a>
 		<a href="{:url('user/register')}">{$lang.free_registered}</a>
 	</p>

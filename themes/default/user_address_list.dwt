@@ -1,16 +1,36 @@
-<!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
-<div class="flow-consignee-list ect-bg-colorf">
-  <section>
-    <ul id="J_ItemList">
-      <li class="ect-padding-tb checkout-add single_item "> </li>
-      <a href="javascript:;" style="text-align:center" class="get_more"></a>
-    </ul>
-  </section>
+<!-- #BeginLibraryItem "/library/new_page_header.lbi" -->
+<!-- #EndLibraryItem -->
+<div class="con">
+	<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
+		<h3 class="box-flex">收货人信息</h3>
+		<p><i class="iconfont icon-pailie j-nav-box"></i></p>
+	</header>
+	<div class="j-nav-content">
+		<ul class="dis-box new-footer-box">
+			<li class="box-flex">
+				<a href="{:url('index/index')}"><i class="iconfont icon-home"></i><span>首页</span></a>
+			</li>
+			<li class="box-flex">
+				<a href="{:url('category/top_all')}"><i class="iconfont icon-caidan"></i><span>分类</span></a>
+			</li>
+			<li class="box-flex"><a href="javascript:;" class="j-search-input-new"><i class="iconfont icon-sousuo"></i><span>搜索</span></a></li>
+			<li class="box-flex"><a href="{:url('flow/cart')}"><i class="iconfont icon-gouwuche"></i><span>购物车</span></a></li>
+			<li class="box-flex"><a href="{:url('user/index')}"><i class="iconfont icon-geren"></i><span>用户中心</span></a></li>
+		</ul>
+	</div>
+	<section class="flow-consignee-list j-get-consignee-one select-three" id="J_ItemList">
+		<li class="flow-checkout-adr m-top08 single_item "> </li>
+		<a href="javascript:;" style="text-align:center" class="get_more"></a>
+	</section>
+	<div class="filter-btn dis-box">
+		<a href="{:url('user/add_address')}" type="button" class="btn-submit box-flex n-iphone5-top1 j-goods-attr j-show-div">{$lang.add_address}</a>
+	</div>
 </div>
-<div class="ect-padding-lr ect-padding-tb ect-margin-tb"> <a href="{:url('user/add_address')}" type="botton" class="btn btn-info ect-btn-info ect-colorf ect-bg">{$lang.add_address}</a> </div>
-</div>
-<!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
-<script type="text/javascript" src="__PUBLIC__/js/jquery.more.js"></script> 
+<!-- #BeginLibraryItem "/library/new_search.lbi" -->
+<!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/page_footer.lbi" -->
+<!-- #EndLibraryItem -->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.more.js"></script>
 <script type="text/javascript">
-get_asynclist('{:url("user/address_list")}' , '__TPL__/images/loader.gif');
-</script> 
+	get_asynclist('{:url("user/address_list")}', '__TPL__/images/loader.gif');
+</script>

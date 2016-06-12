@@ -1,76 +1,97 @@
-<!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem --> 
+<!-- #BeginLibraryItem "/library/new_page_header.lbi" -->
+<!-- #EndLibraryItem -->
+<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
+	<h3 class="box-flex">个人资料</h3>
+	<p><i class="iconfont icon-pailie j-nav-box"></i></p>
+</header>
+<div class="j-nav-content">
+	<ul class="dis-box new-footer-box">
+		<li class="box-flex">
+			<a href="{:url('index/index')}"><i class="iconfont icon-home"></i><span>首页</span></a>
+		</li>
+		<li class="box-flex">
+			<a href="{:url('category/top_all')}"><i class="iconfont icon-caidan"></i><span>分类</span></a>
+		</li>
+		<li class="box-flex"><a href="javascript:;" class="j-search-input-new"><i class="iconfont icon-sousuo"></i><span>搜索</span></a></li>
+		<li class="box-flex"><a href="{:url('flow/cart')}"><i class="iconfont icon-gouwuche"></i><span>购物车</span></a></li>
+		<li class="box-flex"><a href="{:url('user/index')}"><i class="iconfont icon-geren"></i><span>用户中心</span></a></li>
+	</ul>
+</div>
 
-<script type="text/javascript">
-	  {foreach from=$lang.profile_js item=item key=key}
-		var {$key} = "{$item}";
-	  {/foreach}
-	</script>
 <form name="formEdit" action="{:url('user/profile')}" method="post" onSubmit="return userEdit()">
-  <section class="flow-consignee ect-bg-colorf">
-    <ul>
-      <li>
-        <div class="input-text"><b class="pull-left">{$lang.username}：</b><span>
-          {$info.username}
-          </span></div>
-      </li>
-      <li>
-        <div class="input-text"><b class="pull-left">{$lang.email}：</b><span>
-          <input name="email" type="text" placeholder="{$lang.no_emaill}"  value="{$profile.email}">
-          </span></div>
-      </li>
-      {foreach from=$extend_info_list item=field} 
-      <!-- {if $field.id eq 6} -->
-      <li>
-        <div class="form-select"> <i class="fa fa-sort"></i>
-          <select name="sel_question">
-            <option value='0'>{$lang.sel_question}</option>
-            
-            {html_options options=$passwd_questions selected=$profile.passwd_question}
-          
+	<section class="flow-consignee ect-bg-colorf s-user-top onclik-admin">
+		<ul>
+			<li class="dis-box s-xian-box s-user-top-1">
+				<h3 class="profile-left-name text-all-span my-u-title-size">{$lang.username}：</h3>
+				<div class="box-flex t-goods1 n-pro-name  onelist-hidden"> {$info.username}</div>
+			</li>
+			<li class="dis-box s-xian-box s-user-top-1">
+				<h3 class="profile-left-name text-all-span my-u-title-size">{$lang.email}：</h3>
+				<div class="box-flex t-goods1 onelist-hidden "> <input name="email" type="text" placeholder="{$lang.no_emaill}" value="{$profile.email}"></div>
+			</li>
+			{foreach from=$extend_info_list item=field}
+			<!-- {if $field.id eq 6} -->
+			<li>
+				<div class="form-select"> <i class="fa fa-sort"></i>
+					<select name="sel_question">
+            <option value='0'>{$lang.sel_question}</option>            
+            {html_options options=$passwd_questions selected=$profile.passwd_question}          
           </select>
-        </div>
-      </li>
-      <li>
-        <div class="input-text"><b class="pull-left">{$lang.passwd_answer}:</b> <span>
-          <input placeholder="{$lang.passwd_answer}" name="passwd_answer" type="text" value="{$profile.passwd_answer}" />
-          </span></div>
-      </li>
-      <!-- {else} -->
-      <li>
-        <div class="input-text"><b class="pull-left">{$field.reg_field_name}:</b><span>
-          <input name="extend_field{$field.id}" type="text" value="{$field.content}" placeholder="{$field.reg_field_name}">
-          </span></div>
-      </li>
-      </li>
-      <!-- {/if} --> 
-      {/foreach}
-    </ul>
-  </section>
-  <input name="act" type="hidden" value="profile" />
-  <div class="two-btn ect-padding-tb ect-padding-lr ect-margin-tb text-center">
-    <input name="submit" type="submit" value="{$lang.confirm_edit}" class="btn btn-info ect-bg-colory" />
-  </div>
+				</div>
+			</li>
+			<li class="dis-box s-xian-box s-user-top-1">
+				<h3 class="profile-left-name text-all-span my-u-title-size">{$lang.passwd_answer}:</h3>
+				<div class="box-flex t-goods1  onelist-hidden"> <input placeholder="{$lang.passwd_answer}" name="passwd_answer" type="text" value="{$profile.passwd_answer}" /></div>
+			</li>
+			<!-- {else} -->
+			<li class="dis-box s-xian-box s-user-top-1">
+				<h3 class="profile-left-name text-all-span my-u-title-size">{$field.reg_field_name}:</h3>
+				<div class="box-flex t-goods1  onelist-hidden"> <input name="extend_field{$field.id}" type="text" value="{$field.content}" placeholder="{$field.reg_field_name}"></div>
+			</li>
+			<!-- {/if} -->
+			{/foreach}
+		</ul>
+	</section>
+	<input name="act" type="hidden" value="profile" />
+	<div class=" ect-padding-tb padding-all">
+		<input name="submit" type="submit" value="{$lang.confirm_edit}" class="btn-submit" />
+	</div>
 </form>
 
-<section class="flow-consignee ect-bg-colorf">
-  <ul>
-   <a href="{:url('user/edit_password')}">
-    <li style="border-bottom:1px solid #e3e3e3;">修改密码<i class="iconfont" style="float:right;font-size:1.5rem;">&#xe60c;</i></li>
-   </a>
-   <a href="{:url('user/address_list')}">
-    <li>收货地址<i class="iconfont" style="float:right;line-height:2rem;font-size:1.5rem;">&#xe60c;</i></li>
-   </a>
-  </ul>
+<section class="b-color-f my-nav-box m-top10">
+	<a href="{:url('user/edit_password')}">
+		<div class="s-user-top">
+			<div class="dis-box s-xian-box s-user-top-1">
+				<h3 class="box-flex text-all-span my-u-title-size">修改密码</h3>
+				<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
+			</div>
+		</div>
+	</a>
+	<a href="{:url('user/address_list')}">
+		<div class="s-user-top">
+			<div class="dis-box s-xian-box s-user-top-1">
+				<h3 class="box-flex text-all-span my-u-title-size">收货地址</h3>
+				<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
+			</div>
+		</div>
+	</a>
+	{if $is_not_wechat}
+	<a href="{:url('user/logout')}">
+		<div class="s-user-top">
+			<div class="dis-box s-user-top-1">
+				<h3 class="box-flex text-all-span my-u-title-size">退出</h3>
+				<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
+			</div>
+		</div>
+	</a>
+	{/if}
 </section>
-
-{if $is_not_wechat}
-<section class="flow-consignee ect-bg-colorf">
-  <ul>
-    <li><a href="{:url('user/logout')}">注销退出</a></li>
-  </ul>
-</section>
-{/if}
 </div>
-<!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+
+<!-- #BeginLibraryItem "/library/new_search.lbi" -->
+<!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/page_footer.lbi" -->
+<!-- #EndLibraryItem -->
 </body>
+
 </html>
