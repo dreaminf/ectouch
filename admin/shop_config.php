@@ -185,7 +185,7 @@ elseif ($_REQUEST['act'] == 'post')
                 }
 
                 /* 判断是否上传成功 */
-                if (move_upload_file($file['tmp_name'], $file_name))
+                if (ecmoban_move_upload_file($file, $file_name))
                 {
                     $sql = "UPDATE " . $ecs->table('shop_config') . " SET value = '$file_name' WHERE code = '$code'";
                     $db->query($sql);

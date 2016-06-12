@@ -65,6 +65,7 @@ defined('__ROOT__') OR define('__ROOT__', '../');
 defined('__PUBLIC__') OR define('__PUBLIC__', '../data/assets');
 defined('__TPL__') OR define('__TPL__', '../data/assets/admin');
 
+require(BASE_PATH . 'vendor/autoload.php');
 require(BASE_PATH . 'config/constant.php');
 spl_autoload_register('autoload');
 require(ROOT_PATH . 'include/helpers/time_helper.php');

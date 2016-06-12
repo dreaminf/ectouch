@@ -692,7 +692,7 @@ function upload_article_file($upload)
     $filename = image::random_filename() . substr($upload['name'], strpos($upload['name'], '.'));
     $path     = ROOT_PATH. DATA_DIR . "/attached/article/" . $filename;
 
-    if (move_upload_file($upload['tmp_name'], $path))
+    if (ecmoban_move_upload_file($upload, $path))
     {
         return DATA_DIR . "/attached/article/" . $filename;
     }

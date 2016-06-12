@@ -174,11 +174,10 @@ elseif ($_REQUEST['act'] == 'insert')
                 $urlstr .= chr(mt_rand(97, 122));
             }
 
-            $source_file = $_FILES['upfile_flash']['tmp_name'];
             $target      = ROOT_PATH . DATA_DIR . '/attached/afficheimg/';
             $file_name   = $urlstr .'.swf';
 
-            if (!move_upload_file($source_file, $target.$file_name))
+            if (!ecmoban_move_upload_file($_FILES['upfile_flash'], $target.$file_name))
             {
                 $link[] = array('text' => $_LANG['go_back'], 'href' => 'javascript:history.back(-1)');
                 sys_msg($_LANG['upfile_error'], 0, $link);
@@ -398,11 +397,10 @@ elseif ($_REQUEST['act'] == 'update')
                 $urlstr .= chr(mt_rand(97, 122));
             }
 
-            $source_file = $_FILES['upfile_flash']['tmp_name'];
             $target      = ROOT_PATH . DATA_DIR . '/attached/afficheimg/';
             $file_name   = $urlstr .'.swf';
 
-            if (!move_upload_file($source_file, $target.$file_name))
+            if (!ecmoban_move_upload_file($_FILES['upfile_flash'], $target.$file_name))
             {
                 $link[] = array('text' => $_LANG['go_back'], 'href' => 'javascript:history.back(-1)');
                 sys_msg($_LANG['upfile_error'], 0, $link);

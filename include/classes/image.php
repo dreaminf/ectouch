@@ -542,7 +542,7 @@ class image
      * @author: weber liu
      * @return string
      */
-    function random_filename()
+    public static function random_filename()
     {
         $str = '';
         for($i = 0; $i < 9; $i++)
@@ -692,7 +692,7 @@ class image
             return false;
         }
 
-        if (!move_upload_file($upload['tmp_name'], $target))
+        if (!ecmoban_move_upload_file($upload, $target))
         {
             return false;
         }

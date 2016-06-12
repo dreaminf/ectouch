@@ -625,7 +625,7 @@ class EcsImage {
             return false;
         }
 
-        if (!move_upload_file($upload['tmp_name'], $target)) {
+        if (!ecmoban_move_upload_file($upload, $target)) {
             return false;
         }
 

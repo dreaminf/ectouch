@@ -1410,7 +1410,7 @@ function upload_file($upload, $type)
             $name = $_SESSION['user_id'] . '_' . $name . '.' . $ftype;
 
             $target = STORAGE_PATH . '/' . $type . '/' . $name;
-            if (!move_upload_file($upload['tmp_name'], $target))
+            if (!ecmoban_move_upload_file($upload, $target))
             {
                 $global->err->add(L('upload_file_error'), 1);
 

@@ -166,10 +166,11 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
                 {
                     $name .= chr(mt_rand(97, 122));
                 }
-                $name .= '.' . end(explode('.', $_FILES['topic_img']['name']));
+                $topic_img_name = explode('.', $_FILES['topic_img']['name']);
+                $name .= '.' . end($topic_img_name);
                 $target = ROOT_PATH . DATA_DIR . '/attached/afficheimg/' . $name;
 
-                if (move_upload_file($_FILES['topic_img']['tmp_name'], $target))
+                if (ecmoban_move_upload_file($_FILES['topic_img'], $target))
                 {
                     $topic_img = DATA_DIR . '/attached/afficheimg/' . $name;
                 }
@@ -217,10 +218,11 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         {
             $name .= chr(mt_rand(97, 122));
         }
-        $name .= '.' . end(explode('.', $_FILES['title_pic']['name']));
+        $title_pic_name = explode('.', $_FILES['title_pic']['name']);
+        $name .= '.' . end($title_pic_name);
         $target = ROOT_PATH . DATA_DIR . '/attached/afficheimg/' . $name;
 
-        if (move_upload_file($_FILES['title_pic']['tmp_name'], $target))
+        if (ecmoban_move_upload_file($_FILES['title_pic'], $target))
         {
             $title_pic = DATA_DIR . '/attached/afficheimg/' . $name;
         }

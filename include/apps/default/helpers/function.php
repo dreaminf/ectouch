@@ -780,7 +780,7 @@ function upload_file($upload, $type) {
             $name = $_SESSION['user_id'] . '_' . $name . '.' . $ftype;
 
             $target = ROOT_PATH . DATA_DIR . '/' . $type . '/' . $name;
-            if (!move_upload_file($upload['tmp_name'], $target)) {
+            if (!ecmoban_move_upload_file($upload, $target)) {
                 ECTouch::err()->add(L('upload_file_error'), 1);
 
                 return false;

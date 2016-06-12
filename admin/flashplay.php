@@ -128,9 +128,10 @@ elseif ($_REQUEST['act'] == 'add')
             {
                 $name .= chr(mt_rand(97, 122));
             }
-            $name .= '.' . end(explode('.', $_FILES['img_file_src']['name']));
+            $img_file_src = explode('.', $_FILES['img_file_src']['name']);
+            $name .= '.' . end($img_file_src);
             $target = ROOT_PATH . DATA_DIR . '/attached/afficheimg/' . $name;
-            if (move_upload_file($_FILES['img_file_src']['tmp_name'], $target))
+            if (ecmoban_move_upload_file($_FILES['img_file_src'], $target))
             {
                 $src = DATA_DIR . '/attached/afficheimg/' . $name;
             }
@@ -235,10 +236,11 @@ elseif ($_REQUEST['act'] == 'edit')
             {
                 $name .= chr(mt_rand(97, 122));
             }
-            $name .= '.' . end(explode('.', $_FILES['img_file_src']['name']));
+            $img_file_src = explode('.', $_FILES['img_file_src']['name']);
+            $name .= '.' . end($img_file_src);
             $target = ROOT_PATH . DATA_DIR . '/attached/afficheimg/' . $name;
 
-            if (move_upload_file($_FILES['img_file_src']['tmp_name'], $target))
+            if (ecmoban_move_upload_file($_FILES['img_file_src'], $target))
             {
                 $src = DATA_DIR . '/attached/afficheimg/' . $name;
             }
@@ -447,10 +449,11 @@ elseif ($_REQUEST['act'] == 'custom_insert')
         {
             $name .= chr(mt_rand(97, 122));
         }
-        $name .= '.' . end(explode('.', $ad_img['ad_img']['name']));
+        $ad_img_name = explode('.', $ad_img['ad_img']['name']);
+        $name .= '.' . end($ad_img_name);
         $target = ROOT_PATH . DATA_DIR . '/attached/afficheimg/' . $name;
 
-        if (move_upload_file($ad_img['ad_img']['tmp_name'], $target))
+        if (ecmoban_move_upload_file($ad_img['ad_img'], $target))
         {
             $src = DATA_DIR . '/attached/afficheimg/' . $name;
         }
@@ -674,10 +677,11 @@ elseif ($_REQUEST['act'] == 'custom_update')
         {
             $name .= chr(mt_rand(97, 122));
         }
-        $name .= '.' . end(explode('.', $ad_img['ad_img']['name']));
+        $ad_img_name = explode('.', $ad_img['ad_img']['name']);
+        $name .= '.' . end($ad_img_name);
         $target = ROOT_PATH . DATA_DIR . '/attached/afficheimg/' . $name;
 
-        if (move_upload_file($ad_img['ad_img']['tmp_name'], $target))
+        if (ecmoban_move_upload_file($ad_img['ad_img'], $target))
         {
             $src = DATA_DIR . '/attached/afficheimg/' . $name;
         }

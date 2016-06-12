@@ -115,7 +115,7 @@ class ConfigController extends AdminController {
                     }
 
                     /* 判断是否上传成功 */
-                    if (move_upload_file($file['tmp_name'], $file_name)) {
+                    if (ecmoban_move_upload_file($file, $file_name)) {
                         $data2['value'] = __ROOT__ . str_replace(array('./', '../'), '/', $file_name);
                         $this->model->table('touch_shop_config')->data($data2)->where("code = '$code'")->update();
                     } else {
