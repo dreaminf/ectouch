@@ -107,11 +107,6 @@
 						<li>
 							<h4 class="ellipsis-one"><i class="iconfont icon-p-return my-img-size"></i></h4>
 							<p class="t-remark3">退/换货</p>
-							<div class="user-list-num" style="display:block">
-								<!--{if $list.tuihuan neq ''}-->{$list.tuihuan}
-								<!--{else}-->0
-								<!--{/if}-->
-							</div>
 						</li>
 					</a>
 				</ul>
