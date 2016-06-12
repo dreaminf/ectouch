@@ -2035,7 +2035,12 @@ class UsersModel extends BaseModel {
         }
         return $operate;
     }
-
+    /**退换货**/
+    function tuihuanhuo($user_id) {
+       $where['user_id'] = $user_id;       
+       $count = $this->model->table('order_return')->where($where)->count();
+       return $count;
+    }
     /**
      *  获取用户指定范围的订单列表
      *

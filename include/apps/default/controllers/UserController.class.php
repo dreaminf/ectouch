@@ -60,7 +60,7 @@ class UserController extends CommonController {
 		$bonus = model('ClipsBase')->my_bonus($this->user_id);	
 		// 待评价
 		$not_comment = model('ClipsBase')->not_pingjia($this->user_id);	
-		
+		$tuihuan = model('Users')->tuihuanhuo($this->user_id);
 		// 用户积分余额
 		$user_pay = model('ClipsBase')->pay_money($this->user_id);
 		$user_money = $user_pay['user_money'];  //余额
@@ -102,6 +102,7 @@ class UserController extends CommonController {
 		'user_money'=> $user_money,
 		'user_points'=> $user_points,
 		'bonus'=> $bonus,
+        'tuihuan'=>$tuihuan
 		);
 		$this->assign('list',$arr);
         $this->assign('user_notice', C('user_notice'));
@@ -109,6 +110,7 @@ class UserController extends CommonController {
         $this->assign('comment_list', $comment_list);
         $this->assign('history', $history);
         $this->assign('title', L('user_center'));
+        $this->assign('tuihuan',$tuihuan);
         $this->display('user.dwt');
     }
 
