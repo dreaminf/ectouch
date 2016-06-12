@@ -5,7 +5,6 @@
 	  {if $pager.page_number} 
 	<li class="box-flex">
 		<div class="page-num">
-		<i class="fa fa-sort-desc"></i>
 	    <select name="sel_question" onChange="window.location.href=this.value;">
 			<!-- {foreach from=$pager.page_number key=key item=num} -->
 			<option value="{$num}" {if $pager.page == $key}selected{/if} >{$key}/{$pager.page_count}</option>
