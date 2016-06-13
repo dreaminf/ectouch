@@ -54,7 +54,7 @@
 	</section>
 	<input name="act" type="hidden" value="profile" />
 	<div class=" ect-padding-tb padding-all">
-		<input name="submit" type="submit" value="{$lang.confirm_edit}" class="btn-submit" />
+		<button name="submit" type="submit" class="btn-submit" value="{$lang.confirm_edit}">{$lang.confirm_edit}</button>
 	</div>
 </form>
 

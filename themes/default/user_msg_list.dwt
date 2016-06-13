@@ -29,7 +29,7 @@
         			<span>{$msg.msg_time}</span>
         		</div>
         		<div class="box-flex">
-        			<label><a onclick="if (!confirm('{$lang.confirm_remove_msg}')) return false;" href="{$msg.url}">{$lang.drop}</a></label>
+        			<a onclick="if (!confirm('{$lang.confirm_remove_msg}')) return false;" href="{$msg.url}"><i class="iconfont icon-xiao10 fr"></i></a>
         		</div>
             </div>
             <h5> {$msg.msg_title}</h5>

@@ -1,44 +1,83 @@
-<!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
-<div class="ect-margin-tb ect-pro-list ect-margin-bottom0 ect-border-bottom0">
-<!--{if $collection_list}-->
-  <ul>
-  <!-- {foreach from=$collection_list item=val} -->
-    <li class="single_item" id="more_element_1"> <a href="{:url('goods/index', array('id'=>$this->_var[val]['goods_id']))}"><img src="{$val.goods_thumb}"></a>
-      <dl>
-        <dt>
-          <h4 class="title"><a href="{:url('goods/index', array('id'=>$this->_var[val]['goods_id']))}">{$val.goods_name}</a></h4>
-        </dt>
-        <dd class="dd-price">
-			<span class="pull-left"><strong>{$lang.sort_price}：<b class="ect-colory">{$val.shop_price}</b></strong><small class="ect-margin-lr"><del>{$val.market_price}</del></small></span>
-			<span class="pull-right">
-				<!-- {if $val.is_attention} -->
-				<a href="javascript:if (confirm('{$lang.del_attention}')) location.href='{:url('user/del_attention', array('rec_id'=>$this->_var['val']['rec_id']))}'" class="fa fa-eye-slash">{$lang.no_attention}</a>
-				<!-- {else} -->
-				<a href="javascript:if (confirm('{$lang.add_to_attention}')) location.href='{:url('user/add_attention', array('rec_id'=>$this->_var['val']['rec_id']))}'" class="fa fa-eye">{$lang.attention}</a>
-				<!-- {/if} -->
-			</span>
-		</dd>
-        <dd class="text-center">
-			<a class="btn btn-default btn-xs" href="javascript:addToCart({$val.goods_id})" style="margin-right:1rem;">{$lang.add_to_cart}</a>
-			<a class="btn btn-default btn-xs" href="javascript:if(confirm('{$lang.remove_collection_confirm}')) location.href='{:url('delete_collection', array('rec_id'=>$this->_var['val']['rec_id']))}'">{$lang.drop}</a>
-		</dd>
-      </dl>
-    </li>
-	<!-- {/foreach} -->
-  </ul>
-   <!--{else}-->
-      <p class="text-center n-tishi-tit">{$lang.no_data}</p>
-    
-      
-   <!--{/if}--> 
+<!-- #BeginLibraryItem "/library/new_page_header.lbi" -->
+<!-- #EndLibraryItem -->
+<div class="con">
+	<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
+	<h3 class="box-flex">收藏</h3>
+	<p><i class="iconfont icon-pailie j-nav-box"></i></p>
+</header>
+<div class="j-nav-content">
+	<ul class="dis-box new-footer-box">
+		<li class="box-flex">
+			<a href="{:url('index/index')}"><i class="iconfont icon-home"></i><span>首页</span></a>
+		</li>
+		<li class="box-flex">
+			<a href="{:url('category/top_all')}"><i class="iconfont icon-caidan"></i><span>分类</span></a>
+		</li>
+		<li class="box-flex"><a href="javascript:;" class="j-search-input-new"><i class="iconfont icon-sousuo"></i><span>搜索</span></a></li>
+		<li class="box-flex"><a href="{:url('flow/cart')}"><i class="iconfont icon-gouwuche"></i><span>购物车</span></a></li>
+		<li class="box-flex"><a href="{:url('user/index')}"><i class="iconfont icon-geren"></i><span>用户中心</span></a></li>
+	</ul>
 </div>
-<!-- #BeginLibraryItem "/library/page.lbi" --><!-- #EndLibraryItem -->
-<!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
-<script type="text/javascript">
-var compare_no_goods = "{$lang.compare_no_goods}";
-var btn_buy = "{$lang.btn_buy}";
-var is_cancel = "{$lang.is_cancel}";
-var select_spe = "{$lang.select_spe}";
-</script>
-</body>
-</html>
+	<!--{if $collection_list}-->
+	<div class="flow-accessories blur-div">
+
+		<section class="j-product-list product-list-small">
+			<ul>
+				<!-- {foreach from=$collection_list item=val} -->
+				<li>
+					<div class="product-div">
+						<a href="{:url('goods/index', array('id'=>$this->_var[val]['goods_id']))}">
+							<img class="product-list-img" src="{$val.goods_thumb}">
+						</a>
+						<div class="product-text">
+			      <a href="{:url('goods/index', array('id'=>$this->_var[val]['goods_id']))}"><h4>{$val.goods_name}</h4></a>
+							<div class="n-money-con"><span class="p-price t-first ">{$val.shop_price}</span><small class="ect-margin-lr"><del>{$val.market_price}</del></small></div>
+							<div class="dis-box n-but-box">
+							
+								<a href="javascript:addToCart({$val.goods_id})" class="box-flex">
+									<div class="s-but">{$lang.add_to_cart}</div>
+								</a>
+									<!-- {if $val.is_attention} -->
+								<a class="box-flex" href="javascript:if (confirm('{$lang.del_attention}')) location.href='{:url('user/del_attention', array('rec_id'=>$this->_var['val']['rec_id']))}'">
+									<div class="s-but">{$lang.no_attention}</div>
+								</a>
+								<!-- {else} -->
+								<a class="box-flex" href="javascript:if (confirm('{$lang.add_to_attention}')) location.href='{:url('user/add_attention', array('rec_id'=>$this->_var['val']['rec_id']))}'">
+									<div class="s-but ">{$lang.attention}</div>
+								</a>
+								<!-- {/if} -->
+								<a class="n-margin-del" href="javascript:if(confirm('{$lang.remove_collection_confirm}')) location.href='{:url('delete_collection', array('rec_id'=>$this->_var['val']['rec_id']))}'"><div class="n-del"><i class="iconfont icon-xiao10 fr"></i></div></a>
+							</div>
+
+						</div>
+
+					</div>
+
+				</li>
+				<!-- {/foreach} -->
+			</ul>
+		</section>
+	</div>
+	<!--{else}-->
+	<div class="no-div-message flow-no-cart">
+			<i class="iconfont icon-biaoqingleiben"></i>
+			<p>亲，此处没有内容～！</p>
+			<a href="{:url('index/index')}" type="button" class="btn-default">去收藏</a>
+		</div>
+
+	<!--{/if}-->
+	<!-- #BeginLibraryItem "/library/page.lbi" -->
+	<!-- #EndLibraryItem -->
+	<!-- #BeginLibraryItem "/library/new_search.lbi" -->
+	<!-- #EndLibraryItem -->
+	<!-- #BeginLibraryItem "/library/page_footer.lbi" -->
+	<!-- #EndLibraryItem -->
+	<script type="text/javascript">
+		var compare_no_goods = "{$lang.compare_no_goods}";
+		var btn_buy = "{$lang.btn_buy}";
+		var is_cancel = "{$lang.is_cancel}";
+		var select_spe = "{$lang.select_spe}";
+	</script>
+	</body>
+
+	</html>

@@ -66,7 +66,12 @@ del {color: #aaa; font-size:1.2rem;}
 @media only screen and (max-width: 640px) and (min-width: 630px) {html {font-size: 17.77778px}}
 @media only screen and (max-width: 710px) and (min-width: 640px) {html {font-size: 17.77778px}}
 
-
+html{-webkit-touch-callout:none;
+-webkit-user-select:none;
+-khtml-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+user-select:none;}
 /*动画*/
 
 
@@ -1179,7 +1184,7 @@ footer.logo img {
 .no-div-message{text-align: center; padding-top:6rem; color:#999;padding-bottom: 2rem;}
 .no-div-message .icon-biaoqingleiben{font-size:7rem; color:#a6a6a6;}
 .no-div-message p{margin-top:1.8rem; font-size:1.6rem;}
-.no-div-message a{font-size:1.5rem; margin-top:.5rem; display:block; color:#EC5151}
+.no-div-message a{font-size:1.5rem; margin-top:.5rem; display:block; color:#999}
 .padding-all-1{padding:1rem 1.3rem;}
 .n-list-pl{border-bottom:1px solid #f6f6f9;}
 /*搜索未商品提示内容*/
@@ -1326,7 +1331,6 @@ a.s-filter{display:block; font-size:1.6rem; text-align:center; padding:.8rem 0; 
 .is-ban-fize{font-size:4.3rem;color:#999}
 .is-ban-fize.active{color:#666;}
 /*like*/
-.product-list {padding: 0 .6rem;}
 .index-more-list{overflow:hidden}
 .index-more-list li{width:49.4%;height:auto;background-color:#FFFFFF;padding-bottom:0.625rem;margin-bottom:0.625rem}
 .index-more-list li img{width:100%;max-width:294px;max-height:294px}
@@ -1592,8 +1596,7 @@ a.n-but-ls{color:#1CBB7F}
 .new-msg-title{padding:1.3rem;background:#fff;border-bottom:1px solid #f6f6f9;padding:0.8rem 0}
 .user-account-detail ul li h4{font-size:1.7rem;color:#666;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .new-msg-title span{color:#999;font-size:1.3rem}
-.new-msg-title label{border:1px solid #1CBB7F;border-radius:0.5rem;float:right;margin-top:0.3rem}
-.new-msg-title label a{color:#1CBB7F;padding:0.6rem 1rem;font-weight:400;font-size:1.5rem}
+.new-msg-title a i{font-size:1.8rem;color:#999;margin-top:0.7rem}
 .user-account-detail ul li h5{font-size:1.5rem;color:#444;word-wrap:break-word;margin:1rem 0 0.6rem 0}
 .user-account-detail ul li p{clear:both;overflow:hidden;font-size:1.4rem;word-wrap:break-word;color:#888}
 .user-account-message{text-align:center;font-size:1.7rem;margin-top:2rem;color:#555}
@@ -1603,3 +1606,26 @@ a.n-but-ls{color:#1CBB7F}
 .n-page-but .page-but{padding:.7rem;border-radius:0.5rem;font-size:1.5rem; color:#555;text-align:center;    background: #fff;border:1px solid #eee;height:2.2rem;line-height:2.2rem}
 .page-num{padding:0 1rem;}
 .page-num select{padding: .7rem;padding-left:40%;border-radius:0.5rem;width:100%;background:#fff;border:1px solid #eee;font-size:1.7rem; color:#777;height:3.8rem;line-height:1.9rem}
+/*收藏*/
+.n-tishi-tit{margin-top:3rem;color:#666;}
+.s-but{border:1px solid #1CBB7F;border-radius:0.5rem;font-size:1.3rem;margin-right:0.5rem;text-align:center;color:#1CBB7F;padding:0.2rem 0;}
+.n-money-con{padding:0.2rem 0}
+.n-margin-del,.n-del{width:2.4rem}
+.n-del i{color:#777;font-size:1.7rem}
+
+ .flow-done-con{ margin-top:5rem;  text-align: center;}
+ .flow-done-con i{color:#ff6464;display:block;font-size:12rem;}
+ .flow-done-con i.icon-qian{ color: #EFCE0C;}
+ .flow-done-con i.icon-hookring2{color:#3ec074;}
+ .message .flow-done-con p{font-size:1.7rem; color:#777; margin-top:1.7rem;}
+ .flow-done-con{color:#555; font-size:1.7rem;}
+ .flow-done-con .flow-done-price{font-size:3rem;}
+ .flow-done-id{margin-top:1px;}
+ .flow-done-all{margin-top:3rem;}
+ .flow-done-id i.icon-more{font-size:1.7rem; color:#999;}
+ .flow-done-id label, .flow-done-id span{height:2rem; line-height:2rem; font-size:1.6rem;}
+ .flow-done-other{text-align: center; }
+ .flow-done-other a{color:#888; font-size:1.6rem;}
+ .message-a{text-align: center; font-size:1.6rem; color:#888; }
+ .message-a a{color:#999;margin-left:2rem;}
+ .message-a a:first-of-type{margin-left:0;}
