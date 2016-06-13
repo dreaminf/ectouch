@@ -359,29 +359,29 @@ class integrate
                 $this->db->query($sql);
                 $sql = "DELETE FROM " . $this->db->pre . 'wechat_user ' . " WHERE " . db_create_in($col, 'ect_uid'); // 删除微信用户
                 $this->db->query($sql);
-				/*DRP_START*/
-				//删除用户分销信息
-				$col_drp_id = $this->db->table('drp_shop')->field('id')->where(db_create_in($col, 'user_id'))->getCol();
+                /*DRP_START*/
+                //删除用户分销信息
+                $col_drp_id = $this->db->table('drp_shop')->field('id')->where(db_create_in($col, 'user_id'))->getCol();
                 if ($col_drp_id) {
-					$col_drp_order_id = $this->db->table('drp_order_info')->field('order_id')->where(db_create_in($col_drp_id, 'drp_id'))->getCol();
-					if($col_drp_order_id){
-						$sql = "DELETE FROM {pre}drp_order_goods WHERE " . db_create_in($col_drp_order_id, 'order_id');
-						$this->db->query($sql);
-					}
-                    $sql = "DELETE FROM {pre}drp_order_info WHERE " . db_create_in($col_drp_id, 'drp_id');
+                  $col_drp_order_id = $this->db->table('drp_order_info')->field('order_id')->where(db_create_in($col_drp_id, 'drp_id'))->getCol();
+                  if($col_drp_order_id){
+                    $sql = "DELETE FROM {pre}drp_order_goods WHERE " . db_create_in($col_drp_order_id, 'order_id');
                     $this->db->query($sql);
-					$sql = "DELETE FROM {pre}drp_visiter WHERE " . db_create_in($col_drp_id, 'drp_id');
-                    $this->db->query($sql);
+                  }
+                  $sql = "DELETE FROM {pre}drp_order_info WHERE " . db_create_in($col_drp_id, 'drp_id');
+                  $this->db->query($sql);
+                  $sql = "DELETE FROM {pre}drp_visiter WHERE " . db_create_in($col_drp_id, 'drp_id');
+                  $this->db->query($sql);
                 }
-				$sql = "DELETE FROM {pre}drp_shop  WHERE " . db_create_in($col, 'user_id'); // 删除用户店铺
-				$this->db->query($sql);
-				$sql = "DELETE FROM {pre}drp_log  WHERE " . db_create_in($col, 'user_id'); // 删除用户资金明细
+                $sql = "DELETE FROM {pre}drp_shop  WHERE " . db_create_in($col, 'user_id'); // 删除用户店铺
                 $this->db->query($sql);
-				$sql = "DELETE FROM {pre}drp_bank  WHERE " . db_create_in($col, 'user_id'); // 删除用户银行卡信息
+                $sql = "DELETE FROM {pre}drp_log  WHERE " . db_create_in($col, 'user_id'); // 删除用户资金明细
                 $this->db->query($sql);
-				$sql = "DELETE FROM {pre}drp_apply  WHERE " . db_create_in($col, 'user_id'); // 删除用户购买微分销记录
+                $sql = "DELETE FROM {pre}drp_bank  WHERE " . db_create_in($col, 'user_id'); // 删除用户银行卡信息
                 $this->db->query($sql);
-				/*DRP_END*/
+                $sql = "DELETE FROM {pre}drp_apply  WHERE " . db_create_in($col, 'user_id'); // 删除用户购买微分销记录
+                $this->db->query($sql);
+                /*DRP_END*/
             }
         }
         
