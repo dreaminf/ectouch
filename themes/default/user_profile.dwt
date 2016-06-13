@@ -23,7 +23,7 @@
 		<ul>
 			<li class="dis-box s-xian-box s-user-top-1">
 				<h3 class="profile-left-name text-all-span my-u-title-size">{$lang.username}：</h3>
-				<div class="box-flex t-goods1 n-pro-name  onelist-hidden"> {$info.username}</div>
+				<div class="box-flex t-goods1  onelist-hidden">  <input name="email" type="text" readonly="readonly" placeholder="{$info.username}" value="{$info.username}"></div>
 			</li>
 			<li class="dis-box s-xian-box s-user-top-1">
 				<h3 class="profile-left-name text-all-span my-u-title-size">{$lang.email}：</h3>

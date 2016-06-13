@@ -1543,8 +1543,8 @@ a.n-but-ls{color:#1CBB7F}
 .sex-default-color a{color:#b2b2b2;position:relative;}
 .sex-default-color input{  position: absolute;top: -4.5rem;left: -16%;width: 9rem;height: 12rem;opacity:0}
 .profile-left-name{width:12rem;}
-.t-goods1 input{font-size:1.5rem;color:#666;    }
-.n-pro-name{line-height:2.6rem;    margin-left: 1.9rem;}
+.t-goods1 input{font-size:1.5rem;color:#666;       border: none;border:0;background:none; }
+.n-pro-name{line-height:2.6rem;    margin-left: 1.2rem;}
 .flow-consignee ul li{padding:1.3rem 0rem;overflow:hidden;height:auto;clear:both;position:relative;}
 .input-text{position:relative;font-size:1.7rem}
 .input-text b{display:block;float:left;width:6m;font-weight:400}
