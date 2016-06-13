@@ -132,7 +132,7 @@ label.admin-text{color:#999;}
 .t-first {color: #1CBB7F}/*主字体颜色*/
 .t-two{color: #f4a213}/*黄色 － 与购物车按钮背景色一致*/
 .t-remark,
-.t-remark:link {color: #777;font-size: 1.5rem; }/*文本备注文字颜色*/
+.t-remark:link {color: #777;font-size: 1.3rem; }/*文本备注文字颜色*/
 .t-remark2 {color: #444;font-size: 1.6rem;}/*主要文本连接*/
 .a-first:link {color: #1CBB7F}/*主连接*/
 .a-first:visited {color: #1CBB7F}
@@ -1321,7 +1321,7 @@ a.s-filter{display:block; font-size:1.6rem; text-align:center; padding:.8rem 0; 
 .index-nav ul li{padding-bottom:1rem}
 .index-nav p{font-size:1.3rem;color:#666}
 /*版权*/
-.n-footer-box{padding:1.6rem 0 1rem 0;border-bottom:1px solid #ddd;}
+.n-footer-box{padding:1.6rem 0 1rem 0;border-bottom:1px solid #eee;}
 .n-footer-minbox{overflow:hidden;    width: 70%; margin:0 auto;}
 .n-footer-minbox li{float:left;width:33%;}
 .n-footer-img-box{width:3.8rem; height:3.8rem;margin:0 auto;position: relative;}
@@ -1330,7 +1330,7 @@ a.s-filter{display:block; font-size:1.6rem; text-align:center; padding:.8rem 0; 
 .n-footer-minbox .footer-tit{color:#666;}		
 .is-ban-fize{font-size:4.3rem;color:#999}
 .is-ban-fize.active{color:#666;}
-/*like*/
+/*index-like*/
 .index-more-list{overflow:hidden}
 .index-more-list li{width:49.4%;height:auto;background-color:#FFFFFF;padding-bottom:0.625rem;margin-bottom:0.625rem}
 .index-more-list li img{width:100%;max-width:294px;max-height:294px}
@@ -1346,9 +1346,14 @@ a.s-filter{display:block; font-size:1.6rem; text-align:center; padding:.8rem 0; 
 .index-footer-list i{font-size:1.6rem;color:#D7D7D7;display:block;line-height:1.6rem}
 .index-footer-list span{font-size:0.9rem;color:#D7D7D7}
 .index-more-list h4{font-size:1.6rem; height:3.8rem; line-height: 1.9rem; overflow: hidden;padding: 0.8rem 0.8rem 0 0.8rem;}
-.index-title{color:#777;font-size:1.6rem}
+.index-title{color:#444;font-size:1.6rem}
 .bd-top-none{border-right:1px solid #f6f6f9;}
-
+ .is-cainixihuan{font-size:2rem;margin-right:0.5rem;color:#1CBB7F}
+ .index-small-title{font-size:1.3rem;color:#888}
+ .n-cate-box{
+     background: url(../img/bejing.png);
+    background-repeat: no-repeat;
+    background-size: cover;}
 /*==================
     关注
 =============*/
@@ -1547,7 +1552,7 @@ a.n-but-ls{color:#1CBB7F}
 .sex-default-color a{color:#b2b2b2;position:relative;}
 .sex-default-color input{  position: absolute;top: -4.5rem;left: -16%;width: 9rem;height: 12rem;opacity:0}
 .profile-left-name{width:12rem;}
-.t-goods1 input{font-size:1.5rem;color:#666;       border: none;border:0;background:none; }
+.t-goods1 input{font-size:1.5rem;color:#666;       width: 100%;    border: none;border:0;background:none; }
 .n-pro-name{line-height:2.6rem;    margin-left: 1.2rem;}
 .flow-consignee ul li{padding:1.3rem 0rem;overflow:hidden;height:auto;clear:both;position:relative;}
 .input-text{position:relative;font-size:1.7rem}
@@ -1629,3 +1634,5 @@ a.n-but-ls{color:#1CBB7F}
  .message-a{text-align: center; font-size:1.6rem; color:#888; }
  .message-a a{color:#999;margin-left:2rem;}
  .message-a a:first-of-type{margin-left:0;}
+ .p-link input{background:none;border:none;color:#777;font-size:1.6rem}
+ .p-link a{color:#777;font-size:1.6rem}

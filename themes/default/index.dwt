@@ -33,7 +33,7 @@
 				<li class="box-flex n-input-index-box">
 					<div class="index-search-box j-search-input-new" id="j-input-focus"><i class="iconfont icon-sousuo"></i>请输入您搜索的关键词!</div>
 				</li>
-				<li class="index-right-box"><a onclick="window.location = '{:url('user/msg_list')}'"><i class="iconfont icon-xiaoxi color-whie n-xiaoxi-size"></i></a></li>
+				<li class="index-right-box"><a onclick="window.location = '{:url('user/msg_list')}'"><i class="iconfont icon-xiaoxi1 color-whie n-xiaoxi-size"></i></a></li>
 			</ul>
 		</div>
 	</header>
@@ -76,7 +76,10 @@
 		{insert name='ads' id=256 num=4}
 	</ul>
 	<!--like-->
-	<p class="index-title padding-all text-c">猜你喜欢</p>
+	<div class="padding-all text-c n-cate-box">
+	<p class="index-title"><i class="iconfont icon-cainixihuan is-cainixihuan"></i>猜你喜欢</p>
+	<p class="index-small-title">实时推荐最适合您的宝贝</p>
+	</div>
 	<section class="product-list j-product-list n-index-box " data="1">
 
 		<ul class="index-more-list" id="J_ItemList">

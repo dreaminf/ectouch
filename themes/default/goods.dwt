@@ -18,7 +18,7 @@
 
 					<div class="s-jiantou tf-45"></div>
 					<ul class="goods-nav-box">
-						<a href="{:url('user/msg_list')}"><li><i class="iconfont icon-xiaoxi j-nav-box"></i>消息</li></a>
+						<a href="{:url('user/msg_list')}"><li><i class="iconfont icon-xiaoxi1 j-nav-box"></i>消息</li></a>
 						<a href="{:url('index/index')}"><li><i class="iconfont icon-home j-nav-box"></i>首页</li></a>
 						<a href="{:url('user/index')}"><li><i class="iconfont icon-geren j-nav-box"></i>用户中心</li></a>
 						<a href="{:url('user/index')}"><li style="border:none"><i class="iconfont icon-fenxiang j-nav-box"></i>分享</li></a>
@@ -113,7 +113,7 @@
 						</div>
 						<div class="dis-box m-top08 g-r-rule">
 							<p class="box-flex t-remark3">
-								<em class="fl em-promotion"><i class="iconfont icon-weibiaoti1"></i></em><span class="fl">正品保证</span></p>
+								<em class="fl em-promotion"><i class="iconfont icon-weibiaoti11"></i></em><span class="fl">正品保证</span></p>
 							<p class="box-flex t-remark3">
 								<em class="fl em-promotion"><i class="iconfont icon-daifukuan"></i></em><span class="fl">货到付款</span></p>
 							<p class="box-flex t-remark3">
