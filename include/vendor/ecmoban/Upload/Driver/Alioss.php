@@ -87,6 +87,23 @@ class Alioss
     }
 
     /**
+     * 同步指定文件
+     * @param  array   $file    保存的文件信息
+     * @return boolean          保存状态，true-成功，false-失败
+     */
+    public function sync($file)
+    {
+        $filename = str_replace(ROOT_PATH, '', $file);
+        try{
+            $this->alioss->uploadFile($this->config['OSS_BUCKET'], $filename, $file);
+            return true;
+        }catch(OssException $e){
+            $this->error = $e->getMessage();
+            return false;
+        }
+    }
+
+    /**
      * 获取最后一次上传错误信息
      * @return string 错误信息
      */

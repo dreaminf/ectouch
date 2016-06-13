@@ -274,6 +274,7 @@ class image
         //确认文件是否生成
         if (file_exists($dir . $filename))
         {
+            ecmoban_upload_file($dir . $filename);
             return str_replace(ROOT_PATH, '', $dir) . $filename;
         }
         else

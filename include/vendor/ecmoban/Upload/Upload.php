@@ -223,6 +223,17 @@ class Upload
     }
 
     /**
+     * 同步图片数据到远程服务器
+     */
+    public function sync($file = ''){
+        if ($this->uploader->sync($file)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * 转换上传文件数组变量为正确的方式
      * @access private
      * @param array $files  上传的文件变量
