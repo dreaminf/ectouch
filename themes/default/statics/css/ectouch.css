@@ -1713,3 +1713,41 @@ a.btn-submit-1{color:#fff}
 .com-textarea textarea {
     height: 15rem;
 }
+/*购买成为分销商*/
+.new-not{border-bottom:none;}
+.share-cont-box{padding:0.5rem 1.3rem 1rem}
+.share-cont-box h3{padding:1.3rem 0 ;border-bottom:1px solid #f6f6f9;}
+.share-cont-box h3.active{border-bottom: 1px solid #f77e7e;}
+.share-cont-box h4{padding:1rem 0;}
+.share-table-box{border-bottom: px solid #efefef;width:100%;}
+.share-table-box tr th{background:#f6f6f9;}
+.share-table-box tr td,.share-table-box tr th{color:#444;font-size:1.5rem;text-align:center;border-bottom:1px solid #f6f6f9;padding:0.5rem;border-left:1px solid #f6f6f9;}
+.share-table-box tr td:last-child,.share-table-box tr th:last-child{border-right:1px solid #f6f6f9;}
+.share-ewm-box{margin:1.3rem auto;}
+.share-ewm-box-1{width:70%;margin:0 auto; border:1px solid #f6f6f9}
+.share-ewm-box-1 img{width:100%;}
+
+
+
+table.u-table {
+    margin-bottom: 0.8em;
+}
+table.u-table tr.first-tr td {
+    height: 3.5em;
+    font-weight: bold;
+    background: #f2f2f2;
+}
+table.u-table td {
+    border: 1px solid #e3e3e3;
+    padding: 0.5em 0.2em;
+    height: 3em;
+    width: 7em;
+    background: #fff;
+}
+table.u-table td {
+    border: 1px solid #e3e3e3;
+    padding: 0.5em 0.2em;
+    height: 3em;
+    width: 7em;
+    background: #fff;
+}
