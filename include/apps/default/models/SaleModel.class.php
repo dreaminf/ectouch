@@ -228,9 +228,12 @@ class SaleModel extends BaseModel {
                     $goods_list[$key]['touch_sale'] = $val['touch_sale'];
                     $goods_list[$key]['goods_thumb'] = get_image_path($val['goods_id'],$val['goods_thumb']);
                 }
-
+                $nick_name = M()->table('wechat_user')->field('nickname')->where("ect_uid=".$value[user_id])->getOne();
+                if(empty($nick_name)){
+                    $nick_name = M()->table('users')->field('user_name')->where("user_id=".$value[user_id])->getOne();
+                }
                 $arr[] = array('order_id' => $value['order_id'],
-                    'user_name' => M()->table('users')->field('user_name')->where("user_id=".$value[user_id])->getOne(),
+                    'user_name' =>  $nick_name ,
                     'order_sn' => $value['order_sn'],
                     'img' => get_image_path(0, model('Order')->get_order_thumb($value['order_id'])),
                     'order_time' => local_date(C('time_format'), $value['add_time']),
