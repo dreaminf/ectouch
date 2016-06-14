@@ -1650,7 +1650,7 @@ a.n-but-ls{color:#1CBB7F}
 .user-nav-1-box a{border-left: 1px solid rgba(250,250,250,0.1);}
 .user-nav-1-box a:first-child{border:none;}
 .is-money-color{font-size:1.8rem;padding-right:0.5rem;}
-.user-money-list a{position: relative;padding: 0 1.3rem;  border-right: 1px solid #F6F6F9;}
+.user-money-list a{position: relative;padding: 0 1.3rem;}
 .user-money-list a:last-child{border:none;}
 .n-acc-log{border-top:1px solid #f6f6f9;padding-top:1.3rem;margin-top:1rem;    text-align: right;}
 .n-acc-log .btn-default,.n-acc-log a{color:#444;border:1px solid #1CBB7F;color:#1CBB7F;text-align:center;padding:0.5rem 2rem;border-radius:0.5rem;width:100%;font-size:1.5rem;margin-top:1rem}
