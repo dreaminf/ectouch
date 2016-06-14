@@ -448,7 +448,8 @@ class GoodsModel extends BaseModel {
             $arr[$temp_index]['parent_id'] = $value['parent_id'];
             $arr[$temp_index]['parent_name'] = $value['parent_name']; //配件的基本件的名称
             $arr[$temp_index]['parent_short_name'] = C('goods_name_length') > 0 ?
-                    sub_str($value['parent_name'], C('goods_name_length')) : $value['parent_name']; //配件的基本件显示的名称
+            sub_str($value['parent_name'], C('goods_name_length')) : $value['parent_name']; //配件的基本件显示的名称
+			$arr[$temp_index]['parent_id'] = $value['parent_id']; //配件的parent_id
             $arr[$temp_index]['goods_id'] = $value['goods_id']; //配件的商品ID
             $arr[$temp_index]['goods_name'] = $value['goods_name']; //配件的名称
             $arr[$temp_index]['short_name'] = C('goods_name_length') > 0 ?
