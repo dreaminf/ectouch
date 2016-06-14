@@ -336,10 +336,10 @@ h4.title-hrbg hr {background: #f6f6f9;height: 1px;border: 0;position: absolute;l
 	transform: rotate(-90deg);}
 
 .select-two ul{padding-top:0; padding-bottom:0;border-top:1px solid #e7e8ef;}
-.select-two .ect-select{font-size:1.5rem;  border-bottom:1px solid #F6F6F9;}
+.select-two .ect-select{font-size:1.5rem;  border-bottom:1px solid #F6F6F9;position:relative;}
 .select-two .ect-select:last-child{border-bottom:none;}
 .select-two .ect-select label{ padding:1.6rem 0;  text-align: left; display: block; color:#666;}
-.select-two .ect-select label i.icon-gou{visibility:hidden; color:#1CBB7F; opacity: 0; font-size:2.2rem}
+.select-two .ect-select label i.icon-gou{visibility:hidden; color:#1CBB7F; opacity: 0; font-size:2.2rem;}
 .select-two .ect-select label.active{color:#1CBB7F;}
 .select-two .ect-select label.active i.icon-gou{visibility: visible; opacity: 1;}
 
@@ -488,7 +488,7 @@ transform: rotate(135deg);background:#fff; bottom:-.6rem; z-index: -1; left:50%;
  * 三种模式商品列表
  * [备注：]库存销量,加入购物车按钮，市场价默认全部显示，如需隐藏/显示在对应图片列表代码中设置即可
  */
-.product-list{}
+.product-list{padding: 0 0.5rem;}
 .product-list ul{ overflow: hidden; width:100%;}
 .product-list ul li{box-sizing: border-box;}
 
@@ -612,7 +612,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .t-goods1{font-size:1.5rem;}
 .goods .j-goodsinfo-div{color:#999;}
 /*弹出层中关闭*/
-.show-div-guanbi{font-size:2.1rem; color:#999; margin-left:1rem;}
+.show-div-guanbi{font-size:2.1rem; color:#999; }
 
 /*评价列表*/
 .evaluation-list .t-remark{font-size:1.3rem;}
@@ -950,7 +950,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
  .f-c-s-coupon{position:relative;}
  .f-c-s-coupon a{position:absolute; left: 0; top:0; bottom:0; right:0;}
  /*弹出时间层*/
- .show-time-con .ect-select{margin-right:1rem;}
+ .show-time-con .ect-select{margin-right:1rem;position:relative;}
  .show-time-con .ect-select label span{font-size:1.5rem;}
  .s-time-con-btn a{margin-left:1rem; font-size:1.5rem;}
  .s-time-con-btn a.s-time-clsoe{color:#777;}
@@ -1100,7 +1100,7 @@ nav.ect-nav-list{border-top:none; border-bottom:1px solid #e3e3e3; position:rela
 
 .show-goods-coupon.show, .show-goods-attr.show, .show-goods-service.show, .show-goods-dist.show, .show-time-con.show{
 	bottom:0 ;
-	
+	visibility: visible;	
 }
 .show-goods-attr .swiper-wrapper{display:block;}
 
@@ -1636,3 +1636,37 @@ a.n-but-ls{color:#1CBB7F}
  .message-a a:first-of-type{margin-left:0;}
  .p-link input{background:none;border:none;color:#777;font-size:1.6rem}
  .p-link a{color:#777;font-size:1.6rem}
+ 
+ /*我的钱包-首页shi*/
+.purse-f{color:#fff}
+.purse-header-box{background:#1CBB7F;width:100%;position: relative;}
+.purse-header-box img{width:100%;position:absolute;bottom:0;  left: 0;right: 0;z-index:1;}
+.purse-header-box h2{font-size: 3.2rem;padding:0.5rem 0}
+.purse-header-box p{padding-top: 5.2rem;font-size:1.5rem;}
+.purse-header-box h5{font-size:1.5rem;}
+.user-pur-box{border-top:1px solid rgba(250,250,250,0.1);margin-top:2rem;  margin-top: 5.2rem;position:relative; z-index:2}
+.g-s-i-title-2 h4{  font-size: 1.5rem;}
+.purse-ts-box{position:absolute; width: 0.9rem;height: 0.9rem;background: #1CBB7F;border-radius: 0.45rem;right: 12%;  top: 7%;}
+.user-nav-1-box a{border-left: 1px solid rgba(250,250,250,0.1);}
+.user-nav-1-box a:first-child{border:none;}
+.is-money-color{font-size:1.8rem;padding-right:0.5rem;}
+.user-money-list a{position: relative;padding: 0 1.3rem;  border-right: 1px solid #F6F6F9;}
+.user-money-list a:last-child{border:none;}
+.n-acc-log{border-top:1px solid #f6f6f9;padding-top:1.3rem;margin-top:1rem;    text-align: right;}
+.n-acc-log .btn-default,.n-acc-log a{color:#444;border:1px solid #1CBB7F;color:#1CBB7F;text-align:center;padding:0.5rem 2rem;border-radius:0.5rem;width:100%;font-size:1.5rem;margin-top:1rem}
+.n-money-box a{margin-top:1rem}
+.user-recharge .t-goods1 {margin-top: .4rem;}
+.n-acc-jt{top:.5rem;}
+.icon-accounon-but{color:#fff;margin:1.3rem 0;font-size:1.7rem}
+.ect-radio-1 label i{width:1.2rem;height:1.2rem;margin-right:0.3em;display:block;margin-top:0.1em;border-radius:100%;background:rgba(255,255,255,0);border:2px solid #bbb}
+.n-accc-input-box{position:absolute;width: 100%;height: 100%;opacity: 0;}
+.n-acc-but-queding {margin-top:1rem}
+.n-acc-but-queding .btn-info{border:none;background:#aaa;padding:0 0;font-size:1.7rem}
+.g-s-i-title-4{padding:1.5rem 0}
+.g-s-i-title-4 h4{font-size:1.5rem}
+/*充值提现*/
+.user-recharge .f-c-select-msg label{font-size: 1.65rem; display: block;height: 3rem;line-height: 3rem;margin-right: 0.8rem;vertical-align: middle;}
+.user-recharge .text-all span.t-jiantou i{margin-top:.4rem;}
+.user-recharge .t-goods1{margin-top:.4rem;}
+.text-area12{padding:0.5rem 0 1.8rem 0;}
+.text-area12 input{font-size:1.6rem;width:100%;}

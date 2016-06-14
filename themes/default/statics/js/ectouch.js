@@ -306,7 +306,31 @@ $(function($) {
 			$(this).parents(".j-show-goods-text").siblings(".j-goods-dist").find(".t-goods1 em").text(dist_em);
 		}
 	});
-
+/*弹出层方式*/
+	$(".j-show-div").click(function() {
+		document.addEventListener("touchmove", handler, false);
+		$(this).find(".j-filter-show-div").addClass("show");
+		$(".mask-filter-div").addClass("show");
+	});
+	$(".j-show-div1").click(function() {
+		document.addEventListener("touchmove", handler, false);
+		$(".j-filter-show-div").addClass("show");
+		$(".mask-filter-div").addClass("show");
+	});
+	/*关闭弹出层*/
+	$(".mask-filter-div,.show-div-guanbi").click(function() {
+		document.removeEventListener("touchmove", handler, false);
+		if ($(".j-filter-show-div").hasClass("show")) {
+			$(".j-filter-show-div").removeClass("show");
+			$(".mask-filter-div").removeClass("show");
+			return false;
+		}
+		if ($(".j-filter-show-list").hasClass("show")) {
+			$(".j-filter-show-list").removeClass("show");
+			$(".mask-filter-div").removeClass("show");
+			return false;
+		}
+	});
 	/*商品详情 红心*/
 	//	$(".j-heart").click(function() {
 	//		$(this).toggleClass("active");
