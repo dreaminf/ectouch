@@ -272,6 +272,27 @@ class UserController extends CommonController {
     /**
      * 资金管理
      */
+         public function account_list() {
+        // 获取剩余余额
+        $surplus_amount = model('ClipsBase')->get_user_surplus($this->user_id);
+        if (empty($surplus_amount)) {
+            $surplus_amount = 0;
+        }
+        $size = I(C('page_size'), 5);
+        $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
+        $where = 'user_id = ' . $this->user_id . ' AND user_money <> 0';
+        $count = $this->model->table('account_log')->field('COUNT(*)')->where($where)->getOne();
+        $this->pageLimit(url('user/account_detail'), $size);
+        $this->assign('pager', $this->pageShow($count));
+        
+        $account_detail = model('Users')->get_account_detail($this->user_id, $size, ($page-1)*$size);
+        
+        $this->assign('title', L('label_user_surplus'));
+        $this->assign('surplus_amount', price_format($surplus_amount, false));
+        $this->assign('account_log', $account_detail);
+        $this->display('user_account_list.dwt');
+    }
+     
     public function account_detail() {
         // 获取剩余余额
         $surplus_amount = model('ClipsBase')->get_user_surplus($this->user_id);

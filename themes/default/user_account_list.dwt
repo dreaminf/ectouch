@@ -2,7 +2,7 @@
 <!-- #EndLibraryItem -->
 <div class="con">
 	<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
-		<h3 class="box-flex">充值中心</h3>
+		<h3 class="box-flex">账户明细</h3>
 		<p><i class="iconfont icon-pailie j-nav-box"></i></p>
 	</header>
 	<div class="j-nav-content">
@@ -18,52 +18,32 @@
 			<li class="box-flex"><a href="{:url('user/index')}"><i class="iconfont icon-geren"></i><span>用户中心</span></a></li>
 		</ul>
 	</div>
-	<section class="text-center purse-f red-bg padding-tb">
-		<h5 class=" f-03 col-f">{$lang.surplus_amount}</h5>
-		<h2 class="col-f">{$amount}</h2>
-	</section>
-	<ul class="n-user-acc-log">
-		<li class="dis-shop-list p-r padding-all m-top10 b-color-f  ">
+	<ul class="n-user-acc-log m-top10">
+		<!--{if $account_log}-->
+		<!--{foreach from=$account_log item=item}-->
+		<li class="dis-shop-list p-r padding-all m-top1px b-color-f  ">
 			<div class="dis-box">
 				<div class="box-flex">
-					<h5 class="f-05 col-7">{$lang.payment_name}</h5>
-					<h6 class="f-05 col-7  m-top04">{$lang.payment_fee}</h6>
+					<h5 class="f-05 col-7">{$item.change_time}</h5>
+					<h6 class="f-05 col-7  m-top04">{$item.short_change_desc}</h6>
 				</div>
 				<div class="box-flex">
-					<p class="f-05 color-red text-right">{$payment.pay_name}</p>
-					<h6 class="f-05 col-3 text-right m-top04">{$pay_fee}</h6>
+					<p class="f-05 color-red text-right">{$item.amount}</p>
+					<h6 class="f-05 col-3 text-right m-top04">{$item.type}</h6>
 				</div>
 			</div>
-			<p class="f-05 m-top04"><span class="col-7 f-05">{$lang.payment_desc} </span><span class="col-3">{$payment.pay_desc}</span></p>
 		</li>
+		<!--{/foreach}-->
+		<!--{else}-->
+		<p class="text-center ect-margin-tb ect-padding-tb">暂无数据</p>
+		<!--{/if}-->
 	</ul>
-	<div class="padding-all">
-		<div class="n-acc-but-queding btn-submit">{$payment.pay_button}</div>
-	</div>
+	{include file='library/page.lbi '}
 </div>
 <!-- #BeginLibraryItem "/library/new_search.lbi" -->
 <!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" -->
 <!-- #EndLibraryItem -->
-<script type="text/javascript" src="__PUBLIC__/script/region.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/shopping_flow.js"></script>
-<script type="text/javascript">
-	region.isAdmin = false; {
-		foreach from = $lang.flow_js item = item key = key
-	}
-	var {
-		$key
-	} = "{$item}"; {
-		/foreach} {
-		literal
-	}
-	onload = function() {
-			if (!document.all) {
-				document.forms['theForm'].reset();
-			}
-		} {
-			/literal}
-</script>
 </body>
 
 </html>
