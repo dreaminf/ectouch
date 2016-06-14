@@ -1671,25 +1671,12 @@ a.n-but-ls{color:#1CBB7F}
 .text-area12{padding:0.5rem 0 1.8rem 0;}
 .text-area12 input{font-size:1.6rem;width:100%;}
 .n-b-hongbao{border-radius:0.5rem;padding:0.7rem}
-
+.n-acc-but-queding .ect-btn-info{font-size:1.7rem;color:#fff;border:0;text-align:center;padding:.84rem 0;border-radius:4px;width:100%;background:#1CBB7F;border:1px solid #1CBB7F}
 /*客服*/
-.user-service .ect-radio {
-    overflow: hidden;
-}
-.n-user-service input[type=checkbox], input[type=radio] {
-    margin: 4px 0 0;
-    margin-top: 1px\9;
-    line-height: normal;
-}
-.ect-radio label, .ect-checkbox label {
-    margin-bottom: 0;
-}
-.n-user-service label {
-    display: inline-block;
-    max-width: 100%;
-    margin-bottom: 5px;
-    font-weight: 400;
-}
+.user-service .ect-radio{overflow:hidden}
+.n-user-service input[type=checkbox],input[type=radio]{margin:4px 0 0;margin-top:1px\9;line-height:normal}
+.ect-radio label,.ect-checkbox label{margin-bottom:0}
+.n-user-service label{display:inline-block;max-width:100%;margin-bottom:5px;font-weight:400}
 .n-user-service{padding:0 1.3rem}
 .mb-6{margin-bottom: 5.1rem;}
 .presell-right{width:35.32%}
@@ -1726,28 +1713,6 @@ a.btn-submit-1{color:#fff}
 .share-ewm-box{margin:1.3rem auto;}
 .share-ewm-box-1{width:70%;margin:0 auto; border:1px solid #f6f6f9}
 .share-ewm-box-1 img{width:100%;}
-
-
-
-table.u-table {
-    margin-bottom: 0.8em;
-}
-table.u-table tr.first-tr td {
-    height: 3.5em;
-    font-weight: bold;
-    background: #f2f2f2;
-}
-table.u-table td {
-    border: 1px solid #e3e3e3;
-    padding: 0.5em 0.2em;
-    height: 3em;
-    width: 7em;
-    background: #fff;
-}
-table.u-table td {
-    border: 1px solid #e3e3e3;
-    padding: 0.5em 0.2em;
-    height: 3em;
-    width: 7em;
-    background: #fff;
-}
+table.u-table{margin-bottom:0.8em}
+table.u-table tr.first-tr td{height:3.5em;font-weight:bold;background:#f2f2f2}
+table.u-table td{border:1px solid #e3e3e3;padding:0.5em 0.2em;height:3em;width:7em;background:#fff}
