@@ -49,7 +49,6 @@
 	<div class="no-div-message flow-no-cart">
 			<i class="iconfont icon-biaoqingleiben"></i>
 			<p>亲，此处没有内容～！</p>
-			<a href="{:url('index/index')}" type="button" class="btn-default">去收藏</a>
 		</div>
 <!--{/if}-->
 </ul>

@@ -35,7 +35,10 @@
 		</li>
 		<!--{/foreach}-->
 		<!--{else}-->
-		<p class="text-center ect-margin-tb ect-padding-tb">暂无数据</p>
+	<div class="no-div-message flow-no-cart">
+			<i class="iconfont icon-biaoqingleiben"></i>
+			<p>亲，此处没有内容～！</p>
+		</div>
 		<!--{/if}-->
 	</ul>
 	{include file='library/page.lbi '}
