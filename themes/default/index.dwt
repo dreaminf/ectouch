@@ -77,8 +77,8 @@
 	</ul>
 	<!--like-->
 	<div class="padding-all text-c n-cate-box">
-	<p class="index-title"><i class="iconfont icon-cainixihuan is-cainixihuan"></i>猜你喜欢</p>
-	<p class="index-small-title">实时推荐最适合您的宝贝</p>
+		<p class="index-title"><i class="iconfont icon-cainixihuan is-cainixihuan"></i>猜你喜欢</p>
+		<p class="index-small-title">实时推荐最适合您的宝贝</p>
 	</div>
 	<section class="product-list j-product-list n-index-box " data="1">
 
@@ -124,7 +124,6 @@
 	<p class="text-c">长按二维码关注公众微信</p>
 </div>
 <div class="index-bg-box"></div>
-
 <!-- #BeginLibraryItem "/library/page_user_menu.lbi" -->
 <!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/new_search.lbi" -->
@@ -137,6 +136,11 @@
 </script>
 <script type="text/javascript ">
 	$(function($) {
+		//延迟加载
+		 $("img.lazy").lazyload({ 
+		    placeholder : "__TPL__/statics/img/loading_shop.png",
+            effect: "fadeIn"
+           });  
 		$(".lizhuanz").click(function() {
 			$(".index-guanz-t").addClass("active");
 		});
@@ -185,7 +189,6 @@
 	$(".share-div").click(function() {
 		$(".share-div").removeClass("active");
 	})
-</script>
 </script>
 
 </body>
