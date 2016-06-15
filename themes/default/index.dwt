@@ -131,16 +131,14 @@
 <!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
 <!-- #EndLibraryItem -->
 <script type="text/javascript" src="__PUBLIC__/js/jquery.more.js"></script>
+
 <script type="text/javascript">
 	get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}", '__TPL__/images/loader.gif');
 </script>
+<script type="text/javascript" src="__TPL__/statics/js/jquery.lazyload.min.js"></script>
 <script type="text/javascript ">
+
 	$(function($) {
-		//延迟加载
-		 $("img.lazy").lazyload({ 
-		    placeholder : "__TPL__/statics/img/loading_shop.png",
-            effect: "fadeIn"
-           });  
 		$(".lizhuanz").click(function() {
 			$(".index-guanz-t").addClass("active");
 		});
@@ -189,6 +187,7 @@
 	$(".share-div").click(function() {
 		$(".share-div").removeClass("active");
 	})
+	  echo.init();
 </script>
 
 </body>
