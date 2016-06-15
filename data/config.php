@@ -13,6 +13,7 @@
 
 // 部署模式(0:单机|1:分布式)
 define('DEPLOY_MODE', 0);
+define('STATICS_URL', 'http://cn-ectouch.oss-cn-hangzhou.aliyuncs.com/');
 $GLOBALS['DEPLOY_CONF'] = array(
     /* 上传设置 */
     'UPLOAD_CONF' => array(
