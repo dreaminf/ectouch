@@ -20,7 +20,7 @@
 		<li>
 			<div class="product-div">
 				<a class="product-div-link" href="{{vo.url}}"></a>
-				<img class="product-list-img" src="{{vo.goods_thumb}}" />
+				<img class="product-list-img lazy"  src="__TPL__/statics/img/loading_shop.png" data-original="{{vo.goods_thumb}}" />
 				<div class="product-text">
 					<h4>{{vo.goods_name}}</h4>
 					<p class="dis-box p-t-remark"><span class="box-flex">库存：{{vo.goods_number}}{$category.measure_unit}</span><!--<span class="box-flex">销量：{{vo.goods_sales}}{$category.measure_unit}</span>--></p>
