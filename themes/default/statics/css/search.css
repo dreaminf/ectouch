@@ -94,7 +94,7 @@ a.btn-reset,a.btn-default{color:#555;}
 	transition: all 0.1s;}
 .is-yanjing.disabled{color:#ddd;}
 /*搜索框*/
-.new-search-div{background:#fff; position:fixed; height:100%; width:100%; left: 0; top: 0; right: 0; bottom:0; z-index: 1120;display:none;}
+.new-search-div{background:#fff; position:fixed; height:100%; width:100%; max-width:640px;left: 0; top: 0; right: 0; bottom:0; z-index: 1120;display:none;}
 .new-search-div.active{display:block;}
 body.show-search-div-new,.new-search-div .search{background:#F6F6F9}
 .show-search-div .search-div{top:0;opacity:1;}
