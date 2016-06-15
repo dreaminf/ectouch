@@ -1595,17 +1595,17 @@ class OrderModel extends BaseModel {
             if ($total_amount > 0 && $total_amount >= $favourable['min_amount'] && ($total_amount <= $favourable['max_amount'] || $favourable['max_amount'] == 0)) {
                 if ($favourable['act_type'] == FAT_DISCOUNT) {
                     $discount += $total_amount * (1 - $favourable['act_type_ext'] / 100);
-
+					$total_amountd = $total_amount;
                     $favourable_name[] = $favourable['act_name'];
                 } elseif ($favourable['act_type'] == FAT_PRICE) {
                     $discount += $favourable['act_type_ext'];
-
+					$total_amountd = $total_amount;
                     $favourable_name[] = $favourable['act_name'];
                 }
             }
         }
         //折扣减免金额大于订单额判断
-        $discount = $total_amount >= $discount ? $discount : $total_amount;
+        $discount = $total_amountd >= $discount ? $discount : $total_amountd;
         return array('discount' => $discount, 'name' => $favourable_name);
     }
 
