@@ -159,8 +159,8 @@ class SaleController extends CommonController {
 
         $size = I(C('page_size'), 10);
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
-        $where = 'user_id = ' . $this->user_id;
-        $sql = "select COUNT(*) as count from {pre}drp_log where $where";
+        $where = 'o.user_id = ' . $this->user_id;
+        $sql = "select COUNT(*) as count from {pre}drp_log as d right join {pre}order_info as o on d.order_id = o.order_id  where $where";
         $count = $this->model->query($sql);
         $count = $count['0']['count'];
         $this->pageLimit(url('sale/account_detail'), $size);
@@ -504,7 +504,7 @@ class SaleController extends CommonController {
         $this->assign('user_count', $user_count ? $user_count : 0);
 
         // 店铺订单数
-        $sql = "select count(*) as count from {pre}drp_order_info where drp_id = ".$this->drp['drp_id'];
+        $sql = "select count(*) as count from {pre}drp_order_info as d right join {pre}order_info as o on d.order_id=o.order_id  where d.drp_id = ".$this->drp['drp_id'];
         $order_count = $this->model->getRow($sql);
         $this->assign('order_count', $order_count['count'] ? $order_count['count'] : 0);
 

@@ -153,7 +153,7 @@ class SaleModel extends BaseModel {
         // 获取余额记录
         $account_log = array();
 
-        $sql = "SELECT * FROM  {pre}drp_log WHERE user_id = " . $user_id .
+        $sql = "SELECT * FROM  {pre}drp_log as d right join {pre}order_info as o on d.order_id = o.order_id WHERE o.user_id = " . $user_id .
             " ORDER BY log_id DESC limit " . $start . ',' . $num;
         $res = M()->query($sql);
 
