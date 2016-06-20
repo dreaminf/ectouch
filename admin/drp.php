@@ -353,6 +353,7 @@ if ($_REQUEST['act'] == 'user_order')
 
         sys_msg($_LANG['empty_id']);
     }
+	$_SESSION['user_id'] = $user_id;
     assign_query_info();
     if (empty($_REQUEST['is_ajax']))
     {
@@ -367,6 +368,20 @@ if ($_REQUEST['act'] == 'user_order')
 
     $smarty->assign('ur_here', $_LANG['drp_user_edit']);
     $smarty->display('drp_user_order.htm');
+}
+/*------------------------------------------------------ */
+//-- 排序、分页、查询
+/*------------------------------------------------------ */
+elseif ($_REQUEST['act'] == 'user_order_list')
+{
+	$user_id = $_SESSION['user_id'];
+    $list = get_user_order_list($user_id);
+    $smarty->assign('list',         $list['list']);
+    $smarty->assign('filter',       $list['filter']);
+    $smarty->assign('record_count', $list['record_count']);
+    $smarty->assign('page_count',   $list['page_count']);
+
+    make_json_result($smarty->fetch('drp_user_order.htm'), '',array('filter' => $list['filter'], 'page_count' => $list['page_count']));
 }
 
 /*------------------------------------------------------ */
