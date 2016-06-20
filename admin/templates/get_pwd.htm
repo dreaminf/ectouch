@@ -72,8 +72,7 @@ var {$key} = "{$item}";
         <input type="hidden" name="adminid" value="{$adminid}" />
         <input type="hidden" name="code" value="{$code}" />
         <input name="password" type="password" placeholder="{$lang.enter_admin_pwd}">
-        <input name="password" type="password" placeholder="{$lang.confirm_admin_pwd}">
-        <div style="overflow:hidden;"> <span class="pull-right"><a href="{:U('forget')}">{$lang.forget_pwd}</a></span> </div>
+        <input name="confirm_pwd" type="password" placeholder="{$lang.confirm_admin_pwd}">
         <div class="get_password">
           <button class="btn btn-danger cpull-left">{$lang.click_button}</button>
           <button class="btn btn-default pull-right">{$lang.reset_button}</button>
