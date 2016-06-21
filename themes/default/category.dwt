@@ -31,11 +31,13 @@
 				<!-- #BeginLibraryItem "/library/new_goods_list.lbi" --><!-- #EndLibraryItem -->
 			</div>
 		</div>
+	
 		<!-- #BeginLibraryItem "/library/new_goods_filter.lbi" --><!-- #EndLibraryItem -->
 		<!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem -->
 		<div class="div-messages"></div>
 		<!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
 		<!-- #EndLibraryItem -->
+		<script type="text/javascript" src="__TPL__/statics/js/echo.min.js"></script>
 		<script type="text/javascript" src="__PUBLIC__/js/template.js"></script>
 <script type="text/javascript">
 $('#hide-div').delay(1500).hide(0);
@@ -152,7 +154,8 @@ $('#hide-div').delay(1500).hide(0);
       }
       return true;
   }
-
+  echo.init();
 </script>
+
 	</body>
 </html>

@@ -148,6 +148,7 @@
 			loop: false,
 			grabCursor: true,
 			paginationClickable: true,
+			autoplayDisableOnInteraction: false,
 			autoplay: 3000
 		});
 	});
