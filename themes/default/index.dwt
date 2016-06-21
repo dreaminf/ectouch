@@ -75,6 +75,7 @@
 	<ul class="index-cate-box">
 		{insert name='ads' id=256 num=4}
 	</ul>
+
 	<!--like-->
 	<div class="padding-all text-c n-cate-box">
 		<p class="index-title"><i class="iconfont icon-cainixihuan is-cainixihuan"></i>猜你喜欢</p>
@@ -130,6 +131,8 @@
 <!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
 <!-- #EndLibraryItem -->
+
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/jquery.more.js"></script>
 <script type="text/javascript">
 	get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}", '__TPL__/images/loader.gif');
@@ -144,26 +147,10 @@
 		});
 		var mySwiper = new Swiper('.banner-first', {
 			pagination: '.banner-first-pagination',
-		});
-		var mySwiper = new Swiper('.banner-second', {
-			pagination: '.banner-second-pagination',
-		});
-		var mySwiper = new Swiper('.banner-third', {
-			pagination: '.banner-third-pagination',
-		});
-		var mySwiper = new Swiper('.recom-container', {
-			pagination: '.recom-pagination',
-			slidesPerView: 1,
+			loop: false,
+			grabCursor: true,
 			paginationClickable: true,
-		});
-		var mySwiper = new Swiper('.brand-container', {
-			pagination: '.brand-pagination',
-			slidesPerView: 1,
-			paginationClickable: true,
-		});
-		var mySwiper = new Swiper('.hot-container', {
-			slidesPerView: 4,
-			paginationClickable: true,
+			autoplay: 3000
 		});
 	});
 	/*立即关注*/
@@ -184,9 +171,6 @@
 	$(".share-div").click(function() {
 		$(".share-div").removeClass("active");
 	})
-	  echo.init();
 </script>
-
 </body>
-
 </html>

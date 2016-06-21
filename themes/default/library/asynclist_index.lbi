@@ -7,10 +7,17 @@
 <li class="fl">
 {/if}
 <div class="product-div">
-  <a href="{$goods.url}"><img  src="__TPL__/statics/img/loading_shop.png" data-echo="{$goods.goods_img}"  alt="{$goods.name}" /></a>
+  <a href="{$goods.url}"><img class="lazy" src="__TPL__/statics/img/loading_shop.png" data-original="{$goods.goods_img}"  alt="{$goods.name}" /></a>
   <a href="{$goods.url}"><h4>{$goods.name}</h4></a>
   <p><span><!--{if $goods.promote_price}-->{$goods.promote_price}<!--{else}-->{$goods.shop_price}<!--{/if}--></span></p>
   </div>
 </li>
 <!-- {/if}--> 
 <!-- 商品列表 end--> 
+<script type="text/javascript">
+      $(function() {
+          $("img.lazy").lazyload({ 
+                 effect: "fadeIn"
+           });  
+      });
+</script>

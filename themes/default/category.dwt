@@ -34,16 +34,9 @@
 		<!-- #BeginLibraryItem "/library/new_goods_filter.lbi" --><!-- #EndLibraryItem -->
 		<!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem -->
 		<div class="div-messages"></div>
-		
-		<!--引用js-->
-		<script type="text/javascript" src="__TPL__/statics/js/swiper-3.2.5.min.js"></script>
-		<script type="text/javascript" src="__TPL__/statics/js/jquery-ui-1.10.1.custom.min.js"></script>
-		<script type="text/javascript" src="__TPL__/statics/js/jquery.ui.touch-punch.min.js"></script>
-		<script type="text/javascript" src="__TPL__/statics/js/jquery.scrollUp.min.js"></script>
-		<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
+		<!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
+		<!-- #EndLibraryItem -->
 		<script type="text/javascript" src="__PUBLIC__/js/template.js"></script>
-		<script type="text/javascript" src="__TPL__/statics/js/echo.min.js"></script>
-	
 <script type="text/javascript">
 $('#hide-div').delay(1500).hide(0);
 	var sliders = function() {
@@ -159,8 +152,7 @@ $('#hide-div').delay(1500).hide(0);
       }
       return true;
   }
-  echo.init();
-</script>
 
+</script>
 	</body>
 </html>
