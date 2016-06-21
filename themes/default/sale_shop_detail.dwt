@@ -23,7 +23,7 @@
 		</div>
 		<section>
 			<ul class="dis-box padding-all n-bs-f n-b-b">
-				<li class="box-flex"><span class="f-07 col-6">累计销售佣金</span></li>
+				<li class="box-flex"><span class="f-07 col-6">累计销售额</span></li>
 				<li class="box-flex"><span class="f-r col-lv f-06">{$money}元</span></li>
 			</ul>
 		</section>	
@@ -38,7 +38,7 @@
 			</ul>
 			<ul class="dis-box padding-all n-bs-f n-b-b">
 				<li class="box-flex"><span class="f-07 col-6">累计会员</span></li>
-				<li class="box-flex"><span class="f-r col-lv f-06">{$shop_count}</span></li>
+				<li class="box-flex"><span class="f-r col-lv f-06">{$user_count}</span></li>
 			</ul>
 			</section>	
 	</div>
