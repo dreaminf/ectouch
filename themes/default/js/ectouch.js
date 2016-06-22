@@ -245,3 +245,14 @@ $('.menu-tab ul li').click(function() {
 	$(this).addClass("selected").siblings().removeClass('selected');
 	$('.menu-cont-list').hide().eq($('.menu-tab ul li').index(this)).show();
 });
+
+/*修改密码验证*/
+function editPassword() {
+    var new_password = $("#new_password").val(); //获取
+	var comfirm_password = $("#comfirm_password").val();
+	if(new_password != comfirm_password){
+		alert('两次输入的密码不一致');
+		return false;
+	}
+	
+}
