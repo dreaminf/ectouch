@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>缺货登记</title>
+		<link rel="stylesheet" href="css/ectouch.css" />
+	</head>
+
+	<body>
+		<div class="con">
+			<div class="user-recharge b-color-f">
+				<section class="m-top1px margin-lr">
+					<div class="text-all dis-box j-text-all">
+						<label class="t-remark">订购商品名</label>
+						<div class="box-flex input-text">
+							<input class="j-input-text" type="text" placeholder="">
+						</div>
+					</div>
+				</section>
+				<section class="m-top1px margin-lr">
+					<div class="text-all dis-box j-text-all">
+						<label class="t-remark">订购数量</label>
+						<div class="box-flex input-text">
+							<input class="j-input-text" type="text" placeholder="">
+						</div>
+					</div>
+				</section>
+				<section class="m-top1px padding-tb margin-lr" style="padding-bottom:0;">
+					<div class="f-c-select-msg">
+						<label class="t-remark">订购描述<span class="t-remark">（50字）</span></label>
+						<div class="text-area1 m-top04">
+							<textarea class="text-area1" maxlength="50" placeholder="选填"></textarea>
+							<span>50</span>
+						</div>
+					</div>
+				</section>
+				<section class="m-top1px margin-lr">
+					<div class="text-all dis-box j-text-all">
+						<label class="t-remark">联系人</label>
+						<div class="box-flex input-text">
+							<input class="j-input-text" type="text" placeholder="">
+						</div>
+					</div>
+				</section>
+				<section class="m-top1px margin-lr">
+					<div class="text-all dis-box j-text-all">
+						<label class="t-remark">电子邮箱地址</label>
+						<div class="box-flex input-text">
+							<input class="j-input-text" type="text" placeholder="">
+						</div>
+					</div>
+				</section>
+				<section class="m-top1px margin-lr">
+					<div class="text-all dis-box j-text-all">
+						<label class="t-remark">联系电话</label>
+						<div class="box-flex input-text">
+							<input class="j-input-text" type="text" placeholder="">
+						</div>
+					</div>
+				</section>
+			</div>
+			<div class="ect-button-more dis-box m-top12 padding-lr">
+				<a href="user_booking_detail.html" class="btn-submit box-flex">提交缺货登记</a>
+				<a class="btn-reset box-flex btn-clear">重置</a>
+			</div>
+			<!--提现layer-->
+			<div class="mask-filter-div"></div>
+		</div>
+		<!--引用js-->
+		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="js/swiper-3.2.5.min.js"></script>
+		<script type="text/javascript" src="js/ectouch.js"></script>
+		<script type="text/javascript">
+			$(function($) {
+				$('.btn-clear').click(function() {
+					$('input,textarea').val("");
+				});
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>邮箱绑定</title>
+		<link rel="stylesheet" href="css/ectouch.css" />
+	</head>
+
+	<body class="b-color-f">
+		<div id="loading"><img src="images/loading.gif" /></div>
+		<div class="con">
+			<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
+				<h3 class="box-flex">找回密码</h3>
+				<a class="" href="javascript:;"><i class="iconfont icon-pailie j-nav-box"></i></a>
+			</header>
+			<div class="j-nav-content">
+				<ul class="dis-box new-footer-box">
+					<li class="box-flex">
+						<a href="index.html"><i class="iconfont icon-home"></i><span>首页</span></a>
+					</li>
+					<li class="box-flex">
+						<a href="catalog.html"><i class="iconfont icon-caidan"></i><span>分类</span></a>
+					</li>
+					<li class="box-flex"><a href="javascript:;" class="j-search-input"><i class="iconfont icon-sousuo"></i><span>搜索</span></a></li>
+					<li class="box-flex"><a href="flow_cart.html"><i class="iconfont icon-gouwuche"></i><span>购物车</span></a></li>
+					<li class="box-flex"><a href="user.html"><i class="iconfont icon-geren"></i><span>用户中心</span></a></li>
+				</ul>
+			</div>
+			<!--根据邮箱找回-->
+			<section class="user-center j-f-email margin-lr">
+				<form action="user_forget_code.html">
+					<div class="text-all dis-box j-text-all">
+						<div class="input-text box-flex">
+							<input class="j-input-text" type="text" placeholder="请输入用户名" />
+							<i class="iconfont icon-guanbi1 is-null j-is-null"></i>
+						</div>
+					</div>
+					<div class="text-all dis-box j-text-all">
+						<div class="input-text box-flex">
+							<input class="j-input-text" type="email" placeholder="请输入邮箱" />
+							<i class="iconfont icon-guanbi1 is-null j-is-null"></i>
+						</div>
+					</div>
+					<p class="fl t-remark">为了您的安全，我们会向你邮箱发送验证码</p>
+					<input type="hidden" name="u-h-forget" value="u-f-email" />
+					<button type="submit" class="btn-submit">下一步</button>
+					<p class="fr t-remark">您也可以通过 <a href="user_forget_tel.html">手机找回</a> </p>
+				</form>
+			</section>
+		</div>
+		<!--引用js-->
+		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="js/ectouch.js"></script>
+
+	</body>
+
+</html>
