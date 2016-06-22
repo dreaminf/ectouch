@@ -2261,6 +2261,11 @@ class UserController extends CommonController {
         if (IS_POST) {
             $old_password = isset($_POST['old_password']) ? in($_POST['old_password']) : null;
             $new_password = isset($_POST['new_password']) ? in($_POST['new_password']) : '';
+            $comfirm_password = isset($_POST['comfirm_password']) ? in($_POST['comfirm_password']) : '';
+            if($new_password != $comfirm_password){
+                show_message('请输入两次相同的密码', L('back_page_up'), '', 'info');
+            }
+
             $user_id = isset($_POST['uid']) ? intval($_POST['uid']) : $this->user_id;
             $code = isset($_POST['code']) ? in($_POST['code']) : ''; // 邮件code
             $mobile = isset($_POST['mobile']) ? base64_decode(in($_POST['mobile'])) : ''; // 手机号
