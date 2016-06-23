@@ -868,7 +868,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .other-login ul li span {display: block;width: 5rem;height: 5rem;line-height: 5rem;border-radius: 50%;margin: 0 auto;margin-bottom: .4rem;}
 .other-login ul li span.qq {background: #36aaf4}
 .other-login ul li span.weixin {background: #2cbf19;}
-.other-login ul li span.xinlang {background: #ec4353;}
+.other-login ul li span.weibo {background: #ec4353;}
 .other-login ul li i {display: block;color: #fff;font-size: 3.4rem;}
 .other-login ul li a:link {text-decoration: none !important;}
 
@@ -2428,4 +2428,20 @@ table.u-table td{border:1px solid #e3e3e3;padding:0.5em 0.2em;height:3em;width:7
 .con{max-width:640px;}
 
 /*购物车*/
-.n-flow-left{left:1.3rem;}222
+.n-flow-left{left:1.3rem;}
+/*顶部高度*/
+.ect-header{height:2.5em; position:relative;}
+.ect-header span{font-size: 1.4em;position: absolute;left: 2.4em;right: 3em;top: 0.3em;}
+.ect-header a{  width: 2.5em;height: 2.5em;}
+.ect-text-left{text-align:left;}
+.ect-border-none{border:none;}
+.ect-margin-lr{margin-left:0.6em; margin-right:0.6em;}
+.ect-margin-tb{  margin-top: 0.6em;margin-bottom: 0.6em;}
+.ect-padding-lr{padding-left:0.6em; padding-right:0.6em;}
+.ect-padding-tb{padding-top:0.6em; padding-bottom:0.6em;}
+.ect-border-radius100{ border-radius: 100%; -moz-border-radius: 100%; -webkit-border-radius: 100%; -o-border-radius: 100%;}
+.ect-border-radius0{ border-radius:0; -moz-border-radius:0; -webkit-border-radius:0; -o-border-radius:0;}
+.ect-icon-color{color:silver;}
+.ect-diaplay-box{display: -webkit-box;display: -moz-box;display: -ms-box;display: box;}
+.ect-box-flex{-webkit-box-flex: 1;-moz-box-flex: 1;-ms-box-flex: 1;box-flex: 1; display:block; width:100%;}
+.ect-margin-bottom0{margin-bottom:0 !important;}
