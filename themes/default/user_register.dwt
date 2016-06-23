@@ -85,7 +85,7 @@
 								<!--{/if}-->
 							</ul>
 						</div>
-						<p class="ect-checkbox ect-padding-tb ect-margin-tb ect-margin-bottom0 ect-padding-lr">
+						<p class="ect-checkbox ect-padding-tb ect-margin-tb ect-margin-bottom0">
 							<input id="agreement" name="agreement" type="checkbox" value="1" checked="checked">
 							<label for="agreement">{$lang.agreement}<i></i></label>
 						</p>
