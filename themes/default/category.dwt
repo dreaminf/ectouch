@@ -1,29 +1,18 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-		<meta name="format-detection" content="telephone=no" />
-		<meta charset="utf-8">
-		<title>{$page_title}</title>
-		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
-		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
-	</head>
+<!-- #BeginLibraryItem "/library/new_page_header.lbi" --><!-- #EndLibraryItem -->
 	<style>
             a.a-sequence {width: 3.5rem;height: 0rem;line-height: 3rem;margin-left:0.5rem;}
             a.s-filter {line-height: 3rem;padding-left: 0rem;}
-    </style>
-	<body class="">
-		<div id="loading"><img src="__TPL__/statics/img/loading.gif" /></div>
+   </style>
 		<div class="con">
 			<div class="category">
 				<section class="search">
-					<div class="text-all dis-box j-text-all">
-						<div class="box-flex input-text">
-							<a class="a-search-input j-search-input-new" href="javascript:;"></a>
-							<input class="j-input-text" type="text" placeholder="商品搜索" />
-							<i class="iconfont icon-guanbi is-null j-is-null"></i>
+					<div class="text-all dis-box j-text-all text-all-back">
+						<a class="a-icon-back j-close-search" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou is-left-font"></i></a>
+						<div class="box-flex input-text n-input-text i-search-input">
+							<a class="a-search-input j-search-input" href="javascript:void(0)"></a>
+							<i class="iconfont icon-sousuo"></i>
+							<input class="j-input-text" type="text" placeholder="请输入您搜索的关键词!">
+							<i class="iconfont icon-guanbi1 is-null j-is-null"></i>
 						</div>
 						<a class="a-sequence j-a-sequence"><i class="iconfont icon-pailie" data="1"></i></a>
 					</div>
@@ -37,6 +26,7 @@
 		<div class="div-messages"></div>
 		<!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
 		<!-- #EndLibraryItem -->
+
 		<script type="text/javascript" src="__TPL__/statics/js/echo.min.js"></script>
 		<script type="text/javascript" src="__PUBLIC__/js/template.js"></script>
 <script type="text/javascript">

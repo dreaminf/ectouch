@@ -354,7 +354,7 @@ a.s-filter{display:block; font-size:1.6rem; text-align:center; padding:.8rem 0; 
 .search .btn-submit{display: block; width:6rem; height:3.6rem; line-height:1.8rem; box-sizing: border-box; border-radius: 0px 4px 4px 0;}
 .search .n-input-text.i-search-input input{padding-left:3.7rem;}
 .i-search-input i.icon-sousuo{position:absolute; font-size:2rem; color:#999; left:1rem; top:50%; margin-top:-1.32rem;}
-.is-left-font{font-size: 2rem;line-height: 3.4rem;color: #999;}
+.is-left-font{font-size: 2rem;line-height: 3.4rem;color: #999;    margin-right: 1rem;}
 /*span靠边对齐带箭头*/
 span.t-jiantou{position: relative; font-size:1.5rem; padding-right: 1.3rem;margin-top: 0.1rem; color:#555;}
 span.t-jiantou.active{color:#1CBB7F;}

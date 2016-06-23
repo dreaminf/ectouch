@@ -6,26 +6,40 @@
 	<!--style="margin-bottom: 50px;"-->
 	<div class="goods" style="margin-bottom: 0rem;">
 		<div class="ect-bg">
-			<header class="dis-box header-menu-1 b-color color-whie goods-fixed">
-				<a class="" href="javascript:history.go(-1)">
-					<div class="goods-left-jiat"><i class="iconfont icon-jiantou is-con"></i></div>
-				</a>
-				<h3 class="box-flex"></h3>
-				<a class="" href="javascript:;" onClick="openMune()">
-					<div class="goods-left-jiat"><i class="iconfont icon-gengduo j-nav-box is-con"></i></div>
-				</a>
-				<div class="goods-nav ts-3">
-					<ul class="goods-nav-box">
-						<a href="{:url('user/msg_list')}"><li><i class="iconfont icon-xiaoxi1 j-nav-box"></i>消息</li></a>
-						<a href="{:url('index/index')}"><li><i class="iconfont icon-home j-nav-box"></i>首页</li></a>
-						<a href="{:url('user/index')}"><li><i class="iconfont icon-geren j-nav-box"></i>用户中心</li></a>
-						<a href="{:url('user/index')}"><li style="border:none"><i class="iconfont icon-fenxiang j-nav-box"></i>分享</li></a>
-					</ul>
-				</div>
-			</header>
+					<header class="dis-box header-menu-1 b-color color-whie goods-fixed ts-3">
+					<a class="" href="javascript:history.go(-1)">
+						<div class="goods-left-jiat"><i class="iconfont icon-jiantou is-con"></i></div>
+					</a>
+					<div class="box-flex">
+						<ul class="dis-box goods-header-nav-box">
+							<li class="box-flex"><a class="hover" href="javascript:;"><label>商品</label></a></li>
+							<li class="box-flex"><a href="#n-goods"><label>详情</label></a></li>
+							<li class="box-flex"><a href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><label>评价</label></a></li>
+						</ul>
+					</div>
+					<a class="" href="javascript:;">
+						<div class="goods-left-jiat"><i class="iconfont icon-gengduo j-nav-box is-con"></i></div>
+					</a>
+					<div class="goods-nav ts-3">
+						<ul class="goods-nav-box">
+							<a href="{:url('user/msg_list')}">
+								<li><i class="iconfont icon-xiaoxi1 j-nav-box"></i>消息</li>
+							</a>
+							<a href="{:url('index/index')}">
+								<li><i class="iconfont icon-home j-nav-box"></i>首页</li>
+							</a>
+							<a href="{:url('user/index')}">
+								<li><i class="iconfont icon-geren j-nav-box"></i>用户中心</li>
+							</a>
+							<a href="{:url('user/index')}">
+								<li style="border:none"><i class="iconfont icon-fenxiang j-nav-box"></i>分享</li>
+							</a>
+						</ul>
+					</div>
+				</header>			
 		</div>
 		<!--商品图片相册-->
-		<div class="goods-photo j-show-goods-img">
+		<div class="goods-photo n-j-show-goods-img">
 			<div class="hd">
 				<ul>
 				</ul>
@@ -107,7 +121,7 @@
 							<p class="box-flex t-goods2">本服务由{$shop_name}提供售后服务与产品支持</p>
 							<i class="iconfont icon-102 goods-min-icon"></i>							
 						</div>
-						<div class="dis-box m-top08 g-r-rule">
+						<div class="dis-box m-top08 g-r-rule goods-service-list">
 							<p class="box-flex t-remark3">
 								<em class="fl em-promotion"><i class="iconfont icon-weibiaoti11"></i></em><span class="fl">正品保证</span></p>
 							<p class="box-flex t-remark3">
@@ -260,21 +274,13 @@
 	<!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
 	<!-- #EndLibraryItem -->
 </div>
-<div class="n-goods-bg-box"></div>
+<div class="n-goods-bg"></div>
 <!-- #BeginLibraryItem "/goods_info.dwt" -->
 <!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/new_search.lbi" -->
 <!-- #EndLibraryItem -->
 <script type="text/javascript" src="__TPL__/js/lefttime.js"></script>
 <script type="text/javascript">	
-	/*点击下拉菜单*/
-	function openMune() {
-	    if ($(".ect-nav").is(":visible")) {
-	        $(".ect-nav").hide();
-	    } else {
-	        $(".ect-nav").show();
-	    }
-	}
 	/*倒计时*/
 	var goods_id = {$goods_id};
 	var goodsattr_style = 1;
@@ -353,7 +359,7 @@ $(function() {
 		/*弹出层方式*/
 		$(".j-show-div").click(function() {
 			document.addEventListener("touchmove", handler, false);
-			$(this).find(".j-filter-show-div").addClass("show");
+			$(".j-filter-show-div").addClass("show");
 			$(".mask-filter-div").addClass("show");
 		});
 		/*关闭弹出层*/
@@ -377,7 +383,30 @@ $(function() {
 	});
 </script>
 
+		<script>
+			$(function() {
+					/*头部导航*/
+	$(".j-nav-box").click(function() {
+		$(".j-nav-content").toggleClass("active");
+	});
 
+/*导航弹框*/	
+$(".icon-gengduo").click(function() {
+					$(".goods-nav").toggleClass("active");
+				});	
+				
+				
+				$('.goods-header-nav-box li').click(function() {
+					for (var i = 0; i < $('.goods-header-nav-box li').size(); i++) {
+						if (this == $('.goods-header-nav-box li').get(i)) {
+							$('.goods-header-nav-box li').eq(i).children('a').addClass('hover');
+						} else {
+							$('.goods-header-nav-box li').eq(i).children('a').removeClass('hover');
+						}
+					}
+				})
+			})
+		</script>
 </body>
 
 </html>

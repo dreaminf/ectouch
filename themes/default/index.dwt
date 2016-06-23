@@ -3,40 +3,34 @@
 <div class="con m-b7 new-maxbox">
 	<header class="header-max-box">
 		{if !$subscribe}
-		<div class="ect-attention dis-box">
-			<div class="attention-left-img">
-				<img src="__TPL__/images/more_icon.png">
+		<div class="ect-header-banner dis-box">
+			<div class="box-flex">
+				<img src="__TPL__/images/more_icon.png" class="fl" />
+				<div class="ect-header-text fl">
+					<h4>欢迎进入<span class="color-red">微商城</span></h4>
+					<p>关注公众号,享专属服务</p>
+				</div>
 			</div>
-			<div class="attention-text box-flex">
-				<p style="font-size: 1.4rem;"><span style="color:#fff">欢迎进入</span><span style="color:#05af10"> [ 微商城 ]</span></p>
-				<p style="font-size: 1.3rem;"><span style="color:#d6d6d6">关注公众号,享专属服务</span></p>
-			</div>
-			<div class="attention-button">
-				<a class='lizhuanz'>
-					<button class="button">立即关注</button>
-				</a>
-			</div>
+			<a class="btn-submit1 j-ewm-box" href="javascript:;">立即关注</a>
 		</div>
-		<!--立即关注-->
-		<div class="index-guanz-t">
-			<div class="index-guanz-show">
-				<img src="__TPL__/images/guanzm.png">
-				<h5>ECTouch微信，欢迎您！</h5>
-				<p><span>长按二维码关注公众微信</span></p>
-			</div>
-			<div class="index-guanz-bg"></div>
+		<div class="index-weixin-box">
+			<div><img src="__TPL__/statics/img/ewm.png"></div>
+			<h3>ECTouch微信，欢迎您！</h3>
+			<p class="text-c">长按二维码关注公众微信</p>
 		</div>
+		<div class="index-bg-box"></div>
 		{/if}
 		<div class="index-nav-box">
 			<ul class="dis-box">
 				<li class="index-left-box"><a href="{:url('category/top_all')}"><i class="iconfont icon-caidan color-whie"></i></a></li>
 				<li class="box-flex n-input-index-box">
-					<div class="index-search-box j-search-input-new" id="j-input-focus"><i class="iconfont icon-sousuo"></i>请输入您搜索的关键词!</div>
+					<div class="index-search-box j-search-input" id="j-input-focus"><i class="iconfont icon-sousuo"></i>请输入您搜索的关键词!</div>
 				</li>
-				<li class="index-right-box"><a onclick="window.location = '{:url('user/msg_list')}'"><i class="iconfont icon-xiaoxi1 color-whie n-xiaoxi-size"></i></a></li>
+				<li class="index-right-box"><a href="{:url('user/msg_list')}"><i class="iconfont icon-xiaoxi1 color-whie n-xiaoxi-size"></i></a></li>
 			</ul>
 		</div>
 	</header>
+
 	<div class="index-banner swiper-container box position-rel banner-first">
 		<div class="swiper-wrapper">
 			{insert name='ads' id=255 num=3}
@@ -51,7 +45,8 @@
 		<ul class="box ul-4 text-c bg-white">
 			<!--{foreach from=$navigator item=nav}-->
 			<li class="fl">
-				<a href="{$nav.url}" {if $nav.opennew eq 1}target="_blank" {/if}><img src="{$nav.pic}" /></a><a class="index-menu-text" href="{$nav.url}" {if $nav.opennew eq 1}target="_blank" {/if}>{$nav.name}</a>
+				<a href="{$nav.url}" {if $nav.opennew eq 1}target="_blank" {/if}><img src="{$nav.pic}" /></a>
+				<a class="index-menu-text" href="{$nav.url}" {if $nav.opennew eq 1}target="_blank" {/if}>{$nav.name}</a>
 			</li>
 			<!--{/foreach}-->
 
@@ -72,6 +67,7 @@
 			</div>
 		</div>
 	</div>
+
 	<ul class="index-cate-box">
 		{insert name='ads' id=256 num=4}
 	</ul>
@@ -115,18 +111,24 @@
 		<br/>地址：上海市普陀区中山北路3553号伸大厦3层
 	</footer>
 </div>
-
-<!--悬浮菜单e-->
-
-<div class="index-weixin-box">
-	<label><i class="iconfont icon-guanbi j-ewm-close"></i></label>
-	<div><img src="__TPL__/statics/img/ewm.png"></div>
-	<h3>ECTouch微信，欢迎您！</h3>
-	<p class="text-c">长按二维码关注公众微信</p>
+<!--悬浮菜单s-->
+<div class="filter-top" id="scrollUp">
+	<i class="iconfont icon-dingbu"></i>
 </div>
-<div class="index-bg-box"></div>
-<!-- #BeginLibraryItem "/library/page_user_menu.lbi" -->
-<!-- #EndLibraryItem -->
+<!--悬浮菜单e-->
+<footer class="new-index-footer ">
+		<ul class="dis-box new-footer-box">
+			<li class="box-flex">
+				<a href="{:url('index/index')}" class="nav-cont active"><i class="nav-box"><img src="__TPL__/statics/img/home-a.png"></i><span>首页</span></a>
+			</li>
+			<li class="box-flex">
+				<a href="{:url('category/top_all')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/cate-b.png"></i><span>分类</span></a>
+			</li>
+			<li class="box-flex"><a href="{:url('store/check_store')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/shop-b.png"></i><span>店铺</span></a></li>
+			<li class="box-flex"><a href="{:url('flow/cart')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/flow-b.png"></i><span>购物车</span></a></li>
+			<li class="box-flex"><a href="{:url('user/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/user-b.png"></i><span>用户中心</span></a></li>
+		</ul>
+	</footer>
 <!-- #BeginLibraryItem "/library/new_search.lbi" -->
 <!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
@@ -136,13 +138,7 @@
 	get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}", '__TPL__/images/loader.gif');
 </script>
 <script type="text/javascript ">
-	$(function($) {
-		$(".lizhuanz").click(function() {
-			$(".index-guanz-t").addClass("active");
-		});
-		$(".index-show-close,.index-guanz-bg").click(function() {
-			$(".index-guanz-t").removeClass("active");
-		});
+	$(function($) {		
 		var mySwiper = new Swiper('.banner-first', {
 			pagination: '.banner-first-pagination',
 			loop: false,
@@ -153,23 +149,16 @@
 		});
 	});
 	/*立即关注*/
-	if ($(".ect-attention").hasClass("ect-attention")) {
+	if ($(".index-weixin-box").hasClass("index-weixin-box")) {
 		$(".index-banner").css({
-			"marginTop": "9.2rem"
+			"marginTop": "5rem"
 		})
 	} else {
 		$(".index-banner").css({
-			"marginTop": "4.2rem"
+			"marginTop": "0rem"
 		})
 	}
-	$(function($) {
-		$(".ect-index-share").click(function() {
-			$(".share-div").addClass("active");
-		});
-	});
-	$(".share-div").click(function() {
-		$(".share-div").removeClass("active");
-	})
 </script>
 </body>
+
 </html>
