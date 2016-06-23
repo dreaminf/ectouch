@@ -800,4 +800,5 @@ $(".icon-gengduo").click(function() {
 					$(".goods-nav").toggleClass("active");
 				});	
 
+
 });

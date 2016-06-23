@@ -1197,8 +1197,8 @@ text-align: center;
  .filter-menu.active .filter-menu-list {left:0; right:0; width:inherit; opacity: 1;}
  .filter-menu.active  .filter-menu-title:before,.filter-top:before{-moz-transform: rotate(-45deg);-webkit-transform: rotate(-45deg);-ms-transform: rotate(-45deg);-o-transform: rotate(-45deg);transform: rotate(-45deg);}
  .filter-menu.active  .filter-menu-title:after,.filter-top:after{-moz-transform: rotate(-135deg);-webkit-transform: rotate(-135deg);-ms-transform: rotate(-135deg);-o-transform: rotate(-135deg);transform: rotate(-135deg);}
- .filter-top{width:4.6rem; height:4.6rem;  text-align:center; line-height:4.6rem; background:rgba(0,0,0,0.5); border-radius: 100%; bottom:6.6rem; right:1.6rem; left:inherit}
- .filter-top .icon-jiantou{position:absolute; left:0; right:0; font-size:2rem; color:#fff; -moz-transform: rotate(90deg);-webkit-transform: rotate(90deg);-ms-transform: rotate(90deg);-o-transform: rotate(90deg);transform: rotate(90deg);}
+ .filter-top{width:4rem; height:4rem;  text-align:center; line-height:4rem; background:rgba(255,255,255,0.86);border: 1px solid #999; border-radius: 100%; bottom:6.6rem; right:1.6rem; left:inherit}
+ .filter-top .icon-dingbu{position:absolute; left:0; right:0; font-size:2.4rem; color:#888; }
  
  /*========================================
  					 店铺街
@@ -1990,16 +1990,17 @@ a.btn-submit-1{color:#fff}
 .share-ewm-box-1{width:70%;margin:0 auto; border:1px solid #f6f6f9}
 .share-ewm-box-1 img{width:100%;}
 /*new hooter*/
-.new-footer-box{padding:0.4rem 0;}
+.nav-box img{width:2.2rem;}
+.new-footer-box{padding:0.6rem 0;}
 .new-footer-box i{font-size:2rem;display:block;text-align:center;}
-.new-footer-box span{font-size:1.3rem;display:block;text-align:center;padding-top:0rem;}
+.new-footer-box span{font-size:1.3rem;display:block;text-align:center;padding-top:0rem;margin-top: -0.5rem;}
 .new-index-footer{ background-color: rgba(254, 253, 252, 0.96);   left: 0;right: 0;position: fixed;z-index: 4;overflow: hidden;margin: 0 auto;bottom: 0;z-index: 4;box-shadow: 1px 5px 15px rgba(50,50,50,0.3);}
 .new-index-header{ background-color: rgba(50, 50, 50, 0.6);   left: 0;right: 0;position: fixed;z-index: 4;overflow: hidden;margin: 0 auto;top: 0rem;z-index: 5;}
 .new-footer-box li .nav-cont{color:#666;}
 .new-footer-box li .nav-cont.active{color:#1CBB7F}
-.j-nav-content{display:none;background-color: rgba(255, 255, 255, 1);border-bottom:1px solid #f6f6f9;overflow: hidden;margin: 0 auto;top: 0rem;z-index: 5;}
+.j-nav-content{display:none;background-color: rgba(255, 255, 255, 1);border-bottom:1px solid #f6f6f9;overflow: hidden;margin: 0 auto;top: 0rem;z-index: 5;box-shadow: 1px 5px 15px rgba(50,50,50,0.3);}
 .j-nav-content.active{display:block;}
-.j-nav-content .new-footer-box i,.j-nav-content .new-footer-box span{color:#999;}
+.j-nav-content .new-footer-box i,.j-nav-content .new-footer-box span{color:#666;}
 .index-nav ul li img{width:5rem;}
 .header-max-box{position:fixed;top:0;width:100%;z-index: 12;}
 .index-nav-box{background:rgba(28,187,127, 0);moz-transition: 0.1s ease;-o-transition: 0.1s ease;-webkit-transition:0.1s ease;    padding: 0 0.6rem;}
