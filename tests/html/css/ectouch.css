@@ -52,7 +52,7 @@ user-select:none;
 .ect-header-banner p{font-size:1.3rem; color:#ccc;line-height: 1.9rem;}
 .ect-header-banner .btn-submit1{padding:.6rem 1rem; margin-top:-.3rem; font-size:1.3rem; margin-right:2rem; color:#fff; border-color:#05af10;background:#05af10;}
 .ect-header-banner .btn-submit1:hover{border-color:#049d0e;background:#049d0e;}
-.index-banner{margin-top: 3.7rem;}
+/*.index-banner{margin-top: 3.7rem;}*/
 html,body,.con{max-width:640px;margin:0 auto;}
 body{position:relative}
 .shopping-list{min-height:100%}
@@ -273,15 +273,18 @@ label.admin-text{color:#999;}
 .btn-default,
 .btn-alipay,
 .btn-wechat{font-size: 1.7rem;color: #fff;border: 0;text-align: center;padding: .84rem 0;border-radius: 4px;width: 100%;}
+.btn-submit-flow{font-size: 1.7rem;color: #fff;border: 0;text-align: center;padding: .6rem 0.1rem;border-radius: 4px;width: 100%;}
 a.btn-submit,
+a.btn-submit-flow,
 a.btn-disab,
 a.btn-cart,
 a.btn-alipay,
 a.btn-wechat{color: #fff;}
 a.btn-reset,a.btn-default{color:#555;}
-.btn-submit {background: #1CBB7F;border:1px solid #1CBB7F}/*主提交按钮*/
+.btn-submit,.btn-submit-flow {background: #1CBB7F;border:1px solid #1CBB7F}/*主提交按钮*/
 .btn-submit:active,
-.btn-submit:hover {border:1px solid #1aad76;background:#1aad76;}/*主提交按钮按下颜色*/
+.btn-submit:hover,.btn-submit-flow:active,
+.btn-submit-flow:hover{border:1px solid #1aad76;background:#1aad76;}/*主提交按钮按下颜色*/
 .btn-submit1,a.btn-submit1 {color:#1CBB7F; background:none;  border:1px solid #1CBB7F}/*主提交按钮1*/
 .btn-submit1:active,
 .btn-submit1:hover{background: none; border:1px solid #1CBB7F}/*主提交按钮按下颜色1*/
@@ -1005,6 +1008,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
  .f-cart-filter-btn.active .btn-default{margin-right:1rem;}
  .flow-have-cart .flow-list-box{margin-top:1rem;}
   .flow-have-cart .flow-list-box:first-child{margin-top:0rem;}
+  .g-cart-filter-sb{width:6rem;}
  /*=======================================
 		订单提交页
   =======================================*/
@@ -2001,8 +2005,8 @@ a.btn-submit-1{color:#fff}
 .j-nav-content.active{display:block;}
 .j-nav-content .new-footer-box i,.j-nav-content .new-footer-box span{color:#777;}
 .index-nav ul li img{width:5rem;}
-.header-max-box{position:fixed;top:0;width:100%;z-index: 12;    max-width: 640px;}
-.index-nav-box{background:rgba(28,187,127, 0);moz-transition: 0.1s ease;-o-transition: 0.1s ease;-webkit-transition:0.1s ease;    padding: 0 0.6rem;}
+.header-max-box{width:100%;max-width: 640px;}
+.index-nav-box{background:rgba(28,187,127, 0);moz-transition: 0.1s ease;-o-transition: 0.1s ease;-webkit-transition:0.1s ease; position:absolute;width:100%;top:0.3rem;z-index:11}
 .index-nav-box.active{background:rgba(28,187,127, 0.96)}
 .index-left-box,.index-right-box{width:3.6rem;}
 .index-search-box{height:3.4rem;line-height:3.4rem;    background:rgba(255,255,255,0.9);border-radius:3.4rem;font-size: 1.3rem;color: #777;padding-left: .5rem;}
@@ -2023,7 +2027,7 @@ a.btn-submit-1{color:#fff}
 .n-index-box .product-div p span{color:#1CBB7F;font-size:1.8rem}
 .n-index-box li{margin-bottom:0.6rem;}
 .m-b7{margin-bottom:5.5rem;}
-.m-b5{margin-bottom:4.1rem;}
+.m-b5{margin-bottom:4.4rem;}
 .index-cate-box li{width:49.2%;}
 .index-cate-img{padding:0 0.2rem;}
 .xiangqing-1 {padding-bottom: 1rem;line-height: 2rem;background-color: #FFFFFF;margin-top: 0.5rem;margin-bottom: 6.5rem;}
@@ -2128,7 +2132,7 @@ a.btn-submit-1{color:#fff}
     width: 100%;
 
     box-sizing: border-box;
-    padding: .4rem 1.3rem;
+    padding: .3rem 1.3rem;
     z-index: 6;
     background: #fdfbf6;
 }
@@ -2425,7 +2429,7 @@ a.btn-submit-1{color:#fff}
 table.u-table{margin-bottom:0.8em}
 table.u-table tr.first-tr td{height:3.5em;font-weight:bold;background:#f2f2f2}
 table.u-table td{border:1px solid #e3e3e3;padding:0.5em 0.2em;height:3em;width:7em;background:#fff}
-.con{max-width:640px;margin:0 auto;}
+.con{max-width:640px;}
 
 /*购物车*/
 .n-flow-left{left:1.3rem;}
