@@ -12,9 +12,10 @@
 	</head>
 
 	<body>
+		<div id="loading"><img src="images/loading.gif" /></div>
 		<div class="con">
 			<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
-				<h3 class="box-flex">促销活动</h3>
+				<h3 class="box-flex">支付提示</h3>
 				<a class="" href="javascript:;"><i class="iconfont icon-pailie j-nav-box"></i></a>
 			</header>
 			<div class="j-nav-content">
@@ -30,61 +31,19 @@
 					<li class="box-flex"><a href="user.html" class="nav-cont"><i class="nav-box"><img src="images/icon/user.png"></i><span>用户中心</span></a></li>
 				</ul>
 			</div>
-			<section>
-				<a href="activity_detail.html">
-					<div class="act-header-box-list">
-						<div class="act-right-box">享 受
-							<br/>赠 品</div>
-						<img src="images/act_list_1.png">
-					</div>
-					<div class="padding-all b-color-f ">
-						<h3 class="my-u-title-size">商家大促销</h3>
-						<p class="act-cont">2015-08-01 21:38 - 2019-08-01 21:38 </p>
-					</div>
-				</a>
-			</section>
-			<section class="m-top06">
-				<a href="activity_detail.html">
-					<div class="act-header-box-list">
-						<div class="act-right-box">现 金
-							<br/>减 免</div>
-						<img src="images/act_list_2.png">
+			<div class="message">
+				<div class="flow-done-con">
+					<i class="iconfont icon-guanbi1" style="display:none;"></i>
+					<i class="iconfont icon-hookring2"></i>
+					<p>支付成功</p>
+					<p style="display:none;">密码错误</p>
+				</div>
+				<div class="padding-all message-a">
+					<a href="javascript:history.go(-1)">返回上一级</a><a href="user_order.html">查看我的订单</a>
+					<a href="user_login.html" style="display:none;">重新支付</a>
+				</div>
 
-					</div>
-					<div class="padding-all b-color-f ">
-						<h3 class="my-u-title-size">购物大酬宾，赠品送不停</h3>
-						<p class="act-cont">2015-08-01 21:38 - 2019-08-01 21:38 </p>
-					</div>
-				</a>
-			</section>
-			<section class="m-top06">
-				<a href="activity_detail.html">
-					<div class="act-header-box-list">
-						<div class="act-right-box">享 受
-							<br/>折 扣</div>
-						<img src="images/act_list_3.png">
-
-					</div>
-					<div class="padding-all b-color-f ">
-						<h3 class="my-u-title-size">你敢买我就敢折扣</h3>
-						<p class="act-cont">2015-08-01 21:38 - 2019-08-01 21:38 </p>
-					</div>
-				</a>
-			</section>
-			<section class="m-top06">
-				<a href="activity_detail.html">
-					<div class="act-header-box-list">
-						<div class="act-right-box">享 受
-							<br/>折 扣</div>
-						<img src="images/act_list_4.png">
-
-					</div>
-					<div class="padding-all b-color-f ">
-						<h3 class="my-u-title-size">商家打折扣</h3>
-						<p class="act-cont">2015-08-01 21:38 - 2019-08-01 21:38 </p>
-					</div>
-				</a>
-			</section>
+			</div>
 		</div>
 		<!--引用js-->
 		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>

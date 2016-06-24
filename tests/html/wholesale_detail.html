@@ -13,8 +13,9 @@
 
 	<body>
 		<div class="con">
+			<div id="loading"><img src="images/loading.gif" /></div>
 			<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
-				<h3 class="box-flex">团购详情</h3>
+				<h3 class="box-flex">批发商品详情</h3>
 				<a class="" href="javascript:;"><i class="iconfont icon-pailie j-nav-box"></i></a>
 			</header>
 			<div class="j-nav-content">
@@ -32,16 +33,7 @@
 			</div>
 			<div class="goods">
 				<div class="goods-photo j-show-goods-img">
-					<div class="group-time-box" id="fnTimeCountDown">
-						<span class="day">00</span>天
-						<span class="hour">00</span>时
-						<span class="mini">00</span>分
-						<span class="sec">00</span>秒
-						<!--<span class="hm">000</span>-->
-					</div>
-					<span class="goods-num" id="goods-num">
-						<span id="g-active-num"></span>/<span id="g-all-num"></span>
-					</span>
+					<span class="goods-num" id="goods-num"><span id="g-active-num"></span>/<span id="g-all-num"></span></span>
 					<div class="swiper-wrapper">
 						<li class="swiper-slide tb-lr-center"><img src="images/T1nbXxFfRjXXXXXXXX_!!0-item_pic.jpg" /></li>
 						<li class="swiper-slide tb-lr-center"><img src="images/T1v1naFKxXXXXXXXXX_!!0-item_pic.jpg" /></li>
@@ -59,14 +51,23 @@
 					</div>
 				</section>
 				<section class="goods-price padding-all b-color-f">
-					<p class="p-price"><span class="t-first">¥238.00</span><em class="em-promotion">5.8折</em></p>
-					<p class="p-market">市场价 <del>¥598.00</del></p>
+					<p class="p-price"><span class="t-first">¥238.00</span></p>
 					<p class=" dis-box g-p-tthree m-top06">
 						<span class="box-flex text-left">销量 1280</span>
 						<span class="box-flex text-right">库存 1880</span>
 					</p>
 				</section>
-				<section class="m-top1px padding-all b-color-f goods-attr j-goods-attr j-show-div">
+				<section class="b-color-f m-top04">
+					<ul class="wholesale-box">
+						<li><span>购买数量(件)</span></li>
+						<li><span>批发价格</span></li>
+						<li>50</li>
+						<li>220元</li>
+						<li>100</li>
+						<li>190元</li>
+					</ul>
+				</section>
+				<section class="m-top1px padding-all b-color-f touch-none goods-attr j-goods-attr j-show-div">
 					<div class="dis-box">
 						<label class="t-remark g-t-temark">已选</label>
 						<div class="box-flex t-goods1 ">请选择</div>
@@ -78,13 +79,13 @@
 						<section class="s-g-attr-title b-color-1  product-list-small">
 							<div class="product-div">
 								<img class="product-list-img" src="images/T1nbXxFfRjXXXXXXXX_!!0-item_pic.jpg">
-								<div class="product-text n-right-box">
+								<div class="product-text">
 									<div class="dis-box position-rel">
 										<h4 class="box-flex">韩版2015冬装新款女装拼接羽绒服GW4509</h4>
-										<i class="iconfont icon-guanbi show-div-guanbi"></i>
+										<i class="iconfont icon-guanbi2 show-div-guanbi"></i>
 									</div>
 									<p><span class="p-price t-first ">¥1789.00</span></p>
-									<p class="dis-box p-t-remark"><span class="box-flex">限购数量：30件</span></p>
+									<p class="dis-box p-t-remark"><span class="box-flex">库存:12800</span></p>
 								</div>
 							</div>
 						</section>
@@ -154,8 +155,9 @@
 					</div>
 					<!--商品属性弹出层end-->
 				</section>
-				<section class="m-top04 goods-evaluation">
-					<a href="goods_evaluation.html">
+
+				<section class="m-top04 goods-evaluation touch-none">
+					<a href="comment.html">
 						<div class="dis-box padding-all b-color-f  g-evaluation-title">
 							<label class="t-remark g-t-temark">用户评价</label>
 							<div class="box-flex t-goods1">好评率 <em class="t-first">97%</em></div>
@@ -169,7 +171,7 @@
 								<p class="fr t-remark">2015-08-09 10:46:43</p>
 							</div>
 							<p class="clear m-top10 t-goods1">很好看，大小刚刚好 很好看</p>
-							<p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p>
+							<p class="clear t-remark">颜色分类：70cm、5144蓝色</p>
 						</div>
 					</div>
 					<div class="padding-all m-top1px b-color-f g-evaluation-con">
@@ -179,17 +181,7 @@
 								<p class="fr t-remark">2015-08-09 10:46:43</p>
 							</div>
 							<p class="clear m-top10 t-goods1">很好看，大小刚刚好 很好看</p>
-							<p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p>
-						</div>
-					</div>
-					<div class="padding-all m-top1px b-color-f g-evaluation-con">
-						<div class="of-hidden evaluation-list">
-							<div class="of-hidden ">
-								<p class="fl"><span class="grade-star g-star-5 fl"></span><em class="t-remark fl">s****y</em></p>
-								<p class="fr t-remark">2015-08-09 10:46:43</p>
-							</div>
-							<p class="clear m-top10 t-goods1">很好看，大小刚刚好 很好看</p>
-							<p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p>
+							<p class="clear  t-remark">颜色分类：70cm、5144蓝色</p>
 						</div>
 					</div>
 				</section>
@@ -241,35 +233,23 @@
 						</div>
 					</div>
 				</div>
+
 			</div>
 
 			<!--悬浮btn star-->
 			<section class="filter-btn dis-box">
-				<a class="filter-btn-kefu filter-btn-a"><i class="iconfont icon-kefu"></i><em>客服</em></a>
+				<a class="filter-btn-kefu filter-btn-a"><i class="iconfont icon-kefu-copy"></i><em>客服</em></a>
 				<a href="flow_cart.html" class="filter-btn-flow filter-btn-a"><i class="iconfont icon-gouwuche"></i><sup class="b-color">9</sup><em>购物车</em></a>
-				<a class="btn-cart box-flex">加入购物车</a>
-				<a class="btn-submit box-flex">立即团购</a>
+				<a href="flow_cart.html" class="btn-cart box-flex">加入购物车</a>
+				<a href="flow_cart.html" class="btn-submit box-flex">立即购买</a>
 			</section>
 			<!--悬浮btn end-->
-			<!--地区s-->
-			<div class="filter-city-div ts-5 c-filter-div c-city-div">
-				<section class="close-filter-div j-close-filter-div">
-					<div class="close-f-btn">
-						<i class="iconfont icon-fanhui"></i>
-						<span>关闭</span>
-					</div>
-				</section>
-
-			</div>
-			<!--地区e-->
-			</section>
 		</div>
 		<!--仓库e-->
 		<!--悬浮菜单s-->
 		<div class="filter-top" id="scrollUp	">
 			<i class="iconfont icon-jiantou "></i>
 		</div>
-		<!--悬浮菜单e-->
 		<!--搜索弹框-->
 		<div class="search-div j-search-div ts-3">
 			<section class="search">
@@ -315,13 +295,14 @@
 				点击关闭
 			</footer>
 		</div>
+		<!--悬浮菜单e-->
 		<!--引用js-->
 		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript" src="js/swiper-3.2.5.min.js"></script>
 		<script type="text/javascript" src="js/layer.js"></script>
 		<script type="text/javascript" src="js/ectouch.js"></script>
-		<script type="text/javascript" src="http://libs.useso.com/js/jquery/1.11.1/jquery.min.js"></script>
 		<script>
+			/*商品详情切换*/
 			var tabsSwiper = new Swiper('#j-tab-con', {
 				speed: 100,
 				noSwiping: true,
@@ -358,102 +339,6 @@
 				centeredSlides: false,
 				grabCursor: true
 			});
-			/*团购详情倒计时*/
-			$.extend($.fn, {
-				fnTimeCountDown: function(d) {
-					this.each(function() {
-						var $this = $(this);
-						var o = {
-							hm: $this.find(".hm"),
-							sec: $this.find(".sec"),
-							mini: $this.find(".mini"),
-							hour: $this.find(".hour"),
-							day: $this.find(".day"),
-							month: $this.find(".month"),
-							year: $this.find(".year")
-						};
-						var f = {
-							haomiao: function(n) {
-								if (n < 10) return "00" + n.toString();
-								if (n < 100) return "0" + n.toString();
-								return n.toString();
-							},
-							zero: function(n) {
-								var _n = parseInt(n, 10); //解析字符串,返回整数
-								if (_n > 0) {
-									if (_n <= 9) {
-										_n = "0" + _n
-									}
-									return String(_n);
-								} else {
-									return "00";
-								}
-							},
-							dv: function() {
-								//d = d || Date.UTC(2050, 0, 1); //如果未定义时间，则我们设定倒计时日期是2050年1月1日
-								var _d = $this.data("end") || d;
-								var now = new Date(),
-									endDate = new Date(_d);
-								//现在将来秒差值
-								//alert(future.getTimezoneOffset());
-								var dur = (endDate - now.getTime()) / 1000,
-									mss = endDate - now.getTime(),
-									pms = {
-										sec: "00",
-										mini: "00",
-										hour: "00",
-										day: "00",
-									};
-								if (mss > 0) {
-									pms.hm = f.haomiao(mss % 1000);
-									pms.sec = f.zero(dur % 60);
-									pms.mini = Math.floor((dur / 60)) > 0 ? f.zero(Math.floor((dur / 60)) % 60) : "00";
-									pms.hour = Math.floor((dur / 3600)) > 0 ? f.zero(Math.floor((dur / 3600)) % 24 * 100) : "00";
-									pms.day = Math.floor((dur / 86400)) > 0 ? f.zero(Math.floor((dur / 86400)) % 30) : "00";
-									//月份，以实际平均每月秒数计算
-									pms.month = Math.floor((dur / 2629744)) > 0 ? f.zero(Math.floor((dur / 2629744)) % 12) : "00";
-									//年份，按按回归年365天5时48分46秒算
-									pms.year = Math.floor((dur / 31556926)) > 0 ? Math.floor((dur / 31556926)) : "0";
-								} else {
-									pms.year = pms.month = pms.day = pms.hour = pms.mini = pms.sec = "00";
-									pms.hm = "000";
-									//alert('结束了');
-									return;
-								}
-								return pms;
-							},
-							ui: function() {
-								if (o.hm) {
-									o.hm.html(f.dv().hm);
-								}
-								if (o.sec) {
-									o.sec.html(f.dv().sec);
-								}
-								if (o.mini) {
-									o.mini.html(f.dv().mini);
-								}
-								if (o.hour) {
-									o.hour.html(f.dv().hour);
-								}
-								if (o.day) {
-									o.day.html(f.dv().day);
-								}
-								if (o.month) {
-									o.month.html(f.dv().month);
-								}
-								if (o.year) {
-									o.year.html(f.dv().year);
-								}
-								setTimeout(f.ui, 1);
-							}
-						};
-						f.ui();
-					});
-				}
-			});
-		</script>
-		<script type="text/javascript">
-			$("#fnTimeCountDown").fnTimeCountDown("2018/07/08 18:45:13");
 		</script>
 	</body>
 

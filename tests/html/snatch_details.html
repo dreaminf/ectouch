@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta charset="utf-8">
+		<title>ECTouch微商城</title>
+		<link rel="stylesheet" href="css/ectouch.css" />
+	</head>
+
+	<body>
+		<div class="con">
+			<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
+				<h3 class="box-flex">夺宝详情</h3>
+				<a class="" href="javascript:;"><i class="iconfont icon-pailie j-nav-box"></i></a>
+			</header>
+			<div class="j-nav-content">
+				<ul class="dis-box new-footer-box">
+					<li class="box-flex">
+						<a href="index.html" class="nav-cont"><i class="nav-box"><img src="images/icon/home.png"></i><span>首页</span></a>
+					</li>
+					<li class="box-flex">
+						<a href="catalog.html" class="nav-cont"><i class="nav-box"><img src="images/icon/cate.png"></i><span>分类</span></a>
+					</li>
+					<li class="box-flex"><a href="distribution_open_one.html" class="nav-cont"><i class="nav-box"><img src="images/icon/shop.png"></i><span>店铺</span></a></li>
+					<li class="box-flex"><a href="flow_cart.html" class="nav-cont"><i class="nav-box"><img src="images/icon/flow.png"></i><span>购物车</span></a></li>
+					<li class="box-flex"><a href="user.html" class="nav-cont"><i class="nav-box"><img src="images/icon/user.png"></i><span>用户中心</span></a></li>
+				</ul>
+			</div>
+			<div class="goods">
+				<div class="goods-photo j-show-goods-img">
+					<div class="group-time-box" id="fnTimeCountDown">
+						<span class="day">00</span>天
+						<span class="hour">00</span>时
+						<span class="mini">00</span>分
+						<span class="sec">00</span>秒
+						<!--<span class="hm">000</span>-->
+					</div>
+					<span class="goods-num" id="goods-num">
+						<span id="g-active-num"></span>/<span id="g-all-num"></span>
+					</span>
+					<div class="swiper-wrapper">
+						<li class="swiper-slide tb-lr-center"><img src="images/T1vyCzFJVXXXXXXXXX_!!0-item_pic.jpg" /></li>
+						<li class="swiper-slide tb-lr-center"><img src="images/TB1J4JeFVXXXXbfXpXXXXXXXXXX_!!0-item_pic.jpg" /></li>
+						<li class="swiper-slide tb-lr-center"><img src="images/T1vyCzFJVXXXXXXXXX_!!0-item_pic.jpg" /></li>
+						<li class="swiper-slide tb-lr-center"><img src="images/TB1J4JeFVXXXXbfXpXXXXXXXXXX_!!0-item_pic.jpg" /></li>
+					</div>
+					<!-- Add Pagination -->
+					<div class="swiper-pagination"></div>
+				</div>
+
+				<section class="goods-title b-color-f padding-all ">
+					<div class="dis-box">
+						<h3 class="box-flex">太平鸟女装2015秋冬新品 菱格印花欧根纱拼接连衣女宽松衬衫裙</h3>
+						<span class="heart j-heart"><i class="ts-2"></i><em class="ts-2">收藏</em></span>
+					</div>
+				</section>
+				<section class="goods-price padding-all b-color-f">
+					<p class="p-price"><span class="t-first">¥238.00</span></p>
+					<p class="p-market">市场价 <del>¥598.00</del></p>
+				</section>
+				<section class=" padding-all b-color-f new-auction-bor goods-promotion">
+					<div class="div-num dis-box m-top04 ">
+						<a class="num-less"></a>
+						<input class="box-flex" type="number" value="16">
+						<a class="num-plus"></a>
+					</div>
+				</section>
+				<section class="m-top04 goods-evaluation">
+					<div class="padding-1 b-color-f g-evaluation-title ">
+						<div class="box-flex">
+							<h3 class="my-u-title-size">夺宝流程</h3> </div>
+					</div>
+					<div id="myarticle" class="padding-all-3 b-color-f g-evaluation-con">
+						<div class="of-hidden evaluation-list new-auction-cont">
+							<h4>1、获取资格</h4>
+							<p class="aut-cont">用户账号当前积分大于出价所需积分 </p>
+						</div>
+						<div class="of-hidden evaluation-list new-auction-cont">
+							<h4>2、夺的商品</h4>
+							<p class="aut-cont">保证竞拍结束出价最低且唯一，获得竞拍商品 </p>
+						</div>
+						<div class="of-hidden evaluation-list new-auction-cont">
+							<h4>3、确认订单</h4>
+							<p class="aut-cont">填写订单信息，提交订单</p>
+						</div>
+						<div class="goods-more" style="display:none">
+							<div class="of-hidden evaluation-list new-auction-cont">
+								<h4>4、支付订单</h4>
+								<p class="aut-cont">支付已提交的订单 </p>
+							</div>
+							<div class="of-hidden evaluation-list new-auction-cont">
+								<h4>5、竞拍成功</h4>
+								<p class="aut-cont">支付成功后等待收货，竞拍完成 </p>
+							</div>
+						</div>
+					</div>
+					<p id="btn" class="act-gengduo b-color-f but-mu"><em onclick="javascript:this.innerHTML=(this.innerHTML=='展开'?'收起':'展开');">展开</em><span class="t-jiantou"><i class="iconfont icon-jiantou tf-180"></i></span></p>
+				</section>
+				<section class="box b-color-f m-top04">
+					<a href="auction_details_more.html">
+						<div class="box padding-all  wallet-bt">
+							<h3 class="recom-title-1">
+						出价记录					
+						<span class=" t-remark fr">309人<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180"></i></span></span>
+					    </h3>
+						</div>
+					</a>
+					<div class="padding-1 m-top1px b-color-f g-evaluation-con">
+						<div class="of-hidden evaluation-list">
+							<div class="of-hidden ">
+								<p class="fl"><span class="act-new-box a-col-red">领先</span><span class="aut-admin">smarty1</span></p>
+								<p class="fr t-remark">2015-08-09 10:46:43</p>
+							</div>
+							<p><span class="p-price t-first ">¥1100.00</span></p>
+						</div>
+					</div>
+					<div class="padding-1 m-top1px b-color-f new-auction-bor g-evaluation-con">
+						<div class="of-hidden evaluation-list">
+							<div class="of-hidden ">
+								<p class="fl"><span class="act-new-box a-col-hs">出局</span><span class="aut-admin">smarty2</span></p>
+								<p class="fr t-remark">2015-08-09 10:46:43</p>
+							</div>
+							<p><span class="p-price t-first ">¥1000.00</span></p>
+						</div>
+					</div>
+					<div class="padding-1 m-top1px b-color-f new-auction-bor g-evaluation-con">
+						<div class="of-hidden evaluation-list">
+							<div class="of-hidden ">
+								<p class="fl"><span class="act-new-box a-col-hs">出局</span><span class="aut-admin">smarty3</span></p>
+								<p class="fr t-remark">2015-08-09 10:46:43</p>
+							</div>
+							<p><span class="p-price t-first ">¥900.00</span></p>
+						</div>
+					</div>
+					<a href="auction_details_more.html">
+						<div class=" padding-all ect-button-more dis-box">
+							<span class="box-flex btn-default">查看更多</span>
+						</div>
+					</a>
+				</section>
+				<section class="m-top04  goods-shop  b-color-f no-shopping-title">
+					<div class="box padding-all wallet-bt">
+						<h3 class="recom-title-1">
+						推荐夺宝											
+					    </h3>
+					</div>
+					<div class="goods-shop-pic of-hidden padding-all ">
+						<div class="g-s-p-con product-one-list of-hidden scrollbar-none j-g-s-p-con">
+							<div class="swiper-wrapper">
+								<li class="swiper-slide">
+									<div class="product-div">
+										<a class="product-div-link" href="snatch_details.html"></a>
+										<img class="product-list-img" src="images/T1vyCzFJVXXXXXXXXX_!!0-item_pic.jpg" />
+										<div class="product-text m-top06">
+											<h4>韩版2015冬装新款女装拼舒服羽绒服GW4509</h4>
+											<p><span class="p-price t-first ">¥789.00</p>
+										</div>
+									</div>
+								</li>
+								<li class="swiper-slide">
+									<div class="product-div">
+										<a class="product-div-link" href="snatch_details.html"></a>
+										<img class="product-list-img" src="images/T1vyCzFJVXXXXXXXXX_!!0-item_pic.jpg" />
+										<div class="product-text m-top06">
+											<h4>韩版15冬装新款女宽松连帽羽绒服DU5014樱</h4>
+											<p><span class="p-price t-first ">¥1008.00</span></p>
+										</div>
+									</div>
+								</li>
+								<li class="swiper-slide">
+									<div class="product-div">
+										<a class="product-div-link" href="snatch_details.html"></a>
+										<img class="product-list-img" src="images/T1vyCzFJVXXXXXXXXX_!!0-item_pic.jpg" />
+										<div class="product-text m-top06">
+											<h4>衣品天成2015冬装新款修身长款连帽毛领羽绒服女</h4>
+											<p><span class="p-price t-first ">¥659.80</span></p>
+										</div>
+									</div>
+								</li>
+								<li class="swiper-slide">
+									<div class="product-div">
+										<a class="product-div-link" href="snatch_details.html"></a>
+										<img class="product-list-img" src="images/T1vyCzFJVXXXXXXXXX_!!0-item_pic.jpg" />
+										<div class="product-text m-top06">
+											<h4>女幼童羽绒服卡通女童宝宝保暖外套儿童冬装新款</h4>
+											<p><span class="p-price t-first ">¥279.00</span></p>
+										</div>
+									</div>
+								</li>
+								<li class="swiper-slide">
+									<div class="product-div">
+										<a class="product-div-link" href="snatch_details.html"></a>
+										<img class="product-list-img" src="images/T1vyCzFJVXXXXXXXXX_!!0-item_pic.jpg" />
+										<div class="product-text m-top04	">
+											<h4>女装 保暖修身弹力长裤 154155 优衣库UNIQLO</h4>
+											<p><span class="p-price t-first ">¥280.00</span></p>
+										</div>
+									</div>
+								</li>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="m-top04 product-sequence dis-box">
+					<a class="box-flex a-change">夺宝介绍</a>
+					<a class="box-flex active">服务保障</a>
+					<a class="box-flex">夺宝攻略</a>
+				</section>
+			</div>
+
+			<!--悬浮btn star-->
+			<section class="filter-btn dis-box">
+				<a class="filter-btn-kefu filter-btn-a"><i class="iconfont icon-kefu-copy"></i><em>客服</em></a>
+				<a class="filter-btn-shop filter-btn-a"><i class="iconfont icon-dianpu"></i><em>店铺</em></a>
+				<a class="btn-submit box-flex">我要夺宝</a>
+			</section>
+			<!--悬浮btn end-->
+
+			<!--仓库e-->
+			<!--悬浮菜单s-->
+			<div class="filter-top" id="scrollUp	">
+				<i class="iconfont icon-jiantou "></i>
+			</div>
+			<!--悬浮菜单e-->
+			<!--引用js-->
+			<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+			<script type="text/javascript" src="js/swiper-3.2.5.min.js"></script>
+			<script type="text/javascript" src="js/layer.js"></script>
+			<script type="text/javascript" src="js/ectouch.js"></script>
+			<script type="text/javascript" src="http://libs.useso.com/js/jquery/1.11.1/jquery.min.js"></script>
+			<script>
+				/*展开全部内容*/
+				$(document).ready(function() {
+					$(".but-mu").click(function() {
+						$(".goods-more").toggle();
+					});
+				});
+				/*商品详情相册切换*/
+				var swiper = new Swiper('.goods-photo', {
+					paginationClickable: true,
+					onInit: function(swiper) {
+						document.getElementById("g-active-num").innerHTML = swiper.activeIndex + 1;
+						document.getElementById("g-all-num").innerHTML = swiper.slides.length;
+					},
+					onSlideChangeStart: function(swiper) {
+						document.getElementById("g-active-num").innerHTML = swiper.activeIndex + 1;
+					}
+				});
+				/*店铺信息商品滚动*/
+				var swiper = new Swiper('.j-g-s-p-con', {
+					scrollbarHide: true,
+					slidesPerView: 'auto',
+					centeredSlides: false,
+					grabCursor: true
+				});
+				/*团购详情倒计时*/
+				$.extend($.fn, {
+					fnTimeCountDown: function(d) {
+						this.each(function() {
+							var $this = $(this);
+							var o = {
+								hm: $this.find(".hm"),
+								sec: $this.find(".sec"),
+								mini: $this.find(".mini"),
+								hour: $this.find(".hour"),
+								day: $this.find(".day"),
+								month: $this.find(".month"),
+								year: $this.find(".year")
+							};
+							var f = {
+								haomiao: function(n) {
+									if (n < 10) return "00" + n.toString();
+									if (n < 100) return "0" + n.toString();
+									return n.toString();
+								},
+								zero: function(n) {
+									var _n = parseInt(n, 10); //解析字符串,返回整数
+									if (_n > 0) {
+										if (_n <= 9) {
+											_n = "0" + _n
+										}
+										return String(_n);
+									} else {
+										return "00";
+									}
+								},
+								dv: function() {
+									//d = d || Date.UTC(2050, 0, 1); //如果未定义时间，则我们设定倒计时日期是2050年1月1日
+									var _d = $this.data("end") || d;
+									var now = new Date(),
+										endDate = new Date(_d);
+									//现在将来秒差值
+									//alert(future.getTimezoneOffset());
+									var dur = (endDate - now.getTime()) / 1000,
+										mss = endDate - now.getTime(),
+										pms = {
+											sec: "00",
+											mini: "00",
+											hour: "00",
+											day: "00",
+										};
+									if (mss > 0) {
+										pms.hm = f.haomiao(mss % 1000);
+										pms.sec = f.zero(dur % 60);
+										pms.mini = Math.floor((dur / 60)) > 0 ? f.zero(Math.floor((dur / 60)) % 60) : "00";
+										pms.hour = Math.floor((dur / 3600)) > 0 ? f.zero(Math.floor((dur / 3600)) % 24 * 100) : "00";
+										pms.day = Math.floor((dur / 86400)) > 0 ? f.zero(Math.floor((dur / 86400)) % 30) : "00";
+										//月份，以实际平均每月秒数计算
+										pms.month = Math.floor((dur / 2629744)) > 0 ? f.zero(Math.floor((dur / 2629744)) % 12) : "00";
+										//年份，按按回归年365天5时48分46秒算
+										pms.year = Math.floor((dur / 31556926)) > 0 ? Math.floor((dur / 31556926)) : "0";
+									} else {
+										pms.year = pms.month = pms.day = pms.hour = pms.mini = pms.sec = "00";
+										pms.hm = "000";
+										//alert('结束了');
+										return;
+									}
+									return pms;
+								},
+								ui: function() {
+									if (o.hm) {
+										o.hm.html(f.dv().hm);
+									}
+									if (o.sec) {
+										o.sec.html(f.dv().sec);
+									}
+									if (o.mini) {
+										o.mini.html(f.dv().mini);
+									}
+									if (o.hour) {
+										o.hour.html(f.dv().hour);
+									}
+									if (o.day) {
+										o.day.html(f.dv().day);
+									}
+									if (o.month) {
+										o.month.html(f.dv().month);
+									}
+									if (o.year) {
+										o.year.html(f.dv().year);
+									}
+									setTimeout(f.ui, 1);
+								}
+							};
+							f.ui();
+						});
+					}
+				});
+				$("#fnTimeCountDown").fnTimeCountDown("2018/07/08 18:45:13");
+			</script>
+
+	</body>
+
+</html>
