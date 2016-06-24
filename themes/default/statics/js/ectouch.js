@@ -735,11 +735,11 @@ $(".my-com-nav-one").click(function() {
 });
 /*首页导航*/
 function adv_index() {
-	if ($(window).scrollTop() > 120) {
+	/*if ($(window).scrollTop() > 120) {
 		$(".index-nav-box").addClass("active");
 	} else {
 		$(".index-nav-box").removeClass("active");
-	}
+	}*/
 	if ($(window).scrollTop() > 250) {
 		$(".goods-fixed").addClass("active");
 		$(".goods-left-jiat").addClass("active");
@@ -752,11 +752,12 @@ function adv_index() {
 }
 
 function guanzhu_index() {
+	/*
 	if ($(window).scrollTop() > 120) {
 		$(".ect-header-banner").addClass("active");
 	} else {
 		$(".ect-header-banner").removeClass("active");
-	}
+	}*/
 }
 $(function($) {		
 	adv_index();

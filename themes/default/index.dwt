@@ -5,7 +5,6 @@
 		{if !$subscribe}
 		<div class="ect-header-banner dis-box">
 			<div class="box-flex">
-				<img src="__TPL__/images/more_icon.png" class="fl" />
 				<div class="ect-header-text fl">
 					<h4>欢迎进入<span class="color-red">微商城</span></h4>
 					<p>关注公众号,享专属服务</p>
@@ -15,12 +14,15 @@
 		</div>
 		<div class="index-weixin-box">
 			<div><img src="__TPL__/statics/img/ewm.png"></div>
-			<h3>ECTouch微信，欢迎您！</h3>
 			<p class="text-c">长按二维码关注公众微信</p>
 		</div>
 		<div class="index-bg-box"></div>
 		{/if}
-		<div class="index-nav-box">
+
+	</header>
+
+	<div class="index-banner swiper-container box position-rel banner-first">
+				<div class="index-nav-box">
 			<ul class="dis-box">
 				<li class="index-left-box"><a href="{:url('category/top_all')}"><i class="iconfont icon-caidan color-whie"></i></a></li>
 				<li class="box-flex n-input-index-box">
@@ -29,9 +31,6 @@
 				<li class="index-right-box"><a href="{:url('user/msg_list')}"><i class="iconfont icon-xiaoxi1 color-whie n-xiaoxi-size"></i></a></li>
 			</ul>
 		</div>
-	</header>
-
-	<div class="index-banner swiper-container box position-rel banner-first">
 		<div class="swiper-wrapper">
 			{insert name='ads' id=255 num=3}
 		</div>
@@ -151,11 +150,13 @@
 	/*立即关注*/
 	if ($(".index-weixin-box").hasClass("index-weixin-box")) {
 		$(".index-banner").css({
-			"marginTop": "5rem"
+			"marginTop": "0rem",
+			"display":"block"
 		})
 	} else {
 		$(".index-banner").css({
-			"marginTop": "0rem"
+			"marginTop": "0rem",
+			"display":"none"
 		})
 	}
 </script>
