@@ -51,7 +51,7 @@
 		</section>
 		<section class=" padding-all b-color-f com-textarea">
 			<div class="f-c-select-msg ">
-				<div class="text-area2">
+				<div class="text-area1">
 					<textarea name="msg_content" class="text-area1" placeholder="{$lang.message_content} " wrap="virtual"></textarea>
 				</div>
 			</div>

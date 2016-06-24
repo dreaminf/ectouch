@@ -151,7 +151,7 @@
 						<section class="s-g-attr-title b-color-1  product-list-small">
 							<div class="product-div">
 								<img src="{$goods.goods_img}" alt="{$goods.goods_name}" class="product-list-img" />
-								<div class="product-text">
+								<div class="product-text n-right-box">
 									<div class="dis-box">
 										<h4 class="box-flex">{$goods.goods_style_name}</h4>
 										<i class="iconfont icon-guanbi show-div-guanbi"></i>

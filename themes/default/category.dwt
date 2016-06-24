@@ -20,7 +20,11 @@
 				<!-- #BeginLibraryItem "/library/new_goods_list.lbi" --><!-- #EndLibraryItem -->
 			</div>
 		</div>
-	
+	<!--悬浮菜单s-->
+<div class="filter-top" id="scrollUp">
+	<i class="iconfont icon-dingbu"></i>
+</div>
+<!--悬浮菜单e-->
 		<!-- #BeginLibraryItem "/library/new_goods_filter.lbi" --><!-- #EndLibraryItem -->
 		<!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem -->
 		<div class="div-messages"></div>
