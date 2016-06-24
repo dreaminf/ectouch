@@ -53,7 +53,7 @@ user-select:none;
 .ect-header-banner .btn-submit1{padding:.6rem 1rem; margin-top:-.3rem; font-size:1.3rem; margin-right:2rem; color:#fff; border-color:#05af10;background:#05af10;}
 .ect-header-banner .btn-submit1:hover{border-color:#049d0e;background:#049d0e;}
 .index-banner{margin-top: 3.7rem;}
-html,body,.con{overflow-x:hidden;max-width:100%;min-width:320px;}
+html,body,.con{overflow-x:hidden;max-width:100%;}
 body{position:relative}
 .shopping-list{min-height:100%}
 .br-5{border-radius:5px}
@@ -2243,6 +2243,7 @@ a.n-but-ls{color:#1CBB7F}
 .item-password .btn-off{background:url(../img/as.png)no-repeat;background-size:5rem 3.5rem}
 .item-password .btn-on{background:url(../img/ab.png)no-repeat;background-size:5rem 3.5rem}
 .n-login-x a{font-size:1.3rem;clear:both}
+.ect-checkbox a{font-size:1.4rem;}
 /*资料设置*/
 .user-head-img-box-1 img{width:4.5rem;height:4.5rem;border-radius:2.5rem;border:2px solid #eee;}  
 .s-user-img{line-height:5.2rem;}  

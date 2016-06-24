@@ -3,20 +3,9 @@
 <body class="b-color-f">
 <header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
 	<h3 class="box-flex">登录</h3>
-	<p><i class="iconfont icon-pailie j-nav-box"></i></p>
+	<p><a href="{:url('index/index')}"><i class="iconfont icon-home"></i></p>
 </header>
-<div class="j-nav-content">
-	<ul class="dis-box new-footer-box">
-		<li class="box-flex">
-			<a href="{:url('index/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/home.png"></i><span>首页</span></a>
-		</li>
-		<li class="box-flex">
-			<a href="{:url('category/top_all')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/cate.png"></i><span>分类</span></a>
-			<li class="box-flex"><a href="javascript:;" class="nav-cont j-search-input"><i class="nav-box"><img src="__TPL__/statics/img/search.png"></i><span>搜索</span></a></li>
-			<li class="box-flex"><a href="{:url('flow/cart')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/flow.png"></i><span>购物车</span></a></li>
-			<li class="box-flex"><a href="{:url('user/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/user.png"></i><span>用户中心</span></a></li>
-	</ul>
-</div>
+
 <div class="padding-all b-color-f">
 	<form name="formLogin" action="{:url('user/login')}" method="post" class="validforms">
 		<div class="ect-bg-colorf">
