@@ -184,7 +184,7 @@ $(function($) {
 		$(".j-menu-select .j-t-jiantou em").text("全部");
 		$(".j-filter-city span.text-all-span").css("color", "#555");
 		$(".j-filter-city span.text-all-span").text("请选择");
-
+        $(".div-messages").removeClass("active");
 		$(this).parents(".j-get-limit").attr("data-istrue", true)
 	});
 
@@ -269,11 +269,6 @@ $(function($) {
 		}
 	});
 
-	/*自提点赋值*/
-	$(".j-flow-site .ect-select").click(function() {
-		site_h4_text = $(this).find("h4").text();
-		$(this).parents(".j-goods-site-li").find(".t-goods1 span").text(site_h4_text);
-	});
 
 	/*单选consignee*/
 	$(".j-get-consignee-one label").click(function() {
@@ -293,7 +288,7 @@ $(function($) {
 		$(this).find("label").addClass("active");
 		city_span.text(city_txt);
 		if ($(".j-filter-city span.text-all-span").hasClass("j-city-scolor")) {
-			$(".j-filter-city span.text-all-span").css("color", "#ec5151");
+			$(".j-filter-city span.text-all-span").css("color", "#1CBB7F");
 		}
 		$("body").removeClass("show-city-div");
 		$("html,body").animate({
@@ -372,14 +367,16 @@ $(function($) {
 
 	/*点击弹出搜索层*/
 	$(".j-search-input").click(function() {
+		document.addEventListener("touchmove", handler, false);
 		$(".search-div,.new-maxbox").addClass("active");
 		$('#newinput').focus();
 	});
-
 	/*关闭搜索层*/
 	$(".j-close-search").click(function() {
+		document.removeEventListener("touchmove", handler, false);
 		$(".search-div,.new-maxbox").removeClass("active");
 	});
+
 	/*城市筛选单选city*/
 	$(".j-filter-city").click(function() {
 		cityTop = $(window).scrollTop();
@@ -557,10 +554,6 @@ $(function($) {
 		$(this).parents(".text-all-select").find(".j-input-text").val(text_select);
 		$(this).parents(".text-all-select").find(".text-all-select-div").hide();
 		return false;
-	});
-	/*悬浮菜单点击显示*/
-	$(".filter-menu-title").click(function() {
-		$(".filter-menu").toggleClass("active");
 	});
 	/*店铺街*/
 	$(".j-s-nav-select,.j-shopping-menu-close").click(function() {
@@ -798,18 +791,10 @@ $(function($) {
 	});
 /*导航弹框*/	
 $(".icon-gengduo").click(function() {
-					$(".goods-nav").toggleClass("active");
-				});	
+		$(".goods-nav").toggleClass("active");
+	});	
 
-
-});
-
-/*new-js*/
-$(function($) {
-	var handler = function(e) {
-		e.preventDefault();
-	};
-	if ($(".swiper-scroll").hasClass("swiper-scroll")) {
+if ($(".swiper-scroll").hasClass("swiper-scroll")) {
 		var scorll_swiper = new Swiper('.swiper-scroll', {
 			scrollbar: '.swiper-scrollbar',
 			direction: 'vertical',
@@ -818,7 +803,6 @@ $(function($) {
 			freeMode: true
 		});
 	}
-
 	function d_messages(m_text) {
 		//弹出消息
 		$(".div-messages").text(m_text);
@@ -831,175 +815,7 @@ $(function($) {
 			$(".div-messages").removeClass("active");
 		}, 3000);
 	}
-	
-	/*多选并限制个数  －  ［商品筛选将值传给em标签］  */
-	$(".j-get-limit .ect-select").not(".j-checkbox-all").click(function() {
-		get_text = $(this).parents(".j-get-limit");
-		s_t_em_value = get_text.prev(".select-title").find(".t-jiantou em"); //获取需要改变值的em标签
-		checked = $(this).find("label").hasClass("active");
-		ischecked = $(this).parents(".j-get-limit").attr("data-istrue");
-		var s_t_em_text = "",
-			s_get_label_num = 0;
-		var active_jiantou = get_text.prev(".j-menu-select").find(".j-t-jiantou");
-		active_jiantou.addClass("active");
-		if (get_text.find(".j-checkbox-all label").hasClass("active")) { //当点击非j-checkbox-all的时候删除其选中状态
-			get_text.find(".j-checkbox-all label").removeClass("active");
-		}
-		if (ischecked == "true") {
-			$(this).find("label").toggleClass("active");
-		}
-		if (checked) {
-			$(this).find("label").removeClass("active");
-			$(this).parents(".j-get-limit").attr("data-istrue", "true")
-		}
-		if (ischecked == "false") {
-			d_messages("筛选最多不能超过5个");
-		}
-		s_get_label = get_text.find("label.active"); //获取被选中label
-		s_get_label_num = s_get_label.length;
-		if (s_get_label_num <= 0) {
-			active_jiantou.removeClass("active");
-			$(".j-checkbox-all label").addClass("active");
-			s_t_em_text = $(this).siblings(".j-checkbox-all").find("label").text() + "、";
-		}
-		if (s_get_label_num >= 5) {
-			$(this).parents(".j-get-limit").attr("data-istrue", "false")
-		} else {
-			$(".div-messages").removeClass("active");
-			$(this).parents(".j-get-limit").attr("data-istrue", "true")
-		}
-		s_get_label.each(function() {
-			s_t_em_text += $(this).text() + "、";
-		});
-		s_t_em_value.text(s_t_em_text.substring(0, s_t_em_text.length - 1));
 
-	});
-	$(".j-checkbox-all").click(function() {
-		checkbox_all = $(this).find("label"); //获取值为“全部”的label
-		s_t_em_value = $(this).parent().prev(".select-title").find(".t-jiantou em"); //获取需要改变值的em标签
-		checkbox_all_text = $(this).find("label").text();
-		if (!checkbox_all.hasClass("active")) {
-			$(this).find("label").addClass("active").parents(".ect-select").siblings().find("label").removeClass("active");
-			s_t_em_value.text(checkbox_all_text); //将calss为j-checkbox-all的label的值赋值给需要改变的em标签
-			$(this).parent(".j-get-limit").prev(".select-title").find(".t-jiantou").removeClass("active");
-			$(this).parents(".j-get-limit").attr("data-istrue", "true")
-		}
-	});
-	/*筛选按钮中清空选项*/
-	$(".j-filter-reset").click(function() {
-		$(".con-filter-div label").removeClass("active");
-		$(".j-checkbox-all label").addClass("active");
-		$(".j-radio-switching").removeClass("active");
-		$(".j-menu-select .j-t-jiantou").removeClass("active");
-		$(".j-menu-select .j-t-jiantou em").text("全部");
-		$(".j-filter-city span.text-all-span").css("color", "#555");
-		$(".j-filter-city span.text-all-span").text("请选择");
-		$(".div-messages").removeClass("active");
-
-		$(this).parents(".j-get-limit").attr("data-istrue", true)
-	});
-	/*多选*/
-	$(".j-get-more .ect-select").click(function() {
-
-		if (!$(this).find("label").hasClass("active")) {
-			$(this).find("label").addClass("active");
-			if ($(this).find("label").hasClass("label-all")) {
-				$(".j-select-all").find(".ect-select label").addClass("active");
-			}
-		} else {
-			$(this).find("label").removeClass("active");
-			if ($(this).find("label").hasClass("label-all")) {
-				$(".j-select-all").find(".ect-select label").removeClass("active");
-			}
-		}
-	});
-	/*多选只点击单选按钮 - 全选，全不选*/
-	$(".j-get-i-more .j-select-btn").click(function() {
-		if ($(this).parents(".ect-select").hasClass("j-flowcoupon-select-disab")) {
-			d_messages("同商家只能选择一个");
-		} else {
-			is_select_all = true;
-			if ($(this).parent("label").hasClass("label-this-all")) {
-				if (!$(this).parent("label").hasClass("active")) {
-					$(this).parents(".j-get-i-more").find(".ect-select label").addClass("active");
-				} else {
-					$(this).parents(".j-get-i-more").find(".ect-select label").removeClass("active");
-				}
-			}
-
-			if (!$(this).parent("label").hasClass("label-this-all") && !$(this).parent("label").hasClass("label-all")) {
-				$(this).parent("label").toggleClass("active");
-				is_select_this_all = true;
-				select_this_all = $(this).parents(".j-get-i-more").find(".ect-select label").not(".label-this-all");
-
-				select_this_all.each(function() {
-					if (!$(this).hasClass("active")) {
-						is_select_this_all = false;
-						return false;
-					}
-				})
-				if (is_select_this_all) {
-					$(this).parents(".j-get-i-more").find(".label-this-all").addClass("active");
-				} else {
-					$(this).parents(".j-get-i-more").find(".label-this-all").removeClass("active");
-				}
-			}
-
-			var select_all = $(".j-select-all").find(".ect-select label");
-			select_all.each(function() {
-				if (!$(this).hasClass("active")) {
-					is_select_all = false;
-					return false;
-				}
-			});
-			if (is_select_all) {
-				$(".label-all").addClass("active");
-			} else {
-				$(".label-all").removeClass("active");
-			}
-		}
-	});
-
-
-	/*单选*/
-	$(".j-get-one .ect-select").click(function() {
-		get_tjiantou = $(this).parent(".j-get-one").prev(".select-title").find(".t-jiantou");
-		$(this).find("label").addClass("active").parent(".ect-select").siblings().find("label").removeClass("active");
-		get_tjiantou.find("em").text($(this).find("label").text());
-		if ($(this).hasClass("j-checkbox-all")) {
-			get_tjiantou.removeClass("active");
-		} else {
-			get_tjiantou.addClass("active");
-		}
-		if ($(this).parents("show-goods-attr")) { //赋值给goods-attr
-			s_get_label = $(".show-goods-attr .s-g-attr-con").find("label.active"); //获取被选中label
-			var get_text = '';
-			s_get_label.each(function() {
-				get_text += $(this).text() + "、";
-			});
-			$(".j-goods-attr").find(".t-goods1").text(get_text.substring(0, get_text.length - 1));
-		}
-	});
-	/*单选consignee*/
-	$(".j-get-consignee-one label").click(function() {
-		$(this).addClass("active").parents(".flow-checkout-adr").siblings().find("label").removeClass("active");
-	});
-	/*城市筛选单选city*/
-	$(".j-filter-city").click(function() {
-		$("body").addClass("show-city-div");
-	});
-
-	$(".j-get-city-one .ect-select").click(function() {
-		city_span = $(".j-filter-city span.text-all-span");
-		city_txt = $(".j-city-left li.active").text() + " " + $(this).parents(".j-sub-menu").prev(".j-menu-select").find("label").text() + " " + $(this).find("label").text();
-		$(".j-get-city-one").find(".ect-select label").removeClass("active");
-		$(this).find("label").addClass("active");
-		city_span.text(city_txt);
-		if ($(".j-filter-city span.text-all-span").hasClass("j-city-scolor")) {
-			$(".j-filter-city span.text-all-span").css("color", "#1CBB7F");
-		}
-		$("body").removeClass("show-city-div");
-	});
 
 	/*订单提交页面单选赋值*/
 	$(".s-g-list-con .j-get-one .ect-select").click(function() {
@@ -1013,39 +829,6 @@ $(function($) {
 		}
 	});
 
-
-	/*商品详情 红心*/
-	//	$(".j-heart").click(function() {
-	//		$(this).toggleClass("active");
-	//	});
-	/*点击弹出搜索层*/
-	$(".j-search-input").click(function() {
-		document.addEventListener("touchmove", handler, false);
-		$("body").addClass("show-search-div");
-		$(".search-div").css("z-index","49999");
-		$('input[name="keywords"]').focus();
-	});
-	/*关闭搜索层*/
-	$(".j-close-search").click(function() {
-		document.removeEventListener("touchmove", handler, false);
-		$("body").removeClass("show-search-div");
-	});
-    /*new*/
-	/*点击弹出搜索层*/
-	$(".j-search-input-new").click(function() {
-		document.addEventListener("touchmove", handler, false);
-		$(".new-search-div,.new-maxbox").addClass("active");
-		$('#newinput').focus();
-			$("body").addClass("show-search-div-new");
-	});
-
-	/*关闭搜索层*/
-	$(".j-close-search-new").click(function() {
-		document.removeEventListener("touchmove", handler, false)
-		$(".new-search-div,.new-maxbox").removeClass("active");
-			$("body").removeClass("show-search-div-new");
-	});
-
 	/*弹出配送方式*/
 	$(".j-goods-dist").click(function() {
 		document.addEventListener("touchmove", handler, false);
@@ -1057,21 +840,7 @@ $(function($) {
 		document.addEventListener("touchmove", handler, false);
 		$("body").addClass("show-attr-div");
 	});
-	//弹出优惠券
-	$(".j-goods-coupon").click(function() {
-		document.addEventListener("touchmove", handler, false);
-		$("body").addClass("show-coupon-div");
-	});
-	//弹出服务说明
-	$(".j-goods-service i.goods-min-icon").click(function() {
-		document.addEventListener("touchmove", handler, false);
-		$("body").addClass("show-service-div");
-	});
-	/*时间选择弹出层*/
-	$(".j-distribution-time-con").click(function() {
-		document.addEventListener("touchmove", handler, false);
-		$("body").addClass("show-time-div");
-	});
+
 	/*关闭商品详情弹出层*/
 	$(".mask-filter-div,.show-div-guanbi").click(function() {
 		document.removeEventListener("touchmove", handler, false);
@@ -1096,17 +865,6 @@ $(function($) {
 			return false;
 		}
 	});
-	/*购物车点击展开优惠说明*/
-	$(".flow-have-cart .j-icon-show").click(function() {
-			$(this).parents(".g-promotion-con").toggleClass("active");
-		})
-		/*购物车悬浮按钮编辑状态*/
-	$(".f-cart-filter-btn .span-bianji").click(function() {
-		$(".f-cart-filter-btn").addClass("active");
-	})
-	$(".f-cart-filter-btn .j-btn-default").click(function() {
-		$(".f-cart-filter-btn").removeClass("active");
-	})
 
 	/*数字增减*/
 	$(".div-num-disabled").find("input").attr("readonly", true);
@@ -1154,48 +912,6 @@ $(function($) {
 		}
 	});
 
-	/*订单提交页*/
-	$(".flow-checkout-pro span.t-jiantou").click(function() {
-			$(this).parents(".flow-checkout-pro").toggleClass("active");
-		})
-		/*文本框获得焦点下拉*/
-	$(".text-all-select .j-input-text").focus(function() {
-		$(this).parents(".text-all-select").find(".text-all-select-div").show();
-	});
-	$(".text-all-select-div li").click(function() {
-
-		text_select = $(this).text();
-		$(this).parents(".text-all-select").find(".j-input-text").val(text_select);
-		$(this).parents(".text-all-select").find(".text-all-select-div").hide();
-		return false;
-	});
-	/*悬浮菜单点击显示*/
-	$(".filter-menu-title").click(function() {
-		$(".filter-menu").toggleClass("active");
-	});
-	/*页面向上滚动js*/
-	var prevTop = 0,
-		currTop = 0;
-	$(window).scroll(function() {
-		currTop = $(window).scrollTop();
-		if (currTop < prevTop) { //判断小于则为向上滚动
-			$(".filter-top,.filter-menu").fadeIn(300);
-		} else {
-			$(".filter-top,.filter-menu").fadeOut(300);
-		}
-		//prevTop = currTop; //IE下有BUG，所以用以下方式
-		setTimeout(function() {
-			prevTop = currTop
-		}, 0);
-	});
-
-})
-
-$(function() {
-	$('#loading').hide();
-})
-
-$(function(){
 	$(".del").click(function(){
 		if(!confirm('您确定要删除吗？')){
 			return false;
@@ -1212,8 +928,7 @@ $(function(){
 		}, 'json');
 		return false;
 	});
-})
-
+});
 // 本地存储
 localData = {
 	hname:location.hostname?location.hostname:'localStatus',
