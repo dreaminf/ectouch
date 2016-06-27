@@ -1490,7 +1490,7 @@ transform: rotate(45deg);-ms-transform: rotate(45deg);-webkit-transform: rotate(
 /*店铺*/
 .swiper-pagination-clickable{padding-bottom:1rem;}
 .brand-n-box-pos{position:absolute;bottom:0;width:100%;background-color:rgba(365,365,365,0.8);  padding:.4rem 0}
-.brand-n-box-pos h2{text-align:center;color；#7a7a7a;font-size:1.7rem; font-weight: bold;}
+.brand-n-box-pos h2{text-align:center;color:#7a7a7a;font-size:1.7rem; font-weight: bold;}
 .brand-n-box-pos p{text-align:center;font-size:1.5rem; color:#555;}
 .brend-day-box{background-color:rgba(365,365,365,0.8);position:absolute;top:0;width:4rem; height:4rem; left:0; line-height:4rem; text-align: center;}
 .brend-day-box em{font-size: 1.5rem; color:#444;}
