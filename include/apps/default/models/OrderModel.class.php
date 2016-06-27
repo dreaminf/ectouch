@@ -1531,7 +1531,7 @@ class OrderModel extends BaseModel {
                 "favourable_activity WHERE start_time <= '$now'" .
                 " AND end_time >= '$now'" .
                 " AND CONCAT(',', user_rank, ',') LIKE '%" . $user_rank . "%'" .
-                " AND act_type " . db_create_in(array(FAT_DISCOUNT, FAT_PRICE));
+                " AND act_type " . db_create_in(array(FAT_DISCOUNT, FAT_PRICE,FAT_PREMIUM));
         $favourable_list = $this->query($sql);
         if (!$favourable_list) {
             return 0;
@@ -1602,6 +1602,13 @@ class OrderModel extends BaseModel {
 					$total_amountd = $total_amount;
                     $favourable_name[] = $favourable['act_name'];
                 }
+				/*手机专享价*/
+				elseif ($favourable['act_type'] == FAT_PREMIUM) {
+                    $discount += $favourable['act_type_ext'];
+					$total_amountd = $total_amount;
+                    $favourable_name[] = $favourable['act_name'];
+                }
+				/*手机专享价*/
             }
         }
         //折扣减免金额大于订单额判断
@@ -1743,7 +1750,7 @@ class OrderModel extends BaseModel {
                 "favourable_activity WHERE start_time <= '$now'" .
                 " AND end_time >= '$now'" .
                 " AND CONCAT(',', user_rank, ',') LIKE '%" . $user_rank . "%'" .
-                " AND act_type " . db_create_in(array(FAT_DISCOUNT, FAT_PRICE));
+                " AND act_type " . db_create_in(array(FAT_DISCOUNT, FAT_PRICE,FAT_PREMIUM));
         $favourable_list = $this->query($sql);
         if (!$favourable_list) {
             return 0;
@@ -1807,7 +1814,12 @@ class OrderModel extends BaseModel {
                     $discount += $total_amount * (1 - $favourable['act_type_ext'] / 100);
                 } elseif ($favourable['act_type'] == FAT_PRICE) {
                     $discount += $favourable['act_type_ext'];
+                }/*手机专享价*/
+				elseif ($favourable['act_type'] == FAT_PREMIUM) {
+                    $discount += $favourable['act_type_ext'];
+                    $favourable_name[] = $favourable['act_name'];
                 }
+				/*手机专享价*/
             }
         }
         //折扣减免金额大于订单额判断

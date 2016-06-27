@@ -58,6 +58,9 @@
       <option value="0" {if $favourable.act_type eq 0}selected="selected"{/if}>{$lang.fat_goods}</option>
       <option value="1" {if $favourable.act_type eq 1}selected="selected"{/if}>{$lang.fat_price}</option>
       <option value="2" {if $favourable.act_type eq 2}selected="selected"{/if}>{$lang.fat_discount}</option>
+	  <!--手机专享价-->
+	  <option value="3" {if $favourable.act_type eq 3}selected="selected"{/if}>{$lang.fat_Premium}</option>
+	  <!--手机专享价-->
       </select>
       <input name="act_type_ext" type="text" id="act_type_ext" value="{$favourable.act_type_ext}" size="10" />
       <br />

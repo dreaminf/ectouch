@@ -177,6 +177,7 @@ define('FAR_GOODS',                 3); // 按商品选择
 define('FAT_GOODS',                 0); // 送赠品或优惠购买
 define('FAT_PRICE',                 1); // 现金减免
 define('FAT_DISCOUNT',              2); // 价格打折优惠
+define('FAT_PREMIUM',               3); // 手机专享价
 
 /* 评论条件 */
 define('COMMENT_LOGIN',             1); //只有登录用户可以评论
