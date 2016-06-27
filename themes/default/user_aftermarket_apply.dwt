@@ -424,13 +424,7 @@
 
 		//},'json');
 
-		server: '{:url('
-		user / upload_file ',array('
-		goods_id '=>$this->_var['
-		goods ']['
-		goods_id '],'
-		rec_id '=>$this->_var['
-		rec_id ']))}',
+		server:'{:url('user/upload_file',array('goods_id'=>$this->_var['goods']['goods_id'],'rec_id'=>$this->_var['rec_id']))}',
 
 		// 选择文件的按钮。可选。
 		// 内部根据当前运行是创建，可能是input元素，也可能是flash.
