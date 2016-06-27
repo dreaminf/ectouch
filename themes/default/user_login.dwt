@@ -47,10 +47,10 @@
 	<div class="other-login">
 		<h4 class="title-hrbg"><span>{$lang.third_login}</span><hr> </h4>
 		<ul class="dis-box">
-			<li class="box-flex"><a href="{:url('user/third_login',array('type'=>'qq'))}"><span class="qq"><i class="iconfont icon-qq"></i></span>QQ登录</a></li>
-			<li class="box-flex"><a href="{:url('user/third_login',array('type'=>'sina'))}"><span class="weibo"><i class="iconfont icon-weibo"></i></span>新浪登录</a></li>
+			<li class="box-flex"><a href="{:url('user/third_login',array('type'=>'qq'))}"><span class="qq"><i class="iconfont icon-qq"></i></span></a></li>
+			<li class="box-flex"><a href="{:url('user/third_login',array('type'=>'sina'))}"><span class="weibo"><i class="iconfont icon-weibo"></i></span></a></li>
 			{if $is_wechat}
-			<li class="box-flex"><a href="{:url('user/third_login',array('type'=>'weixin'))}"><span class="weixin"><i class="iconfont icon-weibiaoti1"></i></span>微信登录</a></li>
+			<li class="box-flex"><a href="{:url('user/third_login',array('type'=>'weixin'))}"><span class="weixin"><i class="iconfont icon-weibiaoti1"></i></span></a></li>
 			{/if}
 		</ul>
 	</div>

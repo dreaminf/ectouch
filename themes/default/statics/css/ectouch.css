@@ -1878,16 +1878,16 @@ a.btn-submit-1{color:#fff}
 .index-nav-1 ul li .my-com-nav2 img{width:100%}
 
 /*版权*/
-.n-footer-box{padding:1.6rem 0 1rem 0;border-bottom:1px solid #ddd;}
+.n-footer-box{padding:1.6rem 0 1rem 0;}
 .n-footer-minbox{overflow:hidden;    width: 70%; margin:0 auto;}
 .n-footer-minbox li{float:left;width:33%;}
 .n-footer-img-box{width:3.8rem; height:3.8rem;margin:0 auto;position: relative;}
-.n-footer-minbox .footer-tit,.n-footer-minbox .footer-tit1{text-align:center;font-size:1.3rem;padding-top:1rem;}
+.n-footer-minbox .footer-tit,.n-footer-minbox .footer-tit1{text-align:center;font-size:1.1rem;padding-top:0.4rem;}
 .n-footer-minbox .footer-tit1{ color:#999;}
 .n-footer-minbox .footer-tit{color:#666;}		
-.is-ban-fize{font-size:4.3rem;color:#999}
+.is-ban-fize{font-size:3.6rem;color:#999}
 .is-ban-fize.active{color:#666;}
-.jian-top-2{position: absolute;margin-top: -0.4rem;}
+.jian-top-2{position: absolute;margin-top: -0.2rem;}
 /*我的微店*/
 .user-shop-img-box,.user-shop-img-box img{width:100%;display: block;}
 .user-shop-cont{position:absolute;height:8rem;bottom:-6rem;}
@@ -2232,6 +2232,7 @@ a.n-but-ls{color:#1CBB7F}
 .ect-radio label i,.ect-checkbox label i{width:1.43rem;height:1.43rem;margin-right:0.3em;display:block;float:left;margin-top:0.1em;border-radius:100%;background:rgba(255,255,255,0);border:1px solid #bbb}
 .ect-radio input[type=radio],.ect-checkbox input[type=checkbox]{display:none}
 .ect-checkbox label{display:inline-block;max-width:100%;color:#666;font-size: 1.3rem;}
+.ect-checkbox{font-size:1.3rem;}
 .ect-margin-bottom0 a{color:#777}
 .user-register-list{width:7rem;height:3rem;line-height:3rem;border-left:1px solid #f6f6f9;margin-left:1rem;padding-left:1rem;text-align:center;font-size:1.4rem}
 .user-register-list2{width:13rem;height:3rem;line-height:3rem;border-left:1px solid #f6f6f9;margin-left:1rem;padding-left:1rem;text-align:center;font-size:1.5rem;color:#666}
@@ -2446,3 +2447,5 @@ table.u-table td{border:1px solid #e3e3e3;padding:0.5em 0.2em;height:3em;width:7
 .ect-diaplay-box{display: -webkit-box;display: -moz-box;display: -ms-box;display: box;}
 .ect-box-flex{-webkit-box-flex: 1;-moz-box-flex: 1;-ms-box-flex: 1;box-flex: 1; display:block; width:100%;}
 .ect-margin-bottom0{margin-bottom:0 !important;}
+.select-one .ect-select input{opacity: 0;position:absolute;left:0}
+.select-one li{position:relative;}

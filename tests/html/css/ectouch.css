@@ -794,8 +794,8 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .search-left p,.search-left i{color:#fff}
 .search-logo{overflow:hidden;height:2rem;width:6.6rem}
 .search-logo img{height:2rem;width:auto;margin-right:1rem;position:absolute;top:50%;margin-top:-1rem}
-.index-nav{padding-bottom:.6rem;padding-top:2rem}
-.index-nav ul li{padding-bottom:1rem}
+.index-nav{padding-bottom:0rem;padding-top:1rem}
+.index-nav ul li{padding-bottom:0.8rem}
 .index-nav ul li i.iconfont{margin:0 auto;display:block;width:4rem;height:4rem;border-radius:50%;line-height:4rem;color:#fff;font-size:2rem}
 .index-nav ul li a{color:#222222;font-size:1.3rem}
 .title h3{font-weight:normal;font-size:1.7rem}
@@ -1881,16 +1881,16 @@ a.btn-submit-1{color:#fff}
 .index-nav-1 ul li .my-com-nav2 img{width:100%}
 
 /*版权*/
-.n-footer-box{padding:1.6rem 0 1rem 0;border-bottom:1px solid #ddd;}
+.n-footer-box{padding:1.6rem 0 1rem 0;}
 .n-footer-minbox{overflow:hidden;    width: 70%; margin:0 auto;}
 .n-footer-minbox li{float:left;width:33%;}
 .n-footer-img-box{width:3.8rem; height:3.8rem;margin:0 auto;position: relative;}
-.n-footer-minbox .footer-tit,.n-footer-minbox .footer-tit1{text-align:center;font-size:1.3rem;padding-top:1rem;}
+.n-footer-minbox .footer-tit,.n-footer-minbox .footer-tit1{text-align:center;font-size:1.1rem;padding-top:1rem;}
 .n-footer-minbox .footer-tit1{ color:#999;}
 .n-footer-minbox .footer-tit{color:#666;}		
-.is-ban-fize{font-size:4.3rem;color:#999}
+.is-ban-fize{font-size:3.8rem;color:#999}
 .is-ban-fize.active{color:#666;}
-.jian-top-2{position: absolute;margin-top: -0.4rem;}
+.jian-top-2{position: absolute;margin-top: -0.2rem;}
 /*我的微店*/
 .user-shop-img-box,.user-shop-img-box img{width:100%;display: block;}
 .user-shop-cont{position:absolute;height:8rem;bottom:-6rem;}
@@ -2008,15 +2008,14 @@ a.btn-submit-1{color:#fff}
 .header-max-box{width:100%;max-width: 640px;}
 .index-nav-box{background:rgba(28,187,127, 0);moz-transition: 0.1s ease;-o-transition: 0.1s ease;-webkit-transition:0.1s ease; position:absolute;width:100%;top:0.3rem;z-index:11}
 .index-nav-box.active{background:rgba(28,187,127, 0.96)}
-.index-left-box,.index-right-box{width:3.6rem;}
+.index-left-box,.index-right-box{width:3.6rem;position:relative;}
 .index-search-box{height:3.4rem;line-height:3.4rem;    background:rgba(255,255,255,0.9);border-radius:3.4rem;font-size: 1.3rem;color: #777;padding-left: .5rem;}
 .n-input-index-box{padding:0.4rem}
-.index-left-box i,.index-right-box i{line-height:4rem;    text-align: center;display: block;}
-.n-xiaoxi-size{font-size: 2.6rem;}
-.index-left-box i{font-size: 1.8rem;}
+.index-left-box i,.index-right-box i{line-height:3.2rem;    text-align: center;display: block;color:rgba(255,255,255,0.7);}
+.n-xiaoxi-size{font-size: 2.2rem;}
+.index-left-box i{font-size: 2.4rem;}
 .index-search-box i{margin:0 0.6rem;font-size:1.5rem}
 .index-img img{width:100%;}
-.index-cate-box li{width:49.2%;}
 .index-cate-box li img{width:100%;}
 .index-cate-box{background:#fff;overflow:hidden;padding: 0.6rem;}
 .index-more-list li img{width:100%}
@@ -2028,7 +2027,7 @@ a.btn-submit-1{color:#fff}
 .n-index-box li{margin-bottom:0.6rem;}
 .m-b7{margin-bottom:5.5rem;}
 .m-b5{margin-bottom:4.4rem;}
-.index-cate-box li{width:49.2%;}
+.index-cate-box li{width:50%;}
 .index-cate-img{padding:0 0.2rem;}
 .xiangqing-1 {padding-bottom: 1rem;line-height: 2rem;background-color: #FFFFFF;margin-top: 0.5rem;margin-bottom: 6.5rem;}
 .index-weixin-box{margin:0 auto;position:fixed;top:20%;left:20%;right:20%;z-index: 16;background: #fff;padding: 0.5rem; box-shadow: 0px 5px 10px rgba(0,0,0,0.6);border-radius: 0.5rem;display:none}
@@ -2039,6 +2038,8 @@ a.btn-submit-1{color:#fff}
 .index-weixin-box label i{display:block;text-align:center;line-height:2rem;color:#888}
 .index-weixin-box h3{font-size:1.6rem;color:#1CBB7F;text-align:center;}
 .index-weixin-box.active,.index-bg-box.active{display:block;}
+.index-nav-box label{font-size:0.9rem;color:rgba(255,255,255,0.7);    position: absolute;top: 1.6rem; display: block;right: 0.86rem;font-size:100;}
+.my-u-title-size span{color:#1CBB7F;padding-right:0.2rem;height:font-size:2rem;}
 /*订单*/
 .n-order-box .n-order-all{margin-top:0.8rem;}
 .n-order-box .n-order-all:first-child{margin-top:0;}
