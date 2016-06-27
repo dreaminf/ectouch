@@ -4,7 +4,7 @@
 <body class="b-color-f">
 	<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
 		<h3 class="box-flex">注册</h3>
-		<p><a href="{:url('index/index')}"><i class="iconfont icon-home"></i></p>
+		<p><a href="{:url('index/index')}"><i class="iconfont icon-home"></i></a></p>
 	</header>
 	<div class="con padding-all">
 		<div class="user-register">
