@@ -791,7 +791,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .search-left p,.search-left i{color:#fff}
 .search-logo{overflow:hidden;height:2rem;width:6.6rem}
 .search-logo img{height:2rem;width:auto;margin-right:1rem;position:absolute;top:50%;margin-top:-1rem}
-.index-nav{padding-bottom:.6rem;padding-top:2rem}
+.index-nav{padding-bottom:.6rem;}
 .index-nav ul li{padding-bottom:1rem}
 .index-nav ul li i.iconfont{margin:0 auto;display:block;width:4rem;height:4rem;border-radius:50%;line-height:4rem;color:#fff;font-size:2rem}
 .index-nav ul li a{color:#222222;font-size:1.3rem}
