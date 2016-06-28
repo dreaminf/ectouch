@@ -5,12 +5,16 @@ var region = new Object();
 region.isAdmin = false;
 
 region.loadRegions = function(parent, type, target)
-{
-  $.get(region.getFileName(), {type:type, target:target, parent:parent}, function(data){
-    region.response(data, '');
-  }, 'json');
+{  try {
+    $.get(region.getFileName(), {type: type, target: target, parent: parent}, function (data) {
+        region.response(data, '');
+    }, 'json');
+    }catch (e){
+    Ajax.call(region.getFileName(), 'type=' + type + '&target=' + target + "&parent=" + parent , region.response, "GET", "JSON");
+     }
 
 }
+
 
 /* *
  * 载入指定的国家下所有的省份
