@@ -38,7 +38,7 @@
 		<div class="linear"></div>
 	</div>
 	<!--menu-->
-	<nav class="bg-white ptb-1 index-nav mb-1">
+	<nav class="bg-white ptb-1 index-nav">
 		<ul class="box ul-4 text-c bg-white">
 			<!--{foreach from=$navigator item=nav}-->
 			<li class="fl">
@@ -50,9 +50,9 @@
 		</ul>
 	</nav>
 	<!--discount-->
-	<div class="box mb-1 title inx-ms">
+	<div class="box  title inx-ms m-top06">
 		<div class="dis-box m-top1px b-color-f">
-			<div class="box-flex title text-c bd bd-top-none pt-1 position-rel">
+			<div class="box-flex title text-c  pt-1 position-rel index-sale-list">
 				{insert name='ads' id=257 num=1}
 			</div>
 			<div class="box-flex ">
@@ -65,12 +65,12 @@
 		</div>
 	</div>
 
-	<ul class="index-cate-box">
+	<ul class="index-cate-box m-top06">
 		{insert name='ads' id=256 num=4}
 	</ul>
 
 	<!--like-->
-	<div class="padding-all text-c n-cate-box">
+	<div class="text-c n-cate-box">
 		<p class="index-title"><i class="iconfont icon-cainixihuan is-cainixihuan"></i>猜你喜欢</p>
 		<p class="index-small-title">实时推荐最适合您的宝贝</p>
 	</div>
