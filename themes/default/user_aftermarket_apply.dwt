@@ -229,7 +229,7 @@
                
                上传凭证 end-->
 
-								<div class="ect-bg-colorf flow-consignee aftermarket">
+								<div class="ect-bg-colorf  aftermarket">
 
 									<ul class="n-addr-box dis-box">
 										<li class="n-left-cont">{$lang.consignee_name}：</li>
