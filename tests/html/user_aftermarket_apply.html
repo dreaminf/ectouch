@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>ECTouch微商城</title>
+		<link rel="stylesheet" href="css/ectouch.css" />
+
+	</head>
+
+	<body>
+		<div id="loading"><img src="images/loading.gif" /></div>
+
+		<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
+			<h3 class="box-flex">服务选择</h3>
+			<a class="" href="javascript:;"><i class="iconfont icon-pailie j-nav-box"></i></a>
+		</header>
+		<div class="j-nav-content">
+			<ul class="dis-box new-footer-box">
+				<li class="box-flex">
+					<a href="index.html" class="nav-cont"><i class="nav-box"><img src="images/icon/home.png"></i><span>首页</span></a>
+				</li>
+				<li class="box-flex">
+					<a href="catalog.html" class="nav-cont"><i class="nav-box"><img src="images/icon/cate.png"></i><span>分类</span></a>
+				</li>
+				<li class="box-flex"><a href="distribution_open_one.html" class="nav-cont"><i class="nav-box"><img src="images/icon/shop.png"></i><span>店铺</span></a></li>
+				<li class="box-flex"><a href="flow_cart.html" class="nav-cont"><i class="nav-box"><img src="images/icon/flow.png"></i><span>购物车</span></a></li>
+				<li class="box-flex"><a href="user.html" class="nav-cont"><i class="nav-box"><img src="images/icon/user.png"></i><span>用户中心</span></a></li>
+			</ul>
+		</div>
+		<div style="top: 0px; min-height: 567px; opacity: 1;background:#fff;" id="page">
+			<div id="wrapper">
+				<div id="scroller">
+					<div class="panel panel-form">
+						<form class="f-form" method="post" action="/ecshop-mobile/index.php?m=default&c=user&a=aftermarket_done&u=9" enctype="multipart/form-data" name="serviceform" novalidate="novalidate">
+							<div class="panel-heading">
+								<div id="J_ModId_2">
+									<div class="service-list f-field">
+										<div class="row">
+											<div class="f-label"><em>*</em>申请服务</div>
+											<div class="f-controls select-wrapper">
+												<select name="service_id" onchange="changeServiceType(this.value)">
+                                        <option value="3" selected ="true">换货</option>
+                                        <option value="1" >退货退款</option>
+                                      </select>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="panel-body" id="return_type3">
+								<div id="J_ModId_3">
+									<div class="bidi-viewer" data-view="form">
+										<div id="bidi-form-81" class="f-field">
+											<div class="row">
+												<label class="f-label">
+							                    <em>*</em>
+							                    <label id="bidi-form-82">换货原因</label>
+												</label>
+												<div class="f-controls select-wrapper">
+													<select id="bidi-form-83" class="select" name="reason" data-type="select">
+                       								<option value="24" >颜色问题</option><option value="25" >质量问题</option>                      </select>
+												</div>
+											</div>
+										</div>
+
+										<div id="bidi-form-84" class="f-field">
+											<div class="row">
+												<label class="f-label"> <em>*</em>退货数量 </label>
+												<div class="f-controls money-input iconfont">
+													<input id="bidi-form-87" class="input-l input-content-len-10 J_InputFee" name="back_num" value="1" type="number" wrapper=".f-field" required="" min="1" max="1" placeholder="">
+												</div>
+											</div>
+										</div>
+
+										<div id="bidi-form-93" class="f-field">
+											<div class="row"> <span class="memo-tip"></span>
+												<div class="f-label"> 退货说明 </div>
+												<div class="f-controls  n-aftermark-cont">
+													<textarea id="bidi-form-94" class="textarea J_Description" name="description" msg-warning-wrapper="#msg-warning-wrapper-description" msg-wrapper="#msg-wrapper-description" aria-label="退货说明" placeholder="最多200字" max-length="200"></textarea>
+												</div>
+											</div>
+											<div style="display: none;" id="msg-warning-wrapper-description"></div>
+											<div style="display: none;" id="msg-wrapper-description" class="msg-wrapper"></div>
+										</div>
+
+										<div id="bidi-form-93" class="f-field">
+											<div class="row"> <span class="memo-tip"></span>
+												<div class="f-label">寄回商家地址：</div>
+												<div class="f-controls n-aftermark-cont">
+													<div class="n-add-box">
+														普陀区收件人：ECTouch微商城晴天联系电话： </div>
+												</div>
+											</div>
+											<div style="display: none;" id="msg-warning-wrapper-description"></div>
+											<div style="display: none;" id="msg-wrapper-description" class="msg-wrapper"></div>
+										</div>
+										<!--商家地址end
+                 <div class="uploader-field">
+                  <div class="J_TakephotoBox takephoto-box" id="uploader">
+                    <div class="J_TakephotoTrigger takephoto-trigger btns">
+                      <div class="add-text" id="picker">
+                        <span>(最多三张)</span>
+                        </div>
+                    </div>
+                     <ul id="thelist" class="uploader-list"> 
+                    
+                    </ul>
+                  </div>
+                  <div style="display: none;" class="msg-wrapper"></div>
+                </div>
+               
+               上传凭证 end-->
+
+										<div class="ect-bg-colorf flow-consignee aftermarket">
+
+											<ul class="n-addr-box dis-box">
+												<li class="n-left-cont">收货人姓名：</li>
+												<li class="box-flex"> <input name="consignee" placeholder="收货人姓名必填" type="text" class="inputBg" value="吃大餐" /></li>
+											</ul>
+											<ul class="n-addr-box dis-box">
+												<li class="n-left-cont">手机：</li>
+												<li class="box-flex"> <input placeholder="手机必填" name="phone" type="text" class="inputBg_touch" value="17010285501" /></li>
+											</ul>
+											<ul class="n-addr-box dis-box" style="display:none">
+												<li class="n-left-cont">城市/地区：</li>
+												<li class="box-flex">
+													<span>
+                      <div class="f-controls select-wrapper">
+                      <select name="country" id="selCountries_" onchange="region.changed(this, 1, 'selProvinces_')">
+                        <option value="0">请选择</option>
+                                                <option value="1" selected>中国</option>
+                                              </select>
+                      </div>
+                      </span>
+												</li>
+											</ul>
+											<ul class="n-addr-box dis-box" id="selDistricts__box" style="">
+												<li class="n-left-cont">省/市：</li>
+												<li class="box-flex">
+													<span>    
+		               	<div class="input-text f-controls select-wrapper" >               		
+	                       <select name="province" id="selProvinces_" onchange="region.changed(this, 2, 'selCities_')">
+	                        <option value="0">请选择</option>
+	                        	                        <option value="2" >北京</option>
+	                        	                        <option value="3" >安徽</option>
+	                        	                        <option value="4" selected>福建</option>
+	                        	                        <option value="5" >甘肃</option>
+	                        	                        <option value="6" >广东</option>
+	                        	                        <option value="7" >广西</option>
+	                        	                        <option value="8" >贵州</option>
+	                        	                        <option value="9" >海南</option>
+	                        	                        <option value="10" >河北</option>
+	                        	                        <option value="11" >河南</option>
+	                        	                        <option value="12" >黑龙江</option>
+	                        	                        <option value="13" >湖北</option>
+	                        	                        <option value="14" >湖南</option>
+	                        	                        <option value="15" >吉林</option>
+	                        	                        <option value="16" >江苏</option>
+	                        	                        <option value="17" >江西</option>
+	                        	                        <option value="18" >辽宁</option>
+	                        	                        <option value="19" >内蒙古</option>
+	                        	                        <option value="20" >宁夏</option>
+	                        	                        <option value="21" >青海</option>
+	                        	                        <option value="22" >山东</option>
+	                        	                        <option value="23" >山西</option>
+	                        	                        <option value="24" >陕西</option>
+	                        	                        <option value="25" >上海</option>
+	                        	                        <option value="26" >四川</option>
+	                        	                        <option value="27" >天津</option>
+	                        	                        <option value="28" >西藏</option>
+	                        	                        <option value="29" >新疆</option>
+	                        	                        <option value="30" >云南</option>
+	                        	                        <option value="31" >浙江</option>
+	                        	                        <option value="32" >重庆</option>
+	                        	                        <option value="33" >香港</option>
+	                        	                        <option value="34" >澳门</option>
+	                        	                        <option value="35" >台湾</option>
+	                        	                      </select>
+	                          </div>
+	                      </span>
+
+												</li>
+											</ul>
+											<ul class="n-addr-box dis-box" id="selDistricts__box" style="">
+												<li class="n-left-cont">城市：</li>
+												<li class="box-flex">
+													<span>    
+		               	<div class="input-text f-controls select-wrapper" >               		
+	                               <select name="city" id="selCities_" onchange="region.changed(this, 3, 'selDistricts_')" >
+                        <option value="0">请选择</option>
+                                                <option value="53" >福州</option>
+                                                <option value="54"                         selected>龙岩</option>
+                                                <option value="55" >南平</option>
+                                                <option value="56" >宁德</option>
+                                                <option value="57" >莆田</option>
+                                                <option value="58" >泉州</option>
+                                                <option value="59" >三明</option>
+                                                <option value="60" >厦门</option>
+                                                <option value="61" >漳州</option>
+                                              </select>
+	                          </div>
+	                      </span>
+
+												</li>
+											</ul>
+											<ul class="n-addr-box dis-box">
+												<li class="n-left-cont">区/县：</li>
+												<li class="box-flex">
+													<span>    
+		               	<div class="input-text f-controls select-wrapper" >               		
+	                     <select name="district" id="selDistricts_">                    
+                        <option value="0">请选择</option>
+                                                <option value="531" >新罗区</option>
+                                                <option value="532" selected>漳平市</option>
+                                                <option value="533" >长汀县</option>
+                                                <option value="534" >永定县</option>
+                                                <option value="535" >上杭县</option>
+                                                <option value="536" >武平县</option>
+                                                <option value="537" >连城县</option>
+                                              </select>
+	                          </div>
+	                      </span>
+
+												</li>
+											</ul>
+
+											<ul class="n-addr-box dis-box">
+												<li class="n-left-cont">详细地址：</li>
+												<li class="box-flex n-addr-textarea"><textarea name="address" placeholder="详细地址必填" type="text">吃的吃大餐</textarea></li>
+											</ul>
+										</div>
+
+										<div class="padding-all n-user-after-z">
+											注：如您修改地址，请您确认上方"省、市、县"是否需要修改。
+										</div>
+
+										<input name="order_id" value="32" type="hidden">
+										<input name="rec_id" value="40" type="hidden">
+										<input name="goods_id" value="" type="hidden">
+										<div style="display: none;" class="msg-wrapper"></div>
+										<div style="display: none;" class="msg-wrapper"></div>
+										<div style="display: none;" class="msg-wrapper"></div>
+									</div>
+								</div>
+							</div>
+
+							<div class="panel-body" id="return_type4">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="filter-btn dis-box">
+				<a href="user_aftermarket_done.html" type="button" class="btn-submit box-flex n-iphone5-top1 j-goods-attr j-show-div" id="diyStart" onclick="check_service()">提交申请</a>
+			</div>
+
+		</div>
+		<div id="mask"></div>
+		<div id="popup" class="bottom-side"></div>
+		<div id="load-layer">
+			<div class="load-icon hidden">
+				<div class="load-outer">
+					<div class="load-inner"></div>
+				</div>
+				<div class="load-msg hidden">正在加载</div>
+			</div>
+		</div>
+		<div id="error-layer">
+			<div class="iconfont icon-wifi"></div>
+			<p class="error-msg">资源加载失败，请稍候重试</p>
+			<button class="retry-btn" onclick="javascript:location.reload();" type="button">重新加载</button>
+		</div>
+		<div style="top: 0px; width: 344px; font-size: 1.2rem; visibility: hidden; position: absolute; z-index: -1;">一</div>
+		<div class="search-div ts-3">
+			<section class="search">
+				<form action="/ecshop-mobile/index.php?m=default&c=category&a=index&u=9" method="post">
+					<div class="text-all dis-box j-text-all">
+						<a class="a-icon-back j-close-search" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou is-left-font"></i></a>
+						<div class="box-flex input-text">
+							<input class="j-input-text" type="text" name="name" placeholder="请输入搜索关键词！" id="newinput" autofocus="autofocus" / style="font-size:1.56rem;">
+							<i class="iconfont icon-guanbi2 is-null j-is-null"></i>
+						</div>
+						<button type="submit" class="btn-submit">搜索</button>
+					</div>
+				</form>
+			</section>
+			<section class="search-con">
+				<div class="swiper-scroll history-search">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<p>
+								<label class="fl">热门搜索</label>
+							</p>
+							<ul class="hot-search a-text-more">
+							</ul>
+							<p class="hos-search">
+								<label class="fl">最近搜索</label>
+								<span class="fr" onclick="javascript:clearHistroy();"><i class="iconfont icon-xiao10 is-xiao10 jian-top fr"></i></span>
+							</p>
+
+							<ul class="hot-search a-text-more a-text-one" id="search_histroy">
+							</ul>
+						</div>
+					</div>
+					<div class="swiper-scrollbar"></div>
+				</div>
+			</section>
+			<footer class="close-search j-close-search">
+				点击关闭
+			</footer>
+		</div>
+		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="js/swiper-3.2.5.min.js"></script>
+		<script type="text/javascript" src="js/ectouch.js"></script>
+		<script type="text/javascript">
+			//设置cookie
+			function setCookie(cname, cvalue, exdays) {
+				var d = new Date();
+				d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+				var expires = "expires=" + d.toUTCString();
+				document.cookie = cname + "=" + cvalue + "; " + expires;
+			}
+
+			function clearHistroy() {
+				setCookie('ECS[keywords]', '', -1);
+				document.getElementById("search_histroy").style.visibility = "hidden";
+			}
+		</script>
+		<script>
+			//服务类型切换
+			function changeServiceType(service_id) {
+				$.get('index.php?m=default&c=user&a=change_service', {
+					id: service_id,
+					order_id: {
+						$order_id
+					},
+					rec_id: {
+						$rec_id
+					}
+				}, function(result) {
+					if (result.error > 0) {
+						alert(result.message);
+					} else {
+						window.location.href = result.url;
+					}
+				}, 'json');
+			}
+			/*控制最大退换货数量*/
+			$("#back_num").change(function() {
+
+				var reg = /^[0-9]*[1-9][0-9]*$/;
+				var fee = {
+					$goods.goods_price
+				};
+				var val = $('#back_num').val();
+				var max_num = {
+					$goods.goods_number
+				};
+				if (!reg.test(val)) {
+					$('#back_num').val(1);
+				}
+				if (val > max_num || val < 1) {
+					$('#back_num').val(max_num);
+				}
+				$('#refundFee').val((fee * val).toFixed(2));
+			});
+
+			/*提交验证*/
+			function check_service() {
+
+			}
+		</script>
+		<script type="text/javascript">
+			var $ = jQuery,
+				$list = $('#thelist'),
+				// 优化retina, 在retina下这个值是2
+				ratio = window.devicePixelRatio || 1,
+				// 缩略图大小
+				thumbnailWidth = 100 * ratio,
+				thumbnailHeight = 100 * ratio,
+				mapping = {},
+				// Web Uploader实例
+				uploader;
+			var uploader = WebUploader.create({
+				// swf文件路径
+				swf: 'js/Uploader.swf',
+				// 文件接收服务端。
+				//$.post("{:url('user/upload_file",{'goods_id':$this->_var['goods']['goods_id'],'rec_id':$this->_var['rec_id']},function(){
+
+				//},'json');
+
+				server:'{:url('user/upload_file',array('goods_id'=>$this->_var['goods']['goods_id'],'rec_id'=>$this->_var['rec_id']))}',
+
+				// 选择文件的按钮。可选。
+				// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+				pick: '#picker',
+				// 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+				resize: false,
+
+				fileNumLimit: 3 //限制上传数量3
+			});
+			//点击上传
+			$("#diyStart").click(function() {
+				var html = $list.html();
+				if (html != undefined || html != "") {
+					uploader.upload();
+					document.forms['serviceform'].submit();
+				}
+			});
+			uploader.on('beforeFileQueued', function(file) {
+				var hash = file.__hash || (file.__hash = hashString(file.name +
+					file.size + file.lastModifiedDate));
+
+				// 已经重复了
+				if (mapping[hash]) {
+					alert('图片不能重复');
+					return false;
+				}
+			});
+			// 当有文件添加进来的时候
+			uploader.on('fileQueued', function(file) {
+				var hash = file.__hash;
+				hash && (mapping[hash] = true);
+
+				var $li = $('<li id="' + file.id + '">' + '<p class="imgWrap">' + '<img class="img-thumbnail">' + '</p></li>'),
+					$img = $li.find('img');
+				$list.append($li);
+				file.rotation = 0;
+				// 创建缩略图
+				uploader.makeThumb(file, function(error, src) {
+					if (error) {
+						$img.replaceWith('<span>不能预览</span>');
+						return;
+					}
+					$img.attr('src', src);
+				}, thumbnailWidth, thumbnailHeight);
+				//添加移除按钮
+				/*if($("#removeBtn").length <= 0){
+				  $("div.btns").append('<a id="removeBtn" type="button" class="btn btn-default">移除文件</a>');
+				}*/
+			});
+			//移除文件
+			$("div.btns").on("click", "#removeBtn", function() {
+				var id = $(".state").parent().attr("id");
+				if (id != undefined || id != "") {
+					$("div.btns #removeBtn").remove();
+					//移除队列
+					uploader.removeFile(id, true);
+					$list.empty();
+				}
+			});
+
+			// 文件上传成功，给item添加成功class, 用样式标记上传成功。
+			uploader.on('uploadSuccess', function(file, response) {
+				console.log(file);
+				console.log(response);
+			});
+			// 文件上传失败，显示上传出错。
+			uploader.on('uploadError', function(file) {
+				var $li = $('#' + file.id),
+					$error = $li.find('div.error');
+				// 避免重复创建
+				if (!$error.length) {
+					$error = $('<div class="error text-danger"></div>').appendTo($li);
+				}
+				$error.text('上传失败');
+			});
+
+			// 完成上传完了，成功或者失败，先删除进度条。
+			uploader.on('uploadComplete', function(file) {
+				$('#' + file.id).find('.progress').remove();
+			});
+
+			uploader.onFileQueued = function(file) {
+				addFile(file);
+			};
+			// 当有文件添加进来时执行，负责view的创建
+			function addFile(file) {
+				var $li = $("#" + file.id),
+					$btns = $('<div class="file-panel">' +
+						'<span class="cancel">删除</span>' +
+						'<span class="rotateRight">向右旋转</span>' +
+						'<span class="rotateLeft">向左旋转</span></div>').appendTo($li),
+					$prgress = $li.find('p.progress span'),
+					$wrap = $li.find('p.imgWrap'),
+					$info = $('<p class="error"></p>'),
+
+					showError = function(code) {
+						switch (code) {
+							case 'exceed_size':
+								text = '文件大小超出';
+								break;
+
+							case 'interrupt':
+								text = '上传暂停';
+								break;
+
+							default:
+								text = '上传失败，请重试';
+								break;
+						}
+						$info.text(text).appendTo($li);
+					};
+				file.on('statuschange', function(cur, prev) {
+					if (prev === 'progress') {
+						$prgress.hide().width(0);
+					} else if (prev === 'queued') {
+						$li.off('mouseenter mouseleave');
+						$btns.remove();
+					}
+
+					// 成功
+					if (cur === 'error' || cur === 'invalid') {
+						console.log(file.statusText);
+						showError(file.statusText);
+						/*percentages[ file.id ][ 1 ] = 1;*/
+					} else if (cur === 'interrupt') {
+						showError('interrupt');
+					} else if (cur === 'queued') {
+						/* percentages[ file.id ][ 1 ] = 0;*/
+					} else if (cur === 'progress') {
+						$info.remove();
+						$prgress.css('display', 'block');
+					} else if (cur === 'complete') {
+						$li.append('<span class="success"></span>');
+					}
+
+					$li.removeClass('state-' + prev).addClass('state-' + cur);
+				});
+
+				$li.on('mouseenter', function() {
+					$btns.stop().animate({
+						height: 30
+					});
+				});
+
+				$li.on('mouseleave', function() {
+					$btns.stop().animate({
+						height: 0
+					});
+				});
+
+				$btns.on('click', 'span', function() {
+					var index = $(this).index(),
+						deg,
+						supportTransition = (function() {
+							var s = document.createElement('p').style,
+								r = 'transition' in s ||
+								'WebkitTransition' in s ||
+								'MozTransition' in s ||
+								'msTransition' in s ||
+								'OTransition' in s;
+							s = null;
+							return r;
+						})();
+					switch (index) {
+						case 0:
+							//uploader.removeFile( file);
+							removeFile(file);
+							return;
+						case 1:
+							file.rotation += 90;
+							break;
+
+						case 2:
+							file.rotation -= 90;
+							break;
+					}
+					if (supportTransition) {
+						deg = 'rotate(' + file.rotation + 'deg)';
+						$wrap.css({
+							'-webkit-transform': deg,
+							'-mos-transform': deg,
+							'-o-transform': deg,
+							'transform': deg
+						});
+					} else {
+						$wrap.css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation=' + (~~((file.rotation / 90) % 4 + 4) % 4) + ')');
+					}
+				});
+				$li.appendTo($('#thelist'));
+			}
+
+			function hashString(str) {
+				var hash = 0,
+					i = 0,
+					len = str.length,
+					_char;
+
+				for (; i < len; i++) {
+					_char = str.charCodeAt(i);
+					hash = _char + (hash << 6) + (hash << 16) - hash;
+				}
+				return hash;
+			}
+			// 负责view的销毁
+			function removeFile(file) {
+				var $li = $('#' + file.id);
+				/* delete percentages[ file.id ];
+				 updateTotalProgress();*/
+				$li.off().find('.file-panel').off().end().remove();
+			}
+		</script>
+	</body>
