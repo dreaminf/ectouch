@@ -163,7 +163,7 @@ body{position:relative}
 .no-div-message p{margin-top:1.8rem; font-size:1.6rem;}
 .no-div-message a{font-size:1.5rem; margin-top:.5rem; display:block; color:#1CBB7F}
 /*分页器样式*/
-.swiper-container-horizontal>.swiper-pagination{bottom:.6rem;}
+.swiper-container-horizontal>.swiper-pagination{bottom:-.6rem;}
 .swiper-pagination-bullet{width:0.5rem; height:0.5rem; border-radius: 100%; border:1px solid #fff; opacity: .8;}
 .swiper-pagination-bullet-active{background:#1CBB7F; opacity: 1;border: 1px solid #1CBB7F;}
 
@@ -1881,7 +1881,7 @@ a.btn-submit-1{color:#fff}
 .n-footer-box{padding:1.6rem 0 1rem 0;}
 .n-footer-minbox{overflow:hidden;    width: 70%; margin:0 auto;}
 .n-footer-minbox li{float:left;width:33%;}
-.n-footer-img-box{width:3.8rem; height:3.8rem;margin:0 auto;position: relative;}
+.n-footer-img-box{width:3.6rem; height:3.6rem;margin:0 auto;position: relative;}
 .n-footer-minbox .footer-tit,.n-footer-minbox .footer-tit1{text-align:center;font-size:1.1rem;padding-top:0.4rem;}
 .n-footer-minbox .footer-tit1{ color:#999;}
 .n-footer-minbox .footer-tit{color:#666;}		
