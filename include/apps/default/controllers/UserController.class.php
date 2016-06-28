@@ -2901,7 +2901,8 @@ class UserController extends CommonController {
             $address_id = I('id');
 			$data['address_id'] = $address_id;
             $condition['user_id'] = $this->user_id;
-			$this->model->table('users')->data($data)->where($condition)->update();						
+			$this->model->table('users')->data($data)->where($condition)->update();	
+			unset($_SESSION['flow_consignee']);
             echo json_encode(array('status' => 1));
         } else {
             echo json_encode(array('status' => 0));
