@@ -2896,6 +2896,7 @@ class UserController extends CommonController {
     }
     //退换货end
 	
+	/*設置默認收貨地址*/
 	public function edit_address_info() {
 		if (IS_AJAX && IS_AJAX) {
             $address_id = I('id');
