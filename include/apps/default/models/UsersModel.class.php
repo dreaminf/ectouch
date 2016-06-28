@@ -464,7 +464,8 @@ class UsersModel extends BaseModel {
             $this->table = 'user_address';
             return $this->find($where);
         } else {
-            $sql = 'select * from ' . $this->pre . 'user_address where user_id = ' . $user_id . ' order by address_id limit ' . $start . ', ' . $num;
+            $sql = 'select ua.*,u.address_id as adds_id from ' . $this->pre . 'user_address as ua left join '. $this->pre . 'users as u on ua.address_id =u.address_id'. ' where ua.user_id = ' . $user_id . ' order by ua.address_id limit ' . $start . ', ' . $num;
+			
             return $this->query($sql);
         }
     }

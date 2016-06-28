@@ -2895,4 +2895,18 @@ class UserController extends CommonController {
         $this->display('user_aftermarket_return.dwt');
     }
     //退换货end
+	
+	public function edit_address_info() {
+		if (IS_AJAX && IS_AJAX) {
+            $address_id = I('id');
+			$data['address_id'] = $address_id;
+            $condition['user_id'] = $this->user_id;
+			$this->model->table('users')->data($data)->where($condition)->update();						
+            echo json_encode(array('status' => 1));
+        } else {
+            echo json_encode(array('status' => 0));
+         }
+		 
+	}
+	
 }

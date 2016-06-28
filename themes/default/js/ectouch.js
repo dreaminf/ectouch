@@ -256,3 +256,18 @@ function editPassword() {
 	}
 	
 }
+
+/*設置默認收貨地址*/
+function edit_address_info(address_id) {
+	var url = 'index.php?m=default&c=user&a=edit_address_info';
+	$.get(url, {'id':address_id}, function(data){
+		if(1 == data.status){
+			location.reload();				
+		}
+		else{
+			alert("删除失败");
+		}
+	}, 'json');
+	return false;
+
+}
