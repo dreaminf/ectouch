@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>ECTouch微商城</title>
+		<link rel="stylesheet" href="css/ectouch.css" />
+
+	</head>
+
+	<body>
+		<div id="loading"><img src="images/loading.gif" /></div>
+
+		<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
+				<h3 class="box-flex">服务选择</h3>
+				<a class="" href="javascript:;"><i class="iconfont icon-pailie j-nav-box"></i></a>
+			</header>
+			<div class="j-nav-content">
+				<ul class="dis-box new-footer-box">
+					<li class="box-flex">
+						<a href="index.html" class="nav-cont"><i class="nav-box"><img src="images/icon/home.png"></i><span>首页</span></a>
+					</li>
+					<li class="box-flex">
+						<a href="catalog.html" class="nav-cont"><i class="nav-box"><img src="images/icon/cate.png"></i><span>分类</span></a>
+					</li>
+					<li class="box-flex"><a href="distribution_open_one.html" class="nav-cont"><i class="nav-box"><img src="images/icon/shop.png"></i><span>店铺</span></a></li>
+					<li class="box-flex"><a href="flow_cart.html" class="nav-cont"><i class="nav-box"><img src="images/icon/flow.png"></i><span>购物车</span></a></li>
+					<li class="box-flex"><a href="user.html" class="nav-cont"><i class="nav-box"><img src="images/icon/user.png"></i><span>用户中心</span></a></li>
+				</ul>
+			</div>
+		<div style="top: 0px; min-height: 567px; opacity: 1;" id="page">
+			<div id="wrapper">
+				<div id="scroller">
+					<div class="panel panel-entrance m-top10">
+						<div class="panel-body">
+							<div id="J_ModId_1">
+								<ul id="J_Entrance" class="entrance show">
+									<li class="arrow J_ListItem" data-value="3">
+										<a href="/ecshop-mobile/index.php?m=default&c=user&a=returns_apply&id=3&order_id=32&rec_id=40&u=9">
+											<span class="iconfont icon-7tianwuliyoutuihuo n-user-lanbg"></span>
+											<h5 class="title">换货</h5>
+											<div class="desc">对已收到的货物不满意，联系卖家协商换货</div>
+										</a>
+									</li>
+									<li class="arrow J_ListItem" data-value="3">
+										<a href="/ecshop-mobile/index.php?m=default&c=user&a=returns_apply&id=1&order_id=32&rec_id=40&u=9">
+											<span class="iconfont icon-p-return n-user-huanbg"></span>
+											<h5 class="title">退货退款</h5>
+											<div class="desc">已收到货，需要退还已收到的货物1</div>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="mask"></div>
+		<div id="popup" class="bottom-side"></div>
+		<div id="load-layer">
+			<div class="load-icon hidden">
+				<div class="load-outer">
+					<div class="load-inner"></div>
+				</div>
+				<div class="load-msg hidden">正在加载</div>
+			</div>
+		</div>
+		<div id="error-layer">
+			<div class="iconfont icon-wifi"></div>
+			<p class="error-msg">资源加载失败，请稍候重试</p>
+			<button class="retry-btn" onclick="javascript:location.reload();" type="button">重新加载</button>
+		</div>
+		<div class="search-div ts-3">
+			<section class="search">
+				<form action="/ecshop-mobile/index.php?m=default&c=category&a=index&u=9" method="post">
+					<div class="text-all dis-box j-text-all">
+						<a class="a-icon-back j-close-search" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou is-left-font"></i></a>
+						<div class="box-flex input-text">
+							<input class="j-input-text" type="text" name="name" placeholder="请输入搜索关键词！" id="newinput" autofocus="autofocus" / style="font-size:1.56rem;">
+							<i class="iconfont icon-guanbi2 is-null j-is-null"></i>
+						</div>
+						<button type="submit" class="btn-submit">搜索</button>
+					</div>
+				</form>
+			</section>
+			<section class="search-con">
+				<div class="swiper-scroll history-search">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<p>
+								<label class="fl">热门搜索</label>
+							</p>
+							<ul class="hot-search a-text-more">
+							</ul>
+							<p class="hos-search">
+								<label class="fl">最近搜索</label>
+								<span class="fr" onclick="javascript:clearHistroy();"><i class="iconfont icon-xiao10 is-xiao10 jian-top fr"></i></span>
+							</p>
+
+							<ul class="hot-search a-text-more a-text-one" id="search_histroy">
+							</ul>
+						</div>
+					</div>
+					<div class="swiper-scrollbar"></div>
+				</div>
+			</section>
+			<footer class="close-search j-close-search">
+				点击关闭
+			</footer>
+		</div>
+		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="js/swiper-3.2.5.min.js"></script>
+		<script type="text/javascript" src="js/ectouch.js"></script>
+		<script type="text/javascript">
+			//设置cookie
+			function setCookie(cname, cvalue, exdays) {
+				var d = new Date();
+				d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+				var expires = "expires=" + d.toUTCString();
+				document.cookie = cname + "=" + cvalue + "; " + expires;
+			}
+
+			function clearHistroy() {
+				setCookie('ECS[keywords]', '', -1);
+				document.getElementById("search_histroy").style.visibility = "hidden";
+			}
+		</script>
+
+	</body>

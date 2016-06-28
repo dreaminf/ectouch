@@ -2206,6 +2206,8 @@ a.n-but-ls{color:#1CBB7F}
 .n-but-ls a{color:#1CBB7F}
 .n-but-ls:active,
 .n-but-ls:hover {background: #f6f6f9;border:1px solid #1CBB7F}/*按下颜色*/
+.dd-price b,.additional b,.additional{    font-weight: 400;font-size: 1.6rem;}
+
 /*详情*/
 .m_msg .msg-item .msg-info .desc-i{line-height:2.2rem;font-size:1.4rem;word-break:break-all}
 .m_msg .msg-item .msg-info .desc{position:relative;line-height:2.2rem;z-index:2}
@@ -2265,7 +2267,7 @@ a.n-but-ls{color:#1CBB7F}
 .profile-left-name{width:12rem;}
 .t-goods1 input{font-size:1.5rem;color:#666;       width: 100%;    border: none;border:0;background:none; }
 .n-pro-name{line-height:2.6rem;    margin-left: 1.2rem;}
-.flow-consignee ul li{padding:1.3rem 0rem;overflow:hidden;height:auto;clear:both;position:relative;}
+.flow-consignee ul li{padding:0rem 0rem;overflow:hidden;height:auto;clear:both;position:relative;}
 .input-text{position:relative;font-size:1.7rem}
 .input-text b{display:block;float:left;width:6m;font-weight:400}
 .input-text span{position:absolute;left:6.2em;right:0em}

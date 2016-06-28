@@ -163,7 +163,7 @@ body{position:relative}
 .no-div-message p{margin-top:1.8rem; font-size:1.6rem;}
 .no-div-message a{font-size:1.5rem; margin-top:.5rem; display:block; color:#1CBB7F}
 /*分页器样式*/
-.swiper-container-horizontal>.swiper-pagination{bottom:.6rem;}
+.swiper-container-horizontal>.swiper-pagination{bottom:-.6rem;}
 .swiper-pagination-bullet{width:0.5rem; height:0.5rem; border-radius: 100%; border:1px solid #fff; opacity: .8;}
 .swiper-pagination-bullet-active{background:#1CBB7F; opacity: 1;border: 1px solid #1CBB7F;}
 
@@ -795,7 +795,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .search-logo{overflow:hidden;height:2rem;width:6.6rem}
 .search-logo img{height:2rem;width:auto;margin-right:1rem;position:absolute;top:50%;margin-top:-1rem}
 .index-nav{padding-bottom:0rem;padding-top:1rem}
-.index-nav ul li{padding-bottom:0.8rem}
+.index-nav ul li{padding-bottom:0.6rem}
 .index-nav ul li i.iconfont{margin:0 auto;display:block;width:4rem;height:4rem;border-radius:50%;line-height:4rem;color:#fff;font-size:2rem}
 .index-nav ul li a{color:#222222;font-size:1.3rem}
 .title h3{font-weight:normal;font-size:1.7rem}
@@ -856,7 +856,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 /*chang - end*/
 .idx-padding{padding-bottom:4rem;}
 .idx-padding .recom-container.swiper-container-horizontal>.swiper-pagination, .brand-container.swiper-container-horizontal>.swiper-pagination{bottom:-2.6rem;}
-
+.index-sale-box{border-bottom:1px solid  #F6f6f9}
 /*=======================================
 		用户登录页
   =======================================*/
@@ -944,8 +944,8 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
  .flow-have-cart .product-list-small li{box-sizing: border-box; border-bottom:1px solid #F6F6F9}
  .flow-have-cart .product-list-small li:last-of-type{border-bottom:none;}
  .flow-have-cart .product-list-small li>.dis-box{width:100%;}
- .flow-have-cart .product-list-small .ect-select{padding:1.3rem padding-left:0;  padding-top:1.8rem;}
- .flow-have-cart .product-list-small .product-div{padding:1.3rem 0rem; padding-top:0;  padding-right: 0;}
+ .flow-have-cart .product-list-small .ect-select{padding:1.3rem padding-left:0;  padding-top:10%;}
+ .flow-have-cart .product-list-small .product-div{padding:1.3rem 1rem; padding-top:0;  padding-right: 0;}
  .flow-have-cart .product-list-small .product-div i.icon-xiao10{position:absolute; font-size:1.8rem; color:#999; right:-.1rem; bottom:1.3rem;}
  .flow-have-cart .product-list-small .product-div:first-of-type{padding-top:1.3rem;} 
  .flow-have-cart .product-list-small .product-div .p-d-img{position: relative; overflow: hidden; width:9rem; height:9rem;}
@@ -986,13 +986,13 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
  a.a-accessories{color: #666; margin-top:.2rem; font-size:1.7rem; display: block; border-radius: 4px;}
  .f-cart-filter-btn{font-size:1.5rem;color:#666;}
  .f-cart-filter-btn .btn-submit, .f-cart-filter-btn .btn-default{padding:.84rem 1.3rem; width: auto;}
- .f-cart-filter-btn .ect-select{position:absolute; top:50%; margin-top:-1.1rem;}
+ .f-cart-filter-btn .ect-select{position:absolute; top:20%; margin-top:-1.1rem;}
  .f-cart-filter-btn .heart{margin-right:1.8rem; position: absolute; top:50%; margin-top:-1.8rem; right:16rem;  width:auto; display: initial;}
  .f-cart-filter-btn .heart i{width:2.2rem; height:2.2rem;}
  .f-cart-filter-btn .heart i{background-size:100% 4.4rem;}
  .f-cart-filter-btn .heart em{font-size:1.3rem; margin-top:0; color:#999;}
  .f-cart-filter-btn .heart.active em{color:#1CBB7F}
- .g-cart-filter-price{left:1.3rem; right:13rem; font-size:1.5rem; top:50%; margin-top:-1.6rem; position: absolute;}
+ .g-cart-filter-price{left:7.8rem; right:13rem; font-size:1.5rem; top:20%; margin-top:-1.6rem; position: absolute;}
  .g-cart-filter-price em, .g-cart-filter-price .t-first{line-height:2rem;}
  .g-cart-filter-price .t-remark{font-size:1.3rem;}
  .f-cart-filter-btn .ect-select label span{font-size:1.5rem; margin-left:.4rem}
@@ -2004,7 +2004,7 @@ a.btn-submit-1{color:#fff}
 .j-nav-content{display:none;background-color: rgba(255, 255, 255, 1);border-bottom:1px solid #f6f6f9;overflow: hidden;margin: 0 auto;top: 0rem;z-index: 5; }
 .j-nav-content.active{display:block;}
 .j-nav-content .new-footer-box i,.j-nav-content .new-footer-box span{color:#777;}
-.index-nav ul li img{width:5rem;}
+.index-nav ul li img{width:4.8rem;}
 .header-max-box{width:100%;max-width: 640px;}
 .index-nav-box{background:rgba(28,187,127, 0);moz-transition: 0.1s ease;-o-transition: 0.1s ease;-webkit-transition:0.1s ease; position:absolute;width:100%;top:0.3rem;z-index:11}
 .index-nav-box.active{background:rgba(28,187,127, 0.96)}
@@ -2231,7 +2231,7 @@ a.n-but-ls{color:#1CBB7F}
 .hidden{display:none}
 /*login*/
 .ect-checkbox label i{border-radius:4px !important}
-.ect-radio input:checked+label i,.ect-checkbox input:checked+label i{color:#F00;background:url(../img/radio.png) center center #1CBB7F no-repeat;background-size:80%;border:none;width:1.6rem;height:1.6rem}
+.ect-radio input:checked+label i,.ect-checkbox input:checked+label i{color:#F00;background:url(../images/radio.png) center center #1CBB7F no-repeat;background-size:80%;border:none;width:1.6rem;height:1.6rem}
 .ect-checkbox label i{border-radius:4px !important}
 .ect-radio label i,.ect-checkbox label i{width:1.43rem;height:1.43rem;margin-right:0.3em;display:block;float:left;margin-top:0.1em;border-radius:100%;background:rgba(255,255,255,0);border:1px solid #bbb}
 .ect-radio input[type=radio],.ect-checkbox input[type=checkbox]{display:none}
@@ -2244,8 +2244,8 @@ a.n-but-ls{color:#1CBB7F}
 .code-register{font-family:Arial,宋体;font-style:italic;color:#1CBB7F;border:0;padding:2px 3px;letter-spacing:3px;font-weight:bolder}
 .unchanged{border:0}
 .item-password .tp-btn{display:block;position:absolute;right:0;top:0.9rem;width:5rem;height:3.5rem}
-.item-password .btn-off{background:url(../img/as.png)no-repeat;background-size:5rem 3.5rem}
-.item-password .btn-on{background:url(../img/ab.png)no-repeat;background-size:5rem 3.5rem}
+.item-password .btn-off{background:url(../images/as.png)no-repeat;background-size:5rem 3.5rem}
+.item-password .btn-on{background:url(../images/ab.png)no-repeat;background-size:5rem 3.5rem}
 .n-login-x a{font-size:1.3rem;clear:both}
 .ect-checkbox a{font-size:1.4rem;}
 /*资料设置*/
@@ -2268,7 +2268,7 @@ a.n-but-ls{color:#1CBB7F}
 .profile-left-name{width:12rem;}
 .t-goods1 input{font-size:1.5rem;color:#666;       width: 100%;    border: none;border:0;background:none; }
 .n-pro-name{line-height:2.6rem;    margin-left: 1.2rem;}
-.flow-consignee ul li{padding:1.3rem 0rem;overflow:hidden;height:auto;clear:both;position:relative;}
+.flow-consignee ul li{padding:0rem 0rem;overflow:hidden;height:auto;clear:both;position:relative;}
 .input-text{position:relative;font-size:1.7rem}
 .input-text b{display:block;float:left;width:6m;font-weight:400}
 .input-text span{position:absolute;left:6.2em;right:0em}
@@ -2450,3 +2450,5 @@ table.u-table td{border:1px solid #e3e3e3;padding:0.5em 0.2em;height:3em;width:7
 .ect-diaplay-box{display: -webkit-box;display: -moz-box;display: -ms-box;display: box;}
 .ect-box-flex{-webkit-box-flex: 1;-moz-box-flex: 1;-ms-box-flex: 1;box-flex: 1; display:block; width:100%;}
 .ect-margin-bottom0{margin-bottom:0 !important;}
+/*商品详情*/
+.user-order-detail-list label{border: 1px solid #ddd;font-size: 1.3rem;padding: 0.2rem 1.6rem;border-radius: 0.3rem;float: right;margin-top: 0.2rem;}
