@@ -2136,4 +2136,403 @@ class FlowController extends CommonController {
         }
     }
 
+
+         /**
+     * 
+     */
+    function  add_to_cart_combo()
+    {
+        $_POST['goods']=strip_tags(urldecode($_POST['goods']));
+        $_POST['goods'] = json_str_iconv($_POST['goods']);
+        
+        if (!empty($_REQUEST['goods_id']) && empty($_POST['goods']))
+        {
+            if (!is_numeric($_REQUEST['goods_id']) || intval($_REQUEST['goods_id']) <= 0)
+            {
+                ecs_header("Location:./\n");
+            }
+            $goods_id = intval($_REQUEST['goods_id']);
+            exit;
+        }
+        $result = array('error' => 0, 'message' => '', 'content' => '', 'goods_id' => '');
+        $json = new EcsJson();
+    
+        if (empty($_POST['goods']))
+        {
+            $result['error'] = 1;
+            die($json->encode($result));
+        }
+
+        $goods = $json->decode($_POST['goods']);
+        /* 检查：如果商品有规格，而post的数据没有规格，把商品的规格属性通过JSON传到前台 */
+        if (empty($goods->spec) AND empty($goods->quick))
+        {
+            $sql = "SELECT a.attr_id, a.attr_name, a.attr_type, ".
+                "g.goods_attr_id, g.attr_value, g.attr_price " .
+                'FROM ' . $this->model->pre . 'goods_attr' . ' AS g ' .
+                'LEFT JOIN ' . $this->model->pre . 'attribute' . ' AS a ON a.attr_id = g.attr_id ' .
+                "WHERE a.attr_type != 0 AND g.goods_id = '" . $goods->goods_id . "' " .
+                'ORDER BY a.sort_order, g.attr_price, g.goods_attr_id';
+    
+            $res = $this->model->query($sql);
+    
+            if (!empty($res))
+            {
+                $spe_arr = array();
+                foreach ($res AS $row)
+                {
+                    $spe_arr[$row['attr_id']]['attr_type'] = $row['attr_type'];
+                    $spe_arr[$row['attr_id']]['name']     = $row['attr_name'];
+                    $spe_arr[$row['attr_id']]['attr_id']     = $row['attr_id'];
+                    $spe_arr[$row['attr_id']]['values'][] = array(
+                        'label'        => $row['attr_value'],
+                        'price'        => $row['attr_price'],
+                        'format_price' => price_format($row['attr_price'], false),
+                        'id'           => $row['goods_attr_id']);
+                }
+                $i = 0;
+                $spe_array = array();
+                foreach ($spe_arr AS $row)
+                {
+                    $spe_array[]=$row;
+                }
+                $result['error']   = ERR_NEED_SELECT_ATTR;
+                $result['goods_id'] = $goods->goods_id;
+                $result['parent'] = $goods->parent;
+                $result['message'] = $spe_array;
+                $result['group'] = $goods->group;
+    
+                die($json->encode($result));
+            }
+        }
+
+      
+        /* 更新：如果是一步购物，先清空购物车 */
+        if (C('one_step_buy') == '1')
+        {
+            model('Order')->clear_cart();
+        }
+        /* 检查：商品数量是否合法 */
+        if (!is_numeric($goods->number) || intval($goods->number) <= 0)
+        {
+            $result['error']   = 1;
+            $result['message'] = 'buzu';
+        }
+        /* 更新：购物车 */
+        else
+        {
+            // 更新：添加到购物车
+            if (model('Order')->addto_cart_combo($goods->goods_id, $goods->number, $goods->spec, $goods->parent, $goods->group))
+            {
+                if (C('cart_confirm') > 2)
+                {
+                    $result['message'] = '';
+                }
+                else
+                {
+                    $result['message'] = C('cart_confirm') == 1 ? L('addto_cart_success_1') : L('addto_cart_success_2');
+                }
+    
+                $result['group']    = $goods->group;
+                $result['goods_id'] = stripslashes($goods->goods_id);
+                $result['content'] = insert_cart_info();
+                $result['one_step_buy'] = C('one_step_buy');
+    
+                //返回 原价，配件价，库存信息
+                $combo_goods_info = model('Order')->get_combo_goods_info($goods->goods_id, $goods->number, $goods->spec, $goods->parent);
+                $result['fittings_price'] = $combo_goods_info['fittings_price'];
+                $result['spec_price']   = $combo_goods_info['spec_price'];
+                $result['goods_price'] = $combo_goods_info['goods_price'];
+                $result['stock'] = $combo_goods_info['stock'];
+                $result['parent'] = $goods->parent;
+            }
+            else
+            {
+                $result['message']  = ECTOUCH::err()->last_message();
+                $result['error']    = ECTOUCH::err()->error_no;
+                $result['group']    = $goods->group;
+                $result['goods_id'] = stripslashes($goods->goods_id);
+                if (is_array($goods->spec))
+                {
+                    $result['product_spec'] = implode(',', $goods->spec);
+                }
+                else
+                {
+                    $result['product_spec'] = $goods->spec;
+                }
+            }
+        }
+      $cart_confirm =  C('cart_confirm');
+        $result['confirm_type'] = !empty($cart_confirm) ? $cart_confirm : 2;
+        die($json->encode($result));
+    }
+    
+    /**
+     * 删除购物车项目
+     */
+    public function del_in_cart_combo()
+    {
+        $_POST['goods']=strip_tags(urldecode($_POST['goods']));
+        $_POST['goods'] = json_str_iconv($_POST['goods']);
+    
+        if (!empty($_REQUEST['goods_id']) && empty($_POST['goods']))
+        {
+            if (!is_numeric($_REQUEST['goods_id']) || intval($_REQUEST['goods_id']) <= 0)
+            {
+                ecs_header("Location:./\n");
+            }
+            $goods_id = intval($_REQUEST['goods_id']);
+            exit;
+        }
+    
+        $result = array('error' => 0, 'message' => '');
+        $json = new EcsJson();
+    
+        if (empty($_POST['goods']))
+        {
+            $result['error'] = 1;
+            die($json->encode($result));
+        }
+    
+        $goods = $json->decode($_POST['goods']);
+    
+        if($goods->parent == 0){
+            //更新临时购物车（删除基本件）
+            $sql = "DELETE FROM " . $this->model->pre . 'cart_combo' . " WHERE session_id='" . SESS_ID . "'".
+                " AND goods_id = '" . $goods->goods_id . "' AND group_id = '" . $goods->group . "'";
+            $this->model->query($sql);
+            //更新临时购物车（删除配件）
+            $sql = "DELETE FROM " . $this->model->pre . 'cart_combo' . " WHERE session_id='" . SESS_ID . "'".
+                " AND parent_id = '".$goods->goods_id."' AND group_id = '" . $goods->group . "'";
+            $this->model->query($sql);
+        }else{
+            //更新临时购物车（删除配件）
+            $sql = "DELETE FROM " . $this->model->pre . 'cart_combo' . " WHERE session_id='" . SESS_ID . "'".
+                " AND goods_id = '" . $goods->goods_id . "' AND group_id = '" . $goods->group . "'";
+            $this->model->query($sql);
+        }
+    
+        $result['error'] = 0;
+        $result['group'] = substr($goods->group, 0, strrpos($goods->group, "_"));
+        $result['parent'] = $goods->parent;
+    
+        die($json->encode($result));
+    }
+    
+    /**
+     * 套餐添加到购物车
+     */
+    function add_to_cart_group()
+    {
+        $_POST['goods'] = strip_tags(urldecode($_POST['goods']));
+        $_POST['goods'] = json_str_iconv($_POST['goods']);
+        $result = array('error' => 0, 'message' => '');
+        $json = new EcsJson();
+    
+        if (empty($_POST['goods']))
+        {
+            $result['error'] = 1;
+            $result['message'] = '系统无法接收不完整的数据';
+            die($json->encode($result));
+        }
+    
+        $goods = $json->decode($_POST['goods']);
+        $group = $goods->group ."_". $goods->goods_id;//套餐组
+        //批量加入购物车
+        $sql = "SELECT rec_id FROM " . $this->model->pre . 'cart_combo' . " WHERE session_id = '" . SESS_ID . "'" .
+            " AND group_id = '". $group ."' ORDER BY parent_id limit 1";
+        $res = $this->model->query($sql);
+        if($res){
+            //清空购物车中的原有数据
+            $sql = "DELETE FROM " . $this->model->pre . 'cart' . " WHERE ".
+                " session_id='" . SESS_ID . "' AND group_id = '" . $group . "'";
+             $this->model->query($sql);
+            //插入新的数据
+            $sql = "INSERT INTO " . $this->model->pre . 'cart' . " SELECT * FROM " . $this->model->pre . 'cart_combo' . " WHERE ".
+                " session_id='" . SESS_ID . "' AND group_id = '" . $group . "'";
+            $this->model->query($sql);
+            //插入更新购物车商品数量
+            $sql = "UPDATE " . $this->model->pre . 'cart' . " set goods_number = '$goods->number' WHERE ".
+                " session_id='" . SESS_ID . "' AND group_id = '" . $group . "'";
+            $this->model->query($sql);
+            //清空套餐临时数据
+            $sql = "DELETE FROM " . $this->model->pre . 'cart_combo' . " WHERE ".
+                " session_id='" . SESS_ID . "' AND group_id = '" . $group . "'";
+            $this->model->query($sql);
+        }else{
+            $result['error'] = 1;
+            $result['message'] = '暂无数据可提交，请重新选择';
+            die($json->encode($result));
+        }
+    
+        $result['error']  = 0;
+        die($json->encode($result));
+    }
+    
+    /**
+     * 更新购物车中的商品数量
+     *
+     * @access  public
+     * @param   array   $arr
+     * @return  void
+     */
+    function flow_update_cart($arr)
+    {
+        /* 处理 */
+        foreach ($arr AS $key => $val)
+        {
+            $val = intval(make_semiangle($val));
+            if ($val <= 0 || !is_numeric($key))
+            {
+                continue;
+            }
+    
+            //查询：
+            $sql = "SELECT `goods_id`, `goods_attr_id`, `product_id`, `extension_code` FROM" . $this->model->pre . 'cart'.
+            " WHERE rec_id='$key' AND session_id='" . SESS_ID . "'";
+            $goods = $this->model->query($sql);
+            $goods = $goods['0'];
+            $sql = "SELECT g.goods_name, g.goods_number ".
+                "FROM " . $this->model->pre . 'goods' . " AS g, ".
+                $this->model->pre . 'cart' . " AS c ".
+                "WHERE g.goods_id = c.goods_id AND c.rec_id = '$key'";
+            $row = $this->model->query($sql);
+            $row = $goods['0'];
+    
+            //查询：系统启用了库存，检查输入的商品数量是否有效
+            if (intval(C('use_storage')) > 0 && $goods['extension_code'] != 'package_buy')
+            {
+                if ($row['goods_number'] < $val)
+                {
+                    show_message(sprintf(L('stock_insufficiency'), $row['goods_name'],
+                    $row['goods_number'], $row['goods_number']));
+                    exit;
+                }
+                /* 是货品 */
+                $goods['product_id'] = trim($goods['product_id']);
+                if (!empty($goods['product_id']))
+                {
+                    $sql = "SELECT product_number FROM " .$this->model->pre . 'products' . " WHERE goods_id = '" . $goods['goods_id'] . "' AND product_id = '" . $goods['product_id'] . "'";
+    
+                    $product_number = $this->model->query($sql);
+                    $product_number = $product_number['0']['product_number'];
+                    if ($product_number < $val)
+                    {
+                        show_message(sprintf(L('stock_insufficiency'), $row['goods_name'],
+                        $product_number['product_number'], $product_number['product_number']));
+                        exit;
+                    }
+                }
+            }
+            elseif (intval(C('use_storage')) > 0 && $goods['extension_code'] == 'package_buy')
+            {
+                if (model('Order')->judge_package_stock($goods['goods_id'], $val))
+                {
+                    show_message(L('package_stock_insufficiency'));
+                    exit;
+                }
+            }
+    
+            /* 查询：检查该项是否为基本件 以及是否存在配件 */
+            /* 此处配件是指添加商品时附加的并且是设置了优惠价格的配件 此类配件都有parent_id goods_number为1 */
+            $sql = "SELECT b.goods_number, b.rec_id
+                FROM " .$this->model->pre . 'cart' . " a, " .$this->model->pre . 'cart' . " b
+                    WHERE a.rec_id = '$key'
+                    AND a.session_id = '" . SESS_ID . "'
+                AND a.extension_code <> 'package_buy'
+                AND b.parent_id = a.goods_id
+                AND b.session_id = '" . SESS_ID . "'";
+    
+            $offers_accessories_res = $this->model->query($sql);
+    
+            //订货数量大于0
+            if ($val > 0)
+            {
+                /* 判断是否为超出数量的优惠价格的配件 删除*/
+                $row_num = 1;
+                foreach ($offers_accessories_res as $key=>$offers_accessories_row){
+                    if ($row_num > $val)
+                    {
+                        $sql = "DELETE FROM " . $this->model->pre . 'cart' .
+                        " WHERE session_id = '" . SESS_ID . "' " .
+                        "AND rec_id = '" . $offers_accessories_row['rec_id'] ."' AND group_id='' LIMIT 1"; 
+                        $this->model->query($sql);
+                    }
+                    
+                    $row_num ++;
+                }
+    
+                /* 处理超值礼包 */
+                if ($goods['extension_code'] == 'package_buy')
+                {
+                    //更新购物车中的商品数量
+                    $sql = "UPDATE " .$this->model->pre . 'cart' .
+                    " SET goods_number = '$val' WHERE rec_id='$key' AND session_id='" . SESS_ID . "' AND group_id=''";
+                }
+                /* 处理普通商品或非优惠的配件 */
+                else
+                {
+                    $attr_id    = empty($goods['goods_attr_id']) ? array() : explode(',', $goods['goods_attr_id']);
+                    $goods_price = model('Goodsbase')->get_final_price($goods['goods_id'], $val, true, $attr_id);
+    
+                    //更新购物车中的商品数量
+                    $sql = "UPDATE " .$this->model->pre . 'cart' .
+                    " SET goods_number = '$val', goods_price = '$goods_price' WHERE rec_id='$key' AND session_id='" . SESS_ID . "' AND group_id=''";
+                }
+            }
+            //订货数量等于0
+            else
+            {
+                /* 如果是基本件并且有优惠价格的配件则删除优惠价格的配件 */
+                foreach ($offers_accessories_res as $key=>$offers_accessories_row){
+                   $sql = "DELETE FROM " . $this->model->pre . 'cart' .
+                    " WHERE session_id = '" . SESS_ID . "' " .
+                    "AND rec_id = '" . $offers_accessories_row['rec_id'] ."' AND group_id='' LIMIT 1";
+                    $this->model->query($sql);
+                }
+    
+                $sql = "DELETE FROM " .$this->model->pre . 'cart' .
+                " WHERE rec_id='$key' AND session_id='" .SESS_ID. "' AND group_id=''";
+            }
+    
+            $this->model->query($sql);
+        }
+    
+        /* 删除所有赠品 */
+        $sql = "DELETE FROM " . $this->model->pre . 'cart' . " WHERE session_id = '" .SESS_ID. "' AND is_gift <> 0";
+        $this->model->query($sql);
+    }
+    
+     /*
+     * label选中价格 
+     */
+    public function cart_label_count(){
+        $goods_id  = I('goods_id','');
+        $parent_id  = I('parent_id','');
+        if($parent_id ){
+            $shop_price = $this->model->table('goods')->where(array('goods_id'=>$parent_id))->field('shop_price')->getOne();
+        }
+        if($goods_id) { 
+            $sql = "select g.shop_price ,gg.goods_price from " . $this->model->pre ."group_goods as gg LEFT JOIN " . $this->model->pre . "goods as g on gg.goods_id = g.goods_id " . "where gg.goods_id in ($goods_id) and gg.parent_id = $parent_id ";
+            $count = $this->model->query($sql);
+        }
+        $num=0;
+        if(count($count)>0){            
+            foreach($count as $key){
+                $count_price += floatval($key['goods_price']);
+                $num ++;
+            }
+        }else{
+            $count_price = '0.00';
+        }
+        if($shop_price){
+            $count_price += floatval($shop_price);
+            $num += 1;
+        }
+        $result['content'] = price_format($count_price);
+        $result['cart_number'] = $num;
+        die(json_encode($result));
+    }
+
+
 }

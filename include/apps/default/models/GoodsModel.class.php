@@ -434,7 +434,7 @@ class GoodsModel extends BaseModel {
         $temp_index = 0;
         $arr = array();
 
-        $sql = 'SELECT gg.parent_id, ggg.goods_name AS parent_name, gg.goods_id, gg.goods_price, g.goods_name, g.goods_thumb, g.goods_img, g.shop_price AS org_price, ' .
+        $sql = 'SELECT gg.parent_id, gg.group_id, ggg.goods_name AS parent_name, gg.goods_id, gg.goods_price, g.goods_name, g.goods_thumb, g.goods_img, g.shop_price AS org_price, ' .
                 "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price " .
                 'FROM ' . $this->pre . 'group_goods AS gg ' .
                 'LEFT JOIN ' . $this->pre . 'goods AS g ON g.goods_id = gg.goods_id ' .
@@ -459,6 +459,14 @@ class GoodsModel extends BaseModel {
             $arr[$temp_index]['goods_thumb'] = get_image_path($value['goods_id'], $value['goods_thumb'], true);
             $arr[$temp_index]['goods_img'] = get_image_path($value['goods_id'], $value['goods_img']);
             $arr[$temp_index]['url'] = url('goods/index', array('id' => $value['goods_id']));
+            //套餐组合 start
+            $arr[$temp_index]['spare_price']       = price_format($value['shop_price']-$value['goods_price']);
+            $arr[$temp_index]['shop_price_ori']    = str_replace(array('￥','元'), '', price_format($value['shop_price']));//配件原价格
+            $arr[$temp_index]['fittings_price_ori']= str_replace(array('￥','元'), '', price_format($value['goods_price']));//配件价格
+            $arr[$temp_index]['spare_price_ori']   = str_replace(array('￥','元'), '', price_format($value['shop_price']-$row['goods_price']));//节省的差价
+            $arr[$temp_index]['group_id']          = $value['group_id'];
+            //套餐组合 end
+
             $temp_index++;
         }
         return $arr;

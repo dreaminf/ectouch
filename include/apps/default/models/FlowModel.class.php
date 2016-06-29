@@ -52,7 +52,7 @@ class FlowModel extends BaseModel {
                 }
                 $_del_str = trim($_del_str, ',');
 
-                $sql = "DELETE FROM " . $this->pre . "cart WHERE session_id = '" . SESS_ID . "' " . "AND (rec_id IN ($_del_str) OR parent_id = '$row[goods_id]' OR is_gift <> 0)";
+                $sql = "DELETE FROM " . $this->pre . "cart WHERE session_id = '" . SESS_ID . "' " . "AND (rec_id IN ($_del_str) OR parent_id = '$row[goods_id]' OR is_gift <> 0) AND group_id='".$row['group_id']."'";
             }
             // 如果不是普通商品，只删除该商品即可
             else {

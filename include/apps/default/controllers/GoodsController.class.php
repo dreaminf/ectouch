@@ -145,6 +145,20 @@ class GoodsController extends CommonController
         $this->assign('meta_description', htmlspecialchars($goods['goods_brief']));
         $this->assign('ur_here', $page_info['ur_here']);
         $this->assign('page_title', $page_info['title']);
+        //组合套餐名 start
+        $comboTabIndex = array(' ','一', '二', '三','四','五','六','七','八','九','十');
+        $this->assign('comboTab',$comboTabIndex);
+        //组合套餐组
+        $fittings_list = model('Goods')->get_goods_fittings(array($this->goods_id));
+        $fittings_index = array();
+        if(is_array($fittings_list)){
+            foreach($fittings_list as $vo){
+                $fittings_index[$vo['group_id']] = 1;//关联数组
+            }
+        }
+        ksort($fittings_index);//重新排序
+        $this->assign('fittings_tab_index', $fittings_index);//套餐数量
+        // 组合套餐名 end
         $this->display('goods.dwt');
     }
 

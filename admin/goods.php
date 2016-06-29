@@ -387,6 +387,12 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
         $link_goods_list    = get_linked_goods($goods['goods_id']); // 关联商品
         $group_goods_list   = get_group_goods($goods['goods_id']); // 配件
         $goods_article_list = get_goods_articles($goods['goods_id']);   // 关联文章
+        if(is_array($group_goods_list)){ //by mike add
+            foreach($group_goods_list as $k=>$val){
+                $group_goods_list[$k]['goods_name'] = '[套餐'.$val['group_id'].']'.$val['goods_name'];    
+            }
+        }
+
 
         /* 商品图片路径 */
         if (isset($GLOBALS['shop_id']) && ($GLOBALS['shop_id'] > 10) && !empty($goods['original_img']))
@@ -1942,7 +1948,7 @@ elseif ($_REQUEST['act'] == 'add_link_goods')
     foreach ($linked_goods AS $val)
     {
         $options[] = array('value'  => $val['goods_id'],
-                        'text'      => $val['goods_name'],
+                        'text'      => '[套餐'.$val['group_id'].']'.$val['goods_name'],
                         'data'      => '');
     }
 
@@ -2020,11 +2026,12 @@ elseif ($_REQUEST['act'] == 'add_group_goods')
     $arguments  = $json->decode($_GET['JSON']);
     $goods_id   = $arguments[0];
     $price      = $arguments[1];
+    $group_id      = $arguments[2];//by mike add
 
     foreach ($fittings AS $val)
     {
-        $sql = "INSERT INTO " . $ecs->table('group_goods') . " (parent_id, goods_id, goods_price, admin_id) " .
-                "VALUES ('$goods_id', '$val', '$price', '$_SESSION[admin_id]')";
+        $sql = "INSERT INTO " . $ecs->table('group_goods') . " (parent_id, goods_id, goods_price, admin_id, group_id) " .
+                "VALUES ('$goods_id', '$val', '$price', '$_SESSION[admin_id]', '$group_id')";//by mike add
         $db->query($sql, 'SILENT');
     }
 
@@ -2034,7 +2041,7 @@ elseif ($_REQUEST['act'] == 'add_group_goods')
     foreach ($arr AS $val)
     {
         $opt[] = array('value'      => $val['goods_id'],
-                        'text'      => $val['goods_name'],
+                        'text'      => '[套餐'.$val['group_id'].']'.$val['goods_name'],
                         'data'      => '');
     }
 
@@ -2072,7 +2079,7 @@ elseif ($_REQUEST['act'] == 'drop_group_goods')
     foreach ($arr AS $val)
     {
         $opt[] = array('value'      => $val['goods_id'],
-                        'text'      => $val['goods_name'],
+                        'text'      => '[套餐'.$val['group_id'].']'.$val['goods_name'],
                         'data'      => '');
     }
 

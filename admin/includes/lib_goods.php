@@ -763,7 +763,7 @@ function get_linked_goods($goods_id)
  */
 function get_group_goods($goods_id)
 {
-    $sql = "SELECT gg.goods_id, CONCAT(g.goods_name, ' -- [', gg.goods_price, ']') AS goods_name " .
+    $sql = "SELECT gg.goods_id, gg.group_id, CONCAT(g.goods_name, ' -- [', gg.goods_price, ']') AS goods_name " .
             "FROM " . $GLOBALS['ecs']->table('group_goods') . " AS gg, " .
                 $GLOBALS['ecs']->table('goods') . " AS g " .
             "WHERE gg.parent_id = '$goods_id' " .
@@ -772,6 +772,7 @@ function get_group_goods($goods_id)
     {
         $sql .= " AND gg.admin_id = '$_SESSION[admin_id]'";
     }
+    $sql .= " order by gg.group_id asc, g.goods_id asc"; //by mike add
     $row = $GLOBALS['db']->getAll($sql);
 
     return $row;
