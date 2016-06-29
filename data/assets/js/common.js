@@ -822,8 +822,8 @@ function docEle() {
 
 //生成属性选择层
 function openSpeDiv(message, goods_id, parent) {
-    var _id = "speDiv";
-    var m = "mask";
+    /*var _id = "speDiv";
+    var m = "mask";*/
     if (docEle(_id))
         document.removeChild(docEle(_id));
     if (docEle(m))
@@ -926,7 +926,7 @@ function openSpeDiv(message, goods_id, parent) {
             + is_cancel + "</a>]</center>";
     document.body.appendChild(newDiv);
 
- /*   // mask图层
+    // mask图层
     var newMask = document.createElement("div");
     newMask.id = m;
     newMask.style.position = "absolute";
@@ -940,7 +940,7 @@ function openSpeDiv(message, goods_id, parent) {
     newMask.style.opacity = "0.40";
     document.body.appendChild(newMask);
 }
-*/
+
 //获取选择属性后，再次提交到购物车
 function submit_div(goods_id, parentId) {
     var goods = new Object();
