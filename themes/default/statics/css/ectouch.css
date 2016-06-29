@@ -366,7 +366,7 @@ h4.title-hrbg {font-size: 1.3rem;position: relative; z-index:1; height: 4rem;lin
 h4.title-hrbg span {background: #fff;padding: 1rem .6rem;font-size: 1.5rem; z-index: 10;}
 h4.title-hrbg hr {background: #f6f6f9;height: 1px;border: 0;position: absolute;left: 0;right: 0;top: 50%;margin-top: 1px;z-index: -1;}
 /*加减文本*/
-.div-num{border:1px solid #ededed; border-radius: 4px; width:12rem;}
+.div-num{border:1px solid #ededed; border-radius: 4px; width:12rem;    margin-bottom: 1rem;}
 .div-num input{border:0;border-left:1px solid #ededed; border-right: 1px solid #ededed; border-radius: 0; height:2rem; padding:.5rem; font-size:1.3rem; text-align: center;}
 .div-num a{display:block; width:3rem; height:3rem; position: relative;}
 .div-num a.num-less:before,.div-num a.num-plus:before,.div-num a.num-plus:after{content: " "; display: block; border-bottom:1px solid #888; width:1.6rem; position: absolute; left:50%; margin-left:-.8rem; top:50%; margin-top:-1px;}
@@ -439,7 +439,7 @@ transform: rotate(135deg);background:#fff; bottom:-.6rem; z-index: -1; left:50%;
  * 
  */
 
-.filter-div,.filter-city-div,.mask-filter-div,.mask-search-div,.filter-depot-div{position:fixed; width:100%; left:100%; right:0; top: 0; bottom: 0; z-index: 12; background:rgba(0,0,0,0.4) }
+.filter-div,.filter-city-div,.mask-filter-div,.mask-search-div,.filter-depot-div{position:fixed; width:100%; left:100%; right:0; top: 0; bottom: 0; z-index: 12; background:rgba(0,0,0,0.2) }
 .mask-filter-div,.mask-search-div{z-index: 11; display: none; left: 0;max-width: 640px;margin: 0 auto;}
 .close-filter-div,.con-filter-div{position:absolute; top: 0; bottom: 0; z-index: 11; overflow-y:scroll;}
 .close-filter-div{ width:3.8rem; left: 3.9rem; background:rgba(0,0,0,0.6);}
@@ -569,6 +569,8 @@ transform: rotate(135deg);background:#fff; bottom:-.6rem; z-index: -1; left:50%;
  * 在.product-list处加入.product-list-small即可实现
  */
 .product-list-small ul li{width:100%; padding-bottom:1px;}
+.n-product-list-small ul li{width:auto;}
+.n-product-list-small h5{font-size: 1.5rem;height: auto;line-height: auto;overflow:auto;}
 .product-list-small .product-div{padding:.8rem;}
 .product-list-small .product-div img{ border:1px solid #F6F6F9;}
 .product-list-small .product-list-img{width:9.6rem; height: auto; float:left;}
@@ -719,7 +721,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .show-goods-service.show,
 .show-goods-dist.show,
 .show-time-con.show{bottom:0; visibility: visible;}
-.s-g-attr-con{max-height: 14rem; overflow:hidden;}
+.s-g-attr-con{max-height: 14rem; }
 .s-g-attr-con .ect-select{margin: 0; margin-right:1rem; margin-bottom:1rem;}
 .goods-big-service em.em-promotion{width:4rem; height:4rem; display: block; padding:0; line-height: 4rem; text-align: center; border-radius: 2rem; margin-right:1rem;}
 .goods-big-service em.em-promotion i{ font-size:2.2rem;}
@@ -1070,7 +1072,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
  .f-checkout-filter-btn .btn-submit, .f-checkout-filter-btn .btn-default{width:auto; padding:.84rem 1.3rem;display:inline-block;}
  .s-g-list-con{overflow:hidden; max-height: 20rem;}
  .s-g-list-con ul li{padding:0;}
- .swiper-scroll{position:relative;}
+ .swiper-scroll{position:relative;overflow:hidden;}
  .swiper-slide,.swiper-wrapper{height:auto;}
  .menu-right .swiper-wrapper, .menu-right .swiper-slide{}
  .f-c-s-coupon{position:relative;}
@@ -2328,7 +2330,7 @@ a.n-but-ls{color:#1CBB7F}
 .page-num select{padding: .7rem;padding-left:40%;border-radius:0.5rem;width:100%;background:#fff;border:1px solid #eee;font-size:1.7rem; color:#777;height:3.8rem;line-height:1.9rem}
 /*收藏*/
 .n-tishi-tit{margin-top:3rem;color:#666;}
-.s-but{border:1px solid #1CBB7F;border-radius:0.5rem;font-size:1.3rem;margin-right:0.5rem;text-align:center;color:#1CBB7F;padding:0.2rem 0;}
+.s-but{border:1px solid #1CBB7F;border-radius:0.5rem;font-size:1.3rem;margin-right:0.5rem;text-align:center;color:#1CBB7F;padding:0.2rem 0;width: 7rem;}
 .n-money-con{padding:0.2rem 0}
 .n-margin-del,.n-del{width:2.4rem}
 .n-del i{color:#777;font-size:1.7rem}

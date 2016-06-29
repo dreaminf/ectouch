@@ -18,12 +18,14 @@ function isWeiXin(){
 }
 
 function get_asynclist(url, src) {
-    $('#J_ItemList').more({'address': url, 'spinner_code': '<div style="text-align:center; margin:10px;"><img src="' + src + '" /></div>'})
+
+    $('#J_ItemList').more({'address': url, 'spinner_code': '<div style="text-align:center; margin:10px;"><img class="lazy" src="__TPL__/statics/img/loading_shop.png" data-original="' + src + '" /></div>'})
     $(window).scroll(function() {
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
             $('.get_more').click();
         }
     });
+	
 }
 /* *
  * 添加商品到购物车 
@@ -924,7 +926,7 @@ function openSpeDiv(message, goods_id, parent) {
             + is_cancel + "</a>]</center>";
     document.body.appendChild(newDiv);
 
-    // mask图层
+ /*   // mask图层
     var newMask = document.createElement("div");
     newMask.id = m;
     newMask.style.position = "absolute";
@@ -938,7 +940,7 @@ function openSpeDiv(message, goods_id, parent) {
     newMask.style.opacity = "0.40";
     document.body.appendChild(newMask);
 }
-
+*/
 //获取选择属性后，再次提交到购物车
 function submit_div(goods_id, parentId) {
     var goods = new Object();
