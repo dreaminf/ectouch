@@ -86,28 +86,6 @@ function clear_filter(){
 	$("#min ,#max").val(0);
 	$("#filter_attr").val(0);
 }
-$(function(){
-	$('.ect-select').click(function(){
-		var data = $(this).attr('data-attr');
-		$(this).siblings('input[type="hidden"]').val(data);
-	})
-})
-//属性
-$(function() {
-    $('.j-sub-menu-attr li').click(function() {
-		$(this).addClass('active').siblings('li').removeClass('active');
-		var i = 0;
-		var new_attr = new Array();
-		$(".j-sub-menu-attr li").each(function(){
-			if ($(this).hasClass('active')) {
-				 new_attr[i] = $(this).find('label').attr('value');
-				 i = i + 1;
-			 }
-		});
-		var new_attr_str = new_attr.join('.');
-        //属性参数具体值
-        $('input[name=filter_attr]').val(new_attr_str);
-    })
-})
+
 
 </script>
