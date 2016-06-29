@@ -320,9 +320,9 @@ $(function($) {
 	});
 
 	/*商品详情 红心*/
-	$(".j-heart").click(function() {
-		$(this).toggleClass("active");
-	});
+	//$(".j-heart").click(function() {
+		//$(this).toggleClass("active");
+	//});
 
 	/*发票赋值*/
 	$(".flow-receipt .r-btn-submit").click(function() {
