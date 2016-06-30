@@ -145,12 +145,12 @@
 	if ($(".index-weixin-box").hasClass("index-weixin-box")) {
 		$(".index-banner").css({
 			"marginTop": "0rem",
-			"display":"block"
+			
 		})
 	} else {
 		$(".index-banner").css({
 			"marginTop": "0rem",
-			"display":"none"
+			
 		})
 	}
 </script>
