@@ -176,7 +176,7 @@
 									<ul class="select-one  <!-- {if $spec.attr_type eq 1} -->j-get-one<!-- {else} -->j-get-more<!-- {/if} --> m-top10">
 										<!-- {foreach from=$spec.values item=value key=key} -->
 										<li class="ect-select dis-flex fl">
-											<input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if} onclick="changePrice()" />
+											<input type="<!-- {if $spec.attr_type eq 1} -->radio<!-- {else} -->checkbox<!-- {/if} -->" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if} onclick="changePrice()" />
 											<label class="ts-1 {if $key eq 0}active{/if}" for="spec_value_{$value.id}">{$value.label}</label>
 										</li>
 										<!-- {/foreach} -->
@@ -281,6 +281,7 @@
 <!-- #BeginLibraryItem "/library/new_search.lbi" -->
 <!-- #EndLibraryItem -->
 <script type="text/javascript" src="__TPL__/js/lefttime.js"></script>
+<script type="text/javascript" src="__TPL__/statics/js/layer.js"></script>
 <script type="text/javascript">	
 	/*倒计时*/
 	var goods_id = {$goods_id};

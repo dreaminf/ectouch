@@ -2453,5 +2453,5 @@ table.u-table td{border:1px solid #e3e3e3;padding:0.5em 0.2em;height:3em;width:7
 .ect-diaplay-box{display: -webkit-box;display: -moz-box;display: -ms-box;display: box;}
 .ect-box-flex{-webkit-box-flex: 1;-moz-box-flex: 1;-ms-box-flex: 1;box-flex: 1; display:block; width:100%;}
 .ect-margin-bottom0{margin-bottom:0 !important;}
-.select-one .ect-select input{opacity: 0;position:absolute;left:0}
+.select-one .ect-select input{opacity: 0;position:absolute;left:0;width: 90%;height: 90%;}
 .select-one li{position:relative;}
