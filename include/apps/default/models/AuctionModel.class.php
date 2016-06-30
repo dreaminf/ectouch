@@ -52,7 +52,8 @@ class AuctionModel extends BaseModel {
                 "LEFT JOIN " . $this->pre . "touch_goods_activity AS t ON a.act_id = t.act_id " .
                 "LEFT JOIN " . $this->pre . "touch_goods as tg ON g.goods_id = tg.goods_id " .
                 "WHERE a.act_type = '" . GAT_AUCTION . "' " .
-                "AND a.start_time <= '$now' AND a.end_time >= '$now' AND a.is_finished < 2 ORDER BY $sort $order LIMIT $start ,$size ";
+                //"AND a.start_time <= '$now' AND a.end_time >= '$now'".
+				" AND a.is_finished < 2 ORDER BY $sort $order LIMIT $start ,$size ";
         $res = $this->query($sql);
         
         foreach ($res as $row) {
@@ -69,7 +70,12 @@ class AuctionModel extends BaseModel {
             $auction['act_banner'] = $row['act_banner'] ? $row['act_banner'] : $auction['goods_thumb'];
             $auction['url'] = url('auction/info', array('id' => $auction['act_id']));
 
-            if ($auction['status_no'] < 2) {
+            /* if ($auction['status_no'] < 2) {
+                $auction_list['under_way'][] = $auction;
+            } else {
+                $auction_list['finished'][] = $auction;
+            } */
+			if ($auction['status_no'] < 3) {
                 $auction_list['under_way'][] = $auction;
             } else {
                 $auction_list['finished'][] = $auction;
