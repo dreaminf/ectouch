@@ -212,7 +212,7 @@ class CommonController extends BaseController
 		if (isset($_GET['drp_id'])) {
             $condition = array('id' => I('drp_id', 0, 'intval'));
         }else{
-            $condition = array('user_id' => I('u', 0, 'intval'));
+            $condition = array('user_id' => $_SESSION['user_id']);
         }
 		$drp_id = $this->model->table('drp_shop')->field('id')->where($condition)->getOne();	
 		//$drp_id = $this->model->table('drp_shop')->field('id')->where("user_id=".$_SESSION['user_id'])->getOne();
