@@ -491,9 +491,10 @@ class SaleController extends CommonController {
     }
     public function my_shop_info(){
 
-        // 总销售额
-        $money = model('Sale')->get_shop_sale_money($this->user_id,1);
-        $this->assign('money', $money['profit'] ? $money['profit'] : '0.00');
+        // 总销售额 
+        $sale_money = model('Sale')->get_sale_money_total();
+        $this->assign('money',$sale_money ? $sale_money : '0.00');
+		
         // 一级分店数
         $sql = "select count(*) count from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id = ".$_SESSION['user_id'];
         $shop_count = $this->model->getRow($sql);
