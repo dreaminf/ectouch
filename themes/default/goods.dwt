@@ -134,12 +134,13 @@
 					</div>
 				</div>
 			</section>
+			<!-- #BeginLibraryItem "/library/goods_fittings.lbi" --><!-- #EndLibraryItem -->
 			<form action="javascript:addToCart({$goods.goods_id})" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY">
 				<section class="goods-more-a">
 					<!--  <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_brief}</span> <span class="pull-right"><i class="fa fa-chevron-right"></i></span></a> 
       <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_comment}</span> <span class="pull-right"><span class="ect-color">{$comments.count}</span>{$lang.comment_num} <span class="ect-color">{$comments.favorable}%</span>{$lang.favorable_comment} <i class="fa fa-chevron-right"></i></span></a>  -->
 				</section>
-				<!-- #BeginLibraryItem "/library/goods_fittings.lbi" --><!-- #EndLibraryItem -->
+				
 				<section class="m-top10 padding-all b-color-f goods-attr j-goods-attr j-show-div">
 					<div class="dis-box">
 						<label class="t-remark g-t-temark">已选</label>
@@ -245,8 +246,6 @@
 			<a href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}" class="j-goodsinfo-div">点击查看商品详情</a>
 		</section> -->
 
-			</form>
-
 		</div>
 		<!--商品属性弹出层star-->
 		<div class="mask-filter-div"></div>
@@ -310,8 +309,8 @@ $(function() {
 	 * 点选可选属性或改变数量时修改商品价格的函数
 	 */
 	function changePrice(type) {
-		//var qty = document.forms['ECS_FORMBUY'].elements['number'].value;
-		var qty = 0;
+		var qty = document.forms['ECS_FORMBUY'].elements['number'].value;
+		//var qty = 0;
 
 		if (type == 1) {
 			qty--;
