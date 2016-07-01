@@ -360,7 +360,7 @@ class GoodsBaseModel extends BaseModel {
         if ($is_spec_price) {
             if (!empty($spec)) {
                 $spec_price = model('Goods')->spec_price($spec);
-                $final_price += $spec_price;
+                $final_price += ($spec_price+$final_price/$_SESSION['discount'])*$_SESSION['discount']-$final_price;
             }
         }
 
