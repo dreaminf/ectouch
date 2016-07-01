@@ -88,6 +88,8 @@ $(function(){
 	$(".artlist").click(function(){
 	    if($(this).is(":checked")){
 	        $(this).siblings(".news_mask").removeClass("hidden");
+		}else{
+			$(this).siblings(".news_mask").addClass("hidden");
 		}
 	});
 })
