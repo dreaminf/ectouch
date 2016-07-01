@@ -108,7 +108,7 @@ class SaleModel extends BaseModel {
      */
     function saleMoney($uid=0) {
         $uid = $uid > 0 ? $uid : $_SESSION['user_id'];
-        $money = M()->getRow("select sum(user_money) as money from {pre}drp_log where user_id = ".$uid ." and user_money > 0 and status=1");
+        $money = M()->getRow("select sum(user_money) as money from {pre}drp_log where user_id = ".$uid ."  and status=1");
         $money = $money['money'];
         return $money ? $money : 0;
 
@@ -122,7 +122,7 @@ class SaleModel extends BaseModel {
      */
     function saleMoney_today($uid=0) {
         $uid = $uid > 0 ? $uid : $_SESSION['user_id'];
-        $user_money =  M()->getRow("select sum(user_money) as money from {pre}drp_log where user_id = ".$uid ." and change_time > ".strtotime(local_date('Y-m-d'))." and status=1");
+        $user_money =  M()->getRow("select sum(user_money) as money from {pre}drp_log where user_id = ".$uid ." and change_time > ".strtotime(local_date('Y-m-d'))." and user_money > 0 and status=1");
         return $user_money['money'];
 
     }
@@ -153,7 +153,9 @@ class SaleModel extends BaseModel {
         // 获取余额记录
         $account_log = array();
 
-        $sql = "SELECT * FROM  {pre}drp_log as d right join {pre}order_info as o on d.order_id = o.order_id WHERE d.user_id = " . $user_id .
+        /* $sql = "SELECT d.* FROM  {pre}drp_log as d right join {pre}order_info as o on d.order_id = o.order_id WHERE d.user_id = " . $user_id .
+            " ORDER BY log_id DESC limit " . $start . ',' . $num; */
+		$sql = "SELECT d.* FROM  {pre}drp_log as d  WHERE d.user_id = " . $user_id .
             " ORDER BY log_id DESC limit " . $start . ',' . $num;
         $res = M()->query($sql);
 
