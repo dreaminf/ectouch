@@ -153,7 +153,7 @@ class SaleModel extends BaseModel {
         // 获取余额记录
         $account_log = array();
 
-        $sql = "SELECT * FROM  {pre}drp_log as d right join {pre}order_info as o on d.order_id = o.order_id WHERE o.user_id = " . $user_id .
+        $sql = "SELECT * FROM  {pre}drp_log as d right join {pre}order_info as o on d.order_id = o.order_id WHERE d.user_id = " . $user_id .
             " ORDER BY log_id DESC limit " . $start . ',' . $num;
         $res = M()->query($sql);
 
@@ -243,7 +243,8 @@ class SaleModel extends BaseModel {
                     'url' => url('user/order_detail', array('order_id' => $value['order_id'])),
                     'is_separate' => $value['shop_separate'] > 0 ? "<span style='font-weight:bold'>已分成</span>" : "<span style='color:red;font-weight:bold'>未分成</span>",
                     'goods'=>$goods_list,
-                    'log' => $this->model->getRow("select * from {pre}drp_log where order_id=".$value['order_id']),//table('drp_log')->where('order_id=90')->getRow(),
+                    'log' => $this->model->getRow("select * from {pre}drp_log where order_id='".$value[order_id]."' and user_id='".$user_id."'"),
+					//table('drp_log')->where('order_id=90')->getRow(),
                 );
             }
         }
@@ -288,7 +289,8 @@ class SaleModel extends BaseModel {
                     'url' => url('user/order_detail', array('order_id' => $value['order_id'])),
                     'is_separate' => $value['shop_separate'] > 0 ? "<span style='font-weight:bold'>已分成</span>" : "<span style='color:red;font-weight:bold'>未分成</span>",
                     'goods'=>$goods_list,
-                    'log' => $this->model->getRow("select * from {pre}drp_log where order_id=".$value['order_id']),//table('drp_log')->where('order_id=90')->getRow(),
+                    'log' => $this->model->getRow("select * from {pre}drp_log where order_id='".$value[order_id]."' and user_id='".$user_id."'"),
+					//table('drp_log')->where('order_id=90')->getRow(),
                 );
             }
         }
