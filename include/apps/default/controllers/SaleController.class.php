@@ -284,7 +284,8 @@ class SaleController extends CommonController {
         $id = I('u') ? I('u') : $this->user_id;
         if(!isset($_GET['u'])){
             redirect(url('sale/spread',array('u'=>$id)));
-        }        
+        }  
+		$this->check_open($id);
         // 创建目录
         $filename  = ROOT_PATH.'data/attached/drp';
         if(!file_exists($filename)){
@@ -385,6 +386,7 @@ class SaleController extends CommonController {
         if(!$id){
             redirect(url('index/index'));
         }
+		$this->check_open($id);
         $filename  = ROOT_PATH.'data/attached/drp';
         if(!file_exists($filename)){
             mkdir($filename);
@@ -1012,4 +1014,15 @@ class SaleController extends CommonController {
         $this->assign('title','分销申请');
         $this->display('sale_apply.dwt');
     }
+	/**
+     * 获取二维码，验证是否开店
+     */
+	public function check_open($id){
+		$condition['user_id'] = $id;
+        $shop_info = $this->model->table('drp_shop')->where($condition)->find();
+		if(empty($shop_info)){
+			show_message('您还未开店，请先前往开店','前去开店',url('sale/sale_set'));			
+		}
+		
+	}
 }
