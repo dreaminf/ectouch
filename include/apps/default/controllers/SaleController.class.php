@@ -243,6 +243,24 @@ class SaleController extends CommonController {
             " SET money = money - ('$amount')" .
             " WHERE user_id = '$this->user_id' LIMIT 1";
         $this->model->query($sql);
+		
+		// 推送消息
+        $message_status = M()->table('drp_config')->field('value')->where('keyword = "msg_open"')->getOne();
+        if (method_exists('WechatController', 'send_message') && $message_status=='open') {
+			 // 模版信息设置
+			// 获取openid 和 微信昵称
+            $userInfo = M()->table('wechat_user')->field('openid,nickname')->where('ect_uid = ' . $this->user_id)->find();		
+            $data['openid'] = $userInfo['openid'];  
+			$data['open_id'] = 'OPENTM400075274';
+            $data['url'] = 'http://'.$_SERVER['HTTP_HOST'].url('sale/account_detail');
+            $data['first'] = '分销结款通知';  // 简介
+			$data['keyword1'] = $amount;  // 结款金额
+            $data['keyword2'] = $bank['bank_card'];  // 银行卡号
+            if($data['openid']){
+               call_user_func(array('WechatController', 'sendTemplateMessage'), $data);
+            }			
+		}
+		
         $content = L('surplus_appl_submit');
         show_message($content, L('back_account_log'), url('sale/account_detail'), 'info');
     }
