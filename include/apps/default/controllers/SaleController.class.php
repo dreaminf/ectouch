@@ -648,6 +648,26 @@ class SaleController extends CommonController {
         $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$_SESSION['user_id'])->getOne();
         $this->assign('drp_id', $drp_id);
         $this->assign('sale_url','http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?u='.$_SESSION['user_id'].'&drp_id='.$drp_id);
+		
+		// 推送消息
+        $message_status = M()->table('drp_config')->field('value')->where('keyword = "msg_open"')->getOne();
+        if (method_exists('WechatController', 'send_message') && $message_status=='open') {
+			 // 模版信息设置
+			// 获取openid 和 微信昵称
+            $userInfo = M()->table('wechat_user')->field('openid,nickname')->where('ect_uid = ' . $_SESSION['user_id'])->find();
+			$drp_shop = M()->table('drp_shop')->field('shop_name,shop_mobile,create_time')->where('id = ' . $drp_id)->find();
+            $data['openid'] = $userInfo['openid'];  
+			$data['open_id'] = 'OPENTM207126233';
+            $data['url'] = 'http://'.$_SERVER['HTTP_HOST'].url('sale/index',array('order_id'=>$new_order_id));
+            $data['first'] = '分销商申请成功提醒';  // 简介
+			$data['keyword1'] = $drp_shop['shop_name'];  // 分销商名称
+            $data['keyword2'] = $drp_shop['shop_mobile'];  // 分销商电话
+            $data['keyword3'] = local_date('Y-m-d H:i:s',($drp_shop ['create_time'])); // 申请时间		
+            if($data['openid']){
+               call_user_func(array('WechatController', 'sendTemplateMessage'), $data);
+            }			
+		}
+		
         $this->assign('title',L('sale_set_category'));
         $this->display('sale_set_end.dwt');
     }
