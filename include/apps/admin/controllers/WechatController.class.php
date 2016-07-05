@@ -413,7 +413,7 @@ class WechatController extends AdminController
         }
         if (isset($_GET['group_id']) && $group_id >= 0) {
             $where = ' and u.group_id = ' . $group_id;
-            $where1 = 'wechat_id = "' . $this->wechat_id . '" and group_id = ' . $group_id;
+            $where1 = 'wechat_id = "' . $this->wechat_id . '" and subscribe = 1 and group_id = ' . $group_id;
         }
         
         // 分页
@@ -509,8 +509,10 @@ class WechatController extends AdminController
             // 数据在微信端存在
             if (in_array($val['openid'], $wechat_user_list)) {
                 $info = $this->weObj->getUserInfo($val['openid']);
-                $info['group_id'] = $this->weObj->getUserGroup($val['openid']);
+                $info['group_id'] = $info['groupid'];
                 $where1['openid'] = $val['openid'];
+                unset($info['groupid']);
+                unset($info['tagid_list']);
                 $this->model->table('wechat_user')
                     ->data($info)
                     ->where($where1)
@@ -528,8 +530,10 @@ class WechatController extends AdminController
         foreach ($wechat_user_list as $vs) {
             if (! in_array($vs, $user_list)) {
                 $info = $this->weObj->getUserInfo($vs);
-                $info['group_id'] = $this->weObj->getUserGroup($vs);
+                $info['group_id'] = $info['groupid'];
                 $info['wechat_id'] = $this->wechat_id;
+                unset($info['groupid']);
+                unset($info['tagid_list']);
                 $this->model->table('wechat_user')
                     ->data($info)
                     ->insert();

@@ -401,8 +401,8 @@ class SaleController extends CommonController {
      */
     public function store(){
         $id = I('u') ? I('u') : $this->user_id;
-        if(!$id){
-            redirect(url('index/index'));
+        if(!isset($_GET['u'])){
+            redirect(url('sale/store',array('u' => $id)));
         }
 		$this->check_open($id);
         $filename  = ROOT_PATH.'data/attached/drp';
