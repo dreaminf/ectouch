@@ -44,9 +44,9 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_topic` (
   `intro` text NOT NULL,
   `start_time` int(11) NOT NULL DEFAULT '0',
   `end_time` int(10) NOT NULL DEFAULT '0',
-  `data` text NOT NULL,
+  `data` text NOT NULL DEFAULT '',
   `template` varchar(255) NOT NULL DEFAULT '',
-  `css` text NOT NULL,
+  `css` text NOT NULL DEFAULT '',
   `topic_img` varchar(255) DEFAULT NULL,
   `title_pic` varchar(255) DEFAULT NULL,
   `base_style` char(6) DEFAULT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_category` (
 
 CREATE TABLE IF NOT EXISTS `ecs_touch_feedback` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `msg_id` mediumint(8) unsigned NOT NULL,
+  `msg_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `msg_read` int(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_goods_activity` (
   `act_banner` varchar(255) DEFAULT NULL,
   `sales_count` int(10) DEFAULT NULL,
   `click_num` int(10) NOT NULL DEFAULT '0',
-  `cur_price` decimal(10,2) NOT NULL,
+  `cur_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   UNIQUE KEY `act_id` (`act_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -126,13 +126,13 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_nav` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `ctype` varchar(10) DEFAULT NULL,
   `cid` smallint(5) unsigned DEFAULT NULL,
-  `name` varchar(255) NOT NULL,
-  `ifshow` tinyint(1) NOT NULL,
-  `vieworder` tinyint(1) NOT NULL,
-  `opennew` tinyint(1) NOT NULL,
-  `url` varchar(255) NOT NULL,
-  `pic` varchar(255) NOT NULL,
-  `type` varchar(10) NOT NULL,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `ifshow` tinyint(1) NOT NULL DEFAULT '0',
+  `vieworder` tinyint(1) NOT NULL DEFAULT '0',
+  `opennew` tinyint(1) NOT NULL DEFAULT '0',
+  `url` varchar(255) NOT NULL DEFAULT '',
+  `pic` varchar(255) NOT NULL DEFAULT '',
+  `type` varchar(10) NOT NULL DEFAULT '', 
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `ifshow` (`ifshow`)
@@ -165,8 +165,8 @@ INSERT INTO `ecs_shop_config` (parent_id, code, type, store_range, store_dir, va
 
 CREATE TABLE IF NOT EXISTS `ecs_touch_auth` (
   `id` tinyint(2) NOT NULL AUTO_INCREMENT,
-  `auth_config` text NOT NULL,
-  `from` varchar(10) NOT NULL,
+  `auth_config` text NOT NULL DEFAULT '',
+  `from` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='登录插件';
 
@@ -198,15 +198,15 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_config` (
 
 CREATE TABLE IF NOT EXISTS `ecs_drp_log` (
   `log_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` mediumint(8) unsigned NOT NULL,
-  `user_money` decimal(10,2) NOT NULL,
-  `pay_points` mediumint(9) NOT NULL,
-  `change_time` int(10) unsigned NOT NULL,
-  `change_desc` varchar(255) NOT NULL,
-  `change_type` tinyint(3) unsigned NOT NULL,
+  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `user_money` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `pay_points` mediumint(9) NOT NULL DEFAULT '0',
+  `change_time` int(10) unsigned NOT NULL DEFAULT '',
+  `change_desc` varchar(255) NOT NULL DEFAULT '',
+  `change_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `bank_info`  text COMMENT '提现银行卡信息',
-  `order_id` int(10) unsigned NOT NULL,
-  `status` int(1) unsigned NOT NULL,
+  `order_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `status` int(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`log_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -263,9 +263,9 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_bank` (
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `ecs_drp_visiter` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) NOT NULL,
-  `drp_id` int(10) NOT NULL,
-  `visit_time` int(12) NOT NULL COMMENT '访问时间',
+  `user_id` int(10) NOT NULL DEFAULT '0',
+  `drp_id` int(10) NOT NULL DEFAULT '0',
+  `visit_time` int(12) NOT NULL DEFAULT '0' COMMENT '访问时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
