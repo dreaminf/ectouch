@@ -157,6 +157,12 @@ class FlowController extends CommonController {
         $result['product_spec'] = $goods->spec;
         // 检查：如果商品有规格，而post的数据没有规格，把商品的规格属性通过JSON传到前台
         if (empty($goods->spec) and empty($goods->quick)) {
+             $sql = "SELECT goods_name,goods_thumb,shop_price,goods_number FROM ".$this->model->pre."goods where goods_id = ".$goods->goods_id;
+            $res = $this->model->query($sql);
+            $goods_name = $res[0]['goods_name'];
+            $shop_price = $res[0]['shop_price'];
+            $goods_number = $res[0]['goods_number'];
+            $goods_thumb = $res[0]['goods_thumb'];
             $sql = "SELECT a.attr_id, a.attr_name, a.attr_type, " . "g.goods_attr_id, g.attr_value, g.attr_price " . 'FROM ' . $this->model->pre . 'goods_attr AS g ' . 'LEFT JOIN ' . $this->model->pre . 'attribute AS a ON a.attr_id = g.attr_id ' . "WHERE a.attr_type != 0 AND g.goods_id = '" . $goods->goods_id . "' " . 'ORDER BY a.sort_order, g.attr_price, g.goods_attr_id';
             $res = $this->model->query($sql);
             if (!empty($res)) {
@@ -181,7 +187,10 @@ class FlowController extends CommonController {
                 $result ['goods_id'] = $goods->goods_id;
                 $result ['parent'] = $goods->parent;
                 $result ['message'] = $spe_array;
-
+                $result ['goods_name'] = $goods_name;
+                $result ['goods_thumb'] = $goods_thumb;
+                $result ['goods_number'] = $goods_number;
+                $result ['shop_price'] = $shop_price;
                 die(json_encode($result));
             }
         }
