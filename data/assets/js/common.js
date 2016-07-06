@@ -879,8 +879,8 @@ function openSpeDiv(message, goods_id, parent, goods_name, goods_thumb, goods_nu
 							"</section>"+
 							"</div>";
 					 for (var spec = 0; spec < message.length; spec++) {
-					           newDiv.innerHTML += "<h6 style='text-align:left; background:#666;'>"
-					                    + message[spec]['name'] + "</h6>";
+					           newDiv.innerHTML += "<h6 style='text-align:left; background:#fff;color:#777;padding: 0 0 0.4rem 1.3rem;font-size: 1.5rem;'>"
+					                    + message[spec]['name'] +':'+ "</h6>";
 					
 					            if (message[spec]['attr_type'] == 1) {
 					                for (var val_arr = 0; val_arr < message[spec]['values'].length; val_arr++) {
