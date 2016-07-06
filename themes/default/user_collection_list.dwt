@@ -1,6 +1,6 @@
 <!-- #BeginLibraryItem "/library/new_page_header.lbi" -->
 <!-- #EndLibraryItem -->
-<div class="con">
+<div class="">
 	<header class="dis-box header-menu b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
 	<h3 class="box-flex">收藏</h3>
 	<p><i class="iconfont icon-pailie j-nav-box"></i></p>
@@ -32,19 +32,18 @@
 			              <a href="{:url('goods/index', array('id'=>$this->_var[val]['goods_id']))}"><h4>{$val.goods_name}</h4></a>
 							<div class="n-money-con"><span class="p-price t-first ">{$val.shop_price}</span><small class="ect-margin-lr"><del>{$val.market_price}</del></small></div>
 							<div class="dis-box n-but-box">
-						     <section class="goods-attr j-goods-attr j-show-div">
-						     <!--
+						     <section class="goods-attr j-goods-attr  j-show-div0">
+						     
 								<a href="javascript:addToCart({$val.goods_id})" class="box-flex">
 									<div class="s-but">{$lang.add_to_cart}</div>
 								</a>
-								-->
 									<!--商品属性弹出层star-->
-									<div class="mask-filter-div"></div>
+									 <div class="mask-filter-div"></div>
 									<div class="show-goods-attr j-filter-show-div ts-3 b-color-1">
-										<section class="s-g-attr-title b-color-1  product-list-small">
+										 <section class="s-g-attr-title b-color-1  product-list-small">
 											<div class="product-div">
 												<img src="__TPL__/statics/img/flow_cart_14.png" alt="" class="product-list-img" />
-												<div class="product-text n-right-box">
+												 <div class="product-text n-right-box">
 													<div class="dis-box">
 														<h4 class="box-flex">媞沫 2016夏装新品女装 宽松假两件蝙蝠短袖印花雪纺衫 粉色 S</h4>
 														<i class="iconfont icon-guanbi show-div-guanbi"></i>
@@ -61,6 +60,7 @@
 											<div class="swiper-wrapper">
 												<div class="swiper-slide">
 													<h5 class="t-remark">尺码：</h5>
+
 													<ul class="select-one  j-get-one  m-top10">													
 														<li class="ect-select dis-flex fl">
 															<input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if} onclick="changePrice()" />
@@ -99,15 +99,15 @@
 							</div>
 							<!--商品属性弹出层end-->
 							</section>
-										<!-- {if $val.is_attention }
+										<!-- {if $val.is_attention} -->
 								<a class="box-flex" href="javascript:if (confirm('{$lang.del_attention}')) location.href='{:url('user/del_attention', array('rec_id'=>$this->_var['val']['rec_id']))}'">
 									<div class="s-but">{$lang.no_attention}</div>
 								</a>
-								 {else} 
+								<!-- {else} -->
 								<a class="box-flex" href="javascript:if (confirm('{$lang.add_to_attention}')) location.href='{:url('user/add_attention', array('rec_id'=>$this->_var['val']['rec_id']))}'">
 									<div class="s-but ">{$lang.attention}</div>
 								</a>
-								 {/if} -->
+								<!-- {/if} -->
 								<a class="n-margin-del" href="javascript:if(confirm('{$lang.remove_collection_confirm}')) location.href='{:url('delete_collection', array('rec_id'=>$this->_var['val']['rec_id']))}'"><div class="n-del"><i class="iconfont icon-xiao10 fr"></i></div></a>
 							</div>
 

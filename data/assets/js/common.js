@@ -25,10 +25,10 @@ function get_asynclist(url, src) {
             $('.get_more').click();
         }
     });
-	
+
 }
 /* *
- * 添加商品到购物车 
+ * 添加商品到购物车
  */
 function addToCart(goodsId, parentId) {
     var goods = new Object();
@@ -38,7 +38,7 @@ function addToCart(goodsId, parentId) {
     var formBuy = document.forms['ECS_FORMBUY'];
     var quick = 0;
 
-    // 检查是否有商品规格 
+    // 检查是否有商品规格
     if (formBuy) {
         str = getSelectedAttributes(formBuy);
         spec_arr = str.split(',');
@@ -72,7 +72,7 @@ function getSelectedAttributes(formBuy) {
 
     for (i = 0; i < formBuy.elements.length; i++) {
         var prefix = formBuy.elements[i].name.substr(0, 5);
-
+          //console.log(formBuy.elements[i].value);
         if (prefix == 'spec_'
                 && (((formBuy.elements[i].type == 'radio' || formBuy.elements[i].type == 'checkbox') && formBuy.elements[i].checked) || formBuy.elements[i].tagName == 'SELECT')) {
             spec_arr[j] = formBuy.elements[i].value;
@@ -98,9 +98,9 @@ function addToCartResponse(result) {
         }
         // 没选规格，弹出属性选择框
         else if (result.error == 6) {
-            openSpeDiv(result.message, result.goods_id, result.parent);
+            openSpeDiv(result.message, result.goods_id, result.parent, result.goods_name, result.goods_thumb, result.goods_number, result.shop_price);
         } else {
-            alert(result.message);
+             alert(result.message);
         }
     } else {
         var cartInfo = document.getElementById('ECS_CARTINFO');
@@ -120,11 +120,11 @@ function addToCartResponse(result) {
             {
                 case '1' :
                     if (confirm(result.message))
-                        location.href = cart_url;
+                         location.href = cart_url;
                     break;
                 case '2' :
                     if (!confirm(result.message))
-                        location.href = cart_url;
+                         location.href = cart_url;
                     break;
                 case '3' :
                     location.href = cart_url;
@@ -821,9 +821,9 @@ function docEle() {
 }
 
 //生成属性选择层
-function openSpeDiv(message, goods_id, parent) {
-    /*var _id = "speDiv";
-    var m = "mask";*/
+function openSpeDiv(message, goods_id, parent, goods_name, goods_thumb, goods_number, shop_price) {
+      var _id = "speDiv";
+    var m = "mask";
     if (docEle(_id))
         document.removeChild(docEle(_id));
     if (docEle(m))
@@ -847,98 +847,89 @@ function openSpeDiv(message, goods_id, parent) {
     }
 
     // 新激活图层
-    var newDiv = document.createElement("div");
-    newDiv.id = _id;
-    newDiv.style.position = "absolute";
-    newDiv.style.zIndex = "10000";
-    newDiv.style.width = "300px";
-    newDiv.style.height = "260px";
-    newDiv.style.top = (parseInt(scrollPos + 200)) + "px";
-    newDiv.style.left = (parseInt(document.body.offsetWidth) - 200) / 2 + "px"; // 屏幕居中
-    newDiv.style.overflow = "auto";
-    newDiv.style.background = "#FFF";
-    newDiv.style.border = "3px solid #59B0FF";
-    newDiv.style.padding = "5px";
-
-    //生成层内内容
-    newDiv.innerHTML = '<h4 style="font-size:14; margin:15 0 0 15;">'
-            + select_spe + "</h4>";
-
-    for (var spec = 0; spec < message.length; spec++) {
-        newDiv.innerHTML += '<hr style="color: #EBEBED; height:1px;"><h6 style="text-align:left; background:#ffffff; margin-left:15px;">'
-                + message[spec]['name'] + '</h6>';
-
-        if (message[spec]['attr_type'] == 1) {
-            for (var val_arr = 0; val_arr < message[spec]['values'].length; val_arr++) {
-                if (val_arr == 0) {
-                    newDiv.innerHTML += "<input style='margin-left:15px;' type='radio' name='spec_"
-                            + message[spec]['attr_id']
-                            + "' value='"
-                            + message[spec]['values'][val_arr]['id']
-                            + "' id='spec_value_"
-                            + message[spec]['values'][val_arr]['id']
-                            + "' checked /><font color=#555555>"
-                            + message[spec]['values'][val_arr]['label']
-                            + '</font> ['
-                            + message[spec]['values'][val_arr]['format_price']
-                            + ']</font><br />';
-                } else {
-                    newDiv.innerHTML += "<input style='margin-left:15px;' type='radio' name='spec_"
-                            + message[spec]['attr_id']
-                            + "' value='"
-                            + message[spec]['values'][val_arr]['id']
-                            + "' id='spec_value_"
-                            + message[spec]['values'][val_arr]['id']
-                            + "' /><font color=#555555>"
-                            + message[spec]['values'][val_arr]['label']
-                            + '</font> ['
-                            + message[spec]['values'][val_arr]['format_price']
-                            + ']</font><br />';
-                }
-            }
-            newDiv.innerHTML += "<input type='hidden' name='spec_list' value='"
-                    + val_arr + "' />";
-        } else {
-            for (var val_arr = 0; val_arr < message[spec]['values'].length; val_arr++) {
-                newDiv.innerHTML += "<input style='margin-left:15px;' type='checkbox' name='spec_"
-                        + message[spec]['attr_id']
-                        + "' value='"
-                        + message[spec]['values'][val_arr]['id']
-                        + "' id='spec_value_"
-                        + message[spec]['values'][val_arr]['id']
-                        + "' /><font color=#555555>"
-                        + message[spec]['values'][val_arr]['label']
-                        + ' ['
-                        + message[spec]['values'][val_arr]['format_price']
-                        + ']</font><br />';
-            }
-            newDiv.innerHTML += "<input type='hidden' name='spec_list' value='"
-                    + val_arr + "' />";
-        }
-    }
-    newDiv.innerHTML += "<br /><center>[<a href='javascript:submit_div("
-            + goods_id
-            + ","
-            + parent
-            + ")' class='f6' >"
-            + btn_buy
-            + "</a>]&nbsp;&nbsp;[<a href='javascript:cancel_div()' class='f6' >"
-            + is_cancel + "</a>]</center>";
-    document.body.appendChild(newDiv);
+         var newDiv = document.createElement("div");
+        newDiv.id = _id;
+        newDiv.style.position = "fixed";
+        newDiv.style.zIndex = "10000";
+        //newDiv.style.width = "100%";
+        //newDiv.style.height = "28rem";
+        //newDiv.style.top = (parseInt(scrollPos + 200)) + "px";
+        newDiv.style.left = "0rem"; // 屏幕居中
+        newDiv.style.right = "0rem"; // 屏幕居中
+        newDiv.style.bottom = "0rem"; // 屏幕居中
+        newDiv.style.overflow = "hidden";
+        newDiv.style.background = "#fff";
+        //newDiv.style.border = "3px solid #59B0FF";
+        //生成层内内容
+        newDiv.innerHTML += '<div class="mask-filter-div">'+"</div>";
+		newDiv.innerHTML +='<div class="j-filter-show-div ts-3 b-color-1">'+
+							 '<section class="s-g-attr-title b-color-1  product-list-small">'+
+								'<div class="product-div" style="border-bottom:1px solid #f6f6f9;margin-bottom:1rem">'+
+									'<img src="'+goods_thumb +'" class="product-list-img">'+
+								'<div class="product-text n-right-box">'+
+								       '<div class="dis-box">'+
+										  '<h4 class="box-flex">'+ goods_name +"</h4>"+
+										   '<a href="javascript:cancel_div()">'+'<i  class="iconfont icon-guanbi show-div-guanbi">'+"</i>"+"</a>"+
+										"</div>"+
+											'<p>'+'<span class="p-price t-first" id="ECS_GOODS_AMOUNT">'+ shop_price +"</span>"+
+											"</p>"+
+											'<p class="dis-box p-t-remark">'+'<span class="box-flex">'+ goods_number +"</span>"+"</p>"+
+										"</div>"+
+								"</div>"+
+							"</section>"+
+							"</div>";
+					 for (var spec = 0; spec < message.length; spec++) {
+					           newDiv.innerHTML += '<h6 style="text-align:left; background:#666;>'
+					                    + message[spec]['name'] + '</h6>';
+					
+					            if (message[spec]['attr_type'] == 1) {
+					                for (var val_arr = 0; val_arr < message[spec]['values'].length; val_arr++) {
+					                    if (val_arr == 0) {
+					                        newDiv.innerHTML += "<div class='n-input-box'><input style='margin-left:15px;' type='radio' name='spec_"+ message[spec]['attr_id']+ "' value='"+ message[spec]['values'][val_arr]['id']+ "' id='spec_value_"+ message[spec]['values'][val_arr]['id']+ "' checked /><label class='' color=#555555>"+ message[spec]['values'][val_arr]['label']+ '</label> ['+ message[spec]['values'][val_arr]['format_price']+ ']</label></div>';
+					                    } else {
+					                        newDiv.innerHTML += "<div class='n-input-box'><input style='margin-left:15px;' type='radio' name='spec_"+ message[spec]['attr_id']+ "' value='"+ message[spec]['values'][val_arr]['id']+ "' id='spec_value_"+ message[spec]['values'][val_arr]['id']+ "' /><label color=#555555>"+ message[spec]['values'][val_arr]['label']+ '</label>['+ message[spec]['values'][val_arr]['format_price']+ ']</label></div>';
+					                    }
+					                }
+					                newDiv.innerHTML += "<input type='hidden' name='spec_list' value='"
+					                        + val_arr + "' />";
+					            } else {
+					            	
+					                for (var val_arr = 0; val_arr < message[spec]['values'].length; val_arr++) {
+					                    newDiv.innerHTML += "<div class='n-input-box'><input style='margin-left:15px;' type='checkbox' name='spec_"
+					                            + message[spec]['attr_id']
+					                            + "' value='"
+					                            + message[spec]['values'][val_arr]['id']
+					                            + "' id='spec_value_"
+					                            + message[spec]['values'][val_arr]['id']
+					                            + "' /><label color=#555555>"
+					                            + message[spec]['values'][val_arr]['label']
+					                            + ' ['
+					                            + message[spec]['values'][val_arr]['format_price']
+					                            + ']</label></div>';
+					                }
+					                newDiv.innerHTML += "<input type='hidden' name='spec_list' value='"
+					                        + val_arr + "' />";
+					            }
+					        }
+ 
+        newDiv.innerHTML += "<div class='dis-box n-foot-but b-color-f'><a href='javascript:submit_div("+ goods_id+ ","+ parent+ ")' class='box-flex' ><div class='btn-submit'>"+ btn_buy+ "</div></a><a href='javascript:cancel_div()' class='box-flex' ><div class='btn-cart'>"+ is_cancel +"</div></a></div>";              
+    document.body.appendChild(newDiv); 
 
     // mask图层
     var newMask = document.createElement("div");
     newMask.id = m;
     newMask.style.position = "absolute";
     newMask.style.zIndex = "9999";
-    newMask.style.width = document.body.scrollWidth + "px";
+    //newMask.style.width = document.body.scrollWidth + "px";
     newMask.style.height = document.body.scrollHeight + "px";
     newMask.style.top = "0px";
     newMask.style.left = "0px";
-    newMask.style.background = "#FFF";
+    newMask.style.right = "0px";
+    newMask.style.bottom = "0px";
+    newMask.style.background = "#000";
     newMask.style.filter = "alpha(opacity=30)";
     newMask.style.opacity = "0.40";
-    document.body.appendChild(newMask);
+     document.body.appendChild(newMask);
 }
 
 //获取选择属性后，再次提交到购物车
@@ -1002,7 +993,7 @@ function cancel_div() {
 }
 
 /* *
- * 添加商品到购物车 
+ * 添加商品到购物车
  */
 function addToCart_quick(goodsId, parentId) {
     var goods = new Object();
@@ -1012,7 +1003,7 @@ function addToCart_quick(goodsId, parentId) {
     var formBuy = document.forms['ECS_FORMBUY'];
     var quick = 0;
 
-    // 检查是否有商品规格 
+    // 检查是否有商品规格
     if (formBuy) {
         str = getSelectedAttributes(formBuy);
         spec_arr = str.split(',');
@@ -1051,7 +1042,7 @@ function addToCartResponse_quick(result) {
         	}else{
         		alert(result.message);
         	}
-			
+
         }
         // 没选规格，弹出属性选择框
         else if (result.error == 6) {
