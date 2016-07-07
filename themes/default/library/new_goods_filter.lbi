@@ -84,6 +84,7 @@ function clear_filter(){
 	$(".ui-slider-range").css({left:0,width:0});
 	$("#slider-range-amount").html(0);
 	$("#min ,#max").val(0);
+	$('input[name="brand"]').val(0);
 	$("#filter_attr").val(0);
 }
 
