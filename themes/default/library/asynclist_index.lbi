@@ -7,7 +7,26 @@
 <li class="fl">
 {/if}
 <div class="product-div">
-  <a href="{$goods.url}"><img class="lazy" src="__TPL__/statics/img/loading_shop.png" data-original="{$goods.goods_img}"  alt="{$goods.name}" /></a>
+  <a href="{$goods.url}">
+  		<div class="goods-photo">
+			<ul class="swiper-wrapper">
+				<!--{if $pictures}-->
+				<!-- {foreach from=$pictures item=picture name=no}-->
+				<li class="swiper-slide tb-lr-center"><img class="lazy" src="__TPL__/statics/img/loading_shop.png" data-original="{$picture.img_url}" alt="{$picture.img_desc}" /></li>
+				<!--{/foreach}-->
+				<!--{else}-->
+				<li class="swiper-slide tb-lr-center"><img class="lazy" src="__TPL__/statics/img/loading_shop.png" data-original="{$goods.goods_img}" alt="{$goods.goods_name}" /></li>					
+				<!--{/if}-->
+			</ul>
+			<div class="swiper-pagination index-wiper-pagination"></div>
+		</div>
+  	
+  	
+  	
+  
+  
+  
+  </a>
   <a href="{$goods.url}"><h4>{$goods.name}</h4></a>
   <p><span><!--{if $goods.promote_price}-->{$goods.promote_price}<!--{else}-->{$goods.shop_price}<!--{/if}--></span></p>
   </div>
@@ -16,6 +35,13 @@
 <!-- 商品列表 end--> 
 <script type="text/javascript">
       $(function() {
+      			/*商品详情相册切换*/
+				var swiper = new Swiper('.goods-photo', {
+			paginationClickable: true,
+			pagination : '.swiper-pagination',
+			paginationType : 'fraction'
+		});
+      	
           $("img.lazy").lazyload({ 
                  effect: "fadeIn"
            });  

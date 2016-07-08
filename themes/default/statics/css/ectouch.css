@@ -522,7 +522,7 @@ transform: rotate(135deg);background:#fff; bottom:-.6rem; z-index: -1; left:50%;
  * [备注：]库存销量,加入购物车按钮，市场价默认全部显示，如需隐藏/显示在对应图片列表代码中设置即可
  */
 .product-list{}
-.product-list ul{ overflow: hidden; width:100%;}
+.product-list ul{ width:100%;}
 .product-list ul li{box-sizing: border-box;}
 
 .product-div{background:#fff;  position: relative;  overflow: hidden;}
@@ -2473,5 +2473,7 @@ table.u-table td{border:1px solid #e3e3e3;padding:0.5em 0.2em;height:3em;width:7
 /*.n-input-box input{position:absolute; opacity: 0.5;}*/
 .n-input-box label.active{border-color: #1CBB7F;color: #1CBB7F;}
 .n-input-box label{margin-left:0.5rem;font-size:1.5rem;color:#666}
-
 .n-input-box{width:50%;display:inline-block;font-size:1.5rem;color:#666}
+#speDiv{margin:0 auto;max-width:640px;}
+
+.swiper-container-horizontal>.index-wiper-pagination{ width:4rem;  color:#fff;  background:rgba(0,0,0,0.4);padding: 0.4rem 0.2rem;border-radius: 5rem;    left: 70%;position: absolute;bottom: 1.4rem;font-size: 1.2rem;z-index: 1;}
