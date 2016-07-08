@@ -3368,7 +3368,7 @@ function aftermarket_refund($order, $refund_type, $refund_amount, $refund_note)
     if ($refund_note) {
         $change_desc = $refund_note;
     } else {
-        include_once(ROOT_PATH . 'languages/' . $GLOBALS['_CFG']['lang'] . '/admin/aftermarket.php');
+        //include_once(ROOT_PATH . 'languages/' . $GLOBALS['_CFG']['lang'] . '/admin/aftermarket.php');
         $change_desc = sprintf($GLOBALS['_LANG']['order_refund'], $order['order_sn']);
     }
 
@@ -3640,4 +3640,117 @@ function get_business_address($suppliers_id) {
     }
     return $address;
 }
+/*DRP_START*/
+function aftermarket_drp($order_goods= array()){
+	foreach ($order_goods['goods_list'] as $key => $value) {
+		$order_id = $value['order_id'];
+		$goods_id = $value['goods_id'];	
+		
+		//查询退货数量
+		$sql = "SELECT rg.goods_name,rg.back_num" .
+        " FROM " . $GLOBALS['ecs']->table('return_goods') .
+        " as rg JOIN ".$GLOBALS['ecs']->table('order_goods') ." as og ON rg.rec_id = og.rec_id ".
+        " WHERE og.order_id = '$order_id' and og.goods_id = '$goods_id'";
+		$goods = $GLOBALS['db']->getRow($sql);
+		//查询商品分销佣金
+		$sql = 'SELECT touch_sale FROM ' . $GLOBALS['ecs']->table('drp_goods') . " WHERE goods_id = '$goods_id'";
+		$touch_sale = $GLOBALS['db']->getOne($sql);
+
+		//  获取佣金分成比例		
+		$profit = get_drp_profit($goods_id);
+		// 分销商三级利润
+		$sale_money['profit1']+= $touch_sale/100*$profit['profit1']*$goods['back_num'];
+		$sale_money['profit2']+= $touch_sale/100*$profit['profit2']*$goods['back_num'];
+		$sale_money['profit3']+= $touch_sale/100*$profit['profit3']*$goods['back_num'];
+		
+		
+		// 获取订单所属店铺信息
+		$sql = 'SELECT drp_id FROM ' . $GLOBALS['ecs']->table('drp_order_info') . " WHERE order_id = '$order_id'";
+		$drp_id = $GLOBALS['db']->getOne($sql);
+		if($drp_id){
+			// 本店用户id
+			$sql = 'SELECT user_id FROM ' . $GLOBALS['ecs']->table('drp_shop') . " WHERE id = '$drp_id'";
+			$user_id = $GLOBALS['db']->getOne($sql);
+			if($user_id){
+				/* 修改帐户变动记录 */
+				
+				$sql = 'SELECT user_money FROM ' . $GLOBALS['ecs']->table('drp_log') . " WHERE user_id = '$user_id' and order_id = '$order_id'  ";
+				$user_money = $GLOBALS['db']->getOne($sql);
+				$new_user_money = $user_money - $sale_money['profit1'];
+
+				 $sql = "UPDATE " . $GLOBALS['ecs']->table('drp_log') .
+				" SET user_money = '$new_user_money'" .
+				"WHERE user_id = '$user_id' and order_id = '$order_id' ";
+				$GLOBALS['db']->query($sql); 
+
+
+				// 一级用户id
+				$sql = 'SELECT parent_id FROM ' . $GLOBALS['ecs']->table('users') . " WHERE user_id = $user_id";
+				$parent_id1 = $GLOBALS['db']->getOne($sql);
+				if($parent_id1){
+					/* 修好帐户变动记录 */
+					
+					$sql = 'SELECT user_money FROM ' . $GLOBALS['ecs']->table('drp_log') . " WHERE user_id = '$parent_id1' and order_id = '$order_id'";
+					$user_money = $GLOBALS['db']->getOne($sql);
+					$new_user_money = $user_money - $sale_money['profit2'];
+					
+					$sql = "UPDATE " . $GLOBALS['ecs']->table('drp_log') .
+					" SET user_money = '$new_user_money'" .
+					"WHERE user_id = '$parent_id1' and order_id = '$order_id' ";
+					$GLOBALS['db']->query($sql);
+					
+					
+					// 二级用户id
+					$sql = 'SELECT parent_id FROM ' . $GLOBALS['ecs']->table('users') . " WHERE user_id = $parent_id1";
+					$parent_id2 = $GLOBALS['db']->getOne($sql);
+					if($parent_id2) {
+						/* 修改帐户变动记录 */
+						
+						$sql = 'SELECT user_money FROM ' . $GLOBALS['ecs']->table('drp_log') . " WHERE user_id = '$parent_id2' and order_id = '$order_id' ";
+						$user_money = $GLOBALS['db']->getOne($sql);
+						$new_user_money = $user_money - $sale_money['profit3'];
+					
+						$sql = "UPDATE " . $GLOBALS['ecs']->table('drp_log') .
+						" SET user_money = '$new_user_money'" .
+						"WHERE user_id = '$parent_id2' and order_id = '$order_id' ";
+						$GLOBALS['db']->query($sql);
+						
+						
+					}
+				}
+			}
+		}
+	
+	return true;
+	}	
+	
+}
+
+function get_drp_profit($goods_id = 0){
+	 if($goods_id == 0 ){
+		return false;
+	}
+	$sql = 'SELECT cat_id FROM ' . $GLOBALS['ecs']->table('goods') . " WHERE goods_id = '$goods_id'";
+	$res = $GLOBALS['db']->getOne($sql);
+	$id = get_goods_cat($res);
+	
+	$sql1 = 'SELECT * FROM ' . $GLOBALS['ecs']->table('drp_profit') . " WHERE cate_id = '$id'";
+    $profit = $GLOBALS['db']->GetRow($sql1);	
+	return $profit;
+	
+}
+function get_goods_cat($id){	
+	$sql = 'SELECT parent_id FROM ' . $GLOBALS['ecs']->table('category') . " WHERE cat_id = '$id'";
+	$res = $GLOBALS['db']->getOne($sql);
+	$parent_id = $res;
+	if($parent_id==0){
+		return $id;
+	}else{
+		$id = get_goods_cat($parent_id);
+		return $id;
+	}
+	
+}
+/*DRP_END*/
+
 

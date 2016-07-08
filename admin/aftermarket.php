@@ -413,7 +413,7 @@ elseif ($_REQUEST['act'] == 'operate_post') {
     } /* 设为无效 */ elseif ('invalid' == $operation) {
         //TODO
     } /* 退款 */ elseif ('refund' == $operation) {
-        include_once(ROOT_PATH . 'includes/lib_transaction.php');
+        //include_once(ROOT_PATH . 'includes/lib_transaction.php');
         /* 定义当前时间 */
         define('GMTIME_UTC', gmtime()); // 获取 UTC 时间戳
         $order_goods = get_order_goods($order);                     //订单商品
@@ -447,17 +447,23 @@ elseif ($_REQUEST['act'] == 'operate_post') {
         $refund_type = empty($refund_type) ? 1 : $refund_type;
         $refund_amount = $_REQUEST['refund_amount'] + $_REQUEST['shipping'];
         $refund_note = $_REQUEST['refund_note'];
-
+		
         if ($return_info['refund_status'] == FF_NOREFUND) {
             /* 退款 */
             aftermarket_refund($order, $refund_type, $refund_amount, $refund_note);
             /* 标记order_return 表已退款 */
+			
+			/*DRP_START*/
+			aftermarket_drp($order_goods);//退货退款减去分销佣金
+			/*DRP_END*/
+			
             $arr = array(
                 'refund_status' => FF_REFUND,
                 'actual_return' => $refund_amount,
                 'is_check' => RC_APPLY_SUCCESS,
             );
             $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('order_return'), $arr, 'UPDATE', "rec_id = '$rec_id'");
+			
         }
         /* 退货用积分 */
         return_surplus_integral_bonus($return_info['user_id'], $_REQUEST['refund_amount']);
