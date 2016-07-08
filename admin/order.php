@@ -2852,14 +2852,18 @@ elseif ($_REQUEST['act'] == 'operate')
             {
                 die('Hacking attempt');
             }
-
             /* 删除订单 */
             $db->query("DELETE FROM ".$ecs->table('order_info'). " WHERE order_id = '$order_id'");
             $db->query("DELETE FROM ".$ecs->table('order_goods'). " WHERE order_id = '$order_id'");
             $db->query("DELETE FROM ".$ecs->table('order_action'). " WHERE order_id = '$order_id'");
+			/*DRP_START*/
+			$db->query("DELETE FROM ".$ecs->table('drp_log'). " WHERE order_id = '$order_id'");
+			$db->query("DELETE FROM ".$ecs->table('drp_order_info'). " WHERE order_id = '$order_id'");
+			$db->query("DELETE FROM ".$ecs->table('drp_order_goods'). " WHERE order_id = '$order_id'");
+			/*DRP_END*/
             $action_array = array('delivery', 'back');
             del_delivery($order_id, $action_array);
-
+			
             /* todo 记录日志 */
             admin_log($order['order_sn'], 'remove', 'order');
 
@@ -4517,6 +4521,11 @@ elseif ($_REQUEST['act'] == 'remove_order')
     $GLOBALS['db']->query("DELETE FROM ".$GLOBALS['ecs']->table('order_info'). " WHERE order_id = '$order_id'");
     $GLOBALS['db']->query("DELETE FROM ".$GLOBALS['ecs']->table('order_goods'). " WHERE order_id = '$order_id'");
     $GLOBALS['db']->query("DELETE FROM ".$GLOBALS['ecs']->table('order_action'). " WHERE order_id = '$order_id'");
+	/*DRP_START*/
+	$db->query("DELETE FROM ".$ecs->table('drp_log'). " WHERE order_id = '$order_id'");
+	$db->query("DELETE FROM ".$ecs->table('drp_order_info'). " WHERE order_id = '$order_id'");
+	$db->query("DELETE FROM ".$ecs->table('drp_order_goods'). " WHERE order_id = '$order_id'");
+	/*DRP_END*/
     $action_array = array('delivery', 'back');
     del_delivery($order_id, $action_array);
 
