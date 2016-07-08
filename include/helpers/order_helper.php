@@ -3663,7 +3663,6 @@ function aftermarket_drp($order_goods= array()){
 		$sale_money['profit2']+= $touch_sale/100*$profit['profit2']*$goods['back_num'];
 		$sale_money['profit3']+= $touch_sale/100*$profit['profit3']*$goods['back_num'];
 		
-		
 		// 获取订单所属店铺信息
 		$sql = 'SELECT drp_id FROM ' . $GLOBALS['ecs']->table('drp_order_info') . " WHERE order_id = '$order_id'";
 		$drp_id = $GLOBALS['db']->getOne($sql);
@@ -3673,14 +3672,17 @@ function aftermarket_drp($order_goods= array()){
 			$user_id = $GLOBALS['db']->getOne($sql);
 			if($user_id){
 				/* 修改帐户变动记录 */
+				$sql = 'SELECT order_sn FROM ' . $GLOBALS['ecs']->table('order_info') . " WHERE order_id = '$order_id'  ";
+				$order_sn = $GLOBALS['db']->getOne($sql);
 				
 				$sql = 'SELECT user_money FROM ' . $GLOBALS['ecs']->table('drp_log') . " WHERE user_id = '$user_id' and order_id = '$order_id'  ";
 				$user_money = $GLOBALS['db']->getOne($sql);
 				$new_user_money = $user_money - $sale_money['profit1'];
-
+				$change_desc = '订单分成，订单号：'.$order_sn.',分成金额：'.$new_user_money;
+				
 				 $sql = "UPDATE " . $GLOBALS['ecs']->table('drp_log') .
-				" SET user_money = '$new_user_money'" .
-				"WHERE user_id = '$user_id' and order_id = '$order_id' ";
+				" SET user_money = '$new_user_money' , change_desc = '$change_desc'" .
+				" WHERE user_id = '$user_id' and order_id = '$order_id' ";
 				$GLOBALS['db']->query($sql); 
 
 
@@ -3693,9 +3695,10 @@ function aftermarket_drp($order_goods= array()){
 					$sql = 'SELECT user_money FROM ' . $GLOBALS['ecs']->table('drp_log') . " WHERE user_id = '$parent_id1' and order_id = '$order_id'";
 					$user_money = $GLOBALS['db']->getOne($sql);
 					$new_user_money = $user_money - $sale_money['profit2'];
-					
+					$change_desc = '订单分成，订单号：'.$order_sn.',分成金额：'.$new_user_money;
+				
 					$sql = "UPDATE " . $GLOBALS['ecs']->table('drp_log') .
-					" SET user_money = '$new_user_money'" .
+					" SET user_money = '$new_user_money' , change_desc = '$change_desc'" .
 					"WHERE user_id = '$parent_id1' and order_id = '$order_id' ";
 					$GLOBALS['db']->query($sql);
 					
@@ -3709,9 +3712,10 @@ function aftermarket_drp($order_goods= array()){
 						$sql = 'SELECT user_money FROM ' . $GLOBALS['ecs']->table('drp_log') . " WHERE user_id = '$parent_id2' and order_id = '$order_id' ";
 						$user_money = $GLOBALS['db']->getOne($sql);
 						$new_user_money = $user_money - $sale_money['profit3'];
-					
+						$change_desc = '订单分成，订单号：'.$order_sn.',分成金额：'.$new_user_money;
+				
 						$sql = "UPDATE " . $GLOBALS['ecs']->table('drp_log') .
-						" SET user_money = '$new_user_money'" .
+						" SET user_money = '$new_user_money' , change_desc = '$change_desc'" .
 						"WHERE user_id = '$parent_id2' and order_id = '$order_id' ";
 						$GLOBALS['db']->query($sql);
 						
