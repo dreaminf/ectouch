@@ -3621,3 +3621,4 @@ body, .index-header, .index-footer {
 		.n-footer-minbox .footer-tit1{text-align:center;font-size:1.3rem; color:#999;padding-top:0.5rem;}
 		.n-footer-minbox .footer-tit{color:#666;text-align:center;font-size:1.3rem;padding-top:0.5rem;}
 		.n-fonter-tit3{font-size:1.3rem;color:#555;text-align:center;padding:1rem;}
+    .single_item h4{height:3rem;line-height: 1.5rem;overflow:hidden;}
