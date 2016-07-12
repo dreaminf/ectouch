@@ -3657,7 +3657,7 @@ function aftermarket_drp($order_goods= array()){
 		$touch_sale = $GLOBALS['db']->getOne($sql);
 
 		//  获取佣金分成比例		
-		$profit = get_drp_profit($goods_id);
+		$profit = afte_drp_profit($goods_id);
 		// 分销商三级利润
 		$sale_money['profit1']+= $touch_sale/100*$profit['profit1']*$goods['back_num'];
 		$sale_money['profit2']+= $touch_sale/100*$profit['profit2']*$goods['back_num'];
@@ -3730,27 +3730,27 @@ function aftermarket_drp($order_goods= array()){
 	
 }
 
-function get_drp_profit($goods_id = 0){
+function afte_drp_profit($goods_id = 0){
 	 if($goods_id == 0 ){
 		return false;
 	}
 	$sql = 'SELECT cat_id FROM ' . $GLOBALS['ecs']->table('goods') . " WHERE goods_id = '$goods_id'";
 	$res = $GLOBALS['db']->getOne($sql);
-	$id = get_goods_cat($res);
+	$id = afte_goods_cat($res);
 	
 	$sql1 = 'SELECT * FROM ' . $GLOBALS['ecs']->table('drp_profit') . " WHERE cate_id = '$id'";
     $profit = $GLOBALS['db']->GetRow($sql1);	
 	return $profit;
 	
 }
-function get_goods_cat($id){	
+function afte_goods_cat($id){	
 	$sql = 'SELECT parent_id FROM ' . $GLOBALS['ecs']->table('category') . " WHERE cat_id = '$id'";
 	$res = $GLOBALS['db']->getOne($sql);
 	$parent_id = $res;
 	if($parent_id==0){
 		return $id;
 	}else{
-		$id = get_goods_cat($parent_id);
+		$id = afte_goods_cat($parent_id);
 		return $id;
 	}
 	
