@@ -463,7 +463,7 @@ $(function(){
 
 //允许购买套餐的最大数量
 function getMaxStock(group){
-	var obj = $('input[name="'+group+'_number"]');
+	var obj = $('input[name="'+group+'_number"]').val();
 	var original = parseInt(Number(obj.val()));
 	var stock = $("."+group).eq(0).attr('stock');
 	//是否是数字
@@ -566,7 +566,7 @@ function ec_group_addToCartResponse(result)
 			$('.'+group+'_display').eq(index).text(goods_price);//前台显示
 		}
 	});
-	getMaxStock(group);//根据套餐获取该套餐允许购买的最大数
+	//getMaxStock(group);//根据套餐获取该套餐允许购买的最大数
 	display_Price(group,group.charAt(group.length-1));//显示套餐价格
   }
 }
