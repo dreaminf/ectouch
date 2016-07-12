@@ -471,12 +471,7 @@ function getMaxStock(group){
 		original = 1;
 		obj.val(original);
 	}
-	$("."+group).each(function(index){
-		if($("."+group).eq(index).prop('checked')){
-			var item_stock = parseInt($("."+group).eq(index).attr('stock'));
-			stock = (stock > item_stock)?item_stock:stock;//取最小值
-		}
-	});
+	
 	//更新
 	original = (original < 1)?1:original;
 	stock = (stock < 1)?1:stock;
