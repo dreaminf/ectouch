@@ -2153,5 +2153,17 @@ function get_business_address($suppliers_id) {
     return $address;
 }
 
+ /**
+ * 获取省，市，地区id
+ */
+function find_address($region_name,$region_type = 0) {
+	
+	$sql = "SELECT region_id FROM " . $this->pre .
+		"region where region_name like '%$region_name%' and region_type = $region_type ";
+	$address = $this->row($sql);
+    return $address['region_id'];
+	
+}
+
 
 }

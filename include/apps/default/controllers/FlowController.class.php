@@ -788,9 +788,20 @@ class FlowController extends CommonController {
                 if ($addressId > 0) {
                     $consignee_list[] = model('Users')->get_consignee_list($_SESSION ['user_id'], $addressId);
                 } else {
-                    $consignee_list [] = array(
-                        'country' => C('shop_country')
-                    );
+					if(!empty($_SESSION['consignee'])){
+						$consignee = $_SESSION['consignee'];
+						$consignee_list [] = array(
+                        'country' => C('shop_country'),
+						'province' => $consignee['province'],						   
+						'city' => $consignee['city'],						   
+						'district' => $consignee['district'],
+						   
+						);
+					}else{
+						$consignee_list [] = array(
+                        'country' => C('shop_country'),
+						);						
+					}                    
                 }
             } else {
                 if (isset($_SESSION ['flow_consignee'])) {

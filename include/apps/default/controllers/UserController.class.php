@@ -1085,13 +1085,17 @@ class UserController extends CommonController {
             }
             exit();
         }
-		
+		if(!empty($_SESSION['consignee'])){
+			$consignee = $_SESSION['consignee'];
+			$this->assign('consignee', $consignee);
+		}
         $province_list = model('RegionBase')->get_regions(1, 1);
-        $city_list = model('RegionBase')->get_regions(2);
-        $district_list = model('RegionBase')->get_regions(3);
+        $city_list = model('RegionBase')->get_regions(2, $consignee['province']);
+        $district_list = model('RegionBase')->get_regions(3,$consignee['city'] );
 		$this->assign("token",$token);
         $this->assign('title', L('add_address'));
         // 取得国家列表、商店所在国家、商店所在国家的省列表
+		
         $this->assign('country_list', model('RegionBase')->get_regions());
         $this->assign('shop_province_list', model('RegionBase')->get_regions(1, C('shop_country')));
         $this->assign('province_list', $province_list);
@@ -1100,7 +1104,40 @@ class UserController extends CommonController {
 
         $this->display('user_add_address.dwt');
     }
-
+	
+	 // 根据经纬度获取所在地区
+	public function positions(){
+		if(IS_POST){
+			$lng = I('post.lng', 0);
+			$lat = I('post.lat', 0);	
+			$store = $lat .','.$lng;			
+			if(empty($store)){
+				exit(json_encode(array('error'=>1, 'message'=> '暂时无法获取默认地址')));
+			}
+			$result = Http::doGet('http://apis.map.qq.com/ws/geocoder/v1/?location='.$store.'&key=LXDBZ-2SA3V-PXAPD-U2YGL-D47G6-C4B7O');
+			$data = json_decode($result, 1);
+			if(!empty($data)){
+				$address = $data['result']['address_component'];
+				$province = $address['province'];
+				$province = mb_substr($province, 0,-1,'utf-8');
+				$city = $address['city'];
+				$city = mb_substr($city, 0,-1,'utf-8');
+				$district =$address['district'];
+				$province_id = model('Users')->find_address($province, 1);
+				$city_id = model('Users')->find_address($city,2);
+				$district_id = model('Users')->find_address($district,3);
+				$consignee = array(
+                    'province' => $province_id,
+                    'city' => $city_id,
+                    'district' => $district_id
+                );			
+				$_SESSION['consignee'] = $consignee ;
+				
+			}
+			
+		}
+		
+	}
     /**
      * 编辑收货地址的处理
      */
