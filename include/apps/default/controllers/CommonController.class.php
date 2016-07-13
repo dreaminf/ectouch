@@ -214,8 +214,7 @@ class CommonController extends BaseController
         }else{
             $condition = array('user_id' => $_SESSION['user_id']);
         }
-		$drp_id = $this->model->table('drp_shop')->field('id')->where($condition)->getOne();	
-		//$drp_id = $this->model->table('drp_shop')->field('id')->where("user_id=".$_SESSION['user_id'])->getOne();
+		$drp_id = $this->model->table('drp_shop')->field('id')->where($condition)->getOne();
 		if($drp_id > 0){
 			$drp_info = model('Sale')->get_drp($drp_id,'1');
             if($drp_info['open'] == 1){
@@ -239,6 +238,8 @@ class CommonController extends BaseController
 					$_SESSION['drp_shop'] = $drp_info;
                     model('Sale')->drp_visiter($drp_info['id']);
 				}
+			}else{			
+				$_SESSION['drp_shop'] = array();			
 			}
 		}
     } 
