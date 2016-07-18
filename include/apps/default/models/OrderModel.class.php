@@ -629,7 +629,7 @@ class OrderModel extends BaseModel {
                     " AND extension_code <> 'package_buy' " .
                     " AND rec_type = 'CART_GENERAL_GOODS'";
 
-            $row = $this->query($sql);
+            $row = $this->row($sql);
 
             if ($row) { //如果购物车已经有此物品，则更新
                 $num += $row['goods_number'];
