@@ -442,7 +442,6 @@ elseif ($_REQUEST['act'] == 'operate_post') {
 
         /* 处理退款已付款订单 */
         $return_info = return_order_info($ret_id);        //退换货订单
-
         $refund_type = $_REQUEST['refund'];   //退款类型 1 线上 2 线下 默认为 1
         $refund_type = empty($refund_type) ? 1 : $refund_type;
         $refund_amount = $_REQUEST['refund_amount'] + $_REQUEST['shipping'];
@@ -454,7 +453,7 @@ elseif ($_REQUEST['act'] == 'operate_post') {
             /* 标记order_return 表已退款 */
 			
 			/*DRP_START*/
-			aftermarket_drp($order_goods);//退货退款减去分销佣金
+			aftermarket_drp($return_info);//退货退款减去分销佣金
 			/*DRP_END*/
 			
             $arr = array(
