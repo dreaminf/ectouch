@@ -183,7 +183,7 @@
 									<div class="row">
 										<label class="f-label"> <em>*</em>{$lang.return_num} </label>
 										<div class="f-controls money-input iconfont">
-											<input id="bidi-form-87" class="input-l input-content-len-10 J_InputFee" name="back_num" value="1" type="number" wrapper=".f-field" required="" min="1" max="{$goods.goods_number}" placeholder="">
+											<input id="back_num" class="input-l input-content-len-10 J_InputFee" name="back_num" value="1" type="number" wrapper=".f-field" required="" min="1" max="{$goods.goods_number}" placeholder="">
 										</div>
 									</div>
 								</div>
@@ -366,12 +366,8 @@
 	function changeServiceType(service_id) {
 		$.get('index.php?m=default&c=user&a=change_service', {
 			id: service_id,
-			order_id: {
-				$order_id
-			},
-			rec_id: {
-				$rec_id
-			}
+			order_id: {$order_id},
+			rec_id: {$rec_id}
 		}, function(result) {
 			if (result.error > 0) {
 				alert(result.message);
@@ -392,6 +388,9 @@
 		}
 		if (val > max_num || val < 1) {
 			$('#back_num').val(max_num);
+			 val = max_num;
+			 $('#refundFee').val((fee * val).toFixed(2));
+
 		}
 		$('#refundFee').val((fee * val).toFixed(2));
 	});
