@@ -382,15 +382,11 @@
 	}
 	/*控制最大退换货数量*/
 	$("#back_num").change(function() {
-
+ 
 		var reg = /^[0-9]*[1-9][0-9]*$/;
-		var fee = {
-			$goods.goods_price
-		};
+		var fee = {$goods.goods_price};
 		var val = $('#back_num').val();
-		var max_num = {
-			$goods.goods_number
-		};
+		var max_num = {$goods.goods_number};
 		if (!reg.test(val)) {
 			$('#back_num').val(1);
 		}
