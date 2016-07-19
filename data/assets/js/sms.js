@@ -20,7 +20,7 @@ function sendSms(){
 			if(result.msg){
 				alert(result.msg);
 			}else{
-				alert('手机验证码发送失败');0
+				alert('手机验证码发送失败');
 			}
 		}
 	}, "json");
