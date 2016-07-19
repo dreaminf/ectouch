@@ -5,10 +5,10 @@
 -- ------------------------------------------------------------
 
 --
--- 转存表中的数据 `ecs_admin_action`
+-- 转存表中的数据 `{pre}admin_action`
 --
 
---INSERT INTO `ecs_admin_action` (`action_id`, `parent_id`, `action_code`, `relevance`) VALUES
+--INSERT INTO `{pre}admin_action` (`action_id`, `parent_id`, `action_code`, `relevance`) VALUES
 --(12, 0, 'service_manage', ''),
 --(139, 12, 'service_type', ''),
 --(140, 12, 'back_cause_list', ''),
@@ -20,11 +20,11 @@
 
 
 --
--- 表的结构 `ecs_order_return`
+-- 表的结构 `{pre}order_return`
 --
-DROP TABLE IF EXISTS `ecs_order_return`;
+DROP TABLE IF EXISTS `{pre}order_return`;
 
-CREATE TABLE IF NOT EXISTS `ecs_order_return` (
+CREATE TABLE IF NOT EXISTS `{pre}order_return` (
   `ret_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '退换货id',
   `service_sn` varchar(20) NOT NULL COMMENT '服务订单编号',
   `goods_id` int(13) NOT NULL COMMENT '商品唯一id',
@@ -61,11 +61,11 @@ CREATE TABLE IF NOT EXISTS `ecs_order_return` (
 
 
 --
--- 表的结构 `ecs_return_action`
+-- 表的结构 `{pre}return_action`
 --
-DROP TABLE IF EXISTS `ecs_return_action`;
+DROP TABLE IF EXISTS `{pre}return_action`;
 
-CREATE TABLE IF NOT EXISTS `ecs_return_action` (
+CREATE TABLE IF NOT EXISTS `{pre}return_action` (
   `action_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `ret_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `action_user` varchar(30) NOT NULL DEFAULT '',
@@ -82,11 +82,11 @@ CREATE TABLE IF NOT EXISTS `ecs_return_action` (
 
 
 --
--- 表的结构 `ecs_return_cause`
+-- 表的结构 `{pre}return_cause`
 --
-DROP TABLE IF EXISTS `ecs_return_cause`;
+DROP TABLE IF EXISTS `{pre}return_cause`;
 
-CREATE TABLE IF NOT EXISTS `ecs_return_cause` (
+CREATE TABLE IF NOT EXISTS `{pre}return_cause` (
   `cause_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增id',
   `cause_name` varchar(50) NOT NULL COMMENT '退换货原因',
   `parent_id` int(11) NOT NULL COMMENT '父级id',
@@ -96,18 +96,18 @@ CREATE TABLE IF NOT EXISTS `ecs_return_cause` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='退换货原因说明' AUTO_INCREMENT=24 ;
 
 --
--- 转存表中的数据 `ecs_return_cause`
+-- 转存表中的数据 `{pre}return_cause`
 --
-INSERT INTO `ecs_return_cause` (`cause_name`, `parent_id`, `sort_order`, `is_show`) VALUES
+INSERT INTO `{pre}return_cause` (`cause_name`, `parent_id`, `sort_order`, `is_show`) VALUES
 ('颜色问题', 0, 50, 1),
 ('质量问题', 0, 50, 1);
 
 --
--- 表的结构 `ecs_return_goods`
+-- 表的结构 `{pre}return_goods`
 --
-DROP TABLE IF EXISTS `ecs_return_goods`;
+DROP TABLE IF EXISTS `{pre}return_goods`;
 
-CREATE TABLE IF NOT EXISTS `ecs_return_goods` (
+CREATE TABLE IF NOT EXISTS `{pre}return_goods` (
   `rg_id` int(10) NOT NULL AUTO_INCREMENT,
   `rec_id` mediumint(8) unsigned NOT NULL,
   `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -130,11 +130,11 @@ CREATE TABLE IF NOT EXISTS `ecs_return_goods` (
 
 
 --
--- 表的结构 `ecs_aftermarket_attachments`
+-- 表的结构 `{pre}aftermarket_attachments`
 --
-DROP TABLE IF EXISTS `ecs_aftermarket_attachments`;
+DROP TABLE IF EXISTS `{pre}aftermarket_attachments`;
 
-CREATE TABLE IF NOT EXISTS `ecs_aftermarket_attachments` (
+CREATE TABLE IF NOT EXISTS `{pre}aftermarket_attachments` (
   `img_id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `rec_id` mediumint(8) NOT NULL,
   `img_url` varchar(255) NOT NULL,
@@ -143,11 +143,11 @@ CREATE TABLE IF NOT EXISTS `ecs_aftermarket_attachments` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 --
--- 表的结构 `ecs_service_type`
+-- 表的结构 `{pre}service_type`
 --
-DROP TABLE IF EXISTS `ecs_service_type`;
+DROP TABLE IF EXISTS `{pre}service_type`;
 
-CREATE TABLE IF NOT EXISTS `ecs_service_type` (
+CREATE TABLE IF NOT EXISTS `{pre}service_type` (
   `service_id` int(10) NOT NULL AUTO_INCREMENT,
   `service_name` varchar(60) NOT NULL,
   `service_desc` text NOT NULL,
@@ -160,10 +160,10 @@ CREATE TABLE IF NOT EXISTS `ecs_service_type` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- 转存表中的数据 `ecs_service_type`
+-- 转存表中的数据 `{pre}service_type`
 --
 
-INSERT INTO `ecs_service_type` (`service_id`, `service_name`, `service_desc`, `received_days`, `unreceived_days`, `is_show`, `sort_order`, `service_type`) VALUES
+INSERT INTO `{pre}service_type` (`service_id`, `service_name`, `service_desc`, `received_days`, `unreceived_days`, `is_show`, `sort_order`, `service_type`) VALUES
 (1, '退货退款', '已收到货，需要退还已收到的货物1', 7, 8, 1, 9, 1),
 (3, '换货', '对已收到的货物不满意，联系卖家协商换货', 7, 10, 1, 3, 3);
 
