@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_activity` (
 CREATE TABLE IF NOT EXISTS `ecs_touch_topic` (
   `topic_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '',
-  `intro` text NOT NULL,
+  `intro` text NOT NULL DEFAULT '',
   `start_time` int(11) NOT NULL DEFAULT '0',
   `end_time` int(10) NOT NULL DEFAULT '0',
   `data` text NOT NULL DEFAULT '',
@@ -100,8 +100,8 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_feedback` (
 --
 
 CREATE TABLE IF NOT EXISTS `ecs_touch_goods` (
-  `goods_id` int(10) unsigned default NULL COMMENT '外键',
-  `sales_volume` int(10) unsigned default NULL COMMENT '销量统计',
+  `goods_id` int(10) unsigned default '0' COMMENT '外键',
+  `sales_volume` int(10) unsigned default '0' COMMENT '销量统计',
   UNIQUE KEY `goods_id` (`goods_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -110,9 +110,9 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_goods` (
 --
 
 CREATE TABLE IF NOT EXISTS `ecs_touch_goods_activity` (
-  `act_id` int(10) DEFAULT NULL,
+  `act_id` int(10) DEFAULT '0',
   `act_banner` varchar(255) DEFAULT NULL,
-  `sales_count` int(10) DEFAULT NULL,
+  `sales_count` int(10) DEFAULT '0',
   `click_num` int(10) NOT NULL DEFAULT '0',
   `cur_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   UNIQUE KEY `act_id` (`act_id`)
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_goods_activity` (
 CREATE TABLE IF NOT EXISTS `ecs_touch_nav` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `ctype` varchar(10) DEFAULT NULL,
-  `cid` smallint(5) unsigned DEFAULT NULL,
+  `cid` smallint(5) unsigned DEFAULT '0',
   `name` varchar(255) NOT NULL DEFAULT '',
   `ifshow` tinyint(1) NOT NULL DEFAULT '0',
   `vieworder` tinyint(1) NOT NULL DEFAULT '0',
@@ -175,8 +175,8 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_auth` (
 --
 
 CREATE TABLE IF NOT EXISTS `ecs_touch_user_info` (
-  `user_id` int(10) NOT NULL,
-  `aite_id` varchar(200) NOT NULL COMMENT '标识'
+  `user_id` int(10) NOT NULL DEFAULT '0',
+  `aite_id` varchar(200) NOT NULL DEFAULT '' COMMENT '标识'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户信息';
 
 -- /*DRP_START*/
@@ -217,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_log` (
 
 CREATE TABLE IF NOT EXISTS `ecs_drp_profit` (
   `profit_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '分类利润id',
-  `cate_id` int(10) DEFAULT NULL COMMENT '商品分类',
+  `cate_id` int(10) DEFAULT '0' COMMENT '商品分类',
   `profit1` float(20,2) DEFAULT '0.00' COMMENT '分销利润1级',
   `profit2` float(20,2) DEFAULT '0.00' COMMENT '分销利润2级',
   `profit3` float(20,2) DEFAULT '0.00' COMMENT '分销利润3级',
@@ -254,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_bank` (
   `bank_name` varchar(50) DEFAULT NULL COMMENT '银行名称',
   `bank_user_name` varchar(50) DEFAULT NULL COMMENT '开户名称',
   `bank_card` varchar(50) DEFAULT NULL COMMENT '银行卡号',
-  `user_id` int(10) DEFAULT NULL COMMENT '用户id',
+  `user_id` int(10) DEFAULT '0' COMMENT '用户id',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -285,7 +285,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_goods` (
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `ecs_drp_order_goods` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `goods_id` int(10) DEFAULT NULL,
+  `goods_id` int(10) DEFAULT '0',
   `touch_sale` decimal(10,2) DEFAULT '0.00',
   `touch_fencheng` decimal(10,2) DEFAULT '0.00',
   `order_id` int(10) DEFAULT NULL,
@@ -309,9 +309,9 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_order_info` (
 CREATE TABLE IF NOT EXISTS `ecs_drp_apply` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `apply` int(1) DEFAULT '1',
-  `user_id` int(10) DEFAULT NULL,
-  `time` int(12) DEFAULT NULL,
-  `amount` decimal(10,2) DEFAULT NULL,
+  `user_id` int(10) DEFAULT '0',
+  `time` int(12) DEFAULT '0',
+  `amount` decimal(10,2) DEFAULT '0.00',
   PRIMARY KEY (`id`)
 )  ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
