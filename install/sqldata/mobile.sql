@@ -201,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_log` (
   `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `user_money` decimal(10,2) NOT NULL DEFAULT '0.00',
   `pay_points` mediumint(9) NOT NULL DEFAULT '0',
-  `change_time` int(10) unsigned NOT NULL DEFAULT '',
+  `change_time` int(10) unsigned NOT NULL DEFAULT '0',
   `change_desc` varchar(255) NOT NULL DEFAULT '',
   `change_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `bank_info`  text COMMENT '提现银行卡信息',
