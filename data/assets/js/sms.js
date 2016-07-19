@@ -1,3 +1,4 @@
+var c=1;
 function sendSms(){
 	var mobile = $('#mobile_phone').val();
 	var flag = $('#flag').val();
@@ -5,6 +6,10 @@ function sendSms(){
 	var captcha = $("#captcha").val();
 	if(mobile.length == ''){
 		alert('请填写手机号码');
+		return false;
+	}
+	if(c==0){
+		alert('发送频繁');
 		return false;
 	}
 	RemainTime();
@@ -15,7 +20,7 @@ function sendSms(){
 			if(result.msg){
 				alert(result.msg);
 			}else{
-				alert('手机验证码发送失败');
+				alert('手机验证码发送失败');0
 			}
 		}
 	}, "json");
@@ -88,8 +93,9 @@ function submitForget(){
 		
 var iTime = 59;
 var Account;
+
 function RemainTime(){
-  document.getElementById('zphone').disabled = true;
+  //document.getElementById('zphone').disabled = true;
   var iSecond,sSecond="",sTime="";
   if (iTime >= 0){
     iSecond = parseInt(iTime%60);
@@ -101,13 +107,17 @@ function RemainTime(){
       clearTimeout(Account);
       sTime='获取手机验证码';
       iTime = 59;
-      document.getElementById('zphone').disabled = false;
+	  c=1;
+      //document.getElementById('zphone').disabled = false;
     }else{
+	 
       Account = setTimeout("RemainTime()",1000);
       iTime=iTime-1;
+	  c=0;
     }
   }else{
     sTime='没有倒计时';
   }
-  document.getElementById('zphone').value = sTime;
+  //document.getElementById('zphone').value = sTime;
+  $('#zphone').html(sTime);
 }
