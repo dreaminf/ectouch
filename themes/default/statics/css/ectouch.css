@@ -902,6 +902,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .c-filter-div .price-range{padding-top:0;}
 /*商品分类页*/
 .category-top .search{border-bottom:1px solid #e8e8e8;position:fixed; left:0; top:0; right:0; z-index: 1; background:#F6F6F9}
+.menu-left,.menu-right{position:fixed; left:0;top:5.7rem; bottom:0; overflow-y: scroll;margin-bottom:5.4rem;}
 .menu-right{position:fixed; left:0;top:5.7rem; bottom:0; overflow-y: scroll;}
 .menu-right #loading{left:11rem; top:6.7rem;}
 
