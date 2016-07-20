@@ -433,6 +433,7 @@ $_LANG['08_wechat_qrcode'] = '扫码引荐';
 $_LANG['09_wechat_extends'] = '扩展功能';
 $_LANG['10_wechat_remind'] = '提醒设置';
 $_LANG['11_wechat_customer'] = '多客服设置';
+$_LANG['12_wechat_wall'] = '微信墙';
 /* by ECTouch leah begin*/
 $_LANG['13_service_type'] = '售后服务类型';
 $_LANG['02_add_service_type'] = '添加售后服务类型';
