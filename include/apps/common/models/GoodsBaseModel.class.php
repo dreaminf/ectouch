@@ -359,15 +359,19 @@ class GoodsBaseModel extends BaseModel {
         //如果需要加入规格价格
         if ($is_spec_price) {
             if (!empty($spec)) {
-                $spec_price = model('Goods')->spec_price($spec);
-                if($volume_price == 0)
+                $spec_price = model('Goods')->spec_price($spec);  
+                $sql = "select user_price from " . $this->pre . "member_price where user_rank =".$_SESSION['user_rank'] ." and goods_id = ".$goods_id;
+                $res = $this->query($sql);
+                
+                if($res[0]['user_price'])
                 {
-                    $final_price += $spec_price;
+                  $final_price += $spec_price;
                 }
                 
                 else
                 {
-                $final_price += ($spec_price+$final_price/$_SESSION['discount'])*$_SESSION['discount']-$final_price;
+                
+                 $final_price += ($spec_price+$final_price/$_SESSION['discount'])*$_SESSION['discount']-$final_price; 
                 }
             }
         }

@@ -157,17 +157,38 @@ class FlowController extends CommonController {
         $result['product_spec'] = $goods->spec;
         // 检查：如果商品有规格，而post的数据没有规格，把商品的规格属性通过JSON传到前台
         if (empty($goods->spec) and empty($goods->quick)) {
-             $sql = "SELECT goods_name,goods_thumb,shop_price,goods_number FROM ".$this->model->pre."goods where goods_id = ".$goods->goods_id;
+            $sql = "select user_price from ".$this->model->pre."member_price where goods_id = ".$goods->goods_id ." and user_rank = ".$_SESSION['user_rank'];
             $res = $this->model->query($sql);
+            $mp_price = $res[0][user_price] ;
+            if(empty($mp_price)){
+                    $sql = "SELECT g.goods_name as goods_name,g.goods_thumb as goods_thumb, g.shop_price*$_SESSION[discount]  as shop_price,g.  goods_number as goods_number FROM ".
+                     $this->model->pre."goods as g  ".
+                     " where g.goods_id = ".$goods->goods_id ; 
+            } else{
+                 $sql = "SELECT g.goods_name as goods_name,g.goods_thumb as goods_thumb,ifnull(".$mp_price.",g.shop_price*$_SESSION[discount]) as shop_price,g.  goods_number as goods_number FROM ".
+                     $this->model->pre."goods as g  ".
+                     " where g.goods_id = ".$goods->goods_id ; 
+            }
+             //var_dump($sql) ; 
+           
+            $res = $this->model->query($sql); 
             $goods_name = $res[0]['goods_name'];
             $shop_price = $res[0]['shop_price'];
             $goods_number = $res[0]['goods_number'];
             $goods_thumb = $res[0]['goods_thumb'];
+            $sql = "SELECT user_price FROM ".$this->model->pre.
+                   "member_price WHERE goods_id = ".$goods->goods_id.
+                   " AND user_rank = ".$_SESSION['user_rank'];
+            $res = $this->model->query($sql);
+            $mp = $res[0]["user_price"];
             $sql = "SELECT a.attr_id, a.attr_name, a.attr_type, " . "g.goods_attr_id, g.attr_value, g.attr_price " . 'FROM ' . $this->model->pre . 'goods_attr AS g ' . 'LEFT JOIN ' . $this->model->pre . 'attribute AS a ON a.attr_id = g.attr_id ' . "WHERE a.attr_type != 0 AND g.goods_id = '" . $goods->goods_id . "' " . 'ORDER BY a.sort_order, g.attr_price, g.goods_attr_id';
             $res = $this->model->query($sql);
             if (!empty($res)) {
                 $spe_arr = array();
                 foreach ($res as $row) {
+                    if(!$mp){
+                        $row['attr_price'] = $row['attr_price'] * $_SESSION['discount'];
+                    }
                     $spe_arr [$row ['attr_id']] ['attr_type'] = $row ['attr_type'];
                     $spe_arr [$row ['attr_id']] ['name'] = $row ['attr_name'];
                     $spe_arr [$row ['attr_id']] ['attr_id'] = $row ['attr_id'];

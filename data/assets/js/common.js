@@ -845,7 +845,10 @@ function openSpeDiv(message, goods_id, parent, goods_name, goods_thumb, goods_nu
         //sel_obj[i].style.visibility = "hidden";
         i++;
     }
-
+     var attr_arr = [];
+     for(var n=0;n<message.length;n++){
+         attr_arr[n] = message[n]['attr_id'];
+     }
     // 新激活图层
          var newDiv = document.createElement("div");
         newDiv.id = _id;
@@ -871,7 +874,7 @@ function openSpeDiv(message, goods_id, parent, goods_name, goods_thumb, goods_nu
 										  '<h4 class="box-flex">'+ goods_name +"</h4>"+
 										   '<a href="javascript:cancel_div()">'+'<i  class="iconfont icon-guanbi show-div-guanbi">'+"</i>"+"</a>"+
 										"</div>"+
-											'<p>'+'<span class="p-price t-first" id="ECS_GOODS_AMOUNT">'+ shop_price +"</span>"+
+											'<p>'+'<span class="p-price t-first" id="ECS_GOODS_AMOUNT" name="tk_price">'+ shop_price +"</span>"+
 											"</p>"+
 											'<p class="dis-box p-t-remark">'+'<span class="box-flex">'+ goods_number +"</span>"+"</p>"+
 										"</div>"+
@@ -883,16 +886,18 @@ function openSpeDiv(message, goods_id, parent, goods_name, goods_thumb, goods_nu
 					                    + message[spec]['name'] +':'+ "</h6>";
 					
 					            if (message[spec]['attr_type'] == 1) {
-					                for (var val_arr = 0; val_arr < message[spec]['values'].length; val_arr++) {
-					                    if (val_arr == 0) {
-					                        newDiv.innerHTML += "<div class='n-input-box'><input style='margin-left:15px;' type='radio' name='spec_"+ message[spec]['attr_id']+ "' value='"+ message[spec]['values'][val_arr]['id']+ "' id='spec_value_"+ message[spec]['values'][val_arr]['id']+ "' checked /><label class='' color=#555555>"+ message[spec]['values'][val_arr]['label']+ '</label> ['+ message[spec]['values'][val_arr]['format_price']+ ']</label></div>';
-					                    } else {
-					                        newDiv.innerHTML += "<div class='n-input-box'><input style='margin-left:15px;' type='radio' name='spec_"+ message[spec]['attr_id']+ "' value='"+ message[spec]['values'][val_arr]['id']+ "' id='spec_value_"+ message[spec]['values'][val_arr]['id']+ "' /><label color=#555555>"+ message[spec]['values'][val_arr]['label']+ '</label>['+ message[spec]['values'][val_arr]['format_price']+ ']</label></div>';
-					                    }
-					                }
-					                newDiv.innerHTML += "<input type='hidden' name='spec_list' value='"
-					                        + val_arr + "' />";
-					            } else {
+                                    for (var val_arr = 0; val_arr < message[spec]['values'].length; val_arr++) {
+                                        if (val_arr == 0) {
+
+                                              newDiv.innerHTML += "<div class='n-input-box'><input style='margin-left:15px;' type='radio' name='spec_"+ message[spec]['attr_id']+ "' value='"+ message[spec]['values'][val_arr]['id']+ "' id='spec_value_"+ message[spec]['values'][val_arr]['id']+ "' onclick='attrChangePrice("+attr_arr+","+shop_price+")' /><label class='' color=#555555 data-value="+ message[spec]['values'][val_arr]['price']+">"+ message[spec]['values'][val_arr]['label']+ '</div>';
+                                        } else {
+                                       
+                                              newDiv.innerHTML += "<div class='n-input-box'><input style='margin-left:15px;' type='radio' name='spec_"+ message[spec]['attr_id']+ "' value='"+ message[spec]['values'][val_arr]['id']+ "' id='spec_value_"+ message[spec]['values'][val_arr]['id']+ "' onclick='attrChangePrice("+attr_arr+","+shop_price+")' /><label color=#555555 data-value="+ message[spec]['values'][val_arr]['price']+">"+ message[spec]['values'][val_arr]['label']+ '</div>';
+                                        }
+                                    }
+                                    newDiv.innerHTML += "<input type='hidden' name='spec_list' value='"
+                                            + val_arr + "' />";
+                                } else {
 					            	
 					                for (var val_arr = 0; val_arr < message[spec]['values'].length; val_arr++) {
 					                    newDiv.innerHTML += "<div class='n-input-box'><input style='margin-left:15px;' type='checkbox' name='spec_"
@@ -931,7 +936,26 @@ function openSpeDiv(message, goods_id, parent, goods_name, goods_thumb, goods_nu
     newMask.style.opacity = "0.40";
      document.body.appendChild(newMask);
 }
+function attrChangePrice(){
 
+    var len = arguments.length;
+    var shop_price = arguments[arguments.length-1];
+    var attr_price = 0;
+    var spe = [];
+    var spe_va = [];
+    for(var i=0;i<(len-1);i++){
+        spe[i] = "spec_"+arguments[i];
+        spe_va[i] = $("input[name="+spe[i]+"]:checked").siblings("label").attr("data-value");
+        if(spe_va[i]){
+            attr_price = attr_price + parseInt(spe_va[i]);
+             //attr_price += spe_va[i];
+        }
+    }
+    shop_price = shop_price +attr_price;
+    $("span[name='tk_price']").text(shop_price);
+
+
+ }
 //获取选择属性后，再次提交到购物车
 function submit_div(goods_id, parentId) {
     var goods = new Object();
