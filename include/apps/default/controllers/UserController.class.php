@@ -282,9 +282,8 @@ class UserController extends CommonController {
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
         $where = 'user_id = ' . $this->user_id . ' AND user_money <> 0';
         $count = $this->model->table('account_log')->field('COUNT(*)')->where($where)->getOne();
-        $this->pageLimit(url('user/account_detail'), $size);
+        $this->pageLimit(url('user/account_list'), $size);
         $this->assign('pager', $this->pageShow($count));
-        
         $account_detail = model('Users')->get_account_detail($this->user_id, $size, ($page-1)*$size);
         
         $this->assign('title', L('label_user_surplus'));
@@ -325,7 +324,7 @@ class UserController extends CommonController {
         $record_count = $this->model->table('user_account')->field('COUNT(*)')->where("user_id = $this->user_id AND process_type ". db_create_in(array(SURPLUS_SAVE, SURPLUS_RETURN)))->getOne();
 
         //分页函数
-        $pager = get_pager('index.php', array('c' => 'user'), $record_count, $page);
+        $pager = get_pager('index.php', array('c' => 'user' ,'a' => 'account_log' ), $record_count, $page);
 
         //获取剩余余额
         $surplus_amount = model('ClipsBase')->get_user_surplus($this->user_id);
