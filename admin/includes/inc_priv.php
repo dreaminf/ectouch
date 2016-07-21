@@ -106,6 +106,12 @@ if (!defined('IN_ECTOUCH'))
     $purview['08_add_order']         = 'order_edit';
     $purview['09_delivery_order']    = 'delivery_view';
     $purview['10_back_order']        = 'back_view';
+	/* by ECTouch leah begin*/
+	$purview['13_service_type']      = 'service_type';	
+	$purview['11_back_cause']        = 'back_cause_list';
+	$purview['10_cause_add']         = 'add_return_cause';
+	$purview['12_back_apply']        = 'aftermarket_list';
+	/* by Leah end*/
 
 //报表统计权限
     $purview['flow_stats']           = 'client_flow_stats';

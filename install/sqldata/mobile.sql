@@ -24,7 +24,11 @@ INSERT INTO `ecs_admin_action` VALUES ('154', '201', 'wechat_qrcode', '');
 INSERT INTO `ecs_admin_action` VALUES ('155', '201', 'wechat_extends', '');
 INSERT INTO `ecs_admin_action` VALUES ('156', '201', 'wechat_remind', '');
 INSERT INTO `ecs_admin_action` VALUES ('157', '201', 'wechat_customer', '');
-
+INSERT INTO `ecs_admin_action` (`action_id`,`parent_id`, `action_code`, `relevance`) VALUES
+('158', '6', 'service_type', ''),
+('159', '6', 'back_cause_list', ''),
+('160', '6', 'aftermarket_list', ''),
+('161', '6', 'add_return_cause', '');
 --
 -- 表的结构 `ecs_touch_activity`
 --
