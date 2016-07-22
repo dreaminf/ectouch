@@ -2893,7 +2893,38 @@ class UserController extends CommonController {
             $consignee ['district']
         );
         $shipping_list = model('Shipping')->available_shipping_list($region);
-        /*处理退货信息*/ 
+    
+        $sql = "select value from ".$this->model->pre."shop_config where code='shop_country'";
+        $res = $this->model->query($sql);
+        $shop_country_id = $res[0]['value'];
+        $sql = "select region_name from ".$this->model->pre."region where region_id = '$shop_country_id'";
+        $res = $this->model->query($sql);
+        $shop_country = $res[0]['region_name'];
+        $sql = "select value from ".$this->model->pre."shop_config where code='shop_province'";
+        $res = $this->model->query($sql);
+        $shop_province_id = $res[0]['value'];
+        $sql = "select region_name from ".$this->model->pre."region where region_id = '$shop_province_id'";
+        $res = $this->model->query($sql);
+        $shop_province = $res[0]['region_name'];
+        $sql = "select value from ".$this->model->pre."shop_config where code='shop_city'";
+        $res = $this->model->query($sql);
+        $shop_city_id = $res[0]['value'];
+        $sql = "select region_name from ".$this->model->pre."region where region_id = '$shop_city_id'";
+        $res = $this->model->query($sql);
+        $shop_city = $res[0]['region_name'];
+        $sql = "select value from ".$this->model->pre."shop_config where code ='shop_address'";
+        $res = $this->model->query($sql);
+        $shop_address = $res[0]['value'];
+        $sql = "select value from ".$this->model->pre."shop_config where code ='shop_name'";
+        $res = $this->model->query($sql);
+        $shop_name = $res[0]['value'];
+        $sql = "select value from ".$this->model->pre."shop_config where code ='service_phone'";
+        $res = $this->model->query($sql);
+        $service_phone = $res[0]['value'];
+        $addr_str = $shop_country." ".$shop_province." ".$shop_city." ".$shop_address.
+                    "  收件人： ".$shop_name." 联系电话：".$service_phone;
+
+        /*处理退货信息*/
         if (IS_POST) {
             $invoice_no = I('post.back_invoice_no');
             $shipping_id = I('post.back_other_shipping');
@@ -2926,6 +2957,7 @@ class UserController extends CommonController {
             exit;
         }
         $this->assign('shipping_list', $shipping_list);
+        $this->assign('addr', $addr_str);
         $this->assign('ret_id', $ret_id);
         $this->assign('title', L('send_out'));
         $this->display('user_aftermarket_return.dwt');
