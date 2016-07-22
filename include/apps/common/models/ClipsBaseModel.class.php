@@ -564,7 +564,7 @@ class ClipsBaseModel extends BaseModel {
             $info['avatar'] = $u_row['headimgurl'];
         } else {
             $info['name'] = $info['username'];
-            $info['avatar'] = __PUBLIC__ . '/images/get_avatar.png';
+            $info['avatar'] = __TPL__. '/images/idx_user.png';
         }
 
         //如果$_SESSION中时间无效说明用户是第一次登录。取当前登录时间。
