@@ -359,7 +359,7 @@ class MY_FlowController extends FlowController {
                     $data['openid'] = $userInfo['openid'];
                     $data['keyword5'] = $userInfo['nickname'];
                     if($data['openid']){
-                        call_user_func(array('WechatController', 'sendTemplateMessage'), $data);
+                        sendTemplateMessage($data);
                     }
                     // 一级用户id
                     $parent_id1 = M()->table('users')->field('parent_id')->where('user_id = ' . $user_id)->getOne();
@@ -369,7 +369,7 @@ class MY_FlowController extends FlowController {
                         $data['openid'] = $userInfo['openid'];
                         $data['keyword5'] = $userInfo['nickname'];
                         if($data['openid']){
-                            call_user_func(array('WechatController', 'sendTemplateMessage'), $data);
+                            sendTemplateMessage($data);
                         }
                         // 二级用户id
                         $parent_id2 = M()->table('users')->field('parent_id')->where('user_id = ' . $parent_id1)->getOne();
@@ -379,7 +379,7 @@ class MY_FlowController extends FlowController {
                             $data['openid'] = $userInfo['openid'];
                             $data['keyword5'] = $userInfo['nickname'];
                             if($data['openid']){
-                                call_user_func(array('WechatController', 'sendTemplateMessage'), $data);
+                                sendTemplateMessage($data);
                             }
                         }
                     }
