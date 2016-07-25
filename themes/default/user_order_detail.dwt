@@ -155,7 +155,7 @@
   </ul>
 </section>  
 <section class="order-detail-info ect-margin-tb ect-margin-bottom0 user-bottom0">
-  <ul>
+  <ul style="margin-bottom: 2rem;">
    <!-- {if $order.shipping_id > 0} -->
     <li>{$lang.shipping}：<b>{$order.shipping_name}</b></li>
     <!-- {/if} -->
@@ -188,6 +188,5 @@
     <li>{$lang.booking_process}：<b>{$order.how_oos_name}</b></li>
   </ul>
 </section>
-<footer class="logo"><a href="http://www.ectouch.cn" title="ECTouch官网" target="_blank"><img src="__TPL__/images/copyright.png" width="176" height="60"></a></footer>
 </div>
 <!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

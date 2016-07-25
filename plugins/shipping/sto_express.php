@@ -87,13 +87,13 @@ class sto_express
      */
     function query($invoice_sn)
     {
-        $url = 'http://m.kuaidi100.com/query?type=shentong&id=1&postid=' .$invoice_sn. '&temp='.time();
+        $url = 'http://wap.guoguo-app.com/wuliuDetail.htm?mailNo=' .$invoice_sn. '&temp='.time();
         return $url;
     }
 
     function third_party($invoice_sn)
     {
-        $url = 'http://m.kuaidi100.com/index_all.html?type=shentong&postid=' .$invoice_sn;
+        $url = 'http://wap.guoguo-app.com/wuliuDetail.htm?mailNo=' .$invoice_sn;
         return $url;
     }
 }
