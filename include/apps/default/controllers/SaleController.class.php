@@ -257,7 +257,7 @@ class SaleController extends CommonController {
 			$data['keyword1'] = $amount;  // 结款金额
             $data['keyword2'] = $bank['bank_card'];  // 银行卡号
             if($data['openid']){
-               call_user_func(array('WechatController', 'sendTemplateMessage'), $data);
+               sendTemplateMessage($data);
             }			
 		}
 		
@@ -682,7 +682,7 @@ class SaleController extends CommonController {
             $data['keyword2'] = $drp_shop['shop_mobile'];  // 分销商电话
             $data['keyword3'] = local_date('Y-m-d H:i:s',($drp_shop ['create_time'])); // 申请时间		
             if($data['openid']){
-               call_user_func(array('WechatController', 'sendTemplateMessage'), $data);
+               sendTemplateMessage($data);
             }			
 		}
 		
