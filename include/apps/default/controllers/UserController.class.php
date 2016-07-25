@@ -626,11 +626,10 @@ class UserController extends CommonController {
      */
     public function not_shoushuo() {
 		$where['user_id'] = $this->user_id;
-        $where['shipping_status'] = 1;
+        $where['pay_status'] = 2;
         $pay = 1;
         $size = I(C('page_size'), 10);
         $count = $this->model->table('order_info')->where($where)->count();
-		//dump($count);exit;
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('not_shoushuo', $filter), $size);
         $offset_page = explode(',', $offset);

@@ -622,7 +622,7 @@ class UsersModel extends BaseModel {
         $sql = "SELECT order_id, order_sn, shipping_id, order_status, shipping_status, pay_status, add_time, " .
                 "(goods_amount + shipping_fee + insure_fee + pay_fee + pack_fee + card_fee + tax - discount) AS total_fee " .
                 " FROM " . $this->pre .
-                "order_info WHERE user_id = '$user_id' and shipping_status = 1 ORDER BY add_time DESC LIMIT $start , $num";
+                "order_info WHERE user_id = '$user_id' and pay_status = 2 ORDER BY add_time DESC LIMIT $start , $num";
         $res = M()->query($sql);
         foreach ($res as $key => $value) {
             if ($value['order_status'] == OS_UNCONFIRMED) {

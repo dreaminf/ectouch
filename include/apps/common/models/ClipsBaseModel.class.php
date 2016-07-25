@@ -921,7 +921,7 @@ class ClipsBaseModel extends BaseModel {
      */
 	public function not_shouhuo($user_id) {
 	   $where['user_id'] = $user_id;
-       $where['shipping_status'] = 1; 
+       $where['pay_status'] = 2; 
        $count = $this->model->table('order_info')->where($where)->count();
 	   return $count;
     }
