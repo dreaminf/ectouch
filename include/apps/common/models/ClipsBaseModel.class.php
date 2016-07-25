@@ -920,10 +920,11 @@ class ClipsBaseModel extends BaseModel {
      * 获取未收货订单的数量
      */
 	public function not_shouhuo($user_id) {
-	   $where['user_id'] = $user_id;
-       $where['pay_status'] = 2; 
-       $count = $this->model->table('order_info')->where($where)->count();
-	   return $count;
+       $where = 'and pay_status = ' . PS_PAYED . ' and shipping_status not in(' . SS_RECEIVED .')';
+       $sql = "SELECT count(*) as num FROM " . $this->pre . "order_info WHERE user_id = '$user_id' " . $where ;
+       $res = $this->row($sql);
+       return $res['num'];
+	   
     }
 	 /**
      * 获取用户积分余额
