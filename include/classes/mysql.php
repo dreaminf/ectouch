@@ -311,9 +311,9 @@ class mysql
         return mysqli_ping($this->link_id);
     }
 
-    static function escape_string($unescaped_string)
+    function escape_string($unescaped_string)
     {
-        return mysqli_real_escape_string($unescaped_string);
+        return mysqli_real_escape_string($this->link_id, $unescaped_string);
     }
 
     function close()

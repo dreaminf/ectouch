@@ -28,7 +28,7 @@ if (!defined('IN_ECTOUCH'))
  */
 function dump_escape_string($str)
 {
-    return mysql::escape_string($str);
+    return $GLOBALS['db']->escape_string($str);
 }
 
 /**
