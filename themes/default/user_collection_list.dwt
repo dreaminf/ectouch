@@ -104,9 +104,9 @@
 									<div class="s-but">{$lang.no_attention}</div>
 								</a>
 								<!-- {else} -->
-								<a class="box-flex" href="javascript:if (confirm('{$lang.add_to_attention}')) location.href='{:url('user/add_attention', array('rec_id'=>$this->_var['val']['rec_id']))}'">
+								<!-- <a class="box-flex" href="javascript:if (confirm('{$lang.add_to_attention}')) location.href='{:url('user/add_attention', array('rec_id'=>$this->_var['val']['rec_id']))}'">
 									<div class="s-but ">{$lang.attention}</div>
-								</a>
+								</a> -->
 								<!-- {/if} -->
 								<a class="n-margin-del" href="javascript:if(confirm('{$lang.remove_collection_confirm}')) location.href='{:url('delete_collection', array('rec_id'=>$this->_var['val']['rec_id']))}'"><div class="n-del"><i class="iconfont icon-xiao10 fr"></i></div></a>
 							</div>
