@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>众筹商品列表</title>
+
+		<link href="css/jquery-ui-1.10.1.custom.min.css" rel="stylesheet" />
+		<!--字体图标库-->
+		<link rel="stylesheet" href="__TPL__/crowd/fonts/iconfont.css">
+		<link rel="stylesheet" href="__TPL__/crowd/css/swiper-3.2.5.min.css" />
+		<!--主样式-->
+		<link rel="stylesheet" href="__TPL__/crowd/css/ectouch.css" />
+
+	</head>
+
+	<body class="">
+		<div class="con">
+			<div class="category">
+				<section class="search">
+					<div class="text-all dis-box j-text-all text-all-back">
+						<div class="box-flex input-text n-input-text i-search-input">
+							<a class="a-search-input j-search-input" href="javascript:void(0)"></a>
+							<i class="iconfont icon-sousuo"></i>
+							<input class="j-input-text" type="text" placeholder="商品搜索" />
+							<i class="iconfont icon-guanbi is-null j-is-null"></i>
+						</div>
+
+					</div>
+				</section>
+				<section>
+					<ul class="raise-cate-nav dis-box">
+						<li class="box-flex" class="current">综合排序<i class="iconfont icon-xiajiantou"></i></li>
+						<li class="box-flex">全部商品<i class="iconfont icon-xiajiantou"></i></li>
+						<a class="a-sequence j-a-sequence"><i class="iconfont icon-pailie" data="1"></i></a>
+					</ul>
+					<div class="raise-content">
+						<ul class="raise-list-box">
+
+							<div class="catalog-nav-box select-one j-all-raise">
+								<div class="j-get-one padding-all of-hidden">
+									<li class="ect-select w-3 rsise-nav">
+										<label class="ts-1 <!--{if $type eq ''}-->active<!--{/if}-->"><a href="{:url('crowdfunding/index',array('type'=>''))}">综合排序</a></label>
+									</li>
+									<li class="ect-select w-3 rsise-nav">
+										<label class="ts-1 <!--{if $type eq 'new'}-->active<!--{/if}-->"><a href="{:url('crowdfunding/index',array('type'=>'new'))}">最新上线</a></label>
+									</li>
+									<li class="ect-select w-3 rsise-nav">
+										<label class="ts-1 <!--{if $type eq 'sum_price'}-->active<!--{/if}-->"><a href="{:url('crowdfunding/index',array('type'=>'sum_price'))}">金额最多</a></label>
+									</li>
+									<li class="ect-select w-3  rsise-nav">
+										<label class="ts-1 <!--{if $type eq 'buy_num'}-->active<!--{/if}-->"><a href="{:url('crowdfunding/index',array('type'=>'buy_num'))}">支持最多</a></label>
+									</li>
+									<!-- <li class="ect-select w-3  rsise-nav">
+										<label class="ts-1"><a href="{:url('crowdfunding/index',array('type'=>'new'))}">即将开始</a></label>
+									</li> -->
+								</div>
+								<div class="ect-button-more raise-button dis-box">
+									<a class="box-flex btn-default cate-nav-top">取消</a>
+									<a href="javascript:;" class="box-flex btn-submit">确定</a>
+								</div>
+							</div>
+
+						</ul>
+						<ul class="raise-list-box">
+							<div class="catalog-nav-box select-one j-cate-raise">
+								<div class="j-get-one padding-all of-hidden">
+									<li class="ect-select w-3 rsise-nav">
+										<label class="ts-1 <!--{if $id eq ''}-->active<!--{/if}-->"><a href="{:url('crowdfunding/index',array('id'=>0))}">全部商品</a></label>
+									</li>
+									<!--{foreach from=$category item=vo}-->
+									
+									<li class="ect-select w-3 rsise-nav">
+										<label class="ts-1 <!--{if $vo.id eq $id}-->active<!--{/if}-->" ><a href="{:url('crowdfunding/index',array('id'=>$this->_var['vo']['id']))}">{$vo.name}</a></label>
+									</li>
+									
+									<!--{/foreach}-->									
+								</div>
+								<div class="ect-button-more raise-button dis-box">
+									<a class="box-flex btn-default cate-nav-top">取消</a>
+									<a href="javascript:;" class="box-flex btn-submit">确定</a>
+								</div>
+							</div>
+						</ul>
+					</div>
+				</section>
+
+				<section class="product-list j-product-list product-list-medium" data="1">
+					<ul>
+						<!--{foreach from=$goods_list item = goods}-->
+						<li>
+							<div class="product-div position-rel">
+								<a class="product-div-link" href="{$goods.url}"></a>
+								<img class="product-list-img" src="{$goods.goods_img}" />
+								<div class="product-text raise-category">
+									<h4>{$goods.goods_name}</h4>
+									<p class="col-9 f-03 raise-category-num">支持人<em class="color-red">{$goods.buy_num}</em><em class="col-9 f-02">人</em><em class="fr col-9"><i class="iconfont icon-shijian f-02"></i> {$goods.start_time}天前</em></p>
+									<div class="raise-progressBar dis-box">
+										<p class="wrap box-flex">
+											<span class="bar" style="width:{$goods.bar}%;"><i class="color"></i></span>
+										</p>
+										<p class="txt">{$goods.bar}%</p>
+									</div>
+									<p class="col-9 f-03">已筹<em class="color-red">{$goods.total_price}</em><em class="col-9 f-02"></em><em class="fr col-9">目标:<em class="color-red">{$goods.sum_price}</em></em>
+									</p>
+								</div>
+								<!-- <div class="raise-cate-tag"><i class="iconfont icon-geren"></i>1555800</div> --> 
+							</div>
+						</li>
+						<!--{/foreach}-->
+					</ul>
+				</section>
+			</div>
+		</div>
+		<div class="search-div j-search-div ts-3">
+			<section class="search raise-search">
+				<form action="{:url('crowdfunding/index')}" method="post">
+				<div class="text-all dis-box j-text-all">
+					<div class="box-flex input-text">
+						<input class="j-input-text" type="text" id="keywordBox" name="keywords" placeholder="项目搜索" />
+						<i class="iconfont icon-guanbi1 is-null j-is-null"></i>
+					</div>
+					<a type="button" onclick="return check('keywordBox')" class="btn-submit">搜索</a>
+				</div>
+				</form>
+			</section>
+			<section class="search-con">
+				<div class="swiper-scroll history-search">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<p>
+								<label class="fl">热门搜索</label>
+							</p>
+							<ul class="hot-search a-text-more">
+								<li class="w-3">
+									<a><span>雪地靴</span></a>
+								</li>
+								<li class="w-3">
+									<a><span>溜溜车</span></a>
+								</li>
+								<li class="w-3">
+									<a><span>登山鞋</span></a>
+								</li>
+								<li class="w-3">
+									<a><span>微单相机</span></a>
+								</li>
+								<li class="w-3">
+									<a><span>海尔空调</span></a>
+								</li>
+								<li class="w-3">
+									<a><span>PPTV电视</span></a>
+								</li>
+							</ul>
+							<p class="hos-search">
+								<label class="fl">最近搜索</label>
+								<span class="fr"><i class="iconfont icon-xiao10"></i></span>
+							</p>
+
+							<ul class="hot-search a-text-more a-text-one">
+								<li>
+									<a><span>雪地靴</span></a>
+								</li>
+								<li>
+									<a><span>溜溜车</span></a>
+								</li>
+								<li>
+									<a><span>登山鞋</span></a>
+								</li>
+								<li>
+									<a><span>微单相机</span></a>
+								</li>
+								<li>
+									<a><span>海尔空调</span></a>
+								</li>
+								<li>
+									<a><span>PPTV电视</span></a>
+								</li>
+								<li>
+									<a><span>海尔空调</span></a>
+								</li>
+								<li>
+									<a><span>PPTV电视</span></a>
+								</li>
+								<li>
+									<a><span>海尔空调</span></a>
+								</li>
+								<li>
+									<a><span>PPTV电视</span></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="swiper-scrollbar"></div>
+				</div>
+			</section>
+			<footer class="close-search j-close-search">
+				点击关闭
+			</footer>
+		</div>
+
+		<!--商品属性弹出层end-->
+		<div class="div-messages"></div>
+		<!--悬浮菜单s-->
+		<div class="filter-top" id="scrollUp	">
+			<i class="iconfont icon-jiantou "></i>
+		</div>
+		<div class="filter-menu">
+			<div class="filter-menu-list ts-5">
+				<ul class="dis-box">
+					<li class="box-flex position-rel">
+						<a href="index.html" class="product-div-link"></a>
+						<i class="iconfont icon-home"></i>
+						<em>首页</em>
+					</li>
+					<li class="box-flex position-rel">
+						<a href="#" class="product-div-link"></a>
+						<i class="iconfont icon-caidan"></i>
+						<em>分类</em>
+					</li>
+					<li class="box-flex position-rel">
+						<a href="javascript:void(0)" class="product-div-link"></a>
+						<i class="iconfont icon-sousuo"></i>
+						<em>搜索</em>
+					</li>
+					<li class="box-flex filter-nenu-cart position-rel">
+						<a href="#" class="product-div-link"></a>
+						<span>11</span>
+						<i class="iconfont icon-gouwuche"></i>
+						<em>购物车</em>
+					</li>
+					<li class="box-flex position-rel">
+						<a href="user.html" class="product-div-link"></a>
+						<i class="iconfont icon-geren"></i>
+						<em>我</em>
+					</li>
+					<li class="w"></li>
+				</ul>
+			</div>
+			<div class="filter-menu-title"></div>
+		</div>
+		<!--悬浮菜单e-->
+
+		<!--引用js-->
+		<script type="text/javascript" src="__TPL__/crowd/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="__TPL__/crowd/js/swiper-3.2.5.min.js"></script>
+		<script type="text/javascript" src="__TPL__/crowd/js/ectouch.js"></script>
+		<script type="text/javascript">
+			$(function($) {
+				//nav
+				window.onload = function() {
+					var $li = $('.raise-cate-nav li');
+					var $ul = $('.raise-content ul');
+
+					$li.click(function() {
+						var $this = $(this);
+						var $t = $this.index();
+						$li.removeClass();
+						$this.addClass('current');
+						$ul.css('display', 'none');
+						$ul.eq($t).css('display', 'block');
+					})
+				}
+				$(".cate-nav-top").click(function() {
+					$(".raise-content").addClass("active");
+				});
+				$(".raise-cate-nav li").click(function() {
+					$(".raise-content").removeClass("active");
+				});
+			});
+			/* 搜索验证 */
+			function check(Id) {
+				var strings = document.getElementById(Id).value;
+				if (strings.replace(/(^\s*)|(\s*$)/g, "").length == 0) {
+					alert('请输入搜索内容');
+					return false;
+				}
+				$("form").submit();
+				return true;
+			}
+
+		</script>
+	</body>
+
+</html>
