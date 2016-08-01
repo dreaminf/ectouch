@@ -277,7 +277,8 @@
 								<ul class="j-get-one">
 									<!--{foreach from=$goods_plan item =plan key=key}-->
 									<li class="ect-select">
-										<label onclick="changePrice()" rec-id="{$plan.cp_id}" class="ts-1  <!--{if $key eq 0}-->active<!--{/if}--> "  >											
+										<label  for="cp_{$plan.cp_id}" class="ts-1  <!--{if $key eq 0}-->active<!--{/if}--> "  >											
+										<input style="display:none" id="cp_{$plan.cp_id}" type="radio" name="cp_{$plan.cp_id}" value="{$plan.cp_id}" onclick="changePrice()" />
 										<div class="dis-box raise-detail-return m-top1px b-color-f raise-goods-active">
 											<div class="left">
 												<div class="raise-return-img"><img src="{$plan.cp_img}"></div>
@@ -381,11 +382,7 @@
 					 */
 					function changePrice(type) {
 						var id='';
-						$("label").each(function (){							
-							if($(this).hasClass("active")) {
-								id = $(this).attr("rec-id");
-							}							
-						})
+					
 						var qty = $("#number").val();
 						
 						if (type == 1) {
