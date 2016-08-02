@@ -9,13 +9,11 @@
 		<meta charset="utf-8">
 		<title>众筹商品列表</title>
 
-		<link href="css/jquery-ui-1.10.1.custom.min.css" rel="stylesheet" />
 		<!--字体图标库-->
 		<link rel="stylesheet" href="__TPL__/crowd/fonts/iconfont.css">
 		<link rel="stylesheet" href="__TPL__/crowd/css/swiper-3.2.5.min.css" />
 		<!--主样式-->
 		<link rel="stylesheet" href="__TPL__/crowd/css/ectouch.css" />
-
 	</head>
 
 	<body class="">
@@ -32,7 +30,7 @@
 
 					</div>
 				</section>
-				<section>
+				<section class="product-sequence">
 					<ul class="raise-cate-nav dis-box">
 						<li class="box-flex" class="current">综合排序<i class="iconfont icon-xiajiantou"></i></li>
 						<li class="box-flex">全部商品<i class="iconfont icon-xiajiantou"></i></li>
@@ -73,12 +71,12 @@
 										<label class="ts-1 <!--{if $id eq ''}-->active<!--{/if}-->"><a href="{:url('crowdfunding/index',array('id'=>0))}">全部商品</a></label>
 									</li>
 									<!--{foreach from=$category item=vo}-->
-									
+
 									<li class="ect-select w-3 rsise-nav">
-										<label class="ts-1 <!--{if $vo.id eq $id}-->active<!--{/if}-->" ><a href="{:url('crowdfunding/index',array('id'=>$this->_var['vo']['id']))}">{$vo.name}</a></label>
+										<label class="ts-1 <!--{if $vo.id eq $id}-->active<!--{/if}-->"><a href="{:url('crowdfunding/index',array('id'=>$this->_var['vo']['id']))}">{$vo.name}</a></label>
 									</li>
-									
-									<!--{/foreach}-->									
+
+									<!--{/foreach}-->
 								</div>
 								<div class="ect-button-more raise-button dis-box">
 									<a class="box-flex btn-default cate-nav-top">取消</a>
@@ -108,7 +106,7 @@
 									<p class="col-9 f-03">已筹<em class="color-red"><!--{if $goods.total_price }-->￥{$goods.total_price}<!--{else}-->￥0.00<!--{/if}--></em><em class="col-9 f-02"></em><em class="fr col-9">目标:<em class="color-red">￥{$goods.sum_price}</em></em>
 									</p>
 								</div>
-								<!-- <div class="raise-cate-tag"><i class="iconfont icon-geren"></i>1555800</div> --> 
+								<!-- <div class="raise-cate-tag"><i class="iconfont icon-geren"></i>1555800</div> -->
 							</div>
 						</li>
 						<!--{/foreach}-->
@@ -119,13 +117,13 @@
 		<div class="search-div j-search-div ts-3">
 			<section class="search raise-search">
 				<form action="{:url('crowdfunding/index')}" method="post">
-				<div class="text-all dis-box j-text-all">
-					<div class="box-flex input-text">
-						<input class="j-input-text" type="text" id="keywordBox" name="keywords" placeholder="项目搜索" />
-						<i class="iconfont icon-guanbi1 is-null j-is-null"></i>
+					<div class="text-all dis-box j-text-all">
+						<div class="box-flex input-text">
+							<input class="j-input-text" type="text" id="keywordBox" name="keywords" placeholder="项目搜索" />
+							<i class="iconfont icon-guanbi1 is-null j-is-null"></i>
+						</div>
+						<a type="button" onclick="return check('keywordBox')" class="btn-submit">搜索</a>
 					</div>
-					<a type="button" onclick="return check('keywordBox')" class="btn-submit">搜索</a>
-				</div>
 				</form>
 			</section>
 			<section class="search-con">
@@ -202,48 +200,6 @@
 			</footer>
 		</div>
 
-		<!--商品属性弹出层end-->
-		<div class="div-messages"></div>
-		<!--悬浮菜单s-->
-		<div class="filter-top" id="scrollUp	">
-			<i class="iconfont icon-jiantou "></i>
-		</div>
-		<div class="filter-menu">
-			<div class="filter-menu-list ts-5">
-				<ul class="dis-box">
-					<li class="box-flex position-rel">
-						<a href="index.html" class="product-div-link"></a>
-						<i class="iconfont icon-home"></i>
-						<em>首页</em>
-					</li>
-					<li class="box-flex position-rel">
-						<a href="#" class="product-div-link"></a>
-						<i class="iconfont icon-caidan"></i>
-						<em>分类</em>
-					</li>
-					<li class="box-flex position-rel">
-						<a href="javascript:void(0)" class="product-div-link"></a>
-						<i class="iconfont icon-sousuo"></i>
-						<em>搜索</em>
-					</li>
-					<li class="box-flex filter-nenu-cart position-rel">
-						<a href="#" class="product-div-link"></a>
-						<span>11</span>
-						<i class="iconfont icon-gouwuche"></i>
-						<em>购物车</em>
-					</li>
-					<li class="box-flex position-rel">
-						<a href="user.html" class="product-div-link"></a>
-						<i class="iconfont icon-geren"></i>
-						<em>我</em>
-					</li>
-					<li class="w"></li>
-				</ul>
-			</div>
-			<div class="filter-menu-title"></div>
-		</div>
-		<!--悬浮菜单e-->
-
 		<!--引用js-->
 		<script type="text/javascript" src="__TPL__/crowd/js/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript" src="__TPL__/crowd/js/swiper-3.2.5.min.js"></script>
@@ -274,14 +230,13 @@
 			/* 搜索验证 */
 			function check(Id) {
 				var strings = document.getElementById(Id).value;
-				if (strings.replace(/(^\s*)|(\s*$)/g, "").length == 0) {
+				if(strings.replace(/(^\s*)|(\s*$)/g, "").length == 0) {
 					alert('请输入搜索内容');
 					return false;
 				}
 				$("form").submit();
 				return true;
 			}
-
 		</script>
 	</body>
 
