@@ -265,7 +265,7 @@
 
 				<!--商品属性弹出层star-->
 				<div class="mask-filter-div"></div>
-				<form id="formid" action="{:url('crowdflow/crowd_checkout')}" class="fl" method="post" >
+				<form id="formid" action="{:url('crowdflow/crowd_checkout')}" class="fl" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY" >
 				<div class="show-time-con ts-3 b-color-1 j-filter-show-div">
 					<section class="goods-show-title of-hidden padding-all b-color-f raise-bot-br">
 						<h3 class="fl g-c-title-h3">方案回报</h3>
@@ -277,8 +277,9 @@
 								<ul class="j-get-one">
 									<!--{foreach from=$goods_plan item =plan key=key}-->
 									<li class="ect-select">
-										<label  for="cp_{$plan.cp_id}" class="ts-1  <!--{if $key eq 0}-->active<!--{/if}--> "  >											
-										<input style="display:none" id="cp_{$plan.cp_id}" type="radio" name="cp_{$plan.cp_id}" value="{$plan.cp_id}" onclick="changePrice()" />
+										<input style="display:none"  id="cp_{$plan.cp_id}" type="radio" name="spec_{$key}" value="{$plan.cp_id}" {if $key eq 0}checked{/if} onclick="changePrice()" />
+										<label  for="cp_{$plan.cp_id}" rec-id="{$plan.cp_id}"  class="ts-1  <!--{if $key eq 0}-->active<!--{/if}--> "  >											
+										
 										<div class="dis-box raise-detail-return m-top1px b-color-f raise-goods-active">
 											<div class="left">
 												<div class="raise-return-img"><img src="{$plan.cp_img}"></div>
@@ -297,7 +298,7 @@
 									<h4 class="t-remark">数量</h4>
 									<div class="div-num dis-box m-top08">
 										<a class="num-less" onclick="changePrice(1)"></a>
-										<input class="box-flex" type="number" id="number" value="1">
+										<input class="box-flex" type="number" name="number" id="number" value="1">
 										<a class="num-plus" onclick="changePrice(3)"></a>
 									</div>
 								</div>
@@ -311,7 +312,7 @@
 						<a onclick="c_value()" type="button" class="btn-submit box-flex	">确定</a>
 						<input type="hidden" name="goods_id"   value="{$goods.goods_id}">
 						<input type="hidden" name="cp_id"      value="">
-						<input type="hidden" name="number"     value="1">
+						<!-- <input type="hidden" name="number"     value="1"> -->
 					</section>
 				</div>
 				</form>
@@ -321,6 +322,8 @@
 				<script type="text/javascript" src="__TPL__/crowd/js/layer.js"></script>
 				<script type="text/javascript" src="__TPL__/crowd/js/ectouch.js"></script>
 				<script>
+					
+				
 					/*商品详情相册切换*/
 					var swiper = new Swiper('.goods-photo', {
 						paginationClickable: true,
@@ -370,9 +373,9 @@
 							alert('请先择回报方案');
 							return false;
 						}
-						var qty = $("#number").val();						
+						//var qty = $("#number").val();						
 						$("input[name=cp_id]").val(id);
-						$("input[name=number]").val(qty);
+						//$("input[name=number]").val(qty);
 						document.getElementById("formid").submit();
 					}
 					
@@ -381,7 +384,6 @@
 					 * 点选可选属性或改变数量时修改商品价格的函数
 					 */
 					function changePrice(type) {
-						var id='';
 					
 						var qty = $("#number").val();
 						
@@ -397,6 +399,13 @@
 						if (!/^[0-9]*$/.test(qty)) {
 							qty = document.getElementById('back_number').value;
 						}	
+						
+						var id='';
+						$("label").each(function (){							
+							if($(this).hasClass("active")) {
+								id = $(this).attr("rec-id");
+							}							
+						})
 						$("#number").val(qty)
 						$.get('{:url("crowdfunding/plan_price")}', {
 							'goods_id': goodsId,
