@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_custom_message` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `uid` int(10) unsigned NOT NULL DEFAULT '0',
   `msg` varchar(255) DEFAULT NULL COMMENT '信息内容',
-  `iswechat` smallint(1) unsigned DEFAULT '0',
+  `iswechat` smallint(1) unsigned DEFAULT NULL,
   `send_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '发送时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_prize` (
 CREATE TABLE IF NOT EXISTS `ecs_wechat_qrcode` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `type` int(1) NOT NULL DEFAULT '0' COMMENT '二维码类型，0临时，1永久',
-  `expire_seconds` int(4) DEFAULT '0' COMMENT '二维码有效时间',
+  `expire_seconds` int(4) DEFAULT NULL COMMENT '二维码有效时间',
   `scene_id` int(10) NOT NULL DEFAULT '0' COMMENT '场景值ID，临时二维码时为32位非0整型，永久二维码时最大值为100000（目前参数只支持1--100000）',
   `username` varchar(60) DEFAULT NULL COMMENT '推荐人',
   `function` varchar(255) NOT NULL DEFAULT '' COMMENT '功能',
@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_reply` (
   `wechat_id` int(11) unsigned NOT NULL DEFAULT '0',
   `type` varchar(10) NOT NULL DEFAULT '' COMMENT '自动回复类型',
   `content` varchar(255) DEFAULT NULL,
-  `media_id` int(10) DEFAULT '0',
+  `media_id` int(10) DEFAULT NULL,
   `rule_name` varchar(180) DEFAULT NULL,
   `add_time` int(11) unsigned NOT NULL DEFAULT '0',
   `reply_type` varchar(10) DEFAULT NULL COMMENT '关键词回复内容的类型',
@@ -224,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_template` (
   `contents` varchar(133) DEFAULT NULL,
   `template` text DEFAULT NULL,
   `title` varchar(33) NOT NULL DEFAULT '',
-  `add_time` int(11)  DEFAULT '0',
+  `add_time` int(11) DEFAULT NULL DEFAULT '0',
   `switch` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
