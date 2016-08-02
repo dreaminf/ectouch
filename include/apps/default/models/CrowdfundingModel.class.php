@@ -298,7 +298,23 @@ class CrowdfundingModel extends CommonModel {
 		$sql = "SELECT o.user_id, o.add_time, g.goods_price  FROM ". $this->pre ."order_info as o left join  ". $this->pre ."order_goods as g on o.order_id = g.order_id". " WHERE g.goods_id = '".$goods_id."' AND o.extension_code = 'crowd_buy'  ORDER BY g.rec_id DESC ";
         $buy_list = $this->query($sql);
         foreach($buy_list as $k => $v){
-			$buy_list[$k]['add_time'] = local_date(C('time_format'), $v['add_time']);		
+
+			 $time = gmtime() - $v['add_time'];
+			 if(($time/60) < 1){
+				 $buy_list[$k]['add_time'] = '刚刚';
+			 }
+			 if(($time/60) > 1 && ($time/60)< 60 ){
+				 $buy_list[$k]['add_time'] = intval($time/60).'分钟前';
+			 }
+			 if(($time/60) > 60 && ($time/60)< (60*24) ){
+				 $buy_list[$k]['add_time'] = intval($time/3600).'小时前';
+			 }
+			 if(($time/60) > (60*24)){
+				 $buy_list[$k]['add_time'] = intval($time/(3600*24)).'天前';
+			 }
+				 
+		
+			//$buy_list[$k]['add_time'] = local_date(C('time_format'), $v['add_time']);		
 			
 			$user = $this->model->table('users')->where("user_id=".$v['user_id'])->field('user_name')->find();		
 			$wechat_user = $this->model->table('wechat_user')->where("ect_uid=".$v['user_id'])->field('nickname,headimgurl')->find();
