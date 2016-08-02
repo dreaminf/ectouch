@@ -749,6 +749,11 @@ $(".my-com-nav-one").click(function() {
 		
 });
 
+	/*头部导航*/
+	$(".j-nav-box").click(function() {
+		$(".j-nav-content").toggleClass("active");
+	});
+
 
 
 

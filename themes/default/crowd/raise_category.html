@@ -7,7 +7,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 		<meta name="format-detection" content="telephone=no" />
 		<meta charset="utf-8">
-		<title>众筹商品列表</title>
+		<title>ECTouch-微商城</title>
 
 		<!--字体图标库-->
 		<link rel="stylesheet" href="__TPL__/crowd/fonts/iconfont.css">
@@ -18,6 +18,27 @@
 
 	<body class="">
 		<div class="con">
+			<header class="dis-box header-menu b-color color-whie">
+				<a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
+				<h3 class="box-flex">众筹项目</h3>
+				<p><i class="iconfont icon-pailie j-nav-box"></i></p>
+			</header>
+			<div class="j-nav-content">
+				<ul class="dis-box new-footer-box">
+					<li class="box-flex">
+						<a href="/ecshop-mobile/index.php?m=default&amp;c=index&amp;a=index&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/home.png"></i><span>首页</span></a>
+					</li>
+					<li class="box-flex">
+						<a href="/ecshop-mobile/index.php?m=default&amp;c=category&amp;a=top_all&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/cate.png"></i><span>分类</span></a>
+					</li>					
+					<li class="box-flex">
+						<a href="/ecshop-mobile/index.php?m=default&amp;c=flow&amp;a=cart&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/flow.png"></i><span>购物车</span></a>
+					</li>
+					<li class="box-flex">
+						<a href="/ecshop-mobile/index.php?m=default&amp;c=user&amp;a=index&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/user.png"></i><span>用户中心</span></a>
+					</li>
+				</ul>
+			</div>
 			<div class="category">
 				<section class="search">
 					<div class="text-all dis-box j-text-all text-all-back">
@@ -42,24 +63,20 @@
 							<div class="catalog-nav-box select-one j-all-raise">
 								<div class="j-get-one padding-all of-hidden">
 									<li class="ect-select w-3 rsise-nav">
-										<label class="ts-1 <!--{if $type eq ''}-->active<!--{/if}-->"><a href="{:url('crowdfunding/index',array('type'=>''))}">综合排序</a></label>
+										<a href="{:url('crowdfunding/index',array('type'=>''))}"><label class="ts-1 <!--{if $type eq ''}-->active<!--{/if}-->">综合排序</label></a>
 									</li>
 									<li class="ect-select w-3 rsise-nav">
-										<label class="ts-1 <!--{if $type eq 'new'}-->active<!--{/if}-->"><a href="{:url('crowdfunding/index',array('type'=>'new'))}">最新上线</a></label>
+										<a href="{:url('crowdfunding/index',array('type'=>'new'))}"><label class="ts-1 <!--{if $type eq 'new'}-->active<!--{/if}-->">最新上线</label></a>
 									</li>
 									<li class="ect-select w-3 rsise-nav">
-										<label class="ts-1 <!--{if $type eq 'sum_price'}-->active<!--{/if}-->"><a href="{:url('crowdfunding/index',array('type'=>'sum_price'))}">金额最多</a></label>
+										<a href="{:url('crowdfunding/index',array('type'=>'sum_price'))}"><label class="ts-1 <!--{if $type eq 'sum_price'}-->active<!--{/if}-->">金额最多</label></a>
 									</li>
 									<li class="ect-select w-3  rsise-nav">
-										<label class="ts-1 <!--{if $type eq 'buy_num'}-->active<!--{/if}-->"><a href="{:url('crowdfunding/index',array('type'=>'buy_num'))}">支持最多</a></label>
+										<a href="{:url('crowdfunding/index',array('type'=>'buy_num'))}"><label class="ts-1 <!--{if $type eq 'buy_num'}-->active<!--{/if}-->">支持最多</label></a>
 									</li>
 									<!-- <li class="ect-select w-3  rsise-nav">
 										<label class="ts-1"><a href="{:url('crowdfunding/index',array('type'=>'new'))}">即将开始</a></label>
 									</li> -->
-								</div>
-								<div class="ect-button-more raise-button dis-box">
-									<a class="box-flex btn-default cate-nav-top">取消</a>
-									<a href="javascript:;" class="box-flex btn-submit">确定</a>
 								</div>
 							</div>
 
@@ -68,20 +85,17 @@
 							<div class="catalog-nav-box select-one j-cate-raise">
 								<div class="j-get-one padding-all of-hidden">
 									<li class="ect-select w-3 rsise-nav">
-										<label class="ts-1 <!--{if $id eq ''}-->active<!--{/if}-->"><a href="{:url('crowdfunding/index',array('id'=>0))}">全部商品</a></label>
+										<a href="{:url('crowdfunding/index',array('id'=>0))}"><label class="ts-1 <!--{if $id eq ''}-->active<!--{/if}-->">全部商品</label></a>
 									</li>
 									<!--{foreach from=$category item=vo}-->
 
 									<li class="ect-select w-3 rsise-nav">
-										<label class="ts-1 <!--{if $vo.id eq $id}-->active<!--{/if}-->"><a href="{:url('crowdfunding/index',array('id'=>$this->_var['vo']['id']))}">{$vo.name}</a></label>
+										<a href="{:url('crowdfunding/index',array('id'=>$this->_var['vo']['id']))}"><label class="ts-1 <!--{if $vo.id eq $id}-->active<!--{/if}-->">{$vo.name}</label></a>
 									</li>
 
 									<!--{/foreach}-->
 								</div>
-								<div class="ect-button-more raise-button dis-box">
-									<a class="box-flex btn-default cate-nav-top">取消</a>
-									<a href="javascript:;" class="box-flex btn-submit">确定</a>
-								</div>
+
 							</div>
 						</ul>
 					</div>
