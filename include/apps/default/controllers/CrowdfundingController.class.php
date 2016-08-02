@@ -222,11 +222,16 @@ class CrowdfundingController extends CommonController {
      * 获取众筹项目的评论列表
      */
 	public function crowd_comment_list(){
+		if(!empty($_GET['id'])){
+			$cmt->id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
+			$_SESSION['goods_id']= $cmt->id;
+		}else{
+			$_SESSION['goods_id'];
+		}
 		
-        $cmt->id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
         $cmt->type = !empty($_GET['type']) ? intval($_GET['type']) : 1;
         $cmt->page = isset($_GET['page']) && intval($_GET['page']) > 0 ? intval($_GET['page']) : 1;
-        $com = model('Crowdfunding')->crowd_comment_info($cmt->id,$cmt->type);
+        $com = model('Crowdfunding')->crowd_comment_info($_SESSION['goods_id']);
         $this->assign('comments_info', $com);
         $pay = 0;
         $size = I(C('page_size'), 10);
@@ -235,12 +240,12 @@ class CrowdfundingController extends CommonController {
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('Crowdfunding/crowd_comment_list', $filter), $size);
         $offset_page = explode(',', $offset);
-        $comment_list = model('Crowdfunding')->crowd_get_comment($cmt->id, $cmt->type, $pay, $offset_page[1], $offset_page[0]);
+        $comment_list = model('Crowdfunding')->crowd_get_comment($_SESSION['goods_id'], $pay, $offset_page[1], $offset_page[0]);
         $this->assign('comment_list', $comment_list);
      
         $result['message'] = C('comment_check') ? L('cmt_submit_wait') : L('cmt_submit_done');
         $this->assign('id', $cmt->id);
-        $this->assign('type', $cmt->type);
+        //$this->assign('type', $cmt->type);
         $this->assign('pager', $this->pageShow($count));
         $this->assign('title', L('goods_comment'));
 		

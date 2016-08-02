@@ -142,7 +142,7 @@ class CrowdfundingModel extends CommonModel {
 	/**
      * 获取众筹项目的评价详情shuliang 
      */
-	function crowd_comment_info($id, $type){
+	function crowd_comment_info($id){
 		
 		switch($type){
             case 1:
@@ -160,7 +160,7 @@ class CrowdfundingModel extends CommonModel {
         }
 		
 		$sql = 'SELECT COUNT(*) as count FROM ' . $this->pre .
-                "crowd_comment WHERE goods_id = '$id' $where  AND status = 1 AND parent_id = 0" .
+                "crowd_comment WHERE goods_id = '$id' AND rank > 0  AND status = 1 AND parent_id = 0" .
                 ' ORDER BY id DESC';
         $result = $this->row($sql);
         $info['sum_count'] = $result['count'];
@@ -218,31 +218,17 @@ class CrowdfundingModel extends CommonModel {
 	/**
      * 获取众筹项目的评轮列表
      */
-	function crowd_get_comment($goods_id,$type,$pay = 1, $num = 10, $start = 0){
+	function crowd_get_comment($goods_id,$pay = 1, $num = 10, $start = 0){
 
-		
 		 if(empty($goods_id)){
             return false;
         }
-        switch($type){
-            case 1:
-            $where = " AND rank > 0";
-            break;
-            case 2:
-            $where = " AND rank IN (4,5)";
-            break;
-            case 3:
-            $where = " AND rank IN (2,3)";
-            break;
-            case 4:
-            $where = " AND rank IN (0,1)";
-            break;
-        }
+      
         if(!empty($limit)){
             $limit = " LIMIT $limit";
         }
         $sql = "SELECT id,user_id,user_name,goods_id,content,add_time FROM ". $this->pre ."crowd_comment WHERE ".
-               " goods_id = '".$goods_id."' AND parent_id = 0 AND status = 1 $where ORDER BY id DESC LIMIT $start , $num";
+               " goods_id = '".$goods_id."' AND parent_id = 0 AND status = 1 AND rank > 0 ORDER BY id DESC LIMIT $start , $num";
         $comment_list = $this->query($sql);
         foreach($comment_list as $k => $v){
 			$comment_list[$k]['add_time'] = local_date(C('time_format'), $v['add_time']);
