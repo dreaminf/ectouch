@@ -193,6 +193,9 @@ body{position: relative;}
 .color-red{
 	color: #1CBB7F;
 }
+.con .color-red {
+    color: #1CBB7F;
+}
 .color-money{
 	color: #ed5d5d;
 }
@@ -825,7 +828,15 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 /*弹出层中关闭*/
 .show-div-guanbi{font-size:2.1rem; color:#999; margin-left:1rem;}
 .product-text .show-div-guanbi{ margin-top: -1rem;position: absolute; top: .7rem;right: 0rem;}
-.product-text h4{padding-right:2.3rem;}
+/*分享*/
+.fengxiang-box{width:4rem;  margin: 0 auto;padding:1rem 0 0 0; }
+.fengxiang-box img{width:100%;}
+.is-over{overflow:hidden;  margin-bottom: 2rem;}
+.is-over p{font-size:1.2rem;text-align: center;}
+.new-win i,.new-win span,.new-color i,.new-color p{color:#888;}
+.new-but{background:none;border:none;}
+.ne-bot{padding-bottom: 0rem;}
+.ne-bot textarea{min-height:0rem;}
 
 /*评价列表*/
 .evaluation-list .t-remark{font-size:1.3rem;}
