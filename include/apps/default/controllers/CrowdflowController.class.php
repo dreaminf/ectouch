@@ -32,7 +32,8 @@ class CrowdflowController extends CommonController {
 		if(!empty($_POST)){
 			$goods_id = I('request.goods_id');
 			$cp_id = I('request.cp_id');
-			$number = I('request.number');	
+			$number = I('request.number');
+
 			$_SESSION['goods_id'] =$goods_id ;
 			$_SESSION['cp_id'] = $cp_id ;
 			$_SESSION['number'] = $number ;			
