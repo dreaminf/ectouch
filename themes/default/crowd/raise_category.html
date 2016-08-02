@@ -7,45 +7,25 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 		<meta name="format-detection" content="telephone=no" />
 		<meta charset="utf-8">
-		<title>ECTouch-微商城</title>
+		<title>众筹列表</title>
 
 		<!--字体图标库-->
 		<link rel="stylesheet" href="__TPL__/crowd/fonts/iconfont.css">
 		<link rel="stylesheet" href="__TPL__/crowd/css/swiper-3.2.5.min.css" />
 		<!--主样式-->
-		<link rel="stylesheet" href="__TPL__/crowd/css/ectouch.css" />
+		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
 	</head>
 
 	<body class="">
-		<div class="con">
-			<header class="dis-box header-menu b-color color-whie">
-				<a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
-				<h3 class="box-flex">众筹项目</h3>
-				<p><i class="iconfont icon-pailie j-nav-box"></i></p>
-			</header>
-			<div class="j-nav-content">
-				<ul class="dis-box new-footer-box">
-					<li class="box-flex">
-						<a href="/ecshop-mobile/index.php?m=default&amp;c=index&amp;a=index&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/home.png"></i><span>首页</span></a>
-					</li>
-					<li class="box-flex">
-						<a href="/ecshop-mobile/index.php?m=default&amp;c=category&amp;a=top_all&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/cate.png"></i><span>分类</span></a>
-					</li>					
-					<li class="box-flex">
-						<a href="/ecshop-mobile/index.php?m=default&amp;c=flow&amp;a=cart&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/flow.png"></i><span>购物车</span></a>
-					</li>
-					<li class="box-flex">
-						<a href="/ecshop-mobile/index.php?m=default&amp;c=user&amp;a=index&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/user.png"></i><span>用户中心</span></a>
-					</li>
-				</ul>
-			</div>
+		<div class="con m-b7">
+			
 			<div class="category">
 				<section class="search">
 					<div class="text-all dis-box j-text-all text-all-back">
 						<div class="box-flex input-text n-input-text i-search-input">
 							<a class="a-search-input j-search-input" href="javascript:void(0)"></a>
 							<i class="iconfont icon-sousuo"></i>
-							<input class="j-input-text" type="text" placeholder="商品搜索" />
+							<input class="j-input-text" type="text" placeholder="项目搜索" />
 							<i class="iconfont icon-guanbi is-null j-is-null"></i>
 						</div>
 
@@ -134,7 +114,7 @@
 					<div class="text-all dis-box j-text-all">
 						<div class="box-flex input-text">
 							<input class="j-input-text" type="text" id="keywordBox" name="keywords" placeholder="项目搜索" />
-							<i class="iconfont icon-guanbi1 is-null j-is-null"></i>
+							<i class="iconfont icon-guanbi2 is-null j-is-null"></i>
 						</div>
 						<a type="button" onclick="return check('keywordBox')" class="btn-submit">搜索</a>
 					</div>
@@ -213,11 +193,25 @@
 				点击关闭
 			</footer>
 		</div>
-
+<footer class="new-index-footer ">
+		<ul class="dis-box new-footer-box">
+			<li class="box-flex">
+				<a href="/ecshop-mobile/index.php?m=default&amp;c=index&amp;a=index&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/home.png"></i><span>首页</span></a>
+			</li>
+			<li class="box-flex">
+				<a href="/ecshop-mobile/index.php?m=default&amp;c=category&amp;a=top_all&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/cate.png"></i><span>分类</span></a>
+			</li>
+			<li class="box-flex">
+				<a href="/ecshop-mobile/index.php?m=default&amp;c=category&amp;a=top_all&amp;u=9" class="nav-cont active"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/user-a.png"></i><span>众筹</span></a>
+			</li>
+			<li class="box-flex"><a href="/ecshop-mobile/index.php?m=default&amp;c=flow&amp;a=cart&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/flow.png"></i><span>购物车</span></a></li>
+			<li class="box-flex"><a href="/ecshop-mobile/index.php?m=default&amp;c=user&amp;a=index&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/user.png"></i><span>用户中心</span></a></li>
+		</ul>
+	</footer>
 		<!--引用js-->
 		<script type="text/javascript" src="__TPL__/crowd/js/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript" src="__TPL__/crowd/js/swiper-3.2.5.min.js"></script>
-		<script type="text/javascript" src="__TPL__/crowd/js/ectouch.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
 		<script type="text/javascript">
 			$(function($) {
 				//nav
