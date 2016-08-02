@@ -81,8 +81,9 @@ class CrowdfundingController extends CommonController {
             $goods[$key]['like_num'] = $row['like_num'];
             $goods[$key]['buy_num'] = $row['buy_num'];
 			$goods[$key]['start_time'] =floor((gmtime()-$row['start_time'])/86400);
-            $goods[$key]['sum_price'] = price_format($row['sum_price']);
-            $goods[$key]['total_price'] = price_format($row['total_price']);
+            //$goods[$key]['sum_price'] = price_format($row['sum_price']);
+			$goods[$key]['sum_price'] = $row['sum_price'];
+            $goods[$key]['total_price'] = $row['total_price'];
             $goods[$key]['goods_img'] = 'data/attached/crowdimage/'.$row['goods_img'];
             $goods[$key]['url'] = url('Crowdfunding/goods_info', array('id' => $row['goods_id']));
 			$goods[$key]['bar'] = $row['total_price']*100/$row['sum_price'];
