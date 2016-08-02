@@ -71,7 +71,7 @@
 							<li>
 								<h4 class="ellipsis-one"><i class="iconfont icon-jinqian my-img-size col-9"></i></h4>
 								<p class="t-remark3">已筹资金</p>
-								<p class="f-08 color-red">{$goods.total_price}<em class="f-02 col-9">元</em></h4>
+								<p class="f-08 color-red"><!--{if $goods.total_price }-->{$goods.total_price}<!--{else}-->0.00<!--{/if}--><em class="f-02 col-9">元</em></h4>
 
 							</li>
 						</a>

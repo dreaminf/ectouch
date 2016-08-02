@@ -78,7 +78,7 @@ class CrowdfundingModel extends CommonModel {
 			$row['time'] = $row['time'] - $row['start_time'];
 			$row['shiping_time'] = local_date(C('time_format'), $row['shiping_time']);
 			$row['sum_price'] = $row['sum_price'];
-			$row['total_price'] = $row['total_price'];
+			$row['total_price'] = $this->crowd_buy_price($row['goods_id']);
             $row['goods_img'] = 'data/attached/crowdimage/'.$row['goods_img'];
             $row['url'] = url('Crowdfunding/goods_info', array('id' => $row['goods_id']));
 			$row['bar'] = $row['total_price']*100/$row['sum_price'];
@@ -92,11 +92,22 @@ class CrowdfundingModel extends CommonModel {
 		
 	}
 	
-	/* 获取当前项目购买人数量 */
+	/* 获取当前项目购买人数量*/
 	function crowd_buy_num($goods_id = 0) {
-		$sql = "SELECT count(rec_id) as num  FROM ". $this->pre ."order_info as o left join  ". $this->pre ."order_goods as g on o.order_id = g.order_id". " WHERE g.goods_id = '".$goods_id."' AND o.extension_code = 'crowd_buy' ";
+		$sql = "SELECT count(g.rec_id) as num  FROM ". $this->pre ."order_info as o left join  ". $this->pre ."order_goods as g on o.order_id = g.order_id". " WHERE g.goods_id = '".$goods_id."' AND o.extension_code = 'crowd_buy' ";
         $res = $this->row($sql);
 		return $res['num'];
+	}
+	
+	/* 获取当前项目累计金额*/
+	function crowd_buy_price($goods_id = 0) {
+		$sql = "SELECT sum(g.goods_price) as price FROM ". $this->pre ."order_info as o left join  ". $this->pre ."order_goods as g on o.order_id = g.order_id". " WHERE g.goods_id = '".$goods_id."' AND o.extension_code = 'crowd_buy' ";
+		$res = $this->row($sql);
+        /* $res = $this->query($sql);
+		foreach($res as $row){
+			$price += $row['goods_price'];
+		} */
+		return $res['price'];
 	}
 	
 	
