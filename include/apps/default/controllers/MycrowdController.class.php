@@ -23,8 +23,6 @@ class MycrowdController extends CommonController {
     {
         parent::__construct();
 		$this->user_id = $_SESSION['user_id'];
-		// 验证登录
-		$this->check_login();
         // 用户信息
         $info = model('ClipsBase')->get_user_default($this->user_id);
         // 显示第三方API的头像
@@ -68,46 +66,36 @@ class MycrowdController extends CommonController {
     
 	
 	/**
-     * 未登录验证
+     * 关余众筹
      */
-    private function check_login() {
-        // 不需要登录的操作或自己验证是否登录（如ajax处理）的方法
-        $without = array(
-            'login',
-            'register',
-            'get_password_phone',
-            'get_password_email',
-            'get_password_question',
-            'pwd_question_name',
-            'send_pwd_email',
-            'edit_password',
-            'check_answer',
-            'logout',
-            'clear_histroy',
-            'add_collection',
-            'third_login',
-            'bind',
-            'unsetsession'
-        );
-        // 未登录处理
-        if (empty($_SESSION['user_id']) && !in_array($this->action, $without)) {
-            $url = __HOST__ . $_SERVER['REQUEST_URI'];
-            $this->redirect(url('login', array(
-                'referer' => urlencode($url)
-            )));
-            exit();
+    public function crowd_articlecat() {
+        $sql = 'SELECT cat_id, cat_name' .
+            ' FROM ' .$this->model->pre. 'article_cat ' .
+            ' WHERE cat_type = 1 AND parent_id = 0' .
+            ' ORDER BY sort_order ASC';
+        $data = $this->model->query($sql);
+        foreach($data as $key=>$vo){
+            $data[$key]['url'] = url('crowd_art_list', array('id'=>$vo['cat_id']));
         }
-
-        // 已经登录，不能访问的方法
-        $deny = array(
-            'login',
-            'register'
-        );
-        if (isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0 && in_array($this->action, $deny)) {
-            $this->redirect(url('index/index'));
-            exit();
-        }
+        $this->assign('data', $data); //文章分类树
+        $this->display('crowd/raise_help.html');
     }
+	
+	
+	/**
+     * 关余众筹详细
+     */
+    public function crowd_art_list() {
+		$id = I('request.id') ? intval(I('request.id')) : 0 ;
+        $sql = 'SELECT title, 	description' .
+            ' FROM ' .$this->model->pre. 'article ' .
+            " WHERE is_open = 1 AND cat_id = '$id'" ;
+        $data = $this->model->query($sql);
+        $this->assign('data', $data);
+        $this->display('crowd/raise_problem.html');
+    }
+	
+	
 	
 	
 	
