@@ -18,7 +18,7 @@
 
 	<body class="">
 		<div class="con m-b7">
-			
+
 			<div class="category">
 				<section class="search">
 					<div class="text-all dis-box j-text-all text-all-back">
@@ -83,6 +83,7 @@
 
 				<section class="product-list j-product-list product-list-medium" data="1">
 					<ul>
+						<!--{if $goods_list}-->
 						<!--{foreach from=$goods_list item = goods}-->
 						<li>
 							<div class="product-div position-rel">
@@ -100,10 +101,17 @@
 									<p class="col-9 f-03">已筹<em class="color-red"><!--{if $goods.total_price }-->￥{$goods.total_price}<!--{else}-->￥0.00<!--{/if}--></em><em class="col-9 f-02"></em><em class="fr col-9">目标:<em class="color-red">￥{$goods.sum_price}</em></em>
 									</p>
 								</div>
-								 <div class="raise-cate-tag"><i class="iconfont icon-geren"></i>{$goods.buy_num}</div> 
+								<div class="raise-cate-tag"><i class="iconfont icon-geren"></i>{$goods.buy_num}</div>
 							</div>
 						</li>
 						<!--{/foreach}-->
+						<!--{else}-->
+						<div class="no-div-message flow-no-cart">
+							<i class="iconfont icon-biaoqingleiben"></i>
+							<p>亲，此处没有内容～！</p>						
+						</div>
+
+						<!--{/if}-->
 					</ul>
 				</section>
 			</div>
@@ -168,21 +176,7 @@
 								<li>
 									<a><span>海尔空调</span></a>
 								</li>
-								<li>
-									<a><span>PPTV电视</span></a>
-								</li>
-								<li>
-									<a><span>海尔空调</span></a>
-								</li>
-								<li>
-									<a><span>PPTV电视</span></a>
-								</li>
-								<li>
-									<a><span>海尔空调</span></a>
-								</li>
-								<li>
-									<a><span>PPTV电视</span></a>
-								</li>
+								
 							</ul>
 						</div>
 					</div>
@@ -193,21 +187,25 @@
 				点击关闭
 			</footer>
 		</div>
-<footer class="new-index-footer ">
-		<ul class="dis-box new-footer-box">
-			<li class="box-flex">
-				<a href="/ecshop-mobile/index.php?m=default&amp;c=index&amp;a=index&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/home.png"></i><span>首页</span></a>
-			</li>
-			<li class="box-flex">
-				<a href="/ecshop-mobile/index.php?m=default&amp;c=category&amp;a=top_all&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/cate.png"></i><span>分类</span></a>
-			</li>
-			<li class="box-flex">
-				<a href="/ecshop-mobile/index.php?m=default&amp;c=category&amp;a=top_all&amp;u=9" class="nav-cont active"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/user-a.png"></i><span>众筹</span></a>
-			</li>
-			<li class="box-flex"><a href="/ecshop-mobile/index.php?m=default&amp;c=flow&amp;a=cart&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/flow.png"></i><span>购物车</span></a></li>
-			<li class="box-flex"><a href="/ecshop-mobile/index.php?m=default&amp;c=user&amp;a=index&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/user.png"></i><span>用户中心</span></a></li>
-		</ul>
-	</footer>
+		<footer class="new-index-footer ">
+			<ul class="dis-box new-footer-box">
+				<li class="box-flex">
+					<a href="/ecshop-mobile/index.php?m=default&amp;c=index&amp;a=index&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/home.png"></i><span>首页</span></a>
+				</li>
+				<li class="box-flex">
+					<a href="/ecshop-mobile/index.php?m=default&amp;c=category&amp;a=top_all&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/cate.png"></i><span>分类</span></a>
+				</li>
+				<li class="box-flex">
+					<a href="/ecshop-mobile/index.php?m=default&amp;c=category&amp;a=top_all&amp;u=9" class="nav-cont active"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/user-a.png"></i><span>我的众筹</span></a>
+				</li>
+				<li class="box-flex">
+					<a href="/ecshop-mobile/index.php?m=default&amp;c=flow&amp;a=cart&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/flow.png"></i><span>购物车</span></a>
+				</li>
+				<li class="box-flex">
+					<a href="/ecshop-mobile/index.php?m=default&amp;c=user&amp;a=index&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/user.png"></i><span>用户中心</span></a>
+				</li>
+			</ul>
+		</footer>
 		<!--引用js-->
 		<script type="text/javascript" src="__TPL__/crowd/js/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript" src="__TPL__/crowd/js/swiper-3.2.5.min.js"></script>

@@ -10,11 +10,11 @@
 		<title>ECTouch-微商城</title>
 		<!--字体图标库-->
 		<link rel="stylesheet" href="__TPL__/crowd/fonts/iconfont.css">
-		<link rel="stylesheet" href="__TPL__/crowd/css/swiper-3.2.5.min.css" />
-		<link rel="stylesheet" type="__TPL__/crowd/text/css" href="css/mobile-select-area.css">
-		<link rel="stylesheet" type="__TPL__/crowd/text/css" href="css/dialog.css">
+		<link rel="stylesheet" href="__TPL__/statics/css/swiper-3.2.5.min.css" />
+		<link rel="stylesheet" href="__TPL__/statics/css/mobile-select-area.css">
+		<link rel="stylesheet" href="__TPL__/statics/css/dialog.css">
 		<!--主样式-->
-		<link rel="stylesheet" href="__TPL__/crowd/css/ectouch.css" />
+			<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
 
 	</head>
 
@@ -105,7 +105,7 @@
 									<div class="show-goods-dist ts-3 b-color-1 j-show-goods-text j-filter-show-div">
 										<section class="goods-show-title of-hidden padding-all b-color-f">
 											<h3 class="fl g-c-title-h3">配送方式</h3>
-											<i class="iconfont icon-guanbi2 show-div-guanbi fr"></i>
+											<i class="iconfont icon-guanbi show-div-guanbi fr"></i>
 										</section>
 										<section class="s-g-list-con swiper-scroll">
 											<div class="swiper-wrapper">
@@ -114,7 +114,7 @@
 														 <!-- {foreach from=$shipping_list item=shipping} 循环配送方式 -->
 														<li class="ect-select">
 															<label class="ts-1 dis-box shipping {if $order.shipping_id eq $shipping.shipping_id}active{/if}" rec-id ="{$shipping.shipping_id}" onclick="selectShipping({$shipping.shipping_id})" >
-																<dd><span>{$shipping.shipping_name} </span> <em class="t-first">[{$shipping.format_shipping_fee}]</em></dd><i class="fr iconfont icon-gou ts-1"></i></label>
+																<dd><span>{$shipping.shipping_name} </span> <em>[{$shipping.format_shipping_fee}]</em></dd><i class="fr iconfont icon-gou ts-1"></i></label>
 														</li>
 														<!-- {/foreach} 循环配送方式 -->
 													</ul>
@@ -132,9 +132,7 @@
 										<label class="t-remark g-t-temark">发货时间</label>
 										<span class="t-goods1 box-flex distribution-time-con"><input type="text" value="2016-11-12 09.00-13.00" id="txt_area2"/>
 										<input type="hidden" id="hd_area"/>
-										</span>
-										<i class="iconfont icon-rili t-first"></i>
-
+										</span>										
 									</div>
 								</section>
 
@@ -148,7 +146,7 @@
 									<div class="show-goods-dist ts-3 b-color-1 j-show-goods-text j-filter-show-div">
 										<section class="goods-show-title of-hidden padding-all b-color-f">
 											<h3 class="fl g-c-title-h3">支付方式</h3>
-											<i class="iconfont icon-guanbi2 show-div-guanbi fr"></i>
+											<i class="iconfont icon-guanbi show-div-guanbi fr"></i>
 										</section>
 										<section class="s-g-list-con swiper-scroll">
 											<div class="swiper-wrapper">
@@ -197,8 +195,8 @@
 		<!--引用js-->
 		<script type="text/javascript" src="__TPL__/crowd/js/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript" src="__TPL__/crowd/js/swiper-3.2.5.min.js"></script>
-		<script type="text/javascript" src="__TPL__/crowd/js/dialog.js"></script>
-		<script type="text/javascript" src="__TPL__/crowd/js/mobile-select-area.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/dialog.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/mobile-select-area.js"></script>
 		<script type="text/javascript" src="__TPL__/crowd/js/ectouch.js"></script>
 		<script type="text/javascript" src="__TPL__/crowd/js/shopping_flow.js"></script>
 		<script>
