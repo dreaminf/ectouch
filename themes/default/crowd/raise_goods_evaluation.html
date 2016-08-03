@@ -14,16 +14,18 @@
 		<!--主样式-->
 		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
 	</head>
+
 	<body>
 		<div id="loading"><img src="__TPL__/crowd/img/loading.gif" /></div>
 		<div class="con">
 			<div class="goods-evaluation-page of-hidden  j-ect-tab raise-list-default">
 
-				<div id="j-tab-con" class="b-color-f">
+				<div id="j-tab-con">
 					<div class="swiper-wrapper">
 						<section class="swiper-slide of-hidden">
+							<!--{if $comment_list}-->
 							<!--{foreach from=$comment_list item =comment}-->
-							<div class="evaluation-list padding-all ">
+							<div class="evaluation-list padding-all b-color-f">
 								<div class="dis-box raise-header padding-all b-color-f">
 									<div class="raise-admin-left">
 										<div class="raise-admin-img">
@@ -34,8 +36,8 @@
 									<!--<div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div>-->
 								</div>
 								<div class="b-color-f g-evaluation-con ra">
-										<p class="f-05 col-4">{$comment.content}</p>
-										<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
+									<p class="f-05 col-4">{$comment.content}</p>
+									<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
 								</div>
 								<!-- <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> -->
 								<!-- <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">
@@ -52,7 +54,12 @@
 								<!--{/foreach}-->
 							</div>
 							<!--{/foreach}-->
-
+							<!--{else}-->
+							<div class="no-div-message flow-no-cart">
+								<i class="iconfont icon-biaoqingleiben"></i>
+								<p>亲，此处没有内容～！</p>
+							</div>
+							<!--{/if}-->
 						</section>
 						<section class="swiper-slide">
 							<!--{foreach from=$comment_list item =comment}-->
@@ -67,8 +74,8 @@
 									<div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div>
 								</div>
 								<div class="b-color-f g-evaluation-con ra">
-										<p class="f-05 col-4">{$comment.content}</p>
-										<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
+									<p class="f-05 col-4">{$comment.content}</p>
+									<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
 								</div>
 								<!-- <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> -->
 								<!-- <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">
@@ -98,8 +105,8 @@
 									<div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div>
 								</div>
 								<div class="b-color-f g-evaluation-con ra">
-										<p class="f-05 col-4">{$comment.content}</p>
-										<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
+									<p class="f-05 col-4">{$comment.content}</p>
+									<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
 								</div>
 								<!-- <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> -->
 								<!-- <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">
@@ -129,8 +136,8 @@
 									<div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div>
 								</div>
 								<div class="b-color-f g-evaluation-con ra">
-										<p class="f-05 col-4">{$comment.content}</p>
-										<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
+									<p class="f-05 col-4">{$comment.content}</p>
+									<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
 								</div>
 								<!-- <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> -->
 								<!-- <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">
@@ -160,8 +167,8 @@
 									<div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div>
 								</div>
 								<div class="b-color-f g-evaluation-con ra">
-										<p class="f-05 col-4">{$comment.content}</p>
-										<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
+									<p class="f-05 col-4">{$comment.content}</p>
+									<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
 								</div>
 								<!-- <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> -->
 								<!-- <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">

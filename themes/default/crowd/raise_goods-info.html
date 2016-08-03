@@ -16,13 +16,19 @@
 
 	</head>
 
-	<body class="b-color-f">
+	<body class="">
 		<div id="loading"><img src="__TPL__/crowd/img/loading.gif" /></div>
 		<div class="con">
-			<div class="raise-goods-detali padding-all">
+			<!--{if $goods.goods_desc}-->
+			<div class="raise-goods-detali padding-all b-color-f">
 				{$goods.goods_desc}
 			</div>
-
+			<!--{else}-->
+			<div class="no-div-message flow-no-cart">
+				<i class="iconfont icon-biaoqingleiben"></i>
+				<p>亲，此处没有内容～！</p>
+			</div>
+			<!--{/if}-->
 		</div>
 
 		</div>
