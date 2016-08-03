@@ -2531,7 +2531,12 @@ table.u-table td{border:1px solid #e3e3e3;padding:0.5em 0.2em;height:3em;width:7
 .raise-help-list .help-list{    display: -webkit-box;}
 .raise-help-jiantou i{top:50%;}
 /*众筹个人中心*/
-.raise-user-header {background: url(../img/16040710202494.jpg);background-repeat: no-repeat;background-size: cover;}
+.raise-user-header {/*background: url(../img/16040710202494.jpg);background-repeat: no-repeat;background-size: cover;*/
+background:-webkit-gradient(linear,left top,right top,from(#90c907),to(#1CBB7F));
+background:-moz-linear-gradient(left,#90c907,#1CBB7F);
+background:-o-linear-gradient(left,#90c907,#1CBB7F);
+background:-ms-linear-gradient(left,#90c907,#1CBB7F)}
+}
 .raise-user-time{margin: 0.9rem 0;}
 .raise-tuij-box .product-div{border-bottom: 1px solid #F6F6F9;}
 .raise-help-list{background:none;}
