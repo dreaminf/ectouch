@@ -86,7 +86,7 @@ class CrowdfundingController extends CommonController {
             $goods[$key]['total_price'] = model('Crowdfunding')->crowd_buy_price($row['goods_id']);
             $goods[$key]['goods_img'] = 'data/attached/crowdimage/'.$row['goods_img'];
             $goods[$key]['url'] = url('Crowdfunding/goods_info', array('id' => $row['goods_id']));
-			$goods[$key]['bar'] = $row['total_price']*100/$row['sum_price'];
+			$goods[$key]['bar'] = $goods[$key]['total_price']*100/$row['sum_price'];
 			$goods[$key]['bar'] = round($goods[$key]['bar'],1); //计算百分比
         }
         return $goods;

@@ -569,11 +569,11 @@ class CrowdflowController extends CommonController {
         $this->model->query($sql);
         
 		/* 统计众筹已筹金额 */
-		$crowd_goods = $this->model->table('crowd_goods')->field('total_price')->where("goods_id = '" . $_SESSION['goods_id'] . "' ")->find();
+		/* $crowd_goods = $this->model->table('crowd_goods')->field('total_price')->where("goods_id = '" . $_SESSION['goods_id'] . "' ")->find();
 		$total_price = $crowd_goods['total_price']+$order['goods_amount'];	
 		$where['goods_id'] = $_SESSION['goods_id'];
-		$data['total_price'] = $total_price;;
-		$this->model->table('crowd_goods')->data($data)->where($where)->update();		 
+		$data['total_price'] = $total_price;
+		$this->model->table('crowd_goods')->data($data)->where($where)->update();		  */
 
 		
 		/* 统计方案售出数量 */
