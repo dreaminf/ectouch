@@ -136,7 +136,7 @@ class CrowdfundingModel extends CommonModel {
 	/* 获取当前项目评论 */
 	function crowd_comment($goods_id = 0) {
 		$sql = "SELECT id,user_id,user_name,goods_id,content,add_time FROM ". $this->model->pre ."crowd_comment WHERE ".
-               "goods_id = '".$goods_id."' AND status = 1 and parent_id = 0  ORDER BY id DESC LIMIT 0,5";
+               "goods_id = '".$goods_id."' AND status = 1 and parent_id = 0  ORDER BY id DESC LIMIT 0,3";
         $comment_list = $this->model->query($sql);
         foreach($comment_list as $k => $v){
 			$comment_list[$k]['add_time'] = local_date(C('time_format'), $v['add_time']);
