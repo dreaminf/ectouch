@@ -757,3 +757,24 @@ $(".my-com-nav-one").click(function() {
 
 
 
+/*首页导航*/
+function adv_index() {
+
+	if ($(window).scrollTop() > 250) {
+		$(".goods-fixed").addClass("active");
+		$(".goods-left-jiat").addClass("active");
+		$(".goods-header-nav-box").addClass("active");
+	} else {
+		$(".goods-fixed").removeClass("active");
+		$(".goods-left-jiat").removeClass("active");
+		$(".goods-header-nav-box").removeClass("active");
+	}	
+}
+
+
+$(function($) {		
+	adv_index();
+	$(window).scroll(function() {
+		adv_index();
+	});
+});

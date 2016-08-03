@@ -53,7 +53,7 @@ user-select:none;
 .ect-header-banner .btn-submit1{padding:.6rem 1rem; margin-top:-.3rem; font-size:1.3rem; margin-right:2rem; color:#fff; border-color:#05af10;background:#05af10;}
 .ect-header-banner .btn-submit1:hover{border-color:#049d0e;background:#049d0e;}
 .index-banner{margin-top: 3.7rem;}
-html,body,.con{overflow-x:hidden;max-width:100%;}
+html,body,.con{overflow-x:hidden;max-width:640px;margin:0 auto;}
 body{position:relative}
 .shopping-list{min-height:100%}
 .br-5{border-radius:5px}
@@ -1068,7 +1068,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
  .flow-checkout-tprice ul li:last-of-type{padding-bottom:1.3rem;}
  .flow-checkout-tprice header{font-size:1.7rem;}
  /*悬浮菜单*/ 
- .f-checkout-filter-btn span{margin-right:1rem; font-size:1.6rem; box-sizing: border-box; padding-top:.8rem;    text-align: right;}
+ .f-checkout-filter-btn span{margin-right:1rem; font-size:1.6rem; box-sizing: border-box; padding-top:.8rem;}
  .f-checkout-filter-btn span em{font-size:1.9rem;}
  .f-checkout-filter-btn .btn-submit, .f-checkout-filter-btn .btn-default{width:auto; padding:.84rem 1.3rem;display:inline-block;}
  .s-g-list-con{overflow:hidden; max-height: 20rem;}
@@ -2484,7 +2484,7 @@ table.u-table td{border:1px solid #e3e3e3;padding:0.5em 0.2em;height:3em;width:7
 
 /*众筹*/
 /*默认列表*/
-.raise-list-default .raise-header{padding:1rem 1.3rem 0.6rem;}
+.raise-list-default .raise-header{padding:0rem 0rem 0.6rem;}
 .raise-list-default .raise-admin-left{width:4rem;}
 .raise-list-default .raise-header{font-size:1.5rem;}
 .raise-list-default .raise-header label{padding-top:0.5rem;display: block;}

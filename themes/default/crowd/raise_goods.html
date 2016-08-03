@@ -15,28 +15,39 @@
 
 	<body>
 		<div class="con">
-			<header class="dis-box header-menu b-color color-whie">
-				<a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
-				<h3 class="box-flex">项目详情</h3>
-				<p><i class="iconfont icon-pailie j-nav-box"></i></p>
-			</header>
-			<div class="j-nav-content">
-				<ul class="dis-box new-footer-box">
-					<li class="box-flex">
-						<a href="/ecshop-mobile/index.php?m=default&amp;c=index&amp;a=index&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/home.png"></i><span>首页</span></a>
-					</li>
-					<li class="box-flex">
-						<a href="/ecshop-mobile/index.php?m=default&amp;c=category&amp;a=top_all&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/cate.png"></i><span>分类</span></a>
-					</li>			
-					<li class="box-flex">
-						<a href="/ecshop-mobile/index.php?m=default&amp;c=flow&amp;a=cart&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/flow.png"></i><span>购物车</span></a>
-					</li>
-					<li class="box-flex">
-						<a href="/ecshop-mobile/index.php?m=default&amp;c=user&amp;a=index&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/user.png"></i><span>用户中心</span></a>
-					</li>
-				</ul>
-			</div>
+
 			<div class="goods">
+				<div class="ect-bg">
+					<header class="dis-box header-menu-1 b-color color-whie goods-fixed ts-3">
+					<a class="" href="javascript:history.go(-1)">
+						<div class="goods-left-jiat"><i class="iconfont icon-jiantou is-con"></i></div>
+					</a>
+					<div class="box-flex">
+						<ul class="dis-box goods-header-nav-box">
+							<li class="box-flex"><a class="hover" href="javascript:;"><label>商品</label></a></li>
+							<li class="box-flex"><a href="/ecshop-mobile/index.php?m=default&c=crowdfunding&a=crowd_goods_properties&id=3&u=9"><label>详情</label></a></li>
+							<li class="box-flex"><a href="/ecshop-mobile/index.php?m=default&c=crowdfunding&a=crowd_comment_list&id=3&u=9"><label>评价</label></a></li>
+						</ul>
+					</div>
+					<a class="" href="javascript:;">
+						<div class="goods-left-jiat"><i class="iconfont icon-gengduo j-nav-box is-con"></i></div>
+					</a>
+					<div class="goods-nav ts-3">
+						<ul class="goods-nav-box">
+							
+							<a href="{:url('index/index')}">
+								<li><i class="iconfont icon-home j-nav-box"></i>首页</li>
+							</a>
+							<a href="/ecshop-mobile/index.php?m=default&c=crowdfunding">
+								<li><i class="iconfont icon-xiaoxi1 j-nav-box"></i>我的众筹</li>
+							</a>
+							<a href="{:url('user/index')}">
+								<li style="border:none"><i class="iconfont icon-geren j-nav-box"></i>用户中心</li>
+							</a>					
+						</ul>
+					</div>
+				</header>			
+		</div>
 				<div class="goods-photo j-show-goods-img">
 					<span class="goods-num" id="goods-num"><span id="g-active-num"></span>/<span id="g-all-num"></span></span>
 					<div class="swiper-wrapper">
@@ -155,9 +166,10 @@
 										<div class="t-goods1"><span class="t-jiantou">更多评论<i class="iconfont icon-jiantou tf-180"></i></span></div>
 									</div>
 								</a>
+								<!--{if $comment_list}-->
 								<!--{foreach from=$comment_list item =comment}-->
-								<div class="m-top1px">
-									<div class="dis-box raise-header padding-all b-color-f">
+								<div class="m-top1px evaluation-list padding-all b-color-f">
+									<div class="dis-box raise-header padding-all ">
 										<div class="raise-admin-left">
 											<div class="raise-admin-img">
 												{if $info.avatar}
@@ -170,14 +182,21 @@
 										<div class="box-flex"><label class="col-3">{$comment.name}</label></div>
 										<!-- <div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div> -->
 									</div>
-									<div class="padding-all b-color-f g-evaluation-con ra">
+									<div class=" b-color-f g-evaluation-con ra">
 										<p class="f-05 col-4">{$comment.content}</p>
 										<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
 									</div>
 								</div>
 								<!--{/foreach}-->
+									<!--{else}-->
+							<div class="no-div-message flow-no-cart">
+								<i class="iconfont icon-biaoqingleiben"></i>
+								<p>亲，此处没有内容～！</p>						
+							</div>
+						<!--{/if}-->
 							</section>
 							<section class="swiper-slide goods-info-attr swiper-slide-next">
+								<!--{if $buy_list}-->
 								<!--{foreach from=$buy_list item =buy_list}-->
 								<div class="m-top1px">
 									<div class="dis-box raise-header padding-all b-color-f">
@@ -198,16 +217,29 @@
 									</div>
 								</div>
 								<!--{/foreach}-->
+								<!--{else}-->
+							<div class="no-div-message flow-no-cart">
+								<i class="iconfont icon-biaoqingleiben"></i>
+								<p>亲，此处没有内容～！</p>						
+							</div>
+						<!--{/if}-->
 							</section>
 							<section class="swiper-slide goods-info-attr swiper-slide-next">
 								<div class="order-id-list padding-all b-color-f">
 									<ul>
+										<!--{if $trends_list}-->
 										<!--{foreach from=$trends_list item =trends}-->
 										<li>
 											<p class="t-remark3">{$trends.add_time}</p>
 											<p class="t-remark m-top02">{$trends.content}</p>
 										</li>
 										<!--{/foreach}-->
+										<!--{else}-->
+										<div class="no-div-message flow-no-cart">
+											<i class="iconfont icon-biaoqingleiben"></i>
+											<p>亲，此处没有内容～！</p>						
+										</div>
+									<!--{/if}-->
 									</ul>
 								</div>
 							</section>
@@ -342,7 +374,34 @@
 				<script type="text/javascript" src="__TPL__/crowd/js/swiper-3.2.5.min.js"></script>
 				<script type="text/javascript" src="__TPL__/crowd/js/layer.js"></script>
 				<script type="text/javascript" src="__TPL__/crowd/js/ectouch.js"></script>
-				<script>
+				<script type="text/javascript" src="__TPL__/crowd/js/ectouch.js"></script>
+
+				<script>				
+			$(function() {
+				
+					/*头部导航*/
+					
+	$(".j-nav-box").click(function() {
+		$(".j-nav-content").toggleClass("active");
+	});
+
+/*导航弹框*/	
+$(".icon-gengduo").click(function() {
+					$(".goods-nav").toggleClass("active");
+				});	
+				
+				
+				$('.goods-header-nav-box li').click(function() {
+					for (var i = 0; i < $('.goods-header-nav-box li').size(); i++) {
+						if (this == $('.goods-header-nav-box li').get(i)) {
+							$('.goods-header-nav-box li').eq(i).children('a').addClass('hover');
+						} else {
+							$('.goods-header-nav-box li').eq(i).children('a').removeClass('hover');
+						}
+					}
+				})
+			});
+
 					
 				
 					/*商品详情相册切换*/
