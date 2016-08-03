@@ -1289,7 +1289,7 @@ text-align: center;
 .user-head-img-box img,.user-bg-box img,.user-bg2-box,.user-bg-box-1 img,.user-bg2-box-1 img{width: 100%;}
 .is-shezi,.my-dingdan-color{color: #fff;}
 .user-head-img-box{width:6.25rem;height:6.25rem;border-radius:4rem;overflow:hidden;  border: 3px solid rgba(255,255,255,0.8);}
-.is-youxiang,.my-img-size{font-size: 2.4rem;  color: #555;}
+.is-youxiang,.my-img-size{font-size: 2.4rem;  color: #777;}
 .is-youxiang{padding: 0.2rem;color: #fff;    padding-top: 2rem;float: right;}
 .my-user-right-cont{float:left;margin-left:0.3rem;}
 .is-shezi{font-size: 1.8rem;padding-top: 0.15rem;}
@@ -2544,7 +2544,7 @@ table.u-table td{border:1px solid #e3e3e3;padding:0.5em 0.2em;height:3em;width:7
  }
 .raise-order-header .header-right{width:4.2rem;}
 .raise-font{font-size:3.6rem;color:rgba(255,255,255,0.3);}
-/*raise-categroy*/
+.raise-user .my-nav-box .icon-quanbudingdan,.raise-user .my-nav-box .icon-02,.raise-user .my-nav-box .icon-tishi{color:#ec5151}
 .raise-category h4{padding-right: 0rem;}
 .raise-category p{padding: 0rem;}
 .raise-progressBar{margin:0.8rem 0;}

@@ -17,6 +17,7 @@
 
 	<body class=" ">
 		<div id="loading"><img src="__TPL__/crowd/img/loading.gif" /></div>
+		<div class="con raise-user m-b7">
 		<div class="raise-user-header">
 			<div class="admin-bg-box">
 				<div class="com-header">
@@ -48,7 +49,7 @@
 		<section class="m-top10 my-nav-box b-color-f">
 			<a href="raise_order.html">
 				<div class="dis-box padding-all my-bottom">
-					<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-iconfontquanbudingdan is-user-size  my-dingdan-color"></i>我的订单</h3>
+					<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-quanbudingdan is-user-size"></i>我的订单</h3>
 					<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
 				</div>
 			</a>
@@ -60,7 +61,7 @@
 			</a>
 			<a href="{:url('mycrowd/crowd_like')}">
 				<div class="dis-box padding-all my-bottom">
-					<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-02 is-user-size  my-dingdan-color"></i>我的关注</h3>
+					<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-02 is-user-size"></i>我的关注</h3>
 					<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
 				</div>
 			</a>
@@ -76,7 +77,7 @@
 			</a>
 			<a href="raise_feedback.html">
 				<div class="dis-box padding-all my-bottom">
-					<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-tishi is-user-size my-dingdan-color"></i>意见反馈</h3>
+					<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-tishi is-user-size"></i>意见反馈</h3>
 					<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
 				</div>
 			</a>
@@ -112,41 +113,25 @@
 				</ul>
 
 			</div>
-		</section>
-		<div class="filter-menu">
-			<div class="filter-menu-list ts-5">
-				<ul class="dis-box">
-					<li class="box-flex position-rel">
-						<a href="index.html" class="product-div-link"></a>
-						<i class="iconfont icon-home"></i>
-						<em>首页</em>
-					</li>
-					<li class="box-flex position-rel">
-						<a href="#" class="product-div-link"></a>
-						<i class="iconfont icon-caidan"></i>
-						<em>分类</em>
-					</li>
-					<li class="box-flex position-rel">
-						<a href="#" class="product-div-link"></a>
-						<i class="iconfont icon-sousuo"></i>
-						<em>搜索</em>
-					</li>
-					<li class="box-flex filter-nenu-cart position-rel">
-						<a href="#" class="product-div-link"></a>
-						<span>11</span>
-						<i class="iconfont icon-gouwuche"></i>
-						<em>购物车</em>
-					</li>
-					<li class="box-flex position-rel">
-						<a href="user.html" class="product-div-link"></a>
-						<i class="iconfont icon-geren"></i>
-						<em>我</em>
-					</li>
-					<li class="w"></li>
-				</ul>
-			</div>
-			<div class="filter-menu-title"></div>
+		</section>		
 		</div>
+		<footer class="footer-nav dis-box">
+				<a href="{:url('index/index')}" class="box-flex nav-list">
+					<i class="nav-box i-home"></i><span>首页</span>
+				</a>
+				<a href="{:url('category/top_all')}" class="box-flex nav-list">
+					<i class="nav-box i-cate"></i><span>分类</span>
+				</a>
+				<a href="/ecshop-mobile/index.php?m=default&c=crowdfunding" class="box-flex nav-list">
+					<i class="nav-box i-zhongchou"></i><span>我的众筹</span>
+				</a>				
+				<a href="{:url('flow/cart')}" class="box-flex position-rel nav-list">
+					<i class="nav-box i-flow"></i><span>购物车</span>
+				</a>
+				<a href="{:url('user/index')}" class="box-flex nav-list">
+					<i class="nav-box i-user"></i><span>用户中心</span>
+				</a>
+		</footer>	
 		<!--引用js-->
 		<script type="text/javascript" src="__TPL__/crowd/js/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript" src="__TPL__/crowd/js/swiper-3.2.5.min.js"></script>

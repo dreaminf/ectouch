@@ -140,34 +140,42 @@
 					</a>
 				</ul>
 			</section>
-			<section class="m-top10 my-nav-box b-color-f">
-				<a href="{:url('user/service')};">
-					<div class="dis-box padding-all my-bottom">
-						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-kefu is-user-size color-kf"></i>客服服务</h3>
-						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
-					</div>
+			
+			<section class="b-color-f my-nav-box m-top10">			
+				<div class="dis-box padding-all my-bottom">
+					<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-kefu  t-first is-user-size"></i>我的服务</h3>
+					<div class="box-flex t-goods1 text-right onelist-hidden jian-top"></div>
+					<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
+				</div>	
+			<ul class="user-money-list g-s-i-title-2 dis-box text-center my-dingdan">
+				<a href="{:url('user/service')};" class="box-flex">
+					<li>
+						<h4 class="ellipsis-one"><i class="iconfont icon-kefu my-img-size color-kf"></i></h4>
+						<p class="t-remark3">客服服务</p>				
+					</li>
 				</a>
-				<a href="{:url('user/share')}">
-					<div class="dis-box padding-all my-bottom">
-						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-fenxiang is-user-size my-fengxiang-color"></i>我的分享</h3>
-						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
-					</div>
+				<a href="{:url('user/share')}" class="box-flex">
+					<li>
+						<h4 class="ellipsis-one"><i class="iconfont icon-fenxiang my-img-size"></i></h4>
+						<p class="t-remark3">我的分享</p>				
+					</li>
 				</a>
 				<!--/*DRP_START*/-->
-				<a href="{:url('store/check_store')}">
-					<div class="dis-box padding-all my-bottom">
-						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-dianpuzhuye is-user-size color-ls"></i>我的微店</h3>
-						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
-					</div>
+				<a href="{:url('store/check_store')}" class="box-flex">
+					<li>
+						<h4 class="ellipsis-one"><i class="iconfont icon-dianpu my-img-size"></i></h4>
+						<p class="t-remark3">我的微店</p>						
+					</li>
 				</a>
-				<!--/*DRP_END*/-->
-				<a href="{:url('mycrowd/index')}">
-					<div class="dis-box padding-all my-bottom">
-						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-dianpuzhuye is-user-size color-ls"></i>我的众筹</h3>
-						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
-					</div>
+					<!--/*DRP_END*/-->
+				<a href="{:url('mycrowd/index')}" class="box-flex">
+					<li>
+						<h4 class="ellipsis-one"><i class="iconfont icon-zhongchou my-img-size"></i></h4>
+						<p class="t-remark3">我的微筹</p>					
+					</li>
 				</a>
-			</section>
+			</ul>
+		</section>
 			<!--{if $history}-->
 			<section class="m-top10 my-nav-box">
 				<div class="dis-box padding-all b-color-f">
