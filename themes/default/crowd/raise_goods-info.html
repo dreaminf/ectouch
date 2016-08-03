@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>项目详情</title>
+		<!--字体图标库-->
+		<link rel="stylesheet" href="__TPL__/crowd/fonts/iconfont.css">
+		<link rel="stylesheet" href="__TPL__/crowd/css/swiper-3.2.5.min.css" />
+		<!--主样式-->
+		<link rel="stylesheet" href="__TPL__/crowd/css/ectouch.css" />
+
+	</head>
+
+	<body class="b-color-f">
+		<div id="loading"><img src="__TPL__/crowd/img/loading.gif" /></div>
+		<div class="con">
+			<div class="raise-goods-detali padding-all">
+				{$goods.goods_desc}
+			</div>
+
+		</div>
+
+		</div>
+
+		<!--引用js-->
+		<script type="text/javascript" src="__TPL__/crowd/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="__TPL__/crowd/js/swiper-3.2.5.min.js"></script>
+		<script type="text/javascript" src="__TPL__/crowd/js/ectouch.js"></script>
+		<script>
+			/*切换*/
+			var tabsSwiper = new Swiper('#j-tab-con', {
+				speed: 100,
+				noSwiping: true,
+				autoHeight: true,
+				onSlideChangeStart: function() {
+					$(".j-tab-title .active").removeClass('active')
+					$(".j-tab-title li").eq(tabsSwiper.activeIndex).addClass('active')
+				}
+			})
+			$(".j-tab-title li").on('touchstart mousedown', function(e) {
+				e.preventDefault()
+				$(".j-tab-title .active").removeClass('active')
+				$(this).addClass('active')
+				tabsSwiper.slideTo($(this).index())
+			})
+			$(".j-tab-title li").click(function(e) {
+				e.preventDefault()
+			})
+		</script>
+	</body>
+
+</html>
