@@ -55,6 +55,16 @@ class MycrowdController extends CommonController {
         $this->display('crowd/raise_follow.html');
     }
 	
+	/**
+     * 我的支持众筹项目列表信息
+     */
+    public function crowd_buy() {
+		$this->type = I('request.type') ? intval(I('request.type')) : 1 ;
+        $buy_list = model('Mycrowd')->crowd_buy_list($this->user_id, $this->type);//获取我的支持众筹项目
+		$this->assign('buy_list', $buy_list);
+		$this->assign('type', $this->type);
+        $this->display('crowd/raise_support.html');
+    }
     
 	
 	/**
