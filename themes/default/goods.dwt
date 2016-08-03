@@ -356,9 +356,6 @@ $(function() {
 			e.preventDefault();
 		};
 
-		$(".icon-gengduo").click(function() {
-			$(".goods-nav").toggleClass("active");
-		});
 
 		/*弹出层方式*/
 		$(".j-show-div").click(function() {
@@ -390,6 +387,7 @@ $(function() {
 		<script>
 			$(function() {
 					/*头部导航*/
+					
 	$(".j-nav-box").click(function() {
 		$(".j-nav-content").toggleClass("active");
 	});
@@ -409,7 +407,7 @@ $(".icon-gengduo").click(function() {
 						}
 					}
 				})
-			})
+			});
 		</script>
 		<script type="text/javascript">
 var btn_buy = "确定";

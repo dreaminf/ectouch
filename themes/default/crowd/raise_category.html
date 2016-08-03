@@ -8,10 +8,9 @@
 		<meta name="format-detection" content="telephone=no" />
 		<meta charset="utf-8">
 		<title>众筹列表</title>
-
 		<!--字体图标库-->
-		<link rel="stylesheet" href="__TPL__/crowd/fonts/iconfont.css">
-		<link rel="stylesheet" href="__TPL__/crowd/css/swiper-3.2.5.min.css" />
+		<link rel="stylesheet" href="__TPL__/statics/fonts/iconfont.css">
+		<link rel="stylesheet" href="__TPL__/statics/css/swiper-3.2.5.min.css" />
 		<!--主样式-->
 		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
 	</head>
@@ -186,29 +185,27 @@
 			<footer class="close-search j-close-search">
 				点击关闭
 			</footer>
-		</div>
-		<footer class="new-index-footer ">
-			<ul class="dis-box new-footer-box">
-				<li class="box-flex">
-					<a href="/ecshop-mobile/index.php?m=default&amp;c=index&amp;a=index&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/home.png"></i><span>首页</span></a>
-				</li>
-				<li class="box-flex">
-					<a href="/ecshop-mobile/index.php?m=default&amp;c=category&amp;a=top_all&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/cate.png"></i><span>分类</span></a>
-				</li>
-				<li class="box-flex">
-					<a href="/ecshop-mobile/index.php?m=default&amp;c=category&amp;a=top_all&amp;u=9" class="nav-cont active"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/user-a.png"></i><span>我的众筹</span></a>
-				</li>
-				<li class="box-flex">
-					<a href="/ecshop-mobile/index.php?m=default&amp;c=flow&amp;a=cart&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/flow.png"></i><span>购物车</span></a>
-				</li>
-				<li class="box-flex">
-					<a href="/ecshop-mobile/index.php?m=default&amp;c=user&amp;a=index&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/user.png"></i><span>用户中心</span></a>
-				</li>
-			</ul>
-		</footer>
+		</div>	
+		<footer class="footer-nav dis-box">
+				<a href="{:url('index/index')}" class="box-flex nav-list">
+					<i class="nav-box i-home"></i><span>首页</span>
+				</a>
+				<a href="{:url('category/top_all')}" class="box-flex nav-list">
+					<i class="nav-box i-cate"></i><span>分类</span>
+				</a>
+				<a href="javascript:;" class="box-flex nav-list active">
+					<i class="nav-box i-zhongchou"></i><span>我的众筹</span>
+				</a>				
+				<a href="{:url('flow/cart')}" class="box-flex position-rel nav-list">
+					<i class="nav-box i-flow"></i><span>购物车</span>
+				</a>
+				<a href="{:url('user/index')}" class="box-flex nav-list">
+					<i class="nav-box i-user"></i><span>用户中心</span>
+				</a>
+		</footer>	
 		<!--引用js-->
-		<script type="text/javascript" src="__TPL__/crowd/js/jquery-2.1.4.min.js"></script>
-		<script type="text/javascript" src="__TPL__/crowd/js/swiper-3.2.5.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/swiper.min.js"></script>
 		<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
 		<script type="text/javascript">
 			$(function($) {

@@ -4,13 +4,13 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<meta charset="utf-8">
-		<title>ECTouch-微商城</title>
+		<title>项目详情</title>
 
 		<!--字体图标库-->
-		<link rel="stylesheet" href="__TPL__/crowd/fonts/iconfont.css">
-		<link rel="stylesheet" href="__TPL__/crowd/css/swiper-3.2.5.min.css" />
+		<link rel="stylesheet" href="__TPL__/statics/fonts/iconfont.css">
+		<link rel="stylesheet" href="__TPL__/statics/css/swiper-3.2.5.min.css" />
 		<!--主样式-->
-			<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
+		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
 	</head>
 
 	<body>
@@ -39,7 +39,7 @@
 								<li><i class="iconfont icon-home j-nav-box"></i>首页</li>
 							</a>
 							<a href="/ecshop-mobile/index.php?m=default&c=crowdfunding">
-								<li><i class="iconfont icon-xiaoxi1 j-nav-box"></i>我的众筹</li>
+								<li><i class="iconfont icon-zhongchou j-nav-box"></i>我的众筹</li>
 							</a>
 							<a href="{:url('user/index')}">
 								<li style="border:none"><i class="iconfont icon-geren j-nav-box"></i>用户中心</li>
@@ -93,7 +93,7 @@
 					<ul class="user-money-list g-s-i-title-1 dis-box text-center my-dingdan raise-dateil-list">
 						<a href="javascript:;" class="box-flex">
 							<li>
-								<h4 class="ellipsis-one"><i class="iconfont icon-iconfontqizhi my-img-size col-9"></i></h4>
+								<h4 class="ellipsis-one"><i class="iconfont icon-flagqizi f-2 col-9"></i></h4>
 								<p class="t-remark3">目标资金</p>
 								<p class="f-08 color-red">{$goods.sum_price}<em class="f-02 col-9">元</em></p>
 
@@ -101,7 +101,7 @@
 						</a>
 						<a href="javascript:;" class="box-flex">
 							<li>
-								<h4 class="ellipsis-one"><i class="iconfont icon-jinqian my-img-size col-9"></i></h4>
+								<h4 class="ellipsis-one"><i class="iconfont icon-jinqian f-2 col-9"></i></h4>
 								<p class="t-remark3">已筹资金</p>
 								<p class="f-08 color-red"><!--{if $goods.total_price }-->{$goods.total_price}<!--{else}-->0.00<!--{/if}--><em class="f-02 col-9">元</em></h4>
 
@@ -109,7 +109,7 @@
 						</a>
 						<a href="user_evaluation.html" class="box-flex">
 							<li>
-								<h4 class="ellipsis-one"><i class="iconfont icon-geren my-img-size col-9"></i></h4>
+								<h4 class="ellipsis-one"><i class="iconfont icon-geren f-2 col-9"></i></h4>
 								<p class="t-remark3">支持人数</p>
 								<p class="f-08 color-red">{$goods.buy_num}<em class="f-02 col-9">人</em></p>
 
@@ -141,8 +141,8 @@
 							<div class="raise-return-img"><img src="{$plan.cp_img}"></div>
 						</div>
 						<div class="box-flex">
-							<h4 class="col-3 f-05">支持<em class="color-red">{$plan.shop_price}</em><em class="fr col-9 f-03">剩余<em class="color-red">{$plan.surplus_num}</em>份</em></h4>
-							<p class="col-7 f-04">{$plan.name}</p>
+							<p class="col-3 f-05">支持<em class="color-red">{$plan.shop_price}</em><em class="fr col-9 f-03">剩余<em class="color-red">{$plan.surplus_num}</em>份</em></p>
+							<p class="col-7 f-03">{$plan.name}</p>
 						</div>
 					</div>
 					<!--{/foreach}-->
@@ -258,7 +258,7 @@
 				<div class="show-time-con ts-3 b-color-1 j-filter-show-div-2">
 					<section class="goods-show-title of-hidden padding-all b-color-f">
 						<h3 class="fl g-c-title-h3">分享到：</h3>
-						<i class="iconfont icon-guanbi2 show-div-guanbi fr"></i>
+						<i class="iconfont icon-guanbi show-div-guanbi fr"></i>
 					</section>
 					<section class="s-g-list-con swiper-scroll">
 						<div class="swiper-wrapper">
@@ -322,7 +322,7 @@
 				<div class="show-time-con ts-3 b-color-1 j-filter-show-div">
 					<section class="goods-show-title of-hidden padding-all b-color-f raise-bot-br">
 						<h3 class="fl g-c-title-h3">方案回报</h3>
-						<i class="iconfont icon-guanbi2 show-div-guanbi fr"></i>
+						<i class="iconfont icon-guanbi show-div-guanbi fr"></i>
 					</section>
 					<section class="s-g-list-con swiper-scroll swiper-container-vertical swiper-container-free-mode raise-goods-list">
 						<div class="swiper-wrapper">
@@ -370,40 +370,16 @@
 				</div>
 				</form>
 				<!--引用js-->
-				<script type="text/javascript" src="__TPL__/crowd/js/jquery-2.1.4.min.js"></script>
-				<script type="text/javascript" src="__TPL__/crowd/js/swiper-3.2.5.min.js"></script>
-				<script type="text/javascript" src="__TPL__/crowd/js/layer.js"></script>
-				<script type="text/javascript" src="__TPL__/crowd/js/ectouch.js"></script>
-				<script type="text/javascript" src="__TPL__/crowd/js/ectouch.js"></script>
-
+				<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
+				<script type="text/javascript" src="__TPL__/statics/js/swiper.min.js"></script>
+				<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
 				<script>				
-			$(function() {
-				
-					/*头部导航*/
-					
-	$(".j-nav-box").click(function() {
-		$(".j-nav-content").toggleClass("active");
-	});
-
-/*导航弹框*/	
-$(".icon-gengduo").click(function() {
-					$(".goods-nav").toggleClass("active");
-				});	
-				
-				
-				$('.goods-header-nav-box li').click(function() {
-					for (var i = 0; i < $('.goods-header-nav-box li').size(); i++) {
-						if (this == $('.goods-header-nav-box li').get(i)) {
-							$('.goods-header-nav-box li').eq(i).children('a').addClass('hover');
-						} else {
-							$('.goods-header-nav-box li').eq(i).children('a').removeClass('hover');
-						}
-					}
-				})
-			});
-
-					
-				
+					$(function() {
+						/*导航弹框*/	
+						$(".icon-gengduo").click(function() {
+							$(".goods-nav").toggleClass("active");
+						});					
+					});				
 					/*商品详情相册切换*/
 					var swiper = new Swiper('.goods-photo', {
 						paginationClickable: true,

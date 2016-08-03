@@ -9,27 +9,54 @@
 		<meta charset="utf-8">
 		<title>ECTouch微商城</title>
 		<!--字体图标库-->
-		<link rel="stylesheet" href="__TPL__/crowd/fonts/iconfont.css">
-		<link rel="stylesheet" href="__TPL__/crowd/css/swiper-3.2.5.min.css" />
+		<link rel="stylesheet" href="__TPL__/statics/fonts/iconfont.css">
+		<link rel="stylesheet" href="__TPL__/statics/css/swiper-3.2.5.min.css" />
 		<!--主样式-->
-			<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
+		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
 
 	</head>
 
 	<body>
 		<div id="loading"><img src="__TPL__/crowd/img/loading.gif" /></div>
 		<div class="con">
+			<header class="dis-box header-menu b-color color-whie">
+				<a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
+				<h3 class="box-flex">收货地址</h3>
+				<p><i class="iconfont icon-pailie j-nav-box"></i></p>
+			</header>
+			<div class="j-nav-content">
+				<ul class="dis-box new-footer-box">
+					<li class="box-flex">
+						<a href="/ecshop-mobile/index.php?m=default&amp;c=index&amp;a=index&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/home.png"></i><span>首页</span></a>
+					</li>
+					<li class="box-flex">
+						<a href="/ecshop-mobile/index.php?m=default&amp;c=category&amp;a=top_all&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/cate.png"></i><span>分类</span></a>
+					</li>
+					<li class="box-flex">
+						<a href="/ecshop-mobile/index.php?m=default&c=crowdfunding" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/zhongchou.png"></i><span>我的众筹</span></a>
+					</li>
+					<li class="box-flex">
+						<a href="/ecshop-mobile/index.php?m=default&amp;c=flow&amp;a=cart&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/flow.png"></i><span>购物车</span></a>
+					</li>
+					<li class="box-flex">
+						<a href="/ecshop-mobile/index.php?m=default&amp;c=user&amp;a=index&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/user.png"></i><span>用户中心</span></a>
+					</li>
+				</ul>
+			</div>
 			<div class="flow-consignee-list j-get-consignee-one select-three">
 				<!--{foreach from =$consignee_list item=consignee }-->
 				<section class="flow-checkout-adr m-top08">
 					<div class="flow-set-adr of-hidden padding-all ">
 						<div class="ect-select fl">
-							<label class="dis-box {if $consignee.address_id eq $consignee.adds_id}active{/if}" onclick ="edit_address_info({$consignee.address_id})">
+							<label class="dis-box {if $consignee.address_id eq $consignee.adds_id}active{/if}" onclick="edit_address_info({$consignee.address_id})">
 								<i class="select-btn"></i>
 								<span class="box-flex">设为默认</span>
 							</label>
 						</div>
-						<div class="fr"><a href="{$consignee.url}"><i class="iconfont icon-bianji"></i>编辑</a><a href="{:url('crowdflow/crowd_del_address_list',array('id'=>$this->_var['consignee']['address_id']))}"><i class="iconfont icon-xiao10"></i>删除</a></div>
+						<div class="fr">
+							<a href="{$consignee.url}"><i class="iconfont icon-bianji"></i>编辑</a>
+							<a href="{:url('crowdflow/crowd_del_address_list',array('id'=>$this->_var['consignee']['address_id']))}"><i class="iconfont icon-xiao10"></i>删除</a>
+						</div>
 					</div>
 					<div class="flow-have-adr padding-all">
 						<p class="f-h-adr-title">
@@ -38,91 +65,88 @@
 					</div>
 				</section>
 				<!--{/foreach}-->
-				
+
 				<div class="ect-button-more dis-box filter-btn padding-all">
 					<a href="{:url('crowdflow/crowd_consignee')}" class="btn-submit box-flex">新增收货人信息</a>
-					
+
 				</div>
 			</div>
 		</div>
-				
+
 		<!--引用js-->
-		<script type="text/javascript" src="__TPL__/crowd/js/jquery-2.1.4.min.js"></script>
-		<script type="text/javascript" src="__TPL__/crowd/js/swiper-3.2.5.min.js"></script>
-		<script type="text/javascript" src="__TPL__/crowd/js/ectouch.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/swiper.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
 	</body>
 	<script type="text/javascript">
-	/*設置默認收貨地址*/
-	function edit_address_info(address_id) {
-		var url = 'index.php?m=default&c=user&a=edit_address_info';
-		$.get(url, {'id':address_id}, function(data){
-			if(1 == data.status){
-				location.reload();				
-			}
-			else{
-				alert("删除失败");
-			}
-		}, 'json');
-		return false;
+		/*設置默認收貨地址*/
+		function edit_address_info(address_id) {
+			var url = 'index.php?m=default&c=user&a=edit_address_info';
+			$.get(url, {
+				'id': address_id
+			}, function(data) {
+				if(1 == data.status) {
+					location.reload();
+				} else {
+					alert("删除失败");
+				}
+			}, 'json');
+			return false;
 
-	}
-		
+		}
 	</script>
 	<script>
-    function getLocation(){
-	    var options={
-		    enableHighAccuracy:true, 
-		    maximumAge:1000
-	    }
-	    if(navigator.geolocation){
-		    navigator.geolocation.getCurrentPosition(onSuccess,onError,options);		   
-	    }else{
-		    onError();
-	    }
-   }
-    //成功时
-    function onSuccess(position){
-	    //返回用户位置	   
-	    var longitude =position.coords.longitude; //经度	    
-	    var latitude = position.coords.latitude;//纬度
-		
-		$.post('{:url("user/positions")}', {
-            lng: longitude,
-            lat: latitude
-        }, function (data) {
-            if (data.error == 0) {
-                window.location.href = data.url;
-            } else {
-                alert(data.message);
-            }
-        }, 'json');
-	   }
-    //失败时
-    function onError(error){
-	   switch(error.code){
-		   case 1:
-		   alert("位置服务被拒绝");
-		   break;
+		function getLocation() {
+			var options = {
+				enableHighAccuracy: true,
+				maximumAge: 1000
+			}
+			if(navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+			} else {
+				onError();
+			}
+		}
+		//成功时
+		function onSuccess(position) {
+			//返回用户位置	   
+			var longitude = position.coords.longitude; //经度	    
+			var latitude = position.coords.latitude; //纬度
 
+			$.post('{:url("user/positions")}', {
+				lng: longitude,
+				lat: latitude
+			}, function(data) {
+				if(data.error == 0) {
+					window.location.href = data.url;
+				} else {
+					alert(data.message);
+				}
+			}, 'json');
+		}
+		//失败时
+		function onError(error) {
+			switch(error.code) {
+				case 1:
+					alert("位置服务被拒绝");
+					break;
 
-		   case 2:
-		   alert("暂时获取不到位置信息");
-		   break;
+				case 2:
+					alert("暂时获取不到位置信息");
+					break;
 
+				case 3:
+					alert("获取信息超时");
+					break;
 
-		   case 3:
-		   alert("获取信息超时");
-		   break;
+				case 4:
+					alert("未知错误");
+					break;
+			}
 
+		}
 
-		   case 4:
-			alert("未知错误");
-		   break;
-	   }
+		getLocation();
+	</script>
 
-
-    }
-
-	getLocation();
- </script>
 </html>

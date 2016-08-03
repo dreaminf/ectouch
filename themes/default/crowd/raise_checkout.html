@@ -9,12 +9,12 @@
 		<meta charset="utf-8">
 		<title>ECTouch-微商城</title>
 		<!--字体图标库-->
-		<link rel="stylesheet" href="__TPL__/crowd/fonts/iconfont.css">
+		<link rel="stylesheet" href="__TPL__/statics/fonts/iconfont.css">
 		<link rel="stylesheet" href="__TPL__/statics/css/swiper-3.2.5.min.css" />
 		<link rel="stylesheet" href="__TPL__/statics/css/mobile-select-area.css">
 		<link rel="stylesheet" href="__TPL__/statics/css/dialog.css">
 		<!--主样式-->
-			<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
+		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
 
 	</head>
 
@@ -33,7 +33,10 @@
 					</li>
 					<li class="box-flex">
 						<a href="/ecshop-mobile/index.php?m=default&amp;c=category&amp;a=top_all&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/cate.png"></i><span>分类</span></a>
-					</li>					
+					</li>	
+					<li class="box-flex">
+					<a href="/ecshop-mobile/index.php?m=default&c=crowdfunding" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/zhongchou.png"></i><span>我的众筹</span></a>
+				</li>
 					<li class="box-flex">
 						<a href="/ecshop-mobile/index.php?m=default&amp;c=flow&amp;a=cart&amp;u=9" class="nav-cont"><i class="nav-box"><img src="/ecshop-mobile/themes/default/statics/img/flow.png"></i><span>购物车</span></a>
 					</li>
@@ -132,7 +135,8 @@
 										<label class="t-remark g-t-temark">发货时间</label>
 										<span class="t-goods1 box-flex distribution-time-con"><input type="text" value="2016-11-12 09.00-13.00" id="txt_area2"/>
 										<input type="hidden" id="hd_area"/>
-										</span>										
+										</span>	
+										<i class="iconfont icon-rili t-first"></i>
 									</div>
 								</section>
 
@@ -193,14 +197,12 @@
 		</form>
 
 		<!--引用js-->
-		<script type="text/javascript" src="__TPL__/crowd/js/jquery-2.1.4.min.js"></script>
-		<script type="text/javascript" src="__TPL__/crowd/js/swiper-3.2.5.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/swiper.min.js"></script>
 		<script type="text/javascript" src="__TPL__/statics/js/dialog.js"></script>
 		<script type="text/javascript" src="__TPL__/statics/js/mobile-select-area.js"></script>
-		<script type="text/javascript" src="__TPL__/crowd/js/ectouch.js"></script>
-		<script type="text/javascript" src="__TPL__/crowd/js/shopping_flow.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
 		<script>
-		
 			function submit_buy(){
 				var shipping_id='';
 				$(".shipping").each(function (){							
