@@ -192,3 +192,42 @@ address, cite, dfn, em, var {
 .btn-info11{color:#1CBB7F;background-color:#f6f6f9;border-color:#1CBB7F;padding: 0.5em 0;font-size: 1.3em;}
 .btn-info11.focus,.btn-info11:focus{color:#1CBB7F;background-color:#f6f6f9;border-color:#1CBB7F}
 .btn-info11:hover{color:#1CBB7F;background-color:#f6f6f9;border-color:#1CBB7F}
+.search-div.active {
+    display: block;
+    opacity: 1;
+    top: 0;
+}
+.search-div {
+    background: #fff;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 100%;
+    right: 0;
+    bottom: 0;
+    z-index: 1020;
+    opacity: 0;
+}
+.input-text input {
+    border: 0;
+    height: 3rem;
+    line-height: 2rem;
+    padding: .5rem 0;
+    box-sizing: border-box;
+    width: 100%;
+    color: #555;
+    font-size: 1.46rem;
+    padding-right: 1rem;
+    outline: none;
+    padding-left:0.6rem;
+}
+.search .input-text {
+    padding: .3rem 0;
+    border-bottom: 0;
+    background: #fff;
+    background: #FFFFFF;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
