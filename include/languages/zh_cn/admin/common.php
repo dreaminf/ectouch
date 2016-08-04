@@ -409,10 +409,13 @@ $_LANG['10_shop_authorized'] = '授权证书';
 
 // 数据库
 
-
 // 工具箱
-$_LANG['02_authorization'] = '登录插件';
-$_LANG['99_upgrade'] = '在线更新';
+$_LANG['01_navigator']       = '导航设置';
+$_LANG['02_authorization']   = '登录插件';
+$_LANG['03_mail_settings']   = '邮件服务器设置';
+$_LANG['04_view_sendlist']   = '邮件队列管理';
+$_LANG['05_captcha_manage']  = '验证码管理';
+$_LANG['99_upgrade']         = '在线更新';
 
 /*DRP_START*/
 // 微分销

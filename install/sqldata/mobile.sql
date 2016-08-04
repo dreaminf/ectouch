@@ -2,8 +2,11 @@
 -- 后台权限控制
 --
 
+-- /*DRP_START*/
 INSERT INTO `ecs_admin_action` VALUES ('200', '0', 'ext_fenxiao', '');
+-- /*DRP_END*/
 INSERT INTO `ecs_admin_action` VALUES ('201', '0', 'ext_wechat', '');
+-- /*DRP_START*/
 INSERT INTO `ecs_admin_action` VALUES ('138', '200', 'drp_config', '');
 INSERT INTO `ecs_admin_action` VALUES ('139', '200', 'drp_audit', '');
 INSERT INTO `ecs_admin_action` VALUES ('140', '200', 'drp_users', '');
@@ -13,6 +16,7 @@ INSERT INTO `ecs_admin_action` VALUES ('143', '200', 'drp_affiliate', '');
 INSERT INTO `ecs_admin_action` VALUES ('144', '200', 'drp_affiliate_ck', '');
 INSERT INTO `ecs_admin_action` VALUES ('145', '200', 'drp_ranking', '');
 INSERT INTO `ecs_admin_action` VALUES ('146', '200', 'drp_log', '');
+-- /*DRP_END*/
 INSERT INTO `ecs_admin_action` VALUES ('147', '201', 'wechat_config', '');
 INSERT INTO `ecs_admin_action` VALUES ('148', '201', 'wechat_masssend', '');
 INSERT INTO `ecs_admin_action` VALUES ('149', '201', 'wechat_autoreply', '');
@@ -29,6 +33,14 @@ INSERT INTO `ecs_admin_action` (`action_id`,`parent_id`, `action_code`, `relevan
 ('159', '6', 'back_cause_list', ''),
 ('160', '6', 'aftermarket_list', ''),
 ('161', '6', 'add_return_cause', '');
+INSERT INTO `ecs_admin_action` (`action_id`, `parent_id`, `action_code`, `relevance`) VALUES
+(162, 0, 'menu_tools', ''),
+(163, 162, 'navigator', ''),
+(164, 162, 'authorization', ''),
+(165, 162, 'mail_settings', ''),
+(166, 162, 'view_sendlist', ''),
+(167, 162, 'captcha_manage', ''),
+(168, 162, 'upgrade', '');
 --
 -- 表的结构 `ecs_touch_activity`
 --

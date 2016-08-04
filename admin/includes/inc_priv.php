@@ -156,6 +156,14 @@ if (!defined('IN_ECTOUCH'))
     $purview['magazine_list']        = 'magazine_list';
     $purview['view_sendlist']        = 'view_sendlist';
 
+//工具箱   
+    $purview['01_navigator']       = 'navigator';
+    $purview['02_authorization']   = 'authorization';
+    $purview['03_mail_settings']   = 'mail_settings';
+    $purview['04_view_sendlist']   = 'view_sendlist';
+    $purview['05_captcha_manage']  = 'captcha_manage';
+    $purview['99_upgrade']         = 'upgrade';
+
 /*DRP_START*/
 // 微分销
     $purview['ext_fenxiao'] = 'ext_fenxiao';

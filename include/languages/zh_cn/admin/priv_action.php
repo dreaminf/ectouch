@@ -24,7 +24,7 @@ $_LANG['email'] = '邮件管理';
 $_LANG['templates_manage'] = '模板管理';
 $_LANG['db_manage'] = '数据库管理';
 $_LANG['sms_manage'] = '短信管理';
-
+$_LANG['menu_tools'] = '工具箱';
 //商品管理部分的权限
 $_LANG['goods_manage'] = '商品添加/编辑';
 $_LANG['remove_back'] = '商品删除/恢复';
@@ -188,3 +188,10 @@ $_LANG['wechat_extends'] = '扩展功能';
 $_LANG['wechat_remind'] = '提醒设置';
 $_LANG['wechat_customer'] = '多客服设置';
 
+//工具箱
+$_LANG['navigator']       = '导航设置';
+$_LANG['authorization']   = '登录插件';
+$_LANG['mail_settings']   = '邮件服务器设置';
+$_LANG['view_sendlist']   = '邮件队列管理';
+$_LANG['captcha_manage']  = '验证码管理';
+$_LANG['upgrade']         = '在线更新';
