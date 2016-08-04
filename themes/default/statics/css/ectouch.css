@@ -267,12 +267,14 @@ label.admin-text{color:#999;}
 /*按钮色调*/
 .btn-submit,
 .btn-submit1,
+.btn-submit2,
 .btn-disab,
 .btn-cart,
 .btn-reset,
 .btn-default,
 .btn-alipay,
 .btn-wechat{font-size: 1.7rem;color: #fff;border: 0;text-align: center;padding: .84rem 0;border-radius: 4px;width: 100%;}
+a.btn-submit2{color:#1CBB7F;}
 a.btn-submit,
 a.btn-disab,
 a.btn-cart,
@@ -280,6 +282,7 @@ a.btn-alipay,
 a.btn-wechat{color: #fff;}
 a.btn-reset,a.btn-default{color:#555;}
 .btn-submit {background: #1CBB7F;border:1px solid #1CBB7F}/*主提交按钮*/
+.btn-submit2{border:1px solid #1CBB7F;color:#1CBB7F;} 
 .btn-submit:active,
 .btn-submit:hover {border:1px solid #1aad76;background:#1aad76;}/*主提交按钮按下颜色*/
 .btn-submit1,a.btn-submit1 {color:#1CBB7F; background:none;  border:1px solid #1CBB7F}/*主提交按钮1*/
@@ -611,6 +614,14 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
  * 商品详情页 － 共用样式
  * */
 /*共用*/
+.n-goods-tit{font-size:1.6rem;color:#444;}
+.n-goods-cont-tit{text-align:left; width:100%; background:#ffffff; padding:1rem 0 ;font-size:1.5rem;color:#777;border-top:1px solid #f6f6f9;margin-top:1.2rem;}
+.n-goods-btn{padding:1.3rem 0;border-top:1px solid #f6f6f9;width: 100%;margin-top: 1.2rem;}
+.n-goods-btn a{margin-right:1rem;}
+.n-goods-btn a:last-child{margin-right:0;}
+.n-goods-list-cont{display: inline-block;width: 50%;}
+.n-goods-list-cont label{font-size:1.5rem;color:#444;padding: 0 0.6rem}
+.n-goods-list-cont em{font-size:1.3rem; color:#777;}
 .goods,.flow-have-cart,.flow-checkout,.flow-consignee-list,.user-evaluation{margin-bottom:6.4rem;}
 .show-goods-img{position:fixed; left:0; top:0; right:0; bottom:0;}
 .show-goods-img .j-show-goods-img{background:rgba(0,0,0,1); z-index: 111; left:0; right:0; top:0; bottom:0; position:fixed !important;}

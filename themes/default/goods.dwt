@@ -624,25 +624,27 @@ function ec_group_openSpeDiv(message, group, goods_id, parent)
   // 新激活图层
   var newDiv = document.createElement("div");
   newDiv.id = _id;
-  newDiv.style.position = "absolute";
+  newDiv.style.position = "fixed";
   newDiv.style.zIndex = "10000";
-  newDiv.style.width = "26rem";
-  newDiv.style.height = "28rem";
-  newDiv.style.top = (parseInt(scrollPos + 200)) + "px";
-  newDiv.style.left = "50%"; // 屏幕居中
-  newDiv.style.marginLeft = "-13rem";
-  newDiv.style.overflow = "auto"; 
+  //newDiv.style.width = "26rem";
+  //newDiv.style.height = "28rem";
+  //newDiv.style.top = (parseInt(scrollPos + 200)) + "px";
+  newDiv.style.bottom = "0"; 
+  newDiv.style.left = "0"; 
+  newDiv.style.right = "0"; 
+  //newDiv.style.marginLeft = "-13rem";
+  newDiv.style.overflow = "hidden"; 
   newDiv.style.background = "#FFF";
-  newDiv.style.border = "3px solid #59B0FF";
-  newDiv.style.padding = "5px";
+  //newDiv.style.border = "3px solid #59B0FF";
+  newDiv.style.padding = "1.3rem 1.3rem 0rem 1.3rem";
   newDiv.style.boxSizing = "border-box";
 
   //生成层内内容
-  newDiv.innerHTML = '<h4 style="font-size:14; margin:15 0 0 15;">' + select_spe + "</h4>";
+  newDiv.innerHTML = '<h4 class="n-goods-tit">' + select_spe + "</h4>";
 
   for (var spec = 0; spec < message.length; spec++)
   {
-      newDiv.innerHTML += '<hr style="color: #EBEBED; height:1px;"><h6 style="text-align:left; background:#ffffff; margin-left:15px;">' +  message[spec]['name'] + '</h6>';
+      newDiv.innerHTML += '<h6 class="n-goods-cont-tit">' +  message[spec]['name'] + '</h6>';
 
       if (message[spec]['attr_type'] == 1)
       {
@@ -650,11 +652,11 @@ function ec_group_openSpeDiv(message, group, goods_id, parent)
         {
           if (val_arr == 0)
           {
-            newDiv.innerHTML += "<input style='margin-left:15px;' type='radio' name='spec_" + message[spec]['attr_id'] + "' value='" + message[spec]['values'][val_arr]['id'] + "' id='spec_value_" + message[spec]['values'][val_arr]['id'] + "' checked /><font color=#555555>" + message[spec]['values'][val_arr]['label'] + '</font> [' + message[spec]['values'][val_arr]['format_price'] + ']</font><br />';      
+            newDiv.innerHTML += "<div class='n-goods-list-cont'><input  type='radio' name='spec_" + message[spec]['attr_id'] + "' value='" + message[spec]['values'][val_arr]['id'] + "' id='spec_value_" + message[spec]['values'][val_arr]['id'] + "' checked /><label>" + message[spec]['values'][val_arr]['label'] + '</label><em>(' + message[spec]['values'][val_arr]['format_price'] + ')</em></div>';
           }
           else
           {
-            newDiv.innerHTML += "<input style='margin-left:15px;' type='radio' name='spec_" + message[spec]['attr_id'] + "' value='" + message[spec]['values'][val_arr]['id'] + "' id='spec_value_" + message[spec]['values'][val_arr]['id'] + "' /><font color=#555555>" + message[spec]['values'][val_arr]['label'] + '</font> [' + message[spec]['values'][val_arr]['format_price'] + ']</font><br />';      
+            newDiv.innerHTML += "<div class='n-goods-list-cont'><input  type='radio' name='spec_" + message[spec]['attr_id'] + "' value='" + message[spec]['values'][val_arr]['id'] + "' id='spec_value_" + message[spec]['values'][val_arr]['id'] + "' /><label>" + message[spec]['values'][val_arr]['label'] + '</label><em> (' + message[spec]['values'][val_arr]['format_price'] + ')</em></div>';      
           }
         } 
         newDiv.innerHTML += "<input type='hidden' name='spec_list' value='" + val_arr + "' />";
@@ -663,12 +665,12 @@ function ec_group_openSpeDiv(message, group, goods_id, parent)
       {
         for (var val_arr = 0; val_arr < message[spec]['values'].length; val_arr++)
         {
-          newDiv.innerHTML += "<input style='margin-left:15px;' type='checkbox' name='spec_" + message[spec]['attr_id'] + "' value='" + message[spec]['values'][val_arr]['id'] + "' id='spec_value_" + message[spec]['values'][val_arr]['id'] + "' /><font color=#555555>" + message[spec]['values'][val_arr]['label'] + ' [' + message[spec]['values'][val_arr]['format_price'] + ']</font><br />';     
+          newDiv.innerHTML += "<div class='n-goods-list-cont'><input  type='checkbox' name='spec_" + message[spec]['attr_id'] + "' value='" + message[spec]['values'][val_arr]['id'] + "' id='spec_value_" + message[spec]['values'][val_arr]['id'] + "' /><label>" + message[spec]['values'][val_arr]['label'] + '</label><em> (' + message[spec]['values'][val_arr]['format_price'] + ')</em></div>';     
         }
         newDiv.innerHTML += "<input type='hidden' name='spec_list' value='" + val_arr + "' />";
       }
   }
-  newDiv.innerHTML += "<br /><center>[<a href='javascript:ec_group_submit_div(\"" + group + "\"," + goods_id + "," + parent + ")' class='f6' >" + btn_buy + "</a>]&nbsp;&nbsp;[<a href='javascript:ec_group_cancel_div(\"" + group + "\"," + goods_id + ")' class='f6' >" + is_cancel + "</a>]</center>";
+  newDiv.innerHTML += "<br /><div class='dis-box  b-color-f n-goods-btn'><a href='javascript:ec_group_submit_div(\"" + group + "\"," + goods_id + "," + parent + ")' class='f6 btn-submit box-flex' >" + btn_buy + "</a><a class='f6 btn-submit2 box-flex' href='javascript:ec_group_cancel_div(\"" + group + "\"," + goods_id + ")' class='f6' >" + is_cancel + "</a></div>";
   document.body.appendChild(newDiv);
 
 
@@ -681,7 +683,7 @@ function ec_group_openSpeDiv(message, group, goods_id, parent)
   newMask.style.height = document.body.scrollHeight + "px";
   newMask.style.top = "0px";
   newMask.style.left = "0px";
-  newMask.style.background = "#FFF";
+  newMask.style.background = "#000";
   newMask.style.filter = "alpha(opacity=30)";
   newMask.style.opacity = "0.40";
   document.body.appendChild(newMask);
