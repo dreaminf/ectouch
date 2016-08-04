@@ -670,7 +670,7 @@ function ec_group_openSpeDiv(message, group, goods_id, parent)
         newDiv.innerHTML += "<input type='hidden' name='spec_list' value='" + val_arr + "' />";
       }
   }
-  newDiv.innerHTML += "<br /><div class='dis-box  b-color-f n-goods-btn'><a href='javascript:ec_group_submit_div(\"" + group + "\"," + goods_id + "," + parent + ")' class='f6 btn-submit box-flex' >" + btn_buy + "</a><a class='f6 btn-submit2 box-flex' href='javascript:ec_group_cancel_div(\"" + group + "\"," + goods_id + ")' class='f6' >" + is_cancel + "</a></div>";
+  newDiv.innerHTML += "<br /><div class='dis-box  b-color-f n-goods-btn'><a class='f6 btn-submit2 box-flex' href='javascript:ec_group_cancel_div(\"" + group + "\"," + goods_id + ")' class='f6' >" + is_cancel + "</a><a href='javascript:ec_group_submit_div(\"" + group + "\"," + goods_id + "," + parent + ")' class='f6 btn-submit box-flex' >" + btn_buy + "</a></div>";
   document.body.appendChild(newDiv);
 
 
