@@ -29,7 +29,11 @@
 								<div class="dis-box raise-header padding-all b-color-f">
 									<div class="raise-admin-left">
 										<div class="raise-admin-img">
-											<img src="/ecshop-mobile/themes/default/images/member-photo-img2.jpeg">
+											{if $comment.avatar}
+												<img  src="{$comment.avatar}" />
+											{else}
+												<img src="__TPL__/images/member-photo-img2.jpeg" />
+											{/if}
 										</div>
 									</div>
 									<div class="box-flex"><label class="col-3">admin123</label></div>

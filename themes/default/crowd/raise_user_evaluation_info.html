@@ -22,15 +22,17 @@
 			<div class="user-evaluation">
 				<section class="product-list product-list-small">
 					<ul>
+						<!--{foreach from=$order item = order}-->
 						<li>
 							<div class="product-div">
 								<a class="product-div-link" href="goods.html"></a>
-								<img class="product-list-img" src="__TPL__/crowd/img/85952556d01385443c1062792e530cd3ee4f1c34h5.jpeg@!thumb.png" />
+								<img class="product-list-img" src="{$order.goods_img}" />
 								<div class="product-text">
-									<h4>阳光攀枝花，缤纷芒果季—离太阳更近，离污染更远,离太阳更近，离污染更远。</h4>
+									<h4>{$order.goods_name}</h4>
 								</div>
 							</div>
 						</li>
+						<!--{/foreach}-->
 					</ul>
 				</section>
 				<section class="m-top06 padding-all b-color-f">
@@ -56,16 +58,20 @@
 						</div>
 					</div> -->
 				</section>
+				 <form action="{:url('mycrowd/crowd_comment')}"  method="post" >
 				<section class="m-top1px padding-all b-color-f">
 					<div class="text-area1">
-						<textarea rows="4" maxlength="100" placeholder="填写评论内容 (0-100字)"></textarea>
+						<textarea name="content" rows="4" maxlength="100" placeholder="填写评论内容 (0-100字)"></textarea>
 						<span></span>
 					</div>
 				</section>
 				
 				<p class="ect-padding-tb">
+					<input type="hidden" name="goods_id" value="{$goods_id}" />
+					<input type="hidden" name="order_id" value="{$order_id}" />
 					<input type="submit" class="btn btn-info ect-btn-info ect-bg" value="提交评论">
 				</p>
+				</form>
 				<!-- <section class="padding-all ">
 					<div id="demo" class="demo"></div>
 				</section> -->

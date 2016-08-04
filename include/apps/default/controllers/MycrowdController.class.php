@@ -152,13 +152,42 @@ class MycrowdController extends CommonController {
 	
 	
 	/**
-     * 获取订单商品的评论列表 
+     * 获取订单商品的评论
     */
     public function crowd_comment() {
-        
 		
+		 if (IS_POST) {
+            $data = array(
+                'user_id' => $this->user_id,
+                'user_name' => $_SESSION['user_name'],
+                'content' => I('post.content'),
+				'add_time' => gmtime(),
+                'order_id' => I('post.order_id', 0),
+				'goods_id' => I('post.goods_id', 0)
+                
+            );
+            $this->model->table('crowd_comment')
+                        ->data($data)
+                        ->insert();
+
+            show_message('评论成功等待管理员审核', '返回', url('crowd_order'), 'info');
+            
+
+        }
 		
-		
+		$order_id = I('request.order_id') ? intval(I('request.order_id')) : 0 ;
+		$goods_id = I('request.order_id') ? intval(I('request.order_id')) : 0 ;
+		$sql = "SELECT cg.goods_img, cg.goods_name FROM " . $this->model->pre . "order_info as o left join " . $this->model->pre . "order_goods as g on o.order_id = g.order_id left join ". $this->model->pre ."crowd_goods as cg on g.goods_id = cg.goods_id " ." WHERE o.order_id = '$order_id' and  o.extension_code = 'crowd_buy'  limit 1";		
+		$order = $this->model->query($sql);
+		foreach ($order AS $key => $row) {           
+            $order[$key]['goods_img'] = 'data/attached/crowdimage/'.$row['goods_img'];
+            
+		}
+
+		$this->assign('order_id', $order_id);
+		$this->assign('goods_id', $goods_id);
+		$this->assign('order', $order);
+	
 		$this->display('crowd/raise_user_evaluation_info.html');
     }
 	

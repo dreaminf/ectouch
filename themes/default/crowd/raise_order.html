@@ -89,7 +89,7 @@
 										<!--{/if}-->
 										
 										<!--{if $order.pay_status eq 2 and $order.shipping_status eq 2 }-->
-										<a href="{:url('mycrowd/crowd_comment_list')}" class="btn-submit1">评价</a>
+										<a href="{:url('mycrowd/crowd_comment',array('order_id'=>$this->_var['order']['order_id'],'id'=>$this->_var['order']['goods_id']))}" class="btn-submit1">评价</a>
 										<!--{/if}-->
 										
 										

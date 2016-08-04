@@ -137,6 +137,7 @@ class CrowdfundingModel extends CommonModel {
 	function crowd_comment($goods_id = 0) {
 		$sql = "SELECT id,user_id,user_name,goods_id,content,add_time FROM ". $this->model->pre ."crowd_comment WHERE ".
                "goods_id = '".$goods_id."' AND status = 1 and parent_id = 0  ORDER BY id DESC LIMIT 0,3";
+  
         $comment_list = $this->model->query($sql);
         foreach($comment_list as $k => $v){
 			$comment_list[$k]['add_time'] = local_date(C('time_format'), $v['add_time']);
@@ -239,7 +240,7 @@ class CrowdfundingModel extends CommonModel {
             $limit = " LIMIT $limit";
         }
         $sql = "SELECT id,user_id,user_name,goods_id,content,add_time FROM ". $this->pre ."crowd_comment WHERE ".
-               " goods_id = '".$goods_id."' AND parent_id = 0 AND status = 1 AND rank > 0 ORDER BY id DESC LIMIT $start , $num";
+               " goods_id = '".$goods_id."' AND parent_id = 0 AND status = 1 ORDER BY id DESC LIMIT $start , $num";
         $comment_list = $this->query($sql);
         foreach($comment_list as $k => $v){
 			$comment_list[$k]['add_time'] = local_date(C('time_format'), $v['add_time']);

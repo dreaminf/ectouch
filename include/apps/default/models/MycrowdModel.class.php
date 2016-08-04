@@ -137,7 +137,7 @@ class MycrowdModel extends BaseModel {
 	}
 	
 	/**
-     * 获取方案最低价格     
+     * 获取详情    
      */
 	function crowd_user_orders($user_id, $pay = 1, $num = 10, $start = 0){		
 		/* 取得订单列表 */
@@ -214,6 +214,7 @@ class MycrowdModel extends BaseModel {
 				'goods_name' => $res['goods_name'],
 				'goods_number' => $res['goods_number'],
 				'goods_price' => $res['goods_price'],
+				'goods_id' => $res['goods_id'],
 				'name' => $res['name'],
 				'pay_online' => $order['pay_online'],            //支付按钮
 				'url' => url('Crowdfunding/goods_info', array('id' => $res['goods_id']))
