@@ -16,20 +16,33 @@
 defined('IN_ECTOUCH') or die('Deny Access');
 
 class MycrowdController extends CommonController {
+	
+	protected $user_id;
+    protected $action;
+    protected $back_act = '';
+	
 	 /**
      * 构造函数
      */
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct();		
 		$this->user_id = $_SESSION['user_id'];
+		$this->action = ACTION_NAME;
+		// 验证登录
+        $this->check_login();
         // 用户信息
         $info = model('ClipsBase')->get_user_default($this->user_id);
         // 显示第三方API的头像
         if(isset($_SESSION['avatar'])){
             $info['avatar'] = $_SESSION['avatar'];
         }
+		
+		// 如果是显示页面，对页面进行相应赋值
+        assign_template();
+
 		$this->assign('info', $info);
+		$this->assign('action', $this->action);
     }
 	
     /**
@@ -83,7 +96,7 @@ class MycrowdController extends CommonController {
 	
 	
 	/**
-     * 关余众筹详细
+     * 关余众筹详细order_list
      */
     public function crowd_art_list() {
 		$id = I('request.id') ? intval(I('request.id')) : 0 ;
@@ -94,6 +107,129 @@ class MycrowdController extends CommonController {
         $this->assign('data', $data);
         $this->display('crowd/raise_problem.html');
     }
+	
+	
+	/**
+     * 众筹订单
+     */
+    public function crowd_order() {
+
+		$this->status = I('request.status') ? intval(I('request.status')) : 1 ;
+		//dump($this->status);
+		$pay = $this->status;
+        $size = I(C('page_size'),10);
+        $count = model('Mycrowd')->crowd_orders_num($this->user_id, $this->status);//获取订单数量
+		//dump($count);
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('crowd_order', $filter), $size);
+        $offset_page = explode(',', $offset);
+        $orders = model('Mycrowd')->crowd_user_orders($this->user_id, $pay, $offset_page[1], $offset_page[0]);
+		if(!$orders){
+			show_message('暂无内容');
+		}
+		//dump($orders);
+        $this->assign('pay', $pay);
+        $this->assign('title', L('order_list_lnk'));
+        $this->assign('pager', $this->pageShow($count));
+		$this->assign('status', $this->status);
+        $this->assign('orders_list', $orders);
+		
+		
+        $this->display('crowd/raise_order.html');
+    }
+	
+	
+	/**
+     * 获取订单商品的评论列表 
+    */
+    public function crowd_comment_list() {
+        
+		
+		
+		
+		$this->display('crowd/raise_user_evaluation.html');
+    }
+	
+	
+	/**
+     * 获取订单商品的评论列表 
+    */
+    public function crowd_comment() {
+        
+		
+		
+		
+		$this->display('crowd/raise_user_evaluation_info.html');
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	 /**
+     * 取消订单
+     */
+    public function cancel_order() {
+        $order_id = I('get.order_id', 0, 'intval');
+
+        if (model('Users')->cancel_order($order_id, $this->user_id)) {
+            $url = url('crowd_order');
+            ecs_header("Location: $url\n");
+            exit();
+        } else {
+            ECTouch::err()->show(L('order_list_lnk'), url('crowd_order'));
+        }
+    }
+	
+	private function check_login() {
+        // 是否登陆
+        if(empty($this->user_id)){
+            $url = 'http://'.$_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+            redirect(url('user/login', array('referer' => urlencode($url)) ));
+            exit();
+        }
+	
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
