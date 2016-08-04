@@ -279,9 +279,6 @@ $(function($) {
 		$(this).addClass("active").siblings(".flow-checkout-adr").removeClass("active");
 	});
 
-	$(".s-g-attr-con .select-one .ect-select").click(function() {
-		$(".select-one .ect-select label").addClass("active");
-	});
 	/*商品详情所在地区*/
 	$(".j-get-city-one .ect-select").click(function() {
 		city_span = $(".j-filter-city span.text-all-span");
