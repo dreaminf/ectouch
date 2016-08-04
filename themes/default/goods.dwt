@@ -640,7 +640,7 @@ function ec_group_openSpeDiv(message, group, goods_id, parent)
   newDiv.style.boxSizing = "border-box";
 
   //生成层内内容
-  newDiv.innerHTML = '<h4 class="n-goods-tit">' + select_spe + "</h4>";
+  newDiv.innerHTML = '<div class="dis-box"><h4 class="n-goods-tit box-flex">' + select_spe + "</h4><a href='javascript:ec_group_cancel_div(\"" + group + "\"," + goods_id + ")' class='box-flex text-right'><i class='iconfont icon-guanbi show-div-guanbi'></i></a></div>";
 
   for (var spec = 0; spec < message.length; spec++)
   {

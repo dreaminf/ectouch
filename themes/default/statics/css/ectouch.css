@@ -629,6 +629,8 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .g-t-temark{ margin:0; margin-right:1.3rem; display: inherit;}
 .remark-all{font-size:1.5rem; padding:.6rem; text-align: center; color:#fff; display: block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
+.am-left{position:relative; animation: HTMLBOX 0.2s;}
+@keyframes HTMLBOX{0%   {  left:100%;opacity: 0;}100% {  left:0;opacity: 1;}}
 .big-remark-all{margin-bottom:1.3rem;}
 .big-remark-all .remark-all{padding:1.3rem;box-sizing:border-box;}
 .big-remark-all p{overflow: hidden; clear: both; position: relative;}
