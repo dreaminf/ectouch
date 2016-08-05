@@ -25,8 +25,8 @@
 					<div class="box-flex">
 						<ul class="dis-box goods-header-nav-box">
 							<li class="box-flex"><a class="hover" href="javascript:;"><label>商品</label></a></li>
-							<li class="box-flex"><a href="/ecshop-mobile/index.php?m=default&c=crowdfunding&a=crowd_goods_properties&id=3&u=9"><label>详情</label></a></li>
-							<li class="box-flex"><a href="/ecshop-mobile/index.php?m=default&c=crowdfunding&a=crowd_comment_list&id=3&u=9"><label>评价</label></a></li>
+							<li class="box-flex"><a href="{:url('crowdfunding/crowd_goods_properties',array('id'=>$this->_var['id']))}"><label>详情</label></a></li>
+							<li class="box-flex"><a href="{:url('crowdfunding/crowd_comment_list',array('id'=>$this->_var['id']))}"><label>评价</label></a></li>
 						</ul>
 					</div>
 					<a class="" href="javascript:;">
@@ -38,10 +38,10 @@
 							<a href="{:url('index/index')}">
 								<li><i class="iconfont icon-home j-nav-box"></i>首页</li>
 							</a>
-							<a href="/ecshop-mobile/index.php?m=default&c=crowdfunding">
+							<a href="{:url('crowdfunding/index')}">
 								<li><i class="iconfont icon-zhongchou j-nav-box"></i>众筹广场</li>
 							</a>
-							<a href="/ecshop-mobile/index.php?m=default&c=crowdfunding">
+							<a href="{:url('mycrowd/index')}">
 								<li><i class="iconfont icon-06 j-nav-box"></i>众筹中心</li>
 							</a>
 							<a href="{:url('user/index')}">
