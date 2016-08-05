@@ -108,7 +108,7 @@
 										<!--{/if}-->
 										
 										<!--{if $order.pay_status eq 2 and $order.shipping_status > 0 }-->
-										<a href="raise_user_order_track.html" class="btn-default">查看物流</a>
+										<a href="{:url('mycrowd/order_tracking',array('order_id'=>$this->_var['order']['order_id']))}" class="btn-default">查看物流</a>
 										<!--{/if }-->
 										
 										<!--{if $order.pay_status eq 2 and $order.shipping_status eq 2 }-->
