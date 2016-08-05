@@ -88,14 +88,11 @@
 								</div>
 								<footer class="padding-all b-color-f m-top1px of-hidden dis-box">
 									<h4 class="t-remark2 box-flex"><label class="t-remark">合计：</label><span class="t-first">{$order.total_fee}</span></h4>
-									<p class="ect-button-more">
-										
-										<!-- <a class="btn-default">取消</a> -->
+									<p class="ect-button-more">										
+										<!-- 取消/确定 -->
 										{$order.handler}
-										<!-- <a class="btn-submit1" href="raise_order_detail.html">付款</a> -->
-										{$order.pay_online}
-										
-										
+										<!-- 付款-->
+										{$order.pay_online}	
 										<!--{if $order.pay_status eq 2 and $order.shipping_status eq 0 }-->
 										<a class="btn-submit1" href="raise_order_detail.html">提醒发货</a>
 										<!--{/if}-->
@@ -114,8 +111,6 @@
 											<!--{/if}-->
 										<!--{/if}-->
 										
-										
-										<!--<a class="btn-submit1 " href="raise_order_detail.html">再次购买</a> -->
 									</p>
 								</footer>
 							</section>
