@@ -85,7 +85,7 @@
 										<!--{/if}-->
 										<!--{if $order.pay_status eq 2 and $order.shipping_status eq 1 }-->
 										
-										<a class="btn-submit1 " href="raise_order_detail.html">确定收货</a>
+										<a class="btn-submit1 " href="{:url('mycrowd/affirm_received',array('order_id'=>$this->_var['order']['order_id']))}" onclick="if (!confirm('你确认已经收到货物了吗？')) return false;">确定收货</a>
 										<!--{/if}-->
 										
 										<!--{if $order.pay_status eq 2 and $order.shipping_status > 0 }-->

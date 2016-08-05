@@ -195,14 +195,12 @@ class MycrowdController extends CommonController {
     }
 	
 	/**
-    * 确认收货
-    */
-    public function shopping_order() {
+     * 确认收货
+     */
+    public function affirm_received() {
         $order_id = I('get.order_id', 0, 'intval');
-
-        if (model('Users')->cancel_order($order_id, $this->user_id)) {
-            $url = url('crowd_order');
-            ecs_header("Location: $url\n");
+        if (model('Users')->affirm_received($order_id, $this->user_id)) {
+            ecs_header("Location: " . url('crowd_order') . "\n");
             exit();
         } else {
             ECTouch::err()->show(L('order_list_lnk'), url('crowd_order'));
