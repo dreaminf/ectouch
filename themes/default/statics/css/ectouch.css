@@ -2593,6 +2593,7 @@ background:-ms-linear-gradient(left,#1CBB7F,#1CBB7F)}
 .raise-pay-btn input{background:none;text-align: center;color: #fff;border:none;width:100%;}
 .raise-pay-btn div{width:100%;background: #1dbc20;border: 1px solid #1dbc20;font-size: 1.7rem;color: #fff;border: 0;text-align: center;padding: .84rem 0;border-radius: 4px;width: 100%;}
 .raise-pay-btn a{width:100%;text-align: center;display: block;}
+.raise-zan-list{padding:0.8rem 1.2rem 0.2rem 1.2rem;border-bottom:1px solid #f6f6f9;}
 /*footer*/
 .footer-nav{ background-color: rgba(254, 253, 252, 0.98);   left: 0;right: 0;position: fixed;z-index: 4;margin: 0 auto;bottom: 0;z-index: 4;box-shadow: 1px 5px 15px rgba(50,50,50,0.3);max-width:640px;border-top:1px solid #f6f6f9;padding:0.3rem 0}
 .footer-nav .nav-list{font-size:1.3rem;display:block;text-align:center;padding-top:0rem;color:#777}

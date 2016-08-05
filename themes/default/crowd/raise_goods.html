@@ -4,7 +4,7 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<meta charset="utf-8">
-		<title>项目详情</title>
+		<title>众筹详情</title>
 
 		<!--字体图标库-->
 		<link rel="stylesheet" href="__TPL__/statics/fonts/iconfont.css">
@@ -198,7 +198,7 @@
 							<section class="swiper-slide goods-info-attr swiper-slide-next">
 								<!--{if $buy_list}-->
 								<!--{foreach from=$buy_list item =buy_list}-->
-								<div class="m-top1px">
+								<div class="raise-zan-list b-color-f">
 									<div class="dis-box raise-header padding-all b-color-f">
 										<div class="raise-admin-left">
 											<div class="raise-admin-img">
@@ -210,10 +210,10 @@
 											</div>
 										</div>
 										<div class="box-flex">
-											<label class="col-3" style="padding:0">{$buy_list.name}</label>
+											<label class="col-3 onelist-hidden" style="padding:0">{$buy_list.name}</label>
 											<span class="f-03 col-9">{$buy_list.add_time}</span>
 										</div>
-										<div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">{$buy_list.goods_price}</em>元</label></div>
+										<div class="box-flex col-7 onelist-hidden"><label class="fr f-04">支持<em class="color-red">{$buy_list.goods_price}</em>元</label></div>
 									</div>
 								</div>
 								<!--{/foreach}-->
