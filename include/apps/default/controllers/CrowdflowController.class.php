@@ -42,7 +42,10 @@ class CrowdflowController extends CommonController {
 			$_SESSION['cp_id'];
 			$_SESSION['number'];			
 		}
-
+		$this->assign('goods_id', $_SESSION['goods_id']);
+		$this->assign('cp_id', $_SESSION['cp_id']);
+		$this->assign('number', $_SESSION['number']);
+		
 		//  检查用户是否已经登录 如果用户已经登录了则检查是否有默认的收货地址 如果没有登录则跳转到登录和注册页面
         if (empty($_SESSION ['direct_shopping']) && $_SESSION ['user_id'] == 0) {
             /* 用户没有登录且没有选定匿名购物，转向到登录页面 */
@@ -361,13 +364,17 @@ class CrowdflowController extends CommonController {
      *  提交订单
      */
 	 public function crowd_done() {
-
-		 
+		
+		$goods_id = I('post.goods_id', 0);
+		$cp_id = I('post.cp_id', 0);
+		$number = I('post.number', 0);
+		$_SESSION['goods_id'] =$goods_id ;
+		$_SESSION['cp_id'] = $cp_id ;
+		$_SESSION['number'] = $number ;		
 		 if(empty($_SESSION['goods_id']) && empty($_SESSION['cp_id'])&&empty($_SESSION['number'])){
 			 ecs_header("Location: " . url('index/index') . "\n");
 			 
-		 }
-		
+		 }		
         // 检查用户是否已经登录 如果用户已经登录了则检查是否有默认的收货地址 如果没有登录则跳转到登录和注册页面
         if (empty($_SESSION ['direct_shopping']) && $_SESSION ['user_id'] == 0) {
             /* 用户没有登录且没有选定匿名购物，转向到登录页面 */
@@ -751,9 +758,10 @@ class CrowdflowController extends CommonController {
         unset($_SESSION ['flow_consignee']); // 清除session中保存的收货人信息
         unset($_SESSION ['flow_order']);
         unset($_SESSION ['direct_shopping']);
-		unset($_SESSION ['goods_id']); 
-        unset($_SESSION ['cp_id']);
-        unset($_SESSION ['number']);
+		// 清除session中保存项目信息
+		unset($_SESSION['goods_id']); 
+        unset($_SESSION['cp_id']);
+        unset($_SESSION['number']);
 
         $this->assign('currency_format', C('currency_format'));
         $this->assign('integral_scale', C('integral_scale'));
