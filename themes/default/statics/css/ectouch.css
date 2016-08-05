@@ -2521,7 +2521,7 @@ table.u-table td{border:1px solid #e3e3e3;padding:0.5em 0.2em;height:3em;width:7
 .raise-progressBar .wrap{margin-bottom:12px}
 .raise-progressBar .wrap{position:relative;margin-bottom:2px;height:5px;border-radius:5px;background-color:#efeeee;overflow:hidden}
 .raise-progressBar .bar,.raise-progressBar .color{display:block;height:100%;border-radius:4px}
-.raise-progressBar .color{width:100%;background:#FFA538;background:-webkit-gradient(linear,left top,right top,from(#1CBB7F),to(#1CBB7F));background:-moz-linear-gradient(left,#1CBB7F,#1CBB7F);background:-o-linear-gradient(left,#1CBB7F,#1CBB7F);background:-ms-linear-gradient(left,#1CBB7F,#1CBB7F)}
+.raise-progressBar .color{width:100%;background:#FFA538;background:-webkit-gradient(linear,left top,right top,from(#83dd2b),to(#1CBB7F));background:-moz-linear-gradient(left,#83dd2b,#1CBB7F);background:-o-linear-gradient(left,#83dd2b,#1CBB7F);background:-ms-linear-gradient(left,#83dd2b,#1CBB7F)}
 .raise-dateil-list li p{padding:0.1rem 0;}
 .rsise_detail-time .g-evaluation-con{padding:0.8rem 1.3rem}
 .raise-detail-return{padding:0.6rem 1.3rem;}
@@ -2577,8 +2577,8 @@ background:-ms-linear-gradient(left,#1CBB7F,#1CBB7F)}
 .raise-cate-nav li i{font-size:1.3rem;}
 .raise-cate-nav a{width:20%;outline:none;}
 .raise-cate-nav li.current {color:#1CBB7F;outline:none;}
-.raise-content {position: absolute;z-index: 11;box-shadow: 0px 1px 3px rgba(50,50,50,0.2);display:block;width: 100%;}
-.raise-content.active{display:none;}
+.raise-content {position: absolute;box-shadow: 0px 1px 3px rgba(50,50,50,0.2);visibility:visible;width: 100%;opacity: 1;}
+.raise-content.active{visibility: hidden;opacity: 0;z-index: 140;}
 .raise-content .raise-list-box {line-height:25px;display:none;border-top:1px solid #f6f6f9;}
 .raise-cate-nav a i{text-align: right;display: block;}
 /*raise-goods*/
@@ -2619,3 +2619,7 @@ background:-ms-linear-gradient(left,#1CBB7F,#1CBB7F)}
 /*flow-footer*/
 .flow-footer{position:static;}
 .folw-fixed-footer{position:fixed;bottom:0;left: 0;right: 0;}
+.raise-bg-box{background:rgba(0,0,0,0.3);position:fixed;bottom:0;left:0;right:0;top:0;z-index: 122;visibility: visible;opacity: 1;}
+.raise-bg-box.active{opacity: 0;visibility: hidden;}
+.category-header-box{position:absolute;top:0;width:100%;z-index:150;background:#f6f6f9;}
+.category-header-box.active{position: static;}
