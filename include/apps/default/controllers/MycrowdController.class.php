@@ -99,10 +99,10 @@ class MycrowdController extends CommonController {
      * 关余众筹详细order_list
      */
     public function crowd_art_list() {
-		$id = I('request.id') ? intval(I('request.id')) : 0 ;
+		//$id = I('request.id') ? intval(I('request.id')) : 0 ;
         $sql = 'SELECT title, 	description' .
-            ' FROM ' .$this->model->pre. 'article ' .
-            " WHERE is_open = 1 AND cat_id = '$id'" ;
+            ' FROM ' .$this->model->pre. 'crowd_article ' .
+            " WHERE is_open = 1 " ;
         $data = $this->model->query($sql);
         $this->assign('data', $data);
         $this->display('crowd/raise_problem.html');
@@ -124,9 +124,9 @@ class MycrowdController extends CommonController {
         $offset = $this->pageLimit(url('crowd_order', $filter), $size);
         $offset_page = explode(',', $offset);
         $orders = model('Mycrowd')->crowd_user_orders($this->user_id, $pay, $offset_page[1], $offset_page[0]);
-		if(!$orders){
+		/* if(!$orders){
 			show_message('暂无内容');
-		}
+		} */
 		//dump($orders);
         $this->assign('pay', $pay);
         $this->assign('title', L('order_list_lnk'));
@@ -136,18 +136,6 @@ class MycrowdController extends CommonController {
 		
 		
         $this->display('crowd/raise_order.html');
-    }
-	
-	
-	/**
-     * 获取订单商品的评论列表 
-    */
-    public function crowd_comment_list() {
-        
-		
-		
-		
-		$this->display('crowd/raise_user_evaluation.html');
     }
 	
 	
@@ -169,9 +157,7 @@ class MycrowdController extends CommonController {
             $this->model->table('crowd_comment')
                         ->data($data)
                         ->insert();
-
             show_message('评论成功等待管理员审核', '返回', url('crowd_order'), 'info');
-            
 
         }
 		
@@ -183,7 +169,6 @@ class MycrowdController extends CommonController {
             $order[$key]['goods_img'] = 'data/attached/crowdimage/'.$row['goods_img'];
             
 		}
-
 		$this->assign('order_id', $order_id);
 		$this->assign('goods_id', $goods_id);
 		$this->assign('order', $order);
@@ -191,19 +176,11 @@ class MycrowdController extends CommonController {
 		$this->display('crowd/raise_user_evaluation_info.html');
     }
 	
+
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	 /**
-     * 取消订单
-     */
+	/**
+    * 取消订单
+    */
     public function cancel_order() {
         $order_id = I('get.order_id', 0, 'intval');
 
@@ -216,8 +193,28 @@ class MycrowdController extends CommonController {
         }
     }
 	
+	/**
+    * 确认收货
+    */
+    public function shopping_order() {
+        $order_id = I('get.order_id', 0, 'intval');
+
+        if (model('Users')->cancel_order($order_id, $this->user_id)) {
+            $url = url('crowd_order');
+            ecs_header("Location: $url\n");
+            exit();
+        } else {
+            ECTouch::err()->show(L('order_list_lnk'), url('crowd_order'));
+        }
+    }
+	
+	
+	
+	/**
+    * 验证登录
+    */	
 	private function check_login() {
-        // 是否登陆
+        // 是否登录
         if(empty($this->user_id)){
             $url = 'http://'.$_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
             redirect(url('user/login', array('referer' => urlencode($url)) ));

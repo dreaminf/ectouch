@@ -191,10 +191,21 @@ class MycrowdModel extends BaseModel {
 			// 订单详情
 			$order = model('Users')->get_order_detail($value['order_id'], $user_id);
 
-			
+			// 订单信息
 			$sql = "SELECT og.goods_name,og.goods_id,og.goods_number,og.goods_price,cp.name FROM ". $this->pre ."order_goods as og left join  ". $this->pre ."crowd_plan as cp on og.cp_id = cp.cp_id " . " WHERE og.order_id = '".$value['order_id']."' ";
 			$res = $this->row($sql);
 			
+			// 验证是否评论
+			if ($_SESSION ['user_id']) {
+				$where['user_id'] = $_SESSION ['user_id'];
+				$where['order_id'] = $value['order_id'];
+				$rs = $this->model->table('crowd_comment')->where($where)->count();
+				if ($rs > 0) {
+					$rs = 1;
+				}else{
+					$rs = '';
+				}
+			}
 			
 
             $arr[] = array(
@@ -211,6 +222,7 @@ class MycrowdModel extends BaseModel {
 				'order_status' => $value['order_status'],        //订单状态
 				'pay_status' => $value['pay_status'],            //支付状态
 				'shipping_status' => $value['shipping_status'],  //配送状态
+				'is_comment' => $rs,                             //验证是否评论
 				'goods_name' => $res['goods_name'],
 				'goods_number' => $res['goods_number'],
 				'goods_price' => $res['goods_price'],
