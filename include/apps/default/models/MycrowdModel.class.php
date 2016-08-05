@@ -113,7 +113,7 @@ class MycrowdModel extends BaseModel {
             break;
         }
 
-		$sql = "SELECT g.goods_id, g.cat_id, g.goods_name, g.goods_img, g.sum_price, g.total_price, g.start_time, g.time   FROM ". $this->pre ."order_info as o left join  ". $this->pre ."order_goods as og on o.order_id = og.order_id". " left join " .$this->pre."crowd_goods as g on g.goods_id = og.goods_id". " WHERE o.user_id = '$user_id' $where and  o.extension_code = 'crowd_buy' ";
+		$sql = "SELECT distinct g.goods_id, g.cat_id, g.goods_name, g.goods_img, g.sum_price, g.total_price, g.start_time, g.time   FROM ". $this->pre ."order_info as o left join  ". $this->pre ."order_goods as og on o.order_id = og.order_id". " left join " .$this->pre."crowd_goods as g on g.goods_id = og.goods_id". " WHERE o.user_id = '$user_id' $where and  o.extension_code = 'crowd_buy' ";
 		
         $res = $this->query($sql);
 		$goods = array();

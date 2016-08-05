@@ -51,7 +51,7 @@
 							<section class="flow-checkout-pro m-top08">
 								<header class="b-color-f dis-box padding-all">
 									<span class=" box-flex">订单状态</span>
-									<em class="j-goods-coupon t-first">{$order.order_sn}{$order.order_status}</em>
+									<em class="j-goods-coupon t-first">{$order.status}</em>
 								</header>
 								<div class="product-list-small m-top1px b-color-f dis-box">
 									<ul class="box-flex">
@@ -84,12 +84,15 @@
 										<a class="btn-submit1" href="raise_order_detail.html">提醒发货</a>
 										<!--{/if}-->
 										<!--{if $order.pay_status eq 2 and $order.shipping_status eq 1 }-->
-										<a href="raise_user_order_track.html" class="btn-default">查看物流</a>
+										
 										<a class="btn-submit1 " href="raise_order_detail.html">确定收货</a>
 										<!--{/if}-->
 										
+										<!--{if $order.pay_status eq 2 and $order.shipping_status > 0 }-->
+										<a href="raise_user_order_track.html" class="btn-default">查看物流</a>
+										<!--{/if }-->
+										
 										<!--{if $order.pay_status eq 2 and $order.shipping_status eq 2 }-->
-											<a href="raise_user_order_track.html" class="btn-default">查看物流</a>
 											<!--{if $order.is_comment eq ''}-->
 											<a href="{:url('mycrowd/crowd_comment',array('order_id'=>$this->_var['order']['order_id'],'id'=>$this->_var['order']['goods_id']))}" class="btn-submit1">评价</a>
 											<!--{/if}-->
