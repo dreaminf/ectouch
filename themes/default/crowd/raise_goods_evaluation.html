@@ -16,7 +16,7 @@
 	</head>
 
 	<body>
-		<div id="loading"><img src="__TPL__/crowd/img/loading.gif" /></div>
+		<div id="loading"><img src="__TPL__/statics/img/loading.gif" /></div>
 		<div class="con">
 			<div class="goods-evaluation-page of-hidden  j-ect-tab raise-list-default">
 
@@ -40,8 +40,8 @@
 									<!--<div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div>-->
 								</div>
 								<div class="b-color-f g-evaluation-con ra">
-									<p class="f-05 col-4">{$comment.content}</p>
-									<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
+									<h4 class="f-05 col-4">{$comment.content}</h4>
+									<h5 class="t-remark m-top04 f-03 col-9">{$comment.add_time}</h5>
 								</div>
 								<!-- <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> -->
 								<!-- <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">
@@ -52,7 +52,7 @@
 								</div>
 							</div> -->
 								<!--{foreach from=$comment.reply item =reply}-->
-								<p class="m-top10 t-remark">
+								<p class="f-05">
 									<label class="admin-text">管理员回复：</label> {$reply.content}
 								</p>
 								<!--{/foreach}-->
@@ -78,8 +78,8 @@
 									<div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div>
 								</div>
 								<div class="b-color-f g-evaluation-con ra">
-									<p class="f-05 col-4">{$comment.content}</p>
-									<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
+									<h4 class="f-05 col-4">{$comment.content}</h4>
+									<h5 class="t-remark m-top04 f-03 col-9">{$comment.add_time}</h5>
 								</div>
 								<!-- <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> -->
 								<!-- <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">
@@ -89,7 +89,38 @@
 									</li>									
 								</div>
 							</div> -->
-								<!-- <p class="m-top10 t-remark">
+								<!-- <p class="f-05">
+								<label class="admin-text">管理员回复：</label>
+								感谢您的评价
+							</p> -->
+							</div>
+							<!--{/foreach}-->
+						</section>
+						<section class="swiper-slide">
+							<!--{foreach from=$comment_list item =comment}-->
+							<div class="evaluation-list padding-all">
+								<div class="dis-box raise-header padding-all b-color-f">
+									<div class="raise-admin-left">
+										<div class="raise-admin-img">
+											<img src="/ecshop-mobile/themes/default/images/member-photo-img2.jpeg">
+										</div>
+									</div>
+									<div class="box-flex"><label class="col-3">admin123</label></div>
+									<div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div>
+								</div>
+								<div class="b-color-f g-evaluation-con ra">
+									<h4 class="f-05 col-4">{$comment.content}</h4>
+									<h5 class="t-remark m-top04 f-03 col-9">{$comment.add_time}</h5>
+								</div>
+								<!-- <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> -->
+								<!-- <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">
+								<div class="swiper-wrapper ">
+									<li class="swiper-slide">
+										<img class="product-list-img" src="__TPL__/crowd/img/raise-list1.jpg" />
+									</li>									
+								</div>
+							</div> -->
+								<!-- <p class="f-05">
 								<label class="admin-text">管理员回复：</label>
 								感谢您的评价
 							</p> -->
@@ -120,7 +151,7 @@
 									</li>									
 								</div>
 							</div> -->
-								<!-- <p class="m-top10 t-remark">
+								<!-- <p class="f-05">
 								<label class="admin-text">管理员回复：</label>
 								感谢您的评价
 							</p> -->
@@ -140,8 +171,8 @@
 									<div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div>
 								</div>
 								<div class="b-color-f g-evaluation-con ra">
-									<p class="f-05 col-4">{$comment.content}</p>
-									<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
+									<h4 class="f-05 col-4">{$comment.content}</h4>
+									<h5 class="t-remark m-top04 f-03 col-9">{$comment.add_time}</h5>
 								</div>
 								<!-- <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> -->
 								<!-- <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">
@@ -151,38 +182,7 @@
 									</li>									
 								</div>
 							</div> -->
-								<!-- <p class="m-top10 t-remark">
-								<label class="admin-text">管理员回复：</label>
-								感谢您的评价
-							</p> -->
-							</div>
-							<!--{/foreach}-->
-						</section>
-						<section class="swiper-slide">
-							<!--{foreach from=$comment_list item =comment}-->
-							<div class="evaluation-list padding-all">
-								<div class="dis-box raise-header padding-all b-color-f">
-									<div class="raise-admin-left">
-										<div class="raise-admin-img">
-											<img src="/ecshop-mobile/themes/default/images/member-photo-img2.jpeg">
-										</div>
-									</div>
-									<div class="box-flex"><label class="col-3">admin123</label></div>
-									<div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div>
-								</div>
-								<div class="b-color-f g-evaluation-con ra">
-									<p class="f-05 col-4">{$comment.content}</p>
-									<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
-								</div>
-								<!-- <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> -->
-								<!-- <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">
-								<div class="swiper-wrapper ">
-									<li class="swiper-slide">
-										<img class="product-list-img" src="__TPL__/crowd/img/raise-list1.jpg" />
-									</li>									
-								</div>
-							</div> -->
-								<!-- <p class="m-top10 t-remark">
+								<!-- <p class="f-05">
 								<label class="admin-text">管理员回复：</label>
 								感谢您的评价
 							</p> -->
@@ -193,42 +193,12 @@
 				</div>
 				{include file='library/page.lbi '}
 			</div>
-
 		</div>
 		</div>
 		<!--引用js-->
 		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript" src="__TPL__/statics/js/swiper.min.js"></script>
-		<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
-		<script>
-			/*切换*/
-			var tabsSwiper = new Swiper('#j-tab-con', {
-				speed: 100,
-				noSwiping: true,
-				autoHeight: true,
-				onSlideChangeStart: function() {
-					$(".j-tab-title .active").removeClass('active')
-					$(".j-tab-title li").eq(tabsSwiper.activeIndex).addClass('active')
-				}
-			})
-			$(".j-tab-title li").on('touchstart mousedown', function(e) {
-				e.preventDefault()
-				$(".j-tab-title .active").removeClass('active')
-				$(this).addClass('active')
-				tabsSwiper.slideTo($(this).index())
-			})
-
-			$(".j-tab-title li").click(function(e) {
-					e.preventDefault()
-				})
-				/*店铺信息商品滚动*/
-			var swiper = new Swiper('.j-g-e-p-pic', {
-				scrollbarHide: true,
-				slidesPerView: 'auto',
-				centeredSlides: false,
-				grabCursor: true
-			});
-		</script>
+		<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>		
 	</body>
 
 </html>
