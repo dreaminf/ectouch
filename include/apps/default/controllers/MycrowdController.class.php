@@ -31,6 +31,7 @@ class MycrowdController extends CommonController {
 		$this->action = ACTION_NAME;
 		// 验证登录
         $this->check_login();
+		
         // 用户信息
         $info = model('ClipsBase')->get_user_default($this->user_id);
         // 显示第三方API的头像
@@ -113,7 +114,7 @@ class MycrowdController extends CommonController {
      * 众筹订单
      */
     public function crowd_order() {
-
+		
 		$this->status = I('request.status') ? intval(I('request.status')) : 1 ;
 		//dump($this->status);
 		$pay = $this->status;
@@ -207,6 +208,34 @@ class MycrowdController extends CommonController {
         }
     }
 	
+	 /**
+     * 订单跟踪
+     */
+    public function order_tracking() {
+        $order_id = I('get.order_id', 0);
+        $ajax = I('get.ajax', 0);
+
+        $where['user_id'] = $this->user_id;
+        $where['order_id'] = $order_id;
+        $orders = $this->model->table('order_info')->field('order_id, order_sn, invoice_no, shipping_name, shipping_id')->where($where)->find();
+        // 生成快递100查询接口链接
+        $shipping = get_shipping_object($orders['shipping_id']);
+        // 接口模式
+        $query_link = $shipping->query($orders['invoice_no']);
+        $get_content = Http::doGet($query_link);
+        $get_content_data = json_decode($get_content, 1);
+        if($get_content_data['status'] != '200'){
+            // 跳转模式
+            $query_link = $shipping->third_party($orders['invoice_no']);
+            if($query_link){
+                header('Location: '.$query_link);
+                exit();
+            }
+        }
+        $this->assign('title', L('order_tracking'));
+        $this->assign('trackinfo', $get_content);
+        $this->display('user_order_tracking.dwt');
+    }
 	
 	
 	/**

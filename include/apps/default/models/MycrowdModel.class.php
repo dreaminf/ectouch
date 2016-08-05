@@ -182,7 +182,8 @@ class MycrowdModel extends BaseModel {
                     }
                 }
             } else {
-                $value['handler'] = '<span>' . L('os.' . $value['order_status']) . '</span>';
+                //$value['handler'] = '<span>' . L('os.' . $value['order_status']) . '</span>';
+				$value['handler'] = "<a href=\"" . '#' . "\"class=\" btn-default \">" . L('os.' . $value['order_status']) . "</a>";
             }
 
             $value['shipping_status'] = ($value['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $value['shipping_status'];
