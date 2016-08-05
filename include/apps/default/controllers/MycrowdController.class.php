@@ -154,6 +154,7 @@ class MycrowdController extends CommonController {
 				'goods_id' => I('post.goods_id', 0)
                 
             );
+
             $this->model->table('crowd_comment')
                         ->data($data)
                         ->insert();
@@ -162,7 +163,7 @@ class MycrowdController extends CommonController {
         }
 		
 		$order_id = I('request.order_id') ? intval(I('request.order_id')) : 0 ;
-		$goods_id = I('request.order_id') ? intval(I('request.order_id')) : 0 ;
+		$goods_id = I('request.id') ? intval(I('request.id')) : 0 ;
 		$sql = "SELECT cg.goods_img, cg.goods_name FROM " . $this->model->pre . "order_info as o left join " . $this->model->pre . "order_goods as g on o.order_id = g.order_id left join ". $this->model->pre ."crowd_goods as cg on g.goods_id = cg.goods_id " ." WHERE o.order_id = '$order_id' and  o.extension_code = 'crowd_buy'  limit 1";		
 		$order = $this->model->query($sql);
 		foreach ($order AS $key => $row) {           
