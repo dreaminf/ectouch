@@ -705,7 +705,7 @@ class UserController extends CommonController {
         if ($order['order_status'] == OS_UNCONFIRMED) {
             $order['handler'] = "<a class=\"btn btn-info ect-colorf ect-bg\" href=\"" . url('user/cancel_order', array(
                         'order_id' => $order['order_id']
-                    )) . "\" onclick=\"if (!confirm('" . L('confirm_cancel') . "')) return false;\">" . L('cancel') . "</a>";
+                    )) . "\" onclick=\"if (!confirm('" . L('confirm_cancel') . "')) return false;\">" . L('cancel_order_detail') . "</a>";
         }
         elseif ($order['order_status'] == OS_SPLITED) {
             /* 对配送状态的处理 */
