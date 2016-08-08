@@ -239,7 +239,7 @@ elseif ($_REQUEST['act'] == 'print_upload')
         }
         $bg_name = explode('.', $_FILES['bg']['name']);
         $name .= '.' . end($bg_name);
-        $target = ROOT_PATH . '/images/receipt/' . $name;
+        $target = ROOT_PATH . '/data/attached/images/receipt/' . $name;
 
         if (ecmoban_move_upload_file($_FILES['bg'], $target))
         {
@@ -482,7 +482,9 @@ elseif ($_REQUEST['act'] == 'edit_order')
  */
 function get_site_root_url()
 {
-    return 'http://' . $_SERVER['HTTP_HOST'] . str_replace('/' . ADMIN_PATH . '/shipping.php', '', PHP_SELF);
+    
+    return 'http://' . $_SERVER['HTTP_HOST'] . str_replace('/' . ADMIN_PATH . '/shipping.php', '', PHP_SELF).'/data/attached';
+
 
 }
 
