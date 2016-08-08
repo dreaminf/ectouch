@@ -95,14 +95,14 @@ class CrowdfundingModel extends CommonModel {
 	
 	/* 获取当前项目购买人数量*/
 	function crowd_buy_num($goods_id = 0) {
-		$sql = "SELECT count(g.rec_id) as num  FROM ". $this->pre ."order_info as o left join  ". $this->pre ."order_goods as g on o.order_id = g.order_id". " WHERE g.goods_id = '".$goods_id."' AND o.extension_code = 'crowd_buy' ";
+		$sql = "SELECT count(order_id) as num  FROM ". $this->pre ."crowd_order_info WHERE goods_id = '".$goods_id."' AND extension_code = 'crowd_buy' ";
         $res = $this->row($sql);
 		return $res['num'];
 	}
 	
 	/* 获取当前项目累计金额*/
 	function crowd_buy_price($goods_id = 0) {
-		$sql = "SELECT sum(g.goods_price) as price FROM ". $this->pre ."order_info as o left join  ". $this->pre ."order_goods as g on o.order_id = g.order_id". " WHERE g.goods_id = '".$goods_id."' AND o.extension_code = 'crowd_buy' ";
+		$sql = "SELECT sum(goods_price) as price FROM ". $this->pre ."crowd_order_info ". $this->pre . " WHERE goods_id = '".$goods_id."' AND extension_code = 'crowd_buy' ";
 		$res = $this->row($sql);
         /* $res = $this->query($sql);
 		foreach($res as $row){

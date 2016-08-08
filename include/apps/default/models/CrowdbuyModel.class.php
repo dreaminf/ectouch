@@ -32,7 +32,7 @@ class CrowdbuyModel extends CommonModel {
 			$row['start_time'] =floor((gmtime()-$row['start_time'])/86400);
 			$row['time'] = $row['time'] - $row['start_time'];
 			$row['sum_price'] = $row['sum_price'];
-			$row['total_price'] = $row['total_price'];
+			$row['total_price'] = model('Crowdfunding')->crowd_buy_price($row['goods_id']);
             $row['goods_img'] = 'data/attached/crowdimage/'.$row['goods_img'];
             $row['url'] = url('Crowdfunding/goods_info', array('id' => $row['goods_id']));
 			$row['bar'] = $row['total_price']*100/$row['sum_price'];
@@ -221,10 +221,84 @@ class CrowdbuyModel extends CommonModel {
 	
 	
 	
+	/**
+     * 获得订单信息
+     *
+     * @access  private
+     * @return  array
+     */
+    function crowd_flow_order_info() {
+        $order = isset($_SESSION['flow_order']) ? $_SESSION['flow_order'] : array();
+
+        /* 初始化配送和支付方式 */
+        if (!isset($order['shipping_id']) || !isset($order['pay_id'])) {
+            /* 如果还没有设置配送和支付 */
+            if ($_SESSION['user_id'] > 0) {
+                /* 用户已经登录了，则获得上次使用的配送和支付 */
+                $arr = $this->crowd_last_shipping_and_payment();
+
+                if (!isset($order['shipping_id'])) {
+                    $order['shipping_id'] = $arr['shipping_id'];
+                }
+                if (!isset($order['pay_id'])) {
+                    $order['pay_id'] = $arr['pay_id'];
+                }
+            } else {
+                if (!isset($order['shipping_id'])) {
+                    $order['shipping_id'] = 0;
+                }
+                if (!isset($order['pay_id'])) {
+                    $order['pay_id'] = 0;
+                }
+            }
+        }
+
+        if (!isset($order['pack_id'])) {
+            $order['pack_id'] = 0;  // 初始化包装
+        }
+        if (!isset($order['card_id'])) {
+            $order['card_id'] = 0;  // 初始化贺卡
+        }
+        if (!isset($order['bonus'])) {
+            $order['bonus'] = 0;    // 初始化红包
+        }
+        if (!isset($order['integral'])) {
+            $order['integral'] = 0; // 初始化积分
+        }
+        if (!isset($order['surplus'])) {
+            $order['surplus'] = 0;  // 初始化余额
+        }
+
+        /* 扩展信息 */
+        if (isset($_SESSION['flow_type']) && intval($_SESSION['flow_type']) != CART_GENERAL_GOODS) {
+            $order['extension_code'] = $_SESSION['extension_code'];
+            $order['extension_id'] = $_SESSION['extension_id'];
+        }
+
+        return $order;
+    }
 	
 	
-	
-	
+	 /**
+     * 获得上一次用户采用的支付和配送方式
+     *
+     * @access  public
+     * @return  void
+     */
+    function crowd_last_shipping_and_payment() {
+        $sql = "SELECT shipping_id, pay_id " .
+                " FROM " . $this->pre .
+                "crowd_order_info WHERE user_id = '$_SESSION[user_id]' " .
+                " ORDER BY order_id DESC LIMIT 1";
+        $row = $this->row($sql);
+
+        if (empty($row)) {
+            /* 如果获得是一个空数组，则返回默认值 */
+            $row = array('shipping_id' => 0, 'pay_id' => 0);
+        }
+
+        return $row;
+    }
 	
 	
 	

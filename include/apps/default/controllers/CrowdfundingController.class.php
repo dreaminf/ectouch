@@ -101,6 +101,9 @@ class CrowdfundingController extends CommonController {
 	public function goods_info() {
 
 		$goods = model('Crowdfunding')->crowd_goods_info($this->goods_id);  //项目信息
+		if($goods == false){
+			ecs_header("Location: " . url('crowdfunding/index') . "\n");
+		}
 		//项目相册
 		$gallery = explode(',',$goods['gallery_img']);
 		foreach ($gallery as $key=>$val) {

@@ -57,10 +57,10 @@ class CrowdflowController extends CommonController {
         /* 检查收货人信息是否完整 */
         if (!model('Order')->check_consignee_info($consignee, $flow_type)) {
             /* 如果不完整则转向到收货人信息填写界面 */
-            ecs_header("Location: " . url('crowdflowflow/crowd_consignee_list') . "\n");
+            ecs_header("Location: " . url('crowdflow/crowd_consignee_list') . "\n");
         }
 		// 取得订单信息
-        $order = model('Order')->flow_order_info();
+        $order = model('Crowdbuy')->crowd_flow_order_info();
 		$this->assign('order', $order);
 		
         // 获取配送地址
@@ -341,7 +341,7 @@ class CrowdflowController extends CommonController {
         $this->assign('step', ACTION_NAME);
         $this->assign('title', L('consignee_info'));
 	
-		$this->display('raise_flow_consignee.dwt');
+		$this->display('crowd/raise_flow_consignee.dwt');
 	}
 	
 	
@@ -550,18 +550,24 @@ class CrowdflowController extends CommonController {
         $order ['referer'] = !empty($_SESSION ['referer']) ? addslashes($_SESSION ['referer']). 'Touch' : 'Touch';
 
         /* 记录扩展信息 */       
-            $order ['extension_code'] = 'crowd_buy';
+        $order ['extension_code'] = 'crowd_buy';
   
 
         $parent_id = M()->table('users')->field('parent_id')->where("user_id=".$_SESSION['user_id'])->getOne();
         $order ['parent_id'] = $parent_id;
+		/* 插入众筹项目信息 */ 
+		$order ['goods_id'] = $cart_goods['goods_id'];
+		$order ['cp_id'] = $cart_goods['cp_id'];
+		$order ['goods_name'] = $cart_goods['goods_name'];
+		$order ['goods_number'] = $cart_goods['number'];
+		$order ['goods_price'] = $cart_goods['shop_price'];
 		
         /* 插入订单表 */
         $error_no = 0;
         do {
             $order ['order_sn'] = get_order_sn(); // 获取新订单号
-            $new_order = model('Common')->filter_field('order_info', $order);
-            $this->model->table('order_info')->data($new_order)->insert();
+            $new_order = model('Common')->filter_field('crowd_order_info', $order);
+            $this->model->table('crowd_order_info')->data($new_order)->insert();
             $error_no = M()->errno();
 
             if ($error_no > 0 && $error_no != 1062) {
@@ -570,18 +576,6 @@ class CrowdflowController extends CommonController {
         } while ($error_no == 1062); // 如果是订单号重复则重新提交数据
         $new_order_id = M()->insert_id();
         $order ['order_id'] = $new_order_id;
-
-        /* 插入订单商品 */
-        $sql = "INSERT INTO " . $this->model->pre . "order_goods( order_id, goods_id, cp_id, goods_name, goods_number, goods_price ) " ."VALUES ('$new_order_id','$cart_goods[goods_id]','$cart_goods[cp_id]','$cart_goods[goods_name]','$cart_goods[number]','$cart_goods[shop_price]' )" ;
-        $this->model->query($sql);
-        
-		/* 统计众筹已筹金额 */
-		/* $crowd_goods = $this->model->table('crowd_goods')->field('total_price')->where("goods_id = '" . $_SESSION['goods_id'] . "' ")->find();
-		$total_price = $crowd_goods['total_price']+$order['goods_amount'];	
-		$where['goods_id'] = $_SESSION['goods_id'];
-		$data['total_price'] = $total_price;
-		$this->model->table('crowd_goods')->data($data)->where($where)->update();		  */
-
 		
 		/* 统计方案售出数量 */
 		$crowd_plan = $this->model->table('crowd_plan')->field('backey_num')->where("goods_id = '" . $_SESSION['goods_id'] . "' and cp_id = '" . $_SESSION['cp_id'] . "' ")->find();
@@ -603,10 +597,6 @@ class CrowdflowController extends CommonController {
             model('Order')->use_bonus($order ['bonus_id'], $new_order_id);
         }
 
-        /* 如果使用库存，且下订单时减库存，则减少库存 */
-        if (C('use_storage') == '1' && C('stock_dec_time') == SDT_PLACE) {
-            model('Order')->change_order_goods_storage($order ['order_id'], true, SDT_PLACE);
-        }
 
         /* 给商家发邮件 */
         /* 增加是否给客服发送邮件选项 */
