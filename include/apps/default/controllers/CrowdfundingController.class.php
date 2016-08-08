@@ -70,8 +70,9 @@ class CrowdfundingController extends CommonController {
                     $where .= '';
             }
         }
-		$sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, total_price, start_time, time, like_num, buy_num '.'FROM '
-		. $this->model->pre . 'crowd_goods ' . "WHERE is_verify = 1 $where ";
+		$now = gmtime();
+		$sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, total_price, start_time, time,end_time, like_num, buy_num '.'FROM '
+		. $this->model->pre . 'crowd_goods ' . "WHERE is_verify = 1 AND start_time <= '$now' AND end_time >= '$now' $where ";
         $res = $this->model->query($sql);
 		$goods = array();
         foreach ($res AS $key => $row) {

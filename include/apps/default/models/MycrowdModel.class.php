@@ -20,17 +20,18 @@ class MycrowdModel extends BaseModel {
 	/**
      * 获取推荐众筹     
      */
-	function recom_list(){		
-		$sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, total_price, start_time, time '.'FROM '
-		. $this->pre . 'crowd_goods ' . "WHERE is_verify = 1 and recommend = 1 order by sort_order DESC ";
+	function recom_list(){	
+		$now = gmtime();	
+		$sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, total_price, start_time, end_time, time '.'FROM '
+		. $this->pre . 'crowd_goods ' . "WHERE is_verify = 1 AND start_time <= '$now' AND end_time >= '$now' and recommend = 1 order by sort_order DESC ";
         $res = $this->query($sql);
-
+		
 		$goods = array();
         foreach ($res AS $key => $row) {
             $goods[$key]['id'] = $row['goods_id'];
 			$goods[$key]['cat_id'] = $row['cat_id'];
             $goods[$key]['goods_name'] = $row['goods_name'];
-			$goods[$key]['time'] = $row['time'];
+			$goods[$key]['time'] = floor(($row['end_time']-$row['start_time'])/86400);
             $goods[$key]['like_num'] = $row['like_num'];
             $goods[$key]['buy_num'] = model('Crowdfunding')->crowd_buy_num($row['goods_id']);
 			$goods[$key]['start_time'] =floor((gmtime()-$row['start_time'])/86400);
@@ -66,10 +67,10 @@ class MycrowdModel extends BaseModel {
             $where = " AND g.status = 2";  //已失败
             break;
         }
-
-	
-		 $sql = 'SELECT g.goods_id, g.cat_id, g.goods_name, g.goods_img, g.sum_price, g.total_price, g.start_time, g.time  '.'FROM '
-		. $this->pre . 'crowd_goods as g left join ' . $this->pre  ."crowd_like as cl" . " on g.goods_id=cl.goods_id " . " WHERE g.is_verify = 1 $where and cl.user_id = '$user_id'  order by g.sort_order DESC ";
+		
+		$now = gmtime();	
+		$sql = 'SELECT g.goods_id, g.cat_id, g.goods_name, g.goods_img, g.sum_price, g.total_price, g.start_time, g.end_time  '.'FROM '
+		. $this->pre . 'crowd_goods as g left join ' . $this->pre  ."crowd_like as cl" . " on g.goods_id=cl.goods_id " . " WHERE g.is_verify = 1 $where AND g.start_time <= '$now' AND g.end_time >= '$now' and cl.user_id = '$user_id'  order by g.sort_order DESC ";
 
         $res = $this->query($sql);
 		$goods = array();
@@ -77,8 +78,7 @@ class MycrowdModel extends BaseModel {
             $goods[$key]['id'] = $row['goods_id'];
 			$goods[$key]['cat_id'] = $row['cat_id'];
             $goods[$key]['goods_name'] = $row['goods_name'];
-			$goods[$key]['time'] = $row['time'];
-            $goods[$key]['like_num'] = $row['like_num'];
+			$goods[$key]['time'] = floor(($row['end_time']-$row['start_time'])/86400);
             $goods[$key]['buy_num'] = model('Crowdfunding')->crowd_buy_num($row['goods_id']);
 			$goods[$key]['start_time'] =floor((gmtime()-$row['start_time'])/86400);
 			$goods[$key]['sum_price'] = $row['sum_price'];
