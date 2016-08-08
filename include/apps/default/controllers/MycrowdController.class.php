@@ -38,7 +38,7 @@ class MycrowdController extends CommonController {
         if(isset($_SESSION['avatar'])){
             $info['avatar'] = $_SESSION['avatar'];
         }
-		
+
 		// 如果是显示页面，对页面进行相应赋值
         assign_template();
 
@@ -186,7 +186,7 @@ class MycrowdController extends CommonController {
     public function cancel_order() {
         $order_id = I('get.order_id', 0, 'intval');
 
-        if (model('Users')->cancel_order($order_id, $this->user_id)) {
+        if (model('Mycrowd')->cancel_order($order_id, $this->user_id)) {
             $url = url('crowd_order');
             ecs_header("Location: $url\n");
             exit();
@@ -195,12 +195,18 @@ class MycrowdController extends CommonController {
         }
     }
 	
+	
+	
+	
+	
+	
+	
 	/**
      * 确认收货
      */
     public function affirm_received() {
         $order_id = I('get.order_id', 0, 'intval');
-        if (model('Users')->affirm_received($order_id, $this->user_id)) {
+        if (model('Mycrowd')->affirm_received($order_id, $this->user_id)) {
             ecs_header("Location: " . url('crowd_order') . "\n");
             exit();
         } else {

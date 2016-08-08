@@ -479,12 +479,164 @@ class MycrowdModel extends BaseModel {
     }
 	
 	
+	 /**
+     * 取消一个用户订单
+     *
+     * @access  public
+     * @param   int         $order_id       订单ID
+     * @param   int         $user_id        用户ID
+     *
+     * @return void
+     */
+    function cancel_order($order_id, $user_id = 0) {
+        /* 查询订单信息，检查状态 */
+        $sql = "SELECT user_id, order_id, order_sn , surplus , integral , bonus_id, order_status, shipping_status, pay_status FROM " . $this->pre . "crowd_order_info WHERE order_id = '$order_id'";
+        $order = $this->row($sql);
+        if (empty($order)) {
+            ECTouch::err()->add(L('order_exist'));
+            return false;
+        }
+
+        // 如果用户ID大于0，检查订单是否属于该用户
+        if ($user_id > 0 && $order['user_id'] != $user_id) {
+            ECTouch::err()->add(L('no_priv'));
+
+            return false;
+        }
+
+        // 订单状态只能是“未确认”或“已确认”
+        if ($order['order_status'] != OS_UNCONFIRMED && $order['order_status'] != OS_CONFIRMED) {
+            ECTouch::err()->add(L('current_os_not_unconfirmed'));
+
+            return false;
+        }
+
+        //订单一旦确认，不允许用户取消
+        if ($order['order_status'] == OS_CONFIRMED) {
+            ECTouch::err()->add(L('current_os_already_confirmed'));
+
+            return false;
+        }
+
+        // 发货状态只能是“未发货”
+        if ($order['shipping_status'] != SS_UNSHIPPED) {
+            ECTouch::err()->add(L('current_ss_not_cancel'));
+
+            return false;
+        }
+
+        // 如果付款状态是“已付款”、“付款中”，不允许取消，要取消和商家联系
+        if ($order['pay_status'] != PS_UNPAYED) {
+            ECTouch::err()->add(L('current_ps_not_cancel'));
+
+            return false;
+        }
+
+        //将用户订单设置为取消
+        $sql = "UPDATE " . $this->pre . "crowd_order_info SET order_status = '" . OS_CANCELED . "' WHERE order_id = '$order_id'";
+        if ($this->query($sql)) {
+            /* 记录log */
+            model('OrderBase')->order_action($order['order_sn'], OS_CANCELED, $order['shipping_status'], PS_UNPAYED, L('buyer_cancel'), 'buyer');
+            /* 退货用户余额、积分、红包 */
+            if ($order['user_id'] > 0 && $order['surplus'] > 0) {
+                $change_desc = sprintf(L('return_surplus_on_cancel'), $order['order_sn']);
+                model('ClipsBase')->log_account_change($order['user_id'], $order['surplus'], 0, 0, 0, $change_desc);
+            }
+            if ($order['user_id'] > 0 && $order['integral'] > 0) {
+                $change_desc = sprintf(L('return_integral_on_cancel'), $order['order_sn']);
+                model('ClipsBase')->log_account_change($order['user_id'], 0, 0, 0, $order['integral'], $change_desc);
+            }
+            if ($order['user_id'] > 0 && $order['bonus_id'] > 0) {
+                model('Order')->change_user_bonus($order['bonus_id'], $order['order_id'], false);
+            }
+
+            /* 如果使用库存，且下订单时减库存，则增加库存 */
+           /*  if (C('use_storage') == '1' && C('stock_dec_time') == SDT_PLACE) {
+                model('Order')->change_order_goods_storage($order['order_id'], false, 1);
+            } */
+
+            /* 修改订单 */
+            $arr = array(
+                'bonus_id' => 0,
+                'bonus' => 0,
+                'integral' => 0,
+                'integral_money' => 0,
+                'surplus' => 0
+            );
+            model('Mycrowd')->update_order($order['order_id'], $arr);
+
+            return true;
+        } else {
+            die(M()->errorMsg());
+        }
+    }
+	
+	 /**
+     * 修改订单
+     * @param   int     $order_id   订单id
+     * @param   array   $order      key => value
+     * @return  bool
+     */
+    function update_order($order_id, $order) {
+        $this->table = 'crowd_order_info';
+        $condition['order_id'] = $order_id;
+        
+        $res = $this->query('DESC ' . $this->pre . $this->table);
+        
+        while ($row = mysqli_fetch_row($res)) {
+            $field_names[] = $row[0];
+        }
+        foreach ($field_names as $value) {
+            if (array_key_exists($value, $order) == true) {
+                $order_info[$value] = $order[$value];
+            }
+        }
+        return $this->update($condition, $order_info);
+    }
 	
 	
-	
-	
-	
-	
+	 /**
+     * 确认一个用户订单
+     *
+     * @access  public
+     * @param   int         $order_id       订单ID
+     * @param   int         $user_id        用户ID
+     *
+     * @return  bool        $bool
+     */
+    function affirm_received($order_id, $user_id = 0) {
+        /* 查询订单信息，检查状态 */
+        $sql = "SELECT user_id, order_sn , order_status, shipping_status, pay_status FROM " . $this->pre . "crowd_order_info WHERE order_id = '$order_id'";
+
+        $order = $this->row($sql);
+
+        // 如果用户ID大于 0 。检查订单是否属于该用户
+        if ($user_id > 0 && $order['user_id'] != $user_id) {
+            ECTouch::err()->add(L('no_priv'));
+
+            return false;
+        }
+        /* 检查订单 */ elseif ($order['shipping_status'] == SS_RECEIVED) {
+            ECTouch::err()->add(L('order_already_received'));
+
+            return false;
+        } elseif ($order['shipping_status'] != SS_SHIPPED) {
+            ECTouch::err()->add(L('order_invalid'));
+
+            return false;
+        }
+        /* 修改订单发货状态为“确认收货” */ else {
+            $sql = "UPDATE " . $this->pre . "crowd_order_info SET shipping_status = '" . SS_RECEIVED . "' WHERE order_id = '$order_id'";
+            if ($this->query($sql)) {
+                /* 记录日志 */
+                model('OrderBase')->order_action($order['order_sn'], $order['order_status'], SS_RECEIVED, $order['pay_status'], '', L('buyer'));
+
+                return true;
+            } else {
+                die(M()->errorMsg());
+            }
+        }
+    }
 	
 	
 	
