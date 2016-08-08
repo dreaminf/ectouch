@@ -95,11 +95,10 @@ class BaseController extends Controller {
     private function _common() {
         //加载公共语言
         require(APP_PATH . C('_APP_NAME') . '/languages/' . C('LANG') . '/common.php');
-		require(APP_PATH . C('_APP_NAME') . '/languages/' . C('LANG') . '/user.php');
         //加载控制器语言
         if (file_exists(APP_PATH . C('_APP_NAME') . '/languages/' . C('LANG') . '/' . strtolower(CONTROLLER_NAME) . '.php')) {
             require(APP_PATH . C('_APP_NAME') . '/languages/' . C('LANG') . '/' . strtolower(CONTROLLER_NAME) . '.php');
-        }
+        }	
         L($_LANG); //语言包赋值
         if (file_exists(APP_PATH . C('_APP_NAME') . '/helpers/insert.php')) {
             require(APP_PATH . C('_APP_NAME') . '/helpers/insert.php');
