@@ -75,9 +75,6 @@ class CrowdflowController extends CommonController {
 		
 		$cart_goods = model('Crowdbuy')->cart_crowd_goods($_SESSION['goods_id'], $_SESSION['cp_id'], $_SESSION['number']);  //项目信息
 		$this->assign('goods', $cart_goods);		
-		$sum_price = $_SESSION['number']*$cart_goods['shop_price'];//计算总价
-		$this->assign('sum_price', $sum_price);
-		
 		
 		/* 取得配送列表 */
 		$region = array(

@@ -124,7 +124,8 @@ class CrowdfundingModel extends CommonModel {
             $plan[$key]['cp_id'] = $row['cp_id'];
 			$plan[$key]['name'] = $row['name'];
             $plan[$key]['goods_id'] = $row['goods_id'];
-			$plan[$key]['shop_price'] = price_format($row['shop_price']);
+			//$plan[$key]['shop_price'] = price_format($row['shop_price']);
+			$plan[$key]['shop_price'] = $row['shop_price'];
             $plan[$key]['number'] = $row['number'];
             $plan[$key]['backey_num'] = $row['backey_num'];
 			$plan[$key]['surplus_num'] = $row['number']-$row['backey_num'];
@@ -297,7 +298,7 @@ class CrowdfundingModel extends CommonModel {
      * 获取众筹项的支持者
      */
 	function crowd_buy($goods_id){
-		$sql = "SELECT o.user_id, o.add_time, g.goods_price  FROM ". $this->pre ."order_info as o left join  ". $this->pre ."order_goods as g on o.order_id = g.order_id". " WHERE g.goods_id = '".$goods_id."' AND o.extension_code = 'crowd_buy'  ORDER BY g.rec_id DESC ";
+		$sql = "SELECT user_id, add_time, goods_price  FROM ". $this->pre ."crowd_order_info  " . " WHERE goods_id = '".$goods_id."' AND extension_code = 'crowd_buy'  ORDER BY order_id DESC ";
         $buy_list = $this->query($sql);
         foreach($buy_list as $k => $v){
 
