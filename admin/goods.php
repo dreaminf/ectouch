@@ -823,7 +823,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     $market_price = !empty($_POST['market_price']) ? $_POST['market_price'] : 0;
     $virtual_sales = !empty($_POST['virtual_sales']) ? $_POST['virtual_sales'] : 0;
     $promote_price = !empty($_POST['promote_price']) ? floatval($_POST['promote_price'] ) : 0;
-    $is_promote = empty($promote_price) ? 0 : 1;
+    $is_promote = empty($_POST['is_promote']) ? 0 : 1;
     $promote_start_date = ($is_promote && !empty($_POST['promote_start_date'])) ? local_strtotime($_POST['promote_start_date']) : 0;
     $promote_end_date = ($is_promote && !empty($_POST['promote_end_date'])) ? local_strtotime($_POST['promote_end_date']) : 0;
     $goods_weight = !empty($_POST['goods_weight']) ? $_POST['goods_weight'] * $_POST['weight_unit'] : 0;
