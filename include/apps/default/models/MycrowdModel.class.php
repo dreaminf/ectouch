@@ -167,7 +167,7 @@ class MycrowdModel extends BaseModel {
         $res = M()->query($sql);
         foreach ($res as $key => $value) {
             if ($value['order_status'] == OS_UNCONFIRMED) {
-                $value['handler'] = "<a href=\"" . url('mycrowd/cancel_order', array('order_id' => $value['order_id'])) . "\"class=\" btn-default \" onclick=\"if (!confirm('取消订单')) return false;\">" .'取消' . "</a>";
+                $value['handler'] = "<a href=\"" . url('mycrowd/cancel_order', array('order_id' => $value['order_id'])) . "\"class=\" btn-default \" onclick=\"if (!confirm('" . L('confirm_cancel') . "')) return false;\">" .L('cancel') . "</a>";
             } else if ($value['order_status'] == OS_SPLITED) {
                 /* 对配送状态的处理 */
                 if ($value['shipping_status'] == SS_SHIPPED) {
