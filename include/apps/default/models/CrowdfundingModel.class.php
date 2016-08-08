@@ -76,7 +76,8 @@ class CrowdfundingModel extends CommonModel {
             $row['buy_num'] = $this->crowd_buy_num($row['goods_id']);
 			$row['time'] = floor(($row['end_time']-$row['start_time'])/86400);
 			$row['start_time'] =floor((gmtime()-$row['start_time'])/86400);				
-			$row['shiping_time'] = local_date(C('time_format'), $row['shiping_time']);
+			//$row['shiping_time'] = local_date(C('time_format'), $row['shiping_time']);
+			$row['shiping_time'] =  $row['shiping_time'];
 			$row['sum_price'] = $row['sum_price'];
 			$row['total_price'] = $this->crowd_buy_price($row['goods_id']);
             $row['goods_img'] = 'data/attached/crowdimage/'.$row['goods_img'];
