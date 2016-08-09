@@ -903,20 +903,22 @@ elseif ($_REQUEST['act'] == 'delivery_ship')
     if(file_exists($file) && $order['user_id'] > 0){
         $sql = 'SELECT name, config FROM '.$GLOBALS['ecs']->table('wechat_extend').' where enable = 1 and command = "send_remind" limit 1';
         $remind = $GLOBALS['db']->getRow($sql);
-        $remind_title = $remind['name'] ? $remind['name'] : '发货提醒';
-        $content = '';
-        if($remind['config']){
-            $config = unserialize($remind['config']);
-            $content = str_replace('[$order_id]', $order['order_sn'], $config['template']);
-        }
-        $sql1 = 'SELECT openid FROM '.$GLOBALS['ecs']->table('wechat_user').' where ect_uid = '.$order['user_id'];
-        $openid = $GLOBALS['db']->getOne($sql1);
-        if(!empty($remind_title) && !empty($openid)){
-            $order_url = $GLOBALS['ecs']->url() . 'index.php?c=user&a=order_detail&order_id='.$order['order_id'];
-            $order_url = urlencode(base64_encode($order_url));
-            $url = $GLOBALS['ecs']->url() . 'index.php?c=api&openid='.$openid.'&title='.urlencode($remind_title).'&msg='.urlencode($content).'&url='.$order_url;
-            curlGet($url);
-        }
+		if(!empty($remind)){
+			$remind_title = $remind['name'] ? $remind['name'] : '发货提醒';
+			$content = '';
+			if($remind['config']){
+				$config = unserialize($remind['config']);
+				$content = str_replace('[$order_id]', $order['order_sn'], $config['template']);
+			}
+			$sql1 = 'SELECT openid FROM '.$GLOBALS['ecs']->table('wechat_user').' where ect_uid = '.$order['user_id'];
+			$openid = $GLOBALS['db']->getOne($sql1);
+			if(!empty($remind_title) && !empty($openid)){
+				$order_url = $GLOBALS['ecs']->url() . 'index.php?c=user&a=order_detail&order_id='.$order['order_id'];
+				$order_url = urlencode(base64_encode($order_url));
+				$url = $GLOBALS['ecs']->url() . 'index.php?c=api&openid='.$openid.'&title='.urlencode($remind_title).'&msg='.urlencode($content).'&url='.$order_url;
+				curlGet($url);
+			}
+		}
     }
     /* 微信通 发货提醒微信用户 end  by wanglu */
 
