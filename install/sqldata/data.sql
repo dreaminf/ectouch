@@ -3627,10 +3627,10 @@ INSERT INTO `ecs_shop_config` (`id`, `parent_id`, `code`, `type`, `store_range`,
 (301, 3, 'date_format', 'hidden', '', '', 'Y-m-d', '1'),
 (302, 3, 'time_format', 'text', '', '', 'Y-m-d H:i:s', '1'),
 (303, 3, 'currency_format', 'text', '', '', '￥%s元', '1'),
-(304, 3, 'thumb_width', 'text', '', '', '100', '1'),
-(305, 3, 'thumb_height', 'text', '', '', '100', '1'),
-(306, 3, 'image_width', 'text', '', '', '230', '1'),
-(307, 3, 'image_height', 'text', '', '', '230', '1'),
+(304, 3, 'thumb_width', 'text', '', '', '300', '1'),
+(305, 3, 'thumb_height', 'text', '', '', '300', '1'),
+(306, 3, 'image_width', 'text', '', '', '600', '1'),
+(307, 3, 'image_height', 'text', '', '', '600', '1'),
 (312, 3, 'top_number', 'text', '', '', '10', '1'),
 (313, 3, 'history_number', 'text', '', '', '5', '1'),
 (314, 3, 'comments_number', 'text', '', '', '5', '1'),
@@ -3785,10 +3785,10 @@ INSERT INTO `ecs_template` (`filename`, `region`, `library`, `sort_order`, `id`,
 -- 会员注册项 ecs_reg_fields
 --
 
-INSERT INTO `ecs_reg_fields` (`id`, `reg_field_name`, `dis_order`, `display`, `type`, `is_need`) VALUES  
-(1, 'MSN', 0, 0, 1, 0), 
-(2, 'QQ', 0, 0, 1, 0), 
-(3, '办公电话', 0, 0, 1, 0), 
-(4, '家庭电话', 0, 0, 1, 0), 
+INSERT INTO `ecs_reg_fields` (`id`, `reg_field_name`, `dis_order`, `display`, `type`, `is_need`) VALUES
+(1, 'MSN', 0, 0, 1, 0),
+(2, 'QQ', 0, 0, 1, 0),
+(3, '办公电话', 0, 0, 1, 0),
+(4, '家庭电话', 0, 0, 1, 0),
 (5, '手机', 0, 1, 1, 1),
 (6, '密码找回问题', 0, 0, 1, 0);
