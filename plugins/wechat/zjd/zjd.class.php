@@ -274,12 +274,21 @@ class zjd extends PluginWechatController
                     $count = model('Base')->model->table('wechat_prize')
                         ->where('prize_name = "' . $val['prize_name'] . '" and activity_type = "'.$this->plugin_name.'" and wechat_id = ' . $wxid)
                         ->count();
-                    if ($count >= $val['prize_count']) {
+                    // 最后一个奖项
+					$lastarr = end($prize);
+					if($lastarr['prize_level'] == $val['prize_level']){
+						$arr[$val['prize_level']] = $val['prize_prob'];
+						$prize_name[$val['prize_level']] = $val['prize_name'];
+						
+					}else{
+						if ($count >= $val['prize_count']) {
                         unset($prize[$key]);
-                    } else {
-                        $arr[$val['prize_level']] = $val['prize_prob'];
-                        $prize_name[$val['prize_level']] = $val['prize_name'];
-                    }
+						} else {
+							$arr[$val['prize_level']] = $val['prize_prob'];
+							$prize_name[$val['prize_level']] = $val['prize_name'];
+						}
+						
+					}
                 }
                 // 最后一个奖项
                 $lastarr = end($prize);
