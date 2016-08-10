@@ -1,12 +1,17 @@
 {include file="pageheader"}
 <div class="container-fluid" style="padding:0">
 	<div class="row" style="margin:0">
-<!--	   <tr>
-			<td></td>
-                        <td><div style="float:right">
-                                <a href="{url('crowd/goods_add')}"><button class="btn btn-primary">添加商品</button></a>
-				</div></td>
-		</tr>-->
+	<div class="panel-heading">{$lang['sub_title']}</div>
+			<form class="navbar-form " role="search" action="{url('order_list')}" method="post">
+				<input type="text" class="form-control" placeholder="订单号" name="keywords"/>	
+                                <select name="type" class="form-control">
+                                    <option value="0">订单状态</option>
+                                    <option value="1">未付款</option>
+                                    <option value="2">已付款未发货</option>
+                                    <option value="3">已发货</option>
+                                </select>
+			        <input name="Submit" class="btn btn-primary" type="submit" value="搜索">
+    	 	        </form>
             <div class="container-fluid" style="padding:0">
 	<div class="row" style="margin:0">
 	  <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
@@ -15,7 +20,6 @@
 			<table class="table table-hover table-striped table-bordered">
                 <tr>
                     <th class="text-center">订单号</th>
-                  
                     <th class="text-center">收货人</th>
                     <th class="text-center">总金额</th>
                     <th class="text-center">订单状态</th>   

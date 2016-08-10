@@ -110,6 +110,12 @@
                      {$order_info[zipcode]}
                     </div></td>
             </tr>
+              <tr>
+                <td width="200">买家留言:</td>
+                        <td><div class="col-md-3 content">
+                     {$order_info[postscript]}
+                    </div></td>
+            </tr>
            
                   <tr>
                 <td align="center"  colspan=2>商品信息:</td>  
@@ -123,6 +129,19 @@
                 <td width="200">价格:</td>
                 <td><div class="col-md-4">
                          {$order_info[goods_price]}
+                    </div></td>
+            </tr>
+            
+              <tr>
+                <td width="200">购买数量:</td>
+                <td><div class="col-md-4">
+                         {$order_info[goods_number]}
+                    </div></td>
+            </tr>
+              <tr>
+                <td width="200">回报方案名称:</td>
+                <td><div class="col-md-4">
+                         {$order_info[cp_name]}
                     </div></td>
             </tr>
             <tr>
@@ -139,13 +158,21 @@
                       {$order_info[total_fee]}   
                     </div></td>
             </tr>
-            
          <input type="hidden" name="data[order_id]" value="{$order_info[order_id]}" />
          {if $order_info[order_status]==5 &&$order_info[pay_status]==2 && $order_info[shipping_status]==0 }   
           <tr>
             <td width="200"></td>
             <td><div class="col-md-4">
   	    <input type="submit" value="发货" class="btn btn-primary" />
+              </div></td>
+          </tr>
+          {/if}
+          
+          {if $order_info[order_status]==5 &&$order_info[pay_status]==2 && $order_info[shipping_status]!=0 }   
+          <tr>
+            <td width="200"></td>
+            <td><div class="col-md-4">
+                    <input type="submit" value="无效" name="data[cancel]" class="btn btn-primary" />
                
               </div></td>
           </tr>

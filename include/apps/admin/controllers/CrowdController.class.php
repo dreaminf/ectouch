@@ -25,7 +25,6 @@ class CrowdController extends AdminController {
         $this->assign('ur_here', L('crowd'));
         $this->assign('action', ACTION_NAME);
     }
-
     /**
      * 众筹回报项目列表页
      */
@@ -62,7 +61,6 @@ class CrowdController extends AdminController {
                 }
                 $data['cp_img'] = substr($result['message']['cp_img']['savepath'], 2) . $result['message']['cp_img']['savename'];
             }
-
             if (empty($data['cp_id'])) {
                 //入库
                 $this->model->table('crowd_plan')
@@ -106,7 +104,7 @@ class CrowdController extends AdminController {
         if (IS_POST) {
             $data = I('post.data');
             // 商品图片处理
-            if ($_FILES['goods_img']['name']) {
+            if (!empty($_FILES['goods_img']['name'])) {
                 $result = $this->ectouchUpload('goods_img', 'crowd');
                 if ($result['error'] > 0) {
                     $this->message($result['message'], NULL, 'error');
@@ -115,13 +113,14 @@ class CrowdController extends AdminController {
             }
             //商品相册  
             $uploadfile;
-            if ($_FILES['gallery_img']['name']) {
+            if (!empty($_FILES['gallery_img']['name'])) {
                 $dest_folder = 'data/attached/crowd/thumb/';   //上传图片保存的路径 图片放在跟你upload.php同级的picture文件夹里
                 $arr = array();  //定义一个数组存放上传图片的名称方便你以后会用的，如果不用那就不写
                 $count = 0;
                 if (!file_exists($dest_folder)) {
                     mkdir($dest_folder, 0777);
                 }
+                $file=array();
                 foreach ($_FILES["gallery_img"]["error"] as $key => $error) {
                     if ($error == 0) {
                         $tmp_name = $_FILES["gallery_img"]["tmp_name"][$key];
@@ -202,6 +201,40 @@ class CrowdController extends AdminController {
      * 众筹订单列表
      */
     public function order_list() {
+        $keywords = I('post.keywords') ? I('post.keywords') : '';
+        $type= I('post.type') ? I('post.type') : '';
+        $where = '1=1';
+        //只搜索订单号
+        if (!empty($keywords) && empty($type)) {
+             $where='order_sn like "%' . $keywords . '%"'; 
+         }
+         //只搜索状态
+        if(!empty($type) && empty($keywords)){
+            if($type==0){
+                 $where = '1=1';
+             }
+            if($type==1){
+                 $where = 'pay_status !=2';
+             }
+            if($type==2){
+                 $where = 'pay_status =2 and shipping_status=0';
+             }
+            if($type==3){
+                 $where = 'pay_status =2 and shipping_status !=0';
+             }
+         }
+         //两个条件都有
+        if(!empty($type) && !empty($keywords)){
+            if($type==1){
+                $where='order_sn like "%' . $keywords . '%" and pay_status !=2 '; 
+             }
+            if($type==2){
+                 $where='order_sn like "%' . $keywords . '%" and pay_status =2 and shipping_status=0 '; 
+             }
+            if($type==3){
+                 $where='order_sn like "%' . $keywords . '%" and pay_status =2 and shipping_status !=0'; 
+             }
+          }
         //分页
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('order_list', $filter), 15);
@@ -209,7 +242,7 @@ class CrowdController extends AdminController {
                 ->order('add_time desc')
                 ->count();
         $this->assign('page', $this->pageShow($total));
-        $sql = 'select order_id,cp_id,order_sn,user_id,goods_name,order_status, shipping_status,pay_status,add_time,goods_amount from ' . $this->model->pre . 'crowd_order_info order by add_time desc limit ' . $offset;
+        $sql = 'select order_id,cp_id,order_sn,user_id,goods_name,order_status, shipping_status,pay_status,add_time,goods_amount from ' . $this->model->pre . 'crowd_order_info  where '.$where.' order by add_time desc limit ' . $offset;
         $order_list = $this->model->query($sql);
         $list = array();
         foreach ($order_list as $key => $value) {
@@ -244,27 +277,38 @@ class CrowdController extends AdminController {
         $order_info['address'] = $country['region_name'] . $province['region_name'] . $city['region_name'] . $order_info['address'];
         $stock = $this->get_stock($order_info['goods_id']);
         $order_info['stock'] = $stock['number'] - $stock['backey_num']; //库存
+        $order_info['cp_name']=$this->get_cp_name($order_info['cp_id']);
         $this->assign('order_info', $order_info);
         $this->display();
     }
-
     /**
      * 发货
      */
     public function delivery() {
         if (IS_POST) {
             $data = I('post.data');
-            if (empty($data[invoice_no])) {
-                $this->message('请填写发货单号');
+            if (isset($data['cancel'])) {
+                $data['order_status'] = 3;
+                $data['pay_status'] = 0;
+                $data['shipping_status'] =0;
+                //更新订单状态
+                $this->model->table('crowd_order_info')
+                        ->data(array('order_status'=>$data['order_status'],'pay_status'=>$data['pay_status'],'shipping_status'=>$data['shipping_status']))
+                        ->where(array('order_id' => $data['order_id']))
+                        ->update();
+            } else {
+                if (empty($data[invoice_no])) {
+                    $this->message('请填写发货单号');
+                }
+                $data['order_status'] = 5;
+                $data['pay_status'] = 2;
+                $data['shipping_status'] = 1;
+                //更新订单状态
+                $this->model->table('crowd_order_info')
+                        ->data($data)
+                        ->where(array('order_id' => $data['order_id']))
+                        ->update();
             }
-            $data['order_status'] = 5;
-            $data['pay_status'] = 2;
-            $data['shipping_status'] = 1;
-            //更新订单状态
-            $this->model->table('crowd_order_info')
-                    ->data($data)
-                    ->where(array('order_id' => $data['order_id']))
-                    ->update();
             $this->redirect(url('crowd/order_list'));
         }
     }
