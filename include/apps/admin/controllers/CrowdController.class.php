@@ -153,8 +153,8 @@ class CrowdController extends AdminController {
         if (I('goods_id')) {
             $goods_id = I('goods_id', '', 'intval');
             $goods_info = $this->model->table('crowd_goods')->field()->where(array('goods_id' => $goods_id))->find();
-            $data['start_time'] = time($data['start_time']);
-            $data['end_time'] = time($data['end_time']);
+            $goods_info['start_time'] = date('Y-m-d H:i:s',$goods_info['start_time']);
+            $goods_info['end_time'] = date('Y-m-d H:i:s',$goods_info['end_time']);
             $this->assign('goods', $goods_info);
         }
         $this->assign('cat_select', cat_lists(0, 0, true));
