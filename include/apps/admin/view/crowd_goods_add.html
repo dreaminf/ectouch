@@ -1,0 +1,151 @@
+{include file="pageheader"}
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
+<link rel="stylesheet" type="text/css" href="__ASSETS__/css/jquery.datetimepicker.css" />
+<div class="container-fluid" style="padding:0">
+  <div class="row" style="margin:0">
+    <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
+      <div class="panel panel-default">
+        <div class="panel-heading">添加商品</div>
+        <form action="{url('crowd/goods_add')}" method="post" enctype="multipart/form-data" role="form">
+        <table id="general-table" class="table table-hover ectouch-table">
+         <tr>
+            <td width="200">商品名称:</td>
+            <td><div class="col-md-4">
+                <input type='text' name='data[goods_name]' value="{$goods['goods_name']}" class="form-control input-sm" />
+              </div></td>
+          </tr>
+            <tr>
+            <td width="200">目标金额:</td>
+            <td><div class="col-md-4">
+                <input type='text' name='data[sum_price]' value="{$goods['goods_name']}" class="form-control input-sm" />
+              </div></td>
+          </tr>
+          <tr>
+            <td width="200">分类:</td>
+                    <td >
+                        <select name="data[cat_id]">
+                            <option value="0">顶级分类</option>
+                            {$cat_select}
+                        </select>
+                    </td>
+          </tr>
+          <tr>
+            <td width="200">商品图片:</td>
+            <td><div class="col-md-4">
+                <input type="file" value="{$article['file']}" name="goods_img" class="form-control input-sm">
+                </div>
+           </td>
+           <tr>
+        <td width="200">开始时间</td>
+        <td>
+            <div class="col-md-4 col-sm-4">
+                <input type="text" name="data[start_time]" class="form-control" id="starttime" value="{$goods['start_time']}" />
+          </div>
+        </td>
+    </tr>
+   
+    <tr>
+        <td width="200">结束时间</td>
+        <td>
+            <div class="col-md-4 col-sm-4">
+                <input type="text" name="data[end_time]" class="form-control" id="endtime" value="{$goods['end_time']}" />
+           </div>
+        </td>
+    </tr>
+        <tr>
+        <td width="200">预计发货时间(天数：例：3天)</td>
+        <td>
+            <div class="col-md-4 col-sm-4">
+                <input type="text" name="data[shiping_time]" class="form-control"value="{$goods['shiping_time']}" />
+          </div>
+              <span class="help-block">1、在筹款结束后发货建议按照“筹款成功后X天”格式填写,在项目完成时判定项目是否成功，成功则选择发货，失败则退回筹款</br>2、为了兼顾急需资金的项目，可以一边筹款一边发货，在项目结束前可以选择修改目标金额使项目达成，建议按照“下单后X天”格式填写，以示区分</span>
+        </td>
+    </tr>
+         <tr>
+            <td width="200">商品详情:</td>
+            <td><div class="col-md-4">
+                <textarea class="form-control" name="data[goods_desc]">{$goods['goods_desc']}</textarea>
+              </div></td>
+          </tr>
+<!--          <tr>
+            <td width="200">正文:</td>
+            <td><div class="col-md-9"><?php echo create_html_editor('content', html_out($article['content']));?></div></td>
+          </tr>-->
+          <tr>
+            <td width="200">排序:</td>
+            <td><div class="col-md-2">
+                <input type='text' name='data[sort_order]' value="{$goods['sort_order']}" class="form-control input-sm" />
+              </div></td>
+          </tr>
+            <tr>
+                <td width="200">商品相册：</td>
+        <td>
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                <table class="table ectouch-table">
+                    <tr>
+                        <th class="text-center" width="10%"><a href="javascript:;" class="glyphicon glyphicon-plus" onClick="addprize(this)"></a></th>
+                        <th class="text-center"  width="20%">相册图片</th>
+                        
+                    </tr>
+                  
+                    <tr>
+                        <td class="text-center"><a href="javascript:;" class="glyphicon glyphicon-minus" onClick="delprize(this)"></a></td>
+                        <td class="text-center"><input type="file" name="gallery_img[]" class="form-control" value=""></td>
+                   </tr>
+        
+            </table>
+            </div>
+            </div>
+        </td>
+    </tr>
+          <tr>
+            <td width="200"></td>
+            <td><div class="col-md-4">
+                <input type="hidden" name="data[goods_id]" value="{$goods['goods_id']}" />
+                <input type="hidden" name="data[is_verify]" value="1" />
+                <input type="hidden" name="data[admin_user_id]" value="" />
+                <input type="hidden" name="data[recommend]" value="" />
+                <input type="hidden" name="data[like_num]" value="" />
+                <input type="hidden" name="data[buy_num]" value="" />
+                <input type="hidden" name="data[status]" value="0" />
+                <input type="hidden" name="data[total_price]" value="" />
+  		<input type="submit" value="{$lang['button_submit']}" class="btn btn-primary" />
+                <input type="reset" value="{$lang['button_reset']}" class="btn btn-default" />
+              </div></td>
+          </tr>
+      </table>
+      </form>
+    </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/fancybox/jquery.fancybox.js?v=2.1.5"></script>
+<script src="__ASSETS__/js/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+    //iframe显示
+    $(function(){
+    	//弹出框
+    	$(".fancybox").fancybox({
+    		title : '',
+    		closeBtn : false,
+    		width : '60%'
+    	});
+    })
+    //日历显示
+    $("#starttime, #endtime").datetimepicker({
+    	lang:'ch',
+    	format:'Y-m-d H:i',
+    	timepicker:true
+    });
+      //添加奖项
+    function addprize(obj){
+    	var html = '<tr><td class="text-center"><a href="javascript:;" class="glyphicon glyphicon-minus" onClick="delprize(this)"></a></td> <td class="text-center"><input type="file" name="gallery_img[]" class="form-control" value="{$v['prize_level']}"></td></tr>';
+        $(obj).parent().parent().parent().append(html);
+    }
+    //删除奖项
+    function delprize(obj){
+        $(obj).parent().parent().remove();
+    }
+</script>
+{include file="pagefooter"}

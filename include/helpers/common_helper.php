@@ -398,6 +398,149 @@ function cat_list($cat_id = 0, $selected = 0, $re_type = true, $level = 0, $is_s
     }
 }
 
+function cat_lists($cat_id = 0, $selected = 0, $re_type = true, $level = 0, $is_show_all = true)
+{
+    $global = getInstance();
+    static $res = NULL;
+
+    if ($res === NULL)
+    {
+        $data = read_static_cache('cat_pid_releate');
+        if ($data === false)
+        {
+            $sql = "SELECT c.cat_id, c.cat_name,  c.parent_id, c.is_show, c.sort_order, COUNT(s.cat_id) AS has_children ".
+                'FROM ' . $global->ecs->table('crowd_category') . " AS c ".
+                "LEFT JOIN " . $global->ecs->table('crowd_category') . " AS s ON s.parent_id=c.cat_id ".
+                "GROUP BY c.cat_id ".
+                'ORDER BY c.parent_id, c.sort_order ASC';
+            $res = $global->db->getAll($sql);
+
+            $sql = "SELECT cat_id, COUNT(*) AS goods_num " .
+                    " FROM " . $global->ecs->table('goods') .
+                    " WHERE is_delete = 0 AND is_on_sale = 1 " .
+                    " GROUP BY cat_id";
+            $res2 = $global->db->getAll($sql);
+
+            $sql = "SELECT gc.cat_id, COUNT(*) AS goods_num " .
+                    " FROM " . $global->ecs->table('goods_cat') . " AS gc , " . $global->ecs->table('goods') . " AS g " .
+                    " WHERE g.goods_id = gc.goods_id AND g.is_delete = 0 AND g.is_on_sale = 1 " .
+                    " GROUP BY gc.cat_id";
+            $res3 = $global->db->getAll($sql);
+
+            $newres = array();
+            foreach($res2 as $k=>$v)
+            {
+                $newres[$v['cat_id']] = $v['goods_num'];
+                foreach($res3 as $ks=>$vs)
+                {
+                    if($v['cat_id'] == $vs['cat_id'])
+                    {
+                    $newres[$v['cat_id']] = $v['goods_num'] + $vs['goods_num'];
+                    }
+                }
+            }
+
+            foreach($res as $k=>$v)
+            {
+                $res[$k]['goods_num'] = !empty($newres[$v['cat_id']]) ? $newres[$v['cat_id']] : 0;
+            }
+            //如果数组过大，不采用静态缓存方式
+            if (count($res) <= 1000)
+            {
+                write_static_cache('cat_pid_releate', $res);
+            }
+        }
+        else
+        {
+            $res = $data;
+        }
+    }
+
+    if (empty($res) == true)
+    {
+        return $re_type ? '' : array();
+    }
+
+    $options = cat_options($cat_id, $res); // 获得指定分类下的子分类的数组
+
+    $children_level = 99999; //大于这个分类的将被删除
+    if ($is_show_all == false)
+    {
+        foreach ($options as $key => $val)
+        {
+            if ($val['level'] > $children_level)
+            {
+                unset($options[$key]);
+            }
+            else
+            {
+                if ($val['is_show'] == 0)
+                {
+                    unset($options[$key]);
+                    if ($children_level > $val['level'])
+                    {
+                        $children_level = $val['level']; //标记一下，这样子分类也能删除
+                    }
+                }
+                else
+                {
+                    $children_level = 99999; //恢复初始值
+                }
+            }
+        }
+    }
+
+    /* 截取到指定的缩减级别 */
+    if ($level > 0)
+    {
+        if ($cat_id == 0)
+        {
+            $end_level = $level;
+        }
+        else
+        {
+            $first_item = reset($options); // 获取第一个元素
+            $end_level  = $first_item['level'] + $level;
+        }
+
+        /* 保留level小于end_level的部分 */
+        foreach ($options AS $key => $val)
+        {
+            if ($val['level'] >= $end_level)
+            {
+                unset($options[$key]);
+            }
+        }
+    }
+
+    if ($re_type == true)
+    {
+        $select = '';
+        foreach ($options AS $var)
+        {
+            $select .= '<option value="' . $var['cat_id'] . '" ';
+            $select .= ($selected == $var['cat_id']) ? "selected='ture'" : '';
+            $select .= '>';
+            if ($var['level'] > 0)
+            {
+                $select .= str_repeat('&nbsp;', $var['level'] * 4);
+            }
+            $select .= htmlspecialchars(addslashes($var['cat_name']), ENT_QUOTES) . '</option>';
+        }
+
+        return $select;
+    }
+    else
+    {
+        foreach ($options AS $key => $value)
+        {
+            $options[$key]['url'] = build_uri('category', array('cid' => $value['cat_id']), $value['cat_name']);
+        }
+
+        return $options;
+    }
+}
+
 /**
  * 过滤和排序所有分类，返回一个带有缩进级别的数组
  *

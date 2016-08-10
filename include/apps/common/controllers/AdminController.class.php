@@ -31,6 +31,7 @@ class AdminController extends BaseController {
 
     protected function checkLogin() {
         $access = array(
+            'crowd' => '*', 
             'wechat' => '*', 
             'extend' => '*', 
             'upload' => '*', 

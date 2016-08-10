@@ -367,7 +367,7 @@ $_LANG['10_menu_tools'] = '工具箱';
 $_LANG['11_menu_rec'] = '微分销';
 /*DRP_END*/
 $_LANG['12_menu_wechat'] = '微信通';
-
+$_LANG['13_menu_crowd'] = '微筹';
 // 控制台
 $_LANG['01_dashboard_welcome'] = '欢迎页面';
 //$_LANG['02_favorite'] = '常用功能';
@@ -446,3 +446,7 @@ $_LANG['10_wechat_remind'] = '提醒设置';
 $_LANG['11_wechat_customer'] = '多客服设置';
 $_LANG['12_wechat_wall'] = '微信墙';
 
+$_LANG['01_crowd'] = '微筹项目列表';
+$_LANG['02_crowd_order_list'] = '微筹订单列表';
+$_LANG['03_crowd_message_list'] = '微筹订单评论';
+$_LANG['04_crowd_category'] = '添加微筹分类';

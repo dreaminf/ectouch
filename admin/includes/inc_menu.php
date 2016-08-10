@@ -99,6 +99,7 @@ $modules['06_menu_promotion']['12_favourable']           = 'favourable.php?act=l
 //$modules['03_promotion']['ebao_commend']            = 'ebao_commend.php?act=list';
 $modules['06_menu_promotion']['15_exchange_goods']       = 'exchange_goods.php?act=list';
 
+
 // 报表
 // $modules['07_menu_stats']['flow_stats']                  = 'flow_stats.php?act=view';
 //$modules['07_menu_stats']['searchengine_stats']          = 'searchengine_stats.php?act=view';
@@ -183,4 +184,12 @@ $modules['12_menu_wechat']['10_wechat_remind'] = '../index.php?m=admin&c=wechat&
 $modules['12_menu_wechat']['11_wechat_customer'] = '../index.php?m=admin&c=wechat&a=customer_service';
 /*DRP_START*/
 $modules['12_menu_wechat']['12_wechat_wall'] = '../index.php?m=admin&c=extend&a=wall';
+/*DRP_END*/
+/*DRP_START*/
+// 众筹
+
+$modules['13_menu_crowd']['01_crowd'] =  '../index.php?m=admin&c=crowd&a=index';
+$modules['13_menu_crowd']['02_crowd_order_list'] = '../index.php?m=admin&c=crowd&a=order_list';
+$modules['13_menu_crowd']['03_crowd_message_list'] = '../index.php?m=admin&c=crowd&a=message_list';
+$modules['13_menu_crowd']['04_crowd_category'] = '../index.php?m=admin&c=crowd&a=category';
 /*DRP_END*/

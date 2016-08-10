@@ -1340,6 +1340,83 @@ function cat_list($cat_id = 0, $selected = 0, $re_type = true, $level = 0, $is_s
     }
 }
 
+function cat_lists($cat_id = 0, $selected = 0, $re_type = true, $level = 0, $is_show_all = true) {
+    static $res = NULL;
+
+    if ($res === NULL) {
+        $data = read_static_cache('cat_pid_releate');
+        if ($data === false) {
+            $res = model('Base')->get_all_cat_lists();
+            //如果数组过大，不采用静态缓存方式
+            if (count($res) <= 1000) {
+                write_static_cache('cat_pid_releate', $res);
+            }
+        } else {
+            $res = $data;
+        }
+    }
+
+    if (empty($res) == true) {
+        return $re_type ? '' : array();
+    }
+
+    $options = cat_options($cat_id, $res); // 获得指定分类下的子分类的数组
+
+    $children_level = 99999; //大于这个分类的将被删除
+    if ($is_show_all == false) {
+        foreach ($options as $key => $val) {
+            if ($val['level'] > $children_level) {
+                unset($options[$key]);
+            } else {
+                if ($val['is_show'] == 0) {
+                    unset($options[$key]);
+                    if ($children_level > $val['level']) {
+                        $children_level = $val['level']; //标记一下，这样子分类也能删除
+                    }
+                } else {
+                    $children_level = 99999; //恢复初始值
+                }
+            }
+        }
+    }
+
+    /* 截取到指定的缩减级别 */
+    if ($level > 0) {
+        if ($cat_id == 0) {
+            $end_level = $level;
+        } else {
+            $first_item = reset($options); // 获取第一个元素
+            $end_level = $first_item['level'] + $level;
+        }
+
+        /* 保留level小于end_level的部分 */
+        foreach ($options AS $key => $val) {
+            if ($val['level'] >= $end_level) {
+                unset($options[$key]);
+            }
+        }
+    }
+
+    if ($re_type == true) {
+        $select = '';
+        foreach ($options AS $var) {
+            $select .= '<option value="' . $var['cat_id'] . '" ';
+            $select .= ($selected == $var['cat_id']) ? "selected='ture'" : '';
+            $select .= '>';
+            if ($var['level'] > 0) {
+                $select .= str_repeat('&nbsp;', $var['level'] * 4);
+            }
+            $select .= htmlspecialchars(addslashes($var['cat_name']), ENT_QUOTES) . '</option>';
+        }
+        return $select;
+    } else {
+        foreach ($options AS $key => $value) {
+            $options[$key]['url'] = url('crowd_category/category', array('id' => $value['cat_id']));
+        }
+        return $options;
+    }
+}
+
 /**
  * 过滤和排序所有分类，返回一个带有缩进级别的数组
  *

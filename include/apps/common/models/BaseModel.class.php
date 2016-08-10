@@ -59,6 +59,43 @@ class BaseModel extends Model {
 
         return $res;
     }
+     public function get_all_cat_lists() {
+        $sql = "SELECT c.cat_id, c.cat_name, c.parent_id, c.is_show,c.sort_order, COUNT(s.cat_id) AS has_children " .
+                'FROM ' . $this->pre . "crowd_category AS c " .
+                "LEFT JOIN " . $this->pre . "crowd_category AS s ON s.parent_id=c.cat_id " .
+                "GROUP BY c.cat_id " .
+                'ORDER BY c.parent_id, c.sort_order ASC';
+        $res = $this->query($sql);
+
+        $sql = "SELECT cat_id, COUNT(*) AS goods_num " .
+                " FROM " . $this->pre . "goods WHERE is_delete = 0 AND is_on_sale = 1 " .
+                " GROUP BY cat_id";
+        $res2 = $this->query($sql);
+
+        $sql = "SELECT gc.cat_id, COUNT(*) AS goods_num " .
+                " FROM " . $this->pre . "goods_cat AS gc , " . $this->pre . "goods AS g " .
+                " WHERE g.goods_id = gc.goods_id AND g.is_delete = 0 AND g.is_on_sale = 1 " .
+                " GROUP BY gc.cat_id";
+        $res3 = $this->query($sql);
+
+        $newres = array();
+        if (is_array($res2))
+            foreach ($res2 as $k => $v) {
+                $newres[$v['cat_id']] = $v['goods_num'];
+                if (is_array($res3))
+                    foreach ($res3 as $ks => $vs) {
+                        if ($v['cat_id'] == $vs['cat_id']) {
+                            $newres[$v['cat_id']] = $v['goods_num'] + $vs['goods_num'];
+                        }
+                    }
+            }
+
+        foreach ($res as $k => $v) {
+            $res[$k]['goods_num'] = !empty($newres[$v['cat_id']]) ? $newres[$v['cat_id']] : 0;
+        }
+
+        return $res;
+    }
 
     /**
      * 载入配置信息
