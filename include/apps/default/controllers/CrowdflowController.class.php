@@ -338,7 +338,7 @@ class CrowdflowController extends CommonController {
         $this->assign('step', ACTION_NAME);
         $this->assign('title', L('consignee_info'));
 	
-		$this->display('crowd/raise_flow_consignee.dwt');
+		$this->display('raise_flow_consignee.dwt');
 	}
 	
 	
