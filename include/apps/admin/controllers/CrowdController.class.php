@@ -134,8 +134,8 @@ class CrowdController extends AdminController {
                 }
                 $data['gallery_img'] = implode(',', $file);
             }
-            $data['start_time'] = time($data['start_time']);
-            $data['end_time'] = time($data['end_time']);
+            $data['start_time'] = strtotime($data['start_time']);
+            $data['end_time'] = strtotime($data['end_time']);
             if (empty($data['goods_id'])) {
                 //入库
                 $this->model->table('crowd_goods')
@@ -194,7 +194,7 @@ class CrowdController extends AdminController {
         $this->model->table('crowd_goods')
                 ->where(array('goods_id' => $id))
                 ->delete();
-        $this->message(L('drop') . L('success'), url('category_list'));
+        $this->message(L('drop') . L('success'), url('index'));
     }
 
     /**
