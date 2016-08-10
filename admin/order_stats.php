@@ -409,7 +409,7 @@ elseif ($act = 'download')
 
     /* 无效或已取消订单数 */
     $sql = "SELECT COUNT(*) AS invalid_num FROM " .$GLOBALS['ecs']->table('order_info').
-           " WHERE order_status > '" .OS_CONFIRMED. "'".
+           " WHERE order_status > '" .OS_CONFIRMED. "' AND order_status < '".OS_RETURNED."'  ".
            " AND add_time >= '$start_date' AND add_time < '" . ($end_date + 86400) . "'";
     $order_info['invalid_num'] = $GLOBALS['db']->getOne($sql);
     return $order_info;
