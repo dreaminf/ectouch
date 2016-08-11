@@ -93,7 +93,7 @@ class CrowdfundingModel extends CommonModel {
 	
 	/* 获取当前项目购买人数量*/
 	function crowd_buy_num($goods_id = 0) {
-		$sql = "SELECT count(order_id) as num  FROM ". $this->pre ."crowd_order_info WHERE goods_id = '".$goods_id."' AND extension_code = 'crowd_buy' ";
+		$sql = "SELECT count(order_id) as num  FROM ". $this->pre ."crowd_order_info WHERE goods_id = '".$goods_id."' AND extension_code = 'crowd_buy'  and pay_status = '" . PS_PAYED . "' ";
         $res = $this->row($sql);
 		return $res['num'];
 	}
