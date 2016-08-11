@@ -191,6 +191,6 @@ $modules['12_menu_wechat']['12_wechat_wall'] = '../index.php?m=admin&c=extend&a=
 $modules['13_menu_crowd']['01_crowd'] =  '../index.php?m=admin&c=crowd&a=index';
 $modules['13_menu_crowd']['02_crowd_order_list'] = '../index.php?m=admin&c=crowd&a=order_list';
 $modules['13_menu_crowd']['03_crowd_message_list'] = '../index.php?m=admin&c=crowd&a=message_list';
-$modules['13_menu_crowd']['04_crowd_category'] = '../index.php?m=admin&c=crowd&a=category';
+$modules['13_menu_crowd']['04_crowd_category_list'] = '../index.php?m=admin&c=crowd&a=category_list';
 $modules['13_menu_crowd']['05_crowd_article_list'] = '../index.php?m=admin&c=crowd&a=article_list';
 /*DRP_END*/

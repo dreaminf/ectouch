@@ -1,12 +1,17 @@
 {include file="pageheader"}
 <div class="container-fluid" style="padding:0">
 	<div class="row" style="margin:0">
+          
 	   <tr>
 			<td></td>
                         <td><div style="float:right">
                                 <a href="{url('crowd/goods_add')}"><button class="btn btn-primary">添加项目</button></a>
 				</div></td>
 		</tr>
+                  	<form class="navbar-form " role="search" action="{url('index')}" method="post">
+				<input type="text" class="form-control" placeholder="项目名称" name="name"/>	
+			        <input name="Submit" class="btn btn-primary" type="submit" value="搜索">
+    	 	        </form>
             <div class="container-fluid" style="padding:0">
 	<div class="row" style="margin:0">
 	  <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">

@@ -449,5 +449,5 @@ $_LANG['12_wechat_wall'] = '微信墙';
 $_LANG['01_crowd'] = '微筹项目列表';
 $_LANG['02_crowd_order_list'] = '微筹订单列表';
 $_LANG['03_crowd_message_list'] = '微筹订单评论';
-$_LANG['04_crowd_category'] = '添加微筹分类';
+$_LANG['04_crowd_category_list'] = '微筹分类';
 $_LANG['05_crowd_article_list'] = '文章中心';

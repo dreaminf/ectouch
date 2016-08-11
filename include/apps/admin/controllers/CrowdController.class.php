@@ -399,8 +399,65 @@ class CrowdController extends AdminController {
      * 评论列表
      */
     public function message_list() {
-        
+          //分页
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('message_list', $filter), 10);
+        $total = $this->model->table('crowd_comment')
+                ->order('add_time desc')
+                ->count();
+        $this->assign('page', $this->pageShow($total));
+        $sql = 'select * from ' . $this->model->pre . 'crowd_comment where parent_id=0 order by add_time desc limit ' . $offset;
+        $message_list = $this->model->query($sql);
+        foreach ($message_list as $key=>$value){
+          $message_list[$key]['goods_name']= $this->get_goods_name($value['goods_id']);
+          $message_list[$key]['add_time']= date('Y-m-d H:i:s', $value['add_time']);
+          $message_list[$key]['id']=$value['id'];
+        }
+        $this->assign('message_list', $message_list);
+        $this->display();
     }
+    /**
+     * 评论详情
+     */
+    public function message_info() {
+        $id = I('get.id', '', 'intval');
+        $message_info = $this->model->table('crowd_comment')->where(array('id' => $id))->find();
+        $message_info['add_time']=date('Y-m-d H:i:s', $message_info['add_time']);
+        $message_info['reply_time']=date('Y-m-d H:i:s', $message_info['reply_time']);
+        $this->assign('message_info', $message_info);
+        $this->display();
+    }
+     /**
+     * 评论详情
+     */
+    public function message_reply() {
+        if (IS_POST) {
+            $data = array();
+            $data['id'] = I('post.id');
+            $data['reply_time'] = time();
+            $data['reply'] = I('post.reply');
+            $data['status'] = I('post.status');
+            $this->model->table('crowd_comment')
+                    ->data($data)
+                    ->where(array('id' => $data['id']))
+                    ->update();
+            $this->redirect(url('crowd/message_list'));
+        }
+    }
+      /**
+     * 删除评论
+     */
+    public function del_message() {
+        $id = I('get.id');
+        if (empty($id)) {
+            $this->message(L('menu_select_del'), NULL, 'error');
+        }
+        $this->model->table('crowd_comment')
+                ->where(array('id' => $id))
+                ->delete();
+        $this->message(L('drop') . L('success'), url('message_list'));
+    }
+    
     /**
      * 文章列表
      */
@@ -418,7 +475,6 @@ class CrowdController extends AdminController {
            $article_list[$key]['add_time']=date('Y-m-d H:i:s', $value['add_time']); 
         }
         $this->assign('article_list', $article_list);
-        
         $this->display();
     }
     /**
@@ -482,6 +538,13 @@ class CrowdController extends AdminController {
     private function get_username($user_id) {
         $username = $this->model->table('users')->field('user_name')->where(array('user_id' => $user_id))->find();
         return $username['user_name'];
+    }
+    /**
+     * 获取订单的用户名称
+     */
+    private function get_goods_name($goods_id) {
+        $goods = $this->model->table('crowd_goods')->field('goods_name')->where(array('goods_id' => $goods_id))->find();
+        return $goods['goods_name'];
     }
 
     /**
