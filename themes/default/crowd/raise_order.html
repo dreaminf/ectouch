@@ -74,7 +74,7 @@
 									<ul class="box-flex">
 										<li>
 											<div class="product-div">
-												<a class="product-div-link" href="{$order.url}"></a>
+												<a class="product-div-link" href="{:url('mycrowd/crowd_order_detail',array('order_id'=>$this->_var['order']['order_id']))}"></a>
 												<img class="product-list-img" src="{$order.img}">
 												<div class="product-text">
 													<h4>{$order.goods_name}</h4>
