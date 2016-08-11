@@ -65,14 +65,12 @@ class CrowdfundingModel extends CommonModel {
 	}
 	/* 获取当前项目信息 */
 	function crowd_goods_info($goods_id = 0) {
-		$sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, total_price, start_time,shiping_time,end_time,gallery_img, like_num, buy_num '.'FROM '. $this->pre . 'crowd_goods ' . "WHERE is_verify = 1 and goods_id = '$goods_id' ";
+		$sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, start_time,shiping_time,end_time,gallery_img '.'FROM '. $this->pre . 'crowd_goods ' . "WHERE is_verify = 1 and goods_id = '$goods_id' ";
         $row = $this->row($sql);
         if ($row !== false) {
             $row['goods_id'] = $row['goods_id'];
 			$row['cat_id'] = $row['cat_id'];
             $row['goods_name'] = $row['goods_name'];
-            $row['like_num'] = $row['like_num'];
-			$row['gallery_img'] = $row['gallery_img'];
             $row['buy_num'] = $this->crowd_buy_num($row['goods_id']);
 			$row['time'] = floor(($row['end_time']-$row['start_time'])/86400);
 			$row['start_time'] =floor((gmtime()-$row['start_time'])/86400);				
@@ -80,7 +78,7 @@ class CrowdfundingModel extends CommonModel {
 			$row['shiping_time'] =  $row['shiping_time'];
 			$row['sum_price'] = $row['sum_price'];
 			$row['total_price'] = $this->crowd_buy_price($row['goods_id']);
-            $row['goods_img'] = 'data/attached/crowdimage/'.$row['goods_img'];
+            $row['goods_img'] = $row['goods_img'];
             $row['url'] = url('Crowdfunding/goods_info', array('id' => $row['goods_id']));
 			$row['bar'] = $row['total_price']*100/$row['sum_price'];
 			$row['bar'] = round($row['bar'],1); //计算百分比
@@ -117,8 +115,7 @@ class CrowdfundingModel extends CommonModel {
 	function crowd_goods_paln($goods_id = 0) {
 		$sql = 'SELECT cp_id, name, goods_id, shop_price, number, backey_num, cp_img, return_time '.'FROM '
 		. $this->model->pre . 'crowd_plan ' . "WHERE status = 1 and goods_id = '$goods_id' order by sort_order ASC ";
-        $res = $this->query($sql);
-		
+        $res = $this->query($sql);		
 		$plan = array();
         foreach ($res AS $key => $row) {
             $plan[$key]['cp_id'] = $row['cp_id'];
@@ -129,7 +126,7 @@ class CrowdfundingModel extends CommonModel {
             $plan[$key]['number'] = $row['number'];
             $plan[$key]['backey_num'] = $row['backey_num'];
 			$plan[$key]['surplus_num'] = $row['number']-$row['backey_num'];
-            $plan[$key]['cp_img'] = 'data/attached/crowdimage/'.$row['cp_img'];           
+            $plan[$key]['cp_img'] = $row['cp_img'];           
         }
         return $plan;
 		

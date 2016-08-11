@@ -22,7 +22,7 @@ class CrowdbuyModel extends CommonModel {
     */
 	function cart_crowd_goods($goods_id, $cp_id, $number){
 	
-		$sql = 'SELECT cg.goods_id, cg.goods_name, cg.goods_img, cg.sum_price, cg.total_price, cg.start_time,time, cg.buy_num,cp.cp_id, cp.shop_price, cp.name '.'FROM '. $this->pre . 'crowd_goods as cg left join ' . $this->pre . 'crowd_plan as cp' .' on cp.goods_id=cg.goods_id '.  "WHERE cg.is_verify = 1 and cp.goods_id = '$goods_id' and cp.cp_id = '$cp_id' ";
+		$sql = 'SELECT cg.goods_id, cg.goods_name, cg.goods_img, cg.sum_price, cg.start_time,time,cp.cp_id, cp.shop_price, cp.name '.'FROM '. $this->pre . 'crowd_goods as cg left join ' . $this->pre . 'crowd_plan as cp' .' on cp.goods_id=cg.goods_id '.  "WHERE cg.is_verify = 1 and cp.goods_id = '$goods_id' and cp.cp_id = '$cp_id' ";
 
         $row = $this->row($sql);
         if ($row !== false) {
@@ -30,10 +30,9 @@ class CrowdbuyModel extends CommonModel {
             $row['goods_name'] = $row['goods_name'];
             $row['buy_num'] = model('Crowdfunding')->crowd_buy_num($row['goods_id']);
 			$row['start_time'] =floor((gmtime()-$row['start_time'])/86400);
-			$row['time'] = $row['time'] - $row['start_time'];
 			$row['sum_price'] = $row['sum_price'];
 			$row['total_price'] = model('Crowdfunding')->crowd_buy_price($row['goods_id']);
-            $row['goods_img'] = 'data/attached/crowdimage/'.$row['goods_img'];
+            $row['goods_img'] = $row['goods_img'];
             $row['url'] = url('Crowdfunding/goods_info', array('id' => $row['goods_id']));
 			$row['bar'] = $row['total_price']*100/$row['sum_price'];
 			$row['bar'] = round($row['bar'],1); //计算百分比sum_price

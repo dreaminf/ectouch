@@ -71,7 +71,7 @@ class CrowdfundingController extends CommonController {
             }
         }
 		$now = gmtime();
-		$sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, total_price, start_time, time,end_time, like_num, buy_num '.'FROM '
+		$sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, start_time,end_time '.'FROM '
 		. $this->model->pre . 'crowd_goods ' . "WHERE is_verify = 1 AND start_time <= '$now' AND end_time >= '$now' $where ";
         $res = $this->model->query($sql);
 		$goods = array();
@@ -79,15 +79,16 @@ class CrowdfundingController extends CommonController {
             $goods[$key]['id'] = $row['goods_id'];
 			$goods[$key]['cat_id'] = $row['cat_id'];
             $goods[$key]['goods_name'] = $row['goods_name'];
-            $goods[$key]['like_num'] = $row['like_num'];
             $goods[$key]['buy_num'] = model('Crowdfunding')->crowd_buy_num($row['goods_id']);
 			$goods[$key]['start_time'] =floor((gmtime()-$row['start_time'])/86400);
             //$goods[$key]['sum_price'] = price_format($row['sum_price']);
 			$goods[$key]['sum_price'] = $row['sum_price'];
             $goods[$key]['total_price'] = model('Crowdfunding')->crowd_buy_price($row['goods_id']);
-            $goods[$key]['goods_img'] = 'data/attached/crowdimage/'.$row['goods_img'];
-            $goods[$key]['url'] = url('Crowdfunding/goods_info', array('id' => $row['goods_id']));
-			$goods[$key]['bar'] = $goods[$key]['total_price']*100/$row['sum_price'];
+            $goods[$key]['goods_img'] = $row['goods_img'];
+			$goods[$key]['url'] = url('Crowdfunding/goods_info', array('id' => $row['goods_id']));
+			if($row['sum_price'] > 0){
+				$goods[$key]['bar'] = $goods[$key]['total_price']*100/$row['sum_price'];
+			} 
 			$goods[$key]['bar'] = round($goods[$key]['bar'],1); //计算百分比
         }
         return $goods;
@@ -107,7 +108,7 @@ class CrowdfundingController extends CommonController {
 		//项目相册
 		$gallery = explode(',',$goods['gallery_img']);
 		foreach ($gallery as $key=>$val) {
-			$gallery_img[$key] = 'data/attached/crowdimage/'.$val;
+			$gallery_img[$key] = $val;
         }
 		$this->assign('gallery_img', $gallery_img);
 		$goods_plan = model('Crowdfunding')->crowd_goods_paln($this->goods_id);//项目方案

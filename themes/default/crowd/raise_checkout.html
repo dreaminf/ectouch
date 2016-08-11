@@ -76,7 +76,7 @@
 										<img class="product-list-img" src="{$goods.goods_img}" />
 										<div class="product-text">
 											<h4>{$goods.goods_name}</h4>
-											<p class="col-3 f-03"><em class="col-9">已筹资金:</em><em class="color-red">{$goods.total_price}</em>元<em class="fr col-9 f-03">支持人:<em class="color-red">{$goods.buy_num}</em>人</em>
+											<p class="col-3 f-03"><em class="col-9">已筹资金:</em><em class="color-red"><!--{if $goods.total_price }-->{$goods.total_price}<!--{else}-->0.00<!--{/if}--></em>元<em class="fr col-9 f-03">支持人:<em class="color-red">{$goods.buy_num}</em>人</em>
 											</p>
 											<div class="raise-progressBar dis-box">
 												<p class="wrap box-flex">
