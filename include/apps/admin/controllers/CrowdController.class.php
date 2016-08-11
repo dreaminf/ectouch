@@ -160,6 +160,20 @@ class CrowdController extends AdminController {
         $this->assign('cat_select', cat_lists(0, 0, true));
         $this->display();
     }
+     /**
+     * 结束项目
+     */
+    public function goods_end() {
+        $goods_id=I('get.goods_id');
+        if(!empty($goods_id)){
+            $time=time();
+              $this->model->table('crowd_goods')
+                        ->data(array('end_time'=>$time))
+                        ->where(array('goods_id' => $goods_id))
+                        ->update();
+        }
+        $this->redirect(url('crowd/index'));
+    }
 
     /**
      * 众筹商品列表
@@ -437,6 +451,7 @@ class CrowdController extends AdminController {
             $data['reply_time'] = time();
             $data['reply'] = I('post.reply');
             $data['status'] = I('post.status');
+            dump($data);die;
             $this->model->table('crowd_comment')
                     ->data($data)
                     ->where(array('id' => $data['id']))
