@@ -256,7 +256,7 @@ elseif ($_REQUEST['act']=='action')
     }
     else
     {
-        $sql = "UPDATE ".$ecs->table('feedback')." SET user_email = '".$_POST['user_email']."', msg_content='".$_POST['msg_content']."', msg_time = '".gmtime()."' WHERE msg_id = '".$_REQUEST['parent_id']."'";
+        $sql = "UPDATE ".$ecs->table('feedback')." SET user_name = '".$_SESSION['admin_name']."', user_email = '".$_POST['user_email']."', msg_content='".$_POST['msg_content']."', msg_time = '".gmtime()."' WHERE msg_id = '".$_REQUEST['parent_id']."'";
         $db->query($sql);
     }
 
