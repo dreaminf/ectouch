@@ -80,7 +80,7 @@ class MycrowdController extends CommonController {
     
 	
 	/**
-     * 关余众筹
+     * 关于众筹
      */
     public function crowd_articlecat() {
         $sql = 'SELECT cat_id, cat_name' .

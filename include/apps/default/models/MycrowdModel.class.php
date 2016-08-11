@@ -22,7 +22,7 @@ class MycrowdModel extends BaseModel {
      */
 	function recom_list(){	
 		$now = gmtime();	
-		$sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, start_time, end_time, time '.'FROM '
+		$sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, start_time, end_time '.'FROM '
 		. $this->pre . 'crowd_goods ' . "WHERE is_verify = 1 AND start_time <= '$now' AND end_time >= '$now' and recommend = 1 order by sort_order DESC ";
         $res = $this->query($sql);
 		

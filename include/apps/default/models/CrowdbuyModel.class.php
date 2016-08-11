@@ -22,7 +22,7 @@ class CrowdbuyModel extends CommonModel {
     */
 	function cart_crowd_goods($goods_id, $cp_id, $number){
 	
-		$sql = 'SELECT cg.goods_id, cg.goods_name, cg.goods_img, cg.sum_price, cg.start_time,time,cp.cp_id, cp.shop_price, cp.name '.'FROM '. $this->pre . 'crowd_goods as cg left join ' . $this->pre . 'crowd_plan as cp' .' on cp.goods_id=cg.goods_id '.  "WHERE cg.is_verify = 1 and cp.goods_id = '$goods_id' and cp.cp_id = '$cp_id' ";
+		$sql = 'SELECT cg.goods_id, cg.goods_name, cg.goods_img, cg.sum_price, cg.start_time,cp.cp_id, cp.shop_price, cp.name '.'FROM '. $this->pre . 'crowd_goods as cg left join ' . $this->pre . 'crowd_plan as cp' .' on cp.goods_id=cg.goods_id '.  "WHERE cg.is_verify = 1 and cp.goods_id = '$goods_id' and cp.cp_id = '$cp_id' ";
 
         $row = $this->row($sql);
         if ($row !== false) {
