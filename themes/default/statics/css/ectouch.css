@@ -2624,3 +2624,8 @@ background:-ms-linear-gradient(left,#1CBB7F,#1CBB7F)}
 .category-header-box{position:fixed;top:0;width:100%;z-index:150;background:#f6f6f9;}
 .category-header-box.active{position: static;}
 .raise-cate-maxbox{max-height:20rem;overflow:scroll}
+
+/*订单列表*/
+.raise-money-list{padding:0.6rem 1.3rem;border-top:1px solid #f6f6f9;text-align: right;}
+.raise-new-btn input{font-size:1.6rem;background:none;border:none;color:#1CBB7F}
+.raise-new-btn div{border:1px solid #1CBB7F;border-radius:0.3rem;margin-top: -0.14rem;0rem 0 0.05rem 0;}

@@ -63,11 +63,12 @@
 				<div id="j-tab-con" class="tab-con">
 					<div class="swiper-wrapper">
 						<section class="swiper-slide">
+							<!--{if $orders_list}-->
 							<!--{foreach from=$orders_list item = order}-->
 							<section class="flow-checkout-pro m-top08">
 								<header class="b-color-f dis-box padding-all">
-									<span class=" box-flex">订单状态</span>
-									<em class="j-goods-coupon t-first">{$order.status}</em>
+									<span class=" box-flex f-07">订单状态</span>
+									<em class="j-goods-coupon t-first f-06">{$order.status}</em>
 								</header>
 								<div class="product-list-small m-top1px b-color-f dis-box">
 									<ul class="box-flex">
@@ -86,8 +87,9 @@
 										</li>
 									</ul>
 								</div>
-								<footer class="padding-all b-color-f m-top1px of-hidden dis-box">
-									<h4 class="t-remark2 box-flex"><label class="t-remark">合计：</label><span class="t-first">{$order.total_fee}</span></h4>
+								<div class="b-color-f raise-money-list"><h4 class="t-remark2 box-flex"><label class="t-remark">合计：</label><span class="t-first">{$order.total_fee}</span></h4></div>
+								<footer class="padding-all b-color-f m-top1px of-hidden dis-box raise-new-btn">							
+									<h4 class="box-flex"></h4>
 									<p class="ect-button-more">										
 										<!-- 取消/确定 -->
 										{$order.handler}
@@ -115,136 +117,13 @@
 								</footer>
 							</section>
 							<!--{/foreach}-->
-							
-						</section>
-						<section class="swiper-slide">
-
-							<section class="flow-checkout-pro m-top08">
-								<header class="b-color-f dis-box padding-all">
-									<span class=" box-flex">订单状态</span>
-									<em class="j-goods-coupon t-first">待支付</em>
-								</header>
-								<div class="product-list-small m-top1px b-color-f dis-box">
-									<ul class="box-flex">
-										<li>
-											<div class="product-div">
-												<a class="product-div-link" href="raise_goods.html"></a>
-												<img class="product-list-img" src="__TPL__/crowd/img/14669163270128b6fc19054cd9866.jpg@!thumb.png">
-												<div class="product-text">
-													<h4>阳光攀枝花，缤纷芒果季—离太阳更近，离污染更远,离太阳更近，离污染更远。</h4>
-													<h5 class="col-6 f-05 m-top02">支持<em class="color-red">30</em>元<em class="fr col-9 f-03"><em class="color-red">×5</em></em></h5>
-													<p class="col-7 f-03 m-top04">回报支持者:500克，都是暴发户说的比较好不代表蝴蝶女。</p>
-
-												</div>
-
-											</div>
-										</li>
-									</ul>
-								</div>
-								<footer class="padding-all b-color-f m-top1px of-hidden dis-box">
-									<h4 class="t-remark2 box-flex"><label class="t-remark">合计：</label><span class="t-first">¥21800.00</span></h4>
-									<p class="ect-button-more">
-										<a class="btn-default">取消</a>
-										<a class="btn-submit1" href="raise_order_detail.html">付款</a>
-									</p>
-								</footer>
-							</section>
-						</section>
-						<section class="swiper-slide">
-							<section class="flow-checkout-pro m-top08">
-								<header class="b-color-f dis-box padding-all">
-									<span class=" box-flex">订单状态</span>
-									<em class="j-goods-coupon t-first">待发货</em>
-								</header>
-								<div class="product-list-small m-top1px b-color-f dis-box">
-									<ul class="box-flex">
-										<li>
-											<div class="product-div">
-												<a class="product-div-link" href="raise_goods.html"></a>
-												<img class="product-list-img" src="__TPL__/crowd/img/14669163270128b6fc19054cd9866.jpg@!thumb.png">
-												<div class="product-text">
-													<h4>阳光攀枝花，缤纷芒果季—离太阳更近，离污染更远,离太阳更近，离污染更远。</h4>
-													<h5 class="col-6 f-05 m-top02">支持<em class="color-red">30</em>元<em class="fr col-9 f-03"><em class="color-red">×5</em></em></h5>
-													<p class="col-7 f-03 m-top04">回报支持者:500克，都是暴发户说的比较好不代表蝴蝶女。</p>
-
-												</div>
-
-											</div>
-										</li>
-									</ul>
-								</div>
-								<footer class="padding-all b-color-f m-top1px of-hidden dis-box">
-									<h4 class="t-remark2 box-flex"><label class="t-remark">合计：</label><span class="t-first">¥21800.00</span></h4>
-									<p class="ect-button-more">
-										<a class="btn-submit1" href="raise_order_detail.html">提醒发货</a>
-									</p>
-								</footer>
-							</section>
-						</section>
-						<section class="swiper-slide">
-							<section class="flow-checkout-pro m-top08">
-								<header class="b-color-f dis-box padding-all">
-									<span class="box-flex">订单状态</span>
-									<em class="j-goods-coupon t-first">待收货</em>
-								</header>
-								<div class="product-list-small m-top1px b-color-f dis-box">
-									<ul class="box-flex">
-										<li>
-											<div class="product-div">
-												<a class="product-div-link" href="raise_goods.html"></a>
-												<img class="product-list-img" src="__TPL__/crowd/img/85952556d01385443c1062792e530cd3ee4f1c34h5.jpeg@!thumb.png">
-												<div class="product-text">
-													<h4>饭后一杯强效排油『纯天然黑乌龙茶』， 原产地直供品质完胜日货</h4>
-													<h5 class="col-6 f-05 m-top02">支持<em class="color-red">30</em>元<em class="fr col-9 f-03"><em class="color-red">×5</em></em></h5>
-													<p class="col-7 f-03 m-top04">回报支持者:500克，都是暴发户说的比较好不代表蝴蝶女。</p>
-
-												</div>
-
-											</div>
-										</li>
-									</ul>
-								</div>
-								<footer class="padding-all b-color-f m-top1px of-hidden dis-box">
-									<h4 class="t-remark2 box-flex"><label class="t-remark">合计：</label><span class="t-first">¥21800.00</span></h4>
-									<p class="ect-button-more">
-										<a href="raise_user_order_track.html" class="btn-default">查看物流</a>
-										<a class="btn-submit1 " href="raise_order_detail.html">确定收货</a>
-									</p>
-								</footer>
-							</section>
-						</section>
-						<section class="swiper-slide">
-							<section class="flow-checkout-pro m-top08">
-								<header class="b-color-f dis-box padding-all">
-									<span class="box-flex">订单状态</span>
-									<em class="j-goods-coupon t-first">已完结</em>
-								</header>
-								<div class="product-list-small m-top1px b-color-f dis-box">
-									<ul class="box-flex">
-										<li>
-											<div class="product-div">
-												<a class="product-div-link" href="raise_goods.html"></a>
-												<img class="product-list-img" src="__TPL__/crowd/img/85952556d01385443c1062792e530cd3ee4f1c34h5.jpeg@!thumb.png">
-												<div class="product-text">
-													<h4>饭后一杯强效排油『纯天然黑乌龙茶』， 原产地直供品质完胜日货</h4>
-													<h5 class="col-6 f-05 m-top02">支持<em class="color-red">30</em>元<em class="fr col-9 f-03"><em class="color-red">×5</em></em></h5>
-													<p class="col-7 f-03 m-top04">回报支持者:500克，都是暴发户说的比较好不代表蝴蝶女。</p>
-
-												</div>
-
-											</div>
-										</li>
-									</ul>
-								</div>
-								<footer class="padding-all b-color-f m-top1px of-hidden dis-box">
-									<h4 class="t-remark2 box-flex"><label class="t-remark">合计：</label><span class="t-first">¥21800.00</span></h4>
-									<p class="ect-button-more">
-										<a href="raise_user_evaluation.html" class="btn-submit1">评价</a>
-										<a class="btn-submit1 " href="raise_order_detail.html">再次购买</a>
-									</p>
-								</footer>
-							</section>
-						</section>
+							<!--{else}-->
+							<div class="no-div-message flow-no-cart">
+								<i class="iconfont icon-biaoqingleiben"></i>
+								<p>亲，此处没有相关订单～！</p>						
+							</div>
+						<!--{/if}-->
+						</section>												
 					</div>
 				</div>
 			</div>
