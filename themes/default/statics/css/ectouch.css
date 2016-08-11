@@ -2517,7 +2517,7 @@ table.u-table td{border:1px solid #e3e3e3;padding:0.5em 0.2em;height:3em;width:7
 .j-all-raise.active,.j-cate-raise.active{display:block;}*/
 .raise-button{padding:0.6rem 1.3rem;background:#eee;}
 .raise-button-1{background:#1CBB7F;padding:0.5rem 1.4rem;border-radius:0.5rem;}
-.raise-progressBar .txt{width:6rem;font-size:1.3rem;text-align: right;color:#777;line-height: 0.5rem;}
+.raise-progressBar .txt{font-size:1.3rem;text-align: right;color:#777;line-height: 0.5rem;margin-left: 0.6rem;}
 .raise-progressBar .wrap{margin-bottom:12px}
 .raise-progressBar .wrap{position:relative;margin-bottom:2px;height:5px;border-radius:5px;background-color:#efeeee;overflow:hidden}
 .raise-progressBar .bar,.raise-progressBar .color{display:block;height:100%;border-radius:4px}
