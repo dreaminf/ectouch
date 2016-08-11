@@ -37,52 +37,51 @@
 							<li class="box-flex">全部商品<i class="iconfont icon-xiajiantou"></i></li>
 							<a class="a-sequence j-a-sequence"><i class="iconfont icon-pailie" data="1"></i></a>
 						</ul>
-						<div class="raise-content am-left">
-							<ul class="raise-list-box">
+						<div class="raise-cate-maxbox">
+							<div class="raise-content am-left">
+								<ul class="raise-list-box">
 
-								<div class="catalog-nav-box select-one j-all-raise">
-									<div class="j-get-one padding-all of-hidden">
-										<li class="ect-select w-3 rsise-nav">
-											<a href="{:url('crowdfunding/index',array('type'=>''))}"><label class="ts-1 <!--{if $type eq ''}-->active<!--{/if}-->">综合排序</label></a>
-										</li>
-										<li class="ect-select w-3 rsise-nav">
-											<a href="{:url('crowdfunding/index',array('type'=>'new'))}"><label class="ts-1 <!--{if $type eq 'new'}-->active<!--{/if}-->">最新上线</label></a>
-										</li>
-										<li class="ect-select w-3 rsise-nav">
-											<a href="{:url('crowdfunding/index',array('type'=>'sum_price'))}"><label class="ts-1 <!--{if $type eq 'sum_price'}-->active<!--{/if}-->">金额最多</label></a>
-										</li>
-										<li class="ect-select w-3  rsise-nav">
-											<a href="{:url('crowdfunding/index',array('type'=>'buy_num'))}"><label class="ts-1 <!--{if $type eq 'buy_num'}-->active<!--{/if}-->">支持最多</label></a>
-										</li>
-										<!-- <li class="ect-select w-3  rsise-nav">
+									<div class="catalog-nav-box select-one j-all-raise">
+										<div class="j-get-one padding-all of-hidden">
+											<li class="ect-select w-3 rsise-nav">
+												<a href="{:url('crowdfunding/index',array('type'=>''))}"><label class="ts-1 <!--{if $type eq ''}-->active<!--{/if}-->">综合排序</label></a>
+											</li>
+											<li class="ect-select w-3 rsise-nav">
+												<a href="{:url('crowdfunding/index',array('type'=>'new'))}"><label class="ts-1 <!--{if $type eq 'new'}-->active<!--{/if}-->">最新上线</label></a>
+											</li>
+											<li class="ect-select w-3 rsise-nav">
+												<a href="{:url('crowdfunding/index',array('type'=>'sum_price'))}"><label class="ts-1 <!--{if $type eq 'sum_price'}-->active<!--{/if}-->">金额最多</label></a>
+											</li>
+											<li class="ect-select w-3  rsise-nav">
+												<a href="{:url('crowdfunding/index',array('type'=>'buy_num'))}"><label class="ts-1 <!--{if $type eq 'buy_num'}-->active<!--{/if}-->">支持最多</label></a>
+											</li>
+											<!-- <li class="ect-select w-3  rsise-nav">
 										<label class="ts-1"><a href="{:url('crowdfunding/index',array('type'=>'new'))}">即将开始</a></label>
 									</li> -->
 
+										</div>
 									</div>
-								</div>
+								</ul>
+								<ul class="raise-list-box">
+									<div class="catalog-nav-box select-one j-cate-raise">
+										<div class="j-get-one padding-all of-hidden">
+											<li class="ect-select w-3 rsise-nav">
+												<a href="{:url('crowdfunding/index',array('id'=>0))}"><label class="ts-1 <!--{if $id eq ''}-->active<!--{/if}-->">全部商品</label></a>
+											</li>
+											<!--{foreach from=$category item=vo}-->
 
-							</ul>
-							<ul class="raise-list-box">
-								<div class="catalog-nav-box select-one j-cate-raise">
-									<div class="j-get-one padding-all of-hidden">
-										<li class="ect-select w-3 rsise-nav">
-											<a href="{:url('crowdfunding/index',array('id'=>0))}"><label class="ts-1 <!--{if $id eq ''}-->active<!--{/if}-->">全部商品</label></a>
-										</li>
-										<!--{foreach from=$category item=vo}-->
-
-										<li class="ect-select w-3 rsise-nav">
-											<a href="{:url('crowdfunding/index',array('id'=>$this->_var['vo']['id']))}"><label class="ts-1 <!--{if $vo.id eq $id}-->active<!--{/if}-->">{$vo.name}</label></a>
-										</li>
-
-										<!--{/foreach}-->
+											<li class="ect-select w-3 rsise-nav">
+												<a href="{:url('crowdfunding/index',array('id'=>$this->_var['vo']['id']))}"><label class="ts-1 <!--{if $vo.id eq $id}-->active<!--{/if}-->">{$vo.name}</label></a>
+											</li>
+											<!--{/foreach}-->
+										</div>
 									</div>
-								</div>
-							</ul>
-
+								</ul>
+							</div>
 						</div>
 					</section>
-				</div>
 
+				</div>
 				<section class="product-list j-product-list product-list-medium position-rel" data="1">
 					<ul class="of-hidden">
 						<!--{if $goods_list}-->
@@ -114,7 +113,7 @@
 						</div>
 
 						<!--{/if}-->
-					</ul>					
+					</ul>
 				</section>
 
 			</div>
@@ -234,7 +233,7 @@
 					$(".raise-content").removeClass("active");
 					$(".raise-bg-box").removeClass("active");
 					$(".category-header-box").removeClass("active");
-				});		
+				});
 			});
 			/* 搜索验证 */
 			function check(Id) {
