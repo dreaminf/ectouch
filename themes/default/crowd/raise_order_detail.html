@@ -170,7 +170,7 @@
 		<!--{if $order.pay_status eq 2 and $order.shipping_status eq 0 }-->
 		<section class="filter-btn f-checkout-filter-btn dis-box">
 			<span class="box-flex t-remark">实付款 <em class="t-first">¥{$order.total_fee}</em></span>
-			<a href="raise_done.html" type="button" class="btn-submit box-flex	">提醒发货</a>
+			<a href="{:url('user/service')}" type="button" class="btn-submit box-flex	">提醒发货</a>
 		</section>
 		<!--{/if}-->
 		

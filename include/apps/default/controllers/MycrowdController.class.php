@@ -213,21 +213,6 @@ class MycrowdController extends CommonController {
 	
 	
 	/**
-     * 提醒发货
-     */
-    public function shipments() {
-        $order_id = I('get.order_id', 0, 'intval');
-		
-		
-		
-		
-		
-        $this->display('crowd/raise_order_detail.html');
-    }
-	
-	
-	
-	/**
      * 确认收货
      */
     public function affirm_received() {
