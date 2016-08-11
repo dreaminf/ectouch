@@ -139,6 +139,21 @@ class MycrowdController extends CommonController {
         $this->display('crowd/raise_order.html');
     }
 	
+	/**
+     * 众筹订单详情
+     */
+    public function crowd_order_detail() {
+		$order_id = I('request.order_id') ? intval(I('request.order_id')) : 0 ;
+		// 订单详情
+		$order = model('Mycrowd')->get_order_detail($order_id, $this->user_id);
+		$goods_list = model('Mycrowd')->order_goods($order['order_id']);//获取订单商品详情
+		//dump($order);
+		$this->assign('goods', $goods_list);
+		$this->assign('order', $order);
+		
+        $this->display('crowd/raise_order_detail.html');
+    }
+	
 	
 	/**
      * 获取订单商品的评论
@@ -197,7 +212,18 @@ class MycrowdController extends CommonController {
 	
 	
 	
-	
+	/**
+     * 提醒发货
+     */
+    public function shipments() {
+        $order_id = I('get.order_id', 0, 'intval');
+		
+		
+		
+		
+		
+        $this->display('crowd/raise_order_detail.html');
+    }
 	
 	
 	
@@ -220,10 +246,10 @@ class MycrowdController extends CommonController {
     public function order_tracking() {
         $order_id = I('get.order_id', 0);
         $ajax = I('get.ajax', 0);
-
         $where['user_id'] = $this->user_id;
         $where['order_id'] = $order_id;
-        $orders = $this->model->table('order_info')->field('order_id, order_sn, invoice_no, shipping_name, shipping_id')->where($where)->find();
+        $orders = $this->model->table('crowd_order_info')->field('order_id, order_sn, invoice_no, shipping_name, shipping_id')->where($where)->find();
+
         // 生成快递100查询接口链接
         $shipping = get_shipping_object($orders['shipping_id']);
         // 接口模式

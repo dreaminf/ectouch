@@ -413,13 +413,14 @@ class MycrowdModel extends BaseModel {
         }
 
         /* 确认时间 支付时间 发货时间 */
+		$order['add_time'] =  local_date(C('time_format'), $order['add_time']);
         if ($order['confirm_time'] > 0 && ($order['order_status'] == OS_CONFIRMED || $order['order_status'] == OS_SPLITED || $order['order_status'] == OS_SPLITING_PART)) {
             $order['confirm_time'] = sprintf(L('confirm_time'), local_date(C('time_format'), $order['confirm_time']));
         } else {
             $order['confirm_time'] = '';
         }
         if ($order['pay_time'] > 0 && $order['pay_status'] != PS_UNPAYED) {
-            $order['pay_time'] = sprintf(L('pay_time'), local_date(C('time_format'), $order['pay_time']));
+            $order['pay_time'] = local_date(C('time_format'), $order['pay_time']);
         } else {
             $order['pay_time'] = '';
         }
@@ -428,11 +429,49 @@ class MycrowdModel extends BaseModel {
         } else {
             $order['shipping_time'] = '';
         }
+		
+		 // 订单 支付 配送 状态语言项
+        /* $order['order_status'] = L('os.' . $order['order_status']);
+        $order['pay_status'] = L('ps.' . $order['pay_status']);
+        $order['shipping_status'] = L('ss.' . $order['shipping_status']); */
 
         return $order;
     }
 	
-	
+	/**
+     * 获取订单商品详情
+     */
+    public function order_goods($order_id = 0) {
+		$sql = "SELECT g.goods_name,g.goods_id,g.goods_img,g.sum_price,og.goods_number,og.user_id,og.goods_price,cp.name FROM ". $this->pre ."crowd_order_info as og left join  ". $this->pre ."crowd_plan as cp on og.cp_id = cp.cp_id  left join " . $this->pre . "crowd_goods as g on og.goods_id = g.goods_id" . " WHERE og.order_id = '".$order_id."' ";
+        $row = $this->row($sql);
+        if ($row !== false) {
+            $row['goods_id'] = $row['goods_id'];
+            $row['goods_name'] = $row['goods_name'];
+            $row['buy_num'] = model('Crowdfunding')->crowd_buy_num($row['goods_id']);
+			$row['time'] = floor(($row['end_time']-$row['start_time'])/86400);
+			$row['start_time'] =floor((gmtime()-$row['start_time'])/86400);				
+			//$row['shiping_time'] = local_date(C('time_format'), $row['shiping_time']);
+			$row['shiping_time'] =  $row['shiping_time'];
+			$row['sum_price'] = $row['sum_price'];
+			$row['total_price'] =model('Crowdfunding')->crowd_buy_price($row['goods_id']);
+            $row['goods_img'] = $row['goods_img'];
+            $row['url'] = url('Crowdfunding/goods_info', array('id' => $row['goods_id']));
+			$row['bar'] = $row['total_price']*100/$row['sum_price'];
+			$row['bar'] = round($row['bar'],1); //计算百分比
+			$wechat_user = $this->model->table('wechat_user')->where("ect_uid=".$row['user_id'])->field('nickname,headimgurl')->find();
+			if(!empty($wechat_user)){
+				$row['user_name'] =  $wechat_user['nickname'];
+				$row['avatar'] = $wechat_user['headimgurl'];
+			}else{
+				$row['user_name'] =  $_SESSION['user_name'];
+				$row['avatar'] = '';				
+			}
+
+            return $row;
+        } else {
+            return false;
+        }
+	}
 	
 	 /**
      * 取得订单信息
