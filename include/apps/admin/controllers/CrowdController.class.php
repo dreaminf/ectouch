@@ -165,14 +165,21 @@ class CrowdController extends AdminController {
      * 众筹商品列表
      */
     public function index() {
+        //搜索
+        $keywords = I('post.name') ? I('post.name') : '';
+        $where = '1=1';
+        //只搜索订单号
+        if (!empty($keywords)) {
+            $where = 'goods_name like "%' . $keywords . '%"';
+        }
         //分页
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('index', $filter), 10);
         $total = $this->model->table('crowd_goods')
-                ->order('sort_order desc')
+                ->order('goods_id desc')
                 ->count();
         $this->assign('page', $this->pageShow($total));
-        $sql = 'select goods_id,status,sum_price,total_price,shiping_time,goods_name,cat_id,sort_order,start_time,end_time from ' . $this->model->pre . 'crowd_goods order by sort_order desc limit ' . $offset;
+        $sql = 'select goods_id,status,sum_price,total_price,shiping_time,goods_name,cat_id,sort_order,start_time,end_time from ' . $this->model->pre . 'crowd_goods where '.$where.' order by goods_id desc limit ' . $offset;
         $goods_list = $this->model->query($sql);
         foreach ($goods_list as $key => $value) {
             $goods_list[$key]['start_time'] = date('Y-m-d H:i:s', $value['start_time']);
@@ -182,7 +189,6 @@ class CrowdController extends AdminController {
         $this->assign('cat_select', cat_lists(0, 0, false));
         $this->display();
     }
-
     /**
      * 删除众筹商品
      */
@@ -395,7 +401,73 @@ class CrowdController extends AdminController {
     public function message_list() {
         
     }
-    
+    /**
+     * 文章列表
+     */
+    public function article_list() {
+         //分页
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('article_list', $filter), 10);
+        $total = $this->model->table('crowd_article')
+                ->order('article_id desc')
+                ->count();
+        $this->assign('page', $this->pageShow($total));
+        $sql = 'select article_id,title,add_time,sort_order,is_open from ' . $this->model->pre . 'crowd_article order by article_id desc limit ' . $offset;
+        $article_list = $this->model->query($sql);
+        foreach ($article_list as $key=>$value){
+           $article_list[$key]['add_time']=date('Y-m-d H:i:s', $value['add_time']); 
+        }
+        $this->assign('article_list', $article_list);
+        
+        $this->display();
+    }
+    /**
+     * 添加和修改文章
+     */
+    public function add_article() {
+        if (IS_POST) {
+            $data = array();
+            $data['title'] = I('post.title');
+            $data['description'] = I('post.description');
+            $data['add_time'] = time();
+            $data['is_open'] = I('post.is_open');
+            $data['sort_order'] = I('post.sort_order');
+            $data['article_id'] = I('post.article_id');
+            if (empty($data['article_id'])) {
+                //插入数据   
+                $this->model->table('crowd_article')
+                        ->data($data)
+                        ->insert();
+            } else {
+                   // 更新数据
+                $this->model->table('crowd_article')
+                        ->data($data)
+                        ->where(array('article_id' => $data['article_id']))
+                        ->update();
+            }
+            $this->redirect(url('crowd/article_list'));
+        }
+        if (I('article_id')) {
+            $article_id = I('article_id', '', 'intval');
+            $article_info = $this->model->table('crowd_article')->field()->where(array('article_id' => $article_id))->find();
+            $this->assign('article', $article_info);
+        }
+       $this->display();
+    }
+    /**
+     * 删除文章
+     */
+    public function del_article() {
+        $id = I('get.article_id');
+        if (empty($id)) {
+            $this->message(L('menu_select_del'), NULL, 'error');
+        }
+        $this->model->table('crowd_article')
+                ->where(array('article_id' => $id))
+                ->delete();
+        $this->message(L('drop') . L('success'), url('article_list'));
+    }
+
     /**
      * 查询收货地址
      */
