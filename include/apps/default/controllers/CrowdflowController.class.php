@@ -581,7 +581,21 @@ class CrowdflowController extends CommonController {
 		$where['cp_id'] = $_SESSION['cp_id'];
 		$datas['backey_num'] = $backey_num;
 		$this->model->table('crowd_plan')->data($datas)->where($where)->update();		
-
+		
+		/* 如果全部使用余额支付，检查余额是否足够 */
+        if ($payment ['pay_code'] == 'balance' && $order ['surplus'] > 0) {
+			//验证项目是否成功
+			$crowd_goods = $this->model->table('crowd_goods')->field('sum_price')->where("goods_id = '" . $order['goods_id'] . "'  ")->find();
+			$total_price = model('Crowdfunding')->crowd_buy_price($order['goods_id']);
+			if($total_price >= $crowd_goods['sum_price']){
+				$data['status'] = 1;
+				$this->model->table('crowd_goods')->data($data)->where("goods_id = '" . $order['goods_id'] . "'  ")->update();			
+			}
+			
+		}
+		
+		
+		
         /* 处理余额、积分、红包 */
         if ($order ['user_id'] > 0 && $order ['surplus'] > 0) {
             model('ClipsBase')->log_account_change($order ['user_id'], $order ['surplus'] * (- 1), 0, 0, 0, sprintf(L('pay_order'), $order ['order_sn']));
