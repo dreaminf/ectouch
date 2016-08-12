@@ -33,15 +33,6 @@ html{-webkit-touch-callout:none;
 user-select:none;}
 /*动画*/
 .swiper-scrollbar{display:none;}
-/*页面内长按禁止选中*/
-.html{
--webkit-touch-callout:none;
--webkit-user-select:none;
--khtml-user-select:none;
--moz-user-select:none;
--ms-user-select:none;
-user-select:none;
-}
 /*chang - star*/
 .ect-header-banner{background:rgba(53,53,53,1); height:5rem; line-height:5rem; width:100%; color: #fff;display:block;moz-transition : 0.5s ease ;-o-transition: 0.5s ease;-webkit-transition :0.5s ease;    padding: 0 0.6 rem;}
 .ect-header-banner.active{display:none;moz-transition : 0.5s ease ;-o-transition: 0.5s ease;-webkit-transition :0.5s ease;    padding: 0 0.6 rem;}
@@ -62,6 +53,7 @@ body{position:relative}
 .half-box{width:50%;box-sizing:border-box;overflow:hidden}
 .text-c{text-align:center}
 .img{width:100%;height:auto;display:block}
+.b-s{box-shadow: -1px 1px 4px rgba(50,50,50,0.2)}
 /*背景颜色*/
 .bg-white{background: #fff;}
 /*红色*/
