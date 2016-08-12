@@ -16,7 +16,7 @@
 	</head>
 
 	<body>
-		<div id="loading"><img src="__TPL__/crowd/img/loading.gif" /></div>
+		<div id="loading"><img src="__TPL__/statics/img/loading.gif" /></div>
 		<div class="con">
 			<div class="flow-checkout ">
 			
@@ -24,10 +24,10 @@
 				<!--{if $order.pay_status eq 0 }-->
 				<section class="padding-all b-color-f raise-order-header dis-box">
 					<div class="box-flex">
-						<h4 class="f-03 color-whie">等待您的支持</h4>
-					<p class="f-04 color-whie">亲，请您赶快支付哦。。。么么哒。。。</p>
+					<h4 class="f-06 color-whie">等待您的支持</h4>
+					<p class="f-03 color-whie">亲，请您赶快支付哦!么么哒!</p>
 					</div>
-					<div class="header-right"><i class="iconfont icon-daifukuan raise-font"></i></div>					
+					<div class="header-right"><i class="iconfont icon-daifukuan raise-font fr"></i></div>					
 				</section>
 				<!--{/if}-->
 				
@@ -37,7 +37,7 @@
 					<p class="f-04 color-whie">订单成功！</p>
 					<h4 class="f-03 color-whie">欢迎下次光临！</h4>
 					</div>
-					<div class="header-right"><i class="iconfont icon-hookring2 raise-font"></i></div>					
+					<div class="header-right"><i class="iconfont icon-hookring2 raise-font fr"></i></div>					
 				</section>
 				<!--{/if}-->
 				
@@ -52,7 +52,7 @@
 					<section class="flow-checkout-pro j-flow-checkout-pro active">
 
 						<section class="raise-list-default">
-							<div class="dis-box raise-header b-color-f">
+							<div class="dis-box raise-header-1 b-color-f">
 								<div class="raise-admin-left">
 									<div class="raise-admin-img">
 									{if $goods.avatar}
@@ -162,7 +162,7 @@
 		<!--{if $order.pay_status eq 0 }-->
 		<section class="filter-btn f-checkout-filter-btn dis-box">
 			<span class="box-flex t-remark">实付款 <em class="t-first">¥{$order.total_fee}</em></span>
-			{$order.pay_online}
+			<section class="n-btn-box">{$order.pay_online}</section>
 		</section>
 		<!--{/if}-->
 		
@@ -191,7 +191,7 @@
 		
 		<!--引用js-->
 		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
-		<script type="text/javascript" src="__TPL__/statics/js/swiper-3.2.5.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/swiper.min.js"></script>
 		<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
 		<script>
 			var scorll_swiper = new Swiper('.swiper-scroll', {
