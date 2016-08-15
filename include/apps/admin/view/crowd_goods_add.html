@@ -77,6 +77,20 @@
                 <input type='text' name='data[sort_order]' value="{$goods['sort_order']}" class="form-control input-sm" />
               </div></td>
           </tr>
+          {if $goods['goods_id']}
+            <tr>
+            <td width="200">是否显示:</td>
+            <td><div class="col-md-4 btn-group" data-toggle="buttons">
+                <label class="btn btn-primary {if $goods['status'] == 1}active{/if}">
+                  <input type="radio" name="data[status]" value="1" {if $goods[status] == 1}checked{/if} />成功
+                </label>
+                <label class="btn btn-primary {if $goods['status'] == 0}active{/if}">
+                  <input type="radio" name="data[status]" value="2" {if $goods[status] == 0}checked{/if} />失败
+                </label>
+              </div>
+            </td>
+          </tr>
+          {/if}
             <tr>
                 <td width="200">商品相册：</td>
         <td>
@@ -86,12 +100,10 @@
                     <tr>
                         <th class="text-center" width="10%"><a href="javascript:;" class="glyphicon glyphicon-plus" onClick="addprize(this)"></a></th>
                         <th class="text-center"  width="20%">相册图片</th>
-                        
                     </tr>
-                  
                     <tr>
                         <td class="text-center"><a href="javascript:;" class="glyphicon glyphicon-minus" onClick="delprize(this)"></a></td>
-                        <td class="text-center"><input type="file" name="gallery_img[]" class="form-control" value=""></td>
+                        <td class="text-center"><input type="file" name="gallery_img[]" class="form-control" value="{$goods[gallery_img]}"></td>
                    </tr>
         
             </table>
@@ -103,8 +115,12 @@
             <td width="200"></td>
             <td><div class="col-md-4">
                 <input type="hidden" name="data[goods_id]" value="{$goods['goods_id']}" />
+               
                 <input type="hidden" name="data[is_verify]" value="1" />
-                <input type="hidden" name="data[status]" value="1" />
+  
+                 {if $goods['goods_id']==0 }
+                <input type="hidden" name="data[status]" value="0" />
+                   {/if}
                 <input type="hidden" name="data[total_price]" value="" />
   		<input type="submit" value="{$lang['button_submit']}" class="btn btn-primary" />
                 <input type="reset" value="{$lang['button_reset']}" class="btn btn-default" />

@@ -11,18 +11,18 @@
 	<div class="row" style="margin:0">
 	  <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
 		<div class="panel panel-default">
-			<div class="panel-heading"></div>
+			<div class="panel-heading">回报方案列表</div>
 			<table class="table table-hover table-striped table-bordered">
                 <tr>
                      <th class="text-center">ID</th>
-                    <th class="text-center">方案名称</th>
+                    <th class="text-center">回报内容</th>
                     <th class="text-center">方案价格</th>
-                    <th class="text-center">计划销售数量</th>
+                    <th class="text-center">设置份数</th>
                     <th class="text-center">售出数量</th>
                     <th class="text-center">排序</th>
                     <th class="text-center">状态</th>
+                    <th class="text-center">操作</th>
                 </tr>
-
     {loop $plan_list $plan}
   <tr align="center" class="{$cat[level]}" id="{$cat[level]}_{$cat[cat_id]}">
       <td align="center" class="first-cell" >

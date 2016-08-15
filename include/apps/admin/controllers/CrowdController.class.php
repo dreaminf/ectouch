@@ -193,16 +193,20 @@ class CrowdController extends AdminController {
                 ->order('goods_id desc')
                 ->count();
         $this->assign('page', $this->pageShow($total));
-        $sql = 'select goods_id,status,sum_price,total_price,shiping_time,goods_name,cat_id,sort_order,start_time,end_time from ' . $this->model->pre . 'crowd_goods where '.$where.' order by goods_id desc limit ' . $offset;
+        $sql = 'select goods_id,status,sum_price,total_price,shiping_time,goods_name,cat_id,sort_order,start_time,end_time from ' . $this->model->pre . 'crowd_goods where ' . $where . ' order by goods_id desc limit ' . $offset;
         $goods_list = $this->model->query($sql);
+
         foreach ($goods_list as $key => $value) {
             $goods_list[$key]['start_time'] = date('Y-m-d H:i:s', $value['start_time']);
             $goods_list[$key]['end_time'] = date('Y-m-d H:i:s', $value['end_time']);
+            $goods_list[$key]['total_price'] =$this->crowd_buy_price($value['goods_id']);
         }
+   
         $this->assign('goods', $goods_list);
         $this->assign('cat_select', cat_lists(0, 0, false));
         $this->display();
     }
+
     /**
      * 删除众筹商品
      */
@@ -332,7 +336,6 @@ class CrowdController extends AdminController {
             $this->redirect(url('crowd/order_list'));
         }
     }
-
     /**
      * 众筹分类
      */
@@ -576,6 +579,17 @@ class CrowdController extends AdminController {
     private function get_stock($goods_id) {
         $stock = $this->model->table('crowd_plan')->field('number,backey_num')->where(array('goods_id' => $goods_id))->find();
         return $stock;
+    }
+    /**
+     * 获取当前项目累计金额
+     */
+    private function crowd_buy_price($goods_id = 0) {
+        $sql = "SELECT goods_price ,goods_number FROM {pre}crowd_order_info  WHERE goods_id = '" . $goods_id . "' AND extension_code = 'crowd_buy' and pay_status = 2 ";
+        $res = $this->model->query($sql);
+        foreach ($res as $key => $row) {
+            $price += $row['goods_price'] * $row['goods_number'];
+        }
+        return $price;
     }
 
 }
