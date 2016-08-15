@@ -96,6 +96,76 @@ class CrowdController extends AdminController {
                 ->delete();
         $this->message(L('drop') . L('success'), url('category_list'));
     }
+    /**
+     * 项目动态列表
+    */
+    public function trends_list() {
+        $goods_id = I('get.goods_id');
+        $this->assign('goods_id', $goods_id);
+        //分页
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('trends_list', $filter), 10);
+        $total = $this->model->table('crowd_trends')
+                ->where(array('goods_id' => $goods_id))
+                ->order('id desc')
+                ->count();
+        $this->assign('page', $this->pageShow($total));
+        $sql = 'select id,goods_id,add_time,content,sort_order,sort_order,status from ' . $this->model->pre . 'crowd_trends where goods_id=' . $goods_id . ' order by id desc limit ' . $offset;
+        $trends_list = $this->model->query($sql);
+        foreach ($trends_list as $key => $value) {
+            $trends_list[$key]['add_time'] = date('Y-m-d H:i:s', $value['add_time']);
+            $trends_list[$key]['goods_name'] = $this->get_goods_name($value['goods_id']);
+        }
+        $this->assign('trends_list', $trends_list);
+        $this->display();
+    }
+
+    /**
+     *增加项目动态
+    */
+    public function trends_add() {
+        $goods_id = I('get.goods_id');
+        $this->assign('goods_id', $goods_id);
+        if (IS_POST) {
+            $data = I('post.data');
+            $data['add_time']=time();
+            if (empty($data['id'])) {
+                //入库
+                $this->model->table('crowd_trends')
+                        ->data($data)
+                        ->insert();
+            } else {
+                //修改
+                $this->model->table('crowd_trends')
+                        ->data($data)
+                        ->where(array('id' => $data['id']))
+                        ->update();
+            }
+            $this->redirect(url('crowd/trends_list', array('goods_id' => $data['goods_id'])));
+        }
+        if (I('id')) {
+            $id = I('id', '', 'intval');
+            $trends = $this->model->table('crowd_trends')->where(array('id' => $id))->find();
+           
+            $this->assign('trends_info', $trends);
+        }
+
+        $this->display();
+    }
+    
+    /**
+     * 删除众筹商品
+     */
+    public function del_trends() {
+        $id = I('get.id');
+        if (empty($id)) {
+            $this->message(L('menu_select_del'), NULL, 'error');
+        }
+        $this->model->table('crowd_trends')
+                ->where(array('id' => $id))
+                ->delete();
+        $this->message(L('drop') . L('success'), url('trends_list'));
+    }
 
     /**
      * 添加众筹商品

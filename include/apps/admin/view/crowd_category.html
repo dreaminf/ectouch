@@ -51,11 +51,11 @@
 			<td>是否显示</td>
 			<td><div class="col-sm-2">
 				<div  class="btn-group" data-toggle="buttons">
-					<label class="btn btn-primary {if $data['is_show']==1}active{/if}">
-						<input type="radio" name="is_show" value="1" {if $data['is_show']==1}checked{/if}> 显示
+					<label class="btn btn-primary {if $cat_info['is_show']==1}active{/if}">
+						<input type="radio" name="is_show" value="1" {if $cat_info['is_show']==1}checked{/if}> 显示
 					</label>
-					<label class="btn btn-primary {if $data['is_show']==0}active{/if}">
-						<input type="radio" name="is_show" value="0" {if $data['is_show']==0}checked{/if}> 不显示
+					<label class="btn btn-primary {if $cat_info['is_show']==0}active{/if}">
+						<input type="radio" name="is_show" value="0" {if $cat_info['is_show']==0}checked{/if}> 不显示
 					</label>
 				</div>
 			</div></td>
