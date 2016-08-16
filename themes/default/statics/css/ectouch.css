@@ -2576,6 +2576,10 @@ background:-ms-linear-gradient(left,#1CBB7F,#1CBB7F)}
 .raise-content.active{visibility: hidden;opacity: 0;z-index: 140;}
 .raise-content .raise-list-box {line-height:25px;display:none;}
 .raise-cate-nav a i{text-align: right;display: block;}
+.raise-support-bg{background:rgba(0,0,0,0.4);position:absolute;left:0;right:0;bottom:0;top:0;width:9.6rem}
+.product-text-box{margin-left:0.8rem;}
+.raise-tag{width:7rem;z-index:4999; position:absolute;right:-1.5rem;bottom:0.5rem;-moz-transform: rotate(-25deg);-webkit-transform: rotate(-25deg);-ms-transform: rotate(-25deg);-o-transform: rotate(-25deg);transform: rotate(-25deg);}
+.raise-tuij-box .product-div img{border:none;}
 /*raise-goods*/
 .raise-heart{display:block; width:4rem; height:4rem;}
 .raise-heart i{display:block; width: 2.4rem; height:2.4rem; margin:0 auto; background:url(../img/heart_03.png) 0 100% no-repeat; background-size: 2.4rem 5rem;}

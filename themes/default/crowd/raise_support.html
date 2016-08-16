@@ -58,10 +58,21 @@
 								<div class="my-nav-box product-list-small m-top1px b-color-f raise-tuij-box dis-box ">
 									<ul class="box-flex  flow-checkout-pro">
 										<li>
-											<div class="product-div">
+											<div class="product-div dis-box">
 												<a class="product-div-link" href="{$goods.url}"></a>
-												<img class="product-list-img" src="{$goods.goods_img}">
-												<div class="product-text">
+												<div class="position-rel">
+													<img class="product-list-img" src="{$goods.goods_img}">
+												<!--标签-->
+												<div class="raise-support-bg" style="display:none">
+													<div class="raise-tag">
+														<!--成功-->
+														<img src="__TPL__/statics/img/s-bg1.png" class="img" style="display:none;">
+														<!--失败-->
+														<img src="__TPL__/statics/img/sb-b1.png" class="img">
+													</div>
+												</div>
+												</div>
+												<div class="product-text-box box-flex">
 													<h4>{$goods.goods_name}</h4>
 													<p class="col-3 f-05"><em class="color-red">￥{$goods.min_price}</em><em class="col-9 f-02">起</em><em class="fr col-9 f-02"><i class="iconfont icon-shijian mr-small f-03"></i>{$goods.time}天</em></p>
 													<div class="raise-progressBar raise-user-time dis-box">
