@@ -134,6 +134,22 @@
 					</div>
 				</div>
 			</section>
+			<!--优惠数量价格显示 START-->
+			<!--{if $volume_price_list}-->
+			<section class="goods-num-box b-color-f text-c f-05 padding-all">
+				<ul class=" dis-box goods-box-bor">
+					<li class="box-flex goods-bor goods-b-n">优惠数量</li>
+					<li class="box-flex goods-bor goods-b-n">优惠价格</li>
+				</ul>
+				<!-- {foreach from=$volume_price_list item=volume}-->
+				<ul class="dis-box">
+					<li class="box-flex goods-bor">{$volume.number}</li>
+					<li class="box-flex goods-bor">{$volume.price}</li>
+				</ul>				
+				<!--{/foreach}-->
+			</section>			
+			<!--{/if}-->
+			<!--优惠数量价格显示 END-->
 			<!-- #BeginLibraryItem "/library/goods_fittings.lbi" --><!-- #EndLibraryItem -->
 			<form action="javascript:addToCart({$goods.goods_id})" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY">
 				<section class="goods-more-a">

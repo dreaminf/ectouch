@@ -2628,3 +2628,11 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 /*订单详情*/
 .n-btn-box div{ background: #1CBB7F;border: 1px solid #1CBB7F;    width: auto;padding: 0.84rem 1.3rem;display: inline-block;border-radius:0.3rem}
 .n-btn-box div input{background: none;border: none;color:#fff;font-size:1.7rem;margin:0;padding:0;}
+
+/*优惠价格阶梯显示*/
+.goods-num-box ul li{padding:0.2rem 0;border-right:1px solid #1CBB7F;}
+.goods-num-box ul{border-bottom:1px solid #1CBB7F;}
+.goods-num-box ul li:last-child{border-right:1px solid #1CBB7F;}
+.goods-num-box ul li:first-child{border-left:1px solid #1CBB7F;}
+.goods-b-n{border-bottom:none;}
+.goods-box-bor{border-top:1px solid #1CBB7F;}
