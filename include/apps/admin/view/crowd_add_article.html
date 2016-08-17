@@ -32,10 +32,11 @@
               </div>
             </td>
           </tr>
-          <tr>
-            <td width="200">问题解答:</td>
-            <td><div class="col-md-9"><?php echo create_html_editor('description', html_out($article['description']));?></div></td>
-          </tr>      
+            <tr>
+                 <td width="200">问答内容:</td>
+                        <td class="text-center"><textarea name="description" class="form-control" >{$article['description']}</textarea>
+                        </td>
+              </tr>    
             </table>
             </div>
             </div>
