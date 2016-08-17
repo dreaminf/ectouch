@@ -5,7 +5,7 @@
   <div class="row" style="margin:0">
     <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
       <div class="panel panel-default">
-        <div class="panel-heading">添加商品</div>
+        <div class="panel-heading">添加项目</div>
         <form action="{url('crowd/goods_add')}" method="post" enctype="multipart/form-data" role="form">
         <table id="general-table" class="table table-hover ectouch-table">
          <tr>
@@ -18,16 +18,23 @@
             <td width="200">目标金额:</td>
             <td><div class="col-md-4">
                 <input type='text' name='data[sum_price]' value="{$goods['goods_name']}" class="form-control input-sm" />
-              </div></td>
+              </div>
+                  <span class="help_block" >
+                    建议第一期项目目标金额稍小一些，打开市场后逐步提升目标金额
+                  </span>
+              </td>
           </tr>
           <tr>
-            <td width="200">分类:</td>
+            <td width="200">项目分类:</td>
                     <td><div class="col-md-4">
                         <select name="data[cat_id]" class="form-control input-sm">
                             <option value="0">顶级分类</option>
                             {$cat_select}
                         </select>
                         </div>
+                        <span class="help_block">
+                            若没有目标分类，可以在左侧边栏“微筹分类”中添加分类
+                        </span>
                     </td>
           </tr>
           <tr>
@@ -35,6 +42,9 @@
             <td><div class="col-md-4">
                 <input type="file" value="{$article['file']}" name="goods_img" class="form-control input-sm">
                 </div>
+                <span class="help_block">
+                  此图片为本项目在“微筹广场”显示的图片
+                </span>
            </td>
            <tr>
         <td width="200">开始时间</td>
@@ -86,7 +96,7 @@
           </tr>
           {if $goods['goods_id']}
             <tr>
-            <td width="200">是否显示:</td>
+            <td width="200">项目结果:</td>
             <td><div class="col-md-4 btn-group" data-toggle="buttons">
                 <label class="btn btn-primary {if $goods['status'] == 1}active{/if}">
                   <input type="radio" name="data[status]" value="1" {if $goods[status] == 1}checked{/if} />成功
