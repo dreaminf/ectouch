@@ -142,7 +142,7 @@ class CrowdfundingModel extends CommonModel {
 
         $comment_list = $this->model->query($sql);
         foreach ($comment_list as $k => $v) {
-            $comment_list[$k]['add_time'] = local_date(C('time_format'), $v['add_time']);
+			$comment_list[$k]['add_time'] = date('Y-m-d H:i:s',$v['add_time']);
             $comment_list[$k]['name'] = $v['user_name'];
             $comment_list[$k]['avatar'] = '';
             $wechat_user = $this->model->table('wechat_user')->where("ect_uid=" . $v['user_id'])->field('nickname,headimgurl')->find();
@@ -245,7 +245,7 @@ class CrowdfundingModel extends CommonModel {
                 " goods_id = '" . $goods_id . "' AND parent_id = 0 AND status = 1 ORDER BY id DESC LIMIT $start , $num";
         $comment_list = $this->query($sql);
         foreach ($comment_list as $k => $v) {
-            $comment_list[$k]['add_time'] = local_date(C('time_format'), $v['add_time']);
+			$comment_list[$k]['add_time'] = date('Y-m-d H:i:s',$v['add_time']);
             $comment_list[$k]['name'] = $v['user_name'];
             $comment_list[$k]['avatar'] = '';
             $wechat_user = $this->model->table('wechat_user')->where("ect_uid=" . $v['user_id'])->field('nickname,headimgurl')->find();
@@ -273,8 +273,8 @@ class CrowdfundingModel extends CommonModel {
         $sql = "SELECT id,user_id,user_name,goods_id,content,add_time FROM " . $this->pre . "crowd_comment WHERE " .
                 " parent_id = '" . $parent_id . "' AND status = 1 $where ORDER BY id DESC";
         $replyt_list = $this->query($sql);
-        foreach ($replyt_list as $k => $v) {
-            $replyt_list[$k]['add_time'] = local_date(C('time_format'), $v['add_time']);
+        foreach ($replyt_list as $k => $v) {            
+			$replyt_list[$k]['add_time'] = date('Y-m-d H:i:s',$v['add_time']);
         }
         return $replyt_list;
     }
@@ -287,7 +287,7 @@ class CrowdfundingModel extends CommonModel {
                 " goods_id = '" . $goods_id . "' AND status = 1 $where ORDER BY id DESC ";
         $trends_list = $this->query($sql);
         foreach ($trends_list as $k => $v) {
-            $trends_list[$k]['add_time'] = local_date(C('time_format'), $v['add_time']);
+			$trends_list[$k]['add_time'] = date('Y-m-d H:i:s',$v['add_time']);
         }
         return $trends_list;
     }
@@ -313,9 +313,6 @@ class CrowdfundingModel extends CommonModel {
             if (($time / 60) > (60 * 24)) {
                 $buy_list[$k]['add_time'] = intval($time / (3600 * 24)) . '天前';
             }
-
-
-            //$buy_list[$k]['add_time'] = local_date(C('time_format'), $v['add_time']);		
 
             $user = $this->model->table('users')->where("user_id=" . $v['user_id'])->field('user_name')->find();
             $wechat_user = $this->model->table('wechat_user')->where("ect_uid=" . $v['user_id'])->field('nickname,headimgurl')->find();

@@ -212,7 +212,7 @@ class MycrowdModel extends BaseModel {
                 'order_id' => $value['order_id'],
                 'order_sn' => $value['order_sn'],
                 'img' => $this->order_thumb($value['order_id']),
-                'order_time' => local_date(C('time_format'), $value['add_time']),
+				'order_time' => date('Y-m-d H:i:s',$value['add_time']),
                 'status' => $value['status'],
                 'shipping_id' => $value['shipping_id'],
                 'total_fee' => price_format($value['total_fee'], false),
@@ -415,19 +415,22 @@ class MycrowdModel extends BaseModel {
         }
 
         /* 确认时间 支付时间 发货时间 */
-		$order['add_time'] =  local_date(C('time_format'), $order['add_time']);
+		$order['add_time'] =  date('Y-m-d H:i:s',$order['add_time']);
         if ($order['confirm_time'] > 0 && ($order['order_status'] == OS_CONFIRMED || $order['order_status'] == OS_SPLITED || $order['order_status'] == OS_SPLITING_PART)) {
-            $order['confirm_time'] = sprintf(L('confirm_time'), local_date(C('time_format'), $order['confirm_time']));
+            //$order['confirm_time'] = sprintf(L('confirm_time'), local_date(C('time_format'), $order['confirm_time']));
+			$order['confirm_time'] = sprintf(L('confirm_time'), date('Y-m-d H:i:s',$order['confirm_time']));
         } else {
             $order['confirm_time'] = '';
         }
         if ($order['pay_time'] > 0 && $order['pay_status'] != PS_UNPAYED) {
-            $order['pay_time'] = local_date(C('time_format'), $order['pay_time']);
+            //$order['pay_time'] = local_date(C('time_format'), $order['pay_time']);
+			$order['pay_time'] = date('Y-m-d H:i:s',$order['pay_time']);
         } else {
             $order['pay_time'] = '';
         }
         if ($order['shipping_time'] > 0 && in_array($order['shipping_status'], array(SS_SHIPPED, SS_RECEIVED))) {
-            $order['shipping_time'] = sprintf(L('shipping_time'), local_date(C('time_format'), $order['shipping_time']));
+            //$order['shipping_time'] = sprintf(L('shipping_time'), local_date(C('time_format'), $order['shipping_time']));
+			$order['shipping_time'] = sprintf(L('shipping_time'), date('Y-m-d H:i:s',$order['shipping_time']));
         } else {
             $order['shipping_time'] = '';
         }
@@ -510,7 +513,7 @@ class MycrowdModel extends BaseModel {
             $order['formated_integral_money'] = price_format($order['integral_money'], false);
             $order['formated_surplus'] = price_format($order['surplus'], false);
             $order['formated_order_amount'] = price_format(abs($order['order_amount']), false);
-            $order['formated_add_time'] = local_date(C('time_format'), $order['add_time']);
+			$order['formated_add_time'] = date('Y-m-d H:i:s',$order['add_time']);;
         }
 
         return $order;
