@@ -71,8 +71,8 @@ class CrowdfundingController extends CommonController {
             }
         }
 		$now = gmtime();
-		$sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, start_time,end_time '.'FROM '
-		. $this->model->pre . 'crowd_goods ' . "WHERE is_verify = 1 AND start_time <= '$now' AND end_time >= '$now' $where ";
+		$sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, start_time,end_time,status '.'FROM '
+		. $this->model->pre . 'crowd_goods ' . "WHERE start_time <= '$now' AND end_time >= '$now' $where and status < 2 ";
         $res = $this->model->query($sql);
 		$goods = array();
         foreach ($res AS $key => $row) {

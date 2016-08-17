@@ -69,7 +69,8 @@ class CrowdfundingModel extends CommonModel {
     /* 获取当前项目信息 */
 
     function crowd_goods_info($goods_id = 0) {
-        $sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, start_time,shiping_time,end_time,gallery_img ' . 'FROM ' . $this->pre . 'crowd_goods ' . "WHERE is_verify = 1 and goods_id = '$goods_id' ";
+		$now = gmtime();
+        $sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, start_time,shiping_time,end_time,gallery_img ' . 'FROM ' . $this->pre . 'crowd_goods ' . "WHERE start_time <= '$now' AND end_time >= '$now' and goods_id = '$goods_id' ";
         $row = $this->row($sql);
         if ($row !== false) {
             $row['goods_id'] = $row['goods_id'];

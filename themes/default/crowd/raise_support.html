@@ -63,6 +63,7 @@
 												<div class="position-rel">
 													<img class="product-list-img" src="{$goods.goods_img}">
 												<!--标签-->
+												<!--{if $goods.status > 0}-->
 												<div class="raise-support-bg">
 													<div class="raise-tag">
 														<!--成功-->
@@ -73,8 +74,9 @@
 														<!--{if $goods.status eq 2}-->
 														<img src="__TPL__/statics/img/sb-b1.png" class="img">
 														<!--{/if}-->
-													</div>
+													</div>													
 												</div>
+												<!--{/if}-->
 												</div>
 												<div class="product-text-box box-flex">
 													<h4>{$goods.goods_name}</h4>
