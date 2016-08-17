@@ -112,7 +112,7 @@ class MycrowdModel extends BaseModel {
             break;
         }
 
-		$sql = "SELECT distinct g.goods_id, g.cat_id, g.goods_name, g.goods_img, g.sum_price, g.start_time,g.end_time  FROM ". $this->pre ."crowd_order_info as o left join  ". $this->pre ."crowd_goods as g on o.goods_id = g.goods_id". " WHERE o.user_id = '$user_id' $where and  o.extension_code = 'crowd_buy' ";
+		$sql = "SELECT distinct g.goods_id, g.cat_id, g.goods_name, g.goods_img, g.sum_price, g.start_time,g.end_time,g.status  FROM ". $this->pre ."crowd_order_info as o left join  ". $this->pre ."crowd_goods as g on o.goods_id = g.goods_id". " WHERE o.user_id = '$user_id' $where and  o.extension_code = 'crowd_buy' ";
 		
         $res = $this->query($sql);
 		$goods = array();
@@ -130,6 +130,7 @@ class MycrowdModel extends BaseModel {
 			$goods[$key]['bar'] = $goods[$key]['total_price']*100/$row['sum_price'];
 			$goods[$key]['bar'] = round($goods[$key]['bar'],1); //计算百分比
 			$goods[$key]['min_price'] = $this->plan_min_price($row['goods_id']); //获取方案最低价格
+			$goods[$key]['status'] = $row['status'];
         }
         return $goods;
 	}
