@@ -25,6 +25,7 @@ class CrowdController extends AdminController {
         $this->assign('ur_here', L('crowd'));
         $this->assign('action', ACTION_NAME);
     }
+
     /**
      * 众筹回报项目列表页
      */
@@ -96,9 +97,10 @@ class CrowdController extends AdminController {
                 ->delete();
         $this->message(L('drop') . L('success'), url('category_list'));
     }
+
     /**
      * 项目动态列表
-    */
+     */
     public function trends_list() {
         $goods_id = I('get.goods_id');
         $this->assign('goods_id', $goods_id);
@@ -121,14 +123,14 @@ class CrowdController extends AdminController {
     }
 
     /**
-     *增加项目动态
-    */
+     * 增加项目动态
+     */
     public function trends_add() {
         $goods_id = I('get.goods_id');
         $this->assign('goods_id', $goods_id);
         if (IS_POST) {
             $data = I('post.data');
-            $data['add_time']=time();
+            $data['add_time'] = time();
             if (empty($data['id'])) {
                 //入库
                 $this->model->table('crowd_trends')
@@ -146,13 +148,13 @@ class CrowdController extends AdminController {
         if (I('id')) {
             $id = I('id', '', 'intval');
             $trends = $this->model->table('crowd_trends')->where(array('id' => $id))->find();
-           
+
             $this->assign('trends_info', $trends);
         }
 
         $this->display();
     }
-    
+
     /**
      * 删除众筹商品
      */
@@ -173,6 +175,7 @@ class CrowdController extends AdminController {
     public function goods_add() {
         if (IS_POST) {
             $data = I('post.data');
+            $data['goods_desc'] = $_POST['goods_desc'];
             // 商品图片处理
             if (!empty($_FILES['goods_img']['name'])) {
                 $result = $this->ectouchUpload('goods_img', 'crowd');
@@ -190,7 +193,7 @@ class CrowdController extends AdminController {
                 if (!file_exists($dest_folder)) {
                     mkdir($dest_folder, 0777);
                 }
-                $file=array();
+                $file = array();
                 foreach ($_FILES["gallery_img"]["error"] as $key => $error) {
                     if ($error == 0) {
                         $tmp_name = $_FILES["gallery_img"]["tmp_name"][$key];
@@ -204,8 +207,18 @@ class CrowdController extends AdminController {
                 }
                 $data['gallery_img'] = implode(',', $file);
             }
-            $data['start_time'] = strtotime($data['start_time']);
-            $data['end_time'] = strtotime($data['end_time']);
+            if (empty($data['start_time'])) {
+                $data['start_time'] = time();
+            } else {
+                $data['start_time'] = strtotime($data['start_time']);
+            }
+            if (empty($data['end_time'])) {
+                $data['end_time'] = time();
+            } else {
+                $data['end_time'] = strtotime($data['end_time']);
+            }
+
+
             if (empty($data['goods_id'])) {
                 //入库
                 $this->model->table('crowd_goods')
@@ -223,24 +236,25 @@ class CrowdController extends AdminController {
         if (I('goods_id')) {
             $goods_id = I('goods_id', '', 'intval');
             $goods_info = $this->model->table('crowd_goods')->field()->where(array('goods_id' => $goods_id))->find();
-            $goods_info['start_time'] = date('Y-m-d H:i:s',$goods_info['start_time']);
-            $goods_info['end_time'] = date('Y-m-d H:i:s',$goods_info['end_time']);
+            $goods_info['start_time'] = date('Y-m-d H:i:s', $goods_info['start_time']);
+            $goods_info['end_time'] = date('Y-m-d H:i:s', $goods_info['end_time']);
             $this->assign('goods', $goods_info);
         }
         $this->assign('cat_select', cat_lists(0, 0, true));
         $this->display();
     }
-     /**
+
+    /**
      * 结束项目
      */
     public function goods_end() {
-        $goods_id=I('get.goods_id');
-        if(!empty($goods_id)){
-            $time=time();
-              $this->model->table('crowd_goods')
-                        ->data(array('end_time'=>$time))
-                        ->where(array('goods_id' => $goods_id))
-                        ->update();
+        $goods_id = I('get.goods_id');
+        if (!empty($goods_id)) {
+            $time = time();
+            $this->model->table('crowd_goods')
+                    ->data(array('end_time' => $time))
+                    ->where(array('goods_id' => $goods_id))
+                    ->update();
         }
         $this->redirect(url('crowd/index'));
     }
@@ -269,9 +283,9 @@ class CrowdController extends AdminController {
         foreach ($goods_list as $key => $value) {
             $goods_list[$key]['start_time'] = date('Y-m-d H:i:s', $value['start_time']);
             $goods_list[$key]['end_time'] = date('Y-m-d H:i:s', $value['end_time']);
-            $goods_list[$key]['total_price'] =$this->crowd_buy_price($value['goods_id']);
+            $goods_list[$key]['total_price'] = $this->crowd_buy_price($value['goods_id']);
         }
-   
+
         $this->assign('goods', $goods_list);
         $this->assign('cat_select', cat_lists(0, 0, false));
         $this->display();
@@ -296,39 +310,39 @@ class CrowdController extends AdminController {
      */
     public function order_list() {
         $keywords = I('post.keywords') ? I('post.keywords') : '';
-        $type= I('post.type') ? I('post.type') : '';
+        $type = I('post.type') ? I('post.type') : '';
         $where = '1=1';
         //只搜索订单号
         if (!empty($keywords) && empty($type)) {
-             $where='order_sn like "%' . $keywords . '%"'; 
-         }
-         //只搜索状态
-        if(!empty($type) && empty($keywords)){
-            if($type==0){
-                 $where = '1=1';
-             }
-            if($type==1){
-                 $where = 'pay_status !=2';
-             }
-            if($type==2){
-                 $where = 'pay_status =2 and shipping_status=0';
-             }
-            if($type==3){
-                 $where = 'pay_status =2 and shipping_status !=0';
-             }
-         }
-         //两个条件都有
-        if(!empty($type) && !empty($keywords)){
-            if($type==1){
-                $where='order_sn like "%' . $keywords . '%" and pay_status !=2 '; 
-             }
-            if($type==2){
-                 $where='order_sn like "%' . $keywords . '%" and pay_status =2 and shipping_status=0 '; 
-             }
-            if($type==3){
-                 $where='order_sn like "%' . $keywords . '%" and pay_status =2 and shipping_status !=0'; 
-             }
-          }
+            $where = 'order_sn like "%' . $keywords . '%"';
+        }
+        //只搜索状态
+        if (!empty($type) && empty($keywords)) {
+            if ($type == 0) {
+                $where = '1=1';
+            }
+            if ($type == 1) {
+                $where = 'pay_status !=2';
+            }
+            if ($type == 2) {
+                $where = 'pay_status =2 and shipping_status=0';
+            }
+            if ($type == 3) {
+                $where = 'pay_status =2 and shipping_status !=0';
+            }
+        }
+        //两个条件都有
+        if (!empty($type) && !empty($keywords)) {
+            if ($type == 1) {
+                $where = 'order_sn like "%' . $keywords . '%" and pay_status !=2 ';
+            }
+            if ($type == 2) {
+                $where = 'order_sn like "%' . $keywords . '%" and pay_status =2 and shipping_status=0 ';
+            }
+            if ($type == 3) {
+                $where = 'order_sn like "%' . $keywords . '%" and pay_status =2 and shipping_status !=0';
+            }
+        }
         //分页
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('order_list', $filter), 15);
@@ -336,7 +350,7 @@ class CrowdController extends AdminController {
                 ->order('add_time desc')
                 ->count();
         $this->assign('page', $this->pageShow($total));
-        $sql = 'select order_id,cp_id,order_sn,user_id,goods_name,order_status, shipping_status,pay_status,add_time,goods_amount from ' . $this->model->pre . 'crowd_order_info  where '.$where.' order by add_time desc limit ' . $offset;
+        $sql = 'select order_id,cp_id,order_sn,user_id,goods_name,order_status, shipping_status,pay_status,add_time,goods_amount from ' . $this->model->pre . 'crowd_order_info  where ' . $where . ' order by add_time desc limit ' . $offset;
         $order_list = $this->model->query($sql);
         $list = array();
         foreach ($order_list as $key => $value) {
@@ -371,10 +385,11 @@ class CrowdController extends AdminController {
         $order_info['address'] = $country['region_name'] . $province['region_name'] . $city['region_name'] . $order_info['address'];
         $stock = $this->get_stock($order_info['goods_id']);
         $order_info['stock'] = $stock['number'] - $stock['backey_num']; //库存
-        $order_info['cp_name']=$this->get_cp_name($order_info['cp_id']);
+        $order_info['cp_name'] = $this->get_cp_name($order_info['cp_id']);
         $this->assign('order_info', $order_info);
         $this->display();
     }
+
     /**
      * 发货
      */
@@ -384,10 +399,10 @@ class CrowdController extends AdminController {
             if (isset($data['cancel'])) {
                 $data['order_status'] = 3;
                 $data['pay_status'] = 0;
-                $data['shipping_status'] =0;
+                $data['shipping_status'] = 0;
                 //更新订单状态
                 $this->model->table('crowd_order_info')
-                        ->data(array('order_status'=>$data['order_status'],'pay_status'=>$data['pay_status'],'shipping_status'=>$data['shipping_status']))
+                        ->data(array('order_status' => $data['order_status'], 'pay_status' => $data['pay_status'], 'shipping_status' => $data['shipping_status']))
                         ->where(array('order_id' => $data['order_id']))
                         ->update();
             } else {
@@ -406,6 +421,7 @@ class CrowdController extends AdminController {
             $this->redirect(url('crowd/order_list'));
         }
     }
+
     /**
      * 众筹分类
      */
@@ -486,7 +502,7 @@ class CrowdController extends AdminController {
      * 评论列表
      */
     public function message_list() {
-          //分页
+        //分页
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('message_list', $filter), 10);
         $total = $this->model->table('crowd_comment')
@@ -495,26 +511,28 @@ class CrowdController extends AdminController {
         $this->assign('page', $this->pageShow($total));
         $sql = 'select * from ' . $this->model->pre . 'crowd_comment where parent_id=0 order by add_time desc limit ' . $offset;
         $message_list = $this->model->query($sql);
-        foreach ($message_list as $key=>$value){
-          $message_list[$key]['goods_name']= $this->get_goods_name($value['goods_id']);
-          $message_list[$key]['add_time']= date('Y-m-d H:i:s', $value['add_time']);
-          $message_list[$key]['id']=$value['id'];
+        foreach ($message_list as $key => $value) {
+            $message_list[$key]['goods_name'] = $this->get_goods_name($value['goods_id']);
+            $message_list[$key]['add_time'] = date('Y-m-d H:i:s', $value['add_time']);
+            $message_list[$key]['id'] = $value['id'];
         }
         $this->assign('message_list', $message_list);
         $this->display();
     }
+
     /**
      * 评论详情
      */
     public function message_info() {
         $id = I('get.id', '', 'intval');
         $message_info = $this->model->table('crowd_comment')->where(array('id' => $id))->find();
-        $message_info['add_time']=date('Y-m-d H:i:s', $message_info['add_time']);
-        $message_info['reply_time']=date('Y-m-d H:i:s', $message_info['reply_time']);
+        $message_info['add_time'] = date('Y-m-d H:i:s', $message_info['add_time']);
+        $message_info['reply_time'] = date('Y-m-d H:i:s', $message_info['reply_time']);
         $this->assign('message_info', $message_info);
         $this->display();
     }
-     /**
+
+    /**
      * 评论详情
      */
     public function message_reply() {
@@ -524,7 +542,8 @@ class CrowdController extends AdminController {
             $data['reply_time'] = time();
             $data['reply'] = I('post.reply');
             $data['status'] = I('post.status');
-            dump($data);die;
+            dump($data);
+            die;
             $this->model->table('crowd_comment')
                     ->data($data)
                     ->where(array('id' => $data['id']))
@@ -532,7 +551,8 @@ class CrowdController extends AdminController {
             $this->redirect(url('crowd/message_list'));
         }
     }
-      /**
+
+    /**
      * 删除评论
      */
     public function del_message() {
@@ -545,12 +565,12 @@ class CrowdController extends AdminController {
                 ->delete();
         $this->message(L('drop') . L('success'), url('message_list'));
     }
-    
+
     /**
      * 文章列表
      */
     public function article_list() {
-         //分页
+        //分页
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('article_list', $filter), 10);
         $total = $this->model->table('crowd_article')
@@ -559,12 +579,13 @@ class CrowdController extends AdminController {
         $this->assign('page', $this->pageShow($total));
         $sql = 'select article_id,title,add_time,sort_order,is_open from ' . $this->model->pre . 'crowd_article order by article_id desc limit ' . $offset;
         $article_list = $this->model->query($sql);
-        foreach ($article_list as $key=>$value){
-           $article_list[$key]['add_time']=date('Y-m-d H:i:s', $value['add_time']); 
+        foreach ($article_list as $key => $value) {
+            $article_list[$key]['add_time'] = date('Y-m-d H:i:s', $value['add_time']);
         }
         $this->assign('article_list', $article_list);
         $this->display();
     }
+
     /**
      * 添加和修改文章
      */
@@ -583,7 +604,7 @@ class CrowdController extends AdminController {
                         ->data($data)
                         ->insert();
             } else {
-                   // 更新数据
+                // 更新数据
                 $this->model->table('crowd_article')
                         ->data($data)
                         ->where(array('article_id' => $data['article_id']))
@@ -596,8 +617,9 @@ class CrowdController extends AdminController {
             $article_info = $this->model->table('crowd_article')->field()->where(array('article_id' => $article_id))->find();
             $this->assign('article', $article_info);
         }
-       $this->display();
+        $this->display();
     }
+
     /**
      * 删除文章
      */
@@ -627,6 +649,7 @@ class CrowdController extends AdminController {
         $username = $this->model->table('users')->field('user_name')->where(array('user_id' => $user_id))->find();
         return $username['user_name'];
     }
+
     /**
      * 获取订单的用户名称
      */
@@ -650,6 +673,7 @@ class CrowdController extends AdminController {
         $stock = $this->model->table('crowd_plan')->field('number,backey_num')->where(array('goods_id' => $goods_id))->find();
         return $stock;
     }
+
     /**
      * 获取当前项目累计金额
      */

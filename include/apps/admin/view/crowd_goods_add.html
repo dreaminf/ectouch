@@ -63,9 +63,9 @@
     </tr>
          <tr>
             <td width="200">商品详情:</td>
-            <td><div class="col-md-4">
-                <textarea class="form-control" name="data[goods_desc]">{$goods['goods_desc']}</textarea>
-              </div></td>
+              <td><div class="col-md-4"><?php echo create_html_editor('goods_desc', html_out($goods['goods_desc']));?></div></td>
+              
+              
           </tr>
 <!--          <tr>
             <td width="200">正文:</td>
@@ -73,9 +73,15 @@
           </tr>-->
           <tr>
             <td width="200">排序:</td>
+            {if $goods['sort_order']}
             <td><div class="col-md-2">
                 <input type='text' name='data[sort_order]' value="{$goods['sort_order']}" class="form-control input-sm" />
               </div></td>
+             {else}
+               <td><div class="col-md-2">
+                <input type='text' name='data[sort_order]' value="10" class="form-control input-sm" />
+              </div></td>
+            {/if}
           </tr>
           {if $goods['goods_id']}
             <tr>
@@ -93,7 +99,7 @@
           {/if}
             <tr>
                 <td width="200">商品相册：</td>
-        <td>
+           <td>
             <div class="col-md-6 col-sm-6">
                 <div class="form-group">
                 <table class="table ectouch-table">
