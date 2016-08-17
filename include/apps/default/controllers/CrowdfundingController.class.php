@@ -70,7 +70,7 @@ class CrowdfundingController extends CommonController {
                     $where .= '';
             }
         }
-		$now = gmtime();
+		$now = time();
 		$sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, start_time,end_time,status '.'FROM '
 		. $this->model->pre . 'crowd_goods ' . "WHERE start_time <= '$now' AND end_time >= '$now' $where and status < 2 ";
         $res = $this->model->query($sql);
@@ -80,7 +80,7 @@ class CrowdfundingController extends CommonController {
 			$goods[$key]['cat_id'] = $row['cat_id'];
             $goods[$key]['goods_name'] = $row['goods_name'];
             $goods[$key]['buy_num'] = model('Crowdfunding')->crowd_buy_num($row['goods_id']);
-			$goods[$key]['start_time'] =floor((gmtime()-$row['start_time'])/86400);
+			$goods[$key]['start_time'] =floor((time()-$row['start_time'])/86400);
             //$goods[$key]['sum_price'] = price_format($row['sum_price']);
 			$goods[$key]['sum_price'] = $row['sum_price'];
             $goods[$key]['total_price'] = model('Crowdfunding')->crowd_buy_price($row['goods_id']);
@@ -206,7 +206,7 @@ class CrowdfundingController extends CommonController {
 		} else {
 			$data['user_id'] = $this->user_id;
 			$data['goods_id'] = $goods_id;
-			$data['add_time'] = gmtime();
+			$data['add_time'] = time();
 			if ($this->model->table('crowd_like')
 							->data($data)
 							->insert() === false) {

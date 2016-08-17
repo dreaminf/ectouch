@@ -165,7 +165,7 @@ class MycrowdController extends CommonController {
                 'user_id' => $this->user_id,
                 'user_name' => $_SESSION['user_name'],
                 'content' => I('post.content'),
-				'add_time' => gmtime(),
+				'add_time' => time(),
                 'order_id' => I('post.order_id', 0),
 				'goods_id' => I('post.goods_id', 0)
                 

@@ -29,7 +29,7 @@ class CrowdbuyModel extends CommonModel {
             $row['goods_id'] = $row['goods_id'];
             $row['goods_name'] = $row['goods_name'];
             $row['buy_num'] = model('Crowdfunding')->crowd_buy_num($row['goods_id']);
-			$row['start_time'] =floor((gmtime()-$row['start_time'])/86400);
+			$row['start_time'] =floor((time()-$row['start_time'])/86400);
 			$row['sum_price'] = $row['sum_price'];
 			$row['total_price'] = model('Crowdfunding')->crowd_buy_price($row['goods_id']);
             $row['goods_img'] = $row['goods_img'];

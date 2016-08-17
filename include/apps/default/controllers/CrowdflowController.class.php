@@ -532,9 +532,9 @@ class CrowdflowController extends CommonController {
         /* 如果订单金额为0（使用余额或积分或红包支付），修改订单状态为已确认、已付款 */
         if ($order ['order_amount'] <= 0) {
             $order ['order_status'] = OS_CONFIRMED;
-            $order ['confirm_time'] = gmtime();
+            $order ['confirm_time'] = time();
             $order ['pay_status'] = PS_PAYED;
-            $order ['pay_time'] = gmtime();
+            $order ['pay_time'] = time();
             $order ['order_amount'] = 0;
         }
 
@@ -656,7 +656,7 @@ class CrowdflowController extends CommonController {
                         /* 修改订单状态 */
                         model('Users')->update_order($order ['order_id'], array(
                             'shipping_status' => SS_SHIPPED,
-                            'shipping_time' => gmtime()
+                            'shipping_time' => time()
                         ));
 
                         /* 如果订单用户不为空，计算积分，并发给用户；发红包 */

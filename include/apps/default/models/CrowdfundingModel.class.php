@@ -69,7 +69,7 @@ class CrowdfundingModel extends CommonModel {
     /* 获取当前项目信息 */
 
     function crowd_goods_info($goods_id = 0) {
-		$now = gmtime();
+		$now = time();
         $sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, start_time,shiping_time,end_time,gallery_img ' . 'FROM ' . $this->pre . 'crowd_goods ' . "WHERE start_time <= '$now' AND end_time >= '$now' and goods_id = '$goods_id' ";
         $row = $this->row($sql);
         if ($row !== false) {
@@ -78,7 +78,7 @@ class CrowdfundingModel extends CommonModel {
             $row['goods_name'] = $row['goods_name'];
             $row['buy_num'] = $this->crowd_buy_num($row['goods_id']);
             $row['time'] = floor(($row['end_time'] - $row['start_time']) / 86400);
-            $row['start_time'] = floor((gmtime() - $row['start_time']) / 86400);
+            $row['start_time'] = floor((time() - $row['start_time']) / 86400);
             //$row['shiping_time'] = local_date(C('time_format'), $row['shiping_time']);
             $row['shiping_time'] = $row['shiping_time'];
             $row['sum_price'] = $row['sum_price'];
@@ -300,7 +300,7 @@ class CrowdfundingModel extends CommonModel {
         $buy_list = $this->query($sql);
         foreach ($buy_list as $k => $v) {
 
-            $time = gmtime() - $v['add_time'];
+            $time = time() - $v['add_time'];
             if (($time / 60) < 1) {
                 $buy_list[$k]['add_time'] = '刚刚';
             }
