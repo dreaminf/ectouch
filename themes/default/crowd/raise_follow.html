@@ -63,12 +63,16 @@
 												<a class="product-div-link" href="{$goods.url}"></a>
 												<div class="position-rel"><img class="product-list-img" src="{$goods.goods_img}">
 													<!--标签-->
-													<div class="raise-support-bg" style="display:none">
+													<div class="raise-support-bg" >
 														<div class="raise-tag">
 															<!--成功-->
-															<img src="__TPL__/statics/img/s-bg1.png" class="img" style="display:none;">
+															<!--{if $goods.status eq 1}-->
+															<img src="__TPL__/statics/img/s-bg1.png" class="img" ">
+															<!--{/if}-->
 															<!--失败-->
+															<!--{if $goods.status eq 2}-->
 															<img src="__TPL__/statics/img/sb-b1.png" class="img">
+															<!--{/if}-->
 														</div>
 													</div>
 												</div>

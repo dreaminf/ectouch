@@ -68,7 +68,7 @@ class MycrowdModel extends BaseModel {
         }
 		
 		$now = gmtime();	
-		$sql = 'SELECT g.goods_id, g.cat_id, g.goods_name, g.goods_img, g.sum_price, g.start_time, g.end_time  '.'FROM '
+		$sql = 'SELECT g.goods_id, g.cat_id, g.goods_name, g.goods_img, g.sum_price, g.start_time, g.end_time,g.status  '.'FROM '
 		. $this->pre . 'crowd_goods as g left join ' . $this->pre  ."crowd_like as cl" . " on g.goods_id=cl.goods_id " . " WHERE g.is_verify = 1 $where AND g.start_time <= '$now' AND g.end_time >= '$now' and cl.user_id = '$user_id'  order by g.sort_order DESC ";
 
         $res = $this->query($sql);
@@ -86,6 +86,7 @@ class MycrowdModel extends BaseModel {
 			$goods[$key]['bar'] = $goods[$key]['total_price']*100/$row['sum_price'];
 			$goods[$key]['bar'] = round($goods[$key]['bar'],1); //计算百分比
 			$goods[$key]['min_price'] = $this->plan_min_price($row['goods_id']); //获取方案最低价格
+			$goods[$key]['status'] = $row['status'];
         }
         return $goods;
 	}
