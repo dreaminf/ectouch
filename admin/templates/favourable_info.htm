@@ -92,7 +92,7 @@
         {$lang.touch_img}
     </td>
     <td>
-        <input type="file" name="touch_img" id="touch_img" size="45">
+        <input type="file" name="touch_img" value="{$favourable.touch_img}" id="touch_img" size="45">
         {if $favourable.touch_img neq ""}
         <input type="button" value="{$lang.drop_touch_img}" onclick="if (confirm('{$lang.confirm_drop_img}'))location.href='favourable.php?act=drop_img&id={$favourable.act_id}'">
         {/if}

@@ -305,10 +305,10 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
             $gift[] = array('id' => $id, 'name' => $_POST['gift_name'][$key], 'price' => $_POST['gift_price'][$key]);
         }
     }
-
     /*处理图片*/
+    if($_FILES['touch_img']['error'] == 0)
+    {
     $img_name = basename($image->upload_image($_FILES['touch_img'],'favourable'));
-
     /* 提交值 */
     $favourable = array(
         'act_id'        => intval($_POST['id']),
@@ -325,6 +325,25 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         'gift'          => serialize($gift),
         'touch_img'     => $img_name,
     );
+    }else{
+        $sql = "SELECT touch_img FROM " .$ecs->table('favourable_activity'). " WHERE act_id = '".$_POST['id']."'";
+        $img_name = $db->getOne($sql);        
+        $favourable = array(
+        'act_id'        => intval($_POST['id']),
+        'act_name'      => $act_name,
+        'start_time'    => local_strtotime($_POST['start_time']),
+        'end_time'      => local_strtotime($_POST['end_time']),
+        'user_rank'     => isset($_POST['user_rank']) ? join(',', $_POST['user_rank']) : '0',
+        'act_range'     => intval($_POST['act_range']),
+        'act_range_ext' => intval($_POST['act_range']) == 0 ? '' : join(',', $_POST['act_range_ext']),
+        'min_amount'    => floatval($_POST['min_amount']),
+        'max_amount'    => floatval($_POST['max_amount']),
+        'act_type'      => intval($_POST['act_type']),
+        'act_type_ext'  => floatval($_POST['act_type_ext']),
+        'gift'          => serialize($gift),
+        'touch_img'     => $img_name,
+    );
+    }
     if ($favourable['act_type'] == FAT_GOODS)
     {
         $favourable['act_type_ext'] = round($favourable['act_type_ext']);
