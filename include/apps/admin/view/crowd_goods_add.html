@@ -17,7 +17,7 @@
             <tr>
             <td width="200">目标金额:</td>
             <td><div class="col-md-4">
-                <input type='text' name='data[sum_price]' value="{$goods['goods_name']}" class="form-control input-sm" />
+                <input type='text' name='data[sum_price]' value="{$goods['sum_price']}" class="form-control input-sm" />
               </div>
                   <span class="help_block" >
                     建议第一期项目目标金额稍小一些，打开市场后逐步提升目标金额
@@ -132,9 +132,7 @@
             <td width="200"></td>
             <td><div class="col-md-4">
                 <input type="hidden" name="data[goods_id]" value="{$goods['goods_id']}" />
-               
                 <input type="hidden" name="data[is_verify]" value="1" />
-  
                  {if $goods['goods_id']==0 }
                 <input type="hidden" name="data[status]" value="0" />
                    {/if}
@@ -167,12 +165,12 @@
     	format:'Y-m-d H:i',
     	timepicker:true
     });
-      //添加奖项
+      //添加相册
     function addprize(obj){
     	var html = '<tr><td class="text-center"><a href="javascript:;" class="glyphicon glyphicon-minus" onClick="delprize(this)"></a></td> <td class="text-center"><input type="file" name="gallery_img[]" class="form-control" value="{$v['prize_level']}"></td></tr>';
         $(obj).parent().parent().parent().append(html);
     }
-    //删除奖项
+    //删除相册
     function delprize(obj){
         $(obj).parent().parent().remove();
     }
