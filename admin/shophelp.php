@@ -41,11 +41,12 @@ if ($_REQUEST['act'] == 'list_cat')
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'list_article')
 {
+    $cat_id = intval(addslashes($_REQUEST['cat_id']));
     $smarty->assign('ur_here',     $_LANG['article_list']);
-    $smarty->assign('action_link', array('text' => $_LANG['article_add'], 'href' => 'shophelp.php?act=add&cat_id=' . $_REQUEST['cat_id']));
+    $smarty->assign('action_link', array('text' => $_LANG['article_add'], 'href' => 'shophelp.php?act=add&cat_id=' . $cat_id));
     $smarty->assign('full_page',   1);
-    $smarty->assign('cat',         article_cat_list($_REQUEST['cat_id'], true, 'cat_id', 0, "onchange=\"location.href='?act=list_article&cat_id='+this.value\""));
-    $smarty->assign('list',        shophelp_article_list($_REQUEST['cat_id']));
+    $smarty->assign('cat',         article_cat_list($cat_id, true, 'cat_id', 0, "onchange=\"location.href='?act=list_article&cat_id='+this.value\""));
+    $smarty->assign('list',        shophelp_article_list($cat_id));
 
     assign_query_info();
     $smarty->display('shophelp_article_list.htm');
@@ -56,7 +57,7 @@ if ($_REQUEST['act'] == 'list_article')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'query_art')
 {
-    $cat_id = intval($_GET['cat']);
+    $cat_id = intval(addslashes($_GET['cat']));
 
     $smarty->assign('list', shophelp_article_list($cat_id));
     make_json_result($smarty->fetch('shophelp_article_list.htm'));
@@ -89,7 +90,7 @@ if ($_REQUEST['act'] == 'add')
     }
     else
     {
-        $selected = $_REQUEST['cat_id'];
+        $selected = intval(addslashes($_REQUEST['cat_id']));
     }
     $cat_list = article_cat_list($selected,true, 'cat_id', 0);
     $cat_list = str_replace('select please', $_LANG['select_plz'], $cat_list);
@@ -103,24 +104,26 @@ if ($_REQUEST['act'] == 'insert')
 {
     /* 权限判断 */
     admin_priv('shophelp_manage');
-
+    $title = intval(addslashes($_POST['title']));
     /* 判断是否重名 */
-    $exc_article->is_only('title', $_POST['title'], $_LANG['title_exist']);
-
+    $exc_article->is_only('title', $title, $_LANG['title_exist']);
+    $cat_id = intval(addslashes($_POST['cat_id']));
+    $article_type = addslashes($_POST['article_type']);
+    $FCKeditor1 = addslashes($_POST['FCKeditor1']);
     /* 插入数据 */
     $add_time = gmtime();
-    $sql = "INSERT INTO ".$ecs->table('article')."(title, cat_id, article_type, content, add_time, author) VALUES('$_POST[title]', '$_POST[cat_id]', '$_POST[article_type]','$_POST[FCKeditor1]','$add_time', '_SHOPHELP' )";
+    $sql = "INSERT INTO ".$ecs->table('article')."(title, cat_id, article_type, content, add_time, author) VALUES('$title', '$cat_id', '$article_type','$FCKeditor1','$add_time', '_SHOPHELP' )";
     $db ->query($sql);
 
     $link[0]['text'] = $_LANG['back_list'];
-    $link[0]['href'] = 'shophelp.php?act=list_article&cat_id=' . $_POST['cat_id'];
+    $link[0]['href'] = 'shophelp.php?act=list_article&cat_id=' . $cat_id;
     $link[1]['text'] = $_LANG['continue_add'];
-    $link[1]['href'] = 'shophelp.php?act=add&cat_id=' . $_POST['cat_id'];
+    $link[1]['href'] = 'shophelp.php?act=add&cat_id=' . $cat_id;
 
     /* 清除缓存 */
     clear_cache_files();
 
-    admin_log($_POST['title'], 'add', 'shophelp');
+    admin_log($title, 'add', 'shophelp');
     sys_msg($_LANG['articleadd_succeed'], 0, $link);
 }
 
@@ -131,9 +134,9 @@ if ($_REQUEST['act'] == 'edit')
 {
     /* 权限判断 */
     admin_priv('shophelp_manage');
-
+    $id = intval(addslashes($_REQUEST['id']));
     /* 取文章数据 */
-    $sql = "SELECT article_id,title, cat_id, article_type, is_open, author, author_email, keywords, content FROM " .$ecs->table('article'). " WHERE article_id='$_REQUEST[id]'";
+    $sql = "SELECT article_id,title, cat_id, article_type, is_open, author, author_email, keywords, content FROM " .$ecs->table('article'). " WHERE article_id='$id'";
     $article = $db->GetRow($sql);
 
     /* 创建 html editor */
@@ -153,23 +156,27 @@ if ($_REQUEST['act'] == 'update')
 {
     /* 权限判断 */
     admin_priv('shophelp_manage');
-
+    $title = addslashes($_POST['title']);
+    $id = intval(addslashes($_POST['id']));
+    $cat_id = intval(addslashes($_POST['cat_id']));
+    $article_type = addslashes($_POST['article_type']);
+    $FCKeditor1 = addslashes($_POST['FCKeditor1']);
     /* 检查重名 */
     if ($_POST['title'] != $_POST['old_title'] )
     {
-        $exc_article->is_only('title', $_POST['title'], $_LANG['articlename_exist'], $_POST['id']);
+        $exc_article->is_only('title', $title, $_LANG['articlename_exist'], $id);
     }
     /* 更新 */
-    if ($exc_article->edit("title = '$_POST[title]', cat_id = '$_POST[cat_id]', article_type = '$_POST[article_type]', content = '$_POST[FCKeditor1]'", $_POST['id']))
+    if ($exc_article->edit("title = '$title', cat_id = '$cat_id', article_type = '$article_type', content = '$FCKeditor1'", $id))
     {
         /* 清除缓存 */
         clear_cache_files();
 
         $link[0]['text'] = $_LANG['back_list'];
-        $link[0]['href'] = 'shophelp.php?act=list_article&cat_id='.$_POST['cat_id'];
+        $link[0]['href'] = 'shophelp.php?act=list_article&cat_id='.$cat_id;
 
-        sys_msg(sprintf($_LANG['articleedit_succeed'], $_POST['title']), 0, $link);
-        admin_log($_POST['title'], 'edit', 'shophelp');
+        sys_msg(sprintf($_LANG['articleedit_succeed'], $title), 0, $link);
+        admin_log($title, 'edit', 'shophelp');
     }
 }
 
@@ -180,7 +187,7 @@ elseif ($_REQUEST['act'] == 'edit_catname')
 {
     check_authz_json('shophelp_manage');
 
-    $id       = intval($_POST['id']);
+    $id       = intval(addslashes($_POST['id']));
     $cat_name = json_str_iconv(trim($_POST['val']));
 
     /* 检查分类名称是否重复 */
@@ -210,7 +217,7 @@ elseif ($_REQUEST['act'] == 'edit_cat_order')
 {
     check_authz_json('shophelp_manage');
 
-    $id    = intval($_POST['id']);
+    $id    = intval(addslashes($_POST['id']));
     $order = json_str_iconv(trim($_POST['val']));
 
     /* 检查输入的值是否合法 */
@@ -235,7 +242,7 @@ elseif ($_REQUEST['act'] == 'remove')
 {
     check_authz_json('shophelp_manage');
 
-    $id = intval($_GET['id']);
+    $id = intval(addslashes($_GET['id']));
 
     /* 非空的分类不允许删除 */
     if ($exc_article->num('cat_id', $id) != 0)
@@ -262,7 +269,7 @@ elseif ($_REQUEST['act'] == 'remove_art')
 {
     check_authz_json('shophelp_manage');
 
-    $id     = intval($_GET['id']);
+    $id     = intval(addslashes($_GET['id']));
     $cat_id = $db->getOne('SELECT cat_id FROM ' .$ecs->table('article'). " WHERE article_id='$id'");
 
     if ($exc_article->drop($id))
@@ -290,7 +297,7 @@ elseif ($_REQUEST['act'] == 'add_catname')
 {
     check_authz_json('shophelp_manage');
 
-    $cat_name = trim($_POST['cat_name']);
+    $cat_name = trim(addslashes($_POST['cat_name']));
 
     if (!empty($cat_name))
     {
@@ -325,7 +332,7 @@ elseif ($_REQUEST['act'] == 'edit_title')
 {
     check_authz_json('shophelp_manage');
 
-    $id    = intval($_POST['id']);
+    $id    = intval(addslashes($_POST['id']));
     $title = json_str_iconv(trim($_POST['val']));
 
     /* 检查文章标题是否有重名 */

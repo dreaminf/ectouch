@@ -38,7 +38,8 @@ if ($_REQUEST['act'] == 'list')
     $smarty->assign('page_count',   $logdb['page_count']);
     if (!empty($_GET['auid']))
     {
-        $smarty->assign('action_link',  array('text' => $_LANG['back_note'], 'href'=>"users.php?act=edit&id=$_GET[auid]"));
+        $auid = intval(addslashes($_GET['auid']));
+        $smarty->assign('action_link',  array('text' => $_LANG['back_note'], 'href'=>"users.php?act=edit&id=$auid"));
     }
     assign_query_info();
     $smarty->display('affiliate_ck_list.htm');
@@ -65,7 +66,7 @@ elseif ($_REQUEST['act'] == 'query')
 */
 elseif ($_REQUEST['act'] == 'del')
 {
-    $oid = (int)$_REQUEST['oid'];
+    $oid = intval(addslashes($_REQUEST['oid'])); //(int)$_REQUEST['oid'];
     $stat = $db->getOne("SELECT is_separate FROM " . $GLOBALS['ecs']->table('order_info') . " WHERE order_id = '$oid'");
     if (empty($stat))
     {
@@ -82,7 +83,7 @@ elseif ($_REQUEST['act'] == 'del')
 */
 elseif ($_REQUEST['act'] == 'rollback')
 {
-    $logid = (int)$_REQUEST['logid'];
+    $logid = intval(addslashes($_REQUEST['logid'])); //(int)$_REQUEST['logid'];
     $stat = $db->getRow("SELECT * FROM " . $GLOBALS['ecs']->table('affiliate_log') . " WHERE log_id = '$logid'");
     if (!empty($stat))
     {
@@ -116,7 +117,7 @@ elseif ($_REQUEST['act'] == 'separate')
 
     $separate_by = $affiliate['config']['separate_by'];
 
-    $oid = (int)$_REQUEST['oid'];
+    $oid = intval(addslashes($_REQUEST['oid'])); //(int)$_REQUEST['oid'];
 
     $row = $db->getRow("SELECT o.order_sn, o.is_separate, (o.goods_amount - o.discount) AS goods_amount, o.user_id FROM " . $GLOBALS['ecs']->table('order_info') . " o".
                     " LEFT JOIN " . $GLOBALS['ecs']->table('users') . " u ON o.user_id = u.user_id".
@@ -219,17 +220,19 @@ function get_affiliate_ck()
     $sqladd = '';
     if (isset($_REQUEST['status']))
     {
-        $sqladd = ' AND o.is_separate = ' . (int)$_REQUEST['status'];
-        $filter['status'] = (int)$_REQUEST['status'];
+        $sqladd = ' AND o.is_separate = ' . intval(addslashes($_REQUEST['status'])); //(int)$_REQUEST['status'];
+        $filter['status'] = intval(addslashes($_REQUEST['status'])); //(int)$_REQUEST['status'];
     }
     if (isset($_REQUEST['order_sn']))
     {
-        $sqladd = ' AND o.order_sn LIKE \'%' . trim($_REQUEST['order_sn']) . '%\'';
-        $filter['order_sn'] = $_REQUEST['order_sn'];
+        $order_sn = addslashes($_REQUEST['order_sn']);
+        $sqladd = ' AND o.order_sn LIKE \'%' . trim($order_sn) . '%\'';
+        $filter['order_sn'] = $order_sn;
     }
     if (isset($_GET['auid']))
     {
-        $sqladd = ' AND a.user_id=' . $_GET['auid'];
+        $auid = intval(addslashes($_GET['auid']));
+        $sqladd = ' AND a.user_id=' . $auid;
     }
 
     if(!empty($affiliate['on']))
