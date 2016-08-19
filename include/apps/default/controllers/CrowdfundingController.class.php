@@ -66,6 +66,9 @@ class CrowdfundingController extends CommonController {
                 case 'buy_num':
                     $where .= ' order by buy_num DESC ';
                     break;
+				case 'end':
+                    $where .= ' order by end_time asc ';
+                    break;
                 default:
                     $where .= '';
             }
