@@ -185,8 +185,15 @@ class CrowdfundingController extends CommonController {
             'error' => 0,
             'message' => ''
         );
-        $goods_id = intval($_GET['id']);
-      
+		
+		
+		if (!isset($this->user_id) || $this->user_id == 0) {
+            $result['error'] = 2;
+            $result['message'] = '请先登录';
+            die(json_encode($result));
+        }
+		
+        $goods_id = intval($_GET['id']);      
 		// 检查是否已经存在于用户的关注列表
 		$where['user_id'] = $this->user_id;
 		$where['goods_id'] = $goods_id;
