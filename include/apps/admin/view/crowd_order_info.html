@@ -55,7 +55,7 @@
             </tr>
             <tr>
                 <td width="200">发货单号:</td>
-                {if $order_info[order_status]==5 &&$order_info[pay_status]==2 && $order_info[shipping_status]==0 }   
+                {if $order_info[order_status]==1 &&$order_info[pay_status]==2 && $order_info[shipping_status]==0 }   
                       <td><div class="col-md-3 content">
                      <input name="data[invoice_no]">
                     </div></td>
@@ -159,7 +159,7 @@
                     </div></td>
             </tr>
          <input type="hidden" name="data[order_id]" value="{$order_info[order_id]}" />
-         {if $order_info[order_status]==5 &&$order_info[pay_status]==2 && $order_info[shipping_status]==0 }   
+         {if $order_info[order_status]==1 &&$order_info[pay_status]==2 && $order_info[shipping_status]==0 }   
           <tr>
             <td width="200"></td>
             <td><div class="col-md-4">
