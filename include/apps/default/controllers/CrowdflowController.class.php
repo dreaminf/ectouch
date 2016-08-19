@@ -580,7 +580,15 @@ class CrowdflowController extends CommonController {
 		$where['goods_id'] = $_SESSION['goods_id'];
 		$where['cp_id'] = $_SESSION['cp_id'];
 		$datas['backey_num'] = $backey_num;
-		$this->model->table('crowd_plan')->data($datas)->where($where)->update();		
+		$this->model->table('crowd_plan')->data($datas)->where($where)->update();
+
+        /* 统计项目累计售出数量 */
+		$goods = $this->model->table('crowd_goods')->field('buy_num')->where("goods_id = '" . $_SESSION['goods_id'] . "' ")->find();
+		$buy_num = $goods['buy_num']+$cart_goods[number];			
+		$where1['goods_id'] = $_SESSION['goods_id'];
+		$data1['buy_num'] = $buy_num;
+		$this->model->table('crowd_goods')->data($data1)->where($where1)->update();	
+				
 		
 		/* 如果全部使用余额支付，检查余额是否足够 */
         if ($payment ['pay_code'] == 'balance' && $order ['surplus'] > 0) {
