@@ -51,11 +51,12 @@
 									</li>									
 								</div>
 							</div> -->
-								<!--{foreach from=$comment.reply item =reply}-->
+								<!--{if $comment.reply}-->
 								<p class="f-05">
-									<label class="admin-text">管理员回复：</label> {$reply.content}
+									<label class="admin-text">管理员回复：</label> {$comment.reply}
 								</p>
-								<!--{/foreach}-->
+								<h5 class="t-remark m-top04 f-03 col-9">{$comment.reply_time}</h5>
+								<!--{/if}-->
 							</div>
 							<!--{/foreach}-->
 							<!--{else}-->
@@ -65,70 +66,10 @@
 							</div>
 							<!--{/if}-->
 						</section>
-						<section class="swiper-slide">
-							<!--{foreach from=$comment_list item =comment}-->
-							<div class="evaluation-list padding-all">
-								<div class="dis-box raise-header padding-all b-color-f">
-									<div class="raise-admin-left">
-										<div class="raise-admin-img">
-											<img src="/ecshop-mobile/themes/default/images/member-photo-img2.jpeg">
-										</div>
-									</div>
-									<div class="box-flex"><label class="col-3">admin123</label></div>
-									<div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div>
-								</div>
-								<div class="b-color-f g-evaluation-con ra">
-									<h4 class="f-05 col-4">{$comment.content}</h4>
-									<h5 class="t-remark m-top04 f-03 col-9">{$comment.add_time}</h5>
-								</div>
-								<!-- <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> -->
-								<!-- <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">
-								<div class="swiper-wrapper ">
-									<li class="swiper-slide">
-										<img class="product-list-img" src="__TPL__/crowd/img/raise-list1.jpg" />
-									</li>									
-								</div>
-							</div> -->
-								<!-- <p class="f-05">
-								<label class="admin-text">管理员回复：</label>
-								感谢您的评价
-							</p> -->
-							</div>
-							<!--{/foreach}-->
-						</section>
-						<section class="swiper-slide">
-							<!--{foreach from=$comment_list item =comment}-->
-							<div class="evaluation-list padding-all">
-								<div class="dis-box raise-header padding-all b-color-f">
-									<div class="raise-admin-left">
-										<div class="raise-admin-img">
-											<img src="/ecshop-mobile/themes/default/images/member-photo-img2.jpeg">
-										</div>
-									</div>
-									<div class="box-flex"><label class="col-3">admin123</label></div>
-									<div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div>
-								</div>
-								<div class="b-color-f g-evaluation-con ra">
-									<h4 class="f-05 col-4">{$comment.content}</h4>
-									<h5 class="t-remark m-top04 f-03 col-9">{$comment.add_time}</h5>
-								</div>
-								<!-- <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> -->
-								<!-- <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">
-								<div class="swiper-wrapper ">
-									<li class="swiper-slide">
-										<img class="product-list-img" src="__TPL__/crowd/img/raise-list1.jpg" />
-									</li>									
-								</div>
-							</div> -->
-								<!-- <p class="f-05">
-								<label class="admin-text">管理员回复：</label>
-								感谢您的评价
-							</p> -->
-							</div>
-							<!--{/foreach}-->
-						</section>
-						<section class="swiper-slide">
-							<!--{foreach from=$comment_list item =comment}-->
+						
+						
+						<!-- <section class="swiper-slide">
+							
 							<div class="evaluation-list padding-all">
 								<div class="dis-box raise-header padding-all b-color-f">
 									<div class="raise-admin-left">
@@ -143,55 +84,25 @@
 									<p class="f-05 col-4">{$comment.content}</p>
 									<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
 								</div>
-								<!-- <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> -->
-								<!-- <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">
+								 <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> 
+								 <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">
 								<div class="swiper-wrapper ">
 									<li class="swiper-slide">
 										<img class="product-list-img" src="__TPL__/crowd/img/raise-list1.jpg" />
 									</li>									
 								</div>
-							</div> -->
-								<!-- <p class="f-05">
+							</div>
+								<p class="f-05">
 								<label class="admin-text">管理员回复：</label>
 								感谢您的评价
-							</p> -->
+							</p> 
 							</div>
-							<!--{/foreach}-->
-						</section>
-						<section class="swiper-slide">
-							<!--{foreach from=$comment_list item =comment}-->
-							<div class="evaluation-list padding-all">
-								<div class="dis-box raise-header padding-all b-color-f">
-									<div class="raise-admin-left">
-										<div class="raise-admin-img">
-											<img src="/ecshop-mobile/themes/default/images/member-photo-img2.jpeg">
-										</div>
-									</div>
-									<div class="box-flex"><label class="col-3">admin123</label></div>
-									<div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div>
-								</div>
-								<div class="b-color-f g-evaluation-con ra">
-									<h4 class="f-05 col-4">{$comment.content}</h4>
-									<h5 class="t-remark m-top04 f-03 col-9">{$comment.add_time}</h5>
-								</div>
-								<!-- <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> -->
-								<!-- <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">
-								<div class="swiper-wrapper ">
-									<li class="swiper-slide">
-										<img class="product-list-img" src="__TPL__/crowd/img/raise-list1.jpg" />
-									</li>									
-								</div>
-							</div> -->
-								<!-- <p class="f-05">
-								<label class="admin-text">管理员回复：</label>
-								感谢您的评价
-							</p> -->
-							</div>
-							<!--{/foreach}-->
-						</section>
+							
+						</section> -->
+					
 					</div>
 				</div>
-				{include file='library/page.lbi '}
+				{include file='library/page.lbi'}
 			</div>
 		</div>
 		</div>

@@ -189,6 +189,12 @@
 										<h4 class="f-05 col-4">{$comment.content}</h4>
 										<h5 class="t-remark m-top04 f-03 col-9">{$comment.add_time}</h5>
 									</div>
+									<!--{if $comment.reply}-->
+									<p class="f-05">
+									<label class="admin-text">管理员回复：</label> {$comment.reply}
+									</p>
+									<h5 class="t-remark m-top04 f-03 col-9">{$comment.reply_time}</h5>
+									<!--{/if}-->
 								</div>
 								<!--{/foreach}-->
 									<!--{else}-->

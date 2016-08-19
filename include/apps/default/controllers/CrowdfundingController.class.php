@@ -116,7 +116,7 @@ class CrowdfundingController extends CommonController {
 		$this->assign('gallery_img', $gallery_img);
 		$goods_plan = model('Crowdfunding')->crowd_goods_paln($this->goods_id);//项目方案
 		$comment_list = model('Crowdfunding')->crowd_comment($this->goods_id);//项目评论
-		$trends_list = model('Crowdfunding')->crowd_trends($this->goods_id);//项目评论
+		$trends_list = model('Crowdfunding')->crowd_trends($this->goods_id);//项目动态
 		$buy_list = model('Crowdfunding')->crowd_buy($this->goods_id);//项目的支持者
 		// 检查是否已经存在于用户的关注列表
         if ($_SESSION ['user_id']) {

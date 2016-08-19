@@ -137,12 +137,13 @@ class CrowdfundingModel extends CommonModel {
     /* 获取当前项目评论 */
 
     function crowd_comment($goods_id = 0) {
-        $sql = "SELECT id,user_id,user_name,goods_id,content,add_time FROM " . $this->model->pre . "crowd_comment WHERE " .
+        $sql = "SELECT id,user_id,user_name,goods_id,content,add_time,reply,reply_time FROM " . $this->model->pre . "crowd_comment WHERE " .
                 "goods_id = '" . $goods_id . "' AND status = 1 and parent_id = 0  ORDER BY id DESC LIMIT 0,3";
 
         $comment_list = $this->model->query($sql);
         foreach ($comment_list as $k => $v) {
 			$comment_list[$k]['add_time'] = date('Y-m-d H:i:s',$v['add_time']);
+			$comment_list[$k]['reply_time'] = date('Y-m-d H:i:s',$v['reply_time']);
             $comment_list[$k]['name'] = $v['user_name'];
             $comment_list[$k]['avatar'] = '';
             $wechat_user = $this->model->table('wechat_user')->where("ect_uid=" . $v['user_id'])->field('nickname,headimgurl')->find();
@@ -241,11 +242,12 @@ class CrowdfundingModel extends CommonModel {
         if (!empty($limit)) {
             $limit = " LIMIT $limit";
         }
-        $sql = "SELECT id,user_id,user_name,goods_id,content,add_time FROM " . $this->pre . "crowd_comment WHERE " .
+        $sql = "SELECT id,user_id,user_name,goods_id,content,add_time,reply,reply_time FROM " . $this->pre . "crowd_comment WHERE " .
                 " goods_id = '" . $goods_id . "' AND parent_id = 0 AND status = 1 ORDER BY id DESC LIMIT $start , $num";
         $comment_list = $this->query($sql);
         foreach ($comment_list as $k => $v) {
 			$comment_list[$k]['add_time'] = date('Y-m-d H:i:s',$v['add_time']);
+			$comment_list[$k]['reply_time'] = date('Y-m-d H:i:s',$v['reply_time']);
             $comment_list[$k]['name'] = $v['user_name'];
             $comment_list[$k]['avatar'] = '';
             $wechat_user = $this->model->table('wechat_user')->where("ect_uid=" . $v['user_id'])->field('nickname,headimgurl')->find();
@@ -253,7 +255,7 @@ class CrowdfundingModel extends CommonModel {
                 $comment_list[$k]['name'] = $wechat_user['nickname'];
                 $comment_list[$k]['avatar'] = $wechat_user['headimgurl'];
             }
-            $comment_list[$k]['reply'] = $this->reply_content($v['id']);
+            //$comment_list[$k]['reply'] = $this->reply_content($v['id']);
         }
         return $comment_list;
     }
