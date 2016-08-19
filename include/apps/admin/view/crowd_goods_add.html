@@ -136,7 +136,7 @@
                  {if $goods['goods_id']==0 }
                 <input type="hidden" name="data[status]" value="0" />
                    {/if}
-                <input type="hidden" name="data[total_price]" value="" />
+                <input type="hidden" name="data[total_price]" value="{$goods['total_price']}" />
   		<input type="submit" value="{$lang['button_submit']}" class="btn btn-primary" />
                 <input type="reset" value="{$lang['button_reset']}" class="btn btn-default" />
               </div></td>

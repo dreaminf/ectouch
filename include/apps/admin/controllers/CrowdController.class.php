@@ -226,6 +226,9 @@ class CrowdController extends AdminController {
                         ->insert();
             } else {
                 //修改
+                if($data['status']==1){
+                    $data['sum_price']=$data['total_price'];
+                }
                 $this->model->table('crowd_goods')
                         ->data($data)
                         ->where(array('goods_id' => $data['goods_id']))
@@ -238,6 +241,7 @@ class CrowdController extends AdminController {
             $goods_info = $this->model->table('crowd_goods')->field()->where(array('goods_id' => $goods_id))->find();
             $goods_info['start_time'] = date('Y-m-d H:i:s', $goods_info['start_time']);
             $goods_info['end_time'] = date('Y-m-d H:i:s', $goods_info['end_time']);
+            $goods_info['total_price'] = $this->crowd_buy_price($goods_info['goods_id']);
             $this->assign('goods', $goods_info);
         }
         $this->assign('cat_select', cat_lists(0, 0, true));
