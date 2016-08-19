@@ -217,8 +217,6 @@ class CrowdController extends AdminController {
             } else {
                 $data['end_time'] = strtotime($data['end_time']);
             }
-
-
             if (empty($data['goods_id'])) {
                 //入库
                 $this->model->table('crowd_goods')
@@ -226,8 +224,8 @@ class CrowdController extends AdminController {
                         ->insert();
             } else {
                 //修改
-                if($data['status']==1){
-                    $data['sum_price']=$data['total_price'];
+                if ($data['status'] == 1) {
+                    $data['sum_price'] = $data['total_price'];
                 }
                 $this->model->table('crowd_goods')
                         ->data($data)
@@ -546,8 +544,6 @@ class CrowdController extends AdminController {
             $data['reply_time'] = time();
             $data['reply'] = I('post.reply');
             $data['status'] = I('post.status');
-            dump($data);
-            die;
             $this->model->table('crowd_comment')
                     ->data($data)
                     ->where(array('id' => $data['id']))
