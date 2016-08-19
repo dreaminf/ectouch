@@ -106,6 +106,8 @@ CREATE TABLE IF NOT EXISTS `{pre}crowd_comment` (
   `content` text  DEFAULT NULL COMMENT '评论内容',
   `add_time` int(10) COMMENT '评论时间',
   `order_id` mediumint(8) DEFAULT NULL COMMENT '订单id',
+  `reply` text DEFAULT NULL COMMENT '回复内容',
+  `reply_time` int(10) DEFAULT NULL COMMENT '回复时间',
   `rank` tinyint(1) NOT NULL DEFAULT '0' COMMENT '评论等级',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '显示 1是  0否',
   PRIMARY KEY (`id`)
