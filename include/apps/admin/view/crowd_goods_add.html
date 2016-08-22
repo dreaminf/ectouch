@@ -99,16 +99,22 @@
           {if $goods['goods_id']}
             <tr>
             <td width="200">项目结果:</td>
-            <td><div class="col-md-4 btn-group" data-toggle="buttons">
-                <label class="btn btn-primary {if $goods['status'] == 1}active{/if}">
-                  <input type="radio" name="data[status]" value="1" {if $goods[status] == 1}checked{/if} />成功
-                </label>
-                <label class="btn btn-primary {if $goods['status'] == 0}active{/if}">
-                  <input type="radio" name="data[status]" value="2" {if $goods[status] == 2}checked{/if} />失败
-                </label>
-                
-              </div>
-            </td>
+  
+            
+                 <td><div class="col-md-4">
+                        <select name="data[status]" class="form-control input-sm">
+                          <option value="0">进行中</option>
+                          <option value="1">成功</option>
+                          <option value="2">失败</option>
+                        </select>
+                        </div>
+                        <span class="help_block">
+                            ???
+                        </span>
+                    </td>
+            
+            
+            
           </tr>
           {/if}
             <tr>
