@@ -28,8 +28,10 @@
             <td width="200">项目分类:</td>
                     <td><div class="col-md-4">
                         <select name="data[cat_id]" class="form-control input-sm">
-                            <option value="0">顶级分类</option>
-                            {$cat_select}
+                          <option value="0">顶级分类</option>
+                           {loop $cat_select $cat}
+                            <option value="{$cat[cat_id]}">{$cat[cat_name]}</option>
+                           {/loop}
                         </select>
                         </div>
                         <span class="help_block">
@@ -104,6 +106,7 @@
                 <label class="btn btn-primary {if $goods['status'] == 0}active{/if}">
                   <input type="radio" name="data[status]" value="2" {if $goods[status] == 2}checked{/if} />失败
                 </label>
+                
               </div>
             </td>
           </tr>

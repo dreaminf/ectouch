@@ -242,7 +242,8 @@ class CrowdController extends AdminController {
             $goods_info['total_price'] = $this->crowd_buy_price($goods_info['goods_id']);
             $this->assign('goods', $goods_info);
         }
-        $this->assign('cat_select', cat_lists(0, 0, true));
+        $cat_list=$this->model->table('crowd_category')->data($data)->select();
+        $this->assign('cat_select', $cat_list);
         $this->display();
     }
 
@@ -289,7 +290,8 @@ class CrowdController extends AdminController {
         }
 
         $this->assign('goods', $goods_list);
-        $this->assign('cat_select', cat_lists(0, 0, false));
+        $cat_list=$this->model->table('crowd_category')->data($data)->select();
+        $this->assign('cat_select', $cat_list);
         $this->display();
     }
 
@@ -443,7 +445,7 @@ class CrowdController extends AdminController {
                 'cat_name' => I('cat_name'),
                 'sort_order' => I('sort_order'),
                 'cat_desc' => I('cat_desc'),
-                'parent_id' => I('parent_id '),
+                'parent_id' => I('parent_id'),
                 'is_show' => I('is_show'),
             );
             //验证数据
@@ -473,7 +475,8 @@ class CrowdController extends AdminController {
             $cat_info = $this->model->table('crowd_category')->field()->where(array('cat_id' => $cat_id))->find();
             $this->assign('cat_info', $cat_info);
         }
-        $this->assign('cat_select', cat_lists(0, 0, true));
+        $cat_list=$this->model->table('crowd_category')->data($data)->select();
+        $this->assign('cat_select', $cat_list);
         $this->display();
     }
 
@@ -491,7 +494,6 @@ class CrowdController extends AdminController {
         $sql = 'select cat_id,cat_name,cat_desc,sort_order,is_show from ' . $this->model->pre . 'crowd_category order by sort_order desc limit ' . $offset;
         $cat_list = $this->model->query($sql);
         $this->assign('cat_info', $cat_list);
-        $this->assign('cat_select', cat_lists(0, 0, false));
         $this->display();
     }
 
@@ -694,5 +696,5 @@ class CrowdController extends AdminController {
         }
         return $price;
     }
+ }
 
-}
