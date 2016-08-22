@@ -301,7 +301,16 @@ class CrowdController extends AdminController {
         if (empty($id)) {
             $this->message(L('menu_select_del'), NULL, 'error');
         }
+        //删除项目
         $this->model->table('crowd_goods')
+                ->where(array('goods_id' => $id))
+                ->delete();
+        //删除回报方案
+        $this->model->table('crowd_plan')
+                ->where(array('goods_id' => $id))
+                ->delete();
+        //删除项目动态
+        $this->model->table('crowd_trends')
                 ->where(array('goods_id' => $id))
                 ->delete();
         $this->message(L('drop') . L('success'), url('index'));
