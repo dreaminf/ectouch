@@ -5,26 +5,37 @@
   <div class="row" style="margin:0">
     <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
       <div class="panel panel-default">
-        <div class="panel-heading">添加商品</div>
+        <div class="panel-heading">添加方案</div>
         <form action="{url('crowd/add_plan')}" method="post" enctype="multipart/form-data" role="form">
         <table id="general-table" class="table table-hover ectouch-table">
               <tr>
             <td width="200">方案价格:</td>
             <td><div class="col-md-4">
                 <input type='text' name='data[shop_price]' value="{$plans['shop_price']}" class="form-control input-sm" />
-              </div></td>
+              </div>
+              <span class="help_block">
+                  单份购买价格，输入数字，如：99
+                </span>
+              </td>
           </tr>
          <tr>
             <td width="200">回报内容:</td>
             <td><div class="col-md-4">
                 <input type='text' name='data[name]' value="{$plans['name']}" class="form-control input-sm" />
-              </div></td>
+              </div>
+                <span class="help_block">
+                  回报内容，输入文字介绍
+                </span></td>
           </tr>
             <tr>
             <td width="200">设置份数:</td>
             <td><div class="col-md-4">
                 <input type='text' name='data[number]' value="{$plans['number']}" class="form-control input-sm" />
-              </div></td>
+              </div>
+                <span class="help_block">
+                  份数总额，输入数字，如：99
+                </span>
+              </td>
           </tr>
           <tr>
             <td width="200">方案图片:</td>
@@ -36,7 +47,11 @@
             <td width="200">排序:</td>
             <td><div class="col-md-2">
                 <input type='text' name='data[sort_order]' value="{$plans['sort_order']}" class="form-control input-sm" />
-              </div></td>
+              </div>
+                <span class="help_block">
+                   此排序与前台方案排列顺序一致，建议按照购买金额由小到大排列
+                </span>
+              </td>
           </tr>
       
             </table>
