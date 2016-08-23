@@ -19,7 +19,7 @@ function isWeiXin(){
 
 function get_asynclist(url, src) {
 
-    $('#J_ItemList').more({'address': url, 'spinner_code': '<div style="text-align:center; margin:10px;"><img class="lazy" src="__TPL__/statics/img/loading_shop.png" data-original="' + src + '" /></div>'})
+    $('#J_ItemList').more({'address': url, 'spinner_code': '<div style="text-align:center; margin:10px;"><img class="lazy" src=" '+tpl+'/statics/img/loading_shop.png" data-original="' + src + '" /></div>'})
     $(window).scroll(function() {
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
             $('.get_more').click();
@@ -884,21 +884,21 @@ function openSpeDiv(message, goods_id, parent, goods_name, goods_thumb, goods_nu
 					 for (var spec = 0; spec < message.length; spec++) {
 					           newDiv.innerHTML += "<h6 style='text-align:left; background:#fff;color:#777;padding: 0 0 0.4rem 1.3rem;font-size: 1.5rem;'>"
 					                    + message[spec]['name'] +':'+ "</h6>";
-					
+
 					            if (message[spec]['attr_type'] == 1) {
                                     for (var val_arr = 0; val_arr < message[spec]['values'].length; val_arr++) {
                                         if (val_arr == 0) {
 
                                               newDiv.innerHTML += "<div class='n-input-box'><input style='margin-left:15px;' type='radio' name='spec_"+ message[spec]['attr_id']+ "' value='"+ message[spec]['values'][val_arr]['id']+ "' id='spec_value_"+ message[spec]['values'][val_arr]['id']+ "' onclick='attrChangePrice("+attr_arr+","+shop_price+")' /><label class='' color=#555555 data-value="+ message[spec]['values'][val_arr]['price']+">"+ message[spec]['values'][val_arr]['label']+ '</div>';
                                         } else {
-                                       
+
                                               newDiv.innerHTML += "<div class='n-input-box'><input style='margin-left:15px;' type='radio' name='spec_"+ message[spec]['attr_id']+ "' value='"+ message[spec]['values'][val_arr]['id']+ "' id='spec_value_"+ message[spec]['values'][val_arr]['id']+ "' onclick='attrChangePrice("+attr_arr+","+shop_price+")' /><label color=#555555 data-value="+ message[spec]['values'][val_arr]['price']+">"+ message[spec]['values'][val_arr]['label']+ '</div>';
                                         }
                                     }
                                     newDiv.innerHTML += "<input type='hidden' name='spec_list' value='"
                                             + val_arr + "' />";
                                 } else {
-					            	
+
 					                for (var val_arr = 0; val_arr < message[spec]['values'].length; val_arr++) {
 					                    newDiv.innerHTML += "<div class='n-input-box'><input style='margin-left:15px;' type='checkbox' name='spec_"
 					                            + message[spec]['attr_id']
@@ -916,9 +916,9 @@ function openSpeDiv(message, goods_id, parent, goods_name, goods_thumb, goods_nu
 					                        + val_arr + "' />";
 					            }
 					        }
- 
-        newDiv.innerHTML += "<div class='dis-box n-foot-but b-color-f'><a href='javascript:submit_div("+ goods_id+ ","+ parent+ ")' class='box-flex' ><div class='btn-submit'>"+ btn_buy+ "</div></a><a href='javascript:cancel_div()' class='box-flex' ><div class='btn-cart'>"+ is_cancel +"</div></a></div>";              
-    document.body.appendChild(newDiv); 
+
+        newDiv.innerHTML += "<div class='dis-box n-foot-but b-color-f'><a href='javascript:submit_div("+ goods_id+ ","+ parent+ ")' class='box-flex' ><div class='btn-submit'>"+ btn_buy+ "</div></a><a href='javascript:cancel_div()' class='box-flex' ><div class='btn-cart'>"+ is_cancel +"</div></a></div>";
+    document.body.appendChild(newDiv);
 
     // mask图层
     var newMask = document.createElement("div");
