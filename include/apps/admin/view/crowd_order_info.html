@@ -53,6 +53,7 @@
                      {$order_info[shipping_name]}
                     </div></td>
             </tr>
+            
             <tr>
                 <td width="200">发货单号:</td>
                 {if $order_info[order_status]==1 &&$order_info[pay_status]==2 && $order_info[shipping_status]==0 }   
@@ -65,7 +66,14 @@
                     </div></td>
                  {/if}
             </tr>
-        
+               {if $order_info[order_status]==1 &&$order_info[pay_status]==2 && $order_info[shipping_status]==0 } 
+             <tr>
+                <td width="200">打印快递单:</td>
+                        <td><div class="col-md-3 content">
+                     <input type="button" onclick="window.open('{url('print_order',array('order_id'=>$order_info[order_id]))}')" class="button" value="打印快递单" />
+                    </div></td>
+            </tr>
+            {/if}
               <tr>
                 <td align="center"  colspan=2>收货人信息:</td> </tr>
              <tr>

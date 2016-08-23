@@ -236,11 +236,12 @@ class CrowdController extends AdminController {
         }
         if (I('goods_id')) {
             $goods_id = I('goods_id', '', 'intval');
-            $goods_info = $this->model->table('crowd_goods')->field()->where(array('goods_id' => $goods_id))->find();
+            $goods_info = $this->model->table('crowd_goods')->where(array('goods_id' => $goods_id))->find();
             $goods_info['start_time'] = date('Y-m-d H:i:s', $goods_info['start_time']);
             $goods_info['end_time'] = date('Y-m-d H:i:s', $goods_info['end_time']);
             $goods_info['total_price'] = $this->crowd_buy_price($goods_info['goods_id']);
             $this->assign('goods', $goods_info);
+           
         }
         $cat_list=$this->model->table('crowd_category')->data($data)->select();
         $this->assign('cat_select', $cat_list);
@@ -282,13 +283,12 @@ class CrowdController extends AdminController {
         $this->assign('page', $this->pageShow($total));
         $sql = 'select goods_id,status,sum_price,total_price,shiping_time,goods_name,cat_id,sort_order,start_time,end_time from ' . $this->model->pre . 'crowd_goods where ' . $where . ' order by goods_id desc limit ' . $offset;
         $goods_list = $this->model->query($sql);
-
         foreach ($goods_list as $key => $value) {
             $goods_list[$key]['start_time'] = date('Y-m-d H:i:s', $value['start_time']);
             $goods_list[$key]['end_time'] = date('Y-m-d H:i:s', $value['end_time']);
             $goods_list[$key]['total_price'] = $this->crowd_buy_price($value['goods_id']);
         }
-
+        
         $this->assign('goods', $goods_list);
         $cat_list=$this->model->table('crowd_category')->data($data)->select();
         $this->assign('cat_select', $cat_list);
@@ -317,6 +317,140 @@ class CrowdController extends AdminController {
                 ->delete();
         $this->message(L('drop') . L('success'), url('index'));
     }
+    /**
+     * 众筹打印订单
+     */
+     public function print_order() {
+        $order_id = I('order_id');
+        $order = $this->model->table('crowd_order_info')->where(array('order_id' => $order_id))->find();
+          /* 打印快递单 */
+        //发货地址所在地
+        $region_array = array();
+        $region_id = C('shop_country') . ',' ;
+        $region_id .= C('shop_province') . ',' ;
+        $region_id .= C('shop_city') . ',';
+        $region_id = substr($region_id, 0, -1);
+        $region = $this->model->query("SELECT region_id, region_name FROM {pre}region WHERE region_id IN ($region_id)");
+        
+        if (!empty($region))
+        {
+            foreach($region as $region_data)
+            {
+                $region_array[$region_data['region_id']] = $region_data['region_name'];
+            }
+        }
+        $this->assign('shop_name',   C('shop_name'));
+        $this->assign('order_id',    $order_id);
+        $this->assign('province', $region_array[C('shop_province')]);
+        $this->assign('city', $region_array[C('shop_city')]);
+        $this->assign('shop_address', C('shop_address'));
+        $this->assign('service_phone',C('service_phone'));
+        $shipping = $this->model->getRow("SELECT * FROM {pre}shipping WHERE shipping_id = " . $order['shipping_id']);
+
+        //打印单模式
+        if ($shipping['print_model'] == 2)
+        {
+            /* 可视化 */
+            /* 快递单 */
+            $shipping['print_bg'] = empty($shipping['print_bg']) ? '' : $this->get_site_root_url() . $shipping['print_bg'];
+  
+            /* 取快递单背景宽高 */
+            if (!empty($shipping['print_bg']))
+            {
+              
+                $_size = @getimagesize($shipping['print_bg']);
+               
+                if ($_size != false)
+                {
+                    $shipping['print_bg_size'] = array('width' => $_size[0], 'height' => $_size[1]);
+                }
+            }
+
+            if (empty($shipping['print_bg_size']))
+            {
+                $shipping['print_bg_size'] = array('width' => '1024', 'height' => '600');
+            }
+
+     
+            /* 标签信息 */
+            $lable_box = array();
+            $lable_box['t_shop_country'] = $region_array[C('shop_country')]; //网店-国家
+            $lable_box['t_shop_city'] = $region_array[C('shop_city')]; //网店-城市
+            $lable_box['t_shop_province'] = $region_array[C('shop_province')]; //网店-省份
+            $lable_box['t_shop_name'] = C('shop_name'); //网店-名称
+            $lable_box['t_shop_district'] = ''; //网店-区/县
+            $lable_box['t_shop_tel'] = C('service_phone'); //网店-联系电话
+            $lable_box['t_shop_address'] = C('shop_address'); //网店-地址
+            $lable_box['t_customer_country'] = $region_array[$order['country']]; //收件人-国家
+            $lable_box['t_customer_province'] = $region_array[$order['province']]; //收件人-省份
+            $lable_box['t_customer_city'] = $region_array[$order['city']]; //收件人-城市
+            $lable_box['t_customer_district'] = $region_array[$order['district']]; //收件人-区/县
+            $lable_box['t_customer_tel'] = $order['tel']; //收件人-电话
+            $lable_box['t_customer_mobel'] = $order['mobile']; //收件人-手机
+            $lable_box['t_customer_post'] = $order['zipcode']; //收件人-邮编
+            $lable_box['t_customer_address'] = $order['address']; //收件人-详细地址
+            $lable_box['t_customer_name'] = $order['consignee']; //收件人-姓名
+
+            $gmtime_utc_temp = gmtime(); //获取 UTC 时间戳
+            $lable_box['t_year'] = date('Y', $gmtime_utc_temp); //年-当日日期
+            $lable_box['t_months'] = date('m', $gmtime_utc_temp); //月-当日日期
+            $lable_box['t_day'] = date('d', $gmtime_utc_temp); //日-当日日期
+
+            $lable_box['t_order_no'] = $order['order_sn']; //订单号-订单
+            $lable_box['t_order_postscript'] = $order['postscript']; //备注-订单
+            $lable_box['t_order_best_time'] = $order['best_time']; //送货时间-订单
+            $lable_box['t_pigeon'] = '√'; //√-对号
+            $lable_box['t_custom_content'] = ''; //自定义内容
+        
+            //标签替换
+            $temp_config_lable = explode('||,||', $shipping['config_lable']);
+            if (!is_array($temp_config_lable))
+            {
+                $temp_config_lable[] = $shipping['config_lable'];
+            }
+            foreach ($temp_config_lable as $temp_key => $temp_lable)
+            {
+                $temp_info = explode(',', $temp_lable);
+                if (is_array($temp_info))
+                {
+                    $temp_info[1] = $lable_box[$temp_info[0]];
+                }
+                $temp_config_lable[$temp_key] = implode(',', $temp_info);
+            }
+            $shipping['config_lable'] = implode('||,||',  $temp_config_lable);
+            $this->assign('shipping', $shipping);
+
+            $this->display('print');
+        }
+        elseif (!empty($shipping['shipping_print']))
+        {
+            /* 代码 */
+            echo $this->fetch("str:" . $shipping['shipping_print']);
+        }
+        else
+        {
+            $shipping_code = $this->model->getOne("SELECT shipping_code FROM {pre}shipping WHERE shipping_id=" . $order['shipping_id']);
+            if ($shipping_code)
+            {
+                include_once(ROOT_PATH . 'include/modules/shipping/' . $shipping_code . '.php');
+            }
+
+            if (!empty($_LANG['shipping_print']))
+            {
+                echo $this->fetch("str:$_LANG[shipping_print]");
+            }
+            else
+            {
+                echo $_LANG['no_print_shipping'];
+            }
+
+        }
+    }
+    
+    
+    
+    
+    
 
     /**
      * 众筹订单列表
@@ -696,5 +830,16 @@ class CrowdController extends AdminController {
         }
         return $price;
     }
- }
+    
+    
+    /**
+     * 获取站点根目录网址
+     *
+     * @access  private
+     * @return  Bool
+     */
+    private function get_site_root_url() {
+        return 'http://' . $_SERVER['HTTP_HOST'] . str_replace('/' . ADMIN_PATH . '/order.php', '', PHP_SELF);
+    }
 
+}
