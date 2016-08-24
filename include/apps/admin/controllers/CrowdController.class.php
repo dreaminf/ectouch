@@ -318,9 +318,9 @@ class CrowdController extends AdminController {
         $this->message(L('drop') . L('success'), url('index'));
     }
     /**
-     * 众筹打印订单
+     * 众筹打印快递单
      */
-     public function print_order() {
+     public function print_shipping() {
         $order_id = I('order_id');
         $order = $this->model->table('crowd_order_info')->where(array('order_id' => $order_id))->find();
           /* 打印快递单 */
@@ -446,11 +446,26 @@ class CrowdController extends AdminController {
 
         }
     }
-    
-    
-    
-    
-    
+    /**
+     * 众筹打印订单
+     */
+    public function print_order() {
+        $order_id = I('order_id');
+        $order = $this->model->table('crowd_order_info')->where(array('order_id' => $order_id))->find();
+//        dump($order);die;
+        $goods_attr = array();
+        $res = $this->model->table('crowd_order_info')->field('goods_id')->where(array('order_id' => $order_id))->find();;
+        $this->assign('goods_attr', $attr);
+        /* 是否打印订单，分别赋值 */
+        $this->assign('shop_name', C('shop_name'));
+        $this->assign('order', $order);
+        $this->assign('shop_address', C('shop_address'));
+        $this->assign('service_phone', C('service_phone'));
+        $this->assign('print_time', local_date(C('time_format')));
+        $this->assign('action_user', $_SESSION['admin_name']);
+        $this->template_dir = '../' . DATA_DIR . '/template';
+        $this->display('order_print');
+    }
 
     /**
      * 众筹订单列表

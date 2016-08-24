@@ -70,10 +70,16 @@
              <tr>
                 <td width="200">打印快递单:</td>
                         <td><div class="col-md-3 content">
-                     <input type="button" onclick="window.open('{url('print_order',array('order_id'=>$order_info[order_id]))}')" class="button" value="打印快递单" />
+                     <input type="button" onclick="window.open('{url('print_shipping',array('order_id'=>$order_info[order_id]))}')" class="button" value="打印快递单" />
                     </div></td>
             </tr>
             {/if}
+            <tr>
+                <td width="200">打印订单:</td>
+                        <td><div class="col-md-3 content">
+                     <input type="button" onclick="window.open('{url('print_order',array('order_id'=>$order_info[order_id]))}')" class="button" value="打印订单" />
+                    </div></td>
+            </tr>
               <tr>
                 <td align="center"  colspan=2>收货人信息:</td> </tr>
              <tr>
