@@ -368,8 +368,8 @@ class CrowdflowController extends CommonController {
 		$_SESSION['goods_id'] =$goods_id ;
 		$_SESSION['cp_id'] = $cp_id ;
 		$_SESSION['number'] = $number ;		
-		 if(empty($_SESSION['goods_id']) && empty($_SESSION['cp_id'])&&empty($_SESSION['number'])){
-			 ecs_header("Location: " . url('index/index') . "\n");
+		if(empty($_SESSION['goods_id']) && empty($_SESSION['cp_id'])&&empty($_SESSION['number'])){
+			ecs_header("Location: " . url('index/index') . "\n");
 			 
 		 }		
         // 检查用户是否已经登录 如果用户已经登录了则检查是否有默认的收货地址 如果没有登录则跳转到登录和注册页面
@@ -377,7 +377,17 @@ class CrowdflowController extends CommonController {
             /* 用户没有登录且没有选定匿名购物，转向到登录页面 */
             ecs_header("Location: " . url('user/login') . "\n");
         }
+		
+		/*判断重复商品订单 是否支付 */		
+		$condition = "user_id = '".$_SESSION[user_id]."' AND goods_id = '".$_SESSION['goods_id']."' AND cp_id = '".$_SESSION['cp_id']."' AND pay_status = 0 ";
+        $order_num = $this->model->table('crowd_order_info')->field('count(order_id)')->where($condition)->getOne();
+		if($order_num > 0)
+		{
+			//show_message('您有未支付的众筹订单，请付款后再提交新订单','返回上一页',U('mycrowd/index/order'));
+			show_message('您有未支付的众筹订单，请付款后再提交新订单', '去支付', url('mycrowd/crowd_order'), 'info');
+		}
 
+		
         // 获取收货人信息
         $consignee = model('Order')->get_consignee($_SESSION ['user_id']);
         /* 检查收货人信息是否完整 */
