@@ -116,19 +116,13 @@ class MycrowdController extends CommonController {
     public function crowd_order() {
 		
 		$this->status = I('request.status') ? intval(I('request.status')) : 1 ;
-		//dump($this->status);
 		$pay = $this->status;
         $size = I(C('page_size'),10);
         $count = model('Mycrowd')->crowd_orders_num($this->user_id, $this->status);//获取订单数量
-		//dump($count);
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('crowd_order', $filter), $size);
         $offset_page = explode(',', $offset);
         $orders = model('Mycrowd')->crowd_user_orders($this->user_id, $pay, $offset_page[1], $offset_page[0]);
-		/* if(!$orders){
-			show_message('暂无内容');
-		} */
-		//dump($orders);
         $this->assign('pay', $pay);
         $this->assign('title', L('order_list_lnk'));
         $this->assign('pager', $this->pageShow($count));
