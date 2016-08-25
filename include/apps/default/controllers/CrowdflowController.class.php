@@ -403,7 +403,7 @@ class CrowdflowController extends CommonController {
 		if($order_num > 0)
 		{
 			//show_message('您有未支付的众筹订单，请付款后再提交新订单','返回上一页',U('mycrowd/index/order'));
-			show_message('您有未支付的众筹订单，请付款后再提交新订单', '去支付', url('mycrowd/crowd_order'), 'info');
+			crowd_show_message('您有未支付的众筹订单，请付款后再提交新订单', '去支付', url('mycrowd/crowd_order'), 'info');
 		}
 
 		

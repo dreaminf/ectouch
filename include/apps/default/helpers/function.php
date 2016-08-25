@@ -841,6 +841,48 @@ function show_message($content, $links = '', $hrefs = '', $type = 'info', $auto_
 }
 
 /**
+ * 众筹显示一个提示信息
+ *
+ * @access  public
+ * @param   string  $content
+ * @param   string  $link
+ * @param   string  $href
+ * @param   string  $type               信息类型：warning, error, info
+ * @param   string  $auto_redirect      是否自动跳转
+ * @return  void
+ */
+function crowd_show_message($content, $links = '', $hrefs = '', $type = 'info', $auto_redirect = true) {
+    assign_template();
+
+    $msg['content'] = $content;
+    if (is_array($links) && is_array($hrefs)) {
+        if (!empty($links) && count($links) == count($hrefs)) {
+            foreach ($links as $key => $val) {
+                $msg['url_info'][$val] = $hrefs[$key];
+            }
+            $msg['back_url'] = $hrefs['0'];
+        }
+    } else {
+        $link = empty($links) ? L('back_up_page') : '<input style=margin-top:4rem type=button '.'value='.$links.'>';
+        $href = empty($hrefs) ? 'javascript:history.back()' : $hrefs;
+        $msg['url_info'][$link] = $href;
+        $msg['back_url'] = $href;
+    }
+
+    $msg['type'] = $type;
+    if (is_null(ECTouch::view()->get_template_vars('helps'))) {
+        ECTouch::view()->assign('helps', model('Article')->get_shop_help()); // 网店帮助
+    }
+
+    ECTouch::view()->assign('title', L('tips_message'));
+    ECTouch::view()->assign('auto_redirect', $auto_redirect);
+    ECTouch::view()->assign('message', $msg);
+    ECTouch::view()->display('crowd/message.html');
+
+    exit;
+}
+
+/**
  * 将一个形如+10, 10, -10, 10%的字串转换为相应数字，并返回操作符号
  *
  * @access  public
