@@ -299,8 +299,32 @@ class CrowdbuyModel extends CommonModel {
         return $row;
     }
 	
-	
-	
+	 /**
+     * 付款更新众筹信息
+     *
+     */
+	function update_crowd($order_id = 0){
+		
+		$order_info = $this->model->table('crowd_order_info')->field('goods_id,cp_id,goods_number')->where("order_id = '" . $order_id . "' ")->find();
+		/* 统计方案售出数量 */
+		$crowd_plan = $this->model->table('crowd_plan')->field('backey_num')->where("goods_id = '" . $order_info['goods_id'] . "' and cp_id = '" . $order_info['cp_id'] . "' ")->find();
+		$backey_num = $crowd_plan['backey_num']+$order_info['goods_number'];			
+		$where['goods_id'] = $order_info['goods_id'];
+		$where['cp_id'] = $order_info['cp_id'];
+		$datas['backey_num'] = $backey_num;
+		$this->model->table('crowd_plan')->data($datas)->where($where)->update();
+
+        /* 统计项目累计售出数量 */
+		$goods = $this->model->table('crowd_goods')->field('buy_num')->where("goods_id = '" . $order_info['goods_id'] . "' ")->find();
+		$buy_num = $goods['buy_num']+$order_info['goods_number'];			
+		$where1['goods_id'] = $order_info['goods_id'];
+		$data1['buy_num'] = $buy_num;
+		$this->model->table('crowd_goods')->data($data1)->where($where1)->update();	
+		
+		
+		
+		
+	}
 	
 	
 	

@@ -585,19 +585,19 @@ class CrowdflowController extends CommonController {
         $order ['order_id'] = $new_order_id;
 		
 		/* 统计方案售出数量 */
-		$crowd_plan = $this->model->table('crowd_plan')->field('backey_num')->where("goods_id = '" . $_SESSION['goods_id'] . "' and cp_id = '" . $_SESSION['cp_id'] . "' ")->find();
+		/* $crowd_plan = $this->model->table('crowd_plan')->field('backey_num')->where("goods_id = '" . $_SESSION['goods_id'] . "' and cp_id = '" . $_SESSION['cp_id'] . "' ")->find();
 		$backey_num = $crowd_plan['backey_num']+$cart_goods[number];			
 		$where['goods_id'] = $_SESSION['goods_id'];
 		$where['cp_id'] = $_SESSION['cp_id'];
 		$datas['backey_num'] = $backey_num;
-		$this->model->table('crowd_plan')->data($datas)->where($where)->update();
+		$this->model->table('crowd_plan')->data($datas)->where($where)->update(); */
 
         /* 统计项目累计售出数量 */
-		$goods = $this->model->table('crowd_goods')->field('buy_num')->where("goods_id = '" . $_SESSION['goods_id'] . "' ")->find();
+		/* $goods = $this->model->table('crowd_goods')->field('buy_num')->where("goods_id = '" . $_SESSION['goods_id'] . "' ")->find();
 		$buy_num = $goods['buy_num']+$cart_goods[number];			
 		$where1['goods_id'] = $_SESSION['goods_id'];
 		$data1['buy_num'] = $buy_num;
-		$this->model->table('crowd_goods')->data($data1)->where($where1)->update();	
+		$this->model->table('crowd_goods')->data($data1)->where($where1)->update();	 */
 				
 		
 		/* 如果全部使用余额支付，检查余额是否足够 */
@@ -617,6 +617,9 @@ class CrowdflowController extends CommonController {
         /* 处理余额、积分、红包 */
         if ($order ['user_id'] > 0 && $order ['surplus'] > 0) {
             model('ClipsBase')->log_account_change($order ['user_id'], $order ['surplus'] * (- 1), 0, 0, 0, sprintf(L('pay_order'), $order ['order_sn']));
+			//付款更新众筹信息
+			model('Crowdbuy')->update_crowd($order['order_id']);
+			
         }
         if ($order ['user_id'] > 0 && $order ['integral'] > 0) {
             model('ClipsBase')->log_account_change($order ['user_id'], 0, 0, 0, $order ['integral'] * (- 1), sprintf(L('pay_order'), $order ['order_sn']));
