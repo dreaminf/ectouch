@@ -38,6 +38,19 @@
               </td>
           </tr>
           <tr>
+		<td>是否显示</td>
+			<td><div class="col-sm-2">
+				<div  class="btn-group" data-toggle="buttons">
+					<label class="btn btn-primary {if $plans['status']==1}active{/if}">
+						<input type="radio" name="data[status]" value="1" {if $plans['status']==1}checked{/if}> 显示
+					</label>
+					<label class="btn btn-primary {if $plans['status']==0}active{/if}">
+						<input type="radio" name="data[status]" value="0" {if $plans['status']==0}checked{/if}> 不显示
+					</label>
+				</div>
+			</div></td>
+		</tr>
+          <tr>
             <td width="200">方案图片:</td>
             <td><div class="col-md-4">
                 <input type="file" value="{$plans['cp_img']}" name="cp_img" class="form-control input-sm">
@@ -66,7 +79,6 @@
             <td width="200"></td>
             <td><div class="col-md-4">
                 <input type="hidden" name="data[cp_id]" value="{$plans['cp_id']}" />
-                <input type="hidden" name="data[status]" value="0" />
                 <input type="hidden" name="data[goods_id]" value="{$goods_id}" />
   		<input type="submit" value="{$lang['button_submit']}" class="btn btn-primary" />
                 <input type="reset" value="{$lang['button_reset']}" class="btn btn-default" />
