@@ -54,6 +54,27 @@ class CrowdController extends AdminController {
         $this->assign('goods_id', $goods_id);
         if (IS_POST) {
             $data = I('post.data');
+            if(empty($data['shop_price'])){
+                $this->message('方案价格不能为空'); 
+            }
+            if( !preg_match('/^[0-9]*$/', $data['shop_price'])){
+                $this->message('方案价格必须是数字'); 
+            }
+            if(empty($data['name'])){
+                $this->message('回报内容不能为空'); 
+            }
+             if(empty($data['number'])){
+                $this->message('方案份数不能为空'); 
+            }
+            if( !preg_match('/^[0-9]*$/', $data['number'])){
+                $this->message('方案份数必须是数字'); 
+            }
+            if(empty($data['sort_order'])){
+                $this->message('排序不能为空'); 
+            }
+            if( !preg_match('/^[0-9]*$/', $data['sort_order'])){
+                $this->message('排序必须是数字'); 
+            }
             // 商品图片处理
             if ($_FILES['cp_img']['name']) {
                 $result = $this->ectouchUpload('cp_img', 'crowd_plan');
@@ -131,6 +152,15 @@ class CrowdController extends AdminController {
         if (IS_POST) {
             $data = I('post.data');
             $data['add_time'] = time();
+            if(empty($data['content'])){
+                $this->message('项目动态描述不能为空'); 
+            }
+            if(empty($data['sort_order'])){
+                $this->message('排序不能为空'); 
+            }
+            if( !preg_match('/^[0-9]*$/', $data['sort_order'])){
+                $this->message('排序必须是数字'); 
+            }
             if (empty($data['id'])) {
                 //入库
                 $this->model->table('crowd_trends')
@@ -175,6 +205,25 @@ class CrowdController extends AdminController {
     public function goods_add() {
         if (IS_POST) {
             $data = I('post.data');
+            if(empty($data['goods_name'])){
+                $this->message('项目名称不能为空'); 
+            }
+            if(empty($data['sum_price'])){
+                $this->message('目标金额不能为空'); 
+            }
+            if( !preg_match('/^[0-9]*$/', $data['sum_price'])){
+                $this->message('目标金额必须是数字'); 
+            }
+            if(empty($data['cat_id'])){
+                $this->message('项目分类不能为空'); 
+            }
+            if(empty($_FILES['goods_img']['name'])){
+                $this->message('请上传图片'); 
+            }
+            if(empty($data['shiping_time'])){
+                $this->message('预计发货时间不能为空'); 
+            }
+          
             $data['goods_desc'] = $_POST['goods_desc'];
             // 商品图片处理
             if (!empty($_FILES['goods_img']['name'])) {
@@ -599,6 +648,12 @@ class CrowdController extends AdminController {
                 'parent_id' => I('parent_id'),
                 'is_show' => I('is_show'),
             );
+            if(empty($data['sort_order'])){
+                $this->message('排序不能为空'); 
+            }
+            if( !preg_match('/^[0-9]*$/', $data['sort_order'])){
+                $this->message('排序必须是数字'); 
+            }
             //验证数据
             $result = Check::rule(array(
                         Check::must($data['cat_name']),
@@ -760,6 +815,18 @@ class CrowdController extends AdminController {
             $data['is_open'] = I('post.is_open');
             $data['sort_order'] = I('post.sort_order');
             $data['article_id'] = I('post.article_id');
+            if(empty($data['title'])){
+                $this->message('标题不能为空'); 
+            }
+            if(empty($data['description'])){
+                $this->message('描述不能为空'); 
+            }
+            if(empty($data['sort_order'])){
+                $this->message('排序不能为空'); 
+            }
+            if( !preg_match('/^[0-9]*$/', $data['sort_order'])){
+                $this->message('排序必须是数字'); 
+            }
             if (empty($data['article_id'])) {
                 //插入数据   
                 $this->model->table('crowd_article')
