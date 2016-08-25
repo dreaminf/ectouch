@@ -65,6 +65,20 @@
                                 </div>
                             </td>
                         </tr>
+                        
+                               <tr>
+		  <td>是否推荐</td>
+			<td><div class="col-sm-2">
+				<div  class="btn-group" data-toggle="buttons">
+					<label class="btn btn-primary {if $goods['recommend']==1}active{/if}">
+						<input type="radio" name="data[recommend]" value="1" {if $goods['recommend']==1}checked{/if}> 推荐
+					</label>
+					<label class="btn btn-primary {if $goods['recommend']==0}active{/if}">
+						<input type="radio" name="data[recommend]" value="0" {if $goods['recommend']==0}checked{/if}> 不推荐
+					</label>
+				</div>
+			</div></td>
+		</tr>
                         <tr>
                             <td width="200">预计发货时间(天数：例：3天)</td>
                             <td>
