@@ -66,9 +66,9 @@
 <div class="two-btn ect-padding-tb ect-padding-lr ect-margin-tb text-center"> 
   <!-- {if $smarty.session.user_id gt 0 and $consignee.address_id gt 0} --> 
   <!-- 如果登录了，显示删除按钮 --> 
-  <a  class="btn btn-info11 n-but-bor"  onclick="if (confirm('{$lang.drop_consignee_confirm}')) location.href='{:url('crowd_flow/crowd_del_address_list',array('id'=>$this->_var['consignee']['address_id']))}'" >{$lang.drop}</a> 
+  <a  class="btn  btn-raise-box"  onclick="if (confirm('{$lang.drop_consignee_confirm}')) location.href='{:url('crowd_flow/crowd_del_address_list',array('id'=>$this->_var['consignee']['address_id']))}'" >{$lang.drop}</a> 
   <!-- {/if} -->
-  <button type="submit" class="btn btn-info ect-bg-colory" name="Submit">{$lang.shipping_address}</button>
+  <button type="submit" class="btn   btn-submit-raise" name="Submit">{$lang.shipping_address}</button>
 </div>
 <input type="hidden" name="step" value="consignee" />
 <input type="hidden" name="act" value="checkout" />
