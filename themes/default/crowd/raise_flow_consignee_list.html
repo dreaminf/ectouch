@@ -79,7 +79,6 @@
 		/*設置默認收貨地址*/
 		function edit_address_info(address_id) {
 			var url = 'index.php?m=default&c=crowdflow&a=crowd_edit_address_info';
-			alert(address_id);
 			$.get(url, {
 				'id': address_id
 			}, function(data) {
