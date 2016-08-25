@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_topic` (
   `htmls` mediumtext,
   `keywords` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
-  KEY `topic_id` (`topic_id`)
+  PRIMARY KEY (`topic_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
