@@ -29,6 +29,8 @@ class CrowdflowController extends CommonController {
      * 众筹项目订单确认页
      */
     public function crowd_checkout() {
+		/* 取得购物类型 */
+        //$flow_type = isset($_SESSION ['flow_type']) ? intval($_SESSION ['flow_type']) : CART_GENERAL_GOODS;
 		if(!empty($_POST)){
 			$goods_id = I('request.goods_id');
 			$cp_id = I('request.cp_id');
@@ -59,6 +61,11 @@ class CrowdflowController extends CommonController {
             /* 如果不完整则转向到收货人信息填写界面 */
             ecs_header("Location: " . url('crowdflow/crowd_consignee_list') . "\n");
         }
+		
+		/* 对商品信息赋值 */
+		$cart_goods = model('Crowdbuy')->cart_crowd_goods($_SESSION['goods_id'], $_SESSION['cp_id'], $_SESSION['number']);  //项目信息
+		$this->assign('goods', $cart_goods);
+		
 		// 取得订单信息
         $order = model('Crowdbuy')->crowd_flow_order_info();
 		$this->assign('order', $order);
@@ -72,9 +79,10 @@ class CrowdflowController extends CommonController {
 
         $_SESSION ['flow_consignee'] = $consignee;
         $this->assign('consignee', $consignee);		
-		
-		$cart_goods = model('Crowdbuy')->cart_crowd_goods($_SESSION['goods_id'], $_SESSION['cp_id'], $_SESSION['number']);  //项目信息
-		$this->assign('goods', $cart_goods);		
+		//计算订单的费用
+        $total = model('Crowdbuy')->crowd_order_fee($order, $cart_goods, $consignee);
+		$this->assign('total', $total);
+	
 		
 		/* 取得配送列表 */
 		$region = array(
@@ -88,13 +96,10 @@ class CrowdflowController extends CommonController {
         $insure_disabled = true;
         $cod_disabled = true;
 
-        // 查看购物车中是否全为免运费商品，若是则把运费赋为零
-        $condition = "`session_id` = '" . SESS_ID . "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0";
-        $shipping_count = $this->model->table('cart')->field('count(*)')->where($condition)->getOne();
         foreach ($shipping_list as $key => $val) {
 
             $shipping_cfg = unserialize_config($val ['configure']);
-            $shipping_fee = ($shipping_count == 0 and $cart_weight_price ['free_shipping'] == 1) ? 0 : shipping_fee($val['shipping_code'], unserialize($val ['configure']), $cart_weight_price ['weight'], $cart_weight_price ['amount'], $cart_weight_price ['number']);
+            $shipping_fee = shipping_fee($val['shipping_code'], unserialize($val ['configure']), $cart_weight_price ['weight'], $cart_weight_price ['amount'], $cart_weight_price ['number']);
 
             $shipping_list [$key] ['format_shipping_fee'] = price_format($shipping_fee, false);
             $shipping_list [$key] ['shipping_fee'] = $shipping_fee;
@@ -111,7 +116,6 @@ class CrowdflowController extends CommonController {
                 unset($shipping_list[$key]);
             }
         }
-
         $this->assign('shipping_list', $shipping_list);
         $this->assign('insure_disabled', $insure_disabled);
         $this->assign('cod_disabled', $cod_disabled);
@@ -477,7 +481,6 @@ class CrowdflowController extends CommonController {
 
         /* 订单中的总额 */
         $total = model('Crowdbuy')->crowd_order_fee($order, $cart_goods, $consignee);
-
         $order ['bonus'] = $total ['bonus'];
         $order ['goods_amount'] = $total ['goods_price'];
         $order ['discount'] = $total ['discount'];
