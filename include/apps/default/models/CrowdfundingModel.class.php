@@ -174,7 +174,7 @@ class CrowdfundingModel extends CommonModel {
         }
 
         $sql = 'SELECT COUNT(*) as count FROM ' . $this->pre .
-                "crowd_comment WHERE goods_id = '$id' AND rank > 0  AND status = 1 AND parent_id = 0" .
+                "crowd_comment WHERE goods_id = '$id'  AND status = 1 AND parent_id = 0" .
                 ' ORDER BY id DESC';
         $result = $this->row($sql);
         $info['sum_count'] = $result['count'];
