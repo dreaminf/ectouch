@@ -227,6 +227,10 @@ class CrowdController extends AdminController {
                 if ($data['status'] == 1) {
                     $data['sum_price'] = $data['total_price'];
                 }
+                if(empty($_FILES['gallery_img']['name'])){
+                $goods_info = $this->model->table('crowd_goods')->where(array('goods_id' => $data[goods_id]))->find();
+                $data['gallery_img']=$goods_info['gallery_img']; 
+                }
                 $this->model->table('crowd_goods')
                         ->data($data)
                         ->where(array('goods_id' => $data['goods_id']))
@@ -240,8 +244,8 @@ class CrowdController extends AdminController {
             $goods_info['start_time'] = date('Y-m-d H:i:s', $goods_info['start_time']);
             $goods_info['end_time'] = date('Y-m-d H:i:s', $goods_info['end_time']);
             $goods_info['total_price'] = $this->crowd_buy_price($goods_info['goods_id']);
+            $goods_info['gallery_img']= explode(',', $goods_info['gallery_img']);
             $this->assign('goods', $goods_info);
-           
         }
         $cat_list=$this->model->table('crowd_category')->data($data)->select();
         $this->assign('cat_select', $cat_list);
@@ -288,7 +292,6 @@ class CrowdController extends AdminController {
             $goods_list[$key]['end_time'] = date('Y-m-d H:i:s', $value['end_time']);
             $goods_list[$key]['total_price'] = $this->crowd_buy_price($value['goods_id']);
         }
-        
         $this->assign('goods', $goods_list);
         $cat_list=$this->model->table('crowd_category')->data($data)->select();
         $this->assign('cat_select', $cat_list);
@@ -452,7 +455,6 @@ class CrowdController extends AdminController {
     public function print_order() {
         $order_id = I('order_id');
         $order = $this->model->table('crowd_order_info')->where(array('order_id' => $order_id))->find();
-//        dump($order);die;
         $goods_attr = array();
         $res = $this->model->table('crowd_order_info')->field('goods_id')->where(array('order_id' => $order_id))->find();;
         $this->assign('goods_attr', $attr);
