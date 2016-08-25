@@ -1,5 +1,25 @@
-<!-- #BeginLibraryItem "/library/page_header.lbi" -->
-<!-- #EndLibraryItem -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="format-detection" content="telephone=no">
+{if $auto_redirect}
+<meta http-equiv="refresh" content="3;URL={$message.back_url}" />
+{/if}
+<title>{$title}</title>
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/swiper/css/swiper.min.css"/>
+<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
+<link rel="stylesheet" href="__TPL__/css/photoswipe.css">
+<link rel="stylesheet" href="__TPL__/css/style.css">
+<script type="text/javascript" src="__TPL__/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__TPL__/js/ectouch.js"></script>
+<link rel="stylesheet" href="__TPL__/statics/css/search.css" />
+</head>
+<body>
+{$share_img}
 <script type="text/javascript" src="__PUBLIC__/script/region.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/shopping_flow.js"></script>
 <script type="text/javascript">
@@ -26,17 +46,88 @@
 			<a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span>
 			<a href="javascript:;" onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune"></a>
 		</header>
-		<nav class="ect-nav ect-nav-list" style="display:none;">
-			<!-- #BeginLibraryItem "/library/page_menu.lbi" -->
-			<!-- #EndLibraryItem -->
-		</nav>
+		
 	</div>
 	<section class="ect-text-style">
 		<!-- 如果有收货地址，循环显示用户的收获地址 -->
 		<!-- {foreach from=$consignee_list item=consignee key=sn} -->
 		<form action="{:url('crowdflow/crowd_consignee')}" method="post" name="theForm" id="theForm" onSubmit="return checkConsignee(this)">
-			<!-- #BeginLibraryItem "/Library/crowd_consignee.lbi" -->
-			<!-- #EndLibraryItem -->
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+			<div class="ect-bg-colorf flow-consignee">
+			  <ul>
+				<li>
+				  <div class="input-text"><b class="pull-left">{$lang.consignee_name}：</b><span style="top: -0.5rem;">
+					<input name="consignee" maxlength="10" type="text" class="inputBg" id="consignee_{$sn}" placeholder="{$lang.consignee_name}{$lang.require_field}" value="{$consignee.consignee|escape}">
+					</span></div>
+				</li>
+				<li>
+				  <div class="input-text"><b class="pull-left">{$lang.mobile}：</b><span style="top: -0.5rem;">
+					<input name="mobile" maxlength="11" type="text" class="inputBg"  id="mobile_{$sn}" placeholder="{$lang.mobile}{$lang.require_field}" value="{$consignee.mobile|escape}">
+					</span></div>
+				</li>
+
+				<!-- 购物车中存在实体商品显示国家和地区 -->
+				<li style="display:none">
+					<div class="input-text"><b class="pull-left">{$lang.city_district}：</b><span>
+					<select name="country" id="selCountries_{$sn}" onchange="region.changed(this, 1, 'selProvinces_{$sn}')">
+					  <option value="0">{$lang.please_select}{$name_of_region[0]}</option>
+					  <!-- {foreach from=$country_list item=country} -->
+					  <option value="{$country.region_id}"{if $country.region_id eq '1'} selected{/if}>{$country.region_name}</option>
+					  <!-- {/foreach} -->
+					</select>
+				  </div>
+				</li>
+				<li>
+					<div class="input-text"><b class="pull-left">省/直辖市：</b><span style="top: -0.5rem;">
+					<select name="province" id="selProvinces_{$sn}" onchange="region.changed(this, 2, 'selCities_{$sn}')">
+					  <option value="0">{$lang.please_select}{$name_of_region[1]}</option>
+					  <!-- {foreach from=$province_list item=province} -->
+					  <option value="{$province.region_id}" {if $consignee.province eq $province.region_id}selected{/if}>{$province.region_name}</option>
+					  <!-- {/foreach} -->
+					</select>
+				  </div>
+				</li>
+				<li>
+					<div class="input-text"><b class="pull-left">城市：</b><span style="top: -0.5rem;">
+					<select name="city" id="selCities_{$sn}" onchange="region.changed(this, 3, 'selDistricts_{$sn}')">
+					  <option value="0">{$lang.please_select}{$name_of_region[2]}</option>
+					  <!-- {foreach from=$city_list.$sn item=city} -->
+					  <option value="{$city.region_id}" {if $consignee.city eq $city.region_id}selected{/if}>{$city.region_name}</option>
+					  <!-- {/foreach} -->
+					</select>
+				  </div>
+				</li>
+				<li id="selDistricts_{$sn}_box" {if !$district_list.$sn}style="display:none"{/if}>
+					<div class="input-text"><b class="pull-left">区/县：</b><span style="top: -0.5rem;">
+					<select name="district" id="selDistricts_{$sn}">
+					  <option value="0">{$lang.please_select}{$name_of_region[3]}</option>
+					  <!-- {foreach from=$district_list.$sn item=district} -->
+					  <option value="{$district.region_id}" {if $consignee.district eq $district.region_id}selected{/if}>{$district.region_name}</option>
+					  <!-- {/foreach} -->
+					</select
+					  >
+				  </div>
+				</li>
+
+
+				<!-- 购物车中存在实体商品显示详细地址 -->
+				<li class="input-text"><b class="pull-left">{$lang.detailed_address}：</b>
+				  <textarea name="address" placeholder="{$lang.detailed_address}{$lang.require_field}"  id="address_{$sn}">{$consignee.address|escape}</textarea>
+				</li>
+
+			  </ul>
+			</div>
+			<div class="two-btn ect-padding-tb ect-padding-lr ect-margin-tb text-center"> 
+			  <!-- {if $smarty.session.user_id gt 0 and $consignee.address_id gt 0} --> 
+			  <!-- 如果登录了，显示删除按钮 --> 
+			  <a  class="btn  btn-raise-box"  onclick="if (confirm('{$lang.drop_consignee_confirm}')) location.href='{:url('crowd_flow/crowd_del_address_list',array('id'=>$this->_var['consignee']['address_id']))}'" >{$lang.drop}</a> 
+			  <!-- {/if} -->
+			  <button type="submit" class="btn   btn-submit-raise" name="Submit">{$lang.shipping_address}</button>
+			</div>
+			<input type="hidden" name="step" value="consignee" />
+			<input type="hidden" name="act" value="checkout" />
+			<input name="address_id" type="hidden" value="{$consignee.address_id}" />
+
 		</form>
 		<!-- {/foreach} -->
 	</section>
