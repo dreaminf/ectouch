@@ -77,8 +77,9 @@ class CrowdfundingModel extends CommonModel {
             $row['cat_id'] = $row['cat_id'];
             $row['goods_name'] = $row['goods_name'];
             $row['buy_num'] = $this->crowd_buy_num($row['goods_id']);
-            $row['time'] = floor(($row['end_time'] - $row['start_time']) / 86400);
-            $row['start_time'] = floor((time() - $row['start_time']) / 86400);
+			//$row['time'] = floor(($row['end_time'] - time()) / 86400);
+			$row['time'] = $this->end_time_past(time(),$row['end_time'] );
+			$row['start_time'] = $this->start_time_past($row['start_time'], time());
             //$row['shiping_time'] = local_date(C('time_format'), $row['shiping_time']);
             $row['shiping_time'] = $row['shiping_time'];
             $row['sum_price'] = $row['sum_price'];
@@ -93,7 +94,7 @@ class CrowdfundingModel extends CommonModel {
             return false;
         }
     }
-
+	
     /* 获取当前项目购买人数量 */
 
     function crowd_buy_num($goods_id = 0) {
@@ -301,21 +302,7 @@ class CrowdfundingModel extends CommonModel {
         $sql = "SELECT user_id, add_time, goods_price  FROM " . $this->pre . "crowd_order_info  " . " WHERE goods_id = '" . $goods_id . "' AND extension_code = 'crowd_buy'  ORDER BY order_id DESC ";
         $buy_list = $this->query($sql);
         foreach ($buy_list as $k => $v) {
-
-            $time = time() - $v['add_time'];
-            if (($time / 60) < 1) {
-                $buy_list[$k]['add_time'] = '刚刚';
-            }
-            if (($time / 60) > 1 && ($time / 60) < 60) {
-                $buy_list[$k]['add_time'] = intval($time / 60) . '分钟前';
-            }
-            if (($time / 60) > 60 && ($time / 60) < (60 * 24)) {
-                $buy_list[$k]['add_time'] = intval($time / 3600) . '小时前';
-            }
-            if (($time / 60) > (60 * 24)) {
-                $buy_list[$k]['add_time'] = intval($time / (3600 * 24)) . '天前';
-            }
-
+			$buy_list[$k]['add_time'] = $this->start_time_past($v['add_time'],time());      
             $user = $this->model->table('users')->where("user_id=" . $v['user_id'])->field('user_name')->find();
             $wechat_user = $this->model->table('wechat_user')->where("ect_uid=" . $v['user_id'])->field('nickname,headimgurl')->find();
             if (!empty($wechat_user)) {
@@ -329,5 +316,104 @@ class CrowdfundingModel extends CommonModel {
 
         return $buy_list;
     }
+	
+	
+	//将时间转化为开始，刚刚、几分钟前等等 
+	function start_time_past($time=0,$now=0){
+		$time_past="";
+
+		if($now>=$time)
+		{		
+			//相差时间
+			$diff=$now-$time;
+			
+			//一分钟内：刚刚
+			if($diff>0 && $diff<=60)
+			{
+				$time_past="刚刚";
+			}
+			//一小时内：n分钟前
+			elseif($diff>60 && $diff<=3600)
+			{
+				$time_past=floor($diff/60)."分钟前";
+			}
+			//一天内：n小时前
+			elseif($diff>3600 && $diff<=86400)
+			{
+				$time_past=floor($diff/3600)."小时前";
+			}
+			//一月内：n天前
+			elseif($diff>86400 && $diff<=2592000)
+			{
+				$time_past=floor($diff/86400)."天前";
+			}
+			//一年内：n月前
+			elseif($diff>2592000 && $diff<=31536000)
+			{
+				$time_past=floor($diff/2592000)."月前";
+			}
+			//一年后：n年前
+			elseif($diff>31536000)
+			{
+				$time_past=floor($diff/31536000)."年前";
+			}
+		}
+		else
+		{
+			$time_past="时间不合法";
+		}
+
+		return $time_past;
+	}
+
+	//将时间转化为剩余、几分钟前等等  
+	function end_time_past($time=0,$now=0){
+		$time_past="";
+
+		if($now>=$time)
+		{		
+			//相差时间
+			$diff=$now-$time;
+			
+			//一分钟内：刚刚
+			if($diff>0 && $diff<=60)
+			{
+				$time_past="即将结束";
+			}
+			//一小时内：n分钟前
+			elseif($diff>60 && $diff<=3600)
+			{
+				$time_past=floor($diff/60)."分钟";
+			}
+			//一天内：n小时前
+			elseif($diff>3600 && $diff<=86400)
+			{
+				$time_past=floor($diff/3600)."小时";
+			}
+			//一月内：n天前
+			elseif($diff>86400 && $diff<=2592000)
+			{
+				$time_past=floor($diff/86400)."天";
+			}
+			//一年内：n月前
+			elseif($diff>2592000 && $diff<=31536000)
+			{
+				$time_past=floor($diff/2592000)."月";
+			}
+			//一年后：n年前
+			elseif($diff>31536000)
+			{
+				$time_past=floor($diff/31536000)."年";
+			}
+		}
+		else
+		{
+			$time_past="时间不合法";
+		}
+
+		return $time_past;
+	}
+	
+	
 
 }
