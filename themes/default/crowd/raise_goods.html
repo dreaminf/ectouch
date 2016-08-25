@@ -413,17 +413,17 @@
 						noSwiping: true,
 						autoHeight: true,
 						onSlideChangeStart: function() {
-							$(".j-tab-title-raise .active").removeClass('active')
-							$(".j-tab-title-raise li").eq(tabsSwiper.activeIndex).addClass('active')
+							$(".j-tab-title .active").removeClass('active')
+							$(".j-tab-title li").eq(tabsSwiper.activeIndex).addClass('active')
 						}
 					})
-					$(".j-tab-title-raise li").on('touchstart mousedown', function(e) {
+					$(".j-tab-title li").on('touchstart mousedown', function(e) {
 						e.preventDefault()
-						$(".j-tab-title-raise .active").removeClass('active')
+						$(".j-tab-title .active").removeClass('active')
 						$(this).addClass('active')
 						tabsSwiper.slideTo($(this).index())
 					})
-					$(".j-tab-title-raise li").click(function(e) {
+					$(".j-tab-title li").click(function(e) {
 						e.preventDefault()
 					})
 					
