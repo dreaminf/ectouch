@@ -75,7 +75,7 @@
 										<img class="product-list-img" src="{$goods.goods_img}" />
 										<div class="product-text">
 											<h4>{$goods.goods_name}</h4>
-											<p class="col-3 f-03"><em class="col-9">已筹资金:</em><em class="color-red"><!--{if $goods.total_price }-->{$goods.total_price}<!--{else}-->0.00<!--{/if}--></em>元<em class="fr col-9 f-03">支持人:<em class="color-red">{$goods.buy_num}</em>人</em>
+											<p class="col-3 f-03"><em class="col-9">已筹资金:</em><em class="raise-col"><!--{if $goods.total_price }-->{$goods.total_price}<!--{else}-->0.00<!--{/if}--></em>元<em class="fr col-9 f-03">支持人:<em class="raise-col">{$goods.buy_num}</em>人</em>
 											</p>
 											<div class="raise-progressBar dis-box">
 												<p class="wrap box-flex">
@@ -83,7 +83,7 @@
 												</p>
 												<p class="txt">{$goods.bar}%</p>
 											</div>
-											<p class="col-3 f-03">支持<em class="color-red">￥{$goods.goods_price}</em><em class="col-9 f-02">元</em><em class="fr col-9">×{$goods.goods_number}</em></p>
+											<p class="col-3 f-03">支持<em class="raise-col">￥{$goods.goods_price}</em><em class="col-9 f-02">元</em><em class="fr col-9">×{$goods.goods_number}</em></p>
 											<p class="col-9 f-03 onelist-hidden">{$goods.name}</p>
 										</div>
 
@@ -98,7 +98,7 @@
 							<li>
 								<section class="dis-box ">
 									<label class="t-remark g-t-temark">配送方式</label>
-									<div class="box-flex t-goods1 text-right onelist-hidden"><span>{$order.shipping_name}</span> <em class="t-first">¥{$order.shipping_fee}</em></div>
+									<div class="box-flex t-goods1 text-right onelist-hidden"><span>{$order.shipping_name}</span> <em class="raise-col">¥{$order.shipping_fee}</em></div>
 								</section>
 							</li>
 							<li>
@@ -113,7 +113,7 @@
 							<li>
 								<section class="dis-box ">
 									<label class="t-remark g-t-temark">支付方式</label>
-									<div class="box-flex t-goods1 text-right onelist-hidden"><span>{$order.pay_name}</span> <em class="t-first">¥{$order.pay_fee}</em></div>
+									<div class="box-flex t-goods1 text-right onelist-hidden"><span>{$order.pay_name}</span> <em class="raise-col">¥{$order.pay_fee}</em></div>
 								</section>
 							</li>
 							<li>
@@ -161,7 +161,7 @@
 		<!--待付款1-->
 		<!--{if $order.pay_status eq 0 }-->
 		<section class="filter-btn f-checkout-filter-btn dis-box">
-			<span class="box-flex t-remark">实付款 <em class="t-first">¥{$order.total_fee}</em></span>
+			<span class="box-flex t-remark">实付款 <em class="raise-col">¥{$order.total_fee}</em></span>
 			<section class="n-btn-box">{$order.pay_online}</section>
 		</section>
 		<!--{/if}-->
@@ -169,8 +169,8 @@
 		<!--待发货2-->
 		<!--{if $order.pay_status eq 2 and $order.shipping_status eq 0 }-->
 		<section class="filter-btn f-checkout-filter-btn dis-box">
-			<span class="box-flex t-remark">实付款 <em class="t-first">¥{$order.total_fee}</em></span>
-			<a href="{:url('user/service')}" type="button" class="btn-submit box-flex	">提醒发货</a>
+			<span class="box-flex t-remark">实付款 <em class="raise-col">¥{$order.total_fee}</em></span>
+			<a href="{:url('user/service')}" type="button" class="btn-submit btn-submit-raise box-flex	">提醒发货</a>
 		</section>
 		<!--{/if}-->
 		
@@ -178,14 +178,14 @@
 		<section class="filter-btn f-checkout-filter-btn dis-box">
 			<a href="javascript:;" type="button" class=" box-flex"></a>
 			<a href="{:url('mycrowd/order_tracking',array('order_id'=>$this->_var['order']['order_id']))}" type="button" class="btn-default box-flex	">查看物流</a>
-			<a href="{:url('mycrowd/affirm_received',array('order_id'=>$this->_var['order']['order_id']))}" onclick="if (!confirm('你确认已经收到货物了吗？')) return false;" type="button" class="btn-submit box-flex	">确定收货</a>
+			<a href="{:url('mycrowd/affirm_received',array('order_id'=>$this->_var['order']['order_id']))}" onclick="if (!confirm('你确认已经收到货物了吗？')) return false;" type="button" class="btn-submit btn-submit-raise box-flex	">确定收货</a>
 		</section>
 		<!--{/if}-->
 		
 		<!--{if $order.pay_status eq 2 and $order.shipping_status > 1 }-->
 		<section class="filter-btn f-checkout-filter-btn dis-box">
 			<a href="javascript:;" type="button" class=" box-flex"></a>			
-			<a href="{:url('mycrowd/order_tracking',array('order_id'=>$this->_var['order']['order_id']))}" type="button" class="btn-submit box-flex	">查看物流</a>
+			<a href="{:url('mycrowd/order_tracking',array('order_id'=>$this->_var['order']['order_id']))}" type="button" class="btn-submit btn-submit-raise box-flex	">查看物流</a>
 		</section>
 		<!--{/if}-->
 		

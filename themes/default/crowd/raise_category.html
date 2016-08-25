@@ -43,42 +43,38 @@
 
 									<div class="catalog-nav-box select-one j-all-raise">
 										<div class="j-get-one padding-all of-hidden">
-											<li class="ect-select w-3 rsise-nav">
+											<li class="ect-select-raise w-3 rsise-nav">
 												<a href="{:url('crowdfunding/index',array('type'=>''))}"><label class="ts-1 <!--{if $type eq ''}-->active<!--{/if}-->">综合排序</label></a>
 											</li>
-											<li class="ect-select w-3 rsise-nav">
+											<li class="ect-select-raise w-3 rsise-nav">
 												<a href="{:url('crowdfunding/index',array('type'=>'new'))}"><label class="ts-1 <!--{if $type eq 'new'}-->active<!--{/if}-->">最新上线</label></a>
 											</li>
-											<li class="ect-select w-3 rsise-nav">
+											<li class="ect-select-raise w-3 rsise-nav">
 												<a href="{:url('crowdfunding/index',array('type'=>'sum_price'))}"><label class="ts-1 <!--{if $type eq 'sum_price'}-->active<!--{/if}-->">金额最多</label></a>
 											</li>
-											<li class="ect-select w-3  rsise-nav">
+											<li class="ect-select-raise w-3  rsise-nav">
 												<a href="{:url('crowdfunding/index',array('type'=>'buy_num'))}"><label class="ts-1 <!--{if $type eq 'buy_num'}-->active<!--{/if}-->">支持最多</label></a>
 											</li>
-											<li class="ect-select w-3  rsise-nav">
+											<li class="ect-select-raise w-3  rsise-nav">
 												<a href="{:url('crowdfunding/index',array('type'=>'end'))}"><label class="ts-1 <!--{if $type eq 'end'}-->active<!--{/if}-->">即将结束</label></a>
 											</li>
-										</div>
-										<div class="ect-button-more raise-button dis-box">
-											<a class="box-flex btn-default cate-nav-top">取消</a>
+											
+
 										</div>
 									</div>
 								</ul>
 								<ul class="raise-list-box">
 									<div class="catalog-nav-box select-one j-cate-raise">
 										<div class="j-get-one padding-all of-hidden">
-											<li class="ect-select w-3 rsise-nav">
+											<li class="ect-select-raise w-3 rsise-nav">
 												<a href="{:url('crowdfunding/index',array('id'=>0))}"><label class="ts-1 <!--{if $id eq ''}-->active<!--{/if}-->">全部商品</label></a>
 											</li>
 											<!--{foreach from=$category item=vo}-->
 
-											<li class="ect-select w-3 rsise-nav">
+											<li class="ect-select-raise w-3 rsise-nav">
 												<a href="{:url('crowdfunding/index',array('id'=>$this->_var['vo']['id']))}"><label class="ts-1 <!--{if $vo.id eq $id}-->active<!--{/if}-->">{$vo.name}</label></a>
 											</li>
 											<!--{/foreach}-->
-										</div>
-										<div class="ect-button-more raise-button dis-box">
-											<a class="box-flex btn-default cate-nav-top">取消</a>
 										</div>
 									</div>
 								</ul>
@@ -97,7 +93,7 @@
 								<img class="product-list-img" src="{$goods.goods_img}" />
 								<div class="product-text raise-category">
 									<h4>{$goods.goods_name}</h4>
-									<p class="col-9 f-03 raise-category-num">支持人<em class="color-red">{$goods.buy_num}</em><em class="col-9 f-02">人</em><em class="fr col-9"><i class="iconfont icon-shijian f-02"></i> {$goods.start_time}天前</em></p>
+									<p class="col-9 f-03 raise-category-num">支持人<em class="raise-col">{$goods.buy_num}</em><em class="col-9 f-02">人</em><em class="fr col-9"><i class="iconfont icon-shijian f-02"></i> {$goods.start_time}天前</em></p>
 									<div class="raise-progressBar dis-box">
 										<p class="wrap box-flex">
 											<span class="bar" style="width:{$goods.bar}%;"><i class="color"></i></span>
@@ -105,7 +101,7 @@
 										<p class="txt">{$goods.bar}%</p>
 									</div>
 									<div class="dis-box">
-										<p class="col-9 f-03 onelist-hidden">已筹<em class="color-red mr-small"><!--{if $goods.total_price }-->￥{$goods.total_price}<!--{else}-->￥0.00<!--{/if}--></em><em class="col-9 f-02"></em><em class="col-9 m-l-05"></p><p class="box-flex col-9 f-03 text-right onelist-hidden">目标:<em class="color-red">￥{$goods.sum_price}</em></em>
+										<p class="col-9 f-03 onelist-hidden">已筹<em class="raise-col mr-small"><!--{if $goods.total_price }-->￥{$goods.total_price}<!--{else}-->￥0.00<!--{/if}--></em><em class="col-9 f-02"></em><em class="col-9 m-l-05"></p><p class="box-flex col-9 f-03 text-right onelist-hidden">目标:<em class="raise-col">￥{$goods.sum_price}</em></em>
 										</p>
 									</div>
 								</div>
@@ -133,12 +129,12 @@
 							<input class="j-input-text" type="text" id="keywordBox" name="keywords" placeholder="项目搜索" />
 							<i class="iconfont icon-guanbi2 is-null j-is-null"></i>
 						</div>
-						<a type="button" onclick="return check('keywordBox')" class="btn-submit">搜索</a>
+						<a type="button" onclick="return check('keywordBox')" class="btn-submit btn-submit-raise">搜索</a>
 					</div>
 				</form>
 			</section>
 			<section class="search-con">
-				<div class="swiper-scroll history-search">
+				<div class="history-search">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide">
 							<p>
@@ -196,7 +192,7 @@
 				点击关闭
 			</footer>
 		</div>
-		<footer class="footer-nav dis-box">
+		<footer class="footer-nav footer-nav-raise dis-box">
 			<a href="{:url('index/index')}" class="box-flex nav-list">
 				<i class="nav-box i-home"></i><span>首页</span>
 			</a>

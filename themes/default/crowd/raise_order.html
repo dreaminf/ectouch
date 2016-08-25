@@ -7,7 +7,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 		<meta name="format-detection" content="telephone=no" />
 		<meta charset="utf-8">
-		<title>ECTouch微商城</title>
+		<title>微筹订单</title>
 		<!--字体图标库-->
 		<link rel="stylesheet" href="__TPL__/statics/fonts/iconfont.css">
 		<link rel="stylesheet" href="__TPL__/statics/css/swiper-3.2.5.min.css" />
@@ -19,11 +19,6 @@
 	<body>
 		<div id="loading"><img src="__TPL__/statics/img/loading.gif" /></div>
 		<div class="con">
-			<header class="dis-box header-menu b-color color-whie">
-				<a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
-				<h3 class="box-flex">订单列表</h3>
-				<p><i class="iconfont icon-pailie j-nav-box"></i></p>
-			</header>
 			<div class="j-nav-content">
 				<ul class="dis-box new-footer-box">
 					<li class="box-flex">
@@ -41,7 +36,7 @@
 				</ul>
 			</div>
 			<div class="goods-info user-order of-hidden ect-tab j-ect-tab ts-3 p-t0">
-				<nav class=" j-tab-title tab-title b-color-f of-hidden">
+				<nav class=" j-tab-title tab-title-raise b-color-f of-hidden">
 					<ul class="dis-box">
 						<li class="box-flex <!--{if $status eq 1}-->active<!--{/if}-->">
 							<a href="{:url('mycrowd/crowd_order',array('status'=>'1'))}">全部订单</a>
@@ -68,7 +63,7 @@
 							<section class="flow-checkout-pro m-top08">
 								<header class="b-color-f dis-box padding-all">
 									<span class=" box-flex f-07">订单状态</span>
-									<em class="j-goods-coupon t-first f-06">{$order.status}</em>
+									<em class="j-goods-coupon raise-col f-06">{$order.status}</em>
 								</header>
 								<div class="product-list-small m-top1px b-color-f dis-box">
 									<ul class="box-flex">
@@ -78,8 +73,8 @@
 												<img class="product-list-img" src="{$order.img}">
 												<div class="product-text">
 													<h4>{$order.goods_name}</h4>
-													<h5 class="col-6 f-05 m-top02">支持<em class="color-red">{$order.goods_price}</em>元<em class="fr col-9 f-03"><em class="color-red">×{$order.goods_number}</em></em></h5>
-													<p class="col-7 f-03 m-top04">{$order.name}</p>
+													<h5 class="col-6 f-05 m-top02">支持<em class="raise-col">{$order.goods_price}</em>元<em class="fr col-9 f-03"><em class="raise-col">×{$order.goods_number}</em></em></h5>
+													<p class="col-7 f-03 m-top04 onelist-hidden">{$order.name}</p>
 
 												</div>
 
@@ -87,7 +82,7 @@
 										</li>
 									</ul>
 								</div>
-								<div class="b-color-f raise-money-list"><h4 class="t-remark2 box-flex"><label class="t-remark">合计：</label><span class="t-first">{$order.total_fee}</span></h4></div>
+								<div class="b-color-f raise-money-list"><h4 class="t-remark2 box-flex"><label class="t-remark">合计：</label><span class="raise-col">{$order.total_fee}</span></h4></div>
 								<footer class="padding-all b-color-f m-top1px of-hidden dis-box raise-new-btn">							
 									<h4 class="box-flex"></h4>
 									<p class="ect-button-more">										
@@ -96,11 +91,11 @@
 										<!-- 付款-->
 										{$order.pay_online}	
 										<!--{if $order.pay_status eq 2 and $order.shipping_status eq 0 }-->
-										<a class="btn-submit1" href="{:url('user/service')}">提醒发货</a>
+										<a class="btn-submit-r" href="{:url('user/service')}"><span class="raise-col">提醒发货</span></a>
 										<!--{/if}-->
 										<!--{if $order.pay_status eq 2 and $order.shipping_status eq 1 }-->
 										
-										<a class="btn-submit1 " href="{:url('mycrowd/affirm_received',array('order_id'=>$this->_var['order']['order_id']))}" onclick="if (!confirm('你确认已经收到货物了吗？')) return false;">确定收货</a>
+										<a class="btn-submit-r " href="{:url('mycrowd/affirm_received',array('order_id'=>$this->_var['order']['order_id']))}" onclick="if (!confirm('你确认已经收到货物了吗？')) return false;">确定收货</a>
 										<!--{/if}-->
 										
 										<!--{if $order.pay_status eq 2 and $order.shipping_status > 0 }-->

@@ -18,12 +18,12 @@
 			<div id="loading"><img src="__TPL__/statics/img/loading.gif" /></div>
 			<div class="goods">
 				<div class="ect-bg">
-					<header class="dis-box header-menu-1 b-color color-whie goods-fixed ts-3">
+					<header class="dis-box header-menu-1 b-color color-whie goods-fixed goods-fixed-raise ts-3">
 					<a class="" href="javascript:history.go(-1)">
 						<div class="goods-left-jiat"><i class="iconfont icon-jiantou is-con"></i></div>
 					</a>
 					<div class="box-flex">
-						<ul class="dis-box goods-header-nav-box">
+						<ul class="dis-box goods-header-nav-box goods-header-nav-box-raise">
 							<li class="box-flex"><a class="hover" href="javascript:;"><label>商品</label></a></li>
 							<li class="box-flex"><a href="{:url('crowdfunding/crowd_goods_properties',array('id'=>$this->_var['id']))}"><label>详情</label></a></li>
 							<li class="box-flex"><a href="{:url('crowdfunding/crowd_comment_list',array('id'=>$this->_var['id']))}"><label>评价</label></a></li>
@@ -74,14 +74,14 @@
 						<div class="raise-admin-left">
 							<div class="raise-admin-img"><img src="__TPL__/crowd/img/0.jpg"></div>
 						</div>
-						<div class="box-flex"><label class="color-red f-06">岁月无声</label></div>
+						<div class="box-flex"><label class="raise-col f-06">岁月无声</label></div>
 						<div class="box-flex"><label class="fr color-whie f-04 raise-button-1">咨询</label></div> 
 					</div> -->
 					
 						<div class="b-color-f raise-cont m-top08">
 							<h4 class="col-3 f-07">{$goods.goods_name}</h4>
 							<p class=" dis-box g-p-tthree m-top06">
-								<span class="box-flex text-right">{$goods.start_time} | 还剩:<label class="color-red">{$goods.time}</label></span>
+								<span class="box-flex text-right">{$goods.start_time} | 还剩:<label class="raise-col">{$goods.time}</label></span>
 							</p>
 							<div class="raise-progressBar dis-box">
 								<p class="wrap box-flex">
@@ -98,7 +98,7 @@
 							<li>
 								<h4 class="ellipsis-one"><i class="iconfont icon-flagqizi f-2 col-9"></i></h4>
 								<p class="t-remark3">目标资金</p>
-								<p class="f-08 color-red">{$goods.sum_price}<em class="f-02 col-9">元</em></p>
+								<p class="f-08 raise-col">{$goods.sum_price}<em class="f-02 col-9">元</em></p>
 
 							</li>
 						</a>
@@ -106,7 +106,7 @@
 							<li>
 								<h4 class="ellipsis-one"><i class="iconfont icon-jinqian f-2 col-9"></i></h4>
 								<p class="t-remark3">已筹资金</p>
-								<p class="f-08 color-red"><!--{if $goods.total_price }-->{$goods.total_price}<!--{else}-->0.00<!--{/if}--><em class="f-02 col-9">元</em></h4>
+								<p class="f-08 raise-col"><!--{if $goods.total_price }-->{$goods.total_price}<!--{else}-->0.00<!--{/if}--><em class="f-02 col-9">元</em></h4>
 
 							</li>
 						</a>
@@ -114,7 +114,7 @@
 							<li>
 								<h4 class="ellipsis-one"><i class="iconfont icon-geren f-2 col-9"></i></h4>
 								<p class="t-remark3">支持人数</p>
-								<p class="f-08 color-red">{$goods.buy_num}<em class="f-02 col-9">人</em></p>
+								<p class="f-08 raise-col">{$goods.buy_num}<em class="f-02 col-9">人</em></p>
 
 							</li>
 						</a>
@@ -122,7 +122,7 @@
 				</section>
 				<section class="m-top1px padding-all b-color-f goods-promotion">
 					<a href="{:url('crowdfunding/crowd_goods_properties',array('id'=>$this->_var['id']))}">
-						<div class="t-remark text-c color-red"><label>查看项目详情</label> <i class="iconfont icon-jiantouyou"></i></div>
+						<div class="t-remark text-c raise-col"><label>查看项目详情</label> <i class="iconfont icon-jiantouyou"></i></div>
 					</a>
 				</section>
 				<section class="m-top08 goods-evaluation rsise_detail-time">
@@ -144,7 +144,7 @@
 							<div class="raise-return-img"><img src="{$plan.cp_img}"></div>
 						</div>
 						<div class="box-flex">
-							<p class="col-3 f-05">支持<em class="color-red">{$plan.shop_price}</em> 元 <em class="fr col-9 f-03">剩余<em class="color-red">{$plan.surplus_num}</em>份</em></p>
+							<p class="col-3 f-05">支持<em class="raise-col">{$plan.shop_price}</em> 元 <em class="fr col-9 f-03">剩余<em class="raise-col">{$plan.surplus_num}</em>份</em></p>
 							<p class="col-7 f-03">{$plan.name}</p>
 						</div>
 					</div>
@@ -152,7 +152,7 @@
 				</section>
 
 				<div id="n-goods" class="goods-info of-hidden ect-tab j-goods-info j-ect-tab ts-3 p-t0 m-top08">
-					<div class="hd j-tab-title tab-title b-color-f of-hidden n-fixed-none">
+					<div class="hd j-tab-title  tab-title-raise b-color-f of-hidden n-fixed-none">
 						<ul class="dis-box">
 							<li class="box-flex f-06 active">用户评论</li>
 							<li class="box-flex f-06">TA的支持者</li>
@@ -183,7 +183,7 @@
 											</div>
 										</div>
 										<div class="box-flex"><label class="col-3">{$comment.name}</label></div>
-										<!-- <div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div> -->
+										<!-- <div class="box-flex col-7"><label class="fr f-04">支持<em class="raise-col">30</em>元</label></div> -->
 									</div>
 									<div class=" b-color-f g-evaluation-con ra">
 										<h4 class="f-05 col-4">{$comment.content}</h4>
@@ -222,7 +222,7 @@
 											<label class="col-3 onelist-hidden" style="padding:0">{$buy_list.name}</label>
 											<span class="f-03 col-9">{$buy_list.add_time}</span>
 										</div>
-										<div class="box-flex col-7 onelist-hidden"><label class="fr f-04">支持<em class="color-red">{$buy_list.goods_price}</em> 元 </label></div>
+										<div class="box-flex col-7 onelist-hidden"><label class="fr f-04">支持<em class="raise-col">{$buy_list.goods_price}</em> 元 </label></div>
 									</div>
 								</div>
 								<!--{/foreach}-->
@@ -260,7 +260,7 @@
 
 				<section class="filter-btn dis-box">
 					<a class="filter-btn-kefu filter-btn-a" onClick="collect({$goods.goods_id})"><span class="raise-heart j-heart <!--{if $sc eq 1}-->active<!--{/if}-->" id="ECS_COLLECT" ><i class="ts-2"></i><em class="ts-2" >关注</em></span></a>
-					<a class="btn-submit box-flex j-goods-attr j-show-div-1">支持</a>
+					<a class="btn-submit btn-submit-raise box-flex j-goods-attr j-show-div-1">支持</a>
 					<a class="filter-btn-kefu filter-btn-a j-show-div-2 raise-fengxian"><i class="iconfont icon-fenxiang"></i><em>分享</em></a>
 				</section>
 				<!--分享-->
@@ -338,7 +338,7 @@
 							<div class="swiper-slide select-two raise-goods-list-box swiper-slide-active ">
 								<ul class="j-get-one">
 									<!--{foreach from=$goods_plan item =plan key=key}-->
-									<li class="ect-select">
+									<li class="ect-select-raise">
 										<input style="display:none"  id="cp_{$plan.cp_id}" type="radio" name="spec_{$key}" value="{$plan.cp_id}" {if $key eq 0}checked{/if} onclick="changePrice()" />
 										<label  for="cp_{$plan.cp_id}" rec-id="{$plan.cp_id}"  class="ts-1  <!--{if $key eq 0}-->active<!--{/if}--> "  >											
 										
@@ -347,7 +347,7 @@
 												<div class="raise-return-img"><img src="{$plan.cp_img}"></div>
 											</div>
 											<div class="box-flex">
-												<h4 class="col-3 f-05">支持<em class="color-red">{$plan.shop_price}</em> 元 <em class="fr col-9 f-03">剩余<em class="color-red">{$plan.surplus_num}</em>份</em></h4>
+												<h4 class="col-3 f-05">支持<em class="raise-col">{$plan.shop_price}</em> 元 <em class="fr col-9 f-03">剩余<em class="raise-col">{$plan.surplus_num}</em>份</em></h4>
 												<p class="col-7 f-03">{$plan.name}</p>
 											</div>
 										</div>
@@ -370,8 +370,8 @@
 						</div>
 					</section>
 					<section class="filter-btn f-checkout-filter-btn dis-box">
-						<span class="box-flex t-remark">合计: <em class="t-first" id="ECS_GOODS_AMOUNT"></em></span>
-						<a onclick="c_value()" type="button" class="btn-submit box-flex	">确定</a>
+						<span class="box-flex t-remark">合计: <em class="raise-col" id="ECS_GOODS_AMOUNT"></em></span>
+						<a onclick="c_value()" type="button" class="btn-submit btn-submit-raise box-flex	">确定</a>
 						<input type="hidden" name="goods_id"   value="{$goods.goods_id}">
 						<input type="hidden" name="cp_id"      value="">
 						<!-- <input type="hidden" name="number"     value="1"> -->
@@ -413,17 +413,17 @@
 						noSwiping: true,
 						autoHeight: true,
 						onSlideChangeStart: function() {
-							$(".j-tab-title .active").removeClass('active')
-							$(".j-tab-title li").eq(tabsSwiper.activeIndex).addClass('active')
+							$(".j-tab-title-raise .active").removeClass('active')
+							$(".j-tab-title-raise li").eq(tabsSwiper.activeIndex).addClass('active')
 						}
 					})
-					$(".j-tab-title li").on('touchstart mousedown', function(e) {
+					$(".j-tab-title-raise li").on('touchstart mousedown', function(e) {
 						e.preventDefault()
-						$(".j-tab-title .active").removeClass('active')
+						$(".j-tab-title-raise .active").removeClass('active')
 						$(this).addClass('active')
 						tabsSwiper.slideTo($(this).index())
 					})
-					$(".j-tab-title li").click(function(e) {
+					$(".j-tab-title-raise li").click(function(e) {
 						e.preventDefault()
 					})
 					
