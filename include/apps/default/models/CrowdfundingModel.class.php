@@ -106,12 +106,9 @@ class CrowdfundingModel extends CommonModel {
     /* 获取当前项目累计金额 */
 
     function crowd_buy_price($goods_id = 0) {
-        $sql = "SELECT goods_price ,goods_number FROM " . $this->pre . "crowd_order_info  WHERE goods_id = '" . $goods_id . "' AND extension_code = 'crowd_buy' and pay_status = '" . PS_PAYED . "' ";
-        $res = $this->query($sql);
-        foreach ($res as $key => $row) {
-            $price += $row['goods_price'] * $row['goods_number'];
-        }
-        return $price;
+        $sql = "SELECT sum(goods_amount) as price FROM " . $this->pre . "crowd_order_info  WHERE goods_id = '" . $goods_id . "' AND extension_code = 'crowd_buy' and pay_status = '" . PS_PAYED . "' ";
+        $res = $this->row($sql);
+        return $res['price'];
     }
 
     /* 获取当前项目方案 */
