@@ -186,8 +186,7 @@ class CrowdfundingController extends CommonController {
             'message' => ''
         );
 		
-		
-		if (!isset($this->user_id) || $this->user_id == 0) {
+		if ($this->user_id == 0) {
             $result['error'] = 2;
             $result['message'] = '请先登录';
             die(json_encode($result));
