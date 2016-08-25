@@ -1010,3 +1010,22 @@ localData = {
 }
 
 
+	/*单选*/
+	$(".j-get-one .ect-select-raise").click(function() {
+		get_tjiantou = $(this).parent(".j-get-one").prev(".select-title").find(".t-jiantou");
+		$(this).find("label").addClass("active").parent(".ect-select-raise").siblings().find("label").removeClass("active");
+		get_tjiantou.find("em").text($(this).find("label").text());
+		if($(this).hasClass("j-checkbox-all")) {
+			get_tjiantou.removeClass("active");
+		} else {
+			get_tjiantou.addClass("active");
+		}
+		if($(this).parents("show-goods-attr")) { //赋值给goods-attr
+			s_get_label = $(".show-goods-attr .s-g-attr-con").find("label.active"); //获取被选中label
+			var get_text = '';
+			s_get_label.each(function() {
+				get_text += $(this).text() + "、";
+			});
+			$(".j-goods-attr").find(".t-goods1").text(get_text.substring(0, get_text.length - 1));
+		}
+	});
