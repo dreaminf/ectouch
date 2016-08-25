@@ -58,8 +58,9 @@
 											<li class="ect-select w-3  rsise-nav">
 												<a href="{:url('crowdfunding/index',array('type'=>'end'))}"><label class="ts-1 <!--{if $type eq 'end'}-->active<!--{/if}-->">即将结束</label></a>
 											</li>
-											
-
+										</div>
+										<div class="ect-button-more raise-button dis-box">
+											<a class="box-flex btn-default cate-nav-top">取消</a>
 										</div>
 									</div>
 								</ul>
@@ -75,6 +76,9 @@
 												<a href="{:url('crowdfunding/index',array('id'=>$this->_var['vo']['id']))}"><label class="ts-1 <!--{if $vo.id eq $id}-->active<!--{/if}-->">{$vo.name}</label></a>
 											</li>
 											<!--{/foreach}-->
+										</div>
+										<div class="ect-button-more raise-button dis-box">
+											<a class="box-flex btn-default cate-nav-top">取消</a>
 										</div>
 									</div>
 								</ul>
