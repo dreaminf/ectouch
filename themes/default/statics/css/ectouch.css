@@ -2712,3 +2712,12 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 .n-raise-btn button:active,.n-raise-btn button:hover{background:#ee6305;color:#fff;}
 .btn-raise-box{ border:1px solid #ff6700;color:#ff6700;    padding: 0.5em 0;font-size: 1.3em;}
 .btn-raise-box:active,.btn-raise-box:hover{border:1px solid #ee6305;color:#ee6305; }
+
+
+/*物流详情*/
+.user-order-id header{font-size:1.7rem;}
+.order-id-list-raise .t-remark{color:#333; font-size:1.5rem;}
+.order-id-list-raise ul li{position:relative; padding-left:2rem;}
+.order-id-list-raise ul li:first-of-type .t-remark{color:#ff6700}
+.order-id-list-raise ul li:before{content:" "; display:block; width:1rem; height:1rem; position:absolute; background:#ff6700; border-radius: 100%; border:2px solid #fff; left:-.2rem; top:1.3rem; z-index: 2;}
+.order-id-list-raise ul li:after{content:" "; width:1px; top:0; bottom:0; position:absolute; background:#ddd; display: block; left: 0.5rem; z-index: 1;}
