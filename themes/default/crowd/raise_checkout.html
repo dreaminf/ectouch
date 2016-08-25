@@ -113,7 +113,7 @@
 												<div class="swiper-slide select-two">
 													<ul class="j-get-one padding-all">
 														 <!-- {foreach from=$shipping_list item=shipping} 循环配送方式 -->
-														<li class="ect-select">
+														<li class="ect-select-raise">
 															<label class="ts-1 dis-box shipping {if $order.shipping_id eq $shipping.shipping_id}active{/if}" rec-id ="{$shipping.shipping_id}" onclick="selectShipping({$shipping.shipping_id})" >
 																<dd><span>{$shipping.shipping_name} </span> <em>[{$shipping.format_shipping_fee}]</em></dd><i class="fr iconfont icon-gou ts-1"></i></label>
 														</li>
@@ -155,7 +155,7 @@
 												<div class="swiper-slide select-two">
 													<ul class="j-get-one padding-all">
 														 <!-- {foreach from=$payment_list item=payment} -->
-														<li class="ect-select goods-site">
+														<li class="ect-select-raise goods-site">
 															<label class="ts-1 payment {if $order.pay_id eq $payment.pay_id}active{/if}" rec-id="{$payment.pay_id}">
 																<dd><span>{$payment.pay_name} [{$payment.format_pay_fee}]</span></dd><i class="fr iconfont icon-gou ts-1"></i></label>
 														</li>

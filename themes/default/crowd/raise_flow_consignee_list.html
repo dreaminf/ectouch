@@ -44,7 +44,7 @@
 				<!--{foreach from =$consignee_list item=consignee }-->
 				<section class="flow-checkout-adr m-top08">
 					<div class="flow-set-adr of-hidden padding-all ">
-						<div class="ect-select fl">
+						<div class="ect-select-raise fl">
 							<label class="dis-box {if $consignee.address_id eq $consignee.adds_id}active{/if}" onclick="edit_address_info({$consignee.address_id})">
 								<i class="select-btn"></i>
 								<span class="box-flex">设为默认</span>
@@ -64,7 +64,7 @@
 				<!--{/foreach}-->
 
 				<div class="ect-button-more dis-box filter-btn padding-all">
-					<a href="{:url('crowdflow/crowd_consignee')}" class="btn-submit box-flex">新增收货人信息</a>
+					<a href="{:url('crowdflow/crowd_consignee')}" class="btn-submit btn-submit-raise box-flex">新增收货人信息</a>
 
 				</div>
 			</div>
