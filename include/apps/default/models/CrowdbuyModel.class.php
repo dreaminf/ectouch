@@ -91,12 +91,7 @@ class CrowdbuyModel extends CommonModel {
                     $weight_price = model('Order')->cart_weight_price();
                 }
 
-                // 查看购物车中是否全为免运费商品，若是则把运费赋为零
-                $sql = 'SELECT count(*) as count FROM ' . $this->pre . "cart WHERE  `session_id` = '" . SESS_ID . "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0";
-                $res = $this->row($sql);
-                $shipping_count = $res['count'];
-
-                $total['shipping_fee'] = ($shipping_count == 0 AND $weight_price['free_shipping'] == 1) ? 0 : shipping_fee($shipping_info['shipping_code'], $shipping_info['configure'], $weight_price['weight'], $total['goods_price'], $weight_price['number']);
+                $total['shipping_fee'] =  shipping_fee($shipping_info['shipping_code'], $shipping_info['configure'], $weight_price['weight'], $total['goods_price'], $weight_price['number']);
 
                 if (!empty($order['need_insure']) && $shipping_info['insure'] > 0) {
                     $total['shipping_insure'] = shipping_insure_fee($shipping_info['shipping_code'], $total['goods_price'], $shipping_info['insure']);
