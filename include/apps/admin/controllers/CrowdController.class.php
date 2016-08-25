@@ -57,7 +57,7 @@ class CrowdController extends AdminController {
             if(empty($data['shop_price'])){
                 $this->message('方案价格不能为空'); 
             }
-            if( !preg_match('/^[0-9]*$/', $data['shop_price'])){
+            if( !preg_match('/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/', $data['shop_price'])){
                 $this->message('方案价格必须是数字'); 
             }
             if(empty($data['name'])){
@@ -211,7 +211,7 @@ class CrowdController extends AdminController {
             if(empty($data['sum_price'])){
                 $this->message('目标金额不能为空'); 
             }
-            if( !preg_match('/^[0-9]*$/', $data['sum_price'])){
+            if( !preg_match('/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/', $data['sum_price'])){
                 $this->message('目标金额必须是数字'); 
             }
             if(empty($data['cat_id'])){
