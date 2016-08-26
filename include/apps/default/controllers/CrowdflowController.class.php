@@ -341,10 +341,25 @@ class CrowdflowController extends CommonController {
         $this->assign('integral_scale', C('integral_scale'));
         $this->assign('step', ACTION_NAME);
         $this->assign('title', L('consignee_info'));
-	
-		$this->display('raise_flow_consignee.dwt');
+
+		$this->display('crowd/raise_flow_consignee.html');
 	}
 	
+	/*设置默认收货地址*/
+	public function crowd_edit_address_info() {
+		if (IS_AJAX && IS_AJAX) {
+            $address_id = I('id');
+			//print_r($address_id);
+			$data['address_id'] = $address_id;
+            $condition['user_id'] = $_SESSION['user_id'];
+			$this->model->table('users')->data($data)->where($condition)->update();	
+			unset($_SESSION['flow_consignee']);
+            echo json_encode(array('status' => 1));
+        } else {
+            echo json_encode(array('status' => 0));
+         }
+		 
+	}
 	
 	 /**
      * 删除收货地址
@@ -388,7 +403,7 @@ class CrowdflowController extends CommonController {
 		if($order_num > 0)
 		{
 			//show_message('您有未支付的众筹订单，请付款后再提交新订单','返回上一页',U('mycrowd/index/order'));
-			show_message('您有未支付的众筹订单，请付款后再提交新订单', '去支付', url('mycrowd/crowd_order'), 'info');
+			crowd_show_message('您有未支付的众筹订单，请付款后再提交新订单', '去支付', url('mycrowd/crowd_order'), 'info');
 		}
 
 		

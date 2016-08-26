@@ -25,6 +25,7 @@
                     <th class="text-center">结束时间</th>
                     <th class="text-center">预计发货时间</th>   
                     <th class="text-center">排序</th>
+                    <th class="text-center">是否推荐</th>
                     <th class="text-center">状态</th>
                     <th class="text-center">操作</th>
                 </tr>
@@ -58,6 +59,13 @@
     </td>
      <td align="center" class="first-cell" >
       <span>{$goods[sort_order]}</span>
+    </td
+      <td align="center" class="first-cell" >
+          {if $goods[recommend]==1 }
+      <span>推荐</span>
+      {else}
+       <span>不推荐</span>
+      {/if}
     </td>
     {if $goods[status]==0}
      <td align="center" class="first-cell" >

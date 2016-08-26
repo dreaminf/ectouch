@@ -247,6 +247,7 @@ class EcMysqlPdo {
 
         //设置编码
         $pdo->query("SET NAMES {$db['DB_CHARSET']}");
+        $pdo->query("SET sql_mode=''");
         return $pdo;
     }
 

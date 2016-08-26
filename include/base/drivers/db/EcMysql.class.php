@@ -228,6 +228,7 @@ class EcMysql {
         }
         //设置编码
         $mysqli->query("SET NAMES {$db['DB_CHARSET']}");
+        $mysqli->query("SET sql_mode=''");
         return $mysqli;
     }
 

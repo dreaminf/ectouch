@@ -211,9 +211,6 @@ class CrowdController extends AdminController {
             if(empty($data['cat_id'])){
                 $this->message('项目分类不能为空'); 
             }
-            if(empty($_FILES['goods_img']['name'])){
-                $this->message('请上传图片'); 
-            }
             if(empty($data['shiping_time'])){
                 $this->message('预计发货时间不能为空'); 
             }

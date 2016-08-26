@@ -78,15 +78,18 @@
 	<script type="text/javascript">
 		/*設置默認收貨地址*/
 		function edit_address_info(address_id) {
-			var url = 'index.php?m=default&c=user&a=edit_address_info';
+			var url = 'index.php?m=default&c=crowdflow&a=crowd_edit_address_info';
 			$.get(url, {
 				'id': address_id
 			}, function(data) {
-				if(1 == data.status) {
-					location.reload();
-				} else {
-					alert("删除失败");
-				}
+				//if(1 == data.status) {
+					//location.reload();
+				//} 
+				
+				if (1 == data.status) {							
+					window.location.href = 'index.php?m=default&c=crowdflow&a=crowd_checkout';
+							
+				}	
 			}, 'json');
 			return false;
 
