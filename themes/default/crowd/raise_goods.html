@@ -385,9 +385,12 @@
 							alert('请先择回报方案');
 							return false;
 						}
-						//var qty = $("#number").val();						
+						var qty = $("#number").val();
+						if(qty < 1 ){
+							alert('此方案已售完，请选择其他方案');
+							return false;
+						}
 						$("input[name=cp_id]").val(id);
-						//$("input[name=number]").val(qty);
 						document.getElementById("formid").submit();
 					}
 					
@@ -433,6 +436,7 @@
 					function changePriceResponse(res) {
 						if (res.err_msg.length > 0) {
 							alert(res.err_msg);
+							$("input[name=number]").val(res.number);
 						} else {
 							if (document.getElementById('ECS_GOODS_AMOUNT'))
 								document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result;

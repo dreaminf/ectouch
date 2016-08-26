@@ -190,6 +190,7 @@ class CrowdfundingController extends CommonController {
             }
 			if($number > $surplus_num){
 				$res ['err_msg'] = '已超出计划销售数量';
+				$res ['number'] = $surplus_num;
 				$res ['err_no'] = 1;
 				
 			}
