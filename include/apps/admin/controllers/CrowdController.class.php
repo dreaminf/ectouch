@@ -95,7 +95,7 @@ class CrowdController extends AdminController {
                         ->where(array('cp_id' => $data['cp_id']))
                         ->update();
             }
-            $this->redirect(url('crowd/plan_list', array('goods_id' => $data['goods_id'])));
+            $this->message( L('success'),url('crowd/plan_list', array('goods_id' => $data['goods_id'])));
         }
         if (I('cp_id')) {
             $cp_id = I('cp_id', '', 'intval');
@@ -167,7 +167,7 @@ class CrowdController extends AdminController {
                         ->where(array('id' => $data['id']))
                         ->update();
             }
-            $this->redirect(url('crowd/trends_list', array('goods_id' => $data['goods_id'])));
+             $this->message( L('success'), url('crowd/trends_list', array('goods_id' => $data['goods_id'])));
         }
         if (I('id')) {
             $id = I('id', '', 'intval');
@@ -276,7 +276,7 @@ class CrowdController extends AdminController {
                         ->where(array('goods_id' => $data['goods_id']))
                         ->update();
             }
-            $this->redirect(url('crowd/index'));
+            $this->message( L('success'),url('crowd/index'));
         }
         if (I('goods_id')) {
             $goods_id = I('goods_id', '', 'intval');
@@ -830,7 +830,7 @@ class CrowdController extends AdminController {
                         ->where(array('article_id' => $data['article_id']))
                         ->update();
             }
-            $this->redirect(url('crowd/article_list'));
+            $this->message( L('success'),url('crowd/article_list'));
         }
         if (I('article_id')) {
             $article_id = I('article_id', '', 'intval');
