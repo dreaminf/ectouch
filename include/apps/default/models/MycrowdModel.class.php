@@ -170,14 +170,14 @@ class MycrowdModel extends BaseModel {
             } else if ($value['order_status'] == OS_SPLITED) {
                 /* 对配送状态的处理 */
                 if ($value['shipping_status'] == SS_SHIPPED) {
-                    @$value['handler'] = "<a href=\"" . url('user/affirm_received', array('order_id' => $value['order_id'])) . "\" onclick=\"if (!confirm('" . L('confirm_received') . "')) return false;\">" . L('received') . "</a>";
+                    @$value['handler'] = "<a href=\"" . url('mycrowd/affirm_received', array('order_id' => $value['order_id'])) . "\" onclick=\"if (!confirm('" . L('confirm_received') . "')) return false;\">" . L('received') . "</a>";
                 } elseif ($value['shipping_status'] == SS_RECEIVED) {
                     @$value['handler'] = '<span style="color:red">' . L('ss_received') . '</span>';
                 } else {
                     if ($value['pay_status'] == PS_UNPAYED) {
-                        @$value['handler'] = "<a href=\"" . url('user/cancel_order', array('order_id' => $value['order_id'])) . "\">" . L('pay_money') . "</a>";
+                        @$value['handler'] = "<a href=\"" . url('mycrowd/cancel_order', array('order_id' => $value['order_id'])) . "\">" . L('pay_money') . "</a>";
                     } else {
-                        @$value['handler'] = "<a href=\"" . url('user/cancel_order', array('order_id' => $value['order_id'])) . "\">" . L('view_order') . "</a>";
+                        @$value['handler'] = "<a href=\"" . url('mycrowd/cancel_order', array('order_id' => $value['order_id'])) . "\">" . L('view_order') . "</a>";
                     }
                 }
             } else {

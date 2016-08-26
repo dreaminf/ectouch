@@ -27,6 +27,18 @@ class CrowdfundingController extends CommonController {
 		$this->type = I('request.type');
 		$this->keywords = I('request.keywords');
 		$this->goods_id = I('request.id');
+		
+		if (!empty($_COOKIE['ZCECS']['keywords'])) {
+            $histroy = explode(',',$_COOKIE['ZCECS']['keywords']);
+            foreach ($histroy as $key=>$val) {
+                if($key < 10){
+                    $zchistroy_list[$key] = $val;
+                }
+            }
+            $this->assign('zcsearch_histroy', $zchistroy_list);
+        }
+		
+		
     }
 	
     /**
@@ -48,6 +60,16 @@ class CrowdfundingController extends CommonController {
      * 众筹项目列表信息
      */
 	public function crowd_goods() {
+		
+		/*记录搜索历史记录*/
+		if (!empty($_COOKIE['ZCECS']['keywords'])) {
+			$history = explode(',', $_COOKIE['ZCECS']['keywords']);
+			array_unshift($history, $this->keywords); //在数组开头插入一个或多个元素
+			$history = array_unique($history);  //移除数组中的重复的值，并返回结果数组。
+			setcookie('ZCECS[keywords]', implode(',', $history), gmtime() + 3600 * 24 * 30);
+		} else {
+			setcookie('ZCECS[keywords]', $this->keywords, gmtime() + 3600 * 24 * 30);
+		}		
 		if ($this->keywords) {
             $where .= " and goods_name like '%$this->keywords%' ";
         }		
@@ -278,7 +300,18 @@ class CrowdfundingController extends CommonController {
 	
 	
 	
-	
+	 /**
+     * 清空浏览历史
+     */
+    public function clear_history() {
+        // ajax请求
+        if (IS_AJAX && IS_AJAX) {
+            setcookie('ZCECS[keywords]', '', 1);
+            echo json_encode(array('status' => 1));
+        } else {
+            echo json_encode(array('status' => 0));
+        }
+    }
 	
 	
 	
