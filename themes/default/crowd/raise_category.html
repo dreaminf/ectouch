@@ -136,36 +136,13 @@
 			<section class="search-con">
 				<div class="history-search">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide">
-							<!-- <p>
-								<label class="fl">热门搜索</label>
-							</p>
-							<ul class="hot-search a-text-more">
-								<li class="w-3">
-									<a><span>雪地靴</span></a>
-								</li>
-								<li class="w-3">
-									<a><span>溜溜车</span></a>
-								</li>
-								<li class="w-3">
-									<a><span>登山鞋</span></a>
-								</li>
-								<li class="w-3">
-									<a><span>微单相机</span></a>
-								</li>
-								<li class="w-3">
-									<a><span>海尔空调</span></a>
-								</li>
-								<li class="w-3">
-									<a><span>PPTV电视</span></a>
-								</li>
-							</ul> -->
+						<div class="swiper-slide">							
 							<p class="hos-search">
 								<label class="fl">最近搜索</label>
-								<span class="fr" onclick="javascript:clearHistroy();"><i class="iconfont icon-xiao10"></i></span>
+								<span class="fr" onclick="javascript:clearHistroy();"><i class="iconfont icon-xiao10 j-detail-close"></i></span>
 							</p>
 
-							<ul class="hot-search a-text-more a-text-one">
+							<ul class="hot-search a-text-more a-text-one raise-search-cont">
 							<!-- {foreach from=$zcsearch_histroy item=keyword} -->
 								<li>
 									<a href="{:url('category/index', array('keywords'=>$this->_var[keyword]))}"><span>{$keyword}</span></a>
@@ -201,6 +178,9 @@
 		<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
 		<script type="text/javascript">
 			$(function($) {
+				$(".j-detail-close").click(function(){
+					$(".raise-search-cont").addClass("active");
+				})
 				//nav
 				window.onload = function() {
 					var $li = $('.raise-cate-nav li');
