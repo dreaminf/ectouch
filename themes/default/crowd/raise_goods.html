@@ -258,70 +258,10 @@
 				<section class="filter-btn dis-box">
 					<a class="filter-btn-kefu filter-btn-a" onClick="collect({$goods.goods_id})"><span class="raise-heart j-heart <!--{if $sc eq 1}-->active<!--{/if}-->" id="ECS_COLLECT" ><i class="ts-2"></i><em class="ts-2" >关注</em></span></a>
 					<a class="btn-submit btn-submit-raise box-flex j-goods-attr j-show-div-1">支持</a>
-					<a class="filter-btn-kefu filter-btn-a j-show-div-2 raise-fengxian"><i class="iconfont icon-fenxiang"></i><em>分享</em></a>
+					<a class="filter-btn-kefu filter-btn-a j-fengxiang-box raise-fengxian"><i class="iconfont icon-fenxiang"></i><em>分享</em></a>
 				</section>
-				<!--分享-->
-				<div class="show-time-con ts-3 b-color-1 j-filter-show-div-2">
-					<section class="goods-show-title of-hidden padding-all b-color-f">
-						<h3 class="fl g-c-title-h3">分享到：</h3>
-						<i class="iconfont icon-guanbi show-div-guanbi fr"></i>
-					</section>
-					<section class="s-g-list-con swiper-scroll">
-						<div class="swiper-wrapper">
-							<div class="swiper-slide select-two">
-								<ul class="j-get-one padding-all ul-4 pt-1 is-over">
-									<li class=" ">
-										<a href="javascript:;">
-											<div class="fengxiang-box"><img src="__TPL__/crowd/img/icon/weixin.png"></div>
-											<p>微信</p>
-										</a>
-									</li>
-
-									<li class="">
-										<a href="javascript:;">
-											<div class="fengxiang-box"><img src="__TPL__/crowd/img/icon/pengyouquan.png"></div>
-											<p>朋友圈</p>
-										</a>
-									</li>
-									<li class="">
-										<a href="javascript:;">
-											<div class="fengxiang-box"><img src="__TPL__/crowd/img/icon/qq.png"></div>
-											<p>qq</p>
-										</a>
-									</li>
-									<li class="">
-										<a href="javascript:;">
-											<div class="fengxiang-box"><img src="__TPL__/crowd/img/icon/kongjian.png"></div>
-											<p>空间</p>
-										</a>
-									</li>
-									<li class="">
-										<a href="javascript:;">
-											<div class="fengxiang-box"><img src="__TPL__/crowd/img/icon/weibao.png"></div>
-											<p>微博</p>
-										</a>
-
-									</li>
-									<li class="">
-										<a href="javascript:;">
-											<div class="fengxiang-box"><img src="__TPL__/crowd/img/icon/lianjie.png"></div>
-											<p>复制链接</p>
-										</a>
-									</li>
-									<li class="">
-										<a href="javascript:;">
-											<div class="fengxiang-box"><img src="__TPL__/crowd/img/icon/gengduo.png"></div>
-											<p>更多</p>
-										</a>
-									</li>
-
-								</ul>
-							</div>
-							<div class="swiper-scrollbar"></div>
-						</div>
-					</section>
-				</div>
-
+		<div class="fengxiang-img-box "><img src="__TPL__/statics/img/fengxiang.png" class="img"></div>				
+		<div class="fengxing-bg "></div>
 				<!--商品属性弹出层star-->
 				<div class="mask-filter-div"></div>
 				<form id="formid" action="{:url('crowdflow/crowd_checkout')}" class="fl" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY" >
@@ -381,6 +321,16 @@
 				<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
 				<script>				
 					$(function() {
+						$(".j-fengxiang-box").click(function(){
+								document.addEventListener("touchmove", handler, false);
+							$(".fengxiang-img-box").addClass("active");
+							$(".fengxing-bg").addClass("active");
+						});
+							$(".fengxing-bg").click(function(){
+								document.removeEventListener("touchmove", handler, false);
+							$(".fengxiang-img-box").removeClass("active");
+							$(".fengxing-bg").removeClass("active");
+						});
 						/*导航弹框*/	
 						$(".icon-gengduo").click(function() {
 							$(".goods-nav").toggleClass("active");
