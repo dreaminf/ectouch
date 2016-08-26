@@ -424,7 +424,8 @@ class CrowdflowController extends CommonController {
         $id = intval($_GET['id']);
 
         if (model('Users')->drop_consignee($id)) {
-            $url = url('crowd_consignee_list');
+            $url = url('crowdflow/crowd_consignee_list');
+			unset($_SESSION['flow_consignee']);
             ecs_header("Location: $url\n");
             exit();
         } else {
