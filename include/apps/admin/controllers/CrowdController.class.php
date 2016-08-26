@@ -813,12 +813,6 @@ class CrowdController extends AdminController {
             if(empty($data['description'])){
                 $this->message('描述不能为空'); 
             }
-            if(empty($data['sort_order'])){
-                $this->message('排序不能为空'); 
-            }
-            if( !preg_match('/^[0-9]*$/', $data['sort_order'])){
-                $this->message('排序必须是数字'); 
-            }
             if (empty($data['article_id'])) {
                 //插入数据   
                 $this->model->table('crowd_article')
