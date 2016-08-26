@@ -168,7 +168,7 @@ class MycrowdController extends CommonController {
             $this->model->table('crowd_comment')
                         ->data($data)
                         ->insert();
-            show_message('评论成功等待管理员审核', '返回', url('crowd_order'), 'info');
+            crowd_show_message('评论成功等待管理员审核', '返回', url('crowd_order'), 'info');
 
         }
 		

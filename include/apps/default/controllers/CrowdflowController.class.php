@@ -134,11 +134,11 @@ class CrowdflowController extends CommonController {
                 if ($flow_type == CART_GROUP_BUY_GOODS) {
                     $group_buy_id = $_SESSION ['extension_id'];
                     if ($group_buy_id <= 0) {
-                        show_message('error group_buy_id');
+                        crowd_show_message('error group_buy_id');
                     }
                     $group_buy = model('GroupBuyBase')->group_buy_info($group_buy_id);
                     if (empty($group_buy)) {
-                        show_message('group buy not exists: ' . $group_buy_id);
+                        crowd_show_message('group buy not exists: ' . $group_buy_id);
                     }
 
                     if ($group_buy ['deposit'] > 0) {
