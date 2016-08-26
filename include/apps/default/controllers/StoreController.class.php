@@ -50,7 +50,7 @@ class StoreController extends CommonController {
         }
         $wechat_user = $this->model->table('wechat_user')->where(array('ect_uid'=>$shop_info['user_id']))->field('headimgurl')->find();
         $shop_info['shop_img'] = empty($shop_info['shop_img']) ? '': __ROOT__ . '/data/attached/drp_logo/'.$shop_info['shop_img'];
-        $shop_info['headimgurl'] = empty($wechat_user['headimgurl']) ? __PUBLIC__ . '/images/get_avatar.png':$wechat_user['headimgurl'];
+        $shop_info['headimgurl'] = empty($wechat_user['headimgurl']) ? __ROOT__ . '/data/attached/images/get_avatar.png':$wechat_user['headimgurl'];
         $_SESSION['drp_shop'] = $shop_info;
         $_SESSION['drp_shop']['drp_id'] = $shop_info['id'];
         return $_SESSION['drp_shop'];

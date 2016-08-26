@@ -9,21 +9,22 @@
 	<link rel="stylesheet" type="text/css" href="__TPL__/css/search_index.css"/>
 	<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
 	<link rel="stylesheet" href="__TPL__/statics/css/search.css" />
+    <script type="text/javascript">var tpl = '__TPL__';</script>
+    <style>
+    .search {position: relative;padding:0;}
+    .text-all{padding:1rem;}
+    .input-texts input {font-size: 1.4rem;}
+    .search-con p {font-size: 1.4rem;}
+    .close-search {font-size: 1.5rem;}
+    .btn-submit {font-size: 1.42rem;}
+    .history-search {padding:0 1.3rem;}
+    .search .btn-submit {height: 3.6rem;}
+    .input-texts input {height: 3rem;line-height: 3rem;}
+    .a-text-more span {font-size: 1.4rem;}
+    .a-text-more span {line-height: 2.6rem;}
+    .a-text-one span {line-height: 0rem;}
+    </style>
 </head>
-<style>
-.search {position: relative;padding:0;}
-.text-all{padding:1rem;}
-.input-texts input {font-size: 1.4rem;}
-.search-con p {font-size: 1.4rem;}
-.close-search {font-size: 1.5rem;}
-.btn-submit {font-size: 1.42rem;}
-.history-search {padding:0 1.3rem;}
-.search .btn-submit {height: 3.6rem;}
-.input-texts input {height: 3rem;line-height: 3rem;}
-.a-text-more span {font-size: 1.4rem;}
-.a-text-more span {line-height: 2.6rem;}
-.a-text-one span {line-height: 0rem;}
-</style>
 <body>
 <div class="con">
 <div class="index-max-box">
@@ -56,8 +57,8 @@
     <img src="{if $drp_info.shop_img}{$drp_info.shop_img}{else}__TPL__/sale/images/index_bg.jpg{/if}" class="fl"/>
 </div>
 <!--立即关注弹出窗 start-->
-<div class="index-guanz-t"> 
-    <div class="index-guanz-show">      
+<div class="index-guanz-t">
+    <div class="index-guanz-show">
         <img src="__TPL__/images/guanzm.png">
         <p><span class="left">长按二维码关注公众号</span><span class="right index-show-close">关闭</span></p>
     </div>
@@ -126,7 +127,7 @@ get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}" , '__TPL__/ima
 	}else{
 		 $(".index-main").css({"marginTop":"0rem"})
 		}
-		
+
     $(function($) {
         $(".ect-index-share").click(function(){
 
