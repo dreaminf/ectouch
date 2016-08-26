@@ -586,7 +586,8 @@ class CrowdController extends AdminController {
         $country = $this->get_region_name($order_info['country']);
         $province = $this->get_region_name($order_info['province']);
         $city = $this->get_region_name($order_info['city']);
-        $order_info['address'] = $country['region_name'] . $province['region_name'] . $city['region_name'] . $order_info['address'];
+        $district = $this->get_region_name($order_info['district']);
+        $order_info['address'] = $country['region_name'] . $province['region_name'] . $city['region_name'] . $district['region_name'].$order_info['address'];
         $stock = $this->get_stock($order_info['goods_id']);
         $order_info['stock'] = $stock['number'] - $stock['backey_num']; //库存
         $order_info['cp_name'] = $this->get_cp_name($order_info['cp_id']);
