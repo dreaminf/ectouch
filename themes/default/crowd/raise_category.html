@@ -137,7 +137,7 @@
 				<div class="history-search">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide">
-							<p>
+							<!-- <p>
 								<label class="fl">热门搜索</label>
 							</p>
 							<ul class="hot-search a-text-more">
@@ -159,28 +159,18 @@
 								<li class="w-3">
 									<a><span>PPTV电视</span></a>
 								</li>
-							</ul>
+							</ul> -->
 							<p class="hos-search">
 								<label class="fl">最近搜索</label>
-								<span class="fr"><i class="iconfont icon-xiao10"></i></span>
+								<span class="fr" onclick="javascript:clearHistroy();"><i class="iconfont icon-xiao10"></i></span>
 							</p>
 
-							<ul class="hot-search a-text-more a-text-one">
+							<ul class="hot-search a-text-more a-text-one"  id="search_histroy">
+							<!-- {foreach from=$zcsearch_histroy item=keyword} -->
 								<li>
-									<a><span>雪地靴</span></a>
+									<a href="{:url('category/index', array('keywords'=>$this->_var[keyword]))}"><span>{$keyword}</span></a>
 								</li>
-								<li>
-									<a><span>溜溜车</span></a>
-								</li>
-								<li>
-									<a><span>登山鞋</span></a>
-								</li>
-								<li>
-									<a><span>微单相机</span></a>
-								</li>
-								<li>
-									<a><span>海尔空调</span></a>
-								</li>
+							<!-- {/foreach} -->	
 
 							</ul>
 						</div>
@@ -241,13 +231,25 @@
 			/* 搜索验证 */
 			function check(Id) {
 				var strings = document.getElementById(Id).value;
-				if(strings.replace(/(^\s*)|(\s*$)/g, "").length == 0) {
+				if(strings.replace(/(^\s*)|(\s*$)/g, "").length == 0 || strings == '') {
 					alert('请输入搜索内容');
 					return false;
 				}
 				$("form").submit();
 				return true;
 			}
+			/* 清空搜索记录 */
+			function clearHistroy(){
+				$.get('{:url("crowdfunding/clear_history")}', {
+				}, function(data) {
+					if(data.status ==0){
+						alert('删除失败')
+					}else{
+						
+					}
+				}, 'json');				
+			}
+			
 		</script>
 	</body>
 
