@@ -296,9 +296,10 @@ class CrowdfundingModel extends CommonModel {
      * 获取众筹项的支持者
      */
     function crowd_buy($goods_id) {
-        $sql = "SELECT user_id, add_time, goods_price  FROM " . $this->pre . "crowd_order_info  " . " WHERE goods_id = '" . $goods_id . "' and pay_status = '" . PS_PAYED . "'  AND extension_code = 'crowd_buy'  ORDER BY order_id DESC ";
+        $sql = "SELECT user_id, add_time, (goods_price*goods_number) as price ,goods_number FROM " . $this->pre . "crowd_order_info  " . " WHERE goods_id = '" . $goods_id . "' and pay_status = '" . PS_PAYED . "'  AND extension_code = 'crowd_buy'  ORDER BY order_id DESC ";
         $buy_list = $this->query($sql);
         foreach ($buy_list as $k => $v) {
+			$buy_list[$k]['goods_price'] = $v['price']; 
 			$buy_list[$k]['add_time'] = $this->start_time_past($v['add_time'],time());      
             $user = $this->model->table('users')->where("user_id=" . $v['user_id'])->field('user_name')->find();
             $wechat_user = $this->model->table('wechat_user')->where("ect_uid=" . $v['user_id'])->field('nickname,headimgurl')->find();

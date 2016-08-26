@@ -190,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `{pre}crowd_order_info` (
   `to_buyer` varchar(255) NOT NULL DEFAULT '' COMMENT '商家给客户的留言',
   `pay_note` varchar(255) NOT NULL DEFAULT '' COMMENT '付款备注',  
   `parent_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '自增ID',
-  `discount` decimal(10,2) NOT NULL COMMENT '会员等级的商品折扣',
+  `discount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '会员等级的商品折扣',
   `tax` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '发票税额',
   PRIMARY KEY (`order_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
