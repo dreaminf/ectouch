@@ -93,7 +93,7 @@
 								<img class="product-list-img" src="{$goods.goods_img}">
 								<div class="product-text">
 									<h4>{$goods.goods_name}</h4>
-									<p class="col-3 f-05"><em class="color-red">￥{$goods.min_price}</em><em class="col-9 f-02">起</em><em class="fr col-9 f-02"><i class="iconfont icon-shijian f-03"></i> {$goods.time}天</em></p>
+									<p class="col-3 f-05"><em class="color-red">￥<!--{if $goods.min_price}-->{$goods.min_price}<!--{else}-->0.00<!--{/if}--></em><em class="col-9 f-02">起</em><em class="fr col-9 f-02"><i class="iconfont icon-shijian f-03"></i> {$goods.time}天</em></p>
 									<div class="raise-progressBar raise-user-time dis-box">
 										<p class="wrap box-flex">
 											<span class="bar" style="width:{$goods.bar}%;"><i class="color"></i></span>
