@@ -19,7 +19,7 @@ function isWeiXin(){
 
 function get_asynclist(url, src) {
 
-    $('#J_ItemList').more({'address': url, 'spinner_code': '<div style="text-align:center; margin:10px;"><img class="lazy" src=" '+tpl+'/statics/img/loading_shop.png" data-original="' + src + '" /></div>'})
+    $('#J_ItemList').more({'address': url, 'spinner_code': '<div style="text-align:center; margin:10px;"><img class="lazy" src="__TPL__/statics/img/loading_shop.png" data-original="' + src + '" /></div>'})
     $(window).scroll(function() {
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
             $('.get_more').click();

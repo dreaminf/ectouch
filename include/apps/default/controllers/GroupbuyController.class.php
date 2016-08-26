@@ -249,7 +249,7 @@ class GroupbuyController extends CommonController {
         $_SESSION['extension_id'] = $group_buy_id;
 
         /* 进入收货人页面 */
-        $this->redirect(url('flow/consignee_list'));
+        $this->redirect(url('flow/checkout'));
         exit;
     }
 
