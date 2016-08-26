@@ -204,7 +204,63 @@ class CrowdflowController extends CommonController {
 	   
     }
 	
-	
+	 /**
+     * 改变配送方式
+     */
+    public function select_shipping() {
+
+        // 格式化返回数组
+        $result = array(
+            'error' => '',
+            'content' => '',
+            'need_insure' => 0
+        );
+        /* 取得购物类型 */
+        $flow_type = isset($_SESSION ['flow_type']) ? intval($_SESSION ['flow_type']) : CART_GENERAL_GOODS;
+        /* 获得收货人信息 */
+        $consignee = model('Order')->get_consignee($_SESSION ['user_id']);
+        /* 对商品信息赋值 */
+        $cart_goods = model('Crowdbuy')->cart_crowd_goods($_SESSION['goods_id'], $_SESSION['cp_id'], $_SESSION['number']);  //项目信息	
+        if (empty($cart_goods) || !model('Order')->check_consignee_info($consignee, $flow_type)) {
+            $result ['error'] = L('no_goods_in_cart');
+        } else {
+            /* 取得购物流程设置 */
+            $this->assign('config', C('CFG'));
+            /* 取得订单信息 */
+			$order = model('Crowdbuy')->crowd_flow_order_info();
+			
+            $order ['shipping_id'] = intval($_REQUEST ['shipping']);
+            $regions = array(
+                $consignee ['country'],
+                $consignee ['province'],
+                $consignee ['city'],
+                $consignee ['district']
+            );
+            $shipping_info = model('Shipping')->shipping_area_info($order ['shipping_id'], $regions);
+
+
+            /* 计算订单的费用 */
+			$total = model('Crowdbuy')->crowd_order_fee($order, $cart_goods, $consignee);
+            $this->assign('total', $total);
+
+            /* 取得可以得到的积分和红包 */
+            /* $this->assign('total_integral', model('Order')->cart_amount(false, $flow_type) - $total ['bonus'] - $total ['integral_money']);
+            $this->assign('total_bonus', price_format(model('Order')->get_total_bonus(), false));  */
+
+            /* 团购标志 */
+            if ($flow_type == CART_GROUP_BUY_GOODS) {
+                $this->assign('is_group_buy', 1);
+            }
+			$result['amount'] = $total['amount_formated'];
+            $result ['cod_fee'] = $shipping_info ['pay_fee'];
+            if (strpos($result ['cod_fee'], '%') === false) {
+                $result ['cod_fee'] = price_format($result ['cod_fee'], false);
+            }
+            $result ['need_insure'] = ($shipping_info ['insure'] > 0 && !empty($order ['need_insure'])) ? 1 : 0;
+            $result ['content'] = ECTouch::$view->fetch('crowd/order_total.html');
+        }
+        echo json_encode($result);
+    }
 	
 	/**
      * 收货地址列表
