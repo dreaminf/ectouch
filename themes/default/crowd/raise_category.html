@@ -35,7 +35,7 @@
 						<ul class="raise-cate-nav dis-box">
 							<li class="box-flex" class="current">综合排序<i class="iconfont icon-xiajiantou"></i></li>
 							<li class="box-flex">全部商品<i class="iconfont icon-xiajiantou"></i></li>
-							<a class="a-sequence j-a-sequence"><i class="iconfont icon-viewlist" data="1"></i></a>
+							<a class="a-sequence j-a-sequence"><i class="iconfont icon-pailie" data="1"></i></a>
 						</ul>
 						<div class="raise-cate-maxbox">
 							<div class="raise-content am-left">
@@ -83,7 +83,7 @@
 					</section>
 
 				</div>
-				<section class="product-list j-product-list product-list-small position-rel" data="2">
+				<section class="product-list j-product-list product-list-medium position-rel" data="1">
 					<ul class="of-hidden">
 						<!--{if $goods_list}-->
 						<!--{foreach from=$goods_list item = goods}-->
@@ -193,18 +193,15 @@
 			</footer>
 		</div>
 		<footer class="footer-nav footer-nav-raise dis-box">
-			<a href="{:url('index/index')}" class="box-flex nav-list">
-				<i class="nav-box i-home"></i><span>首页</span>
-			</a>
 			<a href="{:url('crowdfunding/index')}" class="box-flex nav-list active">
 				<i class="nav-box i-zhongchou"></i><span>微筹广场</span>
 			</a>
+			<a href="{:url('mycrowd/crowd_order')}" class="box-flex position-rel nav-list">
+				<i class="nav-box i-zhongchou-order"></i><span>微筹订单</span>
+			</a>
 			<a href="{:url('mycrowd/index')}" class="box-flex position-rel nav-list">
 				<i class="nav-box i-zhongchou_user"></i><span>微筹中心</span>
-			</a>
-			<a href="{:url('user/index')}" class="box-flex nav-list">
-				<i class="nav-box i-user"></i><span>用户中心</span>
-			</a>
+			</a>	
 		</footer>
 		<div class="raise-bg-box active ts-3"></div>
 		<!--引用js-->

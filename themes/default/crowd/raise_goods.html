@@ -26,7 +26,7 @@
 						<ul class="dis-box goods-header-nav-box goods-header-nav-box-raise">
 							<li class="box-flex"><a class="hover" href="javascript:;"><label>商品</label></a></li>
 							<li class="box-flex"><a href="{:url('crowdfunding/crowd_goods_properties',array('id'=>$this->_var['id']))}"><label>详情</label></a></li>
-							<li class="box-flex"><a href="{:url('crowdfunding/crowd_comment_list',array('id'=>$this->_var['id']))}"><label>评论</label></a></li>
+							<li class="box-flex"><a href="{:url('crowdfunding/crowd_comment_list',array('id'=>$this->_var['id']))}"><label>评价</label></a></li>
 						</ul>
 					</div>
 					<a class="" href="javascript:;">
@@ -34,19 +34,16 @@
 					</a>
 					<div class="goods-nav ts-3">
 						<ul class="goods-nav-box">
-							
-							<a href="{:url('index/index')}">
-								<li><i class="iconfont icon-home j-nav-box"></i>首页</li>
-							</a>
 							<a href="{:url('crowdfunding/index')}">
 								<li><i class="iconfont icon-zhongchou j-nav-box"></i>微筹广场</li>
 							</a>
+
+							<a href="{:url('mycrowd/crowd_order')}">
+								<li><i class="iconfont icon-quanbudingdan j-nav-box"></i>微筹订单</li>
+							</a>	
 							<a href="{:url('mycrowd/index')}">
-								<li><i class="iconfont icon-06 j-nav-box"></i>微筹中心</li>
+								<li style="border:none"><i class="iconfont icon-06 j-nav-box"></i>微筹中心</li>
 							</a>
-							<a href="{:url('user/index')}">
-								<li style="border:none"><i class="iconfont icon-geren j-nav-box"></i>用户中心</li>
-							</a>					
 						</ul>
 					</div>
 				</header>			
@@ -234,7 +231,7 @@
 						<!--{/if}-->
 							</section>
 							<section class="swiper-slide goods-info-attr swiper-slide-next">
-								<div class="order-id-list-raise padding-all b-color-f">
+								<div class="order-id-list padding-all b-color-f">
 									<ul>
 										<!--{if $trends_list}-->
 										<!--{foreach from=$trends_list item =trends}-->

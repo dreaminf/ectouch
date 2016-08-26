@@ -86,16 +86,18 @@
 								<footer class="padding-all b-color-f m-top1px of-hidden dis-box raise-new-btn">							
 									<h4 class="box-flex"></h4>
 									<p class="ect-button-more">										
-										<!-- 取消/确定 -->
+										<!-- 取消/确定/确定收货 -->
 										{$order.handler}
+										
 										<!-- 付款-->
 										{$order.pay_online}	
+										
 										<!--{if $order.pay_status eq 2 and $order.shipping_status eq 0 }-->
 										<a class="btn-submit-r" href="{:url('user/service')}"><span class="raise-col">提醒发货</span></a>
 										<!--{/if}-->
-										<!--{if $order.pay_status eq 2 and $order.shipping_status eq 1 }-->
 										
-										<a class="btn-submit-r " href="{:url('mycrowd/affirm_received',array('order_id'=>$this->_var['order']['order_id']))}" onclick="if (!confirm('你确认已经收到货物了吗？')) return false;">确定收货</a>
+										<!--{if $order.pay_status eq 2 and $order.shipping_status eq 1 }-->										
+										<!-- <a class="btn-submit-r " href="{:url('mycrowd/affirm_received',array('order_id'=>$this->_var['order']['order_id']))}" onclick="if (!confirm('你确认已经收到货物了吗？')) return false;">确定收货</a> -->
 										<!--{/if}-->
 										
 										<!--{if $order.pay_status eq 2 and $order.shipping_status > 0 }-->
@@ -125,6 +127,17 @@
 			{include file='library/page.lbi '}
 		</div>
 		</div>
+		<footer class="footer-nav footer-nav-raise dis-box">
+			<a href="{:url('crowdfunding/index')}" class="box-flex nav-list">
+				<i class="nav-box i-zhongchou"></i><span>微筹广场</span>
+			</a>
+			<a href="{:url('mycrowd/crowd_order')}" class="box-flex position-rel nav-list  active">
+				<i class="nav-box i-zhongchou-order"></i><span>微筹订单</span>
+			</a>
+			<a href="{:url('mycrowd/index')}" class="box-flex position-rel nav-list">
+				<i class="nav-box i-zhongchou_user"></i><span>微筹中心</span>
+			</a>	
+		</footer>
 		<!--引用js-->
 		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript" src="__TPL__/statics/js/swiper.min.js"></script>
