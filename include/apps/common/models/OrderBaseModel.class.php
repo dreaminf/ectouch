@@ -36,9 +36,32 @@ class OrderBaseModel extends BaseModel {
 
         $sql = 'INSERT INTO ' . $this->pre . 'order_action (order_id, action_user, order_status, shipping_status, pay_status, action_place, action_note, log_time) ' .
                 " SELECT order_id, '$username', '$order_status', '$shipping_status', '$pay_status', '$place', '$note', '" . gmtime() . "' " .
-                'FROM ' . $this->pre . "order_info WHERE order_sn = '$order_sn'";
+                'FROM ' . $this->pre . "crowd_order_info WHERE order_sn = '$order_sn'";
         $this->query($sql);
     }
+	
+	/**
+     * 记录众筹订单操作记录
+     * @access  public
+     * @param   string  $order_sn           订单编号
+     * @param   integer $order_status       订单状态
+     * @param   integer $shipping_status    配送状态
+     * @param   integer $pay_status         付款状态
+     * @param   string  $note               备注
+     * @param   string  $username           用户名，用户自己的操作则为 buyer
+     * @return  void
+     */
+    function crowd_order_action($order_sn, $order_status, $shipping_status, $pay_status, $note = '', $username = null, $place = 0) {
+        if (is_null($username)) {
+            $username = $_SESSION['admin_name'];
+        }
+
+        $sql = 'INSERT INTO ' . $this->pre . 'crowd_order_action (order_id, action_user, order_status, shipping_status, pay_status, action_place, action_note, log_time) ' .
+                " SELECT order_id, '$username', '$order_status', '$shipping_status', '$pay_status', '$place', '$note', '" . time() . "' " .
+                'FROM ' . $this->pre . "crowd_order_info WHERE order_sn = '$order_sn'";
+        $this->query($sql);
+    }
+	
 
     /**
      * 返回订单中的虚拟商品

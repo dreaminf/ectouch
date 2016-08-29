@@ -55,6 +55,9 @@ class wxpay
         if($order['apply'] == 1){
             $this->setParameter("attach", "drp");
         }
+		if($order['zc_apply'] == 'crowd'){
+			$this->setParameter("attach", "crowd");
+		}
         $prepay_id = $this->getPrepayId();
         $jsApiParameters = $this->getParameters($prepay_id);
         // wxjsbridge
@@ -127,7 +130,9 @@ class wxpay
                     // 改变订单状态
                     if($attach == 'drp'){
                         model('Payment')->drp_order_paid($log_id, 2);
-                    }else{
+                    }elseif($attach == 'crowd'){
+						model('Payment')->crowd_order_paid($log_id, 2);						
+					}else{
                         model('Payment')->order_paid($log_id, 2);
                     }
                     // 修改订单信息(openid，tranid)

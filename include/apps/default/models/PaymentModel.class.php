@@ -244,6 +244,127 @@ class PaymentModel extends BaseModel {
             }
         }
     }
+	
+	
+	 /**
+     * 修改订单的支付状态
+     *
+     * @access  public
+     * @param   string  $log_id     支付编号
+     * @param   integer $pay_status 状态
+     * @param   string  $note       备注
+     * @return  void
+     */
+    function crowd_order_paid($log_id, $pay_status = PS_PAYED, $note = '') {
+        /* 取得支付编号 */
+        $log_id = intval($log_id);
+        if ($log_id > 0) {
+            /* 取得要修改的支付记录信息 */
+            $sql = "SELECT * FROM " . $this->pre .
+                    "pay_log WHERE log_id = '$log_id'";
+            $pay_log = $this->row($sql);
+            if ($pay_log && $pay_log['is_paid'] == 0) {
+                /* 修改此次支付操作的状态为已付款 */
+                $sql = 'UPDATE ' . $this->pre .
+                        "pay_log SET is_paid = '1' WHERE log_id = '$log_id'";
+                $this->query($sql);
+
+                /* 根据记录类型做相应处理 */
+                if ($pay_log['order_type'] == PAY_ORDER) {
+                    /* 取得订单信息 */
+                    $sql = 'SELECT order_id, user_id, order_sn, consignee, address, mobile, shipping_id, extension_code, extension_id, goods_amount ' .
+                            'FROM ' . $this->pre .
+                            "crowd_order_info WHERE order_id = '$pay_log[order_id]'";
+                    $order = $this->row($sql);
+                    $order_id = $order['order_id'];
+                    $order_sn = $order['order_sn'];
+
+                    /* 修改订单状态为已付款 */
+                    $sql = 'UPDATE ' . $this->pre .
+                            "crowd_order_info SET order_status = '" . OS_CONFIRMED . "', " .
+                            " confirm_time = '" . time() . "', " .
+                            " pay_status = '$pay_status', " .
+                            " pay_time = '" . time() . "', " .
+                            " money_paid = order_amount," .
+                            " order_amount = 0 " .
+                            "WHERE order_id = '$order_id'";
+                    $this->query($sql);
+
+                    /* 记录订单操作记录 */
+                    model('OrderBase')->crowd_order_action($order_sn, OS_CONFIRMED, SS_UNSHIPPED, $pay_status, $note, L('buyer'));
+					
+					//付款更新众筹信息
+					model('Crowdbuy')->update_crowd($order['order_id']);
+					
+                    /* 如果需要，发短信 */
+                    if (C('sms_order_payed') == '1' && C('sms_shop_mobile') != '') {
+                        $sms = new EcsSms();
+                        $sms->send(C('sms_shop_mobile'), sprintf(L('order_payed_sms'), $order_sn, $order['consignee'], $order['mobile']), '', 13, 1);
+                    }
+
+                } elseif ($pay_log['order_type'] == PAY_SURPLUS) {
+                    $sql = 'SELECT `id` FROM ' . $this->pre . "user_account WHERE `id` = '$pay_log[order_id]' AND `is_paid` = 1  LIMIT 1";
+                    $res = $this->row($sql);
+                    $res_id = $res['id'];
+                    if (empty($res_id)) {
+                        /* 更新会员预付款的到款状态 */
+                        $sql = 'UPDATE ' . $this->pre .
+                                "user_account SET paid_time = '" . gmtime() . "', is_paid = 1" .
+                                " WHERE id = '$pay_log[order_id]' LIMIT 1";
+                        $this->query($sql);
+
+                        /* 取得添加预付款的用户以及金额 */
+                        $sql = "SELECT user_id, amount FROM " . $this->pre .
+                                "user_account WHERE id = '$pay_log[order_id]'";
+                        $arr = $this->row($sql);
+
+                        /* 修改会员帐户金额 */
+                        $_LANG = array();
+                        include_once(ROOT_PATH . 'languages/' . C('lang') . '/user.php');
+                        model('ClipsBase')->log_account_change($arr['user_id'], $arr['amount'], 0, 0, 0, $_LANG['surplus_type_0'], ACT_SAVING);
+                    }
+                }
+            } else {
+                /* 取得已发货的虚拟商品信息 */
+                $post_virtual_goods = model('OrderBase')->get_virtual_goods($pay_log['order_id'], true);
+
+                /* 有已发货的虚拟商品 */
+                if (!empty($post_virtual_goods)) {
+                    $msg = '';
+                    /* 检查两次刷新时间有无超过12小时 */
+                    $sql = 'SELECT pay_time, order_sn FROM ' . $this->pre . "order_info WHERE order_id = '$pay_log[order_id]'";
+                    $row = $this->row($sql);
+                    $intval_time = gmtime() - $row['pay_time'];
+                    if ($intval_time >= 0 && $intval_time < 3600 * 12) {
+                        $virtual_card = array();
+                        foreach ($post_virtual_goods as $code => $goods_list) {
+                            /* 只处理虚拟卡 */
+                            if ($code == 'virtual_card') {
+                                foreach ($goods_list as $goods) {
+                                    if ($info = model('OrderBase')->virtual_card_result($row['order_sn'], $goods)) {
+                                        $virtual_card[] = array('goods_id' => $goods['goods_id'], 'goods_name' => $goods['goods_name'], 'info' => $info);
+                                    }
+                                }
+
+                                ECTouch::view()->assign('virtual_card', $virtual_card);
+                            }
+                        }
+                    } else {
+                        $msg = '<div>' . L('please_view_order_detail') . '</div>';
+                    }
+                    $pay_success = L('pay_success') . $msg;
+                    L('pay_success', $pay_success);
+                }
+
+                /* 取得未发货虚拟商品 */
+                $virtual_goods = model('OrderBase')->get_virtual_goods($pay_log['order_id'], false);
+                if (!empty($virtual_goods)) {
+                    $pay_success = L('pay_success') . '<br />' . L('virtual_goods_ship_fail');
+                    L('pay_success', $pay_success);
+                }
+            }
+        }
+    }
     /**
      * 根据out_trade_no订单号获取log_id;
      */

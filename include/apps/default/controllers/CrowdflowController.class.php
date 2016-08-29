@@ -443,9 +443,11 @@ class CrowdflowController extends CommonController {
 		$number = I('post.number', 0);
 		$_SESSION['goods_id'] =$goods_id ;
 		$_SESSION['cp_id'] = $cp_id ;
-		$_SESSION['number'] = $number ;		
-		if(empty($_SESSION['goods_id']) && empty($_SESSION['cp_id'])&&empty($_SESSION['number'])){
-			ecs_header("Location: " . url('index/index') . "\n");
+		$_SESSION['number'] = $number ;	
+
+		if(empty($_SESSION['goods_id']) && empty($_SESSION['cp_id'])&& empty($_SESSION['number'])){
+			//ecs_header("Location: " . url('index/index') . "\n");
+			crowd_show_message('暂无商品', '去选购', url('crowdfunding/index'), 'info');
 			 
 		 }		
         // 检查用户是否已经登录 如果用户已经登录了则检查是否有默认的收货地址 如果没有登录则跳转到登录和注册页面
@@ -775,11 +777,11 @@ class CrowdflowController extends CommonController {
 
         /* 插入支付日志 */
         $order ['log_id'] = model('ClipsBase')->insert_pay_log($new_order_id, $order ['order_amount'], PAY_ORDER);
-
+		$order['zc_apply'] = 'crowd';//
         /* 取得支付信息，生成支付代码 */
         if ($order ['order_amount'] > 0) {
             $payment = model('Order')->payment_info($order ['pay_id']);
-
+			
             include_once (ROOT_PATH . 'plugins/payment/' . $payment ['pay_code'] . '.php');
 
             $pay_obj = new $payment ['pay_code'] ();
