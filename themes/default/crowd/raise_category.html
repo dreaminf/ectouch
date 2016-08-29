@@ -35,7 +35,7 @@
 						<ul class="raise-cate-nav dis-box">
 							<li class="box-flex" class="current">综合排序<i class="iconfont icon-xiajiantou"></i></li>
 							<li class="box-flex">全部商品<i class="iconfont icon-xiajiantou"></i></li>
-							<a class="a-sequence j-a-sequence"><i class="iconfont icon-viewlist" data="2"></i></a>
+							<a class="a-sequence j-a-sequence"><i class="iconfont icon-pailie" data="1"></i></a>
 						</ul>
 						<div class="raise-cate-maxbox">
 							<div class="raise-content">
@@ -83,7 +83,7 @@
 					</section>
 
 				</div>
-				<section class="product-list j-product-list product-list-small position-rel" data="2">
+				<section class="product-list j-product-list product-list-medium position-rel" data="1">
 					<ul class="of-hidden">
 						<!--{if $goods_list}-->
 						<!--{foreach from=$goods_list item = goods}-->
@@ -100,10 +100,10 @@
 										</p>
 										<p class="txt">{$goods.bar}%</p>
 									</div>
-									<div class="dis-box">
-										<p class="col-9 f-03 onelist-hidden">已筹<em class="raise-col mr-small"><!--{if $goods.total_price }-->￥{$goods.total_price}<!--{else}-->￥0.00<!--{/if}--></em><em class="col-9 f-02"></em><em class="col-9 m-l-05"></p><p class="box-flex col-9 f-03 text-right onelist-hidden">目标:<em class="raise-col">￥{$goods.sum_price}</em></em>
-										</p>
-									</div>
+									<ul class="index-n-box of-hidden">
+										<li class="col-9 f-03 onelist-hidden">已筹<em class="raise-col mr-small"><!--{if $goods.total_price }-->￥{$goods.total_price}<!--{else}-->￥0.00<!--{/if}--></em><em class="col-9 f-02"></em><em class="col-9 m-l-05"></li>
+										<li class="col-9 f-03 onelist-hidden">目标:<em class="raise-col">￥{$goods.sum_price}</em></em></li>
+									</ul;>
 								</div>
 								<div class="raise-cate-tag"><i class="iconfont icon-geren"></i>{$goods.buy_num}</div>
 							</div>
@@ -161,6 +161,9 @@
 			</footer>
 		</div>
 		<footer class="footer-nav footer-nav-raise dis-box">
+			<a href="{:url('index/index')}" class="box-flex nav-list">
+					<i class="nav-box i-home"></i><span>首页</span>
+				</a>
 			<a href="{:url('crowdfunding/index')}" class="box-flex nav-list active">
 				<i class="nav-box i-zhongchou"></i><span>微筹广场</span>
 			</a>

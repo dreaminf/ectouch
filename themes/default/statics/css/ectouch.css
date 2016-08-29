@@ -2027,7 +2027,7 @@ a.btn-submit-1{color:#fff}
 .index-more-list li img{width:100%}
 .index-more-list li{width:49%;}
 .n-index-box{padding:0 .6rem;}
-.n-index-box .product-div h4{padding:0.8rem;font-size: 1.6rem;height: 3.2rem;line-height: 1.9rem;    overflow: hidden;}
+.n-index-box .product-div h4{padding:0.8rem;font-size: 1.6rem;height: 3.1rem;line-height: 1.9rem;    overflow: hidden;}
 .n-index-box .product-div p{padding:0.8rem;}
 .n-index-box .product-div p span{color:#1CBB7F;font-size:1.8rem}
 .n-index-box li{margin-bottom:0.6rem;}
@@ -2725,6 +2725,10 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 .flow-done-con-raise i{font-size:10rem;margin-bottom:0.2rem;color:#ffba00;}
 .flow-done-con-raise .flow-done-price{font-size:2.6rem;color:#666}
 .n-message-raise a input{margin-bottom:5rem;color:#ff6700;}
+ .product-list-medium .index-n-box li{width:100%;}
+ .product-list-small .index-n-box li,.product-list-big .index-n-box li{float:left;width:50%;}
+.product-list-small .index-n-box li:last-child,.product-list-big .index-n-box li:last-child{text-align: right;}
+
 /*物流详情*/
 .order-id-list-raise .t-remark{color:#333; font-size:1.5rem;}
 .order-id-list-raise ul li{position:relative; padding-left:2rem;}
