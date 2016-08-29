@@ -15,8 +15,7 @@
 		<link rel="stylesheet" href="__TPL__/statics/css/dialog.css">
 		<!--主样式-->
 		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
-				<script type="text/javascript" src="__TPL__/crowd/js/shopping_flow.js"></script>
-
+		<script type="text/javascript" src="__TPL__/crowd/js/shopping_flow.js"></script>
 	</head>
 
 	<body>
@@ -31,16 +30,14 @@
 			<div class="j-nav-content">
 				<ul class="dis-box new-footer-box">
 					<li class="box-flex">
-						<a href="{:url('index/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/home.png"></i><span>首页</span></a>
-					</li>
-					<li class="box-flex">
 						<a href="{:url('crowdfunding/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/zhongchou.png"></i><span>微筹广场</span></a>
 					</li>
+
 					<li class="box-flex">
-						<a href="{:url('mycrowd/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/raise_shop.png"></i><span>微筹中心</span></a>
+						<a href="{:url('mycrowd/crowd_order')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/zhongchou-order.png"></i><span>微筹订单</span></a>
 					</li>
-					<li class="box-flex">
-						<a href="{:url('user/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/user.png"></i><span>用户中心</span></a>
+										<li class="box-flex">
+						<a href="{:url('mycrowd/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/raise_shop.png"></i><span>微筹中心</span></a>
 					</li>
 				</ul>
 			</div>
@@ -101,7 +98,7 @@
 							<li>
 								<section class="dis-box j-goods-dist j-show-div j-show-get-val">
 									<label class="t-remark g-t-temark">配送方式</label>
-									<div class="box-flex t-goods1 text-right onelist-hidden"><span>请选择</span> <em class="raise-col"></em></div>
+									<div class="box-flex t-goods1 text-right onelist-hidden"><span>请选择</span></div>
 									<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180"></i></span>
 									<!--配送方式star-->
 									<div class="show-goods-dist ts-3 b-color-1 j-show-goods-text j-filter-show-div">
@@ -182,8 +179,7 @@
 						</ul>
 						<p class="f-c-select-price text-right t-remark">共 {$goods.number} 件商品，合计：<span class="raise-col" >¥{$goods.formated_subtotal}</span></p>
 						<!--费用价格-->
-						{include file='crowd/order_total.html'}
-						
+						{include file='crowd/order_total.html'}						
 					</section>
 				</section>
 			</div>

@@ -38,7 +38,7 @@
 							<a class="a-sequence j-a-sequence"><i class="iconfont icon-pailie" data="1"></i></a>
 						</ul>
 						<div class="raise-cate-maxbox">
-							<div class="raise-content am-left">
+							<div class="raise-content">
 								<ul class="raise-list-box">
 
 									<div class="catalog-nav-box select-one j-all-raise">
@@ -100,10 +100,10 @@
 										</p>
 										<p class="txt">{$goods.bar}%</p>
 									</div>
-									<div class="dis-box">
-										<p class="col-9 f-03 onelist-hidden">已筹<em class="raise-col mr-small"><!--{if $goods.total_price }-->￥{$goods.total_price}<!--{else}-->￥0.00<!--{/if}--></em><em class="col-9 f-02"></em><em class="col-9 m-l-05"></p><p class="box-flex col-9 f-03 text-right onelist-hidden">目标:<em class="raise-col">￥{$goods.sum_price}</em></em>
-										</p>
-									</div>
+									<ul class="index-n-box of-hidden">
+										<li class="col-9 f-03 onelist-hidden">已筹<em class="raise-col mr-small"><!--{if $goods.total_price }-->￥{$goods.total_price}<!--{else}-->￥0.00<!--{/if}--></em><em class="col-9 f-02"></em><em class="col-9 m-l-05"></li>
+										<li class="col-9 f-03 onelist-hidden">目标:<em class="raise-col">￥{$goods.sum_price}</em></em></li>
+									</ul;>
 								</div>
 								<div class="raise-cate-tag"><i class="iconfont icon-geren"></i>{$goods.buy_num}</div>
 							</div>
@@ -136,6 +136,7 @@
 			<section class="search-con">
 				<div class="history-search">
 					<div class="swiper-wrapper">
+<<<<<<< HEAD
 						<div class="swiper-slide">
 							<!-- <p>
 								<label class="fl">热门搜索</label>
@@ -166,11 +167,24 @@
 							</p>
 
 							<ul class="hot-search a-text-more a-text-one"  id="search_histroy">
+=======
+						<div class="swiper-slide">							
+							<p class="hos-search">
+								<label class="fl">最近搜索</label>
+								<span class="fr" onclick="javascript:clearHistroy();"><i class="iconfont icon-xiao10 j-detail-close"></i></span>
+							</p>
+
+							<ul class="hot-search a-text-more a-text-one raise-search-cont">
+>>>>>>> crowdfunding
 							<!-- {foreach from=$zcsearch_histroy item=keyword} -->
 								<li>
 									<a href="{:url('category/index', array('keywords'=>$this->_var[keyword]))}"><span>{$keyword}</span></a>
 								</li>
 							<!-- {/foreach} -->	
+<<<<<<< HEAD
+=======
+								
+>>>>>>> crowdfunding
 
 							</ul>
 						</div>
@@ -184,17 +198,17 @@
 		</div>
 		<footer class="footer-nav footer-nav-raise dis-box">
 			<a href="{:url('index/index')}" class="box-flex nav-list">
-				<i class="nav-box i-home"></i><span>首页</span>
-			</a>
+					<i class="nav-box i-home"></i><span>首页</span>
+				</a>
 			<a href="{:url('crowdfunding/index')}" class="box-flex nav-list active">
 				<i class="nav-box i-zhongchou"></i><span>微筹广场</span>
 			</a>
+			<a href="{:url('mycrowd/crowd_order')}" class="box-flex position-rel nav-list">
+				<i class="nav-box i-zhongchou-order"></i><span>微筹订单</span>
+			</a>
 			<a href="{:url('mycrowd/index')}" class="box-flex position-rel nav-list">
 				<i class="nav-box i-zhongchou_user"></i><span>微筹中心</span>
-			</a>
-			<a href="{:url('user/index')}" class="box-flex nav-list">
-				<i class="nav-box i-user"></i><span>用户中心</span>
-			</a>
+			</a>	
 		</footer>
 		<div class="raise-bg-box active ts-3"></div>
 		<!--引用js-->
@@ -203,6 +217,9 @@
 		<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
 		<script type="text/javascript">
 			$(function($) {
+				$(".j-detail-close").click(function(){
+					$(".raise-search-cont").addClass("active");
+				})
 				//nav
 				window.onload = function() {
 					var $li = $('.raise-cate-nav li');
@@ -238,6 +255,10 @@
 				$("form").submit();
 				return true;
 			}
+<<<<<<< HEAD
+=======
+			
+>>>>>>> crowdfunding
 			/* 清空搜索记录 */
 			function clearHistroy(){
 				$.get('{:url("crowdfunding/clear_history")}', {
@@ -249,7 +270,10 @@
 					}
 				}, 'json');				
 			}
+<<<<<<< HEAD
 			
+=======
+>>>>>>> crowdfunding
 		</script>
 	</body>
 

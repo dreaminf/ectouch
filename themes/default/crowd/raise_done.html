@@ -27,22 +27,20 @@
 			<div class="j-nav-content">
 				<ul class="dis-box new-footer-box">
 					<li class="box-flex">
-						<a href="{:url('index/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/home.png"></i><span>首页</span></a>
-					</li>
-					<li class="box-flex">
 						<a href="{:url('crowdfunding/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/zhongchou.png"></i><span>微筹广场</span></a>
 					</li>
+
 					<li class="box-flex">
-						<a href="{:url('mycrowd/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/raise_shop.png"></i><span>微筹中心</span></a>
+						<a href="{:url('mycrowd/crowd_order')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/zhongchou-order.png"></i><span>微筹订单</span></a>
 					</li>
-					<li class="box-flex">
-						<a href="{:url('user/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/user.png"></i><span>用户中心</span></a>
+										<li class="box-flex">
+						<a href="{:url('mycrowd/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/raise_shop.png"></i><span>微筹中心</span></a>
 					</li>
 				</ul>
 			</div>
 			<div class="flow-done">
-				<div class="flow-done-con">
-					<i class="iconfont icon-qian"></i>
+				<div class="flow-done-con flow-done-con-raise">
+					<i class="iconfont icon-jinqian"></i>
 					<p class="flow-done-title">付款金额</p>
 					<p class="flow-done-price">{$total.amount_formated}</p>
 				</div>
@@ -55,7 +53,7 @@
 						
 					</div>
 				</div>
-				<div class="flow-done-all">
+				<div class="m-top1px">
 					<div class="padding-all b-color-f flow-done-id">
 						<section class="dis-box">
 							<label class="t-remark g-t-temark">配送方式：</label>

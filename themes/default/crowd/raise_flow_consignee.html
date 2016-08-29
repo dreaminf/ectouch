@@ -1,74 +1,82 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-<meta name="format-detection" content="telephone=no">
-{if $auto_redirect}
-<meta http-equiv="refresh" content="3;URL={$message.back_url}" />
-{/if}
-<title>{$title}</title>
-<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
-<link rel="stylesheet" href="__PUBLIC__/swiper/css/swiper.min.css"/>
-<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
-<link rel="stylesheet" href="__TPL__/css/photoswipe.css">
-<link rel="stylesheet" href="__TPL__/css/style.css">
-<script type="text/javascript" src="__TPL__/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="__TPL__/js/ectouch.js"></script>
-<link rel="stylesheet" href="__TPL__/statics/css/search.css" />
-</head>
-<body>
-{$share_img}
-<script type="text/javascript" src="__PUBLIC__/script/region.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/shopping_flow.js"></script>
-<script type="text/javascript">
-	region.isAdmin = false; {
-		foreach from = $lang.flow_js item = item key = key
-	}
-	var {
-		$key
-	} = "{$item}"; {
-		/foreach}
-		{
-			literal
-		}
-		onload = function() {
-				if (!document.all) {
-					document.forms['theForm'].reset();
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="format-detection" content="telephone=no"> {if $auto_redirect}
+		<meta http-equiv="refresh" content="3;URL={$message.back_url}" /> {/if}
+		<title>{$title}</title>
+		<link rel="stylesheet" href="__PUBLIC__/swiper/css/swiper.min.css" />
+		<link rel="stylesheet" href="__TPL__/css/style.css">
+		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
+		<script type="text/javascript" src="__TPL__/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="__TPL__/js/ectouch.js"></script>
+
+	</head>
+
+	<body>
+		{$share_img}
+		<script type="text/javascript" src="__PUBLIC__/script/region.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/js/shopping_flow.js"></script>
+		<script type="text/javascript">
+			region.isAdmin = false; {
+				foreach from = $lang.flow_js item = item key = key
+			}
+			var {
+				$key
+			} = "{$item}"; {
+				/foreach} {
+					literal
 				}
-			} {
-				/literal}
-</script>
-<div class="con">
-	<div class="ect-bg">
-		<header class="ect-header ect-margin-tb ect-margin-lr text-center b-raise icon-write">
-			<a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span>
-			<a href="javascript:;" onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune"></a>
-		</header>
-		
-	</div>
-	<section class="ect-text-style">
-		<!-- 如果有收货地址，循环显示用户的收获地址 -->
-		<!-- {foreach from=$consignee_list item=consignee key=sn} -->
-		<form action="{:url('crowdflow/crowd_consignee')}" method="post" name="theForm" id="theForm" onSubmit="return checkConsignee(this)">
-			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-			<div class="ect-bg-colorf flow-consignee">
-			  <ul>
-				<li>
-				  <div class="input-text"><b class="pull-left">{$lang.consignee_name}：</b><span style="top: -0.5rem;">
+				onload = function() {
+						if(!document.all) {
+							document.forms['theForm'].reset();
+						}
+					} {
+						/literal}
+		</script>
+		<div class="con">
+			<header class="dis-box header-menu b-raise color-whie">
+				<a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
+				<h3 class="box-flex">收货地址</h3>
+				<p><i class="iconfont icon-pailie j-nav-box"></i></p>
+			</header>
+			<div class="j-nav-content">
+				<ul class="dis-box new-footer-box">
+					<li class="box-flex">
+						<a href="{:url('crowdfunding/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/zhongchou.png"></i><span>微筹广场</span></a>
+					</li>
+
+					<li class="box-flex">
+						<a href="{:url('user/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/zhongchou-order.png"></i><span>用户中心</span></a>
+					</li>
+					<li class="box-flex">
+						<a href="{:url('mycrowd/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/raise_shop.png"></i><span>微筹中心</span></a>
+					</li>
+				</ul>
+			</div>
+			<section class="ect-text-style">
+				<!-- 如果有收货地址，循环显示用户的收获地址 -->
+				<!-- {foreach from=$consignee_list item=consignee key=sn} -->
+				<form action="{:url('crowdflow/crowd_consignee')}" method="post" name="theForm" id="theForm" onSubmit="return checkConsignee(this)">
+					<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+					<div class="ect-bg-colorf flow-consignee n-flow-con-raise">
+						<ul>
+							<li>
+								<div class="input-text"><b class="pull-left">{$lang.consignee_name}：</b><span style="top: -0.5rem;">
 					<input name="consignee" maxlength="10" type="text" class="inputBg" id="consignee_{$sn}" placeholder="{$lang.consignee_name}{$lang.require_field}" value="{$consignee.consignee|escape}">
 					</span></div>
-				</li>
-				<li>
-				  <div class="input-text"><b class="pull-left">{$lang.mobile}：</b><span style="top: -0.5rem;">
+							</li>
+							<li>
+								<div class="input-text"><b class="pull-left">{$lang.mobile}：</b><span style="top: -0.5rem;">
 					<input name="mobile" maxlength="11" type="text" class="inputBg"  id="mobile_{$sn}" placeholder="{$lang.mobile}{$lang.require_field}" value="{$consignee.mobile|escape}">
 					</span></div>
-				</li>
+							</li>
 
-				<!-- 购物车中存在实体商品显示国家和地区 -->
-				<li style="display:none">
-					<div class="input-text"><b class="pull-left">{$lang.city_district}：</b><span>
+							<!-- 购物车中存在实体商品显示国家和地区 -->
+							<li style="display:none">
+								<div class="input-text"><b class="pull-left">{$lang.city_district}：</b><span>
 					<select name="country" id="selCountries_{$sn}" onchange="region.changed(this, 1, 'selProvinces_{$sn}')">
 					  <option value="0">{$lang.please_select}{$name_of_region[0]}</option>
 					  <!-- {foreach from=$country_list item=country} -->
@@ -134,6 +142,9 @@
 </div>
 <script type="text/javascript" src="__PUBLIC__/script/region.js"></script> 
 <script type="text/javascript" src="__PUBLIC__/js/shopping_flow.js"></script> 
+		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/swiper.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
 <script type="text/javascript">
 	region.isAdmin = false;
 	{foreach from=$lang.flow_js item=item key=key}

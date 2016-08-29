@@ -1029,3 +1029,11 @@ localData = {
 			$(".j-goods-attr").find(".t-goods1").text(get_text.substring(0, get_text.length - 1));
 		}
 	});
+	
+	/*订单提交页面单选赋值*/
+	$(".s-g-list-con .j-get-one .ect-select-raise").click(function() {
+		dist_span = $(this).find("label>dd").html();
+		t_goods1 = $(this).parents(".j-show-get-val").find(".t-goods1"); //需要获取弹出层em标签
+		t_goods1.html(dist_span);
+
+	});

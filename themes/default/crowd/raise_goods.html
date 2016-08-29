@@ -34,19 +34,16 @@
 					</a>
 					<div class="goods-nav ts-3">
 						<ul class="goods-nav-box">
-							
-							<a href="{:url('index/index')}">
-								<li><i class="iconfont icon-home j-nav-box"></i>首页</li>
-							</a>
 							<a href="{:url('crowdfunding/index')}">
 								<li><i class="iconfont icon-zhongchou j-nav-box"></i>微筹广场</li>
 							</a>
+
+							<a href="{:url('mycrowd/crowd_order')}">
+								<li><i class="iconfont icon-quanbudingdan j-nav-box"></i>微筹订单</li>
+							</a>	
 							<a href="{:url('mycrowd/index')}">
-								<li><i class="iconfont icon-06 j-nav-box"></i>微筹中心</li>
+								<li style="border:none"><i class="iconfont icon-06 j-nav-box"></i>微筹中心</li>
 							</a>
-							<a href="{:url('user/index')}">
-								<li style="border:none"><i class="iconfont icon-geren j-nav-box"></i>用户中心</li>
-							</a>					
 						</ul>
 					</div>
 				</header>			
@@ -93,31 +90,22 @@
 					
 				</section>
 				<section class="b-color-f m-top1px">
-					<ul class="user-money-list g-s-i-title-1 dis-box text-center my-dingdan raise-dateil-list">
-						<a href="javascript:;" class="box-flex">
-							<li>
+					<ul class="user-money-list g-s-i-title-1 dis-box text-center my-dingdan raise-dateil-list">				
+							<li class="box-flex">
 								<h4 class="ellipsis-one"><i class="iconfont icon-flagqizi f-2 col-9"></i></h4>
 								<p class="t-remark3">目标资金</p>
 								<p class="f-08 raise-col">{$goods.sum_price}<em class="f-02 col-9">元</em></p>
-
 							</li>
-						</a>
-						<a href="javascript:;" class="box-flex">
-							<li>
+							<li class="box-flex">
 								<h4 class="ellipsis-one"><i class="iconfont icon-jinqian f-2 col-9"></i></h4>
 								<p class="t-remark3">已筹资金</p>
 								<p class="f-08 raise-col"><!--{if $goods.total_price }-->{$goods.total_price}<!--{else}-->0.00<!--{/if}--><em class="f-02 col-9">元</em></h4>
-
-							</li>
-						</a>
-						<a href="javascript:;" class="box-flex">
-							<li>
+							</li>									
+							<li class="box-flex">
 								<h4 class="ellipsis-one"><i class="iconfont icon-geren f-2 col-9"></i></h4>
 								<p class="t-remark3">支持人数</p>
 								<p class="f-08 raise-col">{$goods.buy_num}<em class="f-02 col-9">人</em></p>
-
-							</li>
-						</a>
+							</li>					
 					</ul>
 				</section>
 				<section class="m-top1px padding-all b-color-f goods-promotion">
@@ -161,15 +149,15 @@
 					</div>
 					<div id="j-tab-con" class="tab-con swiper-container-horizontal swiper-container-autoheight raise-list-default">
 						<div class="swiper-wrapper">
-							<section class="swiper-slide swiper-slide-active">
-								<a href="{:url('crowdfunding/crowd_comment_list',array('id'=>$this->_var['id']))}">
+							<section class="swiper-slide swiper-slide-active">							
+								<!--{if $comment_list}-->
+									<a href="{:url('crowdfunding/crowd_comment_list',array('id'=>$this->_var['id']))}">
 									<div class="dis-box padding-all b-color-f  g-evaluation-title">
 										<label class="t-remark g-t-temark">用户评价</label>
 										<div class="box-flex t-goods1"></div>
 										<div class="t-goods1"><span class="t-jiantou">更多评论<i class="iconfont icon-jiantou tf-180"></i></span></div>
 									</div>
 								</a>
-								<!--{if $comment_list}-->
 								<!--{foreach from=$comment_list item =comment}-->
 								<div class="m-top1px evaluation-list padding-all b-color-f">
 									<div class="dis-box raise-header padding-all ">
@@ -198,7 +186,7 @@
 								</div>
 								<!--{/foreach}-->
 									<!--{else}-->
-							<div class="no-div-message flow-no-cart">
+							<div class="no-div-raise flow-no-cart">
 								<i class="iconfont icon-biaoqingleiben"></i>
 								<p>亲，此处没有内容～！</p>						
 							</div>
@@ -227,29 +215,30 @@
 								</div>
 								<!--{/foreach}-->
 								<!--{else}-->
-							<div class="no-div-message flow-no-cart">
+							<div class="no-div-raise flow-no-cart">
 								<i class="iconfont icon-biaoqingleiben"></i>
 								<p>亲，此处没有内容～！</p>						
 							</div>
 						<!--{/if}-->
 							</section>
 							<section class="swiper-slide goods-info-attr swiper-slide-next">
-								<div class="order-id-list padding-all b-color-f">
-									<ul>
-										<!--{if $trends_list}-->
+								<div class="order-id-list-raise ">
+									<!--{if $trends_list}-->
+									<ul class="padding-all b-color-f">
 										<!--{foreach from=$trends_list item =trends}-->
 										<li>
 											<p class="t-remark3">{$trends.add_time}</p>
 											<p class="t-remark m-top02">{$trends.content}</p>
 										</li>
-										<!--{/foreach}-->
-										<!--{else}-->
-										<div class="no-div-message flow-no-cart">
+										<!--{/foreach}-->											
+									</ul>
+									<!--{else}-->
+									<div class="no-div-raise flow-no-cart">
 											<i class="iconfont icon-biaoqingleiben"></i>
 											<p>亲，此处没有内容～！</p>						
-										</div>
+									</div>
 									<!--{/if}-->
-									</ul>
+									
 								</div>
 							</section>
 						</div>
@@ -261,70 +250,10 @@
 				<section class="filter-btn dis-box">
 					<a class="filter-btn-kefu filter-btn-a" onClick="collect({$goods.goods_id})"><span class="raise-heart j-heart <!--{if $sc eq 1}-->active<!--{/if}-->" id="ECS_COLLECT" ><i class="ts-2"></i><em class="ts-2" >关注</em></span></a>
 					<a class="btn-submit btn-submit-raise box-flex j-goods-attr j-show-div-1">支持</a>
-					<a class="filter-btn-kefu filter-btn-a j-show-div-2 raise-fengxian"><i class="iconfont icon-fenxiang"></i><em>分享</em></a>
+					<a class="filter-btn-kefu filter-btn-a j-fengxiang-box raise-fengxian"><i class="iconfont icon-fenxiang"></i><em>分享</em></a>
 				</section>
-				<!--分享-->
-				<div class="show-time-con ts-3 b-color-1 j-filter-show-div-2">
-					<section class="goods-show-title of-hidden padding-all b-color-f">
-						<h3 class="fl g-c-title-h3">分享到：</h3>
-						<i class="iconfont icon-guanbi show-div-guanbi fr"></i>
-					</section>
-					<section class="s-g-list-con swiper-scroll">
-						<div class="swiper-wrapper">
-							<div class="swiper-slide select-two">
-								<ul class="j-get-one padding-all ul-4 pt-1 is-over">
-									<li class=" ">
-										<a href="javascript:;">
-											<div class="fengxiang-box"><img src="__TPL__/crowd/img/icon/weixin.png"></div>
-											<p>微信</p>
-										</a>
-									</li>
-
-									<li class="">
-										<a href="javascript:;">
-											<div class="fengxiang-box"><img src="__TPL__/crowd/img/icon/pengyouquan.png"></div>
-											<p>朋友圈</p>
-										</a>
-									</li>
-									<li class="">
-										<a href="javascript:;">
-											<div class="fengxiang-box"><img src="__TPL__/crowd/img/icon/qq.png"></div>
-											<p>qq</p>
-										</a>
-									</li>
-									<li class="">
-										<a href="javascript:;">
-											<div class="fengxiang-box"><img src="__TPL__/crowd/img/icon/kongjian.png"></div>
-											<p>空间</p>
-										</a>
-									</li>
-									<li class="">
-										<a href="javascript:;">
-											<div class="fengxiang-box"><img src="__TPL__/crowd/img/icon/weibao.png"></div>
-											<p>微博</p>
-										</a>
-
-									</li>
-									<li class="">
-										<a href="javascript:;">
-											<div class="fengxiang-box"><img src="__TPL__/crowd/img/icon/lianjie.png"></div>
-											<p>复制链接</p>
-										</a>
-									</li>
-									<li class="">
-										<a href="javascript:;">
-											<div class="fengxiang-box"><img src="__TPL__/crowd/img/icon/gengduo.png"></div>
-											<p>更多</p>
-										</a>
-									</li>
-
-								</ul>
-							</div>
-							<div class="swiper-scrollbar"></div>
-						</div>
-					</section>
-				</div>
-
+		<div class="fengxiang-img-box "><img src="__TPL__/statics/img/fengxiang.png" class="img"></div>				
+		<div class="fengxing-bg "></div>
 				<!--商品属性弹出层star-->
 				<div class="mask-filter-div"></div>
 				<form id="formid" action="{:url('crowdflow/crowd_checkout')}" class="fl" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY" >
@@ -384,6 +313,16 @@
 				<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
 				<script>				
 					$(function() {
+						$(".j-fengxiang-box").click(function(){
+								document.addEventListener("touchmove", handler, false);
+							$(".fengxiang-img-box").addClass("active");
+							$(".fengxing-bg").addClass("active");
+						});
+							$(".fengxing-bg").click(function(){
+								document.removeEventListener("touchmove", handler, false);
+							$(".fengxiang-img-box").removeClass("active");
+							$(".fengxing-bg").removeClass("active");
+						});
 						/*导航弹框*/	
 						$(".icon-gengduo").click(function() {
 							$(".goods-nav").toggleClass("active");
@@ -438,9 +377,12 @@
 							alert('请先择回报方案');
 							return false;
 						}
-						//var qty = $("#number").val();						
+						var qty = $("#number").val();
+						if(qty < 1 ){
+							alert('此方案已售完，请选择其他方案');
+							return false;
+						}
 						$("input[name=cp_id]").val(id);
-						//$("input[name=number]").val(qty);
 						document.getElementById("formid").submit();
 					}
 					
@@ -486,6 +428,7 @@
 					function changePriceResponse(res) {
 						if (res.err_msg.length > 0) {
 							alert(res.err_msg);
+							$("input[name=number]").val(res.number);
 						} else {
 							if (document.getElementById('ECS_GOODS_AMOUNT'))
 								document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result;
