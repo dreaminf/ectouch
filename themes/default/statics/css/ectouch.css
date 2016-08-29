@@ -2689,7 +2689,7 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 
 /*订单列表*/
 .raise-money-list{padding:0.6rem 1.3rem;border-top:1px solid #f6f6f9;text-align: right;}
-.raise-new-btn input{font-size:1.6rem;background:none;border:none;color:#ff6700;margin:0;padding:0;}
+.raise-new-btn input{font-size:1.6rem;background:none;border:none;color:#ff6700;margin:0;padding:0;border:0;}
 
 /*订单详情*/
 .n-btn-box div{ background: #ff6700;border: 1px solid #ff6700;    width: auto;padding: 0.84rem 1.3rem;display: inline-block;border-radius:0.3rem}
@@ -2712,20 +2712,19 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 .n-raise-btn button:active,.n-raise-btn button:hover{background:#ee6305;color:#fff;}
 .btn-raise-box{ border:1px solid #ff6700;color:#ff6700;    padding: 0.84rem 0;font-size: 1.7rem;border-radius: 4px;}
 .btn-raise-box:active,.btn-raise-box:hover{border:1px solid #ee6305;color:#ee6305; }
-
 .n-flow-con-raise ul li{padding:1.3rem}
-.n-flow-con-raise ul li select{font-size:1.6rem}
-
+.n-flow-con-raise ul li select{font-size:1.6rem;}
 .fengxiang-img-box{position:fixed;top:0;right:5%;width:70%;z-index:100;display:none}
 .fengxing-bg{background:rgba(0,0,0,0.8);position:fixed;top:0;left:0;right:0;bottom:0;z-index:99;display:none;}
 .fengxiang-img-box.active,.fengxing-bg.active{display:block;}
 .raise-search-cont.active{display:none}
 .no-div-raise{text-align: center;padding-top: 1.2rem;color: #999;}
 .no-div-raise .icon-biaoqingleiben {font-size: 7rem;color: #ccc;}
-.no-div-raise p {margin-top: 0.6rem;font-size: 1.4rem;}
+.no-div-raise p {margin-top: 0.6rem;font-size: 1.4rem;margin-bottom:0.9rem;}
 .flow-done-con-raise{margin-top:3rem;font-size:1.5rem}
-.flow-done-con-raise i{font-size:10rem;margin-bottom:0.4rem;color:#ffba00;}
+.flow-done-con-raise i{font-size:10rem;margin-bottom:0.2rem;color:#ffba00;}
 .flow-done-con-raise .flow-done-price{font-size:2.6rem;color:#666}
+.n-message-raise a input{margin-bottom:5rem;color:#ff6700;}
 /*物流详情*/
 .order-id-list-raise .t-remark{color:#333; font-size:1.5rem;}
 .order-id-list-raise ul li{position:relative; padding-left:2rem;}
