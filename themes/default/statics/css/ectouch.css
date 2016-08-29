@@ -2581,7 +2581,7 @@ table.u-table td{border:1px solid #e3e3e3;padding:0.5em 0.2em;height:3em;width:7
 .raise-search .input-text input{padding-left: 1rem;}
 .g-s-i-title-1 {padding: 1.2rem 0}  
 .raise-pay-btn input{background:none;text-align: center;color: #fff;border:none;width:100%;}
-.raise-pay-btn div{width:100%;background: #1dbc20;border: 1px solid #1dbc20;font-size: 1.7rem;color: #fff;border: 0;text-align: center;padding: .84rem 0;border-radius: 4px;width: 100%;}
+.raise-pay-btn div{width:100%;background: #ff6700;border: 1px solid #ff6700;font-size: 1.7rem;color: #fff;border: 0;text-align: center;padding: .84rem 0;border-radius: 4px;width: 100%;}
 .raise-pay-btn a{width:100%;text-align: center;display: block;}
 .raise-zan-list{padding:0.8rem 1.2rem 0.2rem 1.2rem;border-bottom:1px solid #f6f6f9;}
 .raise-pro-cont{width:95%;}
@@ -2683,7 +2683,6 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 .select-three .ect-select-raise i{display:block; width:2.1rem; height:2.1rem; border:1px solid #ddd; border-radius: 100%;}
 .select-three .ect-select-raise label.active i{border:1px solid #ff6700; color:#fff; text-align: center; background:#ff6700 url(../img/iconfont-gou.png) center center no-repeat; background-size:70%;}
 
-
 /*个人中心*/
 .user-head-img-raise{width:5.4rem;height:5.4rem;border-radius:4rem;overflow:hidden;  border: 3px solid rgba(255,255,255,0.5);}
 .user-head-img-raise img{width:100%;}
@@ -2707,7 +2706,6 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 .raise-order-header{padding:2.4rem 3rem;background:#ff6700;}
 .raise-heart.active em{color:#ff6700}
 
-
 .n-header-raise{background: #ff6700 !important; !important;height: auto;overflow: hidden;}
 .n-header-raise span{color: #fff}
 .n-raise-btn button{background:#ff6700;color:#fff;font-size: 1.3em;}
@@ -2722,3 +2720,12 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 .fengxing-bg{background:rgba(0,0,0,0.8);position:fixed;top:0;left:0;right:0;bottom:0;z-index:99;display:none;}
 .fengxiang-img-box.active,.fengxing-bg.active{display:block;}
 .raise-search-cont.active{display:none}
+.no-div-raise{text-align: center;padding-top: 1.2rem;color: #999;}
+.no-div-raise .icon-biaoqingleiben {font-size: 7rem;color: #ccc;}
+.no-div-raise p {margin-top: 0.6rem;font-size: 1.4rem;}
+/*物流详情*/
+.order-id-list-raise .t-remark{color:#333; font-size:1.5rem;}
+.order-id-list-raise ul li{position:relative; padding-left:2rem;}
+.order-id-list-raise ul li:first-of-type .t-remark{color:#ff6700}
+.order-id-list-raise ul li:before{content:" "; display:block; width:1rem; height:1rem; position:absolute; background:#ff6700; border-radius: 100%; border:2px solid #fff; left:-.2rem; top:1.3rem; z-index: 2;}
+.order-id-list-raise ul li:after{content:" "; width:1px; top:0; bottom:0; position:absolute; background:#ddd; display: block; left: 0.5rem; z-index: 1;}

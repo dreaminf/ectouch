@@ -158,15 +158,15 @@
 					</div>
 					<div id="j-tab-con" class="tab-con swiper-container-horizontal swiper-container-autoheight raise-list-default">
 						<div class="swiper-wrapper">
-							<section class="swiper-slide swiper-slide-active">
-								<a href="{:url('crowdfunding/crowd_comment_list',array('id'=>$this->_var['id']))}">
+							<section class="swiper-slide swiper-slide-active">							
+								<!--{if $comment_list}-->
+									<a href="{:url('crowdfunding/crowd_comment_list',array('id'=>$this->_var['id']))}">
 									<div class="dis-box padding-all b-color-f  g-evaluation-title">
 										<label class="t-remark g-t-temark">用户评价</label>
 										<div class="box-flex t-goods1"></div>
 										<div class="t-goods1"><span class="t-jiantou">更多评论<i class="iconfont icon-jiantou tf-180"></i></span></div>
 									</div>
 								</a>
-								<!--{if $comment_list}-->
 								<!--{foreach from=$comment_list item =comment}-->
 								<div class="m-top1px evaluation-list padding-all b-color-f">
 									<div class="dis-box raise-header padding-all ">
@@ -195,7 +195,7 @@
 								</div>
 								<!--{/foreach}-->
 									<!--{else}-->
-							<div class="no-div-message flow-no-cart">
+							<div class="no-div-raise flow-no-cart">
 								<i class="iconfont icon-biaoqingleiben"></i>
 								<p>亲，此处没有内容～！</p>						
 							</div>
@@ -224,29 +224,30 @@
 								</div>
 								<!--{/foreach}-->
 								<!--{else}-->
-							<div class="no-div-message flow-no-cart">
+							<div class="no-div-raise flow-no-cart">
 								<i class="iconfont icon-biaoqingleiben"></i>
 								<p>亲，此处没有内容～！</p>						
 							</div>
 						<!--{/if}-->
 							</section>
 							<section class="swiper-slide goods-info-attr swiper-slide-next">
-								<div class="order-id-list padding-all b-color-f">
-									<ul>
-										<!--{if $trends_list}-->
+								<div class="order-id-list-raise ">
+									<!--{if $trends_list}-->
+									<ul class="padding-all b-color-f">
 										<!--{foreach from=$trends_list item =trends}-->
 										<li>
 											<p class="t-remark3">{$trends.add_time}</p>
 											<p class="t-remark m-top02">{$trends.content}</p>
 										</li>
-										<!--{/foreach}-->
-										<!--{else}-->
-										<div class="no-div-message flow-no-cart">
+										<!--{/foreach}-->											
+									</ul>
+									<!--{else}-->
+									<div class="no-div-raise flow-no-cart">
 											<i class="iconfont icon-biaoqingleiben"></i>
 											<p>亲，此处没有内容～！</p>						
-										</div>
+									</div>
 									<!--{/if}-->
-									</ul>
+									
 								</div>
 							</section>
 						</div>
