@@ -42,6 +42,9 @@ class CrowdController extends AdminController {
         $this->assign('page', $this->pageShow($total));
         $sql = 'select cp_id,name,goods_id,shop_price,number,sort_order,backey_num,sort_order,status from ' . $this->model->pre . 'crowd_plan where goods_id=' . $goods_id . ' order by cp_id desc limit ' . $offset;
         $plan_list = $this->model->query($sql);
+		foreach ($plan_list as $key => $value) {
+			$plan_list[$key]['surplus'] = $value['number']-$value['backey_num'];
+        }
         $this->assign('plan_list', $plan_list);
         $this->display();
     }
