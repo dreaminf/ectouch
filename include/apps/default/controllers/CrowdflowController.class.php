@@ -457,7 +457,7 @@ class CrowdflowController extends CommonController {
         }
 		
 		/*判断重复商品订单 是否支付 */		
-		$condition = "user_id = '".$_SESSION[user_id]."' AND goods_id = '".$_SESSION['goods_id']."' AND cp_id = '".$_SESSION['cp_id']."' AND pay_status = 0 ";
+		$condition = "user_id = '".$_SESSION[user_id]."' AND goods_id = '".$_SESSION['goods_id']."' AND cp_id = '".$_SESSION['cp_id']."' AND pay_status = 0 and order_status !=2 ";
         $order_num = $this->model->table('crowd_order_info')->field('count(order_id)')->where($condition)->getOne();
 		if($order_num > 0)
 		{
