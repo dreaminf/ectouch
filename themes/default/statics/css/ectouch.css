@@ -2661,7 +2661,7 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 
 /*单选复选通用样式 － 2 列表打勾显示*/
 .select-two{background:#fff; overflow: hidden; padding-top:0; padding-bottom:0;}
-.select-two .ect-select-raise{overflow:hidden;display: block; font-size:1.7rem;  border-top:1px solid #e7e8ef;}
+.select-two .ect-select-raise{overflow:hidden;display: block; font-size:1.7rem;}
 .select-two .ect-select-raise:first-child{border-top:0;}
 .select-two .ect-select-raise span{margin-top:.2rem;}
 .select-two .ect-select-raise.active i{-webkit-transform: rotate(-90deg);
@@ -2723,6 +2723,9 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 .no-div-raise{text-align: center;padding-top: 1.2rem;color: #999;}
 .no-div-raise .icon-biaoqingleiben {font-size: 7rem;color: #ccc;}
 .no-div-raise p {margin-top: 0.6rem;font-size: 1.4rem;}
+.flow-done-con-raise{margin-top:3rem;font-size:1.5rem}
+.flow-done-con-raise i{font-size:10rem;margin-bottom:0.4rem;color:#ffba00;}
+.flow-done-con-raise .flow-done-price{font-size:2.6rem;color:#666}
 /*物流详情*/
 .order-id-list-raise .t-remark{color:#333; font-size:1.5rem;}
 .order-id-list-raise ul li{position:relative; padding-left:2rem;}
