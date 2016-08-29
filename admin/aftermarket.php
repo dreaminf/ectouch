@@ -470,7 +470,7 @@ elseif ($_REQUEST['act'] == 'operate_post') {
         return_action($ret_id, $return_info['return_status'], FF_REFUND, RC_APPLY_SUCCESS, $action_note);
     } elseif ('after_service' == $operation) {
         /* 记录log */
-        order_action($order['order_sn'], $order['order_status'], $order['shipping_status'], $order['pay_status'], '[' . $_LANG['op_after_service'] . '] ' . $action_note);
+        return_action($ret_id, $return_info['return_status'], FF_REFUND, RC_APPLY_SUCCESS,'[' . 售后 . '] ' . $action_note);
     } else {
         die('invalid params');
     }
