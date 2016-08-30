@@ -2394,7 +2394,8 @@ a.n-but-ls{color:#1CBB7F}
 .text-area12{padding:0.5rem 0 1.8rem 0;}
 .text-area12 input{font-size:1.6rem;width:100%;}
 .n-b-hongbao{border-radius:0.5rem;padding:0.7rem}
-.n-acc-but-queding .ect-btn-info{font-size:1.7rem;color:#fff;border:0;text-align:center;padding:.84rem 0;border-radius:4px;width:100%;background:#1CBB7F;border:1px solid #1CBB7F}
+.n-acc-but-queding div{background:#1CBB7F;border:1px solid #1CBB7F;border-radius: 4px;}
+.n-acc-but-queding .ect-btn-info{-webkit-appearance:none;font-size:1.7rem;color:#fff;border:0;text-align:center;padding:.84rem 0;border-radius:4px;width:100%;background:none;border:none}
 /*客服*/
 .user-service .ect-radio{overflow:hidden}
 .n-user-service input[type=checkbox],input[type=radio]{margin:4px 0 0;margin-top:1px\9;line-height:normal}
