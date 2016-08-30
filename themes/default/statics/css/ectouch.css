@@ -2092,15 +2092,17 @@ a.btn-submit-1{color:#fff}
 
 .header-menu-1 .is-con{font-size:2rem;color:#fff;text-align:center;display:block;line-height:3.6rem;}
 .goods-left-jiat{background:rgba(0,0,0,0.3);height:3.6rem;width:3.6rem; border-radius:100%;margin:0.6rem 0.6rem 0.6rem 0.6rem;}
-.goods-nav{width:50%; height:0;border-radius:0.5rem;position:absolute;background:#333;z-index:49999;right: 0rem;top:5.1rem;opacity: 0; 
+.goods-nav{width:50%; height:0;border-radius:0.5rem;position:absolute;background:#333;z-index:4999;right: 0rem;top:5.1rem;opacity: 0; 
 			-webkit-transform: scale(0.0);transform: scale(0.0);
 			-webkit-transform-origin: 86% -12px;
 			-ms-transform-origin: 86% -12px;
 			transform-origin: 86% -12px;}
-.goods-nav.active{height:inherit; opacity: 1; -webkit-transform: scale(1.0);transform: scale(1.0);}			
+.goods-nav.active{height:inherit; opacity: 1; -webkit-transform: scale(1.0);transform: scale(1.0);}	
+/*.goods-nav-bg{background:rgba(0,0,0,0.5);position: fixed;left:0;right:0;top:0;bottom:0;z-index:10;display: none;}		
+.goods-nav-bg.active{display: block;}*/
 .goods-nav-box li i{font-size:1.8rem;} 
 .goods-nav:before{content:"";display:block;position:absolute;width:0;height:0;border-color:transparent;border-width:12px;border-style:solid;bottom:100%;right:1.4rem;border-bottom-color:rgba(51,51,51,0.96)}
-.goods-nav-box{font-size:1.6rem;border-radius:0.5rem;position:absolute;background:rgba(51,51,51,0.96);right:0.8rem}
+.goods-nav-box{font-size:1.6rem;border-radius:0.5rem;position:absolute;background:rgba(51,51,51,0.96);right:0.8rem;z-index: 119;}
 .goods-nav li{padding:1.1rem 3rem 1.1rem 2rem;border-bottom:1px solid rgba(100,100,100,0.5);color:#ccc}
 .goods-nav-box i{margin-right:0.8rem;}
 .goods-nav-box a{color:#fff;}
@@ -2641,7 +2643,7 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 .btn-submit-raise{background: #ff6700;border: 1px solid #ff6700;color:#fff;padding: 0.84rem;font-size: 1.7rem;}
 .btn-submit-raise:hover {border:1px solid #ff6700;background:#ff6700;}/*主提交按钮按下颜色*/
 .raise-cate-nav li.current {color:#ff6700;outline:none;}
-.goods-fixed-raise{position:fixed;top:0;z-index:9;width:100%;max-width:640px;background:rgba(255,255,255,0);}
+.goods-fixed-raise{position:fixed;top:0;z-index:199;width:100%;max-width:640px;background:rgba(255,255,255,0);}
 .goods-fixed-raise.active{background:rgba(255,103,0,0.96);box-shadow: 1px 0px 4px rgba(50,50,50,0.3);}
 .goods-header-nav-box-raise li a{color:rgba(255,255,255,0.6);display:block;}	
 .goods-header-nav-box-raise li a.hover{color:#fff;border-bottom:1px solid #fff;}
@@ -2706,7 +2708,9 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 .btn-submit-r{padding: .3rem .8rem;
     font-size: 1.6rem;
     width: auto;border-radius:4px}
-.btn-submit-r,a.btn-submit1 {color:#ff6700; background:none;  border:1px solid #ff6700}/*主提交按钮1*/
+.btn-submit-r,a.btn-submit2 {color:#ff6700; background:none;  border:1px solid #ff6700}/*主提交按钮1*/
+.btn-submit2:active,
+.btn-submit2:hover{background: none; border:1px solid #ff6700}/*主提交按钮按下颜色1*/
 .btn-submit-r:active,
 .btn-submitr:hover{background: none; border:1px solid #ff6700}/*主提交按钮按下颜色1*/
 .raise-order-header{padding:2.4rem 3rem;background:#ff6700;}
@@ -2728,7 +2732,7 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 .no-div-raise .icon-biaoqingleiben {font-size: 7rem;color: #ccc;}
 .no-div-raise p {margin-top: 0.6rem;font-size: 1.4rem;margin-bottom:0.9rem;}
 .flow-done-con-raise{margin-top:3rem;font-size:1.5rem}
-.flow-done-con-raise i{font-size:10rem;margin-bottom:0.2rem;color:#ffba00;}
+.flow-done-con-raise .icon-jinqian{font-size:10rem;margin-bottom:0.2rem;color:#ffba00;}
 .flow-done-con-raise .flow-done-price{font-size:2.6rem;color:#666}
 .n-message-raise a input{margin-bottom:5rem;color:#ff6700;}
  .product-list-medium .index-n-box li{width:100%;}
@@ -2741,3 +2745,6 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 .order-id-list-raise ul li:first-of-type .t-remark{color:#ff6700}
 .order-id-list-raise ul li:before{content:" "; display:block; width:1rem; height:1rem; position:absolute; background:#ff6700; border-radius: 100%; border:2px solid #fff; left:-.2rem; top:1.3rem; z-index: 2;}
 .order-id-list-raise ul li:after{content:" "; width:1px; top:0; bottom:0; position:absolute; background:#ddd; display: block; left: 0.5rem; z-index: 1;}
+.evaluation-btn{margin:1.3rem;}
+.evaluation-btn .btn-submit-raise{border-radius: 4px;}
+.evaluation-btn .btn-submit-raise input{width:100%;background:none;font-size:1.7rem;color:#fff;}

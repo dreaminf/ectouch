@@ -40,9 +40,14 @@
 			</div>
 			<div class="flow-done">
 				<div class="flow-done-con flow-done-con-raise">
+					<!--{if $order.pay_code == 'balance'}-->
+					<i class="iconfont icon-hookring2"></i>
+					<p class="flow-done-title">余额支付成功</p>
+					<!--{else}-->
 					<i class="iconfont icon-jinqian"></i>
 					<p class="flow-done-title">付款金额</p>
 					<p class="flow-done-price">{$total.amount_formated}</p>
+					<!--{/if}-->
 				</div>
 				<div class="flow-done-all">
 					<div class="padding-all b-color-f flow-done-id">
