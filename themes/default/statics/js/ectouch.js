@@ -760,6 +760,7 @@ function adv_index() {
 	}
 }
 
+
 function guanzhu_index() {
 	/*
 	if ($(window).scrollTop() > 120) {
@@ -791,7 +792,8 @@ $(function($) {
 		$(".index-weixin-box").removeClass("active");
 	});
 	/*头部导航*/
-	$(".j-nav-box").click(function() {
+	
+	$(".j-nav-box").on("click",function() {
 		$(".j-nav-content").toggleClass("active");
 	});
 	/*goods弹框*/
@@ -801,8 +803,30 @@ $(function($) {
 	});
 	/*导航弹框*/
 	$(".icon-gengduo").click(function() {
-		$(".goods-nav").toggleClass("active");
+		$(".goods-scoll-bg").addClass("active");
+		if(!$(".goods-nav").hasClass("active")){
+			$(".goods-nav").addClass("active");
+			$(".goods-scoll-bg").addClass("active");
+			return false;
+		}else{
+			$(".goods-nav").removeClass("active");
+			$(".goods-scoll-bg").removeClass("active");
+			return false;
+		}
 	});
+	$(".goods-scoll-bg").click(function() {
+		$(".goods-scoll-bg").removeClass("active");
+		$(".goods-nav").removeClass("active");
+	});
+	//详情导航滚动隐藏
+		$(function($) {	
+			$(window).scroll(function() {			
+				if($(window).scrollTop() > 0) {	
+				  $(".goods-scoll-bg").removeClass("active");
+				  $(".goods-nav").removeClass("active"); 				  	 
+				};										
+			});
+		});
 
 	if($(".swiper-scroll").hasClass("swiper-scroll")) {
 		var scorll_swiper = new Swiper('.swiper-scroll', {

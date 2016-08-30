@@ -26,7 +26,7 @@
 						<ul class="dis-box goods-header-nav-box goods-header-nav-box-raise">
 							<li class="box-flex"><a class="hover" href="javascript:;"><label>商品</label></a></li>
 							<li class="box-flex"><a href="{:url('crowdfunding/crowd_goods_properties',array('id'=>$this->_var['id']))}"><label>详情</label></a></li>
-							<li class="box-flex"><a href="{:url('crowdfunding/crowd_comment_list',array('id'=>$this->_var['id']))}"><label>评价</label></a></li>
+							<li class="box-flex"><a href="{:url('crowdfunding/crowd_comment_list',array('id'=>$this->_var['id']))}"><label>评论</label></a></li>
 						</ul>
 					</div>
 					<a class="" href="javascript:;">
@@ -50,17 +50,17 @@
 		</div>
 				<div class="goods-photo j-show-goods-img">
 					<span class="goods-num" id="goods-num"><span id="g-active-num"></span>/<span id="g-all-num"></span></span>
+					
 					<div class="swiper-wrapper">
-						<li class="swiper-slide tb-lr-center"><img src="{$goods.goods_img}" /></li>
 						<!--{if $gallery_img}-->
 						<!-- {foreach from=$gallery_img item=gallery} -->
 						<li class="swiper-slide tb-lr-center"><img src="{$gallery}" /></li>
-						<!-- {/foreach} -->
+						<!-- {/foreach} -->	
 						<!--{else}-->
 						<li class="swiper-slide tb-lr-center"><img src="{$goods.goods_img}" /></li>
 						<!--{/if}-->
-						
 					</div>
+					
 					<!-- Add Pagination -->
 					<div class="swiper-pagination"></div>
 				</div>
@@ -90,22 +90,23 @@
 					
 				</section>
 				<section class="b-color-f m-top1px">
-					<ul class="user-money-list g-s-i-title-1 dis-box text-center my-dingdan raise-dateil-list">				
+					<ul class="user-money-list g-s-i-title-1 dis-box text-center my-dingdan raise-dateil-list">			
 							<li class="box-flex">
 								<h4 class="ellipsis-one"><i class="iconfont icon-flagqizi f-2 col-9"></i></h4>
 								<p class="t-remark3">目标资金</p>
 								<p class="f-08 raise-col">{$goods.sum_price}<em class="f-02 col-9">元</em></p>
-							</li>
+							</li>		
 							<li class="box-flex">
 								<h4 class="ellipsis-one"><i class="iconfont icon-jinqian f-2 col-9"></i></h4>
 								<p class="t-remark3">已筹资金</p>
 								<p class="f-08 raise-col"><!--{if $goods.total_price }-->{$goods.total_price}<!--{else}-->0.00<!--{/if}--><em class="f-02 col-9">元</em></h4>
-							</li>									
+							</li>		
 							<li class="box-flex">
 								<h4 class="ellipsis-one"><i class="iconfont icon-geren f-2 col-9"></i></h4>
 								<p class="t-remark3">支持人数</p>
 								<p class="f-08 raise-col">{$goods.buy_num}<em class="f-02 col-9">人</em></p>
-							</li>					
+							</li>
+						</a>
 					</ul>
 				</section>
 				<section class="m-top1px padding-all b-color-f goods-promotion">
@@ -307,6 +308,7 @@
 					</section>
 				</div>
 				</form>
+				<div class="goods-scoll-bg"></div>
 				<!--引用js-->
 				<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
 				<script type="text/javascript" src="__TPL__/statics/js/swiper.min.js"></script>

@@ -266,6 +266,7 @@
 		</div>
 		<!--商品属性弹出层star-->
 		<div class="mask-filter-div"></div>
+		<div class="goods-scoll-bg"></div>
 		<!--加入购物车弹出层 S-->
 		<script type="text/javascript">
 			function showDiv() {
