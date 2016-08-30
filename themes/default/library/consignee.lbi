@@ -1,5 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<div class="ect-bg-colorf flow-consignee">
+<div class="ect-bg-colorf flow-consignee s-user-top">
   <ul>
     <li>
       <div class="input-text"><b class="pull-left">{$lang.consignee_name}：</b><span style="top: -0.5rem;">
@@ -68,7 +68,7 @@
   <!-- 如果登录了，显示删除按钮 --> 
   <a  class="btn btn-info11 n-but-bor"  onclick="if (confirm('{$lang.drop_consignee_confirm}')) location.href='{:url('flow/drop_consignee',array('id'=>$this->_var['consignee']['address_id']))}'" >{$lang.drop}</a> 
   <!-- {/if} -->
-  <button type="submit" class="btn btn-info ect-bg-colory" name="Submit">{$lang.shipping_address}</button>
+  <button type="submit" class="btn btn-submit  ect-bg-colory" name="Submit">{$lang.shipping_address}</button>
 </div>
 <input type="hidden" name="step" value="consignee" />
 <input type="hidden" name="act" value="checkout" />
