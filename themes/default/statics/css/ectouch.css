@@ -1,6 +1,6 @@
 @import"../fonts/iconfont.css";@import"swiper-3.2.5.min.css";@import"zyUpload.css";
 /*初始样式*/
-html,input,button,textarea{font-size:18px;font-family:Heiti, Heiti SC, DroidSans, DroidSansFallback, Arial, "Microsoft YaHei";-webkit-font-smoothing:antialiased}
+html,input,button,textarea,select{font-size:18px;font-family:Heiti, Heiti SC, DroidSans, DroidSansFallback, Arial, "Microsoft YaHei";-webkit-font-smoothing:antialiased}
 body{}
 body,ul,ol,li,p,h2,h3,h4,h5,h6,form,fieldset,td,img,div,dl,dt,dd{margin:0;padding:0;border:0;list-style:none;font-weight:normal}
 body{background:#F6F6F9;color:#333;margin:0 auto;font-size:18px;font-weight:normal}
@@ -1296,7 +1296,7 @@ text-align: center;
 .user-head-img-box{width:6.25rem;height:6.25rem;border-radius:4rem;overflow:hidden;  border: 3px solid rgba(255,255,255,0.8);}
 .is-youxiang,.my-img-size{font-size: 2.4rem;  color: #777;}
 .is-youxiang{padding: 0.2rem;color: #fff;    padding-top: 2rem;float: right;}
-.my-user-right-cont{float:left;margin-left:0.3rem;}
+.my-user-right-cont{float:left;margin-left:0.3rem;font-size:1.3rem}
 .is-shezi{font-size: 1.8rem;padding-top: 0.15rem;}
 .my-t-remark{font-size:1.5rem;}
 .user-nav-box a {border-left:1px solid rgba(255,255,255,0.1);}
