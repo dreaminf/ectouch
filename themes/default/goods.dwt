@@ -48,10 +48,10 @@
 			<ul class="swiper-wrapper">
 				<!--{if $pictures}-->
 				<!-- {foreach from=$pictures item=picture name=no}-->
-				<li class="swiper-slide tb-lr-center"><img src="{$picture.img_url}" alt="{$picture.img_desc}" /></li>
+				<li class="swiper-slide tb-lr-center"><img id="img-photo-box" src="{$picture.img_url}" alt="{$picture.img_desc}" /></li>
 				<!--{/foreach}-->
 				<!--{else}-->
-				<li class="swiper-slide tb-lr-center"><img src="{$goods.goods_img}" alt="{$goods.goods_name}" /></li>
+				<li class="swiper-slide tb-lr-center"><img id="img-photo-box" src="{$goods.goods_img}" alt="{$goods.goods_name}" /></li>
 				<!--{/if}-->
 			</ul>
 			<div class="swiper-pagination"></div>

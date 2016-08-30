@@ -1061,3 +1061,8 @@ localData = {
 		t_goods1.html(dist_span);
 
 	});
+	/*商品相册*/
+	document.getElementById('img-photo-box').style.width = $(document).width() + 'px';
+    document.getElementById('img-photo-box').style.height = $(document).width() + 'px';
+	
+
