@@ -2332,8 +2332,8 @@ a.n-but-ls{color:#1CBB7F}
 /*page*/
 .n-page-but{width:7rem;}
 .n-page-but .page-but{padding:.7rem;border-radius:0.5rem;font-size:1.5rem; color:#555;text-align:center;    background: #fff;border:1px solid #eee;height:2.2rem;line-height:2.2rem}
-.page-num{padding:0 1rem;}
-.page-num select{padding: .7rem;padding-left:40%;border-radius:0.5rem;width:100%;background:#fff;border:1px solid #eee;font-size:1.7rem; color:#777;height:3.8rem;line-height:1.9rem}
+.page-num{margin:0 1rem;background:#fff;border:1px solid #eee;border-radius: 0.5rem;}
+.page-num select{ padding-left:42%; -webkit-appearance: none;width:100%;background:none;border:none;font-size:1.7rem; color:#777;line-height:1.8rem;height:3.6rem;}
 /*收藏*/
 .n-tishi-tit{margin-top:3rem;color:#666;}
 .s-but{border:1px solid #1CBB7F;border-radius:0.5rem;font-size:1.3rem;margin-right:0.5rem;text-align:center;color:#1CBB7F;padding:0.2rem 0;width: 7rem;}
