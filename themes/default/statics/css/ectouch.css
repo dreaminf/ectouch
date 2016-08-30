@@ -2245,7 +2245,10 @@ a.n-but-ls{color:#1CBB7F}
 .ect-radio input[type=radio],.ect-checkbox input[type=checkbox]{display:none}
 .ect-checkbox label{display:inline-block;max-width:100%;color:#666;font-size: 1.3rem;}
 .ect-checkbox{font-size:1.3rem;}
-.ect-margin-bottom0 a{color:#777}
+.ect-margin-bottom0 a{color:#666}
+.n-activity-list h5{font-size:1.5rem;color:#777;border-bottom:1px solid #f6f6f9;padding:0.3rem 0 0.6rem 0}
+.n-activity-list p{font-size:1.5rem;}
+.n-activity-list p a i.zk{font-style:normal;background:#1CBB7F;padding:0.1rem 0.6rem;color:#fff;border-radius: 2rem;font-size:1.1rem}
 .user-register-list{width:7rem;height:3rem;line-height:3rem;border-left:1px solid #f6f6f9;margin-left:1rem;padding-left:1rem;text-align:center;font-size:1.4rem}
 .user-register-list2{width:13rem;height:3rem;line-height:3rem;border-left:1px solid #f6f6f9;margin-left:1rem;padding-left:1rem;text-align:center;font-size:1.5rem;color:#666}
 .user-register-box{padding:1rem 0rem;border-radius:0.5rem;border-bottom:1px solid #f6f6f9}

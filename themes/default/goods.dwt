@@ -89,8 +89,8 @@
 				</p>
 			</section>
 			<!-- {if $promotion} 优惠活动 -->
-			<section class="ect-margin-tb ect-margin-bottom0 ect-padding-tb goods-promotion ect-padding-lr ">
-				<h5><b>{$lang.activity}：</b></h5>
+			<section class="ect-margin-tb ect-margin-bottom0 ect-padding-tb goods-promotion ect-padding-lr n-activity-list b-color-f">
+				<h5>{$lang.activity}</h5>
 				<p class="ect-border-top ect-margin-tb">
 					<!-- {foreach from=$promotion item=item key=key} 优惠活动-->
 					<!-- {if $item.type eq "snatch"} -->
