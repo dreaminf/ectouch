@@ -614,15 +614,18 @@ class CategoryController extends CommonController
             $arr[$key]['goods_brief'] = $row['goods_brief'];
             $arr[$key]['goods_style_name'] = add_style($row['goods_name'], $row['goods_name_style']);
             $arr[$key]['market_price'] = price_format($row['market_price']);
-            $arr[$key]['shop_price'] = price_format($row['shop_price']);
             $arr[$key]['type'] = $row['goods_type'];
-            $arr[$key]['promote_price'] = ($promote_price > 0) ? price_format($promote_price) : '';
+            if ($promote_price > 0) {
+                $arr[$key]['shop_price'] = price_format($promote_price);
+            } else {
+                $arr[$key]['shop_price'] = price_format($row['shop_price']);
+            }
             $arr[$key]['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
             $arr[$key]['goods_img'] = get_image_path($row['goods_id'], $row['goods_img']);
             $arr[$key]['url'] = url('goods/index', array(
                 'id' => $row['goods_id']
             ));
-            $arr[$key]['sales_count'] = $sales_volume;
+            //$arr[$key]['sales_count'] = $sales_volume;
             $arr[$key]['sc'] = model('GoodsBase')->get_goods_collect($row['goods_id']);
             $arr[$key]['mysc'] = 0;
             // 检查是否已经存在于用户的收藏夹
@@ -637,7 +640,7 @@ class CategoryController extends CommonController
                 $arr[$key]['mysc'] = $rs;
             }
 
-            $arr[$key]['goods_sales'] = $this->get_goods_sales($row['goods_id']);
+            $arr[$key]['sales_count'] = model('GoodsBase')->get_sales_count($row['goods_id']);
             $arr[$key]['goods_number'] = $row['goods_number'];
             $arr[$key]['promotion'] = model('GoodsBase')->get_promotion_show($row['goods_id']);
             $arr[$key]['comment_count'] = model('Comment')->get_goods_comment($row['goods_id'], 0);  //商品总评论数量
@@ -646,11 +649,11 @@ class CategoryController extends CommonController
         return $arr;
     }
 
-    private function get_goods_sales($goods_id)
-    {
-        $sql = "select sum(goods_number) as num from {pre}order_goods WHERE goods_id = " . $goods_id;
-        $res = $this->model->query($sql);
-        return intval($res[0]['num']);
-    }
+    // private function get_goods_sales($goods_id)
+    // {
+    //     $sql = "select sum(goods_number) as num from {pre}order_goods WHERE goods_id = " . $goods_id;
+    //     $res = $this->model->query($sql);
+    //     return intval($res[0]['num']);
+    // }
 
 }
