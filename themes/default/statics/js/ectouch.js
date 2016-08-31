@@ -792,7 +792,7 @@ $(function($) {
 		$(".index-weixin-box").removeClass("active");
 	});
 	/*头部导航*/
-	
+
 	$(".j-nav-box").on("click",function() {
 		$(".j-nav-content").toggleClass("active");
 	});
@@ -819,12 +819,12 @@ $(function($) {
 		$(".goods-nav").removeClass("active");
 	});
 	//详情导航滚动隐藏
-		$(function($) {	
-			$(window).scroll(function() {			
-				if($(window).scrollTop() > 0) {	
+		$(function($) {
+			$(window).scroll(function() {
+				if($(window).scrollTop() > 0) {
 				  $(".goods-scoll-bg").removeClass("active");
-				  $(".goods-nav").removeClass("active"); 				  	 
-				};										
+				  $(".goods-nav").removeClass("active");
+				};
 			});
 		});
 
@@ -1034,35 +1034,35 @@ localData = {
 }
 
 
-	/*单选*/
-	$(".j-get-one .ect-select-raise").click(function() {
-		get_tjiantou = $(this).parent(".j-get-one").prev(".select-title").find(".t-jiantou");
-		$(this).find("label").addClass("active").parent(".ect-select-raise").siblings().find("label").removeClass("active");
-		get_tjiantou.find("em").text($(this).find("label").text());
-		if($(this).hasClass("j-checkbox-all")) {
-			get_tjiantou.removeClass("active");
-		} else {
-			get_tjiantou.addClass("active");
-		}
-		if($(this).parents("show-goods-attr")) { //赋值给goods-attr
-			s_get_label = $(".show-goods-attr .s-g-attr-con").find("label.active"); //获取被选中label
-			var get_text = '';
-			s_get_label.each(function() {
-				get_text += $(this).text() + "、";
-			});
-			$(".j-goods-attr").find(".t-goods1").text(get_text.substring(0, get_text.length - 1));
-		}
-	});
-	
-	/*订单提交页面单选赋值*/
-	$(".s-g-list-con .j-get-one .ect-select-raise").click(function() {
-		dist_span = $(this).find("label>dd").html();
-		t_goods1 = $(this).parents(".j-show-get-val").find(".t-goods1"); //需要获取弹出层em标签
-		t_goods1.html(dist_span);
+/*单选*/
+$(".j-get-one .ect-select-raise").click(function() {
+	get_tjiantou = $(this).parent(".j-get-one").prev(".select-title").find(".t-jiantou");
+	$(this).find("label").addClass("active").parent(".ect-select-raise").siblings().find("label").removeClass("active");
+	get_tjiantou.find("em").text($(this).find("label").text());
+	if($(this).hasClass("j-checkbox-all")) {
+		get_tjiantou.removeClass("active");
+	} else {
+		get_tjiantou.addClass("active");
+	}
+	if($(this).parents("show-goods-attr")) { //赋值给goods-attr
+		s_get_label = $(".show-goods-attr .s-g-attr-con").find("label.active"); //获取被选中label
+		var get_text = '';
+		s_get_label.each(function() {
+			get_text += $(this).text() + "、";
+		});
+		$(".j-goods-attr").find(".t-goods1").text(get_text.substring(0, get_text.length - 1));
+	}
+});
 
-	});
-	/*商品相册*/
+/*订单提交页面单选赋值*/
+$(".s-g-list-con .j-get-one .ect-select-raise").click(function() {
+	dist_span = $(this).find("label>dd").html();
+	t_goods1 = $(this).parents(".j-show-get-val").find(".t-goods1"); //需要获取弹出层em标签
+	t_goods1.html(dist_span);
+
+});
+/*商品相册*/
+if(document.getElementById('img-photo-box')){
 	document.getElementById('img-photo-box').style.width = $(document).width() + 'px';
-    document.getElementById('img-photo-box').style.height = $(document).width() + 'px';
-	
-
+	document.getElementById('img-photo-box').style.height = $(document).width() + 'px';
+}
