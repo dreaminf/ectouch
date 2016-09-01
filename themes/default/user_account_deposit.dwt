@@ -35,7 +35,7 @@
 						<div class="select-two">
 							<a class="select-title padding-all j-menu-select">
 								<label class="fl col-7">{$lang.payment} </label>
-								<span class="fr t-jiantou j-t-jiantou"><em class="fl t-first">支付宝支付</em><i class="iconfont icon-jiantou tf-180 ts-2"></i></span>
+								<span class="fr t-jiantou j-t-jiantou"><em class="fl t-first">请选择</em><i class="iconfont icon-jiantou tf-180 ts-2"></i></span>
 							</a>
 							<ul class="j-sub-menu padding-all j-get-one" data-istrue="true">
 								<!-- {foreach from=$payment item=list} -->
