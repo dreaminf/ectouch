@@ -36,7 +36,10 @@
         <dl>
           <dt>
             <h4 class="title"><a href="{:url('goods/index', array('id'=>$this->_var['goods']['goods_id']))}">{$goods.goods_name}{$goods.goods_attr}</a></h4>
-          </dt><dd class="dd-price">
+          </dt>
+           <dd class="dd-price"><b>{$goods.goods_attr}</b></dd>
+          <dd class="dd-price"><b>{$lang.ws_subtotal}：<span class="ect-colory">{$goods.subtotal}</span> {$lang.number_to}：{$goods.goods_number}</b></dd>
+          <dd class="dd-price raise-order-box">
             <!--{if $goods.aftermarket eq 1}-->
           <b class="service">
               <a href="{:url('user/aftermarket_done',array('rec_id'=>$this->_var['goods']['rec_id'],'order_id'=>$this->_var['order']['order_id']))}" >查看申请记录</a>
@@ -50,8 +53,7 @@
           
           </dd>
 
-          <dd class="dd-price"><b>{$goods.goods_attr}</b></dd>
-          <dd class="dd-price"><b>{$lang.ws_subtotal}：<span class="ect-colory">{$goods.subtotal}</span> {$lang.number_to}：{$goods.goods_number}</b></dd>
+         
         </dl>
       </li>
       <!-- {/foreach} -->
