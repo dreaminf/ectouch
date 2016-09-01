@@ -1062,7 +1062,7 @@ $(".s-g-list-con .j-get-one .ect-select-raise").click(function() {
 
 });
 /*商品相册*/
-if(document.getElementById('img-photo-box')){
-	document.getElementById('img-photo-box').style.width = $(document).width() + 'px';
-	document.getElementById('img-photo-box').style.height = $(document).width() + 'px';
+window.onresize = function(){
+	document.getElementById('img-photo-box').style.width = document.body.offsetWidth + 'px';
+    document.getElementById('img-photo-box').style.height = document.body.offsetWidth + 'px';
 }
