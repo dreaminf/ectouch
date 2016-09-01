@@ -559,3 +559,17 @@ border: 1px solid transparent;border-radius: 4px;cursor: pointer;display: inline
 .page-num select{padding: .7rem;padding-left:40%;border-radius:0.5rem;width:100%;background:#fff;border:1px solid #eee;font-size:1.5rem; color:#777;}
 .raise-order-box .service{    float: right;}
 .raise-order-box .service a{border:1px solid #ff6700;color:#ff6700;border-radius: 4px;padding:0.2rem 0.6rem;font-size:1.4rem;font-weight: 400;margin-left: 0.3rem;}
+
+.no-div-message {
+    text-align: center;
+    padding-top: 6rem;
+    color: #999;
+}
+.no-div-message div{
+   width:25%;margin:0 auto;
+}
+.no-div-message div img{width:100%;}
+.no-div-message p {
+    margin-top: 1.8rem;
+    font-size: 1.6rem;
+}
