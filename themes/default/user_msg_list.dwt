@@ -28,15 +28,16 @@
         			<span>{$msg.msg_time}</span>
         		</div>
         		<div class="box-flex">
-        			<a onclick="if (!confirm('{$lang.confirm_remove_msg}')) return false;" href="{$msg.url}"><i class="iconfont icon-xiao10 fr"></i></a>
+        			<a onclick="if (!confirm('{$lang.confirm_remove_msg}')) return false;" href="{$msg.url}" style="float: right; outline: none;"><i class="iconfont icon-xiao10 fr"></i></a>
         		</div>
             </div>
             <h5> {$msg.msg_title}</h5>
             <p> {$msg.msg_content} </p>
             <!--{if $msg.re_msg_content}-->
             <table>
+            	
               <tr>
-                <td> {$lang.shopman_reply}({$msg.re_msg_time})<br/>
+                <td><div class="msg-jiantou tf-45"></div> <label>{$lang.shopman_reply}<em>({$msg.re_msg_time})</em></label>
                   {$msg.re_msg_content} </td>
               </tr>
             </table>
