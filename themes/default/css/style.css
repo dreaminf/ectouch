@@ -264,7 +264,7 @@ select{-webkit-appearance:none; border:0; color:#555; padding-left:0; border:1px
 .ect-wrapper div a:last-child{border-right:none;}
 .ect-wrapper div a.category-list{width:5em;}
 .ect-wrapper div a.select i.glyphicon-arrow-up{-webkit-transform: rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);
-                                               transform: rotate(45deg);}
+                                               transform: rotate(180deg);}
 .ect-wrapper div a i.ect-icon-cate3,.ect-wrapper a i.ect-icon-min{display:inline-block; vertical-align:-0.5em; margin-right:0.3em; width:1.7em; height:1.7em; background-position:-0.16em -0.1em;}
 .ect-wrapper div a i.ect-icon-min{ background:url(../images/yspic.png) no-repeat; background-size:200%;  vertical-align:middle; margin:0 auto; }
 .ect-wrapper div i{font-size:0.8em;}
