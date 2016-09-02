@@ -3369,7 +3369,7 @@ function aftermarket_refund($order, $refund_type, $refund_amount, $refund_note)
         $change_desc = $refund_note;
     } else {
         //include_once(ROOT_PATH . 'languages/' . $GLOBALS['_CFG']['lang'] . '/admin/aftermarket.php');
-        $change_desc = sprintf($GLOBALS['_LANG']['order_refund'], $order['order_sn']);
+        $change_desc = '订单退款'. $order['order_sn'];
     }
 
     /* 处理退款 */
