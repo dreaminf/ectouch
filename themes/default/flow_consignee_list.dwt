@@ -34,6 +34,19 @@
 	get_asynclist('index.php?m=default&c=flow&a=consignee_list', '__TPL__/images/loader.gif');
 </script>
 <script>
+	
+	/*设置默认收货地址*/
+	function flow_edit_address_info(address_id) {
+		var url = 'index.php?m=default&c=flow&a=edit_address_info';
+		$.get(url, {'id':address_id}, function(data){
+			if (1 == data.status) {							
+				window.location.href = 'index.php?m=default&c=flow&a=checkout';							
+			}
+		}, 'json');
+		return false;
+
+	}
+	
     function getLocation(){
 	    var options={
 		    enableHighAccuracy:true, 

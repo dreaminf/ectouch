@@ -1187,6 +1187,7 @@ class UserController extends CommonController {
 
         if (model('Users')->drop_consignee($id)) {
             $url = url('address_list');
+			unset($_SESSION['flow_consignee']);
             ecs_header("Location: $url\n");
             exit();
         } else {

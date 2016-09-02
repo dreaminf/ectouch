@@ -2150,7 +2150,7 @@ class FlowController extends CommonController {
                     }
                     $v['address'] = $address . ' ' . $v['address'];
                     $v['url'] = url('flow/consignee', array('id' => $v ['address_id']));
-                    $this->assign('consignee', $v);
+                    $this->assign('flow_consignee', $v);
                     $sayList [] = array(
                         'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
                     );
@@ -2182,9 +2182,22 @@ class FlowController extends CommonController {
             show_message(L('not_fount_consignee'));
         }
     }
+	/*设置默认收货地址*/
+	public function edit_address_info() {
+		if (IS_AJAX && IS_AJAX) {
+            $address_id = I('id');
+			$data['address_id'] = $address_id;
+            $condition['user_id'] = $_SESSION['user_id'];
+			$this->model->table('users')->data($data)->where($condition)->update();	
+			unset($_SESSION['flow_consignee']);
+            echo json_encode(array('status' => 1));
+        } else {
+            echo json_encode(array('status' => 0));
+         }
+		 
+	}
 
-
-         /**
+     /**
      * 
      */
     function  add_to_cart_combo()
