@@ -96,7 +96,7 @@
 					<!-- {if $item.type eq "snatch"} -->
 					<a href="{$item.url}" title="{$lang.snatch}"><i class="label tbqb">{$lang.snatch_act}</i> [{$lang.snatch}]<i class="pull-right fa fa-angle-right"></i></a>
 					<!-- {elseif $item.type eq "group_buy"} -->
-					<a href="{$item.url}" title="{$lang.group_buy}"><i class="label tuan">{$lang.group_buy_act}</i> [{$lang.group_buy}]<i class="pull-right fa fa-angle-right"></i></a>
+					<a href="{$item.url}" title="{$lang.group_buy}"><i class="label tuan">{$lang.group_buy_act}</i> [{$lang.group_buy}]{$item.time}<i class="pull-right fa fa-angle-right"></i></a>
 					<!-- {elseif $item.type eq "auction"} -->
 					<a href="{$item.url}" title="{$lang.auction}"><i class="label pm">{$lang.auction_act}</i> [{$lang.auction}]<i class="pull-right fa fa-angle-right"></i></a>
 					<!-- {elseif $item.type eq "favourable"} -->
