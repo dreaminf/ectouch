@@ -179,7 +179,7 @@
 							<img class="product-list-img" src="{$val.goods_thumb}">
 							<div class="product-text m-top06">
 								<h4>{$val.goods_name}</h4>
-								<p><span class="p-price t-first ">{$lang.sort_price}：&#165;{$val.shop_price}</span></p>
+								<p style="display:none"><span class="p-price t-first ">{$lang.sort_price}：&#165;{$val.shop_price}</span></p>
 							</div>
 						</div>
 					</li>
