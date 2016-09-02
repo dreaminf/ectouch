@@ -237,8 +237,22 @@ class CommentModel extends BaseModel {
         $comment_list = $this->query($sql);
         foreach($comment_list as $k => $v){
 			$comment_list[$k]['add_time'] = local_date(C('time_format'), $v['add_time']);
+			$comment_list[$k]['reply'] =  $this->reply_content($v['comment_id']);
         }
         return $comment_list;
     }
+	
+	/**
+     * 获取评轮回复信息
+     */
+	function reply_content($parent_id){
+		$sql = "SELECT comment_id,email,user_name,content,add_time FROM ". $this->pre ."comment WHERE ".
+               " parent_id = '".$parent_id."'";
+        $replyt_list = $this->query($sql);
+        foreach($replyt_list as $k => $v){
+			$replyt_list[$k]['add_time'] = local_date(C('time_format'), $v['add_time']);
+        }
+		 return $replyt_list;
+	}
 
 }

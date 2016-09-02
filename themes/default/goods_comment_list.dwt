@@ -156,6 +156,15 @@
 							<p>
 								<font class="f1">{$lang.admin_username}</font>{$comment.re_content}</p>
 							<!-- {/if} -->
+							
+							<!-- 回复-->
+							<!--{if $list.reply}-->
+							<!--{foreach from=$list.reply item=reply }-->
+							<p class="clear m-top10 t-goods1">
+								<font class="f1">{$reply.user_name} 回复：</font>{$reply.content}
+							</p>
+							<!--{/foreach}-->
+							<!--{/if}-->
 							<p style="display:none;" class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p>
 						</div>
 						<!--{/foreach}-->
