@@ -2011,7 +2011,7 @@ a.btn-submit-1{color:#fff}
 .j-nav-content.active{display:block;}
 .j-nav-content .new-footer-box i,.j-nav-content .new-footer-box span{color:#777;}
 .index-nav ul li img{width:4.4rem;}
-.header-max-box{width:100%;max-width: 640px;display:none;}
+.header-max-box{width:100%;max-width: 640px;}
 .index-nav-box{background:rgba(28,187,127, 0);moz-transition: 0.1s ease;-o-transition: 0.1s ease;-webkit-transition:0.1s ease;    position:absolute;width:100%;top:0.3rem;z-index:11}
 .index-nav-box.active{background:rgba(28,187,127, 0.96)}
 .index-left-box,.index-right-box{width:3.6rem;}
