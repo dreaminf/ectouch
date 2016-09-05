@@ -24,6 +24,7 @@
     .a-text-more span {line-height: 2.6rem;}
     .a-text-one span {line-height: 0rem;}
     </style>
+    <script type="text/javascript" >var tpl = '__TPL__';</script>
 </head>
 <body>
 <div class="con">
