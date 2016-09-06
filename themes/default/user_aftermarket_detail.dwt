@@ -23,11 +23,11 @@
 			<div class="m_msg J_Status show">
 				<div class="msg-item msg-lst">
 					<div class="msg-info m-top10"> <s class="arrow"></s>
-						<div class="p-img">
-							<a href="{:url('goods/index', array('id'=>$this->_var['goods']['goods_id']))}" target="_blank"><img src="{$goods.goods_thumb}"></a>
-							<dl>
+						<div class="dis-box">
+							<a  href="{:url('goods/index', array('id'=>$this->_var['goods']['goods_id']))}" target="_blank"><div class="n-detail-box"><img src="{$goods.goods_thumb}"></div></a>
+							<dl class="box-flex n-aft-detail-box">
 								<dt>
-                        <h4 class="title"><a href="{:url('goods/index', array('id'=>$this->_var['goods']['goods_id']))}">{$goods.goods_name}{$goods.goods_attr}</a></h4>
+                        <h4><a href="{:url('goods/index', array('id'=>$this->_var['goods']['goods_id']))}">{$goods.goods_name}{$goods.goods_attr}</a></h4>
                       </dt>
 								<dd class="dd-price"><b>{$lang.shop_price}{$goods.goods_price} {$lang.number_to}：{$goods.goods_number}</b></dd>
 								<dd class="dd-price"><b class="pull-left">{$lang.ws_subtotal}：<span class="ect-colory">{$goods.subtotal}</span></b></dd>
