@@ -220,8 +220,9 @@ function get_affiliate_ck()
     $sqladd = '';
     if (isset($_REQUEST['status']))
     {
-        $sqladd = ' AND o.is_separate = ' . intval(addslashes($_REQUEST['status'])); //(int)$_REQUEST['status'];
-        $filter['status'] = intval(addslashes($_REQUEST['status'])); //(int)$_REQUEST['status'];
+        $status = intval(addslashes($_REQUEST['status']));
+        $sqladd = ' AND o.is_separate = ' . $status; //(int)$_REQUEST['status'];
+        $filter['status'] = $status; //(int)$_REQUEST['status'];
     }
     if (isset($_REQUEST['order_sn']))
     {

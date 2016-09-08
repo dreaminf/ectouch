@@ -104,12 +104,12 @@ if ($_REQUEST['act'] == 'insert')
 {
     /* 权限判断 */
     admin_priv('shophelp_manage');
-    $title = intval(addslashes($_POST['title']));
+    $title = trim(addslashes($_POST['title']));
     /* 判断是否重名 */
     $exc_article->is_only('title', $title, $_LANG['title_exist']);
     $cat_id = intval(addslashes($_POST['cat_id']));
-    $article_type = addslashes($_POST['article_type']);
-    $FCKeditor1 = addslashes($_POST['FCKeditor1']);
+    $article_type = trim(addslashes($_POST['article_type']));
+    $FCKeditor1 = trim(addslashes($_POST['FCKeditor1']));
     /* 插入数据 */
     $add_time = gmtime();
     $sql = "INSERT INTO ".$ecs->table('article')."(title, cat_id, article_type, content, add_time, author) VALUES('$title', '$cat_id', '$article_type','$FCKeditor1','$add_time', '_SHOPHELP' )";
@@ -156,11 +156,11 @@ if ($_REQUEST['act'] == 'update')
 {
     /* 权限判断 */
     admin_priv('shophelp_manage');
-    $title = addslashes($_POST['title']);
+    $title = trim(addslashes($_POST['title']));
     $id = intval(addslashes($_POST['id']));
     $cat_id = intval(addslashes($_POST['cat_id']));
-    $article_type = addslashes($_POST['article_type']);
-    $FCKeditor1 = addslashes($_POST['FCKeditor1']);
+    $article_type = trim(addslashes($_POST['article_type']));
+    $FCKeditor1 = trim(addslashes($_POST['FCKeditor1']));
     /* 检查重名 */
     if ($_POST['title'] != $_POST['old_title'] )
     {
@@ -188,7 +188,7 @@ elseif ($_REQUEST['act'] == 'edit_catname')
     check_authz_json('shophelp_manage');
 
     $id       = intval(addslashes($_POST['id']));
-    $cat_name = json_str_iconv(trim($_POST['val']));
+    $cat_name = json_str_iconv(trim(addslashes($_POST['val'])));
 
     /* 检查分类名称是否重复 */
     if ($exc_cat->num("cat_name", $cat_name, $id) != 0)
@@ -218,7 +218,7 @@ elseif ($_REQUEST['act'] == 'edit_cat_order')
     check_authz_json('shophelp_manage');
 
     $id    = intval(addslashes($_POST['id']));
-    $order = json_str_iconv(trim($_POST['val']));
+    $order = json_str_iconv(trim(addslashes($_POST['val'])));
 
     /* 检查输入的值是否合法 */
     if (!preg_match("/^[0-9]+$/", $order))
@@ -333,7 +333,7 @@ elseif ($_REQUEST['act'] == 'edit_title')
     check_authz_json('shophelp_manage');
 
     $id    = intval(addslashes($_POST['id']));
-    $title = json_str_iconv(trim($_POST['val']));
+    $title = json_str_iconv(trim(addslashes($_POST['val'])));
 
     /* 检查文章标题是否有重名 */
     if ($exc_article->num('title', $title, $id) == 0)

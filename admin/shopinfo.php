@@ -69,7 +69,7 @@ if ($_REQUEST['act'] == 'insert')
 {
     /* 权限判断 */
     admin_priv('shopinfo_manage');
-    $title = addslashes($_POST['title']);
+    $title = trim(addslashes($_POST['title']));
     /* 判断是否重名 */
     $is_only = $exc->is_only('title', $title);
 
@@ -77,7 +77,7 @@ if ($_REQUEST['act'] == 'insert')
     {
         sys_msg(sprintf($_LANG['title_exist'], stripslashes($title)), 1);
     }
-    $FCKeditor1 = addslashes($_POST['FCKeditor1']);
+    $FCKeditor1 = trim(addslashes($_POST['FCKeditor1']));
     /* 插入数据 */
     $add_time = gmtime();
     $sql = "INSERT INTO ".$ecs->table('article')."(title, cat_id, content, add_time) VALUES('$title', '0', '$FCKeditor1','$add_time' )";
@@ -121,7 +121,7 @@ if ($_REQUEST['act'] == 'update')
 {
     /* 权限判断 */
     admin_priv('shopinfo_manage');
-    $title = addslashes($_POST['title']);
+    $title = trim(addslashes($_POST['title']));
     $id = intval(addslashes($_POST['id']));
     /* 检查重名 */
     if ($_POST['title'] != $_POST['old_title'])
@@ -133,7 +133,7 @@ if ($_REQUEST['act'] == 'update')
             sys_msg(sprintf($_LANG['title_exist'], stripslashes($title)), 1);
         }
     }
-    $FCKeditor1 = addslashes($_POST['FCKeditor1']);
+    $FCKeditor1 = trim(addslashes($_POST['FCKeditor1']));
     /* 更新数据 */
     $cur_time = gmtime();
     if ($exc->edit("title='$title', content='$FCKeditor1',add_time ='$cur_time'",$id))
