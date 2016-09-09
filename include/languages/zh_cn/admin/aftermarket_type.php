@@ -38,7 +38,6 @@ $_LANG['return_nums'] = '退回数量';
 $_LANG['all_status'] = '订单状态';
 
 $_LANG['st'][ST_RETURN_GOODS] = '退货退款';
-$_LANG['st'][ST_REFUND] = '仅退款';
 $_LANG['st'][ST_EXCHANGE] = '换货';
-$_LANG['st'][ST_REPAIR] = '维修';
+
 ?>

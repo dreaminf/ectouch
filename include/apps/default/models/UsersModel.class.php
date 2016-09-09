@@ -1944,7 +1944,7 @@ class UsersModel extends BaseModel {
                     }
                 } elseif ($order['shipping_status'] == SS_RECEIVED) {
                     //已收货 退货换货，退款, 换货, 维修
-                    $action = $this->model->table('order_action')->field('log_time')->where(array('shipping_status' => SS_SHIPPED, 'order_id' => $order['order_id']))->find(); //获取发货时间
+                    $action = $this->model->table('order_action')->field('log_time')->where(array('shipping_status' => SS_RECEIVED, 'order_id' => $order['order_id']))->find(); //获取发货时间
                     /* 退货退款 现在时间-发货时时间 得到天数 */
                     $days = (($time - $action['log_time']) / 3600 / 24);
                     if ($days <= $service_return['unreceived_days']) {
