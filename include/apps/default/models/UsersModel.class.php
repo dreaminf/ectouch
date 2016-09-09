@@ -169,7 +169,7 @@ class UsersModel extends BaseModel {
             }
             
             //定义other合法的变量数组
-            $other_key_array = array('msn', 'qq', 'office_phone', 'home_phone', 'mobile_phone', 'parent_id');
+            $other_key_array = array('msn', 'qq', 'office_phone', 'home_phone', 'mobile_phone', 'parent_id', 'aite_id');
             $update_data['reg_time'] = local_strtotime(local_date('Y-m-d H:i:s'));
             if ($other) {
                 foreach ($other as $key => $val) {
