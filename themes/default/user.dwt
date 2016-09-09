@@ -145,10 +145,10 @@
 				<i class="iconfont icon-kefu"></i>
 				<p class="f-03 col-6">客服服务</p>
 			</a>
-			<a href="{:url('user/share')}" class="box-flex">
+			<!-- <a href="{:url('user/share')}" class="box-flex">
 				<i class="iconfont icon-fenxiang"></i>
 				<p class="f-03 col-6">我的分享</p>
-			</a>
+			</a> -->
 			<!--/*DRP_START*/-->
 			<a href="{:url('store/check_store')}" class="box-flex">
 				<i class="iconfont icon-dianpu"></i>
