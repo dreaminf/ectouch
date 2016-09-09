@@ -185,11 +185,3 @@ $modules['12_menu_wechat']['11_wechat_customer'] = '../index.php?m=admin&c=wecha
 /*DRP_START*/
 $modules['12_menu_wechat']['12_wechat_wall'] = '../index.php?m=admin&c=extend&a=wall';
 /*DRP_END*/
-/*DRP_START*/
-// 众筹
-$modules['13_menu_crowd']['01_crowd_category_list'] = '../index.php?m=admin&c=crowd&a=category_list';
-$modules['13_menu_crowd']['02_crowd'] =  '../index.php?m=admin&c=crowd&a=index';
-$modules['13_menu_crowd']['03_crowd_order_list'] = '../index.php?m=admin&c=crowd&a=order_list';
-$modules['13_menu_crowd']['04_crowd_message_list'] = '../index.php?m=admin&c=crowd&a=message_list';
-$modules['13_menu_crowd']['05_crowd_article_list'] = '../index.php?m=admin&c=crowd&a=article_list';
-/*DRP_END*/

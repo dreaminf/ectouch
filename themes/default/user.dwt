@@ -155,10 +155,7 @@
 				<p class="f-03 col-6">我的微店</p>
 			</a>
 			<!--/*DRP_END*/-->
-			<a href="{:url('mycrowd/index')}" class="box-flex">
-				<i class="iconfont icon-zhongchou"></i>
-				<p class="f-03 col-6">我的微筹</p>
-			</a>
+			
 
 		</div>
 	</footer>
