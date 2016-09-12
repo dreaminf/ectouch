@@ -1552,6 +1552,7 @@ CREATE TABLE IF NOT EXISTS `ecs_topic` (
 CREATE TABLE IF NOT EXISTS `ecs_users` (
   `user_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(60) NOT NULL DEFAULT '',
+  `aite_id` varchar(60) NOT NULL DEFAULT '',
   `user_name` varchar(60) NOT NULL DEFAULT '',
   `password` varchar(32) NOT NULL DEFAULT '',
   `question` varchar(255) NOT NULL DEFAULT '',
