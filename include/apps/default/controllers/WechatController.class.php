@@ -214,7 +214,7 @@ class WechatController extends CommonController
                 $scene_user_id = $this->model->table("users")->field('user_id')->where(array('user_id'=>$scene_id))->getOne();
                 $scene_user_id = empty($scene_user_id) ? 0 : $scene_user_id;
                 $domain = get_top_domain();
-                if (model('Users')->register($username, $password, $username . '@' . $domain, array('parent_id'=>$scene_user_id, 'aite_id'=>$data['unionid'])) !== false) {
+                if (model('Users')->register($username, $password, $username . '@' . $domain, array('parent_id'=>$scene_user_id, 'aite_id'=>'wechat_'.$data['unionid'])) !== false) {
                     model('Users')->update_user_info();
                 } else {
                     exit('null');
