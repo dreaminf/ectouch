@@ -2088,7 +2088,7 @@ a.btn-submit-1{color:#fff}
 .new-maxbox.active{display:none;}
 /*goods*/
 .goods-fixed{position:fixed;top:0;z-index:300;width:100%;max-width:640px;background:rgba(255,255,255,0);}
-.goods-fixed.active{background:rgba(255,103,0,0.96);box-shadow: 1px 0px 4px rgba(50,50,50,0.3);}
+.goods-fixed.active{background:rgba(28,187,127,0.96);box-shadow: 1px 0px 4px rgba(50,50,50,0.3);}
 .goods-left-jiat.active{background:rgba(0,0,0,0);}
 
 .header-menu-1 .is-con{font-size:2rem;color:#fff;text-align:center;display:block;line-height:3.6rem;}
