@@ -78,9 +78,13 @@
 					</span>
 					<em class="em-promotion">积分可抵现</em>
 				</p>
+				<!--{if goods.is__promote and $goods.gmt_end_time } 促销-->
+				
+				<!--{else}-->
 				<p class="p-market"style="color:red;">
 					会员等级价格 {$goods.rank_price_formated}
 				</p>
+				<!--{/if}-->
 				<!-- {if $cfg.show_marketprice} 市场价格-->
 				<p class="p-market">
 					市场价 <del>{$goods.market_price}</del>
