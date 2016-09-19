@@ -26,6 +26,8 @@ class CommonController extends BaseController
     protected static $view = NULL;
     
     protected $subscribe = 0;
+    protected $custom = 0;
+    protected $customs = 0;
 
     public function __construct()
     {
@@ -189,6 +191,16 @@ class CommonController extends BaseController
             }
             $this->assign('search_histroy', $histroy_list);
         }
+
+        $this->custom = $this->model->table('drp_config')->field("value")->where("id =12")->getOne();
+        $this->customs = $this->model->table('drp_config')->field("value")->where("id =11")->getOne(); 
+        $coustomes = L();
+        if(is_array($coustomes)){          
+            foreach($coustomes as $key => $val) {
+                L($key,str_replace("分销",$this->custom,str_replace("分销商",$this->customs,$val)));              
+            }
+            
+        }    
         $this->assign('is_wechat', (int) is_wechat_browser());
 
         // 模板替换

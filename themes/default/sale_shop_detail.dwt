@@ -19,7 +19,7 @@
 			<p class="f-03 color-whie text-c">{$shop_user.shop_mobile}</p>
 		</header>
 		<div class="padding-alla text-c col-7 f-01  n-b-b">
-			<time>分销时间：{$shop_user.time}</time>
+			<time>{$custom}时间：{$shop_user.time}</time>
 		</div>
 		<section>
 			<ul class="dis-box padding-all n-bs-f n-b-b">

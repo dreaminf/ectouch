@@ -345,8 +345,8 @@ INSERT INTO `ecs_drp_config` VALUES ('7', '', 'money', '购买金额', '购买�
 INSERT INTO `ecs_drp_config` VALUES ('8', 'open,close', 'audit', '分销商审核', '是否对新申请的分销商进行审核', 'radio', 'open');
 INSERT INTO `ecs_drp_config` VALUES ('9', 'open,close', 'buy_money', '累计消费金额', '是否开启购物累计消费金额满足设置才能开店', 'radio', 'close');
 INSERT INTO `ecs_drp_config` VALUES ('10', '', 'buy', '设置累计消费金额', '设置会员累计消费金额', 'text', '0');
-INSERT INTO `ecs_drp_config` VALUES ('10', '', 'custom_distributor', '自定义“分销商”名称', '替换设定的分销商名称', 'text', '代言人');
-INSERT INTO `ecs_drp_config` VALUES ('10', '', 'custom_distribution', '自定义“分销”名称', '替换设定的分销名称', 'text', '代言');
+INSERT INTO `ecs_drp_config` VALUES ('11', '', 'custom_distributor', '自定义“分销商”名称', '替换设定的分销商名称', 'text', '代言人');
+INSERT INTO `ecs_drp_config` VALUES ('12', '', 'custom_distribution', '自定义“分销”名称', '替换设定的分销名称', 'text', '代言');
 ALTER TABLE `ecs_users` ADD COLUMN `apply_sale` int(1) unsigned NOT NULL DEFAULT '0';
 
 -- /*DRP_END*/

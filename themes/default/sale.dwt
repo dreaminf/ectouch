@@ -72,7 +72,7 @@
 			<!--分类3-->
 			<ul class="int-nav-box-a my-new-m padding-all shop-b">
 				<li>
-					<label class="cate-shop-box"><i class="iconfont icon-fenxiao a_left n-is--icont-1"></i><span>我的分销</span></label>
+					<label class="cate-shop-box"><i class="iconfont icon-fenxiao a_left n-is--icont-1"></i><span>我的{$custom}</span></label>
 					<span class="t-jiantou fr n-sect-i"><i class="iconfont icon-jiantou1 tf-180 jian-top int-jt-box"></i></span>
 				</li>
 			</ul>
@@ -159,7 +159,7 @@
 			<a href="{:url('sale/ranking_list')}">
 				<ul class="int-nav-box-1 my-new-m padding-all shop-b">
 					<li>
-						<label class="cate-shop-box"><i class="iconfont icon-iconfontpaihangbang"></i><span>分销排行榜</span></label>
+						<label class="cate-shop-box"><i class="iconfont icon-iconfontpaihangbang"></i><span>{$custom}排行榜</span></label>
 						<span class="t-jiantou f-r"><i class="iconfont icon-jiantou1 tf-180 jian-top"></i></span>
 					</li>
 				</ul>

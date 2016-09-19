@@ -63,7 +63,7 @@ class SaleController extends CommonController {
         // 今日收入
         $sale_money_today = model('Sale')->saleMoney_today();
         $this->assign('sale_money_today',$sale_money_today ? $sale_money_today : '0.00');
-
+        $this->assign('custom',$this->custom);
         $this->assign('title', L('sale'));
         $this->display('sale.dwt');
     }
@@ -94,7 +94,7 @@ class SaleController extends CommonController {
             }
             $where['user_id'] = $_SESSION['user_id'];
             $this->model->table('drp_shop')->data($data)->where($where)->update();
-            show_message(L('success'),'分销中心',url('sale/index'));
+            show_message(L('success'),$this->custom.'中心',url('sale/index'));
         }
         $drp_info = $this->model->table('drp_shop')->field('shop_name,real_name,shop_mobile,shop_img,shop_qq')->where('user_id='.session('user_id'))->select();
         $this->assign('drp_info',$drp_info['0']);
@@ -119,7 +119,7 @@ class SaleController extends CommonController {
             $data['cat_id'] = $cat_id;
             $where['user_id'] = $_SESSION['user_id'];
             $this->model->table('drp_shop')->data($data)->where($where)->update();
-            show_message(L('success'),'分销中心',url('sale/index'));
+            show_message(L('success'),$this->custom.'中心',url('sale/index'));
         }
         $cat_id = $this->model->table('drp_shop')->field("cat_id")->where(array("user_id"=>$_SESSION['user_id']))->getOne();
         $catArr = explode(',',$cat_id);
@@ -140,7 +140,7 @@ class SaleController extends CommonController {
                 }
             }
         }
-
+        $this->assign('custom',$this->custom);
         $this->assign('category',$category);
         $this->assign('title', '我的商品');
         $this->display('sale_my_goods.dwt');
@@ -253,7 +253,7 @@ class SaleController extends CommonController {
             $data['openid'] = $userInfo['openid'];  
 			$data['open_id'] = 'OPENTM400075274';
             $data['url'] = 'http://'.$_SERVER['HTTP_HOST'].url('sale/account_detail');
-            $data['first'] = '分销结款通知';  // 简介
+            $data['first'] = $this->custom . '结款通知';  // 简介
 			$data['keyword1'] = $amount;  // 结款金额
             $data['keyword2'] = $bank['bank_card'];  // 银行卡号
             if($data['openid']){
@@ -540,6 +540,7 @@ class SaleController extends CommonController {
         $key = I('key') ? I('key') : '1';
         $list = model('Sale')->get_shop_list($key);
         $this->assign('list', $list);
+        $this->assign('custom',$this->custom);
         $this->assign('title', L('my_shop_list'.$key));
         $dwt = $list ? 'sale_my_shop_list.dwt' : 'sale_show_message.dwt';
         $this->display($dwt);
@@ -639,6 +640,7 @@ class SaleController extends CommonController {
                 $category[$key]['profit3'] = $category[$key]['profit3'] ? $category[$key]['profit3'] : 0;
             }
         }
+        $this->assign('custom',$this->custom);
         $this->assign('category',$category);
         $this->assign('title',L('sale_set_category'));
         $this->display('sale_set_category.dwt');
@@ -677,7 +679,7 @@ class SaleController extends CommonController {
             $data['openid'] = $userInfo['openid'];  
 			$data['open_id'] = 'OPENTM207126233';
             $data['url'] = 'http://'.$_SERVER['HTTP_HOST'].url('sale/index',array('order_id'=>$new_order_id));
-            $data['first'] = '分销商申请成功提醒';  // 简介
+            $data['first'] = $this->customs.'申请成功提醒';  // 简介
 			$data['keyword1'] = $drp_shop['shop_name'];  // 分销商名称
             $data['keyword2'] = $drp_shop['shop_mobile'];  // 分销商电话
             $data['keyword3'] = local_date('Y-m-d H:i:s',($drp_shop ['create_time'])); // 申请时间		
@@ -877,6 +879,7 @@ class SaleController extends CommonController {
         // 店铺订单数
         $order_count = M()->table('drp_order_info')->where("drp_id=".$info['id'])->count();;
         $this->assign('order_count', $order_count ? $order_count : 0);
+        $this->assign('custom',$this->custom);
         $this->assign('title', '店铺详情');
         $this->display('sale_shop_detail.dwt');
     }
@@ -982,7 +985,7 @@ class SaleController extends CommonController {
      * 分销商审核中
      */
     public function examine(){
-        $this->assign('title','分销商审核');
+        $this->assign('title',$this->customs.'审核');
         $this->display('sale_examine.dwt');
     }
 
@@ -1049,7 +1052,7 @@ class SaleController extends CommonController {
 
         $money = $this->model->table('drp_config')->field('value')->where('keyword = "money"')->getOne();
         $this->assign('money',$money);
-        $this->assign('title','分销申请');
+        $this->assign('title',$this->custom.'申请');
         $this->display('sale_apply.dwt');
     }
 	/**
