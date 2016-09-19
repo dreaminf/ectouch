@@ -48,7 +48,7 @@ INSERT INTO `ecs_admin_action` (`action_id`, `parent_id`, `action_code`, `releva
 CREATE TABLE IF NOT EXISTS `ecs_touch_activity` (
   `act_id` int(10) NOT NULL,
   `act_banner` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_touch_topic`
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_topic` (
   `keywords` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`topic_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `ecs_touch_ad`
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_category` (
   `cat_id` int(10) unsigned DEFAULT NULL COMMENT '外键',
   `cat_image` varchar(255) DEFAULT NULL COMMENT '分类ICO图标',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_touch_feedback`
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_feedback` (
   `msg_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `msg_read` int(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_touch_goods`
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_goods` (
   `goods_id` int(10) unsigned default '0' COMMENT '外键',
   `sales_volume` int(10) unsigned default '0' COMMENT '销量统计',
   UNIQUE KEY `goods_id` (`goods_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_touch_goods_activity`
@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_goods_activity` (
   `click_num` int(10) NOT NULL DEFAULT '0',
   `cur_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   UNIQUE KEY `act_id` (`act_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_touch_nav`
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_nav` (
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `ifshow` (`ifshow`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `ecs_touch_nav`
@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_auth` (
   `auth_config` text NOT NULL DEFAULT '',
   `from` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='登录插件';
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='登录插件';
 
 --
 -- 表的结构 `ecs_touch_user_info`
@@ -193,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_auth` (
 CREATE TABLE IF NOT EXISTS `ecs_touch_user_info` (
   `user_id` int(10) NOT NULL DEFAULT '0',
   `aite_id` varchar(200) NOT NULL DEFAULT '' COMMENT '标识'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息';
 
 -- /*DRP_START*/
 
@@ -206,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_config` (
   `type` varchar(20) DEFAULT 'text' COMMENT '数据类型',
   `value` TEXT COMMENT '默认值',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_drp_log`
@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_log` (
   `status` int(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`log_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- 表的结构 `ecs_drp_profit`
@@ -238,7 +238,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_profit` (
   `profit2` float(20,2) DEFAULT '0.00' COMMENT '分销利润2级',
   `profit3` float(20,2) DEFAULT '0.00' COMMENT '分销利润3级',
   PRIMARY KEY (`profit_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- 表的结构 `ecs_drp_shop`
@@ -259,7 +259,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_shop` (
   `open` int(1) NOT NULL DEFAULT '0' COMMENT '店铺是否开启',
   `bank` int(10) NOT NULL DEFAULT '0' COMMENT '默认银行卡',
   PRIMARY KEY (`id`,`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 -- ----------------------------
 -- Table structure for `ecs_drp_bank`
@@ -272,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_bank` (
   `bank_card` varchar(50) DEFAULT NULL COMMENT '银行卡号',
   `user_id` int(10) DEFAULT '0' COMMENT '用户id',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for `ecs_drp_visiter`
@@ -283,7 +283,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_visiter` (
   `drp_id` int(10) NOT NULL DEFAULT '0',
   `visit_time` int(12) NOT NULL DEFAULT '0' COMMENT '访问时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for `ecs_drp_goods`
@@ -294,7 +294,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_goods` (
   `touch_sale` decimal(10,2) NOT NULL DEFAULT '0.00',
   `touch_fencheng` decimal(10,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for `ecs_drp_order_goods`
@@ -306,7 +306,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_order_goods` (
   `touch_fencheng` decimal(10,2) DEFAULT '0.00',
   `order_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for `ecs_drp_order_info`
@@ -317,7 +317,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_order_info` (
   `shop_separate` int(1) unsigned NOT NULL DEFAULT '0',
   `order_id` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for `ecs_drp_apply`
@@ -329,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_apply` (
   `time` int(12) DEFAULT '0',
   `amount` decimal(10,2) DEFAULT '0.00',
   PRIMARY KEY (`id`)
-)  ENGINE=MyISAM DEFAULT CHARSET=utf8;
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ecs_drp_config

@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `{pre}order_return` (
   `is_check` tinyint(1) NOT NULL COMMENT '是否审核',
   `to_buyer` varchar(255) NOT NULL,
   PRIMARY KEY (`ret_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='商品退货表' AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='商品退货表' AUTO_INCREMENT=4 ;
 
 
 --
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `{pre}return_action` (
   `log_time` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`action_id`),
   KEY `order_id` (`ret_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `{pre}return_cause` (
   `sort_order` int(10) NOT NULL COMMENT '排序',
   `is_show` tinyint(3) NOT NULL COMMENT '是否显示',
   PRIMARY KEY (`cause_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='退换货原因说明' AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='退换货原因说明' AUTO_INCREMENT=24 ;
 
 --
 -- 转存表中的数据 `{pre}return_cause`
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `{pre}return_goods` (
   `refund` decimal(10,2) NOT NULL,
   PRIMARY KEY (`rg_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 
 --
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `{pre}aftermarket_attachments` (
   `img_url` varchar(255) NOT NULL,
   `goods_id` mediumint(8) NOT NULL,
   UNIQUE KEY `img_id` (`img_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 --
 -- 表的结构 `{pre}service_type`
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS `{pre}service_type` (
   `sort_order` tinyint(3) NOT NULL,
   `service_type` tinyint(1) NOT NULL COMMENT '服务类型',
   PRIMARY KEY (`service_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- 转存表中的数据 `{pre}service_type`
