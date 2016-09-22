@@ -97,7 +97,7 @@
          {/if}
           <tr>
             <td class="label">{$lang.lab_shop_price}</td>
-            <td><input type="text" name="shop_price" value="{$goods.shop_price}" size="20" onblur="priceSetted()"/>
+            <td><input type="text" name="shop_price" value="{$goods.shop_price}" size="20" onchange="priceSetted()"/>
             <input type="button" value="{$lang.compute_by_mp}" onclick="marketPriceSetted()" />
             {$lang.require_field}</td>
           </tr>
