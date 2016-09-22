@@ -24,7 +24,7 @@ class CommonController extends BaseController
     protected static $sess = NULL;
 
     protected static $view = NULL;
-    
+
     protected $subscribe = 0;
     protected $custom = 0;
     protected $customs = 0;
@@ -44,7 +44,8 @@ class CommonController extends BaseController
         }
         if(is_wechat_browser()){
             //是否显示关注按钮
-            $condition['openid'] = !empty($_SESSION['openid']) ? $_SESSION['openid'] : 0;
+            // $condition['openid'] = !empty($_SESSION['openid']) ? $_SESSION['openid'] : 0;
+            $condition['ect_uid'] = !empty($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
             $userinfo = $this->model->table('wechat_user')->field('subscribe')->where($condition)->find();
             $_SESSION['subscribe'] = $userinfo['subscribe'];
             $this->assign('subscribe', $userinfo['subscribe']);
@@ -99,7 +100,7 @@ class CommonController extends BaseController
     {
         header('Cache-control: private');
         header('Content-type: text/html; charset=utf-8');
-        
+
         $shop_closed = C('shop_closed');
         if (! empty($shop_closed)) {
             $close_comment = C('close_comment');
@@ -110,14 +111,14 @@ class CommonController extends BaseController
         // 初始化session
         self::$sess = new EcsSession(self::$db, self::$ecs->table('sessions'), self::$ecs->table('sessions_data'), C('COOKIE_PREFIX').'touch_id');
         define('SESS_ID', self::$sess->get_session_id());
-        
+
         // 创建 Smarty 对象
         self::$view = new EcsTemplate();
         self::$view->cache_lifetime = C('cache_time');
         self::$view->template_dir = ROOT_PATH . 'themes/' . C('template');
         self::$view->cache_dir = ROOT_PATH . 'data/caches/caches';
         self::$view->compile_dir = ROOT_PATH . 'data/caches/compiled';
-        
+
         if ((DEBUG_MODE & 2) == 2) {
             self::$view->direct_output = true;
             self::$view->force_compile = true;
@@ -126,7 +127,7 @@ class CommonController extends BaseController
             self::$view->force_compile = false;
         }
         self::$view->caching = true;
-        
+
         // 会员信息
         self::$user = init_users();
         if (empty($_SESSION['user_id'])) {
@@ -143,17 +144,17 @@ class CommonController extends BaseController
                 $_SESSION['discount'] = 1.00;
             }
         }
-        
+
         // 判断是否支持gzip模式
         if (gzip_enabled()) {
             ob_start('ob_gzhandler');
         }
-        
+
         // 设置推荐会员
         if (isset($_GET['u'])) {
             set_affiliate();
         }
-        
+
         // session不存在，检查cookie
         if (! empty($_COOKIE['ECS']['user_id']) && ! empty($_COOKIE['ECS']['password'])) {
             // 找到cookie,验证信息
@@ -174,7 +175,7 @@ class CommonController extends BaseController
                 setcookie("ECS[password]", '', $time, '/');
             }
         }
-        
+
         // search 关键词
         $search_keywords = C('search_keywords');
         if (!empty($search_keywords) && is_string($search_keywords)) {
@@ -193,14 +194,14 @@ class CommonController extends BaseController
         }
 
         $this->custom = $this->model->table('drp_config')->field("value")->where("id =12")->getOne();
-        $this->customs = $this->model->table('drp_config')->field("value")->where("id =11")->getOne(); 
+        $this->customs = $this->model->table('drp_config')->field("value")->where("id =11")->getOne();
         $coustomes = L();
-        if(is_array($coustomes)){          
+        if(is_array($coustomes)){
             foreach($coustomes as $key => $val) {
-                L($key,str_replace("分销",$this->custom,str_replace("分销商",$this->customs,$val)));              
+                L($key,str_replace("分销",$this->custom,str_replace("分销商",$this->customs,$val)));
             }
-            
-        }    
+
+        }
         $this->assign('is_wechat', (int) is_wechat_browser());
 
         // 模板替换
@@ -215,7 +216,7 @@ class CommonController extends BaseController
         // 设置parent_id
         session('parent_id',$_SESSION['user_id'] ? 0 : $_GET['u'] ? $_GET['u'] : 0);
     }
-    
+
     /*DRP_START*/
     /*
      * 分销店铺信息
@@ -250,13 +251,13 @@ class CommonController extends BaseController
 					$_SESSION['drp_shop'] = $drp_info;
                     model('Sale')->drp_visiter($drp_info['id']);
 				}
-			}else{			
-				$_SESSION['drp_shop'] = array();			
+			}else{
+				$_SESSION['drp_shop'] = array();
 			}
 		}
-    } 
+    }
     /*DRP_END*/
-    
+
     /*
      * 微信jsSDK
      */
