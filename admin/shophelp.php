@@ -11,7 +11,7 @@
  * ============================================================================
  * $Author: liubo $
  * $Id: shophelp.php 17217 2011-01-19 06:29:08Z liubo $
-*/
+ */
 
 define('IN_ECTOUCH', true);
 
@@ -80,6 +80,7 @@ if ($_REQUEST['act'] == 'add')
 {
     /* 权限判断 */
     admin_priv('shophelp_manage');
+    $_POST['id'] = intval($_POST['id']);
 
     /* 创建 html editor */
     create_html_editor('FCKeditor1');
@@ -104,6 +105,7 @@ if ($_REQUEST['act'] == 'insert')
 {
     /* 权限判断 */
     admin_priv('shophelp_manage');
+    $_POST['id'] = intval($_REQUEST['id']);
     $title = trim(addslashes($_POST['title']));
     /* 判断是否重名 */
     $exc_article->is_only('title', $title, $_LANG['title_exist']);
@@ -134,7 +136,7 @@ if ($_REQUEST['act'] == 'edit')
 {
     /* 权限判断 */
     admin_priv('shophelp_manage');
-    $id = intval(addslashes($_REQUEST['id']));
+    $id = intval($_REQUEST['id']);
     /* 取文章数据 */
     $sql = "SELECT article_id,title, cat_id, article_type, is_open, author, author_email, keywords, content FROM " .$ecs->table('article'). " WHERE article_id='$id'";
     $article = $db->GetRow($sql);
@@ -157,8 +159,8 @@ if ($_REQUEST['act'] == 'update')
     /* 权限判断 */
     admin_priv('shophelp_manage');
     $title = trim(addslashes($_POST['title']));
-    $id = intval(addslashes($_POST['id']));
-    $cat_id = intval(addslashes($_POST['cat_id']));
+    $id = intval($_REQUEST['id']);
+    $cat_id = intval($_POST['cat_id']);
     $article_type = trim(addslashes($_POST['article_type']));
     $FCKeditor1 = trim(addslashes($_POST['FCKeditor1']));
     /* 检查重名 */
@@ -187,7 +189,7 @@ elseif ($_REQUEST['act'] == 'edit_catname')
 {
     check_authz_json('shophelp_manage');
 
-    $id       = intval(addslashes($_POST['id']));
+    $id       = intval($_REQUEST['id']);
     $cat_name = json_str_iconv(trim(addslashes($_POST['val'])));
 
     /* 检查分类名称是否重复 */
@@ -217,7 +219,7 @@ elseif ($_REQUEST['act'] == 'edit_cat_order')
 {
     check_authz_json('shophelp_manage');
 
-    $id    = intval(addslashes($_POST['id']));
+    $id    = intval($_REQUEST['id']);
     $order = json_str_iconv(trim(addslashes($_POST['val'])));
 
     /* 检查输入的值是否合法 */
@@ -242,7 +244,7 @@ elseif ($_REQUEST['act'] == 'remove')
 {
     check_authz_json('shophelp_manage');
 
-    $id = intval(addslashes($_GET['id']));
+    $id = intval($_REQUEST['id']);
 
     /* 非空的分类不允许删除 */
     if ($exc_article->num('cat_id', $id) != 0)
@@ -269,7 +271,7 @@ elseif ($_REQUEST['act'] == 'remove_art')
 {
     check_authz_json('shophelp_manage');
 
-    $id     = intval(addslashes($_GET['id']));
+    $id     = intval($_REQUEST['id']);
     $cat_id = $db->getOne('SELECT cat_id FROM ' .$ecs->table('article'). " WHERE article_id='$id'");
 
     if ($exc_article->drop($id))
@@ -332,7 +334,7 @@ elseif ($_REQUEST['act'] == 'edit_title')
 {
     check_authz_json('shophelp_manage');
 
-    $id    = intval(addslashes($_POST['id']));
+    $id    = intval($_REQUEST['id']);
     $title = json_str_iconv(trim(addslashes($_POST['val'])));
 
     /* 检查文章标题是否有重名 */

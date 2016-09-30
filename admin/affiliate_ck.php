@@ -28,6 +28,7 @@ $separate_on = $affiliate['on'];
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'list')
 {
+    $_GET['auid'] = intval($_GET['auid']);
     $logdb = get_affiliate_ck();
     $smarty->assign('full_page',  1);
     $smarty->assign('ur_here', $_LANG['affiliate_ck']);
@@ -38,7 +39,7 @@ if ($_REQUEST['act'] == 'list')
     $smarty->assign('page_count',   $logdb['page_count']);
     if (!empty($_GET['auid']))
     {
-        $auid = intval(addslashes($_GET['auid']));
+        $auid = intval($_GET['auid']);
         $smarty->assign('action_link',  array('text' => $_LANG['back_note'], 'href'=>"users.php?act=edit&id=$auid"));
     }
     assign_query_info();
@@ -49,6 +50,7 @@ if ($_REQUEST['act'] == 'list')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'query')
 {
+    $_GET['auid'] = intval($_GET['auid']);
     $logdb = get_affiliate_ck();
     $smarty->assign('logdb',        $logdb['logdb']);
     $smarty->assign('on', $separate_on);
@@ -232,7 +234,7 @@ function get_affiliate_ck()
     }
     if (isset($_GET['auid']))
     {
-        $auid = intval(addslashes($_GET['auid']));
+        $auid = intval($_GET['auid']);
         $sqladd = ' AND a.user_id=' . $auid;
     }
 

@@ -51,6 +51,7 @@ if ($_REQUEST['act'] =='add')
 {
     /* 权限判断 */
     admin_priv('shopinfo_manage');
+    $_REQUEST['id'] = intval($_REQUEST['id']);
 
     /* 创建 html editor */
     create_html_editor('FCKeditor1');
@@ -69,7 +70,10 @@ if ($_REQUEST['act'] == 'insert')
 {
     /* 权限判断 */
     admin_priv('shopinfo_manage');
+
+    $_REQUEST['id'] = intval($_REQUEST['id']);
     $title = trim(addslashes($_POST['title']));
+
     /* 判断是否重名 */
     $is_only = $exc->is_only('title', $title);
 
@@ -103,7 +107,8 @@ if ($_REQUEST['act'] == 'edit')
 {
     /* 权限判断 */
     admin_priv('shopinfo_manage');
-    $id = intval(addslashes($_REQUEST['id']));
+    $id = intval($_REQUEST['id']);
+
     /* 取得文章数据 */
     $sql = "SELECT article_id, title, content FROM ".$ecs->table('article')."WHERE article_id =".$id;
     $article = $db->GetRow($sql);
@@ -122,7 +127,7 @@ if ($_REQUEST['act'] == 'update')
     /* 权限判断 */
     admin_priv('shopinfo_manage');
     $title = trim(addslashes($_POST['title']));
-    $id = intval(addslashes($_POST['id']));
+    $id = intval($_REQUEST['id']);
     /* 检查重名 */
     if ($_POST['title'] != $_POST['old_title'])
     {
@@ -156,7 +161,7 @@ elseif ($_REQUEST['act'] == 'edit_title')
 {
     check_authz_json('shopinfo_manage');
 
-    $id    = intval(addslashes($_POST['id']));
+    $id    = intval($_REQUEST['id']);
     $title = json_str_iconv(trim(addslashes($_POST['val'])));
 
     /* 检查文章标题是否有重名 */
@@ -182,7 +187,7 @@ elseif ($_REQUEST['act'] == 'remove')
 {
     check_authz_json('shopinfo_manage');
 
-    $id = intval(addslashes($_GET['id']));
+    $id = intval($_REQUEST['id']);
 
     /* 获得文章主题 */
     $title = $exc->get_name($id);
