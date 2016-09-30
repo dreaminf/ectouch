@@ -22,17 +22,17 @@
 					</a>
 					<div class="goods-nav ts-3">
 						<ul class="goods-nav-box">
+						    <a href="{:url('index/index')}">
+								<li><i class="iconfont icon-home j-nav-box"></i>首页</li>
+							</a>
 							<a href="{:url('user/msg_list')}">
 								<li><i class="iconfont icon-xiaoxi1 j-nav-box"></i>消息</li>
-							</a>
-							<a href="{:url('index/index')}">
-								<li><i class="iconfont icon-home j-nav-box"></i>首页</li>
 							</a>
 							<a href="{:url('user/index')}">
 								<li><i class="iconfont icon-geren j-nav-box"></i>用户中心</li>
 							</a>
-							<a href="{:url('user/index')}">
-								<li style="border:none"><i class="iconfont icon-fenxiang j-nav-box"></i>分享</li>
+							<a href="{:url('user/order_list')}">
+								<li style="border:none"><i class="iconfont icon-quanbudingdan j-nav-box"></i>全部订单</li>
 							</a>
 						</ul>
 					</div>
