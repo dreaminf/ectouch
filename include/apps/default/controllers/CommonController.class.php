@@ -192,7 +192,7 @@ class CommonController extends BaseController
             }
             $this->assign('search_histroy', $histroy_list);
         }
-
+        /*DRP_START*/
         $this->custom = $this->model->table('drp_config')->field("value")->where("id =12")->getOne();
         $this->customs = $this->model->table('drp_config')->field("value")->where("id =11")->getOne();
         $coustomes = L();
@@ -202,6 +202,7 @@ class CommonController extends BaseController
             }
 
         }
+        /*DRP_END*/
         $this->assign('is_wechat', (int) is_wechat_browser());
 
         // 模板替换
