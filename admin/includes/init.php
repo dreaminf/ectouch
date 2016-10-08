@@ -40,7 +40,7 @@ if (defined('DEBUG_MODE') == false){
 }
 
 if (PHP_VERSION >= '5.1'){
-    date_default_timezone_set("PRC");
+    date_default_timezone_set(DEFAULT_TIMEZONE);
 }
 
 if (isset($_SERVER['PHP_SELF'])){

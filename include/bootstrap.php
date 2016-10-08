@@ -37,7 +37,7 @@ C('APP', load_file(BASE_PATH . 'config/app.php'));
 /* 数据库配置 */
 C('DB', load_file(ROOT_PATH . 'data/config.php'));
 /* 设置时区 */
-date_default_timezone_set(C('DEFAULT_TIMEZONE'));
+date_default_timezone_set(DEFAULT_TIMEZONE);
 /* 调试配置 */
 defined('APP_DEBUG') or define('APP_DEBUG', C('DEBUG'));
 /* 基于ecshop */

@@ -17,12 +17,13 @@ define('STATICS_URL', 'http://cn-ectouch.oss-cn-hangzhou.aliyuncs.com/');
 $GLOBALS['DEPLOY_CONF'] = array(
     /* 上传设置 */
     'UPLOAD_CONF' => array(
-        'OSS_ACCESS_ID' => 'vml6ns7R1i65cd88', //您从OSS获得的AccessKeyId
-        'OSS_ACCESS_KEY' => 'SFxvHBQTWHwVZSFD1EPy36eTz3RWwt', //您从OSS获得的AccessKeySecret
+        'OSS_ACCESS_ID' => '', //您从OSS获得的AccessKeyId
+        'OSS_ACCESS_KEY' => '', //您从OSS获得的AccessKeySecret
         'OSS_ENDPOINT' => 'oss-cn-hangzhou.aliyuncs.com', //您选定的OSS数据中心访问域名
         'OSS_BUCKET' => 'cn-ectouch', //空间名称
     )
 );
+
 // 兼容运行环境
 $global_config = dirname(ROOT_PATH) . '/data/config.php';
 if (file_exists($global_config)) {
@@ -31,6 +32,7 @@ if (file_exists($global_config)) {
     $db_host = $db_hosts[0];
     $db_port = isset($db_hosts[1]) ? $db_hosts[1] : '3306';
     define('RUN_ON_ECS', true);
+    define('DEFAULT_TIMEZONE', $timezone);
     return array(
         'DB_TYPE' => 'mysql',
         'DB_HOST' => $db_host,
@@ -48,8 +50,9 @@ define('EC_CHARSET', 'utf-8');
 define('ADMIN_PATH', 'admin');
 define('AUTH_KEY', 'this is a key');
 define('OLD_AUTH_KEY', '');
-define('API_TIME', '2016-06-12 14:15:02');
+define('API_TIME', '2016-10-08 12:01:52');
 define('RUN_ON_ECS', false);
+define('DEFAULT_TIMEZONE', 'PRC');
 $db_config = ROOT_PATH . 'data/database.php';
 if (file_exists($db_config)) {
     return require($db_config);
