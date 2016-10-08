@@ -73,6 +73,7 @@ $_LANG['user']['user_name'] = '用户名';
 $_LANG['user']['real_name'] = '真实姓名';
 $_LANG['user']['money'] = '分销佣金';
 $_LANG['user']['sale_money'] = '销售佣金';
+$_LANG['user']['sales_volume'] = '销售额';
 $_LANG['user']['shop_name'] = '店铺名';
 $_LANG['user']['shop_mobile'] = '手机号';
 $_LANG['user']['shop_qq'] = 'QQ号';
