@@ -10,6 +10,8 @@ defined('ROOT_PATH') or define('ROOT_PATH', str_replace('\\', '/', dirname(__FIL
 // 修改的文件
 $edit_file = array(
   'admin/goods.php',
+  'admin/aftermarket.php',
+  'admin/order.php',
   'admin/includes/inc_menu.php',
   'admin/includes/inc_priv.php',
   'admin/templates/goods_info.htm',
