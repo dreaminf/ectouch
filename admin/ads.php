@@ -83,15 +83,21 @@ elseif ($_REQUEST['act'] == 'add')
     admin_priv('ad_manage');
 
     $ad_link = empty($_GET['ad_link']) ? '' : trim($_GET['ad_link']);
+    $topic_id=intval($_GET['topic_id']);
     $ad_name = empty($_GET['ad_name']) ? '' : trim($_GET['ad_name']);
 
     $start_time = local_date('Y-m-d');
     $end_time   = local_date('Y-m-d', gmtime() + 3600 * 24 * 30);  // 默认结束时间为1个月以后
-
-    $smarty->assign('ads',
-        array('ad_link' => $ad_link, 'ad_name' => $ad_name, 'start_time' => $start_time,
-            'end_time' => $end_time, 'enabled' => 1));
-
+    if(!empty($topic_id)){
+            $ad_link=__URL__."/index.php?m=default&c=topic&a=index&topic_id=".$topic_id;
+            $smarty->assign('ads',
+            array('ad_link' => $ad_link, 'ad_name' => $ad_name, 'start_time' => $start_time,
+                'end_time' => $end_time, 'enabled' => 1));
+    }else{
+            $smarty->assign('ads',
+                array('ad_link' => $ad_link, 'ad_name' => $ad_name, 'start_time' => $start_time,
+                    'end_time' => $end_time, 'enabled' => 1));
+    }    
     $smarty->assign('ur_here',       $_LANG['ads_add']);
     $smarty->assign('action_link',   array('href' => 'ads.php?act=list', 'text' => $_LANG['ad_list']));
     $smarty->assign('position_list', get_position_list());

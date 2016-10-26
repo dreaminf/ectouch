@@ -91,7 +91,7 @@ $modules['06_menu_promotion']['04_bonustype_list']       = 'bonus.php?act=list';
 // $modules['06_menu_promotion']['06_pack_list']            = 'pack.php?act=list';
 // $modules['06_menu_promotion']['07_card_list']            = 'card.php?act=list';
 $modules['06_menu_promotion']['08_group_buy']            = 'group_buy.php?act=list';
-// $modules['06_menu_promotion']['09_topic']                = 'topic.php?act=list';
+$modules['06_menu_promotion']['09_topic']                = 'topic.php?act=list';
 //$modules['06_menu_promotion']['10_auction']              = 'auction.php?act=list';
 $modules['06_menu_promotion']['12_favourable']           = 'favourable.php?act=list';
 //$modules['06_menu_promotion']['13_wholesale']            = 'wholesale.php?act=list';

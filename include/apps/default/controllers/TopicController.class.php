@@ -24,7 +24,7 @@ class TopicController extends CommonController {
      */
     public function __construct() {
         parent::__construct();
-        $this->id = isset($_REQUEST ['id']) ? intval($_REQUEST ['id']) : 0;
+        $this->id = isset($_REQUEST ['topic_id']) ? intval($_REQUEST ['topic_id']) : 0;
     }
 
     /**

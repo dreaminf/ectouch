@@ -380,8 +380,8 @@ function get_topic_list()
     while($topic = $GLOBALS['db']->fetch_array($query)){
         $topic['start_time'] = local_date('Y-m-d',$topic['start_time']);
         $topic['end_time']   = local_date('Y-m-d',$topic['end_time']);
-        $topic['url']        = $GLOBALS['ecs']->url() . 'topic.php?topic_id=' . $topic['topic_id'];
-        $res[] = $topic;
+        $topic['url']        = $GLOBALS['ecs']->url() . 'index.php?m=default&c=topic&a=index&topic_id=' . $topic['topic_id'];
+        $res[] = $topic; 
     }
 
     $arr = array('item' => $res, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
