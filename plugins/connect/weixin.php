@@ -41,7 +41,7 @@ if (isset($set_modules) && $set_modules == TRUE) {
     $modules[$i]['email'] = 'support@ectouch.cn';
 
     // 申请网址
-    $modules[$i]['website'] = 'http://mp.wexin.qq.com';
+    $modules[$i]['website'] = 'http://mp.weixin.qq.com';
 
     // 版本号
     $modules[$i]['version'] = '1.0';
@@ -70,8 +70,8 @@ class weixin {
     /**
      * 构造函数
      *
-     * @param unknown $app            
-     * @param string $access_token            
+     * @param unknown $app
+     * @param string $access_token
      */
     public function __construct($conf) {
         $this->token = $conf['token'];
@@ -126,8 +126,8 @@ class weixin {
     /**
      * 更新微信用户信息
      *
-     * @param unknown $userinfo          
-     * @param unknown $weObj            
+     * @param unknown $userinfo
+     * @param unknown $weObj
      */
     public function update_weixin_user($userinfo, $wechat_id = 0, $weObj)
     {
@@ -193,7 +193,7 @@ class weixin {
                 $template = '您已拥有帐号，用户名为'.$username;
                 $data1['ect_uid'] = $ect_uid;
             }
-            
+
             // 获取用户所在分组ID
             $group_id = $weObj->getUserGroup($userinfo['openid']);
             $group_id = $group_id ? $group_id : 0;
@@ -211,7 +211,7 @@ class weixin {
             $data1['subscribe_time'] = $time;
             $data1['group_id'] = $group_id;
             $data1['unionid'] = $userinfo['unionid'];
-            
+
             model('Base')->model->table('wechat_user')->data($data1)->insert();
         } else {
             //开放平台有privilege字段,公众平台没有
