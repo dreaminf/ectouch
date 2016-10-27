@@ -760,15 +760,34 @@ class SaleModel extends BaseModel {
                     }
                 }
             }
+            $drp_id = $this->model->table('drp_shop')->where(array('user_id'=>$_SESSION[user_id]))->field('id,audit,open')->find();
+            if(!empty($drp_id['id']))
+            {
+                if($drp_id['audit'] == 1 && $drp_id['open'] == 1)
+                {
+                  $drp_id1 = $drp_id['id'];
+                }
+                else
+                {
+                  $parent_id = M()->table('users')->field('parent_id')->where(array('user_id'=>$_SESSION[user_id]))->getOne();
+                  $drp_id1 = M()->table('drp_shop')->field('id')->where(array('user_id'=>$parent_id))->getOne();                  
+                }
+             }
+             else
+             {
+                  $parent_id = M()->table('users')->field('parent_id')->where(array('user_id'=>$_SESSION[user_id]))->getOne();
+                  $drp_id1 = M()->table('drp_shop')->field('id')->where(array('user_id'=>$parent_id))->getOne();
+             }
+            
             unset($data);
-            $data['drp_id'] = $_SESSION['drp_shop']['drp_id'];
+            $data['drp_id'] = $drp_id1;
             $data['shop_separate'] = 0;
-            $data['order_id'] = $order_id;
+            $data['order_id'] = $order_id; 
             $this->model->table('drp_order_info')
                 ->data($data)
                 ->insert();
-        }
-
+        }  
+             
         // 获取订单所属店铺信息
         $drp_id = M()->table('drp_order_info')->field('drp_id')->where('order_id = ' . $order_id)->getOne();
         if($drp_id){
