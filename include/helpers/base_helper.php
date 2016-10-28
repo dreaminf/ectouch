@@ -983,7 +983,8 @@ function to_utf8_iconv($str)
  */
 function get_file_suffix($file_name, $allow_type = array())
 {
-    $file_suffix = strtolower(array_pop(explode('.', $file_name)));
+    $arr = explode('.', $file_name);
+    $file_suffix = strtolower(array_pop($arr));
     if (empty($allow_type)) {
         return $file_suffix;
     } else {

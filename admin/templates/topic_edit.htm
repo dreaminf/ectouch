@@ -67,8 +67,8 @@
             <td><textarea name="htmls" id="htmls" cols="50" rows="7">{$topic.htmls}</textarea></td>
           </tr>
         </tbody>
-
-        <!-- <tr>
+        
+        <tr>
           <td  class="label"><a href="javascript:showNotice('title_pic_upload');" title="{$lang.form_notice}">
               <img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a>{$lang.lable_title_upload}</td>
           <td><input type='file' name='title_pic' id='title_pic' size='35' />
@@ -77,19 +77,19 @@
         <tr>
           <td class="label">{$lang.lable_from_web}</td>
           <td><input type="text" name="title_url" id="title_url" value="" size="35" /></td>
-        </tr>        
+        </tr>
+
         <tbody id="edit_title_img">
           <tr>
             <td class="label">&nbsp;</td>
             <td><input type="text" name="title_img_url" id="title_img_url" value="{$topic.title_pic}" size="35" readonly="readonly"/></td>
           </tr>
-        </tbody>    -->     
-        
+        </tbody>
 
-        <tr>
+        <!-- <tr>
           <td class="label">{$lang.lable_base_style}</td>
           <td><input type="text" name="base_style" id="base_style" value="{$topic.base_style}" size="7" maxlength="6" style="float:left;color:{$goods_name_color};" size="30"/><div style="background-color:#{$topic.base_style};float:left;margin-left:2px;" id="font_color" onclick="ColorSelecter.Show(this);"><img src="images/color_selecter.gif" style="margin-top:-1px;" /></div></td>
-        </tr>
+        </tr> -->
 
         <tr>
           <td class="label">{$lang.cycle}</td>
@@ -239,28 +239,28 @@ function initialize_form(status_code)
     case 0 :
       document.getElementById('content_01').style.display = display_yes;
       document.getElementById('content_23').style.display = 'none';
-			document.getElementById('title_upload').innerHTML = '{$width_height}';
-			document.getElementById('edit_img').style.display = display_yes;
+      document.getElementById('title_upload').innerHTML = '{$width_height}';
+      document.getElementById('edit_img').style.display = display_yes;
     break;
-		
+    
     case 1 :
       document.getElementById('content_01').style.display = display_yes;
       document.getElementById('content_23').style.display = 'none';
-			document.getElementById('title_upload').innerHTML = '{$lang.tips_upload_notice}';
-			document.getElementById('edit_img').style.display = display_yes;
+      document.getElementById('title_upload').innerHTML = '{$lang.tips_upload_notice}';
+      document.getElementById('edit_img').style.display = display_yes;
     break;
-		
+    
     case 2 :
       document.getElementById('content_01').style.display = 'none';
       document.getElementById('content_23').style.display = display_yes;
-			document.getElementById('edit_img').style.display = 'none';
+      document.getElementById('edit_img').style.display = 'none';
     break;
   }
 
-	{if $isadd eq 'isadd'}
-	document.getElementById('edit_img').style.display = 'none';
-	document.getElementById('edit_title_img').style.display = 'none';
-	{/if}
+  {if $isadd eq 'isadd'}
+  document.getElementById('edit_img').style.display = 'none';
+  document.getElementById('edit_title_img').style.display = 'none';
+  {/if}
 
   return true;
 }

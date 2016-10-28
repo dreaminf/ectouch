@@ -187,8 +187,15 @@
           <!-- {foreach from=$goods_list item=goods} -->
           <li>
             <dl>
-              <dt class="pull-left"> 
-                <!-- {if $goods.goods_id gt 0 && $goods.extension_code eq 'package_buy'} --> 
+             
+
+            <div class="flow-checkout-box">
+              <div class="flow-checkout-shopimg">
+               <a href="{:url('goods/index',array('id'=>$this->_var['goods']['goods_id']))}" target="_blank" > <img src="{$goods.goods_thumb}"></a>
+              </div>
+              <div class="flow-checkout-cont">
+                 <h4 class="twolist-hidden">
+                 <!-- {if $goods.goods_id gt 0 && $goods.extension_code eq 'package_buy'} --> 
                 <a href="javascript:void(0)" onClick="setSuitShow({$goods.goods_id})" >{$goods.goods_name}<span style="color:#FF0000;">（{$lang.remark_package}）</span></a> 
                 <!-- { else } --> 
                 <a href="{:url('goods/index',array('id'=>$this->_var['goods']['goods_id']))}" target="_blank" >{$goods.goods_name}</a> 
@@ -199,13 +206,18 @@
                 <!-- {/if} --> 
                 <!-- {/if} --> 
                 <!-- {if $goods.is_shipping} -->(<span style="color:#FF0000">{$lang.free_goods}</span>)<!-- {/if} --> 
-              </dt>
-              <dd class="pull-left list-num">x {$goods.goods_number}</dd>
-              <dd class="pull-right">{$goods.formated_subtotal}</dd>
+                </h4>
+                <p class="n-check-title">数量：<span>x {$goods.goods_number}</span></p>
+                <p>价格：<span class="color-red">{$goods.formated_subtotal}</span></p>
+              </div>
+            </div>
+
+
             </dl>
           </li>
           <!-- {/foreach} -->
         </ul>
+
         <!-- #BeginLibraryItem "/Library/order_total.lbi" --><!-- #EndLibraryItem --> </section>
       <div class="ect-padding-lr ect-padding-tb ect-margin-tb">
         <input type="submit" name="submit" value="{$lang.order_submit}" class="btn btn-info ect-btn-info ect-colorf ect-bg"/>

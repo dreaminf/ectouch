@@ -297,12 +297,13 @@ class OrderModel extends BaseModel {
      * @return  array   购物车商品数组
      */
     function cart_goods($type = CART_GENERAL_GOODS) {
-        $sql = "SELECT rec_id, user_id, goods_id, goods_name, goods_sn, goods_number, " .
-                "market_price, goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, is_shipping, " .
-                "goods_price * goods_number AS subtotal " .
+        $sql = "SELECT ca.rec_id, ca.user_id, ca.goods_id, ca.goods_name, ca.goods_sn, ca.goods_number, " .
+                "ca.market_price, ca.goods_price, ca.goods_attr, ca.is_real, ca.extension_code, ca.parent_id, ca.is_gift, ca.is_shipping, g.goods_thumb, " .
+                "ca.goods_price * ca.goods_number AS subtotal " .
                 "FROM " . $this->pre .
-                "cart WHERE session_id = '" . SESS_ID . "' " .
-                "AND rec_type = '$type'";
+                "cart AS ca, " .$this->pre ."goods AS g " ."WHERE session_id = '" . SESS_ID . "' " .
+                "AND rec_type = '$type'" . 
+                "AND ca.goods_id = g.goods_id";
 
         $arr = $this->query($sql);
 
@@ -311,12 +312,11 @@ class OrderModel extends BaseModel {
             $arr[$key]['formated_market_price'] = price_format($value['market_price'], false);
             $arr[$key]['formated_goods_price'] = price_format($value['goods_price'], false);
             $arr[$key]['formated_subtotal'] = price_format($value['subtotal'], false);
-
+            $arr[$key]['goods_thumb'] = get_image_path($value['goods_id'], $value['goods_thumb'], true);
             if ($value['extension_code'] == 'package_buy') {
                 $arr[$key]['package_goods_list'] = model('PackageBase')->get_package_goods($value['goods_id']);
             }
         }
-
         return $arr;
     }
 
