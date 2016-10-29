@@ -480,12 +480,42 @@ CREATE TABLE IF NOT EXISTS `ecs_cart` (
   `is_shipping` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `can_handsel` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `goods_attr_id` varchar(255) NOT NULL DEFAULT '',
+  `group_id` varchar(255) NOT NULL ，
   PRIMARY KEY (`rec_id`),
   KEY `session_id` (`session_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
+--
+-- 表的结构 `ecs_cart_combo`
+--
 
+CREATE TABLE IF NOT EXISTS `ecs_cart_combot` (
+  `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `session_id` char(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `goods_sn` varchar(60) NOT NULL DEFAULT '',
+  `product_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `goods_name` varchar(120) NOT NULL DEFAULT '',
+  `market_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `goods_price` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `goods_number` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `goods_attr` text NOT NULL,
+  `is_real` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `extension_code` varchar(30) NOT NULL DEFAULT '',
+  `parent_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `rec_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `is_gift` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `is_shipping` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `can_handsel` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `goods_attr_id` varchar(255) NOT NULL DEFAULT '',
+  `group_id` varchar(255) NOT NULL ，
+  PRIMARY KEY (`rec_id`),
+  KEY `session_id` (`session_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 --
 -- 表的结构 `ecs_category`
 --
@@ -557,6 +587,7 @@ CREATE TABLE IF NOT EXISTS `ecs_comment` (
   `status` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
   `user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `order_id` mediumint(8) NOT NULL ,
   PRIMARY KEY (`comment_id`),
   KEY `parent_id` (`parent_id`),
   KEY `id_value` (`id_value`)
@@ -800,6 +831,7 @@ CREATE TABLE IF NOT EXISTS `ecs_goods` (
   `goods_number` smallint(5) unsigned NOT NULL DEFAULT '0',
   `goods_weight` decimal(10,3) unsigned NOT NULL DEFAULT '0.000',
   `market_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `virtual_sales` varchar( 10 ) NOT NULL DEFAULT '0',
   `shop_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
   `promote_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
   `promote_start_date` int(11) unsigned NOT NULL DEFAULT '0',
@@ -950,6 +982,7 @@ CREATE TABLE IF NOT EXISTS `ecs_group_goods` (
   `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `goods_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
   `admin_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `group_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`parent_id`,`goods_id`,`admin_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1230,6 +1263,8 @@ CREATE TABLE IF NOT EXISTS `ecs_pay_log` (
   `order_amount` decimal(10,2) unsigned NOT NULL,
   `order_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `is_paid` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `openid` VARCHAR(255) NOT NULL ,
+  `transid` VARCHAR(255) NOT NULL ,
   PRIMARY KEY (`log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
