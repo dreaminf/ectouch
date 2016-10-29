@@ -480,7 +480,7 @@ CREATE TABLE IF NOT EXISTS `ecs_cart` (
   `is_shipping` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `can_handsel` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `goods_attr_id` varchar(255) NOT NULL DEFAULT '',
-  `group_id` varchar(255) NOT NULL ，
+  `group_id` varchar(255) NOT NULL ,
   PRIMARY KEY (`rec_id`),
   KEY `session_id` (`session_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -510,7 +510,7 @@ CREATE TABLE IF NOT EXISTS `ecs_cart_combot` (
   `is_shipping` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `can_handsel` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `goods_attr_id` varchar(255) NOT NULL DEFAULT '',
-  `group_id` varchar(255) NOT NULL ，
+  `group_id` varchar(255) NOT NULL ,
   PRIMARY KEY (`rec_id`),
   KEY `session_id` (`session_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

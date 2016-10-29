@@ -145,7 +145,7 @@ elseif ($_REQUEST['act'] == 'separate')
         $goods_list = $db->getAll("SELECT goods_id,goods_number FROM " . $GLOBALS['ecs']->table('order_goods') .  " where order_id = $oid");
 
         foreach($goods_list as $key=>$val){
-            $money = $db->getOne("SELECT touch_fencheng as goods_price FROM " . $GLOBALS['ecs']->table('drp_order_goods') .  " where goods_id = ".$val['goods_id']." and order_id = $oid");
+            $money = round($affiliate['config']['level_money_all'] * $row['goods_amount'],2);
             $integral = integral_to_give(array('order_id' => $oid, 'extension_code' => ''));
             $point = $money;
 
