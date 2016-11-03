@@ -248,7 +248,7 @@ class PaymentModel extends BaseModel {
      * 根据out_trade_no订单号获取log_id;
      */
     function get_log_id($out_trade_no = null) {
-		$out_trade_no = floatval($out_trade_no);
+		$out_trade_no = (string)$out_trade_no;
         $sql = 'SELECT l.log_id ' .
             'FROM ' . $this->pre .
             "pay_log AS l INNER JOIN " .$this->pre .
