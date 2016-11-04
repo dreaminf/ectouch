@@ -521,7 +521,7 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
         $anchor =   $info['fragment'];
         if(false !== strpos($anchor,'?')) { // 解析参数
             list($anchor,$info['query']) = explode('?',$anchor,2);
-        }        
+        }
         if(false !== strpos($anchor,'@')) { // 解析域名
             list($anchor,$host)    =   explode('@',$anchor, 2);
         }
@@ -615,7 +615,7 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
         $url        =   __APP__.'?'.$varModule."={$module}&".http_build_query(array_reverse($var), '', '&');
         if($urlCase){
             $url    =   strtolower($url);
-        }        
+        }
         if(!empty($vars)) {
             $vars   =   http_build_query($vars, '', '&');
             $url   .=   '&'.$vars;
@@ -633,7 +633,7 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
         if(!empty($vars)) { // 添加参数
             foreach ($vars as $var => $val){
                 if('' !== trim($val))   $url .= $depr . $var . $depr . urlencode($val);
-            }                
+            }
         }
         if($suffix) {
             $suffix   =  $suffix===true ? C('URL_HTML_SUFFIX'):$suffix;
@@ -780,7 +780,7 @@ function load_config($file,$parse=''){
     switch($ext){
         case 'php':
             return include $file;
-        case 'xml': 
+        case 'xml':
             return (array)simplexml_load_file($file);
         case 'json':
             return json_decode(file_get_contents($file), true);
@@ -881,7 +881,7 @@ function get_top_domain($url = '')
     foreach ($topleveldomaindb as $v) {
         $str .= ($str ? '|' : '') . $v;
     }
-    
+
     $matchstr = "[^\.]+\.(?:(" . $str . ")|\w{2}|((" . $str . ")\.\w{2}))$";
     if (preg_match("/" . $matchstr . "/ies", $host, $matchs)) {
         $domain = $matchs['0'];
@@ -1615,9 +1615,10 @@ function site_info($appid = AUTH_KEY){
  * @param string $word
  */
 function logResult($word='') {
+    $word = is_array($word) ? var_export($word, true) : $word;
 	$fp = fopen(ROOT_PATH ."data/log.txt","a");
 	flock($fp, LOCK_EX) ;
-	fwrite($fp,"执行日期：".strftime("%Y%m%d%H%M%S",time())."\n".$word."\n");
+	fwrite($fp,"执行日期：". date("Y-m-d H:i:s",time()) ."\n".$word."\n");
 	flock($fp, LOCK_UN);
 	fclose($fp);
 }
@@ -1642,7 +1643,7 @@ function fatalError()
 }
 
 /**
- * 错误输出 
+ * 错误输出
  * @param $error
  */
 function halt($error)
