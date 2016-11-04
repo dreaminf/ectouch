@@ -4,6 +4,14 @@
       <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
         <div class="panel panel-default">
             <div class="panel-heading">素材管理</div>
+            <div class="explanation" id="explanation">
+              <div class="ex_tit"><i class="sc_icon"></i><h4>操作提示</h4></div>
+                <ul>
+                    <li>图文消息：分为单图文、多图文消息。支持图片，语音，视频素材。</li>
+                    <li>单图文素材添加好之后，即可将多条单图文素材组合成为一条多图文素材。</li>
+                    <li>★ 注意事项：单图文素材如果经过修改，则多图文素材需要重新组合。</li>
+                </ul>
+            </div>
             <div class="panel-body">
                 <ul class="nav nav-pills pull-left" role="tablist">
                      <li role="presentation" class="active"><a href="{url('article')}">图文消息</a></li>
@@ -52,7 +60,7 @@
                             <p>{date('Y年m月d日', $val['add_time'])}</p>
                             <div class="cover"><img src="{$val['file']}" /></div>
                             <p>{$val['content']}</p>
-                            
+
                         </div>
                         <div class="bg-info">
                                 <ul class="nav nav-pills nav-justified" role="tablist">

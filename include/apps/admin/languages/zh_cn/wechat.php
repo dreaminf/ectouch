@@ -36,6 +36,7 @@ $_LANG['token'] = 'Token';
 $_LANG['appid'] = 'AppID';
 $_LANG['appsecret'] = 'AppSecret';
 $_LANG['wechat_add'] = '新增';
+$_LANG['wechat_editor'] = '编辑';
 $_LANG['wechat_help1'] = '请填写已认证的服务号名称';
 $_LANG['wechat_help2'] = '请认真填写，如：gh_845581623321';
 $_LANG['wechat_help3'] = '自定义的Token值';
@@ -46,6 +47,7 @@ $_LANG['must_id'] = '请填写公众号原始ID';
 $_LANG['must_token'] = '请填写公众号Token';
 $_LANG['wechat_empty'] = '公众号不存在';
 $_LANG['open_wechat'] = '请开启公众号';
+
 
 //关注用户
 $_LANG['sub_title'] = '关注用户列表';

@@ -4,23 +4,30 @@
     <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
       <div class="panel panel-default">
 	<div class="panel-heading">{$lang['template_title']}</div>
-	<table border="0" cellpadding="0" cellspacing="0" class="table table-hover table-bordered table-striped">
-		{loop $list $key $val}
-		<tr>
-			<td width="200">{$val['title']}</td>
-			<td><input id="number" value="{$val['open_id']}" type="hidden">
-                <div class="btn-group"  data-toggle="buttons" id="btn1">
-                    <label class="btn btn-primary {if $val['switch'] == 0}active{/if}" ><input type="radio" name="data[status]" value="0"  {if $val['switch'] == 0}checked{/if} >{$lang['wechat_close']}</label>
-                    <label class="btn btn-primary {if $val['switch'] == 1}active{/if}" ><input type="radio" name="data[status]" value="1" {if $val['switch'] == 1}checked{/if} > {$lang['wechat_open']}</label>
-                </div>
-			</td>
-		</tr>
-		{/loop}
-	</table>
+        <div class="explanation" id="explanation">
+          <div class="ex_tit"><i class="sc_icon"></i><h4>操作提示</h4></div>
+            <ul>
+                <li>消息提醒，即微信模板消息，需要先登录微信公众号平台右侧菜单，添加插件，申请开通模板消息。（不用手动添加，手动添加的无效）</li>
+                <li>申请时选择填写所在行业： IT科技/互联网|电子商务，如果有其他行业则选填：IT科技/电子技术。</li>
+            </ul>
+        </div>
+    	<table border="0" cellpadding="0" cellspacing="0" class="table table-hover table-bordered table-striped">
+    		{loop $list $key $val}
+    		<tr>
+    			<td width="200">{$val['title']}</td>
+    			<td><input id="number" value="{$val['open_id']}" type="hidden">
+                    <div class="btn-group"  data-toggle="buttons" id="btn1">
+                        <label class="btn btn-primary {if $val['switch'] == 0}active{/if}" ><input type="radio" name="data[status]" value="0"  {if $val['switch'] == 0}checked{/if} >{$lang['wechat_close']}</label>
+                        <label class="btn btn-primary {if $val['switch'] == 1}active{/if}" ><input type="radio" name="data[status]" value="1" {if $val['switch'] == 1}checked{/if} > {$lang['wechat_open']}</label>
+                    </div>
+    			</td>
+    		</tr>
+    		{/loop}
+    	</table>
       </div>
     </div>
   </div>
-</div>	
+</div>
 <script type="text/javascript">
 $(function(){
 	$('.btn-primary input').bind('change',function(){

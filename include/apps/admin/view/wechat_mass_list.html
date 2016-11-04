@@ -2,10 +2,15 @@
 <div class="container-fluid" style="padding:0">
   <div class="row" style="margin:0">
     <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
+
       <div class="panel panel-default">
         <div class="panel-heading"><a href="{url('mass_message')}" class="btn btn-default">群发信息</a><a href="{url('mass_list')}" class="btn btn-primary" style="margin-left: 5px;">发送记录</a></div>
-        <div class="panel-body bg-danger">
-            请注意，只有已经发送成功的消息才能删除删除消息只是将消息的图文详情页失效，已经收到的用户，还是能在其本地看到消息卡片。 另外，删除群发消息只能删除图文消息和视频消息，其他类型的消息一经发送，无法删除。 
+        <div class="explanation" id="explanation">
+            <div class="ex_tit"><i class="sc_icon"></i><h4>操作提示</h4></div>
+            <ul>
+                <li>请注意，只有已经发送成功的消息才能删除删除消息只是将消息的图文详情页失效，已经收到的用户，还是能在其本地看到消息卡片。</li>
+                <li> 另外，删除群发消息只能删除图文消息和视频消息，其他类型的消息一经发送，无法删除。</li>
+            </ul>
         </div>
         <ul class="list-group">
         {loop $list $val}
@@ -24,7 +29,7 @@
                 </div>
                 <div class="col-md-3">{date('Y年m月d日', $val['send_time'])}</div>
                 <div class="col-md-2"><a href="javascript:if(confirm('{$lang['confirm_delete']}')){window.location.href='{url('mass_del', array('id'=>$val['id']))}'};" class="btn btn-default">删除</a></div>
-                
+
             </li>
         {/loop}
         </ul>

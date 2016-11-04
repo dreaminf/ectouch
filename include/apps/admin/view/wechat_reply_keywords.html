@@ -11,6 +11,16 @@
 	  <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
 		<div class="panel panel-default">
 			<div class="panel-heading">自动回复</div>
+        <div class="explanation" id="explanation">
+          <div class="ex_tit"><i class="sc_icon"></i><h4>操作提示</h4></div>
+            <ul>
+                <li>三、关键词自动回复：即可以自己添加规则自动回复内容。</li>
+                <li>★ 字数限制：微信公众平台认证与非认证用户的关键字自动回复设置规则上限为200条规则（每条规则名，最多可设置60个汉字），每条规则内最多设置10条关键字（每条关键字，最多可设置30个汉字）</li>
+                <li>★ 规则设置：一个规则您可设置多个关键字，建议使用常用关键字，如关键词：help,帮助。采取中英文结合的方式最佳。如果用户发送的信息中含有您设置的其中一个关键字，则系统会匹配自动回复。
+                </li>
+                <li>★ 注意事项：关键词 不能设置系统已经存在的关键词，如功能扩展当中的hot、best、news等。</li>
+            </ul>
+        </div>
 			<div class="panel-body">
 			     <ul class="nav nav-tabs" role="tablist" id="myTab">
 			         <li><a href="{url('reply_subscribe')}">关注自动回复</a></li>
@@ -18,7 +28,7 @@
 			         <li class="active"><a href="{url('reply_keywords')}">关键词自动回复</a></li>
 			     </ul>
 			</div>
-			
+
 			<div class="panel-body">
                 <div class="form-group">
                     <a href="javascript:;" class="btn btn-success rule_add">添加规则</a>
@@ -125,7 +135,7 @@
                             {else}
                                 <span>{$val['content']}</span>
                             {/if}
-                            </div>    
+                            </div>
                         </div>
                         </li>
                     </ul>

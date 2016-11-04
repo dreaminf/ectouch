@@ -4,6 +4,13 @@
 	  <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
 		<div class="panel panel-default">
 			<div class="panel-heading">自动回复</div>
+        <div class="explanation" id="explanation">
+          <div class="ex_tit"><i class="sc_icon"></i><h4>操作提示</h4></div>
+          <ul>
+            <li>二、消息自动回复：当用户输入任意消息，匹配不到功能扩展即系统已有关键词时或者没有在关键词自动回复里的规则关键词，则默认回复一条 消息提示。（可以为空）例如：对不起！你输入的关键词不存在，建议你咨询相关客服。</li>
+            <li>★ 消息自动回复，可以配合关键词自动回复灵活使用。回复提示用户输入系统已有关键词。</li>
+          </ul>
+        </div>
 			<div class="panel-body">
 			     <ul class="nav nav-tabs" role="tablist" id="myTab">
 			         <li><a href="{url('reply_subscribe')}">关注自动回复</a></li>
@@ -11,7 +18,7 @@
 			         <li><a href="{url('reply_keywords')}">关键词自动回复</a></li>
 			     </ul>
 			</div>
-			
+
 			<div class="panel-body">
                 <form action="{url('reply_msg')}" method="post">
                   <div class="panel panel-default">
