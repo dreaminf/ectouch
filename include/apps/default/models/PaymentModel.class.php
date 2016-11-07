@@ -157,6 +157,20 @@ class PaymentModel extends BaseModel {
                         $sms = new EcsSms();
                         $sms->send(C('sms_shop_mobile'), sprintf(L('order_payed_sms'), $order_sn, $order['consignee'], $order['mobile']), '', 13, 1);
                     }
+                    /* 如果安装微信通,订单支付成功消息提醒 */
+                    if(class_exists('WechatController')&& is_wechat_browser()) {
+                        $pushData = array(
+                            'keyword1' => array('value' => $order_sn,'color' => '#FF0000'),  // 订单号
+                            'keyword2' => array('value' => '已付款','color' => '#FF0000'),   // 付款状态
+                            'keyword3' => array('value' => local_date('Y-m-d H:i:s', gmtime()),'color' => '#FF0000'),  //付款时间
+                            'keyword4' => array('value' => $GLOBALS['_CFG']['shop_name'],'color' => '#FF0000'),       // 商户名
+                            'keyword5' => array('value' => $pay_log['order_amount'],'color' => '#FF0000')             // 付款金额
+                        );
+                        // $url = __URL__ . 'index.php?c=user&a=order_detail&order_id='.$order_id;
+                        $order_url = __HOST__ . U('user/order_detail',array('order_id'=> $order_id));
+                        $url = str_replace('api/notify/wxpay.php', '', $order_url);
+                        pushTemplate('OPENTM204987032', $pushData, $url, $order['user_id']);
+                    }
 
                     /* 对虚拟商品的支持 */
                     $virtual_goods = model('OrderBase')->get_virtual_goods($order_id);

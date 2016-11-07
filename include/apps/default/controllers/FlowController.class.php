@@ -163,15 +163,15 @@ class FlowController extends CommonController {
             if(empty($mp_price)){
                     $sql = "SELECT g.goods_name as goods_name,g.goods_thumb as goods_thumb, g.shop_price*$_SESSION[discount]  as shop_price,g.  goods_number as goods_number FROM ".
                      $this->model->pre."goods as g  ".
-                     " where g.goods_id = ".$goods->goods_id ; 
+                     " where g.goods_id = ".$goods->goods_id ;
             } else{
                  $sql = "SELECT g.goods_name as goods_name,g.goods_thumb as goods_thumb,ifnull(".$mp_price.",g.shop_price*$_SESSION[discount]) as shop_price,g.  goods_number as goods_number FROM ".
                      $this->model->pre."goods as g  ".
-                     " where g.goods_id = ".$goods->goods_id ; 
+                     " where g.goods_id = ".$goods->goods_id ;
             }
-             //var_dump($sql) ; 
-           
-            $res = $this->model->query($sql); 
+             //var_dump($sql) ;
+
+            $res = $this->model->query($sql);
             $goods_name = $res[0]['goods_name'];
             $shop_price = $res[0]['shop_price'];
             $goods_number = $res[0]['goods_number'];
@@ -813,16 +813,16 @@ class FlowController extends CommonController {
 						$consignee = $_SESSION['consignee'];
 						$consignee_list [] = array(
                         'country' => C('shop_country'),
-						'province' => $consignee['province'],						   
-						'city' => $consignee['city'],						   
+						'province' => $consignee['province'],
+						'city' => $consignee['city'],
 						'district' => $consignee['district'],
-						   
+
 						);
 					}else{
 						$consignee_list [] = array(
                         'country' => C('shop_country'),
-						);						
-					}                    
+						);
+					}
                 }
             } else {
                 if (isset($_SESSION ['flow_consignee'])) {
@@ -1311,18 +1311,24 @@ class FlowController extends CommonController {
             $msg = $order ['pay_status'] == PS_UNPAYED ? L('order_placed_sms') : L('order_placed_sms') . '[' . L('sms_paid') . ']';
             $sms->send(C('sms_shop_mobile'), sprintf($msg, $order ['consignee'], $order ['mobile']), '', 13, 1);
         }
-         /* 如果需要，微信通知 by wanglu */
-        if (method_exists('WechatController', 'snsapi_base') && is_wechat_browser()) {
-            $order_url = __HOST__ . url('user/order_detail', array('order_id' => $order ['order_id']));
-            $order_url = urlencode(base64_encode($order_url));
-            send_wechat_message('order_remind', '', $order['order_sn'] . L('order_effective'), $order_url, $order['order_sn']);
-        }
-        /* 如果需要，微信通知 by wanglu */
-        // if (method_exists('WechatController', 'do_oauth')) {
+        //  /* 如果需要，微信通知 by wanglu */
+        // if (method_exists('WechatController', 'snsapi_base') && is_wechat_browser()) {
         //     $order_url = __HOST__ . url('user/order_detail', array('order_id' => $order ['order_id']));
         //     $order_url = urlencode(base64_encode($order_url));
         //     send_wechat_message('order_remind', '', $order['order_sn'] . L('order_effective'), $order_url, $order['order_sn']);
         // }
+        // 微信通模板消息
+        if (class_exists('WechatController') && is_wechat_browser() ) {
+            $pushData = array(
+                'first' => array('value' => '您的订单已提交成功','color' => '#173177'),
+                'orderID' => array('value' => $order['order_sn'],'color' => '#FF0000'), //订单号
+                'orderMoneySum' => array('value' => $order['order_amount'],'color' => '#FF0000'), //订单金额
+                'backupFieldName' => array('value' => ''),
+                'remark' => array('value' => '请尽快完成支付，感谢您的购买！')
+            );
+            $url = __HOST__ . U('user/order_detail', array('order_id' => $new_order_id));
+            pushTemplate('TM00016', $pushData, $url);
+        }
         /* 如果订单金额为0 处理虚拟卡 */
         if ($order ['order_amount'] <= 0) {
             $sql = "SELECT goods_id, goods_name, goods_number AS num FROM " . $this->model->pre . "cart WHERE is_real = 0 AND extension_code = 'virtual_card'" . " AND session_id = '" . SESS_ID . "' AND rec_type = '$flow_type'";
@@ -2188,23 +2194,23 @@ class FlowController extends CommonController {
             $address_id = I('id');
 			$data['address_id'] = $address_id;
             $condition['user_id'] = $_SESSION['user_id'];
-			$this->model->table('users')->data($data)->where($condition)->update();	
+			$this->model->table('users')->data($data)->where($condition)->update();
 			unset($_SESSION['flow_consignee']);
             echo json_encode(array('status' => 1));
         } else {
             echo json_encode(array('status' => 0));
          }
-		 
+
 	}
 
      /**
-     * 
+     *
      */
     function  add_to_cart_combo()
     {
         $_POST['goods']=strip_tags(urldecode($_POST['goods']));
         $_POST['goods'] = json_str_iconv($_POST['goods']);
-        
+
         if (!empty($_REQUEST['goods_id']) && empty($_POST['goods']))
         {
             if (!is_numeric($_REQUEST['goods_id']) || intval($_REQUEST['goods_id']) <= 0)
@@ -2216,7 +2222,7 @@ class FlowController extends CommonController {
         }
         $result = array('error' => 0, 'message' => '', 'content' => '', 'goods_id' => '');
         $json = new EcsJson();
-    
+
         if (empty($_POST['goods']))
         {
             $result['error'] = 1;
@@ -2233,9 +2239,9 @@ class FlowController extends CommonController {
                 'LEFT JOIN ' . $this->model->pre . 'attribute' . ' AS a ON a.attr_id = g.attr_id ' .
                 "WHERE a.attr_type != 0 AND g.goods_id = '" . $goods->goods_id . "' " .
                 'ORDER BY a.sort_order, g.attr_price, g.goods_attr_id';
-    
+
             $res = $this->model->query($sql);
-    
+
             if (!empty($res))
             {
                 $spe_arr = array();
@@ -2261,12 +2267,12 @@ class FlowController extends CommonController {
                 $result['parent'] = $goods->parent;
                 $result['message'] = $spe_array;
                 $result['group'] = $goods->group;
-    
+
                 die($json->encode($result));
             }
         }
 
-      
+
         /* 更新：如果是一步购物，先清空购物车 */
         if (C('one_step_buy') == '1')
         {
@@ -2292,12 +2298,12 @@ class FlowController extends CommonController {
                 {
                     $result['message'] = C('cart_confirm') == 1 ? L('addto_cart_success_1') : L('addto_cart_success_2');
                 }
-    
+
                 $result['group']    = $goods->group;
                 $result['goods_id'] = stripslashes($goods->goods_id);
                 $result['content'] = insert_cart_info();
                 $result['one_step_buy'] = C('one_step_buy');
-    
+
                 //返回 原价，配件价，库存信息
                 $combo_goods_info = model('Order')->get_combo_goods_info($goods->goods_id, $goods->number, $goods->spec, $goods->parent);
                 $result['fittings_price'] = $combo_goods_info['fittings_price'];
@@ -2326,7 +2332,7 @@ class FlowController extends CommonController {
         $result['confirm_type'] = !empty($cart_confirm) ? $cart_confirm : 2;
         die($json->encode($result));
     }
-    
+
     /**
      * 删除购物车项目
      */
@@ -2334,7 +2340,7 @@ class FlowController extends CommonController {
     {
         $_POST['goods']=strip_tags(urldecode($_POST['goods']));
         $_POST['goods'] = json_str_iconv($_POST['goods']);
-    
+
         if (!empty($_REQUEST['goods_id']) && empty($_POST['goods']))
         {
             if (!is_numeric($_REQUEST['goods_id']) || intval($_REQUEST['goods_id']) <= 0)
@@ -2344,18 +2350,18 @@ class FlowController extends CommonController {
             $goods_id = intval($_REQUEST['goods_id']);
             exit;
         }
-    
+
         $result = array('error' => 0, 'message' => '');
         $json = new EcsJson();
-    
+
         if (empty($_POST['goods']))
         {
             $result['error'] = 1;
             die($json->encode($result));
         }
-    
+
         $goods = $json->decode($_POST['goods']);
-    
+
         if($goods->parent == 0){
             //更新临时购物车（删除基本件）
             $sql = "DELETE FROM " . $this->model->pre . 'cart_combo' . " WHERE session_id='" . SESS_ID . "'".
@@ -2371,14 +2377,14 @@ class FlowController extends CommonController {
                 " AND goods_id = '" . $goods->goods_id . "' AND group_id = '" . $goods->group . "'";
             $this->model->query($sql);
         }
-    
+
         $result['error'] = 0;
         $result['group'] = substr($goods->group, 0, strrpos($goods->group, "_"));
         $result['parent'] = $goods->parent;
-    
+
         die($json->encode($result));
     }
-    
+
     /**
      * 套餐添加到购物车
      */
@@ -2388,14 +2394,14 @@ class FlowController extends CommonController {
         $_POST['goods'] = json_str_iconv($_POST['goods']);
         $result = array('error' => 0, 'message' => '');
         $json = new EcsJson();
-    
+
         if (empty($_POST['goods']))
         {
             $result['error'] = 1;
             $result['message'] = '系统无法接收不完整的数据';
             die($json->encode($result));
         }
-    
+
         $goods = $json->decode($_POST['goods']);
         $group = $goods->group ."_". $goods->goods_id;//套餐组
         //批量加入购物车
@@ -2424,11 +2430,11 @@ class FlowController extends CommonController {
             $result['message'] = '暂无数据可提交，请重新选择';
             die($json->encode($result));
         }
-    
+
         $result['error']  = 0;
         die($json->encode($result));
     }
-    
+
     /**
      * 更新购物车中的商品数量
      *
@@ -2446,7 +2452,7 @@ class FlowController extends CommonController {
             {
                 continue;
             }
-    
+
             //查询：
             $sql = "SELECT `goods_id`, `goods_attr_id`, `product_id`, `extension_code` FROM" . $this->model->pre . 'cart'.
             " WHERE rec_id='$key' AND session_id='" . SESS_ID . "'";
@@ -2458,7 +2464,7 @@ class FlowController extends CommonController {
                 "WHERE g.goods_id = c.goods_id AND c.rec_id = '$key'";
             $row = $this->model->query($sql);
             $row = $goods['0'];
-    
+
             //查询：系统启用了库存，检查输入的商品数量是否有效
             if (intval(C('use_storage')) > 0 && $goods['extension_code'] != 'package_buy')
             {
@@ -2473,7 +2479,7 @@ class FlowController extends CommonController {
                 if (!empty($goods['product_id']))
                 {
                     $sql = "SELECT product_number FROM " .$this->model->pre . 'products' . " WHERE goods_id = '" . $goods['goods_id'] . "' AND product_id = '" . $goods['product_id'] . "'";
-    
+
                     $product_number = $this->model->query($sql);
                     $product_number = $product_number['0']['product_number'];
                     if ($product_number < $val)
@@ -2492,7 +2498,7 @@ class FlowController extends CommonController {
                     exit;
                 }
             }
-    
+
             /* 查询：检查该项是否为基本件 以及是否存在配件 */
             /* 此处配件是指添加商品时附加的并且是设置了优惠价格的配件 此类配件都有parent_id goods_number为1 */
             $sql = "SELECT b.goods_number, b.rec_id
@@ -2502,9 +2508,9 @@ class FlowController extends CommonController {
                 AND a.extension_code <> 'package_buy'
                 AND b.parent_id = a.goods_id
                 AND b.session_id = '" . SESS_ID . "'";
-    
+
             $offers_accessories_res = $this->model->query($sql);
-    
+
             //订货数量大于0
             if ($val > 0)
             {
@@ -2515,13 +2521,13 @@ class FlowController extends CommonController {
                     {
                         $sql = "DELETE FROM " . $this->model->pre . 'cart' .
                         " WHERE session_id = '" . SESS_ID . "' " .
-                        "AND rec_id = '" . $offers_accessories_row['rec_id'] ."' AND group_id='' LIMIT 1"; 
+                        "AND rec_id = '" . $offers_accessories_row['rec_id'] ."' AND group_id='' LIMIT 1";
                         $this->model->query($sql);
                     }
-                    
+
                     $row_num ++;
                 }
-    
+
                 /* 处理超值礼包 */
                 if ($goods['extension_code'] == 'package_buy')
                 {
@@ -2534,7 +2540,7 @@ class FlowController extends CommonController {
                 {
                     $attr_id    = empty($goods['goods_attr_id']) ? array() : explode(',', $goods['goods_attr_id']);
                     $goods_price = model('Goodsbase')->get_final_price($goods['goods_id'], $val, true, $attr_id);
-    
+
                     //更新购物车中的商品数量
                     $sql = "UPDATE " .$this->model->pre . 'cart' .
                     " SET goods_number = '$val', goods_price = '$goods_price' WHERE rec_id='$key' AND session_id='" . SESS_ID . "' AND group_id=''";
@@ -2550,21 +2556,21 @@ class FlowController extends CommonController {
                     "AND rec_id = '" . $offers_accessories_row['rec_id'] ."' AND group_id='' LIMIT 1";
                     $this->model->query($sql);
                 }
-    
+
                 $sql = "DELETE FROM " .$this->model->pre . 'cart' .
                 " WHERE rec_id='$key' AND session_id='" .SESS_ID. "' AND group_id=''";
             }
-    
+
             $this->model->query($sql);
         }
-    
+
         /* 删除所有赠品 */
         $sql = "DELETE FROM " . $this->model->pre . 'cart' . " WHERE session_id = '" .SESS_ID. "' AND is_gift <> 0";
         $this->model->query($sql);
     }
-    
+
      /*
-     * label选中价格 
+     * label选中价格
      */
     public function cart_label_count(){
         $goods_id  = I('goods_id','');
@@ -2572,12 +2578,12 @@ class FlowController extends CommonController {
         if($parent_id ){
             $shop_price = $this->model->table('goods')->where(array('goods_id'=>$parent_id))->field('shop_price')->getOne();
         }
-        if($goods_id) { 
+        if($goods_id) {
             $sql = "select g.shop_price ,gg.goods_price from " . $this->model->pre ."group_goods as gg LEFT JOIN " . $this->model->pre . "goods as g on gg.goods_id = g.goods_id " . "where gg.goods_id in ($goods_id) and gg.parent_id = $parent_id ";
             $count = $this->model->query($sql);
         }
         $num=0;
-        if(count($count)>0){            
+        if(count($count)>0){
             foreach($count as $key){
                 $count_price += floatval($key['goods_price']);
                 $num ++;

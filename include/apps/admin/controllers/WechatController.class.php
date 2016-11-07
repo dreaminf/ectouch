@@ -2237,11 +2237,11 @@ class WechatController extends AdminController
      */
     public function template_massage_list(){
         $list = $this->model->table('wechat_template')
-            ->order('id desc')
+            ->order('id asc')
             ->select();
         if($list){
             foreach($list as $key=>$val){
-                $list[$key]['add_time'] = local_date('Y-m-d H:i:s',$val['add_time']);
+                $list[$key]['add_time'] = local_date('Y-m-d H:i',$val['add_time']);
             }
         }
         $this->assign('list',$list);
@@ -2253,27 +2253,48 @@ class WechatController extends AdminController
      */
     public function is_switch(){
         if(IS_GET){
-            $open_id = I('open_id');
-            $template_id = $this->model->table('wechat_template')
-                ->field('template_id')
-                ->where("open_id = '$open_id'")
-                ->getOne();
-            if(!$template_id){
-                $template_id = $this->weObj->addTemplateMessage($open_id);
+            $id = I('get.id',0, 'intval');
+            $status = I('get.status',0, 'intval');
+            if(empty($id)){
+                $this->message('请选择模板消息', NULL, 'error');
             }
-
-            if($template_id){
-                $data['switch'] = I('value', 0);
-                $data['template_id'] = $template_id;
-                $data['add_time'] = gmtime();
-                $where['open_id'] = $open_id;
-                $list = $this->model->table('wechat_template')
-                    ->data($data)
-                    ->where($where)
-                    ->update();
+            //开启模板消息
+            if(1 == $status){
+                $template = $this->model->table('wechat_template')->field('template_id, code')->where(array('id'=>$id))->find();
+                if(empty($template['template_id'])){
+                    $template_id = $this->weObj->addTemplateMessage($template['code']);
+                    if(!$template_id){
+                        $this->message($this->weObj->errMsg, NULL, 'error');
+                    }
+                    $this->model->table('wechat_template')->data(array('template_id'=>$template_id, 'add_time' => gmtime()))->where(array('id'=>$id))->update();
+                }
             }
-            echo json_encode(array('status'=> 200, 'message'=>'ok'));
+            $this->model->table('wechat_template')->data(array('status'=>$status))->where(array('id'=>$id))->update();
+            exit(json_encode(array('status'=> 200, 'message'=>'ok')));
         }
 
     }
+    /**
+     * 编辑模板消息
+     */
+    public function editTemplate(){
+        if(IS_AJAX){
+            $id = I('post.id');
+            $data = I('post.data','','trim');
+            if($id){
+                $this->model->table('wechat_template')->data($data)->where(array('id'=>$id))->update();
+                exit(json_encode(array('status'=>1)));
+            }else{
+                exit(json_encode(array('status'=>0, 'msg'=>'编辑失败')));
+            }
+        }
+        $id = I('get.id');
+        if($id){
+            $template = $this->model->table('wechat_template')->where(array('id'=>$id))->find();
+            $this->assign('template', $template);
+        }
+        $this->display();
+    }
+
+
 }

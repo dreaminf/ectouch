@@ -66,6 +66,81 @@ function sendTemplateMessage($data){
 }
 
 /**
+ * 模板消息通知,先增加记录
+ * @param string $user_id  消息模版发送给他人，需传参数
+ */
+function pushTemplate($code = '', $data = array(), $url = '',$uid = ''){
+    if($uid){
+        $user_id = $uid;
+    }else{
+        $user_id = $_SESSION['user_id'];
+        if(!$user_id || !$code || !$data){
+            return false;
+        }
+    }
+    $openid = '';
+    if(!isset($_SESSION['openid']) || empty($_SESSION['openid'])){
+        $openid = M()->table('wechat_user')->field('openid')->where(array('ect_uid'=>$user_id))->getOne();
+    }
+    elseif($_SESSION['openid']){
+        $openid = $_SESSION['openid'];
+    }
+    if(!$openid){
+        return false;
+    }
+    $template = M()->table('wechat_template')->field('title,content')->where(array('code'=>$code, 'status'=>1))->find();
+    if(empty($template['title'])){
+        return false;
+    }
+
+    $data['first'] = !empty($data['first']) ? $data['first'] : array('value' => $template['title'],'color' => '#173177');
+    $data['remark'] = !empty($template['content']) ? array('value' => $template['content'],'color' => '#FF0000') : $data['remark'];
+    logResult($data);
+    $rs['code'] = $code;
+    $rs['openid'] = $openid;
+    $rs['data'] = serialize($data);
+    $rs['url'] = $url;
+    M()->table('wechat_template_log')->data($rs)->insert();
+    // 查询消息记录表未发送的，执行发送
+    sendTemplate($code);
+}
+
+/**
+ * 发送模板消息
+ * $code 模板标识
+ * $openid 发送人的openid
+ */
+function sendTemplate($code = '' ){
+    //公众号信息
+    $config = M()->table('wechat')->field('token, appid, appsecret')->where(array('id'=>1, 'status'=>1))->find();
+    if(!$config){
+        return false;
+    }
+    $sql = "SELECT d.code, d.openid, d.data, d.url, t.template_id FROM {pre}wechat_template_log d LEFT JOIN {pre}wechat_template t ON d.code = t.code WHERE d.status = 0  and d.code = '" .$code. "' ORDER BY d.id ASC";
+    $list = M()->query($sql);
+    if($list){
+        foreach($list as $k=>$v){
+            $data['touser'] = $v['openid'];
+            $data['template_id'] = $v['template_id'];
+            $data['url'] = $v['url'];
+            $data['topcolor'] =  '#FF0000';
+            $data['data'] = unserialize($v['data']);
+            $weObj = new Wechat($config);
+            $rs = $weObj->sendTemplateMessage($data);
+            //logResult(var_export($rs, 1));
+            if(empty($rs)){
+                // logResult($weObj->errMsg);
+                return false;
+            }
+            M()->table('wechat_template_log')->data(array('status'=>1))->where(array('code'=>$v['code']))->update();
+            return true;
+        }
+    }
+    return false;
+}
+
+
+/**
  * 获得当前格林威治时间的时间戳
  *
  * @return  integer
@@ -1626,7 +1701,7 @@ function price_format($price, $change_price = true) {
     } else {
         $price = number_format($price, 2, '.', '');
     }
-    
+
     $price = sprintf(C('currency_format'), $price);
 
     return $price = strip_tags($price);

@@ -233,12 +233,43 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_template` (
 -- 转存表中的数据 `ecs_wechat_template`
 --
 
+CREATE TABLE IF NOT EXISTS `ecs_wechat_template` (
+  `id` smallint(5) NOT NULL AUTO_INCREMENT,
+  `template_id` varchar(64) DEFAULT NULL,
+  `code` varchar(30) DEFAULT NULL COMMENT '模板消息标识',
+  `content` text DEFAULT NULL,
+  `template` text,
+  `title` varchar(60) NOT NULL,
+  `add_time` int(11) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL,
+  `wechat_id` mediumint(8),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+
+CREATE TABLE IF NOT EXISTS `ecs_wechat_template_log` (
+`id` mediumint(8) NOT NULL AUTO_INCREMENT,
+`code` varchar(60) NOT NULL,
+`openid` varchar(64) NOT NULL,
+`data` text NOT NULL,
+`url` varchar(255) NOT NULL,
+`status` tinyint(1) NOT NULL DEFAULT '0',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `ecs_wechat_template` (`template_id`, `code`, `content`, `template`, `title`, `add_time`, `status`, `wechat_id`) VALUES
+('', 'TM00016', NULL, '订单号：{{orderID.DATA}}\r\n待付金额：{{orderMoneySum.DATA}}\r\n{{backupFieldName.DATA}}{{backupFieldData.DATA}}\r\n{{remark.DATA}}', '订单提交成功', 1458290854, 0, 1),
+('', 'OPENTM204987032', NULL, '{{first.DATA}}\r\n订单：{{keyword1.DATA}}\r\n支付状态：{{keyword2.DATA}}\r\n支付日期：{{keyword3.DATA}}\r\n商户：{{keyword4.DATA}}\r\n金额：{{keyword5.DATA}}\r\n{{remark.DATA}}', '订单支付成功通知', 1458538502, 0, 1),
+('', 'OPENTM202243318', NULL, '{{first.DATA}}\r\n订单内容：{{keyword1.DATA}}\r\n物流服务：{{keyword2.DATA}}\r\n快递单号：{{keyword3.DATA}}\r\n收货信息：{{keyword4.DATA}}\r\n{{remark.DATA}}', '订单发货通知', 1458538686, 0, 1);
+
+
 -- /*DRP_START*/
 
-INSERT INTO `ecs_wechat_template` (`id`, `open_id`, `template_id`, `contents`, `template`, `title`, `add_time`, `switch`) VALUES
-(1, 'OPENTM206547887', '', '{{first.DATA}}\r\n订单编号：{{keyword1.DATA}}\r\n商品名称：{{keyword2.DATA}}\r\n下单时间：{{keyword3.DATA}}\r\n下单金额：{{keyword4.DATA}}\r\n分销商名称：{{keyword5.DATA', '您的分销商有新的订单产生。\r\n订单编号：2015070210121001\r\n商品名称：2015新款简约百搭蕾丝连衣裙\r\n下单时间：2015年07月02日 10:12\r\n下单金额：128元\r\n分销商名称：木友衣橱\r\n订单已付款，请尽快发货！', '分销订单通知', 0, 0),
-(2, 'OPENTM400075274', '', '{{first.DATA}}\r\n结款金额：{{keyword1.DATA}}\r\n银行卡：{{keyword2.DATA}}\r\n{{remark.DATA}}\r\n', '内容示例\r\n您本月的分销结款金额如下，\r\n结款金额：1000\r\n银行卡：62XXXXXXXXXX\r\n银行到账可能会有延迟，如有问题，祝生活愉快！', '分销结款通知', 0, 0),
-(3, 'OPENTM207126233', '', '{{first.DATA}}\r\n分销商名称：{{keyword1.DATA}}\r\n分销商电话：{{keyword2.DATA}}\r\n申请时间：{{keyword3.DATA}}\r\n{{remark.DATA}}\r\n', '分销商申请成功提醒\r\n分销商名称：张三\r\n分销商电话：15050510328\r\n申请时间：2015.07.28 10:01\r\n如有疑问，请在微信中留言，我们将第一时间为您服务。', '分销商申请成功提醒', 0, 0);
+INSERT INTO `ecs_wechat_template` (`template_id`, `code`, `content`, `template`, `title`, `add_time`, `status`, `wechat_id`) VALUES
+('', 'OPENTM206547887', NULL, '{{first.DATA}}\r\n订单编号：{{keyword1.DATA}}\r\n商品名称：{{keyword2.DATA}}\r\n下单时间：{{keyword3.DATA}}\r\n下单金额：{{keyword4.DATA}}\r\n分销商名称：{{keyword5.DATA}}\r\n', '分销订单通知', 1458290854, 0, 1),
+('', 'OPENTM400075274', NULL, '{{first.DATA}}\r\n结款金额：{{keyword1.DATA}}\r\n银行卡：{{keyword2.DATA}}\r\n{{remark.DATA}}\r\n', '分销结款通知', 1458538502, 0, 1),
+('', 'OPENTM207126233', NULL, '{{first.DATA}}\r\n分销商名称：{{keyword1.DATA}}\r\n分销商电话：{{keyword2.DATA}}\r\n申请时间：{{keyword3.DATA}}\r\n{{remark.DATA}}\r\n', '分销商申请成功提醒', 1458538686, 0, 1);
 
 -- /*DRP_END*/
 

@@ -153,9 +153,15 @@ $_LANG['detail_gallery'] = '内容示例';
 $_LANG['shop_name'] = '商品名称:';
 $_LANG['shop_time'] = '商品价格:';
 $_LANG['buy_time'] = '购买时间:';
-$_LANG['template_title'] = '模板标题';
-$_LANG['template_info'] = '模板内容:';
-$_LANG['template_id'] = '模板ID:';
+// $_LANG['template_info'] = '模板内容:';
+// $_LANG['template_id'] = '模板ID:';
 $_LANG['template_list'] = '模板列表:';
 $_LANG['detect_template'] = '检测模板ID';
 $_LANG['edit_template'] = '修改模板';
+
+//模板消息
+$_LANG['template_title'] = '模板标题';
+$_LANG['template_id'] = '模板ID';
+$_LANG['template_code'] = '模板编号';
+$_LANG['template_content'] = '模板内容';
+$_LANG['template_remark'] = '备注';

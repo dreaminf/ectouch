@@ -228,7 +228,7 @@ class WechatController extends CommonController
             // 关注送红包
             $bonus_msg = $this->send_message($openid, 'bonus', $this->weObj, 1);
             if (! empty($bonus_msg)) {
-                $template = $template . "\r\n" . $bonus_msg['content'];
+                $template = !$template ?  $template . "\r\n" . $bonus_msg['content'] : $bonus_msg['content'];
             }
             // 微信端发送消息
             if(!empty($template)){
@@ -254,7 +254,7 @@ class WechatController extends CommonController
                     'touser' => $openid,
                     'msgtype' => 'text',
                     'text' => array(
-                        'content' => $template 
+                        'content' => $template
                     )
                 );
                 $this->weObj->sendCustomMessage($msg);
