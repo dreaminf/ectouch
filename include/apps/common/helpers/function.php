@@ -95,7 +95,7 @@ function pushTemplate($code = '', $data = array(), $url = '',$uid = ''){
 
     $data['first'] = !empty($data['first']) ? $data['first'] : array('value' => $template['title'],'color' => '#173177');
     $data['remark'] = !empty($template['content']) ? array('value' => $template['content'],'color' => '#FF0000') : $data['remark'];
-    logResult($data);
+    // logResult($data);
     $rs['code'] = $code;
     $rs['openid'] = $openid;
     $rs['data'] = serialize($data);
