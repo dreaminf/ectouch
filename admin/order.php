@@ -56,8 +56,8 @@ if ($_REQUEST['act'] == 'order_query')
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'list')
-{ 
-   
+{
+
     /* 检查权限 */
     admin_priv('order_view');
     /* 模板赋值 */
@@ -898,29 +898,20 @@ elseif ($_REQUEST['act'] == 'delivery_ship')
         }
     }
 
-    /* 微信通 发货提醒微信用户 start  by wanglu */
+    /* 微信通模板消息之发货通知 start 20161107 */
     $file = ROOT_PATH . 'include/apps/default/controllers/WechatController.class.php';
     if(file_exists($file) && $order['user_id'] > 0){
-        $sql = 'SELECT name, config FROM '.$GLOBALS['ecs']->table('wechat_extend').' where enable = 1 and command = "send_remind" limit 1';
-        $remind = $GLOBALS['db']->getRow($sql);
-		if(!empty($remind)){
-			$remind_title = $remind['name'] ? $remind['name'] : '发货提醒';
-			$content = '';
-			if($remind['config']){
-				$config = unserialize($remind['config']);
-				$content = str_replace('[$order_id]', $order['order_sn'], $config['template']);
-			}
-			$sql1 = 'SELECT openid FROM '.$GLOBALS['ecs']->table('wechat_user').' where ect_uid = '.$order['user_id'];
-			$openid = $GLOBALS['db']->getOne($sql1);
-			if(!empty($remind_title) && !empty($openid)){
-				$order_url = $GLOBALS['ecs']->url() . 'index.php?c=user&a=order_detail&order_id='.$order['order_id'];
-				$order_url = urlencode(base64_encode($order_url));
-				$url = $GLOBALS['ecs']->url() . 'index.php?c=api&openid='.$openid.'&title='.urlencode($remind_title).'&msg='.urlencode($content).'&url='.$order_url;
-				curlGet($url);
-			}
-		}
+        $pushData = array(
+            'keyword1' => array('value' => $order['order_sn']), //订单内容
+            'keyword2' => array('value' => $order['shipping_name']), //物流服务
+            'keyword3' => array('value' => $order['invoice_no']),  //快递单号
+            'keyword4' => array('value' => $order['consignee']),  // 收货信息
+            'remark' => array('value' => '感谢您的光临')
+        );
+        $order_url = $GLOBALS['ecs']->url() . 'mobile/index.php?r=user/order/detail&order_id='.$order_id;
+        pushTemplate('OPENTM202243318', $pushData, $order_url, $order['user_id']);
     }
-    /* 微信通 发货提醒微信用户 end  by wanglu */
+    /* 微信通模板消息之发货通知 end 20161107 */
 
     /* 清除缓存 */
     clear_cache_files();
@@ -2865,7 +2856,7 @@ elseif ($_REQUEST['act'] == 'operate')
 			/*DRP_END*/
             $action_array = array('delivery', 'back');
             del_delivery($order_id, $action_array);
-			
+
             /* todo 记录日志 */
             admin_log($order['order_sn'], 'remove', 'order');
 
@@ -3092,7 +3083,7 @@ elseif ($_REQUEST['act'] == 'operate')
         {
             sys_msg($_LANG['pls_select_order']);
         }
-        
+
         /* 赋值公用信息 */
         $smarty->assign('shop_name',    $_CFG['shop_name']);
         $smarty->assign('shop_url',     $ecs->url());
@@ -3108,7 +3099,7 @@ elseif ($_REQUEST['act'] == 'operate')
         //require_once dirname(__FILE__) . '/Classes/PHPExcel.php';
         //require_once dirname(__FILE__) . '/Classes/PHPExcel/IOFactory.php';
         $PHPExcel = new PHPExcel();
-        
+
         //设置excel属性基本信息
         $PHPExcel->getProperties()->setCreator("Neo")
         ->setLastModifiedBy("Neo")
@@ -3126,12 +3117,12 @@ elseif ($_REQUEST['act'] == 'operate')
         //合并表头单元格
         $PHPExcel->getActiveSheet()->mergeCells('A1:T1');
         $PHPExcel->getActiveSheet()->mergeCells('A2:T2');
-        
+
         //设置表头行高
         $PHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(40);
         $PHPExcel->getActiveSheet()->getRowDimension(2)->setRowHeight(20);
         $PHPExcel->getActiveSheet()->getRowDimension(3)->setRowHeight(30);
-        
+
         //设置表头字体
         $PHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setName('黑体');
         $PHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setSize(20);
@@ -3139,18 +3130,18 @@ elseif ($_REQUEST['act'] == 'operate')
         $PHPExcel->getActiveSheet()->getStyle('A2')->getFont()->setName('宋体');
         $PHPExcel->getActiveSheet()->getStyle('A2')->getFont()->setSize(14);
         $PHPExcel->getActiveSheet()->getStyle('A3:T3')->getFont()->setBold(true);
- 
+
         //设置单元格边框
-        $styleArray = array(  
-            'borders' => array(  
-                'allborders' => array(  
-                    //'style' => PHPExcel_Style_Border::BORDER_THICK,//边框是粗的  
-                    'style' => PHPExcel_Style_Border::BORDER_THIN,//细边框  
-                    //'color' => array('argb' => 'FFFF0000'),  
-                ),  
-            ),  
+        $styleArray = array(
+            'borders' => array(
+                'allborders' => array(
+                    //'style' => PHPExcel_Style_Border::BORDER_THICK,//边框是粗的
+                    'style' => PHPExcel_Style_Border::BORDER_THIN,//细边框
+                    //'color' => array('argb' => 'FFFF0000'),
+                ),
+            ),
         );
-        
+
         //表格宽度
         $PHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(18);//订单编号
         $PHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(20);//下单时间
@@ -3194,15 +3185,15 @@ elseif ($_REQUEST['act'] == 'operate')
         $PHPExcel->getActiveSheet()->setCellValue('R3', '数量');
         $PHPExcel->getActiveSheet()->setCellValue('S3', '小计');
         $PHPExcel->getActiveSheet()->setCellValue('T3', '商品总金额');
- 
-        $hang = 4; 
+
+        $hang = 4;
         foreach ($order_sn_list as $order_sn) {
             /* 取得订单信息 */
             $order = order_info(0, $order_sn);
             if (empty($order)) {
                 continue;
             }
- 
+
             /* 根据订单是否完成检查权限 */
             if (order_finished($order)) {
                 if (!admin_priv('order_view_finished', '', false)) {
@@ -3213,7 +3204,7 @@ elseif ($_REQUEST['act'] == 'operate')
                     continue;
                 }
             }
- 
+
             /* 如果管理员属于某个办事处，检查该订单是否也属于这个办事处 */
             $sql       = "SELECT agency_id FROM " . $ecs->table('admin_user') . " WHERE user_id = '$_SESSION[admin_id]'";
             $agency_id = $db->getOne($sql);
@@ -3222,33 +3213,33 @@ elseif ($_REQUEST['act'] == 'operate')
                     continue;
                 }
             }
- 
+
             /* 取得用户名 */
             if ($order['user_id'] > 0) {
                 $user = user_info($order['user_id']);
                 if (!empty($user)) {
                     $order['user_name'] = $user['user_name'];
- 
+
                 }
             }
- 
+
             /* 取得区域名 */
             $sql             = "SELECT concat(IFNULL(c.region_name, ''), '  ', IFNULL(p.region_name, ''), " . "'  ', IFNULL(t.region_name, ''), '  ', IFNULL(d.region_name, '')) AS region " . "FROM " . $ecs->table('order_info') . " AS o " . "LEFT JOIN " . $ecs->table('region') . " AS c ON o.country = c.region_id " . "LEFT JOIN " . $ecs->table('region') . " AS p ON o.province = p.region_id " . "LEFT JOIN " . $ecs->table('region') . " AS t ON o.city = t.region_id " . "LEFT JOIN " . $ecs->table('region') . " AS d ON o.district = d.region_id " . "WHERE o.order_id = '$order[order_id]'";
             $order['region'] = $db->getOne($sql);
-            
+
             /* 其他处理 */
             $order['order_time']    = local_date($_CFG['time_format'], $order['add_time']);
             $order['pay_time']      = $order['pay_time'] > 0 ? local_date($_CFG['time_format'], $order['pay_time']) : $_LANG['ps'][PS_UNPAYED];
             $order['shipping_time'] = $order['shipping_time'] > 0 ? local_date($_CFG['time_format'], $order['shipping_time']) : $_LANG['ss'][SS_UNSHIPPED];
             $order['status']        = $_LANG['os'][$order['order_status']] . ',' . $_LANG['ps'][$order['pay_status']] . ',' . $_LANG['ss'][$order['shipping_status']];
             $order['invoice_no']    = $order['shipping_status'] == SS_UNSHIPPED || $order['shipping_status'] == SS_PREPARING ? $_LANG['ss'][SS_UNSHIPPED] : $order['invoice_no'];
- 
+
             /* 此订单的发货备注(此订单的最后一条操作记录) */
             $sql                   = "SELECT action_note FROM " . $ecs->table('order_action') . " WHERE order_id = '$order[order_id]' AND shipping_status = 1 ORDER BY log_time DESC";
             $order['invoice_note'] = $db->getOne($sql);
 
             $shuliang = 0;
- 
+
             /* 取得订单商品 */
             $sql        = "SELECT o.*, g.goods_number AS storage, o.goods_attr, IFNULL(b.brand_name, '') AS brand_name " . "FROM " . $ecs->table('order_goods') . " AS o " . "LEFT JOIN " . $ecs->table('goods') . " AS g ON o.goods_id = g.goods_id " . "LEFT JOIN " . $ecs->table('brand') . " AS b ON g.brand_id = b.brand_id " . "WHERE o.order_id = '$order[order_id]' ";
             $res        = $db->query($sql);
@@ -3267,10 +3258,10 @@ elseif ($_REQUEST['act'] == 'operate')
                         }
                     }
                 }
- 
+
                 $row['formated_subtotal']    = price_format($row['goods_price'] * $row['goods_number']);
                 $row['formated_goods_price'] = price_format($row['goods_price']);
-                
+
                 //var_dump($order);die;
                 //输出订单的商品，由于可能一个人购买多个商品，所以在这先输出了
                 $PHPExcel->getActiveSheet()->setCellValue('N' . $chanpin, $row['goods_sn']);
@@ -3314,11 +3305,11 @@ elseif ($_REQUEST['act'] == 'operate')
             $PHPExcel->getActiveSheet()->setCellValue('L' . ($hang), $order['mobile']);
             $PHPExcel->getActiveSheet()->setCellValue('M' . ($hang), $order['email']);
             $PHPExcel->getActiveSheet()->setCellValue('T' . ($hang), $order['formated_goods_amount']);
-            
+
             $hang = $hang + $shuliang;
-            
+
         }
-        
+
         //设置单元格边框
         $PHPExcel->getActiveSheet()->getStyle('A1:T'.$hang)->applyFromArray($styleArray);
         //设置自动换行
@@ -6627,23 +6618,41 @@ function get_site_root_url()
 }
 
 /**
- * curl 获取
+ * 模板消息通知,先增加记录
+ * @param string $user_id  消息模版发送给他人，需传参数
  */
-function curlGet($url, $timeout = 5, $header = "") {
-    $defaultHeader = '$header = "User-Agent:Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.2.12) Gecko/20101026 Firefox/3.6.12\r\n";
-        $header.="Accept:text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n";
-        $header.="Accept-language: zh-cn,zh;q=0.5\r\n";
-        $header.="Accept-Charset: GB2312,utf-8;q=0.7,*;q=0.7\r\n";';
-    $header = empty($header) ? $defaultHeader : $header;
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);    // https请求 不验证证书和hosts
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array($header)); //模拟的header头
-    $result = curl_exec($ch);
-    curl_close($ch);
-    return $result;
+function pushTemplate($code = '', $data = array(), $url = '',$uid = ''){
+    if($uid){
+        $user_id = $uid;
+    }else{
+        $user_id = $_SESSION['user_id'];
+        if(!$user_id || !$code || !$data){
+            return false;
+        }
+    }
+    $openid = '';
+    if(!isset($_SESSION['openid']) || empty($_SESSION['openid'])){
+        //$openid = model()->table('wechat_user')->field('openid')->where(array('ect_uid'=>$user_id))->one();
+        $sql = " SELECT openid FROM ".$GLOBALS['ecs']->table('wechat_user')." WHERE ect_uid = '$user_id' ";
+        $openid = $GLOBALS['db']->getOne($sql);
+    }
+    elseif($_SESSION['openid']){
+        $openid = $_SESSION['openid'];
+    }
+    if(!$openid){
+        return false;
+    }
+    //$title = model()->table('wechat_template')->field('title')->where(array('code'=>$code, 'status'=>1))->one();
+    $sql = " SELECT title FROM ".$GLOBALS['ecs']->table('wechat_template')." WHERE code = '$code' and status = 1 ";
+    $title = $GLOBALS['db']->getOne($sql);
+    if(!$title){
+        return false;
+    }
+    $data['first'] = $title;
+    $rs['code'] = $code;
+    $rs['openid'] = $openid;
+    $rs['data'] = serialize($data);
+    $rs['url'] = $url;
+    //model()->table('wechat_template_log')->data($rs)->insert();
+    $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('wechat_template_log'), $rs, 'INSERT');
 }

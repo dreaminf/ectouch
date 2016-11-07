@@ -36,7 +36,7 @@ class IndexController extends CommonController {
             $cat_rec = model('Index')->get_recommend_res(10,4);
             $this->assign('cat_best', $cat_rec[1]);
             $this->assign('cat_new', $cat_rec[2]);
-            $this->assign('cat_hot', $cat_rec[3]);			
+            $this->assign('cat_hot', $cat_rec[3]);
             // 促销活动
             $this->assign('promotion_info', model('GoodsBase')->get_promotion_info());
             // 团购商品
@@ -47,6 +47,12 @@ class IndexController extends CommonController {
             $this->assign('brand_list', model('Brand')->get_brands($app = 'brand', C('page_size'), 1));
             // 分类下的文章
             $this->assign('cat_articles', model('Article')->assign_articles(1,5)); // 1 是文章分类id ,5 是文章显示数量
+
+            if (class_exists('WechatController') && is_wechat_browser() ) {
+               // 查询发货通知模板消息，执行发送
+                sendTemplate('OPENTM202243318');
+            }
+
         }
         $this->display('index.dwt', $cache_id);
     }
