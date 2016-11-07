@@ -173,14 +173,12 @@ $modules['12_menu_wechat']['01_wechat_config'] = '../index.php?m=admin&c=wechat'
 $modules['12_menu_wechat']['02_wechat_masssend'] = '../index.php?m=admin&c=wechat&a=mass_message';
 $modules['12_menu_wechat']['03_wechat_autoreply'] = '../index.php?m=admin&c=wechat&a=reply_subscribe';
 $modules['12_menu_wechat']['04_wechat_selfmenu'] = '../index.php?m=admin&c=wechat&a=menu_list';
-/*DRP_START*/
 $modules['12_menu_wechat']['05_wechat_tmplmsg'] = '../index.php?m=admin&c=wechat&a=template_massage_list';
-/*DRP_END*/
 $modules['12_menu_wechat']['06_wechat_contactmanage'] = '../index.php?m=admin&c=wechat&a=subscribe_list';
 $modules['12_menu_wechat']['07_wechat_appmsg'] = '../index.php?m=admin&c=wechat&a=article';
 $modules['12_menu_wechat']['08_wechat_qrcode'] = '../index.php?m=admin&c=wechat&a=share_list';
 $modules['12_menu_wechat']['09_wechat_extends'] = '../index.php?m=admin&c=Extend&a=index';
-$modules['12_menu_wechat']['10_wechat_remind'] = '../index.php?m=admin&c=wechat&a=remind';
+// $modules['12_menu_wechat']['10_wechat_remind'] = '../index.php?m=admin&c=wechat&a=remind';
 $modules['12_menu_wechat']['11_wechat_customer'] = '../index.php?m=admin&c=wechat&a=customer_service';
 /*DRP_START*/
 // $modules['12_menu_wechat']['12_wechat_wall'] = '../index.php?m=admin&c=extend&a=wall';

@@ -26,7 +26,7 @@ INSERT INTO `ecs_admin_action` VALUES ('152', '201', 'wechat_contactmanage', '')
 INSERT INTO `ecs_admin_action` VALUES ('153', '201', 'wechat_appmsg', '');
 INSERT INTO `ecs_admin_action` VALUES ('154', '201', 'wechat_qrcode', '');
 INSERT INTO `ecs_admin_action` VALUES ('155', '201', 'wechat_extends', '');
-INSERT INTO `ecs_admin_action` VALUES ('156', '201', 'wechat_remind', '');
+-- INSERT INTO `ecs_admin_action` VALUES ('156', '201', 'wechat_remind', '');
 INSERT INTO `ecs_admin_action` VALUES ('157', '201', 'wechat_customer', '');
 INSERT INTO `ecs_admin_action` (`action_id`,`parent_id`, `action_code`, `relevance`) VALUES
 ('158', '6', 'service_type', ''),
@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_nav` (
   `opennew` tinyint(1) NOT NULL DEFAULT '0',
   `url` varchar(255) NOT NULL DEFAULT '',
   `pic` varchar(255) NOT NULL DEFAULT '',
-  `type` varchar(10) NOT NULL DEFAULT '', 
+  `type` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `ifshow` (`ifshow`)

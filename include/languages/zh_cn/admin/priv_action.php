@@ -178,14 +178,12 @@ $_LANG['wechat_config'] = '公众号设置';
 $_LANG['wechat_masssend'] = '群发消息';
 $_LANG['wechat_autoreply'] = '自动回复';
 $_LANG['wechat_selfmenu'] = '自定义菜单';
-/*DRP_START*/
 $_LANG['wechat_tmplmsg'] = '模板消息';
-/*DRP_END*/
 $_LANG['wechat_contactmanage'] = '用户管理';
 $_LANG['wechat_appmsg'] = '素材管理';
 $_LANG['wechat_qrcode'] = '扫码引荐';
 $_LANG['wechat_extends'] = '扩展功能';
-$_LANG['wechat_remind'] = '提醒设置';
+// $_LANG['wechat_remind'] = '提醒设置';
 $_LANG['wechat_customer'] = '多客服设置';
 
 //工具箱

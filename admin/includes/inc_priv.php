@@ -107,7 +107,7 @@ if (!defined('IN_ECTOUCH'))
     $purview['09_delivery_order']    = 'delivery_view';
     $purview['10_back_order']        = 'back_view';
 	/* by ECTouch leah begin*/
-	$purview['13_service_type']      = 'service_type';	
+	$purview['13_service_type']      = 'service_type';
 	$purview['11_back_cause']        = 'back_cause_list';
 	$purview['10_cause_add']         = 'add_return_cause';
 	$purview['12_back_apply']        = 'aftermarket_list';
@@ -156,7 +156,7 @@ if (!defined('IN_ECTOUCH'))
     $purview['magazine_list']        = 'magazine_list';
     $purview['view_sendlist']        = 'view_sendlist';
 
-//工具箱   
+//工具箱
     $purview['01_navigator']       = 'navigator';
     $purview['02_authorization']   = 'authorization';
     $purview['03_mail_settings']   = 'mail_settings';
@@ -183,12 +183,10 @@ if (!defined('IN_ECTOUCH'))
     $purview['02_wechat_masssend'] = 'wechat_masssend';
     $purview['03_wechat_autoreply'] = 'wechat_autoreply';
     $purview['04_wechat_selfmenu'] = 'wechat_selfmenu';
-    /*DRP_START*/
     $purview['05_wechat_tmplmsg'] = 'wechat_tmplmsg';
-    /*DRP_END*/
     $purview['06_wechat_contactmanage'] = 'wechat_contactmanage';
     $purview['07_wechat_appmsg'] = 'wechat_appmsg';
     $purview['08_wechat_qrcode'] = 'wechat_qrcode';
     $purview['09_wechat_extends'] = 'wechat_extends';
-    $purview['10_wechat_remind'] = 'wechat_remind';
+    // $purview['10_wechat_remind'] = 'wechat_remind';
     $purview['11_wechat_customer'] = 'wechat_customer';
