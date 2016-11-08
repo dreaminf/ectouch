@@ -332,28 +332,16 @@ class MY_FlowController extends FlowController {
         //     $order_url = urlencode(base64_encode($order_url));
         //     send_wechat_message('order_remind', '', $order['order_sn'] . L('order_effective'), $order_url, $order['order_sn']);
         // }
-        // 微信通模板消息
-        if (class_exists('WechatController') && is_wechat_browser() ) {
-            $pushData = array(
-                'first' => array('value' => '您的订单已提交成功','color' => '#173177'),
-                'orderID' => array('value' => $order['order_sn'],'color' => '#FF0000'), //订单号
-                'orderMoneySum' => array('value' => $order['order_amount'],'color' => '#FF0000'), //订单金额
-                'backupFieldName' => array('value' => ''),
-                'remark' => array('value' => '请尽快完成支付，感谢您的购买！')
-            );
-            $url = __HOST__ . U('user/order_detail', array('order_id' => $new_order_id));
-            pushTemplate('TM00016', $pushData, $url);
-        }
 
         // 推送微分销模板消息
         $message_status = M()->table('drp_config')->field('value')->where('keyword = "msg_open"')->getOne();
-        if (method_exists('WechatController', 'send_message') && $message_status=='open') {
+        if (class_exists('WechatController') && is_wechat_browser() && $message_status=='open' ) {
             $goods_name = $this->model->table('order_goods')->field('goods_name')->where("order_id ='".$new_order_id."'")->getOne();  // 商品名称
             $pushData = array(
                 'keyword1' => array('value' => $order['order_sn']), //订单号
                 'keyword2' => array('value' => $goods_name), // 商品名称
                 'keyword3' => array('value' => local_date('Y-m-d H:i:s', $order['add_time'])), // 下单时间
-                'keyword4' => array('value' => $order['order_amount']), // 下单金额
+                'keyword4' => array('value' => price_format($order['goods_amount'])), // 下单金额
                 'keyword5' => array('value' => ''), // 分销商名称
             );
             $url = __HOST__ . U('sale/order_detail', array('order_id' => $new_order_id));
@@ -366,7 +354,7 @@ class MY_FlowController extends FlowController {
                 if($user_id){
                     // 获取微信昵称
                     $nickname = M()->table('wechat_user')->field('nickname')->where('ect_uid = ' . $user_id)->getOne();
-                    $pushData['keyword5'] = $nickname;
+                    $pushData['keyword5'] = array('value' => $nickname,'color' => '#173177');
 
                     pushTemplate('OPENTM206547887', $pushData, $url, $user_id);
 
@@ -374,7 +362,7 @@ class MY_FlowController extends FlowController {
                     $parent_id1 = M()->table('users')->field('parent_id')->where('user_id = ' . $user_id)->getOne();
                     if($parent_id1){
                         $nickname = M()->table('wechat_user')->field('nickname')->where('ect_uid = ' . $parent_id1)->getOne();
-                        $pushData['keyword5'] = $nickname;
+                        $pushData['keyword5'] = array('value' => $nickname,'color' => '#173177');
 
                         pushTemplate('OPENTM206547887', $pushData, $url, $parent_id1);
 
@@ -382,7 +370,7 @@ class MY_FlowController extends FlowController {
                         $parent_id2 = M()->table('users')->field('parent_id')->where('user_id = ' . $parent_id1)->getOne();
                         if($parent_id2) {
                             $nickname = M()->table('wechat_user')->field('nickname')->where('ect_uid = ' . $parent_id2)->getOne();
-                            $pushData['keyword5'] = $nickname;
+                            $pushData['keyword5'] = array('value' => $nickname,'color' => '#173177');
 
                             pushTemplate('OPENTM206547887', $pushData, $url, $parent_id2);
                         }

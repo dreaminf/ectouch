@@ -243,24 +243,20 @@ class SaleController extends CommonController {
             " SET money = money - ('$amount')" .
             " WHERE user_id = '$this->user_id' LIMIT 1";
         $this->model->query($sql);
-		
-		// 推送消息
+
+        // 模板消息 分销结款通知
         $message_status = M()->table('drp_config')->field('value')->where('keyword = "msg_open"')->getOne();
-        if (method_exists('WechatController', 'send_message') && $message_status=='open') {
-			 // 模版信息设置
-			// 获取openid 和 微信昵称
-            $userInfo = M()->table('wechat_user')->field('openid,nickname')->where('ect_uid = ' . $this->user_id)->find();		
-            $data['openid'] = $userInfo['openid'];  
-			$data['open_id'] = 'OPENTM400075274';
-            $data['url'] = 'http://'.$_SERVER['HTTP_HOST'].url('sale/account_detail');
-            $data['first'] = $this->custom . '结款通知';  // 简介
-			$data['keyword1'] = $amount;  // 结款金额
-            $data['keyword2'] = $bank['bank_card'];  // 银行卡号
-            if($data['openid']){
-               sendTemplateMessage($data);
-            }			
-		}
-		
+        if (class_exists('WechatController') && is_wechat_browser() && $message_status == 'open' ) {
+            $pushData = array(
+                'first'    => array('value' => '您的结款金额如下，','color' => '#FF0000'), //提示
+                'keyword1' => array('value' => $amount,'color' => '#FF0000'), //结款金额
+                'keyword2' => array('value' => $bank['bank_card'],'color' => '#FF0000'), //银行卡
+                'remark'   => array('value' => '银行到账可能会有延迟，如有问题，请联系客服，祝生活愉快！')
+            );
+            $url = __HOST__ . U('sale/account_detail');
+            pushTemplate('OPENTM400075274', $pushData, $url, $this->user_id);
+        }
+
         $content = L('surplus_appl_submit');
         show_message($content, L('back_account_log'), url('sale/account_detail'), 'info');
     }
@@ -302,7 +298,7 @@ class SaleController extends CommonController {
         $id = I('u') ? I('u') : $this->user_id;
         if(!isset($_GET['u'])){
             redirect(url('sale/spread',array('u'=>$id)));
-        }  
+        }
 		$this->check_open($id);
         // 创建目录
         $filename  = ROOT_PATH.'data/attached/drp';
@@ -511,10 +507,10 @@ class SaleController extends CommonController {
     }
     public function my_shop_info(){
 
-        // 总销售额 
+        // 总销售额
         $sale_money = model('Sale')->get_sale_money_total();
         $this->assign('money',$sale_money ? $sale_money : '0.00');
-		
+
         // 一级分店数
         $sql = "select count(*) count from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id = ".$_SESSION['user_id'];
         $shop_count = $this->model->getRow($sql);
@@ -552,7 +548,7 @@ class SaleController extends CommonController {
      * 微店设置
      */
     public function sale_set(){
-		$buy_money = $this->model->table('drp_config')->field("value")->where(array("keyword"=>'buy_money'))->getOne();//是否开启		
+		$buy_money = $this->model->table('drp_config')->field("value")->where(array("keyword"=>'buy_money'))->getOne();//是否开启
 		if($buy_money == open){
 			$buy = $this->model->table('drp_config')->field("value")->where(array("keyword"=>'buy'))->getOne();//设置金额
 			$sql ="select sum(goods_amount) as money from {pre}order_info where pay_status= 2 and user_id = ".$_SESSION['user_id'] ;
@@ -566,9 +562,9 @@ class SaleController extends CommonController {
 					else{
 						redirect(url('sale/index'));
 					}
-				}				
+				}
 			}else{
-				show_message('您的累计消费金额未达到开店要求，再接再厉','返回商城',url('user/index'));				
+				show_message('您的累计消费金额未达到开店要求，再接再厉','返回商城',url('user/index'));
 			}
 		}else{
 			$info = $this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->select();
@@ -579,7 +575,7 @@ class SaleController extends CommonController {
 				else{
 					redirect(url('sale/index'));
 				}
-			}			
+			}
 		}
         if (IS_POST){
             $data = I('data');
@@ -668,26 +664,22 @@ class SaleController extends CommonController {
         $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$_SESSION['user_id'])->getOne();
         $this->assign('drp_id', $drp_id);
         $this->assign('sale_url','http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?u='.$_SESSION['user_id'].'&drp_id='.$drp_id);
-		
-		// 推送消息
+
+        // 模板消息 分销商申请成功提醒
         $message_status = M()->table('drp_config')->field('value')->where('keyword = "msg_open"')->getOne();
-        if (method_exists('WechatController', 'send_message') && $message_status=='open') {
-			 // 模版信息设置
-			// 获取openid 和 微信昵称
-            $userInfo = M()->table('wechat_user')->field('openid,nickname')->where('ect_uid = ' . $_SESSION['user_id'])->find();
-			$drp_shop = M()->table('drp_shop')->field('shop_name,shop_mobile,create_time')->where('id = ' . $drp_id)->find();
-            $data['openid'] = $userInfo['openid'];  
-			$data['open_id'] = 'OPENTM207126233';
-            $data['url'] = 'http://'.$_SERVER['HTTP_HOST'].url('sale/index',array('order_id'=>$new_order_id));
-            $data['first'] = $this->customs.'申请成功提醒';  // 简介
-			$data['keyword1'] = $drp_shop['shop_name'];  // 分销商名称
-            $data['keyword2'] = $drp_shop['shop_mobile'];  // 分销商电话
-            $data['keyword3'] = local_date('Y-m-d H:i:s',($drp_shop ['create_time'])); // 申请时间		
-            if($data['openid']){
-               sendTemplateMessage($data);
-            }			
-		}
-		
+        if (class_exists('WechatController') && is_wechat_browser() && $message_status == 'open' ) {
+            $drp_shop = M()->table('drp_shop')->field('shop_name,shop_mobile,create_time')->where('id = ' . $drp_id)->find();
+            $pushData = array(
+                'first'    => array('value' => '恭喜您申请成功！','color' => '#FF0000'), //提示
+                'keyword1' => array('value' => $drp_shop['shop_name'],'color' => '#FF0000'), // 分销商名称
+                'keyword2' => array('value' => $drp_shop['shop_mobile'],'color' => '#FF0000'), // 分销商电话
+                'keyword2' => array('value' => local_date('Y-m-d H:i:s',($drp_shop ['create_time'])),'color' => '#FF0000'), // 申请时间
+                'remark'   => array('value' => '如有疑问，请在微信中留言，我们将第一时间为您服务。')
+            );
+            $url = __HOST__ . U('sale/index',array('order_id'=>$new_order_id));
+            pushTemplate('OPENTM207126233', $pushData, $url, $_SESSION['user_id']);
+        }
+
         $this->assign('title',L('sale_set_category'));
         $this->display('sale_set_end.dwt');
     }
@@ -1062,8 +1054,8 @@ class SaleController extends CommonController {
 		$condition['user_id'] = $id;
         $shop_info = $this->model->table('drp_shop')->where($condition)->find();
 		if(empty($shop_info)){
-			show_message('您还未开店，请先前往开店','前去开店',url('sale/sale_set'));			
+			show_message('您还未开店，请先前往开店','前去开店',url('sale/sale_set'));
 		}
-		
+
 	}
 }

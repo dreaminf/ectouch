@@ -79,7 +79,7 @@ function pushTemplate($code = '', $data = array(), $url = '',$uid = ''){
         }
     }
     $openid = '';
-    if(!isset($_SESSION['openid']) || empty($_SESSION['openid'])){
+    if($user_id){
         $openid = M()->table('wechat_user')->field('openid')->where(array('ect_uid'=>$user_id))->getOne();
     }
     elseif($_SESSION['openid']){
