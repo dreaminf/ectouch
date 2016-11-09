@@ -673,8 +673,8 @@ class SaleController extends CommonController {
                 'first'    => array('value' => '恭喜您申请成功！','color' => '#FF0000'), //提示
                 'keyword1' => array('value' => $drp_shop['shop_name'],'color' => '#FF0000'), // 分销商名称
                 'keyword2' => array('value' => $drp_shop['shop_mobile'],'color' => '#FF0000'), // 分销商电话
-                'keyword2' => array('value' => local_date('Y-m-d H:i:s',($drp_shop ['create_time'])),'color' => '#FF0000'), // 申请时间
-                'remark'   => array('value' => '如有疑问，请在微信中留言，我们将第一时间为您服务。')
+                'keyword3' => array('value' => local_date('Y-m-d H:i:s',($drp_shop ['create_time'])),'color' => '#FF0000'), // 申请时间
+                'remark'   => array('value' => '如有疑问，请联系管理员，我们将第一时间为您服务。')
             );
             $url = __HOST__ . U('sale/index',array('order_id'=>$new_order_id));
             pushTemplate('OPENTM207126233', $pushData, $url, $_SESSION['user_id']);
