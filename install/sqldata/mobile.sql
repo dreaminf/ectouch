@@ -26,7 +26,6 @@ INSERT INTO `ecs_admin_action` VALUES ('152', '201', 'wechat_contactmanage', '')
 INSERT INTO `ecs_admin_action` VALUES ('153', '201', 'wechat_appmsg', '');
 INSERT INTO `ecs_admin_action` VALUES ('154', '201', 'wechat_qrcode', '');
 INSERT INTO `ecs_admin_action` VALUES ('155', '201', 'wechat_extends', '');
--- INSERT INTO `ecs_admin_action` VALUES ('156', '201', 'wechat_remind', '');
 INSERT INTO `ecs_admin_action` VALUES ('157', '201', 'wechat_customer', '');
 INSERT INTO `ecs_admin_action` (`action_id`,`parent_id`, `action_code`, `relevance`) VALUES
 ('158', '6', 'service_type', ''),
