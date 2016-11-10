@@ -48,11 +48,6 @@ class IndexController extends CommonController {
             // 分类下的文章
             $this->assign('cat_articles', model('Article')->assign_articles(1,5)); // 1 是文章分类id ,5 是文章显示数量
 
-            if (class_exists('WechatController') && is_wechat_browser() ) {
-               // 查询发货通知模板消息，执行发送
-                sendTemplate('OPENTM202243318');
-            }
-
         }
         $this->display('index.dwt', $cache_id);
     }
