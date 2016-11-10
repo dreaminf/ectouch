@@ -902,14 +902,18 @@ elseif ($_REQUEST['act'] == 'delivery_ship')
     $file = ROOT_PATH . 'include/apps/default/controllers/WechatController.class.php';
     if(file_exists($file) && $order['user_id'] > 0){
         $pushData = array(
+            'first' => array('value' => '您的订单已经发货，正在配送当中'), //提示
             'keyword1' => array('value' => $order['order_sn']), //订单内容
             'keyword2' => array('value' => $order['shipping_name']), //物流服务
             'keyword3' => array('value' => $order['invoice_no']),  //快递单号
             'keyword4' => array('value' => $order['consignee']),  // 收货信息
-            'remark' => array('value' => '感谢您的光临')
+            'remark' => array('value' => '请您及时留意关注物流信息')
         );
-        $order_url = $GLOBALS['ecs']->url() . 'mobile/index.php?r=user/order/detail&order_id='.$order_id;
-        pushTemplate('OPENTM202243318', $pushData, $order_url, $order['user_id']);
+        $code = 'OPENTM202243318';
+        $order_url = $GLOBALS['ecs']->url() . 'mobile/index.php?c=user&a=order_detail&order_id='.$order_id;
+        $order_url = urlencode(base64_encode($order_url));
+        $url = $GLOBALS['ecs']->url() . 'mobile/?c=api&a=index&user_id='.$order['user_id'].'&code='.urlencode($code).'&pushData='.serialize($pushData).'&url='.$order_url;
+        curlGet($url);
     }
     /* 微信通模板消息之发货通知 end 20161107 */
 
@@ -6618,41 +6622,23 @@ function get_site_root_url()
 }
 
 /**
- * 模板消息通知,先增加记录
- * @param string $user_id  消息模版发送给他人，需传参数
+ * curl 获取
  */
-function pushTemplate($code = '', $data = array(), $url = '',$uid = ''){
-    if($uid){
-        $user_id = $uid;
-    }else{
-        $user_id = $_SESSION['user_id'];
-        if(!$user_id || !$code || !$data){
-            return false;
-        }
-    }
-    $openid = '';
-    if(!isset($_SESSION['openid']) || empty($_SESSION['openid'])){
-        //$openid = model()->table('wechat_user')->field('openid')->where(array('ect_uid'=>$user_id))->one();
-        $sql = " SELECT openid FROM ".$GLOBALS['ecs']->table('wechat_user')." WHERE ect_uid = '$user_id' ";
-        $openid = $GLOBALS['db']->getOne($sql);
-    }
-    elseif($_SESSION['openid']){
-        $openid = $_SESSION['openid'];
-    }
-    if(!$openid){
-        return false;
-    }
-    //$title = model()->table('wechat_template')->field('title')->where(array('code'=>$code, 'status'=>1))->one();
-    $sql = " SELECT title FROM ".$GLOBALS['ecs']->table('wechat_template')." WHERE code = '$code' and status = 1 ";
-    $title = $GLOBALS['db']->getOne($sql);
-    if(!$title){
-        return false;
-    }
-    $data['first'] = $title;
-    $rs['code'] = $code;
-    $rs['openid'] = $openid;
-    $rs['data'] = serialize($data);
-    $rs['url'] = $url;
-    //model()->table('wechat_template_log')->data($rs)->insert();
-    $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('wechat_template_log'), $rs, 'INSERT');
+function curlGet($url, $timeout = 5, $header = "") {
+    $defaultHeader = '$header = "User-Agent:Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.2.12) Gecko/20101026 Firefox/3.6.12\r\n";
+        $header.="Accept:text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n";
+        $header.="Accept-language: zh-cn,zh;q=0.5\r\n";
+        $header.="Accept-Charset: utf-8;q=0.7,*;q=0.7\r\n";';
+    $header = empty($header) ? $defaultHeader : $header;
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);    // https请求 不验证证书和hosts
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array($header)); //模拟的header头
+    $result = curl_exec($ch);
+    curl_close($ch);
+    return $result;
 }
