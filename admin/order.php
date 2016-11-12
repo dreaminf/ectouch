@@ -898,24 +898,40 @@ elseif ($_REQUEST['act'] == 'delivery_ship')
         }
     }
 
-    /* 微信通模板消息之发货通知 start 20161107 */
+    /* 微信通模板消息之发货通知 start by ectouch */
     $file = ROOT_PATH . 'include/apps/default/controllers/WechatController.class.php';
-    if(file_exists($file) && $order['user_id'] > 0){
+    $file_mobile = ROOT_PATH . 'mobile/include/apps/default/controllers/WechatController.class.php';
+    if(file_exists($file)){
+        // 独立版
+        $file_final = $file;
+        $mobile_url = $GLOBALS['ecs']->url();
+    }elseif(file_exists($file_mobile)){
+        // 整合版
+        $file_final = $file_mobile;
+        $mobile_url = $GLOBALS['ecs']->url() . 'mobile/';
+    }else{
+        $file_final = '';
+    }
+
+    if(file_exists($file_final) && $order['user_id'] > 0){
         $pushData = array(
-            'first' => array('value' => '您的订单已经发货，正在配送当中'), //提示
+            'first' => array('value' => '您的订单已经发货','color' => '#173177'), //提示
             'keyword1' => array('value' => $order['order_sn']), //订单内容
             'keyword2' => array('value' => $order['shipping_name']), //物流服务
             'keyword3' => array('value' => $order['invoice_no']),  //快递单号
             'keyword4' => array('value' => $order['consignee']),  // 收货信息
-            'remark' => array('value' => '请您及时留意关注物流信息')
+            'remark' => array('value' => '正在配送当中,请您留意物流信息','color' => '#173177')
         );
+
         $code = 'OPENTM202243318';
-        $order_url = $GLOBALS['ecs']->url() . 'mobile/index.php?c=user&a=order_detail&order_id='.$order_id;
+        $order_url = $mobile_url . 'index.php?c=user&a=order_detail&order_id='.$order_id;
         $order_url = urlencode(base64_encode($order_url));
-        $url = $GLOBALS['ecs']->url() . 'mobile/?c=api&a=index&user_id='.$order['user_id'].'&code='.urlencode($code).'&pushData='.serialize($pushData).'&url='.$order_url;
+        //以json格式传输
+        $data = urlencode(serialize($pushData));
+        $url = $mobile_url . 'index.php?c=api&a=index&user_id='.$order['user_id'].'&code='.urlencode($code).'&pushData='.$data.'&url='.$order_url;
         curlGet($url);
     }
-    /* 微信通模板消息之发货通知 end 20161107 */
+    /* 微信通模板消息之发货通知 end by ectouch */
 
     /* 清除缓存 */
     clear_cache_files();

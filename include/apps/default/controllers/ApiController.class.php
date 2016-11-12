@@ -38,7 +38,7 @@ class ApiController extends CommonController
         parent::__construct();
         $this->user_id = I('get.user_id',0,'intval');
         $this->code = I('get.code','','trim');
-        $this->pushData = I('get.pushData','');
+        $this->pushData = I('get.pushData','','trim');
 		$this->url = I('get.url','');
 		$this->url = $this->url ? base64_decode(urldecode($this->url)) : '';
     }
@@ -48,6 +48,9 @@ class ApiController extends CommonController
      */
     public function index()
     {
+        $this->pushData = stripslashes(urldecode($this->pushData));
+        //转换成数组
+        $this->pushData = unserialize($this->pushData);
         pushTemplate($this->code, $this->pushData, $this->url, $this->user_id);
     }
 
