@@ -22,7 +22,7 @@ if (! defined('IN_ECTOUCH')) {
  * 订单查询类
  *
  * @author wanglu
- *        
+ *
  */
 class ddcx extends PluginWechatController
 {
@@ -34,7 +34,7 @@ class ddcx extends PluginWechatController
     /**
      * 构造方法
      *
-     * @param unknown $cfg            
+     * @param unknown $cfg
      */
     public function __construct($cfg = array())
     {
@@ -69,7 +69,9 @@ class ddcx extends PluginWechatController
                 $goods = '';
                 if(!empty($order_goods)){
                     foreach($order_goods as $key=>$val){
-                        $goods .= $val['goods_name'].'('.$val['goods_attr'].')('.$val['goods_number'].'), ';
+                        $goods_attr = !empty($val['goods_attr']) ? '(' . $val['goods_attr'] .')' : '';
+                        $goods_number= !empty($val['goods_number']) ? '(' . $val['goods_number'] .'),' : '';
+                        $goods .= $val['goods_name'] . $goods_attr . $goods_number;
                     }
                     $goods = substr($goods, 0, -1);
                 }
@@ -77,10 +79,10 @@ class ddcx extends PluginWechatController
                     require(APP_PATH . C('_APP_NAME') . '/languages/' . C('LANG') . '/user.php');
                 }
                 L($_LANG);
-                $order['order_status'] = L('os.' . $order['order_status']);
-                $order['pay_status'] = L('ps.' . $order['pay_status']);
-                $order['shipping_status'] = L('ss.' . $order['shipping_status']);
-                
+                $order['order_status'] = L('os.' . $order['order_status']) . ',';
+                $order['pay_status'] = L('ps.' . $order['pay_status']) . ',';
+                $order['shipping_status'] = L('ss.' . $order['shipping_status']) . ',';
+
                 $articles = array();
                 $articles['type'] = 'news';
                 $articles['content'][0]['Title'] = '订单号：'.$order['order_sn'];
@@ -96,8 +98,8 @@ class ddcx extends PluginWechatController
     /**
      * 积分赠送
      *
-     * @param unknown $fromusername            
-     * @param unknown $info            
+     * @param unknown $fromusername
+     * @param unknown $info
      */
     public function give_point($fromusername, $info)
     {
