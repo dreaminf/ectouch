@@ -96,6 +96,9 @@ class WechatController extends CommonController
                 $this->redirect($wedata['EventKey']);
             } elseif ('SCAN' == $wedata['Event']) {
                 $scene_id = $this->weObj->getRevSceneId();
+            }elseif ('LOCATION' == $wedata['Event']) {
+                // 关注开启地理位置响应
+                exit('success');
             }
         } else {
             $this->msg_reply('msg');
