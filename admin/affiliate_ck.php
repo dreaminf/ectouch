@@ -234,7 +234,7 @@ function get_affiliate_ck()
         $sqladd = ' AND o.order_sn LIKE \'%' . trim($order_sn) . '%\'';
         $filter['order_sn'] = $order_sn;
     }
-    if (isset($_GET['auid']))
+    if (!empty($_GET['auid']))
     {
         $auid = intval($_GET['auid']);
         $sqladd = ' AND a.user_id=' . $auid;
