@@ -18,6 +18,9 @@ class GoodsController extends PubController{
      */
     public function index(){
         $goods = $this->common->model('Goods')->get_goods_info($this->goods_id);
+        // 更新点击次数
+        $data = 'click_count = click_count + 1';
+        $this->model->table('goods')->data($data)->where('goods_id = ' . $this->goods_id)->update();
 
         $this->common->responseAct($goods);
     }

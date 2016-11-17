@@ -2,11 +2,16 @@
 
 namespace apps\weapp\services;
 
-class CommonService {
+use Model;
+
+class CommonService extends Model{
     private $request;
+    public  $model;
+
     public function __construct($data = null)
     {
         $this->request = I('');
+        $this->model = new Model;
     }
 
     //获取参数

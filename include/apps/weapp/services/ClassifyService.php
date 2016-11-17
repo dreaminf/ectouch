@@ -2,7 +2,6 @@
 namespace apps\weapp\services;
 
 use Model;
-use apps\weapp\services\CommonService;
 
 class ClassifyService extends Model{
     protected $common;

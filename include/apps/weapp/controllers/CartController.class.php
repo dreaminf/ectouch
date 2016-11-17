@@ -1,8 +1,6 @@
 <?php
 
-namespace apps\weapp\controllers;
-
-class CartController extends BaseController{
+class CartController extends PubController{
 
     public function __construct()
     {
@@ -10,9 +8,18 @@ class CartController extends BaseController{
     }
 
     /**
-     * 主页
+     * 购物车
      */
-    public function IndexAction(){
+    public function index(){
+        $cart_goods = $this->common->model('Order')->get_cart_goods();
 
+        $this->common->responseAct($cart_goods);
     }
+    /**
+     * 添加到购物车
+     */
+    public function addToCart(){
+        $reqInfo = $this->common->get('');
+    }
+
 }
