@@ -37,7 +37,7 @@ class AuthService{
      * 没有token 则发起认证机制
      */
     public function authenticate(){
-        return;
+        return array('union_id'=>1, 'widget_id'=>1);
         //获取需要认证列表
         if(!$this->getAccessList()){
             return ;
