@@ -65,4 +65,22 @@ class CommonService {
         return $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$url;
     }
 
+    /**
+     * 获取default模块 model文件夹
+     */
+    public function model($model) {
+        static $objArray = array();
+        $className = $model . 'Model';
+
+        require_once APP_PATH . 'default/models/' . $className . '.class.php';
+
+        if (!is_object($objArray[$className])) {
+            if (!class_exists($className)) {
+                throw new \Exception(C('_APP_NAME') . '/' . $className . '.class.php 模型类不存在');
+            }
+            $className = class_exists('MY_'. $className) ? 'MY_'. $className : $className;
+            $objArray[$className] = new $className();
+        }
+        return $objArray[$className];
+    }
 }
