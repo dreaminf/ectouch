@@ -10,7 +10,6 @@ class ClassifyController extends PubController{
     public function __construct()
     {
         parent::__construct();
-        require_once(APP_PATH . 'common/helpers/function.php');
     }
 
     /**

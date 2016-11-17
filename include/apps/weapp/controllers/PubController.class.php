@@ -13,7 +13,9 @@ class PubController extends BaseController{
     {
 //        error_reporting(0);
         //加载service文件
-        require APP_PATH.APP_NAME.'/services/CommonService.php';
+        require_once APP_PATH.APP_NAME.'/services/CommonService.php';
+        require_once(APP_PATH . 'common/helpers/function.php');
+
         $this->common = new CommonService();
 
         $DI['common'] = $this->common;
