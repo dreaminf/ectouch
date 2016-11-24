@@ -7,7 +7,7 @@
 				</ul>
 			</div>
 			<div id="j-tab-con" class="b-color-f m-top1px tab-con ">
-				<div class="swiper-wrapper">
+				<div class="swiper-wrapper swiper-no-swiping">
 					<section class="swiper-slide ">
 						<div class="padding-all">
 						<!--{if $goods.goods_desc}-->
@@ -21,7 +21,7 @@
 						
 						</div>
 					</section>
-					<section class="swiper-slide goods-info-attr">
+					<section class="swiper-slide goods-info-attr swiper-no-swiping">
 					<!--{if $properties}-->
 							<ul class="t-remark">
 							<!-- {foreach from=$properties item=property_group key=key} -->

@@ -1,6 +1,6 @@
 @import"../fonts/iconfont.css";@import"swiper-3.2.5.min.css";@import"zyUpload.css";@import"jquery-ui-1.10.1.custom.min.css";
 /*初始样式*/
-html,input,button,textarea,select{font-size:18px;font-family:Heiti, Heiti SC, DroidSans, DroidSansFallback, Arial, "Microsoft YaHei";-webkit-font-smoothing:antialiased}
+html,input,button,textarea,select{font-size:18px;font-family:Heiti, Heiti SC, DroidSans, DroidSansFallback, Arial, "Microsoft YaHei";-webkit-font-smoothing:antialiased;-webkit-appearance: none;}
 body{}
 body,ul,ol,li,p,h2,h3,h4,h5,h6,form,fieldset,td,img,div,dl,dt,dd{margin:0;padding:0;border:0;list-style:none;font-weight:normal}
 body{background:#F6F6F9;color:#333;margin:0 auto;font-size:18px;font-weight:normal}
@@ -2283,7 +2283,6 @@ a.n-but-ls{color:#1cbb7f}
 .g-s-i-title-3{  padding: 2.8rem 0;}
 .sex-default-color a{color:#b2b2b2;position:relative;}
 .sex-default-color input{  position: absolute;top: -4.5rem;left: -16%;width: 9rem;height: 12rem;opacity:0}
-.profile-left-name{width:8rem;}
 .t-goods1 input{font-size:1.5rem;color:#666;       width: 94%;    border: none;border:0;background:none;     text-align: right;}
 .n-pro-name{line-height:2.6rem;    margin-left: 1.2rem;}
 .flow-consignee{border-top: none;}

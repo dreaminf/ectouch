@@ -825,6 +825,14 @@ function sleep(d){
 	for(var t = Date.now();Date.now() - t <= d;);
 }
 */
+/*相册控制*/
+	document.getElementById('img-photo-box').style.width = document.body.offsetWidth + 'px';
+	document.getElementById('img-photo-box').style.height = document.body.offsetWidth + 'px';     	
+	window.onresize = function(){
+		document.getElementById('img-photo-box').style.width = document.body.offsetWidth + 'px';
+	    document.getElementById('img-photo-box').style.height = document.body.offsetWidth + 'px';     					         
+	}
+
 </script>
 
 </body>

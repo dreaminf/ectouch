@@ -22,7 +22,7 @@
 		<ul>
 			<li class="dis-box s-xian-box s-user-top-1">
 				<h3 class="profile-left-name text-all-span my-u-title-size">{$lang.consignee_name}：</h3>
-				<div class="box-flex t-goods1 n-pro-name  onelist-hidden"> <input name="consignee" maxlength="10" placeholder="{$lang.consignee_name}{$lang.require_field}" type="text" class="inputBg" value="{$consignee.consignee|escape}" /></div>
+				<div class="box-flex t-goods1 n-pro-name  onelist-hidden"> <input name="consignee" maxlength="20" placeholder="{$lang.consignee_name}{$lang.require_field}" type="text" class="inputBg" value="{$consignee.consignee|escape}" /></div>
 			</li>
 			<li class="dis-box s-xian-box s-user-top-1">
 				<h3 class="profile-left-name text-all-span my-u-title-size">{$lang.mobile}：</h3>

@@ -1061,10 +1061,3 @@ $(".s-g-list-con .j-get-one .ect-select-raise").click(function() {
 	t_goods1.html(dist_span);
 
 });
-/*相册控制*/
-	document.getElementById('img-photo-box').style.width = document.body.offsetWidth + 'px';
-	document.getElementById('img-photo-box').style.height = document.body.offsetWidth + 'px';     	
-	window.onresize = function(){
-		document.getElementById('img-photo-box').style.width = document.body.offsetWidth + 'px';
-	    document.getElementById('img-photo-box').style.height = document.body.offsetWidth + 'px';     					         
-	}
