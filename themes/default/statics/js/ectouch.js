@@ -749,7 +749,7 @@ function adv_index() {
 	} else {
 		$(".index-nav-box").removeClass("active");
 	}*/
-	if($(window).scrollTop() > 250) {
+	if($(window).scrollTop() > 10) {
 		$(".goods-fixed").addClass("active");
 		$(".goods-left-jiat").addClass("active");
 		$(".goods-header-nav-box").addClass("active");

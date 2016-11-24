@@ -3,9 +3,25 @@
 
 
 <div class="con">
-	<!--style="margin-bottom: 50px;"-->
 	<div class="goods" style="margin-bottom: 0rem;">
-		<div class="ect-bg">
+	<!--style="margin-bottom: 50px;"-->
+			<div class="goods-box">
+					{if !$subscribe}
+						<div class="ect-header-banner dis-box">
+							<div class="box-flex">
+								<div class="ect-header-text fl">
+									<h4>欢迎进入<span class="color-red">微商城</span></h4>
+									<p>关注公众号,享专属服务</p>
+								</div>
+							</div>
+							<a class="btn-submit1 j-ewm-box" href="javascript:;">立即关注</a>
+						</div>
+						<div class="index-weixin-box">
+							<div><img src="__TPL__/statics/img/ewm.png"></div>
+							<p class="text-c">长按二维码关注公众微信</p>
+						</div>
+						<div class="index-bg-box"></div>
+						{/if}
 					<header class="dis-box header-menu-1 b-color color-whie goods-fixed ts-3">
 					<a class="" href="javascript:history.go(-1)">
 						<div class="goods-left-jiat"><i class="iconfont icon-jiantou is-con"></i></div>
@@ -36,8 +52,8 @@
 							</a>
 						</ul>
 					</div>
-				</header>			
-		</div>
+				</header>	
+			</div>
 		<!--商品图片相册-->
 		<div class="goods-photo n-j-show-goods-img">
 			<div class="hd">
@@ -287,6 +303,22 @@
 				document.getElementById('popDiv').style.display = 'none';
 				document.getElementById('hidDiv').style.display = 'none';
 			}
+			/*首页二维码*/
+	$(".j-ewm-box").click(function() {
+		document.addEventListener("touchmove", handler, false);
+		$(".index-bg-box").addClass("active");
+		$(".index-weixin-box").addClass("active");
+	});
+	$(".j-ewm-close").click(function() {
+		document.removeEventListener("touchmove", handler, false);
+		$(".index-bg-box").removeClass("active");
+		$(".index-weixin-box").removeClass("active");
+	});
+	$(".index-bg-box").click(function() {
+		document.removeEventListener("touchmove", handler, false);
+		$(".index-bg-box").removeClass("active");
+		$(".index-weixin-box").removeClass("active");
+	});
 		</script>
 		<div class="tipMask" id="hidDiv" style="display:none"></div>
 
