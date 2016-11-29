@@ -214,22 +214,6 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_rule_keywords` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `ecs_wechat_template`
---
-
-CREATE TABLE IF NOT EXISTS `ecs_wechat_template` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `open_id` varchar(255) DEFAULT NULL,
-  `template_id` varchar(255) DEFAULT NULL,
-  `contents` varchar(133) DEFAULT NULL,
-  `template` text DEFAULT NULL,
-  `title` varchar(33) NOT NULL DEFAULT '',
-  `add_time` int(11)  DEFAULT '0',
-  `switch` tinyint(2) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
-
---
 -- 转存表中的数据 `ecs_wechat_template`
 --
 
