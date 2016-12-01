@@ -50,9 +50,10 @@ define('EC_CHARSET', 'utf-8');
 define('ADMIN_PATH', 'admin');
 define('AUTH_KEY', 'this is a key');
 define('OLD_AUTH_KEY', '');
-define('API_TIME', '2016-10-08 12:01:52');
+define('API_TIME', '2016-11-24 09:19:23');
 define('RUN_ON_ECS', false);
 define('DEFAULT_TIMEZONE', 'PRC');
+define('APP_KEY', '123456');
 $db_config = ROOT_PATH . 'data/database.php';
 if (file_exists($db_config)) {
     return require($db_config);

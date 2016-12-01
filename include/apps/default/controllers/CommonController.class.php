@@ -64,6 +64,31 @@ class CommonController extends BaseController
         C('show_asynclist', 1);
         /* 模板赋值 */
         assign_template();
+
+        /* ecjia验证登录
+        *参数：&origin=ecjia&user=test&sign=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        *sign算法：md5(md5("user=test&reg_time=122222&key=123456").'123456')
+        */
+        if (isset($_GET['origin'])) {
+            $origin = I('get.origin');
+            if($origin == 'ecjia'){
+                $user_name = I('get.user');
+                $sign = I('get.sign');
+                $user = $this->model->table('users')->field('id,reg_time')->where(array('user_name'=>$user_name))->find();
+                if($user){
+                    $url = 'user='.$user_name.'&reg_time='.$user['reg_time'];
+                    $msign = md5(md5($url. APP_KEY).APP_KEY);
+                    if($sign == $msign){
+                        set_cookie($user_name);
+                        set_session($user_name);
+                    }
+
+                }
+
+            }
+
+        }
+
     }
 
     static function user()
