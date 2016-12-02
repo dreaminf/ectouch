@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `ecs_account_log` (
   `change_type` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`log_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `ecs_ad` (
   PRIMARY KEY (`ad_id`),
   KEY `position_id` (`position_id`),
   KEY `enabled` (`enabled`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `ecs_admin_action` (
   `relevance` varchar(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`action_id`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `ecs_admin_log` (
   PRIMARY KEY (`log_id`),
   KEY `log_time` (`log_time`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `ecs_admin_message` (
   PRIMARY KEY (`message_id`),
   KEY `sender_id` (`sender_id`,`receiver_id`),
   KEY `receiver_id` (`receiver_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `ecs_admin_user` (
   PRIMARY KEY (`user_id`),
   KEY `user_name` (`user_name`),
   KEY `agency_id` (`agency_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `ecs_adsense` (
   `referer` varchar(255) NOT NULL DEFAULT '',
   `clicks` int(10) unsigned NOT NULL DEFAULT '0',
   KEY `from_ad` (`from_ad`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `ecs_ad_custom` (
   `url` varchar(255) DEFAULT NULL,
   `ad_status` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ad_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `ecs_ad_position` (
   `position_desc` varchar(255) NOT NULL DEFAULT '',
   `position_style` text NOT NULL,
   PRIMARY KEY (`position_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `ecs_affiliate_log` (
   `point` int(10) NOT NULL DEFAULT '0',
   `separate_type` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `ecs_agency` (
   `agency_desc` text NOT NULL,
   PRIMARY KEY (`agency_id`),
   KEY `agency_name` (`agency_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -210,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `ecs_area_region` (
   `shipping_area_id` smallint(5) unsigned NOT NULL DEFAULT '0',
   `region_id` smallint(5) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`shipping_area_id`,`region_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -235,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `ecs_article` (
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`article_id`),
   KEY `cat_id` (`cat_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -256,7 +256,7 @@ CREATE TABLE IF NOT EXISTS `ecs_article_cat` (
   KEY `cat_type` (`cat_type`),
   KEY `sort_order` (`sort_order`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -277,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `ecs_attribute` (
   `attr_group` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`attr_id`),
   KEY `cat_id` (`cat_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -293,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `ecs_auction_log` (
   `bid_time` int(10) unsigned NOT NULL,
   PRIMARY KEY (`log_id`),
   KEY `act_id` (`act_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -307,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `ecs_auto_manage` (
   `starttime` int(10) NOT NULL,
   `endtime` int(10) NOT NULL,
   PRIMARY KEY (`item_id`,`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -330,7 +330,7 @@ CREATE TABLE IF NOT EXISTS `ecs_back_goods` (
   PRIMARY KEY (`rec_id`),
   KEY `back_id` (`back_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -373,7 +373,7 @@ CREATE TABLE IF NOT EXISTS `ecs_back_order` (
   PRIMARY KEY (`back_id`),
   KEY `user_id` (`user_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -394,7 +394,7 @@ CREATE TABLE IF NOT EXISTS `ecs_bonus_type` (
   `use_end_date` int(11) NOT NULL DEFAULT '0',
   `min_goods_amount` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -418,7 +418,7 @@ CREATE TABLE IF NOT EXISTS `ecs_booking_goods` (
   `dispose_note` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`rec_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -436,7 +436,7 @@ CREATE TABLE IF NOT EXISTS `ecs_brand` (
   `is_show` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`brand_id`),
   KEY `is_show` (`is_show`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -452,7 +452,7 @@ CREATE TABLE IF NOT EXISTS `ecs_card` (
   `free_money` decimal(6,2) unsigned NOT NULL DEFAULT '0.00',
   `card_desc` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`card_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -483,7 +483,7 @@ CREATE TABLE IF NOT EXISTS `ecs_cart` (
   `group_id` varchar(255) NOT NULL ,
   PRIMARY KEY (`rec_id`),
   KEY `session_id` (`session_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 --
@@ -513,7 +513,7 @@ CREATE TABLE IF NOT EXISTS `ecs_cart_combot` (
   `group_id` varchar(255) NOT NULL ,
   PRIMARY KEY (`rec_id`),
   KEY `session_id` (`session_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 --
@@ -536,7 +536,7 @@ CREATE TABLE IF NOT EXISTS `ecs_category` (
   `filter_attr` varchar(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`cat_id`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -548,7 +548,7 @@ CREATE TABLE IF NOT EXISTS `ecs_cat_recommend` (
   `cat_id` smallint(5) NOT NULL,
   `recommend_type` tinyint(1) NOT NULL,
   PRIMARY KEY (`cat_id`,`recommend_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -566,7 +566,7 @@ CREATE TABLE IF NOT EXISTS `ecs_collect_goods` (
   KEY `user_id` (`user_id`),
   KEY `goods_id` (`goods_id`),
   KEY `is_attention` (`is_attention`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -591,7 +591,7 @@ CREATE TABLE IF NOT EXISTS `ecs_comment` (
   PRIMARY KEY (`comment_id`),
   KEY `parent_id` (`parent_id`),
   KEY `id_value` (`id_value`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -620,7 +620,7 @@ CREATE TABLE IF NOT EXISTS `ecs_crons` (
   KEY `nextime` (`nextime`),
   KEY `enable` (`enable`),
   KEY `cron_code` (`cron_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -645,7 +645,7 @@ CREATE TABLE IF NOT EXISTS `ecs_delivery_goods` (
   PRIMARY KEY (`rec_id`),
   KEY `delivery_id` (`delivery_id`,`goods_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -687,7 +687,7 @@ CREATE TABLE IF NOT EXISTS `ecs_delivery_order` (
   PRIMARY KEY (`delivery_id`),
   KEY `user_id` (`user_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -701,7 +701,7 @@ CREATE TABLE IF NOT EXISTS `ecs_email_list` (
   `stat` tinyint(1) NOT NULL DEFAULT '0',
   `hash` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -718,7 +718,7 @@ CREATE TABLE IF NOT EXISTS `ecs_email_sendlist` (
   `pri` tinyint(10) NOT NULL,
   `last_send` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -733,7 +733,7 @@ CREATE TABLE IF NOT EXISTS `ecs_error_log` (
   `time` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `time` (`time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -747,7 +747,7 @@ CREATE TABLE IF NOT EXISTS `ecs_exchange_goods` (
   `is_exchange` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `is_hot` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`goods_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -771,7 +771,7 @@ CREATE TABLE IF NOT EXISTS `ecs_favourable_activity` (
   `sort_order` tinyint(3) unsigned NOT NULL DEFAULT '50',
   PRIMARY KEY (`act_id`),
   KEY `act_name` (`act_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -795,7 +795,7 @@ CREATE TABLE IF NOT EXISTS `ecs_feedback` (
   `msg_area` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`msg_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -811,7 +811,7 @@ CREATE TABLE IF NOT EXISTS `ecs_friend_link` (
   `show_order` tinyint(3) unsigned NOT NULL DEFAULT '50',
   PRIMARY KEY (`link_id`),
   KEY `show_order` (`show_order`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -874,7 +874,7 @@ CREATE TABLE IF NOT EXISTS `ecs_goods` (
   KEY `promote_start_date` (`promote_start_date`),
   KEY `goods_number` (`goods_number`),
   KEY `sort_order` (`sort_order`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -896,7 +896,7 @@ CREATE TABLE IF NOT EXISTS `ecs_goods_activity` (
   `ext_info` text NOT NULL,
   PRIMARY KEY (`act_id`),
   KEY `act_name` (`act_name`,`act_type`,`goods_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -909,7 +909,7 @@ CREATE TABLE IF NOT EXISTS `ecs_goods_article` (
   `article_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `admin_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`goods_id`,`article_id`,`admin_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -926,7 +926,7 @@ CREATE TABLE IF NOT EXISTS `ecs_goods_attr` (
   PRIMARY KEY (`goods_attr_id`),
   KEY `goods_id` (`goods_id`),
   KEY `attr_id` (`attr_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -938,7 +938,7 @@ CREATE TABLE IF NOT EXISTS `ecs_goods_cat` (
   `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `cat_id` smallint(5) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`goods_id`,`cat_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -955,7 +955,7 @@ CREATE TABLE IF NOT EXISTS `ecs_goods_gallery` (
   `img_original` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`img_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -969,7 +969,7 @@ CREATE TABLE IF NOT EXISTS `ecs_goods_type` (
   `enabled` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `attr_group` varchar(255) NOT NULL,
   PRIMARY KEY (`cat_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -984,7 +984,7 @@ CREATE TABLE IF NOT EXISTS `ecs_group_goods` (
   `admin_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `group_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`parent_id`,`goods_id`,`admin_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -998,7 +998,7 @@ CREATE TABLE IF NOT EXISTS `ecs_keywords` (
   `keyword` varchar(90) NOT NULL DEFAULT '',
   `count` mediumint(8) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`date`,`searchengine`,`keyword`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1012,7 +1012,7 @@ CREATE TABLE IF NOT EXISTS `ecs_link_goods` (
   `is_double` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `admin_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`goods_id`,`link_goods_id`,`admin_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1032,7 +1032,7 @@ CREATE TABLE IF NOT EXISTS `ecs_mail_templates` (
   PRIMARY KEY (`template_id`),
   UNIQUE KEY `template_code` (`template_code`),
   KEY `type` (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1047,7 +1047,7 @@ CREATE TABLE IF NOT EXISTS `ecs_member_price` (
   `user_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`price_id`),
   KEY `goods_id` (`goods_id`,`user_rank`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1068,7 +1068,7 @@ CREATE TABLE IF NOT EXISTS `ecs_nav` (
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `ifshow` (`ifshow`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1088,7 +1088,7 @@ CREATE TABLE IF NOT EXISTS `ecs_order_action` (
   `log_time` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`action_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1116,7 +1116,7 @@ CREATE TABLE IF NOT EXISTS `ecs_order_goods` (
   PRIMARY KEY (`rec_id`),
   KEY `order_id` (`order_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1197,7 +1197,7 @@ CREATE TABLE IF NOT EXISTS `ecs_order_info` (
   KEY `pay_id` (`pay_id`),
   KEY `extension_code` (`extension_code`,`extension_id`),
   KEY `agency_id` (`agency_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1213,7 +1213,7 @@ CREATE TABLE IF NOT EXISTS `ecs_pack` (
   `free_money` smallint(5) unsigned NOT NULL DEFAULT '0',
   `pack_desc` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`pack_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1228,7 +1228,7 @@ CREATE TABLE IF NOT EXISTS `ecs_package_goods` (
   `goods_number` smallint(5) unsigned NOT NULL DEFAULT '1',
   `admin_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`package_id`,`goods_id`,`admin_id`,`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1249,7 +1249,7 @@ CREATE TABLE IF NOT EXISTS `ecs_payment` (
   `is_online` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`pay_id`),
   UNIQUE KEY `pay_code` (`pay_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1266,7 +1266,7 @@ CREATE TABLE IF NOT EXISTS `ecs_pay_log` (
   `openid` VARCHAR(255) NOT NULL ,
   `transid` VARCHAR(255) NOT NULL ,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1281,7 +1281,7 @@ CREATE TABLE IF NOT EXISTS `ecs_plugins` (
   `assign` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `install_date` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1296,7 +1296,7 @@ CREATE TABLE IF NOT EXISTS `ecs_products` (
   `product_sn` varchar(60) DEFAULT NULL,
   `product_number` smallint(5) unsigned DEFAULT '0',
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1314,7 +1314,7 @@ CREATE TABLE IF NOT EXISTS `ecs_region` (
   KEY `parent_id` (`parent_id`),
   KEY `region_type` (`region_type`),
   KEY `agency_id` (`agency_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1328,7 +1328,7 @@ CREATE TABLE IF NOT EXISTS `ecs_reg_extend_info` (
   `reg_field_id` int(10) unsigned NOT NULL,
   `content` text NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1344,7 +1344,7 @@ CREATE TABLE IF NOT EXISTS `ecs_reg_fields` (
   `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `is_need` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100 ;
 
 -- --------------------------------------------------------
 
@@ -1359,7 +1359,7 @@ CREATE TABLE IF NOT EXISTS `ecs_role` (
   `role_describe` text,
   PRIMARY KEY (`role_id`),
   KEY `user_name` (`role_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1372,7 +1372,7 @@ CREATE TABLE IF NOT EXISTS `ecs_searchengine` (
   `searchengine` varchar(20) NOT NULL DEFAULT '',
   `count` mediumint(8) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`date`,`searchengine`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1407,7 +1407,7 @@ CREATE TABLE IF NOT EXISTS `ecs_sessions_data` (
   `data` longtext NOT NULL,
   PRIMARY KEY (`sesskey`),
   KEY `expiry` (`expiry`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1430,7 +1430,7 @@ CREATE TABLE IF NOT EXISTS `ecs_shipping` (
   `shipping_order` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`shipping_id`),
   KEY `shipping_code` (`shipping_code`,`enabled`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1445,7 +1445,7 @@ CREATE TABLE IF NOT EXISTS `ecs_shipping_area` (
   `configure` text NOT NULL,
   PRIMARY KEY (`shipping_area_id`),
   KEY `shipping_id` (`shipping_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1465,7 +1465,7 @@ CREATE TABLE IF NOT EXISTS `ecs_shop_config` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1481,7 +1481,7 @@ CREATE TABLE IF NOT EXISTS `ecs_snatch_log` (
   `bid_time` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`log_id`),
   KEY `snatch_id` (`snatch_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1501,7 +1501,7 @@ CREATE TABLE IF NOT EXISTS `ecs_stats` (
   `referer_path` varchar(200) NOT NULL DEFAULT '',
   `access_url` varchar(255) NOT NULL DEFAULT '',
   KEY `access_time` (`access_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1515,7 +1515,7 @@ CREATE TABLE IF NOT EXISTS `ecs_suppliers` (
   `suppliers_desc` mediumtext,
   `is_check` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`suppliers_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1531,7 +1531,7 @@ CREATE TABLE IF NOT EXISTS `ecs_tag` (
   PRIMARY KEY (`tag_id`),
   KEY `user_id` (`user_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1552,7 +1552,7 @@ CREATE TABLE IF NOT EXISTS `ecs_template` (
   KEY `filename` (`filename`,`region`),
   KEY `theme` (`theme`),
   KEY `remarks` (`remarks`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1576,7 +1576,7 @@ CREATE TABLE IF NOT EXISTS `ecs_topic` (
   `keywords` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   KEY `topic_id` (`topic_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1625,7 +1625,7 @@ CREATE TABLE IF NOT EXISTS `ecs_users` (
   KEY `email` (`email`),
   KEY `parent_id` (`parent_id`),
   KEY `flag` (`flag`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1648,7 +1648,7 @@ CREATE TABLE IF NOT EXISTS `ecs_user_account` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `is_paid` (`is_paid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1674,7 +1674,7 @@ CREATE TABLE IF NOT EXISTS `ecs_user_address` (
   `best_time` varchar(120) NOT NULL DEFAULT '',
   PRIMARY KEY (`address_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1692,7 +1692,7 @@ CREATE TABLE IF NOT EXISTS `ecs_user_bonus` (
   `emailed` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`bonus_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1708,7 +1708,7 @@ CREATE TABLE IF NOT EXISTS `ecs_user_feed` (
   `feed_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `is_feed` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`feed_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1725,7 +1725,7 @@ CREATE TABLE IF NOT EXISTS `ecs_user_rank` (
   `show_price` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `special_rank` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`rank_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1747,7 +1747,7 @@ CREATE TABLE IF NOT EXISTS `ecs_virtual_card` (
   KEY `goods_id` (`goods_id`),
   KEY `car_sn` (`card_sn`),
   KEY `is_saled` (`is_saled`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1761,7 +1761,7 @@ CREATE TABLE IF NOT EXISTS `ecs_volume_price` (
   `volume_number` smallint(5) unsigned NOT NULL DEFAULT '0',
   `volume_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`price_type`,`goods_id`,`volume_number`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1777,7 +1777,7 @@ CREATE TABLE IF NOT EXISTS `ecs_vote` (
   `can_multi` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `vote_count` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`vote_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1792,7 +1792,7 @@ CREATE TABLE IF NOT EXISTS `ecs_vote_log` (
   `vote_time` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`log_id`),
   KEY `vote_id` (`vote_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1808,7 +1808,7 @@ CREATE TABLE IF NOT EXISTS `ecs_vote_option` (
   `option_order` tinyint(3) unsigned NOT NULL DEFAULT '100',
   PRIMARY KEY (`option_id`),
   KEY `vote_id` (`vote_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1825,4 +1825,4 @@ CREATE TABLE IF NOT EXISTS `ecs_wholesale` (
   `enabled` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`act_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

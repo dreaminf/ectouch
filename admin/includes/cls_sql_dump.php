@@ -105,7 +105,7 @@ class cls_sql_dump
 
         if ($this->db->version() >= '4.1')
         {
-            $table_df .= $tmp_sql . " ENGINE=InnoDB DEFAULT CHARSET=" . str_replace('-', '', CHARSET) . ";\r\n";
+            $table_df .= $tmp_sql . " ENGINE=MyISAM DEFAULT CHARSET=" . str_replace('-', '', CHARSET) . ";\r\n";
         }
         else
         {

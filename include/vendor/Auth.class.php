@@ -161,7 +161,7 @@ class Auth {
   `sort` int(10) unsigned NOT NULL,
   `status` int(1) unsigned NOT NULL,
   PRIMARY KEY (`{$group_field_id}`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;";
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;";
 
         $sql_resource = "CREATE TABLE IF NOT EXISTS `" . self::$model->pre . $table_resource . "` (
   `{$resource_field_id}` int(10) unsigned NOT NULL auto_increment,
@@ -173,7 +173,7 @@ class Auth {
   `status` int(1) unsigned NOT NULL,
   PRIMARY KEY  (`{$resource_field_id}`),
   KEY `pid` (`{$resource_field_pid}`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;";
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;";
         self::$model->query($sql_group);
         self::$model->query($sql_resource);
 
