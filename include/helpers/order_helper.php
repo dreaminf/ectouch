@@ -3657,9 +3657,9 @@ function aftermarket_drp($return_info){
 		$profit = afte_drp_profit($return_info['goods_id']);
 		
 		// 分销商三级利润
-		$sale_money['profit1']+= $touch_sale/100*$profit['profit1']*$goods['back_num'];
-		$sale_money['profit2']+= $touch_sale/100*$profit['profit2']*$goods['back_num'];
-		$sale_money['profit3']+= $touch_sale/100*$profit['profit3']*$goods['back_num'];
+		$sale_money['profit1']+= number_format($touch_sale/100*$profit['profit1']*$goods['back_num'], 2, '.', '');
+		$sale_money['profit2']+= number_format($touch_sale/100*$profit['profit2']*$goods['back_num'], 2, '.', '');
+		$sale_money['profit3']+= number_format($touch_sale/100*$profit['profit3']*$goods['back_num'], 2, '.', '');
 		$order_id = $return_info['order_id'];
 
 		// 获取订单所属店铺信息
