@@ -82,7 +82,8 @@ class GroupbuyController extends CommonController {
     public function info() {
         /* 取得参数：团购活动id */
         $group_buy_id = isset($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
-        $sql= "select goods_id from ecs_goods_activity where act_id = " . $group_buy_id;
+        $sql= "SELECT goods_id ".
+              "FROM ". $this->model->pre ."goods_activity where act_id = " . $group_buy_id;
         $res=$this->model->query($sql);
         
         $goods_id = $res[0]["goods_id"];
