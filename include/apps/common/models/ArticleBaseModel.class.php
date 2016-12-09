@@ -41,8 +41,10 @@ class ArticleBaseModel extends BaseModel {
             $condition .= ' AND title like \'%' . $requirement . '%\'';
         }
         $limit = ($page - 1) * $size . ',' . $size;
-        $list = $this->select($condition, 'article_id, title, author, add_time, file_url, open_type,link', ' article_id DESC', $limit);
-
+        $sql = "select article_id, title, author, add_time, file_url, open_type,link from ".$this->pre."article where  ".$condition." order by article_type DESC,article_id DESC limit ".$limit;
+        $list = $this->query($sql);
+        
+            
         $i = 1;
         $arr = array();
         if (is_array($list)) {
