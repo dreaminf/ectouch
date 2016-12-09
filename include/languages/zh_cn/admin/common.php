@@ -435,14 +435,12 @@ $_LANG['01_wechat_config'] = '公众号设置';
 $_LANG['02_wechat_masssend'] = '群发消息';
 $_LANG['03_wechat_autoreply'] = '自动回复';
 $_LANG['04_wechat_selfmenu'] = '自定义菜单';
-/*DRP_START*/
 $_LANG['05_wechat_tmplmsg'] = '模板消息';
-/*DRP_END*/
 $_LANG['06_wechat_contactmanage'] = '用户管理';
 $_LANG['07_wechat_appmsg'] = '素材管理';
 $_LANG['08_wechat_qrcode'] = '扫码引荐';
 $_LANG['09_wechat_extends'] = '扩展功能';
-$_LANG['10_wechat_remind'] = '提醒设置';
+// $_LANG['10_wechat_remind'] = '提醒设置';
 $_LANG['11_wechat_customer'] = '多客服设置';
-$_LANG['12_wechat_wall'] = '微信墙';
+// $_LANG['12_wechat_wall'] = '微信墙';
 
