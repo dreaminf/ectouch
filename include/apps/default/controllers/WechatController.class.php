@@ -153,20 +153,20 @@ class WechatController extends CommonController
             exit('null');
         } else {
             $data = array(
+                'wechat_id' => $this->wechat_id,
                 'subscribe' => $info['subscribe'],
                 'openid' => $info['openid'],
                 'nickname' => $info['nickname'],
                 'sex' => $info['sex'],
+                'language' => $info['language'],
                 'city' => $info['city'],
                 'country' => $info['country'],
                 'province' => $info['province'],
-                'language' => $info['country'],
                 'headimgurl' => $info['headimgurl'],
                 'subscribe_time' => $info['subscribe_time'],
                 'unionid' => isset($info['unionid']) ? $info['unionid'] : '',
                 'remark' => $info['remark'],
                 'group_id' => isset($info['groupid']) ? $info['groupid'] : $this->weObj->getUserGroup($openid),
-                'wechat_id' => $this->wechat_id
             );
         }
         // 公众号启用微信开发者平台，检查unionid
