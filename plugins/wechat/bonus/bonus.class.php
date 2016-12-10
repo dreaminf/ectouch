@@ -49,7 +49,8 @@ class bonus extends PluginWechatController
     public function install()
     {
         //红包数据，线下发放类型
-        $bonus = model('Base')->model->table('bonus_type')->field('type_id, type_name, type_money')->where('send_type = 3')->select();
+        $time = gmtime();
+        $bonus = model('Base')->model->table('bonus_type')->field('type_id, type_name, type_money')->where('send_type = 3 and AND send_end_date > "' . $time. '" ')->select();
         $this->cfg['bonus'] = $bonus;
         $this->plugin_display('install', $this->cfg);
     }
