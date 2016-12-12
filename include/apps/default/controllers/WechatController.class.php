@@ -225,7 +225,7 @@ class WechatController extends CommonController
                     'aite_id' => $identify,
                     'sex' => $data['sex'],
                 );
-                if (model('Users')->register($username, $password, $email, $extend)) !== false) {
+                if (model('Users')->register($username, $password, $email, $extend) !== false) {
                     model('Users')->update_user_info();
                 } else {
                     exit('null');
