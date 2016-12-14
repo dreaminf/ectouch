@@ -226,27 +226,17 @@ class CommonController extends BaseController
     *参数：&origin=app&openid=openid&token=token
     */
     private function ecjia_login(){
-
-        if (isset($_GET['origin'])) {
-            $origin = I('get.origin');
-            if($origin == 'app'){
-                $openid = I('get.openid');
-                $token = I('get.token');                
-				$connect_user = $this->model->table('connect_user')->field('token,user_id')->where(array('openid'=>$openid))->find();
-                if($token == $connect_user['token']){
-					$user = $this->model->table('users')->field('user_name')->where(array('user_id'=>$connect_user['user_id']))->find();
-                    if($user){
-                        ECTouch::user()->set_cookie($user['user_name']);
-                        ECTouch::user()->set_session($user['user_name']);
-                    }
-
-                }
-
-            }
-
-        }
-
-
+		
+		if(isset($_GET['origin']) && $_GET['origin'] == 'app'){
+			$openid = I('get.openid');
+			$token = I('get.token');                
+			$sql= "select cu.token,u.user_name from " . $this->model->pre . "connect_user as cu LEFT JOIN "  . $this->model->pre . "users as u on cu.user_id = u.user_id where open_id = '$openid' ";
+			$user = $this->model->getRow($sql);
+			if($token == $user['token']){
+				ECTouch::user()->set_cookie($user['user_name']);
+				ECTouch::user()->set_session($user['user_name']);
+			}
+		} 
     }
 
     /*DRP_START*/
