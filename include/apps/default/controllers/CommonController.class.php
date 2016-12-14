@@ -64,6 +64,10 @@ class CommonController extends BaseController
         C('show_asynclist', 1);
         /* 模板赋值 */
         assign_template();
+
+        /* ecjia验证登录*/
+        $this->ecjia_login();
+
     }
 
     static function user()
@@ -216,6 +220,36 @@ class CommonController extends BaseController
 
         // 设置parent_id
         session('parent_id',$_SESSION['user_id'] ? 0 : $_GET['u'] ? $_GET['u'] : 0);
+    }
+
+    /* ecjia验证登录
+    *参数：&origin=ecjia&user=test&sign=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    *sign算法：md5(md5("user=test&reg_time=122222&key=123456").'123456')
+    *&origin=ecjia&user=admin123&sign=266550769f487951d6b6e322fe1a37eb
+    */
+    private function ecjia_login(){
+
+        if (isset($_GET['origin'])) {
+            $origin = I('get.origin');
+            if($origin == 'ecjia'){
+                $user_name = I('get.user');
+                $sign = I('get.sign');
+                $user = $this->model->table('users')->field('user_id,reg_time')->where(array('user_name'=>$user_name))->find();
+                if($user){
+                    $url = 'user='.$user_name.'&reg_time='.$user['reg_time'];
+                    $msign = md5(md5($url. APP_KEY).APP_KEY);
+                    if($sign == $msign){
+                        ECTouch::user()->set_cookie($user_name);
+                        ECTouch::user()->set_session($user_name);
+                    }
+
+                }
+
+            }
+
+        }
+
+
     }
 
     /*DRP_START*/
