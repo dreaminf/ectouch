@@ -605,9 +605,9 @@ class SaleController extends CommonController {
      * 设置分销商品的分类
      */
     public function sale_set_category(){
-        // if($this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id'],"open"=>1,'cat_id'=>''))->count() > 0){
-        //     redirect(url('sale/index'));
-        // }
+        if($this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->count() > 0){
+            show_message('您已提交申请，请等待管理员审核','返回个人中心',url('user/index'));
+        }
         if(IS_POST){
             $cateArr = I('cate');
             $cat_id = '';
