@@ -167,7 +167,7 @@ class UsersModel extends BaseModel {
             if (!empty($register_points)) {
                 model('ClipsBase')->log_account_change($_SESSION['user_id'], 0, 0, C('register_points'), C('register_points'), L('register_points'));
             }
-            
+
             //定义other合法的变量数组
             $other_key_array = array('msn', 'qq', 'office_phone', 'home_phone', 'mobile_phone', 'parent_id', 'aite_id');
             $update_data['reg_time'] = local_strtotime(local_date('Y-m-d H:i:s'));
@@ -465,7 +465,7 @@ class UsersModel extends BaseModel {
             return $this->find($where);
         } else {
             $sql = 'select ua.*,u.address_id as adds_id from ' . $this->pre . 'user_address as ua left join '. $this->pre . 'users as u on ua.address_id =u.address_id'. ' where ua.user_id = ' . $user_id . ' order by ua.address_id limit ' . $start . ', ' . $num;
-			
+
             return $this->query($sql);
         }
     }
@@ -598,13 +598,13 @@ class UsersModel extends BaseModel {
         }
         return $arr;
     }
-	
+
 	/**
      *  获取用户未收货订单列表
      *
      * @access  public
      * @param   int         $user_id        用户ID号
-     * @param   int         $pay            订单状态，0未付款，1全部，默认1 
+     * @param   int         $pay            订单状态，0未付款，1全部，默认1
      * @param   int         $num            列表最大数量
      * @param   int         $start          列表起始位置
      * @return  array       $order_list     订单列表
@@ -615,7 +615,7 @@ class UsersModel extends BaseModel {
 
         if ($pay == 1) {
             $pay = 'and pay_status = ' . PS_PAYED . ' and shipping_status not in(' . SS_RECEIVED .')';
-            
+
 
         } else {
 
@@ -626,9 +626,9 @@ class UsersModel extends BaseModel {
                 "(goods_amount + shipping_fee + insure_fee + pay_fee + pack_fee + card_fee + tax - discount) AS total_fee " .
                 " FROM " . $this->pre .
                 "order_info WHERE user_id = '$user_id' " . $pay . " ORDER BY add_time DESC LIMIT $start , $num";
-                
+
         $res = M()->query($sql);
-        
+
 
 
 
@@ -1309,7 +1309,7 @@ class UsersModel extends BaseModel {
         $sql = "SELECT u.bonus_sn, u.order_id, b.type_name, b.type_money, b.min_goods_amount, b.use_start_date, b.use_end_date " .
                 " FROM " . $this->pre . "user_bonus AS u ," .
                 $this->pre . "bonus_type AS b" .
-                " WHERE u.bonus_type_id = b.type_id AND u.user_id = '" . $user_id . "' ORDER BY bonus_id DESC LIMIT " . $start . ',' . $num;            
+                " WHERE u.bonus_type_id = b.type_id AND u.user_id = '" . $user_id . "' ORDER BY bonus_id DESC LIMIT " . $start . ',' . $num;
         $res = $this->query($sql);
         $arr = array();
 
@@ -1380,7 +1380,7 @@ class UsersModel extends BaseModel {
 
     /**
      * 指定默认配送地址
-     * 
+     *
      */
     function save_consignee_default($address_id) {
         /* 保存为用户的默认收货地址 */
@@ -1692,9 +1692,9 @@ class UsersModel extends BaseModel {
     function update_order($order_id, $order) {
         $this->table = 'order_info';
         $condition['order_id'] = $order_id;
-        
+
         $res = $this->query('DESC ' . $this->pre . $this->table);
-        
+
         while ($row = mysqli_fetch_row($res)) {
             $field_names[] = $row[0];
         }
@@ -1800,9 +1800,9 @@ class UsersModel extends BaseModel {
         return $res['count'];
     }
     /**
-     * 检查该用户是否启动过第三方登录 
+     * 检查该用户是否启动过第三方登录
      * @param type $aite_id
-     * @return type 
+     * @return type
      */
     function get_one_user($aite_id) {
         // pc兼容模式，安装pc端插件之后移除注释
@@ -1821,7 +1821,7 @@ class UsersModel extends BaseModel {
     }
 
     /**
-     * 插入第三方登录信息到数据库 
+     * 插入第三方登录信息到数据库
      * @param type $info
      * @return boolean
      */
@@ -1855,13 +1855,13 @@ class UsersModel extends BaseModel {
         $condition['user_name'] = $user_name;
         return $this->count($condition);
     }
-	
+
 	 /**
      * 获取订单商品数量
      * @return type
      */
     function get_order_goods_count($order_id) {
-    
+
         $sql = "SELECT  COUNT(*) as count " .
             "FROM " . $this->pre . "order_goods AS o " .
             "LEFT JOIN " . $this->pre . "products AS p ON o.product_id = p.product_id " .
@@ -1870,7 +1870,7 @@ class UsersModel extends BaseModel {
         $res = $this->row($sql);
         return $res['count'];
     }
-    
+
     /**
      * 查询会员账户明细
      * @access  public
@@ -1880,19 +1880,19 @@ class UsersModel extends BaseModel {
      * @return  array
      */
     public function get_account_detail($user_id, $num, $start) {
-        
+
         // 获取余额记录
         $account_log = array();
-        
+
         $sql = 'SELECT * FROM ' . $this->pre . "account_log WHERE user_id = " . $user_id . ' AND user_money <> 0' .
         " ORDER BY log_id DESC limit " . $start . ',' . $num;
         $res = $this->query($sql);
-        
+
         if (empty($res)) {
             return array();
             exit;
         }
-        
+
         foreach ($res as $k => $v) {
             $res[$k]['change_time'] = local_date(C('date_format'), $v['change_time']);
             $res[$k]['type'] = $v['user_money'] > 0 ? L('account_inc') : L('account_dec');
@@ -1903,13 +1903,13 @@ class UsersModel extends BaseModel {
             $res[$k]['short_change_desc'] = sub_str($v['change_desc'], 60);
             $res[$k]['amount'] = $v['user_money'];
         }
-        
+
         return $res;
-        
-       
+
+
     }
 
-    
+
     // 退换货 start
     /**
      * 获取订单所对应的服务类型数组
@@ -1958,7 +1958,7 @@ class UsersModel extends BaseModel {
                         show_message(L('time_out'));
                     }
                 } else {
-                    //其他 
+                    //其他
                 }
             }
         }
@@ -2046,7 +2046,7 @@ class UsersModel extends BaseModel {
     }
     /**退换货**/
     function tuihuanhuo($user_id) {
-       $where['user_id'] = $user_id;       
+       $where['user_id'] = $user_id;
        $count = $this->model->table('order_return')->where($where)->count();
        return $count;
     }
@@ -2133,20 +2133,20 @@ class UsersModel extends BaseModel {
         }
         return $aftermarket;
     }
-    
+
     /**
  * 获取商家地址
  */
 function get_business_address($suppliers_id) {
 
-   
+
     $address = '';
     if ($suppliers_id) {
         $address = '';
     } else {
         $sql = "SELECT region_name FROM " . $this->pre .
             "region WHERE region_id = '".C('shop_country')."'";
-        $adress = $this->query($sql); 
+        $adress = $this->query($sql);
         //dump($adress);exit;
         $sql = "SELECT region_name FROM " . $this->pre .
             "region WHERE region_id = '".C('shop_province')."'";
@@ -2165,13 +2165,187 @@ function get_business_address($suppliers_id) {
  * 获取省，市，地区id
  */
 function find_address($region_name,$region_type = 0) {
-	
+
 	$sql = "SELECT region_id FROM " . $this->pre .
 		"region where region_name like '%$region_name%' and region_type = $region_type ";
 	$address = $this->row($sql);
     return $address['region_id'];
-	
+
 }
 
+    /**
+     * 合并会员数据
+     * @access  public
+     * @param   id $from_user_id 原会员id
+     * @param   id $to_user_id 新会员id
+     * @return  boolen      $bool
+     */
+    function merge_user($from_user_id = 0, $to_user_id = 0)
+    {
+        if ($from_user_id > 0 && $to_user_id > 0 && $from_user_id != $to_user_id){
+            // users表
+            $from_user_info = $this->model->table('users')->field('*')->where(array('user_id'=> $from_user_id))->find();
+
+            if(!empty($from_user_info)){
+                // 更新字段值 email,sex,birthday,address_id,user_rank,is_special,parent_id,flag,alias,msn,qq,office_phone,home_phone,mobile_phone,is_validated
+                // 组合数据
+                $from_data = array(
+                    'email' => $from_user_info['email'],
+                    'sex' => $from_user_info['sex'],
+                    'birthday' => $from_user_info['birthday'],
+                    'address_id' => $from_user_info['address_id'],
+                    'user_rank' => $from_user_info['user_rank'],
+                    'is_special' => $from_user_info['is_special'],
+                    'parent_id' => $from_user_info['parent_id'],
+                    'flag' => $from_user_info['flag'],
+                    'alias' => $from_user_info['alias'],
+                    'msn' => $from_user_info['msn'],
+                    'qq' => $from_user_info['qq'],
+                    'office_phone' => $from_user_info['office_phone'],
+                    'home_phone' => $from_user_info['home_phone'],
+                    'mobile_phone' => $from_user_info['mobile_phone'],
+                    'is_validated' => $from_user_info['is_validated'],
+                    );
+                $this->model->table('users')->data($from_data)->where(array('user_id' => $to_user_id))->update();
+
+                // 累加字段值 user_money,frozen_money,pay_points,rank_points,credit_line
+                $sql = "UPDATE {pre}users SET user_money = user_money + '" . $from_user_info['user_money'] . "', frozen_money = frozen_money + '" . $from_user_info['frozen_money'] . "', pay_points = pay_points + '" . $from_user_info['pay_points'] . "', rank_points = rank_points + '" . $from_user_info['rank_points'] . "', credit_line = credit_line + '" . $from_user_info['credit_line'] . "'  WHERE user_id = '$to_user_id'";
+
+                $this->model->query($sql);
+            }
+
+            // 用户订单
+            $from_order_info = $this->model->table('order_info')->field('order_id')->where(array('user_id'=> $from_user_id))->select();
+            if(!empty($from_order_info)){
+                foreach ($from_order_info as $key => $value) {
+                    $this->model->table('order_info')->data('user_id = ' . $to_user_id)->where('order_id = ' . $value['order_id'])->update();
+                }
+            }
+
+            // 用户缺货登记
+            $from_booking_goods = $this->model->table('booking_goods')->field('rec_id')->where(array('user_id'=> $from_user_id))->select();
+            if(!empty($from_booking_goods)){
+                foreach ($from_booking_goods as $key => $value) {
+                    $this->model->table('booking_goods')->data('user_id = ' . $to_user_id)->where('rec_id = ' . $value['rec_id'])->update();
+                }
+            }
+            // 会员收藏商品
+            $from_collect_goods = $this->model->table('collect_goods')->field('rec_id')->where(array('user_id'=> $from_user_id))->select();
+            if(!empty($from_collect_goods)){
+                foreach ($from_collect_goods as $key => $value) {
+                    $this->model->table('collect_goods')->data('user_id = ' . $to_user_id)->where('rec_id = ' . $value['rec_id'])->update();
+                }
+            }
+            // 会员留言
+            $from_feedback = $this->model->table('feedback')->field('msg_id')->where(array('user_id'=> $from_user_id))->select();
+            if(!empty($from_feedback)){
+                $to_user_info = $this->model->table('users')->field('user_name')->where(array('user_id'=> $to_user_id))->find();
+                foreach ($from_feedback as $key => $value) {
+                    $setdata = array('user_id' => $to_user_id, 'user_name' => $to_user_info['user_name']);
+                    $this->model->table('feedback')->data($setdata)->where('msg_id = ' . $value['msg_id'])->update();
+                }
+            }
+            // 会员地址
+            $from_user_address = $this->model->table('user_address')->field('address_id')->where(array('user_id'=> $from_user_id))->select();
+            if(!empty($from_user_address)){
+                foreach ($from_user_address as $key => $value) {
+                    $this->model->table('user_address')->data('user_id = ' . $to_user_id)->where('address_id = ' . $value['address_id'])->update();
+                }
+            }
+            // 会员红包
+            $from_user_bonus = $this->model->table('user_bonus')->field('bonus_id')->where(array('user_id'=> $from_user_id))->select();
+            if(!empty($from_user_bonus)){
+                foreach ($from_user_bonus as $key => $value) {
+                    $this->model->table('user_bonus')->data('user_id = ' . $to_user_id)->where('bonus_id = ' . $value['bonus_id'])->update();
+                }
+            }
+            // 用户帐号金额
+            $from_user_account = $this->model->table('user_account')->field('id')->where(array('user_id'=> $from_user_id))->select();
+            if(!empty($from_user_account)){
+                foreach ($from_user_account as $key => $value) {
+                    $this->model->table('user_account')->data('user_id = ' . $to_user_id)->where('id = ' . $value['id'])->update();
+                }
+            }
+            // 用户标记
+            $from_tag = $this->model->table('tag')->field('tag_id')->where(array('user_id'=> $from_user_id))->select();
+            if(!empty($from_tag)){
+                foreach ($from_tag as $key => $value) {
+                    $this->model->table('tag')->data('user_id = ' . $to_user_id)->where('tag_id = ' . $value['tag_id'])->update();
+                }
+            }
+            // 用户日志
+            $from_account_log = $this->model->table('account_log')->field('log_id')->where(array('user_id'=> $from_user_id))->select();
+            if(!empty($from_account_log)){
+                foreach ($from_account_log as $key => $value) {
+                    $this->model->table('account_log')->data('user_id = ' . $to_user_id)->where('log_id = ' . $value['log_id'])->update();
+                }
+            }
+
+            // 用户评论
+            $from_comment = $this->model->table('comment')->field('comment_id')->where(array('user_id'=> $from_user_id))->select();
+            if(!empty($from_comment) && !empty($to_user_info)){
+                foreach ($from_comment as $key => $value) {
+                    $setdata = array('user_id' => $to_user_id, 'user_name' => $to_user_info['user_name'], 'email' => $to_user_info['email']);
+                    $this->model->table('comment')->data($setdata)->where('comment_id = ' . $value['comment_id'])->update();
+                }
+            }
+
+            // 用户退换货
+            $from_order_return = $this->model->table('order_return')->field('ret_id')->where(array('user_id'=> $from_user_id))->select();
+            if(!empty($from_order_return)){
+                foreach ($from_order_return as $key => $value) {
+                    $this->model->table('order_return')->data('user_id = ' . $to_user_id)->where('ret_id = ' . $value['ret_id'])->update();
+                }
+            }
+
+            /*DRP_START*/
+            // 分销商
+            $from_drp_shop = $this->model->table('drp_shop')->field('id')->where(array('user_id'=> $from_user_id))->select();
+            if(!empty($from_drp_shop)){
+                foreach ($from_drp_shop as $key => $value) {
+                    $this->model->table('drp_shop')->data('user_id = ' . $to_user_id)->where('id = ' . $value['id'])->update();
+                }
+            }
+            // 分销订单
+            $from_drp_order_info = $this->model->table('drp_order_info')->field('id')->where(array('drp_id'=> $from_user_id))->select();
+            if(!empty($from_drp_order_info)){
+                foreach ($from_drp_order_info as $key => $value) {
+                    $this->model->table('drp_order_info')->data('drp_id = ' . $to_user_id)->where('id = ' . $value['id'])->update();
+                }
+            }
+            // 分销访客
+            $from_drp_drp_visiter = $this->model->table('drp_visiter')->field('id')->where(array('drp_id'=> $from_user_id))->select();
+            if(!empty($from_drp_visiter)){
+                foreach ($from_drp_visiter as $key => $value) {
+                    $this->model->table('drp_visiter')->data('drp_id = ' . $to_user_id)->where('id = ' . $value['id'])->update();
+                }
+            }
+            // 分销资金明细
+            $from_drp_log = $this->model->table('drp_log')->field('log_id')->where(array('user_id'=> $from_user_id))->select();
+            if(!empty($from_drp_log)){
+                foreach ($from_drp_log as $key => $value) {
+                    $this->model->table('drp_log')->data('user_id = ' . $to_user_id)->where('log_id = ' . $value['id'])->update();
+                }
+            }
+            // 分销用户提现银行卡
+            $from_drp_bank = $this->model->table('drp_bank')->field('id')->where(array('user_id'=> $from_user_id))->select();
+            if(!empty($from_drp_bank)){
+                foreach ($from_drp_bank as $key => $value) {
+                    $this->model->table('drp_bank')->data('user_id = ' . $to_user_id)->where('id = ' . $value['id'])->update();
+                }
+            }
+            // 购买微分销记录
+            $from_drp_apply = $this->model->table('drp_apply')->field('id')->where(array('user_id'=> $from_user_id))->select();
+            if(!empty($from_drp_apply)){
+                foreach ($from_drp_apply as $key => $value) {
+                    $this->model->table('drp_apply')->data('user_id = ' . $to_user_id)->where('id = ' . $value['id'])->update();
+                }
+            }
+            /*DRP_END*/
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 }

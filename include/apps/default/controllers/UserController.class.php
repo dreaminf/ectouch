@@ -26,6 +26,7 @@ class UserController extends CommonController {
      */
     public function __construct() {
         parent::__construct();
+
         // 属性赋值
         $this->user_id = $_SESSION['user_id'];
         $this->action = ACTION_NAME;
@@ -53,14 +54,14 @@ class UserController extends CommonController {
         }
 		// 待付款
         $not_pays = model('ClipsBase')->not_pay($this->user_id);
-		
+
 		// 待收货
 		$not_shouhuos = model('ClipsBase')->not_shouhuo($this->user_id);
 		// 红包
-		$bonus = model('ClipsBase')->my_bonus($this->user_id);	
+		$bonus = model('ClipsBase')->my_bonus($this->user_id);
 		// 待评价
-		$not_comment = model('ClipsBase')->not_pingjia($this->user_id);	
-		
+		$not_comment = model('ClipsBase')->not_pingjia($this->user_id);
+
 		// 用户积分余额
 		$user_pay = model('ClipsBase')->pay_money($this->user_id);
 		$user_money = $user_pay['user_money'];  //余额
@@ -89,7 +90,7 @@ class UserController extends CommonController {
             $wechat = model('Base')->model->table('wechat')->field('id, oauth_status')->where(array('type'=>2, 'status'=>1, 'default_wx'=>1))->find();
             if(empty($isbind) && !empty($wechat['oauth_status'])){
                 $bind = 0;
-            }    
+            }
         }
         $this->assign('isbind', $bind);
 
@@ -285,13 +286,13 @@ class UserController extends CommonController {
         $this->pageLimit(url('user/account_list'), $size);
         $this->assign('pager', $this->pageShow($count));
         $account_detail = model('Users')->get_account_detail($this->user_id, $size, ($page-1)*$size);
-        
+
         $this->assign('title', L('label_user_surplus'));
         $this->assign('surplus_amount', price_format($surplus_amount, false));
         $this->assign('account_log', $account_detail);
         $this->display('user_account_list.dwt');
     }
-     
+
     public function account_detail() {
         // 获取剩余余额
         $surplus_amount = model('ClipsBase')->get_user_surplus($this->user_id);
@@ -304,18 +305,18 @@ class UserController extends CommonController {
         $count = $this->model->table('account_log')->field('COUNT(*)')->where($where)->getOne();
         $this->pageLimit(url('user/account_detail'), $size);
         $this->assign('pager', $this->pageShow($count));
-        
+
         $account_detail = model('Users')->get_account_detail($this->user_id, $size, ($page-1)*$size);
-        
+
         $this->assign('title', L('label_user_surplus'));
         $this->assign('surplus_amount', price_format($surplus_amount, false));
         $this->assign('account_log', $account_detail);
         $this->display('user_account_detail.dwt');
     }
-    
+
 
     /**
-     *  会员充值和提现申请记录 
+     *  会员充值和提现申请记录
      */
     public function  account_log(){
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
@@ -343,25 +344,25 @@ class UserController extends CommonController {
         $this->assign('pager',          $pager);
         $this->display('user_account_log.dwt');
     }
-    
+
     /**
-     *  删除会员余额 
+     *  删除会员余额
      */
     public function cancel(){
-    
+
         $id = I('get.id',0);
         if ($id == 0 || $this->user_id == 0)
         {
             ecs_header("Location: ".url('User/account_log'));
             exit;
         }
-    
+
         $result = model('ClipsBase')->del_user_account($id, $this->user_id);
         ecs_header("Location: ".url('User/account_log'));
     }
-    
+
     /**
-     *  会员退款申请界面 
+     *  会员退款申请界面
      */
     public function account_raply(){
         // 获取剩余余额
@@ -373,22 +374,22 @@ class UserController extends CommonController {
         $this->assign('title', L('label_user_surplus'));
         $this->display('user_account_raply.dwt');
     }
-    
+
     /**
-     *  会员预付款界面 
+     *  会员预付款界面
      */
     public function account_deposit(){
         $this->assign('title', L('label_user_surplus'));
         $surplus_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
         $account    = model('ClipsBase')->get_surplus_info($surplus_id);
-    
+
         $this->assign('payment', model('ClipsBase')->get_online_payment_list(false));
         $this->assign('order',   $account);
         $this->display('user_account_deposit.dwt');
     }
-    
+
     /**
-     *  对会员余额申请的处理 
+     *  对会员余额申请的处理
      */
     public function act_account()
     {
@@ -397,7 +398,7 @@ class UserController extends CommonController {
         {
             show_message(L('select_amount'));
         }
-    
+
         /* 变量初始化 */
         $surplus = array(
             'user_id'      => $this->user_id,
@@ -407,7 +408,7 @@ class UserController extends CommonController {
             'user_note'    => isset($_POST['user_note'])    ? trim($_POST['user_note'])      : '',
             'amount'       => $amount
         );
-    
+
         /* 退款申请的处理 */
         if ($surplus['process_type'] == 1)
         {
@@ -418,12 +419,12 @@ class UserController extends CommonController {
                 $content = L('surplus_amount_error');
                 show_message($content, L('back_page_up'), '', 'info');
             }
-    
+
             //插入会员账目明细
             $amount = '-'.$amount;
             $surplus['payment'] = '';
             $surplus['rec_id']  = model('ClipsBase')->insert_user_account($surplus, $amount);
-    
+
             /* 如果成功提交 */
             if ($surplus['rec_id'] > 0)
             {
@@ -443,13 +444,13 @@ class UserController extends CommonController {
             {
                 show_message(L('select_payment_pls'));
             }
-    
-    
+
+
             //获取支付方式名称
             $payment_info = array();
             $payment_info = model('Order')->payment_info($surplus['payment_id']);
             $surplus['payment'] = $payment_info['pay_name'];
-    
+
             if ($surplus['rec_id'] > 0)
             {
                 //更新会员账目明细
@@ -460,32 +461,32 @@ class UserController extends CommonController {
                 //插入会员账目明细
                 $surplus['rec_id'] = model('ClipsBase')->insert_user_account($surplus, $amount);
             }
-    
+
             //取得支付信息，生成支付代码
             $payment = unserialize_config($payment_info['pay_config']);
-    
+
             //生成伪订单号, 不足的时候补0
             $order = array();
             $order['order_sn']       = $surplus['rec_id'];
             $order['user_name']      = $_SESSION['user_name'];
             $order['surplus_amount'] = $amount;
-    
+
             //计算支付手续费用
             $payment_info['pay_fee'] = pay_fee($surplus['payment_id'], $order['surplus_amount'], 0);
-    
+
             //计算此次预付款需要支付的总金额
             $order['order_amount']   = $amount + $payment_info['pay_fee'];
-    
+
             //记录支付log
             $order['log_id'] = model('ClipsBase')->insert_pay_log($surplus['rec_id'], $order['order_amount'], $type=PAY_SURPLUS, 0);
-    
+
             /* 调用相应的支付方式文件 */
             include_once (ROOT_PATH . 'plugins/payment/' . $payment_info ['pay_code'] . '.php');
-    
+
             /* 取得在线支付方式的支付按钮 */
             $pay_obj = new $payment_info ['pay_code'] ();
             $payment_info['pay_button'] = $pay_obj->get_code($order, $payment);
-    
+
             /* 模板赋值 */
 			$this->assign('title', L('label_act_account'));
             $this->assign('payment', $payment_info);
@@ -495,7 +496,7 @@ class UserController extends CommonController {
             $this->display('user_act_account.dwt');
         }
     }
-    
+
     /**
      * 会员通过帐目明细列表进行再付款的操作
      */
@@ -504,49 +505,49 @@ class UserController extends CommonController {
         //变量初始化
         $surplus_id = isset($_GET['id'])  ? intval($_GET['id'])  : 0;
         $payment_id = isset($_GET['pid']) ? intval($_GET['pid']) : 0;
-    
+
         if ($surplus_id == 0)
         {
             ecs_header("Location: ".url('User/account_log'));
             exit;
         }
-    
+
         //如果原来的支付方式已禁用或者已删除, 重新选择支付方式
         if ($payment_id == 0)
         {
             ecs_header("Location: " . url('User/account_deposit',array('id'=>$surplus_id)));
             exit;
         }
-    
+
         //获取单条会员帐目信息
         $order = array();
         $order = model('ClipsBase')->get_surplus_info($surplus_id);
-    
+
         //支付方式的信息
         $payment_info = array();
         $payment_info = model('Order')->payment_info($payment_id);
-    
+
         /* 如果当前支付方式没有被禁用，进行支付的操作 */
         if (!empty($payment_info))
         {
             //取得支付信息，生成支付代码
             $payment = unserialize_config($payment_info['pay_config']);
-    
+
             //生成伪订单号
             $order['order_sn'] = $surplus_id;
-    
+
             //获取需要支付的log_id
             $order['log_id'] = model('ClipsBase')->get_paylog_id($surplus_id, $pay_type = PAY_SURPLUS);
-    
+
             $order['user_name']      = $_SESSION['user_name'];
             $order['surplus_amount'] = $order['amount'];
-    
+
             //计算支付手续费用
             $payment_info['pay_fee'] = pay_fee($payment_id, $order['surplus_amount'], 0);
-    
+
             //计算此次预付款需要支付的总金额
             $order['order_amount']   = $order['surplus_amount'] + $payment_info['pay_fee'];
-    
+
             //如果支付费用改变了，也要相应的更改pay_log表的order_amount
             $order_amount = M()->getOne("SELECT order_amount FROM " .M()->pre . 'pay_log'." WHERE log_id = '$order[log_id]'");
             $this->model->table('order_goods')->field('COUNT(*)')->where("order_id = '$order[order_id]' " . " AND is_real = 1")->getOne();
@@ -554,13 +555,13 @@ class UserController extends CommonController {
             {
                 M()->query("UPDATE " .M()->pre . "pay_log SET order_amount = '$order[order_amount]' WHERE log_id = '$order[log_id]'");
             }
-    
+
             /* 调用相应的支付方式文件 */
             include_once (ROOT_PATH . 'plugins/payment/' . $payment_info ['pay_code'] . '.php');
             /* 取得在线支付方式的支付按钮 */
             $pay_obj = new $payment_info['pay_code']();
             $payment_info['pay_button'] = $pay_obj->get_code($order, $payment);
-    
+
             /* 模板赋值 */
 			$this->assign('title', L('label_user_surplus'));
             $this->assign('payment', $payment_info);
@@ -1093,7 +1094,7 @@ class UserController extends CommonController {
 		$this->assign("token",$token);
         $this->assign('title', L('add_address'));
         // 取得国家列表、商店所在国家、商店所在国家的省列表
-		
+
         $this->assign('country_list', model('RegionBase')->get_regions());
         $this->assign('shop_province_list', model('RegionBase')->get_regions(1, C('shop_country')));
         $this->assign('province_list', $province_list);
@@ -1102,13 +1103,13 @@ class UserController extends CommonController {
 
         $this->display('user_add_address.dwt');
     }
-	
+
 	 // 根据经纬度获取所在地区
 	public function positions(){
 		if(IS_POST){
 			$lng = I('post.lng', 0);
-			$lat = I('post.lat', 0);	
-			$store = $lat .','.$lng;			
+			$lat = I('post.lat', 0);
+			$store = $lat .','.$lng;
 			if(empty($store)){
 				exit(json_encode(array('error'=>1, 'message'=> '暂时无法获取默认地址')));
 			}
@@ -1128,13 +1129,13 @@ class UserController extends CommonController {
                     'province' => $province_id,
                     'city' => $city_id,
                     'district' => $district_id
-                );			
+                );
 				$_SESSION['consignee'] = $consignee ;
-				
+
 			}
-			
+
 		}
-		
+
 	}
     /**
      * 编辑收货地址的处理
@@ -1423,7 +1424,7 @@ class UserController extends CommonController {
             $this->assign('goods', $goods);
         }
         $shopurl = __URL__ . '/?u=' . $this->user_id;
-        
+
         $this->assign('shopurl', $shopurl);
         $this->assign('domain', __HOST__);
         $this->assign('shopdesc', C('shop_desc'));
@@ -1431,7 +1432,7 @@ class UserController extends CommonController {
         $this->assign('share', $share);
         $this->display('user_share.dwt');
     }
-    
+
     /**
      * 生成二维码
      */
@@ -1479,12 +1480,12 @@ class UserController extends CommonController {
             $bonus_sn = I('post.bonus_sn', '', 'intval');
 			if($bonus_sn ==''){
 				show_message('请输入红包序列号', L('back_up_page'), url('bonus'), 'info');
-			}else{				
+			}else{
 				if (model('Users')->add_bonus($this->user_id, $bonus_sn)) {
 					show_message(L('add_bonus_sucess'), L('back_up_page'), url('bonus'), 'info');
 				} else {
 					ECTouch::err()->show(L('back_up_page'), url('bonus'));
-				}				
+				}
 			}
         }
         // 分页
@@ -1849,12 +1850,12 @@ class UserController extends CommonController {
             $this->assign('enabled_captcha', 1);
             $this->assign('rand', mt_rand());
         }
-		
+
 		//微信浏览器显示授权登录
         if(is_wechat_browser()){
             $this->assign('oauth_url', url('user/index', array('flag'=>'oauth')));
         }
-		
+
         $this->assign('title', L('login'));
         $this->assign('step', I('get.step'));
         $this->assign('anonymous_buy', C('anonymous_buy'));
@@ -1890,21 +1891,29 @@ class UserController extends CommonController {
                         ->getOne();
                 $username = $username_try ? $username_try : $username;
             }
-            if($user_id = self::$user->check_user($username, $password)){
+            if($new_user_id = self::$user->check_user($username, $password)){
                 if(!empty($_SESSION['wechat_user'])){
                     $condition['openid'] = $_SESSION['wechat_user']['openid'];
                     $user = model('Base')->model->table('wechat_user')->field('openid, ect_uid, isbind')->where($condition)->find();
                     if($user && empty($user['isbind'])){
-                        model('Base')->model->table('wechat_user')->data(array('ect_uid'=>$user_id, 'isbind'=>1))->where($condition)->update();
+                        model('Base')->model->table('wechat_user')->data(array('ect_uid'=>$new_user_id, 'isbind'=>1))->where($condition)->update();
+
+                        // 合并绑定会员数据 $this->user_id  $new_user_id
+                        $res = model('Users')->merge_user($this->user_id, $new_user_id);
+                        // 删除原会员数据
+                        if($res == true){
+                            self::$user->remove_user($_SESSION['user_name']);
+                        }
+
                         self::$user->logout();
-                        show_message('账号绑定成功', '会员中心', url('index'), 'error');
+                        show_message('账号绑定成功,需重新登录', '会员中心', url('index'), 'error');
                     }
                     else{
                         show_message('请不要重复绑定', L('relogin_lnk'), url('index'), 'error');
                     }
                 }
                 else{
-                    show_message('请先进行微信授权登录', L('relogin_lnk'), url('index'), 'error');   
+                    show_message('请先进行微信授权登录', L('relogin_lnk'), url('index'), 'error');
                 }
             }
             else{
@@ -2041,10 +2050,10 @@ class UserController extends CommonController {
 
         $this->assign('title', L('register'));
         $this->assign('back_act', $this->back_act);
-        
+
         /* 是否关闭注册 */
         $this->assign('shop_reg_closed', C('shop_reg_closed'));
-        
+
         $this->display('user_register.dwt');
     }
 
@@ -2094,7 +2103,7 @@ class UserController extends CommonController {
                 show_message(L('process_false'), L('relogin_lnk'), url('login', array('referer' => urlencode($this->back_act))), 'error');
             }
         } else {
-            // 开始授权登录  
+            // 开始授权登录
             $url = $obj->act_login($info, $url);
             ecs_header("Location: " . $url . "\n");
             exit();
@@ -2469,8 +2478,8 @@ class UserController extends CommonController {
             }
         }
     }
-	
-	
+
+
 	/**
      * 待评价订单
      * 未评价订单条件：订单全部完成
@@ -2520,7 +2529,7 @@ class UserController extends CommonController {
         $this->display('user_order_comment_list.dwt');
     }
 
-	
+
 	/**
      * 待评价订单商品评论
      */
@@ -2553,7 +2562,7 @@ class UserController extends CommonController {
         $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
         $order = model('Users')->get_order_detail($order_id, $this->user_id);
 
-        $type_list = model('Users')->get_service_opt($order); 
+        $type_list = model('Users')->get_service_opt($order);
         $rec_id = isset($_GET['rec_id']) ? intval($_GET['rec_id']) : 0;
         $service_type = array();
         //查询所对应的可用服务类型
@@ -2565,7 +2574,7 @@ class UserController extends CommonController {
             show_message(L('no_service'));
         }
         $this->assign('service_type', $service_type);
-        
+
 
         $this->display('user_aftermarket.dwt');
     }
@@ -2612,9 +2621,9 @@ class UserController extends CommonController {
         $rec_id = isset($_GET['rec_id']) ? intval($_GET['rec_id']) : 0;
         $order = model('Users')->get_order_detail($order_id, $this->user_id); //订单详情
 
-        
+
         $type_list = model('Users')->get_service_opt($order);
-        
+
         $goods = model('Order')->order_goods_info($rec_id); /*获取订单商品*/
         $service_type = model('Users')->get_service_type_list($order_id, $rec_id, $type_list);
         $this->assign('service_type', $service_type); //退换货类型
@@ -2622,7 +2631,7 @@ class UserController extends CommonController {
         $this->assign('order', $order);
         $this->assign('goods', $goods);
         if ($id == ST_EXCHANGE) {
-            /*换货时商品信息*/ 
+            /*换货时商品信息*/
             $goods_info = model('Goods')->get_goods_info($goods['goods_id']);
 
             if ($goods_info === false) {
@@ -2636,16 +2645,16 @@ class UserController extends CommonController {
                 $this->assign('specification', $properties ['spe']);
 
                 $this->assign('goods_info', $goods_info);
-            
+
             }
         }
         //$id= model('Users')->get_order_detail($order_id, $this->user_id)->field('user_id')->select();
         //dump($id);exit;
          $id = isset($_GET['id']) ? intval($_GET['id']) : '';
-         
+
         // 获得用户对应收货人信息
         $consignee = model('Users')->get_consignee_list($_SESSION['user_id'], $id);
-       
+
         $province_list = model('RegionBase')->get_regions(1, $order['country']);
         $city_list = model('RegionBase')->get_regions(2, $order['province']);
         $district_list = model('RegionBase')->get_regions(3, $order['city']);
@@ -2653,7 +2662,7 @@ class UserController extends CommonController {
         $this->assign('consignee', $consignee);
         // 取得国家列表、商店所在国家、商店所在国家的省列表
         $this->assign('country_list', model('RegionBase')->get_regions());
-        
+
         $this->assign('shop_province_list', model('RegionBase')->get_regions(1, C('shop_country')));
         $this->assign('province_list', $province_list);
         //dump($province_list);
@@ -2672,7 +2681,7 @@ class UserController extends CommonController {
         $result = M()->query($sql);
         $this->assign('info', $result['0']);
         $this->assign('title', $result['0']['service_name']);
-        
+
         $this->display('user_aftermarket_apply.dwt');
     }
 
@@ -2715,7 +2724,7 @@ class UserController extends CommonController {
         $this->display('user_aftermarket_list.dwt');
     }
 
-   
+
     /**
      * 售后服务申请
      */
@@ -2792,12 +2801,12 @@ class UserController extends CommonController {
             $return_goods['goods_sn'] = $goods['goods_sn'];
             $return_goods['return_type'] = intval(I('post.service_id'));
             $return_goods['back_num'] = intval(I('post.back_num'));
-            
+
             /* 添加退货表 */
             $this->model->table('return_goods')->data($return_goods)->insert();
             $order_return = model('Users')->get_aftermarket_detail($ret_id, $this->user_id);
         }
-        
+
         $action_list = model('Order')->get_return_action($ret_id);
         $this->assign('action_list', $action_list); /* 操作记录 */
 
@@ -2827,7 +2836,7 @@ class UserController extends CommonController {
         $goods['tags'] = model('ClipsBase')->get_tags($goods['goods_id']);
         $goods['goods_thumb'] = get_image_path($goods['goods_id'], $goods['goods_thumb']);
 
-        /*服务订单 订单状态 退款状态 审核状态 语言项*/ 
+        /*服务订单 订单状态 退款状态 审核状态 语言项*/
         if ($order['return_status'] == RF_APPLICATION && $order['is_check'] == RC_APPLY_FALSE) {
             /* 状态 ： 待审核 */
             $order['return_status'] = L('wait_check');
@@ -2861,11 +2870,11 @@ class UserController extends CommonController {
 
         $ret_id = intval(I('ret_id'));
         $where['ret_id'] = $ret_id;
-        /*取消提交服务订单*/ 
+        /*取消提交服务订单*/
         $this->model->table('order_return')
                 ->data('return_status = ' . RF_CANCELED)
                 ->where($where)
-                ->update();      
+                ->update();
         $note = $action_info = L('cancel_service_mess');
         model('Order')->return_action($ret_id, RF_CANCELED, FF_NOREFOUND, RC_APPLY_FALSE, $note, L('buyer'), '', $action_info);
         $this->redirect(url('user/aftermarket_detail', array('ret_id' => $ret_id)));
@@ -2893,7 +2902,7 @@ class UserController extends CommonController {
             $consignee ['district']
         );
         $shipping_list = model('Shipping')->available_shipping_list($region);
-    
+
         $sql = "select value from ".$this->model->pre."shop_config where code='shop_country'";
         $res = $this->model->query($sql);
         $shop_country_id = $res[0]['value'];
@@ -2937,7 +2946,7 @@ class UserController extends CommonController {
             $region['city'] = $consignee['city'];
             $region['district'] = $consignee['district'];
             $shipping_info = model('Shipping')->shipping_area_info($shipping_id, $region);
-           
+
             /* 更新数据 */
             $data_u['back_invoice_no'] = $invoice_no;
             $data_u['back_shipping_name'] = $shipping_info['shipping_name'];
@@ -2963,20 +2972,20 @@ class UserController extends CommonController {
         $this->display('user_aftermarket_return.dwt');
     }
     //退换货end
-	
+
 	/*設置默認收貨地址*/
 	public function edit_address_info() {
 		if (IS_AJAX && IS_AJAX) {
             $address_id = I('id');
 			$data['address_id'] = $address_id;
             $condition['user_id'] = $this->user_id;
-			$this->model->table('users')->data($data)->where($condition)->update();	
+			$this->model->table('users')->data($data)->where($condition)->update();
 			unset($_SESSION['flow_consignee']);
             echo json_encode(array('status' => 1));
         } else {
             echo json_encode(array('status' => 0));
          }
-		 
+
 	}
-	
+
 }
