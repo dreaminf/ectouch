@@ -2306,18 +2306,11 @@ function find_address($region_name,$region_type = 0) {
                     $this->model->table('drp_shop')->data('user_id = ' . $to_user_id)->where('id = ' . $value['id'])->update();
                 }
             }
-            // 分销订单
-            $from_drp_order_info = $this->model->table('drp_order_info')->field('id')->where(array('drp_id'=> $from_user_id))->select();
-            if(!empty($from_drp_order_info)){
-                foreach ($from_drp_order_info as $key => $value) {
-                    $this->model->table('drp_order_info')->data('drp_id = ' . $to_user_id)->where('id = ' . $value['id'])->update();
-                }
-            }
             // 分销访客
-            $from_drp_drp_visiter = $this->model->table('drp_visiter')->field('id')->where(array('drp_id'=> $from_user_id))->select();
+            $from_drp_drp_visiter = $this->model->table('drp_visiter')->field('id')->where(array('user_id'=> $from_user_id))->select();
             if(!empty($from_drp_visiter)){
                 foreach ($from_drp_visiter as $key => $value) {
-                    $this->model->table('drp_visiter')->data('drp_id = ' . $to_user_id)->where('id = ' . $value['id'])->update();
+                    $this->model->table('drp_visiter')->data('user_id = ' . $to_user_id)->where('id = ' . $value['id'])->update();
                 }
             }
             // 分销资金明细
