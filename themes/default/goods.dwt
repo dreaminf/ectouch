@@ -227,7 +227,7 @@
 									<h4 class="t-remark">数量</h4>
 									<div class="div-num dis-box m-top08">
 										<a class="num-less" onClick="changePrice('1')"></a>
-										<input class="box-flex" type="text" value="1" name="number" id="goods_number" onblur="changePrice('2')" autocomplete="off"  />
+										<input class="box-flex" type="text" value="1" onkeyup="value=value.replace(/[^\d]/g,'')" name="number" id="goods_number" onblur="changePrice('2')" autocomplete="off" />
 										<a class="num-plus" onClick="changePrice('3')"></a>
 									</div>
 								</div>
