@@ -1332,13 +1332,19 @@ elseif ($_REQUEST['act'] == 'step_post')
             $goods_amount = order_amount($order_id);
             update_order($order_id, array('goods_amount' => $goods_amount));
             update_order_amount($order_id);
-
+            
             /* 更新 pay_log */
             update_pay_log($order_id);
 
             /* todo 记录日志 */
             $sn = $old_order['order_sn'];
-            $new_order = order_info($order_id);
+            $new_order = order_info($order_id);            
+            
+            /*DRP_START*/
+            /*更新佣金分成信息*/
+            update_order_sale($order_id, $sn);
+            /*DRP_END*/
+            
             if ($old_order['total_fee'] != $new_order['total_fee'])
             {
                 $sn .= ',' . sprintf($_LANG['order_amount_change'], $old_order['total_fee'], $new_order['total_fee']);

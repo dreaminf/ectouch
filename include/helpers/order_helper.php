@@ -440,7 +440,121 @@ function order_info($order_id, $order_sn = '')
 
     return $order;
 }
+/*DRP_START*/
+/**
+ * 更新分销佣金信息
+*
+ */
+function update_order_sale($order_id, $order_sn){
+    $global = getInstance();
+    if($order_id > 0)
+    {
+        $sql = "SELECT user_id FROM ". $global->ecs->table('order_info') . " WHERE order_id = '$order_id'";
+        $user_id = $global->db->getOne($sql);
+        $sql = "SELECT goods_id,goods_number FROM ". $global->ecs->table('order_goods') . " WHERE order_id = '$order_id'";
+        $goodsArr = $global->db->getAll($sql);
+        if($goodsArr){
+            // 初始化分销商三级利润
+            $sale_money = array(
+                'profit1'=>0,
+                'profit2'=>0,
+                'profit3'=>0,
+            );
+            foreach($goodsArr as $key=>$val){
+                $sql = "SELECT touch_sale FROM ". $global->ecs->table('drp_goods') . " WHERE goods_id = '$val[goods_id]'";
+                $goods_sale = $global->db->getAll($sql);
 
+                if($goods_sale){
+                    $order_touch_sale = $goods_sale['0']['touch_sale'];
+                    //  获取佣金比例
+                    $profit = get_drp_profit1($val['goods_id']);
+                    // 分销商三级利润
+                    $sale_money['profit1']+= $order_touch_sale/100*$profit['profit1']*$val['goods_number'];
+                    $sale_money['profit2']+= $order_touch_sale/100*$profit['profit2']*$val['goods_number'];
+                    $sale_money['profit3']+= $order_touch_sale/100*$profit['profit3']*$val['goods_number'];
+                }
+            }
+        }
+        $sql = "SELECT id,audit,open FROM ". $global->ecs->table('drp_shop') . " WHERE user_id = '$user_id'";        
+        $drp_id = $global->db->getRow($sql);
+        if(!empty($drp_id['id']))
+        {
+            if($drp_id['audit'] == 1 && $drp_id['open'] == 1)
+            {
+              $drp_id1 = $drp_id['id'];
+            }
+            else
+            {
+              $parent_id = $global->db->getOne("SELECT parent_id FROM ". $global->ecs->table('users') . " WHERE user_id = '$user_id'");
+              $drp_id1 = $global->db->getOne("SELECT id FROM ". $global->ecs->table('drp_shop') . " WHERE user_id = '$parent_id'");                               
+            }
+         }
+         else
+         {
+              $parent_id = $global->db->getOne("SELECT parent_id FROM ". $global->ecs->table('users') . " WHERE user_id = '$user_id'");
+              $drp_id1 = $global->db->getOne("SELECT id FROM ". $global->ecs->table('drp_shop') . " WHERE user_id = '$parent_id'");
+         }
+    }  
+         
+    // 获取订单所属店铺信息
+    $drp_id = $global->db->getOne("SELECT drp_id FROM ". $global->ecs->table('drp_order_info') . " WHERE order_id = '$order_id'");
+    if($drp_id){
+        // 本店用户id
+        $user_id = $global->db->getOne("SELECT user_id FROM ". $global->ecs->table('drp_shop') . " WHERE id = '$drp_id'");
+        if($user_id){
+             //更新自己店铺佣金金额           
+            $sql = "UPDATE " . $global->ecs->table('drp_log') . " SET user_money = '".$sale_money['profit1'] .
+                      "' , change_time = '".gmtime()."'".
+                      " , change_desc = '".'订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit1']."'". " WHERE user_id = '$user_id' AND order_id = '$order_id'";
+                  
+            $global->db->query($sql);            
+
+            // 一级用户id
+            $parent_id1 = $global->db->getOne("SELECT parent_id FROM ". $global->ecs->table('users') . " WHERE user_id = '$user_id'");
+            if($parent_id1){
+                //更新上一级佣金金额
+                $sql = "UPDATE " . $global->ecs->table('drp_log') . " SET user_money = '".$sale_money['profit2'] .
+                      "' , change_time = '".gmtime()."'".
+                      " , change_desc = '".'订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit2']."'". " WHERE user_id = '$parent_id1' AND order_id = '$order_id'";;                
+                $global->db->query($sql);
+                
+                // 二级用户id
+                $parent_id2 = $global->db->getOne("SELECT parent_id FROM ". $global->ecs->table('users') . " WHERE user_id = '$parent_id1'");
+                if($parent_id2) {
+                    //更新上二级佣金金额
+                    $sql = "UPDATE " . $global->ecs->table('drp_log') . " SET user_money = '".$sale_money['profit3'] .
+                      "' , change_time = '".gmtime()."'".
+                      " , change_desc = '".'订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit3']."'". " WHERE user_id = '$parent_id2' AND order_id = '$order_id'";                  
+                    $global->db->query($sql);
+                }
+            }
+        }
+    }
+}
+/**
+ * 获取佣金比例
+ * @param $goods_id
+ */
+function get_drp_profit1($goods_id=0){
+    if($goods_id == 0 ){
+        return false;
+    }
+    $id = $GLOBALS['db']->getOne("select cat_id from ".$GLOBALS['ecs']->table('goods') ." where goods_id = ".$goods_id);
+    $id = get_goods_cat1($id);
+    $profit = $GLOBALS['db']->getRow("select * from ".$GLOBALS['ecs']->table('drp_profit') ." where cate_id = ".$id);
+    return $profit ? $profit : false;
+}
+
+function get_goods_cat1($id){
+    $parent_id = $GLOBALS['db']->getOne("select parent_id from ".$GLOBALS['ecs']->table('category') ." where cat_id = ".$id);
+    if($parent_id==0){
+        return $id;
+    }else{
+        $id = get_goods_cat1($parent_id);
+        return $id;
+    }
+}
+/*DRP_END*/
 /**
  * 判断订单是否已完成
  * @param   array   $order  订单信息
