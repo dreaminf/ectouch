@@ -41,7 +41,7 @@ user-select:none;}
 .ect-header-banner .ect-header-text{padding-left:1.1rem; margin-top:1.1rem;}
 .ect-header-banner h4{font-size:1.5rem; line-height: 1.3rem;}
 .ect-header-banner p{font-size:1.3rem; color:#ccc;line-height: 1.9rem;}
-.ect-header-banner .btn-submit1{padding:.6rem 1rem; margin-top:-.3rem; font-size:1.3rem; margin-right:2rem; color:#fff; border-color:#1cbb7f;background:#1cbb7f;}
+.ect-header-banner .btn-submit1{padding:.6rem 1rem; margin-top:-.3rem; font-size:1.3rem; margin-right:1.3rem; color:#fff; border-color:#1cbb7f;background:#1cbb7f;}
 .ect-header-banner .btn-submit1:hover{border-color:#1cbb7f;background:#1cbb7f;}
 .index-banner{margin-top: 3.7rem;}
 html,body,.con{overflow-x:hidden;max-width:640px;margin:0 auto;}
