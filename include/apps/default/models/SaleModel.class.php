@@ -754,9 +754,10 @@ class SaleModel extends BaseModel {
                         //  获取佣金比例
                         $profit = model('Sale')->get_drp_profit($data['goods_id']);
                         // 分销商三级利润
-                        $sale_money['profit1']+= $data['touch_sale']/100*$profit['profit1']*$val['goods_number'];
-                        $sale_money['profit2']+= $data['touch_sale']/100*$profit['profit2']*$val['goods_number'];
-                        $sale_money['profit3']+= $data['touch_sale']/100*$profit['profit3']*$val['goods_number'];
+                        $sale_money['profit1']+= number_format($data['touch_sale']/100*$profit['profit1']*$val['goods_number'],2);
+                        $sale_money['profit2']+= number_format($data['touch_sale']/100*$profit['profit2']*$val['goods_number'],2);
+                        $sale_money['profit3']+= number_format($data['touch_sale']/100*$profit['profit3']*$val['goods_number'],2); 
+
                     }
                 }
             }

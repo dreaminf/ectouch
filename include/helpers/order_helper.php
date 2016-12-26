@@ -468,10 +468,10 @@ function update_order_sale($order_id, $order_sn){
                     $order_touch_sale = $goods_sale['0']['touch_sale'];
                     //  获取佣金比例
                     $profit = get_drp_profit1($val['goods_id']);
-                    // 分销商三级利润
-                    $sale_money['profit1']+= $order_touch_sale/100*$profit['profit1']*$val['goods_number'];
-                    $sale_money['profit2']+= $order_touch_sale/100*$profit['profit2']*$val['goods_number'];
-                    $sale_money['profit3']+= $order_touch_sale/100*$profit['profit3']*$val['goods_number'];
+                    // 分销商三级利润sprintf("%.2f", $num);
+                    $sale_money['profit1']+= sprintf("%.2f", $order_touch_sale/100*$profit['profit1']*$val['goods_number']);
+                    $sale_money['profit2']+= sprintf("%.2f", $order_touch_sale/100*$profit['profit2']*$val['goods_number']);
+                    $sale_money['profit3']+= sprintf("%.2f", $order_touch_sale/100*$profit['profit3']*$val['goods_number']);
                 }
             }
         }
