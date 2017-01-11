@@ -58,7 +58,7 @@ class ArticleController extends CommonController {
         $this->pageLimit(url('art_list', array('id' => $this->cat_id)), $this->size);
         $this->assign('pager', $this->pageShow($count));
         $this->assign('artciles_list', $artciles_list);
-        
+
         //处理关键词描述
         $sql = "select * from ".M()->pre."article_cat where cat_id = ".$this->cat_id;
         $cat = M()->query($sql);
@@ -68,7 +68,7 @@ class ArticleController extends CommonController {
         if (!empty($cat['0']['cat_desc'])) {
             $this->assign('meta_description',htmlspecialchars($cat['0']['cat_desc']));
         }
-        
+
         $this->display('article_list.dwt');
     }
 
@@ -119,10 +119,14 @@ class ArticleController extends CommonController {
     public function wechat_news_info() {
         /* 文章详情 */
         $news_id = intval(I('get.id'));
-        $data = $this->model->table('wechat_media')->field('title, content,file,is_show')->where('id = ' . $news_id)->find();
+        $data = $this->model->table('wechat_media')->field('title, content,file,is_show, digest')->where('id = ' . $news_id)->find();
         $data['content'] = htmlspecialchars_decode($data['content']);
         $data['image'] =  $data['is_show'] ? __URL__ . '/' . $data['file'] : '';
         $this->assign('article', $data);
+        $this->assign('page_title', $data['title']);
+        /* meta */
+        $this->assign('meta_description', htmlspecialchars($data['digest']));
+        $this->assign('page_img', htmlspecialchars($data['image']));
         $this->display('article_info.dwt');
     }
 

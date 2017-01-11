@@ -42,17 +42,17 @@ class CommonController extends BaseController
                 /*DRP_END*/
             }
         }
-        if(is_wechat_browser()){
+        if(class_exists('WechatController') && is_wechat_browser()){
             //是否显示关注按钮
             // $condition['openid'] = !empty($_SESSION['openid']) ? $_SESSION['openid'] : 0;
             $condition['ect_uid'] = !empty($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
             $userinfo = $this->model->table('wechat_user')->field('subscribe')->where($condition)->find();
             $_SESSION['subscribe'] = $userinfo['subscribe'];
             $this->assign('subscribe', $userinfo['subscribe']);
-            // 设置默认分享图片
-            $share_img = '<div style="margin:0 auto;width:0px;height:0px;overflow:hidden;"><img src="__TPL__/images/share.png"></div>';
-            $this->assign('share_img', $share_img);
+            // 判断微信通 用于JSSDK
+            $this->assign('is_wechat', 1);
         }
+        $this->assign('shop_url', dirname(__URL__));
 
         /* 语言包 */
         $this->assign('lang', L());
@@ -226,17 +226,17 @@ class CommonController extends BaseController
     *参数：&origin=app&openid=openid&token=token
     */
     private function ecjia_login(){
-		
+
 		if(isset($_GET['origin']) && $_GET['origin'] == 'app'){
 			$openid = I('get.openid');
-			$token = I('get.token');                
+			$token = I('get.token');
 			$sql= "select cu.token,u.user_name from " . $this->model->pre . "connect_user as cu LEFT JOIN "  . $this->model->pre . "users as u on cu.user_id = u.user_id where open_id = '$openid' ";
 			$user = $this->model->getRow($sql);
 			if($token == $user['token']){
 				ECTouch::user()->set_cookie($user['user_name']);
 				ECTouch::user()->set_session($user['user_name']);
 			}
-		} 
+		}
     }
 
     /*DRP_START*/

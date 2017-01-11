@@ -143,6 +143,8 @@ class GoodsController extends CommonController
         /* meta */
         $this->assign('meta_keywords', htmlspecialchars($goods['keywords']));
         $this->assign('meta_description', htmlspecialchars($goods['goods_brief']));
+        // 微信JSSDK分享图片
+        $this->assign('page_img', $goods['goods_img']);
         $this->assign('ur_here', $page_info['ur_here']);
         $this->assign('page_title', $page_info['title']);
         //组合套餐名 start

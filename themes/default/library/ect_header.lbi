@@ -16,5 +16,3 @@
 <script type="text/javascript" src="__TPL__/js/ectouch.js"></script>
 </head>
 <body>
-{$share_img}
-

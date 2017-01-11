@@ -366,7 +366,7 @@ class WechatAbstract
 		if ($this->_receive) return $this;
 		$postStr = !empty($this->postxml)?$this->postxml:file_get_contents("php://input");
 		//兼顾使用明文又不想调用valid()方法的情况
-		$this->log($postStr);
+		//$this->log($postStr);
 		if (!empty($postStr)) {
 			$this->_receive = (array)simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
 		}
@@ -1046,7 +1046,7 @@ class WechatAbstract
 			$msg = $this->_msg;
 		}
 		$xmldata=  $this->xml_encode($msg);
-		$this->log($xmldata);
+		//$this->log($xmldata);
 		if ($this->encrypt_type == 'aes') { //如果来源消息为加密方式
 		    $pc = new Prpcrypt($this->encodingAesKey);
 		    $array = $pc->encrypt($xmldata, $this->appid);
@@ -1063,7 +1063,7 @@ class WechatAbstract
 		    $signature = implode($tmpArr);
 		    $signature = sha1($signature);
 		    $xmldata = $this->generate($encrypt, $signature, $timestamp, $nonce);
-		    $this->log($xmldata);
+		    //$this->log($xmldata);
 		}
 		if ($return)
 			return $xmldata;
@@ -1632,9 +1632,9 @@ class WechatAbstract
 	/**
 	 * 上传图片，本接口所上传的图片不占用公众号的素材库中图片数量的5000个的限制。图片仅支持jpg/png格式，大小必须在1MB以下。 (认证后的订阅号可用)
 	 * 注意：上传大文件时可能需要先调用 set_time_limit(0) 避免超时
-	 * 注意：数组的键值任意，但文件名前必须加@，使用单引号以避免本地路径斜杠被转义      
+	 * 注意：数组的键值任意，但文件名前必须加@，使用单引号以避免本地路径斜杠被转义
 	 * @param array $data {"media":'@Path\filename.jpg'}
-	 * 
+	 *
 	 * @return boolean|array
 	 */
 	public function uploadImg($data){
@@ -3566,7 +3566,7 @@ class WechatAbstract
     public function applyShakeAroundDevice($data){
         if (!$this->access_token && !$this->checkAuth()) return false;
         $result = $this->http_post(self::API_BASE_URL_PREFIX . self::SHAKEAROUND_DEVICE_APPLYID . 'access_token=' . $this->access_token, self::json_encode($data));
-        $this->log($result);
+        //$this->log($result);
         if ($result) {
             $json = json_decode($result, true);
             if (!$json || !empty($json['errcode'])) {
@@ -3605,7 +3605,7 @@ class WechatAbstract
     public function updateShakeAroundDevice($data){
     	if (!$this->access_token && !$this->checkAuth()) return false;
     	$result = $this->http_post(self::API_BASE_URL_PREFIX . self::SHAKEAROUND_DEVICE_UPDATE . 'access_token=' . $this->access_token, self::json_encode($data));
-    	$this->log($result);
+    	//$this->log($result);
         if ($result) {
             $json = json_decode($result, true);
             if (!$json || !empty($json['errcode'])) {
@@ -3692,7 +3692,7 @@ class WechatAbstract
     public function searchShakeAroundDevice($data){
         if (!$this->access_token && !$this->checkAuth()) return false;
         $result = $this->http_post(self::API_BASE_URL_PREFIX . self::SHAKEAROUND_DEVICE_SEARCH . 'access_token=' . $this->access_token, self::json_encode($data));
-        $this->log($result);
+        //$this->log($result);
         if ($result) {
             $json = json_decode($result, true);
             if (!$json || !empty($json['errcode'])) {
@@ -3746,7 +3746,7 @@ class WechatAbstract
             'poi_id' => $poi_id
         );
         $result = $this->http_post(self::API_BASE_URL_PREFIX . self::SHAKEAROUND_DEVICE_BINDLOCATION . 'access_token=' . $this->access_token, self::json_encode($data));
-        $this->log($result);
+        //$this->log($result);
         if ($result) {
             $json = json_decode($result, true);
             if (!$json || !empty($json['errcode'])) {
@@ -3807,7 +3807,7 @@ class WechatAbstract
             'append' => $append
         );
         $result = $this->http_post(self::API_BASE_URL_PREFIX . self::SHAKEAROUND_DEVICE_BINDPAGE . 'access_token=' . $this->access_token, self::json_encode($data));
-        $this->log($result);
+        //$this->log($result);
         if ($result) {
             $json = json_decode($result, true);
             if (!$json || !empty($json['errcode'])) {
@@ -3883,7 +3883,7 @@ class WechatAbstract
             "comment" => $comment
         );
         $result = $this->http_post(self::API_BASE_URL_PREFIX . self::SHAKEAROUND_PAGE_ADD . 'access_token=' . $this->access_token, self::json_encode($data));
-        $this->log($result);
+        //$this->log($result);
         if ($result) {
             $json = json_decode($result, true);
             if (!$json || !empty($json['errcode'])) {
@@ -3929,7 +3929,7 @@ class WechatAbstract
             "comment" => $comment
         );
         $result = $this->http_post(self::API_BASE_URL_PREFIX . self::SHAKEAROUND_PAGE_UPDATE . 'access_token=' . $this->access_token, self::json_encode($data));
-        $this->log($result);
+        //$this->log($result);
         if ($result) {
             $json = json_decode($result, true);
             if (!$json || !empty($json['errcode'])) {
@@ -4012,7 +4012,7 @@ class WechatAbstract
             );
         }
         $result = $this->http_post(self::API_BASE_URL_PREFIX . self::SHAKEAROUND_PAGE_SEARCH . 'access_token=' . $this->access_token, self::json_encode($data));
-        $this->log($result);
+        //$this->log($result);
         if ($result) {
             $json = json_decode($result, true);
             if (!$json || !empty($json['errcode'])) {
@@ -4051,7 +4051,7 @@ class WechatAbstract
             'page_ids' => $page_ids
         );
         $result = $this->http_post(self::API_BASE_URL_PREFIX . self::SHAKEAROUND_PAGE_DELETE . 'access_token=' . $this->access_token, self::json_encode($data));
-        $this->log($result);
+        //$this->log($result);
         if ($result) {
             $json = json_decode($result, true);
             if (!$json || !empty($json['errcode'])) {
@@ -4099,7 +4099,7 @@ class WechatAbstract
         if (!$this->access_token && !$this->checkAuth()) return false;
         $data = array('ticket' => $ticket);
         $result = $this->http_post(self::API_BASE_URL_PREFIX . self::SHAKEAROUND_USER_GETSHAKEINFO . 'access_token=' . $this->access_token, self::json_encode($data));
-        $this->log($result);
+        //$this->log($result);
         if ($result) {
             $json = json_decode($result, true);
             if (!$json || !empty($json['errcode'])) {
@@ -4176,7 +4176,7 @@ class WechatAbstract
             'end_date' => $end_date
         );
         $result = $this->http_post(self::API_BASE_URL_PREFIX . self::SHAKEAROUND_STATISTICS_DEVICE . 'access_token=' . $this->access_token, self::json_encode($data));
-        $this->log($result);
+        //$this->log($result);
         if ($result) {
             $json = json_decode($result, true);
             if (!$json || !empty($json['errcode'])) {
@@ -4235,7 +4235,7 @@ class WechatAbstract
             'end_date' => $end_date
         );
         $result = $this->http_post(self::API_BASE_URL_PREFIX . self::SHAKEAROUND_STATISTICS_DEVICE . 'access_token=' . $this->access_token, self::json_encode($data));
-        $this->log($result);
+        //$this->log($result);
         if ($result) {
             $json = json_decode($result, true);
             if (!$json || !empty($json['errcode'])) {
