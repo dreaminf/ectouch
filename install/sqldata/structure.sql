@@ -588,6 +588,7 @@ CREATE TABLE IF NOT EXISTS `ecs_comment` (
   `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
   `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `order_id` mediumint(8) NOT NULL ,
+  `rec_id`  int(10) NOT NULL DEFAULT '0' ,
   PRIMARY KEY (`comment_id`),
   KEY `parent_id` (`parent_id`),
   KEY `id_value` (`id_value`)

@@ -2486,23 +2486,19 @@ class UserController extends CommonController {
      */
     public function order_comment() {
         $user_id = $this->user_id;
-          /*$sql = "select rc.rec_id from ".$this->model->pre."order_goods_comment as rc left join ".$this->model->pre."order_goods as g on g.rec_id = rc.rec_id".
-               " left join " .$this->model->pre."order_info as i on g.order_id = i.order_id";*/
-        $sql = "select comment_id from ".$this->model->pre."comment";
-
+        $sql = "select rec_id from ".$this->model->pre."comment";
         $res = $this->model->query($sql);
         $v = '';
         foreach($res as $key =>$val){
-              if($val['comment_id']){
-                $t = $val['comment_id'];
+              if($val['rec_id']){
+                $t = $val['rec_id'];
                 $v .= $t.",";
             }
-
         }
         $v = substr($v,0,-1) ;
        $sql = "select g.goods_name,g.goods_id,g.rec_id,i.add_time,g.order_id,gg.goods_img from ".$this->model->pre ."order_info as i left join ".
                 $this->model->pre."order_goods as g on i.order_id = g.order_id left join ".$this->model->pre."goods as gg on g.goods_id = gg.goods_id ".
-                "where user_id='$user_id' ".
+                "where i.user_id='$user_id' ".
                 " AND i.shipping_status " . db_create_in(array(SS_RECEIVED)).
                 " AND i.order_status " . db_create_in(array(OS_CONFIRMED, OS_SPLITED)).
                 " AND i.pay_status " . db_create_in(array(PS_PAYED, PS_PAYING));
@@ -2511,6 +2507,7 @@ class UserController extends CommonController {
             $sql .= ' AND g.rec_id NOT IN ( '. $v .' )';
         }
         $result = $this->model->query($sql);
+
         foreach ($result as $key => $vo) {
             $goods[$key]['goods_id'] = $vo['goods_id'];
             $goods[$key]['rec_id'] = $vo['rec_id'];
@@ -2520,14 +2517,14 @@ class UserController extends CommonController {
             $goods[$key]['goods_img'] = get_image_path($vo['goods_id'], $vo['goods_img']);
             $goods[$key]['url'] = url('goods/index', array('id' => $vo['goods_id']));
         }
-        //dump($goods);
         if(!$goods){
-            show_message('暂无内容');
+            show_message('暂无内容', '个人中心', url('user/index'));
         }
         $this->assign('title','待评价');
         $this->assign('goods_list',$goods);
         $this->display('user_order_comment_list.dwt');
     }
+
 
 
 	/**

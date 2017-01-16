@@ -104,9 +104,9 @@ class CommentModel extends BaseModel {
         $user_name = htmlspecialchars($user_name);
 
         /* 保存评论内容 */
-        $sql = "INSERT INTO " . $this->pre . "comment(comment_id,comment_type, id_value, email, user_name, content, comment_rank, add_time, ip_address, status, parent_id, user_id, order_id) VALUES " . "('$recId','" . $cmt->type . "', '" . $cmt->id . "', '$email', '$user_name', '" . $cmt->content . "', '" . $cmt->rank . "', " . gmtime() . ", '" . real_ip() . "', '$status', '0', '$user_id', '$order_id')";
-
+        $sql = "INSERT INTO " . $this->pre . "comment(rec_id,comment_type, id_value, email, user_name, content, comment_rank, add_time, ip_address, status, parent_id, user_id, order_id) VALUES " . "('$recId','" . $cmt->type . "', '" . $cmt->id . "', '$email', '$user_name', '" . $cmt->content . "', '" . $cmt->rank . "', " . gmtime() . ", '" . real_ip() . "', '$status', '0', '$user_id', '$order_id')";
         $result = $this->query($sql);
+
         clear_cache_files('comments_list.lbi');
         return $result;
     }
