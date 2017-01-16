@@ -490,7 +490,7 @@ CREATE TABLE IF NOT EXISTS `ecs_cart` (
 -- 表的结构 `ecs_cart_combo`
 --
 
-CREATE TABLE IF NOT EXISTS `ecs_cart_combot` (
+CREATE TABLE IF NOT EXISTS `ecs_cart_combo` (
   `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `session_id` char(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',

@@ -102,7 +102,9 @@ class ArticleController extends CommonController {
         $article_id = intval(I('get.aid'));
         $article = model('Article')->get_article_info($article_id);
         $this->assign('article', $article);
-
+        $article_goods = model('Article')->get_article_goods($article_id);
+        $this->assign('article_goods',$article_goods);
+        //dump($article_goods);
         /* 页面标题 */
         $page_info = get_page_title($article['cat_id'], $article['title']);
         $this->assign('page_title', htmlspecialchars($page_info['title']));

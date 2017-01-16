@@ -193,5 +193,43 @@ class ArticleModel extends BaseModel {
 
         return $row;
     }
+    /**
+     * 获得文章关联的商品
+     *
+     * @access  public
+     * @param   integer $article_id
+     * @return  array
+     */
+
+    function get_article_goods($article_id){
+        $sql ="SELECT g.goods_id, g.goods_name, g.goods_thumb, g.goods_img, g.shop_price AS org_price, " .
+              "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
+              "g.market_price, g.promote_price, g.promote_start_date, g.promote_end_date " .
+              "FROM ".$this->pre ."goods_article AS ga " .
+              "LEFT JOIN ".$this->pre ."goods AS g ON g.goods_id = ga.goods_id ".
+              "LEFT JOIN ".$this->pre ."member_price AS mp ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
+              "WHERE ga.article_id ='$article_id' AND g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 " .
+              "order by g.goods_id ASC limit 0, 4";
+        $res = $this->query($sql);        
+        $arr = array();
+        foreach($res as $key=>$row){
+            $arr[$key]['goods_id'] = $row['goods_id'];
+            $arr[$key]['goods_name'] = $row['goods_name'];
+            $arr[$key]['goods_thumb']   = get_image_path($row['goods_id'], $row['goods_thumb'], true);
+            $arr[$key]['short_name'] = C('goods_name_length') > 0 ? sub_str($row['goods_name'], C('goods_name_length')) : $row['goods_name'];
+            $arr[$key]['goods_img']     = get_image_path($row['goods_id'], $row['goods_img']);
+            $arr[$key]['market_price']  = price_format($row['market_price']);
+            $arr[$key]['shop_price']    = price_format($row['shop_price']);
+            $arr[$key]['url']           = url('goods/index', array('id' => $row['goods_id']));
+            /* 修正促销价格 */
+            if ($row['promote_price'] > 0) {
+                $arr[$key]['promote_price'] = bargain_price($row['promote_price'], $row['promote_start_date'], $row['promote_end_date']);
+                $arr[$key]['formated_promote_price'] = price_format($arr[$row['goods_id']]['promote_price']);
+            } else {
+                $arr[$key]['promote_price'] = 0;
+            }
+        }
+        return $arr;
+    }
 
 }
