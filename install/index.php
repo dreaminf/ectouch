@@ -250,7 +250,9 @@ switch ($step) {
 					}
 				} else {
 					//插入数据
-					$ret = mysqli_query($conn, $sql);
+					if(!empty($sql)){
+              $ret = mysqli_query($conn, $sql);
+					}
 				}
 			}
 
