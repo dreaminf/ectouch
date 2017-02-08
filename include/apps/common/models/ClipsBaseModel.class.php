@@ -939,12 +939,12 @@ class ClipsBaseModel extends BaseModel {
      * 未评价订单条件：订单全部完成
      */
     public function not_pingjia($user_id) {
-        $sql = "select rec_id from ".$this->model->pre."comment";
+        $sql = "select object_id from ".$this->model->pre."term_relationship";
         $res = $this->query($sql);        
         $v = '';
         foreach($res as $key =>$val){
-            if($val['rec_id']){
-                $t = $val['rec_id'];
+            if($val['object_id']){
+                $t = $val['object_id'];
                 $v .= $t.",";
             }
         }

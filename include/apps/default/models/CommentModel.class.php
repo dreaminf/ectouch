@@ -102,13 +102,33 @@ class CommentModel extends BaseModel {
         $user_name = empty($cmt->username) ? $_SESSION ['user_name'] : '';
         $email = htmlspecialchars($email);
         $user_name = htmlspecialchars($user_name);
+        $sql = "SELECT goods_id FROM ".$this->pre ."order_goods where rec_id = '$recId'";
+        $row = $this->row($sql);
+        $goods_id = $row['goods_id'];
 
         /* 保存评论内容 */
-        $sql = "INSERT INTO " . $this->pre . "comment(rec_id,comment_type, id_value, email, user_name, content, comment_rank, add_time, ip_address, status, parent_id, user_id, order_id) VALUES " . "('$recId','" . $cmt->type . "', '" . $cmt->id . "', '$email', '$user_name', '" . $cmt->content . "', '" . $cmt->rank . "', " . gmtime() . ", '" . real_ip() . "', '$status', '0', '$user_id', '$order_id')";
-        $result = $this->query($sql);
-
-        clear_cache_files('comments_list.lbi');
-        return $result;
+        $sql = "INSERT INTO " . $this->pre . "comment(comment_type, id_value, email, user_name, content, comment_rank, add_time, ip_address, status, parent_id, user_id) VALUES " . "('" . $cmt->type . "', '" . $cmt->id . "', '$email', '$user_name', '" . $cmt->content . "', '" . $cmt->rank . "', " . gmtime() . ", '" . real_ip() . "', '$status', '0', '$user_id')";
+        $result1 = $this->query($sql);
+        $comment_id = $this->db->lastId();
+        if($result1){
+            $sql = 'INSERT INTO ' . $this->pre . 'term_relationship ( ' .
+                'object_type, object_group, object_id, item_key1, item_value1, item_key2, item_value2'.') VALUES (' .
+                "'ecjia.comment', 'comment', '$recId', 'goods_id', '$goods_id', 'comment_id', '$comment_id')";
+            $result = $this->query($sql);
+            if($result)
+            {
+                clear_cache_files('comments_list.lbi');
+                return $result;
+            }else{
+                $sql = "DELETE FROM " . $this->pre . "comment WHERE commet_id = '" . $commet_id . "'";
+                $this->query($sql);
+                clear_cache_files('comments_list.lbi');
+                return $result;
+            }            
+        }else{
+            clear_cache_files('comments_list.lbi');
+            return $result1;
+        }        
     }
 
     /**

@@ -2486,12 +2486,12 @@ class UserController extends CommonController {
      */
     public function order_comment() {
         $user_id = $this->user_id;
-        $sql = "select rec_id from ".$this->model->pre."comment";
+        $sql = "select object_id from ".$this->model->pre."term_relationship";
         $res = $this->model->query($sql);
         $v = '';
         foreach($res as $key =>$val){
-              if($val['rec_id']){
-                $t = $val['rec_id'];
+              if($val['object_id']){
+                $t = $val['object_id'];
                 $v .= $t.",";
             }
         }
@@ -2507,7 +2507,6 @@ class UserController extends CommonController {
             $sql .= ' AND g.rec_id NOT IN ( '. $v .' )';
         }
         $result = $this->model->query($sql);
-
         foreach ($result as $key => $vo) {
             $goods[$key]['goods_id'] = $vo['goods_id'];
             $goods[$key]['rec_id'] = $vo['rec_id'];

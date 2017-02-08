@@ -64,8 +64,7 @@ class CommentController extends CommonController {
 				$this->user_id = $_SESSION['user_id'];
 				$where['user_id'] = $this->user_id;
 				$where['id_value'] = $cmt->id;
-                $sql = "select * from ".$this->model->pre."comment where user_id = ".$recId." and id_value = ".$cmt->id.
-       " and order_id =".$order_id;
+                $sql = "select * from ".$this->model->pre."comment where user_id = ".$recId." and id_value = ".$cmt->id;
 $row = $this->model->query($sql);
 if(empty($row)){
     $row = 0;
