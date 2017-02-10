@@ -261,7 +261,7 @@ class MY_FlowController extends FlowController {
 
         $parent_id = M()->table('users')->field('parent_id')->where("user_id=".$_SESSION['user_id'])->getOne();
         $order ['parent_id'] = $parent_id;
-        $order ['drp_id'] = $_SESSION['drp_shop']['drp_id'] ? $_SESSION['drp_shop']['drp_id'] : 0;;
+        $order ['drp_id'] = $_SESSION['drp_shop']['drp_id'] ? $_SESSION['drp_shop']['drp_id'] : 0;
 
         /* 插入订单表 */
         $error_no = 0;
