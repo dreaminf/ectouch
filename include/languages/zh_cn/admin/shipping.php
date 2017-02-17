@@ -35,6 +35,7 @@ $_LANG['recovery_default'] = '恢复默认';
 
 /* 快递单部分 */
 $_LANG['lable_select_notice'] = '--选择插入标签--';
+$_LANG['lable_box']['sender_name'] = '寄件人姓名';
 $_LANG['lable_box']['shop_country'] = '网店-国家';
 $_LANG['lable_box']['shop_province'] = '网店-省份';
 $_LANG['lable_box']['shop_city'] = '网店-城市';

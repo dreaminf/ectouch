@@ -476,6 +476,7 @@ elseif ($_REQUEST['act'] == 'info')
             $lable_box['t_order_best_time'] = $order['best_time']; //送货时间-订单
             $lable_box['t_pigeon'] = '√'; //√-对号
             $lable_box['t_custom_content'] = ''; //自定义内容
+            $lable_box['t_sender_name'] = $_CFG['sender_name']; //寄件人姓名
 
             //标签替换
             $temp_config_lable = explode('||,||', $shipping['config_lable']);
