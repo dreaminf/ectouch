@@ -47,7 +47,7 @@ class EcsSession {
         $this->session_data_table = $session_data_table;
 
         $this->db = &$db;
-        $this->_ip = real_ip();
+        $this->_ip = '';
 
         // 防御cc或DDOS lite
         $enable_firewall = false;
