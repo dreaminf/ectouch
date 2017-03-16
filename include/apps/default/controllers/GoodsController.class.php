@@ -205,6 +205,7 @@ class GoodsController extends CommonController
         $this->assign('show_asynclist', C('show_asynclist'));
         $count = $com['count'];
         $filter['page'] = '{page}';
+        $filter['id'] = $cmt->id;
         $offset = $this->pageLimit(url('goods/comment_list', $filter), $size);
         $offset_page = explode(',', $offset);
         $comment_list = model('Comment')->get_comment($cmt->id, $cmt->type, $pay, $offset_page[1], $offset_page[0]);
