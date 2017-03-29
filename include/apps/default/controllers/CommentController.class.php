@@ -64,7 +64,7 @@ class CommentController extends CommonController {
 				$this->user_id = $_SESSION['user_id'];
 				$where['user_id'] = $this->user_id;
 				$where['id_value'] = $cmt->id;
-                $sql = "select * from ".$this->model->pre."comment where user_id = ".$recId." and id_value = ".$cmt->id;
+                $sql = "SELECT co.comment_id from ".$this->model->pre."comment as co left join ".$this->model->pre."term_relationship as te on co.comment_id = te.item_value2"." WHERE co.id_value = '$cmt->id' AND te.object_id =".$recId;
 $row = $this->model->query($sql);
 if(empty($row)){
     $row = 0;
