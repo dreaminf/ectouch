@@ -744,7 +744,7 @@ class UserController extends CommonController {
             /*退换货 start*/
             $goods_list[$key]['ret_id'] = $this->model->table('order_return')->field('ret_id')->where('rec_id =' . $value['rec_id'])->getOne();
             $goods_list[$key]['aftermarket'] = model('Users')->check_aftermarket($value['rec_id']); //查询是否申请过售后服务
-            if ($order['pay_status'] == PS_PAYED) {
+            if ($order['shipping_status'] == SS_RECEIVED) {
                 /*只有已付款订单才能申请售后服务*/
                 $goods_list[$key]['service_apply'] = true;
             }
