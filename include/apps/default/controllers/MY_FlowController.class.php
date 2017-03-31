@@ -326,12 +326,19 @@ class MY_FlowController extends FlowController {
             $msg = $order ['pay_status'] == PS_UNPAYED ? L('order_placed_sms') : L('order_placed_sms') . '[' . L('sms_paid') . ']';
             $sms->send(C('sms_shop_mobile'), sprintf($msg, $order ['consignee'], $order ['mobile']), '', 13, 1);
         }
-        /* 如果需要，微信通知 by wanglu */
-        // if (method_exists('WechatController', 'snsapi_base') && is_wechat_browser()) {
-        //     $order_url = __HOST__ . url('user/order_detail', array('order_id' => $order ['order_id']));
-        //     $order_url = urlencode(base64_encode($order_url));
-        //     send_wechat_message('order_remind', '', $order['order_sn'] . L('order_effective'), $order_url, $order['order_sn']);
-        // }
+        /* 如果需要，微信通知订单提交成功 */
+        $message_status = M()->table('drp_config')->field('value')->where('keyword = "msg_open"')->getOne();
+        if (class_exists('WechatController') && is_wechat_browser() && $message_status=='open') {
+            $pushData = array(
+                'first' => array('value' => '您的订单已提交成功','color' => '#173177'),
+                'orderID' => array('value' => $order['order_sn'],'color' => '#FF0000'), //订单号
+                'orderMoneySum' => array('value' => $order['order_amount'],'color' => '#FF0000'), //订单金额
+                'backupFieldName' => array('value' => ''),
+                'remark' => array('value' => '请尽快完成支付，感谢您的购买！')
+            );
+            $url = __HOST__ . U('user/order_detail', array('order_id' => $new_order_id));
+            pushTemplate('TM00016', $pushData, $url);
+        }
 
         // 推送微分销模板消息
         $message_status = M()->table('drp_config')->field('value')->where('keyword = "msg_open"')->getOne();
