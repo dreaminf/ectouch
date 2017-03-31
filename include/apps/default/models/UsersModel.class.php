@@ -204,11 +204,17 @@ class UsersModel extends BaseModel {
                             model('ClipsBase')->log_account_change($up_uid, 0, 0, $affiliate['config']['level_register_all'], 0, L('register_affiliate'));
                         }
                     }
-
-                    //设置推荐人
-                    $sql = 'UPDATE ' . $this->pre . 'users SET parent_id = ' . $up_uid . ' WHERE user_id = ' . $_SESSION['user_id'];
-
-                    $this->query($sql);
+                    /*DRP_START*/
+                    $sql = "SELECT id FROM " . $this->pre . "drp_shop where user_id = ".$up_uid;
+                    $res = $this->row($sql);
+                    if(!empty($res)){
+                    /*DRP_END*/
+                        //设置推荐人
+                        $sql = 'UPDATE ' . $this->pre . 'users SET parent_id = ' . $up_uid . ' WHERE user_id = ' . $_SESSION['user_id'];
+                        $this->query($sql);
+                    /*DRP_START*/
+                    }
+                    /*DRP_END*/
                 }
             }
 
