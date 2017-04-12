@@ -175,14 +175,18 @@ elseif ($_REQUEST['act'] =='insert_update')
                     "AND extension_id = '$group_buy_id' " .
                     "AND (order_status = '" . OS_CONFIRMED . "' or order_status = '" . OS_UNCONFIRMED . "')";
             $order_id_list = $db->getCol($sql);
-
+          
             /* 更新订单商品价 */
             $final_price = $group_buy['trans_price'];
             $sql = "UPDATE " . $ecs->table('order_goods') .
                     " SET goods_price = '$final_price' " .
                     "WHERE order_id " . db_create_in($order_id_list);
             $db->query($sql);
-
+            /*更新团购付款pay_log信息*/
+            $sql = "UPDATE " . $ecs->table('pay_log') .
+                    " SET is_paid = '0' " .
+                    "WHERE order_id " . db_create_in($order_id_list);
+            $db->query($sql);
             /* 查询订单商品总额 */
             $sql = "SELECT order_id, SUM(goods_number * goods_price) AS goods_amount " .
                     "FROM " . $ecs->table('order_goods') .
