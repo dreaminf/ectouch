@@ -81,7 +81,14 @@ class Uploader {
         } else if (!is_uploaded_file($file['tmp_name'])) {
             $this->stateInfo = $this->getStateInfo("ERROR_TMPFILE");
             return;
+        } else if (is_file($file['tmp_name'])){
+             $info = getimagesize($file['tmp_name']);
+             if(!$info){
+                $this->stateInfo = $this->getStateInfo("ERROR_TYPE_NOT_ALLOWED");
+                return;
+             }
         }
+
 
         $this->oriName = $file['name'];
         $this->fileSize = $file['size'];
