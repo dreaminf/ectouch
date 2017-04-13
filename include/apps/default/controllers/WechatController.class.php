@@ -722,7 +722,7 @@ class WechatController extends CommonController
             if (! isset($_SESSION['redirect_url'])) {
                 $callback = __HOST__ . $_SERVER['REQUEST_URI'];
             }
-            $url = url('user/third_login', array('type'=>'weixin', 'backurl'=> $callback));
+            $url = url('user/third_login', array('type'=>'weixin', 'backurl'=> $callback), $org_mode == 'org_mode' );
             header("Location: ".$url);
             exit;
         }

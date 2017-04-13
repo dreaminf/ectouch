@@ -501,8 +501,8 @@ function urlRoute() {
  * @param unknown $params
  * @return Ambigous <string, mixed>|string
  */
-function url($route = 'index/index', $params = array()) {
-	return U($route, $params);
+function url($route = 'index/index', $params = array(), $org_mode = '') {
+    return U($route, $params, true, false, $org_mode);
 }
 
  /**
@@ -513,7 +513,7 @@ function url($route = 'index/index', $params = array()) {
  * @param boolean $domain 是否显示域名
  * @return string
  */
-function U($url='',$vars='',$suffix=true,$domain=false) {
+function U($url='',$vars='',$suffix=true,$domain=false,$org_mode='') {
     // 解析URL
     $info   =  parse_url($url);
     $url    =  !empty($info['path'])?$info['path']:ACTION_NAME;
@@ -611,7 +611,7 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
         }
     }
 
-    if(C('URL_MODEL') == 0) { // 普通模式URL转换
+    if(C('URL_MODEL') == 0 || $org_mode == 'org_mode') { // 普通模式URL转换
         $url        =   __APP__.'?'.$varModule."={$module}&".http_build_query(array_reverse($var), '', '&');
         if($urlCase){
             $url    =   strtolower($url);
