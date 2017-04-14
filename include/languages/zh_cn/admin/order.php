@@ -357,7 +357,7 @@ $_LANG['label_refund_note'] = '退款说明：';
 $_LANG['return_user_money'] = '退回用户余额';
 $_LANG['create_user_account'] = '生成退款申请';
 $_LANG['not_handle'] = '不处理，误操作时选择此项';
-
+$_LANG['return_account'] = '资金原路退回';
 $_LANG['order_refund'] = '订单退款：%s';
 $_LANG['order_pay'] = '订单支付：%s';
 

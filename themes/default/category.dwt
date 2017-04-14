@@ -14,7 +14,7 @@
 							<input class="j-input-text" type="text" placeholder="请输入您搜索的关键词!">
 							<i class="iconfont icon-guanbi1 is-null j-is-null"></i>
 						</div>
-						<a class="a-sequence j-a-sequence"><i class="iconfont icon-pailie" data="1"></i></a>
+						<a class="a-sequence j-a-sequence"><i class="iconfont icon-viewlist" data="2"></i></a>
 					</div>
 				</section>
 				<!-- #BeginLibraryItem "/library/new_goods_list.lbi" --><!-- #EndLibraryItem -->
@@ -55,7 +55,7 @@ $('#hide-div').delay(1500).hide(0);
 		$("#slider-range-amount").text(price_min + " ~ " + price_max);
 	}();
 
-	var url = '{:url('category/async_list', array('id'=>$this->_var['id'], 'type'=>$this->_var['type'], 'brand'=>$this->_var['brand_id'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keywords'=>$this->_var['keywords']))}';
+	var url = '{:url('category/async_list', array('id'=>$this->_var['id'],'tc_id'=>$this->_var['tc_id'],'type'=>$this->_var['type'], 'brand'=>$this->_var['brand_id'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keywords'=>$this->_var['keywords']))}';
 	var total = 0;
 	var page = localData.get('cat_{$id}_page');
 	page = (page === null) ? 1:parseInt(page);

@@ -191,12 +191,109 @@ function insert_ads($arr) {
     return html_entity_decode($val);
 }
 
+
+/**
+ * 调用指定频道的广告位的广告
+ *
+ * @access  public
+ * @param   integer $id     广告位ID
+ * @param   integer $num    广告数量
+ * @param   integer $tc_id    频道id
+ * @param   integer $type     频道广告位类型
+ * @return  string
+ */
+
+function insert_teads($arr) {
+    static $static_res = NULL;
+    $time = gmtime();
+    if (!empty($arr['num']) && $arr['num'] != 1) {
+        
+        if(!empty($arr['tc_id']) && $arr['tc_id']>0){
+            $where .=" and p.tc_id = '" . $arr['tc_id']."' and p.tc_type = '" . $arr['type']."' " ;
+        }else{
+            $where .= '';
+        }
+        $sql = 'SELECT a.ad_id, a.position_id, a.media_type, a.ad_link, a.ad_code, a.ad_name, p.ad_width, ' .
+                'p.ad_height, p.position_style,p.tc_id ' .
+                'FROM ' . M()->pre . 'ad ' . ' AS a ' .
+                'LEFT JOIN ' . M()->pre . 'ad_position ' . ' AS p ON a.position_id = p.position_id ' .
+                "WHERE enabled = 1 AND start_time <= '" . $time . "' AND end_time >= '" . $time . "' $where " .
+                //"AND a.position_id = '" . $arr['id'] . "' $where " .
+                'ORDER BY a.ad_id LIMIT ' . $arr['num'];
+        $res = M()->query($sql);
+    }else {
+        if(!empty($arr['tc_id']) && $arr['tc_id']>0){
+            $where .=" and p.tc_id = '" . $arr['tc_id']."' and p.tc_type = '" . $arr['type']."' " ;
+        }else{
+            $where .= '';
+        }
+        $sql = 'SELECT a.ad_id, a.position_id, a.media_type, a.ad_link, a.ad_code, a.ad_name, p.ad_width, ' .
+                'p.ad_height, p.position_style,p.tc_id  ' .
+                'FROM ' . M()->pre . 'ad ' . ' AS a ' .
+                'LEFT JOIN ' . M()->pre . 'ad_position' . ' AS p ON a.position_id = p.position_id ' .
+                //"WHERE enabled = 1 AND a.position_id = '" . $arr['id'] .
+                "WHERE enabled = 1  AND start_time <= '" . $time . "' AND end_time >= '" . $time . "' $where " .
+                'ORDER BY a.ad_id LIMIT 1';
+        $static_res[$arr['tc_id']] = M()->query($sql);   
+        $res = $static_res[$arr['tc_id']];
+    }
+    $ads = array();
+    $position_style = '';
+    foreach ($res AS $row) {
+        /* if ($row['position_id'] != $arr['id']) {
+            continue;
+        } */
+        $position_style = $row['position_style'];
+        switch ($row['media_type']) {
+            case 0: // 图片广告
+                $src = (strpos($row['ad_code'], 'http://') === false && strpos($row['ad_code'], 'https://') === false) ?
+                    get_data_path($row['ad_code'], 'afficheimg') : $row['ad_code'];
+                $ads[] = "<a href='" . url('default/affiche/index', array('ad_id' => $row['ad_id'], 'uri' => urlencode($row["ad_link"]))) . "' 
+                target='_blank'><img src='$src' border='0' /></a>";
+                break;
+            case 1: // Flash
+                $src = (strpos($row['ad_code'], 'http://') === false && strpos($row['ad_code'], 'https://') === false) ?
+                    get_data_path($row['ad_code'], 'afficheimg') : $row['ad_code'];
+                $ads[] = "<object classid=\"clsid:d27cdb6e-ae6d-11cf-96b8-444553540000\" " .
+                        "codebase=\"http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0\"  " .
+                        "width='$row[ad_width]' height='$row[ad_height]'>
+                           <param name='movie' value='$src'>
+                           <param name='quality' value='high'>
+                           <embed src='$src' quality='high'
+                           pluginspage='http://www.macromedia.com/go/getflashplayer'
+                           type='application/x-shockwave-flash' width='$row[ad_width]'
+                           height='$row[ad_height]'></embed>
+                         </object>";
+                break;
+            case 2: // CODE
+                $ads[] = $row['ad_code'];
+                break;
+            case 3: // TEXT
+                $ads[] = "<a href='" . url('default/affiche/index', array('ad_id' => $row['ad_id'], 'uri' => urlencode($row["ad_link"]))) . "'
+                target='_blank'>" . htmlspecialchars($row['ad_code']) . '</a>';
+                break;
+        }
+    }
+    $position_style = 'str:' . $position_style;
+
+    $need_cache = ECTouch::view()->caching;
+    ECTouch::view()->caching = false;
+
+    ECTouch::view()->assign('ads', $ads);
+    $val = ECTouch::view()->fetch($position_style);
+
+    ECTouch::view()->caching = $need_cache;
+
+    return html_entity_decode($val);
+}
+
 /**
  * 调用会员信息
  *
  * @access  public
  * @return  string
  */
+
 function insert_member_info() {
     $need_cache = ECTouch::view()->caching;
     ECTouch::view()->caching = false;

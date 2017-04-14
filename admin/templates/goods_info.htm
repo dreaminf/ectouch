@@ -19,9 +19,9 @@
         class="tab-back" id="detail-tab">{$lang.tab_detail}</span><span
         class="tab-back" id="mix-tab">{$lang.tab_mix}</span>{if $goods_type_list}<span
         class="tab-back" id="properties-tab">{$lang.tab_properties}</span>{/if}<span
-        class="tab-back" id="gallery-tab">{$lang.tab_gallery}</span><span
-        class="tab-back" id="linkgoods-tab">{$lang.tab_linkgoods}</span>{if $code eq ''}<span
-        class="tab-back" id="groupgoods-tab">{$lang.tab_groupgoods}</span>{/if}<!-- <span
+        class="tab-back" id="gallery-tab">{$lang.tab_gallery}</span><!-- <span
+        class="tab-back" id="linkgoods-tab">{$lang.tab_linkgoods}</span>{if $code eq ''} --><!--<span
+        class="tab-back" id="groupgoods-tab">{$lang.tab_groupgoods}</span>{/if} <span
         class="tab-back" id="article-tab">{$lang.tab_article}</span> -->
       </p>
     </div>
@@ -97,7 +97,7 @@
          {/if}
           <tr>
             <td class="label">{$lang.lab_shop_price}</td>
-            <td><input type="text" name="shop_price" value="{$goods.shop_price}" size="20" onchange="priceSetted()"/>
+            <td><input type="text" name="shop_price" value="{$goods.shop_price}" size="20" onblur="priceSetted()"/>
             <input type="button" value="{$lang.compute_by_mp}" onclick="marketPriceSetted()" />
             {$lang.require_field}</td>
           </tr>
@@ -151,8 +151,7 @@
               <span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="volumePrice">{$lang.notice_volume_price}</span>
             </td>
           </tr>
-          <!--鍟嗗搧浼樻儬浠锋牸 end -->
-
+  
           <tr>
             <td class="label">{$lang.lab_market_price}</td>
             <td><input type="text" name="market_price" value="{$goods.market_price}" size="20" />
@@ -164,7 +163,50 @@
             <td><input type="text" name="virtual_sales" value="{$goods.virtual_sales}" size="20" />
             </td>
           </tr>
+         <!--拼团s--> 
+            <tr>
+			<td class="label"><label for="is_team"><input type="checkbox" id="is_team" name="is_team" value="1" {if $goods.is_team}checked="checked"{/if} onclick="handleTeam(this.checked);" /> 拼团价格</label></td>
+            <!-- <td class="label">拼团价格</td> -->
+            <td><input type="text" name="team_price" value="{$goods.team_price}" size="20" />{$lang.require_field}
+           选择拼团购买时的商品价格 </td>
+         
+          </tr>
+        
+                 <tr>
+            <td class="label">最多几人团</td>
+            <td><input type="text" name="team_num" value="{$goods.team_num}" size="20" />{$lang.require_field}
+            此商品的成团人数 </td>
+            
+          </tr>
+                <tr>
+            <td class="label">虚拟已参团人数</td>
+            <td><input type="text" name="limit_num" value="{$goods.limit_num}" size="20" />
+                &nbsp;&nbsp;&nbsp;&nbsp;已参团人数将会影响商品在“排行-热销”中的顺序</td>
+          </tr>
+                 <tr>
+            <td class="label">开团有效期（小时）</td>
+            <td>
+               <input type="text" name="validity_time" value="{$goods.validity_time}" size="20" />{$lang.require_field}
+            团长开团成功后开始倒计时</td>
+          </tr>
+                 <tr>
+            <td class="label">拼团限购数量</td>
+            <td><input type="text" name="astrict_num" value="{$goods.astrict_num}" size="20" />{$lang.require_field}
+           每位参团人员（包括团长）的限购数量 </td>
+          </tr>
+
+           <tr>
+        <td class="narrow-label">拼团频道</td>
+        <td>
+          <select name="tc_id" onchange="catChanged()">
+            <option value="0">请选择频道</option>
+            {$team_list}
+          </select>
+         {$lang.require_field}</td>
+      </tr>
+         <!--拼团e--> 
           <tr>
+              
             <td class="label"><a href="javascript:showNotice('giveIntegral');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a> {$lang.lab_give_integral}</td>
             <td><input type="text" name="give_integral" value="{$goods.give_integral}" size="20" />
             <br /><span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="giveIntegral">{$lang.notice_give_integral}</span></td>
@@ -469,6 +511,7 @@
   onload = function()
   {
       handlePromote(document.forms['theForm'].elements['is_promote'].checked);
+	  handleTeam(document.forms['theForm'].elements['is_team'].checked);
 
       if (document.forms['theForm'].elements['auto_thumb'])
       {
@@ -700,6 +743,16 @@
       document.forms['theForm'].elements['promote_price'].disabled = !checked;
       document.forms['theForm'].elements['selbtn1'].disabled = !checked;
       document.forms['theForm'].elements['selbtn2'].disabled = !checked;
+  }
+  
+   //是否开启拼团
+  function handleTeam(checked)
+  {
+      document.forms['theForm'].elements['team_price'].disabled = !checked;
+      document.forms['theForm'].elements['team_num'].disabled = !checked;
+      document.forms['theForm'].elements['limit_num'].disabled = !checked;
+	  document.forms['theForm'].elements['validity_time'].disabled = !checked;
+	  document.forms['theForm'].elements['astrict_num'].disabled = !checked;
   }
 
   function handleAutoThumb(checked)

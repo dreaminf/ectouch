@@ -130,6 +130,7 @@ function addToCartResponse(result) {
                     location.href = cart_url;
                     break;
                 default :
+					layer.msg('成功加入购物车');
                     break;
             }
             //showDiv();

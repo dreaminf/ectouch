@@ -1,8 +1,10 @@
-
-<div class="ect-padding-tb text-right" id="ECS_ORDERTOTAL">
+<section class="n-checkout-money-box m-top10 b-color-f" id="ECS_ORDERTOTAL">
+	<h4>商品金额</h4>
+<div class="n-checkout-money-list text-right" >
   <!-- {if $smarty.session.user_id > 0 and ( C('use_integral') or C('use_bonus') )} --> 
   {$lang.complete_acquisition} 
   <!-- {if C('use_integral')} 是否使用积分-->
+
   <b class="ect-colory">{$total.will_get_integral}</b>
   {$points_name} 
   <!-- {/if} --> 
@@ -75,3 +77,4 @@
   {$lang.notice_eg_integral}<b class="ect-colory">{$total.exchange_integral}</b><br />
   <!--{/if}--> 
 </div>
+	</section>

@@ -18,14 +18,14 @@ defined('IN_ECTOUCH') or die('Deny Access');
 class MycrowdModel extends BaseModel {
 
 	/**
-     * 获取推荐众筹     
+     * 获取推荐众筹
      */
-	function recom_list(){	
-		$now = time();	
+	function recom_list(){
+		$now = time();
 		$sql = 'SELECT goods_id, cat_id, goods_name, goods_img, sum_price, start_time, end_time '.'FROM '
 		. $this->pre . 'crowd_goods ' . "WHERE is_verify = 1 AND start_time <= '$now' AND end_time >= '$now' and recommend = 1 order by sort_order DESC ";
         $res = $this->query($sql);
-		
+
 		$goods = array();
         foreach ($res AS $key => $row) {
             $goods[$key]['id'] = $row['goods_id'];
@@ -44,32 +44,32 @@ class MycrowdModel extends BaseModel {
         }
         return $goods;
 	}
-	
-	
-	
-	/**
-     * 获取关注众筹列表    
-     */
-	function like_list($user_id = 0, $type= 0){	
 
+
+
+	/**
+     * 获取关注众筹列表
+     */
+	function like_list($user_id = 0, $type= 0,$page=1,$size =10){
+
+        $now = gmtime();
 		switch($type){
             case 1:
             $where = " ";                  //全部
             break;
             case 2:
-            $where = " AND g.status < 1";  //进行中
+            $where = " AND g.status < 1 and $now < g.end_time ";  //进行中
             break;
             case 3:
             $where = " AND g.status = 1";  //已成功
             break;
             case 4:
-            $where = " AND g.status = 2";  //已失败
+            $where = " AND g.status > 1 or ($now > g.end_time and g.status != 1) ";  //已失败
             break;
         }
-		
-		$now = time();	
+        $start = ($page - 1) * $size;
 		$sql = 'SELECT g.goods_id, g.cat_id, g.goods_name, g.goods_img, g.sum_price, g.start_time, g.end_time,g.status  '.'FROM '
-		. $this->pre . 'crowd_goods as g left join ' . $this->pre  ."crowd_like as cl" . " on g.goods_id=cl.goods_id " . " WHERE g.is_verify = 1 $where AND g.start_time <= '$now' AND g.end_time >= '$now' and cl.user_id = '$user_id'  order by g.sort_order DESC ";
+		. $this->pre . 'crowd_goods as g left join ' . $this->pre  ."crowd_like as cl" . " on g.goods_id=cl.goods_id " . " WHERE g.is_verify = 1 $where  and cl.user_id = '$user_id'  order by g.sort_order DESC LIMIT $start , $size";
 
         $res = $this->query($sql);
 		$goods = array();
@@ -86,34 +86,39 @@ class MycrowdModel extends BaseModel {
 			$goods[$key]['bar'] = $goods[$key]['total_price']*100/$row['sum_price'];
 			$goods[$key]['bar'] = round($goods[$key]['bar'],1); //计算百分比
 			$goods[$key]['min_price'] = $this->plan_min_price($row['goods_id']); //获取方案最低价格
-			$goods[$key]['status'] = $row['status'];
+			if( $row['status']>1 || ($now >$row['end_time'] && $row['status'] != 1 )){
+                $goods[$key]['status'] = 2;
+            }else{
+                $goods[$key]['status'] = $row['status'];
+            }
         }
         return $goods;
 	}
-	
-	
-	/**
-     * 我支持的众筹列表     
-     */
-	function crowd_buy_list($user_id = 0, $type= 0){	
 
+
+	/**
+     * 我支持的众筹列表
+     */
+	function crowd_buy_list($user_id = 0, $type= 0,$page=1,$size =10){
+
+        $now = gmtime();
 		switch($type){
             case 1:
             $where = " ";                  //全部
             break;
             case 2:
-            $where = " AND g.status < 1";  //进行中
+            $where = " AND g.status < 1 and $now < g.end_time ";  //进行中
             break;
             case 3:
             $where = " AND g.status = 1";  //已成功
             break;
             case 4:
-            $where = " AND g.status = 2";  //已失败
+            $where = " AND g.status > 1 or ($now > g.end_time and g.status != 1) "  ;  //已失败
             break;
         }
+        $start = ($page - 1) * $size;
+		$sql = "SELECT distinct g.goods_id, g.cat_id, g.goods_name, g.goods_img, g.sum_price, g.start_time,g.end_time,g.status  FROM ". $this->pre ."crowd_order_info as o right join  ". $this->pre ."crowd_goods as g on o.goods_id = g.goods_id". " WHERE o.user_id = '$user_id' $where and  o.extension_code = 'crowd_buy' LIMIT $start , $size ";
 
-		$sql = "SELECT distinct g.goods_id, g.cat_id, g.goods_name, g.goods_img, g.sum_price, g.start_time,g.end_time,g.status  FROM ". $this->pre ."crowd_order_info as o left join  ". $this->pre ."crowd_goods as g on o.goods_id = g.goods_id". " WHERE o.user_id = '$user_id' $where and  o.extension_code = 'crowd_buy' ";
-		
         $res = $this->query($sql);
 		$goods = array();
         foreach ($res AS $key => $row) {
@@ -130,15 +135,20 @@ class MycrowdModel extends BaseModel {
 			$goods[$key]['bar'] = $goods[$key]['total_price']*100/$row['sum_price'];
 			$goods[$key]['bar'] = round($goods[$key]['bar'],1); //计算百分比
 			$goods[$key]['min_price'] = $this->plan_min_price($row['goods_id']); //获取方案最低价格
-			$goods[$key]['status'] = $row['status'];
+            if( $row['status']>1 || ($now >$row['end_time'] && $row['status'] != 1 )){
+                $goods[$key]['status'] = 2;
+            }else{
+                $goods[$key]['status'] = $row['status'];
+            }
+
         }
         return $goods;
 	}
-	
+
 	/**
-     * 获取详情    
+     * 获取详情
      */
-	function crowd_user_orders($user_id, $pay = 1, $num = 10, $start = 0){		
+	function crowd_user_orders($user_id, $pay = 1, $num = 10, $start = 0){
 		/* 取得订单列表 */
 
         $arr = array();
@@ -182,19 +192,19 @@ class MycrowdModel extends BaseModel {
                 }
             } else {
                 //$value['handler'] = '<span>' . L('os.' . $value['order_status']) . '</span>';
-				$value['handler'] = "<a href=\"" . '#' . "\"class=\" btn-default \">" . L('os.' . $value['order_status']) . "</a>";
+				$value['handler'] = "<a class=\" btn-default \">" . L('os.' . $value['order_status']) . "</a>";
             }
 
             $value['shipping_status'] = ($value['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $value['shipping_status'];
             $value['status'] = L('os.' . $value['order_status']) . ',' . L('ps.' . $value['pay_status']) . ',' . L('ss.' . $value['shipping_status']);
-			
+
 			// 订单详情
 			$order = model('Mycrowd')->get_order_detail($value['order_id'], $user_id);
 
 			// 订单信息
 			$sql = "SELECT og.goods_name,og.goods_id,og.goods_number,og.goods_price,cp.name FROM ". $this->pre ."crowd_order_info as og left join  ". $this->pre ."crowd_plan as cp on og.cp_id = cp.cp_id " . " WHERE og.order_id = '".$value['order_id']."' ";
 			$res = $this->row($sql);
-			
+
 			// 验证是否评论
 			if ($_SESSION ['user_id']) {
 				$where['user_id'] = $_SESSION ['user_id'];
@@ -206,7 +216,7 @@ class MycrowdModel extends BaseModel {
 					$rs = '';
 				}
 			}
-			
+
 
             $arr[] = array(
                 'order_id' => $value['order_id'],
@@ -236,7 +246,7 @@ class MycrowdModel extends BaseModel {
 
         return $arr;
 	}
-	
+
 	/**
     * 获取订单商品的数量
     * @param type $order_id
@@ -265,9 +275,9 @@ class MycrowdModel extends BaseModel {
         $res = $this->row($sql);
         return $res['num'];
     }
-	
-	
-	
+
+
+
 	/**
     * 获取订单商品的缩略图
     * @param type $order_id
@@ -275,20 +285,20 @@ class MycrowdModel extends BaseModel {
     */
     function order_thumb($order_id) {
 
-        $arr = $this->row("SELECT g.goods_img FROM " . $this->model->pre . "crowd_order_info as og left join " . $this->model->pre . "crowd_goods g on og.goods_id = g.goods_id WHERE og.order_id = " . $order_id . " limit 1");		
+        $arr = $this->row("SELECT g.goods_img FROM " . $this->model->pre . "crowd_order_info as og left join " . $this->model->pre . "crowd_goods g on og.goods_id = g.goods_id WHERE og.order_id = " . $order_id . " limit 1");
         return $arr['goods_img'];
     }
-	
+
 	/**
-     * 获取方案最低价格     
+     * 获取方案最低价格
      */
-	function plan_min_price($goods_id = 0){		
+	function plan_min_price($goods_id = 0){
 		$sql = 'SELECT min(shop_price) as price '.'FROM '
 		. $this->model->pre . 'crowd_plan ' . "WHERE status = 1 and goods_id = '$goods_id'  ";
         $res = $this->row($sql);
         return $res['price'];
 	}
-	
+
 	 /**
      *  获取指订单的详情
      *
@@ -434,7 +444,7 @@ class MycrowdModel extends BaseModel {
         } else {
             $order['shipping_time'] = '';
         }
-		
+
 		 // 订单 支付 配送 状态语言项
         /* $order['order_status'] = L('os.' . $order['order_status']);
         $order['pay_status'] = L('ps.' . $order['pay_status']);
@@ -442,7 +452,7 @@ class MycrowdModel extends BaseModel {
 
         return $order;
     }
-	
+
 	/**
      * 获取订单商品详情
      */
@@ -454,7 +464,7 @@ class MycrowdModel extends BaseModel {
             $row['goods_name'] = $row['goods_name'];
             $row['buy_num'] = model('Crowdfunding')->crowd_buy_num($row['goods_id']);
 			$row['time'] = floor(($row['end_time']-$row['start_time'])/86400);
-			$row['start_time'] =floor((time()-$row['start_time'])/86400);				
+			$row['start_time'] =floor((time()-$row['start_time'])/86400);
 			//$row['shiping_time'] = local_date(C('time_format'), $row['shiping_time']);
 			$row['shiping_time'] =  $row['shiping_time'];
 			$row['sum_price'] = $row['sum_price'];
@@ -469,7 +479,7 @@ class MycrowdModel extends BaseModel {
 				$row['avatar'] = $wechat_user['headimgurl'];
 			}else{
 				$row['user_name'] =  $_SESSION['user_name'];
-				$row['avatar'] = '';				
+				$row['avatar'] = '';
 			}
 
             return $row;
@@ -477,7 +487,7 @@ class MycrowdModel extends BaseModel {
             return false;
         }
 	}
-	
+
 	 /**
      * 取得订单信息
      * @param   int     $order_id   订单id（如果order_id > 0 就按id查，否则按sn查）
@@ -518,8 +528,8 @@ class MycrowdModel extends BaseModel {
 
         return $order;
     }
-	
-	
+
+
 	 /**
      * 取消一个用户订单
      *
@@ -611,7 +621,7 @@ class MycrowdModel extends BaseModel {
             die(M()->errorMsg());
         }
     }
-	
+
 	 /**
      * 修改订单
      * @param   int     $order_id   订单id
@@ -621,9 +631,9 @@ class MycrowdModel extends BaseModel {
     function update_order($order_id, $order) {
         $this->table = 'crowd_order_info';
         $condition['order_id'] = $order_id;
-        
+
         $res = $this->query('DESC ' . $this->pre . $this->table);
-        
+
         while ($row = mysqli_fetch_row($res)) {
             $field_names[] = $row[0];
         }
@@ -634,8 +644,8 @@ class MycrowdModel extends BaseModel {
         }
         return $this->update($condition, $order_info);
     }
-	
-	
+
+
 	 /**
      * 确认一个用户订单
      *
@@ -678,22 +688,22 @@ class MycrowdModel extends BaseModel {
             }
         }
     }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

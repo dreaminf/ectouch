@@ -87,8 +87,10 @@ class BaseController extends Controller {
         if(C('rewrite') > 0){
             C('URL_MODEL', 2);
         }
-
+        define('DATA_DIR', self::$ecs->data_dir());
+        define('IMAGE_DIR', self::$ecs->image_dir());
         $this->load = new Loader();
+
     }
 
     //载入函数、语言文件

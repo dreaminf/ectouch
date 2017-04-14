@@ -1,69 +1,82 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem --> 
 <script type="text/javascript" src="__TPL__/js/lefttime.js"></script>
-<div class="con">
-  <div class="ect-bg">
-    <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$lang.groupbuy_goods_info}</span> <a href="javascript:;"  onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a></header>
-    <nav class="ect-nav ect-nav-list" style="display:none;"> <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --> </nav>
-  </div>
+<div class="con m-b8">
+ <header class="dis-box header-menu header-menu-1 b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
+	<h3 class="box-flex">团购详情</h3>
+	<p><i class="iconfont icon-pailie j-nav-box"></i></p>
+</header>
+<div class="j-nav-content">
+	<ul class="dis-box new-footer-box new-footer-box-1">
+		<li class="box-flex">
+			<a href="{:url('index/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/home.png"></i><span>首页</span></a>
+		</li>
+		<li class="box-flex">
+			<a href="{:url('category/top_all')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/cate.png"></i><span>分类</span></a>
+			<li class="box-flex"><a href="javascript:;" class="nav-cont j-search-input"><i class="nav-box"><img src="__TPL__/statics/img/search.png"></i><span>搜索</span></a></li>
+			<li class="box-flex"><a href="{:url('flow/cart')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/flow.png"></i><span>购物车</span></a></li>
+			<li class="box-flex"><a href="{:url('user/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/user.png"></i><span>用户中心</span></a></li>
+	</ul>
+</div>
+  <div class="index-banner swiper-container box position-rel banner-first goods-banner j-goods-box" style="margin-top:0rem;">
+					<div class="swiper-wrapper">
+						<!--商品相册-->
+						<!--{if $pictures}-->
+						<!-- {foreach from=$pictures item=picture name=no}-->
+						<div class="swiper-slide" id="img-photo-box">
+							<img src="{$picture.img_url}" />
+						</div>
+						<!--{/foreach}-->
+						<!--{else}-->
+						<div class="swiper-slide" id="img-photo-box">
+							<img src="{$goods.goods_img}" />
+						</div>
+						<!--{/if}-->
 
-  <!--商品图片相册-->
-  <div id="focus" class="focus goods-focus ect-padding-lr ect-margin-tb">
-    <div class="hd">
-      <ul>
-      </ul>
-    </div>
-    <div class="bd">
-      <ul id="Gallery">
-        <!--{if $pictures }--> 
-        <!-- {foreach from=$pictures item=picture name=no}-->
-        <li><a href="{$picture.img_url}"><img src="{$picture.img_url}" alt="{$picture.img_desc}" /></a></li>
-        <!--{/foreach}--> 
-		<!--{else}-->
-		<li><a href="{$gb_goods.goods_img}"><img src="{$gb_goods.goods_img}" alt="{$gb_goods.goods_name}" /></a></li>
-        <!--{/if}-->
-      </ul>
-    </div>
-  </div>
+					</div>
+					<div class="swiper-pagination banner-first-pagination"></div>
+			</div>
   <!--商品属性介绍-->
-  <div class="goods-info ect-padding-tb">
-    <section class="ect-margin-tb ect-margin-lr">
+  <div class="goods-info ect-padding-tb" style="background:none">
+    <section class="b-color-f padding-all">
       <h4 class="title pull-left" style="position:static;">{$gb_goods.goods_name}</h4>
       </section>
-    <section class="ect-margin-tb ect-margin-lr ">
-      <p><span class="pull-left">{$lang.gb_cur_price}<strong class="ect-colory">{$group_buy.formated_cur_price}</strong></span><span class="pull-right">{$lang.sort_sales}：{$sales_count} 件</span></p>
+    <section class=" group-list-cont b-color-f">
+      <p><span class="pull-left">{$lang.gb_cur_price}<label class="ect-colory">{$group_buy.formated_cur_price}</label></span><span class="pull-right">{$lang.sort_sales}：{$sales_count} 件</span></p>
        <!-- {if $cfg.show_goodssn && 0} -->
-        <p> {$lang.goods_sn}<strong>{$gb_goods.goods_sn}</strong></p>
+        <p> {$lang.goods_sn}<label>{$gb_goods.goods_sn}</label></p>
        <!-- {/if} --> 
         <!-- {if $cfg.goods.brand_name && $show_brand && 0} -->
-        <p> {$lang.goods_brand}<strong>{$gb_goods.brand_name}</strong></p>
+        <p> {$lang.goods_brand}<label>{$gb_goods.brand_name}</label></p>
         <!-- {/if} -->
         <!-- {if $cfg.show_goodsweight && 0} -->
-        <p> {$lang.goods_weight}<strong>{$gb_goods.goods_weight}</strong></p>
+        <p> {$lang.goods_weight}<label>{$gb_goods.goods_weight}</label></p>
        <!-- {/if} --> 
         <!-- {if $group_buy.deposit > 0} 保证金额-->
-        <p> {$lang.gb_deposit}<strong>{$group_buy.formated_deposit}</strong></p>
+        <p> {$lang.gb_deposit}<label>{$group_buy.formated_deposit}</label></p>
        <!--{/if}--> 
        <!--{if $group_buy.restrict_amount > 0} 限购数量-->
-        <p> {$lang.gb_restrict_amount}<strong>{$group_buy.restrict_amount}</strong></p>
+        <p> {$lang.gb_restrict_amount}<label>{$group_buy.restrict_amount}</label></p>
    <!--{/if}--> 
    <!--{if $group_buy.gift_integral > 0} 送积分-->
-        <p> {$lang.gb_gift_integral}<strong>{$group_buy.gift_integral}</strong></p>
+        <p> {$lang.gb_gift_integral}<label>{$group_buy.gift_integral}</label></p>
        <!--{/if}--> 
        <!-- {if $group_buy.status eq 0} 未开始 -->
         <p> {$lang.gbs_pre_start}</p>
        <!-- {elseif $group_buy.status eq 1} 进行中 -->
-        <p> <strong id="leftTime" class="price">{$lang.please_waiting}</strong></p>
-        <p> {$lang.gb_valid_goods}<strong>{$group_buy.valid_goods}</strong></p>
+        <p> <label id="leftTime" class="price">{$lang.please_waiting}</label></p>
+        <p> {$lang.gb_valid_goods}<label>{$group_buy.valid_goods}</label></p>
         <!-- {elseif $group_buy.status eq 2} 已结束 -->
-        <p> {$lang.gbs_finished}</p><p>{$lang.gb_cur_price} <strong>{$group_buy.formated_cur_price}</strong></p><p>{$lang.gb_valid_goods} <strong>{$group_buy.valid_goods}</strong></p>
+        <p> {$lang.gbs_finished}</p><p>{$lang.gb_cur_price} <label>{$group_buy.formated_cur_price}</label></p><p>{$lang.gb_valid_goods} <label>{$group_buy.valid_goods}</label></p>
        <!-- {elseif $group_buy.status eq 3} 团购成功 -->
         <p> {$lang.gbs_succeed}
-            {$lang.gb_final_price} <strong>{$group_buy.formated_trans_price}</strong><br />
-            {$lang.gb_final_amount} <strong>{$group_buy.trans_amount}</strong></p>
+            {$lang.gb_final_price} <label>{$group_buy.formated_trans_price}</label><br />
+            {$lang.gb_final_amount} <label>{$group_buy.trans_amount}</label></p>
        <!-- {elseif $group_buy.status eq 4} 团购失败 -->
         <p> {$lang.gbs_fail}</p>
        <!-- {/if} -->
-       <div class="good-info-table">
+
+    </section>
+           <div class="good-info-table padding-all b-color-f">
         	<ul>
             	<li class="ect-diaplay-box "><h4 class="ect-box-flex">{$lang.gb_ladder_amount}</h4><h4 class="ect-box-flex">{$lang.gb_ladder_price}</h4></li>
                 <!-- {foreach from=$group_buy.price_ladder item=item} -->
@@ -71,11 +84,10 @@
                 <!-- {/foreach} -->
             </ul>
         </div>
-    </section>
       <form action="{:url("groupbuy/buy")}" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY">
         <input type="hidden" name="valid_goods" value="{$group_buy.restrict_amount}" />
         <input type="hidden" name="group_buy_id" value="{$group_buy.group_buy_id}" />
-      <section class="ect-padding-lr ect-padding-tb goods-option">
+      <section class="ect-padding-lr ect-padding-tb goods-option b-color-f">
         <div class="goods-optionc"> 
           <!-- {foreach name=spec from=$specification item=spec key=spec_key} -->
           <div class="goods-option-con"> <span>{$spec.name}：</span>
@@ -113,8 +125,8 @@
             <span class="input-group-addon plus" onClick="changeNum('3')">+</span></div>
         </div>
       </section>
-      <div class="ect-padding-lr ect-padding-tb goods-submit">
-        <a href="javascript:;" class="btn btn-info ect-btn-info ect-colorf ect-bg" onClick="document.getElementById('ECS_FORMBUY').submit()">{$lang.button_buy}</a> 
+      <div class="ect-padding-lr ect-padding-tb goods-submit n-btn-box-1">
+        <a href="javascript:;" class="btn  ect-btn-info ect-colorf ect-bg" onClick="document.getElementById('ECS_FORMBUY').submit()">{$lang.button_buy}</a> 
       </div>
       <div class="tab-info">
       <!-- {if $properties}--> 
@@ -140,19 +152,16 @@
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
 <script type="text/javascript" src="__TPL__/js/TouchSlide.1.1.js"></script> 
 <script type="text/javascript">
-/*banner滚动图片*/
-TouchSlide({
-  slideCell : "#focus",
-  titCell : ".hd ul", // 开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
-  mainCell : ".bd ul",
-  effect : "leftLoop",
-  autoPlay : true, // 自动播放
-  autoPage : true, // 自动分页
-  delayTime: 200, // 毫秒；切换效果持续时间（执行一次效果用多少毫秒）
-  interTime: 2500, // 毫秒；自动运行间隔（隔多少毫秒后执行下一个效果）
-  switchLoad : "_src" // 切换加载，真实图片路径为"_src"
-});
-
+		var mySwiper = new Swiper('.banner-first', {
+				pagination: '.banner-first-pagination',
+				loop: false,
+				grabCursor: true,
+				paginationClickable: true,
+				autoplayDisableOnInteraction: false,
+				loop: true,
+				autoplay: 3000,
+				lazyLoading: true
+		});
 $(function() {
 /*判断user-tab内容高度不够时撑开*/
 	var user_tab_height = $(".group-buy-infos");

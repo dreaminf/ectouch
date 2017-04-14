@@ -239,7 +239,9 @@ class GroupbuyController extends CommonController {
             'extension_code' => addslashes($goods['extension_code']),
             'parent_id' => 0,
             'rec_type' => CART_GROUP_BUY_GOODS,
-            'is_gift' => 0
+            'is_gift' => 0,
+            'is_selected' => 1
+
         );
         $new_cart = model('Common')->filter_field('cart', $cart);
         $this->model->table('cart')->data($new_cart)->insert();

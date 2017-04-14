@@ -450,14 +450,15 @@ elseif ($_REQUEST['act'] == 'operate_post') {
         if ($return_info['refund_status'] == FF_NOREFUND) {
             /* 退款 */
             aftermarket_refund($order, $refund_type, $refund_amount, $refund_note);
-            /*DRP_START*/
             //判断订单是否已分成（未分成则减去分销佣金）
-			$row =  $GLOBALS['db']->getRow("SELECT order_id,shop_separate  FROM " . $GLOBALS['ecs']->table('drp_order_info').
+            $row =  $GLOBALS['db']->getRow("SELECT order_id,shop_separate  FROM " . $GLOBALS['ecs']->table('drp_order_info').
             " WHERE order_id = '$return_info[order_id]'");
-            if($row['shop_separate'] == 0){                
-                aftermarket_drp($return_info);//退货退款减去分销佣金                 
+            if($row['shop_separate'] == 0){
+                /*DRP_START*/
+                aftermarket_drp($return_info);//退货退款减去分销佣金
+                /*DRP_END*/  
             }
-            /*DRP_END*/ 						
+			
             $arr = array(
                 'refund_status' => FF_REFUND,
                 'actual_return' => $refund_amount,

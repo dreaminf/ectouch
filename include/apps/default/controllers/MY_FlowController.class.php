@@ -24,7 +24,7 @@ class MY_FlowController extends FlowController {
         /* 取得购物类型 */
         $flow_type = isset($_SESSION ['flow_type']) ? intval($_SESSION ['flow_type']) : CART_GENERAL_GOODS;
         /* 检查购物车中是否有商品 */
-        $condition = " session_id = '" . SESS_ID . "' " . "AND parent_id = 0 AND is_gift = 0 AND rec_type = '$flow_type'";
+        $condition = " session_id = '" . SESS_ID . "' " . "AND parent_id = 0 AND is_gift = 0 AND rec_type = '$flow_type' and is_selected =1";
         $count = $this->model->table('cart')->field('COUNT(*)')->where($condition)->getOne();
         if ($count == 0) {
             show_message(L('no_goods_in_cart'), '', '', 'warning');
@@ -262,6 +262,27 @@ class MY_FlowController extends FlowController {
         $parent_id = M()->table('users')->field('parent_id')->where("user_id=".$_SESSION['user_id'])->getOne();
         $order ['parent_id'] = $parent_id;
         $order ['drp_id'] = $_SESSION['drp_shop']['drp_id'] ? $_SESSION['drp_shop']['drp_id'] : 0;
+        
+        /* 插入拼团信息记录 */
+        if($flow_type == CART_TEAM_GOODS){
+            if($_SESSION['team_id'] > 0){
+                $order ['team_id']=$_SESSION['team_id'];
+                $order ['team_user_id']=$_SESSION['user_id'];
+            }else{
+                $condition = " session_id = '" . SESS_ID . "' " . "AND parent_id = 0 AND is_gift = 0 AND rec_type = '$flow_type' and is_selected =1";
+                $team_doods = $this->model->table('cart')->where($condition)->find();
+                $team['goods_id'] = $team_doods['goods_id'];
+                $team['start_time'] = gmtime();
+                $team['status'] = 0;
+                $new_team = model('Common')->filter_field('team_log', $team);
+                $this->model->table('team_log')->data($new_team)->insert();
+                $team_log_id = M()->insert_id();
+                $order ['team_id']=$team_log_id;
+                $order ['team_parent_id']=$_SESSION['user_id'];
+            }
+            
+        }
+
 
         /* 插入订单表 */
         $error_no = 0;
@@ -282,8 +303,12 @@ class MY_FlowController extends FlowController {
         $sql = "INSERT INTO " . $this->model->pre . "order_goods( " . "order_id, goods_id, goods_name, goods_sn, product_id, goods_number, market_price, " . "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id ) " . " SELECT '$new_order_id', goods_id, goods_name, goods_sn, product_id, goods_number, market_price, " . "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id " . " FROM " . $this->model->pre . "cart WHERE session_id = '" . SESS_ID . "' AND rec_type = '$flow_type'";
         $this->model->query($sql);
 
-        // 更新佣金信息
-        model('Sale')->update_order_sale($new_order_id);
+        //验证拼团不参与分销
+        if($flow_type != CART_TEAM_GOODS){
+            // 更新佣金信息
+            model('Sale')->update_order_sale($new_order_id);            
+        }
+
 
         /* 修改拍卖活动状态 */
         if ($order ['extension_code'] == 'auction') {
@@ -294,7 +319,11 @@ class MY_FlowController extends FlowController {
         /* 处理余额、积分、红包 */
         if ($order ['user_id'] > 0 && $order ['surplus'] > 0) {
             model('ClipsBase')->log_account_change($order ['user_id'], $order ['surplus'] * (- 1), 0, 0, 0, sprintf(L('pay_order'), $order ['order_sn']));
+            
+            //余额付款更新拼团信息记录
+            model('Flow')->update_team($order['team_id']);
         }
+
         if ($order ['user_id'] > 0 && $order ['integral'] > 0) {
             model('ClipsBase')->log_account_change($order ['user_id'], 0, 0, 0, $order ['integral'] * (- 1), sprintf(L('pay_order'), $order ['order_sn']));
         }
@@ -340,8 +369,10 @@ class MY_FlowController extends FlowController {
             pushTemplate('TM00016', $pushData, $url);
         }
 
-        // 推送微分销模板消息
-        $message_status = M()->table('drp_config')->field('value')->where('keyword = "msg_open"')->getOne();
+        //验证拼团不参与分销
+        if($flow_type != CART_TEAM_GOODS){
+            // 推送消息
+            $message_status = M()->table('drp_config')->field('value')->where('keyword = "msg_open"')->getOne();
         if (class_exists('WechatController') && is_wechat_browser() && $message_status=='open' ) {
             $goods_name = $this->model->table('order_goods')->field('goods_name')->where("order_id ='".$new_order_id."'")->getOne();  // 商品名称
             $pushData = array(
@@ -386,6 +417,9 @@ class MY_FlowController extends FlowController {
             }
 
         }
+            
+        }
+
 
             // 模版信息设置
             // $data['openid'] = '';

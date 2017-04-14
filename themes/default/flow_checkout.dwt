@@ -1,27 +1,59 @@
 <div class="con">
-  <div class="ect-bg">
-    <header class="ect-header ect-margin-tb ect-margin-lr text-center ect-bg icon-write"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span> <a href="javascript:;" onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune"></a></header>
-    <nav class="ect-nav ect-nav-list" style="display:none;"> <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --> </nav>
-  </div>
   <div class="flow-checkout">
     <form action="{:url('flow/done')}" method="post" name="theForm" id="theForm" onSubmit="return checkOrderForm(this)">
       <script type="text/javascript">
         var flow_no_payment = "{$lang.flow_no_payment}";
         var flow_no_shipping = "{$lang.flow_no_shipping}";
         </script><a href="{:url('flow/consignee_list')}">
-      <section class="ect-margin-tb ect-padding-lr ect-padding-tb checkout-add">
+      <div class="flow-checkout-adr padding-all checkout-add">
           <label for="addressId{$con_list.address_id}">
-          <p class="title">{$consignee.consignee|escape} <span>{$consignee.mobile}</span></p>
-          <p>{$consignee.address}</p>
-          <i class="fa fa-angle-right"></i>
+          <p class="f-07 col-3">{$consignee.consignee|escape} <span>{$consignee.mobile}</span></p>
+          <p class="f-05 col-7 m-top04">{$consignee.address}</p>
+         <i class="iconfont icon-jiantou tf-180"></i>
           </label>
-        </section>
-      </a>
-      <section class="ect-margin-tb ect-padding-lr checkout-select" id="accordion"> 
+        </div>
+     </a>      
+        <section class="n-checkout-select-cont  checkout-select checkout-pro-list m-top10 b-color-f">
+        <p>{$lang.goods_list}<span class="label ect-bg-colory"><!--{if $allow_edit_cart} --><a href="{:url('flow/index')}" class="ect-colorf">{$lang.modify}</a><!--{/if} --></span></p>
+		<div class="flow-checkout-pro j-flow-checkout-pro active">					
+			<div class="product-list-small  b-color-f dis-box" style="padding:0">
+				<ul class="box-flex flow-checkout-bigpic">
+					<!-- {foreach from=$goods_list item=goods} -->
+					<li>
+						<div class="product-div">
+							<img class="product-list-img" src="{$goods.goods_img}">
+							<div class="product-text">
+								<h4>
+									 <!-- {if $goods.goods_id gt 0 && $goods.extension_code eq 'package_buy'} --> 
+						<a href="javascript:void(0)" onClick="setSuitShow({$goods.goods_id})" >{$goods.goods_name}<span style="color:#FF0000;">（{$lang.remark_package}）</span></a> 
+						<!-- { else } --> 
+						<a href="{:url('goods/index',array('id'=>$this->_var['goods']['goods_id']))}" target="_blank" >{$goods.goods_name}</a> 
+						<!-- {if $goods.parent_id > 0} --> 
+						<span style="color:#FF0000">（{$lang.accessories}）</span> 
+						<!-- {elseif $goods.is_gift} --> 
+						<span style="color:#FF0000">（{$lang.largess}）</span> 
+						<!-- {/if} --> 
+						<!-- {/if} --> 
+						<!-- {if $goods.is_shipping} -->(<span style="color:#FF0000">{$lang.free_goods}</span>)<!-- {/if} --> 
+								</h4>
+								<p class="m-top12"><span class="p-price t-first ">{$goods.formated_subtotal}<small class="fr t-remark">x {$goods.goods_number}</small></span></p>
+							<!--	<p class="dis-box p-t-remark">红色、XL</p>-->
+							</div>
+						</div>
+					</li>	
+					<!-- {/foreach} -->
+				</ul>							
+			</div>
+		</div>
+       </section>
+      <section class="checkout-select n-checkout-select m-top10" id="accordion"> 
         <!--{if $total.real_goods_count neq 0}--> 
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-        <p><b>{$lang.shipping_method}</b><span class="label ect-bg-colory">{$lang.require_field}</span></p>
-        <i class="fa fa-angle-down"></i></a>
+        <div class="n-checkout-select-cont wallet-bt b-color-f">
+        	<p>{$lang.shipping_method}<span class="label ect-bg-colory">{$lang.require_field}</span></p>
+       		 <i class="fa fa-angle-down"></i>
+        </div>
+        </a>
         <div id="collapseOne" class="panel-collapse collapse in">
           <ul class="ect-radio">
             <!-- {foreach from=$shipping_list item=shipping} 循环配送方式 -->
@@ -37,14 +69,15 @@
         <!--{/if}--> 
         <!--{if $is_exchange_goods neq 1 || $total.real_goods_count neq 0}--> 
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-        <p><b>{$lang.payment_method}</b><span class="label ect-bg-colory">{$lang.require_field}</span></p>
-        <i class="fa fa-angle-down"></i></a>
+       <div class="n-checkout-select-cont wallet-bt b-color-f"> <p>{$lang.payment_method}<span class="label ect-bg-colory">{$lang.require_field}</span></p>
+        <i class="fa fa-angle-down"></i>   </div></a>
         <div id="collapseTwo" class="panel-collapse collapse in">
           <ul class="ect-radio">
             <!-- {foreach from=$payment_list item=payment} -->
             <li>
               <input name="payment" type="radio" id="payment_{$payment.pay_id}" value="{$payment.pay_id}" {if $order.pay_id eq $payment.pay_id}checked{/if} isCod="{$payment.is_cod}" onclick="selectPayment(this)" {if $cod_disabled and $payment.is_cod eq "1"}disabled="true"{/if} style="vertical-align:middle">
-              <label for="payment_{$payment.pay_id}">{$payment.pay_name} [{$payment.format_pay_fee}]<i></i></label>
+             <!--  <label for="payment_{$payment.pay_id}">{$payment.pay_name} [{$payment.format_pay_fee}]<i></i></label> -->
+			  <label for="payment_{$payment.pay_id}"><i></i> <div class="user-payment-img"><img src="{$payment.img}"></div></label>
             </li>
             <!-- {/foreach} -->
           </ul>
@@ -54,8 +87,8 @@
         <!--{/if}--> 
         <!-- {if $inv_content_list} 能否开发票 --> 
         <a onclick="isinv()" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo1">
-        <p><b>{$lang.invoice}</b></p><input id="invinput" type="hidden"  name="invinput" value="0" />
-        <i class="fa fa-angle-down"></i></a>
+        <div class="n-checkout-select-cont b-color-f"> <p>{$lang.invoice}</p><input id="invinput" type="hidden"  name="invinput" value="0" />
+        <i class="fa fa-angle-down"></i></div></a>
         <div id="collapseTwo1" class="panel-collapse collapse in" style="overflow:hidden;">
           
 		  
@@ -92,11 +125,11 @@
         <!--{/if}-->
       </section>
       <!-- {if $pack_list || $card_list} 是否有包装 或贺卡 -->
-      <section class="ect-margin-tb ect-padding-lr checkout-select"> 
+      <section class="checkout-select n-checkout-select m-top10"> 
         <!-- {if $pack_list} 是否有包装 --> 
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-        <p><b>{$lang.goods_package}</b></p>
-        <i class="fa fa-angle-down"></i></a>
+        <div class="n-checkout-select-cont b-color-f"> <p>{$lang.goods_package}</p>
+        <i class="fa fa-angle-down"></i></div></a>
         <div id="collapseThree" class="panel-collapse collapse in">
           <ul class="ect-radio">
             <li>
@@ -114,8 +147,8 @@
         <!-- {/if} 是否使用包装 --> 
         <!-- {if $card_list} 是否有贺卡 --> 
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-        <p><b>{$lang.goods_card}</b></p>
-        <i class="fa fa-angle-down"></i></a>
+        <div class="n-checkout-select-cont b-color-f"> <p>{$lang.goods_card}</p>
+        <i class="fa fa-angle-down"></i></div></a>
         <div id="collapseFour" class="panel-collapse collapse in">
           <ul class="ect-radio">
             <li>
@@ -134,11 +167,11 @@
       </section>
       <!-- {/if} 是否使用贺卡 --> 
       <!-- {/if} 是否有包装 或贺卡 -->
-      <section class="ect-margin-tb ect-padding-lr checkout-select"> 
+      <section class=" checkout-select n-checkout-select m-top10"> 
 	  <!-- {if $allow_use_bonus and $bonus_list} 是否使用红包 -->
 	 	<a data-toggle="collapse" data-parent="#accordion" href="#collapseBonus">
-        <p><b>{$lang.use_bonus}</b></p>
-        <i class="fa fa-angle-down"></i></a>
+       <div class="n-checkout-select-cont b-color-f">  <p>{$lang.use_bonus}</p>
+        <i class="fa fa-angle-down"></i></div></a>
         <div id="collapseBonus" class="panel-collapse collapse in">
 		  <ul class="ect-radio">
             <li>
@@ -156,8 +189,8 @@
         <!-- {/if} 是否使用红包 -->
         <!-- {if $allow_use_surplus} 是否使用余额 --> 
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour1">
-        <p><b> {$lang.use_surplus} </b></p>
-        <i class="fa fa-angle-down"></i> </a>
+      <div class="n-checkout-select-cont b-color-f">   <p>{$lang.use_surplus}</p>
+        <i class="fa fa-angle-down"></i></div> </a>
         <div id="collapseFour1" class="panel-collapse collapse in"> {$lang.your_surplus}{$your_surplus|default:0}<br />
           <span id="ECS_SURPLUS_NOTICE"></span>
           <input name="surplus" type="text" id="ECS_SURPLUS" size="10" value="{$order.surplus|default:0}" onblur="changeSurplus(this.value)" {if $disable_surplus}disabled="disabled"{/if} />
@@ -166,8 +199,8 @@
         
         <!-- {if $allow_use_integral} 是否使用积分 --> 
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive1">
-        <p><b> {$lang.use_integral} </b></p>
-        <i class="fa fa-angle-down"></i> </a>
+        <div class="n-checkout-select-cont b-color-f"> <p>{$lang.use_integral}</p>
+        <i class="fa fa-angle-down"></i> </div></a>
         <div id="collapseFive1" class="panel-collapse collapse in"> {$lang.can_use_integral}:{$your_integral|default:0} {$points_name}，{$lang.noworder_can_integral}{$order_max_integral}  {$points_name}.<br />
           <span id="ECS_INTEGRAL_NOTICE" class="notice"></span>
           <input name="integral" type="text" class="input" id="ECS_INTEGRAL" onblur="changeIntegral(this.value)" value="{$order.integral|default:0}" size="10" />
@@ -175,54 +208,21 @@
         <!-- {/if} 是否使用积分 --> 
         
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
-        <p><b> {$lang.order_postscript} </b></p>
-        <i class="fa fa-angle-down"></i> </a>
+       <div class="n-checkout-select-cont b-color-f">  <p>{$lang.order_postscript}</p>
+        <i class="fa fa-angle-down"></i></div> </a>
         <div id="collapseFive" class="panel-collapse collapse in">
           <input name="postscript" type="text" class="fuyan" maxlength="22" placeholder="{$lang.please_order_postscript}">
         </div>
       </section>
-      <section class="ect-margin-tb ect-margin-bottom0 ect-padding-lr checkout-select checkout-pro-list">
-        <p><b>{$lang.goods_list}</b><span class="label ect-bg-colory"><!--{if $allow_edit_cart} --><a href="{:url('flow/index')}" class="ect-colorf">{$lang.modify}</a><!--{/if} --></span></p>
-        <ul>
-          <!-- {foreach from=$goods_list item=goods} -->
-          <li>
-            <dl>
-             
 
-            <div class="flow-checkout-box">
-              <div class="flow-checkout-shopimg">
-               <a href="{:url('goods/index',array('id'=>$this->_var['goods']['goods_id']))}" target="_blank" > <img src="{$goods.goods_thumb}"></a>
-              </div>
-              <div class="flow-checkout-cont">
-                 <h4 class="twolist-hidden">
-                 <!-- {if $goods.goods_id gt 0 && $goods.extension_code eq 'package_buy'} --> 
-                <a href="javascript:void(0)" onClick="setSuitShow({$goods.goods_id})" >{$goods.goods_name}<span style="color:#FF0000;">（{$lang.remark_package}）</span></a> 
-                <!-- { else } --> 
-                <a href="{:url('goods/index',array('id'=>$this->_var['goods']['goods_id']))}" target="_blank" >{$goods.goods_name}</a> 
-                <!-- {if $goods.parent_id > 0} --> 
-                <span style="color:#FF0000">（{$lang.accessories}）</span> 
-                <!-- {elseif $goods.is_gift} --> 
-                <span style="color:#FF0000">（{$lang.largess}）</span> 
-                <!-- {/if} --> 
-                <!-- {/if} --> 
-                <!-- {if $goods.is_shipping} -->(<span style="color:#FF0000">{$lang.free_goods}</span>)<!-- {/if} --> 
-                </h4>
-                <p class="n-check-title">数量：<span>x {$goods.goods_number}</span></p>
-                <p>价格：<span class="color-red">{$goods.formated_subtotal}</span></p>
-              </div>
-            </div>
-
-
-            </dl>
-          </li>
-          <!-- {/foreach} -->
-        </ul>
-
-        <!-- #BeginLibraryItem "/Library/order_total.lbi" --><!-- #EndLibraryItem --> </section>
-      <div class="ect-padding-lr ect-padding-tb ect-margin-tb">
-        <input type="submit" name="submit" value="{$lang.order_submit}" class="btn btn-info ect-btn-info ect-colorf ect-bg"/>
-        <input type="hidden" name="step" value="done" />
-      </div>
+        <!-- #BeginLibraryItem "/Library/order_total.lbi" --><!-- #EndLibraryItem -->       
+      <section class="filter-btn f-checkout-filter-btn dis-box">
+			<span class="box-flex t-remark">实付款 <em class="t-first" id="amount_new">{$total.amount_formated}</em></span>
+				<div class="btn-submit n-checkout-btn box-flex	"><input type="submit" name="submit" value="{$lang.order_submit}"/>
+	        <input type="hidden" name="step" value="done" />
+				</div>
+		</section>
+      
     </form>
   </div>
 </div>

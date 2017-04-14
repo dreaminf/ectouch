@@ -155,6 +155,11 @@
 				<p class="f-03 col-6">我的微店</p>
 			</a>
 			<!--/*DRP_END*/-->
+			<a href="{:url('mycrowd/index')}" class="box-flex">
+			    <i class="iconfont icon-zhongchou"></i>
+			    <p class="f-03 col-6">我的微筹</p>
+		    </a>			
+
 		</div>
 	</footer>
 
@@ -192,16 +197,14 @@
 	<a href="{:url('category/top_all')}" class="box-flex nav-list">
 		<i class="nav-box i-cate"></i><span>分类</span>
 	</a>
-	<!--/*DRP_START*/-->
 	<a href="{:url('store/check_store')}" class="box-flex nav-list ">
 		<i class="nav-box i-shop"></i><span>店铺</span>
 	</a>
-	<!--/*DRP_END*/-->
 	<a href="{:url('flow/cart')}" class="box-flex position-rel nav-list">
 		<i class="nav-box i-flow"></i><span>购物车</span>
 	</a>
 	<a href="{:url('user/index')}" class="box-flex nav-list active">
-		<i class="nav-box i-user"></i><span>我的</span>
+		<i class="nav-box i-user"></i><span>用户中心</span>
 	</a>
 </footer>
 <!-- #BeginLibraryItem "/library/new_search.lbi" -->

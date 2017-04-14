@@ -4,12 +4,6 @@
 .ect-pro-list ul li{background:#fff;}
 </style>
 <div class="con">
-<div style="height:7.2em;"></div>
-  <header>
-    <nav class="ect-nav ect-bg icon-write">
-      <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem -->
-    </nav>
-  </header>
 <!-- #BeginLibraryItem "/library/goods_list_exchange.lbi" --><!-- #EndLibraryItem -->
 </div>
 </div>

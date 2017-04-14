@@ -326,6 +326,10 @@ function orderSelectedResponse(result)
         surplusObj.disabled = result.pay_code == 'balance';
       }
     }
+	//总价
+    if(result.amount != undefined){
+        $("#amount_new").html(result.amount);
+    }
   }
   catch (ex) { }
 }
@@ -372,7 +376,7 @@ function changeSurplusResponse(obj)
       document.getElementById("ECS_SURPLUS_NOTICE").innerHTML = '';
     }
     catch (ex) { }
-    orderSelectedResponse(obj.content);
+    orderSelectedResponse(obj);
   }
 }
 
@@ -380,7 +384,7 @@ function changeSurplusResponse(obj)
  * 改变积分
  */
 function changeIntegral(val)
-{
+{console.log(val);
   if (selectedIntegral == val)
   {
     return;
@@ -418,7 +422,7 @@ function changeIntegralResponse(obj)
       document.getElementById('ECS_INTEGRAL_NOTICE').innerHTML = '';
     }
     catch (ex) { }
-    orderSelectedResponse(obj.content);
+    orderSelectedResponse(obj);
   }
 }
 
@@ -426,7 +430,7 @@ function changeIntegralResponse(obj)
  * 改变红包
  */
 function changeBonus(val)
-{
+{ 
   if (selectedBonus == val)
   {
     return;
@@ -459,7 +463,7 @@ function changeBonusResponse(obj)
   }
   else
   {
-    orderSelectedResponse(obj.content);
+    orderSelectedResponse(obj);
   }
 }
 
@@ -490,7 +494,7 @@ if (obj.error)
   }
   else
   {
-    orderSelectedResponse(obj.content);
+    orderSelectedResponse(obj);
   }
 }
 

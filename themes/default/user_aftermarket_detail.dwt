@@ -19,7 +19,7 @@
 
 <body class="iscroll">
 	<div id="page">
-		<div class="panel-body" id="panel-body">
+		<div class="panel-body m-b7" id="panel-body">
 			<div class="m_msg J_Status show">
 				<div class="msg-item msg-lst">
 					<div class="msg-info m-top10"> <s class="arrow"></s>
@@ -39,9 +39,10 @@
 							<div class="desc-i">{$lang.aftermarket_status}：<b>{$return.return_status}</b></div>
 							<div class="desc-i">{$lang.refund_status}：<b>{$return.refund_status}</b></div>
 							<div class="desc-i">{$lang.aftermarket_number}：<span>{$return.service_sn}</span> </div>
+							<div class="desc-i">订单号：<span>{$return.order_osn}</span> </div>
 							<div class="desc-i">{$lang.order_addtime}：<span>{$return.formated_add_time}</span></div>
 							<div class="cutoff-line cutoff-line2"></div>
-							<div class="additional"> {$lang.return_num}：<b>{$goods.back_num}</b>: {$lang.should_return}：<b class="ect-colory">{$return.formated_should_return}</b> </div>
+							<div class="additional"> {$lang.return_num}：<b>{$goods.back_num}</b> <!--{if $return.service_id eq 1}-->{$lang.should_return}：<b class="ect-colory">{$return.formated_should_return}</b><!--{/if}--> </div>
 						</div>
 					</div>
 				</div>
@@ -51,7 +52,7 @@
 
 					<div class="filter-btn dis-box">
 						<!--{if $return.handler}-->
-						<div type="button" class="btn-cart n-but-ls box-flex n-iphone5-top1 j-goods-attr j-show-div">{$return.handler}</div>
+						<div type="button" class="n-but-detail-ls box-flex n-iphone5-top1">{$return.handler}</div>
 						<!--{/if}-->
 						<a href="{:url('user/aftermarket_done', array('rec_id'=>$this->_var['return']['rec_id']))}" type="button" class="btn-submit box-flex n-iphone5-top1 j-goods-attr j-show-div">{$lang.aftermarket_action}</a>
 					</div>

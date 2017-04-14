@@ -89,7 +89,6 @@ class Uploader {
              }
         }
 
-
         $this->oriName = $file['name'];
         $this->fileSize = $file['size'];
         $this->fileType = $this->getFileExt();

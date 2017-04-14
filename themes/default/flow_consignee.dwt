@@ -19,7 +19,7 @@
 		</ul>
 	</div>
 	</div>
-	<section class="ect-text-style">
+	<section class="flow-consignee ect-bg-colorf s-user-top onclik-admin">
 		<!-- 如果有收货地址，循环显示用户的收获地址 -->
 		<!-- {foreach from=$consignee_list item=consignee key=sn} -->
 		<form action="{:url('flow/consignee')}" method="post" name="theForm" id="theForm" onSubmit="return checkConsignee(this)">

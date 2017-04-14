@@ -3,25 +3,9 @@
 
 
 <div class="con">
-	<div class="goods" style="margin-bottom: 0rem;">
 	<!--style="margin-bottom: 50px;"-->
-			<div class="goods-box">
-					{if !$subscribe}
-						<div class="ect-header-banner dis-box">
-							<div class="box-flex">
-								<div class="ect-header-text fl">
-									<h4>欢迎进入<span class="color-red">微商城</span></h4>
-									<p>关注公众号,享专属服务</p>
-								</div>
-							</div>
-							<a class="btn-submit1 j-ewm-box" href="javascript:;">立即关注</a>
-						</div>
-						<div class="index-weixin-box">
-							<div><img src="__TPL__/statics/img/ewm.png"></div>
-							<p class="text-c">长按二维码关注公众微信</p>
-						</div>
-						<div class="index-bg-box"></div>
-						{/if}
+	<div class="goods" style="margin-bottom: 0rem;">
+		<div class="ect-bg">
 					<header class="dis-box header-menu-1 b-color color-whie goods-fixed ts-3">
 					<a class="" href="javascript:history.go(-1)">
 						<div class="goods-left-jiat"><i class="iconfont icon-jiantou is-con"></i></div>
@@ -38,22 +22,22 @@
 					</a>
 					<div class="goods-nav ts-3">
 						<ul class="goods-nav-box">
-						    <a href="{:url('index/index')}">
-								<li><i class="iconfont icon-home j-nav-box"></i>首页</li>
-							</a>
 							<a href="{:url('user/msg_list')}">
 								<li><i class="iconfont icon-xiaoxi1 j-nav-box"></i>消息</li>
+							</a>
+							<a href="{:url('index/index')}">
+								<li><i class="iconfont icon-home j-nav-box"></i>首页</li>
 							</a>
 							<a href="{:url('user/index')}">
 								<li><i class="iconfont icon-geren j-nav-box"></i>用户中心</li>
 							</a>
-							<a href="{:url('user/order_list')}">
-								<li style="border:none"><i class="iconfont icon-quanbudingdan j-nav-box"></i>全部订单</li>
+							<a href="{:url('user/index')}">
+								<li style="border:none"><i class="iconfont icon-fenxiang j-nav-box"></i>分享</li>
 							</a>
 						</ul>
 					</div>
-				</header>	
-			</div>
+				</header>			
+		</div>
 		<!--商品图片相册-->
 		<div class="goods-photo n-j-show-goods-img">
 			<div class="hd">
@@ -227,7 +211,7 @@
 									<h4 class="t-remark">数量</h4>
 									<div class="div-num dis-box m-top08">
 										<a class="num-less" onClick="changePrice('1')"></a>
-										<input class="box-flex" type="text" value="1" onkeyup="value=value.replace(/[^\d]/g,'')" name="number" id="goods_number" onblur="changePrice('2')" autocomplete="off" />
+										<input class="box-flex" type="text" value="1" name="number" id="goods_number" autocomplete="off" />
 										<a class="num-plus" onClick="changePrice('3')"></a>
 									</div>
 								</div>
@@ -235,7 +219,7 @@
 							<div class="swiper-scrollbar"></div>
 						</section>
 						<section class="ect-button-more dis-box padding-all">
-							<a class="btn-cart box-flex show-div-guanbi n-btn-box"  type="button" onClick="addToCart({$goods.goods_id});">加入购物车</a>
+							<a class="btn-cart box-flex" type="button" onClick="addToCart({$goods.goods_id});">加入购物车</a>
 							<a class="btn-submit box-flex" type="button" onClick="addToCart_quick({$goods.goods_id});">立即购买</a>
 						</section>
 			</form>
@@ -303,22 +287,6 @@
 				document.getElementById('popDiv').style.display = 'none';
 				document.getElementById('hidDiv').style.display = 'none';
 			}
-			/*首页二维码*/
-	$(".j-ewm-box").click(function() {
-		document.addEventListener("touchmove", handler, false);
-		$(".index-bg-box").addClass("active");
-		$(".index-weixin-box").addClass("active");
-	});
-	$(".j-ewm-close").click(function() {
-		document.removeEventListener("touchmove", handler, false);
-		$(".index-bg-box").removeClass("active");
-		$(".index-weixin-box").removeClass("active");
-	});
-	$(".index-bg-box").click(function() {
-		document.removeEventListener("touchmove", handler, false);
-		$(".index-bg-box").removeClass("active");
-		$(".index-weixin-box").removeClass("active");
-	});
 		</script>
 		<div class="tipMask" id="hidDiv" style="display:none"></div>
 
@@ -857,14 +825,6 @@ function sleep(d){
 	for(var t = Date.now();Date.now() - t <= d;);
 }
 */
-/*相册控制*/
-	document.getElementById('img-photo-box').style.width = document.body.offsetWidth + 'px';
-	document.getElementById('img-photo-box').style.height = document.body.offsetWidth + 'px';     	
-	window.onresize = function(){
-		document.getElementById('img-photo-box').style.width = document.body.offsetWidth + 'px';
-	    document.getElementById('img-photo-box').style.height = document.body.offsetWidth + 'px';     					         
-	}
-
 </script>
 
 </body>

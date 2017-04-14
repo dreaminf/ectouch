@@ -221,7 +221,9 @@ class ExchangeController extends CommonController {
             'extension_code' => addslashes($goods['extension_code']),
             'parent_id' => 0,
             'rec_type' => CART_EXCHANGE_GOODS,
-            'is_gift' => 0
+            'is_gift' => 0,
+            'is_selected' => 1
+
         );
         $this->model->table('cart')->data($cart)->insert();
 

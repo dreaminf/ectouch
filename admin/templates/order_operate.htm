@@ -1,6 +1,6 @@
 <!-- $Id -->
 {include file="pageheader.htm"}
-<form name="theForm" method="get" action="order.php" onsubmit="return check()">
+<form name="theForm" method="post" action="order.php" onsubmit="return check()">
 <div class="list-div">
 <table>
   <tr>
@@ -26,8 +26,8 @@
     <th>{$lang.label_handle_refund}</th>
     <td><p>{if !$anonymous}<label><input type="radio" name="refund" value="1" />{$lang.return_user_money}</label><br>{/if}
       <label><input type="radio" name="refund" value="2" />{$lang.create_user_account}</label><br>
-      <label><input name="refund" type="radio" value="3" />
-      {$lang.not_handle}</label><br>
+      <label><input name="refund" type="radio" value="3" />{$lang.not_handle}</label><br>
+      <label><input name="refund" type="radio" value="4" />{$lang.return_account}</label><br>
     </p></td>
   </tr>
   <tr>

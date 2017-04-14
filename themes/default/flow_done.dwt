@@ -1,39 +1,59 @@
 
 <div class="con">
-  <div class="ect-bg">
-  <header class="ect-header ect-margin-tb ect-margin-lr text-center ect-bg icon-write"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span> <a href="javascript:;" onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune"></a></header>
-  <nav class="ect-nav ect-nav-list" style="display:none;"> <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --> </nav>
-</div>
-  <section class="ect-bg-colorf ect-padding-lr flow-done">
-  		<i class="glyphicon glyphicon-ok"></i>
-        <p class="ect-margin-tb">{$lang.remember_order_number}：<b class="ect-color">{$order.order_sn}</b></p>
-        <p class="ect-margin-tb"><!--{if $order.shipping_name}-->{$lang.select_shipping}:<b>{$order.shipping_name}</b><!--{/if}--></p>
-        <p class="ect-margin-tb">{$lang.order_amount}: <b>{$total.amount_formated}</b></p>
-        <!--{if $virtual_card}-->
-        <div class="alert alert-warning" role="alert" style="height: 100%;">
+    <section class="flow-done n-flow-done">
+  	
+  	<div class="n-flow-header-i"><i class="iconfont icon-hookring2"></i></div>
+        <p class="n-flow-title text-c">订单提交成功!</p>
+        <div class="b-color-f">
+			<ul class="dis-box f-05">        	
+				<li class="box-flex col-7">订单号:</li>
+				<li class="box-flex text-right col-4">{$order.order_sn}</li>
+			</ul>	        	
+			<!--{if $order.shipping_name}-->
+			<ul class="dis-box f-05">        	
+				<li class="box-flex col-7">{$lang.select_shipping}:</li>
+				<li class="box-flex text-right col-4">{$order.shipping_name}</li>
+			</ul>
+			<!--{/if}-->
+			<ul class="dis-box f-05">        	
+				<li class="box-flex col-7">{$lang.order_amount}: </li>
+				<li class="box-flex text-right ect-color">{$total.amount_formated}</li>
+			</ul>
+		</div>
+ 
+		<!--{if $virtual_card}-->
+        <div class="alert-warning b-color-f n-flow-list-box" role="alert">
  	    <!--{foreach from=$virtual_card item=vgoods}-->
-            <h3 style="color:#2359B1; font-size:15px;">{$vgoods.goods_name}</h3>
+            <h3>{$vgoods.goods_name}</h3>
             <!--{foreach from=$vgoods.info item=card}-->
-            <ul style="list-style:none;padding:0;margin:0;clear:both">
+            <div class="n-flow-list">
               <!--{if $card.card_sn}-->
-              <li> <strong>{$lang.card_sn}:</strong><span style="color:red;">{$card.card_sn}</span> </li>
+              <li>{$lang.card_sn}:<span class="ect-color">{$card.card_sn}</span> </li>
               <!--{/if}--> 
               <!--{if $card.card_password}-->
-              <li> <strong>{$lang.card_password}:</strong><span style="color:red;">{$card.card_password}</span> </li>
+              <li>{$lang.card_password}:<span class="ect-color">{$card.card_password}</span> </li>
               <!--{/if}--> 
               <!--{if $card.end_date}-->
-              <li> <strong>{$lang.end_date}:</strong>{$card.end_date} </li>
+              <li>{$lang.end_date}:<<span class="ect-color">{$card.end_date}</span></li>
               <!--{/if}-->
-            </ul>
+            </div>
         	<!--{/foreach}--> 
         <!--{/foreach}--> 
 		</div>
         <!-- {/if} -->
-      {if $pay_desc}
-      <p class="ect-margin-tb">{$lang.select_payment}: <b>{$order.pay_name}</b></p>
-      <p class="ect-margin-tb text-center" style="background-color: rgb(255, 240, 240);padding: 10px;">{$pay_desc}</p>
-      {/if}
-       <p class="ect-margin-tb text-center">{$pay_online}</p>
-       <p class="ect-margin-tb text-center">{$order_submit_back}</p>
-  </section>
+        {if $pay_desc}
+        <ul class="dis-box f-05 b-color-f">        	
+        	<li class="box-flex">{$lang.select_payment}: </li>
+        	<li class="box-flex text-right ect-color">{$order.pay_name}</li>
+        </ul>
+        <div class="flow-n-btn"><p class="text-center" style="padding: 0.85rem; font-size: 1.5rem; margin-top:1rem">{$pay_desc}</p></div>
+        {/if}    
+	
+    </section>
+        <p class="ect-margin-tb text-center">{$pay_online}</p>
+        {if $order.team_id && $order.pay_status}
+	    <div class="n-flow-done-box"> <a href="{:url('goods/team_goods_wait',array('team_id'=>$this->_var['order']['team_id']))}"> <div class=" text-center btn btn-default">查看我的拼团</div></a></div>
+	    {/if}
+        <p class="ect-margin-tb text-center">{$order_submit_back}</p>
+         
 </div>

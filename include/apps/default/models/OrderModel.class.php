@@ -72,7 +72,10 @@ class OrderModel extends BaseModel {
             }
             $row['format_pay_fee'] = strpos($row['pay_fee'], '%') !== false ? $row['pay_fee'] :
                     price_format($row['pay_fee'], false);
+                    
+            $row['img'] = get_data_path($row['pay_code'].'.jpg', 'payment');
             $modules[] = $row;
+
         }
         if (isset($modules)) {
             return $modules;
@@ -297,13 +300,12 @@ class OrderModel extends BaseModel {
      * @return  array   购物车商品数组
      */
     function cart_goods($type = CART_GENERAL_GOODS) {
-        $sql = "SELECT ca.rec_id, ca.user_id, ca.goods_id, ca.goods_name, ca.goods_sn, ca.goods_number, " .
-                "ca.market_price, ca.goods_price, ca.goods_attr, ca.is_real, ca.extension_code, ca.parent_id, ca.is_gift, ca.is_shipping, g.goods_thumb, " .
-                "ca.goods_price * ca.goods_number AS subtotal " .
+        $sql = "SELECT rec_id, user_id, goods_id, goods_name, goods_sn, goods_number, " .
+                "market_price, goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, is_shipping, " .
+                "goods_price * goods_number AS subtotal " .
                 "FROM " . $this->pre .
-                "cart AS ca, " .$this->pre ."goods AS g " ."WHERE session_id = '" . SESS_ID . "' " .
-                "AND rec_type = '$type'" . 
-                "AND ca.goods_id = g.goods_id";
+                "cart WHERE session_id = '" . SESS_ID . "' " .
+                "AND rec_type = '$type' and is_selected =1 ";
 
         $arr = $this->query($sql);
 
@@ -312,13 +314,25 @@ class OrderModel extends BaseModel {
             $arr[$key]['formated_market_price'] = price_format($value['market_price'], false);
             $arr[$key]['formated_goods_price'] = price_format($value['goods_price'], false);
             $arr[$key]['formated_subtotal'] = price_format($value['subtotal'], false);
-            $arr[$key]['goods_thumb'] = get_image_path($value['goods_id'], $value['goods_thumb'], true);
+            $arr[$key]['goods_img'] = model('Order')->goods_img($value['goods_id']);//获取商品图片
             if ($value['extension_code'] == 'package_buy') {
                 $arr[$key]['package_goods_list'] = model('PackageBase')->get_package_goods($value['goods_id']);
             }
         }
+
         return $arr;
     }
+     /**
+     * 取得购物车商品图标
+     */
+    function goods_img($goods_id=0) {
+        $img = $this->model->table('goods')->where("goods_id=" . $goods_id)->field('goods_img')->getone();
+        $goods_img = get_image_path('',$img);
+        return $goods_img;
+    }
+
+    
+
 
     /**
      * 取得购物车总金额
@@ -373,7 +387,7 @@ class OrderModel extends BaseModel {
         $packages_row['free_shipping'] = 1;
 
         /* 计算超值礼包内商品的相关配送参数 */
-        $sql = 'SELECT goods_id, goods_number, goods_price FROM ' . $this->pre . "cart WHERE extension_code = 'package_buy' AND session_id = '" . SESS_ID . "'";
+        $sql = 'SELECT goods_id, goods_number, goods_price FROM ' . $this->pre . "cart WHERE extension_code = 'package_buy' AND session_id = '" . SESS_ID . "' and is_selected =1";
         $row = $this->query($sql);
 
         if ($row) {
@@ -416,7 +430,7 @@ class OrderModel extends BaseModel {
                 'FROM ' . $this->pre . 'cart AS c ' .
                 'LEFT JOIN ' . $this->pre . 'goods AS g ON g.goods_id = c.goods_id ' .
                 "WHERE c.session_id = '" . SESS_ID . "' " .
-                "AND rec_type = '$type' AND g.is_shipping = 0 AND c.extension_code != 'package_buy'";
+                "AND rec_type = '$type' AND g.is_shipping = 0 AND c.extension_code != 'package_buy' and c.is_selected =1 ";
         $row = $this->row($sql);
 
         $packages_row['weight'] = floatval($row['weight']) + $package_row['weight'];
@@ -542,7 +556,9 @@ class OrderModel extends BaseModel {
             'extension_code' => $goods['extension_code'],
             'is_gift' => 0,
             'is_shipping' => $goods['is_shipping'],
-            'rec_type' => CART_GENERAL_GOODS
+            'rec_type' => CART_GENERAL_GOODS,
+            'is_selected'      => 1
+
         );
 
         /* 如果该配件在添加为基本件的配件时，所设置的“配件价格”比原价低，即此配件在价格上提供了优惠， */
@@ -675,7 +691,7 @@ class OrderModel extends BaseModel {
      */
     function clear_cart($type = CART_GENERAL_GOODS) {
         $sql = "DELETE FROM " . $this->pre .
-                "cart WHERE session_id = '" . SESS_ID . "' AND rec_type = '$type'";
+                "cart WHERE session_id = '" . SESS_ID . "' AND rec_type = '$type' and is_selected =1";
         $this->query($sql);
     }
 
@@ -936,9 +952,12 @@ class OrderModel extends BaseModel {
         $virtual_goods_count = 0;
         $real_goods_count = 0;
         foreach ($res as $row) {
-            $total['total_number']+=$row['goods_number'];
-            $total['goods_price'] += $row['goods_price'] * $row['goods_number'];
-            $total['market_price'] += $row['market_price'] * $row['goods_number'];
+            if($row['is_selected'] == 1){
+                $total['total_number']+=$row['goods_number'];
+                $total['goods_price'] += $row['goods_price'] * $row['goods_number'];
+                $total['market_price'] += $row['market_price'] * $row['goods_number'];
+            }
+
 
             $row['subtotal'] = price_format($row['goods_price'] * $row['goods_number'], false);
             $row['goods_price'] = price_format($row['goods_price'], false);
@@ -973,7 +992,9 @@ class OrderModel extends BaseModel {
             //获取库存
             $res = $this->row("SELECT `goods_number` FROM " . $this->pre . "goods WHERE `goods_id`='{$row['goods_id']}'");
             $row['goods_max_number'] = $res['goods_number'];
+            $row['is_selected'] = $row['is_selected'];
             $goods_list[] = $row;
+
         }
         $total['goods_amount'] = $total['goods_price'];
         $total['saving'] = price_format($total['market_price'] - $total['goods_price'], false);
@@ -1629,7 +1650,9 @@ class OrderModel extends BaseModel {
                 "AND c.goods_id > 0 " .
                 "AND c.parent_id = 0 " .
                 "AND c.rec_type = 0 " .
+                "AND c.is_selected =1 " .
                 "AND c.is_gift = 0";
+
         $res = $this->row($sql);
         return intval($res['count']);
     }
@@ -2186,15 +2209,27 @@ class OrderModel extends BaseModel {
             $order['formated_actual_return'] = price_format($order['actual_return'], false);
             $order['formated_add_time'] = local_date(C('time_format'), $order['add_time']);
             $order['cert'] = model('Order')->get_cert_img($order['rec_id']);
+            $order['order_osn'] = model('Order')->get_order_osn($order['order_id']);
+
         }
         return $order;
     }
 
     /**
+     * 获取订单号
+     * @param type $rec_id
+     * @return type
+     */
+    function get_order_osn($order_id) {
+        $order = $this->model->table('order_info')->field('order_sn')->where('order_id = ' . $order_id)->find();
+         return $order['order_sn'];
+    }
+    /**
      * 获取服务订单上传凭证图片
      * @param type $rec_id
      * @return type
      */
+
     function get_cert_img($rec_id) {
 
         $img = $this->model->table('aftermarket_attachments')->field('img_id,goods_id,rec_id,img_url')->where('rec_id = ' . $rec_id)->select();

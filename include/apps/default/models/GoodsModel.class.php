@@ -52,8 +52,12 @@ class GoodsModel extends BaseModel {
             $row['market_price'] = price_format($row['market_price']);
             $row['shop_price_formated'] = price_format($row['shop_price']);
             $row['rank_price_formated'] = price_format($row['rank_price']);
+            /* 获得商品拼团的销售价格 */
+            //$row['team_price'] = price_format($row['team_price']);
+            $row['team_price'] = $row['team_price'];
 
             /* 修正促销价格 */
+
             if ($row['promote_price'] > 0) {
                 $promote_price = bargain_price($row['promote_price'], $row['promote_start_date'], $row['promote_end_date']);
             } else {
@@ -741,5 +745,122 @@ class GoodsModel extends BaseModel {
 
         return $res;
     }
+    /**
+     * 支持服务     
+     */
+    public function team_goods_log($goods_id = 0) {
+
+        $sql ="select tl.team_id, tl.start_time,o.team_parent_id,g.goods_id,g.validity_time ,g.team_num from " . $this->pre . "team_log as tl LEFT JOIN " . $this->pre. "order_info as o ON tl.team_id = o.team_id LEFT JOIN  " . $this->pre ."goods as g ON tl.goods_id = g.goods_id where tl.goods_id ='$goods_id' and tl.status <1 and tl.is_show = 1 and o.extension_code ='team_buy' and o.team_parent_id > 0 and pay_status = 2"; 
+        $result = $this->query($sql);
+        foreach ($result as $key => $vo) {
+            $validity_time =$vo['start_time']+($vo['validity_time']*3600);
+            $goods[$key]['team_id'] = $vo['team_id'];//开团id
+            //$goods[$key]['end_time'] = model('Goods')->end_time($validity_time);//剩余时间
+            $goods[$key]['end_time'] = local_date('Y/m/d H:i:s',$vo['start_time']+($vo['validity_time']*3600));//剩余时间
+            $goods[$key]['surplus'] =$vo['team_num'] - model('Goods')->surplus_num($vo['team_id']);//还差几人
+            $user = $this->model->table('users')->where("user_id=" . $vo['team_parent_id'])->field('user_name')->find();
+            $goods[$key]['name'] = $user['user_name'];
+            $goods[$key]['avatar'] = '';
+            $wechat_user = $this->model->table('wechat_user')->where("ect_uid=" . $vo['team_parent_id'])->field('nickname,headimgurl')->find();
+            if (!empty($wechat_user)) {
+                $goods[$key]['name'] = $wechat_user['nickname'];
+                $goods[$key]['avatar'] = $wechat_user['headimgurl'];
+            }
+            //过滤到期的拼团
+            
+            if($validity_time <= gmtime()){
+                unset($goods[$key]);
+            }
+        }
+        return $goods;
+    }
+    
+    /**
+     * 计算该拼团已参与人数
+     */
+    public function surplus_num($team_id = 0) {
+        
+        $sql = "SELECT count(order_id) as num  FROM " . $this->pre . "order_info WHERE team_id = '" . $team_id . "' AND extension_code = 'team_buy'  and pay_status = '" . PS_PAYED . "' ";
+        $res = $this->row($sql);
+        return $res['num'];
+        
+        
+    }
+    /**
+     * 计算拼团剩余时间
+     */
+    public function end_time($validity_time = 0) {
+
+        if($validity_time>= gmtime())
+        {       
+            //相差时间
+            $diff=$validity_time-gmtime();
+            //一分钟内：刚刚
+            if($diff>0 && $diff<=60)
+            {
+                $time_past="即将结束";
+            }
+            //一小时内：n分钟前
+            elseif($diff>60 && $diff<=3600)
+            {
+                $time_past=floor($diff/60)."分钟";
+            }
+            //一天内：n小时前
+            elseif($diff>3600 && $diff<=86400)
+            {
+                $time_past=floor($diff/3600)."小时";
+            }
+            //一月内：n天前
+            elseif($diff>86400 && $diff<=2592000)
+            {
+                $time_past=floor($diff/86400)."天";
+            }
+            //一年内：n月前
+            elseif($diff>2592000 && $diff<=31536000)
+            {
+                $time_past=floor($diff/2592000)."月";
+            }
+            //一年后：n年前
+            elseif($diff>31536000)
+            {
+                $time_past=floor($diff/31536000)."年";
+            }
+        }
+        else
+        {
+            $time_past="时间不合法";
+        }
+
+        return $time_past;
+        
+    }
+    
+     public function team_goods_info($team_id = 0) {
+                
+        /* --获取拼团商品信息-- */
+        $sql ="select tl.team_id, tl.start_time,o.team_parent_id,g.goods_id,g.goods_img,g.validity_time ,g.goods_name,g.team_num,g.team_price,og.goods_attr from " . $this->pre . "team_log as tl LEFT JOIN " . $this->pre. "order_info as o ON tl.team_id = o.team_id LEFT JOIN  ". $this->pre. "order_goods as og on o.order_id = og.order_id LEFT JOIN " . $this->pre ."goods as g ON tl.goods_id = g.goods_id where tl.team_id =$team_id  and o.pay_status = '" . PS_PAYED . "' and o.extension_code ='team_buy' and o.team_parent_id > 0"; 
+        $result = $this->model->query($sql);
+
+        foreach ($result as $vo) {
+            $goods['goods_id'] = $vo['goods_id'];
+            $goods['goods_name'] = $vo['goods_name'];
+            $goods['goods_img'] = get_image_path($goods_id, $vo['goods_img']);
+            $goods['team_id'] = $vo['team_id'];//开团id
+            $goods['goods_attr'] = $vo['goods_attr'];
+            $goods['team_num'] = $vo['team_num'];
+            $goods['team_price'] = $vo['team_price'];
+            $user = $this->model->table('users')->where("user_id=" . $vo['team_parent_id'])->field('user_name')->find();
+            $goods['name'] = $user['user_name'];
+            $goods['avatar'] = '';
+            $wechat_user = $this->model->table('wechat_user')->where("ect_uid=" . $vo['team_parent_id'])->field('nickname,headimgurl')->find();
+            if (!empty($wechat_user)) {
+                $goods['name'] = $wechat_user['nickname'];
+                $goods['avatar'] = $wechat_user['headimgurl'];
+            }
+        }
+        dump($goods);
+        return $goods;
+     }
+
 
 }

@@ -31,6 +31,8 @@ class AdminController extends BaseController {
 
     protected function checkLogin() {
         $access = array(
+            'team' => '*', 
+            'teamorder' => '*', 
             'crowd' => '*', 
             'wechat' => '*', 
             'extend' => '*', 
@@ -40,6 +42,7 @@ class AdminController extends BaseController {
             'upgrade' => '*',
             'index' => array('license', 'uploader')
         );
+
         $controller = strtolower(CONTROLLER_NAME);
         $action = strtolower(ACTION_NAME);
 

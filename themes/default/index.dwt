@@ -116,18 +116,16 @@
 				<a href="{:url('category/top_all')}" class="box-flex nav-list">
 					<i class="nav-box i-cate"></i><span>分类</span>
 				</a>
-				<!--/*DRP_START*/-->
-				<a href="{:url('store/check_store')}" class="box-flex nav-list ">
+				<!-- <a href="{:url('store/check_store')}" class="box-flex nav-list ">
 					<i class="nav-box i-shop"></i><span>店铺</span>
-				</a>
-				<!--/*DRP_END*/-->
+				</a>	 -->			
 				<a href="{:url('flow/cart')}" class="box-flex position-rel nav-list">
 					<i class="nav-box i-flow"></i><span>购物车</span>
 				</a>
 				<a href="{:url('user/index')}" class="box-flex nav-list">
-					<i class="nav-box i-user"></i><span>我的</span>
+					<i class="nav-box i-user"></i><span>用户中心</span>
 				</a>
-		</footer>
+		</footer>			
 <!-- #BeginLibraryItem "/library/new_search.lbi" -->
 <!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/new_page_footer.lbi" -->
@@ -137,7 +135,7 @@
 	get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}", '__TPL__/images/loader.gif');
 </script>
 <script type="text/javascript ">
-	$(function($) {
+	$(function($) {		
 		var mySwiper = new Swiper('.banner-first', {
 			pagination: '.banner-first-pagination',
 			loop: false,
@@ -151,12 +149,12 @@
 	if ($(".index-weixin-box").hasClass("index-weixin-box")) {
 		$(".index-banner").css({
 			"marginTop": "0rem",
-
+			
 		})
 	} else {
 		$(".index-banner").css({
 			"marginTop": "0rem",
-
+			
 		})
 	}
 </script>

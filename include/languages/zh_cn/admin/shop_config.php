@@ -79,6 +79,11 @@ $_LANG['cfg_name']['member_email_validate'] = '是否开启会员邮件验证';
 $_LANG['cfg_name']['send_verify_email'] = '用户注册时自动发送验证邮件';
 $_LANG['cfg_name']['message_board'] = '是否启用留言板功能';
 $_LANG['cfg_name']['message_check'] = '用户留言是否需要审核';
+$_LANG['cfg_name']['sign_points'] = '签到赠送积分';
+$_LANG['cfg_name']['virtual_order'] = '是否显示首页订单提示轮播';
+$_LANG['cfg_range']['virtual_order']['0'] = '不显示';
+$_LANG['cfg_range']['virtual_order']['1'] = '显示';
+
 //$_LANG['cfg_name']['use_package'] = '是否使用包装';
 //$_LANG['cfg_name']['use_card'] = '是否使用贺卡';
 $_LANG['cfg_name']['use_integral'] = '是否使用积分';

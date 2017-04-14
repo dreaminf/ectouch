@@ -57,13 +57,14 @@ class CommentController extends CommonController {
                 $order_id = $cmt->order_id;
                 $sql = "select goods_id from ".$this->model->pre."order_goods where rec_id = ".$cmt->id;
                 $goodsId = $this->model->query($sql);
-
+                 //dump($cmt);exit;
                 $recId = $cmt->id;
                 $cmt->id = $goodsId[0]["goods_id"];
+                
                 $cmt->type = !empty($cmt->type) ? intval($cmt->type) : 0;
 				$this->user_id = $_SESSION['user_id'];
 				$where['user_id'] = $this->user_id;
-				$where['id_value'] = $cmt->id;
+				$where['id_value'] = $cmt->id;               
                 $sql = "SELECT co.comment_id from ".$this->model->pre."comment as co left join ".$this->model->pre."term_relationship as te on co.comment_id = te.item_value2"." WHERE co.id_value = '$cmt->id' AND te.object_id =".$recId;
 $row = $this->model->query($sql);
 if(empty($row)){

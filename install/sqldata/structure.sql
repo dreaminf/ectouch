@@ -165,6 +165,8 @@ CREATE TABLE IF NOT EXISTS `ecs_ad_position` (
   `ad_height` smallint(5) unsigned NOT NULL DEFAULT '0',
   `position_desc` varchar(255) NOT NULL DEFAULT '',
   `position_style` text NOT NULL,
+  `tc_id` int(10) NOT NULL DEFAULT '0' COMMENT '频道id',
+  `tc_type` varchar(255) NOT NULL DEFAULT '' COMMENT '广告类型',
   PRIMARY KEY (`position_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -480,42 +482,13 @@ CREATE TABLE IF NOT EXISTS `ecs_cart` (
   `is_shipping` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `can_handsel` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `goods_attr_id` varchar(255) NOT NULL DEFAULT '',
-  `group_id` varchar(255) NOT NULL ,
+  `is_selected` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`rec_id`),
   KEY `session_id` (`session_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
---
--- 表的结构 `ecs_cart_combo`
---
 
-CREATE TABLE IF NOT EXISTS `ecs_cart_combo` (
-  `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `session_id` char(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `goods_sn` varchar(60) NOT NULL DEFAULT '',
-  `product_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `goods_name` varchar(120) NOT NULL DEFAULT '',
-  `market_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
-  `goods_price` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `goods_number` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `goods_attr` text NOT NULL,
-  `is_real` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `extension_code` varchar(30) NOT NULL DEFAULT '',
-  `parent_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `rec_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `is_gift` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `is_shipping` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `can_handsel` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `goods_attr_id` varchar(255) NOT NULL DEFAULT '',
-  `group_id` varchar(255) NOT NULL ,
-  PRIMARY KEY (`rec_id`),
-  KEY `session_id` (`session_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
 --
 -- 表的结构 `ecs_category`
 --
@@ -593,6 +566,7 @@ CREATE TABLE IF NOT EXISTS `ecs_comment` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
+
 --
 -- 表的结构 `ecs_term_relationship`
 --
@@ -614,6 +588,7 @@ CREATE TABLE IF NOT EXISTS `ecs_term_relationship` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100 ;
 
 -- --------------------------------------------------------
+
 --
 -- 表的结构 `ecs_crons`
 --
@@ -883,6 +858,13 @@ CREATE TABLE IF NOT EXISTS `ecs_goods` (
   `rank_integral` int(11) NOT NULL DEFAULT '-1',
   `suppliers_id` smallint(5) unsigned DEFAULT NULL,
   `is_check` tinyint(1) unsigned DEFAULT NULL,
+  `team_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '拼团商品价格',
+  `team_num` int(10) NOT NULL COMMENT '几人团',
+  `validity_time` int(10) NOT NULL COMMENT '开团有效期（小时）',
+  `limit_num` int(10) NOT NULL COMMENT '参团人数',
+  `astrict_num` int(10) NOT NULL DEFAULT '0' COMMENT '限购数量',
+  `tc_id` int(10) NOT NULL COMMENT '频道id',
+  `is_team` int(10) NOT NULL DEFAULT '0' COMMENT '是否开团',
   PRIMARY KEY (`goods_id`),
   KEY `goods_sn` (`goods_sn`),
   KEY `cat_id` (`cat_id`),
@@ -1206,6 +1188,10 @@ CREATE TABLE IF NOT EXISTS `ecs_order_info` (
   `is_separate` tinyint(1) NOT NULL DEFAULT '0',
   `parent_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `discount` decimal(10,2) NOT NULL,
+  `team_id` int(10) NOT NULL DEFAULT '0' COMMENT '开团记录id',
+  `team_parent_id` mediumint(8) NOT NULL COMMENT '团长id',
+  `team_user_id` mediumint(8) NOT NULL COMMENT '团员id',
+  `team_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '拼团商品价格',
   PRIMARY KEY (`order_id`),
   UNIQUE KEY `order_sn` (`order_sn`),
   KEY `user_id` (`user_id`),
@@ -1551,6 +1537,9 @@ CREATE TABLE IF NOT EXISTS `ecs_tag` (
   KEY `user_id` (`user_id`),
   KEY `goods_id` (`goods_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
 
 -- --------------------------------------------------------
 

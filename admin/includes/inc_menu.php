@@ -61,7 +61,6 @@ $modules['03_menu_order']['09_delivery_order']           = 'order.php?act=delive
 $modules['03_menu_order']['13_service_type']               = 'aftermarket_type.php?act=service_type';//by Leah
 $modules['03_menu_order']['11_back_cause']               = 'aftermarket_cause.php?act=back_cause_list'; //by Leah
 $modules['03_menu_order']['12_back_apply']               = 'aftermarket.php?act=aftermarket_list';//by Leah
-
 // 会员
 $modules['04_menu_members']['03_users_list']             = 'users.php?act=list';
 $modules['04_menu_members']['04_users_add']              = 'users.php?act=add';
@@ -91,7 +90,7 @@ $modules['06_menu_promotion']['04_bonustype_list']       = 'bonus.php?act=list';
 // $modules['06_menu_promotion']['06_pack_list']            = 'pack.php?act=list';
 // $modules['06_menu_promotion']['07_card_list']            = 'card.php?act=list';
 $modules['06_menu_promotion']['08_group_buy']            = 'group_buy.php?act=list';
-$modules['06_menu_promotion']['09_topic']                = 'topic.php?act=list';
+// $modules['06_menu_promotion']['09_topic']                = 'topic.php?act=list';
 //$modules['06_menu_promotion']['10_auction']              = 'auction.php?act=list';
 $modules['06_menu_promotion']['12_favourable']           = 'favourable.php?act=list';
 //$modules['06_menu_promotion']['13_wholesale']            = 'wholesale.php?act=list';
@@ -183,3 +182,13 @@ $modules['12_menu_wechat']['11_wechat_customer'] = '../index.php?m=admin&c=wecha
 /*DRP_START*/
 // $modules['12_menu_wechat']['12_wechat_wall'] = '../index.php?m=admin&c=extend&a=wall';
 /*DRP_END*/
+//频道
+$modules['13_menu_team']['01_team_index'] = '../index.php?m=admin&c=team';
+$modules['13_menu_team']['02_team_add'] = '../index.php?m=admin&c=team&a=add';
+$modules['13_menu_team']['03_team_order'] = '../index.php?m=admin&c=teamorder';
+$modules['15_menu_crowd']['01_crowd_category_list'] = '../index.php?m=admin&c=crowd&a=category_list';
+$modules['15_menu_crowd']['02_crowd'] =  '../index.php?m=admin&c=crowd&a=index';
+$modules['15_menu_crowd']['03_crowd_order_list'] = '../index.php?m=admin&c=crowd&a=order_list';
+$modules['15_menu_crowd']['04_crowd_message_list'] = '../index.php?m=admin&c=crowd&a=message_list';
+$modules['15_menu_crowd']['05_crowd_article_list'] = '../index.php?m=admin&c=crowd&a=article_list';
+

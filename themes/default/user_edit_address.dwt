@@ -77,8 +77,8 @@
 			</li>
 		</ul>
 
-	<div class="ect-button-more dis-box ect-padding-tb">
-		<a href="{:url('user/del_address_list', array('id'=>$this->_var['consignee']['address_id']))}" class="btn-reset box-flex"><div class="btn-reset-lv">{$lang.drop}</div></a>
+	<div class="ect-button-more dis-box ect-padding-tb text-center nn-btn">
+		<a href="{:url('user/del_address_list', array('id'=>$this->_var['consignee']['address_id']))}" class="btn-info11 n-but-bor box-flex">{$lang.drop}</a>
 		<button type="submit" name="submit" class="btn-submit box-flex">{$lang.confirm_edit}</a>
 		<input name="address_id" type="hidden" value="{$consignee.address_id}" />
   </div>

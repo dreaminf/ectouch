@@ -175,7 +175,7 @@ elseif ($_REQUEST['act'] =='insert_update')
                     "AND extension_id = '$group_buy_id' " .
                     "AND (order_status = '" . OS_CONFIRMED . "' or order_status = '" . OS_UNCONFIRMED . "')";
             $order_id_list = $db->getCol($sql);
-          
+
             /* 更新订单商品价 */
             $final_price = $group_buy['trans_price'];
             $sql = "UPDATE " . $ecs->table('order_goods') .

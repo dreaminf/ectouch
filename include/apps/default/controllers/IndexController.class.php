@@ -47,9 +47,21 @@ class IndexController extends CommonController {
             $this->assign('brand_list', model('Brand')->get_brands($app = 'brand', C('page_size'), 1));
             // 分类下的文章
             $this->assign('cat_articles', model('Article')->assign_articles(1,5)); // 1 是文章分类id ,5 是文章显示数量
+            //获取推荐众筹
+            $recommend = model('Mycrowd')->recom_list();
+            $this->assign('recommend', $recommend);
 
+        // 验证首页下单提示轮播是否开启
+            $sql = 'SELECT value FROM ' . $this->model->pre . 'shop_config'." WHERE code = 'virtual_order'";
+            $is_open = $this->model->getRow($sql);
+            if($is_open['value'] == 1){
+                $this->assign('is_open', 1);
+            }
+            // 获取频道
+            $this->assign('team_categories', model('Index')->team_categories_tree());
         }
-        $this->display('index.dwt', $cache_id);
+        $this->display('team/index.html', $cache_id);
+
     }
 
     /**
@@ -58,9 +70,38 @@ class IndexController extends CommonController {
     public function ajax_goods() {
         if (IS_AJAX) {
             $type = I('get.type');
+            $id = I('get.id');
             $start = $_POST['last'];
             $limit = $_POST['amount'];
-            $goods_list = model('Index')->goods_list($type, $limit, $start);
+            $goods_list = model('Index')->goods_list($type,$id, $limit, $start);
+            $list = array();
+            // 商品列表
+            if ($goods_list) {
+                foreach ($goods_list as $key => $value) {
+                    $value['iteration'] = $key + 1;
+                    $this->assign('goods', $value);
+                    $list [] = array(
+                        'single_item' => ECTouch::view()->fetch('library/asynclist_index.lbi')
+                    );
+                }
+            }
+            echo json_encode($list);
+            exit();
+        } else {
+            $this->redirect(url('index'));
+        }
+    }
+    
+    /**
+     * ajax获取频道商品
+     */
+    public function tean_ajax_goods() {
+        if (IS_AJAX) {
+            //$type = I('get.type');
+            $id = I('get.id');
+            $start = $_POST['last'];
+            $limit = $_POST['amount'];
+            $goods_list = model('Index')->team_goods_list($id, $limit, $start);
             $list = array();
             // 热卖商品
             if ($goods_list) {
@@ -78,5 +119,97 @@ class IndexController extends CommonController {
             $this->redirect(url('index'));
         }
     }
+    
+    /**
+     * 首页频道信息
+     */
+    public function team_category() {
+        $id = isset($_REQUEST ['id']) ? intval($_REQUEST ['id']) : 0;
+        // 获取频道
+        $this->assign('team_categories', model('Index')->team_categories_tree());
+        // 获取子频道
+        $this->assign('team_child', model('Index')->team_get_child_tree($id));
+        // 获取频道名称
+        $name = $this->model->table('team_category')->where("id=" . $id)->field('name')->getone();
+        // 验证首页下单提示轮播是否开启
+        $sql = 'SELECT value FROM ' . $this->model->pre . 'shop_config'." WHERE code = 'virtual_order'";
+        $is_open = $this->model->getRow($sql);
+        if($is_open['value'] == 1){
+            $this->assign('is_open', 1);
+        }
+        $this->assign('id', $id);   
+        $this->assign('title', $name);
+        $this->display('team/index_fresh.html');
+    }
+    
+    //首页下单提示轮播
+    public function virtual_order(){    
+         //格式化返回数组
+        $arr = array(
+            'err_msg' => '',
+            'name' => '',
+            'avatar' => '',
+            'seconds' => ''
+        );
+        $sql = 'SELECT value FROM ' . $this->model->pre . 'shop_config'." WHERE code = 'virtual_order'";
+        $is_open = $this->model->getRow($sql);
+        if($is_open['value'] == 1){
+            //随机用户
+            if($_SESSION['user_id']!=0){
+                $sql = 'SELECT user_name, user_id FROM ' . $this->model->pre . 'users'." WHERE user_id <> ".$_SESSION['user_id']." ORDER BY rand() LIMIT 1";
+            }
+            else{
+                $ip = $this->getIP();
+                $sql = 'SELECT user_name, user_id FROM ' . $this->model->pre . 'users'." WHERE last_ip <> '$ip' ORDER BY rand() LIMIT 1";
+            }
+            $user = $this->model->getRow($sql); 
+            if($user){
+            $arr['name'] = $user['user_name'];
+            $arr['avatar'] = 'themes/default/images/member-photo-img2.jpeg';
+            
+            
+            $wechat_user = $this->model->table('wechat_user')->where("ect_uid=" . $user['user_id'])->field('nickname,headimgurl')->find();
+            if (!empty($wechat_user)) {
+                $arr['name'] = $wechat_user['nickname'];
+                $arr['avatar'] = $wechat_user['headimgurl'];
+            }       
+
+            //随机秒数
+            $arr['seconds']=rand(1,8)."秒前";
+            }else{
+                $arr ['err_no'] = 1;
+                //$arr='';
+            }
+            
+        }else{
+            $arr ['err_no'] = 1;
+            //$arr='';
+        }
+        
+        die(json_encode($arr));
+    }
+    
+    private function getIP()    {   
+        static $realip; 
+        if (isset($_SERVER)){   
+            if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])){   
+                $realip = $_SERVER["HTTP_X_FORWARDED_FOR"]; 
+            } else if (isset($_SERVER["HTTP_CLIENT_IP"])) { 
+                $realip = $_SERVER["HTTP_CLIENT_IP"];   
+            } else {    
+                $realip = $_SERVER["REMOTE_ADDR"];  
+            }   
+        } else {    
+            if (getenv("HTTP_X_FORWARDED_FOR")){    
+                $realip = getenv("HTTP_X_FORWARDED_FOR");   
+            } else if (getenv("HTTP_CLIENT_IP")) {  
+                $realip = getenv("HTTP_CLIENT_IP"); 
+            } else {    
+                $realip = getenv("REMOTE_ADDR");    
+            }   
+        }   
+        return $realip; 
+    }
+
 
 }

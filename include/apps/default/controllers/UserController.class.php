@@ -62,6 +62,10 @@ class UserController extends CommonController {
 		// 待评价
 		$not_comment = model('ClipsBase')->not_pingjia($this->user_id);
 
+        // 拼团中
+        $team_num = model('Users')->team_ongoing($this->user_id);
+
+
 		// 用户积分余额
 		$user_pay = model('ClipsBase')->pay_money($this->user_id);
 		$user_money = $user_pay['user_money'];  //余额
@@ -100,7 +104,9 @@ class UserController extends CommonController {
 		'not_pays'=> $not_pays,
 		'not_shouhuos'=>  $not_shouhuos,
 		'not_comment'=>  $not_comment,
-		'user_money'=> $user_money,
+        'team_num'=>  $team_num,
+        'user_money'=> $user_money,
+
 		'user_points'=> $user_points,
 		'bonus'=> $bonus,
 		);
@@ -110,7 +116,7 @@ class UserController extends CommonController {
         $this->assign('comment_list', $comment_list);
         $this->assign('history', $history);
         $this->assign('title', L('user_center'));
-        $this->display('user.dwt');
+        $this->display('team/user.html');
     }
 
     /**
@@ -584,10 +590,13 @@ class UserController extends CommonController {
      * 获取未付款订单
      */
     public function not_pay_order_list() {
+        $where['user_id'] = $this->user_id;
+        $where['pay_status'] = 0;
         $pay = 0;
         $size = I(C('page_size'), 10);
-        $this->assign('show_asynclist', C('show_asynclist'));
-        $count = $this->model->table('order_info')->where('user_id = ' . $this->user_id)->count();
+        //$this->assign('show_asynclist', C('show_asynclist'));
+        $count = $this->model->table('order_info')->where($where)->count();
+
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('not_pay_order_list', $filter), $size);
         $offset_page = explode(',', $offset);
@@ -645,8 +654,33 @@ class UserController extends CommonController {
         $this->display('user_order_list.dwt');
     }
     /**
+     * 获取拼团订单
+     */
+    public function team_order_list() {
+        $pay = 3;
+        $size = I(C('page_size'), 10);
+        //$this->assign('show_asynclist', C('show_asynclist'));
+        $count = $this->model->table('order_info')->where(array('user_id'=>$this->user_id,'extension_code'=>'team_buy'))->count();
+        $filter['page'] = '{page}';
+        $offset = $this->pageLimit(url('team_order_list', $filter), $size);
+        $offset_page = explode(',', $offset);
+        $orders = model('Users')->get_user_orders($this->user_id, $pay, $offset_page[1], $offset_page[0]);
+        if(!$orders){
+            show_message('暂无内容');
+        }
+        $this->assign('pay', $pay);
+        $this->assign('title', '拼团中');
+        $this->assign('pager', $this->pageShow($count));
+        $this->assign('orders_list', $orders);
+        $this->display('user_order_list.dwt');
+    }
+
+
+
+    /**
      * ajax获取订单
      */
+
     public function async_order_list() {
         if (IS_AJAX) {
             $start = $_POST['last'];
@@ -745,7 +779,8 @@ class UserController extends CommonController {
             $goods_list[$key]['ret_id'] = $this->model->table('order_return')->field('ret_id')->where('rec_id =' . $value['rec_id'])->getOne();
             $goods_list[$key]['aftermarket'] = model('Users')->check_aftermarket($value['rec_id']); //查询是否申请过售后服务
             if ($order['shipping_status'] == SS_RECEIVED) {
-                /*只有已付款订单才能申请售后服务*/
+                /*只有已收货订单才能申请售后服务*/
+
                 $goods_list[$key]['service_apply'] = true;
             }
             /*退换货 end*/
@@ -1824,13 +1859,16 @@ class UserController extends CommonController {
                 }*/
 
                 $jump_url = empty($this->back_act) ? url('index') : $this->back_act;
-                $this->redirect($jump_url);
+                //$this->redirect($jump_url);
+                exit(json_encode(array('status' => 'y', 'info' => '登陆成功','url' => $jump_url)));
             } else {
                 $_SESSION['login_fail']++;
-                show_message(L('login_failure'), L('relogin_lnk'), url('login', array(
-                    'referer' => urlencode($this->back_act)
-                        )), 'error');
+                 /* show_message(L('login_failure'), L('relogin_lnk'), url('login', array(
+                     'referer' => urlencode($this->back_act)
+                         )), 'error'); */
+                exit(json_encode(array('status' => 'n', 'info' => L('login_failure'))));
             }
+
             exit();
         }
 
@@ -2983,5 +3021,218 @@ class UserController extends CommonController {
          }
 
 	}
+    /* ------------------------------------------------------ */
+    //--拼团商城 --> 我的拼团
+    /* ------------------------------------------------------ */
+    public function my_team() {
+        $this->size = 10;
+        $this->page = I('request.page') > 0 ? intval(I('request.page')) : 1;
+        $this->type = isset($_REQUEST ['type']) ? $_REQUEST ['type'] : 2;
+        if (IS_AJAX) {
+            $goodslist = model('Users')->my_team_goods($this->user_id,$this->type,$this->page,$this->size);
+            die(json_encode(array('list' => $goodslist)));
+            exit();
+        }
+        $goodslist = model('Users')->my_team_goods($this->user_id,$this->type,$this->page,$this->size);
+        //当页面无数据时显示
+        if(empty($goodslist) && $this->page == 1 ){
+            $this->assign("is_show",1);
+        }
+        $this->assign('page', $this->page);
+        $this->assign('type', $this->type);
+        $this->display('team/my_team.html');
+    }
+
+    /* ------------------------------------------------------ */
+    //--拼团商城 --> ---签到页---
+    /* ------------------------------------------------------ */
+
+    public function user_sign() {
+
+        $years = date("Y",gmtime());//年
+        $month = date("m",gmtime());//月
+        $tday = date("d",gmtime());//日
+        /* --当前积分-- */
+        $pay_points = $this->model->table('users')->field('pay_points')->where(array('user_id'=>$this->user_id))->getOne();
+        $this->assign('pay_points', $pay_points);
+        /* --签到日期-- */
+        $sign_day = $this->model->table('user_sign')->field('day')->where(array('user_id'=>$this->user_id,'years'=>$years,'month'=>$month))->select();
+        $day ='';
+        if($sign_day){
+            foreach($sign_day as $key ){
+            $day[] = $key['day']-1;
+            }
+            $day  = implode(',',$day);
+        }
+        $this->assign('day', $day);
+        $this->assign('sign_points', C('sign_points'));
+        $sql=" select max(day)as time from " .$this->model->pre."user_sign where user_id = $this->user_id and years = $years and month = $month";
+        $res = $this->model->getrow($sql);
+
+        if($res['time'] == $tday){
+            $this->assign('is_sign', '1');
+        }
+
+        $this->display('team/user_sign.html');
+    }
+
+    /* ------------------------------------------------------ */
+    //--拼团商城 --> ---一部加载积分商品---
+    /* ------------------------------------------------------ */
+    public function sing_goods(){
+
+        if (IS_AJAX) {
+            $type = I('get.type');
+            $start = $_POST['last'];
+            $limit = $_POST['amount'];
+            $goods_list = $this->sing_goods_list($type, $limit, $start);
+            $list = array();
+            // 热卖商品
+            if ($goods_list) {
+                foreach ($goods_list as $key => $value) {
+                    $value['iteration'] = $key + 1;
+                    $this->assign('sing_goods', $value);
+                    $list [] = array(
+                        'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
+                    );
+                }
+            }
+            echo json_encode($list);
+            exit();
+        }
+
+    }
+
+    /* ------------------------------------------------------ */
+    //--拼团商城 --> ---一部加载积分商品---
+    /* ------------------------------------------------------ */
+    public function sing_goods_list($type = 'is_hot', $limit = 10, $start = 0){
+        switch ($type)
+        {
+            case 'is_hot':
+                $type   = ' eg.is_hot = 1';
+                break;
+            default:
+                $type   = '1';
+        }
+
+        /* 获得积分商品列表 */
+
+        $sql = 'SELECT g.goods_id, g.goods_name, g.market_price, g.goods_name_style,g.click_count, eg.exchange_integral, ' .
+                'g.goods_type, g.goods_brief, g.goods_thumb , g.goods_img, eg.is_hot ' .
+                'FROM ' . $this->model->pre . 'exchange_goods AS eg LEFT JOIN  ' . $this->model->pre . 'goods AS g ' .
+                'ON  eg.goods_id = g.goods_id ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' .
+                " WHERE $type ORDER BY g.sort_order, g.last_update DESC limit ". $start . ', ' . $limit;
+        $res = $this->model->query($sql);
+        $arr = array();
+        foreach ($res as $key => $row) {
+            $arr[$key]['goods_id'] = $row['goods_id'];
+            if ($display == 'grid') {
+                $arr[$key]['goods_name'] = C('goods_name_length') > 0 ? sub_str($row['goods_name'], C('goods_name_length')) : $row['goods_name'];
+            } else {
+                $arr[$key]['goods_name'] = $row['goods_name'];
+            }
+            $arr[$key]['name'] = $row['goods_name'];
+            $arr[$key]['goods_brief'] = $row['goods_brief'];
+            $arr[$key]['goods_style_name'] = add_style($row['goods_name'], $row['goods_name_style']);
+            $arr[$key]['market_price'] = price_format($row ['market_price']);
+            $arr[$key]['exchange_integral'] = $row['exchange_integral'];
+            $arr[$key]['click_count'] = $row['click_count'];
+            $arr[$key]['type'] = $row['goods_type'];
+            $arr[$key]['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
+            $arr[$key]['goods_img'] = get_image_path($row['goods_id'], $row['goods_img']);
+            $arr[$key]['url'] = url('exchange/exchange_goods', array('gid' => $row['goods_id']));
+            $arr[$key]['sc'] = model('GoodsBase')->get_goods_collect($row['goods_id']);
+            $arr[$key]['sales_count'] = model('GoodsBase')->get_sales_count($row['goods_id']); // 销售数量
+            $arr[$key]['mysc'] = 0;
+            // 检查是否已经存在于用户的收藏夹
+            if ($_SESSION ['user_id']) {
+                unset($where);
+                // 用户自己有没有收藏过
+                $where['goods_id'] = $row ['goods_id'];
+                $where['user_id'] = $_SESSION ['user_id'];
+                $rs = $this->model->table('collect_goods')->where($where)->count();
+                $arr[$key]['mysc'] = $rs;
+            }
+        }
+        return $arr;
+
+    }
+
+
+    /* ------------------------------------------------------ */
+    //--拼团商城 --> ---签到送积分---
+    /* ------------------------------------------------------ */
+
+    public function add_points() {
+
+         //格式化返回数组
+        $result = array(
+            'error' => 0,
+            'message' => ''
+        );
+
+        $points  = I('points','');
+        $day  = I('day','');
+        $year  = I('year','');
+        $month  = I('month','');
+        $data['user_id']=$this->user_id;
+        $data['years']=$year;
+        $data['month']=$month;
+        $data['day']=$day;
+        $data['last_sign_time']=gmtime();
+        $this->model->table('user_sign')->data($data)->insert();
+
+        model('ClipsBase')->log_account_change($this->user_id, 0, 0, 0, $points * (1), sprintf('签到送积分'), ACT_SIGN);
+        $pay_points = $this->model->table('users')->field('pay_points')->where(array('user_id'=>$this->user_id))->getOne();
+
+        $result ['error'] = 1;
+        $result['pay_points'] = $pay_points;
+        $result['points'] = $points;
+
+        die(json_encode($result));
+    }
+
+    /* ------------------------------------------------------ */
+    //--拼团商城 --> ---积分记录---
+    /* ------------------------------------------------------ */
+
+    public function user_sign_detail() {
+
+        if (IS_AJAX) {
+            $type = I('get.type');
+            $start = $_POST['last'];
+            $limit = $_POST['amount'];
+
+            $sql = 'SELECT pay_points, change_desc, change_time ' .
+                    'FROM ' . $this->model->pre . 'account_log ' .
+                    " WHERE user_id = $this->user_id and pay_points !='' ORDER BY change_time DESC limit ". $start . ', ' . $limit;
+            $res = $this->model->query($sql);
+            $arr = array();
+            foreach ($res as $key => $row) {
+                $arr[$key]['pay_points'] = $row['pay_points'];
+                $arr[$key]['change_desc'] =$row['change_desc'];
+                $arr[$key]['change_time'] =local_date(C('time_format'), $row['change_time']);
+
+            }
+
+            $list = array();
+            // 积分记录
+            if ($arr) {
+                foreach ($arr as $key => $value) {
+                    $value['iteration'] = $key + 1;
+                    $this->assign('sing_detail', $value);
+                    $list [] = array(
+                        'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
+                    );
+                }
+            }
+            echo json_encode($list);
+            exit();
+        }
+
+        $this->display('team/user_sign_detail.html');
+    }
+
 
 }

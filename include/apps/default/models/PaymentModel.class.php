@@ -131,7 +131,7 @@ class PaymentModel extends BaseModel {
                 /* 根据记录类型做相应处理 */
                 if ($pay_log['order_type'] == PAY_ORDER) {
                     /* 取得订单信息 */
-                    $sql = 'SELECT order_id, user_id, order_sn, consignee, address, mobile, shipping_id, extension_code, extension_id, goods_amount ' .
+                    $sql = 'SELECT order_id, user_id, order_sn, consignee, address, mobile, shipping_id, extension_code, extension_id, goods_amount, team_id ' .
                             'FROM ' . $this->pre .
                             "order_info WHERE order_id = '$pay_log[order_id]'";
                     $order = $this->row($sql);
@@ -151,8 +151,16 @@ class PaymentModel extends BaseModel {
 
                     /* 记录订单操作记录 */
                     model('OrderBase')->order_action($order_sn, OS_CONFIRMED, SS_UNSHIPPED, $pay_status, $note, L('buyer'));
-
+                    
+                    /* 支付完成验证拼团是否成功 */
+                    $team_id = $order['team_id'];
+                    if($team_id > 0){
+                        //付款更新拼团信息记录
+                        model('Flow')->update_team($team_id);
+                    }
+                    
                     /* 如果需要，发短信 */
+
                     if (C('sms_order_payed') == '1' && C('sms_shop_mobile') != '') {
                         $sms = new EcsSms();
                         $sms->send(C('sms_shop_mobile'), sprintf(L('order_payed_sms'), $order_sn, $order['consignee'], $order['mobile']), '', 13, 1);

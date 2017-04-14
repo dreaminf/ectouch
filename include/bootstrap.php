@@ -17,7 +17,7 @@
 defined('IN_ECTOUCH') or die('Deny Access');
 header("Content-Type:text/html;charset=utf-8");
 define('APPNAME', 'ECTouch');
-define('VERSION', '2.17.31');
+define('VERSION', '2.17.0331');
 define('RELEASE', '20170331');
 defined('BASE_PATH') or define('BASE_PATH', dirname(__FILE__) . '/');
 defined('ROOT_PATH') or define('ROOT_PATH', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/');

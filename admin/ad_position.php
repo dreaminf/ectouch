@@ -58,10 +58,12 @@ elseif ($_REQUEST['act'] == 'add')
 {
     admin_priv('ad_manage');
 
+    $team_list=get_team_list();
+
+    $smarty->assign('team_list',     $team_list);
     /* 模板赋值 */
     $smarty->assign('ur_here',     $_LANG['position_add']);
     $smarty->assign('form_act',    'insert');
-
     $smarty->assign('action_link', array('href' => 'ad_position.php?act=list', 'text' => $_LANG['ad_position']));
     $smarty->assign('posit_arr',   array('position_style' => '<table cellpadding="0" cellspacing="0">' ."\n". '{foreach from=$ads item=ad}' ."\n". '<tr><td>{$ad}</td></tr>' ."\n". '{/foreach}' ."\n". '</table>'));
 
@@ -71,19 +73,20 @@ elseif ($_REQUEST['act'] == 'add')
 elseif ($_REQUEST['act'] == 'insert')
 {
     admin_priv('ad_manage');
-
     /* 对POST上来的值进行处理并去除空格 */
     $position_name = !empty($_POST['position_name']) ? trim($_POST['position_name']) : '';
     $position_desc = !empty($_POST['position_desc']) ? nl2br(htmlspecialchars($_POST['position_desc'])) : '';
     $ad_width      = !empty($_POST['ad_width'])      ? intval($_POST['ad_width'])  : 0;
     $ad_height     = !empty($_POST['ad_height'])     ? intval($_POST['ad_height']) : 0;
-
+    $tc_id     = !empty($_POST['tc_id'])     ? intval($_POST['tc_id']) : 0;
+    $tc_type     = !empty($_POST['tc_type'])     ? trim($_POST['tc_type']) : '';
+  
     /* 查看广告位是否有重复 */
     if ($exc->num("position_name", $position_name) == 0)
     {
         /* 将广告位置的信息插入数据表 */
-        $sql = 'INSERT INTO '.$ecs->table('ad_position').' (position_name, ad_width, ad_height, position_desc, position_style) '.
-               "VALUES ('$position_name', '$ad_width', '$ad_height', '$position_desc', '$_POST[position_style]')";
+        $sql = 'INSERT INTO '.$ecs->table('ad_position').' (position_name, ad_width, ad_height, position_desc, position_style,tc_id,tc_type) '.
+               "VALUES ('$position_name', '$ad_width', '$ad_height', '$position_desc', '$_POST[position_style]','$tc_id','$tc_type')";
 
         $db->query($sql);
         /* 记录管理员操作 */
@@ -116,11 +119,12 @@ elseif ($_REQUEST['act'] == 'edit')
     admin_priv('ad_manage');
 
     $id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
-
+    $team_list=get_team_list();
+    $smarty->assign('team_list',     $team_list);
     /* 获取广告位数据 */
     $sql = 'SELECT * FROM ' .$ecs->table('ad_position'). " WHERE position_id='$id'";
     $posit_arr = $db->getRow($sql);
-
+     
     $smarty->assign('ur_here',     $_LANG['position_edit']);
     $smarty->assign('action_link', array('href' => 'ad_position.php?act=list', 'text' => $_LANG['ad_position']));
     $smarty->assign('posit_arr',   $posit_arr);
@@ -139,18 +143,22 @@ elseif ($_REQUEST['act'] == 'update')
     $ad_width      = !empty($_POST['ad_width'])      ? intval($_POST['ad_width'])  : 0;
     $ad_height     = !empty($_POST['ad_height'])     ? intval($_POST['ad_height']) : 0;
     $position_id   = !empty($_POST['id'])            ? intval($_POST['id'])        : 0;
+    $tc_id     = !empty($_POST['tc_id'])     ? intval($_POST['tc_id']) : 0;
+    $tc_type     = !empty($_POST['tc_type'])     ? trim($_POST['tc_type']) : '';
     /* 查看广告位是否与其它有重复 */
     $sql = 'SELECT COUNT(*) FROM ' .$ecs->table('ad_position').
            " WHERE position_name = '$position_name' AND position_id <> '$position_id'";
     if ($db->getOne($sql) == 0)
     {
-        $sql = "UPDATE " .$ecs->table('ad_position'). " SET ".
-               "position_name    = '$position_name', ".
-               "ad_width         = '$ad_width', ".
-               "ad_height        = '$ad_height', ".
-               "position_desc    = '$position_desc', ".
-               "position_style   = '$_POST[position_style]' ".
-               "WHERE position_id = '$position_id'";
+        $sql = "UPDATE " . $ecs->table('ad_position') . " SET " .
+                "position_name    = '$position_name', " .
+                "ad_width         = '$ad_width', " .
+                "ad_height        = '$ad_height', " .
+                "tc_id        = '$tc_id', " .
+                "tc_type        = '$tc_type', " .
+                "position_desc    = '$position_desc', " .
+                "position_style   = '$_POST[position_style]' " .
+                "WHERE position_id = '$position_id'";
         if ($db->query($sql))
         {
            /* 记录管理员操作 */
@@ -336,6 +344,14 @@ function ad_position_list()
     }
 
     return array('position' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
+}
+
+/* 获取所有拼团主频道 */
+function get_team_list()
+{
+    $sql='select id,name from '.$GLOBALS['ecs']->table('team_category').' where parent_id=0 ';
+    $res=$GLOBALS['db']->getAll($sql);
+    return $res;
 }
 
 ?>

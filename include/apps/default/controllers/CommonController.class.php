@@ -196,6 +196,10 @@ class CommonController extends BaseController
             }
             $this->assign('search_histroy', $histroy_list);
         }
+        //购物车商品数量
+        $cart_goods = insert_cart_info_number();
+        $this->assign('seller_cart_total_number', $cart_goods);
+
         /*DRP_START*/
         $this->custom = $this->model->table('drp_config')->field("value")->where("id =12")->getOne();
         $this->customs = $this->model->table('drp_config')->field("value")->where("id =11")->getOne();

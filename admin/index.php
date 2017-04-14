@@ -88,6 +88,7 @@ if ($_REQUEST['act'] == '')
         '10_menu_tools' => array('01_navigator' => 1, '02_authorization' => 1, '99_upgrade' => 1),
         '11_menu_rec' => '*',
         '12_menu_wechat' => '*',
+        '13_menu_team' => '*',
     );
     if(IS_ECSHOP){
         foreach($menus as $key => $val){

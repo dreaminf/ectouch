@@ -998,7 +998,6 @@ function product_goods_attr_list($goods_id)
     }
 
     $sql = "SELECT goods_attr_id, attr_value FROM " . $GLOBALS['ecs']->table('goods_attr') . " WHERE goods_id = '$goods_id' order by goods_attr_id DESC";
-
     $results = $GLOBALS['db']->getAll($sql);
 
     $return_arr = array();
@@ -1031,7 +1030,6 @@ function get_goods_specifications_list($goods_id)
             WHERE goods_id = '$goods_id'
             AND a.attr_type = 1
             ORDER BY g.goods_attr_id ASC";
-
     $results = $GLOBALS['db']->getAll($sql);
 
     return $results;

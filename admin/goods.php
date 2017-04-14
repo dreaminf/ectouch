@@ -157,31 +157,38 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
             $last_choose = explode('|', $_COOKIE['ECSCP']['last_choose']);
         }
         $goods = array(
-            'goods_id'      => 0,
-            'goods_desc'    => '',
-            'cat_id'        => $last_choose[0],
-            'brand_id'      => $last_choose[1],
-            'is_on_sale'    => '1',
+            'goods_id' => 0,
+            'goods_desc' => '',
+            'cat_id' => $last_choose[0],
+            'brand_id' => $last_choose[1],
+            'is_on_sale' => '1',
             'is_alone_sale' => '1',
             'is_shipping' => '0',
-            'other_cat'     => array(), // 扩展分类
-            'goods_type'    => 0,       // 商品类型
-            'shop_price'    => 0,
-            'virtual_sales'  => 0,
-            /*DRP_START*/
-            'touch_sale'    => 0,
-            'touch_fencheng'    => 0,
-            /*DRP_END*/
+            'other_cat' => array(), // 扩展分类
+            'goods_type' => 0, // 商品类型
+            'shop_price' => 0,
+            'virtual_sales' => 0,
+            /* DRP_START */
+            'touch_sale' => 0,
+            'touch_fencheng' => 0,
+            /* DRP_END */
             'promote_price' => 0,
-            'market_price'  => 0,
-            'integral'      => 0,
-            'goods_number'  => $_CFG['default_storage'],
-            'warn_number'   => 1,
+            'market_price' => 0,
+            'integral' => 0,
+            'goods_number' => $_CFG['default_storage'],
+            'warn_number' => 1,
             'promote_start_date' => local_date('Y-m-d'),
-            'promote_end_date'   => local_date('Y-m-d', local_strtotime('+1 month')),
-            'goods_weight'  => 0,
+            'promote_end_date' => local_date('Y-m-d', local_strtotime('+1 month')),
+            'goods_weight' => 0,
             'give_integral' => -1,
-            'rank_integral' => -1
+            'rank_integral' => -1,
+            //拼团
+            'team_price' => 0,
+            'team_num' => 0,
+            'validity_time' => 0,
+            'limit_num' => 0,
+            'astrict_num' => 0,
+            'tc_id' => 0,
         );
 
         if ($code != '')
@@ -201,7 +208,9 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
         $sql = "DELETE FROM " . $ecs->table('group_goods') .
                 " WHERE parent_id = 0 AND admin_id = '$_SESSION[admin_id]'";
         $db->query($sql);
-
+        //拼团时间
+        $time=date("Y-m-d H:i:s");
+        $smarty->assign('time',$time);
         /* 关联文章 */
         $goods_article_list = array();
         $sql = "DELETE FROM " . $ecs->table('goods_article') .
@@ -231,30 +240,37 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
         {
             /* 默认值 */
             $goods = array(
-                'goods_id'      => 0,
-                'goods_desc'    => '',
-                'cat_id'        => 0,
-                'is_on_sale'    => '1',
+                'goods_id' => 0,
+                'goods_desc' => '',
+                'cat_id' => 0,
+                'is_on_sale' => '1',
                 'is_alone_sale' => '1',
                 'is_shipping' => '0',
-                'other_cat'     => array(), // 扩展分类
-                'goods_type'    => 0,       // 商品类型
-                'shop_price'    => 0,
-                /*DRP_START*/
-                'touch_sale'    => 0,
-                'touch_fencheng'    => 0,
-                /*DRP_END*/
+                'other_cat' => array(), // 扩展分类
+                'goods_type' => 0, // 商品类型
+                'shop_price' => 0,
+                /* DRP_START */
+                'touch_sale' => 0,
+                'touch_fencheng' => 0,
+                /* DRP_END */
                 'promote_price' => 0,
-                'market_price'  => 0,
-                'virtual_sales'  => 0,
-                'integral'      => 0,
-                'goods_number'  => 1,
-                'warn_number'   => 1,
+                'market_price' => 0,
+                'virtual_sales' => 0,
+                'integral' => 0,
+                'goods_number' => 1,
+                'warn_number' => 1,
                 'promote_start_date' => local_date('Y-m-d'),
-                'promote_end_date'   => local_date('Y-m-d', gmstr2tome('+1 month')),
-                'goods_weight'  => 0,
+                'promote_end_date' => local_date('Y-m-d', gmstr2tome('+1 month')),
+                'goods_weight' => 0,
                 'give_integral' => -1,
-                'rank_integral' => -1
+                'rank_integral' => -1,
+                //拼团
+                'team_price' => 0,
+                'team_num' => 0,
+                'validity_time' => 0,
+                'limit_num' => 0,
+                'astrict_num' => 0,
+                'tc_id' => 0,
             );
         }
 
@@ -436,6 +452,10 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
     $goods['touch_fencheng'] = $goods_sale['touch_fencheng'];
     /*DRP_END*/
     
+    
+    
+    
+    
     /* 模板赋值 */
     $smarty->assign('code',    $code);
     $smarty->assign('ur_here', $is_add ? (empty($code) ? $_LANG['02_goods_add'] : $_LANG['51_virtual_card_add']) : ($_REQUEST['act'] == 'edit' ? $_LANG['edit_goods'] : $_LANG['copy_goods']));
@@ -444,6 +464,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
     $smarty->assign('goods_name_color', $goods_name_style[0]);
     $smarty->assign('goods_name_style', $goods_name_style[1]);
     $smarty->assign('cat_list', cat_list(0, $goods['cat_id']));
+    $smarty->assign('team_list', team_cat_list(0,$goods['tc_id']));//拼团频道树形
     $smarty->assign('brand_list', get_brand_list());
     $smarty->assign('unit_list', get_unit_list());
     $smarty->assign('user_rank_list', get_user_rank_list());
@@ -472,6 +493,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
     {
     $volume_price_list = get_volume_price_list($_REQUEST['goods_id']);
     }
+ 
     if (empty($volume_price_list))
     {
         $volume_price_list = array('0'=>array('number'=>'','price'=>''));
@@ -824,6 +846,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     $virtual_sales = !empty($_POST['virtual_sales']) ? $_POST['virtual_sales'] : 0;
     $promote_price = !empty($_POST['promote_price']) ? floatval($_POST['promote_price'] ) : 0;
     $is_promote = empty($_POST['is_promote']) ? 0 : 1;
+	$is_team = empty($_POST['is_team']) ? 0 : 1;
     $promote_start_date = ($is_promote && !empty($_POST['promote_start_date'])) ? local_strtotime($_POST['promote_start_date']) : 0;
     $promote_end_date = ($is_promote && !empty($_POST['promote_end_date'])) ? local_strtotime($_POST['promote_end_date']) : 0;
     $goods_weight = !empty($_POST['goods_weight']) ? $_POST['goods_weight'] * $_POST['weight_unit'] : 0;
@@ -839,12 +862,18 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     $give_integral = isset($_POST['give_integral']) ? intval($_POST['give_integral']) : '-1';
     $rank_integral = isset($_POST['rank_integral']) ? intval($_POST['rank_integral']) : '-1';
     $suppliers_id = isset($_POST['suppliers_id']) ? intval($_POST['suppliers_id']) : '0';
-
+    //拼团start
+    $team_price = isset($_POST['team_price']) ? $_POST['team_price'] : 0;
+    $team_num = isset($_POST['team_num']) ? $_POST['team_num'] : 0;
+    $validity_time = isset($_POST['validity_time']) ? $_POST['validity_time'] : 0;
+    $limit_num = isset($_POST['limit_num']) ? $_POST['limit_num'] : 0;
+    $astrict_num = isset($_POST['astrict_num']) ? $_POST['astrict_num'] : 0;
+    $tc_id = isset($_POST['tc_id']) ? $_POST['tc_id'] : 0;
+    //拼团end
+    
     $goods_name_style = $_POST['goods_name_color'] . '+' . $_POST['goods_name_style'];
-
     $catgory_id = empty($_POST['cat_id']) ? '' : intval($_POST['cat_id']);
     $brand_id = empty($_POST['brand_id']) ? '' : intval($_POST['brand_id']);
-
     $goods_thumb = (empty($goods_thumb) && !empty($_POST['goods_thumb_url']) && goods_parse_url($_POST['goods_thumb_url'])) ? htmlspecialchars(trim($_POST['goods_thumb_url'])) : $goods_thumb;
     $goods_thumb = (empty($goods_thumb) && isset($_POST['auto_thumb']))? $goods_img : $goods_thumb;
 
@@ -857,13 +886,13 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
                     "cat_id, brand_id, shop_price, market_price, virtual_sales, is_promote, promote_price, " .
                     "promote_start_date, promote_end_date, goods_img, goods_thumb, original_img, keywords, goods_brief, " .
                     "seller_note, goods_weight, goods_number, warn_number, integral, give_integral, is_best, is_new, is_hot, " .
-                    "is_on_sale, is_alone_sale, is_shipping, goods_desc, add_time, last_update, goods_type, rank_integral, suppliers_id)" .
+                    "is_on_sale, is_alone_sale, is_shipping, goods_desc, add_time, last_update, goods_type, rank_integral,suppliers_id,team_price,team_num,validity_time,limit_num,astrict_num,tc_id,is_team)" .
                 "VALUES ('$_POST[goods_name]', '$goods_name_style', '$goods_sn', '$catgory_id', " .
                     "'$brand_id', '$shop_price', '$market_price', '$virtual_sales', '$is_promote','$promote_price', ".
                     "'$promote_start_date', '$promote_end_date', '$goods_img', '$goods_thumb', '$original_img', ".
                     "'$_POST[keywords]', '$_POST[goods_brief]', '$_POST[seller_note]', '$goods_weight', '$goods_number',".
                     " '$warn_number', '$_POST[integral]', '$give_integral', '$is_best', '$is_new', '$is_hot', '$is_on_sale', '$is_alone_sale', $is_shipping, ".
-                    " '$_POST[goods_desc]', '" . gmtime() . "', '". gmtime() ."', '$goods_type', '$rank_integral', '$suppliers_id')";
+                    " '$_POST[goods_desc]', '" . gmtime() . "', '". gmtime() ."', '$goods_type', '$rank_integral', '$suppliers_id','$team_price','$team_num','$validity_time','$limit_num','$astrict_num','$tc_id','$is_team')";
         }
         else
         {
@@ -871,13 +900,13 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
                     "cat_id, brand_id, shop_price, market_price, virtual_sales, is_promote, promote_price, " .
                     "promote_start_date, promote_end_date, goods_img, goods_thumb, original_img, keywords, goods_brief, " .
                     "seller_note, goods_weight, goods_number, warn_number, integral, give_integral, is_best, is_new, is_hot, is_real, " .
-                    "is_on_sale, is_alone_sale, is_shipping, goods_desc, add_time, last_update, goods_type, extension_code, rank_integral)" .
+                    "is_on_sale, is_alone_sale, is_shipping, goods_desc, add_time, last_update, goods_type, extension_code, rank_integral,suppliers_id,team_price,team_num,validity_time,limit_num,astrict_num,tc_id,is_team)" .
                 "VALUES ('$_POST[goods_name]', '$goods_name_style', '$goods_sn', '$catgory_id', " .
                     "'$brand_id', '$shop_price', '$market_price', '$virtual_sales', '$is_promote','$promote_price', ".
                     "'$promote_start_date', '$promote_end_date', '$goods_img', '$goods_thumb', '$original_img', ".
                     "'$_POST[keywords]', '$_POST[goods_brief]', '$_POST[seller_note]', '$goods_weight', '$goods_number',".
                     " '$warn_number', '$_POST[integral]', '$give_integral', '$is_best', '$is_new', '$is_hot', 0, '$is_on_sale', '$is_alone_sale', $is_shipping, ".
-                    " '$_POST[goods_desc]', '" . gmtime() . "', '". gmtime() ."', '$goods_type', '$code', '$rank_integral')";
+                    " '$_POST[goods_desc]', '" . gmtime() . "', '". gmtime() ."', '$goods_type', '$code', '$rank_integral', '$suppliers_id','$team_price','$team_num','$validity_time','$limit_num','$astrict_num','$tc_id','$is_team')";
         }
     }
     else
@@ -911,6 +940,15 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
                 "promote_price = '$promote_price', " .
                 "promote_start_date = '$promote_start_date', " .
                 "suppliers_id = '$suppliers_id', " .
+                //拼团
+                "team_price = '$team_price', " .
+                "team_num = '$team_num', " .
+                "validity_time = '$validity_time', " .
+                "limit_num= '$limit_num', " .
+                "astrict_num= '$astrict_num', " .
+                "tc_id = '$tc_id', " .
+				"is_team = '$is_team', " .
+                //拼团
                 "promote_end_date = '$promote_end_date', ";
 
         /* 如果有上传图片，需要更新数据库 */

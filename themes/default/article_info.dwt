@@ -3,11 +3,10 @@
   <div class="ect-bg">
     <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write article"><a class="ect-icon ect-icon-home pull-left" href="index.php"></a><span>{$lang.shophelp}</span><a class="ect-icon ect-icon-cate pull-right" href="{:url('article/index')}"></a></header>
   </div>
-  <div class="article-info">
+  <div class="article-info b-color-f">
     <h3>{$article.title}</h3>
     <div class="article-info-con"> {if $article.image}<p><img src="{$article.image}" style="width:100:height:auto;"></p>{/if}{$article.content} </div>
-  </div>
-  <!--{if $article_goods}-->
+    <!--{if $article_goods}-->
     <section class="ect-pro-list flow-rel-pro flow-pic">
 		<h4 class="ect-margin-lr ect-margin-tb"><strong>相关商品：</strong></h4>
 		<ul>
@@ -35,11 +34,8 @@
 		</ul>
     </section>
 	<!--{/if}-->
+  </div>
+  
 </div>
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 </body></html>
-    
-		
-		
-		
-

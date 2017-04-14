@@ -200,7 +200,7 @@
 								</div>
 								<!--退款说明 end-->
 								<!--商家地址start-->
-								<div id="bidi-form-93" class="f-field">
+								<div id="bidi-form-93" class="f-field" style="display:none">
 									<div class="row"> <span class="memo-tip"></span>
 										<div class="f-label">寄回商家地址：</div>
 										<div class="f-controls n-aftermark-cont">

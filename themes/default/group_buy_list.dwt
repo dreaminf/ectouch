@@ -1,10 +1,10 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 <div class="con">
-  <div style="height:7.2em;"></div>
-  <header>
-    <nav class="ect-nav ect-bg icon-write"> <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --> </nav>
-  </header>
-  <div class="ect-wrapper text-center">
+    <!--<div style="height:7.2em;"></div>
+	<header>
+    <nav class="ect-nav ect-bg icon-write">  #BeginLibraryItem "/library/page_menu.lbi"  #EndLibraryItem  </nav>
+  </header>-->
+  <div class="ect-wrapper text-center" style="position:static">
     <div> 
     <a class="{if $sort == 'goods_id' && $order == 'DESC'}ect-colory{/if}" href="{:url('groupbuy/index', array('id'=>$this->_var['id'],'page'=>$this->_var['page']['page'],'sort'=>'goods_id','order'=>'DESC'))}">{$lang.sort_default}</a> 
     <a class="{if $sort == 'sales_count' && $order == 'DESC'}select ect-colory{elseif $sort =='sales_count' && $order == 'ASC'}ect-colory{/if}" href="{:url('groupbuy/index', array('id'=>$this->_var['id'],'page'=>$this->_var['page']['page'],'sort'=>'sales_count', 'order'=> ($this->_var['sort']=='sales_count' && $this->_var['order']=='ASC')?'DESC':'ASC'))}">{$lang.sort_sales} <i class="glyphicon glyphicon-arrow-up"></i></a> 
@@ -12,14 +12,14 @@
     <a class="{if $sort =='cur_price' && $order == 'DESC'}select ect-colory{elseif $sort =='cur_price' && $order == 'ASC'}ect-colory{else}{/if}" href="{:url('groupbuy/index', array('id'=>$this->_var['id'],'page'=>$this->_var['page']['page'],'sort'=>'cur_price', 'order'=> ($this->_var['sort']=='cur_price' && $this->_var['order']=='ASC')?'DESC':'ASC'))}" class="xl">{$lang.sort_price} <i class="glyphicon glyphicon-arrow-up"></i></a> </div>
   </div>
   <!--{if $show_asynclist}-->
-  <div class="ect-margin-tb ect-pro-list ect-margin-bottom0 ect-border-bottom0">
+  <div class="ect-pro-list ect-margin-bottom0 ect-border-bottom0 b-color-f">
     <ul id="J_ItemList">
       <li class="single_item"></li>
       <a href="javascript:;" class="get_more"></a>
     </ul>
   </div>
   <!--{else}-->
-  <div class="ect-margin-tb ect-pro-list ect-margin-bottom0 ect-border-bottom0">
+  <div class="ect-pro-list ect-margin-bottom0 ect-border-bottom0 b-color-f">
     <ul id="J_ItemList">
     <!--{foreach name=gb_list from=$gb_list item=groupbuy}-->
       <li class="single_item"> <a href="{$groupbuy.url}"><img src="{$groupbuy.goods_thumb}" alt="{$groupbuy.goods_name}"></a>

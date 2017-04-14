@@ -381,6 +381,42 @@ class GoodsBaseModel extends BaseModel {
     }
 
     /**
+     * 取得拼团商品最终使用价格
+     *
+     * @param   string  $goods_id      商品编号
+     * @param   string  $goods_num     购买数量
+     * @param   boolean $is_spec_price 是否加入规格价格
+     * @param   mix     $spec          规格ID的数组或者逗号分隔的字符串
+     *
+     * @return  商品最终购买价格
+     */
+    function team_get_final_price($goods_id, $goods_num = '1', $is_spec_price = false, $spec = array()) {
+   
+        /* 取得商品信息 */
+        $sql = "SELECT g.promote_price, g.promote_start_date, g.promote_end_date, " .
+                "IFNULL(mp.user_price, g.shop_price * '" . $_SESSION['discount'] . "') AS shop_price,g.team_price " .
+                " FROM " . $this->pre . "goods AS g " .
+                " LEFT JOIN " . $this->pre . "member_price AS mp " .
+                "ON mp.goods_id = g.goods_id AND mp.user_rank = '" . $_SESSION['user_rank'] . "' " .
+                " WHERE g.goods_id = '" . $goods_id . "'" .
+                " AND g.is_delete = 0";
+        $goods = $this->row($sql);
+        //取得商品会员价格列表
+        $final_price = $goods['team_price'];
+        //如果需要加入规格价格
+        if ($is_spec_price) {
+            if (!empty($spec)) {
+                $spec_price = model('Goods')->spec_price($spec);
+                $final_price += $spec_price;            
+            }
+        }
+
+        //返回商品最终购买价格
+        return $final_price;
+    }
+    
+    
+    /**
      *
      * 是否存在规格
      *
@@ -389,6 +425,7 @@ class GoodsBaseModel extends BaseModel {
      *
      * @return      string
      */
+
     function is_spec($goods_attr_id_array, $sort = 'asc') {
         if (empty($goods_attr_id_array)) {
             return $goods_attr_id_array;

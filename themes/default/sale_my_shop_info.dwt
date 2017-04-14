@@ -6,8 +6,9 @@
 
 		<nav class="shop-info-nav padding-all">
 			<ul class="dis-box">
-				<li class="box-flex"><a href="{:url('sale/my_shop_list',array('key'=>'1'))}"><span>二级分店</span></a></li>
-				<li class="box-flex"><a href="{:url('sale/my_shop_list',array('key'=>'2'))}"><span>三级分店</span></a></li>
+				<li class="box-flex"><a href="{:url('sale/my_shop_list',array('key'=>'1'))}"><span>一级分店</span></a></li>
+				<li class="box-flex"><a href="{:url('sale/my_shop_list',array('key'=>'2'))}"><span>二级分店</span></a></li>
+				<li class="box-flex"><a href="{:url('sale/my_shop_list',array('key'=>'3'))}"><span>三级分店</span></a></li>
 			</ul>
 		</nav>
 		<section class="padding-all shop-money n-lv-bg">

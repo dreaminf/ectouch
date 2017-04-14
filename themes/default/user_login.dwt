@@ -7,15 +7,15 @@
 </header>
 
 <div class="padding-all b-color-f">
-	<form name="formLogin" action="{:url('user/login')}" method="post" class="validforms">
+	<form name="formLogin" action="{:url('user/login')}" method="post" class="validforms validation">
 		<div class="ect-bg-colorf">
 			<section>
 				<ul class="register-list-box">
 					<li class="dis-box user-register-box">
-						<div class="box-flex reg-left-input"><input placeholder="用户名/手机号" name="username" type="text" id="username" maxlength="20"></div>
+						<div class="box-flex reg-left-input"><input nullmsg="请输入用户名" placeholder="用户名/手机号" name="username" type="text" id="username" maxlength="20"></div>
 					</li>
 					<li class="dis-box user-register-box input-text item-password">
-						<input class="txt-password" type="password" name="password" autocomplete="off" placeholder="请输入密码" />
+						<input class="txt-password" type="password" name="password" autocomplete="off" nullmsg="请输入密码"  placeholder="请输入密码" />
 						<b class="tp-btn btn-off"></b>
 					</li>
 					<!-- 判断是否启用验证码{if $enabled_captcha} -->
@@ -57,11 +57,31 @@
 </div>
 
 </div>
+<script type="text/javascript" src="__TPL__/team/layer/m/layer.m.js"></script>
+<script type="text/javascript" src="__TPL__/statics/js/validform.js"></script>
 <!-- #BeginLibraryItem "/library/page_footer.lbi" -->
 <!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/new_search.lbi" -->
 <!-- #EndLibraryItem -->
+
 <script>
+	$(".validation").Validform({
+		tiptype: function (msg) {
+			d_messages(msg);
+		},
+		tipSweep: true,
+		ajaxPost: true,
+		callback: function (data) {
+			// {"info":"demo info","status":"y"}
+			if (data.status === 'y') {
+				window.location.href = data.url;
+			} else {
+				d_messages(data.info);
+			}
+		}
+	});
+
+	
 	$('.btn-off').on('click', function() {
 		if ($(this).hasClass('btn-on')) {
 			$(this).removeClass('btn-on');

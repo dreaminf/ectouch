@@ -7,6 +7,29 @@
         <td class="label">{$lang.position_name}</td>
         <td><input type="text" name="position_name" value="{$posit_arr.position_name}" size="30" /></td>
       </tr>
+         <tr>
+        <td class="label">频道</td>
+         <td>
+         <select name="tc_id" >
+             <option value="0">请选择频道</option>
+             {foreach from=$team_list item=cat}
+             <option value="{$cat.id}" {if $posit_arr.tc_id == $cat.id}selected{/if}>{$cat.name}</option>
+            {/foreach}
+          </select>
+        </td>
+      </tr>
+      <tr>
+          <td class="label">广告类型</td>
+          <td>
+              <select name="tc_type" >
+                  <option value="0">请选择频道类型</option>
+                  <option value="banner"{if $posit_arr.tc_type == 'banner'}selected{/if}>顶部</option>
+                  <option value="right"{if $posit_arr.tc_type == 'right'}selected{/if}>右边</option>
+                  <option value="left" {if $posit_arr.tc_type == 'left'}selected{/if}>左边</option>
+                  <option value="bottom"{if $posit_arr.tc_type == 'bottom'}selected{/if}>底部</option>
+              </select>
+          </td>
+      </tr>
       <tr>
         <td class="label">{$lang.ad_width}</td>
         <td><input type="text" name="ad_width" value="{$posit_arr.ad_width}" size="30" /> {$lang.unit_px}</td>
@@ -29,6 +52,7 @@
           <textarea name="position_style" cols="55" rows="6">{$posit_arr.position_style}</textarea>
         </td>
       </tr>
+    
       <tr>
         <td class="label">&nbsp;</td>
         <td>

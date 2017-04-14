@@ -613,3 +613,13 @@ function autoload($class)
     }
     include $_map[$class];
 }
+
+//打印日志
+function log2($word = '') {
+    $word = is_array($word) ? var_export($word, true) : $word;
+    $fp = fopen(ROOT_PATH . "data/log.txt", "a");
+    flock($fp, LOCK_EX);
+    fwrite($fp, "执行日期：" . strftime("%Y%m%d%H%M%S", time()) . "\n" . $word . "\n");
+    flock($fp, LOCK_UN);
+    fclose($fp);
+}

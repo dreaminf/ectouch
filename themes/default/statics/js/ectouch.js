@@ -5,23 +5,7 @@ $(function($) {
 
 	var cityTop;
 
-	function d_messages(content, position) { //消息弹出层
-		var style_text = "";
-		if(position == 1) { //顶部弹出
-			style_text = "border:none; background: rgba(0,0,0,.7); color:#fff; max-width:100%; top:0; position:fixed; left:0; right:0; border-radius:0;";
-		}
-		if(position == 2) { //页面中间弹出
-			style_text = "border:none; background: rgba(0,0,0,.7); color:#fff; max-width:90%; min-width:1rem; margin:0 auto; border-radius:.8rem;";
-		}
-		layer.open({
-			style: style_text,
-			type: 0,
-			anim: 3,
-			content: content,
-			shade: false,
-			time: 2
-		})
-	}
+	
 
 	function d_messages_btn(content, btn1, btn2) { //确定取消弹出层
 		layer.open({
@@ -749,7 +733,7 @@ function adv_index() {
 	} else {
 		$(".index-nav-box").removeClass("active");
 	}*/
-	if($(window).scrollTop() > 10) {
+	if($(window).scrollTop() > 250) {
 		$(".goods-fixed").addClass("active");
 		$(".goods-left-jiat").addClass("active");
 		$(".goods-header-nav-box").addClass("active");
@@ -1061,3 +1045,21 @@ $(".s-g-list-con .j-get-one .ect-select-raise").click(function() {
 	t_goods1.html(dist_span);
 
 });
+function d_messages(content, position) { //消息弹出层
+    var style_text = "";
+    position = arguments[1] ? arguments[1] : 2;
+    if (position == 1) { //顶部弹出
+        style_text = "border:none; background: rgba(0,0,0,.7); color:#fff; max-width:100%; top:0; position:fixed; left:0; right:0; border-radius:0;";
+    }
+    if (position == 2) { //页面中间弹出
+        style_text = "border:none; background: rgba(0,0,0,.7); color:#fff; max-width:90%; min-width:1rem; margin:0 auto; border-radius:.8rem;";
+    }
+    layer.open({
+        style: style_text,
+        type: 0,
+        anim: 3,
+        content: content,
+        shade: false,
+        time: 2
+    })
+}

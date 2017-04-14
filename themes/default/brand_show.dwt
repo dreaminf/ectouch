@@ -1,5 +1,5 @@
-<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 <link rel="stylesheet" href="__TPL__/css/brand.css">
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 <div class="con">
     <!--{if $list}-->
     <div class="brand-main">
@@ -35,9 +35,9 @@
         <div class="brand-today-img">
             <a href="{:url('brand/goods_list',array('id'=>$this->_var['li']['brand_id']))}">
             <div class="brand-today-img-text fl">
-                <p>今日推荐</p><span>Recommendationof day</span>
+                <img src="__TPL__/images/brank-title.jpg">
             </div>
-            <div class="brand-today-img-content fr">
+            <div class="brand-today-img-content-2 fl">
                 <img src="{$li.brand_banner}" alt="" />
             </div>
             <div class="brand-today-img-logo fl">
@@ -46,6 +46,9 @@
             </a>
         </div>
         <!--{/foreach}-->
+        	<div class="b-color-f brank-title">
+				<h3 >热门大牌</h3>
+			</div>
         <div class="brand-lattice">
             <ul>
                 <!--{foreach name=list from=$list.list1 item=li}-->
@@ -53,20 +56,23 @@
                     <a href="{:url('brand/goods_list',array('id'=>$this->_var['li']['brand_id']))}">
                     <img src="{$li.goods.0.goods_thumb}" alt="" class="brand-lattice-bg" />
                     <img src="{$li.brand_logo}" alt="" class="brand-lattice-logo" />
-                    <span>{$li.brand_name}</span>
+                    <span></span>
+                    <label>{$li.brand_name}</label>
                     </a>
 			    </li>
                 <!--{/foreach}-->
             </ul>
         </div>
-
+ 	<div class="b-color-f brank-title">
+				<h3 >推荐大牌</h3>
+			</div>
         <div class="brand-list">
             <ul>
                 <!--{foreach name=brand from=$list.list2 item=br}-->
                 <li><a href="{$br.url}"><img src="{$br.brand_logo}" alt="" /></a></li>
                 <!--{/foreach}-->
 
-                <li><a href="{:url('brand/nav')}"><img src="__TPL__/images/brand-list-img2.gif" alt="" /></a></li>
+                <li><a href="{:url('brand/nav')}"><img src="__TPL__/images/brand-list-img2.jpg" alt="" /></a></li>
             </ul>
         </div>
 

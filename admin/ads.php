@@ -97,7 +97,8 @@ elseif ($_REQUEST['act'] == 'add')
             $smarty->assign('ads',
                 array('ad_link' => $ad_link, 'ad_name' => $ad_name, 'start_time' => $start_time,
                     'end_time' => $end_time, 'enabled' => 1));
-    }    
+    }
+
     $smarty->assign('ur_here',       $_LANG['ads_add']);
     $smarty->assign('action_link',   array('href' => 'ads.php?act=list', 'text' => $_LANG['ad_list']));
     $smarty->assign('position_list', get_position_list());

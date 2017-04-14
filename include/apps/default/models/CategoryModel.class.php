@@ -347,6 +347,79 @@ class CategoryModel extends BaseModel
         $cats = $this->row('SELECT cat_image FROM ' . $this->pre . "touch_category WHERE cat_id = '$cat_id'");
         return $cats['cat_image'];
     }
+    /**
+     * 获取推荐商品
+     * @param  $type
+     * @param  $limit
+     * @param  $start
+     */
+    public function team_goods_list($type = 'best', $page= 1, $size = 10) {
+        switch ($type)
+        {
+            case 'best':
+                //$type   = ' g.is_best = 1 ORDER BY g.sort_orderDESC';
+                $type   = '  ORDER BY g.limit_num DESC';
+                break;
+            case 'new':
+                $type   = 'AND g.is_new = 1 ORDER BY g.add_time DESC';
+                break;
+            case 'hot':
+                $type   = 'AND g.is_hot = 1';
+                break;
+            default:
+                $type   = '1';
+        }
+        $start = ($page - 1) * $size;
+        // 取出所有符合条件的商品数据，并将结果存入对应的推荐类型数组中
+        $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style,g.add_time, g.market_price, g.shop_price AS org_price, g.promote_price,g.team_price,g.team_num,g.validity_time,g.limit_num, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, " . "promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img, RAND() AS rnd " . 'FROM ' . $this->pre . 'goods AS g ' . "LEFT JOIN " . $this->pre . "member_price AS mp " . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ";
+        $sql .= ' WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 and is_team = 1 ' . $type.' limit '. $start . ', ' . $size;
+        $result = $this->query($sql);
+        foreach ($result as $key => $vo) {
+            if ($vo['promote_price'] > 0) {
+                $promote_price = bargain_price($vo['promote_price'], $vo['promote_start_date'], $vo['promote_end_date']);
+                $goods[$key]['promote_price'] = $promote_price > 0 ? price_format($promote_price) : '';
+            } else {
+                $goods[$key]['promote_price'] = '';
+            }
+            if($key<3 && $start < 1){
+                $goods[$key]['key'] = $key+1;
+            }           
+            $goods[$key]['id'] = $vo['goods_id'];
+            $goods[$key]['name'] = $vo['goods_name'];
+            $goods[$key]['goods_name'] = $vo['goods_name'];
+            $goods[$key]['brief'] = $vo['goods_brief'];
+            $goods[$key]['goods_style_name'] = add_style($vo['goods_name'], $vo['goods_name_style']);
+            $goods[$key]['short_name'] = C('goods_name_length') > 0 ? sub_str($vo['goods_name'], C('goods_name_length')) : $vo['goods_name'];
+            $goods[$key]['short_style_name'] = add_style($goods[$key] ['short_name'], $vo['goods_name_style']);
+            $goods[$key]['market_price'] = price_format($vo['market_price']);
+            $goods[$key]['shop_price'] = price_format($vo['shop_price']);
+            $goods[$key]['thumb'] = get_image_path($vo['goods_id'], $vo['goods_thumb'], true);
+            $goods[$key]['goods_thumb'] = get_image_path($vo['goods_id'], $vo['goods_thumb'], true);
+            $goods[$key]['goods_img'] = get_image_path($vo['goods_id'], $vo['goods_img']);
+            $goods[$key]['url'] = url('goods/index', array('id' => $vo['goods_id']));
+            //team
+            $goods[$key]['team_price'] =  price_format($vo['team_price']);
+            $goods[$key]['team_num'] = $vo['team_num'];
+            $goods[$key]['validity_time'] = $vo['validity_time'];
+            $goods[$key]['limit_num'] = $vo['limit_num'];
+            //team
+            $goods[$key]['sales_count'] = model('GoodsBase')->get_sales_count($vo['goods_id']);
+            $goods[$key]['sc'] = model('GoodsBase')->get_goods_collect($vo['goods_id']);
+            $goods[$key]['mysc'] = 0;
+            // 检查是否已经存在于用户的收藏夹
+            if ($_SESSION ['user_id']) {
+                // 用户自己有没有收藏过
+                $condition['goods_id'] = $vo['goods_id'];
+                $condition['user_id'] = $_SESSION ['user_id'];
+                $rs = $this->model->table('collect_goods')->where($condition)->count();
+                $goods[$key]['mysc'] = $rs;
+            }
+            $goods[$key]['promotion'] = model('GoodsBase')->get_promotion_show($vo['goods_id']);
+            //$type_goods[$type][] = $goods[$key];
+        }
+        return $goods;
+    }
+
 
 
 }

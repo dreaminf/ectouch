@@ -204,6 +204,7 @@ class UsersModel extends BaseModel {
                             model('ClipsBase')->log_account_change($up_uid, 0, 0, $affiliate['config']['level_register_all'], 0, L('register_affiliate'));
                         }
                     }
+
                     /*DRP_START*/
                     $sql = "SELECT id FROM " . $this->pre . "drp_shop where user_id = ".$up_uid;
                     $res = $this->row($sql);
@@ -555,7 +556,11 @@ class UsersModel extends BaseModel {
         } elseif($pay == 0) {
             // 未付款 但不包含已取消、无效、退货订单的订单
             $pay = 'and pay_status = ' . PS_UNPAYED . ' and order_status not in(' . OS_CANCELED . ','. OS_INVALID .','. OS_RETURNED .')';
+        }elseif($pay == 3){
+            //拼团订单
+            $pay = " and extension_code = 'team_buy' ";
         }else{
+
             $pay = 'and pay_status = ' . PS_UNPAYED ;
         }
 
@@ -604,6 +609,17 @@ class UsersModel extends BaseModel {
         }
         return $arr;
     }
+    /**
+     * 获取订单商品名称
+     * @param type $order_id
+     * @return type
+     */
+    function get_order_name($order_id) {
+
+        $arr = $this->model->query("SELECT g.goods_name FROM " . $this->model->pre . "order_goods as og left join " . $this->model->pre . "goods g on og.goods_id = g.goods_id WHERE og.order_id = " . $order_id . " limit 1");
+        return $arr[0]['goods_name'];
+    }
+
 
 	/**
      *  获取用户未收货订单列表
@@ -666,6 +682,7 @@ class UsersModel extends BaseModel {
             $arr[] = array('order_id' => $value['order_id'],
                 'order_sn' => $value['order_sn'],
                 'img' => get_image_path(0, model('Order')->get_order_thumb($value['order_id'])),
+                'goods_name' =>  model('Users')->get_order_name($value['order_id']),
                 'order_time' => local_date(C('time_format'), $value['add_time']),
                 'order_status' => $value['order_status'],
                 'shipping_id' => $value['shipping_id'],
@@ -1664,7 +1681,10 @@ class UsersModel extends BaseModel {
         /* 取得可以得到的积分和红包 */
         if ($order['extension_code'] == 'group_buy') {
             $total['will_get_integral'] = $group_buy['gift_integral'];
-        } elseif ($order['extension_code'] == 'exchange_goods') {
+        } elseif ($order['extension_code'] == 'team_buy') {
+            $total['will_get_integral'] = 0;
+        }elseif
+ ($order['extension_code'] == 'exchange_goods') {
             $total['will_get_integral'] = 0;
         } else {
             $total['will_get_integral'] = model('Order')->get_give_integral($goods);
@@ -2180,10 +2200,84 @@ function find_address($region_name,$region_type = 0) {
 }
 
     /**
+     * 获取我的拼团
+     * @param  $type
+     * @param  $limit
+     * @param  $start
+     */
+    public function my_team_goods($user_id,$type = 1, $page= 1, $size = 10) {
+        
+        /* --获取拼团列表-- */
+        switch ($type)
+        {
+            case '1':
+                $type   = "";//全部团
+                break;
+            case '2':
+                $type   = " and t.status < 1 and '".gmtime()."'< (t.start_time+(g.validity_time*3600)) ";//拼团中
+                break;
+            case '3':
+                $type   = " and t.status = 1 ";//成功团
+                break;
+            case '4':
+                $type   = " and t.status != 1 and '".gmtime(). "'> (t.start_time+(g.validity_time*3600)) ";//失败团
+                break;
+
+            default:
+                $type   = '1';
+        }
+        
+        $start = ($page - 1) * $size;
+        $sql="select o.order_id,o.pay_status, t.team_id,t.start_time,t.status,g.goods_id,g.goods_name,g.goods_img,g.validity_time,g.team_num,g.team_price,g.limit_num from ". $this->pre . "order_info as o left join " . $this->pre ."team_log as t on o.team_id = t.team_id left join " . $this->pre ."goods as g on t.goods_id = g.goods_id " . " where o.user_id =$user_id and o.extension_code ='team_buy' and t.is_show = 1 $type  ORDER BY o.add_time DESC " . ' limit '. $start . ', ' . $size;
+        //echo $sql;
+        $result = $this->query($sql);
+        
+        foreach ($result as $key => $vo) {          
+            $goods[$key]['id'] = $vo['goods_id'];
+            $goods[$key]['team_id'] = $vo['team_id'];
+            $goods[$key]['order_id'] = $vo['order_id'];
+            $goods[$key]['pay_status'] = $vo['pay_status'];
+            $goods[$key]['goods_name'] = $vo['goods_name'];
+            $goods[$key]['goods_img'] = get_image_path($vo['goods_id'], $vo['goods_img']);
+            $goods[$key]['team_num'] = $vo['team_num'];
+            $goods[$key]['limit_num'] = model('Goods')->surplus_num($vo['team_id']);//几人参团
+            //$goods[$key]['team_price'] = price_format($vo['team_price']);
+            $goods[$key]['team_price'] = $vo['team_price'];
+            $goods[$key]['url'] = url('goods/index', array('id' => $vo['goods_id']));
+            $goods[$key]['order_url'] = url('user/order_detail', array('order_id' => $vo['order_id']));//查看订单
+            $goods[$key]['team__url'] = url('goods/team_goods_wait', array('team_id' => $vo['team_id']));//查看团
+            if($vo['status']==1){
+                $goods[$key]['status'] = 1;//成功
+            }
+            $validity_time =$vo['start_time']+($vo['validity_time']*3600);
+            if($validity_time <= gmtime() && $vo['status'] != 1){
+                $goods[$key]['status'] = 2;//失败
+            }
+            
+        }
+        return $goods;
+    }
+    
+    /**
+    * 拼团中数量
+    */
+    public function team_ongoing($user_id=0) {
+        
+        $where   = " and t.status < 1 and '".gmtime()."'< (t.start_time+(g.validity_time*3600)) ";//拼团中
+        $sql="select count(o.order_id) as num from ". $this->pre . "order_info as o left join " . $this->pre ."team_log as t on o.team_id = t.team_id left join " . $this->pre ."goods as g on t.goods_id = g.goods_id " . " where o.user_id =$user_id and o.extension_code ='team_buy' $where " ;
+        $res = $this->row($sql);
+        return $res['num'];
+        
+    }
+    
+    
+    
+    /**
      * 合并会员数据
      * @access  public
      * @param   id $from_user_id 原会员id
      * @param   id $to_user_id 新会员id
+     * @return  boolen      $bool
      * @return  boolen      $bool
      */
     function merge_user($from_user_id = 0, $to_user_id = 0)

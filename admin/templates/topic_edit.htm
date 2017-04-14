@@ -239,28 +239,28 @@ function initialize_form(status_code)
     case 0 :
       document.getElementById('content_01').style.display = display_yes;
       document.getElementById('content_23').style.display = 'none';
-      document.getElementById('title_upload').innerHTML = '{$width_height}';
-      document.getElementById('edit_img').style.display = display_yes;
+			document.getElementById('title_upload').innerHTML = '{$width_height}';
+			document.getElementById('edit_img').style.display = display_yes;
     break;
-    
+		
     case 1 :
       document.getElementById('content_01').style.display = display_yes;
       document.getElementById('content_23').style.display = 'none';
-      document.getElementById('title_upload').innerHTML = '{$lang.tips_upload_notice}';
-      document.getElementById('edit_img').style.display = display_yes;
+			document.getElementById('title_upload').innerHTML = '{$lang.tips_upload_notice}';
+			document.getElementById('edit_img').style.display = display_yes;
     break;
-    
+		
     case 2 :
       document.getElementById('content_01').style.display = 'none';
       document.getElementById('content_23').style.display = display_yes;
-      document.getElementById('edit_img').style.display = 'none';
+			document.getElementById('edit_img').style.display = 'none';
     break;
   }
 
-  {if $isadd eq 'isadd'}
-  document.getElementById('edit_img').style.display = 'none';
-  document.getElementById('edit_title_img').style.display = 'none';
-  {/if}
+	{if $isadd eq 'isadd'}
+	document.getElementById('edit_img').style.display = 'none';
+	document.getElementById('edit_title_img').style.display = 'none';
+	{/if}
 
   return true;
 }

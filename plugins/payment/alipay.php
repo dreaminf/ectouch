@@ -16,6 +16,8 @@
 /* 访问控制 */
 defined('IN_ECTOUCH') or die('Deny Access');
 
+require_once __DIR__ . "/alipay/alipay_submit.class.php";
+
 /**
  * 支付插件类
  */
@@ -105,8 +107,41 @@ class alipay
         $sign = substr($sign, 0, - 1) . $payment['alipay_key'];
         
         /* 生成支付按钮 */
-        $button = '<script type="text/javascript" src="'.__PUBLIC__.'/js/ap.js"></script><div><input type="button" class="btn btn-info ect-btn-info ect-colorf ect-bg" onclick="javascript:_AP.pay(\'' . $gateway . $param . '&sign=' . md5($sign) . '\')" value="立即付款" class="c-btn3" /></div>';
+        $button = '<script type="text/javascript" src="'.__PUBLIC__.'/js/ap.js"></script><div class="n-flow-alipay"><input type="button" class="btn ect-btn-info ect-colorf n-btn-flow" onclick="javascript:_AP.pay(\'' . $gateway . $param . '&sign=' . md5($sign) . '\')" value="立即付款" class="c-btn3" /></div>';
         return $button;
+    }
+    
+    public function refund($order, $payment)
+    {
+        $config = array(
+            'partner' => trim($payment['alipay_partner']), // 合作身份者ID
+            'seller_user_id' => trim($payment['alipay_account']), // 卖家支付宝账号
+            'key' => trim($payment['alipay_key']), // MD5密钥，安全检验码
+            'notify_url' => return_url(basename(__FILE__, '.php'), true), // 服务器异步通知页面路径
+            'sign_type' => strtoupper('MD5'), // 签名方式
+            'refund_date' => date("Y-m-d H:i:s",time()), // 退款日期 时间格式 yyyy-MM-dd HH:mm:ss
+            'service' => 'refund_fastpay_by_platform_pwd', // 调用的接口名
+            'input_charset' => strtolower('utf-8'), // 字符编码格式
+            'service' => 'refund_fastpay_by_platform_pwd', // 调用的接口名
+            'cacert' => getcwd().'\\cacert.pem', //ca证书路径地址
+            'transport' => 'http', //访问模式,根据自己的服务器是否支持ssl访问
+        );
+        // 构造要请求的参数数组，无需改动
+        $parameter = array(
+            "service" => trim($config['service']),
+            "partner" => trim($config['partner']),
+            "notify_url"	=> trim($config['notify_url']),
+            "seller_user_id"	=> trim($config['seller_user_id']),
+            "refund_date"	=> trim($config['refund_date']),
+            "batch_no"	=> $batch_no,
+            "batch_num"	=> 1,
+            "detail_data"	=> $detail_data,
+            "_input_charset"	=> trim(strtolower($config['input_charset']))
+        );
+        // 建立请求
+        $alipaySubmit = new AlipaySubmit($alipay_config);
+        $html_text = $alipaySubmit->buildRequestForm($parameter,"get", "确认");
+        //echo $html_text; //TODO 功能不支持API，跳转退款待测试
     }
 
     /**

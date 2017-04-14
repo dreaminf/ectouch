@@ -6,30 +6,42 @@
 .goods-photo .goods-num{position: absolute; font-size:1.5rem; color:#fff; height:2.6rem; line-height:2.6rem; padding:0 1rem; border-radius: 1.3rem; right:1.3rem; bottom:1.3rem; background:rgba(0,0,0,0.5); z-index: 5;}
 .goods-photo li{width:3rem;}
 </style>
-<div class="con">
-<div class="ect-bg">
-     <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$lang.goods_detail}</span> <a href="javascript:;"  onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a></header>
-    <nav class="ect-nav ect-nav-list" style="display:none;"> <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --> </nav>
-  </div>
+<div class="con m-b8">
+	 <header class="dis-box header-menu header-menu-1 b-color color-whie"><a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
+	<h3 class="box-flex">积分详情</h3>
+	<p><i class="iconfont icon-pailie j-nav-box"></i></p>
+</header>
+<div class="j-nav-content">
+	<ul class="dis-box new-footer-box new-footer-box-1">
+		<li class="box-flex">
+			<a href="{:url('index/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/home.png"></i><span>首页</span></a>
+		</li>
+		<li class="box-flex">
+			<a href="{:url('category/top_all')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/cate.png"></i><span>分类</span></a>
+			<li class="box-flex"><a href="javascript:;" class="nav-cont j-search-input"><i class="nav-box"><img src="__TPL__/statics/img/search.png"></i><span>搜索</span></a></li>
+			<li class="box-flex"><a href="{:url('flow/cart')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/flow.png"></i><span>购物车</span></a></li>
+			<li class="box-flex"><a href="{:url('user/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/user.png"></i><span>用户中心</span></a></li>
+	</ul>
+</div>
   <!--商品图片相册-->
-  	<div class="goods-photo j-show-goods-img">
-			<div class="hd">
-				<ul>
-				</ul>
-			</div>
-			<span class="goods-num" id="goods-num"><span id="g-active-num"></span>/<span id="g-all-num"></span></span>
-			<ul class="swiper-wrapper">
-				<!--{if $pictures}-->
-				<!-- {foreach from=$pictures item=picture name=no}-->
-				<li class="swiper-slide tb-lr-center"><img src="{$picture.img_url}" alt="{$picture.img_desc}" /></li>
-				<!--{/foreach}-->
-				<!--{else}-->
-				<li class="swiper-slide tb-lr-center"><img src="{$goods.goods_img}" alt="{$goods.goods_name}" /></li>
-				<!--{/if}-->
-			</ul>
-			<div class="swiper-pagination"></div>
-		</div>
+  <div class="index-banner swiper-container box position-rel banner-first goods-banner j-goods-box" style="margin-top:0rem;">
+					<div class="swiper-wrapper">
+						<!--商品相册-->
+						<!--{if $pictures}-->
+						<!-- {foreach from=$pictures item=picture name=no}-->
+						<div class="swiper-slide" id="img-photo-box">
+							<img src="{$picture.img_url}" />
+						</div>
+						<!--{/foreach}-->
+						<!--{else}-->
+						<div class="swiper-slide" id="img-photo-box">
+							<img src="{$goods.goods_img}" />
+						</div>
+						<!--{/if}-->
 
+					</div>
+					<div class="swiper-pagination banner-first-pagination"></div>
+			</div>
   <!--商品属性介绍-->
   <div class="goods-info ect-padding-tb">
   	<section class="ect-margin-tb ect-margin-lr goods-title">
@@ -39,15 +51,15 @@
       </section>
     <section class="ect-margin-tb ect-margin-lr ">
 
-  	 <p> <span> {$lang.exchange_integral}: <strong class="ect-colory"> {$goods.exchange_integral} </strong></span> </p>
+  	 <p> <span> {$lang.exchange_integral}: <label class="ect-colory f-07"> {$goods.exchange_integral} </label></span> </p>
     <!-- {if $cfg.show_goodssn} 显示商品货号-->
-    <p> <span>{$lang.goods_sn}<strong class="ect-colory">{$goods.goods_sn}</strong></span> </p>
+    <p> <span>{$lang.goods_sn}<label>{$goods.goods_sn}</label></span> </p>
     <!-- {/if} -->
     <!-- {if $goods.goods_brand neq "" and $cfg.show_brand} 显示商品品牌-->
-    <p>{$lang.goods_brand}<strong ><a href="{$goods.goods_brand_url}" class="ect-colory">{$goods.goods_brand}</a></strong></p>
+    <p>{$lang.goods_brand}<label ><a href="{$goods.goods_brand_url}">{$goods.goods_brand}</a></label></p>
     <!-- {/if} -->
     <!-- {if $cfg.show_goodsweight} 商品重量-->
-    <p>{$lang.goods_weight}<strong class="ect-colory">{$goods.goods_weight}</strong></p>
+    <p>{$lang.goods_weight}<label>{$goods.goods_weight}</label></p>
     <!-- {/if} -->
     </section>
      <form action="{:url('exchange/buy')}" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY" >
@@ -87,8 +99,8 @@
         </div>
       </section>
       <input type="hidden" name="goods_id" value="{$goods.goods_id}" />
-      <div class="ect-padding-lr">
-     	 <button type="submit" class="btn btn-info ect-btn-info ect-colorf ect-bg n-but-col" >{$lang.exchange_goods}</button>
+      <div class="n-exchage-btn">
+     	 <button type="submit" class="btn ect-btn-info ect-colorf ect-bg" >{$lang.exchange_goods}</button>
       </div>
       <section class="user-tab ect-border-bottom0">
       <div id="is-nav-tabs" style="height:3.15em; display:none;"></div>
@@ -100,20 +112,35 @@
         <!-- Tab panes -->
         <div class="tab-content">
           <div class="tab-pane tab-info" id="one"><table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#dddddd">
-                  <!-- {foreach from=$properties item=property_group key=key} -->
-                  <tr>
+				<!--{if $properties}-->
+                <!-- {foreach from=$properties item=property_group key=key} -->
+                <tr>
                     <th colspan="2" bgcolor="#FFFFFF">{$key|escape}</th>
-                  </tr>
-                  <!-- {foreach from=$property_group item=property} -->
-                  <tr>
+                </tr>
+				<!-- {foreach from=$property_group item=property} -->
+                <tr>
                     <td bgcolor="#FFFFFF" align="left" width="30%" class="f1">[{$property.name|escape:html}]</td>
                     <td bgcolor="#FFFFFF" align="left" width="70%">{$property.value}</td>
-                  </tr>
-                  <!-- {/foreach}-->
-                  <!-- {/foreach}-->
-                </table></div>
+                </tr>
+				<!-- {/foreach}-->
+                <!-- {/foreach}-->
+				<!--{else}-->
+				<div class="no-div-message">
+					<i class="iconfont icon-biaoqingleiben"></i>
+					<p>亲，此处没有内容～！</p>
+				</div>
+				<!--{/if}-->
+                </table>
+			</div>
           <div class="tab-pane tab-att active" id="two">
+		   <!--{if $goods.goods_desc}-->
            {$goods.goods_desc}
+		   <!--{else}-->
+			<div class="no-div-message">
+				<i class="iconfont icon-biaoqingleiben"></i>
+				<p>亲，此处没有内容～！</p>
+			</div>
+			<!--{/if}-->
           </div>
         </div>
       </section>
@@ -123,6 +150,16 @@
 <!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <script>
+		var mySwiper = new Swiper('.banner-first', {
+				pagination: '.banner-first-pagination',
+				loop: false,
+				grabCursor: true,
+				paginationClickable: true,
+				autoplayDisableOnInteraction: false,
+				loop: true,
+				autoplay: 3000,
+				lazyLoading: true
+		});
 	/*商品详情相册切换*/
 		var swiper = new Swiper('.goods-photo', {
 			paginationClickable: true,

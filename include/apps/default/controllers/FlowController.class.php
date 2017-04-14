@@ -71,7 +71,7 @@ class FlowController extends CommonController {
         $this->assign('integral_scale', C('integral_scale'));
         $this->assign('step', 'cart');
         $this->assign('title', L('shopping_cart'));
-        $this->display('flow.dwt');
+        $this->display('team/flow_cart.html');
     }
 
     /**
@@ -403,11 +403,66 @@ class FlowController extends CommonController {
      * 删除购物车中的商品
      */
     public function drop_goods() {
-        $rec_id = intval($_GET ['id']);
+        $rec_id  = I('rec_id',''); 
         //删除购物车中的商品
         model('Flow')->flow_drop_cart_goods($rec_id);
-        ecs_header("Location: " . url('flow/index') . "\n");
+        //ecs_header("Location: " . url('flow/index') . "\n");
+        $result ['error'] = 1;
+        $result ['message'] = '';
+        die(json_encode($result));
     }
+     /*
+     * label选中价格 
+     */
+    public function cart_label_count(){
+        $rec_id  = I('rec_id','');          
+        if($rec_id) {       
+            $sql = "UPDATE " . $this->model->pre . "cart SET is_selected = 1" .
+                                " WHERE session_id = '" . SESS_ID . "' " .
+                                " AND parent_id = 0 and rec_id in ($rec_id)" .
+                                " AND extension_code <> 'package_buy' " .
+                                "AND rec_type = 'CART_GENERAL_GOODS'";
+             $this->model->query($sql);
+             
+            $sql = "SELECT rec_id FROM " . $this->model->pre . "cart WHERE rec_id not in ($rec_id) and session_id = '" . SESS_ID . "'";
+            $res = $this->model->query($sql);
+            if($res){
+                foreach($res as $k)
+                {
+                    $str.=$k['rec_id'].',';
+                }   
+                $rec_ids = substr($str,0,-1);
+                
+                $sql = "UPDATE " . $this->model->pre . "cart SET is_selected = 0" .
+                                " WHERE session_id = '" . SESS_ID . "' " .
+                                " AND parent_id = 0 and rec_id in ($rec_ids)" .
+                                " AND extension_code <> 'package_buy' " .
+                                "AND rec_type = 'CART_GENERAL_GOODS'";
+             $this->model->query($sql);
+            }
+
+            $sql = "SELECT rec_id, goods_price, goods_number FROM " . $this->model->pre . "cart WHERE rec_id in ($rec_id)";
+            $count = $this->model->query($sql);
+        }else{          
+            $where['session_id'] = SESS_ID;
+            $datas['is_selected'] = 0;
+            $this->model->table('cart')->data($datas)->where($where)->update();             
+        }
+        $num=0;
+        if(count($count)>0){
+            foreach($count as $key){
+                $count_price += floatval($key['goods_number'])*floatval($key['goods_price']);
+                $num +=$key['goods_number'];
+            }
+        }else{
+            $count_price = '0.00';
+        }
+        $result['content'] = price_format($count_price);
+        $result['cart_number'] = $num;
+
+        die(json_encode($result));
+    }
+
 
     /**
      * 订单确认
@@ -503,7 +558,7 @@ class FlowController extends CommonController {
         $cod_disabled = true;
 
         // 查看购物车中是否全为免运费商品，若是则把运费赋为零
-        $condition = "`session_id` = '" . SESS_ID . "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0";
+        $condition = "`session_id` = '" . SESS_ID . "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0 and is_selected =1";
         $shipping_count = $this->model->table('cart')->field('count(*)')->where($condition)->getOne();
         foreach ($shipping_list as $key => $val) {
 
@@ -995,7 +1050,9 @@ class FlowController extends CommonController {
                 $this->assign('is_group_buy', 1);
             }
 
+            $result['amount'] = $total['amount_formated'];
             $result ['cod_fee'] = $shipping_info ['pay_fee'];
+
             if (strpos($result ['cod_fee'], '%') === false) {
                 $result ['cod_fee'] = price_format($result ['cod_fee'], false);
             }
@@ -1012,7 +1069,7 @@ class FlowController extends CommonController {
         /* 取得购物类型 */
         $flow_type = isset($_SESSION ['flow_type']) ? intval($_SESSION ['flow_type']) : CART_GENERAL_GOODS;
         /* 检查购物车中是否有商品 */
-        $condition = " session_id = '" . SESS_ID . "' " . "AND parent_id = 0 AND is_gift = 0 AND rec_type = '$flow_type'";
+        $condition = " session_id = '" . SESS_ID . "' " . "AND parent_id = 0 AND is_gift = 0 AND rec_type = '$flow_type' and is_selected =1";
         $count = $this->model->table('cart')->field('COUNT(*)')->where($condition)->getOne();
         if ($count == 0) {
             show_message(L('no_goods_in_cart'), '', '', 'warning');
@@ -1249,8 +1306,26 @@ class FlowController extends CommonController {
             $order ['extension_id'] = $_SESSION ['extension_id'];
         }
 
-        $parent_id = M()->table('users')->field('parent_id')->where("user_id=".$_SESSION['user_id'])->getOne();
-        $order ['parent_id'] = $parent_id;
+        /* 插入拼团信息记录 */
+        if($flow_type == CART_TEAM_GOODS){
+            if($_SESSION['team_id'] > 0){
+                $order ['team_id']=$_SESSION['team_id'];
+                $order ['team_user_id']=$_SESSION['user_id'];
+            }else{
+                $condition = " session_id = '" . SESS_ID . "' " . "AND parent_id = 0 AND is_gift = 0 AND rec_type = '$flow_type' and is_selected =1";
+                $team_doods = $this->model->table('cart')->where($condition)->find();
+                $team['goods_id'] = $team_doods['goods_id'];
+                $team['start_time'] = gmtime();
+                $team['status'] = 0;
+                $new_team = model('Common')->filter_field('team_log', $team);
+                $this->model->table('team_log')->data($new_team)->insert();
+                $team_log_id = M()->insert_id();
+                $order ['team_id']=$team_log_id;
+                $order ['team_parent_id']=$_SESSION['user_id'];
+            }
+            
+        }
+
 
         /* 插入订单表 */
         $error_no = 0;
@@ -1268,7 +1343,7 @@ class FlowController extends CommonController {
         $order ['order_id'] = $new_order_id;
 
         /* 插入订单商品 */
-        $sql = "INSERT INTO " . $this->model->pre . "order_goods( " . "order_id, goods_id, goods_name, goods_sn, product_id, goods_number, market_price, " . "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id) " . " SELECT '$new_order_id', goods_id, goods_name, goods_sn, product_id, goods_number, market_price, " . "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id " . " FROM " . $this->model->pre . "cart WHERE session_id = '" . SESS_ID . "' AND rec_type = '$flow_type'";
+        $sql = "INSERT INTO " . $this->model->pre . "order_goods( " . "order_id, goods_id, goods_name, goods_sn, product_id, goods_number, market_price, " . "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id) " . " SELECT '$new_order_id', goods_id, goods_name, goods_sn, product_id, goods_number, market_price, " . "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id " . " FROM " . $this->model->pre . "cart WHERE session_id = '" . SESS_ID . "' AND rec_type = '$flow_type' and is_selected =1";
         $this->model->query($sql);
         /* 修改拍卖活动状态 */
         if ($order ['extension_code'] == 'auction') {
@@ -1279,7 +1354,11 @@ class FlowController extends CommonController {
         /* 处理余额、积分、红包 */
         if ($order ['user_id'] > 0 && $order ['surplus'] > 0) {
             model('ClipsBase')->log_account_change($order ['user_id'], $order ['surplus'] * (- 1), 0, 0, 0, sprintf(L('pay_order'), $order ['order_sn']));
+            
+            //余额付款更新拼团信息记录
+            model('Flow')->update_team($order['team_id']);
         }
+
         if ($order ['user_id'] > 0 && $order ['integral'] > 0) {
             model('ClipsBase')->log_account_change($order ['user_id'], 0, 0, 0, $order ['integral'] * (- 1), sprintf(L('pay_order'), $order ['order_sn']));
         }
@@ -1514,12 +1593,13 @@ class FlowController extends CommonController {
             if ($flow_type == CART_GROUP_BUY_GOODS) {
                 $this->assign('is_group_buy', 1);
             }
-
+            $result['amount'] = $total['amount_formated'];
             $result['content'] = ECTouch::$view->fetch('library/order_total.lbi');
         }
 
         echo $json->encode($result);
         exit;
+
     }
 
     /**
@@ -1583,7 +1663,7 @@ class FlowController extends CommonController {
             if ($flow_type == CART_GROUP_BUY_GOODS) {
                 $this->assign('is_group_buy', 1);
             }
-
+            $result['amount'] = $total['amount_formated'];
             $result['content'] = ECTouch::$view->fetch('library/order_total.lbi');
         }
 
@@ -1632,7 +1712,7 @@ class FlowController extends CommonController {
             if ($flow_type == CART_GROUP_BUY_GOODS) {
                 $this->assign('is_group_buy', 1);
             }
-
+            $result['amount'] = $total['amount_formated'];
             $result['content'] = ECTouch::$view->fetch('library/order_total.lbi');
         }
 
@@ -1677,7 +1757,7 @@ class FlowController extends CommonController {
                 if ($flow_type == CART_GROUP_BUY_GOODS) {
                     $this->assign('is_group_buy', 1);
                 }
-
+                $result['amount'] = $total['amount_formated'];
                 $result['content'] = ECTouch::$view->fetch('library/order_total.lbi');
             }
         }
@@ -1726,7 +1806,7 @@ class FlowController extends CommonController {
                 if ($flow_type == CART_GROUP_BUY_GOODS) {
                     $this->assign('is_group_buy', 1);
                 }
-
+                $result['amount'] = $total['amount_formated'];
                 $result['content'] = ECTouch::$view->fetch('library/order_total.lbi');
                 $result['error'] = '';
             }
@@ -1776,7 +1856,7 @@ class FlowController extends CommonController {
             if ($flow_type == CART_GROUP_BUY_GOODS) {
                 $this->assign('is_group_buy', 1);
             }
-
+            $result['amount'] = $total['amount_formated'];
             $result['content'] = ECTouch::$view->fetch('library/order_total.lbi');
         }
 
@@ -2569,36 +2649,36 @@ class FlowController extends CommonController {
         $this->model->query($sql);
     }
 
-     /*
-     * label选中价格
-     */
-    public function cart_label_count(){
-        $goods_id  = I('goods_id','');
-        $parent_id  = I('parent_id','');
-        if($parent_id ){
-            $shop_price = $this->model->table('goods')->where(array('goods_id'=>$parent_id))->field('shop_price')->getOne();
-        }
-        if($goods_id) {
-            $sql = "select g.shop_price ,gg.goods_price from " . $this->model->pre ."group_goods as gg LEFT JOIN " . $this->model->pre . "goods as g on gg.goods_id = g.goods_id " . "where gg.goods_id in ($goods_id) and gg.parent_id = $parent_id ";
-            $count = $this->model->query($sql);
-        }
-        $num=0;
-        if(count($count)>0){
-            foreach($count as $key){
-                $count_price += floatval($key['goods_price']);
-                $num ++;
-            }
-        }else{
-            $count_price = '0.00';
-        }
-        if($shop_price){
-            $count_price += floatval($shop_price);
-            $num += 1;
-        }
-        $result['content'] = price_format($count_price);
-        $result['cart_number'] = $num;
-        die(json_encode($result));
-    }
+    //  /*
+    //  * label选中价格
+    //  */
+    // public function cart_label_count(){
+    //     $goods_id  = I('goods_id','');
+    //     $parent_id  = I('parent_id','');
+    //     if($parent_id ){
+    //         $shop_price = $this->model->table('goods')->where(array('goods_id'=>$parent_id))->field('shop_price')->getOne();
+    //     }
+    //     if($goods_id) {
+    //         $sql = "select g.shop_price ,gg.goods_price from " . $this->model->pre ."group_goods as gg LEFT JOIN " . $this->model->pre . "goods as g on gg.goods_id = g.goods_id " . "where gg.goods_id in ($goods_id) and gg.parent_id = $parent_id ";
+    //         $count = $this->model->query($sql);
+    //     }
+    //     $num=0;
+    //     if(count($count)>0){
+    //         foreach($count as $key){
+    //             $count_price += floatval($key['goods_price']);
+    //             $num ++;
+    //         }
+    //     }else{
+    //         $count_price = '0.00';
+    //     }
+    //     if($shop_price){
+    //         $count_price += floatval($shop_price);
+    //         $num += 1;
+    //     }
+    //     $result['content'] = price_format($count_price);
+    //     $result['cart_number'] = $num;
+    //     die(json_encode($result));
+    // }
 
 
 }

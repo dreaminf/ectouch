@@ -27,9 +27,11 @@ class FlowModel extends BaseModel {
      */
     function flow_drop_cart_goods($id) {
         /* 取得商品id */
-        $sql = "SELECT * FROM " . $this->pre . "cart WHERE rec_id = '$id'";
-        $row = $this->row($sql);
-        if ($row) {
+        $sql = "SELECT * FROM " . $this->pre . "cart WHERE rec_id in ($id)";
+        $result = $this->query($sql);
+        if ($result) {
+            foreach ($result as $row) {
+
             // 如果是超值礼包
             if ($row ['extension_code'] == 'package_buy') {
                 $sql = "DELETE FROM " . $this->pre . "cart WHERE session_id = '" . SESS_ID . "' " . "AND rec_id = '$id' LIMIT 1";
@@ -52,7 +54,7 @@ class FlowModel extends BaseModel {
                 }
                 $_del_str = trim($_del_str, ',');
 
-                $sql = "DELETE FROM " . $this->pre . "cart WHERE session_id = '" . SESS_ID . "' " . "AND (rec_id IN ($_del_str) OR parent_id = '$row[goods_id]' OR is_gift <> 0) AND group_id='".$row['group_id']."'";
+                $sql = "DELETE FROM " . $this->pre . "cart WHERE session_id = '" . SESS_ID . "' " . "AND (rec_id IN ($_del_str) OR parent_id = '$row[goods_id]' OR is_gift <> 0)";
             }
             // 如果不是普通商品，只删除该商品即可
             else {
@@ -60,7 +62,9 @@ class FlowModel extends BaseModel {
             }
             $this->query($sql);
         }
+        }
         //删除购物车中不能单独销售的商品
+
         $this->flow_clear_cart_alone();
     }
 
@@ -473,5 +477,28 @@ class FlowModel extends BaseModel {
             }
         }
     }
+    /**
+     * 支付完成验证拼团是否成功
+     */
+     function update_team($team_id) {
+         if($team_id > 0){
+             $sql ="select g.goods_id,g.limit_num, g.team_num from " . $this->model->pre . "team_log as tl LEFT JOIN " . $this->model->pre ."goods as g ON tl.goods_id = g.goods_id where tl.team_id =$team_id ";
+             $res = $this->row($sql);
+             //验证拼团是否成功
+             $team_count = $this->model->table('order_info')->where(array('team_id'=>$team_id, 'pay_status'=> PS_PAYED ))->count();//统计拼团数量
+             if($team_count>=$res['team_num']){
+                $backey_num = $crowd_plan['backey_num']+$order_info['goods_number'];            
+                $where['team_id'] = $team_id;
+                $data['status'] = 1;
+                $this->model->table('team_log')->data($data)->where($where)->update();
+             }
+             //统计拼团人数
+             $where1['goods_id'] = $res['goods_id'];
+             $data1['limit_num'] = $res['limit_num']+1;
+             $this->model->table('goods')->data($data1)->where($where1)->update();  
+         }
+     }
+     
+
 
 }

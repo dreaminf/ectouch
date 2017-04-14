@@ -69,7 +69,7 @@ class tenpay
         //     return '<script>alert("'.$xml['err_info'].'");</script>';
         // }
         /* 生成支付按钮 */
-        $button = '<div><input type="button" class="btn btn-info ect-btn-info ect-colorf ect-bg" onclick="window.open(\'' . $gateway . '?token_id=' . $xml['token_id'] . '\')" value="立即付款" /></div>';
+        $button = '<div class="n-flow-alipay"><input type="button" class="btn ect-btn-info ect-colorf ect-bg" onclick="window.open(\'' . $gateway . '?token_id=' . $xml['token_id'] . '\')" value="立即付款" /></div>';
         return $button;
     }
 

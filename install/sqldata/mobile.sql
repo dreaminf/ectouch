@@ -26,6 +26,7 @@ INSERT INTO `ecs_admin_action` VALUES ('152', '201', 'wechat_contactmanage', '')
 INSERT INTO `ecs_admin_action` VALUES ('153', '201', 'wechat_appmsg', '');
 INSERT INTO `ecs_admin_action` VALUES ('154', '201', 'wechat_qrcode', '');
 INSERT INTO `ecs_admin_action` VALUES ('155', '201', 'wechat_extends', '');
+INSERT INTO `ecs_admin_action` VALUES ('156', '201', 'wechat_remind', '');
 INSERT INTO `ecs_admin_action` VALUES ('157', '201', 'wechat_customer', '');
 INSERT INTO `ecs_admin_action` (`action_id`,`parent_id`, `action_code`, `relevance`) VALUES
 ('158', '6', 'service_type', ''),
@@ -47,7 +48,7 @@ INSERT INTO `ecs_admin_action` (`action_id`, `parent_id`, `action_code`, `releva
 CREATE TABLE IF NOT EXISTS `ecs_touch_activity` (
   `act_id` int(10) NOT NULL,
   `act_banner` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_touch_topic`
@@ -69,24 +70,13 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_topic` (
   `keywords` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`topic_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `ecs_touch_ad`
---
-
-INSERT INTO `ecs_ad` (`position_id`, `media_type`, `ad_name`, `ad_link`, `ad_code`, `start_time`, `end_time`, `link_man`, `link_email`, `link_phone`, `click_count`, `enabled`) VALUES
-(255, 0, '1', '', 'index_banner_1.png', 1396339200, 1525161600, '', '', '', 0, 1),
-(255, 0, '2', '', 'index_banner_2.png', 1396339200, 1525161600, '', '', '', 0, 1),
-(255, 0, '3', '', 'index_banner_3.png', 1396339200, 1525161600, '', '', '', 0, 1);
 
 --
 -- 转存表中的数据 `ecs_touch_ad_position`
 --
 ALTER TABLE `ecs_ad_position` MODIFY COLUMN `position_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT FIRST;
-DELETE FROM `ecs_ad_position` WHERE `position_id` = 255;
-INSERT INTO `ecs_ad_position` (`position_id`, `position_name`, `ad_width`, `ad_height`, `position_desc`, `position_style`) VALUES
-(255, '手机端首页Banner广告位', 360, 168, '', '{foreach from=$ads item=ad}<div class="swiper-slide">{$ad}</div>{/foreach}');
 
 --
 -- 表的结构 `ecs_touch_category`
@@ -97,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_category` (
   `cat_id` int(10) unsigned DEFAULT NULL COMMENT '外键',
   `cat_image` varchar(255) DEFAULT NULL COMMENT '分类ICO图标',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_touch_feedback`
@@ -108,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_feedback` (
   `msg_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `msg_read` int(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_touch_goods`
@@ -118,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_goods` (
   `goods_id` int(10) unsigned default '0' COMMENT '外键',
   `sales_volume` int(10) unsigned default '0' COMMENT '销量统计',
   UNIQUE KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_touch_goods_activity`
@@ -131,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_goods_activity` (
   `click_num` int(10) NOT NULL DEFAULT '0',
   `cur_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   UNIQUE KEY `act_id` (`act_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_touch_nav`
@@ -151,28 +141,36 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_nav` (
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `ifshow` (`ifshow`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `ecs_touch_nav`
 --
 
 INSERT INTO `ecs_touch_nav` (`id`, `ctype`, `cid`, `name`, `ifshow`, `vieworder`, `opennew`, `url`, `pic`, `type`) VALUES
-(1, '', 0, '全部分类', 1, 0, 0, 'index.php?c=category&amp;a=top_all', 'themes/default/images/nav/nav_0.png', 'middle'),
-(2, '', 0, '我的订单', 1, 0, 0, 'index.php?c=user&amp;a=order_list', 'themes/default/images/nav/nav_1.png', 'middle'),
-(3, '', 0, '最新团购', 1, 0, 0, 'index.php?c=groupbuy', 'themes/default/images/nav/nav_4.png', 'middle'),
-(4, '', 0, '促销活动', 1, 0, 0, 'index.php?c=activity', 'themes/default/images/nav/nav_3.png', 'middle'),
-(5, '', 0, '积分商城', 1, 0, 0, 'index.php?c=exchange', 'themes/default/images/nav/nav_6.png', 'middle'),
-(6, '', 0, '品牌街', 1, 0, 0, 'index.php?c=brand', 'themes/default/images/nav/nav_2.png', 'middle'),
-(7, '', 0, '个人中心', 1, 0, 0, 'index.php?c=user', 'themes/default/images/nav/nav_5.png', 'middle'),
-(8, '', 0, '购物车', 1, 0, 0, 'index.php?c=flow&amp;a=cart', 'themes/default/images/nav/nav_7.png', 'middle');
-
+(1, '', 0, '搜索', 1, 0, 0, 'javascript:openSearch();', 'themes/default/images/nav/nav-01.png', 'middle'),
+(2, '', 0, '活动', 1, 0, 0, 'index.php?c=activity', 'themes/default/images/nav/nav-02.png', 'middle'),
+(3, '', 0, '团购', 1, 0, 0, 'index.php?c=groupbuy', 'themes/default/images/nav/nav-03.png', 'middle'),
+(4, '', 0, '品牌街', 1, 0, 0, 'index.php?c=brand', 'themes/default/images/nav/nav-04.png', 'middle'),
+(5, '', 0, '我的微筹', 1, 0, 0, 'index.php?c=crowdfunding', 'themes/default/images/nav/nav_8.png', 'middle');
 -- ----------------------------
 -- 增加短信接口配置项
 -- ----------------------------
 INSERT INTO `ecs_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (8, 'sms_ecmoban_user', 'text', '', '', '', 0);
 INSERT INTO `ecs_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (8, 'sms_ecmoban_password', 'password', '', '', '', 0);
 INSERT INTO `ecs_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (8, 'sms_signin', 'select', '1,0', '', '0', 1);
+
+-- ----------------------------
+-- 首页下单提示轮播控制
+-- ----------------------------
+INSERT INTO `ecs_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order) VALUES ('2', 'virtual_order', 'select', '1,0', '', '1', '1');
+
+-- ----------------------------
+-- 签到送积分
+-- ----------------------------
+
+INSERT INTO `ecs_shop_config` (parent_id, code, type, store_range, store_dir, value, sort_order)VALUES (2, 'sign_points', 'text', '', '', '10', 1);
+
 
 --
 -- 表的结构 `ecs_touch_user`
@@ -183,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_auth` (
   `auth_config` text NOT NULL DEFAULT '',
   `from` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='登录插件';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='登录插件';
 
 --
 -- 表的结构 `ecs_touch_user_info`
@@ -192,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_auth` (
 CREATE TABLE IF NOT EXISTS `ecs_touch_user_info` (
   `user_id` int(10) NOT NULL DEFAULT '0',
   `aite_id` varchar(200) NOT NULL DEFAULT '' COMMENT '标识'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户信息';
 
 -- /*DRP_START*/
 
@@ -205,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_config` (
   `type` varchar(20) DEFAULT 'text' COMMENT '数据类型',
   `value` TEXT COMMENT '默认值',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_drp_log`
@@ -224,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_log` (
   `status` int(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`log_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- 表的结构 `ecs_drp_profit`
@@ -237,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_profit` (
   `profit2` float(20,2) DEFAULT '0.00' COMMENT '分销利润2级',
   `profit3` float(20,2) DEFAULT '0.00' COMMENT '分销利润3级',
   PRIMARY KEY (`profit_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- 表的结构 `ecs_drp_shop`
@@ -258,7 +256,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_shop` (
   `open` int(1) NOT NULL DEFAULT '0' COMMENT '店铺是否开启',
   `bank` int(10) NOT NULL DEFAULT '0' COMMENT '默认银行卡',
   PRIMARY KEY (`id`,`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 -- ----------------------------
 -- Table structure for `ecs_drp_bank`
@@ -271,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_bank` (
   `bank_card` varchar(50) DEFAULT NULL COMMENT '银行卡号',
   `user_id` int(10) DEFAULT '0' COMMENT '用户id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for `ecs_drp_visiter`
@@ -282,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_visiter` (
   `drp_id` int(10) NOT NULL DEFAULT '0',
   `visit_time` int(12) NOT NULL DEFAULT '0' COMMENT '访问时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for `ecs_drp_goods`
@@ -293,7 +291,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_goods` (
   `touch_sale` decimal(10,2) NOT NULL DEFAULT '0.00',
   `touch_fencheng` decimal(10,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for `ecs_drp_order_goods`
@@ -305,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_order_goods` (
   `touch_fencheng` decimal(10,2) DEFAULT '0.00',
   `order_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for `ecs_drp_order_info`
@@ -316,7 +314,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_order_info` (
   `shop_separate` int(1) unsigned NOT NULL DEFAULT '0',
   `order_id` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for `ecs_drp_apply`
@@ -328,7 +326,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_apply` (
   `time` int(12) DEFAULT '0',
   `amount` decimal(10,2) DEFAULT '0.00',
   PRIMARY KEY (`id`)
-)  ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)  ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ecs_drp_config
@@ -350,6 +348,326 @@ ALTER TABLE `ecs_users` ADD COLUMN `apply_sale` int(1) unsigned NOT NULL DEFAULT
 
 -- /*DRP_END*/
 
+--
+-- 表的结构 `签到记录（ecs_user_sign）`
+--
+
+CREATE TABLE IF NOT EXISTS `ecs_user_sign` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` mediumint(8) NOT NULL,
+  `years` int(10) NOT NULL,
+  `month` int(11) NOT NULL,
+  `day` int(11) NOT NULL,
+  `last_sign_time` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- 表的结构 `开团记录信息表（ecs_team_log）`
+--
+
+CREATE TABLE IF NOT EXISTS `ecs_team_log` (
+  `team_id` mediumint(8) NOT NULL AUTO_INCREMENT COMMENT '开团记录id',
+  `goods_id` mediumint(8) NOT NULL  COMMENT '拼团商品id',
+  `start_time` int(10) COMMENT '开团时间',
+  `status` tinyint(10) NOT NULL DEFAULT '0' COMMENT '拼团状态（1成功，2失败）',
+  `is_show` int(10) NOT NULL DEFAULT '1' COMMENT '是否显示',
+  PRIMARY KEY (`team_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `频道表（ecs_team_category）`
+--
+
+CREATE TABLE IF NOT EXISTS `ecs_team_category` (
+  `id` mediumint(8) NOT NULL AUTO_INCREMENT COMMENT '频道id',
+  `name` varchar(255) DEFAULT NULL COMMENT '频道名称',
+  `parent_id` int(10) NOT NULL DEFAULT '0' COMMENT '父级id',
+  `content` varchar(120) DEFAULT NULL COMMENT '频道描述',
+  `tc_img` varchar(255) DEFAULT NULL COMMENT '频道图标',
+  `sort_order` int(10) NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` tinyint(10) NOT NULL DEFAULT '1' COMMENT '显示0否 1显示',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+
+--
+-- 转存表中的数据 `ecs_team_category 频道列表`
+--
+
+INSERT INTO `ecs_team_category` (`id`, `name`, `parent_id`, `content`, `tc_img`, `sort_order`, `status`) VALUES
+(1, '生鲜', 0, '', '', 0, 1),
+(2, '服装', 0, '', '', 0, 1),
+(3, '美妆', 0, NULL, '', 0, 1),
+(4, '母婴', 0, NULL, '', 0, 1),
+(5, '数码', 0, NULL, '', 0, 1),
+(6, '电器', 0, NULL, '', 0, 1),
+(7, '水果', 1, '', 'images/201610/1477003670262146374.jpg', 0, 1),
+(8, '海鲜', 1, '', 'images/201610/1477003723558440986.jpg', 0, 1),
+(9, '蔬菜', 1, '', 'images/201610/1477003737543093730.jpg', 0, 1),
+(10, '肉类', 1, '', 'images/201610/1477003765554186648.jpg', 0, 1),
+(11, '半身裙', 2, '', 'images/201610/1476238976644478183.jpg', 0, 1),
+(12, '小衫', 2, '', 'images/201610/1476238818094280453.jpg', 0, 1),
+(13, '裤子', 2, '', 'images/201610/1476238847669867996.jpg', 0, 1),
+(14, '套装', 2, '', 'images/201610/1476238872975750020.jpg', 0, 1),
+(15, '天然面膜', 3, '', 'images/201610/1477003847639238159.jpg', 0, 1),
+(16, '唇彩口红', 3, '', 'images/201610/1477003868289504448.jpg', 0, 1),
+(17, '保湿面乳', 3, '', 'images/201610/1477003883140316778.jpg', 0, 1),
+(18, '时尚香水', 3, '', 'images/201610/1477003989942279800.jpg', 0, 1),
+(19, '婴儿起居', 4, '', 'images/201610/1475967205858355624.jpg', 1, 1),
+(20, '妈咪护理', 4, '', 'images/201610/1475967168002105903.jpg', 2, 1),
+(21, '婴儿洗护', 4, '', 'images/201610/1475967135212140877.jpg', 3, 1),
+(22, '智力开发', 4, '', 'images/201610/1475967092323697897.jpg', 4, 1),
+(23, '数码相机', 5, '', 'images/201610/1475967219850127489.jpg', 1, 1),
+(24, '电脑配件', 5, '', 'images/201610/1475967180221500573.jpg', 2, 1),
+(25, '智能设备', 5, '', 'images/201610/1475967146915398463.jpg', 3, 1),
+(26, '智能配件', 5, '', 'images/201610/1475967109605446878.jpg', 4, 1),
+(27, '厨房电器', 6, '', 'images/201610/1475967232110271481.jpg', 1, 1),
+(28, '生活电器', 6, '', 'images/201610/1475967192886890302.jpg', 2, 1),
+(29, '个人护理', 6, '', 'images/201610/1475967156765457477.jpg', 3, 1),
+(30, '影音电器', 6, '', 'images/201610/1475967122572998827.jpg', 4, 1);
+
+
 ALTER TABLE `ecs_brand` ADD COLUMN `brand_banner` varchar(80)  DEFAULT '';
 ALTER TABLE `ecs_goods_activity` ADD COLUMN `touch_img` VARCHAR (50)  DEFAULT '';
 ALTER TABLE `ecs_favourable_activity` ADD COLUMN `touch_img` VARCHAR (50)  DEFAULT '';
+
+--
+-- 表的结构 `ecs_crowd_article`
+--
+
+CREATE TABLE IF NOT EXISTS `ecs_crowd_article` (
+  `article_id` mediumint(8) NOT NULL COMMENT 'id号',
+  `title` varchar(120) NOT NULL COMMENT '标题',
+  `description` text COMMENT '评论内容',
+  `add_time` int(10) DEFAULT NULL COMMENT '添加时间',
+  `sort_order` int(10) NOT NULL DEFAULT '0' COMMENT '排序',
+  `is_open` tinyint(1) NOT NULL DEFAULT '1' COMMENT '显示 1是  0否',
+  PRIMARY KEY (`article_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `ecs_crowd_article`
+--
+
+INSERT INTO `ecs_crowd_article` (`article_id`, `title`, `description`, `add_time`, `sort_order`, `is_open`) VALUES
+(1, '什么是众筹？', '微筹属于回报众筹，适用于对投资人产生实物或服务回报的众筹，发起人可以设置多个回报方案，每个回报还可以设置购买金额。', 1472448401, 0, 1),
+(2, '怎么判定项目成功或失败？', '在筹款期限内，如果筹得资金大于项目目标金额，则项目成功。否则，项目失败。', 1472118300, 0, 1),
+(3, '如果项目失败筹资怎么处理？', '项目失败，会将各支持者投入的资金分别返给各支持者。\n\n特别地，在项目筹款周期内享受了回报的支持者不享受退款。', 1472118300, 0, 1),
+(4, '目标金额达到，是否可以继续支持？', '项目在目标时间内，达到目标金额，用户可以继续支持，直到项目截止时间点', 1473156244, 0, 1);
+
+--
+-- 表的结构 `ecs_crowd_category`
+--
+
+CREATE TABLE IF NOT EXISTS `ecs_crowd_category` (
+  `cat_id` mediumint(5) NOT NULL COMMENT '众筹分类id',
+  `cat_name` varchar(90) DEFAULT NULL COMMENT '分类名称',
+  `cat_desc` varchar(255) DEFAULT NULL COMMENT '分类描述',
+  `parent_id` mediumint(5) NOT NULL DEFAULT '0' COMMENT '父分类id',
+  `sort_order` int(10) NOT NULL DEFAULT '0' COMMENT '排序',
+  `is_show` int(1) NOT NULL DEFAULT '0' COMMENT '显示 0 否 1显示',
+  PRIMARY KEY (`cat_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `ecs_crowd_category`
+--
+
+INSERT INTO `ecs_crowd_category` (`cat_id`, `cat_name`, `cat_desc`, `parent_id`, `sort_order`, `is_show`) VALUES
+(5, '生鲜水果', '', 0, 2, 1),
+(4, '智能产品', '', 0, 1, 1),
+(6, '运动器械', '', 0, 3, 1),
+(7, '灯光音箱', '', 0, 4, 1);
+
+--
+-- 表的结构 `ecs_crowd_comment`
+--
+
+CREATE TABLE IF NOT EXISTS `ecs_crowd_comment` (
+  `id` mediumint(8) NOT NULL COMMENT '评论id号',
+  `parent_id` mediumint(8) NOT NULL DEFAULT '0' COMMENT '父级id',
+  `user_id` mediumint(8) NOT NULL COMMENT '会员id',
+  `user_name` varchar(120) NOT NULL COMMENT '会员名称',
+  `goods_id` mediumint(8) NOT NULL COMMENT '商品id',
+  `content` text COMMENT '评论内容',
+  `add_time` int(10) DEFAULT NULL COMMENT '评论时间',
+  `order_id` mediumint(8) DEFAULT NULL COMMENT '订单id',
+  `reply` text COMMENT '回复内容',
+  `reply_time` int(10) DEFAULT NULL COMMENT '回复时间',
+  `rank` tinyint(1) NOT NULL DEFAULT '0' COMMENT '评论等级',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '显示 1是  0否',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+--
+-- 表的结构 `ecs_crowd_goods`
+--
+
+CREATE TABLE IF NOT EXISTS `ecs_crowd_goods` (
+  `goods_id` mediumint(8) NOT NULL AUTO_INCREMENT COMMENT '商品id',
+  `cat_id` smallint(5) DEFAULT NULL COMMENT '众筹分类id',
+  `admin_user_id` smallint(5) DEFAULT NULL COMMENT '发起人id',
+  `goods_name` varchar(120) DEFAULT NULL COMMENT '项目名称',
+  `goods_img` varchar(255) DEFAULT NULL COMMENT '项目图片',
+  `sum_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '众筹金额',
+  `total_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '已筹金额',
+  `buy_num` int(10) NOT NULL DEFAULT '0' COMMENT '累计销售数量',
+  `start_time` int(10) DEFAULT NULL COMMENT '上架时间',
+  `update_time` int(10) DEFAULT NULL COMMENT '修改时间',
+  `shiping_time` varchar(255) DEFAULT NULL COMMENT '发货时间',
+  `end_time` int(10) DEFAULT NULL COMMENT '结束时间',
+  `goods_desc` text COMMENT '项目详情',
+  `gallery_img` varchar(255) DEFAULT NULL COMMENT '项目相册',
+  `recommend` tinyint(1) NOT NULL DEFAULT '0' COMMENT '商品推荐',
+  `is_verify` tinyint(1) NOT NULL DEFAULT '0' COMMENT '审核状态，0未审核 1正在审核 2已审核 ',
+  `sort_order` int(10) NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` tinyint(10) NOT NULL DEFAULT '0' COMMENT '状态 0进行中 1成功 2失败',
+  PRIMARY KEY (`goods_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `ecs_crowd_goods`
+--
+
+INSERT INTO `ecs_crowd_goods` (`goods_id`, `cat_id`, `admin_user_id`, `goods_name`, `goods_img`, `sum_price`, `total_price`, `buy_num`, `start_time`, `update_time`, `shiping_time`, `end_time`, `goods_desc`, `gallery_img`, `recommend`, `is_verify`, `sort_order`, `status`) VALUES
+(1, 5, NULL, '武台黄桃---黄金果肉水果，分享不一样的味道', 'images/201610/1476665689111641610.jpg', '10000.00', '0.00', 0, 1476608040, NULL, '筹款成功后3天发货', 1479372840, '', 'images/201610/1476665689248999238.jpg', 1, 1, 10, 0),
+(2, 6, NULL, '小乔智能跑步机——高颜值时尚范 年轻人专属跑步机', 'images/201610/1476666069411926174.jpg', '20000.00', '0.00', 0, 1476608400, NULL, '筹款成功后5天发货', 1479373200, '', 'images/201610/1476666069785698615.jpg', 1, 1, 10, 0),
+(3, 7, NULL, '魅动阿里智能水上灯光音箱，和你一起，发现生活的乐趣', 'images/201610/1476666232914237701.jpg', '12000.00', '0.00', 0, 1476608580, NULL, '筹款成功后3天发货', 1479373380, '', 'images/201610/1476666232209009163.jpg', 1, 1, 10, 0),
+(4, 4, NULL, '我的智慧家庭全能管家——莱迪管家型智能服务机器人', 'images/201610/1476666336123991023.jpg', '16000.00', '0.00', 0, 1476608700, NULL, '筹款成功后5天发货', 1479373500, '', 'images/201610/1476666336469344111.jpg', 1, 1, 10, 0);
+
+--
+-- 表的结构 `ecs_crowd_like`
+--
+CREATE TABLE IF NOT EXISTS `ecs_crowd_like` (
+  `id` mediumint(5) NOT NULL AUTO_INCREMENT COMMENT '关注id',
+  `goods_id` mediumint(8) NOT NULL COMMENT '项目id',
+  `user_id` mediumint(8) NOT NULL COMMENT '会员id',
+  `add_time` int(10) DEFAULT NULL COMMENT '关注时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- 表的结构 `ecs_crowd_order_action`
+--
+
+CREATE TABLE IF NOT EXISTS `ecs_crowd_order_action` (
+  `action_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `action_user` varchar(30) NOT NULL DEFAULT '',
+  `order_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `shipping_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `pay_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `action_place` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `action_note` varchar(255) NOT NULL DEFAULT '',
+  `log_time` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`action_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- 表的结构 `ecs_crowd_order_info`
+--
+
+CREATE TABLE IF NOT EXISTS `ecs_crowd_order_info` (
+  `order_id` mediumint(8) NOT NULL AUTO_INCREMENT COMMENT '订单id号',
+  `order_sn` varchar(20) DEFAULT NULL COMMENT '订单号,唯一',
+  `user_id` mediumint(8) NOT NULL COMMENT '会员id',
+  `goods_id` mediumint(8) NOT NULL COMMENT '众筹项目id',
+  `cp_id` mediumint(8) NOT NULL COMMENT '众筹方案id',
+  `goods_name` varchar(120) NOT NULL COMMENT '众筹项目名称',
+  `goods_number` int(10) NOT NULL DEFAULT '0' COMMENT '购买众筹方案数量',
+  `goods_price` decimal(10,2) NOT NULL COMMENT '众筹方案价格',
+  `order_status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '订单的状态',
+  `shipping_status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '配送情况',
+  `pay_status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '支付状态',
+  `consignee` varchar(60) NOT NULL DEFAULT '' COMMENT '收货人的姓名',
+  `country` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '国家',
+  `province` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '省份',
+  `city` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '城市',
+  `district` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '收货人的地区',
+  `address` varchar(255) NOT NULL DEFAULT '' COMMENT '收货人的详细地址',
+  `zipcode` varchar(60) NOT NULL DEFAULT '' COMMENT '收货人的邮编',
+  `tel` varchar(60) NOT NULL DEFAULT '' COMMENT '收货人的电话',
+  `mobile` varchar(60) NOT NULL DEFAULT '' COMMENT '收货人的手机',
+  `email` varchar(60) NOT NULL DEFAULT '收货人的Email',
+  `best_time` varchar(120) NOT NULL DEFAULT '' COMMENT '收货人的最佳送货时间',
+  `sign_building` varchar(120) NOT NULL DEFAULT '' COMMENT '送货人的地址的标志性建筑',
+  `postscript` varchar(255) NOT NULL DEFAULT '' COMMENT '订单附言',
+  `shipping_id` text NOT NULL COMMENT '配送方式id',
+  `shipping_name` text NOT NULL COMMENT '配送方式的名称',
+  `pay_id` tinyint(3) NOT NULL DEFAULT '0' COMMENT '支付方式的id',
+  `pay_name` varchar(120) NOT NULL DEFAULT '' COMMENT '支付方式名称',
+  `how_oos` varchar(120) NOT NULL DEFAULT '' COMMENT '缺货处理方式',
+  `goods_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品的总金额',
+  `shipping_fee` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '配送费用',
+  `insure_fee` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '保价费用',
+  `pay_fee` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '支付费用',
+  `pack_fee` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '包装费用',
+  `card_fee` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '贺卡费用,取值card',
+  `money_paid` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'money_paid',
+  `surplus` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '该订单使用金额的数量',
+  `integral` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '使用的积分的数量',
+  `integral_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '使用积分金额',
+  `bonus` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '使用红包金额',
+  `order_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '应付款金额',
+  `referer` varchar(255) NOT NULL DEFAULT '' COMMENT '订单的来源页面',
+  `add_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '订单生成时间',
+  `confirm_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '订单确认时间',
+  `pay_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '订单支付时间',
+  `shipping_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '订单配送时间',
+  `pack_id` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '包装id',
+  `card_id` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '贺卡id',
+  `bonus_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '红包id',
+  `invoice_no` varchar(255) NOT NULL DEFAULT '' COMMENT '发货时填写',
+  `extension_code` varchar(30) NOT NULL DEFAULT '',
+  `extension_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `to_buyer` varchar(255) NOT NULL DEFAULT '' COMMENT '商家给客户的留言',
+  `pay_note` varchar(255) NOT NULL DEFAULT '' COMMENT '付款备注',
+  `parent_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '自增ID',
+  `tax` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '发票税额',
+  `discount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  PRIMARY KEY (`order_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- 表的结构 `ecs_crowd_plan`
+--
+
+CREATE TABLE IF NOT EXISTS `ecs_crowd_plan` (
+  `cp_id` mediumint(8) NOT NULL AUTO_INCREMENT COMMENT '方案id号',
+  `name` varchar(120)  DEFAULT NULL COMMENT '方案名称',
+  `goods_id` mediumint(8) NOT NULL  COMMENT '商品id',
+  `shop_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '方案价格',
+  `number` int(11) DEFAULT '0' COMMENT '计划销售数量',
+  `backey_num` int(11) DEFAULT '0' COMMENT '售出数量',
+  `cp_img` varchar(255)  DEFAULT NULL COMMENT '方案图标',
+  `return_time` int(11) NOT NULL DEFAULT '0' COMMENT '预计回报时间',
+  `sort_order` int(10) NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` int(10) NOT NULL DEFAULT '1' COMMENT '显示0否 1显示',
+  PRIMARY KEY (`cp_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+--
+-- 转存表中的数据 `ecs_crowd_plan`
+--
+
+INSERT INTO `ecs_crowd_plan` (`cp_id`, `name`, `goods_id`, `shop_price`, `number`, `backey_num`, `cp_img`, `return_time`, `sort_order`, `status`) VALUES
+(1, '黄金果肉水果2斤', 1, '100.00', 100, 0, 'data/attached/crowd_plan/fccd013ee7d086f49d0f4e9230e1d3ca.jpg', 0, 1, 1),
+(2, '小乔智能跑步机v1型', 2, '200.00', 20, 0, 'data/attached/crowd_plan/01400c1d68dfc6522af9f6ef3296f8d8.jpg', 0, 1, 1),
+(3, '小乔智能跑步机v2型', 2, '300.00', 40, 0, 'data/attached/crowd_plan/01218bfcd416a13c5b96509034106849.jpg', 0, 2, 1),
+(4, '魅动阿里智能水上灯光音箱', 3, '200.00', 60, 0, 'data/attached/crowd_plan/ad4ab548f1b6920689100ba6fd88e94b.jpg', 0, 1, 1),
+(5, '我的智慧家庭全能管家', 4, '200.00', 80, 0, 'data/attached/crowd_plan/42198359eeba51d57b4ab8fc7d83bb7b.jpg', 0, 1, 1);
+
+--
+-- 表的结构 `ecs_crowd_trends`
+--
+
+CREATE TABLE IF NOT EXISTS `ecs_crowd_trends` (
+  `id` mediumint(8) NOT NULL AUTO_INCREMENT COMMENT '动态id号',
+  `goods_id` mediumint(8) NOT NULL  COMMENT '商品id',
+  `content` varchar(120)  DEFAULT NULL COMMENT '动态内容',
+  `add_time` int(10) COMMENT '添加时间',
+  `sort_order` int(10) NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` int(10) NOT NULL DEFAULT '1' COMMENT '显示 0否1显示',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;

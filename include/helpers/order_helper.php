@@ -1649,7 +1649,7 @@ function order_refund($order, $refund_type, $refund_note, $refund_amount = 0)
         return true;
     }
 
-    if (!in_array($refund_type, array(1, 2, 3)))
+    if (!in_array($refund_type, array(1, 2, 3, 4)))
     {
         die('invalid params');
     }
@@ -1695,7 +1695,29 @@ function order_refund($order, $refund_type, $refund_note, $refund_amount = 0)
 
         return true;
     }
+    elseif (4 == $refund_type)
+    {
+        // 资金原路退回
+        $payment_info = payment_info($order['pay_id']);
+
+        // 只保留显示手机版支付方式
+        if(file_exists(ROOT_PATH . 'plugins/payment/'.$payment_info['pay_code'].'.php')){
+            // 调用相应的支付方式文件
+            include_once(ROOT_PATH . 'plugins/payment/' . $payment_info['pay_code'] . '.php');
+            //获取需要支付的log_id
+            $sql = 'SELECT log_id FROM' .$GLOBALS['ecs']->table('pay_log') . " WHERE order_id = '{$order['order_id']}'";
+            $order['log_id'] = $GLOBALS['db']->getOne($sql);
+            // 取得支付信息，生成支付代码
+            $payment = unserialize_config($payment_info['pay_config']);
+            // 取得在线支付方式的支付按钮
+            $pay_obj = new $payment_info['pay_code'];
+            return $pay_obj->refund($order, $payment);
+        }
+
+        return true;
+    }
     else
+
     {
         return true;
     }
@@ -3475,7 +3497,7 @@ function aftermarket_refund($order, $refund_type, $refund_amount, $refund_note)
     if ($refund_amount <= 0) {
         return true;
     }
-    if (!in_array($refund_type, array(1, 2, 3))) {
+    if (!in_array($refund_type, array(1, 2, 3, 4))) {
         die('invalid params');
     }
     /* 备注信息 */

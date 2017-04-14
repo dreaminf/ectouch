@@ -49,8 +49,8 @@
 .user-order-detail .ect-pro-list { border-bottom: none; }
 .user-order-detail .ect-pro-list ul li:last-child { padding-bottom: 0; }
 .user-order-detail .ect-pro-list span.num { margin-left: 0.6em; }
-.order-detail-info { background: #FFF; padding: 0 0.6em; font-size: 1.1em; border-top: 1px solid #e3e3e3; border-bottom: 1px solid #e3e3e3; }
-.order-detail-info ul li { padding: 0.8em 0; border-bottom: 1px solid #e3e3e3; overflow: hidden; font-weight: normal; }
+.order-detail-info { background: #FFF; padding: 0 1.2rem; font-size: 1.1em; border-top: 1px solid #f6f6f9; border-bottom: 1px solid #f6f6f9; }
+.order-detail-info ul li { padding: 0.8em 0; border-bottom: 1px solid #F6F6F9; overflow: hidden; font-weight: normal; }
 .order-detail-info ul li:last-child { border-bottom: none; }
 /*user登陆*/
 .user-hezuo p { margin-top: 0.6em; }

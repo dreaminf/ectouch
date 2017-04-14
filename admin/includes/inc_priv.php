@@ -107,7 +107,7 @@ if (!defined('IN_ECTOUCH'))
     $purview['09_delivery_order']    = 'delivery_view';
     $purview['10_back_order']        = 'back_view';
 	/* by ECTouch leah begin*/
-	$purview['13_service_type']      = 'service_type';
+	$purview['13_service_type']      = 'service_type';	
 	$purview['11_back_cause']        = 'back_cause_list';
 	$purview['10_cause_add']         = 'add_return_cause';
 	$purview['12_back_apply']        = 'aftermarket_list';
@@ -156,7 +156,7 @@ if (!defined('IN_ECTOUCH'))
     $purview['magazine_list']        = 'magazine_list';
     $purview['view_sendlist']        = 'view_sendlist';
 
-//工具箱
+//工具箱   
     $purview['01_navigator']       = 'navigator';
     $purview['02_authorization']   = 'authorization';
     $purview['03_mail_settings']   = 'mail_settings';

@@ -23,7 +23,7 @@ class IndexModel extends CommonModel {
      * @param  $limit
      * @param  $start
      */
-    public function goods_list($type = 'best', $limit = 10, $start = 0) {
+    public function goods_list($type = 'best',$id = 0 , $limit = 10, $start = 0) {
         switch ($type)
         {
             case 'best':
@@ -42,6 +42,18 @@ class IndexModel extends CommonModel {
             default:
                 $type   = '1';
         }
+        
+        if($id > 0){
+            $one = $this->model->table('team_category')->field('id')->where('id ='.$id.' or parent_id='.$id)->select();
+            if($one){
+                foreach($one as $key){
+                        $one_id[] = $key['id'];  
+                }
+                $id  = implode(',',$one_id);
+                $type .= " and g.tc_id in ($id) ";  
+            }           
+        }
+
 		/*DRP_START*/ 
 		if($_SESSION['drp_shop']){
 			//获取分销商所选分类
@@ -52,7 +64,7 @@ class IndexModel extends CommonModel {
 		}
 		/*DRP_END*/
         // 取出所有符合条件的商品数据，并将结果存入对应的推荐类型数组中
-        $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.shop_price AS org_price, g.promote_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, " . "promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img, RAND() AS rnd " . 'FROM ' . $this->pre . 'goods AS g ' . "LEFT JOIN " . $this->pre . "member_price AS mp " . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ";
+        $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.shop_price AS org_price, g.promote_price,g.team_price,g.team_num,g.validity_time,g.limit_num,is_team, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, " . "promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img, RAND() AS rnd " . 'FROM ' . $this->pre . 'goods AS g ' . "LEFT JOIN " . $this->pre . "member_price AS mp " . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ";
         $sql .= ' WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 AND ' . $type;
         $sql .= ' ORDER BY g.sort_order, g.last_update DESC limit ' . $start . ', ' . $limit;
 
@@ -60,7 +72,9 @@ class IndexModel extends CommonModel {
         foreach ($result as $key => $vo) {
             if ($vo['promote_price'] > 0) {
                 $promote_price = bargain_price($vo['promote_price'], $vo['promote_start_date'], $vo['promote_end_date']);
-                $goods[$key]['promote_price'] = $promote_price > 0 ? price_format($promote_price) : '';
+                //$goods[$key]['promote_price'] = $promote_price > 0 ? price_format($promote_price) : '';
+                $goods[$key]['promote_price'] = $promote_price > 0 ? $promote_price : '';
+
             } else {
                 $goods[$key]['promote_price'] = '';
             }
@@ -72,11 +86,118 @@ class IndexModel extends CommonModel {
             $goods[$key]['short_name'] = C('goods_name_length') > 0 ? sub_str($vo['goods_name'], C('goods_name_length')) : $vo['goods_name'];
             $goods[$key]['short_style_name'] = add_style($goods[$key] ['short_name'], $vo['goods_name_style']);
             $goods[$key]['market_price'] = price_format($vo['market_price']);
-            $goods[$key]['shop_price'] = price_format($vo['shop_price']);
+            //$goods[$key]['shop_price'] = price_format($vo['shop_price']);
+            $goods[$key]['shop_price'] = $vo['shop_price'];
             $goods[$key]['thumb'] = get_image_path($vo['goods_id'], $vo['goods_thumb'], true);
             $goods[$key]['goods_thumb'] = get_image_path($vo['goods_id'], $vo['goods_thumb'], true);
             $goods[$key]['goods_img'] = get_image_path($vo['goods_id'], $vo['goods_img']);
             $goods[$key]['url'] = url('goods/index', array('id' => $vo['goods_id']));
+            //team
+            //$goods[$key]['team_price'] =  price_format($vo['team_price']);
+            $goods[$key]['team_price'] =  $vo['team_price'];
+            $goods[$key]['team_num'] = $vo['team_num'];
+            $goods[$key]['validity_time'] = $vo['validity_time'];
+            $goods[$key]['limit_num'] = $vo['limit_num'];
+            $goods[$key]['is_team'] = $vo['is_team'];
+            //team
+
+            $goods[$key]['sales_count'] = model('GoodsBase')->get_sales_count($vo['goods_id']);
+            $goods[$key]['sc'] = model('GoodsBase')->get_goods_collect($vo['goods_id']);
+            $goods[$key]['mysc'] = 0;
+            // 检查是否已经存在于用户的收藏夹
+            if ($_SESSION ['user_id']) {
+                // 用户自己有没有收藏过
+                $condition['goods_id'] = $vo['goods_id'];
+                $condition['user_id'] = $_SESSION ['user_id'];
+                $rs = $this->model->table('collect_goods')->where($condition)->count();
+                $goods[$key]['mysc'] = $rs;
+            }
+            $goods[$key]['promotion'] = model('GoodsBase')->get_promotion_show($vo['goods_id']);
+            $type_goods[$type][] = $goods[$key];
+        }
+        return $type_goods[$type];
+    }
+    /**
+     * 获取推荐频道商品
+     * @param  $type
+     * @param  $limit
+     * @param  $start
+     */
+    public function team_goods_list($id = 0 , $limit = 10, $start = 0) {
+        switch ($type)
+        {
+            case 'best':
+                $type   = ' g.is_best = 1';
+                break;
+            case 'new':
+                $type   = ' g.is_new = 1';
+                break;
+            case 'hot':
+                $type   = ' g.is_hot = 1';
+                break;
+            case 'promotion':
+                $time    = gmtime();
+                $type   = " g.promote_price > 0 AND g.promote_start_date <= '$time' AND g.promote_end_date >= '$time'";
+                break;
+            default:
+                $type   = '1';
+        }
+        
+        if($id > 0){
+            $one = $this->model->table('team_category')->field('id')->where('id ='.$id.' or parent_id='.$id)->select();
+            if($one){
+                foreach($one as $key){
+                        $one_id[] = $key['id'];  
+                }
+                $id  = implode(',',$one_id);
+                $type .= " and g.tc_id in ($id) ";  
+            }           
+        }
+        /*DRP_START*/ 
+        if($_SESSION['drp_shop']){
+            //获取分销商所选分类
+            $cat_id = $this->category_cat();        
+            if($cat_id){        
+                $type .= " and g.cat_id in($cat_id)";               
+            }
+        }
+        /*DRP_END*/
+        // 取出所有符合条件的商品数据，并将结果存入对应的推荐类型数组中
+        $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.shop_price AS org_price, g.promote_price,g.team_price,g.team_num,g.validity_time,g.limit_num,is_team, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, " . "promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img, RAND() AS rnd " . 'FROM ' . $this->pre . 'goods AS g ' . "LEFT JOIN " . $this->pre . "member_price AS mp " . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ";
+        $sql .= ' WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 AND ' . $type;
+        $sql .= ' ORDER BY g.sort_order, g.last_update DESC limit ' . $start . ', ' . $limit;
+
+        $result = $this->query($sql);
+        foreach ($result as $key => $vo) {
+            if ($vo['promote_price'] > 0) {
+                $promote_price = bargain_price($vo['promote_price'], $vo['promote_start_date'], $vo['promote_end_date']);
+                //$goods[$key]['promote_price'] = $promote_price > 0 ? price_format($promote_price) : '';
+                $goods[$key]['promote_price'] = $promote_price > 0 ? $promote_price : '';
+            } else {
+                $goods[$key]['promote_price'] = '';
+            }
+            $goods[$key]['id'] = $vo['goods_id'];
+            $goods[$key]['name'] = $vo['goods_name'];
+            $goods[$key]['goods_name'] = $vo['goods_name'];
+            $goods[$key]['brief'] = $vo['goods_brief'];
+            $goods[$key]['goods_style_name'] = add_style($vo['goods_name'], $vo['goods_name_style']);
+            $goods[$key]['short_name'] = C('goods_name_length') > 0 ? sub_str($vo['goods_name'], C('goods_name_length')) : $vo['goods_name'];
+            $goods[$key]['short_style_name'] = add_style($goods[$key] ['short_name'], $vo['goods_name_style']);
+            $goods[$key]['market_price'] = price_format($vo['market_price']);
+            //$goods[$key]['shop_price'] = price_format($vo['shop_price']);
+            $goods[$key]['shop_price'] = $vo['shop_price'];
+            $goods[$key]['thumb'] = get_image_path($vo['goods_id'], $vo['goods_thumb'], true);
+            $goods[$key]['goods_thumb'] = get_image_path($vo['goods_id'], $vo['goods_thumb'], true);
+            $goods[$key]['goods_img'] = get_image_path($vo['goods_id'], $vo['goods_img']);
+            $goods[$key]['url'] = url('goods/index', array('id' => $vo['goods_id']));
+            //team
+            //$goods[$key]['team_price'] =  price_format($vo['team_price']);
+            $goods[$key]['team_price'] =  $vo['team_price'];
+            $goods[$key]['team_num'] = $vo['team_num'];
+            $goods[$key]['validity_time'] = $vo['validity_time'];
+            $goods[$key]['limit_num'] = $vo['limit_num'];
+            $goods[$key]['is_team'] = $vo['is_team'];
+            //team
             $goods[$key]['sales_count'] = model('GoodsBase')->get_sales_count($vo['goods_id']);
             $goods[$key]['sc'] = model('GoodsBase')->get_goods_collect($vo['goods_id']);
             $goods[$key]['mysc'] = 0;
@@ -252,4 +373,51 @@ class IndexModel extends CommonModel {
 		return  implode(',',$reb);			
     }
 	/*DRP_END*/
+
+    /**
+     * 获得所有频道    
+     */
+    function team_categories_tree(){
+        $sql = 'SELECT c.id,c.name,c.parent_id,c.sort_order,c.status ' .
+                        'FROM ' . $this->pre . 'team_category as c ' .
+                        "WHERE c.parent_id = 0 AND c.status = 1 ORDER BY c.sort_order ASC, c.id ASC";
+
+        $res = $this->query($sql);
+        foreach ($res AS $row) {
+            if ($row['status']) {
+                $cat_arr[$row['id']]['id'] = $row['id'];
+                $cat_arr[$row['id']]['name'] = $row['name'];
+                $cat_arr[$row['id']]['url'] = url('index/team_category', array('id' => $row['id']));
+                /* if (isset($row['id']) == isset($row['parent_id'])) {
+                    $cat_arr[$row['id']]['cat_id'] = $this->team_get_child_tree($row['id']);
+                } */
+            }
+        }
+        //dump($cat_arr);
+        return $cat_arr;
+    }
+    
+    function team_get_child_tree($id = 0) {
+        $three_arr = array();
+        $sql = 'SELECT count(*) FROM ' . $this->pre . "team_category WHERE parent_id = '$id' AND status = 1 ";
+        if ($this->row($sql) || $$id == 0) {
+            $child_sql = 'SELECT c.id,c.name,c.parent_id,c.sort_order,c.status,c.tc_img ' .
+                    'FROM ' . $this->pre . 'team_category as c ' .
+                    " WHERE c.parent_id = '$id' AND c.status = 1 GROUP BY c.id ORDER BY c.sort_order ASC, c.id ASC";
+            $res = $this->query($child_sql);
+            foreach ($res AS $row) {
+                if ($row['status']) {
+                    $three_arr[$row['id']]['id'] = $row['id'];
+                    $three_arr[$row['id']]['name'] = $row['name'];
+                    $three_arr[$row['id']]['tc_img'] = $row['tc_img'];
+                    $three_arr[$row['id']]['url'] = url('category/index', array('tc_id' => $row['id']));
+                }
+                if (isset($row['cat_id']) != NULL) {
+                    $three_arr[$row['id']]['cat_id'] = $this->team_get_child_tree($row['id']);
+                }
+            }
+        }
+        return $three_arr;
+    }
+
 }

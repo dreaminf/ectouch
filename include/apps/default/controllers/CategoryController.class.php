@@ -39,6 +39,8 @@ class CategoryController extends CommonController
     {
         parent::__construct();
         $this->cat_id = I('request.id');
+        $this->tc_id = I('request.tc_id');
+
     }
 
     /**
@@ -50,6 +52,7 @@ class CategoryController extends CommonController
         if (I('get.id', 0) == 0 && CONTROLLER_NAME == 'category') {
             $arg = array(
                 'id' => $this->cat_id,
+                'tc_id' => $this->tc_id,
                 'type' => $this->type,
                 'brand' => $this->brand,
                 'price_max' => $this->price_max,
@@ -70,7 +73,9 @@ class CategoryController extends CommonController
         $this->assign('sort', $this->sort);
         $this->assign('order', $this->order);
         $this->assign('id', $this->cat_id);
+        $this->assign('tc_id', $this->tc_id);
         $this->assign('type', $this->type);
+
         // 获取分类
         $this->assign('category', model('CategoryBase')->get_top_category());
         $count = model('Category')->category_get_count($this->children, $this->brand, $this->type, $this->price_min, $this->price_max, $this->ext, $this->keywords);
@@ -180,7 +185,7 @@ class CategoryController extends CommonController
             } else {
                 setcookie('ECS[keywords]', $keyword, gmtime() + 3600 * 24 * 30);
             }
-        }elseif($keyword == '' && ($this->cat_id == 0) && I('request.filter_attr') == ""){
+        }elseif($keyword == '' && ($this->cat_id == 0) && ($this->tc_id == 0) && I('request.filter_attr') == ""){
 			$this->assign('not_keyword', 1);
 		}
     }
@@ -535,7 +540,10 @@ class CategoryController extends CommonController
         $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
         if ($this->keywords != '') {
             $where .= " AND (( 1 " . $this->keywords . " ) ) ";
-        } else {
+        } elseif($this->tc_id > 0) {
+            $where .= " AND  g.tc_id = '".$this->tc_id."' ";
+        }
+ else {
             $where .= " AND ($this->children OR " . model('Goods')->get_extension_goods($this->children) . ') ';
         }
         if ($this->type) {
@@ -655,5 +663,30 @@ class CategoryController extends CommonController
     //     $res = $this->model->query($sql);
     //     return intval($res[0]['num']);
     // }
+
+
+    /* ------------------------------------------------------ */
+    //--拼团商城 --> 拼团排行
+    /* ------------------------------------------------------ */
+    public function user_ranking() {
+        $this->size = 10;
+        $this->page = I('request.page') > 0 ? intval(I('request.page')) : 1;
+        //dump($this->page);
+        $this->type = isset($_REQUEST ['type']) ? $_REQUEST ['type'] : best;
+        if (IS_AJAX) {
+            $goodslist = model('Category')->team_goods_list($this->type,$this->page,$this->size);
+            die(json_encode(array('list' => $goodslist)));
+            exit();
+        }
+        $goodslist = model('Category')->team_goods_list($this->type,$this->page,$this->size);
+        //当页面无数据时显示
+        if(empty($goodslist) && $this->page == 1 ){
+            $this->assign("is_show",1);
+        }
+        $this->assign('page', $this->page);
+        $this->assign('type', $this->type);
+        $this->display('team/user_ranking.html');
+    }
+
 
 }

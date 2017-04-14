@@ -44,7 +44,7 @@ define('CART_GROUP_BUY_GOODS',      1); // 团购商品
 define('CART_AUCTION_GOODS',        2); // 拍卖商品
 define('CART_SNATCH_GOODS',         3); // 夺宝奇兵
 define('CART_EXCHANGE_GOODS',       4); // 积分商城
-
+define('CART_TEAM_GOODS',           5); // 拼团商城
 /* 订单状态 */
 define('OS_UNCONFIRMED',            0); // 未确认
 define('OS_CONFIRMED',              1); // 已确认
@@ -140,7 +140,7 @@ define('ACT_SAVING',                0);     // 帐户冲值
 define('ACT_DRAWING',               1);     // 帐户提款
 define('ACT_ADJUSTING',             2);     // 调节帐户
 define('ACT_OTHER',                99);     // 其他类型
-
+define('ACT_SIGN',                 66);     // 签到
 /* 密码加密方法 */
 define('PWD_MD5',                   1);  //md5加密方式
 define('PWD_PRE_SALT',              2);  //前置验证串的加密方式

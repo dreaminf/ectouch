@@ -18,9 +18,7 @@ require(dirname(__FILE__) . '/includes/init.php');
 
 admin_priv('affiliate_ck');
 $timestamp = time();
-
 $_GET['auid'] = intval($_GET['auid']);
-
 $affiliate = unserialize($GLOBALS['_CFG']['affiliate']);
 empty($affiliate) && $affiliate = array();
 $separate_on = $affiliate['on'];

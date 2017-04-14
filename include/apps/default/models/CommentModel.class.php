@@ -252,11 +252,19 @@ class CommentModel extends BaseModel {
         if(!empty($limit)){
             $limit = " LIMIT $limit";
         }
-        $sql = "SELECT comment_id,email,user_name,content,comment_rank,add_time FROM ". $this->pre ."comment WHERE ".
+        $sql = "SELECT comment_id,email,user_id,user_name,content,comment_rank,add_time FROM ". $this->pre ."comment WHERE ".
                "comment_type = 0 AND id_value = '".$goods_id."' AND status = 1 $where ORDER BY comment_id DESC LIMIT $start , $num";
         $comment_list = $this->query($sql);
         foreach($comment_list as $k => $v){
-			$comment_list[$k]['add_time'] = local_date(C('time_format'), $v['add_time']);
+            $comment_list[$k]['add_time'] = local_date(C('time_format'), $v['add_time']);
+            $comment_list[$k]['name'] = $v['user_name'];
+            $comment_list[$k]['avatar'] = '';
+            $wechat_user = $this->model->table('wechat_user')->where("ect_uid=" . $v['user_id'])->field('nickname,headimgurl')->find();
+            if (!empty($wechat_user)) {
+                $comment_list[$k]['name'] = $wechat_user['nickname'];
+                $comment_list[$k]['avatar'] = $wechat_user['headimgurl'];
+            }
+
 			$comment_list[$k]['reply'] =  $this->reply_content($v['comment_id']);
         }
         return $comment_list;
