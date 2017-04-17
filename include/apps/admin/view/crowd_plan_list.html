@@ -1,0 +1,78 @@
+{include file="pageheader"}
+<div class="container-fluid" style="padding:0">
+	<div class="row" style="margin:0">
+	   <tr>
+			
+                        <td><div style="float:right" class="navbar-form">
+                                <a href="{url('crowd/add_plan',array('goods_id'=>$goods_id))}"><button class="btn btn-primary">添加回报方案</button></a>
+				</div></td>
+		</tr>
+            <div class="container-fluid" style="padding:0">
+	<div class="row" style="margin:0">
+	  <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
+		<div class="panel panel-default">
+			<div class="panel-heading">回报方案列表</div>
+			<table class="table table-hover table-striped table-bordered">
+                <tr>
+                     <th class="text-center">ID</th>
+                    <th class="text-center">回报内容</th>
+                    <th class="text-center">方案价格</th>
+                    <th class="text-center">设置份数</th>
+					<th class="text-center">剩余份数</th>
+                    <th class="text-center">售出数量</th>
+                    <th class="text-center">排序</th>
+                    <th class="text-center">状态</th>
+                    <th class="text-center">操作</th>
+                </tr>
+    {loop $plan_list $plan}
+  <tr align="center" class="{$cat[level]}" id="{$cat[level]}_{$cat[cat_id]}">
+      <td align="center" class="first-cell" >
+      <span>{$plan[cp_id]}</span>
+    </td>
+    <td align="center" class="first-cell" >
+      <span>{$plan[name]}</span>
+    </td>
+      <td align="center" class="first-cell" >
+      <span>{$plan[shop_price]}</span>
+    </td>
+      <td align="center" class="first-cell" >
+      <span>{$plan[number]}</span>
+    </td>
+	 <td align="center" class="first-cell" >
+      <span>{$plan[surplus]}</span>
+    </td>
+      <td align="center" class="first-cell" >
+      <span>{$plan[backey_num]}</span>
+    </td>
+     <td align="center" class="first-cell" >
+      <span>{$plan[sort_order]}</span>
+    </td>
+     <td align="center" class="first-cell" >
+         {if $plan[status]==1}
+          <span>显示</span>
+           {else}
+          <span>不显示</span> 
+         {/if}
+    </td>
+    <td width="24%" align="center">
+        <a href="{url('add_plan', array('cp_id'=>$plan[cp_id],'goods_id'=>$goods_id))}">编辑</a> |
+     <a href="javascript:if(confirm('{$lang['confirm_delete']}')){window.location.href='{url('del_plan', array('cp_id'=>$plan[cp_id]))}'};">删除</a>
+    </td>
+  </tr>
+   {/loop}
+			</table>
+		</div>
+	  </div>
+	</div>
+</div>
+	</div>
+    {include file="pageview"}
+ </div>
+</div>
+{include file="pagefooter"}
+
+
+
+
+
+

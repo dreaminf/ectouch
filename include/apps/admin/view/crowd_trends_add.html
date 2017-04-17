@@ -1,0 +1,57 @@
+{include file="pageheader"}
+<div class="container-fluid" style="padding:0">
+          
+                <tr>
+			
+                        <td><div style="float:right" class="navbar-form ">
+                                <a href="{url('crowd/trends_list',array('goods_id'=>$goods_id))}"><button class="btn btn-primary">动态列表</button></a>
+				</div></td>
+		</tr>
+  <div class="row" style="margin:0">
+    <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
+      <div class="panel panel-default">
+         
+	<table border="0" cellpadding="0" cellspacing="0" class="table table-hover table-bordered table-striped">
+            
+          
+		<form method="post" action="{url('crowd/trends_add')}" class="form-horizontal" role="form">
+       
+                        <div class="panel-heading" style="border:none">添加项目动态：</div>
+
+                <tr>
+			<td>动态描述</td>
+			<td><div class="col-sm-4">
+				<textarea name='data[content]' rows="6" cols="48">{$trends_info[content]}</textarea>
+			</div>
+			<p class="help-block"></p>
+			</td>
+		</tr>
+		<tr>
+			<td>是否显示</td>
+			<td><div class="col-sm-2">
+				<div  class="btn-group" data-toggle="buttons">
+					<label class="btn btn-primary {if $trends_info['status']==1}active{/if}">
+						<input type="radio" name="data[status]" value="1" {if $trends_info['status']==1}checked{/if}> 显示
+					</label>
+					<label class="btn btn-primary {if $trends_info['status']==0}active{/if}">
+						<input type="radio" name="data[status]" value="0" {if $trends_info['status']==0}checked{/if}> 不显示
+					</label>
+				</div>
+			</div></td>
+		</tr>
+		
+		<tr>
+                      <input type="hidden" name="data[goods_id]" value="{$goods_id}">
+                      <input type="hidden" name="data[id]" value="{$trends_info[id]}">
+			<td></td>
+			<td><div class="col-sm-4">
+				<input type="submit" name="submit" value="{$lang['button_save']}" class="btn btn-primary" />
+				</div></td>
+		</tr>
+		</form>
+	</table>
+      </div>
+    </div>
+  </div>
+</div>
+{include file="pagefooter"}

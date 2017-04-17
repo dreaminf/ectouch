@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>明细列表</title>
+		<link rel="stylesheet" href="__TPL__/team/css/ectouch.css" />
+	</head>
+
+	<body>
+		<div id="loading"><img src="__TPL__/team/images/loading.gif" /></div>
+
+		<div class="con">
+
+			<div class="sign-detail" id="J_ItemList">
+				<section class="dis-box sign-detail-list padding-all b-color-f single_item" >
+				</section>
+				<a href="javascript:;" style="text-align:center" class="get_more"></a>
+			</div>
+
+		</div>
+
+		<!--引用js-->
+		<script type="text/javascript" src="__TPL__/team/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="__TPL__/team/js/swiper.min.js"></script>
+		<script type="text/javascript" src="__TPL__/team/js/ectouch.js"></script>
+
+		<!--异步加载-->
+		<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/js/jquery.more.js"></script>
+		<script type="text/javascript" >var tpl = '__TPL__';</script>
+		<script type="text/javascript">
+			get_asynclist("{:url('user/user_sign_detail')}", '__TPL__/images/loader.gif');
+		</script>
+	</body>
+
+</html>

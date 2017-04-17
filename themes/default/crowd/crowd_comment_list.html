@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>商品评论</title>
+		<!--字体图标库-->
+		<link rel="stylesheet" href="__TPL__/statics/fonts/iconfont.css">
+		<link rel="stylesheet" href="__TPL__/statics/css/swiper-3.2.5.min.css" />
+		<!--主样式-->
+		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
+	</head>
+
+	<body>
+		<div id="loading"><img src="__TPL__/statics/img/loading.gif" /></div>
+		
+		<div class="con goods-info-box">
+			<header class="dis-box header-menu-1 b-color color-whie  goods-fixed-raise  active">
+					<div class="box-flex">
+						<ul class="dis-box  goods-header-nav-box-raise active">
+							<li class="box-flex"><a  href="{:url('crowdfunding/goods_info',array('id'=>$this->_var['id']))}"><label>商品</label></a></li>
+							<li class="box-flex"><a  href="{:url('crowdfunding/crowd_goods_properties',array('id'=>$this->_var['id']))}"><label>详情</label></a></li>
+							<li class="box-flex"><a class="hover" href="{:url('crowdfunding/crowd_comment_list',array('id'=>$this->_var['id']))}"><label>评论</label></a></li>
+						</ul>
+					</div>							
+				</header>
+			<div class="goods-evaluation-page of-hidden  j-ect-tab raise-list-default">
+
+				<div id="j-tab-con">
+					<div class="swiper-wrapper">
+						<section class="swiper-slide of-hidden">
+							<!--{if $comment_list}-->
+							<!--{foreach from=$comment_list item =comment}-->
+							<div class="evaluation-list padding-all b-color-f">
+								<div class="dis-box raise-header padding-all b-color-f">
+									<div class="raise-admin-left">
+										<div class="raise-admin-img">
+											{if $comment.avatar}
+												<img  src="{$comment.avatar}" />
+											{else}
+												<img src="__TPL__/images/member-photo-img2.jpeg" />
+											{/if}
+										</div>
+									</div>
+									<div class="box-flex"><label class="col-3">{$comment.user_name}</label></div>
+									<!--<div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div>-->
+								</div>
+								<div class="b-color-f g-evaluation-con ra">
+									<h4 class="f-05 col-4">{$comment.content}</h4>
+									<h5 class="t-remark m-top04 f-03 col-9">{$comment.add_time}</h5>
+								</div>
+								<!-- <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> -->
+								<!-- <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">
+								<div class="swiper-wrapper ">
+									<li class="swiper-slide">
+										<img class="product-list-img" src="__TPL__/crowd/img/raise-list1.jpg" />
+									</li>									
+								</div>
+							</div> -->
+								<!--{if $comment.reply}-->
+								<p class="f-05">
+									<label class="admin-text">管理员回复：</label> {$comment.reply}
+								</p>
+								<h5 class="t-remark m-top04 f-03 col-9">{$comment.reply_time}</h5>
+								<!--{/if}-->
+							</div>
+							<!--{/foreach}-->
+							<!--{else}-->
+							<div class="no-div-message flow-no-cart">
+								<i class="iconfont icon-biaoqingleiben"></i>
+								<p>亲，此处没有内容～！</p>
+							</div>
+							<!--{/if}-->
+						</section>
+						
+						
+						<!-- <section class="swiper-slide">
+							
+							<div class="evaluation-list padding-all">
+								<div class="dis-box raise-header padding-all b-color-f">
+									<div class="raise-admin-left">
+										<div class="raise-admin-img">
+											<img src="/ecshop-mobile/themes/default/images/member-photo-img2.jpeg">
+										</div>
+									</div>
+									<div class="box-flex"><label class="col-3">admin123</label></div>
+									<div class="box-flex col-7"><label class="fr f-04">支持<em class="color-red">30</em>元</label></div>
+								</div>
+								<div class="b-color-f g-evaluation-con ra">
+									<p class="f-05 col-4">{$comment.content}</p>
+									<p class="t-remark m-top02 f-03 col-9">{$comment.add_time}</p>
+								</div>
+								 <p class="clear m-top08 t-remark">颜色分类：70cm、5144蓝色</p> 
+								 <div class="g-e-p-pic product-one-list of-hidden scrollbar-none j-g-e-p-pic m-top10">
+								<div class="swiper-wrapper ">
+									<li class="swiper-slide">
+										<img class="product-list-img" src="__TPL__/crowd/img/raise-list1.jpg" />
+									</li>									
+								</div>
+							</div>
+								<p class="f-05">
+								<label class="admin-text">管理员回复：</label>
+								感谢您的评价
+							</p> 
+							</div>
+							
+						</section> -->
+					
+					</div>
+				</div>
+				{include file='library/page.lbi'}
+			</div>
+		</div>
+		</div>
+		<!--引用js-->
+		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/swiper.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>		
+	</body>
+
+</html>

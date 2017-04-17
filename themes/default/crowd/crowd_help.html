@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>关于微筹</title>
+
+		<!--字体图标库-->
+		<link rel="stylesheet" href="__TPL__/statics/fonts/iconfont.css">
+		<link rel="stylesheet" href="__TPL__/statics/css/swiper-3.2.5.min.css" />
+		<!--主样式-->
+		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
+
+	</head>
+
+	<body>
+		<header class="dis-box header-menu b-raise color-whie">
+			<a class="" href="javascript:history.go(-1)"><i class="iconfont icon-back"></i></a>
+			<h3 class="box-flex">关于微筹</h3>
+			<a></a>
+		</header>
+		<!--{foreach from=$data item = article}-->
+		<a href="{$article.url}">
+			<div class="select-title padding-all  b-color-f m-top12 of-hidden">
+				<label class="fl">{$article.cat_name}</label>
+				<span class="fr t-jiantou j-t-jiantou" id="j-t-jiantou"><i class="iconfont icon-jiantou tf-180 ts-2"></i></span>
+			</div>
+		</a>
+		<!--{/foreach}-->
+
+
+
+	</body>
+
+</html>

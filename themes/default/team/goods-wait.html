@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>{$title}</title>
+		<link rel="stylesheet" href="__TPL__/team/css/ectouch.css" />
+
+	</head>
+
+	<body>
+		<div class="con">
+			<div id="loading"><img src="__TPL__/team/images/loading.gif" /></div>
+			<div class="cont-pb">
+				<section class="padding-all b-o dis-box goods-wait-box">
+					<div class="goods-wait-left">
+						<!--{if $goods.avatar}-->						
+						<div class="left-img"><img src="{$goods.avatar}" class="img"></div>
+						<!--{else}-->						
+						<div class="left-img"><img src="__TPL__/images/member-photo-img2.jpeg" class="img"></div>
+						<!--{/if}-->
+						
+					</div>
+					
+					
+					<!--{if $team.status eq 0}-->
+					<div class="box-flex list-two">
+						<h4 class="font-06 col-3 onelist-hidden m-top04">开团成功啦！</h4>
+						<p class="col-9 font-01 onelist-hidden">只差{$team.surplus}位小伙伴参团，快点邀请好友参团。</p>
+					</div>
+					<!--{elseif $team.status eq 1}-->
+					<div class="box-flex list-two">
+						<h4 class="font-06 col-3 onelist-hidden m-top04">拼团成功啦！</h4>
+						<p class="col-9 font-01 onelist-hidden">继续去开团吧。</p>
+					</div>
+					<!--{else}-->
+					<div class="box-flex list-two">
+						<h4 class="font-06 col-3 onelist-hidden m-top04">拼团失败啦！</h4>
+						<p class="col-9 font-01 onelist-hidden">快继续去开团吧。</p>
+					</div>
+					<!--{/if}-->
+				</section>
+				<section class="flow-checkout-pro j-flow-checkout-pro active m-top1px">					
+					<div class="dis-box flow-checkout-list-box b-color-f padding-all position-rel">
+						<a class="product-div-link" href="{:url('goods/index',array('id'=>$this->_var['goods']['goods_id']))}"></a>
+						<div class="flow-checkout-list-left">
+							<div class="flow-checkout-list-left-img"><img class="img" src="{$goods.goods_img}" /></div>
+						</div>
+						<div class="box-flex">
+							<h4 class="font-06 col-3 twolist-hidden">{$goods.goods_name}</h4>
+							<p class="col-7 font-03">{$goods.goods_attr}</p>
+							<div class="font-05 col-7 m-top08"><i class="iconfont icon-qun"></i>{$goods.team_num}人团 <em class="ec-color font-08">￥{$goods.team_price}</em><!-- (运费:5元) --></div>
+						</div>
+					</div>
+				</section>
+				<script type="text/javascript" src="__TPL__/team/js/lefttime.js"></script>
+				<script type="text/javascript">
+					var gmt_end_time = {$team.end_time};
+					var day = '<em class="color-whie hour">';
+					var hour = '</em> : <em class="color-whie mini">';
+					var minute = '</em> : <em class="color-whie sec">';
+					var second = '</em>';
+					var end = '';
+					onload = function(){
+						try {onload_leftTime();}
+						catch (e) {}
+					}
+				</script>
+				<section class="b-color-f m-top10 padding-all">
+					<div class="other-login countDown">					
+						
+						<!--{if $team.status eq 0}-->
+						<h4 class="title-hrbg">剩余<span class="color-dark" id="leftTime"> </span>结束<hr> </h4>
+						<!--{elseif $team.status eq 1}-->
+						<h4 class="title-hrbg">拼团成功<hr> </h4>
+						<!--{else}-->						
+						<h4 class="title-hrbg">拼团失败<hr> </h4>
+						<!--{/if}-->
+						
+						
+					</div>
+					<ul class="goods-wait-num">
+						<!--{foreach from=$team_user item=user }-->
+						<li>
+							<!--{if $user.team_parent_id}-->
+							<div class="tag-box">团长</div>
+							<!--{/if}-->
+							<!--{if $user.avatar}-->
+							<div class="num-img"><img src="{$user.avatar}" class="img"></div>
+							<!--{else}-->						
+							<div class="num-img"><img src="__TPL__/images/member-photo-img2.jpeg" class="img"></div>
+							<!--{/if}-->
+							
+						</li>
+						<!--{/foreach}-->
+						<li class="position-rel">
+							<a class="product-div-link" href="{:url('goods/goods_wait_list',array('team_id'=>$this->_var['team']['team_id']))}"></a>
+							<div class="num-img"><i class="iconfont icon-menu icon-gengduo is-con"></i></div>
+						</li>
+					</ul>
+
+					<div class="plan-box m-top08">
+						<p class="left-title">
+							<em>{$team.bar}%</em>
+							<i class="color" style="width:{$team.bar}%;"></i>
+						</p>
+					</div>
+
+					<div class="other-login m-top12">
+						<h4 class="title-hrbg"><span>拼团规则</span><hr> </h4>
+					</div>
+					<div class="dis-box group-detail-cont font-03 text-c col-6 position-rel">
+						<div class="box-flex position-rel">
+							<label class="num-left">1</label>
+							<p class="">选择商品</p>
+							<div class="n-list-xian-first position-abo"></div>
+						</div>
+						<div class="box-flex position-rel">
+							<label class="num-left">2</label>
+							<p class="">开团/参团</p>
+							<div class="n-list-xian position-abo"></div>
+						</div>
+						<div class="box-flex position-rel">
+							<label class="num-left">3</label>
+							<p class="">邀请好友</p>
+							<div class="n-list-xian position-abo"></div>
+						</div>
+						<div class="box-flex position-rel">
+							<label class="num-left">4</label>
+							<p class="">人满成团</p>
+							<div class="n-list-xian-last position-abo"></div>
+						</div>
+
+					</div>
+					<div class="goods-mn-jiantou  j-goods-guize-box position-rel "><i class="iconfont icon-mn-jiantoul ts-5"></i></div>
+					<ul class="goods-service-nav-list goods-show-box ts-5">
+						<li class="padding-all of-hidden">
+							<p class="g-b-s-con">1.开团：在商城内选择喜欢的商品，点击“去开团”，付款成功后即为开团成功；</p>
+							<p class="g-b-s-con">2.参团：进入朋友分享的页面，点击“立即参团”，付款后即为参团成功，若多人同时支付，按先支付成功的用户获得参团资格；</p>
+							<p class="g-b-s-con">3.成团：在开团或参团之后,可以点击“分享出去”，在有效时间凑齐成团人数即拼团成功；</p>
+							<p class="g-b-s-con">4.组团失败：在有效时间内未凑齐人数，即为组团失败，此时商城会将原款分别退回；</p>
+							<!-- <p class="g-b-s-con">5.中奖商品预计72小时内发货</p> -->
+						</li>
+					</ul>
+				</section>
+				<section class="index-seckill m-top10">
+					<div class="box padding-all b-color-f wallet-bt">
+						<h3 class="recom-title">
+						热卖商品						
+					</h3>
+					</div>
+
+					<ul class="ul-2 user-sign-list b-color-f of-hidden " id="J_ItemList" >
+						<li class="single_item"></li>
+						<a href="javascript:;" style="text-align:center" class="get_more"></a>		
+					</ul>
+						
+				</section>
+			<footer class="padding-all dis-box goods-wait-footer">
+				<a href="{:url('index/index')}" class="box-flex footer-border"><label class="footer-name">{$cfg.shop_name}</label></a>
+				<a href="{:url('user/my_team')}" class="box-flex"><label class="footer-order">我的团</label></a>
+			</footer>
+			</div>
+
+			<div class="mask-filter-div"></div>
+			<section class="filter-btn dis-box goods-btn-box">
+				<a href="{:url('category/user_ranking')}" class="btn-p  btn-hs-1 box-flex">
+					<h4 class="font-07">更多拼团</h4>
+				</a>
+				<!--{if $team.status eq 1 || $team.status eq 2  }-->
+				<a href="{:url('goods/index',array('id'=>$this->_var['team']['goods_id']))}" class="btn-p group-btn-box btn-submit box-flex ec-white text-c">
+					<h4 class="font-07">去开团</h4>
+					<p class="font-03">￥{$team.team_price}</p>
+				</a>
+				<!--{else}-->
+					<!--{if $team_join}-->
+					<a class="btn-p  btn-submit box-flex ec-white text-c j-fengxiang-box">
+						<h4 class="font-07">邀请好友参团</h4>
+						<!--<p class="font-03">￥{$team.team_price}</p>-->
+					</a>
+					<!--{else}-->
+					<a href="{:url('goods/index',array('id'=>$this->_var['team']['goods_id'],'team_id'=>$this->_var['team']['team_id']))}" class="btn-p group-btn-box btn-submit box-flex ec-white text-c">
+						<h4 class="font-07">立即参团</h4>					                    	
+              			<p class="font-03">￥{$team.team_price}</p>
+					</a>
+					<!--{/if}-->
+				<!--{/if}-->
+			</section>
+		</div>
+		<div class="fengxiang-img-box"><img src="__TPL__/team/images/fengxiang.png" class="img"></div>
+		<div class="fengxing-bg"></div>
+		<!--引用js-->
+		<script type="text/javascript" src="__TPL__/team/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="__TPL__/team/js/swiper.min.js"></script>
+		<script type="text/javascript" src="__TPL__/team/js/ectouch.js"></script>
+		<!--异步加载-->
+		<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/js/jquery.more.js"></script>
+		<script type="text/javascript" >var tpl = '__TPL__';</script>
+		<script type="text/javascript">
+			get_asynclist("{:url('goods/ajax_goods', array('type'=>'hot'))}", '__TPL__/images/loader.gif');
+		</script>
+	
+		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+		<script type="text/javascript">
+			// 分享内容
+			var shareContent = {
+				title: '{$wx_title}',// 分享标题
+				desc: '{$goods.goods_name}', //分享描述
+				link: '', //分享链接
+				imgUrl: '{$goods.goods_img}' // 分享图标
+			};
+			$(function(){
+				var url = window.location.href;
+				var jsConfig = {
+					debug: false,
+					jsApiList: [
+						'onMenuShareTimeline',
+						'onMenuShareAppMessage',
+						'onMenuShareQQ',
+						'onMenuShareWeibo',
+						'onMenuShareQZone'
+					]
+				};
+				$.post('{:url("jssdk/index")}', {url: url}, function (res) {
+					if(res.status == 200){
+						jsConfig.appId = res.data.appId;
+						jsConfig.timestamp = res.data.timestamp;
+						jsConfig.nonceStr = res.data.nonceStr;
+						jsConfig.signature = res.data.signature;
+						// 配置注入
+						wx.config(jsConfig);
+						// 事件注入
+						wx.ready(function () {
+							wx.onMenuShareTimeline(shareContent);
+							wx.onMenuShareAppMessage(shareContent);
+							wx.onMenuShareQQ(shareContent);
+							wx.onMenuShareWeibo(shareContent);
+							wx.onMenuShareQZone(shareContent);
+						});
+					}
+				}, 'json');
+			})
+		</script>
+
+	</body>
+
+</html>

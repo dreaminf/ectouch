@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>微筹中心</title>
+		<!--字体图标库-->
+		<link rel="stylesheet" href="__TPL__/statics/fonts/iconfont.css">
+		<link rel="stylesheet" href="__TPL__/statics/css/swiper-3.2.5.min.css" />
+		<!--主样式-->
+		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
+	</head>
+
+	<body>
+		<div class="con raise-user m-b7">
+			<div id="loading"><img src="__TPL__/statics/img/loading.gif" /></div>
+			<div class="raise-user-header">
+				<div class="admin-bg-box">
+					<div class="com-header">
+						<div class="padding-all dis-box">
+							<!-- <a href="user_detail.html"> -->
+							<div class="user-head-img-raise b-color-f">
+								{if $info.avatar}
+								<img src="{$info.avatar}" /> {else}
+								<img src="__TPL__/images/member-photo-img2.jpeg" /> {/if}
+
+							</div>
+							<!-- </a> -->
+							<!-- <a href="user_detail.html" class="box-flex"> -->
+							<div class="g-s-i-title-a ">
+								<h4 class="ellipsis-one user-admin-size color-whie f-07">{$info.name}</h4>
+								<p class="user-reg-top color-whie f-03"><!-- 17010285501 --></p>
+							</div>
+							<!-- </a> -->
+
+							</ul>
+						</div>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<section class="m-top10 my-nav-box b-color-f">
+				<a href="{:url('mycrowd/crowd_order')}">
+					<div class="dis-box padding-all my-bottom">
+						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-quanbudingdan raise-col is-user-size"></i>我的订单</h3>
+						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
+					</div>
+				</a>
+				<a href="{:url('mycrowd/crowd_buy')}">
+					<div class="dis-box padding-all my-bottom">
+						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-zan is-user-size raise-col"></i>我的支持</h3>
+						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
+					</div>
+				</a>
+				<a href="{:url('mycrowd/crowd_like')}">
+					<div class="dis-box padding-all my-bottom">
+						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-02 is-user-size raise-col"></i>我的关注</h3>
+						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
+					</div>
+				</a>
+
+			</section>
+			<section class="m-top10 my-nav-box b-color-f">
+
+				<a href="{:url('mycrowd/crowd_art_list')}">
+					<div class="dis-box padding-all my-bottom">
+						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-tuandui is-user-size raise-col"></i>关于微筹</h3>
+						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
+					</div>
+				</a>
+				<!-- <a href="raise_feedback.html">
+					<div class="dis-box padding-all my-bottom">
+						<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-tishi is-user-size"></i>意见反馈</h3>
+						<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
+					</div>
+				</a> -->
+			</section>
+			<section class="m-top10 my-nav-box">
+				<div class="dis-box padding-all b-color-f">
+					<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-shijian is-user-size raise-col"></i>项目推荐</h3>
+				</div>
+				<div class="product-list-small m-top1px b-color-f raise-tuij-box dis-box ">
+					<ul class="box-flex flow-checkout-bigpic flow-checkout-pro">
+						<!--{foreach from=$recommend item = goods}-->
+						<li>
+							<div class="product-div">
+								<a class="product-div-link" href="{$goods.url}"></a>
+								<img class="product-list-img" src="{$goods.goods_img}">
+								<div class="product-text">
+									<h4>{$goods.goods_name}</h4>						
+									<p class="col-3 f-05"><em class="raise-col">￥<!--{if $goods.min_price}-->{$goods.min_price}<!--{else}-->0.00<!--{/if}--></em><em class="col-9 f-02">起</em><em class="fr col-9 f-02"><i class="iconfont icon-shijian f-03"></i> {$goods.time}天</em></p>
+									<div class="raise-progressBar raise-user-time dis-box">
+										<p class="wrap box-flex">
+											<span class="bar" style="width:{$goods.bar}%;"><i class="color"></i></span>
+										</p>
+										<p class="txt">{$goods.bar}%</p>
+									</div>
+									<p class="col-3 f-03"><em class="col-9">已筹资金:</em><em class="raise-col"><!--{if $goods.total_price }-->￥{$goods.total_price}<!--{else}-->￥0.00<!--{/if}--></em>
+										<!-- 元 --><em class="fr col-9 f-03">支持人:<em class="raise-col">{$goods.buy_num}</em>人</em>
+									</p>
+								</div>
+							</div>
+						</li>
+						<!--{/foreach}-->
+
+					</ul>
+
+				</div>
+			</section>
+		</div>
+		<footer class="footer-nav footer-nav-raise dis-box">
+			<a href="{:url('index/index')}" class="box-flex nav-list">
+					<i class="nav-box i-home"></i><span>首页</span>
+				</a>
+			<a href="{:url('crowdfunding/index')}" class="box-flex nav-list">
+				<i class="nav-box i-zhongchou"></i><span>微筹广场</span>
+			</a>
+			<a href="{:url('mycrowd/crowd_order')}" class="box-flex position-rel nav-list">
+				<i class="nav-box i-zhongchou-order"></i><span>微筹订单</span>
+			</a>
+			<a href="{:url('mycrowd/index')}" class="box-flex position-rel nav-list  active">
+				<i class="nav-box i-zhongchou_user"></i><span>微筹中心</span>
+			</a>	
+		</footer>
+		<!--引用js-->
+		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/swiper.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>		
+	</body>
+
+</html>

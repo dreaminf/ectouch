@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>我的支持</title>
+		<!--字体图标库-->
+		<link rel="stylesheet" href="__TPL__/statics/fonts/iconfont.css">
+		<link rel="stylesheet" href="__TPL__/statics/css/swiper-3.2.5.min.css" />
+		<!--主样式-->
+		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
+
+	</head>
+
+	<body>
+	<div id="loading"><img src="__TPL__/statics/img/loading.gif" /></div>
+		<div class="con am-left">
+			<div class="goods-info user-order of-hidden ect-tab  ts-3 p-t0">
+				<nav class=" tab-title-raise b-color-f of-hidden">
+					<ul class="dis-box">
+						<li class="box-flex <!--{if $type eq 1}-->active<!--{/if}-->"><a href="{:url('mycrowd/crowd_buy',array('type'=>''))}">全部项目</a></li>
+						<li class="box-flex <!--{if $type eq 2}-->active<!--{/if}-->"><a href="{:url('mycrowd/crowd_buy',array('type'=>'2'))}">进行中</a></li>
+						<li class="box-flex <!--{if $type eq 3}-->active<!--{/if}-->"><a href="{:url('mycrowd/crowd_buy',array('type'=>'3'))}">已成功</a></li>
+						<li class="box-flex <!--{if $type eq 4}-->active<!--{/if}-->"><a href="{:url('mycrowd/crowd_buy',array('type'=>'4'))}">已失败</a></li>
+					</ul>
+				</nav>
+				<div id="j-tab-con" class="tab-con">
+					<div class="swiper-wrapper">
+						<section class="swiper-slide" id="j-product-box">
+
+							<script id="j-product" type="text/html">
+							<%each list as vo %>
+							<section class="flow-checkout-pro">
+								<div class="my-nav-box product-list-small m-top1px b-color-f raise-tuij-box dis-box ">
+									<ul class="box-flex  flow-checkout-pro">
+										<li>
+											<div class="product-div dis-box">
+												<a class="product-div-link" href="<%vo.url%>"></a>
+												<div class="position-rel">
+													<img class="product-list-img" src="<%vo.goods_img%>">
+												<!--标签-->
+												<%if vo.status > 0%>
+												<div class="raise-support-bg">
+													<div class="raise-tag">
+														<!--成功-->
+														<%if vo.status == 1%>
+														<img src="__TPL__/statics/img/s-bg1.png" class="img" >
+														<%/if%>
+														<!--失败-->
+														<%if vo.status == 2%>
+														<img src="__TPL__/statics/img/sb-b1.png" class="img">
+														<%/if%>
+													</div>
+												</div>
+												<%/if%>
+												</div>
+												<div class="product-text-box box-flex">
+													<h4><%vo.goods_name%></h4>
+													<p class="col-3 f-05"><em class="raise-col">￥<%vo.min_price%></em><em class="col-9 f-02">起</em><em class="fr col-9 f-02"><i class="iconfont icon-shijian mr-small f-03"></i><%vo.time%>天</em></p>
+													<div class="raise-progressBar raise-user-time dis-box">
+														<p class="wrap box-flex">
+															<span class="bar" style="width:<%vo.bar%>%;"><i class="color"></i></span>
+														</p>
+														<p class="txt"><%vo.bar%>%</p>
+													</div>
+													<p class="col-3 f-03"><em class="col-9">已筹资金:</em><em class="raise-col"><%if vo.total_price %>￥<%vo.total_price%><%else%>￥0.00<%/if%></em>元<em class="fr col-9 f-03">支持人:<em class="raise-col"><%vo.buy_num%></em>人</em>
+													</p>
+												</div>
+
+											</div>
+										</li>
+									</ul>
+								</div>
+							</section>
+							<%/each%>
+							</script>
+							<!--{if $is_show eq 1}-->
+							<div class="no-div-message flow-no-cart">
+								<i class="iconfont icon-biaoqingleiben"></i>
+								<p>亲，此处还没有内容～！</p>
+							</div>
+							<!--{/if}-->
+
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<!--引用js-->
+		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/swiper.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
+
+
+		<script type="text/javascript" src="__TPL__/statics/js/echo.min.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/js/template.js"></script>
+		<script type="text/javascript">
+
+			var url = '{:url('mycrowd/crowd_buy', array('type'=>$this->_var['type']))}';
+			var total = 0;
+
+			var page = {$page};
+
+			page = (page === null) ? 1:parseInt(page);
+
+			get_data(page);
+			localData.set('page', page);
+			if(page == 1){
+				localData.set('page_min', 1);
+				localData.set('page_max', 1);
+			}
+			if(page > 1){
+				localData.set('page_min', page);
+				localData.set('page_max', page);
+			}
+			var minPage = localData.get('page_max');
+			var maxPage = localData.get('page_max');
+			minPage = (minPage === null) ? 1:parseInt(minPage);
+			maxPage = (maxPage === null) ? 1:parseInt(maxPage);
+
+			$(window).scroll(function () {
+				var scrollTop = $(this).scrollTop();
+				var scrollHeight = $(document).height();
+				var windowHeight = $(this).height();
+
+				// 下拉
+				if (scrollTop + windowHeight == scrollHeight) {
+					if(page >= maxPage){
+						$.ajax({
+							type : "post",
+							url : url,
+							//', array('id'=>$this->_var['id'], 'type'=>$this->_var['type'], 'page'=>$this->_var['page'], 'keywords'=>$this->_var['keywords'])
+							//data : 'page=' + (page + 1),
+							data : {
+							    page : page+1,
+							},
+							dataType: 'json',
+							async : false,
+							success : function(data){
+								//template.config('openTag', '<%');
+								//template.config('closeTag', '%>');
+								var html = template('j-product', data);
+								$('#j-product-box').append(html);
+								//rug
+								if(!isEmpty(data.list)){
+									page++;
+									localData.set('page', page);
+									if(page > maxPage){
+										localData.set('page_max', page);
+									}
+								}
+							}
+						});
+					}
+				}
+				// 上拉
+				if(scrollTop == 0 && minPage > 1){
+					$.ajax({
+						type : "post",
+						url : url,
+						data : 'page=' + (page - 1),
+						dataType: 'json',
+						async : false,
+						success : function(data){
+							//template.config('openTag', '<%');
+							//template.config('closeTag', '%>');
+							var html = template('j-product', data);
+							$('#j-product-box').prepend(html);
+							page--;
+							localData.set('page', page);
+							if(page < minPage){
+								localData.set('page_min', page);
+							}
+						}
+					});
+				}
+			});
+
+			function get_data(page){
+				$.ajax({
+					type : "post",
+					url : url,
+					//data : 'page=' + page,
+					data : {
+						page : 1,
+					},
+					dataType: 'json',
+					async : false,
+					success : function(data){
+						template.config('openTag', '<%');
+                        template.config('closeTag', '%>');
+						var html = template('j-product', data);
+						//alert(html);
+						$('#j-product-box').append(html);
+					}
+				});
+			}
+			/*
+			   * 检测对象是否是空对象(不包含任何可读属性)。
+			   * 方法既检测对象本身的属性，也检测从原型继承的属性(因此没有使hasOwnProperty)。
+			   */
+		   function isEmpty(obj) {
+			   for (var name in obj) {
+				   return false;
+			   }
+			   return true;
+		   }
+		  echo.init();
+
+			$(function($) {
+				$(".j-detail-close").click(function(){
+					$(".raise-search-cont").addClass("active");
+				})
+				//nav
+				window.onload = function() {
+					var $li = $('.raise-cate-nav li');
+					var $ul = $('.raise-content ul');
+
+					$li.click(function() {
+						var $this = $(this);
+						var $t = $this.index();
+						$li.removeClass();
+						$this.addClass('current');
+						$ul.css('display', 'none');
+						$ul.eq($t).css('display', 'block');
+					})
+				}
+				$(".j-text-all,.raise-bg-box").click(function() {
+					$(".raise-content").addClass("active");
+					$(".raise-bg-box").addClass("active");
+					$(".category-header-box").addClass("active");
+				});
+				$(".raise-cate-nav li").click(function() {
+					$(".raise-content").removeClass("active");
+					$(".raise-bg-box").removeClass("active");
+					$(".category-header-box").removeClass("active");
+				});
+			});
+
+
+
+		</script>
+	</body>
+
+</html>

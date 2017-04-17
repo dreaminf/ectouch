@@ -1,0 +1,70 @@
+{include file="pageheader"}
+<div class="container-fluid" style="padding:0">
+	<div class="row" style="margin:0">
+            	<tr>
+			<td></td>
+                        <td><div style="float:right" class="navbar-form ">
+                                <a href="{url('trends_add',array('goods_id'=>$goods_id))}"><button class="btn btn-primary">添加项目动态</button></a>
+				</div></td>
+		</tr>
+
+            <div class="container-fluid" style="padding:0">
+	<div class="row" style="margin:0">
+	  <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
+		<div class="panel panel-default">
+			<div class="panel-heading">项目动态列表</div>
+			<table class="table table-hover table-striped table-bordered">
+                <tr>
+<!--                    <th class="text-center">ID</th>-->
+                    <th class="text-center">支持项目名称</th>
+                    <th class="text-center">动态内容</th>
+                    <th class="text-center">添加时间</th>
+                   
+                    <th class="text-center">是否显示</th>
+                    <th class="text-center">操作</th>
+                </tr>
+
+    {loop $trends_list $trends}
+  <tr align="center">
+<!--      <td align="center" class="first-cell" >
+      <span>{$message[id]}</span>
+    </td>-->
+    <td align="center" class="first-cell" >
+      <span>{$trends[goods_name]}</span>
+    </td>
+      <td align="center" class="first-cell" >
+      <span>{$trends[content]}</span>
+    </td>
+     <td align="center" class="first-cell" >
+      <span>{$trends[add_time]}</span>
+    </td>
+   
+     <td align="center" class="first-cell" >
+       {if $trends[status]==1} 
+      <span>显示</span>
+      {else}
+      <span>不显示</span>
+      {/if}
+    </td>
+    <td width="24%" align="center">
+        <a href="{url('trends_add', array('id'=>$trends[id],'goods_id'=>$goods_id))}">编辑</a> |
+        <a href="javascript:if(confirm('{$lang['confirm_delete']}')){window.location.href='{url('del_trends',array('id'=>$trends[id]))}'};">删除</a>
+    </td>
+  </tr>
+   {/loop}
+			</table>
+		</div>
+	  </div>
+	</div>
+</div>
+	</div>
+    {include file="pageview"}
+ </div>
+</div>
+{include file="pagefooter"}
+
+
+
+
+
+

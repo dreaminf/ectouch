@@ -1,0 +1,198 @@
+{include file="pageheader"}
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
+<link rel="stylesheet" type="text/css" href="__ASSETS__/css/jquery.datetimepicker.css" />
+<div class="container-fluid" style="padding:0">
+    <div class="row" style="margin:0">
+        <div class="col-md-12 col-sm-12 col-lg-12" style="padding:0;">
+            <div class="panel panel-default">
+                <div class="panel-heading">添加项目</div>
+                <form action="{url('crowd/goods_add')}" method="post" enctype="multipart/form-data" role="form">
+                    <table id="general-table" class="table table-hover ectouch-table">
+                        <tr>
+                            <td width="200">项目名称:</td>
+                            <td><div class="col-md-4">
+                                    <input type='text' name='data[goods_name]' value="{$goods['goods_name']}" class="form-control input-sm" />
+                                </div></td>
+                        </tr>
+                        <tr>
+                            <td width="200">目标金额:</td>
+                            <td><div class="col-md-4">
+                                    <input type='text' name='data[sum_price]' value="{$goods['sum_price']}" class="form-control input-sm" />
+                                </div>
+                                <span class="help_block" >
+                                    建议第一期项目目标金额稍小一些，打开市场后逐步提升目标金额
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="200">项目分类:</td>
+                            <td><div class="col-md-4">
+                                    <select name="data[cat_id]" class="form-control input-sm">
+                                        <option>请选择分类</option>
+                                        {loop $cat_select $cat}
+                                        <option value="{$cat[cat_id]}"{if $goods['cat_id'] == $cat[cat_id] }selected{/if}>{$cat[cat_name]}</option>
+                                        {/loop}
+                                    </select>
+                                </div>
+                                <span class="help_block">
+                                    若没有目标分类，可以在左侧边栏“微筹分类”中添加分类
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="200">商品图片:</td>
+                            <td><div class="col-md-4">
+                                    <input type="file" value="{$article['file']}" name="goods_img" class="form-control input-sm">
+                                </div>
+                                <span class="help_block">
+                                           此图片为本项目在“微筹广场”显示的图片 (建议上传图片比例为1:1)
+                                </span>
+                            </td>
+                        <tr>
+                            <td width="200">开始时间</td>
+                            <td>
+                                <div class="col-md-4 col-sm-4">
+                                    <input type="text" name="data[start_time]" class="form-control" id="starttime" value="{$goods['start_time']}" />
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="200">结束时间</td>
+                            <td>
+                                <div class="col-md-4 col-sm-4">
+                                    <input type="text" name="data[end_time]" class="form-control" id="endtime" value="{$goods['end_time']}" />
+                                </div>
+                            </td>
+                        </tr>
+                        
+                               <tr>
+		  <td>是否推荐</td>
+			<td><div class="col-sm-2">
+				<div  class="btn-group" data-toggle="buttons">
+					<label class="btn btn-primary {if $goods['recommend']==1}active{/if}">
+						<input type="radio" name="data[recommend]" value="1" {if $goods['recommend']==1}checked{/if}> 推荐
+					</label>
+					<label class="btn btn-primary {if $goods['recommend']==0}active{/if}">
+						<input type="radio" name="data[recommend]" value="0" {if $goods['recommend']==0}checked{/if}> 不推荐
+					</label>
+				</div>
+			</div></td>
+		</tr>
+                        <tr>
+                            <td width="200">预计发货时间(天数：例：3天)</td>
+                            <td>
+                                <div class="col-md-4 col-sm-4">
+                                    <input type="text" name="data[shiping_time]" class="form-control"value="{$goods['shiping_time']}" />
+                                </div>
+                                <span class="help-block">1、在筹款结束后发货建议按照“筹款成功后X天”格式填写,在项目完成时判定项目是否成功，成功则选择发货，失败则退回筹款</br>2、为了兼顾急需资金的项目，可以一边筹款一边发货，在项目结束前可以选择修改目标金额使项目达成，建议按照“下单后X天”格式填写，以示区分</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="200">商品详情:</td>
+                            <td><div class="col-md-4"><?php echo create_html_editor('goods_desc', html_out($goods['goods_desc']));?></div></td>
+
+
+                        </tr>
+                        <!--          <tr>
+                                    <td width="200">正文:</td>
+                                    <td><div class="col-md-9"><?php echo create_html_editor('content', html_out($article['content']));?></div></td>
+                                  </tr>-->
+                        <tr>
+                            <td width="200">排序:</td>
+                            {if $goods['sort_order']}
+                            <td><div class="col-md-2">
+                                    <input type='text' name='data[sort_order]' value="{$goods['sort_order']}" class="form-control input-sm" />
+                                </div></td>
+                            {else}
+                            <td><div class="col-md-2">
+                                    <input type='text' name='data[sort_order]' value="10" class="form-control input-sm" />
+                                </div></td>
+                            {/if}
+                        </tr>
+                        {if $goods['status']!=0}
+                        <tr>
+                            <td width="200">项目结果:</td>
+                            <td><div class="col-md-4 btn-group" data-toggle="buttons">
+                                    <label class="btn btn-primary {if $goods[status] == 1}active{/if}">
+                                        <input type="radio" name="data[status]" value="1" {if $goods[status]== 1}checked{/if} />成功
+                                    </label>
+                                    <label class="btn btn-primary {if $goods[status] ==2}active{/if}">
+                                        <input type="radio" name="data[status]" value="2" {if $goods[status]== 2}checked{/if} />失败
+                                    </label>
+                                </div>
+                                <span class="help-block">可设置此项目“成功”则系统将此项目目标金额修改为当前筹款金额，项目成功</span>
+                            </td>
+                        </tr>
+                        {/if}
+                        <tr>
+                            <td width="200">商品相册：</td>
+                            <td>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        {loop $goods['gallery_img'] $key=>$img}
+                                          <div style="width:120px;height:120px; border:1px solid #eee">
+                                            <img src="{$img}" style='max-width:100%;max-height: 100%; vertical-align: middle;'>
+                                          </div>
+                                        {/loop}
+                                        <table class="table ectouch-table">
+                                            <tr>   
+                                                <td>
+                                                    <a href="javascript:;" class="glyphicon glyphicon-plus" onClick="addprize(this)"></a>   
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="200"></td>
+                            <td><div class="col-md-4">
+                                    <input type="hidden" name="data[goods_id]" value="{$goods['goods_id']}" />
+                                    <input type="hidden" name="data[is_verify]" value="1" />
+                                    {if $goods['goods_id']==0 }
+                                    <input type="hidden" name="data[status]" value="0" />
+                                    {/if}
+
+                                    <input type="hidden" name="data[total_price]" value="{$goods['total_price']}" />
+                                    <input type="submit" value="{$lang['button_submit']}" class="btn btn-primary" />
+                                    <input type="reset" value="{$lang['button_reset']}" class="btn btn-default" />
+                                </div></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/fancybox/jquery.fancybox.js?v=2.1.5"></script>
+<script src="__ASSETS__/js/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+                            //iframe显示
+                            $(function () {
+                                //弹出框
+                                $(".fancybox").fancybox({
+                                    title: '',
+                                    closeBtn: false,
+                                    width: '60%'
+                                });
+                            })
+                            //日历显示
+                            $("#starttime, #endtime").datetimepicker({
+                                lang: 'ch',
+                                format: 'Y-m-d H:i',
+                                timepicker: true
+                            });
+                            //添加相册
+                            function addprize(obj) {
+                                var html = '<tr><td class="text-center"><a href="javascript:;" class="glyphicon glyphicon-minus" onClick="delprize(this)"></a></td><td class="text-center"><input type="file" name="gallery_img[]" class="form-control" value=""></td></tr>';
+                                $(obj).parent().parent().parent().append(html);
+                            }
+                            //删除相册
+                            function delprize(obj) {
+                                $(obj).parent().parent().remove();
+                            }
+</script>
+{include file="pagefooter"}

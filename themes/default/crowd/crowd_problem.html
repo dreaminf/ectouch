@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>{$page_title}</title>
+
+		<!--字体图标库-->
+		<link rel="stylesheet" href="__TPL__/statics/fonts/iconfont.css">
+		<link rel="stylesheet" href="__TPL__/statics/css/swiper-3.2.5.min.css" />
+		<!--主样式-->
+		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
+
+	</head>
+
+	<body>
+		<div class="con am-left">
+			<div id="loading"><img src="__TPL__/statics/img/loading.gif" /></div>
+			<header class="dis-box header-menu b-raise color-whie">
+				<a class="" href="javascript:history.go(-1)"><i class="iconfont icon-jiantou"></i></a>
+				<h3 class="box-flex">常见问题</h3>
+				<p><i class="iconfont icon-pailie j-nav-box"></i></p>
+			</header>
+			<div class="j-nav-content">
+				<ul class="dis-box new-footer-box">
+					<li class="box-flex">
+						<a href="{:url('crowdfunding/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/zhongchou.png"></i><span>微筹广场</span></a>
+					</li>
+
+					<li class="box-flex">
+						<a href="{:url('mycrowd/crowd_order')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/zhongchou-order.png"></i><span>微筹订单</span></a>
+					</li>
+										<li class="box-flex">
+						<a href="{:url('mycrowd/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/raise_shop.png"></i><span>微筹中心</span></a>
+					</li>
+				</ul>
+			</div>
+			<section class="show-filter-div">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<div class="select-two raise-help-list m-top12">
+							<!--{foreach from=$data item = article}-->
+							<a class="select-title padding-all j-menu-select b-color-f position-rel">
+								<label class="fl raise-pro-cont">{$article.title}</label>
+								<span class="fr t-jiantou j-t-jiantou raise-pro-right" id="j-t-jiantou"><i class="iconfont icon-jiantou tf-90 ts-2"></i></span>
+							</a>
+							<ul class="j-sub-menu padding-all j-get-limit" data-istrue="true">
+								<li class="ect-select j-checkbox-all">
+									<p class="ts-1">{$article.description}</p>
+								</li>
+
+							</ul>
+							<!--{/foreach}-->
+
+						</div>
+					</div>
+			</section>
+			</div>
+			<!--引用js-->
+			<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
+			<!--script for this page only-->
+			<script type="text/javascript" src="__TPL__/statics/js/swiper.min.js"></script>
+			<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
+
+	</body>
+
+</html>

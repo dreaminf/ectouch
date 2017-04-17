@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>{$title}</title>
+		<link rel="stylesheet" href="__TPL__/team/css/ectouch.css" />
+	</head>
+
+	<body>
+		<div class="con cont-pb">
+			<div id="loading"><img src="__TPL__/team/images/loading.gif" /></div>
+			<!--{if $is_open eq 1}-->
+			<header class="dis-box index-fixed-box js-item-hidden" >
+				<div class="index-fixed-imgbox">
+					<div class="index-header-img item01"><img src="__TPL__/team/images/header.jpg" class="img"></div>
+				</div>
+				<div class="box-flex onelist-hidden">
+					<label><em class="col-9 item02" style="color:#fff">风**时</em><em class="item03"style="color:#fff">下单喽</em> <em class="col-9 item04">1秒前</em></label>
+				</div>
+			</header>
+			<!--{/if}-->
+			<div class="shopping-list j-shopping-list">
+				<div class="shopping-menu j-shopping-menu maxbox">
+					<div class="dis-box b-color-f">
+						<nav class="shopping-list-nav box-flex swiper-container-horizontal">
+							<ul class="swiper-wrapper">
+								<li class="div0 swiper-slide   swiper-slide-active" category="0"><a class="product-div-link" href= "{:url('index/index')}"></a>首页</li>
+								<!--{foreach from=$team_categories item =val key=key }-->	
+								<li class="div{$val.id} swiper-slide {if $id eq $val.id}active{/if} {if $key eq 0}swiper-slide-next{/if}" category="{$val.id}"><a class="product-div-link" href= "{$val.url}"></a>{$val.name}</li>
+								<!--{/foreach}-->
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+			<div class="swiper-wrapper">
+				<section class="swiper-slide">
+					<div class="index-box">
+						
+						<div class="index-banner swiper-container box position-rel banner-first">
+							<div class="swiper-wrapper m-45">
+								<!--广告位banner-->
+								{insert name='teads' num=5 tc_id=$id type='banner'}								
+							</div>
+							<!-- 分页器 -->
+							<div class="swiper-pagination banner-first-pagination"></div>
+						</div>
+
+						<!--nav-->
+						<nav class="b-color-f index-nav-box">
+							<ul class="ul-4 of-hidden">
+								<!--{foreach from=$team_child item =child}-->	
+								<li>
+									<a class="box-flex wallet-bt" href="{$child.url}">
+									<div class="cate-img">
+										<img src="{$child.tc_img}" class="img">
+										<p>{$child.name}</p>
+									</div>
+									</a>
+								</li>
+								<!--{/foreach}-->
+							</ul>
+						</nav>
+						<!--nav-end--->
+
+						<!--index-活动-list-->
+						<section class="index-activity m-top10">
+							<div class="dis-box m-top1px">
+								<!--广告位left-->
+								<div class="box-flex activity-list">
+								{insert name='teads' num=1 tc_id=$id type='left'}
+								</div>								
+								<div class="box-flex activity-list-1">
+									<!--广告位right-->
+									{insert name='teads' num=2 tc_id=$id type='right'}								
+								</div>
+							</div>
+						</section>
+						
+						<!--index-团购-list-->
+						<section class="index-group index-group-img position-rel m-top10">
+							<div class="position-rel">
+								<!--广告位bottom-->
+								{insert name='teads' num=1 tc_id=$id type='bottom'}								
+							</div>
+						</section>
+						<!---拼团-list--->
+						
+						<section>
+							<!--热买商品-->
+							<div id="J_ItemList">
+							<div class="single_item m-top10"></div>
+								<a href="javascript:;" style="text-align:center" class="get_more"></a>							
+							</div>
+						</section>
+					</div>
+				</section>
+			</div>
+
+			<!--footer-nav-->
+			<footer class="footer-nav dis-box">
+				<a href="{:url('index/index')}" class="box-flex nav-list active">
+					<i class="nav-box i-home"></i><span>首页</span>
+				</a>
+				<a href="{:url('category/top_all')}" class="box-flex nav-list">
+					<i class="nav-box i-cate"></i><span>分类</span>
+				</a>
+				<a href="{:url('category/user_ranking')}" class="box-flex nav-list">
+					<i class="nav-box i-ranking"></i><span>排行</span>
+				</a>
+				<a href="{:url('flow/cart')}" class="box-flex position-rel nav-list">
+					<i class="nav-box i-flow"></i><span>购物车</span>
+					<em class="position-abo ect-num-tag">10</em>
+				</a>
+				<a href="{:url('user/index')}" class="box-flex nav-list">
+					<i class="nav-box i-user"></i><span>用户中心</span>
+				</a>
+			</footer>
+			<!--搜索-->
+			<div class="search-div ts-3">
+				<section class="t-search-footer active">
+					<div class="user-address-search dis-box j-text-all">
+						<div class="box-flex">
+							<div class="user-search-input position-rel">
+								<i class="iconfont icon-search"></i>
+								<input class="j-input-text ts-5" name="name" type="text" placeholder="请输入搜索的商品" id="newinput" autofocus="autofocus">
+								<i class="iconfont icon-guanbi is-null j-is-null"></i>
+							</div>
+						</div>
+						<div class="user-right-search">
+							<div class="search-box b-color text-c"><button>搜索</button></div>
+						</div>
+					</div>
+				</section>
+				<section class="search-con">
+					<div class=" history-search ">
+						<p>
+							<label class="fl">热门搜索</label>
+						</p>
+						<ul class="hot-search a-text-more">
+							<li class="w-3">
+								<a><span class="onelist-hidden">水果</span></a>
+							</li>
+							<li class="w-3">
+								<a><span class="onelist-hidden">水果</span></a>
+							</li>
+							<li class="w-3">
+								<a><span class="onelist-hidden">水果</span></a>
+							</li>
+							<li class="w-3">
+								<a><span class="onelist-hidden">水果</span></a>
+							</li>
+							<li class="w-3">
+								<a><span class="onelist-hidden">水果</span></a>
+							</li>
+							<li class="w-3">
+								<a><span class="onelist-hidden">水果</span></a>
+							</li>
+						</ul>
+						<p class="hos-search">
+							<label class="fl">最近搜索</label>
+							<span class="fr"><i class="iconfont icon-shanchu"></i></span>
+						</p>
+						<div class="no-div-message">
+							<p>近期没有浏览记录</p>
+						</div>
+					</div>
+					<footer class="close-search j-close-search">
+						点击关闭
+					</footer>
+				</section>
+			</div>
+			<!--悬浮菜单s-->
+			<div class="filter-top" id="scrollUp">
+				<i class="iconfont icon-dingbu"></i>
+			</div>
+		</div>
+		<!--悬浮菜单e-->
+		<script type="text/javascript" src="__TPL__/team/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="__TPL__/team/js/jquery.js"></script>
+		<script type="text/javascript" src="__TPL__/team/js/swiper.min.js"></script>
+		<script type="text/javascript" src="__TPL__/team/js/ectouch.js"></script>
+		<!--下单提示轮播js-->
+		<script type="text/javascript" src="__TPL__/statics/js/jquery.SuperSlide.2.1.1.js"></script>
+		
+		<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/js/jquery.more.js"></script>
+		<script type="text/javascript" >var tpl = '__TPL__';</script>
+		<script type="text/javascript">
+			get_asynclist("{:url('index/tean_ajax_goods', array('type'=>'best','id'=>$this->_var['id']))}", '__TPL__/images/loader.gif');
+		</script>
+		<script type="text/javascript ">
+			//首页下单提示轮播
+			setInterval("virtual_order()",3000);
+			virtual_order();
+			function virtual_order(){
+				$.post("index.php?m=default&c=index&a=virtual_order", '', function(data){
+				if(data){
+					if(data.err_no > 0){
+						$(".js-item-hidden").hide();;
+					}else{
+						$('.item01 img').attr('src',data.avatar);//把src属性更改为'6.jpg';
+						$('.item02').text(data.name);
+						$('.item03').text('下单喽');
+						$('.item04').text(data.seconds);
+					}
+					
+					}
+				}, 'json');
+			}
+			
+			$(function($) {
+				var swiper = new Swiper('.index-new-list', {
+					pagination: '.swiper-pagination',
+					paginationClickable: true,
+					direction: 'vertical',
+					loop: true,
+					grabCursor: true,
+					autoplayDisableOnInteraction: false,
+					autoplay: 4000,
+					speed: 400,
+					freeMode: true,
+				});
+
+				var mySwiper = new Swiper('.banner-first', {
+					pagination: '.banner-first-pagination',
+					loop: false,
+					grabCursor: true,
+					paginationClickable: true,
+					autoplayDisableOnInteraction: false,
+					loop: true,
+					autoplay: 3000
+				});
+			});
+			//滚动-nav
+			var swiper_nav = new Swiper('.shopping-list-nav', {
+				scrollbarHide: true,
+				slidesPerView: 'auto',
+				centeredSlides: false,
+				grabCursor: true
+			});
+			$('.shopping-list-nav li').on('click', function(e) {
+				var category = $(this).attr('category');
+				var index = $(".shopping-list-nav li").index(this);
+				$(this).siblings().removeClass("active");
+				$('.shopping-abs .swiper-slide a').removeClass("active");
+
+				$(".div" + category).addClass("active");
+
+				swiper_nav.slideTo(index, 1000, false); //切换到第一个slide，速度为1秒
+
+				infinite.onload('where=' + category + '&type=1');
+				var swiper = new Swiper('.j-g-s-p-con', {
+					scrollbarHide: true,
+					slidesPerView: 'auto',
+					centeredSlides: false,
+					grabCursor: true
+
+				});
+			})
+		</script>
+	</body>
+
+</html>

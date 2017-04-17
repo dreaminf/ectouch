@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="utf-8">
+		<title>微筹广场</title>
+		<!--字体图标库-->
+		<link rel="stylesheet" href="__TPL__/statics/fonts/iconfont.css">
+		<link rel="stylesheet" href="__TPL__/statics/css/swiper-3.2.5.min.css" />
+		<!--主样式-->
+		<link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" />
+	</head>
+
+	<body class="">
+		<div class="con m-b7">
+			<div id="loading"><img src="__TPL__/statics/img/loading.gif" /></div>
+			<div class="category">
+				<div class="category-header-box active">
+					<section class="search">
+						<div class="text-all dis-box j-text-all text-all-back">
+							<div class="box-flex input-text n-input-text i-search-input">
+								<a class="a-search-input j-search-input" href="javascript:void(0)"></a>
+								<i class="iconfont icon-sousuo"></i>
+								<input class="j-input-text" type="text" placeholder="项目搜索" />
+								<i class="iconfont icon-guanbi is-null j-is-null"></i>
+							</div>
+
+						</div>
+					</section>
+					<section class="product-sequence">
+						<ul class="raise-cate-nav dis-box">
+							<li class="box-flex" class="current">综合排序<i class="iconfont icon-xiajiantou"></i></li>
+							<li class="box-flex">全部商品<i class="iconfont icon-xiajiantou"></i></li>
+							<a class="a-sequence j-a-sequence"><i class="iconfont icon-viewlist" data="2"></i></a>
+						</ul>
+						<div class="raise-cate-maxbox">
+							<div class="raise-content">
+								<ul class="raise-list-box">
+
+									<div class="catalog-nav-box select-one j-all-raise">
+										<div class="j-get-one padding-all of-hidden">
+											<li class="ect-select-raise w-3 rsise-nav">
+												<a href="{:url('crowdfunding/index',array('type'=>''))}"><label class="ts-1 <!--{if $type eq ''}-->active<!--{/if}-->">综合排序</label></a>
+											</li>
+											<li class="ect-select-raise w-3 rsise-nav">
+												<a href="{:url('crowdfunding/index',array('type'=>'new','id'=> $this->_var['id']))}"><label class="ts-1 <!--{if $type eq 'new'}-->active<!--{/if}-->">最新上线{$id}</label></a>
+											</li>
+											<li class="ect-select-raise w-3 rsise-nav">
+												<a href="{:url('crowdfunding/index',array('type'=>'sum_price','id'=>  $this->_var['id']))}"><label class="ts-1 <!--{if $type eq 'sum_price'}-->active<!--{/if}-->">金额最多</label></a>
+											</li>
+											<li class="ect-select-raise w-3  rsise-nav">
+												<a href="{:url('crowdfunding/index',array('type'=>'buy_num','id'=>  $this->_var['id']))}"><label class="ts-1 <!--{if $type eq 'buy_num'}-->active<!--{/if}-->">支持最多</label></a>
+											</li>
+											<li class="ect-select-raise w-3  rsise-nav">
+												<a href="{:url('crowdfunding/index',array('type'=>'end','id'=>  $this->_var['id']))}"><label class="ts-1 <!--{if $type eq 'end'}-->active<!--{/if}-->">即将结束</label></a>
+											</li>										
+										</div>
+							
+									</div>
+												<div class="ect-button-more raise-button dis-box">
+									<i class="iconfont icon-Collapse j-text-all"></i>			
+								</div>
+								</ul>
+								<ul class="raise-list-box">
+									<div class="catalog-nav-box select-one j-cate-raise">
+										<div class="j-get-one padding-all of-hidden">
+											<li class="ect-select-raise w-3 rsise-nav">
+												<a href="{:url('crowdfunding/index',array('id'=>0))}"><label class="ts-1 <!--{if $id eq ''}-->active<!--{/if}-->">全部商品</label></a>
+											</li>
+											<!--{foreach from=$category item=vo}-->
+
+											<li class="ect-select-raise w-3 rsise-nav">
+												<a href="{:url('crowdfunding/index',array('id'=>$this->_var['vo']['id'],'type'=>$this->_var['vo']['type']))}"><label class="ts-1 <!--{if $vo.id eq $id}-->active<!--{/if}-->">{$vo.name}</label></a>
+											</li>
+											<!--{/foreach}-->											
+										</div>										
+									</div>
+									<div class="ect-button-more raise-button dis-box">
+									<i class="iconfont icon-Collapse j-text-all"></i>			
+								</div>
+								</ul>
+							</div>
+						</div>
+					</section>
+
+				</div>
+				<section class="product-list j-product-list product-list-small position-rel" data="2">
+					<ul class="of-hidden" id="j-product-box">
+						
+						<script id="j-product" type="text/html">
+						<%each list as vo %>
+						<li>
+							<div class="product-div position-rel b-s">
+								<a class="product-div-link" href="<%vo.url%>"></a>
+								<img class="product-list-img" src="<%vo.goods_img%>" />
+								<div class="product-text raise-category">
+									<h4><%vo.goods_name%></h4>
+									<p class="col-9 f-03 raise-category-num">支持人<em class="raise-col"><%vo.buy_num%></em><em class="col-9 f-02">人</em><em class="fr col-9"><i class="iconfont icon-shijian f-02"></i> <%vo.start_time%></em></p>
+									<div class="raise-progressBar dis-box">
+										<p class="wrap box-flex">
+											<span class="bar" style="width:<%vo.bar%>%;"><i class="color"></i></span>
+										</p>
+										<p class="txt"><%vo.bar%>%</p>
+									</div>
+									<ul class="index-n-box of-hidden">
+										<li class="col-9 f-03 onelist-hidden">已筹：<em class="raise-col mr-small"><% if vo.total_price %>￥<%vo.total_price%><% else %>￥0.00 <%/if %></em><em class="col-9 f-02"></em><em class="col-9 m-l-05"></li>
+										<li class="col-9 f-03 onelist-hidden">目标：<em class="raise-col">￥<%vo.sum_price%></em></em></li>
+									</ul;>
+								</div>
+								<div class="raise-cate-tag"><i class="iconfont icon-geren"></i><%vo.buy_num%></div>
+							</div>
+						</li>
+						<%/each%>
+						</script>
+					
+					</ul>
+					
+
+				</section>
+
+			</div>
+		</div>
+		<div class="search-div j-search-div ts-3">
+			<section class="search raise-search">
+				<form action="{:url('crowdfunding/index')}" method="post">
+					<div class="text-all dis-box j-text-all">
+						<div class="box-flex input-text">
+							<input class="j-input-text" type="text" id="keywordBox" name="keywords" placeholder="项目搜索" />
+							<i class="iconfont icon-guanbi2 is-null j-is-null"></i>
+						</div>
+						<a type="button" onclick="return check('keywordBox')" class="btn-submit btn-submit-raise">搜索</a>
+					</div>
+				</form>
+			</section>
+			<section class="search-con">
+				<div class="history-search">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">							
+							<p class="hos-search">
+								<label class="fl">最近搜索</label>
+								<span class="fr" onclick="javascript:clearHistroy();"><i class="iconfont icon-xiao10 j-detail-close"></i></span>
+							</p>
+
+							<ul class="hot-search a-text-more a-text-one raise-search-cont">
+							<!-- {foreach from=$zcsearch_histroy item=keyword} -->
+								<li>
+									<a href="{:url('category/index', array('keywords'=>$this->_var[keyword]))}"><span>{$keyword}</span></a>
+								</li>
+							<!-- {/foreach} -->	
+								
+
+							</ul>
+						</div>
+					</div>
+					<div class="swiper-scrollbar"></div>
+				</div>
+			</section>
+			<footer class="close-search j-close-search">
+				点击关闭
+			</footer>
+		</div>
+		<footer class="footer-nav footer-nav-raise dis-box">
+			<a href="{:url('index/index')}" class="box-flex nav-list">
+					<i class="nav-box i-home"></i><span>首页</span>
+				</a>
+			<a href="{:url('crowdfunding/index')}" class="box-flex nav-list active">
+				<i class="nav-box i-zhongchou"></i><span>微筹广场</span>
+			</a>
+			<a href="{:url('mycrowd/crowd_order')}" class="box-flex position-rel nav-list">
+				<i class="nav-box i-zhongchou-order"></i><span>微筹订单</span>
+			</a>
+			<a href="{:url('mycrowd/index')}" class="box-flex position-rel nav-list">
+				<i class="nav-box i-zhongchou_user"></i><span>微筹中心</span>
+			</a>	
+		</footer>
+		<div class="raise-bg-box active ts-3"></div>
+		<!--引用js-->
+		<script type="text/javascript" src="__TPL__/statics/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/swiper.min.js"></script>
+		<script type="text/javascript" src="__TPL__/statics/js/ectouch.js"></script>
+		
+		<!-- <script type="text/javascript" src="__PUBLIC__/js/common.js"></script> -->
+		<script type="text/javascript" src="__TPL__/statics/js/echo.min.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/js/template.js"></script>
+		<script type="text/javascript">
+			
+			var url = '{:url('crowdfunding/async_list', array('id'=>$this->_var['id'], 'type'=>$this->_var['type'], 'keywords'=>$this->_var['keywords']))}';
+			var total = 0;
+			
+			var page = {$page};
+
+			page = (page === null) ? 1:parseInt(page);
+			
+			get_data(page);
+			localData.set('page', page);
+			if(page == 1){
+				localData.set('page_min', 1);
+				localData.set('page_max', 1);
+			}
+			if(page > 1){
+				localData.set('page_min', page);
+				localData.set('page_max', page);
+			}
+			var minPage = localData.get('page_max');
+			var maxPage = localData.get('page_max');
+			minPage = (minPage === null) ? 1:parseInt(minPage);
+			maxPage = (maxPage === null) ? 1:parseInt(maxPage);
+
+			$(window).scroll(function () {
+				var scrollTop = $(this).scrollTop();
+				var scrollHeight = $(document).height();
+				var windowHeight = $(this).height();
+				
+				// 下拉
+				if (scrollTop + windowHeight == scrollHeight) {
+					if(page >= maxPage){
+						$.ajax({
+							type : "post",
+							url : url,
+							//', array('id'=>$this->_var['id'], 'type'=>$this->_var['type'], 'page'=>$this->_var['page'], 'keywords'=>$this->_var['keywords'])
+							//data : 'page=' + (page + 1),
+							data : {
+							    page : page+1,
+							},
+							dataType: 'json',
+							async : false,
+							success : function(data){
+								//template.config('openTag', '<%');
+								//template.config('closeTag', '%>');
+								var html = template('j-product', data);
+								$('#j-product-box').append(html);
+								//rug
+								if(!isEmpty(data.list)){
+									page++;
+									localData.set('page', page);
+									if(page > maxPage){
+										localData.set('page_max', page);
+									}
+								}
+							}
+						});
+					}
+				}
+				// 上拉
+				if(scrollTop == 0 && minPage > 1){
+					$.ajax({
+						type : "post",
+						url : url,
+						data : 'page=' + (page - 1),
+						dataType: 'json',
+						async : false,
+						success : function(data){
+							//template.config('openTag', '<%');
+							//template.config('closeTag', '%>');
+							var html = template('j-product', data);
+							$('#j-product-box').prepend(html);
+							page--;
+							localData.set('page', page);
+							if(page < minPage){
+								localData.set('page_min', page);
+							}
+						}
+					});
+				}
+			});
+
+			function get_data(page){
+				$.ajax({
+					type : "post",
+					url : url,
+					//data : 'page=' + page,
+					data : {
+						page : 1,
+					},
+					dataType: 'json',
+					async : false,
+					success : function(data){
+						template.config('openTag', '<%');
+                        template.config('closeTag', '%>');
+						var html = template('j-product', data);
+						//alert(html);
+						$('#j-product-box').append(html);
+					}
+				});
+			}
+			/*
+			   * 检测对象是否是空对象(不包含任何可读属性)。
+			   * 方法既检测对象本身的属性，也检测从原型继承的属性(因此没有使hasOwnProperty)。
+			   */
+		   function isEmpty(obj) {
+			   for (var name in obj) {
+				   return false;
+			   }
+			   return true;
+		   }
+		  echo.init();
+	
+			$(function($) {
+				$(".j-detail-close").click(function(){
+					$(".raise-search-cont").addClass("active");
+				})
+				//nav
+				window.onload = function() {
+					var $li = $('.raise-cate-nav li');
+					var $ul = $('.raise-content ul');
+
+					$li.click(function() {
+						var $this = $(this);
+						var $t = $this.index();
+						$li.removeClass();
+						$this.addClass('current');
+						$ul.css('display', 'none');
+						$ul.eq($t).css('display', 'block');
+					})
+				}
+				$(".j-text-all,.raise-bg-box").click(function() {
+					$(".raise-content").addClass("active");
+					$(".raise-bg-box").addClass("active");
+					$(".category-header-box").addClass("active");
+				});
+				$(".raise-cate-nav li").click(function() {
+					$(".raise-content").removeClass("active");
+					$(".raise-bg-box").removeClass("active");
+					$(".category-header-box").removeClass("active");
+				});
+			});
+			/* 搜索验证 */
+			function check(Id) {
+				var strings = document.getElementById(Id).value;
+				if(strings.replace(/(^\s*)|(\s*$)/g, "").length == 0) {
+					alert('请输入搜索内容');
+					return false;
+				}
+				$("form").submit();
+				return true;
+			}
+			
+			/* 清空搜索记录 */
+			function clearHistroy(){
+				$.get('{:url("crowdfunding/clear_history")}', {
+				}, function(data) {
+					if(data.status ==0){
+						alert('删除失败')
+					}else{
+						
+					}
+				}, 'json');				
+			}
+		</script>
+	</body>
+
+</html>
