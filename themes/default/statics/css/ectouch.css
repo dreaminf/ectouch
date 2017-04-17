@@ -2647,7 +2647,21 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 .footer-nav .nav-camera{background:url(../img/icon/nav.png) no-repeat;width:4.35rem;height:4.36rem;display: block;margin: 0 auto; background-size: 29.6rem;}
 .footer-nav .icon-camera{background-position: -0.46rem -12.05rem;}
 .footer-nav .icon-camera .icon-xiangji{font-size:2.6rem;line-height:4.6rem;}
-
+/*分类下面导航栏*/
+    .footer-nav .nav-list_new{font-size:1.3rem;display:block;text-align:center;padding-top:0rem;color:#595959}
+    .footer-nav .nav-list_new .nav-box{background:url(../img/icon/nav_new.png) no-repeat;width:2.8rem;height:2.8rem;display: block;margin: 0 auto; background-size: 14rem;}
+    .footer-nav .nav-list_new .i-home{background-position: 0rem .1rem;}
+    .footer-nav .nav-list_new .i-cate{background-position: -2.7rem .1rem;}
+    .footer-nav .nav-list_new .i-ranking{background-position: -5.7rem .1rem;}
+    .footer-nav .nav-list_new .i-flow{background-position: -8.4rem .1rem;}
+    .footer-nav .nav-list_new .i-user{background-position: -11.2rem .1rem;}
+    .footer-nav .nav-list_new.active{color:#fe3939}
+    .footer-nav .nav-list_new.active .i-home{background-position: 0rem -3rem;}
+    .footer-nav .nav-list_new.active .i-cate{background-position: -2.7rem -3rem;}
+    .footer-nav .nav-list_new.active .i-ranking{background-position: -5.7rem -3rem;}
+    .footer-nav .nav-list_new.active .i-flow{background-position: -8.4rem -3rem;}
+    .footer-nav .nav-list_new.active .i-user{background-position: -11.2rem -3rem;}
+/*flow-footer*/
 .flow-footer{position:static;}
 .folw-fixed-footer{position:fixed;bottom:0;left: 0;right: 0;}
 .raise-bg-box{background:rgba(0,0,0,0.3);position:fixed;bottom:0;left:0;right:0;top:0;z-index: 122;visibility: visible;opacity: 1;}

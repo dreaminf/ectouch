@@ -38,20 +38,20 @@
 </div>
 <!--footer-nav-->
 			<footer class="footer-nav dis-box">
-			<a href="{:url('index/index')}" class="box-flex nav-list">
+			<a href="{:url('index/index')}" class="box-flex nav-list_new">
 				<i class="nav-box i-home"></i><span>首页</span>
 			</a>
-			<a href="{:url('category/top_all')}" class="box-flex nav-list active">
+			<a href="{:url('category/top_all')}" class="box-flex nav-list_new active">
 				<i class="nav-box i-cate"></i><span>分类</span>
 			</a>
-			<a href="{:url('category/user_ranking')}" class="box-flex nav-list">
+			<a href="{:url('category/user_ranking')}" class="box-flex nav-list_new">
 				<i class="nav-box i-ranking"></i><span>排行</span>
 			</a>
-			<a href="{:url('flow/cart')}" class="box-flex position-rel nav-list">
+			<a href="{:url('flow/cart')}" class="box-flex position-rel nav-list_new">
 				<i class="nav-box i-flow"></i><span>购物车</span>
 				<!--<em class="position-abo ect-num-tag">10</em>-->
 			</a>
-			<a href="{:url('user/index')}" class="box-flex nav-list">
+			<a href="{:url('user/index')}" class="box-flex nav-list_new">
 				<i class="nav-box i-user"></i><span>用户中心</span>
 			</a>
 		</footer>
