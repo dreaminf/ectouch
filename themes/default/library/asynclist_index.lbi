@@ -34,7 +34,7 @@
   		<img class="lazy" src="{$fx_goods.goods_img}" alt="{$fx_goods.name}">
   </a>
   <a href="{$goods.url}"><h4>{$fx_goods.name}</h4></a>
-  <p><span><!--{if $fx_goods.promote_price}-->￥{$fx_goods.promote_price}<!--{else}-->￥{$fx_goods.shop_price}<!--{/if}--></span></p>
+  <p><span><!--{if $fx_goods.promote_price}-->￥{$fx_goods.promote_price}元<!--{else}-->￥{$fx_goods.shop_price}元<!--{/if}--></span></p>
   </div>
 </li>
 <!-- {/if}--> 
