@@ -438,7 +438,7 @@ ALTER TABLE `ecs_favourable_activity` ADD COLUMN `touch_img` VARCHAR (50)  DEFAU
 --
 
 CREATE TABLE IF NOT EXISTS `ecs_crowd_article` (
-  `article_id` mediumint(8) NOT NULL COMMENT 'id号',
+  `article_id` mediumint(8) NOT NULL AUTO_INCREMENT COMMENT 'id号',
   `title` varchar(120) NOT NULL COMMENT '标题',
   `description` text COMMENT '评论内容',
   `add_time` int(10) DEFAULT NULL COMMENT '添加时间',
@@ -462,7 +462,7 @@ INSERT INTO `ecs_crowd_article` (`article_id`, `title`, `description`, `add_time
 --
 
 CREATE TABLE IF NOT EXISTS `ecs_crowd_category` (
-  `cat_id` mediumint(5) NOT NULL COMMENT '众筹分类id',
+  `cat_id` mediumint(5) NOT NULL AUTO_INCREMENT COMMENT '众筹分类id',
   `cat_name` varchar(90) DEFAULT NULL COMMENT '分类名称',
   `cat_desc` varchar(255) DEFAULT NULL COMMENT '分类描述',
   `parent_id` mediumint(5) NOT NULL DEFAULT '0' COMMENT '父分类id',
@@ -486,7 +486,7 @@ INSERT INTO `ecs_crowd_category` (`cat_id`, `cat_name`, `cat_desc`, `parent_id`,
 --
 
 CREATE TABLE IF NOT EXISTS `ecs_crowd_comment` (
-  `id` mediumint(8) NOT NULL COMMENT '评论id号',
+  `id` mediumint(8) NOT NULL AUTO_INCREMENT COMMENT '评论id号',
   `parent_id` mediumint(8) NOT NULL DEFAULT '0' COMMENT '父级id',
   `user_id` mediumint(8) NOT NULL COMMENT '会员id',
   `user_name` varchar(120) NOT NULL COMMENT '会员名称',

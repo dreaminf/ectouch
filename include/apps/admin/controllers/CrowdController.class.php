@@ -779,8 +779,8 @@ class CrowdController extends AdminController {
     public function message_info() {
         $id = I('get.id', '', 'intval');
         $message_info = $this->model->table('crowd_comment')->where(array('id' => $id))->find();
-        $message_info['add_time'] = date('Y-m-d H:i:s', $message_info['add_time']);
-        $message_info['reply_time'] = date('Y-m-d H:i:s', $message_info['reply_time']);
+        $message_info['add_time'] = $message_info['add_time'] ? date('Y-m-d H:i:s', $message_info['add_time']) : 0;
+        $message_info['reply_time'] = $message_info['reply_time'] ? date('Y-m-d H:i:s', $message_info['reply_time']) : 0;
 		$message_info['goods_name'] = $this->get_goods_name($message_info['goods_id']);
         $this->assign('message_info', $message_info);
         $this->display();
