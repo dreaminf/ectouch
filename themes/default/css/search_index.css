@@ -38,7 +38,7 @@ header{line-height:2rem}
 .attention-text{padding-top:0.6rem;}
 .attention-img {width: 4rem;}
 .attention-button{width:6rem;padding-top:0.88rem;} 
-.attention-button .button{  border: 0px;background: #05af10; width: 6rem; height: 2.5rem; border-radius: 5px;color: #fff;font-size:1.2rem} 
+.attention-button .button{  border: 0px;background: #fe3939; width: 6rem; height: 2.5rem; border-radius: 5px;color: #fff;font-size:1.2rem} 
 .index-max-box{position: fixed;z-index: 1000;top: 0;width: 100%; max-width: 640px;min-width: 320px;}
 .index-header{position:relative;}
 
@@ -116,7 +116,7 @@ header{line-height:2rem}
     .ect-index-menu ul li a h3{
         height: 1.6875rem;
         font-size: 1.8rem;
-        color: #1CBB7F;
+        color: #fe3939;
         line-height: 1.8rem;
         text-align: center;
     }

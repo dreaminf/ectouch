@@ -2687,7 +2687,7 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 .btn-submit-raise:hover {border:1px solid #fe3939;background:#fe3939;}/*主提交按钮按下颜色*/
 .raise-cate-nav li.current {color:#fe3939;outline:none;}
 .goods-fixed-raise{position:fixed;top:0;z-index:199;width:100%;max-width:640px;background:rgba(255,255,255,0);}
-.goods-fixed-raise.active{background:rgba(255,103,0,0.96);box-shadow: 1px 0px 4px rgba(50,50,50,0.3);}
+.goods-fixed-raise.active{background:rgba(254,57,57,0.96);box-shadow: 1px 0px 4px rgba(50,50,50,0.3);}
 .goods-header-nav-box-raise li a{color:rgba(255,255,255,0.8);display:block;}	
 .goods-header-nav-box-raise li a.hover{color:#fff;border-bottom:1px solid #fff;}
 .tab-title-raise.active,.tab-title-raise.active a{color:#fe3939}
@@ -2905,3 +2905,6 @@ h5.title-hrbg {font-size: 1.3rem;position: relative; z-index:1; height: 4rem;lin
 h5.title-hrbg span {background: #e7e8ef;padding: 1rem .6rem;font-size: 1.5rem; z-index: 10;}
 h5.title-hrbg hr {background: #CCCBD9;height: 1px;border: 0;position: absolute;left: 0;right: 0;top: 50%;margin-top: 1px;z-index: -1;}
 .n-cate-box-1 .icon-biaoqingleiben{font-size:8rem;text-align: center;color:#999;display:block;padding:3rem 0 .6rem 0}
+
+.raise-button .icon-Collapse{text-align: center;display:block;width: 100%;color:#999;}
+.raise-cate-nav a .icon-viewlist{font-size:1.6rem;}
