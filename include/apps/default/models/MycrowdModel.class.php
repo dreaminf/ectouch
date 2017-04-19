@@ -688,6 +688,17 @@ class MycrowdModel extends BaseModel {
             }
         }
     }
+    function check_order($goods_id,$cp_id,$number){
+        $condition['goods_id'] = $goods_id;
+        $condition['cp_id'] = $cp_id;
+        $goods = $this->model->table('crowd_plan')->field('number ,backey_num')->where($condition)->find();
+        $surplus_num = $goods['number'] - $goods['backey_num'];
+        $number1 = intval($number);
+        if($number1 > $surplus_num){
+            crowd_show_message('已超出计划销售数量', '去选购', url('crowdfunding/goods_info',array('id'=>$_SESSION['goods_id'])), 'info');
+            exit;
+        }
+    }
 
 
 

@@ -56,14 +56,8 @@ class CrowdflowController extends CommonController {
         }
 		
 		//验证购买方案是否超出
-		$condition['goods_id'] = $_SESSION['goods_id'];
-		$condition['cp_id'] = $_SESSION['cp_id'];
-		$goods = $this->model->table('crowd_plan')->field('number ,backey_num')->where($condition)->find();
-		$surplus_num = $goods['number'] - $goods['backey_num'];
-		if($_SESSION['number'] > $surplus_num){
-			crowd_show_message('已超出计划销售数量', '去选购', url('crowdfunding/goods_info',array('id'=>$_SESSION['goods_id'])), 'info');
-		}
-		
+        model('Mycrowd')->check_order($_SESSION['goods_id'],$_SESSION['cp_id'],$_SESSION['number']);
+					
         // 获取收货人信息
         $consignee = model('Order')->get_consignee($_SESSION ['user_id']);
         /* 检查收货人信息是否完整 */
@@ -473,6 +467,8 @@ class CrowdflowController extends CommonController {
             /* 用户没有登录且没有选定匿名购物，转向到登录页面 */
             ecs_header("Location: " . url('user/login') . "\n");
         }
+        //验证购买方案是否超出
+        model('Mycrowd')->check_order($_SESSION['goods_id'],$_SESSION['cp_id'],$_SESSION['number']);
 		
 		/*判断重复商品订单 是否支付 */		
 		$condition = "user_id = '".$_SESSION[user_id]."' AND goods_id = '".$_SESSION['goods_id']."' AND cp_id = '".$_SESSION['cp_id']."' AND pay_status = 0 and order_status !=2 ";
