@@ -1330,7 +1330,12 @@ function mb_unserialize($serial_str) {
 //ASC
 function asc_unserialize($serial_str) {
     $serial_str = str_replace("\r", "", $serial_str);
-    $serial_str = preg_replace('!s:(\d+):"(.*?)";!se', '"s:".strlen("$2").":\"$2\";"', $serial_str );
+                //preg_replace('!s:(\d+):"(.*?)";!se', '"s:".strlen("$2").":\"$2\";"', $serial_str );
+    $serial_str = preg_replace_callback('/s:\d+:"(.+?)";/s',
+        function($r) {
+            $n = strlen($r[1]);
+            return "s:$n:\"$r[1]\";";
+        }, $serial_str);
     return unserialize($serial_str);
 }
 
