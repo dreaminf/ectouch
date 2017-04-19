@@ -219,11 +219,11 @@ class CrowdfundingController extends CommonController {
 			if($number > $surplus_num){
 				$res ['err_msg'] = '已超出计划销售数量';
 				$res ['number'] = $surplus_num;
-				$res ['result'] = price_format($goods['shop_price']);
+				$res ['result'] = price_format($goods['shop_price'] * $surplus_num);
 				$res ['err_no'] = 1;
-
-			}
-            $res ['result'] = price_format($goods['shop_price'] * $number);
+			}else{
+				$res ['result'] = price_format($goods['shop_price'] * $number);
+			}  
         }
         die(json_encode($res));
 	}
