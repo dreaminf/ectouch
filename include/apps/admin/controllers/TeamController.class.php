@@ -38,15 +38,12 @@ class TeamController extends AdminController {
 
     //添加
     public function add() {
-        if (IS_POST) {            
+        if (IS_POST) {                  
             $data = I('post.data');
-            $parent_id1 = I('post.parent_id1');
-            //修改时分类不能选择自己成为顶级分类
-            if($data['parent_id'] == $data['id']){
-                  $this->message("所选择的上级分类不能是当前分类或者当前分类的下级分类!", url('team/add' ,array('id' => $data['id'])));  
-            }
+            $cat_id1 = $this->model->table('team_category')->field('parent_id')->where(array('id' => $data[parent_id]))->find();
+            $cat_id2 = $this->model->table('team_category')->field('parent_id')->where(array('id' => $data[id]))->find();
             //修改时顶级分类不能成为二级分类
-            if(!empty($data['id']) && $parent_id1 == 0){
+            if($cat_id2['parent_id'] == $cat_id1['parent_id']){
                   $this->message("当前分类是顶级分类,不能修改为下级分类", url('team/add' ,array('id' => $data['id'])));  
             }
             if (empty($data['name'])) {
