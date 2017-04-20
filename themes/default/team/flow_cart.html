@@ -53,6 +53,9 @@
 														<input type="hidden" id="back_number{$goods.rec_id}" value="{$goods.goods_number}" />
 														<input class="box-flex" type="number" name="{$goods.rec_id}" id="goods_number{$goods.rec_id}" value="{$goods.goods_number}" onblur="change_goods_number('2',{$goods.rec_id})">
 														<a class="num-plus" onClick="change_goods_number('3',{$goods.rec_id})"></a>
+												</div>
+												<div class="pull-right">
+													<a onclick="delete_goods('{$goods.rec_id}')"><img class="n-shanchutupian" src=__TPL__/images/iconfont-xiao1.png style="width:1.5rem;height:1.5rem;margin-right:0.5rem;margin-top:0.5rem;float: right;"></a>
 												</div>								
 										
 										</div>
@@ -262,6 +265,20 @@
 						location.href = 'index.php?c=flow&a=cart';						
 					}
 			}});
+		}
+		function delete_goods(id){
+			$.ajax({
+				type:"POST",
+				url:"index.php?m=default&c=flow&a=drop_goods",
+				data:{rec_id:id},
+				dataType:"json",
+				success:function(data){
+					if(data.error == 1){
+						location.href = 'index.php?c=flow&a=cart';
+					}
+				}
+			})
+
 		}
 		
 		//验证是否选中商品
