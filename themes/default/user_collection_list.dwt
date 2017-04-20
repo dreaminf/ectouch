@@ -108,7 +108,7 @@
 									<div class="s-but ">{$lang.attention}</div>
 								</a> -->
 								<!-- {/if} -->
-								<a class="n-margin-del box-flex" href=""><i class="iconfont icon-xiao10 fr"></i></a>
+								<a class="n-margin-del box-flex" href="javascript:if(confirm('{$lang.remove_collection_confirm}')) location.href='{:url('delete_collection', array('rec_id'=>$this->_var['val']['rec_id']))}'"><i class="iconfont icon-xiao10 fr"></i></a>
 							</div>
 
 					</div>
