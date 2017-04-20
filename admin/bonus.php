@@ -375,9 +375,11 @@ if ($_REQUEST['act'] == 'send')
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'send_by_user')
 {
+    $sql = 'SELECT COUNT(user_id) FROM ' . $ecs->table('users'). "";
+    $usernum = $db->getOne($sql);
     $user_list  = array();
     $start      = empty($_REQUEST['start']) ? 0 : intval($_REQUEST['start']);
-    $limit      = empty($_REQUEST['limit']) ? 10 : intval($_REQUEST['limit']);
+    $limit      = empty($_REQUEST['limit']) ? $usernum : intval($_REQUEST['limit']);
     $validated_email = empty($_REQUEST['validated_email']) ? 0 : intval($_REQUEST['validated_email']);
     $send_count = 0;
 
