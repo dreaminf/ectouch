@@ -186,8 +186,8 @@ $modules['12_menu_wechat']['11_wechat_customer'] = '../index.php?m=admin&c=wecha
 $modules['13_menu_team']['01_team_index'] = '../index.php?m=admin&c=team';
 $modules['13_menu_team']['02_team_add'] = '../index.php?m=admin&c=team&a=add';
 $modules['13_menu_team']['03_team_order'] = '../index.php?m=admin&c=teamorder';
-$modules['15_menu_crowd']['01_crowd_category_list'] = '../index.php?m=admin&c=crowd&a=category_list';
-$modules['15_menu_crowd']['02_crowd'] =  '../index.php?m=admin&c=crowd&a=index';
+$modules['15_menu_crowd']['01_crowd'] = '../index.php?m=admin&c=crowd&a=index';
+$modules['15_menu_crowd']['02_crowd_category_list'] =  '../index.php?m=admin&c=crowd&a=category_list';
 $modules['15_menu_crowd']['03_crowd_order_list'] = '../index.php?m=admin&c=crowd&a=order_list';
 $modules['15_menu_crowd']['04_crowd_message_list'] = '../index.php?m=admin&c=crowd&a=message_list';
 $modules['15_menu_crowd']['05_crowd_article_list'] = '../index.php?m=admin&c=crowd&a=article_list';
