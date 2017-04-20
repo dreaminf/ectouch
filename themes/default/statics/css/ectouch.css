@@ -193,6 +193,7 @@ body{position:relative}
 .m-top10{margin-top:1rem;}
 .m-top12{margin-top:1.3rem;}
 .m-top1px{margin-top:1px;}
+.p-l{padding-left:.8rem }
 .margin-lr {margin: 0 1.3rem;}
 .mt-22{margin-top: 2.2rem;}
 .padding-lr {padding: 0 1.3rem; box-sizing: content-box;}
@@ -269,7 +270,7 @@ label.admin-text{color:#999;}
 .btn-reset,
 .btn-default,
 .btn-alipay,
-.btn-wechat{font-size: 1.7rem;color: #fff;border: 0;text-align: center;padding: .84rem 0;border-radius: 4px;width: 100%;}
+.btn-wechat{font-size: 1.7rem;color: #fff;border: 0;text-align: center;padding: .84rem 0;width: 100%;}
 a.btn-submit2{color:#fe3939;}
 a.btn-submit,
 a.btn-disab,
@@ -768,7 +769,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .goods-evaluation-page .g-e-p-pic li:last-of-type{margin-right:0;}
 .goods-evaluation-page .g-e-p-pic img{width:100%;}
 /*悬浮btn*/
-.filter-btn{max-width: 640px;margin: 0 auto;position: fixed; width:100%; left:0; right:0; bottom:0; box-sizing: border-box; padding:.8rem; z-index: 6; background:#fafafc; border-top:1px solid #efefef;}
+.filter-btn{max-width: 640px;margin: 0 auto;position: fixed; width:100%; left:0; right:0; bottom:0; box-sizing: border-box; z-index: 6; background:#fafafc; border-top:1px solid #efefef;}
 
 .filter-btn .filter-btn-a{padding:0 .4rem;  display: block; text-align: center; position: relative;}
 .filter-btn .filter-btn-a i{font-size:2.2rem; color:#777; display:block; color:#636363}
@@ -2882,7 +2883,7 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 a.btn-bf,a.btn-bf{color:#555;}
 
 /*忘记密码*/
-.n-user-get-password-title{padding:0.8rem 1.2rem 0.6rem;font-size:1.4rem;color:#777}
+.n-user-get-password-title{padding:0.8rem 1.2rem 0.6rem;font-size:1.4rem;color:#777;background: #f7f9ee}
 
 /*团购详情*/
 .group-list-cont p{color:#999}

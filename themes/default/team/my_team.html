@@ -31,23 +31,20 @@
 							<%each list as vo %>							
 							<section class="flow-checkout-pro m-top08">
 								<div class="m-top1px of-hidden padding-all b-color-f position-rel">
-									<div class="product-one-list-1 of-hidden j-g-s-p-con">
-										<div class="swiper-wrapper ">
-											<li class="swiper-slide swiper-slide-active">
-												<div class="product-div">
+									<div class="product-one-list-1 of-hidden dis-box">
+											<li class="" style="width:8rem">
+												<div class="product-div" >
 													<a class="product-div-link" href="<%vo.url%>"></a>
 													<img class="product-list-img bd" src="<%vo.goods_img%>">
 
 												</div>
 											</li>
-											<div class="t-list-right-box position-rel">
+											<div class="t-list-right-box position-rel box-flex">
 												<a class="product-div-link" href="<%vo.url%>"></a>
-												<h4 class="font-07 col-5 onelist-hidden"><%vo.goods_name%></h4>
+												<h4 class="font-05 col-5 twolist-hidden"><%vo.goods_name%></h4>
 												<p class="font-03 col-9">已有<%vo.limit_num%>人参团</p>
 												<span class="ec-color font-07">￥<%vo.team_price%> 元</span>
 											</div>
-
-										</div>
 									</div>
 									<!--成功时显示-->
 									<%if vo.status ==1%>
@@ -230,24 +227,8 @@
 			});
 		</script>
 		<script>
-			/*店铺信息商品滚动*/
-			var swiper = new Swiper('.j-g-s-p-con', {
-				scrollbarHide: true,
-				slidesPerView: 'auto',
-				centeredSlides: false,
-				grabCursor: true
-			});
 
-			/*切换*/
-			var tabsSwiper = new Swiper('#j-tab-con', {
-				speed: 100,
-				noSwiping: true,
-				autoHeight: true,
-				onSlideChangeStart: function() {
-					$(".j-tab-title .active").removeClass('active')
-					$(".j-tab-title li").eq(tabsSwiper.activeIndex).addClass('active')
-				}
-			})
+
 			$(".j-tab-title li").on('touchstart mousedown', function(e) {
 				e.preventDefault()
 				$(".j-tab-title .active").removeClass('active')

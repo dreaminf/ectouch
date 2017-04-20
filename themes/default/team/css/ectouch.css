@@ -1362,7 +1362,7 @@ h4.title-hrbg hr{background:#f6f6f9;height:1px;border:0;position:absolute;left:0
 .index-nav-box ul li .cate-img p{background:rgba(0,0,0,0.6);padding:0.2rem 0;position: absolute;bottom:0;width:100%;font-size:1.3rem; color:#fff; text-align: center;}
 
 /*团购列表*/
-.t-list-right-box{padding:0 1.2rem;}
+.t-list-right-box{padding-left:1.2rem;}
 .t-list-right-box span{display: block;margin-top:1.6rem;}
 .team-ts-img {top:15%;right:1.3rem}
 .team-ts-img{width:9rem}
