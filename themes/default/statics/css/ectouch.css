@@ -186,6 +186,7 @@ body{position:relative}
 .div-messages.active{visibility: visible; opacity: 1; -webkit-transition: opacity .5s; -moz-transition: opacity .5s; -o-transition: opacity .5s; transition: opacity .5s;}
 .fl {float: left;}
 .fr {float: right;}
+.br-4{border-radius: 4px}
 .m-top02{margin-top:.2rem;}
 .m-top04{margin-top:.4rem;}
 .m-top06{margin-top:.6rem;}
@@ -270,7 +271,7 @@ label.admin-text{color:#999;}
 .btn-reset,
 .btn-default,
 .btn-alipay,
-.btn-wechat{font-size: 1.7rem;color: #fff;border: 0;text-align: center;padding: .84rem 0;width: 100%;}
+.btn-wechat{font-size: 1.7rem;color: #fff;border: 0;text-align: center;padding: .84rem 0;width: 100%;border-radius: 4px}
 a.btn-submit2{color:#fe3939;}
 a.btn-submit,
 a.btn-disab,
@@ -2598,7 +2599,7 @@ table.u-table td{border:1px solid #e3e3e3;padding:0.5em 0.2em;height:3em;width:7
 .raise-heart{display:block; width:4rem; height:4rem;}
 .raise-heart i{display:block; width: 2.4rem; height:2.4rem; margin:0 auto; background:url(../img/heart_03.png) 0 100% no-repeat; background-size: 2.4rem 5rem;}
 .raise-heart em{font-size:1.3rem; display:block; text-align: center; margin-top:.2rem; color:#555;}
-.raise-heart.active i{ background:url(../img/heart_03-raise.png) 0 0 no-repeat; background-size: 2.4rem 5rem;}
+.raise-heart.active i{ background:url(../img/heart_03.png) 0 0 no-repeat; background-size: 2.4rem 5rem;}
 .raise-fengxian{margin:0 0.6rem;}
 .raise-search .input-text input{padding-left: 1rem;}
 .g-s-i-title-1 {padding: 1.2rem 0}  
@@ -2909,3 +2910,4 @@ h5.title-hrbg hr {background: #CCCBD9;height: 1px;border: 0;position: absolute;l
 
 .raise-button .icon-Collapse{text-align: center;display:block;width: 100%;color:#999;}
 .raise-cate-nav a .icon-viewlist{font-size:1.6rem;}
+.n-checkout-btn{border-radius: 0}
