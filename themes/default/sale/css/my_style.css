@@ -1223,13 +1223,13 @@ textarea, input {border:none;}
 
 /**/
 .n-sale-bg{
-    background: -webkit-linear-gradient(#18a46f, #fe3939);
-    background: -o-linear-gradient(#18a46f, #fe3939);
-    background: -moz-linear-gradient(#18a46f, #fe3939);
-    background: linear-gradient(#18a46f, #fe3939);
+    background: -webkit-linear-gradient(#fe3939, #fe3939);
+    background: -o-linear-gradient(#fe3939, #fe3939);
+    background: -moz-linear-gradient(#fe3939, #fe3939);
+    background: linear-gradient(#fe3939, #fe3939);
 }
 .n-sale-left-box{width:8rem;}
-.n-sale-headerimg-box{width:7rem;height:7rem; border-radius:100%;overflow: hidden;border: 3px solid #18a470;}
+.n-sale-headerimg-box{width:7rem;height:7rem; border-radius:100%;overflow: hidden;border: 3px solid #fe3939;}
 .n-sale-headerimg-box img{width:100%;height:100%;}
 .n-sale-right-box{padding-left:1rem;}
 .n-sale-right-box h4{font-size:1.9rem;color:#fff;padding-top:0.6rem;}
@@ -1242,7 +1242,7 @@ textarea, input {border:none;}
 .sale-right-width span{text-align:center;line-height:2.4rem;display:block;}
 .is-n-sezhi-size{color:#fff;font-size:1.6rem;text-align:right;}
 .n-sale-icon-size{width:2.5rem; height:2.5rem;border-radius:100%;background:rgba(0, 0, 0, 0.1);margin-top: -1rem;}
-.n-sale-nav li{border-right:1px solid #18ab74;}
+.n-sale-nav li{border-right:1px solid #fe3939;}
 .n-sale-nav li:last-child{border-right:none;}
 
 
@@ -1263,7 +1263,7 @@ span.t-jiantou i.icon-jiantou1.current{
 	}	
 	
 /*我的分店*/
-.shop-info-nav{background:#18a470;}
+.shop-info-nav{background:#fb2222;}
 .shop-info-nav span{color:#fff; font-size:1.5rem;text-align:center;display:block;}
 .shop-money p,.shop-money h4{color:#fff;text-align:center;}
 .shop-money p{padding-top:2rem;font-size:1.3rem;}

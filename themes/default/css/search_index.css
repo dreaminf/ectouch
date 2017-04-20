@@ -34,8 +34,8 @@ header{line-height:2rem}
 =============*/
 .attention-left-img{width: 3.6rem;padding-right: 0.7rem;padding-top:0.76rem;}
 .attention-left-img img{width:100%;}
-.ect-attention{height: 4.4rem;background-color: rgba(0, 0, 0, 0.8); padding: 0 1.3rem;}
-.attention-text{padding-top:0.6rem;}
+.ect-attention{height: 5rem;background-color: rgba(0, 0, 0, 0.8); padding: 0 1.3rem;}
+.attention-text{padding-top:1.1rem;}
 .attention-img {width: 4rem;}
 .attention-button{width:6rem;padding-top:0.88rem;} 
 .attention-button .button{  border: 0px;background: #fe3939; width: 6rem; height: 2.5rem; border-radius: 5px;color: #fff;font-size:1.2rem} 
@@ -108,7 +108,7 @@ header{line-height:2rem}
         text-align: center;
     }
     .ect-index-menu ul li a{
-        border-right: 1px solid #e0e0e0;
+        border-right: 1px solid #f6f6f9;
         display: block;
         box-sizing: border-box;
         overflow: hidden;
@@ -123,9 +123,10 @@ header{line-height:2rem}
     .ect-index-menu ul li a h4{
         /*height: 1.3125rem;*/
         font-size: 1rem;
-        color: #999;
-        line-height: 1.2rem;
+        color: #777;
+        line-height: 1.5rem;
         text-align: center;
+        font-weight: 400;
     }
     .ect-index-menu-share{
         height: 1.6875rem;
@@ -133,9 +134,9 @@ header{line-height:2rem}
     }
     .menu-share-pic{
         display: inline-block;
-        width: 1.0625rem;
-        height: 1.125rem;
-        margin-top: .4375rem;
+        width: 1.12rem;
+        height: 1.12rem;
+        margin-top: -.2rem;
         background:url(../sale/images/index-share.png);
         background-repeat: no-repeat;
         background-size: 100%;
@@ -151,3 +152,4 @@ header{line-height:2rem}
     .share-div.active{display:inherit;}
     .share-div{text-align: center;}
     .share-div img{position: absolute; right: 0.2rem; top: 0.4rem;}
+    .ect-index-menu ul{background: #fff;overflow: hidden}

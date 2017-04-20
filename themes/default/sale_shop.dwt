@@ -32,10 +32,10 @@
 {if !$subscribe}
 <div class="ect-attention dis-box" >
 	<div class="attention-text box-flex">
-		<p style="font-size: 1rem;"><span style="color:#fff">欢迎进入</span><span style="color:#57C850"> 微商城</span></p>
-		<p style="font-size: 1rem;"><span style="color:#fff">关注公众号,享专属服务</span></p>
+		<p style="font-size: 1.25rem;"><span style="color:#fff">欢迎进入</span><span style="color:#fe3939"> 微商城</span></p>
+		<p style="font-size: 1.2rem;"><span style="color:#ccc">关注公众号,享专属服务</span></p>
 	</div>
-	<div class="attention-button" style="  padding-top:0.8rem;">
+	<div class="attention-button" style="  padding-top:1.3rem;">
 		<a class='lizhuanz'><button class="button">立即关注</button></a>
 	</div>
 </div>
@@ -98,7 +98,7 @@
         </ul>
     </div>
 
-	<div class="index-more" style="background:#fff">
+	<div class="index-more">
       <ul class="index-more-list" id="J_ItemList">
         <div class="single_item"></div>
         <a href="javascript:;" style="text-align:center" class="get_more"></a>
@@ -142,7 +142,7 @@ get_asynclist("{:url('store/ajax_goods', array('type'=>'best'))}" , '__TPL__/ima
 	  });
 	});
 	if($(".ect-attention").hasClass("ect-attention")){
-	$(".index-main").css({"marginTop":"4rem"})
+	$(".index-main").css({"marginTop":"5rem"})
 	}else{
 		 $(".index-main").css({"marginTop":"0rem"})
 		}
