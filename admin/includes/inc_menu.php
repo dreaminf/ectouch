@@ -161,8 +161,8 @@ $modules['11_menu_rec']['02_drp_audit']                       = 'drp.php?act=use
 $modules['11_menu_rec']['02_drp_users']                       = 'drp.php?act=users';
 $modules['11_menu_rec']['03_drp']                             = 'drp.php?act=list';
 $modules['11_menu_rec']['04_order_list']                      = 'drp.php?act=order_list';
-$modules['11_menu_rec']['05_affiliate']                       = 'affiliate.php?act=list';
-$modules['11_menu_rec']['06_affiliate_ck']                    = 'affiliate_ck.php?act=list';
+// $modules['11_menu_rec']['05_affiliate']                       = 'affiliate.php?act=list';
+// $modules['11_menu_rec']['06_affiliate_ck']                    = 'affiliate_ck.php?act=list';
 $modules['11_menu_rec']['07_ranking']                         = 'drp.php?act=ranking';
 $modules['11_menu_rec']['08_drp_log']                         = 'drp.php?act=drp_log';
 /*DRP_END*/
