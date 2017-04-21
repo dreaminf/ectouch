@@ -1302,7 +1302,7 @@ span.t-jiantou i.icon-jiantou1.current{
 
 .t-jiantou-1 i {font-size: 1.5rem;/* position: absolute; */right: 1.3rem;top: 35%;color: #999;
 }
-.n-right-box{width:4rem;width: 4.5rem;padding-top: 0.25rem;}
+.n-right-box{padding-top: 0.25rem;padding-right: 1.4rem;}
 .sale-right-tit{margin-right: 2.3rem;}
 .weui_msg_desc{font-size:1.2rem;}
 .header-title span{display:block;}

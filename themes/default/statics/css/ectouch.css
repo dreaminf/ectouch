@@ -1054,7 +1054,12 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
  .flow-checkout-pro.active .f-c-a-count{display:none;}
  .flow-checkout-pro.active .flow-checkout-smallpic{display:none;}
  .flow-checkout-pro.active .flow-checkout-bigpic{display:block}
- .flow-checkout-pro footer .ect-button-more button,.flow-checkout-pro footer .ect-button-more a{padding:.3rem .8rem; font-size:1.6rem; width:auto;margin-right: .6rem;}
+ .flow-checkout-pro footer .ect-button-more button,.flow-checkout-pro footer .ect-button-more a{padding:.3rem .8rem; font-size:1.5rem; width:auto;margin-right: .6rem;}
+ .flow-checkout-pro footer .ect-button-more a{border: 1px solid #eee;
+
+    border-radius: 4px;}    
+
+.flow-checkout-pro footer .ect-button-more a.btn-submit-r,.flow-checkout-pro footer .ect-button-more a.btn-submit2{border:1px solid #fe3939;}
  .flow-checkout .product-list-small .product-text{overflow: auto; height: auto;}
  .f-checkout-filter-btn .order-checkout-text{text-align: center; font-size:1.7rem; height:4rem; width:100%; display:block;}
 
