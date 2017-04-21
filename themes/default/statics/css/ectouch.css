@@ -440,7 +440,7 @@ transform: rotate(135deg);background:#fff; bottom:-.6rem; z-index: -1; left:50%;
  * 
  */
 
-.filter-div,.filter-city-div,.mask-filter-div,.mask-search-div,.filter-depot-div{position:fixed; width:100%; left:100%; right:0; top: 0; bottom: 0; z-index: 12; background:rgba(0,0,0,0.2) }
+.filter-div,.filter-city-div,.mask-filter-div,.mask-search-div,.filter-depot-div{position:fixed; width:100%; left:100%; right:0; top: 0; bottom: 0; z-index: 12; background:rgba(0,0,0,0.6) }
 .mask-filter-div,.mask-search-div{z-index: 11; display: none; left: 0;max-width: 640px;margin: 0 auto;}
 .close-filter-div,.con-filter-div{position:absolute; top: 0; bottom: 0; z-index: 11; overflow-y:scroll;}
 .close-filter-div{ width:3.8rem; left: 3.9rem; background:rgba(0,0,0,0.6);}
@@ -2693,7 +2693,7 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 .btn-submit-raise{background: #fe3939;border: 1px solid #fe3939;color:#fff;padding: 0.84rem;font-size: 1.7rem;border-radius:0}
 .btn-submit-raise:hover {border:1px solid #fe3939;background:#fe3939;}/*主提交按钮按下颜色*/
 .raise-cate-nav li.current {color:#fe3939;outline:none;}
-.goods-fixed-raise{position:fixed;top:0;z-index:199;width:100%;max-width:640px;background:rgba(255,255,255,0);}
+.goods-fixed-raise{position:fixed;top:0;z-index:9;width:100%;max-width:640px;background:rgba(255,255,255,0);}
 .goods-fixed-raise.active{background:rgba(254,57,57,0.96);box-shadow: 1px 0px 4px rgba(50,50,50,0.3);}
 .goods-header-nav-box-raise li a{color:rgba(255,255,255,0.8);display:block;}	
 .goods-header-nav-box-raise li a.hover{color:#fff;border-bottom:1px solid #fff;}

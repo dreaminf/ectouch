@@ -54,7 +54,7 @@
 						<!--{if $return.handler}-->
 						<div type="button" class="n-but-detail-ls box-flex n-iphone5-top1">{$return.handler}</div>
 						<!--{/if}-->
-						<a href="{:url('user/aftermarket_done', array('rec_id'=>$this->_var['return']['rec_id']))}" type="button" class="btn-submit box-flex n-iphone5-top1 j-goods-attr j-show-div">{$lang.aftermarket_action}</a>
+						<a href="{:url('user/aftermarket_done', array('rec_id'=>$this->_var['return']['rec_id']))}" type="button" class="btn-submit box-flex n-iphone5-top1 j-goods-attr j-show-div" style="border-radius: 0">{$lang.aftermarket_action}</a>
 					</div>
 
 				</div>
