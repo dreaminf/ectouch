@@ -22,9 +22,9 @@
 							<a href="javascript:;" class="box-flex j-sign-rule j-show-div "><i class="iconfont icon-gantanhao font-05"></i>签到规则</a>
 							<a href="{:url('user/user_sign_detail')}" class="box-flex text-r"><i class="iconfont icon-zichanmingxi font-05"></i>积分明细</a>
 						</div>
-						<div class="cont position-rel j-sign" onclick='changeText()'>
+						<div class="cont position-rel j-sign" >
 							<img src="__TPL__/team/images/sign_header.png" class="img">
-							<div class="cont-box position-abo text-c w-1">
+							<div class="cont-box position-abo text-c w-1 quqiandao" >
 								{if $is_sign eq '1'}
 								<p class="font-08 ec-color" id='boldStuff'>已签到</p>
 								{else}
@@ -119,8 +119,8 @@
 					</div>
 				</div>
 				<script>
-				;
 				(function($) {
+				
 					var Checkin = function(ele, options) {
 						this.ele = ele;
 						this.opt = options;
@@ -202,10 +202,8 @@
 					Checkin.prototype.events = function() {
 						var _self = this.ele;
 						var $li = _self.find(".calendarList").find("li");
-						$li.on('click', function(event) {
+						/*$li.on('click', function(event) {
 							event.preventDefault();
-							/* Act on the event */
-
 							if ($(this).hasClass('able-qiandao')) {
 								$(this).addClass('checked');
 								$(this).removeClass('able-qiandao');
@@ -231,7 +229,36 @@
 								}});
 
 							}
+						});*/
+						
+						$(".quqiandao").click(function() {						   
+							if($(".calendarList li").hasClass("able-qiandao")){
+								modal(_self);
+								isChecked = true;
+								var points = $('#sign_points').html();//赠送积分
+								var year = $('#year').html();//年
+								var month = $('#month').html();//月
+								var day = $(".able-qiandao").html();//当月几号
+								$(".able-qiandao").addClass("checked");
+								$(".able-qiandao").removeClass('able-qiandao');
+								$.ajax({
+									type: "POST",
+									url: "index.php?m=default&c=user&a=add_points",
+									data: {points:points,year:year,month:month,day:day},
+									dataType:"json",
+									success: function(data){
+									if (data.error == 1)
+									{
+										document.getElementById('boldStuff').innerHTML = '已签到';
+										document.getElementById('pay_points').innerHTML = data.pay_points;
+										document.getElementById('points').innerHTML = data.points;
+									}
+
+								}});
+
+							}
 						});
+						
 						var checkBtn = _self.find(".checkBtn");
 						checkBtn.click(function(event) {
 							modal(_self);
@@ -264,13 +291,8 @@
 				})(jQuery);
 				// 插件调用
 				$(".checkin").Checkin();
-				// 元素居中显示，与插件无关，根本自己需要修改；
-				//$(".checkin").css('marginTop',50+'px');
+
 				</script>
-
-
-
-				<!-- <img src="__TPL__/team/images/rili.jpg" class="img"> -->
 
 				</div>
 				<div class="padding-all">
@@ -305,10 +327,5 @@
 			get_asynclist("{:url('user/sing_goods', array('type'=>'is_hot'))}", '__TPL__/images/loader.gif');
 		</script>
 	</body>
-	<script type="text/javascript">
-		/*function changeText() {
-			document.getElementById('boldStuff').innerHTML = '已签到';
-		}*/
-	</script>
 
 </html>
