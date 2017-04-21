@@ -492,10 +492,13 @@ class GoodsController extends CommonController
         $team['bar'] = round($surplus*100/$team['team_num'],0);//百分比
         if($team['status'] != 1 &&gmtime()< ($team['start_time']+($team['validity_time']*3600))){//进项中
             $team['status'] = 0;
+            $result = '等待成团';
         }elseif($team['status'] != 1 && gmtime()> ($team['start_time']+($team['validity_time']*3600))){//失败
             $team['status'] = 2;
+            $result = '拼团失败';
         }elseif($team['status'] = 1){//成功
             $team['status'] = 1;
+            $result = '拼团成功';
         }
 
         /* --获取拼团团员信息-- */
@@ -523,7 +526,7 @@ class GoodsController extends CommonController
         $this->assign('goods', $goods);
         $this->assign('team', $team);
         $this->assign('cfg', C(cfg));
-        $this->assign('title', '等待成团');
+        $this->assign('title', $result);
         $this->assign('wx_title', '邀请您一起拼团');//分享标题
         $this->display('team/goods-wait.html');
     }
