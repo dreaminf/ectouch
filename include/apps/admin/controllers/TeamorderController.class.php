@@ -91,6 +91,7 @@ class TeamorderController extends AdminController {
             $res[$key]['pay_status'] = $value['pay_status'];
             $res[$key]['status'] = L('os.' . $value['order_status']) . ',' . L('ps.' . $value['pay_status']) . ',' . L('ss.' . $value['shipping_status']);
             $res[$key]['goods_amount'] = $value['goods_amount']; //金额
+            $res[$key]['order_money'] = $value['goods_amount'] - $value['discount'] + $value['tax'] + $value['shipping_fee'] + $value['insure_fee'] + $value['pay_fee'] + $value['pay_fee'] + $value['card_fee'];
             $res[$key]['add_time'] = date('Y-m-d H:i:s', $value['add_time']); //下单时间
         }
         $this->assign('order_list', $res);
