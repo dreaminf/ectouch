@@ -499,7 +499,7 @@ class GoodsController extends CommonController
         }
 
         /* --获取拼团团员信息-- */
-        $sql ="select o.team_id, o.user_id,o.team_parent_id,o.team_user_id from " . $this->model->pre . "order_info as o LEFT JOIN " . $this->model->pre ."users as u ON o.user_id = u.user_id where o.team_id =$team_id and o.extension_code ='team_buy' and o.pay_status = '" . PS_PAYED ."' limit 0,5";  
+        $sql ="select o.team_id, o.user_id,o.team_parent_id,o.team_user_id from " . $this->model->pre . "order_info as o LEFT JOIN " . $this->model->pre ."users as u ON o.user_id = u.user_id where o.team_id =$team_id and o.extension_code ='team_buy' and o.pay_status = '" . PS_PAYED ."' order by o.add_time asc limit 0,5";  
         $team_user = $this->model->query($sql); 
         foreach ($team_user as $key => $vo) {
             $team_user[$key]['avatar'] = '';
