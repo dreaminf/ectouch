@@ -11,7 +11,7 @@
 		<!--{else}-->
 		<div class="box-flex font-05 col-7 m-top08">
 		<em class="ec-color font-08"><!--{if $goods.promote_price}-->￥{$goods.promote_price}<!--{else}-->￥{$goods.shop_price}<!--{/if}-->		
-		</em> 市场价 <del>￥{$goods.market_price}<del>
+		</em> 市场价 <del>{$goods.market_price}<del>
 		</div>
 		<div class="group-list-cont-cont"><label class="b-color">立即购买<i class="iconfont icon-mn-jiantour"></i></label></div>
 		<!--{/if}-->

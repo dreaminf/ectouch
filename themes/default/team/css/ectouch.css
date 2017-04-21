@@ -543,7 +543,7 @@ html,body,.con{overflow-x: hidden;max-width:640px;min-width: 320px;margin:0 auto
     .goods-list-close i{font-size:2.6rem;color:#ddd;}
 
 	/*goods-footer*/
-	.filter-btn{ width:100%; left:0; right:0; bottom:0; box-sizing: border-box; position:fixed; z-index: 6; background:#fafafc; }
+	.filter-btn{ width:100%; left:0; right:0; bottom:0; box-sizing: border-box; position:fixed; z-index: 11; background:#fafafc; }
 	.filter-btn-pos{ width:100%;  box-sizing: border-box;  background:#fff; box-shadow: 0px -2px 5px rgba(50,50,50,0.1);background:#f7f7f7;}
 	.filter-btn .filter-btn-a,.filter-btn-pos .filter-btn-a{padding:0 1.6rem;  display: block; text-align: center; position: relative;}
 	.filter-btn .filter-btn-a i,.filter-btn-pos .filter-btn-a i{font-size:2.2rem; color:#777; display:block; color:#636363;padding-top: .7rem;}
