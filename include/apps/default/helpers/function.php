@@ -821,7 +821,7 @@ function show_message($content, $links = '', $hrefs = '', $type = 'info', $auto_
             $msg['back_url'] = $hrefs['0'];
         }
     } else {
-        $link = empty($links) ? L('back_up_page') : '<input style=margin-top:4rem type=button '.'value='.$links.'>';
+        $link = empty($links) ? L('back_up_page') : '<input type=button '.'value='.$links.'>';
         $href = empty($hrefs) ? 'javascript:history.back()' : $hrefs;
         $msg['url_info'][$link] = $href;
         $msg['back_url'] = $href;

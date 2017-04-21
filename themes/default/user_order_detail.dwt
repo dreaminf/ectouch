@@ -63,7 +63,7 @@
 <div class="order-over-btn text-center"> 
   {$order.handler}
     <!-- {if $order.order_tracking}-->
-    <a href="{:url('order_tracking', array('order_id'=>$this->_var['order']['order_id']))}" type="button" class="btn  btn-reset">{$lang.order_tracking}</a>
+    <a href="{:url('order_tracking', array('order_id'=>$this->_var['order']['order_id']))}" type="button" class="btn  btn-reset" style="margin-top:1rem">{$lang.order_tracking}</a>
     <!--{/if}-->
 </div>
 <section class="order-detail-info ect-margin-tb" style="margin-bottom:0;">

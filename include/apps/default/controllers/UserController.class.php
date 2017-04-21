@@ -738,21 +738,21 @@ class UserController extends CommonController {
         // 订单详情
         $order = model('Users')->get_order_detail($order_id, $this->user_id);
         if ($order['order_status'] == OS_UNCONFIRMED) {
-            $order['handler'] = "<a class=\"btn btn-info ect-colorf ect-bg\" href=\"" . url('user/cancel_order', array(
+            $order['handler'] = "<a class=\"btn   btn-submit\" href=\"" . url('user/cancel_order', array(
                         'order_id' => $order['order_id']
                     )) . "\" onclick=\"if (!confirm('" . L('confirm_cancel') . "')) return false;\">" . L('cancel_order_detail') . "</a>";
         }
         elseif ($order['order_status'] == OS_SPLITED) {
             /* 对配送状态的处理 */
             if ($order['shipping_status'] == SS_SHIPPED) {
-                @$order['handler'] = "<a class=\"btn btn-info ect-colorf ect-bg\" href=\"" . url('user/affirm_received', array(
+                @$order['handler'] = "<a class=\"btn  btn-submit\" href=\"" . url('user/affirm_received', array(
                             'order_id' => $order['order_id']
                         )) . "\" onclick=\"if (!confirm('" . L('confirm_received') . "')) return false;\">" . L('received') . "</a>";
             } elseif ($order['shipping_status'] == SS_RECEIVED) {
-                @$order['handler'] = '<a class="btn btn-info ect-colorf ect-bg" type="button" href="javascript:void(0);">' . L('ss_received') . '</a>';
+                @$order['handler'] = '<a class="btn   btn-submit" type="button" href="javascript:void(0);">' . L('ss_received') . '</a>';
             } else {
                 if ($order['pay_status'] == PS_UNPAYED) {
-                    @$order['handler'] = "<a class=\"btn btn-infoect-colorf ect-bg\" href=\"" . url('user/cancel_order', array(
+                    @$order['handler'] = "<a class=\"btn  btn-submit\" href=\"" . url('user/cancel_order', array(
                                 'order_id' => $order['order_id']
                             )) . "\">" . L('pay_money') . "</a>";
                 } else {
@@ -760,7 +760,7 @@ class UserController extends CommonController {
                 }
             }
         } else {
-            $order['handler'] = '<a class="btn btn-info ect-colorf ect-bg" type="button" href="javascript:void(0);">' . L('os.' . $order['order_status']) . '</a>';
+            $order['handler'] = '<a class="btn btn-submit" type="button" href="javascript:void(0);">' . L('os.' . $order['order_status']) . '</a>';
         }
         if ($order === false) {
             ECTouch::err()->show(L('back_home_lnk'), './');
@@ -839,7 +839,6 @@ class UserController extends CommonController {
         $order['order_status'] = L('os.' . $order['order_status']);
         $order['pay_status'] = L('ps.' . $order['pay_status']);
         $order['shipping_status'] = L('ss.' . $order['shipping_status']);
-
         $this->assign('title', L('order_detail'));
         $this->assign('order', $order);
         $this->assign('goods_list', $goods_list);
@@ -1860,7 +1859,7 @@ class UserController extends CommonController {
 
                 $jump_url = empty($this->back_act) ? url('index') : $this->back_act;
                 //$this->redirect($jump_url);
-                exit(json_encode(array('status' => 'y', 'info' => '登陆成功','url' => $jump_url)));
+                exit(json_encode(array('status' => 'y', 'info' => '登录成功','url' => $jump_url)));
             } else {
                 $_SESSION['login_fail']++;
                  /* show_message(L('login_failure'), L('relogin_lnk'), url('login', array(

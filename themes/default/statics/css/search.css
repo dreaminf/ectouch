@@ -46,7 +46,7 @@ a.btn-reset,a.btn-default{color:#555;}
 .btn-cart:hover {background: #e19511;border:1px solid #e19511}/*按下颜色*/
 .btn-reset{background:#fff;color:#555;border:1px solid #efefef}/*清空按钮*/
 .btn-reset:active,
-.btn-reset:hover {background:#fff;border:1px solid #efefef}/*按下颜色*/
+.btn-reset:hover {background:#fff;border:1px solid #efefef;color:#777;}/*按下颜色*/
 .btn-default{background:#fff;color:#555; border:1px solid #efefef}/*默认*/
 .btn-default:active,
 .btn-default:hover {color:#666}/*按下颜色*/
@@ -231,7 +231,7 @@ address, cite, dfn, em, var {
     overflow: hidden;
     position: relative;
 }
-.btn{font-size: 1.7rem;border: 0;text-align: center;padding: .84rem 0;border-radius: 4px;width: 100%;}
+.btn{font-size: 1.7rem;text-align: center;padding: .84rem 0;border-radius: 4px;width: 100%;}
 .ect-pro-list ul{padding:0 1.2rem}
 .order-over-btn{padding:1.2rem 1.2rem 0.6rem 1.2rem}
 .n-order-cont{padding:1.2rem;border-bottom:1px solid #f6f6f9}

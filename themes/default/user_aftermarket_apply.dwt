@@ -334,7 +334,7 @@
 		</div>
 	</div>
 	<div class="filter-btn dis-box">
-		<a type="button" class="btn-submit box-flex n-iphone5-top1 j-goods-attr j-show-div" id="diyStart" onclick="check_service()">提交申请</a>
+		<a type="button" class="btn-submit box-flex n-iphone5-top1 j-goods-attr j-show-div"style="border-radius: 0" id="diyStart" onclick="check_service()">提交申请</a>
 	</div>
 
 </div>

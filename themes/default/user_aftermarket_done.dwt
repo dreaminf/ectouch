@@ -37,7 +37,7 @@
 					<!--<div class="bar-item">
           <button class="J_Btn " type="button" onClick="editapplication()" data-param=''>修改申请</button>
         </div>-->
-					<div class="filter-btn dis-box">
+					<div class="filter-btn dis-box padding-all">
 						<!-- {if $return.is_cancel} -->
 						<a href="{:url('user/cancel_service', array('ret_id'=>$this->_var['return']['ret_id']))}" onclick="if (!confirm('{$lang.confirm_cancel}？'))" return false; onClick="cancellations()" data-param='' type="button" class="btn-cart n-but-ls box-flex n-iphone5-top1 j-goods-attr j-show-div">{$lang.cancel_service}</a>
 						<!-- {/if} -->
