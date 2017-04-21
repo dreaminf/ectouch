@@ -257,7 +257,7 @@
 				<section class="filter-btn dis-box">
 					<a class="filter-btn-kefu filter-btn-a" onClick="collect({$goods.goods_id})"><span class="raise-heart j-heart <!--{if $sc eq 1}-->active<!--{/if}-->" id="ECS_COLLECT" ><i class="ts-2"></i><em class="ts-2" >关注</em></span></a>
 					{if $goods.status eq 2}
-					<a class="btn-submit btn-submit-raise1 box-flex j-goods-attr ">项目结束</a>
+					<a class="btn-submit btn-submit-raise1 box-flex j-goods-attr">项目结束</a>
 					{else}
 					<a class="btn-submit btn-submit-raise box-flex j-goods-attr j-show-div-1">支持</a>
 					{/if}
@@ -310,7 +310,7 @@
 						</div>
 					</section>
 					<section class="filter-btn f-checkout-filter-btn dis-box">
-						<span class="box-flex t-remark">合计: <em class="raise-col" id="ECS_GOODS_AMOUNT">请选择</em></span>
+						<span class="box-flex t-remark p-l">合计: <em class="raise-col" id="ECS_GOODS_AMOUNT">请选择</em></span>
 						<a onclick="c_value()" type="button" class="btn-submit btn-submit-raise box-flex	">确定</a>
 						<input type="hidden" name="goods_id"   value="{$goods.goods_id}">
 						<input type="hidden" name="cp_id"      value="">

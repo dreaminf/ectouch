@@ -773,7 +773,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
 .filter-btn{max-width: 640px;margin: 0 auto;position: fixed; width:100%; left:0; right:0; bottom:0; box-sizing: border-box; z-index: 6; background:#fafafc; border-top:1px solid #efefef;}
 
 .filter-btn .filter-btn-a{padding:0 .4rem;  display: block; text-align: center; position: relative;}
-.filter-btn .filter-btn-a i{font-size:2.2rem; color:#777; display:block; color:#636363}
+.filter-btn .filter-btn-a i{font-size:2rem; color:#777; display:block; color:#636363}
 .filter-btn .filter-btn-flow sup{position:absolute; top:-.3rem; right:.4rem; height:1.5rem; min-width:1.5rem; line-height: 1.5rem;  padding:0 .2rem; box-sizing:border-box; font-size:1.3rem; color:#fff; border-radius: .7rem;}
 .filter-btn .filter-btn-a i.icon-gouwuche em{position:absolute; top: 0; right:0; display: block; min-width: 1.3rem; height:1.3rem; line-height:1.3rem; padding:.1rem .3rem; font-size:1.1rem; border-radius: .8rem; box-sizing: border-box; color:#fff;}
 .filter-btn .filter-btn-a em{display:block; font-size:1.1rem; margin-top:.1rem; color:#666;}
@@ -1080,7 +1080,7 @@ a.a-sequence .iconfont.icon-icon-square:before{font-size:3.2rem;}
  .flow-checkout-tprice header{font-size:1.7rem;}
  /*悬浮菜单*/ 
  .f-checkout-filter-btn span{margin-right:1rem; font-size:1.6rem; box-sizing: border-box; padding-top:.8rem;}
- .f-checkout-filter-btn span em{font-size:1.9rem;}
+ .f-checkout-filter-btn span em{font-size:1.7rem;}
  .f-checkout-filter-btn .btn-submit, .f-checkout-filter-btn .btn-default{width:auto; padding:.84rem 1.3rem;display:inline-block;}
  .s-g-list-con{overflow:hidden; max-height: 20rem;}
  .s-g-list-con ul li{padding:0;}
@@ -2557,7 +2557,7 @@ table.u-table td{border:1px solid #e3e3e3;padding:0.5em 0.2em;height:3em;width:7
 .raise-cont h4{height:4rem; line-height:2rem;overflow:hidden;}
 .raise-goods-right{margin-right:1.3rem;}
 .raise-goods-active{width:85%;}
-.raise-goods-list{max-height: 26rem;margin-bottom: 6rem;}
+.raise-goods-list{max-height: 26rem;margin-bottom: 4rem;}
 .raise-goods-list-box .ect-select label{padding: 0.2rem 0;}
 .raise-bot-br{border-bottom:1px solid #f6f6f9}
 .raise-goods-list-box .ect-select ,.raise-goods-list-box .ect-select:last-child{font-size: 1.5rem;border-bottom: 1px solid #F6F6F9;}
@@ -2596,10 +2596,10 @@ table.u-table td{border:1px solid #e3e3e3;padding:0.5em 0.2em;height:3em;width:7
 .raise-tag{width:7rem;z-index:4999; position:absolute;right:-1.5rem;bottom:0.5rem;-moz-transform: rotate(-25deg);-webkit-transform: rotate(-25deg);-ms-transform: rotate(-25deg);-o-transform: rotate(-25deg);transform: rotate(-25deg);}
 .raise-tuij-box .product-div img{border:none;}
 /*raise-goods*/
-.raise-heart{display:block; width:4rem; height:4rem;}
-.raise-heart i{display:block; width: 2.4rem; height:2.4rem; margin:0 auto; background:url(../img/heart_03.png) 0 100% no-repeat; background-size: 2.4rem 5rem;}
+.raise-heart{display:block; width:4rem;}
+.raise-heart i{display:block; width: 2rem; height:2rem; margin:0 auto; background:url(../img/heart_03.png) 0 100% no-repeat; background-size: 2rem 4rem;    margin-top: .2rem;}
 .raise-heart em{font-size:1.3rem; display:block; text-align: center; margin-top:.2rem; color:#555;}
-.raise-heart.active i{ background:url(../img/heart_03.png) 0 0 no-repeat; background-size: 2.4rem 5rem;}
+.raise-heart.active i{ background:url(../img/heart_03.png) 0 0 no-repeat; background-size: 2rem 4rem;}
 .raise-fengxian{margin:0 0.6rem;}
 .raise-search .input-text input{padding-left: 1rem;}
 .g-s-i-title-1 {padding: 1.2rem 0}  
@@ -2685,7 +2685,7 @@ span.raise-pro-right{position: absolute;top:25%;right:1.2rem;}
 
 .raise-col{color:#fe3939}
 .b-raise{background:#fe3939}
-.btn-submit-raise{background: #fe3939;border: 1px solid #fe3939;color:#fff;padding: 0.84rem;font-size: 1.7rem;}
+.btn-submit-raise{background: #fe3939;border: 1px solid #fe3939;color:#fff;padding: 0.84rem;font-size: 1.7rem;border-radius:0}
 .btn-submit-raise:hover {border:1px solid #fe3939;background:#fe3939;}/*主提交按钮按下颜色*/
 .raise-cate-nav li.current {color:#fe3939;outline:none;}
 .goods-fixed-raise{position:fixed;top:0;z-index:199;width:100%;max-width:640px;background:rgba(255,255,255,0);}

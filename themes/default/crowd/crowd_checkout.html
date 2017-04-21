@@ -192,7 +192,7 @@
 								</div>
 							</li>
 						</ul>
-						<p class="f-c-select-price text-right t-remark">共 {$goods.number} 件商品，合计：<span class="raise-col">¥{$goods.formated_subtotal}</span></p>
+						<p class="f-c-select-price text-right t-remark ">共 {$goods.number} 件商品，合计：<span class="raise-col">¥{$goods.formated_subtotal}</span></p>
 						<!--费用价格-->
 						{include file='crowd/order_total.html'}
 						
@@ -209,7 +209,7 @@
 				<input type="hidden" name="cp_id"      value="{$cp_id}">
 				<input type="hidden" name="number"      value="{$number}">
 				
-				<span class="box-flex t-remark">实付款 <em class="raise-col" id="amount">{$total.amount_formated}</em></span>
+				<span class="box-flex t-remark p-l">实付款 <em class="raise-col" id="amount">{$total.amount_formated}</em></span>
 				<a onclick="submit_buy()"  type="button" class="btn-submit btn-submit-raise box-flex	">提交订单</a>
 			</section>
 			<!--悬浮btn end-->
