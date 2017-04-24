@@ -262,7 +262,7 @@ class MY_FlowController extends FlowController {
         $parent_id = M()->table('users')->field('parent_id')->where("user_id=".$_SESSION['user_id'])->getOne();
         $order ['parent_id'] = $parent_id;
         $order ['drp_id'] = $_SESSION['drp_shop']['drp_id'] ? $_SESSION['drp_shop']['drp_id'] : 0;
-        
+
         /* 插入拼团信息记录 */
         if($flow_type == CART_TEAM_GOODS){
             if($_SESSION['team_id'] > 0){
@@ -280,7 +280,7 @@ class MY_FlowController extends FlowController {
                 $order ['team_id']=$team_log_id;
                 $order ['team_parent_id']=$_SESSION['user_id'];
             }
-            
+
         }
 
 
@@ -300,13 +300,13 @@ class MY_FlowController extends FlowController {
         $order ['order_id'] = $new_order_id;
 
         /* 插入订单商品 */
-        $sql = "INSERT INTO " . $this->model->pre . "order_goods( " . "order_id, goods_id, goods_name, goods_sn, product_id, goods_number, market_price, " . "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id ) " . " SELECT '$new_order_id', goods_id, goods_name, goods_sn, product_id, goods_number, market_price, " . "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id " . " FROM " . $this->model->pre . "cart WHERE session_id = '" . SESS_ID . "' AND rec_type = '$flow_type'";
+        $sql = "INSERT INTO " . $this->model->pre . "order_goods( " . "order_id, goods_id, goods_name, goods_sn, product_id, goods_number, market_price, " . "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id ) " . " SELECT '$new_order_id', goods_id, goods_name, goods_sn, product_id, goods_number, market_price, " . "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id " . " FROM " . $this->model->pre . "cart WHERE session_id = '" . SESS_ID . "' AND rec_type = '$flow_type' and is_selected = 1 ";
         $this->model->query($sql);
 
         //验证拼团不参与分销
         if($flow_type != CART_TEAM_GOODS){
             // 更新佣金信息
-            model('Sale')->update_order_sale($new_order_id);            
+            model('Sale')->update_order_sale($new_order_id);
         }
 
 
@@ -319,7 +319,7 @@ class MY_FlowController extends FlowController {
         /* 处理余额、积分、红包 */
         if ($order ['user_id'] > 0 && $order ['surplus'] > 0) {
             model('ClipsBase')->log_account_change($order ['user_id'], $order ['surplus'] * (- 1), 0, 0, 0, sprintf(L('pay_order'), $order ['order_sn']));
-            
+
             //余额付款更新拼团信息记录
             model('Flow')->update_team($order['team_id']);
         }
@@ -417,7 +417,7 @@ class MY_FlowController extends FlowController {
             }
 
         }
-            
+
         }
 
 
