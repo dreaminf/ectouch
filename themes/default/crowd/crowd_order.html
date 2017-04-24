@@ -88,7 +88,7 @@
 										<a href="{:url('mycrowd/order_tracking',array('order_id'=>$this->_var['order']['order_id']))}" class="btn-default">查看物流</a>
 										<!--{/if }-->
 										
-										<!--{if $order.pay_status eq 2 }-->
+										<!--{if $order.shipping_status eq 2 }-->
 											<!--{if $order.is_comment eq ''}-->
 											<a href="{:url('mycrowd/crowd_comment',array('order_id'=>$this->_var['order']['order_id'],'id'=>$this->_var['order']['goods_id']))}" class="btn-submit2">评价</a>
 											<!--{/if}-->
