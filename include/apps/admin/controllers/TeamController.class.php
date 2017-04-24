@@ -21,8 +21,9 @@ class TeamController extends AdminController {
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('index', $filter), 20);
         $total = $this->model->table('team_category')
+                ->where(array('parent_id'=> '0'))
                 ->order('sort_order desc')
-                ->count();
+                ->count();     
         $this->assign('page', $this->pageShow($total));
         $sql = 'select * from ' . $this->model->pre . 'team_category order by sort_order desc limit ' . $offset;
         $cat_list = $this->get_child_tree(0,$offset);
