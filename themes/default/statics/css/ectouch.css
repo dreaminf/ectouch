@@ -2386,7 +2386,7 @@ outline: none;
  .message-a a:first-of-type{margin-left:0;}
  .p-link input{background:none;border:none;color:#777;font-size:1.6rem}
  .p-link a{color:#777;font-size:1.6rem}
- 
+ .collection-icon-del{position:absolute;right: 1.1rem;bottom: 1.1rem;}
  /*我的钱包-首页shi*/
 .purse-f{color:#fff}
 .purse-header-box{background:#fe3939;width:100%;position: relative;}
