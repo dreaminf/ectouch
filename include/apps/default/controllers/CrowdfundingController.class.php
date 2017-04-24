@@ -71,7 +71,7 @@ class CrowdfundingController extends CommonController {
 		if (!empty($_COOKIE['ZCECS']['keywords'])) {
 			$history = explode(',', $_COOKIE['ZCECS']['keywords']);
 			array_unshift($history, $this->keywords); //在数组开头插入一个或多个元素
-			$history = array_unique($history);  //移除数组中的重复的值，并返回结果数组。
+			$history = array_values(array_filter(array_unique($history)));  //移除数组中的重复的值，并返回结果数组。
 			setcookie('ZCECS[keywords]', implode(',', $history), gmtime() + 3600 * 24 * 30);
 		} else {
 			setcookie('ZCECS[keywords]', $this->keywords, gmtime() + 3600 * 24 * 30);
