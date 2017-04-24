@@ -40,10 +40,11 @@ class ExchangeModel extends BaseModel {
         /* 获得商品列表 */
         $start = ($page - 1) * $size;
         $sort = $sort == 'sales_volume' ? 'dh' : $sort;
-        $sql = 'SELECT  g.goods_id, g.goods_name, g.market_price, g.goods_name_style,g.click_count, count(*) as dh, eg.exchange_integral, ' .
-                'g.goods_type, g.goods_brief, g.goods_thumb , g.goods_img, eg.is_hot ' .
-                'FROM ' . $this->pre . 'exchange_goods AS eg LEFT JOIN  ' . $this->pre . 'goods AS g ON  eg.goods_id = g.goods_id ' . 'LEFT JOIN '.$this->pre .'order_goods as og on eg.goods_id = og.goods_id '.'LEFT JOIN '.$this->pre .'order_info AS oi on og.order_id = oi.order_id'.
-                " WHERE oi.extension_code = 'exchange_goods' AND  $where $ext GROUP BY g.goods_id ORDER BY $sort $order LIMIT $start ,$size ";       
+        $sql = 'SELECT g.goods_id, g.goods_name, g.market_price, g.goods_name_style,g.click_count, eg.exchange_integral, ' .
+                'g.goods_type, g.goods_brief, g.goods_thumb , g.goods_img, eg.is_hot,IFNULL((select count(*) from '.$this->pre.'order_goods as og left join '.$this->pre.'order_info AS oi on og.order_id = oi.order_id where oi.extension_code = "exchange_goods" and eg.goods_id = og.goods_id),0) as dh '  .
+                'FROM ' . $this->pre . 'exchange_goods AS eg LEFT JOIN  ' . $this->pre . 'goods AS g ' .
+                'ON  eg.goods_id = g.goods_id ' . ' LEFT JOIN ' . $this->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' .
+                " WHERE $where $ext GROUP BY g.goods_id ORDER BY $sort $order LIMIT $start ,$size ";    
         $res = $this->query($sql);
         $arr = array();
         foreach ($res as $key => $row) {
