@@ -465,7 +465,7 @@ class SaleController extends CommonController {
         $size = I(C('page_size'), 5);
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
         $where = 'd.drp_id = '.$drp_id;
-        $sql = "select count(*) as count from {pre}drp_order_info as d right join {pre}order_info as o on d.order_id=o.order_id where d.drp_id=$drp_id";
+        $sql = "select count(*) as count from {pre}drp_order_info as d right join {pre}order_info as o on d.order_id=o.order_id where o.order_status != '2' and d.drp_id=$drp_id";
         $count = $this->model->getRow($sql);
         $count = $count['count'] ? $count['count'] : 0;
         $this->pageLimit(url('sale/order_list'), $size);

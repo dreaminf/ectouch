@@ -737,11 +737,11 @@ function get_order_list($is_separate,$order_sn)
 		$where .= " and o.order_sn like '%$order_sn%'  ";
     } 
     /* 查询记录总数，计算分页数 */
-    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 $where and  d.shop_separate = ".$is_separate;
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 $where and o.order_status != '2' and  d.shop_separate = ".$is_separate;
     $filter['record_count'] = $GLOBALS['db']->getOne($sql);
     $filter = page_and_size($filter);
     /* 查询记录 */
-    $sql = "SELECT o.*,d.drp_id as drp FROM " .  $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 and  d.shop_separate = $is_separate $where" .
+    $sql = "SELECT o.*,d.drp_id as drp FROM " .  $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 and o.order_status != '2' and  d.shop_separate = $is_separate $where" .
         " ORDER BY order_id DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 
