@@ -236,7 +236,7 @@ html,body,.con{overflow-x: hidden;max-width:640px;min-width: 320px;margin:0 auto
 	.sign-modal-bg.active{opacity: 1;visibility: visible;}
 
 /************************头部*****************************/
-	 .header-menu{height:4.6rem; line-height: 4.6rem; padding-right:2.6rem;}
+	 .header-menu{height:4.6rem; line-height: 4.6rem; padding-right:1rem;}
 	 .header-menu a{color:#fff;}
 	 .header-menu i.icon-mn-jiantoul{padding-left:.8rem; font-size:2.2rem}
 	 .header-menu h3{font-size:2rem; text-align: center;color:#fff;}
@@ -968,7 +968,7 @@ html,body,.con{overflow-x: hidden;max-width:640px;min-width: 320px;margin:0 auto
 	.user .user-header .header-img-box {width:7rem; height:7rem; background: rgba(255,255,255,0.9); margin: 0 auto;border-radius: 100%;padding:0.2rem;}
 	.user .user-header .header-img-box .header-img{width:7rem; height:7rem;border-radius: 100%;overflow: hidden;}
 	.user .user-header .header-img-box .header-img img{width:100%;}
-	.user .user-set-box{top:2rem;width: 100%;}
+	.user .user-set-box{top:1rem;width: 100%;}
 	.user .user-set-box .user-qiandao{right:0rem;background:rgba(0,0,0,0.4);border-radius:1.5rem 0 0 1.5rem;;height:2.8rem;top:0rem;position:absolute;line-height: 2.8rem;padding: 0rem 1.2rem 0 1rem;}
 	.user .user-set-box .user-set{background:rgba(0,0,0,0.4);border-radius:100%;width:2.8rem;height:2.8rem;top:0rem;position:absolute;left:1.2rem;}
 	.user .user-set-box .user-set .icon-shezhi{font-size:1.7rem;line-height:2.8rem;text-align:center;display:block}
@@ -1439,17 +1439,18 @@ h4.title-hrbg hr{background:#f6f6f9;height:1px;border:0;position:absolute;left:0
 .index-weixin-box h3{font-size:1.6rem;color:#fe3939;text-align:center;}
 .index-weixin-box.active,.index-bg-box.active{display:block;}
 
-/*快捷导航*/
-.commom-nav{position:fixed;right:-82%;top:66%;width:82%;z-index:12;margin-right:4.5rem;}
-.commom-nav.active{right:-4.5rem;}
-.commom-nav .left-icon .nav-icon{position:relative; width:4.5rem;background:rgba(0,0,0,0.7);border-radius:0.5rem 0 0 0.5rem;font-size:1rem;color:#fff; padding: .6rem .2rem .6rem 1.6rem;    margin-top: 2.9rem;}
-.commom-nav .left-icon .icon-jiantou1{position: absolute;left:.4rem;top:28.6%;color:#fff;font-size:1.3rem;-moz-transform: rotate(-180deg);-webkit-transform: rotate(-180deg);-ms-transform: rotate(-180deg);-o-transform: rotate(-180deg);transform: rotate(-180deg);}
-.commom-nav .left-icon .icon-jiantou1.active{-moz-transform: rotate(0deg);-webkit-transform: rotate(0deg);-ms-transform: rotate(0deg);-o-transform: rotate(0deg);transform: rotate(0deg);}
-.commom-nav .right-cont{background:#fff;border-radius:0.5rem 0 0 0.5rem;padding:1rem .6rem;}
-.commom-nav .right-cont .nav-cont{overflow:hidden;}
-.commom-nav .right-cont .nav-cont li{width:25%;float:left;text-align: center;    padding: 0.2rem 0;} 
-.commom-nav .right-cont .nav-cont li i{font-size:2rem;color:#666;    font-weight: 600;}
-.commom-nav .right-cont .nav-cont li p{font-size:1rem; color:#666;margin-top: .1rem;text-overflow:ellipsis; overflow:hidden; white-space:nowrap;}
-.common-show{position:fixed; width:100%;height:100%; left:100%; right:0; top: 0; bottom: 0; z-index: 11; background:rgba(0,0,0,0.4);display:none}
-.common-show.active{display:block;left:0;}
-.filter-top span{font-size:1rem;display: block;text-align: center;padding-top: .7rem;color:#fff;}
+
+
+ .header-menu i{font-size:2.9rem; }
+ .nav-box img{width:2.2rem;}
+.new-footer-box{padding:0.6rem 0;}
+.new-footer-box i{font-size:2rem;display:block;text-align:center;}
+.new-footer-box span{font-size:1.3rem;display:block;text-align:center;padding-top:0rem;margin-top:-0.5rem}
+.new-footer-box-1 span{margin-top:0rem}
+.new-index-footer{ background-color: rgba(254, 253, 252, 0.96);   left: 0;right: 0;position: fixed;z-index: 4;overflow: hidden;margin: 0 auto;bottom: 0;z-index: 4;box-shadow: 1px 5px 15px rgba(50,50,50,0.3);    max-width: 640px;}
+.new-index-header{ background-color: rgba(50, 50, 50, 0.6);   left: 0;right: 0;position: fixed;z-index: 4;overflow: hidden;margin: 0 auto;top: 0rem;z-index: 5;}
+.new-footer-box li .nav-cont{color:#777}
+.new-footer-box li .nav-cont.active{color:#fe3939}
+ .j-nav-content{display:none;background-color: rgba(255, 255, 255, 1);border-bottom:1px solid #f6f6f9;overflow: hidden;margin: 0 auto;top: 0rem;z-index: 5; }
+.j-nav-content.active{display:block;}
+.j-nav-content .new-footer-box i,.j-nav-content .new-footer-box span{color:#777;}

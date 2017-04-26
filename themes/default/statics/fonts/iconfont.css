@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1492743118692'); /* IE9*/
-  src: url('iconfont.eot?t=1492743118692#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1492743118692') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1492743118692') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1492743118692#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1493193541913'); /* IE9*/
+  src: url('iconfont.eot?t=1493193541913#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1493193541913') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1493193541913') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1493193541913#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -37,6 +37,8 @@
 
 .icon-weibo:before { content: "\e62e"; }
 
+.icon-weibiaoti11:before { content: "\e668"; }
+
 .icon-fanhui:before { content: "\e620"; }
 
 .icon-quanbudingdan:before { content: "\e604"; }
@@ -48,6 +50,8 @@
 .icon-more:before { content: "\e610"; }
 
 .icon-viewlist:before { content: "\e61d"; }
+
+.icon-jiantou2:before { content: "\e677"; }
 
 .icon-icon-paihang:before { content: "\e663"; }
 
@@ -72,6 +76,8 @@
 .icon-kefu:before { content: "\e618"; }
 
 .icon-geren:before { content: "\e60c"; }
+
+.icon-jiantou1:before { content: "\e666"; }
 
 .icon-gengduo:before { content: "\e623"; }
 
@@ -177,6 +183,8 @@
 
 .icon-yingyangbaojian:before { content: "\e659"; }
 
+.icon-fuwu-copy:before { content: "\e667"; }
+
 .icon-shoujiyanzheng:before { content: "\e61c"; }
 
 .icon-kefu1:before { content: "\e6cd"; }
@@ -189,7 +197,7 @@
 
 .icon-yanjing:before { content: "\e631"; }
 
-.icon-weibiaoti11:before { content: "\e62a"; }
+.icon-weibiaoti12:before { content: "\e62a"; }
 
 .icon-xiaoxi1:before { content: "\e63a"; }
 
@@ -226,6 +234,8 @@
 .icon-wode-copy:before { content: "\e665"; }
 
 .icon-jiantouxia:before { content: "\e65d"; }
+
+.icon-anquan:before { content: "\e669"; }
 
 .icon-shouhuodizhi:before { content: "\e662"; }
 

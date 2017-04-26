@@ -564,6 +564,9 @@ $(".j-fengxiang-box").click(function(){
 							$(".fengxiang-img-box").removeClass("active");
 							$(".fengxing-bg").removeClass("active");
 						});	
+								$(".j-nav-box").on("click",function() {
+		$(".j-nav-content").toggleClass("active");
+	});
 });
 
 
