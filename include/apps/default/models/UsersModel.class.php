@@ -1464,7 +1464,7 @@ class UsersModel extends BaseModel {
      * @param   bool    $is_gb_deposit  是否团购保证金（如果是，应付款金额只计算商品总额和支付费用，可以获得的积分取 $gift_integral）
      * @return  array
      */
-    function order_fee($order, $goods, $consignee) {
+    function order_fee($order, $goods, $consignee, $flow_type = '') {
         /* 初始化订单的扩展code */
         if (!isset($order['extension_code'])) {
             $order['extension_code'] = '';
@@ -1583,10 +1583,13 @@ class UsersModel extends BaseModel {
                 }
 
                 // 查看购物车中是否全为免运费商品，若是则把运费赋为零
-                $sql = 'SELECT count(*) as count FROM ' . $this->pre . "cart WHERE  `session_id` = '" . SESS_ID . "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0";
+                 if($flow_type ==  CART_TEAM_GOODS){
+                    $sql = 'SELECT count(*) as count FROM ' . $this->pre . "cart WHERE  `session_id` = '" . SESS_ID . "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0 and is_selected = 1";                   
+                }else{
+                    $sql = 'SELECT count(*) as count FROM ' . $this->pre . "cart WHERE  `session_id` = '" . SESS_ID . "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0 AND rec_type != 5 and is_selected = 1";
+                }
                 $res = $this->row($sql);
-                $shipping_count = $res['count'];
-
+                $shipping_count = $res['count'];              
                 $total['shipping_fee'] = ($shipping_count == 0 AND $weight_price['free_shipping'] == 1) ? 0 : shipping_fee($shipping_info['shipping_code'], $shipping_info['configure'], $weight_price['weight'], $total['goods_price'], $weight_price['number']);
 
                 if (!empty($order['need_insure']) && $shipping_info['insure'] > 0) {

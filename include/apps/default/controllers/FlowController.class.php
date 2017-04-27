@@ -536,7 +536,7 @@ class FlowController extends CommonController {
         }
 
         //计算订单的费用
-        $total = model('Users')->order_fee($order, $cart_goods, $consignee);
+        $total = model('Users')->order_fee($order, $cart_goods, $consignee, $flow_type);
 
         $this->assign('total', $total);
         $this->assign('shopping_money', sprintf(L('shopping_money'), $total ['formated_goods_price']));
@@ -560,7 +560,11 @@ class FlowController extends CommonController {
         $cod_disabled = true;
 
         // 查看购物车中是否全为免运费商品，若是则把运费赋为零
-        $condition = "`session_id` = '" . SESS_ID . "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0 and is_selected =1";
+        if($flow_type ==  CART_TEAM_GOODS){
+            $condition = "`session_id` = '" . SESS_ID . "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0 and is_selected =1";
+        }else{
+            $condition = "`session_id` = '" . SESS_ID . "' AND `extension_code` != 'package_buy' AND rec_type != 5 AND `is_shipping` = 0 and is_selected =1";
+        }
         $shipping_count = $this->model->table('cart')->field('count(*)')->where($condition)->getOne();
         foreach ($shipping_list as $key => $val) {
 
@@ -1040,7 +1044,8 @@ class FlowController extends CommonController {
             $shipping_info = model('Shipping')->shipping_area_info($order ['shipping_id'], $regions);
 
             /* 计算订单的费用 */
-            $total = model('Users')->order_fee($order, $cart_goods, $consignee);
+
+            $total = model('Users')->order_fee($order, $cart_goods, $consignee, $flow_type);
             $this->assign('total', $total);
 
             /* 取得可以得到的积分和红包 */
