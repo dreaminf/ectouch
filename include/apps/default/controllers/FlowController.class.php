@@ -468,14 +468,16 @@ class FlowController extends CommonController {
      * 订单确认
      */
     public function checkout() {
-        /* 取得购物类型 */
+        /* 取得购物类型 */  
         $flow_type = isset($_SESSION ['flow_type']) ? intval($_SESSION ['flow_type']) : CART_GENERAL_GOODS;
         /* 团购标志 */
         if ($flow_type == CART_GROUP_BUY_GOODS) {
             $this->assign('is_group_buy', 1);
         } /* 积分兑换商品 */ elseif ($flow_type == CART_EXCHANGE_GOODS) {
             $this->assign('is_exchange_goods', 1);
-        } else {
+        } elseif($flow_type == CART_TEAM_GOODS){
+            $this->assign('is_team_goods', 1);
+        }else {
             // 正常购物流程 清空其他购物流程情况
             $_SESSION ['flow_order'] ['extension_code'] = '';
         }

@@ -145,6 +145,7 @@
           </ul>
         </div>
         <!-- {/if} 是否使用包装 --> 
+        <!--{if $is_team_goods != 1}-->
         <!-- {if $card_list} 是否有贺卡 --> 
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
         <div class="n-checkout-select-cont b-color-f"> <p>{$lang.goods_card}</p>
@@ -166,8 +167,10 @@
         </div>
       </section>
       <!-- {/if} 是否使用贺卡 --> 
+      <!-- {/if} 是否是拼团商品 -->
       <!-- {/if} 是否有包装 或贺卡 -->
       <section class=" checkout-select n-checkout-select m-top10"> 
+      <!--{if $is_team_goods != 1}-->
 	  <!-- {if $allow_use_bonus and $bonus_list} 是否使用红包 -->
 	 	<a data-toggle="collapse" data-parent="#accordion" href="#collapseBonus">
        <div class="n-checkout-select-cont b-color-f">  <p>{$lang.use_bonus}</p>
@@ -187,6 +190,7 @@
           </ul>
         </div>
         <!-- {/if} 是否使用红包 -->
+        <!-- {/if} 是否是拼团商品 -->
         <!-- {if $allow_use_surplus} 是否使用余额 --> 
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour1">
       <div class="n-checkout-select-cont b-color-f">   <p>{$lang.use_surplus}</p>
@@ -196,7 +200,7 @@
           <input name="surplus" type="text" id="ECS_SURPLUS" size="10" value="{$order.surplus|default:0}" onblur="changeSurplus(this.value)" {if $disable_surplus}disabled="disabled"{/if} />
         </div>
         <!-- {/if} 是否使用余额 --> 
-        
+         <!--{if $is_team_goods != 1}-->
         <!-- {if $allow_use_integral} 是否使用积分 --> 
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive1">
         <div class="n-checkout-select-cont b-color-f"> <p>{$lang.use_integral}</p>
@@ -206,7 +210,7 @@
           <input name="integral" type="text" class="input" id="ECS_INTEGRAL" onblur="changeIntegral(this.value)" value="{$order.integral|default:0}" size="10" />
         </div>
         <!-- {/if} 是否使用积分 --> 
-        
+        <!-- {/if} 是否是拼团商品 -->
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
        <div class="n-checkout-select-cont b-color-f">  <p>{$lang.order_postscript}</p>
         <i class="fa fa-angle-down"></i></div> </a>
