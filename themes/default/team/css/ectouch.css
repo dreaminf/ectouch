@@ -541,7 +541,7 @@ html,body,.con{overflow-x: hidden;max-width:640px;min-width: 320px;margin:0 auto
 	.goods-bg-box.active{display:block;}
     .goods-list-close{text-align: center;bottom:1rem;    left: 50%;margin-left:-1rem;}
     .goods-list-close i{font-size:2.6rem;color:#ddd;}
-
+	.goods-not-sale{display:block; padding:1rem 0;position:fixed;z-index:4999;width:100%;bottom:0;background:#eee;box-shadow: 1px 5px 15px rgba(50,50,50,0.3);}
 	/*goods-footer*/
 	.filter-btn{ width:100%; left:0; right:0; bottom:0; box-sizing: border-box; position:fixed; z-index: 11; background:#fafafc; }
 	.filter-btn-pos{ width:100%;  box-sizing: border-box;  background:#fff; box-shadow: 0px -2px 5px rgba(50,50,50,0.1);background:#f7f7f7;}
@@ -1454,3 +1454,4 @@ h4.title-hrbg hr{background:#f6f6f9;height:1px;border:0;position:absolute;left:0
  .j-nav-content{display:none;background-color: rgba(255, 255, 255, 1);border-bottom:1px solid #f6f6f9;overflow: hidden;margin: 0 auto;top: 0rem;z-index: 5; }
 .j-nav-content.active{display:block;}
 .j-nav-content .new-footer-box i,.j-nav-content .new-footer-box span{color:#777;}
+

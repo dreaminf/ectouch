@@ -488,6 +488,9 @@
 				<!--飞入购物车小图s-->	
 				<div id="flyItem" class="fly_item"><img src="{$goods.goods_img}" width="35" height="35"></div>
 				<!--飞入购物车小图e-->
+				<!--{if $on_sale == 0}-->
+				<section class="text-c font-07 col-9 goods-not-sale" >该商品已下架</section>
+				<!--{else}-->
 				<section class="goods-attr">
 					<section class="filter-btn dis-box mr-auto">
 						<a href="{:url('flow/cart')}" class="filter-btn-flow filter-btn-a">
@@ -511,7 +514,7 @@
 								</p>
 							</a>
 							<!--{else}-->	
-<div class="dis-box">							
+                        <div class="dis-box">							
 							<a href="javascript:;" class="box-flex btn-p btn-cart text-c">
 								<h4 class="font-06">加入购购车</h4>
 								
@@ -663,7 +666,7 @@
 					</section>
 
 				</section>
-
+			<!--{/if}-->
 			</div>
 		</div>
 		<div class="goods-scoll-bg"></div>
