@@ -81,11 +81,13 @@
 							</div>
 						</li>
 						<!-- {/foreach} -->
-						
+						<!-- {if $favourable_list} -->
+						<a href="{:url('flow/label_favourable')}" class="text-c font-05 col-7" style="padding:1.2rem 0;background:#fcf8e3">{$lang.show_favourable}</a>
+						<!--{/if}-->
 					</ul>
 				</section>
 			</div>
-		</div>
+		</div>	
 		<!--悬浮btn star-->
 		<section class="folw-fixed-footer">
 			<section class="filter-btn-pos f-cart-filter-btn position-rel dis-box pos-sta maxbox">
