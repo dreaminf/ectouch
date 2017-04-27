@@ -36,9 +36,6 @@ class GoodsController extends CommonController
      */
     public function index()
     {
-        //商品是否已下架
-        $on_sale = $this->model->table('goods')->field('is_on_sale')->where(array("goods_id"=>$this->goods_id))->getOne();
-        $this->assign('on_sale', $on_sale);
         // 获得商品的信息
         $goods = model('Goods')->get_goods_info($this->goods_id);
         //购物车商品数量
