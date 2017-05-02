@@ -8,6 +8,50 @@
 
 		<!--字体图标库-->
 		<link rel="stylesheet" href="__TPL__/team/css/ectouch.css" />
+		{if $is_wechat}
+		<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js" ></script>
+		<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+		<script type="text/javascript">
+		    // 分享内容
+		    var shareContent = {
+		        title: '{$meta_keywords}',
+		        desc: '{$meta_description}',
+		        link: '',
+		        imgUrl: '{if $page_img}{$page_img}{else}{$shop_url}__TPL__/images/wxsdk.png{/if}'
+		    };
+		    $(function(){
+		        var url = window.location.href;
+		        var jsConfig = {
+		            debug: false,
+		            jsApiList: [
+		                'onMenuShareTimeline',
+		                'onMenuShareAppMessage',
+		                'onMenuShareQQ',
+		                'onMenuShareWeibo',
+		                'onMenuShareQZone'
+		            ]
+		        };
+		        $.post("{:url('wechat/jssdk')}", {url: url}, function (res) {
+		            if(res.status == 200){
+		                jsConfig.appId = res.data.appId;
+		                jsConfig.timestamp = res.data.timestamp;
+		                jsConfig.nonceStr = res.data.nonceStr;
+		                jsConfig.signature = res.data.signature;
+		                // 配置注入
+		                wx.config(jsConfig);
+		                // 事件注入
+		                wx.ready(function () {
+		                    wx.onMenuShareTimeline(shareContent);
+		                    wx.onMenuShareAppMessage(shareContent);
+		                    wx.onMenuShareQQ(shareContent);
+		                    wx.onMenuShareWeibo(shareContent);
+		                    wx.onMenuShareQZone(shareContent);
+		                });
+		            }
+		        }, 'json');
+		    })
+		</script>
+		{/if}
 	</head>
 
 	<body>
