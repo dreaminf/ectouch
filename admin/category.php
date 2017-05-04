@@ -351,7 +351,8 @@ if ($_REQUEST['act'] == 'update')
             if ($gallery_thumb === false) {
                 sys_msg($image->error_msg(), 1, array(), false);
             }
-            if(empty($cat_id['cat_image'])){
+            $data = $db->getRow("SELECT cat_image FROM ". $ecs->table('touch_category') . " WHERE cat_id = '$cat_id'");
+            if(empty($data['cat_image'])){
                 $sql = "INSERT INTO " . $ecs->table('touch_category') . "(`cat_id`,`cat_image`)VALUES('$cat_id','$gallery_thumb')";
                 $db->query($sql);
             }else{
