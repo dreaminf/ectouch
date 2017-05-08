@@ -189,7 +189,7 @@ class UsersModel extends BaseModel {
             $affiliate = unserialize(C('affiliate'));
             if (isset($affiliate['on']) && $affiliate['on'] == 1) {
                 // 推荐开关开启
-                $up_uid = model('Users')->get_affiliate();
+                $up_uid = get_affiliate();
                 empty($affiliate) && $affiliate = array();
                 $affiliate['config']['level_register_all'] = intval($affiliate['config']['level_register_all']);
                 $affiliate['config']['level_register_up'] = intval($affiliate['config']['level_register_up']);
@@ -1759,41 +1759,41 @@ class UsersModel extends BaseModel {
      * @return int
      * @author xuanyan
      * */
-    function get_affiliate() {
-        if (!empty($_COOKIE['ecshop_affiliate_uid'])) {
-            $uid = intval($_COOKIE['ecshop_affiliate_uid']);
-            if ($this->row('SELECT user_id FROM ' . $this->pre . "users WHERE user_id = '$uid'")) {
-                return $uid;
-            } else {
-                setcookie('ecshop_affiliate_uid', '', 1);
-            }
-        }
-        elseif($_SESSION['user_id'] !== 0){
-            //推荐 by ecmoban
-            $reg_info = $this->model->table('users')->field('reg_time, parent_id')->where('user_id = '.$_SESSION['user_id'])->find();
-            //推荐信息
-            $config = unserialize(C('affiliate'));
-            if (!empty($config['config']['expire'])) {
-                if ($config['config']['expire_unit'] == 'hour') {
-                    $c = 1;
-                } elseif ($config['config']['expire_unit'] == 'day') {
-                    $c = 24;
-                } elseif ($config['config']['expire_unit'] == 'week') {
-                    $c = 24 * 7;
-                } else {
-                    $c = 1;
-                }
-                //有效时间
-                $eff_time = 3600 * $config['config']['expire'] * $c;
-                //有效时间内
-                if(gmtime() - $reg_info['reg_time'] <= $eff_time){
-                    return $reg_info['parent_id'];
-                }
-            }
-        }
+    // function get_affiliate() {
+    //     if (!empty($_COOKIE['ecshop_affiliate_uid'])) {
+    //         $uid = intval($_COOKIE['ecshop_affiliate_uid']);
+    //         if ($this->row('SELECT user_id FROM ' . $this->pre . "users WHERE user_id = '$uid'")) {
+    //             return $uid;
+    //         } else {
+    //             setcookie('ecshop_affiliate_uid', '', 1);
+    //         }
+    //     }
+    //     elseif($_SESSION['user_id'] !== 0){
+    //         //推荐 by ecmoban
+    //         $reg_info = $this->model->table('users')->field('reg_time, parent_id')->where('user_id = '.$_SESSION['user_id'])->find();
+    //         //推荐信息
+    //         $config = unserialize(C('affiliate'));
+    //         if (!empty($config['config']['expire'])) {
+    //             if ($config['config']['expire_unit'] == 'hour') {
+    //                 $c = 1;
+    //             } elseif ($config['config']['expire_unit'] == 'day') {
+    //                 $c = 24;
+    //             } elseif ($config['config']['expire_unit'] == 'week') {
+    //                 $c = 24 * 7;
+    //             } else {
+    //                 $c = 1;
+    //             }
+    //             //有效时间
+    //             $eff_time = 3600 * $config['config']['expire'] * $c;
+    //             //有效时间内
+    //             if(gmtime() - $reg_info['reg_time'] <= $eff_time){
+    //                 return $reg_info['parent_id'];
+    //             }
+    //         }
+    //     }
 
-        return 0;
-    }
+    //     return 0;
+    // }
     /**
      * 检查是否为第三方用户
      * @param type $user_id
@@ -1820,10 +1820,9 @@ class UsersModel extends BaseModel {
         }
         */
         // 手机独立模式
-        $sql = 'SELECT u.user_name FROM ' . $this->pre . 'users u LEFT JOIN ' . $this->pre .
+        $sql = 'SELECT u.user_name, u.user_id FROM ' . $this->pre . 'users u LEFT JOIN ' . $this->pre .
                 'touch_user_info t ON t.user_id = u.user_id WHERE t.aite_id = "' . $aite_id . '" ';
-        $res = $this->row($sql);
-        return $res['user_name'];
+        return $this->row($sql);
     }
 
     /**
@@ -1848,6 +1847,47 @@ class UsersModel extends BaseModel {
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * 查询社会化登录用户信息
+     * @param string $unionid
+     * @return array
+     */
+    function get_connect_user($unionid) {
+        $sql = "SELECT u.user_name, u.user_id FROM {pre}users u, {pre}connect_user cu WHERE u.user_id = cu.user_id AND cu.open_id = '" . $unionid. "' order by u.user_id DESC ";
+        return $this->row($sql);
+    }
+
+    /**
+     * 同步社会化登录用户信息表
+     * @param  [type] $res, $type:qq,sina,wechat
+     * @return
+     */
+    function update_connnect_user($res, $type = '')
+    {
+        $data = array(
+            'connect_code' => 'sns_' . $type,
+            'user_id' => $res['user_id'],
+            'open_id' => $res['unionid'],
+            'access_token' => $res['access_token'],
+            'expires_in' => $res['expires_in'],
+            'profile' => serialize($res),
+            'create_at' => gmtime()
+        );
+        // 查询是否绑定
+        $where = array('open_id' => $res['unionid']);
+        $connect_userinfo = $this->model->table('connect_user')->field('user_id')->where($where)->order('user_id DESC')->find();
+
+        if($res['user_id'] > 0){
+            if (empty($connect_userinfo)) {
+                // 未绑定插入记录
+                $this->model->table('connect_user')->data($data)->insert();
+            } else {
+                // 已经绑定更新记录
+                $this->model->table('connect_user')->data($data)->where($where)->update();
+            }
         }
     }
 

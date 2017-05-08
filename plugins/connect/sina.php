@@ -47,7 +47,7 @@ if (isset($set_modules) && $set_modules == TRUE) {
     $modules[$i]['version'] = '1.0';
 
     // 更新日期
-    $modules[$i]['date'] = '2014-10-03';
+    $modules[$i]['date'] = '2017-05-05';
 
     /* 配置信息 */
     $modules[$i]['config'] = array(
@@ -68,8 +68,8 @@ class sina {
     /**
      * 构造函数
      *
-     * @param unknown $app            
-     * @param string $access_token            
+     * @param unknown $app
+     * @param string $access_token
      */
     public function __construct($conf, $access_token = NULL) {
         $this->client_id = $conf['app_key'];
@@ -78,59 +78,48 @@ class sina {
     }
 
     /**
-     * 请求登录
+     * 获取授权地址
      *
-     * @param unknown $info            
-     * @param unknown $url            
+     * @param unknown $info
+     * @param unknown $url
      * @return mixed
      */
-    public function act_login($info, $url) {
-        $login_url = $this->login_url($url, $this->scope);
-        $login_url = str_replace('&amp;', '&', $login_url);
-        return $login_url;
+    public function act_login($callback_url) {
+        $login_url = $this->login_url($callback_url, $this->scope);
+        return str_replace('&amp;', '&', $login_url);
     }
 
     /**
-     * 回调
+     * 回调用户数据
      *
-     * @param unknown $info            
-     * @param unknown $url            
-     * @param unknown $code            
+     * @param unknown $info
+     * @param unknown $url
+     * @param unknown $code
      * @return boolean
      */
-    public function call_back($info, $url, $code, $type) {
-        $result = $this->access_token($url, $code);
+    public function call_back($callback_url, $code) {
+        $result = $this->access_token($callback_url, $code);
         if (isset($result['access_token']) && $result['access_token'] != '') {
             // 保存登录信息，此示例中使用session保存
-           $this->access_token = $result['access_token']; // access token echo '授权完成，请记录<br/>access token：<input size="50" value="', $result['access_token'], '">' . $_SESSION['qq_t'];
+            $this->access_token = $result['access_token']; // access token
             $openid = $this->get_openid();
-            // 获取用户信息
             $userinfo = $this->get_user_info($openid);
-            // 处理数据
-            $userinfo['aite_id'] = $type . '_' . $openid; // 添加登录标示
-            $_SESSION['avatar'] = $userinfo['profile_image_url']; // 保存头像
-            $user = init_users();
-            if ($userinfo['user_name'] = model('Users')->get_one_user($userinfo['aite_id'])) {
-                // 已有记录
-                $user->set_session($userinfo['user_name']);
-                $user->set_cookie($userinfo['user_name']);
-                model('Users')->update_user_info();
-                model('Users')->recalculate_price();
-
-                return $url;
+            if($userinfo['gender'] == 'f'){
+                $userinfo['gender'] = 1;
+            }elseif ($userinfo['gender'] == 'm'){
+                $userinfo['gender'] = 2;
+            }else {
+                $userinfo['gender'] = 0;
             }
-            $userinfo['user_name'] = substr(strtoupper($userinfo['aite_id']), 0, 8);
-            if ($user->check_user($userinfo['user_name'])) {
-                $userinfo['user_name'] = $userinfo['user_name'] . rand(1000, 9999); // 重名处理
-            }
-            $userinfo['email'] = empty($userinfo['email']) ? substr($openid, -6) . '@' . get_top_domain() : $userinfo['email'];
-            // 插入数据库
-            model('Users')->third_reg($userinfo);
-            $user->set_session($userinfo['user_name']);
-            $user->set_cookie($userinfo['user_name']);
-            model('Users')->update_user_info();
-            model('Users')->recalculate_price();
-            return $url;
+            $_SESSION['nickname'] = $this->get_user_name($userinfo);
+            $_SESSION['avatar'] = $userinfo['profile_image_url'];
+            $data = array(
+                'openid' => $openid,
+                'name' => $this->get_user_name($userinfo),
+                'sex' => $userinfo['gender'],
+                'avatar' => $userinfo['profile_image_url']
+            );
+            return $data;
         } else {
             // echo "授权失败";
             return false;
@@ -140,7 +129,7 @@ class sina {
     /**
      * 生成授权网址
      *
-     * @param unknown $callback_url            
+     * @param unknown $callback_url
      * @return string
      */
     public function login_url($callback_url) {
@@ -155,8 +144,8 @@ class sina {
     /**
      * 获取access token
      *
-     * @param unknown $callback_url            
-     * @param unknown $code            
+     * @param unknown $callback_url
+     * @param unknown $code
      * @return Ambigous <multitype:, mixed>
      */
     public function access_token($callback_url, $code) {
@@ -186,7 +175,7 @@ class sina {
     /**
      * 根据uid获取用户信息
      *
-     * @param unknown $uid            
+     * @param unknown $uid
      * @return Ambigous <multitype:, mixed>
      */
     public function get_user_info($uid) {
@@ -198,11 +187,11 @@ class sina {
     /**
      * 获取用户名
      *
-     * @param unknown $user_info            
+     * @param unknown $user_info
      * @return Ambigous <multitype:, mixed>
      */
 	public function get_user_name($userinfo){
-		
+
 		if($userinfo['screen_name'] != ''){
 			return $userinfo['screen_name'];
 			}
@@ -213,8 +202,8 @@ class sina {
     /**
      * 发布微博
      *
-     * @param unknown $img_c            
-     * @param string $pic            
+     * @param unknown $img_c
+     * @param string $pic
      * @return Ambigous <multitype:, mixed>
      */
     public function update($img_c, $pic = '') {
@@ -233,9 +222,9 @@ class sina {
     /**
      * 根据uid获取用户微博列表
      *
-     * @param unknown $uid            
-     * @param number $count            
-     * @param number $page            
+     * @param unknown $uid
+     * @param number $count
+     * @param number $page
      * @return Ambigous <multitype:, mixed>
      */
     public function user_timeline($uid, $count = 10, $page = 1) {
@@ -250,9 +239,9 @@ class sina {
     /**
      * 调用接口
      *
-     * @param unknown $url            
-     * @param unknown $params            
-     * @param string $method            
+     * @param unknown $url
+     * @param unknown $params
+     * @param string $method
      * @return Ambigous <multitype:, mixed>
      *         //示例：根据uid获取用户信息
      *         $result=$sina->api('users/show', array('uid'=>$uid), 'GET');
@@ -307,10 +296,10 @@ class sina {
     /**
      * 提交请求
      *
-     * @param unknown $url            
-     * @param string $postfields            
-     * @param string $method            
-     * @param unknown $headers            
+     * @param unknown $url
+     * @param string $postfields
+     * @param string $method
+     * @param unknown $headers
      * @return Ambigous <multitype:, mixed>
      */
     private function http($url, $postfields = '', $method = 'GET', $headers = array()) {

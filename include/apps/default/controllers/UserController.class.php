@@ -1683,6 +1683,7 @@ class UserController extends CommonController {
                 $rs = 1;
             }
             echo json_encode(array('status' => $rs));
+            exit();
         } elseif (!IS_AJAX && IS_GET) {
             $rec_id = I('get.rec_id', 0);
             if ($rec_id > 0) {
@@ -1695,6 +1696,7 @@ class UserController extends CommonController {
             $this->redirect(url('collection_list'));
         } else {
             echo json_encode(array('status' => 0));
+            exit();
         }
     }
 
@@ -1754,6 +1756,7 @@ class UserController extends CommonController {
                 $rs = 1;
             }
             echo json_encode(array('status' => $rs));
+            exit();
         } elseif (IS_GET && !IS_AJAX) {
             $id = I('get.id', 0);
             if ($id > 0) {
@@ -1766,6 +1769,7 @@ class UserController extends CommonController {
             $this->redirect(url('comment_list'));
         } else {
             echo json_encode(array('status' => 0));
+            exit();
         }
     }
 
@@ -2082,32 +2086,150 @@ class UserController extends CommonController {
         if (file_exists($file)) {
             include_once ($file);
         } else {
-            show_message(L('process_false'), L('relogin_lnk'), url('login', array(
-                'referer' => urlencode($this->back_act)
-                    )), 'error');
+            show_message(L('process_false'), L('relogin_lnk'), url('login', array('referer' => urlencode($this->back_act))), 'error');
         }
-		$_GET['backurl'] = empty($_GET['backurl']) ? __URL__ : $_GET['backurl'];
-        $url = __URL__ . '/index.php?m=default&c=user&a=third_login&type=' . $type . '&backurl=' . urlencode($_GET['backurl']) . '&u='.$_GET['u'];
+        if (empty($this->back_act) && isset($GLOBALS['_SERVER']['HTTP_REFERER'])) {
+            $this->back_act = $GLOBALS['_SERVER']['HTTP_REFERER'];
+        }
+
+        $back_url = empty($this->back_act) ? __URL__ : $this->back_act;
+        $url = __URL__ . '/index.php?m=default&c=user&a=third_login&type=' . $type . '&backurl=' . urlencode($back_url) . '&u='.$_GET['u'];
+
         $info = model('ClipsBase')->get_third_user_info($type);
         // 判断是否安装
         if (!$info) {
             show_message(L('no_register_auth'), L('relogin_lnk'), url('login', array('referer' => urlencode($this->back_act))), 'error');
         }
         $obj = new $type($info);
-        if ($_GET['code'] && $_GET['code'] != '') {
-            // 授权成功 返回登录
-            if ($url = $obj->call_back($info, $_GET['backurl'], $_GET['code'], $type)) {
-                $url = empty($url) ? url('index/index') : $url;
-                $this->redirect($url);
+
+        // 授权回调
+        if (isset($_GET['code']) && $_GET['code'] != '') {
+            if ($res = $obj->call_back($url, $_GET['code'])) {
+
+                $res['unionid'] = $res['openid'];
+                $res['type'] = $type;
+                // 处理推荐u参数
+                $up_uid = get_affiliate();  // 获得推荐uid
+                $res['parent_id'] = (!empty($_GET['u']) && $_GET['u'] == $up_uid) ? intval($_GET['u']) : 0;
+
+                $_SESSION['unionid'] = $res['unionid'];
+                $_SESSION['parent_id'] = $res['parent_id'];
+                // 授权登录
+                if ($this->oauthLogin($res) === true) {
+                    $this->redirect($back_url);
+                }
+
+                // 自动注册
+                $this->doRegister($res, $type, $back_url);
             } else {
                 show_message(L('process_false'), L('relogin_lnk'), url('login', array('referer' => urlencode($this->back_act))), 'error');
             }
+            return;
         } else {
             // 开始授权登录
-            $url = $obj->act_login($info, $url);
+            $url = $obj->act_login($url);
             ecs_header("Location: " . $url . "\n");
             exit();
         }
+
+    }
+
+    /**
+     * 授权自动登录
+     * @param unknown $res
+     */
+    private function oauthLogin($res)
+    {
+        // 兼容原touch_user_info表
+        $aite_id = $res['type'] . '_' . $res['unionid'];
+        $old_userinfo = model('Users')->get_one_user($aite_id);
+        if(!empty($old_userinfo)){
+            // 同步社会化登录表
+            $res['user_id'] = $old_userinfo['user_id'];
+            model('Users')->update_connnect_user($res, $res['type']);
+            // 删除旧表信息
+            $where['user_id'] = $old_userinfo['user_id'];
+            $this->model->table('touch_user_info')->where($where)->delete();
+        }
+
+        // 查询新用户
+        $userinfo = model('Users')->get_connect_user($res['unionid']);
+        // print_r($userinfo);
+        // exit;
+        // 已经绑定过的 授权自动登录
+        if ($userinfo) {
+            $this->doLogin($userinfo['user_name']);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 设置成登录状态
+     * @param unknown $username
+     */
+    private function doLogin($username)
+    {
+        ECTouch::user()->set_session($username);
+        ECTouch::user()->set_cookie($username);
+        model('Users')->update_user_info();
+        model('Users')->recalculate_price();
+    }
+
+    /**
+     * 自动授权注册
+     * @param $res
+     * @param string $back_url
+     */
+    private function doRegister($res, $type = '', $back_url = '')
+    {
+        $username = substr(md5($res['unionid']), -2) . time() . rand(100, 999);
+        $password = mt_rand(100000, 999999);
+        $email = $username . '@qq.com';
+        $extends = array(
+            'parent_id' => $res['parent_id']
+        );
+
+        // 查询是否绑定
+        $userinfo = model('Users')->get_connect_user($res['unionid']);
+
+        if(empty($userinfo)){
+            if (model('Users')->register($username, $password, $email, $extend) !== false) {
+
+                // 同步社会化登录用户信息表
+                $res['user_id'] = $_SESSION['user_id'];
+                model('Users')->update_connnect_user($res, $type);
+                // 更新用户信息
+                model('Users')->update_user_info();
+
+                // 更新微信用户绑定信息
+                // if(class_exists('WechatController') && is_wechat_browser()){
+                if(class_exists('WechatController')){
+                    // 查找微信用户是否已经绑定过
+                    $result = $this->model->table('wechat_user')->where(array('ect_uid' => $_SESSION['user_id']))->order('ect_uid DESC')->find();
+                    if (!empty($result)) {
+                        show_message(L('msg_account_bound'), L('msg_go_back'), '', 'error');
+                    }
+                    if (isset($_SESSION['unionid']) && !empty($_SESSION['unionid'])) {
+                        $sql = "UPDATE {pre}wechat_user SET ect_uid = '".$_SESSION['user_id']."'  WHERE openid = '".$_SESSION['openid']."' OR unionid = '" . $_SESSION['unionid']."' ";
+                        $this->model->query($sql);
+                    }
+                }
+                // exit('注册成功');
+                // $this->doLogin($username);
+                // 跳转链接
+                $back_url = empty($back_url) ? url('user/index') : $back_url;
+                $this->redirect($back_url);
+            } else {
+                show_message(L('msg_author_register_error'), L('msg_re_registration'), url('index'), 'error');
+            }
+            return;
+
+        } else {
+            show_message(L('msg_account_bound'), L('msg_go_back'), url('user/index'), 'error');
+        }
+        return;
     }
 
     /**
@@ -2140,10 +2262,7 @@ class UserController extends CommonController {
                 }
 
                 $where['mobile_phone'] = $mobile;
-                $user_id = $this->model->table('users')
-                        ->field('user_id')
-                        ->where($where)
-                        ->getOne();
+                $user_id = $this->model->table('users')->field('user_id')->where($where)->getOne();
 
                 $this->assign('uid', $user_id);
                 $this->assign('mobile', base64_encode($mobile));
@@ -2386,8 +2505,10 @@ class UserController extends CommonController {
         if (IS_AJAX && IS_AJAX) {
             setcookie('ECS[history]', '', 1);
             echo json_encode(array('status' => 1));
+            exit();
         } else {
             echo json_encode(array('status' => 0));
+            exit();
         }
     }
 
@@ -2978,8 +3099,10 @@ class UserController extends CommonController {
 			$this->model->table('users')->data($data)->where($condition)->update();
 			unset($_SESSION['flow_consignee']);
             echo json_encode(array('status' => 1));
+            exit();
         } else {
             echo json_encode(array('status' => 0));
+            exit();
          }
 
 	}

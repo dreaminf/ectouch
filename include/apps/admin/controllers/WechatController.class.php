@@ -167,12 +167,8 @@ class WechatController extends AdminController
             $this->message(L('wechat_editor') . L('success'), U('modify'));
         }
 
-        $data = $this->model->table('wechat')
-            ->where($condition)
-            ->find();
-        if($data){
-            $data['oauth_redirecturi'] = __URL__;
-        }
+        $data = $this->model->table('wechat')->where($condition)->find();
+        $data['oauth_redirecturi'] = !empty($data['oauth_redirecturi']) ? $data['oauth_redirecturi'] :  __URL__;
 
         $this->assign('data', $data);
         $this->display();

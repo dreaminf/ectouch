@@ -987,6 +987,35 @@ function set_affiliate($u = '') {
 }
 
 /**
+ * 获取推荐uid
+ *
+ * @access  public
+ * @param   void
+ *
+ * @return int
+ * @author xuanyan
+ **/
+function get_affiliate()
+{
+    if (!empty($_COOKIE['ecshop_affiliate_uid']))
+    {
+        $uid = intval($_COOKIE['ecshop_affiliate_uid']);
+        $uid = M()->table('users')->field('user_id')->where('user_id = ' . $uid)->getOne();
+        if ($uid)
+        {
+            return $uid;
+        }
+        else
+        {
+            setcookie('ecshop_affiliate_uid', '', 1);
+        }
+    }
+
+    return 0;
+}
+
+
+/**
  * 授权信息内容
  *
  * @return  str
@@ -1574,7 +1603,7 @@ function exchange_points($uid, $fromcredits, $tocredits, $toappid, $netamount) {
  * @param  $title 提醒标题
  * @param  $msg 提醒内容
  * @param  $url 页面链接 base64_decode(urldecode($url));
- * @param  $order_id 订单id 
+ * @param  $order_id 订单id
  *
  */
 function send_wechat_message($type = '', $title = '', $msg = '', $url = '', $order_id = '') {
@@ -1623,7 +1652,7 @@ function get_goods_count($goods_id)
         $ext = " AND o . add_time > '" . local_strtotime(' - 1 months') . "'";
     }
   /* 查询该商品销量 */
-      
+
 
     $sql = 'SELECT IFNULL(SUM(g.goods_number), 0) as count ' .
         'FROM '. M()->pre .'order_info AS o, '. M()->pre .'order_goods AS g ' .
@@ -1632,17 +1661,17 @@ function get_goods_count($goods_id)
         " AND o . shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)) .
         " AND o . pay_status " . db_create_in(array(PS_PAYED, PS_PAYING)) .
         " AND g . goods_id = '$goods_id'";
-    $result = M()->getRow($sql);  
+    $result = M()->getRow($sql);
     $sql_goods = "SELECT virtual_sales FROM " . M()->pre .'goods' . " WHERE goods_id = '$goods_id'";
-    $rs = M()->getRow($sql_goods); 
+    $rs = M()->getRow($sql_goods);
     $virtual_sales = $rs["virtual_sales"];
-        
+
      $result["count"] += $virtual_sales;
     //$result += M()->getRow($sql_goods);
     //dump($result);exit;
     return $result['count'];
 }
- 
+
 /**
  * 得到新服务单号
  * @return  string
@@ -1653,4 +1682,4 @@ function get_service_sn() {
 
     return date('Ymd') . str_pad(mt_rand(1, 99999), 3, '0',STR_PAD_LEFT);
 }
-    
+

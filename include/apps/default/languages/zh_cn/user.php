@@ -465,6 +465,17 @@ $_LANG['sel_question'] = '请选择密码提示问题';
 $_LANG['passwd_answer'] = '问题答案';
 $_LANG['passwd_balnk'] = '密码中不能包含空格';
 
+// 绑定
+$_LANG['msg_go_back'] = '返回上一页';
+$_LANG['msg_authoriza_error'] = '授权回调失败';
+$_LANG['msg_input_namepwd'] = '请输入用户名或密码';
+$_LANG['msg_account_bound'] = '当前账号已经绑定了哦';
+$_LANG['msg_account_bound_fail'] = '账号绑定失败';
+$_LANG['msg_rebound'] = '重新绑定';
+$_LANG['msg_bound_account'] = '绑定已有帐号';
+$_LANG['msg_author_register_error'] = '授权注册失败';
+$_LANG['msg_re_registration'] = '重新注册';
+
 /* 用户中心默认页面 */
 $_LANG['user_center'] = '个人中心';
 $_LANG['welcome_to'] = '欢迎您回到';
