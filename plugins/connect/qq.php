@@ -117,12 +117,12 @@ class qq {
                 $userinfo['gender'] = 0;
             }
             $_SESSION['nickname'] = $this->get_user_name($userinfo);
-            $_SESSION['avatar'] = $userinfo['figureurl_qq_2'] ? $userinfo['figureurl_qq_2'] : $userinfo['figureurl_qq_1'];
+            $_SESSION['headimgurl'] = $userinfo['figureurl_qq_2'] ? $userinfo['figureurl_qq_2'] : $userinfo['figureurl_qq_1'];
             $data = array(
                 'openid' => $openid,
-                'name' => $this->get_user_name($userinfo),
+                'nickname' => $this->get_user_name($userinfo),
                 'sex' => $userinfo['gender'],
-                'avatar' => $userinfo['figureurl_qq_2'] ? $userinfo['figureurl_qq_2'] : $userinfo['figureurl_qq_1']
+                'headimgurl' => $userinfo['figureurl_qq_2'] ? $userinfo['figureurl_qq_2'] : $userinfo['figureurl_qq_1']
             );
             return $data;
         } else {

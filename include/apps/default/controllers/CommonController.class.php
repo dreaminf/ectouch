@@ -230,9 +230,9 @@ class CommonController extends BaseController
 		if(isset($_GET['origin']) && $_GET['origin'] == 'app'){
 			$openid = I('get.openid');
 			$token = I('get.token');
-			$sql= "select cu.token,u.user_name from " . $this->model->pre . "connect_user as cu LEFT JOIN "  . $this->model->pre . "users as u on cu.user_id = u.user_id where open_id = '$openid' ";
+			$sql= "select cu.access_token,u.user_name from " . $this->model->pre . "connect_user as cu LEFT JOIN "  . $this->model->pre . "users as u on cu.user_id = u.user_id where open_id = '$openid' ";
 			$user = $this->model->getRow($sql);
-			if($token == $user['token']){
+			if($token == $user['access_token']){
 				ECTouch::user()->set_cookie($user['user_name']);
 				ECTouch::user()->set_session($user['user_name']);
 			}

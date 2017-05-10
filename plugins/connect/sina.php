@@ -112,12 +112,12 @@ class sina {
                 $userinfo['gender'] = 0;
             }
             $_SESSION['nickname'] = $this->get_user_name($userinfo);
-            $_SESSION['avatar'] = $userinfo['profile_image_url'];
+            $_SESSION['headimgurl'] = $userinfo['profile_image_url'];
             $data = array(
                 'openid' => $openid,
-                'name' => $this->get_user_name($userinfo),
+                'nickname' => $this->get_user_name($userinfo),
                 'sex' => $userinfo['gender'],
-                'avatar' => $userinfo['profile_image_url']
+                'headimgurl' => $userinfo['profile_image_url']
             );
             return $data;
         } else {

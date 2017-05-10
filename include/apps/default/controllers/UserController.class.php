@@ -2106,20 +2106,20 @@ class UserController extends CommonController {
         if (isset($_GET['code']) && $_GET['code'] != '') {
             if ($res = $obj->call_back($url, $_GET['code'])) {
 
-                $res['unionid'] = $res['openid'];
-                $res['type'] = $type;
                 // 处理推荐u参数
                 $up_uid = get_affiliate();  // 获得推荐uid
                 $res['parent_id'] = (!empty($_GET['u']) && $_GET['u'] == $up_uid) ? intval($_GET['u']) : 0;
 
+                $res['unionid'] = $res['openid'];
                 $_SESSION['unionid'] = $res['unionid'];
                 $_SESSION['parent_id'] = $res['parent_id'];
+
                 // 授权登录
-                if ($this->oauthLogin($res) === true) {
+                if ($this->oauthLogin($res, $type) === true) {
                     $this->redirect($back_url);
                 }
 
-                // 自动注册
+                // 未登录注册 则自动注册
                 $this->doRegister($res, $type, $back_url);
             } else {
                 show_message(L('process_false'), L('relogin_lnk'), url('login', array('referer' => urlencode($this->back_act))), 'error');
@@ -2138,15 +2138,24 @@ class UserController extends CommonController {
      * 授权自动登录
      * @param unknown $res
      */
-    private function oauthLogin($res)
+    private function oauthLogin($res, $type)
     {
+        // 兼容原users表aite_id
+        // $aite_id = $res['type'] . '_' . $res['unionid'];
+        // $users = $this->model->table('users')->field('user_id')->where(array('aite_id' => $aite_id))->find();
+        // if(!empty($users)){
+        //     // 同步社会化登录表
+        //     $res['user_id'] = $users['user_id'];
+        //     model('Users')->update_connnect_user($res, $type);
+        // }
+
         // 兼容原touch_user_info表
         $aite_id = $res['type'] . '_' . $res['unionid'];
         $old_userinfo = model('Users')->get_one_user($aite_id);
         if(!empty($old_userinfo)){
             // 同步社会化登录表
             $res['user_id'] = $old_userinfo['user_id'];
-            model('Users')->update_connnect_user($res, $res['type']);
+            model('Users')->update_connnect_user($res, $type);
             // 删除旧表信息
             $where['user_id'] = $old_userinfo['user_id'];
             $this->model->table('touch_user_info')->where($where)->delete();
@@ -2154,11 +2163,24 @@ class UserController extends CommonController {
 
         // 查询新用户
         $userinfo = model('Users')->get_connect_user($res['unionid']);
-        // print_r($userinfo);
-        // exit;
         // 已经绑定过的 授权自动登录
         if ($userinfo) {
             $this->doLogin($userinfo['user_name']);
+            // 更新会员信息
+            // $user_data = array(
+            //     'nick_name' => $res['nickname'],
+            //     'sex' => $res['sex'],
+            //     'user_picture' => $res['headimgurl'],
+            //     );
+            // $this->model->table('users')->data($user_data)->where(array('user_id' => $userinfo['user_id']))->update();
+            // 更新社会化登录用户信息
+            $res['user_id'] = !empty($userinfo['user_id']) ? $userinfo['user_id'] : $_SESSION['user_id'];
+            model('Users')->update_connnect_user($res, $type);
+            // 更新微信用户信息
+            if(class_exists('WechatController') && is_wechat_browser()){
+                $res['openid'] = session('openid');
+                model('Users')->update_wechat_user($res);
+            }
             return true;
         } else {
             return false;
@@ -2188,12 +2210,14 @@ class UserController extends CommonController {
         $password = mt_rand(100000, 999999);
         $email = $username . '@qq.com';
         $extends = array(
-            'parent_id' => $res['parent_id']
+            'parent_id' => $res['parent_id'],
+            'nick_name' => $res['nickname'],
+            'sex' => $res['sex'],
+            'user_picture' => $res['headimgurl'],
         );
 
         // 查询是否绑定
         $userinfo = model('Users')->get_connect_user($res['unionid']);
-
         if(empty($userinfo)){
             if (model('Users')->register($username, $password, $email, $extend) !== false) {
 
@@ -2204,17 +2228,14 @@ class UserController extends CommonController {
                 model('Users')->update_user_info();
 
                 // 更新微信用户绑定信息
-                // if(class_exists('WechatController') && is_wechat_browser()){
-                if(class_exists('WechatController')){
+                if(class_exists('WechatController') && is_wechat_browser()){
                     // 查找微信用户是否已经绑定过
-                    $result = $this->model->table('wechat_user')->where(array('ect_uid' => $_SESSION['user_id']))->order('ect_uid DESC')->find();
+                    $result = $this->model->table('wechat_user')->where(array('ect_uid' => $_SESSION['user_id'], 'wechat_id' => 1))->find();
                     if (!empty($result)) {
                         show_message(L('msg_account_bound'), L('msg_go_back'), '', 'error');
                     }
-                    if (isset($_SESSION['unionid']) && !empty($_SESSION['unionid'])) {
-                        $sql = "UPDATE {pre}wechat_user SET ect_uid = '".$_SESSION['user_id']."'  WHERE openid = '".$_SESSION['openid']."' OR unionid = '" . $_SESSION['unionid']."' ";
-                        $this->model->query($sql);
-                    }
+                    $res['openid'] = session('openid');
+                    model('Users')->update_wechat_user($res);
                 }
                 // exit('注册成功');
                 // $this->doLogin($username);

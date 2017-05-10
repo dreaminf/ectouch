@@ -1856,37 +1856,84 @@ class UsersModel extends BaseModel {
      * @return array
      */
     function get_connect_user($unionid) {
-        $sql = "SELECT u.user_name, u.user_id FROM {pre}users u, {pre}connect_user cu WHERE u.user_id = cu.user_id AND cu.open_id = '" . $unionid. "' order by u.user_id DESC ";
+        $sql = "SELECT u.user_name, u.user_id, u.parent_id FROM {pre}users u, {pre}connect_user cu WHERE u.user_id = cu.user_id AND cu.open_id = '" . $unionid. "' ";
         return $this->row($sql);
     }
 
     /**
-     * 同步社会化登录用户信息表
+     * 更新社会化登录用户信息
      * @param  [type] $res, $type:qq,sina,wechat
      * @return
      */
     function update_connnect_user($res, $type = '')
     {
+        // 组合数据
+        $profile = array(
+            'nickname' => $res['nickname'],
+            'sex' => $res['sex'],
+            'province' => $res['province'],
+            'city' => $res['city'],
+            'country' => $res['country'],
+            'headimgurl' => $res['headimgurl'],
+        );
+        $type = $type == 'weixin' ? 'wechat' : 'weixin'; // 兼容统一命名wechat
         $data = array(
             'connect_code' => 'sns_' . $type,
             'user_id' => $res['user_id'],
             'open_id' => $res['unionid'],
-            'access_token' => $res['access_token'],
-            'expires_in' => $res['expires_in'],
-            'profile' => serialize($res),
-            'create_at' => gmtime()
+            'profile' => serialize($profile)
         );
-        // 查询是否绑定
-        $where = array('open_id' => $res['unionid']);
-        $connect_userinfo = $this->model->table('connect_user')->field('user_id')->where($where)->order('user_id DESC')->find();
-
-        if($res['user_id'] > 0){
+        if($res['user_id'] > 0 && $res['unionid']){
+            // 查询
+            $connect_userinfo = $this->get_connect_user($res['unionid']);
             if (empty($connect_userinfo)) {
-                // 未绑定插入记录
+                // 新增记录
+                $data['create_at'] = gmtime();
                 $this->model->table('connect_user')->data($data)->insert();
             } else {
-                // 已经绑定更新记录
-                $this->model->table('connect_user')->data($data)->where($where)->update();
+                // 更新记录
+                $this->model->table('connect_user')->data($data)->where(array('open_id' => $res['unionid']))->update();
+            }
+            if
+        }
+    }
+
+    /**
+     * 更新微信用户信息
+     * @param array    $info 微信用户信息
+     * @param string   $wechat_id  公众号ID
+     * @return
+     */
+    function update_wechat_user($info, $wechat_id = '')
+    {
+        //公众号id
+        $wechat = $this->model->table('wechat')->field('id')->where(array('type' => 2, 'status' => 1, 'default_wx' => 1))->find();
+        $wechat_id = !empty($wechat_id) ? $wechat_id : $wechat['id'];
+        // 组合数据
+        $data = array(
+            'wechat_id' => $wechat_id,
+            'openid'    => $info['openid'],
+            'nickname'  => !empty($info['nickname']) ? $info['nickname'] : '',
+            'sex'       => !empty($info['sex']) ? $info['sex'] : 0,
+            'language'  => !empty($info['language']) ? $info['language'] : '',
+            'city'      => !empty($info['city']) ? $info['city'] : '',
+            'province'  => !empty($info['province']) ? $info['province'] : '',
+            'country'   => !empty($info['country']) ? $info['country'] : '',
+            'headimgurl' => !empty($info['headimgurl']) ? $info['headimgurl'] : '',
+            'unionid'   => $info['unionid'],
+            'ect_uid'   => !empty($info['user_id']) ? $info['user_id'] : 0,
+        );
+        // unionid 微信开放平台唯一标识
+        if(!empty($info['unionid'])){
+            // 查询
+            $where = array('unionid' => $info['unionid'], 'wechat_id' => $wechat_id);
+            $result = $this->model->table('wechat_user')->field('openid, unionid')->where($where)->find();
+            if (empty($result)) {
+                // 新增记录
+                $this->model->table('wechat_user')->data($data)->insert();
+            } else {
+                // 更新记录
+                $this->model->table('wechat_user')->data($data)->where($where)->update();
             }
         }
     }
