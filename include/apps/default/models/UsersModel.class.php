@@ -1894,7 +1894,6 @@ class UsersModel extends BaseModel {
                 // 更新记录
                 $this->model->table('connect_user')->data($data)->where(array('open_id' => $res['unionid']))->update();
             }
-            if
         }
     }
 
