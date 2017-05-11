@@ -120,6 +120,9 @@ class weixin {
                     'sex' => $userinfo['sex'],
                     'headimgurl' => $userinfo['headimgurl']
                 );
+                if(is_wechat_browser()) {
+                    $this->update_wechat_unionid($userinfo);
+                }
                 return $data;
             } else {
                 // echo '获取授权信息失败';
@@ -130,5 +133,26 @@ class weixin {
         }
     }
 
+    public function update_wechat_unionid($info)
+    {
+        //公众号id
+        $wechat = model('Base')->model->table('wechat')->field('id')->where(array('status' => 1, 'default_wx' => 1))->find();
+        $wechat_id = $wechat['id'];
+        // 组合数据
+        $data = array(
+            'wechat_id' => $wechat_id,
+            'openid' => $info['openid'],
+            'unionid' => $info['unionid']
+        );
+        // unionid 微信开放平台唯一标识
+        if (!empty($info['unionid'])) {
+            // 兼容查询用户 已经存在wechat_user 且 unionid 为空的情况 用openid 更新一下 unionid
+            $where = array('openid' => $info['openid'], 'wechat_id' => $wechat_id);
+            $res = model('Base')->model->table('wechat_user')->field('ect_uid, openid, unionid')->where($where)->find();
+            if(!empty($res['ect_uid']) && empty($res['unionid']) ){
+                model('Base')->model->table('wechat_user')->data($data)->where($where)->update();
+            }
+        }
+    }
 
 }
