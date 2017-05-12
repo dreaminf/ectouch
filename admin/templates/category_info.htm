@@ -145,6 +145,11 @@
               <input type="file" name="category_image" size="45" />
         <span class="notice-span" style="display:block" id="warn_brandlogo">
         </span>
+        {if $cat_info.cat_image}
+          <div style="margin-top: 10px;">
+            <img height="100" width="100" ectype="cat_image" src="../{$cat_info.cat_image}">
+          </div>
+        {/if}
           </td>
       </tr>
 

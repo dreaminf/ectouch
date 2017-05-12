@@ -637,7 +637,7 @@ if ($_REQUEST['act'] == 'remove')
  */
 function get_cat_info($cat_id)
 {
-    $sql = "SELECT * FROM " .$GLOBALS['ecs']->table('category'). " WHERE cat_id='$cat_id' LIMIT 1";
+    $sql = "SELECT c.* ,tc.cat_image FROM " .$GLOBALS['ecs']->table('category')." as c left join  ". $GLOBALS['ecs']->table('touch_category') ." as tc on c.cat_id = tc.cat_id WHERE c.cat_id='$cat_id' LIMIT 1";
     return $GLOBALS['db']->getRow($sql);
 }
 
