@@ -82,7 +82,16 @@ class CategoryBaseModel extends BaseModel {
                 if ($row['is_show']) {
                     $three_arr[$row['cat_id']]['id'] = $row['cat_id'];
                     $three_arr[$row['cat_id']]['name'] = $row['cat_name'];
-                    $row['cat_img'] =  $this->get_cat_goods_img($row['cat_id']);
+                    //如果上传分类图片则使用上传的图片，没有上传分类图片使用默认的分类图片
+                    if($row['cat_id']) {
+                        $sql = 'SELECT t.cat_image' .' FROM ' . $this->pre . 'touch_category as t ' ." WHERE t.cat_id = ".$row['cat_id'] . " group by id desc limit 0 , 1";
+                         $imgres = $this->model->getRow($sql);
+                         if(!empty($imgres['cat_image'])){
+                            $row['cat_img'] =$imgres['cat_image'];
+                        }else{
+                            $row['cat_img'] =  $this->get_cat_goods_img($row['cat_id']);
+                        }                            
+                    }
                     $three_arr[$row['cat_id']]['img'] = get_image_path(0,$row['cat_img'],false);
                     $three_arr[$row['cat_id']]['url'] = url('category/index', array('id' => $row['cat_id']));
                 }
