@@ -23,7 +23,7 @@ $smarty->assign('lang', $_LANG);
 if (isset($_REQUEST['act']) && ($_REQUEST['act'] == 'query' ||  $_REQUEST['act'] == 'download'))
 {
     /* 检查权限 */
-    check_authz_json('sale_order_stats');
+    check_authz_json('sale_list');
     if (strstr($_REQUEST['start_date'], '-') === false)
     {
         $_REQUEST['start_date'] = local_date('Y-m-d', $_REQUEST['start_date']);
@@ -74,7 +74,7 @@ if (isset($_REQUEST['act']) && ($_REQUEST['act'] == 'query' ||  $_REQUEST['act']
 else
 {
     /* 权限判断 */
-    admin_priv('sale_order_stats');
+    admin_priv('sale_list');
     /* 时间参数 */
     if (!isset($_REQUEST['start_date']))
     {

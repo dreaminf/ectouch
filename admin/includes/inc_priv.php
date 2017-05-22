@@ -114,16 +114,15 @@ if (!defined('IN_ECTOUCH'))
 	/* by Leah end*/
 
 //报表统计权限
-    $purview['flow_stats']           = 'client_flow_stats';
-    $purview['report_guest']         = 'client_flow_stats';
-    $purview['report_users']         = 'client_flow_stats';
-    $purview['visit_buy_per']        = 'client_flow_stats';
-    $purview['searchengine_stats']   = 'client_flow_stats';
-    $purview['report_order']         = 'sale_order_stats';
-    $purview['report_sell']          = 'sale_order_stats';
-    $purview['sale_list']            = 'sale_order_stats';
-    $purview['sell_stats']           = 'sale_order_stats';
-
+    //$purview['flow_stats']           = 'client_flow_stats';
+    $purview['report_guest']         = 'report_guest';
+    $purview['report_users']         = 'report_users';
+    //$purview['visit_buy_per']        = 'client_flow_stats';
+    //$purview['searchengine_stats']   = 'client_flow_stats';
+    $purview['report_order']         = 'report_order';
+    $purview['report_sell']          = 'report_sell';
+    $purview['sale_list']            = 'sale_list';
+    $purview['sell_stats']           = 'sell_stats';
 
 //模板管理
     $purview['02_template_select']   = 'template_select';

@@ -36,7 +36,7 @@ else
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'list')
 {
-    admin_priv('sale_order_stats');
+    admin_priv('report_order');
 
     /* 随机的颜色数组 */
     $color_array = array('33FF66', 'FF6600', '3399FF', '009966', 'CC3399', 'FFCC33', '6699CC', 'CC3366');

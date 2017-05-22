@@ -20,7 +20,7 @@ require_once(BASE_PATH . 'languages/' . $_CFG['lang'] . '/admin/statistic.php');
 $smarty->assign('lang', $_LANG);
 
 /* 权限判断 */
-admin_priv('sale_order_stats');
+admin_priv('report_sell');
 
 /* act操作项的初始化 */
 if (empty($_REQUEST['act']) || !in_array($_REQUEST['act'], array('list', 'download')))

@@ -35,7 +35,7 @@ else
 if ($_REQUEST['act'] == 'list')
 {
     /* 权限判断 */
-    admin_priv('client_flow_stats');
+    admin_priv('report_guest');
 
     /* 取得会员总数 */
     $users      =& init_users();

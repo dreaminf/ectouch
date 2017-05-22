@@ -40,6 +40,14 @@ INSERT INTO `ecs_admin_action` (`action_id`, `parent_id`, `action_code`, `releva
 (166, 162, 'view_sendlist', ''),
 (167, 162, 'captcha_manage', ''),
 (168, 162, 'upgrade', '');
+INSERT INTO `ecs_admin_action` (`action_id`, `parent_id`, `action_code`, `relevance`) VALUES
+(169, 0, 'menu_stats', ''),
+(170, 169, 'report_guest', ''),
+(171, 169, 'report_order', ''),
+(172, 169, 'report_sell', ''),
+(173, 169, 'sale_list', ''),
+(174, 169, 'sell_stats', ''),
+(175, 169, 'report_users', '');
 --
 -- 表的结构 `ecs_touch_activity`
 --
