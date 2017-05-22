@@ -2092,7 +2092,7 @@ class UserController extends CommonController {
             $this->back_act = $GLOBALS['_SERVER']['HTTP_REFERER'];
         }
 
-        $back_url = empty($this->back_act) ? __URL__ : $this->back_act;
+        $back_url = empty($_GET['backurl']) ? __URL__ : $_GET['backurl'];
         $url = __URL__ . '/index.php?m=default&c=user&a=third_login&type=' . $type . '&backurl=' . urlencode($back_url) . '&u='.$_GET['u'];
 
         $info = model('ClipsBase')->get_third_user_info($type);
