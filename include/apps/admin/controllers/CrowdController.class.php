@@ -116,8 +116,8 @@ class CrowdController extends AdminController {
         if (empty($id)) {
             $this->message(L('menu_select_del'), NULL, 'error');
         }
-        $this->model->table('crowd_goods')
-                ->where(array('goods_id' => $id))
+        $this->model->table('crowd_plan')
+                ->where(array('cp_id' => $id))
                 ->delete();
         $this->message(L('drop') . L('success'), url('category_list'));
     }
