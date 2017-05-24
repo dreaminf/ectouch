@@ -2663,9 +2663,6 @@ class UserController extends CommonController {
         $this->assign('cause_list', model('Users')->get_parent_cause()); //退换货原因
         $this->assign('order', $order);
         $this->assign('goods', $goods);
-        $goods_return_price = $goods['goods_price'] - ($order['bonus']+$order['integral_money']+$order['discount'])*($goods['goods_price']/($order['goods_amount']));
-        $goods_return_price = round($goods_return_price,2);
-        $this->assign('goods_return_price', $goods_return_price);
         if ($id == ST_EXCHANGE) {
             /*换货时商品信息*/
             $goods_info = model('Goods')->get_goods_info($goods['goods_id']);
@@ -2769,7 +2766,6 @@ class UserController extends CommonController {
         /* 判断是否重复提交申请退换货 */
         $rec_id = empty($_REQUEST['rec_id']) ? '' : $_REQUEST['rec_id'];
         $order_id = empty($_REQUEST['order_id']) ? '' : $_REQUEST['order_id'];
-        $total_exchange_goods = empty($_REQUEST['total_exchange_goods']) ? '' : $_REQUEST['total_exchange_goods'];
         $num = 0;
 
         if ($rec_id) {
@@ -2823,7 +2819,7 @@ class UserController extends CommonController {
                 $order_return['city'] = $order['city'];
                 $order_return['district'] = $order['district'];
                 $order_return['address'] = $order['address'];
-                $order_return['should_return'] = $total_exchange_goods;/*应退金额*/
+                $order_return['should_return'] = intval(I('post.back_num')) * $goods['goods_price'];/*应退金额*/
             };
             /* 插入退换货表 */
             $this->model->table('order_return ')->data($order_return)->insert();
