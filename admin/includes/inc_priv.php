@@ -177,6 +177,19 @@ if (!defined('IN_ECTOUCH'))
     $purview['07_ranking'] = 'drp_ranking';
     $purview['08_drp_log'] = 'drp_log';
 /*DRP_END*/
+//众筹
+    $purview['team'] = 'team';
+    $purview['01_team_index'] = 'team_index';
+    $purview['02_team_add'] = 'team_add';
+    $purview['03_team_order'] = 'team_order';
+//拼团
+    $purview['crowd'] = 'crowd_index';  
+    $purview['01_crowd'] = 'crowd';
+    $purview['02_crowd_category_list'] =  'crowd_category_list';
+    $purview['03_crowd_order_list'] = 'crowd_order_list';
+    $purview['04_crowd_message_list'] = 'crowd_message_list';
+    $purview['05_crowd_article_list'] = 'crowd_article_list';
+
 // 微信通
     $purview['ext_wechat'] = 'ext_wechat';
     $purview['01_wechat_config'] = 'wechat_config';

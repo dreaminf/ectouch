@@ -173,6 +173,20 @@ $_LANG['drp_ranking'] = '分销商排行榜';
 $_LANG['drp_log'] = '佣金提现管理';
 /*DRP_END*/
 
+//拼团
+$_LANG['team']         = '拼团';
+$_LANG['team_index']        = '频道列表';
+$_LANG['team_add']      = '添加频道';
+$_LANG['team_order']    = '拼团订单';
+
+//众筹
+$_LANG['crowd_index']  = '众筹 ';
+$_LANG['crowd']         = '微筹项目列表';
+$_LANG['crowd_category_list']        = '微筹分类';
+$_LANG['crowd_order_list']      = '微筹订单列表';
+$_LANG['crowd_message_list']    = '微筹订单评论';
+$_LANG['crowd_article_list']  = '问答中心 ';
+
 $_LANG['ext_wechat'] = '微信通';
 $_LANG['wechat_config'] = '公众号设置';
 $_LANG['wechat_masssend'] = '群发消息';

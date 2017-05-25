@@ -41,6 +41,17 @@ INSERT INTO `ecs_admin_action` (`action_id`, `parent_id`, `action_code`, `releva
 (166, 162, 'view_sendlist', ''),
 (167, 162, 'captcha_manage', ''),
 (168, 162, 'upgrade', '');
+INSERT INTO `ecs_admin_action` (`action_id`, `parent_id`, `action_code`, `relevance`) VALUES
+(172, 0, 'team', ''),
+(173, 172, 'team_index', ''),
+(174, 172, 'team_add', ''),
+(175, 172, 'team_order', ''),
+(176, 0, 'crowd_index', ''),
+(177, 176, 'crowd', ''),
+(178, 176, 'crowd_category_list', ''),
+(179, 176, 'crowd_order_list', ''),
+(180, 176, 'crowd_message_list', ''),
+(181, 176, 'crowd_article_list', '');
 --
 -- 表的结构 `ecs_touch_activity`
 --
