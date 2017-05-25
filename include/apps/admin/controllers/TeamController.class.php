@@ -44,10 +44,7 @@ class TeamController extends AdminController {
             $cat_id1 = $this->model->table('team_category')->field('parent_id')->where(array('id' => $data[parent_id]))->find();
             $cat_id2 = $this->model->table('team_category')->field('parent_id')->where(array('id' => $data[id]))->find();
 
-            //修改时顶级分类不能成为二级分类
-            if(($data['id'] != $data['parent_id'] && $data['id'] != '') && ($cat_id1['parent_id'] == 0 && $cat_id2['parent_id'] == 0)){
-                $this->message("当前分类是顶级分类,不能修改为下级分类", url('team/add' ,array('id' => $data['id'])));  
-            }
+           
             //不能修改当前分类为自己的下级分类
             if(($data['id'] == $data['parent_id']) && $data['id'] != 0 ){
                 $this->message("不能修改当前分类为自己的下级分类", url('team/add' ,array('id' => $data['id'])));
