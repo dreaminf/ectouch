@@ -277,11 +277,11 @@ class WechatController extends CommonController
                 }
                 // 注册微信资料
                 $data['ect_uid'] = $_SESSION['user_id'];
-                $data['parent_id'] = $scene_user_id;
+                //$data['parent_id'] = $scene_user_id;
             } else {
                 // 更新微信资料
                 $data['ect_uid'] = $userinfo['user_id'];
-                $data['parent_id'] = $userinfo['parent_id'];
+                //$data['parent_id'] = $userinfo['parent_id'];
             }
             // 新增微信粉丝
             $this->model->table('wechat_user')->data($data)->insert();
