@@ -268,6 +268,39 @@ class PaymentModel extends BaseModel {
             }
         }
     }
+   
+    /**
+     * 修改众筹订单的支付状态
+     *
+     * @access  public
+     * @param   string  $log_id     支付编号
+     * @param   integer $pay_status 状态
+     * @param   string  $note       备注
+     * @return  void
+     */
+    function crowd_order_paid($log_id, $pay_status = PS_PAYED, $note = '') {
+        /* 取得支付编号 */
+        $log_id = intval($log_id);
+        if($log_id > 0) {
+            //取得要修改的支付记录信息
+            $sql = "SELECT * FROM " . $this->pre ."pay_log WHERE log_id = '$log_id'";
+            $pay_log = $this->row($sql);
+            if($pay_log && $pay_log['is_paid'] == 0) {
+                /* 修改此次支付操作的状态为已付款 */
+                $sql = 'UPDATE ' . $this->pre ."pay_log SET is_paid = '1' WHERE log_id = '$log_id'";
+                $this->query($sql);
+                /* 取得订单信息 */
+                $sql = 'SELECT order_id, user_id, order_sn, consignee, address, mobile, shipping_id, extension_code, extension_id, goods_amount ' .
+                'FROM ' . $this->pre ."crowd_order_info WHERE order_id = '$pay_log[order_id]'";
+                $order = $this->row($sql);
+                $order_id = $order['order_id'];
+                $order_sn = $order['order_sn'];
+                /* 修改订单状态为已付款 */
+                $sql = 'UPDATE ' . $this->pre ."crowd_order_info SET order_status = '" . OS_CONFIRMED . "', " ." confirm_time = '" . gmtime() . "', " ." pay_status = '$pay_status', " ." pay_time = '" . gmtime() . "', " ." money_paid = order_amount," ." order_amount = 0 " ."WHERE order_id = '$order_id'";
+                $this->query($sql);
+            }
+        }       
+    }
     /**
      * 根据out_trade_no订单号获取log_id;
      */
