@@ -305,10 +305,14 @@ class MY_FlowController extends FlowController {
 
         //验证拼团不参与分销
         if($flow_type != CART_TEAM_GOODS){
+            //验证上级是否是分销商，店铺审核通过开启，计算分成
+            $drp_shop  = model('Sale')->is_drp_shop($order ['user_id']);
             // 更新佣金信息
-            model('Sale')->update_order_sale($new_order_id);
-        }
+            if($drp_shop['id'] > 0){
+                 model('Sale')->update_order_sale($new_order_id);
+            }
 
+        }
 
         /* 修改拍卖活动状态 */
         if ($order ['extension_code'] == 'auction') {

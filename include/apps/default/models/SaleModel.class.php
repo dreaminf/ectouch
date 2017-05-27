@@ -175,7 +175,7 @@ class SaleModel extends BaseModel {
             $res[$k]['amount'] = $v['user_money'];
             $res[$k]['change_type'] = $v['change_type'] == DRP_SEPARATE ? '佣金分成' : '佣金提现';
 			if($v['order_id'] > 0){
-				$res[$k]['order_status'] = $this->get_order_status($v['order_id']);				
+				$res[$k]['order_status'] = $this->get_order_status($v['order_id']);
 			}
         }
         return $res;
@@ -184,13 +184,13 @@ class SaleModel extends BaseModel {
 	 function get_order_status($order_id) {
         /* 取得订单列表 */
         $arr = array();
-        $sql = "SELECT order_status, shipping_status, pay_status " .               
+        $sql = "SELECT order_status, shipping_status, pay_status " .
                 " FROM " . $this->pre . "order_info WHERE order_id = $order_id ". $pay  ;
         $res = M()->query($sql);
-        foreach ($res as $key => $value) {          
-			$value['shipping_status'] = ($value['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $value['shipping_status'];	
+        foreach ($res as $key => $value) {
+			$value['shipping_status'] = ($value['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $value['shipping_status'];
 			$value['order_status'] = L('os.' . $value['order_status']) . ',' . L('ps.' . $value['pay_status']) . ',' . L('ss.' . $value['shipping_status']);
-            $arr[] = array(               
+            $arr[] = array(
                 'order_status' => $value['order_status']
              );
         }
@@ -253,7 +253,7 @@ class SaleModel extends BaseModel {
 
         return $arr;
     }
-	
+
 	function get_sale_goods_detai($where, $user_id) {
         /* 取得订单列表 */
         $arr = array();
@@ -265,7 +265,7 @@ class SaleModel extends BaseModel {
         if($res){
             foreach ($res as $key => $value) {
 
-				
+
                 $value['shipping_status'] = ($value['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $value['shipping_status'];
                 $value['order_status'] = L('os.' . $value['order_status']) . ',' . L('ps.' . $value['pay_status']) . ',' . L('ss.' . $value['shipping_status']);
                 $goods_list = $this->get_order_goods($value['order_id']);
@@ -564,7 +564,7 @@ class SaleModel extends BaseModel {
         if($drp_list){
             $where_drp = '-1';
             foreach($drp_list as $key=>$val){
-                $where_drp.=",".$val['id'];
+                $where_drp.=",".$val['id'];//一级下线分销店铺id
             }
             // 一级订单
             $order_id = M()->table('drp_order_info')->field('order_id')->where('drp_id in('.$where_drp.') and shop_separate='.$separate)->select();
@@ -591,7 +591,7 @@ class SaleModel extends BaseModel {
                 if($drp_list){
                     $where_drp = '-1';
                     foreach($drp_list as $key=>$val){
-                        $where_drp.=",".$val['id'];
+                        $where_drp.=",".$val['id'];//二级下线分销店铺id
                     }
                     $order_id = M()->table('drp_order_info')->field('order_id')->where('drp_id in('.$where_drp.') and shop_separate='.$separate)->select();
 
@@ -600,6 +600,7 @@ class SaleModel extends BaseModel {
                         foreach($order_id as $key=>$val){
                             $where.=",".$val['order_id'];
                         }
+                        // 二级分店利润
                        $data['profit2'] = M()->getRow("select sum(a.user_money) as money from {pre}drp_log as a left join {pre}order_info as o on a.order_id=o.order_id where a.order_id in(".$where.") and a.user_id = ".$user_id ." and a.user_money > 0  and o.pay_status = 2 ");
                         $data['profit2'] = $data['profit2']['money'] ? $data['profit2']['money'] : 0;
 
@@ -748,103 +749,119 @@ class SaleModel extends BaseModel {
                         $data['touch_fencheng'] = $goods_sale['0']['touch_fencheng'];
                         $data['goods_id'] = $val['goods_id'];
                         $data['order_id'] = $order_id;
-                        $this->model->table('drp_order_goods')
-                            ->data($data)
-                            ->insert();
+                        //插入drp_order_goods 分销订单商品记录表
+                        $this->model->table('drp_order_goods')->data($data)->insert();
                         //  获取佣金比例
                         $profit = model('Sale')->get_drp_profit($data['goods_id']);
                         // 分销商三级利润
                         $sale_money['profit1']+= number_format($data['touch_sale']/100*$profit['profit1']*$val['goods_number'],2);
                         $sale_money['profit2']+= number_format($data['touch_sale']/100*$profit['profit2']*$val['goods_number'],2);
-                        $sale_money['profit3']+= number_format($data['touch_sale']/100*$profit['profit3']*$val['goods_number'],2); 
-
+                        $sale_money['profit3']+= number_format($data['touch_sale']/100*$profit['profit3']*$val['goods_number'],2);
                     }
                 }
             }
-            $drp_id = $this->model->table('drp_shop')->where(array('user_id'=>$_SESSION[user_id]))->field('id,audit,open')->find();
-            if(!empty($drp_id['id']))
-            {
-                if($drp_id['audit'] == 1 && $drp_id['open'] == 1)
-                {
-                  $drp_id1 = $drp_id['id'];
-                }
-                else
-                {
-                  $parent_id = M()->table('users')->field('parent_id')->where(array('user_id'=>$_SESSION[user_id]))->getOne();
-                  $drp_id1 = M()->table('drp_shop')->field('id')->where(array('user_id'=>$parent_id))->getOne();                  
-                }
-             }
-             else
-             {
-                  $parent_id = M()->table('users')->field('parent_id')->where(array('user_id'=>$_SESSION[user_id]))->getOne();
-                  $drp_id1 = M()->table('drp_shop')->field('id')->where(array('user_id'=>$parent_id))->getOne();
-             }
-            
+             // 获取订单所属店铺id
+            $drp_id = $this->is_drp_shop($_SESSION['user_id']);
+            //$drp_id = $this->model->table('drp_shop')->where(array('user_id'=>$_SESSION[user_id]))->field('id,audit,open')->find();
+            if(!empty($drp_id['id'])){
+                $drp_id1 = $drp_id['id'];
+            }
+
             unset($data);
             $data['drp_id'] = $drp_id1;
             $data['shop_separate'] = 0;
-            $data['order_id'] = $order_id; 
-            $this->model->table('drp_order_info')
-                ->data($data)
-                ->insert();
-        }  
-             
+            $data['order_id'] = $order_id;
+            //插入订单所属店铺
+            $this->model->table('drp_order_info')->data($data)->insert();
+        }
+
         // 获取订单所属店铺信息
         $drp_id = M()->table('drp_order_info')->field('drp_id')->where('order_id = ' . $order_id)->getOne();
         if($drp_id){
-            // 本店用户id
-            $user_id = M()->table('drp_shop')->field('user_id')->where('id = ' . $drp_id)->getOne();
-            if($user_id){
-                /* 插入帐户变动记录 */
-                $account_log = array(
-                    'user_id'       => $user_id,
-                    'user_money'    => $sale_money['profit1'],
-                    'change_time'   => gmtime(),
-                    'change_desc'   => '订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit1'] ,
-                    'order_id'      =>  $order_id,
-                );
-
-                $this->model->table('drp_log')
-                    ->data($account_log)
-                    ->insert();
-
-                // 一级用户id
-                $parent_id1 = M()->table('users')->field('parent_id')->where('user_id = ' . $user_id)->getOne();
-                if($parent_id1){
-                    /* 插入帐户变动记录 */
+            // 一级用户id
+            $user_info = M()->table('drp_shop')->field('user_id,audit,open')->where('id = ' . $drp_id)->find();
+            if($user_info){
+                if($user_info['audit'] == 1 && $user_info['open'] == 1){
+                    //插入帐户变动记录
                     $account_log = array(
-                        'user_id'       => $parent_id1,
-                        'user_money'    => $sale_money['profit2'],
+                        'user_id'       => $user_info['user_id'],
+                        'user_money'    => $sale_money['profit1'],
                         'change_time'   => gmtime(),
-                        'change_desc'   => '订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit2'] ,
+                        'change_desc'   => '订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit1'] ,
                         'order_id'      =>  $order_id,
                     );
+                    $this->model->table('drp_log')->data($account_log)->insert();
+                }else{
+                    //店铺未审核开启插入帐户无效记录
+                    $account_log = array(
+                        'user_id'       => $user_info['user_id'],
+                        'user_money'    => $sale_money['profit1'],
+                        'change_time'   => gmtime(),
+                        'change_desc'   => '订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit1'] ,
+                        'invalid_desc'   => '店铺未审核或开启',
+                        'order_id'      =>  $order_id,
+                    );
+                    $this->model->table('drp_invalid_log')->data($account_log)->insert();
+                }
 
-                    $this->model->table('drp_log')
-                        ->data($account_log)
-                        ->insert();
-                    // 二级用户id
-                    $parent_id2 = M()->table('users')->field('parent_id')->where('user_id = ' . $parent_id1)->getOne();
-                    if($parent_id2) {
+                // 二级级用户id
+                $user_info = $this->is_drp_shop($user_info['user_id']);
+                //$parent_id1 = M()->table('users')->field('parent_id')->where('user_id = ' . $user_id)->getOne();
+                if($user_info){
+                    if($user_info['audit'] == 1 && $user_info['open'] == 1){
                         /* 插入帐户变动记录 */
                         $account_log = array(
-                            'user_id'       => $parent_id2,
-                            'user_money'    => $sale_money['profit3'],
+                            'user_id'       => $user_info['parent_id'],
+                            'user_money'    => $sale_money['profit2'],
                             'change_time'   => gmtime(),
-                            'change_desc'   => '订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit3'] ,
+                            'change_desc'   => '订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit2'] ,
                             'order_id'      =>  $order_id,
                         );
+                        $this->model->table('drp_log')->data($account_log)->insert();
+                    }else{
+                        //店铺未审核开启插入帐户无效记录
+                        $account_log = array(
+                            'user_id'       => $user_info['parent_id'],
+                            'user_money'    => $sale_money['profit2'],
+                            'change_time'   => gmtime(),
+                            'change_desc'   => '订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit2'] ,
+                            'invalid_desc'   => '店铺未审核或开启',
+                            'order_id'      =>  $order_id,
+                        );
+                        $this->model->table('drp_invalid_log')->data($account_log)->insert();
+                    }
 
-                        $this->model->table('drp_log')
-                            ->data($account_log)
-                            ->insert();
+                    // 三级用户id
+                    $user_info = $this->is_drp_shop($user_info['parent_id']);
+                    //$parent_id2 = M()->table('users')->field('parent_id')->where('user_id = ' . $parent_id1)->getOne();
+                    if($user_info) {
+                        if($user_info['audit'] == 1 && $user_info['open'] == 1){
+                            /* 插入帐户变动记录 */
+                            $account_log = array(
+                                'user_id'       => $user_info['parent_id'],
+                                'user_money'    => $sale_money['profit3'],
+                                'change_time'   => gmtime(),
+                                'change_desc'   => '订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit3'] ,
+                                'order_id'      =>  $order_id,
+                            );
+                            $this->model->table('drp_log')->data($account_log)->insert();
+                        }else{
+                            //店铺未审核开启插入帐户无效记录
+                            $account_log = array(
+                                'user_id'       => $user_info['parent_id'],
+                                'user_money'    => $sale_money['profit3'],
+                                'change_time'   => gmtime(),
+                                'change_desc'   => '订单分成，订单号：'.$order_sn.',分成金额：'.$sale_money['profit3'] ,
+                                'invalid_desc'   => '店铺未审核或开启',
+                                'order_id'      =>  $order_id,
+                            );
+                            $this->model->table('drp_invalid_log')->data($account_log)->insert();
+                        }
+
                     }
                 }
             }
-
-
         }
-
     }
 
     /**
@@ -865,6 +882,18 @@ class SaleModel extends BaseModel {
             }
             return $goodsArr;
 
+        }
+    }
+
+    /**
+     * @param int $user_id
+     * 根据下单user_id 验证上级是否是分销商
+     */
+    public function is_drp_shop($user_id = 0){
+        if($user_id > 0){
+            $sql = "select dp.id,dp.audit,dp.open,u.parent_id from {pre}users as u left join {pre}drp_shop as dp on u.parent_id = dp.user_id where u.user_id=$user_id";
+            $shop_info = $this->model->getRow($sql);
+            return $shop_info;
         }
     }
 
