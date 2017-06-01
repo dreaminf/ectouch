@@ -1129,10 +1129,18 @@ class OrderModel extends BaseModel {
                 "bonus_type WHERE send_type = '" . SEND_BY_ORDER . "' " .
                 " AND send_start_date <= '$today' " .
                 "AND send_end_date >= '$today' " .
-                "AND min_amount > 0 ";
-        $res = $this->row($sql);
-        $order_total = floatval($res['count']);
-
+                "AND min_amount > 0 ".
+                "order by min_amount desc ";
+        $res = $this->query($sql);
+        //找出第一个不为0的红包金额，并且只发最大类型的红包
+        foreach($res as $row){
+            $res1 = $row['count'];
+            if($res1 > 0){
+                $res2 = $res1;
+                break;
+            }
+        }
+        $order_total = floatval($res2);
         return $goods_total + $order_total;
     }
 

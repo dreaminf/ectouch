@@ -2823,8 +2823,9 @@ function order_bonus($order_id)
             " AND g.bonus_type_id = b.type_id " .
             " AND b.send_type = '" . SEND_BY_GOODS . "' " .
             " AND b.send_start_date <= '$today' " .
-            " AND b.send_end_date >= '$today' " .
-            " GROUP BY b.type_id ";
+            " AND b.send_end_date >= '$today' " .           
+            " GROUP BY b.type_id ".
+            "order by min_amount desc ";
     $list = $global->db->getAll($sql);
 
     /* 查询定单中非赠品总金额 */
@@ -2837,13 +2838,30 @@ function order_bonus($order_id)
     $order_time = $global->db->getOne($sql);
 
     /* 查询按订单发的红包 */
-    $sql = "SELECT type_id, type_money, IFNULL(FLOOR('$amount' / min_amount), 1) AS number " .
+    $sql = "SELECT type_id, type_money,min_amount " .
             "FROM " . $global->ecs->table('bonus_type') .
             "WHERE send_type = '" . SEND_BY_ORDER . "' " .
             "AND send_start_date <= '$order_time' " .
-            "AND send_end_date >= '$order_time' ";
-    $list = array_merge($list, $global->db->getAll($sql));
-
+            "AND send_end_date >= '$order_time' order by min_amount desc";
+    $list1 = $global->db->getAll($sql);
+    $sum=$amount;
+    $arrary = array();
+    foreach ($list1 as $key=>$value)  {               
+            if($sum < $amount){
+                $array[$key]['number']=floatval(0);
+                break;
+            }
+            $min_amount=$value['min_amount'];
+            $num=floor($sum/$min_amount); 
+            $sum=$sum-$min_amount*$num;       
+            $array[$key]['number']=$num;
+            unset($unm);       
+    }
+    $arra = array();
+    foreach($list1 as $k=>$r){
+        $arra[] = array_merge($r,$array[$k]);
+    }
+    $list = array_merge($list, $arra);
     return $list;
 }
 
