@@ -138,9 +138,9 @@ if ($_REQUEST['act'] == 'users')
 		$username = $_POST['username'] ? $_POST['username'] : '';
 		$user_name = $_POST['user_name'] ? $_POST['user_name'] : '';
 		$shop_mobile = $_POST['shop_mobile'] ? $_POST['shop_mobile'] : '';
-		$drp_name = $_POST['drp_name'] ? $_POST['drp_name'] : '';		
+		$drp_name = $_POST['drp_name'] ? $_POST['drp_name'] : '';
 	}
-	
+
     $list = get_user_list(1,$username,$user_name, $shop_mobile, $drp_name);
     $smarty->assign('list',         $list['list']);
     $smarty->assign('filter',       $list['filter']);
@@ -182,7 +182,7 @@ if ($_REQUEST['act'] == 'users_audit')
 		$username = $_POST['username'] ? $_POST['username'] : '';
 		$user_name = $_POST['user_name'] ? $_POST['user_name'] : '';
 		$shop_mobile = $_POST['shop_mobile'] ? $_POST['shop_mobile'] : '';
-		$drp_name = $_POST['drp_name'] ? $_POST['drp_name'] : '';		
+		$drp_name = $_POST['drp_name'] ? $_POST['drp_name'] : '';
 	}
 
     $list = get_user_list(0,$username,$user_name, $shop_mobile, $drp_name);
@@ -422,7 +422,7 @@ if($_REQUEST['act'] == 'drp_log'){
     }
     $list = get_drp_log();
     $smarty->assign('etime', date("Y-m-d H:i:s"));
-    $smarty->assign('stime', date("Y-m-d H:i:s",time()-86400*7));    
+    $smarty->assign('stime', date("Y-m-d H:i:s",time()-86400*7));
     $smarty->assign('list',         $list['list']);
     $smarty->assign('filter',       $list['filter']);
     $smarty->assign('record_count', $list['record_count']);
@@ -538,6 +538,7 @@ elseif ($_REQUEST['act'] == 'separate')
 
         if($log){
             foreach($log as $key=>$val){
+                //更新店铺佣金
                 drp_log_change($val['user_id'], $val['user_money'], $val['pay_points']);
             }
         }
@@ -607,29 +608,29 @@ if ($_REQUEST['act'] == 'ranking_query')
  */
 function get_user_list($type ,$username,$user_name, $shop_mobile, $drp_name)
 {
-    
+
     /* 初始化分页参数 */
     $filter = array(
 
     );
 	$conditioin = ' where `audit` = "'.$type.'" '; // 是否审核
-	
+
     $where = 'where audit = "'.$type.'"';
 
 	if ($user_name != '') {
             $where .= " and d.real_name like '%$user_name%'  ";
-        } 
+        }
 	if ($shop_mobile != '') {
             $where .= "and d.shop_mobile like '%$shop_mobile%' ";
-        } 
+        }
 	if ($username != '') {
             $where .= "and u.user_name like '%$username%' ";
-        } 
+        }
 	if ($drp_name != '') {
             $where .= "and d.shop_name like '%$drp_name%' ";
         }
 
-    
+
     /* 查询记录总数，计算分页数 */
     $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('drp_shop') . " as d left join " . $GLOBALS['ecs']->table('users') ." as u on  d.user_id=u.user_id".
         " $where ";
@@ -715,7 +716,7 @@ function get_user_log_list($user_id)
         $row['change_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['change_time']);
         $arr[] = $row;
     }
- 
+
     return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
 }
 
@@ -735,13 +736,13 @@ function get_order_list($is_separate,$order_sn)
     );
 	if ($order_sn != '') {
 		$where .= " and o.order_sn like '%$order_sn%'  ";
-    } 
+    }
     /* 查询记录总数，计算分页数 */
-    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 $where and  d.shop_separate = ".$is_separate;
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 $where and o.order_status != '2' and  d.shop_separate = ".$is_separate;
     $filter['record_count'] = $GLOBALS['db']->getOne($sql);
     $filter = page_and_size($filter);
     /* 查询记录 */
-    $sql = "SELECT o.*,d.drp_id as drp FROM " .  $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 and  d.shop_separate = $is_separate $where" .
+    $sql = "SELECT o.*,d.drp_id as drp FROM " .  $GLOBALS['ecs']->table('order_info'). " as o join ".$GLOBALS['ecs']->table('drp_order_info')." as d on d.order_id=o.order_id WHERE d.drp_id > 0 and o.order_status != '2' and  d.shop_separate = $is_separate $where" .
         " ORDER BY order_id DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 
@@ -795,9 +796,9 @@ function get_drp_log(){
         $row['status_show'] = $row['status'] == DRP_NOT_MANAGE ? '未支付' : '已支付';
         $row['status'] = $row['status'];
         $arr[] = $row;
-        
+
     }
-   
+
     return array('list' => $arr, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
 }
 
@@ -828,8 +829,9 @@ function get_user_ranking($time)
     }
 
     /* 查询记录 */
-    $sql = "SELECT s1.* ,(select sum(l.user_money) from ". $GLOBALS['ecs']->table('drp_log')." as l join " . $GLOBALS['ecs']->table('drp_shop') ." as s on l.user_id=s.user_id where s.user_id=s1.user_id and l.user_money > 0 and l.status=1 ".$ext.") as sale_money ,(select sum(o.goods_amount) from ". $GLOBALS['ecs']->table('order_info')." as o left join " . $GLOBALS['ecs']->table('drp_log') ." as l on o.order_id = l.order_id " . 'left join' . $GLOBALS['ecs']->table('drp_order_info') ." as d on o.order_id = d.order_id where d.drp_id = s1.id and o.pay_status=2 ".$ext.") as sales_volume FROM " . $GLOBALS['ecs']->table('drp_shop') ." as s1 where s1.`audit` = '1' ORDER BY sale_money DESC";
+    $sql = "SELECT s1.* ,(select sum(l.user_money) from ".$GLOBALS['ecs']->table('drp_log')." as l join " . $GLOBALS['ecs']->table('drp_shop') ." as s on l.user_id=s.user_id where s.user_id=s1.user_id and l.user_money > 0 and l.status=1 ".$ext.") as sale_money FROM " . $GLOBALS['ecs']->table('drp_shop') ." as s1 where s1.`audit` = '1' ORDER BY sale_money DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
+
     $arr = array();
     while ($row = $GLOBALS['db']->fetchRow($res))
     {
@@ -945,7 +947,7 @@ if($_REQUEST['act'] == 'export'){
         $objWriter = \PHPExcel_IOFactory::createWriter($objPhpExcel, 'Excel5');
         $objWriter->save('php://output');
    }
-    
+
 }
 
 //佣金体现导出
@@ -963,7 +965,7 @@ if($_REQUEST['act'] == 'drplogexport'){
           " AND dl.change_time <="
           .$end_time.
           " ORDER BY dl.log_id DESC " ;
-        $list = $db->getAll($sql); 
+        $list = $db->getAll($sql);
         include_once (ROOT_PATH . 'include/vendor/PHPExcel.php');
          //创建处理对象实例
         $objPhpExcel = new PHPExcel();
@@ -999,10 +1001,10 @@ if($_REQUEST['act'] == 'drplogexport'){
             ->setCellValue('E'.$num, $v['user_money'])
             ->setCellValue('F'.$num, $v['bank_info'])
             ->setCellValue('G'.$num, $v['status'])
-           
+
             ;
         }
-       
+
         $name = date('Y-m-d'); //设置文件名
         header("Content-Type: application/force-download");
         header("Content-Type: application/octet-stream");
@@ -1018,7 +1020,7 @@ if($_REQUEST['act'] == 'drplogexport'){
 }
 
 
-        
+
 
 
 
