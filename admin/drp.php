@@ -789,7 +789,7 @@ function get_drp_log(){
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
     while ($row = $GLOBALS['db']->fetchRow($res)){
         $row['log_id'] = $row['log_id'];
-        $row['change_time'] = date("Y-m-d H:i:s",$row['change_time']);
+        $row['change_time'] = local_date("Y-m-d H:i:s",$row['change_time']);
         $row['user_money'] = $row['user_money'];
         $row['user_name'] = $GLOBALS['db']->getOne("SELECT user_name FROM".$GLOBALS['ecs']->table("users")."WHERE user_id =".$row['user_id']);
         $row['shop_name'] = $GLOBALS['db']->getOne("SELECT shop_name FROM".$GLOBALS['ecs']->table('drp_shop')."WHERE user_id =".$row['user_id']);
