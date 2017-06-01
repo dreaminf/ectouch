@@ -807,7 +807,7 @@ class SaleModel extends BaseModel {
                 // 二级级用户id
                 $user_info = $this->is_drp_shop($user_info['user_id']);
                 //$parent_id1 = M()->table('users')->field('parent_id')->where('user_id = ' . $user_id)->getOne();
-                if($user_info){
+                if($user_info['id'] > 0){
                     if($user_info['audit'] == 1 && $user_info['open'] == 1){
                         /* 插入帐户变动记录 */
                         $account_log = array(
@@ -834,7 +834,7 @@ class SaleModel extends BaseModel {
                     // 三级用户id
                     $user_info = $this->is_drp_shop($user_info['parent_id']);
                     //$parent_id2 = M()->table('users')->field('parent_id')->where('user_id = ' . $parent_id1)->getOne();
-                    if($user_info) {
+                    if($user_info['id'] > 0) {
                         if($user_info['audit'] == 1 && $user_info['open'] == 1){
                             /* 插入帐户变动记录 */
                             $account_log = array(
@@ -891,7 +891,7 @@ class SaleModel extends BaseModel {
      */
     public function is_drp_shop($user_id = 0){
         if($user_id > 0){
-            $sql = "select dp.id,dp.audit,dp.open,u.parent_id from {pre}users as u left join {pre}drp_shop as dp on u.parent_id = dp.user_id where u.user_id=$user_id";
+            $sql = "select dp.id,dp.audit,dp.open,u.parent_id from {pre}users as u left join {pre}drp_shop as dp on u.parent_id = dp.user_id where u.user_id = $user_id";
             $shop_info = $this->model->getRow($sql);
             return $shop_info;
         }
