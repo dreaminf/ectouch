@@ -22,7 +22,7 @@ class SaleModel extends BaseModel {
      */
     function get_shop_list($key=1){
         $res = array();
-        $sql = "select d.* from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id = ".$_SESSION['user_id'] ." and open = 1";
+        $sql = "select d.* from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id = ".$_SESSION['user_id'];
         $list = M()->query($sql);
         if($key == 1){
             $res = $list;
@@ -33,7 +33,7 @@ class SaleModel extends BaseModel {
                     $where .= $val['user_id'].',';
                 }
                 $where = substr($where, 0, -1);
-                $sql = "select d.* from {pre}users  as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id in($where) and open = 1";
+                $sql = "select d.* from {pre}users  as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id in($where)";
                 $list2 = M()->query($sql);
                 if($key == 2){
                     $res = $list2;
@@ -44,7 +44,7 @@ class SaleModel extends BaseModel {
                             $where .= $val['user_id'].',';
                         }
                         $where = substr($where, 0, -1);
-                        $sql = "select d.* from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id in($where) and open = 1";
+                        $sql = "select d.* from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id in($where)";
                         $list3 = M()->query($sql);
                         if($key == 3){
                             $res = $list3;
@@ -62,6 +62,7 @@ class SaleModel extends BaseModel {
         foreach($res as $key => $val){
             $res[$key]['time'] = local_date('Y-m-d H:i:s',$val['create_time']);
             $res[$key]['shop_name'] = C('shop_name').$res[$key]['shop_name'];
+            $res[$key]['open'] = $val['open'] == 1 ? "开启" : "关闭";
         }
         return $res;
     }
