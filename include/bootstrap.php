@@ -17,14 +17,14 @@
 defined('IN_ECTOUCH') or die('Deny Access');
 header("Content-Type:text/html;charset=utf-8");
 define('APPNAME', 'ECTouch');
-define('VERSION', '2.17.0331');
-define('RELEASE', '20170331');
+define('VERSION', '2.20.01');
+define('RELEASE', '20170601');
 defined('BASE_PATH') or define('BASE_PATH', dirname(__FILE__) . '/');
 defined('ROOT_PATH') or define('ROOT_PATH', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/');
 defined('APP_PATH') or define('APP_PATH', BASE_PATH . 'apps/');
 defined('ADDONS_PATH') or define('ADDONS_PATH', ROOT_PATH . 'plugins/');
 defined('DEFAULT_APP') or define('DEFAULT_APP', 'default');
-defined('DEFAULT_CONTROLLER') or define('DEFAULT_CONTROLLER', 'Index');
+defined('DEFAULT_CONTROLLER') or define('DEFAULT_CONTROLLER', 'IndexOld');
 defined('DEFAULT_ACTION') or define('DEFAULT_ACTION', 'index');
 /* 加载vendor */
 require BASE_PATH . 'vendor/autoload.php';
