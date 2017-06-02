@@ -42,17 +42,22 @@ class IndexModel extends CommonModel {
             default:
                 $type   = '1';
         }
-        
-        if($id > 0){
-            $one = $this->model->table('team_category')->field('id')->where('id ='.$id.' or parent_id='.$id)->select();
-            if($one){
-                foreach($one as $key){
-                        $one_id[] = $key['id'];  
-                }
-                $id  = implode(',',$one_id);
-                $type .= " and g.tc_id in ($id) ";  
-            }           
+        if(CONTROLLER_NAME != 'Indexold'){
+            if($id > 0)
+            {
+                $one = $this->model->table('team_category')->field('id')->where('id ='.$id.' or parent_id='.$id)->select();
+                if($one)
+                {
+                    foreach($one as $key){
+                            $one_id[] = $key['id'];  
+                    }
+                    $id  = implode(',',$one_id);
+                    $type .= " and g.tc_id in ($id) ";  
+                }           
+            }
         }
+        
+        
 
 		/*DRP_START*/ 
 		if($_SESSION['drp_shop']){
