@@ -539,7 +539,7 @@ $_LANG['passport_js']['msg_email_format'] = '* 邮件地址不合法';
 $_LANG['passport_js']['msg_blank'] = '不能为空';
 $_LANG['passport_js']['no_select_question'] = '- 您没有完成密码提示问题的操作';
 $_LANG['passport_js']['passwd_balnk'] = '- 密码中不能包含空格';
-
+$_LANG['passport_js']['mobile_phone_repeated'] = '手机号码已重复';
 
 /* user_clips.dwt js 语言文件 */
 $_LANG['clips_js']['msg_title_empty'] = '留言标题为空';

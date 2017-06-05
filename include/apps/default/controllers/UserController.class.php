@@ -188,6 +188,15 @@ class UserController extends CommonController {
             if (!empty($mobile_phone) && !preg_match('/^1[3|4|5|8|7][0-9]\d{4,8}$/', $mobile_phone)) {
                 show_message(L('passport_js.mobile_phone_invalid'));
             }
+            
+            $data['mobile_phone'] = $mobile_phone;
+            $res = $this->model->table('users')
+                            ->where($data)
+                            ->field('user_id')
+                            ->select();
+            if(!empty($res)) {
+                show_message(L('passport_js.mobile_phone_repeated'));
+            }
 
             // 写入密码提示问题和答案
             if (!empty($passwd_answer) && !empty($sel_question)) {
