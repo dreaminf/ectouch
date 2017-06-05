@@ -129,6 +129,10 @@ class UsersModel extends BaseModel {
         if (ECTouch::err()->error_no > 0) {
             return false;
         }
+        //判断用户名是否是手机号格式
+        if (is_mobile($username)) {
+            $mobile = 1;
+        }
 
         /* 检查是否和管理员重名 */
         if (model('Users')->admin_registered($username)) {
@@ -184,7 +188,16 @@ class UsersModel extends BaseModel {
             }
             $condition['user_id'] = $_SESSION['user_id'];
             $this->update($condition, $update_data);
-
+            $where['mobile_phone'] = $username;
+            $res = $this->model->table('users')
+                        ->field('user_id')
+                        ->where($where)
+                        ->select();
+            //用户名是手机号格式时且并不存在此手机号则把用户插入到手机号字段中
+            if(($mobile == 1) && empty($res)){
+                $sql = 'UPDATE ' . $this->pre . 'users SET mobile_phone = ' . $username . ' WHERE user_id = ' . $_SESSION['user_id'];
+                $this->query($sql);
+            }
             /* 推荐处理 */
             $affiliate = unserialize(C('affiliate'));
             if (isset($affiliate['on']) && $affiliate['on'] == 1) {
