@@ -202,6 +202,22 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_user_info` (
   `aite_id` varchar(200) NOT NULL DEFAULT '' COMMENT '标识'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息';
 
+
+CREATE TABLE IF NOT EXISTS `ecs_connect_user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `connect_code` char(30) NOT NULL DEFAULT '' COMMENT '登录插件名sns_qq，sns_wechat',
+  `user_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员ID',
+  `is_admin` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否管理员,0是会员 ,1是管理员',
+  `open_id` char(64) NOT NULL DEFAULT '' COMMENT '标识',
+  `refresh_token` char(64) DEFAULT '',
+  `access_token` char(64) NOT NULL DEFAULT '' COMMENT 'token',
+  `profile` text COMMENT '序列化用户信息',
+  `create_at` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `expires_in` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'token过期时间',
+  `expires_at` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'token保存时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+--
 -- /*DRP_START*/
 
 CREATE TABLE IF NOT EXISTS `ecs_drp_config` (
