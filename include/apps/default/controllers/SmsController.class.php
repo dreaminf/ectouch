@@ -61,9 +61,8 @@ class SmsController extends CommonController {
                 exit(json_encode(array('msg' => '获取验证码过于频繁')));
             }
         }
-
-        $where['mobile_phone'] = $this->mobile;
-        $user_id = $this->model->table('users')->field('user_id')->where($where)->getOne();
+        $sql = "SELECT user_id FROM ".$this->model->pre."users where user_name ='$this->mobile' OR mobile_phone = '$this->mobile'";
+        $user_id = $this->model->query($sql);
         if ($_GET['flag'] == 'register') {
             //手机注册
             if (!empty($user_id)) {
