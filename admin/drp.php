@@ -829,7 +829,7 @@ function get_user_ranking($time)
     }
 
     /* 查询记录 */
-    $sql = "SELECT s1.* ,(select sum(l.user_money) from ".$GLOBALS['ecs']->table('drp_log')." as l join " . $GLOBALS['ecs']->table('drp_shop') ." as s on l.user_id=s.user_id where s.user_id=s1.user_id and l.user_money > 0 and l.status=1 ".$ext.") as sale_money FROM " . $GLOBALS['ecs']->table('drp_shop') ." as s1 where s1.`audit` = '1' ORDER BY sale_money DESC";
+    $sql = "SELECT s1.* ,(select sum(l.user_money) from ". $GLOBALS['ecs']->table('drp_log')." as l join " . $GLOBALS['ecs']->table('drp_shop') ." as s on l.user_id=s.user_id where s.user_id=s1.user_id and l.user_money > 0 and l.status=1 ".$ext.") as sale_money ,(select sum(o.goods_amount) from ". $GLOBALS['ecs']->table('order_info')." as o left join " . $GLOBALS['ecs']->table('drp_log') ." as l on o.order_id = l.order_id " . 'left join' . $GLOBALS['ecs']->table('drp_order_info') ." as d on o.order_id = d.order_id where d.drp_id = s1.id and o.pay_status=2 ".$ext.") as sales_volume FROM " . $GLOBALS['ecs']->table('drp_shop') ." as s1 where s1.`audit` = '1' ORDER BY sale_money DESC";
     $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 
     $arr = array();
