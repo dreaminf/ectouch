@@ -892,7 +892,7 @@ elseif ($_REQUEST['act'] == 'delivery_ship')
         /* 如果需要，发短信 */
         if ($GLOBALS['_CFG']['sms_order_shipped'] == '1' && $order['mobile'] != '')
         {
-            // include_once('../includes/cls_sms.php');
+            include_once(BASE_PATH . 'classes/sms.php');
             $sms = new sms();
             $sms->send($order['mobile'], sprintf($GLOBALS['_LANG']['order_shipped_sms'], $order['order_sn'],
                 local_date($GLOBALS['_LANG']['sms_time_format']), $GLOBALS['_CFG']['shop_name']), 0);
