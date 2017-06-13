@@ -28,7 +28,7 @@ class sms
         /* 获取API URL */
         $sms_url = "http://106.ihuyi.com/webservice/sms.php?method=Submit";
 
-        if (count($contents) > 1) {
+        if (count($contents) > 0) {
             foreach ($contents as $key => $val) {
                 $post_data = "account=" . $this->sms_name . "&password=" . md5($this->sms_password) . "&mobile=" . $val['phones'] . "&content=" . rawurlencode($val['content']); //密码可以使用明文密码或使用32位MD5加密
 
