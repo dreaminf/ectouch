@@ -45,7 +45,7 @@ class TeamorderController extends AdminController {
         $log_list = $this->model->query($sql);
         $time = gmtime();
         foreach ($log_list as $key => $value) {
-            $log_list[$key]['start_time'] = date('Y-m-d H:m:s', $value['start_time']);
+            $log_list[$key]['start_time'] = local_date('Y-m-d H:m:s', $value['start_time']);
             $endtime = $value['start_time'] + $value['validity_time'] * 3600;
             $cle =$endtime-$time; //得出时间戳差值
             $d = floor($cle/3600/24);
@@ -92,7 +92,7 @@ class TeamorderController extends AdminController {
             $res[$key]['status'] = L('os.' . $value['order_status']) . ',' . L('ps.' . $value['pay_status']) . ',' . L('ss.' . $value['shipping_status']);
             $res[$key]['goods_amount'] = $value['goods_amount']; //金额
             $res[$key]['order_money'] = $value['goods_amount'] - $value['discount'] + $value['tax'] + $value['shipping_fee'] + $value['insure_fee'] + $value['pay_fee'] + $value['pay_fee'] + $value['card_fee'];
-            $res[$key]['add_time'] = date('Y-m-d H:i:s', $value['add_time']); //下单时间
+            $res[$key]['add_time'] = local_date('Y-m-d H:i:s', $value['add_time']); //下单时间
         }
         $this->assign('order_list', $res);
 
