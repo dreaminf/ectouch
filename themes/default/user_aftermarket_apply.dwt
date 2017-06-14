@@ -65,7 +65,8 @@
 									<div class="row">
 										<label class="f-label"> <em>*</em>{$lang.refund_amount}</label>
 										<div class="f-controls money-input iconfont icon-yen">
-											<input id="refundFee" class="input-l input-content-len-10 J_InputFee" name="refundFee" disabled="disabled" value="{$goods.goods_price}" type="text" wrapper=".f-field" required="" min="0" max="" placeholder="">
+											<input id="refundFee" class="input-l input-content-len-10 J_InputFee" name="refundFee" disabled="disabled" value="{$goods_return_price}" type="text" wrapper=".f-field" required="" min="0" max="" placeholder="">
+											<input name="total_exchange_goods" id="exchange_goods_number" type="hidden">
 										</div>
 									</div>
 									<!--<div id="bidi-form-86" class="field-tips">({$lang.max_num}<strong>{$order.total_fee}</strong>
@@ -378,21 +379,20 @@
 	}
 	/*控制最大退换货数量*/
 	$("#back_num").change(function() {
- 
 		var reg = /^[0-9]*[1-9][0-9]*$/;
-		var fee = {$goods.goods_price};
-		var val = $('#back_num').val();
+		var fee = {$goods_return_price};
+		var bval = $('#back_num').val();
 		var max_num = {$goods.goods_number};
-		if (!reg.test(val)) {
+		if (!reg.test(bval)) {
 			$('#back_num').val(1);
 		}
-		if (val > max_num || val < 1) {
+		if (bval > max_num || bval < 1) {
 			$('#back_num').val(max_num);
-			 val = max_num;
-			 $('#refundFee').val((fee * val).toFixed(2));
-
+			 bval = max_num;
+			 $('#refundFee').val((fee * bval).toFixed(2));
 		}
-		$('#refundFee').val((fee * val).toFixed(2));
+		$('#refundFee').val((fee * bval).toFixed(2));
+		$('#exchange_goods_number').val((fee * bval).toFixed(2));
 	});
 
 	/*提交验证*/

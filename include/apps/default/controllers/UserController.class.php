@@ -2672,6 +2672,9 @@ class UserController extends CommonController {
         $this->assign('cause_list', model('Users')->get_parent_cause()); //退换货原因
         $this->assign('order', $order);
         $this->assign('goods', $goods);
+        $goods_return_price = $goods['goods_price'] - ($order['bonus']+$order['integral_money']+$order['discount'])*($goods['goods_price']/($order['goods_amount']));
+        $goods_return_price = round($goods_return_price,2);
+        $this->assign('goods_return_price', $goods_return_price);
         if ($id == ST_EXCHANGE) {
             /*换货时商品信息*/
             $goods_info = model('Goods')->get_goods_info($goods['goods_id']);
