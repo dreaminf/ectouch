@@ -625,7 +625,7 @@ function get_attr_list($cat_id, $goods_id = 0)
             "LEFT JOIN " .$GLOBALS['ecs']->table('goods_attr'). " AS v ".
             "ON v.attr_id = a.attr_id AND v.goods_id = '$goods_id' ".
             "WHERE a.cat_id = " . intval($cat_id) ." OR a.cat_id = 0 ".
-            "ORDER BY a.sort_order, a.attr_type, v.goods_attr_id, a.attr_id ";
+            "ORDER BY v.goods_attr_id ASC";
 
     $row = $GLOBALS['db']->GetAll($sql);
 
