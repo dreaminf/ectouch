@@ -143,7 +143,7 @@ class GoodsModel extends BaseModel {
                 'FROM ' . $this->pre . 'goods_attr AS g ' .
                 'LEFT JOIN ' . $this->pre . 'attribute AS a ON a.attr_id = g.attr_id ' .
                 "WHERE g.goods_id = '$goods_id' " .
-                'ORDER BY a.sort_order, g.attr_price, g.goods_attr_id';
+                'ORDER BY  g.goods_attr_id ASC';
         $res = $this->query($sql);
 
         $arr['pro'] = array();     // 属性
