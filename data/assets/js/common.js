@@ -1,6 +1,12 @@
 /* $Id : common.js 4865 2007-01-31 14:04:10Z paulgao $ */
 
-
+var btn_buy = "确定";
+var is_cancel = "取消";
+var select_spe = "请选择商品属性";
+var select_base = '请选择套餐基本件';
+var select_shop = '请选择套餐商品';
+var data_not_complete = '数据格式不完整';
+var understock = '库存不足，请选择其他商品';
 $(function(){
     // 微信内隐藏头部工具栏
     if(isWeiXin()){
@@ -923,7 +929,7 @@ function openSpeDiv(message, goods_id, parent, goods_name, goods_thumb, goods_nu
     // mask图层
     var newMask = document.createElement("div");
     newMask.id = m;
-    newMask.style.position = "absolute";
+    newMask.style.position = "fixed";
     newMask.style.zIndex = "9999";
     //newMask.style.width = document.body.scrollWidth + "px";
     newMask.style.height = document.body.scrollHeight + "px";
