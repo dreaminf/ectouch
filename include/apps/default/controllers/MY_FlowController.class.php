@@ -282,16 +282,13 @@ class MY_FlowController extends FlowController {
         $sql = "INSERT INTO " . $this->model->pre . "order_goods( " . "order_id, goods_id, goods_name, goods_sn, product_id, goods_number, market_price, " . "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id ) " . " SELECT '$new_order_id', goods_id, goods_name, goods_sn, product_id, goods_number, market_price, " . "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id " . " FROM " . $this->model->pre . "cart WHERE session_id = '" . SESS_ID . "' AND rec_type = '$flow_type'";
         $this->model->query($sql);
 
-        //验证拼团不参与分销
-        if($flow_type != CART_TEAM_GOODS){
-            //验证上级是否是分销商，店铺审核通过开启，计算分成
-            $drp_shop  = model('Sale')->is_drp_shop($order ['user_id']);
-            // 更新佣金信息
-            if($drp_shop['id'] > 0){
-                 model('Sale')->update_order_sale($new_order_id);
-            }
-
+        //验证上级是否是分销商，店铺审核通过开启，计算分成
+        $drp_shop  = model('Sale')->is_drp_shop($order ['user_id']);
+        // 更新佣金信息
+        if($drp_shop['id'] > 0){
+             model('Sale')->update_order_sale($new_order_id);
         }
+
 
         /* 修改拍卖活动状态 */
         if ($order ['extension_code'] == 'auction') {
