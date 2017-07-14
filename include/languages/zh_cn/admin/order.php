@@ -145,6 +145,7 @@ $_LANG['label_shipping_time'] = '发货时间：';
 $_LANG['label_sign_building'] = '标志性建筑：';
 $_LANG['label_best_time'] = '最佳送货时间：';
 $_LANG['label_inv_type'] = '发票类型：';
+$_LANG['label_inv_text_id'] = '纳税人识别号：';
 $_LANG['label_inv_payee'] = '发票抬头：';
 $_LANG['label_inv_content'] = '发票内容：';
 $_LANG['label_postscript'] = '客户给商家的留言：';

@@ -535,6 +535,9 @@ class FlowController extends CommonController {
             $this->assign('your_discount', sprintf(L('your_discount'), $favour_name, price_format($discount ['discount'])));
         }
 
+        $order['inv_type'] = $_SESSION['inv_type'];
+        $order['need_inv'] = empty($order['inv_type']) ? 0 : 1;
+
         //计算订单的费用
         $total = model('Users')->order_fee($order, $cart_goods, $consignee, $flow_type);
 
@@ -744,6 +747,10 @@ class FlowController extends CommonController {
             $this->assign('inv_type_list', $inv_type_list);
         }
 
+        $this->assign('inv_payee', $_SESSION['inv_payee']);
+        $this->assign('inv_type', $_SESSION['inv_type']);
+        $this->assign('inv_text_id', $_SESSION['inv_text_id']);
+        $this->assign('inv_content', $_SESSION['inv_content']);
         // print_r($inv_type_list);
         $this->assign('order', $order);
         /* 保存 session */
@@ -1070,6 +1077,36 @@ class FlowController extends CommonController {
     }
 
     /**
+     * 发票填写
+    */
+    function select_inv(){
+        /* 如果能开发票，取得发票内容列表 */
+        $can_invoice = C('can_invoice');
+        $invoice_content = C('invoice_content');
+        $order = model('Order')->flow_order_info();
+        if ((!isset($can_invoice) || $can_invoice == '1') && isset($invoice_content) && trim($invoice_content) != '' && $flow_type != CART_EXCHANGE_GOODS) {
+            $inv_content_list = explode("\n", str_replace("\r", '', C('invoice_content')));
+            $this->assign('inv_content_list', $inv_content_list);
+            $inv_type_list = array();
+            $invoice_type = C('invoice_type');
+            foreach ($invoice_type['type'] as $key => $type) {
+                if (!empty($type)) {
+                    $inv_type_list [$key]['content'] = $type . ' [' . floatval($invoice_type['rate'] [$key]) . '%]';
+                    $inv_type_list [$key]['name'] = $type ;
+                }
+            }
+            $this->assign('inv_type_list', $inv_type_list);
+            
+        }
+        $this->assign('inv_payee', $_SESSION['inv_payee']);
+        $this->assign('inv_type', $_SESSION['inv_type']);
+        $this->assign('inv_text_id', $_SESSION['inv_text_id']);
+        $this->assign('inv_content', $_SESSION['inv_content']);
+        $this->assign('order', $order);
+        $this->display('flow_select_inv.dwt');
+    }
+
+    /**
      *  提交订单
      */
     public function done() {
@@ -1123,10 +1160,11 @@ class FlowController extends CommonController {
             'surplus' => isset($_POST ['surplus']) ? floatval($_POST ['surplus']) : 0.00,
             'integral' => isset($_POST ['integral']) ? intval($_POST ['integral']) : 0,
             'bonus_id' => isset($_POST ['bonus']) ? intval($_POST ['bonus']) : 0,
-            'need_inv' => empty($_POST ['need_inv']) ? 0 : 1,
-            'inv_type' => $inv_type,
-            'inv_payee' => $inv_payee,
-            'inv_content' => $inv_content,
+            'need_inv' => empty($_POST ['inv_type']) ? 0 : 1,
+            'inv_type' => $_POST ['inv_type'],
+            'inv_payee' => trim($_POST ['inv_payee']),
+            'inv_content' => $_POST['inv_content'],
+            'inv_text_id' => $_POST['inv_text_id'],
             'postscript' => $postscript,
             'how_oos' => isset($oos) ? addslashes("$oos") : '',
             'need_insure' => isset($_POST ['need_insure']) ? intval($_POST ['need_insure']) : 0,
@@ -2654,6 +2692,44 @@ class FlowController extends CommonController {
         /* 删除所有赠品 */
         $sql = "DELETE FROM " . $this->model->pre . 'cart' . " WHERE session_id = '" .SESS_ID. "' AND is_gift <> 0";
         $this->model->query($sql);
+    }
+
+    /**
+    *选中提交发票信息
+    */
+    public function change_inv(){
+        $need_inv = $_POST['need_inv'];
+        if($need_inv == 1){
+            $inv_content = !empty($_POST['inv_type']) ? ($_POST['inv_type'] == 1 ? '个人' : '单位') : '';
+            $inv_person_name = !empty($_POST['inv_person_name']) ? $_POST['inv_person_name'] : '';
+            $inv_payee = !empty($_POST['inv_company_name']) ? $_POST['inv_company_name'] : '';
+            $inv_text_id = !empty($_POST['inv_text_id']) ? $_POST['inv_text_id'] : '';
+            $inv_type = !empty($_POST['inv_name']) ? $_POST['inv_name'] : '';
+
+            if($inv_content == '个人'){
+                $_SESSION['inv_payee'] = $inv_person_name;
+                $_SESSION['inv_type'] = $inv_type;
+                $_SESSION['inv_content'] = '个人';
+                if(!empty($_SESSION['inv_text_id'])){
+                    unset($_SESSION['inv_text_id']);
+                }
+                show_message('保存发票信息成功', '继续结算', url('flow/checkout'));
+
+            }else{
+                $_SESSION['inv_payee'] = $inv_payee;
+                $_SESSION['inv_type'] = $inv_type;
+                $_SESSION['inv_text_id'] = $inv_text_id;
+                $_SESSION['inv_content'] = '单位';
+                show_message('保存发票信息成功', '继续结算', url('flow/checkout'));
+            }
+        }else{
+            unset($_SESSION['inv_payee']);
+            unset($_SESSION['inv_type']);
+            unset($_SESSION['inv_text_id']);
+            unset($_SESSION['inv_content']);
+            show_message('未选择开发票', '继续结算', url('flow/checkout'));
+        }
+
     }
 
     //  /*
