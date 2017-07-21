@@ -195,7 +195,7 @@ class UsersModel extends BaseModel {
                         ->select();
             //用户名是手机号格式时且并不存在此手机号则把用户插入到手机号字段中
             if(($mobile == 1) && empty($res)){
-                $sql = 'UPDATE ' . $this->pre . 'users SET mobile_phone = ' . $username . ' WHERE user_id = ' . $_SESSION['user_id'];
+                $sql = 'UPDATE ' . $this->pre . 'users SET mobile_phone = "' . $username . '" WHERE user_id = "' . $_SESSION['user_id'] . '"';
                 $this->query($sql);
             }
 
