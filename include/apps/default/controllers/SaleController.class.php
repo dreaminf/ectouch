@@ -299,7 +299,7 @@ class SaleController extends CommonController {
         if(!isset($_GET['u'])){
             redirect(url('sale/spread',array('u'=>$id)));
         }
-		$this->check_open($id);
+        $this->check_open($id);
         // 创建目录
         $filename  = ROOT_PATH.'data/attached/drp';
         if(!file_exists($filename)){
@@ -309,10 +309,10 @@ class SaleController extends CommonController {
         $ew_img = ROOT_PATH.'data/attached/drp/tg-ewm-'.$id.'.png';//二维码
         $dp_img = ROOT_PATH.'data/attached/drp/tg-dp-'.$id.'.png';//店铺二维码
         $wx_img = ROOT_PATH.'data/attached/drp/tg-wx-'.$id.'.png';//微信头像
-        $dp_img_size = filesize($dp_img);
-        $ew_img_size = filesize($ew_img);
-        if(!file_exists($dp_img) || empty($dp_img_size) || !file_exists($ew_img) || empty($ew_img_size)){
-            if(!file_exists($ew_img) || empty($ew_img_size)){
+        //$dp_img_size = filesize($dp_img);
+        //$ew_img_size = filesize($ew_img);
+        if(!file_exists($dp_img) || !file_exists($ew_img)){
+            if(!file_exists($ew_img)){
                 $b = call_user_func(array('WechatController', 'rec_qrcode'), $_SESSION['user_name'],$id);
                 $b = preg_replace('/https/','http',$b,1);
                 logResult('Local:1');
@@ -355,10 +355,10 @@ class SaleController extends CommonController {
             // 生成海报图片
             $img = file_get_contents($bg_img);
             file_put_contents($dp_img,$img);
-            chmod(ROOT_PATH.$dp_img, 0777);
+            // chmod(ROOT_PATH.$dp_img, 0777);
 
             // 添加二维码水印
-            if(file_get_contents($ew_img)){
+            if(file_exists($ew_img)){
                 Image::water($dp_img,$ew_img,12);
             }
 
@@ -367,7 +367,7 @@ class SaleController extends CommonController {
                 Image::water($dp_img,$wx_img,13);
             }
         }
-		// 查询推广用户信息
+        // 查询推广用户信息
         $shopuser = $this->model->table('users')->where(array('user_id'=> $id))->find();
         if(empty($shopuser)){
             redirect(url('sale/index'));
@@ -410,8 +410,8 @@ class SaleController extends CommonController {
         $ew_img = ROOT_PATH.'data/attached/drp/dp-ewm-'.$id.'.png';//二维码
         $dp_img = ROOT_PATH.'data/attached/drp/dp-dp-'.$id.'.png';//店铺二维码
         $wx_img = ROOT_PATH.'data/attached/drp/dp-wx-'.$id.'.png';//微信头像
-        $filesize = filesize($dp_img);
-        if(!file_exists($dp_img) || empty($filesize) || !file_exists($ew_img)){
+        // $filesize = filesize($dp_img);
+        if(!file_exists($dp_img) || !file_exists($ew_img)){
             if(!file_exists($ew_img)){
                 $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$id)->getOne();
                 // 二维码
@@ -424,7 +424,6 @@ class SaleController extends CommonController {
             }
 
             // 获取微信头像
-
             $info = model('ClipsBase')->get_user_default($id);
             if(class_exists('WechatController')){
                 if (method_exists('WechatController', 'get_avatar')) {
@@ -441,7 +440,8 @@ class SaleController extends CommonController {
             // 生成海报图片
             $img = file_get_contents($bg_img);
             file_put_contents($dp_img,$img);
-            chmod(ROOT_PATH.$dp_img, 0777);
+            //chmod(ROOT_PATH.$dp_img, 0777);
+
             // 添加二维码水印
             Image::water($dp_img,$ew_img,10);
             // 添加微信头像水印
@@ -465,7 +465,7 @@ class SaleController extends CommonController {
         $size = I(C('page_size'), 5);
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
         $where = 'd.drp_id = '.$drp_id;
-        $sql = "select count(*) as count from {pre}drp_order_info as d right join {pre}order_info as o on d.order_id=o.order_id where d.drp_id=$drp_id";
+        $sql = "select count(*) as count from {pre}drp_order_info as d right join {pre}order_info as o on d.order_id=o.order_id where o.order_status != '2' and d.drp_id=$drp_id";
         $count = $this->model->getRow($sql);
         $count = $count['count'] ? $count['count'] : 0;
         $this->pageLimit(url('sale/order_list'), $size);
