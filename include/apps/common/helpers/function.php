@@ -1231,7 +1231,7 @@ function is_email($user_email) {
  * @return bool
  */
 function is_mobile($user_mobile) {
-    $chars = '/^13[0-9]{9}|15[012356789][0-9]{8}|18[0-9]{9}|14[579][0-9]{8}|17[0-9]{9}$/';
+    $chars = '/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/';
     if (preg_match($chars, $user_mobile)) {
         return true;
     } else {
