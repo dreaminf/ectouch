@@ -149,7 +149,7 @@ class weixin {
                 // 设置的用户注册信息
                 $register = model('Base')->model->table('wechat_extend')
                     ->field('config')
-                    ->where('enable = 1 and command = "register_remind" and wechat_id = '.$wechat_id)
+                    ->where('enable = 1 and command = "register_remind" and wechat_id = "'. $wechat_id .'"')
                     ->find();
                 if (! empty($register)) {
                     $reg_config = unserialize($register['config']);
