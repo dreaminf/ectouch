@@ -204,7 +204,7 @@
 										{$goods.shop_price_formated}
 										<!--{/if}--></span>
 									</p>
-									<p class="dis-box p-t-remark"><span class="box-flex">库存:{$goods.goods_number}</span></p>
+									<p class="dis-box p-t-remark"><span class="box-flex" id="ECS_PRODUCT_NUMBER">库存:{$goods.goods_number}</span></p>
 								</div>
 							</div>
 						</section>
@@ -400,6 +400,9 @@ $(function() {
 		} else {
 			if (document.getElementById('ECS_GOODS_AMOUNT'))
 				document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result;
+			if(res.product_number != null){
+			    document.getElementById('ECS_PRODUCT_NUMBER').innerHTML = res.product_number;
+			}
 		}
 	}
 
