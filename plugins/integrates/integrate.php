@@ -382,6 +382,11 @@ class integrate
                 $sql = "DELETE FROM {pre}drp_apply  WHERE " . db_create_in($col, 'user_id'); // 删除用户购买微分销记录
                 $this->db->query($sql);
                 /*DRP_END*/
+                $col_connect_id = $this->db->table('connect_user')->field('id')->where(db_create_in($col, 'user_id'))->getCol();
+                if($col_connect_id) {
+                   $sql = "DELETE FROM {pre}connect_user  WHERE " . db_create_in($col, 'user_id'); // 删除connect_user表关联数据
+                   $this->db->query($sql);
+                }
             }
         }
         
