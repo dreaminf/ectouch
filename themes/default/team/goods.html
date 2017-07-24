@@ -590,7 +590,7 @@
 										</span>
 												</p>
 												<!--{if $cfg.show_goodsnumber}商品库存-->
-												<p class="dis-box p-t-remark"><span class="box-flex">库存:{$goods.goods_number}</span></p>
+												<p class="dis-box p-t-remark"><span class="box-flex" id="ECS_PRODUCT_NUMBER">库存:{$goods.goods_number}</span></p>
 												<!--{/if}-->
 											</div>
 										</div>
@@ -816,6 +816,9 @@
 				} else {
 					if(document.getElementById('ECS_GOODS_AMOUNT'))
 						document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result;
+					if(res.product_number != null){
+					    document.getElementById('ECS_PRODUCT_NUMBER').innerHTML = res.product_number;
+					}
 				}
 			}
 			

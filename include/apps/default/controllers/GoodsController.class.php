@@ -272,6 +272,9 @@ class GoodsController extends CommonController
             // 查询
             $condition = 'goods_id =' . $this->goods_id;
             $goods = $this->model->table('goods')->field('goods_name , goods_number ,extension_code')->where($condition)->find();
+            $attr_id = $attr_id['0'];         
+            $condition = 'goods_attr = '."'".$attr_id."'";
+            $product = $this->model->table('products')->field('product_number')->where($condition)->find();
 
             // 查询：系统启用了库存，检查输入的商品数量是否有效
 // 			if (intval ( C('use_storage') ) > 0 && $goods ['extension_code'] != 'package_buy') {
@@ -289,6 +292,7 @@ class GoodsController extends CommonController
             }
             $shop_price = model('GoodsBase')->get_final_price($this->goods_id, $number, true, $attr_id);
             $res ['result'] = price_format($shop_price * $number);
+            $res ['product_number'] = $product['product_number'];
         }
         die(json_encode($res));
     }
