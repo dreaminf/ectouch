@@ -1922,16 +1922,18 @@ class UsersModel extends BaseModel {
         $wechat = $this->model->table('wechat')->field('id')->where(array('type' => 2, 'status' => 1, 'default_wx' => 1))->find();
         $wechat_id = !empty($wechat_id) ? $wechat_id : $wechat['id'];
         // 组合数据
-        $data['wechat_id'] = $wechat_id;
-        $data['openid'] = $info['openid'];
-        if(!empty($info['nickname'])) { $data['nickname'] = $info['nickname'];}
-        if(!empty($info['sex'])) { $data['sex'] = $info['sex'];}
-        if(!empty($info['language'])) { $data['language'] = $info['language'];}
-        if(!empty($info['city'])) { $data['city'] = $info['city'];}
-        if(!empty($info['province'])) { $data['province'] = $info['province'];}
-        if(!empty($info['country'])) { $data['country'] = $info['country'];}
-        if(!empty($info['headimgurl'])) { $data['headimgurl'] = $info['headimgurl'];}
-        if(!empty($info['unionid'])) { $data['unionid'] = $info['unionid'];}
+        $data = array(
+            'wechat_id' => $wechat_id,
+            'openid' => $info['openid'],
+            'nickname' => !empty($info['nickname']) ? $info['nickname'] : '',
+            'sex' => !empty($info['sex']) ? $info['sex'] : 0,
+            'language' => !empty($info['language']) ? $info['language'] : '',
+            'city' => !empty($info['city']) ? $info['city'] : '',
+            'province' => !empty($info['province']) ? $info['province'] : '',
+            'country' => !empty($info['country']) ? $info['country'] : '',
+            'headimgurl' => !empty($info['headimgurl']) ? $info['headimgurl'] : '',
+            'unionid' => $info['unionid'],
+        );
         if(!empty($info['ect_uid'])) { $data['ect_uid'] = $info['user_id'];}
 
         // unionid 微信开放平台唯一标识
