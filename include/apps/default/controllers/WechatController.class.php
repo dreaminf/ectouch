@@ -50,6 +50,20 @@ class WechatController extends CommonController
         $type = $this->weObj->getRev()->getRevType();
         $wedata = $this->weObj->getRev()->getRevData();
         $keywords = '';
+
+        // 兼容更新用户关注状态（未配置微信通之前关注的粉丝）
+        $userinfo = $this->weObj->getUserInfo($wedata['FromUserName']);
+        if(!empty($userinfo) && !empty($userinfo['unionid'])){
+            $user_data = array(
+                'subscribe' => $userinfo['subscribe'],
+                'subscribe_time' => $userinfo['subscribe_time'],
+            );
+            $res = $this->model->table('wechat_user')->field('openid, unionid')->where(array('unionid' => $userinfo['unionid'], 'wechat_id' => $this->wechat_id))->find()
+            if(!empty($res)){
+                $this->model->table('wechat_user')->data($user_data)->where(array('unionid' => $userinfo['unionid'], 'wechat_id' => $this->wechat_id))->update();
+            }
+        }
+
         if ($type == Wechat::MSGTYPE_TEXT) {
             $keywords = $wedata['Content'];
         } elseif ($type == Wechat::MSGTYPE_EVENT) {
@@ -277,11 +291,11 @@ class WechatController extends CommonController
                 }
                 // 注册微信资料
                 $data['ect_uid'] = $_SESSION['user_id'];
-                //$data['parent_id'] = $scene_user_id;
+                // $data['parent_id'] = $scene_user_id;
             } else {
                 // 更新微信资料
                 $data['ect_uid'] = $userinfo['user_id'];
-                //$data['parent_id'] = $userinfo['parent_id'];
+                // $data['parent_id'] = $userinfo['parent_id'];
             }
             // 新增微信粉丝
             $this->model->table('wechat_user')->data($data)->insert();

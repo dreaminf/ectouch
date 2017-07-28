@@ -291,8 +291,8 @@ class dzp extends PluginWechatController
                 // 抽奖记录
                 $data['wechat_id'] = $wxid;
                 $data['openid'] = $openid;
-                $data['prize_name'] = $prize_name[$level];
-                $data['dateline'] = time();
+                $data['prize_name'] = !empty($prize_name[$level]) ? $prize_name[$level] : '未中奖';
+                $data['dateline'] = gmtime();
                 $data['activity_type'] = $this->plugin_name;
                 $id = model('Base')->model->table('wechat_prize')->data($data)->insert();
                  //参与人数增加
@@ -352,7 +352,7 @@ class dzp extends PluginWechatController
                     }
                 }
                 // url处理
-                if (! empty($config['plugin_url'])) {
+                if (!empty($config['plugin_url'])) {
                     $config['plugin_url'] = html_out($config['plugin_url']);
                 }
                 // 奖品处理

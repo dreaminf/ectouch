@@ -33,7 +33,7 @@ class WechatController extends AdminController
         if(empty($mpInfo)){
             $data = array(
                 'id' => $this->wechat_id,
-                'time' => time(),
+                'time' => gmtime(),
                 'type' => 2,
                 'status' => 1,
 				'default_wx' => 1
@@ -112,7 +112,7 @@ class WechatController extends AdminController
         /*
         if (IS_POST) {
             $data = I('post.data', '', 'trim,htmlspecialchars');
-            $data['time'] = time();
+            $data['time'] = gmtime();
             // 验证数据
             $result = Check::rule(array(
                 Check::must($data['name']),
@@ -568,7 +568,7 @@ class WechatController extends AdminController
                     'msg' => $rs
                 )));
             }
-            $data['send_time'] = time();
+            $data['send_time'] = gmtime();
 			$data['iswechat'] = 1;
             // 微信端发送消息
             $msg = array(
@@ -632,7 +632,9 @@ class WechatController extends AdminController
             ->where('uid = ' . $uid)
             ->order('send_time desc, id desc')->limit($offset)
             ->select();
-
+        foreach ($list as $key => $value) {
+            $list[$key]['send_time'] = local_date('Y-m-d H:i:s', $value['send_time']);
+        }
         $this->assign('page', $this->pageShow($total));
         $this->assign('list', $list);
         $this->assign('nickname', $nickname);
@@ -947,7 +949,7 @@ class WechatController extends AdminController
             }
             $data['ticket'] = $ticket['ticket'];
             $data['expire_seconds'] = $ticket['expire_seconds'];
-            $data['endtime'] = time() + $ticket['expire_seconds'];
+            $data['endtime'] = gmtime() + $ticket['expire_seconds'];
             // 二维码地址
             $qrcode_url = $this->weObj->getQRUrl($ticket['ticket']);
             $data['qrcode_url'] = $qrcode_url;
@@ -1048,13 +1050,13 @@ class WechatController extends AdminController
                 if ($pic_path != $data['file']) {
                     @unlink(ROOT_PATH . $pic_path);
                 }
-                $data['edit_time'] = time();
+                $data['edit_time'] = gmtime();
                 $this->model->table('wechat_media')
                     ->data($data)
                     ->where('id = ' . $id)
                     ->update();
             } else {
-                $data['add_time'] = time();
+                $data['add_time'] = gmtime();
                 $this->model->table('wechat_media')
                     ->data($data)
                     ->insert();
@@ -1086,13 +1088,13 @@ class WechatController extends AdminController
                 $data['type'] = 'news';
 
                 if (! empty($id)) {
-                    $data['edit_time'] = time();
+                    $data['edit_time'] = gmtime();
                     $this->model->table('wechat_media')
                         ->data($data)
                         ->where('id = ' . $id)
                         ->update();
                 } else {
-                    $data['add_time'] = time();
+                    $data['add_time'] = gmtime();
                     $this->model->table('wechat_media')
                         ->data($data)
                         ->insert();
@@ -1210,7 +1212,7 @@ class WechatController extends AdminController
                 $data['file_name'] = $result['message']['pic']['name'];
                 $data['size'] = $result['message']['pic']['size'];
                 $data['type'] = 'image';
-                $data['add_time'] = time();
+                $data['add_time'] = gmtime();
                 $data['wechat_id'] = $this->wechat_id;
 
                 $this->model->table('wechat_media')
@@ -1264,7 +1266,7 @@ class WechatController extends AdminController
                 $data['size'] = $result['message']['voice']['size'];
                 ;
                 $data['type'] = 'voice';
-                $data['add_time'] = time();
+                $data['add_time'] = gmtime();
                 $data['wechat_id'] = $this->wechat_id;
                 $this->model->table('wechat_media')
                     ->data($data)
@@ -1355,13 +1357,13 @@ class WechatController extends AdminController
             $data['type'] = 'video';
             $data['wechat_id'] = $this->wechat_id;
             if (! empty($id)) {
-                $data['edit_time'] = time();
+                $data['edit_time'] = gmtime();
                 $this->model->table('wechat_media')
                     ->data($data)
                     ->where('id = ' . $id)
                     ->update();
             } else {
-                $data['add_time'] = time();
+                $data['add_time'] = gmtime();
                 $this->model->table('wechat_media')
                     ->data($data)
                     ->insert();
@@ -1435,7 +1437,7 @@ class WechatController extends AdminController
                 )));
             }
             $data['file_name'] = $pic_name;
-            $data['edit_time'] = time();
+            $data['edit_time'] = gmtime();
             $num = $this->model->table('wechat_media')
                 ->data($data)
                 ->where('id = ' . $id)
@@ -1637,7 +1639,7 @@ class WechatController extends AdminController
             $msg_data['wechat_id'] = $this->wechat_id;
             $msg_data['media_id'] = $article_info['id'];
             $msg_data['type'] = $article_info['type'];
-            $msg_data['send_time'] = time();
+            $msg_data['send_time'] = gmtime();
             $msg_data['msg_id'] = $rs2['msg_id'];
             $id = $this->model->table('wechat_mass_history')
                 ->data($msg_data)
@@ -2013,7 +2015,7 @@ class WechatController extends AdminController
                     ->where('rid = ' . $id)
                     ->delete();
             } else {
-                $data['add_time'] = time();
+                $data['add_time'] = gmtime();
                 $data['wechat_id'] = $this->wechat_id;
                 $id = $this->model->table('wechat_reply')
                     ->data($data)

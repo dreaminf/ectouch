@@ -118,7 +118,10 @@ class weixin {
                     'openid' => $userinfo['unionid'],
                     'nickname' => $userinfo['nickname'],
                     'sex' => $userinfo['sex'],
-                    'headimgurl' => $userinfo['headimgurl']
+                    'headimgurl' => $userinfo['headimgurl'],
+                    'city' => $userinfo['city'],
+                    'province' => $userinfo['province'],
+                    'country' => $userinfo['country'],
                 );
                 if(is_wechat_browser()) {
                     $this->update_wechat_unionid($userinfo);
@@ -148,8 +151,8 @@ class weixin {
         if (!empty($info['unionid'])) {
             // 兼容查询用户 已经存在wechat_user 且 unionid 为空的情况 用openid 更新一下 unionid
             $where = array('openid' => $info['openid'], 'wechat_id' => $wechat_id);
-            $res = model('Base')->model->table('wechat_user')->field('ect_uid, openid, unionid')->where($where)->find();
-            if(!empty($res['ect_uid']) && empty($res['unionid']) ){
+            $res = model('Base')->model->table('wechat_user')->field('unionid')->where($where)->find();
+            if(empty($res['unionid']) ){
                 model('Base')->model->table('wechat_user')->data($data)->where($where)->update();
             }
         }
