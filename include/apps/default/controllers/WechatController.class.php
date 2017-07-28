@@ -58,7 +58,7 @@ class WechatController extends CommonController
                 'subscribe' => $userinfo['subscribe'],
                 'subscribe_time' => $userinfo['subscribe_time'],
             );
-            $res = $this->model->table('wechat_user')->field('openid, unionid')->where(array('unionid' => $userinfo['unionid'], 'wechat_id' => $this->wechat_id))->find()
+            $res = $this->model->table('wechat_user')->field('openid, unionid')->where(array('unionid' => $userinfo['unionid'], 'wechat_id' => $this->wechat_id))->find();
             if(!empty($res)){
                 $this->model->table('wechat_user')->data($user_data)->where(array('unionid' => $userinfo['unionid'], 'wechat_id' => $this->wechat_id))->update();
             }

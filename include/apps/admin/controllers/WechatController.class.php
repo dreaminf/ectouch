@@ -531,20 +531,20 @@ class WechatController extends AdminController
             }
         }
         // 数据不存在
-        foreach ($wechat_user_list as $vs) {
-            if (! in_array($vs, $user_list)) {
-                $info = $this->weObj->getUserInfo($vs);
-                $info['group_id'] = $info['groupid'];
-                $info['wechat_id'] = $this->wechat_id;
-                unset($info['groupid']);
-                unset($info['tagid_list']);
-                $this->model->table('wechat_user')
-                    ->data($info)
-                    ->insert();
-            }
-        }
+        // foreach ($wechat_user_list as $vs) {
+        //     if (! in_array($vs, $user_list)) {
+        //         $info = $this->weObj->getUserInfo($vs);
+        //         $info['group_id'] = $info['groupid'];
+        //         $info['wechat_id'] = $this->wechat_id;
+        //         unset($info['groupid']);
+        //         unset($info['tagid_list']);
+        //         $this->model->table('wechat_user')
+        //             ->data($info)
+        //             ->insert();
+        //     }
+        // }
 
-        $this->redirect(url('subscribe_list'));
+        // $this->redirect(url('subscribe_list'));
     }
 
     /**
@@ -683,6 +683,9 @@ class WechatController extends AdminController
                 ->data($data)
                 ->insert();
         }
+        // 更新所有关注用户信息
+        $this->subscribe_update();
+
         $this->redirect(url('subscribe_list'));
     }
 
