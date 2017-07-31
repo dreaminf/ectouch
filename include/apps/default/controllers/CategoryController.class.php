@@ -353,6 +353,19 @@ class CategoryController extends CommonController
             $price_grade[0]['selected'] = empty($price_max) ? 1 : 0;
             $this->assign('price_grade', $price_grade);
         }
+        if (empty($row)) {
+            $row['min'] = 0;
+            $row['max'] = 10000;
+        }
+        //最大最小值范围
+        $this->assign('price_range', $row);
+        // 切换价格区间 可点击的阶梯 比如 每点击-10或+10
+        if($row['min'] > 1000){
+            $range_step = 100;
+        } else {
+            $range_step = 10;
+        }
+        $this->assign('range_step', $range_step);
 
         /* 品牌筛选 */
 
@@ -475,6 +488,9 @@ class CategoryController extends CommonController
                 }
             }
         }
+
+        $this->assign('price_min', $this->price_min);
+        $this->assign('price_max', $this->price_max);
     }
 
     /**
