@@ -292,7 +292,9 @@ class GoodsController extends CommonController
             }
             $shop_price = model('GoodsBase')->get_final_price($this->goods_id, $number, true, $attr_id);
             $res ['result'] = price_format($shop_price * $number);
-            $res ['product_number'] = $product['product_number'];
+            if(!empty($product['product_number'])) {
+                $res ['product_number'] = '库存：'.$product['product_number'];
+            }            
         }
         die(json_encode($res));
     }
