@@ -247,7 +247,7 @@ class GoodsController extends CommonController
             // 查询
             $condition = 'goods_id =' . $this->goods_id;
             $goods = $this->model->table('goods')->field('goods_name , goods_number ,extension_code')->where($condition)->find();
-            $attr_id = $attr_id['0'];         
+            $attr_id = count($attr_id) > 1 ? str_replace(',', '|', $_REQUEST ['attr']) : $attr_id['0'];
             $condition = 'goods_attr = '."'".$attr_id."'";
             $product = $this->model->table('products')->field('product_number')->where($condition)->find();
            
