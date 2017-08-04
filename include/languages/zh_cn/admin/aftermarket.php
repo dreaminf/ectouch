@@ -40,6 +40,7 @@ $_LANG['op_confirm'] = '确认';
 $_LANG['op_invalid'] = '无效';
 $_LANG['op_cancel'] = '取消';
 $_LANG['rf_check'] = '审核';
+$_LANG['op_after_service'] = '售后';
 $_LANG['label_operable_act'] = '当前可执行操作：';
 $_LANG['label_action_note'] = '操作备注：';
 $_LANG['label_cancel_note'] = '取消原因：';
@@ -54,6 +55,17 @@ $_LANG['label_handle_refund'] = '退款方式：';
 $_LANG['return_user_money'] = '退回用户余额';
 $_LANG['return_user_offline']='线下退款';
 $_LANG['label_refund_note'] = '退款说明：';
+
+/* 批处理 */
+$_LANG['pls_select_order'] = '请选择您要操作的订单';
+$_LANG['no_fulfilled_order'] = '没有满足操作条件的订单。';
+$_LANG['updated_order'] = '更新的订单：';
+$_LANG['order'] = '订单：';
+$_LANG['confirm_order'] = '以下订单无法设置为审核状态';
+$_LANG['invalid_order'] = '以下订单无法审核';
+$_LANG['cancel_order'] = '以下订单无法取消';
+$_LANG['after_service_order'] = '以下订单无法售后服务';
+$_LANG['return_list'] = '返回订单列表';
 
 /* 服务订单详情*/
 $_LANG['back_operate'] = '服务订单：';

@@ -2,7 +2,7 @@
 {include file="pageheader.htm"}
 {insert_scripts files="../js/utils.js,listtable.js"}
 <!-- 订单列表 -->
-<form method="post" action="order.php?act=operate" name="listForm" onsubmit="return check()">
+<form method="post" action="aftermarket.php?act=operate" name="listForm" onsubmit="return check_form()">
   <div class="list-div" id="listDiv">
 {/if}
 <table cellpadding="3" cellspacing="1">
@@ -24,7 +24,7 @@
   <tr>
   {foreach from=$order_list item=order key=okey}
   <tr>
-    <td valign="top" nowrap="nowrap"><input type="checkbox" name="checkboxes" value="{$order.order_sn}" /><a href="aftermarket.php?act=aftermarket_info&ret_id={$order.ret_id}&rec_id={$order.rec_id}" id="order_{$okey}">{$order.service_sn}{if $order.extension_code eq "group_buy"}<br /><div align="center">{$lang.group_buy}</div>{elseif $order.extension_code eq "exchange_goods"}<br /><div align="center">{$lang.exchange_goods}</div>{/if}</a></td>
+    <td valign="top" nowrap="nowrap"><input type="checkbox" name="checkboxes" class="checkboxes" value="{$order.service_sn}" /><a href="aftermarket.php?act=aftermarket_info&ret_id={$order.ret_id}&rec_id={$order.rec_id}" id="order_{$okey}">{$order.service_sn}{if $order.extension_code eq "group_buy"}<br /><div align="center">{$lang.group_buy}</div>{elseif $order.extension_code eq "exchange_goods"}<br /><div align="center">{$lang.exchange_goods}</div>{/if}</a></td>
     
     <td>{$order.service_type}</td>
     <td>{$order.add_time}</td>
@@ -60,14 +60,38 @@
 {if $full_page}
   </div>
   <div>
-    <input name="confirm" type="submit" id="btnSubmit" value="{$lang.op_confirm}" class="button" disabled="true" onclick="this.form.target = '_self'" />
-    <input name="invalid" type="submit" id="btnSubmit1" value="{$lang.op_invalid}" class="button" disabled="true" onclick="this.form.target = '_self'" />
-    <input name="cancel" type="submit" id="btnSubmit2" value="{$lang.op_cancel}" class="button" disabled="true" onclick="this.form.target = '_self'" />
-    <input name="remove" type="submit" id="btnSubmit3" value="{$lang.remove}" class="button" disabled="true" onclick="this.form.target = '_self'" />
+    <input name="check" type="submit" id="btnSubmit" value="{$lang.rf_check}" class="button" disabled="true"/>
+    
+    <input name="canceled" type="submit" id="btnSubmit2" value="{$lang.op_cancel}" class="button" disabled="true" onclick="this.form.target = '_self'" />
+    <input name="after_service" type="submit" id="btnSubmit3" value="{$lang.op_after_service}" class="button" disabled="true" onclick="this.form.target = '_self'" />
     <input name="batch" type="hidden" value="1" />
-    <input name="order_id" type="hidden" value="" />
+    <input name="order_id" id="order_id" type="hidden" value="" />
   </div>
 </form>
+<script type="text/javascript">
+  function check_form(){
+    var snArray = new Array();
+    var eles = document.forms['listForm'].elements;
+
+    for (var i=0; i<eles.length; i++)
+    {
+      if (eles[i].tagName == 'INPUT' && eles[i].type == 'checkbox' && eles[i].checked && eles[i].value != 'on')
+      {
+        snArray.push(eles[i].value);
+      }
+    }
+    if (snArray.length == 0)
+    {
+      return false;
+    }
+    else
+    {
+      eles['order_id'].value = snArray.toString();
+      return true;
+    }
+  }
+</script>
+
 <script language="JavaScript">
 listTable.recordCount = {$record_count};
 listTable.pageCount = {$page_count};
@@ -96,27 +120,6 @@ listTable.filter.{$key} = '{$item}';
         listTable.loadList();
     }
 
-    function check()
-    {
-      var snArray = new Array();
-      var eles = document.forms['listForm'].elements;
-      for (var i=0; i<eles.length; i++)
-      {
-        if (eles[i].tagName == 'INPUT' && eles[i].type == 'checkbox' && eles[i].checked && eles[i].value != 'on')
-        {
-          snArray.push(eles[i].value);
-        }
-      }
-      if (snArray.length == 0)
-      {
-        return false;
-      }
-      else
-      {
-        eles['order_id'].value = snArray.toString();
-        return true;
-      }
-    }
     /**
      * 显示订单商品及缩图
      */

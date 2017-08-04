@@ -222,7 +222,7 @@ elseif ($_REQUEST['act'] == 'operate') {
         }
         $anonymous = $order['user_id'] == 0;
     } /* 审核 */ elseif (isset($_POST['check'])) {
-        // $require_note = $_CFG['rf_check'] == 1;
+        $require_note = $_CFG['order_cancel_note'] == 1;
         $action = $_LANG['rf_check'];
         $operation = 'check';
     } /* 无效 */ elseif (isset($_POST['invalid'])) {
@@ -327,12 +327,187 @@ elseif ($_REQUEST['act'] == 'operate') {
             }
         } else {
             /* 多个订单 */
+
             ecs_header("Location: aftermarket.php?act=batch_operate_post&order_id=" . $order_id .
                     "&operation=" . $operation . "&action_note=" . urlencode($action_note) . "\n");
             exit;
         }
     }
 }
+
+/*------------------------------------------------------ */
+//-- 操作订单状态（处理批量提交）
+/*------------------------------------------------------ */
+
+elseif ($_REQUEST['act'] == 'batch_operate_post')
+{
+
+    /* 检查权限 */
+    admin_priv('aftermarket_rf_edit');
+
+    /* 取得参数 */
+    $service_sn   = $_REQUEST['order_id'];        // 订单id（逗号格开的多个订单id）
+    $operation  = $_REQUEST['operation'];       // 订单操作
+    $action_note= $_REQUEST['action_note'];     // 操作备注
+
+    $order_id_list = explode(',', $service_sn);
+
+    /* 初始化处理的订单sn */
+    $sn_list = array();
+    $sn_not_list = array();
+
+    /* 确认 */
+    if ('check' == $operation)
+    {
+        foreach($order_id_list as $id_order)
+        {
+            $sql = "SELECT * FROM " . $ecs->table('order_return') .
+                " WHERE service_sn = '$id_order'" .
+                " AND is_check = '" . OS_UNCONFIRMED . "'";
+            $order = $db->getRow($sql);
+
+            if($order)
+            {               
+                $ret_id = $order['ret_id'];
+                $rec_id = $order['rec_id'];
+                $arr = array(
+                    'return_status' => RF_APPLICATION,
+                    'refund_status' => FF_NOREFUND,
+                    'is_check' => RC_APPLY_SUCCESS,
+                    'actual_return' => 0,
+                );
+
+                $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('order_return'), $arr, 'UPDATE', "rec_id = '$rec_id'");
+                //记录操作
+                return_action($ret_id, RF_APPLICATION, FF_NOREFUND, RC_APPLY_SUCCESS, $action_note);
+                $sn_list[] = $order['service_sn'];
+            }
+            else
+            {
+                $sn_not_list[] = $id_order;
+            }
+        }
+        $sn_str = $_LANG['confirm_order'];
+    }
+    //取消
+    elseif ('canceled' == $operation)
+    {
+        foreach($order_id_list as $id_order)
+        {
+            $sql = "SELECT * FROM " . $ecs->table('order_return') .
+                " WHERE service_sn = '$id_order'";
+            $order = $db->getRow($sql);
+
+            if($order)
+            {    
+                $ret_id = $order['ret_id'];
+                $rec_id = $order['rec_id'];            
+                $cancel_note = isset($_REQUEST['cancel_note']) ? trim($_REQUEST['cancel_note']) : '';
+                $arr = array(
+                    'return_status' => RF_CANCELED,
+                    'refund_status' => FF_NOREFUND,
+                    'is_check' => RC_APPLY_FALSE,
+                    'to_buyer' => $cancel_note, //商家给买家留言
+                    'actual_return' => 0,
+                );
+
+                $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('order_return'), $arr, 'UPDATE', "rec_id = '$rec_id'");
+                /*更新log*/
+                return_action($ret_id, RF_CANCELED, FF_NOREFUND, RC_APPLY_FALSE, $action_note);
+
+                $sn_list[] = $order['service_sn'];
+             }
+            else
+            {
+                $sn_not_list[] = $id_order;
+            }
+        }
+
+        $sn_str = $_LANG['cancel_order'];
+    }
+    //售后
+    elseif ('after_service' == $operation)
+    {
+        foreach ($order_id_list as $id_order)
+        {
+            $sql = "SELECT * FROM " . $ecs->table('order_return') .
+                " WHERE service_sn = '$id_order'";
+            $order = $db->getRow($sql);
+
+            $return_info = return_order_info($order['ret_id']);
+            if($order)
+            {    
+                $ret_id = $order['ret_id'];
+                return_action($ret_id, $return_info['return_status'], FF_REFUND, RC_APPLY_SUCCESS,'[' . 售后 . '] ' . $action_note);
+
+                $sn_list[] = $order['service_sn'];
+             }
+            else
+            {
+                $sn_not_list[] = $id_order;
+            }
+        }
+
+        $sn_str = $_LANG['after_service_order'];
+    }
+    else
+    {
+        die('invalid params');
+    }
+
+    /* 取得备注信息 */
+    if(empty($sn_not_list))
+    {
+        $sn_list = empty($sn_list) ? '' : $_LANG['updated_order'] . join($sn_list, ',');
+       
+        $msg = $sn_list;
+        $links[] = array('text' => $_LANG['return_list'], 'href' => 'aftermarket.php?act=aftermarket_list');
+        sys_msg($msg, 0, $links);
+    }
+    else
+    {
+        
+        $order_list_no_fail = array();
+        $sql = "SELECT o.ret_id, o.rec_id, o.service_sn, o.order_sn, o.add_time, o.user_id, o.service_id, o.should_return , o.actual_return, o.is_check," .
+                "o.return_status, o.refund_status, r.back_num, r.out_num, " .
+                "IFNULL(u.user_name, '" . $GLOBALS['_LANG']['anonymous'] . "') AS buyer " .
+                " FROM " . $GLOBALS['ecs']->table('order_return') . " AS o " .
+                " LEFT JOIN " . $GLOBALS['ecs']->table('users') . " AS u ON u.user_id=o.user_id  " .
+                " LEFT JOIN " . $GLOBALS['ecs']->table('return_goods') . " AS r ON o.rec_id = r.rec_id " .
+                " WHERE service_sn " . db_create_in($sn_not_list);
+        $row = $GLOBALS['db']->getAll($sql);
+        /* 格式话数据 */
+        foreach ($row AS $key => $value) {
+            $row[$key]['formated_order_amount'] = price_format($value['order_amount']);
+            $row[$key]['formated_money_paid'] = price_format($value['money_paid']);
+            $row[$key]['formated_total_fee'] = price_format($value['total_fee']);
+            $row[$key]['short_order_time'] = local_date('m-d H:i', $value['add_time']);
+            $row[$key]['add_time'] = local_date('m-d H:i', $value['add_time']);
+            $row[$key]['back_num'] = number_format($value['back_num']);
+            $row[$key]['service_id'] = $value['service_id'];
+            $row[$key]['service_name'] = get_suppliers_name($value['seller_id']);
+            $row[$key]['service_type'] = get_service_type($value['service_id'], true);
+            $row[$key]['apply_user'] = get_user_info($value['user_id']);
+            $row[$key]['is_check'] = $value['is_check'];
+            if ($value['order_status'] == OS_INVALID || $value['order_status'] == OS_CANCELED) {
+                /* 如果该订单为无效或取消则显示删除链接 */
+                $row[$key]['can_remove'] = 1;
+            } else {
+                $row[$key]['can_remove'] = 0;
+            }
+        }
+
+        /* 模板赋值 */
+        $smarty->assign('order_info', $sn_str);
+        $smarty->assign('action_link', array('href' => 'aftermarket.php?act=list', 'text' => $_LANG['return_list']));
+        $smarty->assign('order_list',   $row);
+
+        /* 显示模板 */
+        assign_query_info();
+        $smarty->display('aftermarket_operate_info.htm');
+    }
+}
+
 /* ------------------------------------------------------ */
 //-- 操作订单状态（处理提交）
 /* ------------------------------------------------------ */ 
@@ -434,14 +609,9 @@ elseif ($_REQUEST['act'] == 'operate_post') {
         $_REQUEST['refund_amount'] = isset($_REQUEST['refund_amount']) ? $_REQUEST['refund_amount'] : 0; //退款金额
         $_REQUEST['refund_note'] = isset($_REQUEST['refund_note']) ? $_REQUEST['refund_note'] : ''; //退款说明
 
-        /* 标记订单为“退货” */
-//        $arr = array(
-//            'order_status' => OS_RETURNED,
-//        );
-//        update_order($order_id, $arr);
-
         /* 处理退款已付款订单 */
         $return_info = return_order_info($ret_id);        //退换货订单
+
         $refund_type = $_REQUEST['refund'];   //退款类型 1 线上 2 线下 默认为 1
         $refund_type = empty($refund_type) ? 1 : $refund_type;
         $refund_amount = $_REQUEST['refund_amount'] + $_REQUEST['shipping'];
@@ -450,15 +620,14 @@ elseif ($_REQUEST['act'] == 'operate_post') {
         if ($return_info['refund_status'] == FF_NOREFUND) {
             /* 退款 */
             aftermarket_refund($order, $refund_type, $refund_amount, $refund_note);
+            /*DRP_START*/
             //判断订单是否已分成（未分成则减去分销佣金）
-            $row =  $GLOBALS['db']->getRow("SELECT order_id,shop_separate  FROM " . $GLOBALS['ecs']->table('drp_order_info').
+			$row =  $GLOBALS['db']->getRow("SELECT order_id,shop_separate  FROM " . $GLOBALS['ecs']->table('drp_order_info').
             " WHERE order_id = '$return_info[order_id]'");
-            if($row['shop_separate'] == 0){
-                /*DRP_START*/
-                aftermarket_drp($return_info);//退货退款减去分销佣金
-                /*DRP_END*/  
+            if($row['shop_separate'] == 0){                
+                aftermarket_drp($return_info);//退货退款减去分销佣金                 
             }
-			
+            /*DRP_END*/ 						
             $arr = array(
                 'refund_status' => FF_REFUND,
                 'actual_return' => $refund_amount,
