@@ -254,7 +254,7 @@ class GoodsController extends CommonController
      * 改变属性、数量时重新计算商品价格
      */
     public function price()
-    {
+    { 
         //格式化返回数组
         $res = array(
             'err_msg' => '',
@@ -263,7 +263,9 @@ class GoodsController extends CommonController
         );
         // 获取参数
         $attr_id = isset($_REQUEST ['attr']) ? explode(',', $_REQUEST ['attr']) : array();
+        $goods_attr_id = isset($_REQUEST ['attr']) ? intval($_REQUEST ['attr']) : 0;
         $number = (isset($_REQUEST ['number'])) ? intval($_REQUEST ['number']) : 1;
+
         // 如果商品id错误
         if ($this->goods_id == 0) {
             $res ['err_msg'] = L('err_change_attr');
@@ -272,19 +274,10 @@ class GoodsController extends CommonController
             // 查询
             $condition = 'goods_id =' . $this->goods_id;
             $goods = $this->model->table('goods')->field('goods_name , goods_number ,extension_code')->where($condition)->find();
-            $attr_id = $attr_id['0'];         
+            $attr_id = count($attr_id) > 1 ? str_replace(',', '|', $_REQUEST ['attr']) : $attr_id['0'];
             $condition = 'goods_attr = '."'".$attr_id."'";
             $product = $this->model->table('products')->field('product_number')->where($condition)->find();
 
-            // 查询：系统启用了库存，检查输入的商品数量是否有效
-// 			if (intval ( C('use_storage') ) > 0 && $goods ['extension_code'] != 'package_buy') {
-// 				if ($goods ['goods_number'] < $number) {
-// 					$res ['err_no'] = 1;
-            //	$res ['err_msg'] = sprintf ( L('stock_insufficiency'), $goods ['goods_name'], $goods ['goods_number'], $goods ['goods_number'] );
-// 					$res ['err_max_number'] = $goods ['goods_number'];
-// 					die ( json_encode ( $res ) );
-// 				}
-// 			}
             if ($number <= 0) {
                 $res ['qty'] = $number = 1;
             } else {
