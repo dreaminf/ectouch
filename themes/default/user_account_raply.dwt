@@ -17,7 +17,7 @@
 			<li class="box-flex"><a href="{:url('user/index')}" class="nav-cont"><i class="nav-box"><img src="__TPL__/statics/img/user.png"></i><span>用户中心</span></a></li>
 	</ul>
 	</div>
-	<form action="{:url('user/act_account')}" method="post" name="theForm">
+	<form action="{:url('user/act_account')}" method="post" name="theForm" onsubmit="return check_form()">
 		<div class="user-recharge b-color-f m-top10">
 			<section class="m-top1px margin-lr">
 				<div class="text-all dis-box j-text-all">
@@ -52,22 +52,16 @@
 <script type="text/javascript" src="__PUBLIC__/script/region.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/shopping_flow.js"></script>
 <script type="text/javascript">
-	region.isAdmin = false; {
-		foreach from = $lang.flow_js item = item key = key
+	function check_form(){
+		var amount = $("input[name='amount']").val();
+		var user_note = $("input[name='user_note']").val();
+		if(amount <= 0 || user_note == ''){	
+			 alert("请输入正确的提现金额或账号");
+             return false;
+		}
 	}
-	var {
-		$key
-	} = "{$item}"; {
-		/foreach} {
-		literal
-	}
-	onload = function() {
-			if (!document.all) {
-				document.forms['theForm'].reset();
-			}
-		} {
-			/literal}
 </script>
+
 </body>
 
 </html>
