@@ -52,7 +52,8 @@
 			</div>
 		</div>
 	</a>
-	
+
+	{if $is_wechat == 1}
 	<a href="{:url('user/account_relation')}">
 		<div class="s-user-top">
 			<div class="dis-box s-xian-box s-user-top-1">
@@ -61,6 +62,7 @@
 			</div>
 		</div>
 	</a>
+	{/if}
 	
 </section>
 	<input name="act" type="hidden" value="profile" />

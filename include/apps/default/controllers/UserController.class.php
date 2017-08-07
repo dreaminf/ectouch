@@ -1974,7 +1974,7 @@ class UserController extends CommonController {
                 show_message('账号不存在，请重新输入！', L('msg_go_back'), '', 'error');
             }
         }
-$_SESSION['unionid'] = 'oJTlrxAy4xits1sDwiH_PM3Xi4_0';
+
         // 显示
         if (!empty($_SESSION['unionid'])) {
             // 默认账号(主账号) 即首次自动注册分配的账号
