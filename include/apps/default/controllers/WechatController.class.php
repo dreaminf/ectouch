@@ -193,7 +193,7 @@ class WechatController extends CommonController
         $condition = array('unionid' => $data['unionid'], 'wechat_id' => $this->wechat_id);
         $result = $this->model->table('wechat_user')->field('ect_uid, openid, unionid')->where($condition)->find();
         // 查找用户是否存在
-        if (isset($result['ect_uid'])) {
+        if (isset($result)) {
             $users = $this->model->table('users')->where(array('user_id' => $result['ect_uid']))->find();
             if (empty($users) || empty($result['ect_uid'])) {
                 $this->model->table('wechat_user')->where($condition)->delete();
@@ -257,12 +257,12 @@ class WechatController extends CommonController
                     $template = str_replace(array('[$username]', '[$password]'), array($username, $password), $reg_config['template']);
                 } else {
                     // $username = 'wx_' . time().mt_rand(1, 99);
-                    $username = substr(md5($identify), -2) . time() . rand(100, 999);
+                    $username = model('Users')->get_wechat_username($data['unionid'],'weixin');
                     $password = mt_rand(100000, 999999);
                     // 通知模版
                     $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
                 }
-                $email = $username . '@' . get_top_domain();
+                $email = $username . '@qq.com';
                 // 查询推荐人ID
                 if(!empty($scene_id)){
                     $scene_user_id = $this->model->table("users")->field('user_id')->where(array('user_id'=>$scene_id))->getOne();
@@ -292,11 +292,8 @@ class WechatController extends CommonController
                 // 注册微信资料
                 $data['ect_uid'] = $_SESSION['user_id'];
                 // $data['parent_id'] = $scene_user_id;
-            } else {
-                // 更新微信资料
-                $data['ect_uid'] = $userinfo['user_id'];
-                // $data['parent_id'] = $userinfo['parent_id'];
             }
+
             // 新增微信粉丝
             $this->model->table('wechat_user')->data($data)->insert();
             // 新用户送红包

@@ -1876,76 +1876,231 @@ class UserController extends CommonController {
     }
 
     /**
-     * 微信用户绑定页面
+     * 账号关联
+     * @return
      */
-    public function bind(){
-        if(IS_POST){
-            $username = I('post.username');
-            $password = I('post.password');
-            $this->back_act = urldecode(I('post.back_act'));
+    public function account_relation()
+    {
+        // 提交
+        if (IS_POST) {
+            $username = I('username', '', 'trim'); // 用户名/手机号
+            $captcha = I('captcha');  // 验证码
 
-            // 用户名是邮箱格式
-            if (is_email($username)) {
-                $where['email'] = $username;
-                $username_try = $this->model->table('users')
-                        ->field('user_name')
-                        ->where($where)
-                        ->getOne();
-                $username = $username_try ? $username_try : $username;
+            $password = I('password', '', 'trim');
+
+            // 数据验证
+            if (empty($username)) {
+                show_message('用户名不能为空', L('msg_go_back'), '', 'error');
+            }
+            if (empty($password)) {;
+                show_message('密码不能为空', L('msg_go_back'), '', 'error');
             }
 
-            // 用户名是手机格式
-            if (is_mobile($username)) {
-                $where['mobile_phone'] = $username;
-                $username_try = $this->model->table('users')
-                        ->field('user_name')
-                        ->where($where)
-                        ->getOne();
-                $username = $username_try ? $username_try : $username;
+            // 验证手机号并通过手机号查找用户名
+            if (is_mobile($username) == true) {
+                $sql = "SELECT user_name FROM {pre}users WHERE user_name = '".$username."' OR mobile_phone = '" . $username. "' ";
+                $r = $this->model->getRow($sql);
+                $username = $r['user_name'];
             }
-            if($new_user_id = self::$user->check_user($username, $password)){
-                if(!empty($_SESSION['wechat_user'])){
-                    $condition['openid'] = $_SESSION['wechat_user']['openid'];
-                    $user = model('Base')->model->table('wechat_user')->field('openid, ect_uid, isbind')->where($condition)->find();
-                    if($user && empty($user['isbind'])){
-                        model('Base')->model->table('wechat_user')->data(array('ect_uid'=>$new_user_id, 'isbind'=>1))->where($condition)->update();
 
-                        // 合并绑定会员数据 $this->user_id  $new_user_id
-                        $res = model('Users')->merge_user($this->user_id, $new_user_id);
-                        // 删除原会员数据
-                        if($res == true){
-                            self::$user->remove_user($_SESSION['user_name']);
-                        }
+            // 检查验证码
+            if (empty($captcha)) {
+                show_message(L('invalid_captcha'), L('msg_go_back'), '', 'error');
+            }
+            if ($_SESSION['ectouch_verify'] !== strtoupper($captcha)) {
+                show_message(L('invalid_captcha'), L('msg_go_back'), '', 'error');
+            }
 
-                        self::$user->logout();
-                        show_message('账号绑定成功,需重新登录', '会员中心', url('index'), 'error');
+            $bind_user_id = self::$user->check_user($username, $password);
+            if ($bind_user_id > 0 && !empty($_SESSION['unionid'])) {
+                // 不能关联已登录账号
+                if ($bind_user_id != $this->user_id) {
+                    // 更新关联表用户ID
+                    $res = $this->model->table('connect_user')->data(array('user_id' => $bind_user_id))->where(array('user_id' => $this->user_id))->update();
+                    // 重新登录
+                    if (!empty($username) && $res) {
+                        unset($_SESSION['user_id']);
+                        unset($_SESSION['user_name']);
+
+                        ECTouch::user()->set_session($username);
+                        ECTouch::user()->set_cookie($username);
+                        model('Users')->update_user_info();
+                        model('Users')->recalculate_price();
                     }
-                    else{
-                        show_message('请不要重复绑定', L('relogin_lnk'), url('index'), 'error');
-                    }
+
+                    show_message('已关联账号'.$username, '' , url('user/index'));
+                } else {
+                    show_message('不能关联已登录账号', L('msg_go_back'), '', 'error');
                 }
-                else{
-                    show_message('请先进行微信授权登录', L('relogin_lnk'), url('index'), 'error');
-                }
-            }
-            else{
-                show_message('用户名或密码错误', L('relogin_lnk'), url('bind', array(
-                    'referer' => urlencode($this->back_act)
-                )), 'error');
+            } else {
+                show_message('账号不存在，请重新输入！', L('msg_go_back'), '', 'error');
             }
         }
-        if (isset($_GET['referer']) && !empty($_GET['referer'])) {
-            $this->back_act = $_GET['referer'];
+
+        // 显示
+        if (!empty($_SESSION['unionid'])) {
+            // 默认账号(主账号) 即首次自动注册分配的账号
+            $wechat_id = $this->model->table('wechat')->field('id')->where(array('default_wx' => 1, 'status' => 1))->getOne();
+
+            $main_user_id = $this->model->table('wechat_user')->field('ect_uid')->where(array('unionid' => $_SESSION['unionid'], 'wechat_id' => $wechat_id))->getOne();
+
+            $main_user_info = model('users')->get_users($main_user_id);
+            if (!empty($main_user_info)) {
+                $main_user_info['user_name'] = $main_user_info['user_name'] . '(系统默认分配账号)';
+                $main_user_info['user_picture'] = $this->model->table('wechat_user')->field('headimgurl')->where(array('unionid' => $_SESSION['unionid'], 'wechat_id' => $wechat_id))->getOne();
+            }
+            $this->assign('main_user_info', $main_user_info); // 主会员信息
+
+            // 关联会员信息
+            $relation_user_info = model('users')->get_connect_user($_SESSION['unionid']);
+            $relation_users = model('users')->get_users($relation_user_info['user_id']);
+            if (!empty($relation_users)) {
+                $relation_user_info['user_picture'] = $relation_users['user_picture'];
+                $relation_user_info['mobile_phone'] = $relation_users['mobile_phone'];
+            }
+            $this->assign('relation_user_info', $relation_user_info); // 已关联会员
+
+            // 当前登录会员
+            $now_user_info = model('users')->get_users($this->user_id);
+
+            if (!empty($main_user_info) && !empty($now_user_info) && $main_user_info['user_id'] == $now_user_info['user_id']) {
+                $now_user_info['user_name'] = $main_user_info['user_name'];
+                $now_user_info['user_picture'] = $main_user_info['user_picture'];
+            }
+            $this->assign('now_user_info', $now_user_info);
+
+            // 是否已经关联
+            if (!empty($main_user_info) && !empty($relation_user_info) && $main_user_info['user_id'] == $relation_user_info['user_id']) {
+                $is_relation = 0;
+            } elseif (!empty($main_user_info) && !empty($relation_user_info) && $main_user_info['user_id'] != $relation_user_info['user_id']) {
+                $is_relation = 1;
+            }
+            $this->assign('is_relation', $is_relation);
+
+            // 是否可以解除关联
+            if (!empty($main_user_info) && !empty($now_user_info) && $main_user_info['user_id'] == $now_user_info['user_id']) {
+                $is_remove_relation = 1;
+            } else {
+                $is_remove_relation = 0;
+            }
+            $this->assign('is_remove_relation', $is_remove_relation);
+
+            // 是否可以切换登录
+            if (!empty($main_user_info) && !empty($relation_user_info) && $main_user_info['user_id'] != $relation_user_info['user_id']) {
+                $is_change_login = 1;
+            } else {
+                $is_change_login = 0;
+            }
+
+            if ($is_change_login == 1) {
+                // 用关联会员登录 否则用默认账号
+                if ($now_user_info && $relation_user_info && $now_user_info['user_id'] != $relation_user_info['user_id']) {
+                    $this->assign('change_user_info', $relation_user_info);
+                } else {
+                    $this->assign('change_user_info', $main_user_info);
+                }
+            }
+
+            $this->assign('is_change_login', $is_change_login);
+
+        } else {
+            $back_url = __HOST__ . $_SERVER['REQUEST_URI'];
+            $this->redirect(url('user/third_login', array('type' => 'weixin', 'backurl' => urlencode($back_url))));
         }
 
-        if (empty($this->back_act) && isset($GLOBALS['_SERVER']['HTTP_REFERER'])) {
-            $this->back_act = strpos($GLOBALS['_SERVER']['HTTP_REFERER'], 'c=user') ? url('index/index') : $GLOBALS['_SERVER']['HTTP_REFERER'];
-            $this->back_act = urlencode($this->back_act);
-        }
+        // 验证码相关设置
+        $this->assign('rand', mt_rand());
 
-        $this->assign('back_act', $this->back_act);
-        $this->assign('title', '绑定');
-        $this->display('user_bind.dwt');
+        $this->assign('title', '账号关联');
+        $this->assign('page_title', '账号关联');
+        $this->display('user_account_relation.dwt');
+    }
+
+    /**
+     * 解除账号关联
+     * @return
+     */
+    public function remove_relation()
+    {
+        // 异步
+        if (IS_AJAX) {
+            $json_result = array('error' => 0, 'msg' => '', 'url' => '');
+
+            $relation_user_id = I('relation_user_id', 0, 'intval');
+
+            if (!empty($relation_user_id)) {
+
+                if ($_SESSION['relation_times'] > 1) {
+                    $json_result = array('error' => 1, 'msg' => '请不要频繁操作！每次登录只能解除关联一次');
+                    exit(json_encode($json_result));
+                }
+
+                $wechat_id = $this->model->table('wechat')->field('id')->where(array('default_wx' => 1, 'status' => 1))->getOne();
+                $main_user_id = $this->model->table('wechat_user')->field('ect_uid')->where(array('unionid' => $_SESSION['unionid'], 'wechat_id' => $wechat_id))->getOne();
+
+                $userinfo = $this->model->table('users')->field('user_name')->where(array('user_id' => $main_user_id))->find();
+                if (!empty($userinfo)) {
+                    // 更新关联表记录
+                    $data = array('user_id' => $main_user_id);
+                    $this->model->table('connect_user')->data($data)->where(array('user_id' => $relation_user_id))->update();
+
+                    unset($_SESSION['user_id']);
+                    unset($_SESSION['user_name']);
+
+                    ECTouch::user()->set_session($userinfo['user_name']);
+                    ECTouch::user()->set_cookie($userinfo['user_name']);
+                    model('Users')->update_user_info();
+                    model('Users')->recalculate_price();
+
+                    $_SESSION['relation_times']++; // 每次登录只能解除关联一次
+
+                    $json_result = array('error' => 0, 'msg' => '解除关联成功', 'url' => url('user/index'));
+                    exit(json_encode($json_result));
+                } else {
+                    $json_result = array('error' => 1, 'msg' => '账号不存在');
+                    exit(json_encode($json_result));
+                }
+            }
+            $json_result = array('error' => 1, 'msg' => '错误');
+            exit(json_encode($json_result));
+        }
+    }
+
+    /**
+     * 切换登录
+     * @return
+     */
+    public function change_login()
+    {
+        // 异步
+        if (IS_AJAX) {
+            $json_result = array('error' => 0, 'msg' => '', 'url' => '');
+
+            $change_user_id = I('change_user_id', 0, 'intval');
+
+            if (!empty($change_user_id)) {
+
+                $userinfo = $this->model->table('users')->field('user_name')->where(array('user_id' => $change_user_id))->find();
+
+                if (!empty($userinfo)) {
+                    unset($_SESSION['user_id']);
+                    unset($_SESSION['user_name']);
+
+                    ECTouch::user()->set_session($userinfo['user_name']);
+                    ECTouch::user()->set_cookie($userinfo['user_name']);
+                    model('Users')->update_user_info();
+                    model('Users')->recalculate_price();
+
+                    $json_result = array('error' => 0, 'msg' => '切换登录成功', 'url' => url('user/index'));
+                    exit(json_encode($json_result));
+                } else {
+                    $json_result = array('error' => 1, 'msg' => '账号不存在');
+                    exit(json_encode($json_result));
+                }
+            }
+            $json_result = array('error' => 1, 'msg' => '错误');
+            exit(json_encode($json_result));
+        }
     }
 
     /**
@@ -2187,6 +2342,7 @@ class UserController extends CommonController {
             // 更新微信用户信息
             if(class_exists('WechatController') && is_wechat_browser()){
                 $res['openid'] = session('openid');
+                unset($res['user_id']); // 关联账号 登录不更新 ect_uid
                 model('Users')->update_wechat_user($res);
             }
             return true;
@@ -2214,7 +2370,7 @@ class UserController extends CommonController {
      */
     private function doRegister($res, $type = '', $back_url = '')
     {
-        $username = substr(md5($res['unionid']), -2) . time() . rand(100, 999);
+        $username = model('Users')->get_wechat_username($res['unionid'], $type);
         $password = mt_rand(100000, 999999);
         $email = $username . '@qq.com';
         $extends = array(

@@ -1934,7 +1934,7 @@ class UsersModel extends BaseModel {
             'headimgurl' => !empty($info['headimgurl']) ? $info['headimgurl'] : '',
             'unionid' => $info['unionid'],
         );
-        if(!empty($info['ect_uid'])) { $data['ect_uid'] = $info['user_id'];}
+        if(!empty($info['user_id'])) { $data['ect_uid'] = $info['user_id'];}
 
         // unionid 微信开放平台唯一标识
         if(!empty($info['unionid'])){
@@ -2150,6 +2150,7 @@ class UsersModel extends BaseModel {
         }
         return $operate;
     }
+
     /**退换货**/
     function tuihuanhuo($user_id) {
        $where['user_id'] = $user_id;
@@ -2241,43 +2242,43 @@ class UsersModel extends BaseModel {
     }
 
     /**
- * 获取商家地址
- */
-function get_business_address($suppliers_id) {
+     * 获取商家地址
+     */
+    function get_business_address($suppliers_id) {
 
 
-    $address = '';
-    if ($suppliers_id) {
         $address = '';
-    } else {
-        $sql = "SELECT region_name FROM " . $this->pre .
-            "region WHERE region_id = '".C('shop_country')."'";
-        $adress = $this->query($sql);
-        //dump($adress);exit;
-        $sql = "SELECT region_name FROM " . $this->pre .
-            "region WHERE region_id = '".C('shop_province')."'";
-        $adress = $this->query($sql);
-        //dump($adress);exit;
-        $sql = "SELECT region_name FROM " . $this->pre .
-            "region WHERE region_id = '".C('shop_city')."'";
-        $adress = $this->query($sql);
+        if ($suppliers_id) {
+            $address = '';
+        } else {
+            $sql = "SELECT region_name FROM " . $this->pre .
+                "region WHERE region_id = '".C('shop_country')."'";
+            $adress = $this->query($sql);
+            //dump($adress);exit;
+            $sql = "SELECT region_name FROM " . $this->pre .
+                "region WHERE region_id = '".C('shop_province')."'";
+            $adress = $this->query($sql);
+            //dump($adress);exit;
+            $sql = "SELECT region_name FROM " . $this->pre .
+                "region WHERE region_id = '".C('shop_city')."'";
+            $adress = $this->query($sql);
 
-        $address.= C('shop_address') . '收件人：' . C('shop_name') . '联系电话：' . C('service_phone');
+            $address.= C('shop_address') . '收件人：' . C('shop_name') . '联系电话：' . C('service_phone');
+        }
+        return $address;
     }
-    return $address;
-}
 
- /**
- * 获取省，市，地区id
- */
-function find_address($region_name,$region_type = 0) {
+     /**
+     * 获取省，市，地区id
+     */
+    function find_address($region_name,$region_type = 0) {
 
-	$sql = "SELECT region_id FROM " . $this->pre .
-		"region where region_name like '%$region_name%' and region_type = $region_type ";
-	$address = $this->row($sql);
-    return $address['region_id'];
+    	$sql = "SELECT region_id FROM " . $this->pre .
+    		"region where region_name like '%$region_name%' and region_type = $region_type ";
+    	$address = $this->row($sql);
+        return $address['region_id'];
 
-}
+    }
 
     /**
      * 合并会员数据
@@ -2446,5 +2447,46 @@ function find_address($region_name,$region_type = 0) {
             return false;
         }
     }
+
+    /**
+     * 查询会员信息
+     * @param  integer $user_id
+     * @param  integer $wechat_id
+     * @return array
+     */
+    function get_users($user_id)
+    {
+        $result = $this->model->table('users')->field('user_name, user_id, mobile_phone, email')->where(array('user_id' => $user_id))->find();
+        return $result;
+    }
+
+
+    /**
+     * 微信粉丝生成用户名规则
+     * 长度最大15个字符 兼容UCenter用户名
+     * @return
+     */
+    function get_wechat_username($unionid, $type = '')
+    {
+        switch ($type) {
+            case 'weixin':
+                $prefix = 'wx';
+                break;
+            case 'qq':
+                $prefix = 'qq';
+                break;
+            case 'sina':
+                $prefix = 'wb';
+                break;
+            case 'facebook':
+                $prefix = 'fb';
+                break;
+            default:
+                $prefix = 'sc';
+                break;
+        }
+        return $prefix . substr(md5($unionid), -2) . substr(time(), -7) . rand(1000, 9999);
+    }
+
 
 }
