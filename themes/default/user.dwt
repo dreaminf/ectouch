@@ -22,13 +22,7 @@
 								<p class="user-reg-top color-whie f-03">{$rank_name}</p>
 							</a>
 						</div>
-						{if !$isbind}
-						<div class="g-s-i-title-a">
-							<a href="{:url('user/bind')}">
-								<p class="user-reg-top color-whie f-03">电脑端账号绑定 </p>
-							</a>
-						</div>
-						{/if}
+
 					</div>
 					<div class="user-right-maxbox">
 						<a href="{:url('user/profile')}">

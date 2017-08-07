@@ -50,6 +50,20 @@ class WechatController extends CommonController
         $type = $this->weObj->getRev()->getRevType();
         $wedata = $this->weObj->getRev()->getRevData();
         $keywords = '';
+
+        // 兼容更新用户关注状态（未配置微信通之前关注的粉丝）
+        $userinfo = $this->weObj->getUserInfo($wedata['FromUserName']);
+        if(!empty($userinfo) && !empty($userinfo['unionid'])){
+            $user_data = array(
+                'subscribe' => $userinfo['subscribe'],
+                'subscribe_time' => $userinfo['subscribe_time'],
+            );
+            $res = $this->model->table('wechat_user')->field('openid, unionid')->where(array('unionid' => $userinfo['unionid'], 'wechat_id' => $this->wechat_id))->find();
+            if(!empty($res)){
+                $this->model->table('wechat_user')->data($user_data)->where(array('unionid' => $userinfo['unionid'], 'wechat_id' => $this->wechat_id))->update();
+            }
+        }
+
         if ($type == Wechat::MSGTYPE_TEXT) {
             $keywords = $wedata['Content'];
         } elseif ($type == Wechat::MSGTYPE_EVENT) {
@@ -164,27 +178,63 @@ class WechatController extends CommonController
                 'province' => $info['province'],
                 'headimgurl' => $info['headimgurl'],
                 'subscribe_time' => $info['subscribe_time'],
-                'unionid' => isset($info['unionid']) ? $info['unionid'] : '',
                 'remark' => $info['remark'],
                 'group_id' => isset($info['groupid']) ? $info['groupid'] : $this->weObj->getUserGroup($openid),
+                'unionid' => isset($info['unionid']) ? $info['unionid'] : '',
             );
         }
         // 公众号启用微信开发者平台，检查unionid
-        $unionmode = empty($data['unionid']) ? false : true;
-        $identify = 'wechat_' . ($unionmode ? $data['unionid'] : $data['openid']);
-
-        // 判断是否注册为微信粉丝（如果是，更新资料；如果不是，新增粉丝）
-        $condition = array('openid'=>$data['openid']);
-        $result = $this->model->table('wechat_user')->where($condition)->find();
-        $pc_userinfo = array();
-        // 是否为微信新用户
-        if (empty($result)) {
-            // 是否申请开放平台，判断是否有pc和app端的用户信息
-            if(!empty($data['unionid'])){
-                $pc_userinfo = $this->model->table('users')->where(array('aite_id'=> $identify))->find();
+        if(empty($data['unionid'])){
+            // exit('关注失败，请联系管理员开通微信开放平台');
+            exit('null');
+        }
+        // 已关注用户基本信息
+        // $condition = array('openid' => $data['openid'], 'wechat_id' => $this->wechat_id);
+        $condition = array('unionid' => $data['unionid'], 'wechat_id' => $this->wechat_id);
+        $result = $this->model->table('wechat_user')->field('ect_uid, openid, unionid')->where($condition)->find();
+        // 查找用户是否存在
+        if (isset($result)) {
+            $users = $this->model->table('users')->where(array('user_id' => $result['ect_uid']))->find();
+            if (empty($users) || empty($result['ect_uid'])) {
+                $this->model->table('wechat_user')->where($condition)->delete();
+                $result = array();
+                unset($_SESSION['user_id']);
             }
-            // 是否已注册pc或app账户
-            if (empty($pc_userinfo)){
+        }
+
+        // 未关注
+        if (empty($result)) {
+
+            // 兼容原users表aite_id
+            // $aite_id = 'wechat_' . $data['unionid'];
+            // $users = $this->model->table('users')->field('user_id')->where(array('aite_id' => $aite_id))->find();
+            // if(!empty($users)){
+            //     // 同步社会化登录表
+            //     $res['user_id'] = $users['user_id'];
+            //     model('Users')->update_connnect_user($res, $type);
+            // }
+
+            // 兼容原touch_user_info表
+            $aite_id = 'wechat_' . $data['unionid'];
+            $old_userinfo = model('Users')->get_one_user($aite_id);
+            if(!empty($old_userinfo)){
+                // 同步社会化登录表
+                $res = array(
+                    'user_id' => $old_userinfo['user_id'],
+                    'unionid' => $data['unionid'],
+                    'nickname' => $data['nickname'],
+                    );
+                model('Users')->update_connnect_user($res, 'wechat');
+                // 删除旧表信息
+                $where['user_id'] = $old_userinfo['user_id'];
+                $this->model->table('touch_user_info')->where($where)->delete();
+            }
+
+            // 其他平台(PC,APP)是否注册
+            $userinfo = model('Users')->get_connect_user($data['unionid']);
+
+            // 是否绑定注册
+            if (empty($userinfo)){
                 // 设置的用户注册信息
                 $reg_condition = array(
                     'enable' => 1,
@@ -206,34 +256,44 @@ class WechatController extends CommonController
                     // 通知模版
                     $template = str_replace(array('[$username]', '[$password]'), array($username, $password), $reg_config['template']);
                 } else {
-                    $username = substr(md5($identify), -2) . time() . rand(100, 999);
+                    // $username = 'wx_' . time().mt_rand(1, 99);
+                    $username = model('Users')->get_wechat_username($data['unionid'],'weixin');
                     $password = mt_rand(100000, 999999);
                     // 通知模版
                     $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
                 }
+                $email = $username . '@qq.com';
                 // 查询推荐人ID
                 if(!empty($scene_id)){
                     $scene_user_id = $this->model->table("users")->field('user_id')->where(array('user_id'=>$scene_id))->getOne();
                 }
                 $scene_user_id = empty($scene_user_id) ? 0 : $scene_user_id;
-
-                $email = $username . '@' . get_top_domain();
                 // 用户注册
                 $extend = array(
                     'parent_id' => $scene_user_id,
-                    'nick_name' => $data['nickname'],
-                    'aite_id' => $identify,
+                    // 'nick_name' => $data['nickname'],
+                    // 'aite_id' => 'wechat_' . $data['unionid'],
                     'sex' => $data['sex'],
+                    // 'user_picture' => $data['headimgurl']
                 );
                 if (model('Users')->register($username, $password, $email, $extend) !== false) {
+                    // 同步社会化登录用户信息表
+                    $res = array(
+                        'user_id' => $_SESSION['user_id'],
+                        'unionid' => $data['unionid'],
+                        'nickname' => $data['nickname'],
+                        );
+                    model('Users')->update_connnect_user($res, 'wechat');
+
                     model('Users')->update_user_info();
                 } else {
                     exit('null');
                 }
+                // 注册微信资料
                 $data['ect_uid'] = $_SESSION['user_id'];
-            } else {
-                $data['ect_uid'] = $pc_userinfo['user_id'];
+                // $data['parent_id'] = $scene_user_id;
             }
+
             // 新增微信粉丝
             $this->model->table('wechat_user')->data($data)->insert();
             // 新用户送红包
@@ -277,14 +337,9 @@ class WechatController extends CommonController
             $template = $data['nickname'] .  '，欢迎您再次回来';
             // 更新微信用户资料
             $this->model->table('wechat_user')->data($data)->where($condition)->update();
-            // 是否申请开放平台
-            if(!empty($data['unionid'])){
-                $pc_data = array('aite_id'=> $identify);
-                $pc_condition = array('user_id' => $result['ect_uid']);
-                $this->model->table('users')->data($pc_data)->where($pc_condition)->update();
-            }
+
             // 先授权登录后再关注送红包
-            $bonus_num = model('Base')->model->table('user_bonus')->where('user_id = "'.$result['ect_uid'].'"')->count();
+            $bonus_num = $this->model->table('user_bonus')->where('user_id = "'.$result['ect_uid'].'"')->count();
             if($bonus_num <= 0){
                 $bonus_msg = $this->send_message($openid, 'bonus', $this->weObj, 1);
                 if (! empty($bonus_msg)) {
@@ -713,7 +768,7 @@ class WechatController extends CommonController
      * 跳转到第三方登录
      */
     public static function snsapi_userinfo(){
-        if(is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid'])) && ACTION_NAME != 'third_login'){
+        if(is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['unionid'])) && ACTION_NAME != 'third_login'){
             $wxinfo   = model('Base')->model->table('wechat')->field('token, appid, appsecret, status')->find();
             if(!$wxinfo['status']){return false;}
             if (! empty($wxinfo['oauth_redirecturi'])) {

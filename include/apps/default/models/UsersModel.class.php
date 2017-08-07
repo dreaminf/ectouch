@@ -198,12 +198,11 @@ class UsersModel extends BaseModel {
                 $sql = 'UPDATE ' . $this->pre . 'users SET mobile_phone = "' . $username . '" WHERE user_id = "' . $_SESSION['user_id'] . '"';
                 $this->query($sql);
             }
-
             /* 推荐处理 */
             $affiliate = unserialize(C('affiliate'));
             if (isset($affiliate['on']) && $affiliate['on'] == 1) {
                 // 推荐开关开启
-                $up_uid = model('Users')->get_affiliate();
+                $up_uid = get_affiliate();
                 empty($affiliate) && $affiliate = array();
                 $affiliate['config']['level_register_all'] = intval($affiliate['config']['level_register_all']);
                 $affiliate['config']['level_register_up'] = intval($affiliate['config']['level_register_up']);
@@ -218,7 +217,6 @@ class UsersModel extends BaseModel {
                             model('ClipsBase')->log_account_change($up_uid, 0, 0, $affiliate['config']['level_register_all'], 0, L('register_affiliate'));
                         }
                     }
-
                     /*DRP_START*/
                     $sql = "SELECT id FROM " . $this->pre . "drp_shop where user_id = ".$up_uid;
                     $res = $this->row($sql);
@@ -1796,41 +1794,41 @@ class UsersModel extends BaseModel {
      * @return int
      * @author xuanyan
      * */
-    function get_affiliate() {
-        if (!empty($_COOKIE['ecshop_affiliate_uid'])) {
-            $uid = intval($_COOKIE['ecshop_affiliate_uid']);
-            if ($this->row('SELECT user_id FROM ' . $this->pre . "users WHERE user_id = '$uid'")) {
-                return $uid;
-            } else {
-                setcookie('ecshop_affiliate_uid', '', 1);
-            }
-        }
-        elseif($_SESSION['user_id'] !== 0){
-            //推荐 by ecmoban
-            $reg_info = $this->model->table('users')->field('reg_time, parent_id')->where('user_id = '.$_SESSION['user_id'])->find();
-            //推荐信息
-            $config = unserialize(C('affiliate'));
-            if (!empty($config['config']['expire'])) {
-                if ($config['config']['expire_unit'] == 'hour') {
-                    $c = 1;
-                } elseif ($config['config']['expire_unit'] == 'day') {
-                    $c = 24;
-                } elseif ($config['config']['expire_unit'] == 'week') {
-                    $c = 24 * 7;
-                } else {
-                    $c = 1;
-                }
-                //有效时间
-                $eff_time = 3600 * $config['config']['expire'] * $c;
-                //有效时间内
-                if(gmtime() - $reg_info['reg_time'] <= $eff_time){
-                    return $reg_info['parent_id'];
-                }
-            }
-        }
+    // function get_affiliate() {
+    //     if (!empty($_COOKIE['ecshop_affiliate_uid'])) {
+    //         $uid = intval($_COOKIE['ecshop_affiliate_uid']);
+    //         if ($this->row('SELECT user_id FROM ' . $this->pre . "users WHERE user_id = '$uid'")) {
+    //             return $uid;
+    //         } else {
+    //             setcookie('ecshop_affiliate_uid', '', 1);
+    //         }
+    //     }
+    //     elseif($_SESSION['user_id'] !== 0){
+    //         //推荐 by ecmoban
+    //         $reg_info = $this->model->table('users')->field('reg_time, parent_id')->where('user_id = '.$_SESSION['user_id'])->find();
+    //         //推荐信息
+    //         $config = unserialize(C('affiliate'));
+    //         if (!empty($config['config']['expire'])) {
+    //             if ($config['config']['expire_unit'] == 'hour') {
+    //                 $c = 1;
+    //             } elseif ($config['config']['expire_unit'] == 'day') {
+    //                 $c = 24;
+    //             } elseif ($config['config']['expire_unit'] == 'week') {
+    //                 $c = 24 * 7;
+    //             } else {
+    //                 $c = 1;
+    //             }
+    //             //有效时间
+    //             $eff_time = 3600 * $config['config']['expire'] * $c;
+    //             //有效时间内
+    //             if(gmtime() - $reg_info['reg_time'] <= $eff_time){
+    //                 return $reg_info['parent_id'];
+    //             }
+    //         }
+    //     }
 
-        return 0;
-    }
+    //     return 0;
+    // }
     /**
      * 检查是否为第三方用户
      * @param type $user_id
@@ -1857,10 +1855,9 @@ class UsersModel extends BaseModel {
         }
         */
         // 手机独立模式
-        $sql = 'SELECT u.user_name FROM ' . $this->pre . 'users u LEFT JOIN ' . $this->pre .
+        $sql = 'SELECT u.user_name, u.user_id FROM ' . $this->pre . 'users u LEFT JOIN ' . $this->pre .
                 'touch_user_info t ON t.user_id = u.user_id WHERE t.aite_id = "' . $aite_id . '" ';
-        $res = $this->row($sql);
-        return $res['user_name'];
+        return $this->row($sql);
     }
 
     /**
@@ -1885,6 +1882,94 @@ class UsersModel extends BaseModel {
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * 查询社会化登录用户信息
+     * @param string $unionid
+     * @return array
+     */
+    function get_connect_user($unionid) {
+        $sql = "SELECT u.user_name, u.user_id, u.parent_id FROM {pre}users u, {pre}connect_user cu WHERE u.user_id = cu.user_id AND cu.open_id = '" . $unionid. "' ";
+        return $this->row($sql);
+    }
+
+    /**
+     * 更新社会化登录用户信息
+     * @param  [type] $res, $type:qq,sina,wechat
+     * @return
+     */
+    function update_connnect_user($res, $type = '')
+    {
+        // 组合数据
+        $profile = array(
+            'nickname' => $res['nickname'],
+            'sex' => $res['sex'],
+            'province' => $res['province'],
+            'city' => $res['city'],
+            'country' => $res['country'],
+            'headimgurl' => $res['headimgurl'],
+        );
+        $type = $type == 'weixin' ? 'wechat' : 'weixin'; // 兼容统一命名wechat
+        $data = array(
+            'connect_code' => 'sns_' . $type,
+            'user_id' => $res['user_id'],
+            'open_id' => $res['unionid'],
+            'profile' => serialize($profile)
+        );
+        if($res['user_id'] > 0 && $res['unionid']){
+            // 查询
+            $connect_userinfo = $this->get_connect_user($res['unionid']);
+            if (empty($connect_userinfo)) {
+                // 新增记录
+                $data['create_at'] = gmtime();
+                $this->model->table('connect_user')->data($data)->insert();
+            } else {
+                // 更新记录
+                $this->model->table('connect_user')->data($data)->where(array('open_id' => $res['unionid']))->update();
+            }
+        }
+    }
+
+    /**
+     * 更新微信用户信息
+     * @param array    $info 微信用户信息
+     * @param string   $wechat_id  公众号ID
+     * @return
+     */
+    function update_wechat_user($info, $wechat_id = '')
+    {
+        //公众号id
+        $wechat = $this->model->table('wechat')->field('id')->where(array('type' => 2, 'status' => 1, 'default_wx' => 1))->find();
+        $wechat_id = !empty($wechat_id) ? $wechat_id : $wechat['id'];
+        // 组合数据
+        $data = array(
+            'wechat_id' => $wechat_id,
+            'openid' => $info['openid'],
+            'nickname' => !empty($info['nickname']) ? $info['nickname'] : '',
+            'sex' => !empty($info['sex']) ? $info['sex'] : 0,
+            'language' => !empty($info['language']) ? $info['language'] : '',
+            'city' => !empty($info['city']) ? $info['city'] : '',
+            'province' => !empty($info['province']) ? $info['province'] : '',
+            'country' => !empty($info['country']) ? $info['country'] : '',
+            'headimgurl' => !empty($info['headimgurl']) ? $info['headimgurl'] : '',
+            'unionid' => $info['unionid'],
+        );
+        if(!empty($info['user_id'])) { $data['ect_uid'] = $info['user_id'];}
+
+        // unionid 微信开放平台唯一标识
+        if(!empty($info['unionid'])){
+            // 查询
+            $where = array('unionid' => $info['unionid'], 'wechat_id' => $wechat_id);
+            $result = $this->model->table('wechat_user')->field('openid, unionid')->where($where)->find();
+            if (empty($result)) {
+                // 新增记录
+                $this->model->table('wechat_user')->data($data)->insert();
+            } else {
+                // 更新记录
+                $this->model->table('wechat_user')->data($data)->where($where)->update();
+            }
         }
     }
 
@@ -2087,6 +2172,7 @@ class UsersModel extends BaseModel {
         }
         return $operate;
     }
+
     /**退换货**/
     function tuihuanhuo($user_id) {
        $where['user_id'] = $user_id;
@@ -2178,43 +2264,43 @@ class UsersModel extends BaseModel {
     }
 
     /**
- * 获取商家地址
- */
-function get_business_address($suppliers_id) {
+     * 获取商家地址
+     */
+    function get_business_address($suppliers_id) {
 
 
-    $address = '';
-    if ($suppliers_id) {
         $address = '';
-    } else {
-        $sql = "SELECT region_name FROM " . $this->pre .
-            "region WHERE region_id = '".C('shop_country')."'";
-        $adress = $this->query($sql);
-        //dump($adress);exit;
-        $sql = "SELECT region_name FROM " . $this->pre .
-            "region WHERE region_id = '".C('shop_province')."'";
-        $adress = $this->query($sql);
-        //dump($adress);exit;
-        $sql = "SELECT region_name FROM " . $this->pre .
-            "region WHERE region_id = '".C('shop_city')."'";
-        $adress = $this->query($sql);
+        if ($suppliers_id) {
+            $address = '';
+        } else {
+            $sql = "SELECT region_name FROM " . $this->pre .
+                "region WHERE region_id = '".C('shop_country')."'";
+            $adress = $this->query($sql);
+            //dump($adress);exit;
+            $sql = "SELECT region_name FROM " . $this->pre .
+                "region WHERE region_id = '".C('shop_province')."'";
+            $adress = $this->query($sql);
+            //dump($adress);exit;
+            $sql = "SELECT region_name FROM " . $this->pre .
+                "region WHERE region_id = '".C('shop_city')."'";
+            $adress = $this->query($sql);
 
-        $address.= C('shop_address') . '收件人：' . C('shop_name') . '联系电话：' . C('service_phone');
+            $address.= C('shop_address') . '收件人：' . C('shop_name') . '联系电话：' . C('service_phone');
+        }
+        return $address;
     }
-    return $address;
-}
 
- /**
- * 获取省，市，地区id
- */
-function find_address($region_name,$region_type = 0) {
+     /**
+     * 获取省，市，地区id
+     */
+    function find_address($region_name,$region_type = 0) {
 
-	$sql = "SELECT region_id FROM " . $this->pre .
-		"region where region_name like '%$region_name%' and region_type = $region_type ";
-	$address = $this->row($sql);
-    return $address['region_id'];
+    	$sql = "SELECT region_id FROM " . $this->pre .
+    		"region where region_name like '%$region_name%' and region_type = $region_type ";
+    	$address = $this->row($sql);
+        return $address['region_id'];
 
-}
+    }
 
     /**
      * 获取我的拼团
@@ -2294,7 +2380,6 @@ function find_address($region_name,$region_type = 0) {
      * @access  public
      * @param   id $from_user_id 原会员id
      * @param   id $to_user_id 新会员id
-     * @return  boolen      $bool
      * @return  boolen      $bool
      */
     function merge_user($from_user_id = 0, $to_user_id = 0)
@@ -2459,89 +2544,44 @@ function find_address($region_name,$region_type = 0) {
     }
 
     /**
-     * 更新微信用户信息
-     * @param array    $info 微信用户信息
-     * @param string   $wechat_id  公众号ID
-     * @return
-     */
-    function update_wechat_user($info, $wechat_id = '')
-    {
-        //公众号id
-        $wechat = $this->model->table('wechat')->field('id')->where(array('type' => 2, 'status' => 1, 'default_wx' => 1))->find();
-        $wechat_id = !empty($wechat_id) ? $wechat_id : $wechat['id'];
-        // 组合数据
-        $data = array(
-            'wechat_id' => $wechat_id,
-            'openid'    => $info['openid'],
-            'nickname'  => !empty($info['nickname']) ? $info['nickname'] : '',
-            'sex'       => !empty($info['sex']) ? $info['sex'] : 0,
-            'language'  => !empty($info['language']) ? $info['language'] : '',
-            'city'      => !empty($info['city']) ? $info['city'] : '',
-            'province'  => !empty($info['province']) ? $info['province'] : '',
-            'country'   => !empty($info['country']) ? $info['country'] : '',
-            'headimgurl' => !empty($info['headimgurl']) ? $info['headimgurl'] : '',
-            'unionid'   => $info['unionid'],
-            'ect_uid'   => !empty($info['user_id']) ? $info['user_id'] : 0,
-        );
-        // unionid 微信开放平台唯一标识
-        if(!empty($info['unionid'])){
-            // 查询
-            $where = array('unionid' => $info['unionid'], 'wechat_id' => $wechat_id);
-            $result = $this->model->table('wechat_user')->field('openid, unionid')->where($where)->find();
-            if (empty($result)) {
-                // 新增记录
-                $this->model->table('wechat_user')->data($data)->insert();
-            } else {
-                // 更新记录
-                $this->model->table('wechat_user')->data($data)->where($where)->update();
-            }
-        }
-    }
-    /**
-     * 查询社会化登录用户信息
-     * @param string $unionid
+     * 查询会员信息
+     * @param  integer $user_id
+     * @param  integer $wechat_id
      * @return array
      */
-    function get_connect_user($unionid) {
-        $sql = "SELECT u.user_name, u.user_id, u.parent_id FROM {pre}users u, {pre}connect_user cu WHERE u.user_id = cu.user_id AND cu.open_id = '" . $unionid. "' ";
-        return $this->row($sql);
+    function get_users($user_id)
+    {
+        $result = $this->model->table('users')->field('user_name, user_id, mobile_phone, email')->where(array('user_id' => $user_id))->find();
+        return $result;
     }
 
+
     /**
-     * 更新社会化登录用户信息
-     * @param  [type] $res, $type:qq,sina,wechat
+     * 微信粉丝生成用户名规则
+     * 长度最大15个字符 兼容UCenter用户名
      * @return
      */
-    function update_connnect_user($res, $type = '')
+    function get_wechat_username($unionid, $type = '')
     {
-        // 组合数据
-        $profile = array(
-            'nickname' => $res['nickname'],
-            'sex' => $res['sex'],
-            'province' => $res['province'],
-            'city' => $res['city'],
-            'country' => $res['country'],
-            'headimgurl' => $res['headimgurl'],
-        );
-        $type = $type == 'weixin' ? 'wechat' : 'weixin'; // 兼容统一命名wechat
-        $data = array(
-            'connect_code' => 'sns_' . $type,
-            'user_id' => $res['user_id'],
-            'open_id' => $res['unionid'],
-            'profile' => serialize($profile)
-        );
-        if($res['user_id'] > 0 && $res['unionid']){
-            // 查询
-            $connect_userinfo = $this->get_connect_user($res['unionid']);
-            if (empty($connect_userinfo)) {
-                // 新增记录
-                $data['create_at'] = gmtime();
-                $this->model->table('connect_user')->data($data)->insert();
-            } else {
-                // 更新记录
-                $this->model->table('connect_user')->data($data)->where(array('open_id' => $res['unionid']))->update();
-            }
+        switch ($type) {
+            case 'weixin':
+                $prefix = 'wx';
+                break;
+            case 'qq':
+                $prefix = 'qq';
+                break;
+            case 'sina':
+                $prefix = 'wb';
+                break;
+            case 'facebook':
+                $prefix = 'fb';
+                break;
+            default:
+                $prefix = 'sc';
+                break;
         }
+        return $prefix . substr(md5($unionid), -2) . substr(time(), -7) . rand(1000, 9999);
     }
+
 
 }

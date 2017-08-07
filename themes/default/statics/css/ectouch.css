@@ -2917,3 +2917,30 @@ h5.title-hrbg hr {background: #CCCBD9;height: 1px;border: 0;position: absolute;l
 .raise-button .icon-Collapse{text-align: center;display:block;width: 100%;color:#999;}
 .raise-cate-nav a .icon-viewlist{font-size:1.6rem;}
 .n-checkout-btn{border-radius: 0}
+
+
+/*账号关联*/
+.remove-relation-button2 { background: #ddd; color: #555;outline: none;border:none}
+.user_relation-section ul{background:#f3f3f3;border-radius: 5px;padding:1rem;}
+.user_relation-section ul li{font-size:1.3rem;color:#777;margin-bottom:.4rem;}
+.user_relation_plan{margin:1.8rem 0 0 0;}
+.user_relation_plan span{background:#ddd;border-radius: 100%;position:relative; width:1.6rem;height:1.6rem;color:#fff;text-align: center;display: block;margin: 0 auto;font-size:1.3rem;line-height:1.6rem;}
+.user_relation_plan .plan.active span{background:#ec5151;}
+.user_relation_plan .plan.active p{color:#ec5151;}
+.user_relation_plan span i{font-size:1rem;line-height:1;}
+.user_relation_plan .plan{position:relative;}
+.user_relation_plan .plan:after{content: " "; position: absolute; display: block; width:80%;  border:1px solid #ddd; border-right: 0; border-bottom:0;
+   background:#f3f3f3; left: 50%; margin-left:1.4rem; top:.7rem;}
+ .relation_section_btn button{margin-right:.5rem;}
+ .relation_section_btn button:last-child{margin-right:0;}
+ .user_tishi-section ul{background:#fbdbdb;border-radius: 5px;padding:.6rem 1rem;}
+ .user_tishi-section ul li{font-size:1.3rem;color:#ec5151;margin-bottom:.4rem;}
+ .user_tishi-section{margin-top:1.8rem;}
+ .user_relation_index h3{padding:1.1rem;border-bottom:1px solid #f6f6f9;}
+ .user_relation_index ul li.right-cont{padding:.4rem 0 0 1rem;}
+ .user_relation_index .guanlian_icon{background:rgba(0,0,0,0.2);width:100%;position:absolute;bottom:0;height:1.4rem;line-height:1rem;}
+ .user_relation_index .guanlian_icon i{font-size:1.3rem;color:#fff;text-align: center;}
+.user_relation_box{padding:0 1.1rem;margin: 1.4rem 0;}
+.user_relation_box h5.title-hrbg { height: 2rem;line-height: 2rem;}
+.user_relation_remark{padding:1.4rem;}
+.user_relation_remark label{display: block}
