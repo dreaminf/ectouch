@@ -3,6 +3,11 @@
 {include file="pageheader.htm"}
 {insert_scripts files="../js/utils.js,listtable.js"}
 
+<style>
+  .p-r{position: relative;}
+  .type-img{margin-left:3.8rem;}
+  .type-cont{position:absolute;top:50%;margin-top:-.5rem;left:1rem;}
+</style>
 <form method="post" action="" name="listForm">
 <!-- start ads list -->
 <div class="list-div" id="listDiv">
@@ -26,7 +31,7 @@
     </td>
     <td align="left"><span>{if $list.position_id eq 0}{$lang.outside_posit}{else}{$list.position_name}{/if}</span>
     </td>
-    <td align="left"><span>{$list.type}</span></td>
+    <td align="left" class="p-r"><span class="type-cont">{$list.type}</span><img src="{$list.ad_code}" class="type-img" width="180px" height="90px" border="0"></td>
     <td align="center"><span>{$list.start_date}</span></td>
     <td align="center"><span>{$list.end_date}</span></td>
     <td align="right"><span>{$list.click_count}</span></td>

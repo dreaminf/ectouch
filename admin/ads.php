@@ -599,7 +599,7 @@ function get_adslist()
          /* 格式化日期 */
          $rows['start_date']    = local_date($GLOBALS['_CFG']['date_format'], $rows['start_time']);
          $rows['end_date']      = local_date($GLOBALS['_CFG']['date_format'], $rows['end_time']);
-
+         $rows['ad_code'] = get_data_path($rows['ad_code'], 'afficheimg');
          $arr[] = $rows;
     }
 

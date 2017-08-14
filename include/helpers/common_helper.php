@@ -2360,6 +2360,31 @@ function get_image_path($goods_id, $image = '', $thumb = false, $call = 'goods',
 
 
 /**
+ * 重新获得非商品图片地址
+ *
+ * @param string $image 图片地址
+ * @param string $folder 图片目录
+ *
+ * @return string   $url
+ */
+function get_data_path($image = '', $folder = ''){
+    $url = C('no_picture');
+    if (!empty($image)) {
+        if (strtolower(substr($image, 0, 4)) == 'http') {
+            return $image;
+        }
+        $shop_url = rtrim(C('shop_url'));
+        $base_url = IS_ECSHOP ? (empty($shop_url) ? dirname(__URL__):$shop_url) : __URL__;
+        if(IS_ECSHOP){
+            $url = $base_url . '/data/' . $folder . '/' . $image;
+        }else{
+            $url = $base_url . '/data/attached/' . $folder . '/' . $image;
+        }
+    }
+    return $url;
+}
+
+/**
  * 调用使用UCenter插件时的函数
  *
  * @param   string  $func
