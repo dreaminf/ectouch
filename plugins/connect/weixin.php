@@ -151,9 +151,18 @@ class weixin {
         if (!empty($info['unionid'])) {
             // 兼容查询用户 已经存在wechat_user 且 unionid 为空的情况 用openid 更新一下 unionid
             $where = array('openid' => $info['openid'], 'wechat_id' => $wechat_id);
-            $res = model('Base')->model->table('wechat_user')->field('unionid')->where($where)->find();
-            if(empty($res['unionid']) ){
+            $res = model('Base')->model->table('wechat_user')->field('unionid, ect_uid')->where($where)->find();
+            if(empty($res['unionid'])){
                 model('Base')->model->table('wechat_user')->data($data)->where($where)->update();
+                if(!empty($res['ect_uid'])){
+                    // 更新社会化登录用户信息
+                    $connect_userinfo = model('Users')->get_connect_user($info['unionid']);
+                    if (empty($connect_userinfo)) {
+                        model('Base')->model->table('connect_user')->data(array('open_id' => $info['unionid']))->where(array('open_id' => $info['openid']))->update();
+                    }
+                    $info['user_id'] = $res['ect_uid'];
+                    model('Users')->update_connnect_user($info, 'wechat');
+                }
             }
         }
     }
