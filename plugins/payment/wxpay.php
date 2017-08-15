@@ -51,7 +51,7 @@ class wxpay
         $this->setParameter("body", $order['order_sn']); // 商品描述
         $this->setParameter("out_trade_no", $order['order_sn'] . 'A' . ($order['order_amount'] * 100) . 'B' . $order['log_id']); // 商户订单号
         $this->setParameter("total_fee", $order['order_amount'] * 100); // 总金额
-        $this->setParameter("notify_url", return_url(basename(__FILE__, '.php'), true)); // 通知地址
+        $this->setParameter("notify_url", notify_url(basename(__FILE__, '.php'), true)); // 通知地址
         $this->setParameter("trade_type", "JSAPI"); // 交易类型
         if ($order['apply'] == 1) {
             $this->setParameter("attach", "drp");
@@ -63,7 +63,7 @@ class wxpay
         $jsApiParameters = $this->getParameters($prepay_id);
         // wxjsbridge
         $js = '<script language="javascript">
-        function jsApiCall(){WeixinJSBridge.invoke("getBrandWCPayRequest",' . $jsApiParameters . ',function(res){if(res.err_msg == "get_brand_wcpay_request:ok"){location.href="' . return_url(basename(__FILE__, '.php'), false, array('status' => 1)) . '"}else{location.href="' . return_url(basename(__FILE__, '.php'), false, array('status' => 0)) . '"}});}function callpay(){if (typeof WeixinJSBridge == "undefined"){if( document.addEventListener ){document.addEventListener("WeixinJSBridgeReady", jsApiCall, false);}else if (document.attachEvent){document.attachEvent("WeixinJSBridgeReady", jsApiCall);document.attachEvent("onWeixinJSBridgeReady", jsApiCall);}}else{jsApiCall();}}
+        function jsApiCall(){WeixinJSBridge.invoke("getBrandWCPayRequest",' . $jsApiParameters . ',function(res){if(res.err_msg == "get_brand_wcpay_request:ok"){location.href="' . return_url(basename(__FILE__, '.php'), false, array('status' => 1)) . '"}else{location.href="' . notify_url(basename(__FILE__, '.php'), false, array('status' => 0)) . '"}});}function callpay(){if (typeof WeixinJSBridge == "undefined"){if( document.addEventListener ){document.addEventListener("WeixinJSBridgeReady", jsApiCall, false);}else if (document.attachEvent){document.attachEvent("WeixinJSBridgeReady", jsApiCall);document.attachEvent("onWeixinJSBridgeReady", jsApiCall);}}else{jsApiCall();}}
             </script>';
 
         $button = '<div class="n-flow-alipay" style=" text-align:center"><button class="btn btn-info ect-btn-info ect-colorf ect-bg" style="background-color:#44b549;" type="button" onclick="callpay()">立即付款</button></div>' . $js;
