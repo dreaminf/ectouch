@@ -1401,22 +1401,23 @@ function send_pwd_email($uid, $user_name, $email, $code) {
 /* * ********************************************************
  * 支付接口函数库
  * ******************************************************** */
-
 /**
  * 取得返回信息地址
  * @param   string  $code   支付方式代码
- * @param   string  $notify  是否是异步通知
  */
-function return_url($code, $notify = false, $data = array())
+function return_url($code)
 {
-    if($notify){
-        return __URL__ . '/api/notify/' . $code . '.php';
-    }else{
-        $string = empty($data) ? '': '&'.http_build_query($data);
-        return __URL__ . '/respond.php?code=' . $code . $string;
-    }
+    return __URL__ . '/respond.php?code=' . $code;
 }
 
+/**
+ * 取得返回信息地址
+ * @param   string $code 支付方式代码
+ */
+function notify_url($code)
+{
+    return __URL__ . '/api/notify/' . $code . '.php';
+}
 /* * ********************************************************
  * 用户交易相关函数库
  * ******************************************************** */

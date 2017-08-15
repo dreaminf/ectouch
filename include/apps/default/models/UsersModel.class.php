@@ -1015,6 +1015,26 @@ class UsersModel extends BaseModel {
             $order['pay_online'] = '';
         }
 
+        //查询订单使用的支付方式
+        $sql = "SELECT pay_code  FROM ".$this->pre."payment where pay_id = '".$order['pay_id']."'" ." and enabled = 1 and is_online = 1";
+        $pay = $this->row($sql);
+        //是否是拼团订单
+        if($order['team_id'] > 0) {
+            //查询拼团订单的成团与否
+            $sql = "SELECT status FROM ".$this->pre."team_log WHERE team_id = '".$order['team_id']."'";
+            $res = $this->row($sql);
+            //拼团订单用支付宝付款、已失败、已付款、未发货可申请退款
+            if($res['status'] == 2 && $order['order_status'] == 1 && $order['shipping_status'] == 0 && $order['pay_status'] == 2 && $pay['pay_code'] == 'alipay'){
+                $order['can_cancle'] = 1;
+            }
+        }
+        else
+        {   //普通订单用支付宝付款、已失败、已付款、未发货可申请退款
+            if($order['order_status'] == 1 && $order['shipping_status'] == 0 && $order['pay_status'] == 2 && $pay['pay_code'] == 'alipay'){
+                $order['can_cancle'] = 1;
+            }
+        }
+
         /* 无配送时的处理 */
         $order['shipping_id'] == -1 and $order['shipping_name'] = L('shipping_not_need');
 
@@ -2581,6 +2601,51 @@ class UsersModel extends BaseModel {
                 break;
         }
         return $prefix . substr(md5($unionid), -2) . substr(time(), -7) . rand(1000, 9999);
+    }
+
+    /**
+     *  支付宝订单退款操作
+     *
+     * @access  public
+     * @param   int         $order_id       订单ID
+     * @param   int         $user_id        用户ID
+     *
+     * @return   bool                     退款状态
+     */
+    function get_refund_order($order_id, $user_id = 0) 
+    {
+        $order_id = intval($order_id);
+        if ($order_id <= 0) {
+            ECTouch::err()->add(L('invalid_order_id'));
+
+            return false;
+        }
+        $order = model('Order')->order_info($order_id);
+
+        $sql = "SELECT pay_code  FROM ".$this->pre."payment where pay_id = '".$order['pay_id']."'" ." and enabled = 1 and is_online = 1";
+        $pay = $this->row($sql);
+
+        //对已付款未发货订单进行退款
+        if($order['order_status'] == 1 && $order['shipping_status'] == 0 && $order['pay_status'] == 2 && $pay['pay_code'] == 'alipay')
+        {
+            $sql = "SELECT pay_code, pay_config  FROM ".$this->pre."payment where pay_id = '".$order['pay_id']."'" ." and enabled = 1 and is_online = 1";
+            $pay = $this->row($sql);
+            $payment = unserialize_config($pay['pay_config']);
+
+            //查询订单的支付金额
+            $sql = "SELECT order_amount, log_id from ".$this->pre."pay_log where order_id = '".$order['order_id']."' and is_paid = 1";
+            $order_amount = $this->row($sql);
+            $order['order_amount'] = $order_amount['order_amount'];
+            $order['log_id'] = $order_amount['log_id'];
+            /* 调用相应的支付方式文件 */
+            include_once(ROOT_PATH . 'plugins/payment/' . $pay['pay_code'] . '.php');
+             /* 在线退款*/
+            $pay_obj = new $pay['pay_code'];            
+            $result = $pay_obj->refund($order, $payment);
+            //退款成功
+            return  $result;           
+        }
+        return false;
     }
 
 

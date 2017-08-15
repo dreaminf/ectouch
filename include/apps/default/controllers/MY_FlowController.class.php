@@ -527,7 +527,8 @@ class MY_FlowController extends FlowController {
 
         /* 插入支付日志 */
         $order ['log_id'] = model('ClipsBase')->insert_pay_log($new_order_id, $order ['order_amount'], PAY_ORDER);
-
+        $order ['log_id'] = (string)$order ['log_id'];
+        
         /* 取得支付信息，生成支付代码 */
         if ($order ['order_amount'] > 0) {
             $payment = model('Order')->payment_info($order ['pay_id']);
