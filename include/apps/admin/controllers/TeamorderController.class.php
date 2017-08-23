@@ -41,21 +41,22 @@ class TeamorderController extends AdminController {
             $total=$value['max'];
         }
         $this->assign('page', $this->pageShow($total));
-        $sql = 'select t.*,g.goods_name,g.validity_time,g.team_num from ' . $this->model->pre . 'team_log as t left join ' . $this->model->pre . 'goods as g on t.goods_id=g.goods_id where ' . $where . ' and t.is_show=1 order by t.start_time desc limit ' . $offset;
+        $sql = 'select t.*,g.goods_name,g.validity_time,g.team_num from ' . $this->model->pre . 'team_log as t left join ' . $this->model->pre . 'goods as g on t.goods_id=g.goods_id where ' . $where . ' and t.is_show=1 order by t.start_time desc limit ' . $offset;           
         $log_list = $this->model->query($sql);
         $time = gmtime();
         foreach ($log_list as $key => $value) {
-            $log_list[$key]['start_time'] = local_date('Y-m-d H:m:s', $value['start_time']);
+            $log_list[$key]['start_time'] = local_date('Y-m-d H:i:s', $value['start_time']);
             $endtime = $value['start_time'] + $value['validity_time'] * 3600;
-            $cle =$endtime-$time; //得出时间戳差值
-            $d = floor($cle/3600/24);
-            $h = floor(($cle%(3600*24))/3600);
-            $m = floor(($cle%(3600*24))/600/60);
-            $log_list[$key]['time']=$d.'天'.$h.'小时'.$m.'分钟';
+            $cle =$endtime-$time; //得出时间戳差值     
+            $second=$cle % 60;//取余得到秒数    
+            $minute=floor($cle/60) % 60;//取余得到分钟数
+            $hour=floor($cle/3600) % 24;//取余得到小时数
+            $day=floor($cle/(3600*24));//得到天数
+            $log_list[$key]['time']=$day.'天'.$hour.'小时'.$minute.'分钟'.$second.'秒';
             $log_list[$key]['cle']=$cle;
             $number=$this->surplus_num($value['team_id']);
             $log_list[$key]['surplus_num']=$value['team_num']-$number;
-        }
+        }        
         $this->assign('log_list', $log_list);
         $this->display();
     }
