@@ -88,6 +88,51 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_topic` (
 -- 转存表中的数据 `ecs_touch_ad_position`
 --
 ALTER TABLE `ecs_ad_position` MODIFY COLUMN `position_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT FIRST;
+ALTER TABLE `ecs_ad_position`
+  ADD COLUMN `tc_id` int(10) NOT NULL DEFAULT '0' COMMENT '频道id',
+  ADD COLUMN `tc_type` varchar(255) NOT NULL DEFAULT '' COMMENT '广告类型';
+ALTER TABLE `ecs_cart`
+  ADD COLUMN `is_selected` tinyint(1) unsigned NOT NULL DEFAULT '0';
+ALTER TABLE `ecs_goods`
+  ADD COLUMN `virtual_sales` varchar( 10 ) NOT NULL DEFAULT '0',
+  ADD COLUMN `team_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '拼团商品价格',
+  ADD COLUMN `team_num` int(10) NOT NULL COMMENT '几人团',
+  ADD COLUMN `validity_time` int(10) NOT NULL COMMENT '开团有效期（小时）',
+  ADD COLUMN `limit_num` int(10) NOT NULL COMMENT '参团人数',
+  ADD COLUMN `astrict_num` int(10) NOT NULL DEFAULT '0' COMMENT '限购数量',
+  ADD COLUMN `tc_id` int(10) NOT NULL COMMENT '频道id',
+  ADD COLUMN `is_team` int(10) NOT NULL DEFAULT '0' COMMENT '是否开团';
+ALTER TABLE `ecs_order_info`
+  ADD COLUMN `team_id` int(10) NOT NULL DEFAULT '0' COMMENT '开团记录id',
+  ADD COLUMN `team_parent_id` mediumint(8) NOT NULL COMMENT '团长id',
+  ADD COLUMN `team_user_id` mediumint(8) NOT NULL COMMENT '团员id',
+  ADD COLUMN `team_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '拼团商品价格';
+ALTER TABLE `ecs_pay_log`
+  ADD COLUMN `openid` VARCHAR(255) NOT NULL ,
+  ADD COLUMN `transid` VARCHAR(255) NOT NULL;
+ALTER TABLE  `ecs_order_info` 
+  ADD COLUMN `inv_text_id` varchar(120) NOT NULL DEFAULT '' AFTER `inv_content`;
+
+--
+-- 表的结构 `ecs_term_relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `ecs_term_relationship` (
+  `relation_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `object_type` char(30) NOT NULL DEFAULT '',
+  `object_group` char(30) NOT NULL DEFAULT '',
+  `object_id` int(11) NOT NULL,
+  `item_key1` varchar(60) DEFAULT NULL,
+  `item_value1` varchar(60) DEFAULT NULL,
+  `item_key2` varchar(60) DEFAULT NULL,
+  `item_value2` varchar(60) DEFAULT NULL,
+  `item_key3` varchar(60) DEFAULT NULL,
+  `item_value3` varchar(60) DEFAULT NULL,
+  `item_key4` varchar(60) DEFAULT NULL,
+  `item_value4` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`relation_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100 ;
+
 
 --
 -- 表的结构 `ecs_touch_category`
@@ -356,6 +401,24 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_apply` (
   `amount` decimal(10,2) DEFAULT '0.00',
   PRIMARY KEY (`id`)
 )  ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `ecs_drp_invalid_log`
+-- ----------------------------
+
+CREATE TABLE IF NOT EXISTS `ecs_drp_invalid_log` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `user_money` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `pay_points` mediumint(9) NOT NULL DEFAULT '0',
+  `change_time` int(10) unsigned NOT NULL DEFAULT '0',
+  `change_desc` varchar(255) NOT NULL DEFAULT '',
+  `change_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `invalid_desc`  text COMMENT '无效说明',
+  `order_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- ----------------------------
 -- Records of ecs_drp_config
