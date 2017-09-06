@@ -230,10 +230,13 @@ class SaleController extends CommonController {
             'change_time'   => gmtime(),
             'change_desc'   => L('drp_log_desc'),
             'change_type'   => DRP_WITHDRAW,
-            'bank_info'     => "银行所在地：".$bank['bank_region']."  开户银行：".$bank['bank_name']."  开户姓名：".$bank['bank_user_name']."  帐号：".$bank['bank_card'],
             'status'        => 0
         );
-
+        if($bank['type'] == 1){
+           $account_log['bank_info'] = "  提现方式：".$bank['bank_name']."  支付宝姓名：".$bank['zfb_bank_user_name']."  支付宝账号：".$bank['zfb_bank_card'];
+        }else{
+            $account_log['bank_info'] = "银行所在地：".$bank['bank_region']."  开户银行：".$bank['bank_name']."  开户姓名：".$bank['bank_user_name']."  帐号：".$bank['bank_card'];
+        }
         $this->model->table('drp_log')
             ->data($account_log)
             ->insert();
@@ -763,17 +766,27 @@ class SaleController extends CommonController {
     public function add_bank(){
         if(IS_POST){
             $data = I('data');
-            if(empty($data['bank_name'])){
-                show_message('请输入银行名称，如：建设银行等');
-            }
-            if(empty($data['bank_card'])){
-                show_message('请输入帐号');
-            }
-            if(empty($data['bank_region'])){
-                show_message('请输入开户所在地');
-            }
-            if(empty($data['bank_user_name'])){
-                show_message('请输开户名');
+            if($data['type'] == 1){//支付宝写入
+                if(empty($data['zfb_bank_user_name'])){
+                    show_message('请输入支付宝姓名');
+                }
+                if(empty($data['zfb_bank_card'])){
+                    show_message('请输入支付宝账号');
+                }
+                $data['bank_name'] = '支付宝';
+            }else{
+                if(empty($data['bank_region'])){
+                    show_message('请输入开户所在地');
+                }
+                if(empty($data['bank_name'])){
+                    show_message('请输入银行名称，如：建设银行等');
+                }
+                if(empty($data['bank_user_name'])){
+                    show_message('请输开户名');
+                }
+                if(empty($data['bank_card'])){
+                    show_message('请输入银行卡号');
+                }
             }
             $data['user_id'] = $this->user_id;
             $this->model->table('drp_bank')
@@ -808,17 +821,32 @@ class SaleController extends CommonController {
     public function edit_bank(){
         if(IS_POST){
             $data = I('data');
-            if(empty($data['bank_name'])){
-                show_message('请输入银行名称，如：建设银行等');
-            }
-            if(empty($data['bank_card'])){
-                show_message('请输入帐号');
-            }
-            if(empty($data['bank_region'])){
-                show_message('请输入开户所在地');
-            }
-            if(empty($data['bank_user_name'])){
-                show_message('请输开户名');
+            if($data['type'] == 1){//支付宝写入
+                if(empty($data['zfb_bank_user_name'])){
+                    show_message('请输入支付宝姓名');
+                }
+                if(empty($data['zfb_bank_card'])){
+                    show_message('支付宝账号');
+                }
+                $data['bank_name'] = '支付宝';
+                $data['bank_region'] = '';
+                $data['bank_user_name'] = '';
+                $data['bank_card'] = '';
+            }else{
+                if(empty($data['bank_region'])){
+                    show_message('请输入开户所在地');
+                }
+                if(empty($data['bank_name'])){
+                    show_message('请输入银行名称，如：建设银行等');
+                }
+                if(empty($data['bank_user_name'])){
+                    show_message('请输开户名');
+                }
+                if(empty($data['bank_card'])){
+                    show_message('请输入银行卡号');
+                }
+                $data['zfb_bank_user_name'] = '';
+                $data['zfb_bank_card'] = '';
             }
             $this->model->table('drp_bank')
                 ->data($data)->where(array('id'=>$data['id']))

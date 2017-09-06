@@ -18,7 +18,11 @@
 					<input type="radio" name="bank" id="banck-check-{$li.id}" value="{$li.id}" checked="checked" />
 					<label for="banck-check-{$li.id}"><i></i></label>
 					<h4>{$li.bank_name}</h4>
+					{if $li.type eq 1 }
+					<span>{$li.zfb_bank_card}</span>
+					{else}
 					<span>{$li.bank_card}</span>
+					{/if}
 				</li>
 				<!-- {/foreach} -->
 			</ul>
@@ -56,11 +60,11 @@
 		body {
 			background: #f0f0f6;
 		}
-		
+
 		.wdyj_content11 {
 			margin-top: -1.7rem;
 		}
-		
+
 		.a-raply-info {
 			background: #FCF8E3;
 			padding: 1rem 0;
@@ -69,24 +73,24 @@
 			color: #494949;
 			border-bottom: 1px solid #DEDEE5;
 		}
-		
+
 		.bank-card ul {
 			margin-top: 0.8rem;
 			border-top: 1px solid #DEDEE5;
 			border-bottom: 1px solid #DEDEE5;
 		}
-		
+
 		.bank-card ul li {
 			position: relative;
 			padding: 1.6rem;
 			background: #fff;
 			border-bottom: 1px solid #EBEBEF;
 		}
-		
+
 		.bank-card ul li:last-child {
 			border-bottom: none;
 		}
-		
+
 		.bank-card ul li label {
 			position: absolute;
 			left: 0;
@@ -94,7 +98,7 @@
 			top: 0;
 			bottom: 0;
 		}
-		
+
 		.bank-card ul li label i {
 			position: absolute;
 			right: 1.6rem;
@@ -104,29 +108,29 @@
 			height: 2rem;
 			width: 3rem;
 		}
-		
+
 		.bank-card input:checked+label i {
 			background: url(images/check_ok_03.png) center center no-repeat;
 			background-size: cover;
 		}
-		
+
 		.bank-card input[type=radio] {
 			display: none;
 		}
-		
+
 		.bank-card ul li h4 {
 			font-size: 1.9rem;
 			color: #303030;
 			font-weight: 100;
 		}
-		
+
 		.bank-card ul li span {
 			font-size: 1.2rem;
 			color: #a4a4a4;
 			margin-top: 0.2rem;
 			display: block;
 		}
-		
+
 		.jg-text {
 			margin: 0;
 			padding: 1.4rem;
@@ -137,7 +141,7 @@
 			background: #fff;
 			margin-top: 1rem;
 		}
-		
+
 		.jg-text-input {
 			position: absolute;
 			left: 7rem;
@@ -145,33 +149,33 @@
 			top: 1.3rem;
 			color: #303030
 		}
-		
+
 		.jg-text-input input[type=text] {
 			width: 100%;
 			font-size: 1.4rem;
 			border: 0;
 		}
-		
+
 		.jg-text label {
 			color: #303030;
 		}
-		
+
 		.jg-text span {
 			color: #7a7a7a;
 			margin-left: .2rem;
 		}
-		
+
 		.t-a-center input {
 			width: 25%;
 			margin: 1rem;
 		}
-		
+
 		.m-sale-box {
 			width: 90%;
 			margin: 0 auto;
 			margin-top: 2rem;
 		}
-		
+
 		.t-a-center-1 input {
 			width: 100%;
 		}

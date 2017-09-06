@@ -14,7 +14,12 @@
 					<a href="{:url('sale/select_bank')}">
 						<label for="banck-check-01"><i></i></label>
 						<h4>{$bank_info.bank_name}</h4>
+						{if $bank_info.type eq 1 }
+						<span>{$bank_info.zfb_bank_card}</span>
+						{else}
 						<span>{$bank_info.bank_card}</span>
+						{/if}
+
 					</a>
 				</li>
 				{else}
