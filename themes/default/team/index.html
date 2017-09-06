@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
+		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 		<meta name="format-detection" content="telephone=no" />
-		<meta charset="utf-8">
 		<title>{$page_title}</title>
-		<link rel="stylesheet" href="__TPL__/team/css/ectouch.css" />		
+		<link rel="stylesheet" href="__TPL__/team/css/ectouch.css" />
+		{include file="/library/js_sdk.lbi"}
 	</head>
 
 	<body>
@@ -23,14 +23,14 @@
 					<label><em class="col-9 item02" style="color:#fff">风**时</em><em class="item03"style="color:#fff">下单喽</em> <em class="col-9 item04">1秒前</em></label>
 				</div>
 			</header>
-			<!--{/if}-->			
+			<!--{/if}-->
 			<div class="shopping-list j-shopping-list">
 				<div class="shopping-menu j-shopping-menu maxbox">
 					<div class="dis-box b-color-f">
 						<nav class="shopping-list-nav box-flex swiper-container-horizontal">
 							<ul class="swiper-wrapper">
-								<li class="div0 swiper-slide active  swiper-slide-active" category="0"><a class="product-div-link" href= "{:url('index/index')}"></a>首页</li>								
-								<!--{foreach from=$team_categories item =val key=key }-->	
+								<li class="div0 swiper-slide active  swiper-slide-active" category="0"><a class="product-div-link" href= "{:url('index/index')}"></a>首页</li>
+								<!--{foreach from=$team_categories item =val key=key }-->
 								<li class="div{$val.id} swiper-slide {if $key eq 0}swiper-slide-next{/if} position-rel" category="{$val.id}"><a class="product-div-link" href= "{$val.url}"></a>
 									{$val.name}
 								</li>
@@ -42,7 +42,7 @@
 			</div>
 			<div class="swiper-wrapper">
 				<section class="swiper-slide">
-					<div class="index-box">					
+					<div class="index-box">
 						<div class="index-banner swiper-container box position-rel banner-first">
 							<div class="swiper-wrapper m-45">
 								{insert name='ads' id=255 num=5}
@@ -56,7 +56,7 @@
 							<ul class="box ul-5 text-c bg-white font-03">
 								<!--{foreach from=$navigator item=nav}-->
 								<li class="">
-									<a href="{$nav.url}" {if $nav.opennew eq 1}target="_blank" {/if} class=""><img src="{$nav.pic}" /></a>									
+									<a href="{$nav.url}" {if $nav.opennew eq 1}target="_blank" {/if} class=""><img src="{$nav.pic}" /></a>
 									<p>{$nav.name}</p>
 								</li>
 								<!--{/foreach}-->
@@ -69,7 +69,7 @@
 								<div class="box-flex activity-list">
 								{insert name='ads' id=257 num=1}
 								</div>
-								<div class="box-flex activity-list-1">									
+								<div class="box-flex activity-list-1">
 									{insert name='ads' id=265 num=2}
 								</div>
 							</div>
@@ -87,8 +87,8 @@
 							<!--list-1-->
 							<div id="J_ItemList">
 							<div class="single_item m-top10"></div>
-								<a href="javascript:;" style="text-align:center" class="get_more"></a>							
-							</div>							
+								<a href="javascript:;" style="text-align:center" class="get_more"></a>
+							</div>
 						</section>
 
 					</div>
@@ -138,7 +138,7 @@
 							<label class="fl">热门搜索</label>
 						</p>
 						<ul class="hot-search a-text-more">
-							
+
 							<!-- {foreach from=$hot_search_keywords item=keyword} -->
 							<li class="w-3">
 								<a href="{:url('category/index', array('keywords'=>$this->_var[keyword]))}"><span class="onelist-hidden">{$keyword}</span></a>
@@ -151,7 +151,7 @@
 						</p>
 						<!--{if $search_histroy}-->
 						<ul class="hot-search a-text-more" id="search_histroy">
-							
+
 							<!-- {foreach from=$search_histroy item=keyword} -->
 							<li class="w-3">
 								<a href="{:url('category/index', array('keywords'=>$this->_var[keyword]))}"><span class="onelist-hidden">{$keyword}</span></a>
@@ -190,7 +190,7 @@
 			get_asynclist("{:url('index/ajax_goods', array('type'=>'best'))}", '__TPL__/images/loader.gif');
 		</script>
 		<script type="text/javascript">
-			
+
 			//首页下单提示轮播
 			setInterval("virtual_order()",3000);
 			virtual_order();
@@ -205,11 +205,11 @@
 						$('.item03').text('下单喽');
 						$('.item04').text(data.seconds);
 					}
-					
+
 					}
 				}, 'json');
 			}
-			
+
 			//设置cookie
 			function setCookie(cname, cvalue, exdays) {
 				var d = new Date();
@@ -289,11 +289,10 @@
                 if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
 
 			        $(".footer-cont").html("<span>没有更多了</span>")
-			     
+
                 }
             });
         });
 		</script>
 	</body>
-
 </html>

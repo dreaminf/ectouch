@@ -36,7 +36,7 @@
 							</a>
 						</ul>
 					</div>
-				</header>			
+				</header>
 		</div>
 		<!--商品图片相册-->
 		<div class="goods-photo n-j-show-goods-img">
@@ -74,12 +74,12 @@
 						{$goods.promote_price}
 						<!--{else}-->
 						{$goods.shop_price_formated}
-						<!--{/if}-->				
+						<!--{/if}-->
 					</span>
 					<em class="em-promotion">积分可抵现</em>
 				</p>
 				<!--{if goods.is__promote and $goods.gmt_end_time } 促销-->
-				
+
 				<!--{else}-->
 				<p class="p-market"style="color:red;">
 					会员等级价格 {$goods.rank_price_formated}
@@ -126,7 +126,7 @@
 					<div class="box-flex">
 						<div class="dis-box">
 							<p class="box-flex t-goods2">本服务由{$shop_name}提供售后服务与产品支持</p>
-							<i class="iconfont icon-102 goods-min-icon"></i>							
+							<i class="iconfont icon-102 goods-min-icon"></i>
 						</div>
 						<div class="dis-box m-top08 g-r-rule goods-service-list">
 							<p class="box-flex t-remark3">
@@ -152,18 +152,18 @@
 				<ul class="dis-box">
 					<li class="box-flex goods-bor">{$volume.number}</li>
 					<li class="box-flex goods-bor">{$volume.price}</li>
-				</ul>				
+				</ul>
 				<!--{/foreach}-->
-			</section>			
+			</section>
 			<!--{/if}-->
 			<!--优惠数量价格显示 END-->
 			<!-- #BeginLibraryItem "/library/goods_fittings.lbi" --><!-- #EndLibraryItem -->
 			<form action="javascript:addToCart({$goods.goods_id})" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY">
 				<section class="goods-more-a">
-					<!--  <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_brief}</span> <span class="pull-right"><i class="fa fa-chevron-right"></i></span></a> 
+					<!--  <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/info',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_brief}</span> <span class="pull-right"><i class="fa fa-chevron-right"></i></span></a>
       <a class="ect-padding-lr ect-padding-tb" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"><span class="Text">{$lang.goods_comment}</span> <span class="pull-right"><span class="ect-color">{$comments.count}</span>{$lang.comment_num} <span class="ect-color">{$comments.favorable}%</span>{$lang.favorable_comment} <i class="fa fa-chevron-right"></i></span></a>  -->
 				</section>
-				
+
 				<section class="m-top10 padding-all b-color-f goods-attr j-goods-attr j-show-div">
 					<div class="dis-box">
 						<label class="t-remark g-t-temark">已选</label>
@@ -305,8 +305,8 @@
 <!-- #BeginLibraryItem "/library/new_search.lbi" -->
 <!-- #EndLibraryItem -->
 <script type="text/javascript" src="__TPL__/js/lefttime.js"></script>
-<script type="text/javascript" src="__TPL__/statics/js/layer.js"></script>
-<script type="text/javascript">	
+<script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+<script type="text/javascript">
 	/*倒计时*/
 	var goods_id = {$goods_id};
 	var goodsattr_style = 1;
@@ -371,11 +371,11 @@ $(function() {
 		}
 	}
 
-	
+
 </script>
 <script>
 	$(function($) {
-	
+
 		var handler = function(e) { //禁止浏览器默认行为
 			e.preventDefault();
 		};
@@ -411,17 +411,17 @@ $(function() {
 		<script>
 			$(function() {
 					/*头部导航*/
-					
+
 	$(".j-nav-box").click(function() {
 		$(".j-nav-content").toggleClass("active");
 	});
 
-/*导航弹框*/	
+/*导航弹框*/
 $(".icon-gengduo").click(function() {
 					$(".goods-nav").toggleClass("active");
-				});	
-				
-				
+				});
+
+
 				$('.goods-header-nav-box li').click(function() {
 					for (var i = 0; i < $('.goods-header-nav-box li').size(); i++) {
 						if (this == $('.goods-header-nav-box li').get(i)) {
@@ -494,7 +494,7 @@ function getMaxStock(group){
 		original = 1;
 		obj.val(original);
 	}
-	
+
 	//更新
 	original = (original < 1)?1:original;
 	stock = (stock < 1)?1:stock;
@@ -542,11 +542,11 @@ function ec_group_addToCart(group,goodsId,parentId){
   goods.number   = number;
   goods.parent   = (typeof(parentId) == "undefined") ? 0 : parseInt(parentId);
   goods.group = group + '_' + group_item;//组名
-  
+
   	$.post('{:url("flow/add_to_cart_combo")}', {goods : $.toJSON(goods)}, function(data) {
 		ec_group_addToCartResponse(data);
-	}, 'json');  
-	
+	}, 'json');
+
 }
 
 //处理添加商品到购物车的反馈信息
@@ -600,7 +600,7 @@ function ec_group_delInCart(group,goodsId,parentId){
 
   	$.post('{:url("flow/del_in_cart_combo")}', {goods : $.toJSON(goods)}, function(data) {
 		ec_group_delInCartResponse(data);
-	}, 'json');  
+	}, 'json');
 }
 
 //处理删除购物车中的商品的反馈信息
@@ -616,25 +616,25 @@ function ec_group_delInCartResponse(result)
 }
 
 //生成属性选择层
-function ec_group_openSpeDiv(message, group, goods_id, parent) 
+function ec_group_openSpeDiv(message, group, goods_id, parent)
 {
   var _id = "speDiv";
   var m = "mask";
   if (docEle(_id)) document.removeChild(docEle(_id));
   if (docEle(m)) document.removeChild(docEle(m));
   //计算上卷元素值
-  var scrollPos; 
-  if (typeof window.pageYOffset != 'undefined') 
-  { 
-    scrollPos = window.pageYOffset; 
-  } 
-  else if (typeof document.compatMode != 'undefined' && document.compatMode != 'BackCompat') 
-  { 
-    scrollPos = document.documentElement.scrollTop; 
-  } 
-  else if (typeof document.body != 'undefined') 
-  { 
-    scrollPos = document.body.scrollTop; 
+  var scrollPos;
+  if (typeof window.pageYOffset != 'undefined')
+  {
+    scrollPos = window.pageYOffset;
+  }
+  else if (typeof document.compatMode != 'undefined' && document.compatMode != 'BackCompat')
+  {
+    scrollPos = document.documentElement.scrollTop;
+  }
+  else if (typeof document.body != 'undefined')
+  {
+    scrollPos = document.body.scrollTop;
   }
 
   var i = 0;
@@ -653,11 +653,11 @@ function ec_group_openSpeDiv(message, group, goods_id, parent)
   //newDiv.style.width = "26rem";
   //newDiv.style.height = "28rem";
   //newDiv.style.top = (parseInt(scrollPos + 200)) + "px";
-  newDiv.style.bottom = "0"; 
-  newDiv.style.left = "0"; 
-  newDiv.style.right = "0"; 
+  newDiv.style.bottom = "0";
+  newDiv.style.left = "0";
+  newDiv.style.right = "0";
   //newDiv.style.marginLeft = "-13rem";
-  newDiv.style.overflow = "hidden"; 
+  newDiv.style.overflow = "hidden";
   newDiv.style.background = "#FFF";
   //newDiv.style.border = "3px solid #59B0FF";
   newDiv.style.padding = "1.3rem 1.3rem 0rem 1.3rem";
@@ -680,16 +680,16 @@ function ec_group_openSpeDiv(message, group, goods_id, parent)
           }
           else
           {
-            newDiv.innerHTML += "<div class='n-goods-list-cont'><input  type='radio' name='spec_" + message[spec]['attr_id'] + "' value='" + message[spec]['values'][val_arr]['id'] + "' id='spec_value_" + message[spec]['values'][val_arr]['id'] + "' /><label>" + message[spec]['values'][val_arr]['label'] + '</label><em> (' + message[spec]['values'][val_arr]['format_price'] + ')</em></div>';      
+            newDiv.innerHTML += "<div class='n-goods-list-cont'><input  type='radio' name='spec_" + message[spec]['attr_id'] + "' value='" + message[spec]['values'][val_arr]['id'] + "' id='spec_value_" + message[spec]['values'][val_arr]['id'] + "' /><label>" + message[spec]['values'][val_arr]['label'] + '</label><em> (' + message[spec]['values'][val_arr]['format_price'] + ')</em></div>';
           }
-        } 
+        }
         newDiv.innerHTML += "<input type='hidden' name='spec_list' value='" + val_arr + "' />";
       }
       else
       {
         for (var val_arr = 0; val_arr < message[spec]['values'].length; val_arr++)
         {
-          newDiv.innerHTML += "<div class='n-goods-list-cont'><input  type='checkbox' name='spec_" + message[spec]['attr_id'] + "' value='" + message[spec]['values'][val_arr]['id'] + "' id='spec_value_" + message[spec]['values'][val_arr]['id'] + "' /><label>" + message[spec]['values'][val_arr]['label'] + '</label><em> (' + message[spec]['values'][val_arr]['format_price'] + ')</em></div>';     
+          newDiv.innerHTML += "<div class='n-goods-list-cont'><input  type='checkbox' name='spec_" + message[spec]['attr_id'] + "' value='" + message[spec]['values'][val_arr]['id'] + "' id='spec_value_" + message[spec]['values'][val_arr]['id'] + "' /><label>" + message[spec]['values'][val_arr]['label'] + '</label><em> (' + message[spec]['values'][val_arr]['format_price'] + ')</em></div>';
         }
         newDiv.innerHTML += "<input type='hidden' name='spec_list' value='" + val_arr + "' />";
       }
@@ -711,10 +711,10 @@ function ec_group_openSpeDiv(message, group, goods_id, parent)
   newMask.style.filter = "alpha(opacity=30)";
   newMask.style.opacity = "0.40";
   document.body.appendChild(newMask);
-} 
+}
 
 //获取选择属性后，再次提交到购物车
-function ec_group_submit_div(group, goods_id, parentId) 
+function ec_group_submit_div(group, goods_id, parentId)
 {
   var goods        = new Object();
   var spec_arr     = new Array();
@@ -747,7 +747,7 @@ function ec_group_submit_div(group, goods_id, parentId)
 
 	$.post('{:url("flow/add_to_cart_combo")}', {goods : $.toJSON(goods)}, function(data) {
 		ec_group_addToCartResponse(data);
-	}, 'json');  
+	}, 'json');
   document.body.removeChild(docEle('speDiv'));
   document.body.removeChild(docEle('mask'));
 
@@ -782,21 +782,21 @@ function ec_group_cancel_div(group, goods_id){
 function addMultiToCart(group,goodsId){
 	var goods     = new Object();
 	var number    = $('input[name="'+group+'_number"]').val();
-	
+
 	goods.group = group;
 	goods.goods_id = goodsId;
 	goods.number = (number < 1) ? 1:number;
-	
+
 	//判断是否勾选套餐
 	if(!$("."+group).is(':checked')){
 		alert(select_shop);
-		return false;	
+		return false;
 	}
-	
-	
+
+
 	$.post('{:url("flow/add_to_cart_group")}', {goods : $.toJSON(goods)}, function(data) {
 		addMultiToCartResponse(data);
-	}, 'json');  
+	}, 'json');
 }
 
 //回调
@@ -814,7 +814,7 @@ function cancel_checkboxed(group, goods_id){
 	group = group.substr(0,group.lastIndexOf("_"));
 	$("."+group).each(function(index){
 		if($("."+group).eq(index).val()==goods_id){
-			$("."+group).eq(index).attr("checked",false);			  
+			$("."+group).eq(index).attr("checked",false);
 		}
 	});
 }

@@ -42,9 +42,9 @@
 				</nav>
 				<div id="j-tab-con" class="tab-con">
 					<div class="swiper-wrapper">
-						<section class="swiper-slide" id="j-product-box">						
+						<section class="swiper-slide" id="j-product-box">
 							<script id="j-product" type="text/html">
-							<%each list as vo %>							
+							<%each list as vo %>
 							<section class="flow-checkout-pro m-top08">
 								<div class="m-top1px of-hidden padding-all b-color-f position-rel">
 									<div class="product-one-list-1 of-hidden dis-box">
@@ -70,7 +70,7 @@
 									<%if vo.status == 2%>
 									<div class="team-ts-img position-abo"><img src="__TPL__/team/images/sb-bg.png"></div>
 									<%/if%>
-								</div>								
+								</div>
 								<footer class="padding-all b-color-f  of-hidden dis-box m-top1px">
 									<h4 class="box-flex"></h4>
 									<p class="ect-button-more">
@@ -81,7 +81,7 @@
 									</p>
 								</footer>
 							</section>
-							
+
 							<%/each%>
 							</script>
 							{if $is_show eq 1}
@@ -104,14 +104,14 @@
 		<script type="text/javascript" src="__TPL__/statics/js/echo.min.js"></script>
 		<script type="text/javascript" src="__PUBLIC__/js/template.js"></script>
 
-		<script type="text/javascript">			
+		<script type="text/javascript">
 			var url = '{:url('user/my_team', array( 'type'=>$this->_var['type']))}';
 			var total = 0;
-			
+
 			var page = {$page};
 
 			page = (page === null) ? 1:parseInt(page);
-			
+
 			get_data(page);
 			localData.set('page', page);
 			if(page == 1){
@@ -131,7 +131,7 @@
 				var scrollTop = $(this).scrollTop();
 				var scrollHeight = $(document).height();
 				var windowHeight = $(this).height();
-				
+
 				// 下拉
 				if (scrollTop + windowHeight == scrollHeight) {
 					if(page >= maxPage){
@@ -212,7 +212,7 @@
 			   return true;
 		   }
 		  echo.init();
-	
+
 			$(function($) {
 				$(".j-detail-close").click(function(){
 					$(".raise-search-cont").addClass("active");

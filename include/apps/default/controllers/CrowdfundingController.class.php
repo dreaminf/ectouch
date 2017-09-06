@@ -178,6 +178,16 @@ class CrowdfundingController extends CommonController {
             }
         }
 		$this->assign('goods', $goods);
+
+        // 微信JSSDK分享
+        $share_data = array(
+            'title' => $goods['goods_name'],
+            'desc' => $goods['shiping_time'],
+            'link' => '',
+            'img' => $goods['goods_img'],
+        );
+        $this->assign('share_data', $this->get_wechat_share_content($share_data));
+
 		$this->assign('id', $this->goods_id);
 		$this->assign('goods_plan', $goods_plan);
 		$this->assign('comment_list', $comment_list);
@@ -223,7 +233,7 @@ class CrowdfundingController extends CommonController {
 				$res ['err_no'] = 1;
 			}else{
 				$res ['result'] = price_format($goods['shop_price'] * $number);
-			}  
+			}
         }
         die(json_encode($res));
 	}

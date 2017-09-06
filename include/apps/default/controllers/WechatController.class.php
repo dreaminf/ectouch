@@ -896,25 +896,6 @@ class WechatController extends CommonController
         }
     }
 
-    // 微信JSSDK
-    public function jssdk()
-    {
-        $url = addslashes($_POST['url']);
-        if ($url != '') {
-            // 获取公众号配置
-            $wxConf = $this->model->table('wechat')
-                ->field('id, token, appid, appsecret')
-                ->where(array('status' => 1, 'default_wx' => 1))
-                ->find();
-            $Obj = new Wechat($wxConf);
-            $sdk = $Obj->getJsSign($url);
-            $data = array('status' => '200', 'data' => $sdk);
-        } else {
-            $data = array('status' => '100', 'message' => '缺少参数');
-        }
-        exit(json_encode($data));
-    }
-
      /**
      * 推荐分成二维码
      * @param  string  $user_name [description]

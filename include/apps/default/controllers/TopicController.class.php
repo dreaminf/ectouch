@@ -113,6 +113,19 @@ class TopicController extends CommonController {
         $this->assign('sort_goods_arr', $sort_goods_arr);          // 商品列表
         $this->assign('topic', $topic);                   // 专题信息
         $this->assign('tile', $topic['title']);
+
+        // 微信JSSDK分享
+        $share_data = array(
+            'title' => $topic['title'],
+            'desc' => $topic['description'],
+            'link' => '',
+            'img' => $topic['topic_img'],
+        );
+        $this->assign('share_data', $this->get_wechat_share_content($share_data));
+
+        $this->assign('meta_keywords', $topic['keywords']);       // 专题信息
+        $this->assign('meta_description', $topic['description']);    // 专题信息
+
         //$this->assign('show_asynclist', C('show_asynclist'));
         $templates = empty($topic['template']) ? 'topic.dwt' : $topic['template'];
         $this->display($templates);

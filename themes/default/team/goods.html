@@ -1,59 +1,16 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-	
 	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
 		<title>{$title}</title>
-
 		<!--字体图标库-->
 		<link rel="stylesheet" href="__TPL__/team/css/ectouch.css" />
-		{if $is_wechat}
-		<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js" ></script>
-		<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
-		<script type="text/javascript">
-		    // 分享内容
-		    var shareContent = {
-		        title: '{$meta_keywords}',
-		        desc: '{$meta_description}',
-		        link: '',
-		        imgUrl: '{if $page_img}{$page_img}{else}{$shop_url}__TPL__/images/wxsdk.png{/if}'
-		    };
-		    $(function(){
-		        var url = window.location.href;
-		        var jsConfig = {
-		            debug: false,
-		            jsApiList: [
-		                'onMenuShareTimeline',
-		                'onMenuShareAppMessage',
-		                'onMenuShareQQ',
-		                'onMenuShareWeibo',
-		                'onMenuShareQZone'
-		            ]
-		        };
-		        $.post("{:url('wechat/jssdk')}", {url: url}, function (res) {
-		            if(res.status == 200){
-		                jsConfig.appId = res.data.appId;
-		                jsConfig.timestamp = res.data.timestamp;
-		                jsConfig.nonceStr = res.data.nonceStr;
-		                jsConfig.signature = res.data.signature;
-		                // 配置注入
-		                wx.config(jsConfig);
-		                // 事件注入
-		                wx.ready(function () {
-		                    wx.onMenuShareTimeline(shareContent);
-		                    wx.onMenuShareAppMessage(shareContent);
-		                    wx.onMenuShareQQ(shareContent);
-		                    wx.onMenuShareWeibo(shareContent);
-		                    wx.onMenuShareQZone(shareContent);
-		                });
-		            }
-		        }, 'json');
-		    })
-		</script>
-		{/if}
+		{include file="/library/js_sdk.lbi"}
 	</head>
-
 	<body>
 		<div class="con">
 			<div id="loading"><img src="__TPL__/team/images/loading.gif" /></div>
@@ -74,21 +31,21 @@
 					</div>
 					<div class="index-bg-box"></div>
 					{/if}
-							
+
 				<header class="dis-box header-menu-1 b-color color-whie goods-fixed goods-fixed-raise ts-3 active" style="position: relative;">
 					<a class="" href="javascript:history.go(-1)">
 						<div class="goods-left-jiat active"><i class="iconfont icon-mn-jiantoul is-con"></i></div>
 					</a>
 					<div class="box-flex">
 						<nav class="shopping-list-nav goods-shopping-list-nav box-flex swiper-container-horizontal ">
-							<ul class="swiper-wrapper goods-header-nav-box-raise dis-box text-c">		
+							<ul class="swiper-wrapper goods-header-nav-box-raise dis-box text-c">
 								<li class="div1 box-flex swiper-slide active  swiper-slide-active position-rel" category="1">
 									<a class="product-div-link" href="{:url('goods/index',array('id'=>$this->_var['id']))}"></a>商品</li>
 								<li class="div3 box-flex swiper-slide swiper-slide-next position-rel" category="3">
-									<a class="product-div-link" href="{:url('goods/info',array('id'=>$this->_var['id']))}"></a>详情</li>					
+									<a class="product-div-link" href="{:url('goods/info',array('id'=>$this->_var['id']))}"></a>详情</li>
 								<li class="div4 box-flex swiper-slide position-rel" category="4">
-									<a class="product-div-link" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"></a>评论</li>								
-							</ul>										
+									<a class="product-div-link" href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}"></a>评论</li>
+							</ul>
 						</nav>
 					</div>
 					<a class="" href="javascript:;">
@@ -149,7 +106,7 @@
 							{$goods.promote_price}
 							<!--{else}-->
 							{$goods.shop_price_formated}
-							<!--{/if}-->						
+							<!--{/if}-->
 						</span>
 						<!--{if $goods.is_team}验证是否是团购商品star-->
 						<em class="em-promotion b-tag">拼团中</em>
@@ -308,8 +265,8 @@
 							<div class="box-flex list-two">
 							<ul class="goods-time-box">
 								<li><h4 class="font-05 col-3 onelist-hidden">{$team.name}</h4></li>
-								
-						
+
+
 							<li><div class="box-flex font-05 list-cont onelist-hidden text-c">还差<em class="ec-color">{$team.surplus}</em>人成团</div></li>
 								</ul>
 								<p class="col-9 font-01 onelist-hidden" style="display:none">剩余：{$team.end_time}</p>
@@ -323,7 +280,7 @@
 									结束
 								</p>
 							</div>
-						
+
 							<a href="{:url('goods/team_goods_wait',array('team_id'=>$this->_var['team']['team_id']))}" class="right-btn b-color ec-white font-05">去参团<i class="iconfont icon-mn-jiantour font-03"></i></a>
 						</div>
 						<!--{/foreach}-->
@@ -331,7 +288,7 @@
 					<!--{/if}-->
 				</section>
 				<!--{/if}验证是否是团购商品end-->
-				
+
 				<!--倒计时 sty-->
 				<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
 				<script type="text/javascript">
@@ -452,7 +409,7 @@
 				</script>
 				<!--{/foreach}-->
 				<!--倒计时 end-->
-				
+
 				<!--用户评价-->
 				<section class="m-top10 goods-evaluation" id="evaluation-detail">
 					<a href="{:url('goods/comment_list',array('id'=>$this->_var['goods']['goods_id']))}">
@@ -529,7 +486,7 @@
 						</div>
 					</div>
 				</div>
-				<!--飞入购物车小图s-->	
+				<!--飞入购物车小图s-->
 				<div id="flyItem" class="fly_item"><img src="{$goods.goods_img}" width="35" height="35"></div>
 				<!--飞入购物车小图e-->
 				<!--{if $goods.is_on_sale == 0}-->
@@ -539,8 +496,8 @@
 					<section class="filter-btn dis-box mr-auto">
 						<a href="{:url('flow/cart')}" class="filter-btn-flow filter-btn-a">
 							<span class="goods-flow-icon"><i class="iconfont icon-cart"></i>
-									<!--飞入购物车位置s-->									
-										<span class="quick_links" id="shopCart"></span>															
+									<!--飞入购物车位置s-->
+										<span class="quick_links" id="shopCart"></span>
 									<!--飞入购物车位置e-->
 								<sup class="b-color" id='total_number'><!--{if $seller_cart_total_number }-->{$seller_cart_total_number}<!--{else}-->0<!--{/if}--></sup><em>购物车</em></span></a>
 
@@ -557,17 +514,17 @@
 									<!--{/if}-->
 								</p>
 							</a>
-							<!--{else}-->	
-                        <div class="dis-box">							
+							<!--{else}-->
+                        <div class="dis-box">
 							<a href="javascript:;" class="box-flex btn-p btn-cart text-c">
 								<h4 class="font-06">加入购购车</h4>
-								
+
 							</a>
 							<a href="javascript:;" class="box-flex btn-p btn-submit text-c">
 								<h4 class="font-06">立即购买</h4>
-								
+
 							</a>
-						</div>	
+						</div>
 							<!--{/if}-->
 							<!--商品属性弹出层star-->
 							<form action="javascript:addToCart({$goods.goods_id})" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY">
@@ -630,10 +587,10 @@
 
 						</div>
 						<!--单独购买 end-->
-						
+
 						<!--拼团 star-->
 						<!--{if $goods.is_team}验证是否是团购商品star-->
-						<div class="j-goods-attr-1 j-show-div-1 box-flex">							
+						<div class="j-goods-attr-1 j-show-div-1 box-flex">
 							<!--{if $team_id} 参团-->
 							<a href="javascript:;" class="btn-p group-btn-box btn-submit  ec-white text-c">
 								<h4 class="font-06">立即参团</h4>
@@ -821,7 +778,7 @@
 					}
 				}
 			}
-			
+
 			//自动加载
 			teamePrice();
 
@@ -859,7 +816,7 @@
 				if(res.err_msg.length > 0) {
 					document.getElementById('team_goods_number').value = res.qty;
 					alert(res.err_msg);
-					
+
 				} else {
 					if(document.getElementById('TEAM_GOODS_AMOUNT'))
 						document.getElementById('TEAM_GOODS_AMOUNT').innerHTML = res.result;

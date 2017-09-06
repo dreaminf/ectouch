@@ -1624,6 +1624,36 @@ function logResult($word='') {
 }
 
 /**
+ * Get the path to a versioned Elixir file.
+ *
+ * @param  string $file
+ * @param  boolean $absolute_path = true 绝对路径
+ * @return string
+ */
+function elixir($file, $absolute_path = false)
+{
+    return ($absolute_path == true ? __HOST__ : '') . __TPL__ . '/' . ltrim($file, '/');
+}
+
+
+/**
+ * 将URL中的某参数设为某值
+ * @param  $url   index.php?m=goods&id=530&u=1111
+ * @param  $key   key=330 ,u=1
+ * @param  $value 要替换后的值
+ * @return string
+ */
+function url_set_value($url, $key, $value)
+{
+    $a = explode('?', $url);
+    $url_f = $a[0];
+    $query = $a[1];
+    parse_str($query, $arr);
+    $arr[$key] = $value;
+    return $url_f . '?' . http_build_query($arr, '', '&');
+}
+
+/**
  * 致命错误捕获
  */
 function fatalError()

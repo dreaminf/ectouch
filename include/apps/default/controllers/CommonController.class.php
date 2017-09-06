@@ -32,26 +32,14 @@ class CommonController extends BaseController
     public function __construct()
     {
         parent::__construct();
+
         $this->ecshop_init();
-        // 微信oauth处理
-        if(class_exists('WechatController')){
-            if (method_exists('WechatController', 'snsapi_base')) {
-                call_user_func(array('WechatController', 'snsapi_base'));
-                /*DRP_START*/
-                $this->drp();
-                /*DRP_END*/
-            }
-        }
-        if(class_exists('WechatController') && is_wechat_browser()){
-            //是否显示关注按钮
-            // $condition['openid'] = !empty($_SESSION['openid']) ? $_SESSION['openid'] : 0;
-            $condition['ect_uid'] = !empty($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
-            $userinfo = $this->model->table('wechat_user')->field('subscribe')->where($condition)->find();
-            $_SESSION['subscribe'] = $userinfo['subscribe'];
-            $this->assign('subscribe', $userinfo['subscribe']);
-            // 判断微信通 用于JSSDK
-            $this->assign('is_wechat', 1);
-        }
+
+        /* ecjia验证登录*/
+        $this->ecjia_login();
+
+        $this->wechat_init();
+
         $this->assign('shop_url', dirname(__URL__));
 
         /* 语言包 */
@@ -64,10 +52,6 @@ class CommonController extends BaseController
         C('show_asynclist', 1);
         /* 模板赋值 */
         assign_template();
-
-        /* ecjia验证登录*/
-        $this->ecjia_login();
-
     }
 
     static function user()
@@ -111,7 +95,7 @@ class CommonController extends BaseController
             $close_comment = empty($close_comment) ? 'closed.':$close_comment;
             exit('<h1 style="font-size: 5rem;text-align: center;margin-top: 40%;">'.$close_comment.'</h1>');
         }
-        //NULL
+
         // 初始化session
         self::$sess = new EcsSession(self::$db, self::$ecs->table('sessions'), self::$ecs->table('sessions_data'), C('COOKIE_PREFIX').'touch_id');
         define('SESS_ID', self::$sess->get_session_id());
@@ -211,7 +195,6 @@ class CommonController extends BaseController
 
         }
         /*DRP_END*/
-        $this->assign('is_wechat', (int) is_wechat_browser());
 
         // 模板替换
         defined('__TPL__') or define('__TPL__', __ROOT__ . '/themes/' . C('template'));
@@ -226,21 +209,53 @@ class CommonController extends BaseController
         session('parent_id',$_SESSION['user_id'] ? 0 : $_GET['u'] ? $_GET['u'] : 0);
     }
 
-    /* ecjia验证登录
-    *参数：&origin=app&openid=openid&token=token
-    */
-    private function ecjia_login(){
+    protected function wechat_init()
+    {
+        // 微信oauth处理
+        if(class_exists('WechatController')){
+            if (method_exists('WechatController', 'snsapi_base')) {
+                call_user_func(array('WechatController', 'snsapi_base'));
+                /*DRP_START*/
+                $this->drp();
+                /*DRP_END*/
+            }
+        }
+        if(class_exists('WechatController') && is_wechat_browser()){
+            //是否显示关注按钮
+            // $condition['openid'] = !empty($_SESSION['openid']) ? $_SESSION['openid'] : 0;
+            $condition['ect_uid'] = !empty($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+            $userinfo = $this->model->table('wechat_user')->field('subscribe')->where($condition)->find();
+            $_SESSION['subscribe'] = $userinfo['subscribe'];
+        }
+        // 关注按钮 是否显示
+        $this->assign('subscribe', $_SESSION['subscribe']);
 
-		if(isset($_GET['origin']) && $_GET['origin'] == 'app'){
-			$openid = I('get.openid');
-			$token = I('get.token');
-			$sql= "select cu.token,u.user_name from " . $this->model->pre . "connect_user as cu LEFT JOIN "  . $this->model->pre . "users as u on cu.user_id = u.user_id where open_id = '$openid' ";
-			$user = $this->model->getRow($sql);
-			if($token == $user['token']){
-				ECTouch::user()->set_cookie($user['user_name']);
-				ECTouch::user()->set_session($user['user_name']);
-			}
-		}
+        // 判断微信通 用于JSSDK
+        $is_wechat = class_exists('WechatController') && is_wechat_browser() ? 1 : 0;
+        $this->assign('is_wechat', $is_wechat);
+        if ($is_wechat == 1) {
+            $share_data = $this->get_wechat_share_content();
+            $this->assign('share_data', $share_data);
+        }
+    }
+
+    /**
+     * ecjia验证登录
+     * &origin=app&openid=openid&token=token
+     */
+    private function ecjia_login()
+    {
+        if (isset($_GET['origin']) && $_GET['origin'] == 'app') {
+            $openid = I('get.openid');
+            $token = I('get.token');
+            $sql= "select cu.access_token,u.user_name from " . $this->model->pre . "connect_user as cu LEFT JOIN "  . $this->model->pre . "users as u on cu.user_id = u.user_id where open_id = '$openid' ";
+            $user = $this->model->getRow($sql);
+            if ($token == $user['access_token']) {
+            	ECTouch::user()->set_cookie($user['user_name']);
+            	ECTouch::user()->set_session($user['user_name']);
+                model('Users')->update_user_info();
+            }
+        }
     }
 
     /*DRP_START*/
@@ -284,32 +299,48 @@ class CommonController extends BaseController
     }
     /*DRP_END*/
 
-    /*
-     * 微信jsSDK
+    /**
+     * 微信JSSDK分享内容
+     * Example: $share_data = array(
+     *     'title' => '', //分享标题 默认商店名称
+     *     'desc' => '', //分享描述 默认商店描述
+     *     'link' => '', //分享链接 默认当前页面链接 含参数
+     *     'img' => '', //分享图片 注意需要绝对路径 http://www.abc.com/mobile/public/img/wxsdk.png
+     *     );
+     * @param array $share_data 分享数据
+     * @return
      */
-    public function wechatJsSdk(){
-        $config = model('Base')->model->table('wechat')->field('token, appid, appsecret, status')->find();
-        if ($config['status']) {
-            //微信店信息
-            $js_sdk_data['title'] = C('shop_name');
-            $js_sdk_data['desc']  = C('shop_desc');
-            $js_sdk_data['url']   = __URL__ . $_SERVER['REQUEST_URI']; //__URL__ . '/index.php?u=' . $_SESSION['user_id'] . '&drp_id='.$drp_id;
-            $js_sdk_data['pic']   = __URL__ . '/images/logo.png';
-
-            //商品信息
-            if(CONTROLLER_NAME == 'Goods' && isset($_GET['id'])){
-                $goods_id = I('id', 0);
-                $goods = model('Goods')->get_goods_info($goods_id);
-                $js_sdk_data['title'] = $goods['goods_name'];
-                $js_sdk_data['desc']  = $goods['goods_name'];
-                $js_sdk_data['pic']   = $goods['goods_thumb'];
-            }
-
-            $wechat = new Wechat($config);
-            $js_sdk_sign = $wechat->getJsSign($js_sdk_data['url']);
-            $this->assign('js_sdk_sign', $js_sdk_sign);
-            $this->assign('js_sdk_data', $js_sdk_data);
+    public function get_wechat_share_content($share_data= array())
+    {
+        if (!empty($share_data['img'])) {
+            $share_img = (strtolower(substr($share_data['img'], 0, 4)) == 'http') ? $share_data['img'] : __HOST__ . $share_data['img'];
+        } else {
+            $share_img = elixir('images/wxsdk.png', true);
         }
+        $data = array(
+            'title' => !empty($share_data['title']) ? $share_data['title'] : C('shop_name'),
+            'desc' => !empty($share_data['desc']) ? str_replace(array(" ", "　", "\t", "\n", "\r"), '', html_in($share_data['desc'])) : C('shop_desc'),
+            'link' => !empty($share_data['link']) ? $share_data['link'] : $this->get_current_url(),
+            'img' => $share_img,
+        );
+        return $data;
+    }
+
+    /**
+     * 取当前页面地址
+     * 如果用户登录 当前地址则需要加上此用户的uid,用于分享出去的地址（非显示在浏览器中的地址）
+     * @return string
+     */
+    public function get_current_url()
+    {
+        $uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
+        $u = I('get.u', 0, 'intval');
+        // 如果含u参数 并且不相同，取u参数 替换为登录用户u参数
+        if (!empty($u) && !empty($_SESSION['user_id']) && $u != $_SESSION['user_id']) {
+            $uri = url_set_value($uri, 'u', $_SESSION['user_id']);
+        }
+
+        return __HOST__ . $uri;
     }
 }
 

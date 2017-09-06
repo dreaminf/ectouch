@@ -31,13 +31,11 @@ class GroupbuyController extends CommonController {
     }
 
     /* ------------------------------------------------------ */
-
     //-- 团购商品 --> 团购活动商品列表
     /* ------------------------------------------------------ */
 
     public function index() {
-        
-           
+
         $this->parameter();
         $this->assign('page', $this->page);
         $this->assign('size', $this->size);
@@ -50,12 +48,11 @@ class GroupbuyController extends CommonController {
         $this->pageLimit(url('index', array('sort' => $this->sort, 'order' => $this->order)), $this->size);
         $this->assign('pager', $this->pageShow($count));
         /* 显示模板 */
-        
+
         $this->display('group_buy_list.dwt');
     }
 
     /* ------------------------------------------------------ */
-
     //--异步加载团购商品列表
     /* ------------------------------------------------------ */
     public function asynclist() {
@@ -76,7 +73,6 @@ class GroupbuyController extends CommonController {
     }
 
     /* ------------------------------------------------------ */
-
     //-- 团购商品 --> 商品详情
     /* ------------------------------------------------------ */
     public function info() {
@@ -85,7 +81,7 @@ class GroupbuyController extends CommonController {
         $sql= "SELECT goods_id ".
               "FROM ". $this->model->pre ."goods_activity where act_id = " . $group_buy_id;
         $res=$this->model->query($sql);
-        
+
         $goods_id = $res[0]["goods_id"];
         if ($group_buy_id <= 0) {
             ecs_header("Location: ./\n");
@@ -93,7 +89,7 @@ class GroupbuyController extends CommonController {
         }
         /* 取得团购活动信息 */
         $group_buy = model('GroupBuyBase')->group_buy_info($group_buy_id);
-        
+
         if (empty($group_buy)) {
             ecs_header("Location: ./\n");
             exit;
@@ -103,7 +99,7 @@ class GroupbuyController extends CommonController {
         $this->assign('group_buy', $group_buy);
         $this->assign('sales_count', model('GoodsBase')->get_sales_count(1));
 
-        
+
         /* 取得团购商品信息 */
         $goods_id = $group_buy['goods_id'];
         $goods = model('Goods')->goods_info($goods_id);
@@ -134,6 +130,19 @@ class GroupbuyController extends CommonController {
         $this->assign('now_time', gmtime());           // 当前系统时间
         $this->assign('goods_id', $group_buy_id);     // 商品的id
 		$this->assign('pictures', model('GoodsBase')->get_goods_gallery($goods_id));
+
+        // 微信JSSDK分享
+        $share_data = array(
+            'title' => '团购商品_' . $goods['goods_name'],
+            'desc' => $goods['goods_brief'],
+            'link' => '',
+            'img' => $goods['goods_img'],
+        );
+        $this->assign('share_data', $this->get_wechat_share_content($share_data));
+
+        $this->assign('meta_keywords', $goods['keywords']);
+        $this->assign('meta_description', $goods['goods_brief']);
+
         $this->display('group_buy_info.dwt');
     }
 

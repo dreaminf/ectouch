@@ -145,10 +145,16 @@ class GoodsController extends CommonController
         /* meta */
         $this->assign('meta_keywords', htmlspecialchars($goods['keywords']));
         $this->assign('meta_description', htmlspecialchars($goods['goods_brief']));
-        // 微信JSSDK分享图片
-        $this->assign('page_img', $goods['goods_img']);
         $this->assign('ur_here', $page_info['ur_here']);
         $this->assign('page_title', $page_info['title']);
+        // 微信JSSDK分享
+        $share_data = array(
+            'title' => $goods['goods_name'],
+            'desc' => $goods['goods_brief'],
+            'link' => '',
+            'img' => $goods['goods_img'],
+        );
+        $this->assign('share_data', $this->get_wechat_share_content($share_data));
         //组合套餐名 start
         $comboTabIndex = array(' ','一', '二', '三','四','五','六','七','八','九','十');
         $this->assign('comboTab',$comboTabIndex);
@@ -167,7 +173,7 @@ class GoodsController extends CommonController
         $team_log = model('Goods')->team_goods_log($this->goods_id);
         $this->assign('team_log', $team_log);
         $this->assign('team_id', $this->team_id);
-        
+
         $this->display('team/goods.html');
 
     }
@@ -203,8 +209,8 @@ class GoodsController extends CommonController
      * 商品评论
      */
     public function comment_list()
-    {   
-        if(empty($_GET['type']) && !empty($_SESSION['type'])){          
+    {
+        if(empty($_GET['type']) && !empty($_SESSION['type'])){
             $_SESSION['type'] = $_SESSION['type'];
         }elseif(!empty($_SESSION['type']) && $_SESSION['type'] != I('request.type')){
             $this->type = I('request.type') ? intval(I('request.type')) : 1 ;
@@ -214,7 +220,7 @@ class GoodsController extends CommonController
             $_SESSION['type'] = $this->type;
         }
         $cmt = new stdClass();
-        if(empty($_GET['id']) && !empty($_SESSION['cmt_id'])){          
+        if(empty($_GET['id']) && !empty($_SESSION['cmt_id'])){
             $_SESSION['cmt_id'] = $_SESSION['cmt_id'];
         }elseif(!empty($_SESSION['cmt_id']) && $_SESSION['cmt_id'] != I('request.id')){
             $cmt->id = I('request.id') ? intval(I('request.id')) : 1 ;
@@ -222,7 +228,7 @@ class GoodsController extends CommonController
         }else{
             $cmt->id = I('request.id') ? intval(I('request.id')) : 0 ;
             $_SESSION['cmt_id'] = $cmt->id;
-        }   
+        }
         $com = model('Comment')->get_comment_info($_SESSION['cmt_id'],0);
         $this->assign('comments_info', $com);
         $pay = 0;
@@ -254,7 +260,7 @@ class GoodsController extends CommonController
      * 改变属性、数量时重新计算商品价格
      */
     public function price()
-    { 
+    {
         //格式化返回数组
         $res = array(
             'err_msg' => '',
@@ -287,7 +293,7 @@ class GoodsController extends CommonController
             $res ['result'] = price_format($shop_price * $number);
             if(!empty($product['product_number'])) {
                 $res ['product_number'] = '库存：'.$product['product_number'];
-            }            
+            }
         }
         die(json_encode($res));
     }
@@ -322,13 +328,13 @@ class GoodsController extends CommonController
                 $res ['qty'] = $number;
             }
             //验证拼团限购数量
-            if($number > $goods ['astrict_num'] ){              
+            if($number > $goods ['astrict_num'] ){
                 $res ['err_msg'] = '已超过拼团限购数量';
                 $res ['err_no'] = 1;
                 $res ['qty'] = $goods ['astrict_num'];
             }
-            
-            
+
+
             $shop_price = model('GoodsBase')->team_get_final_price($this->goods_id, $number, true, $attr_id);
             //$res ['result'] = price_format($shop_price * $number);
             $res ['result'] = '￥'.$shop_price * $number.'元';
@@ -345,7 +351,7 @@ class GoodsController extends CommonController
         if ($_SESSION['user_id'] <= 0) {
             $this->redirect(url('user/login'));
         }
-        
+
         /* 查询：取得数量 */
         $goods_id = isset($_POST['goods_id']) ? intval($_POST['goods_id']) : 0;
         $team_id = isset($_POST['team_id']) ? intval($_POST['team_id']) : 0;
@@ -359,12 +365,12 @@ class GoodsController extends CommonController
 
         // 查询：系统启用了库存，检查输入的商品数量是否有效
         // 查询
-        
+
         $arrGoods = $this->model->table('goods')->field('goods_sn,goods_name,goods_number,extension_code,team_price')->where('goods_id =' . $goods_id)->find();
         $goodsnmber = model('Users')->get_goods_number($goods_id);
         $goodsnmber+=$number;
         if (intval(C('use_storage')) > 0 && $arrGoods ['extension_code'] != 'package_buy') {
-            if ($arrGoods ['goods_number'] < $goodsnmber) {               
+            if ($arrGoods ['goods_number'] < $goodsnmber) {
                show_message(sprintf(L('stock_insufficiency'), $arrGoods ['goods_name'], $arrGoods ['goods_number'], $arrGoods ['goods_number']), '', '', 'error');
             }
         }
@@ -372,10 +378,10 @@ class GoodsController extends CommonController
         // 检查：商品数量是否合法
         if (!is_numeric($number) || intval($number) <= 0) {
              show_message(L('invalid_number'), '', '', 'error');
-        }       
-        
+        }
+
         //验证拼团限购数量
-        if($number > $goods['astrict_num'] ){               
+        if($number > $goods['astrict_num'] ){
              show_message('已超过拼团限购数量', '', '', 'error');
         }
         /* 查询：取得规格 */
@@ -397,7 +403,7 @@ class GoodsController extends CommonController
         if ($specs && $number > $product_info['product_number']) {
             show_message(L('gb_error_goods_lacking'), '', '', 'error');
         }
-        
+
         /* 查询：查询规格名称和值，不考虑价格 */
         $attr_list = array();
         $sql = "SELECT a.attr_name, g.attr_value " .
@@ -410,7 +416,7 @@ class GoodsController extends CommonController
             $attr_list[] = $row['attr_name'] . ': ' . $row['attr_value'];
         }
         $goods_attr = join(chr(13) . chr(10), $attr_list);
-        
+
         /* 更新：清空购物车中所有团购商品 */
         model('Order')->clear_cart(CART_TEAM_GOODS);
 
@@ -449,7 +455,7 @@ class GoodsController extends CommonController
         $this->redirect(url('flow/checkout'));
         exit;
     }
-    
+
     /* ------------------------------------------------------ */
     //--拼团商品 --> 等待成团
     /* ------------------------------------------------------ */
@@ -459,9 +465,9 @@ class GoodsController extends CommonController
             ecs_header("Location: ./\n");
             exit;
         }
-        
+
         /* --获取拼团商品信息-- */
-        $sql ="select tl.team_id, tl.start_time,o.team_parent_id,g.goods_id,g.goods_img,g.validity_time ,g.goods_name,g.team_num,g.team_price,og.goods_attr from " . $this->model->pre . "team_log as tl LEFT JOIN " . $this->model->pre. "order_info as o ON tl.team_id = o.team_id LEFT JOIN  ". $this->model->pre. "order_goods as og on o.order_id = og.order_id LEFT JOIN " . $this->model->pre ."goods as g ON tl.goods_id = g.goods_id where tl.team_id =$team_id  and o.pay_status = '" . PS_PAYED . "' and o.extension_code ='team_buy' and o.team_parent_id > 0"; 
+        $sql ="select tl.team_id, tl.start_time,o.team_parent_id,g.goods_id,g.goods_img,g.validity_time ,g.goods_name,g.team_num,g.team_price,og.goods_attr from " . $this->model->pre . "team_log as tl LEFT JOIN " . $this->model->pre. "order_info as o ON tl.team_id = o.team_id LEFT JOIN  ". $this->model->pre. "order_goods as og on o.order_id = og.order_id LEFT JOIN " . $this->model->pre ."goods as g ON tl.goods_id = g.goods_id where tl.team_id =$team_id  and o.pay_status = '" . PS_PAYED . "' and o.extension_code ='team_buy' and o.team_parent_id > 0";
         $result = $this->model->query($sql);
 
         foreach ($result as $vo) {
@@ -482,8 +488,8 @@ class GoodsController extends CommonController
             }
         }
         /* --获取拼团信息-- */
-        $sql ="select tl.team_id, tl.start_time,tl.goods_id,tl.status,g.validity_time ,g.team_num,g.team_price from " . $this->model->pre . "team_log as tl LEFT JOIN " . $this->model->pre ."goods as g ON tl.goods_id = g.goods_id where tl.team_id =$team_id  "; 
-        $team = $this->model->getRow($sql); 
+        $sql ="select tl.team_id, tl.start_time,tl.goods_id,tl.status,g.validity_time ,g.team_num,g.team_price from " . $this->model->pre . "team_log as tl LEFT JOIN " . $this->model->pre ."goods as g ON tl.goods_id = g.goods_id where tl.team_id =$team_id  ";
+        $team = $this->model->getRow($sql);
         //dump($team);
         $team['end_time'] = $team['start_time']+($team['validity_time']*3600);//剩余时间
         $surplus = model('Goods')->surplus_num($team['team_id']);//几人参团
@@ -501,57 +507,62 @@ class GoodsController extends CommonController
         }
 
         /* --获取拼团团员信息-- */
-        $sql ="select o.team_id, o.user_id,o.team_parent_id,o.team_user_id from " . $this->model->pre . "order_info as o LEFT JOIN " . $this->model->pre ."users as u ON o.user_id = u.user_id where o.team_id =$team_id and o.extension_code ='team_buy' and o.pay_status = '" . PS_PAYED ."' order by o.add_time asc limit 0,5";  
-        $team_user = $this->model->query($sql); 
+        $sql ="select o.team_id, o.user_id,o.team_parent_id,o.team_user_id from " . $this->model->pre . "order_info as o LEFT JOIN " . $this->model->pre ."users as u ON o.user_id = u.user_id where o.team_id =$team_id and o.extension_code ='team_buy' and o.pay_status = '" . PS_PAYED ."' order by o.add_time asc limit 0,5";
+        $team_user = $this->model->query($sql);
         foreach ($team_user as $key => $vo) {
             $team_user[$key]['avatar'] = '';
             $wechat_user = $this->model->table('wechat_user')->where("ect_uid=" . $vo['user_id'])->field('nickname,headimgurl')->find();
             if (!empty($wechat_user)) {
                 $team_user[$key]['name'] = $wechat_user['nickname'];
                 $team_user[$key]['avatar'] = $wechat_user['headimgurl'];
-            }           
+            }
         }
-        
+
         /* --验证是否已经参团-- */
         $team_join = $this->model->table('order_info')->where(array('user_id'=>$_SESSION['user_id'],'team_id'=>$team_id))->count();
         if ($team_join > 0) {
            $this->assign('team_join', 1);
         }
-        // 增加是否是微信的判断
-        if(is_wechat_browser() == false){
-            $this->assign('is_not_wechat',1);
-        }
+
+        // 微信JSSDK分享
+        $share_data = array(
+            'title' => $result,
+            'desc' => $goods['name'].'邀请您一起拼团',
+            'link' => '',
+            'img' => $goods['goods_img'],
+        );
+        $this->assign('share_data', $this->get_wechat_share_content($share_data));
+
         $this->assign('team_user', $team_user);
         $this->assign('goods', $goods);
         $this->assign('team', $team);
         $this->assign('cfg', C(cfg));
         $this->assign('title', $result);
-        $this->assign('wx_title', '邀请您一起拼团');//分享标题
         $this->display('team/goods-wait.html');
     }
-    
+
     /* ------------------------------------------------------ */
     //--拼团商品 --> 品团成员
     /* ------------------------------------------------------ */
     public function goods_wait_list() {
-        
+
         $team_id = isset($_REQUEST ['team_id']) ? intval($_REQUEST ['team_id']) : 0;
-        $sql ="select o.team_id, o.user_id,o.team_parent_id,o.team_user_id,o.add_time ,u.user_name from " . $this->model->pre . "order_info as o LEFT JOIN " . $this->model->pre ."users as u ON o.user_id = u.user_id where o.team_id =$team_id and o.extension_code ='team_buy' and o.pay_status = '" . PS_PAYED ."' order by o.add_time asc ";   
-        $team_user = $this->model->query($sql); 
+        $sql ="select o.team_id, o.user_id,o.team_parent_id,o.team_user_id,o.add_time ,u.user_name from " . $this->model->pre . "order_info as o LEFT JOIN " . $this->model->pre ."users as u ON o.user_id = u.user_id where o.team_id =$team_id and o.extension_code ='team_buy' and o.pay_status = '" . PS_PAYED ."' order by o.add_time asc ";
+        $team_user = $this->model->query($sql);
         foreach ($team_user as $key => $vo) {
-            $team_user[$key]['add_time'] = local_date(C('time_format'), $vo['add_time']); 
+            $team_user[$key]['add_time'] = local_date(C('time_format'), $vo['add_time']);
             $team_user[$key]['name'] = $vo['user_name'];
             $team_user[$key]['avatar'] = '';
             $wechat_user = $this->model->table('wechat_user')->where("ect_uid=" . $vo['user_id'])->field('nickname,headimgurl')->find();
             if (!empty($wechat_user)) {
                 $team_user[$key]['name'] = $wechat_user['nickname'];
                 $team_user[$key]['avatar'] = $wechat_user['headimgurl'];
-            }           
+            }
         }
-        $this->assign('team_user', $team_user);     
+        $this->assign('team_user', $team_user);
         $this->display('team/goods-wait-list.html');
     }
-    
+
     /**
      * ajax获取等待成团热卖商品
      */

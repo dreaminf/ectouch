@@ -85,7 +85,7 @@ class CrowdfundingModel extends CommonModel {
             $row['shiping_time'] = $row['shiping_time'];
             $row['sum_price'] = $row['sum_price'];
             $row['total_price'] = $this->crowd_buy_price($row['goods_id']);
-            $row['goods_img'] = $row['goods_img'];
+            $row['goods_img'] = get_image_path(0, $row['goods_img']);
             $row['url'] = url('Crowdfunding/goods_info', array('id' => $row['goods_id']));
             $row['bar'] = $row['total_price'] * 100 / $row['sum_price'];
             $row['bar'] = round($row['bar'], 1); //计算百分比
