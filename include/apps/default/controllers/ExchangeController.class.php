@@ -57,8 +57,8 @@ class ExchangeController extends CommonController {
     public function asynclist_list() {
         $this->parameter();
         $asyn_last = intval(I('post.last')) + 1;
-		$this->page = I('post.page');	
-        $list = model('Exchange')->exchange_get_goods($this->children, $this->integral_min, $this->integral_max, $this->ext, $this->size, 
+		$this->page = I('post.page');
+        $list = model('Exchange')->exchange_get_goods($this->children, $this->integral_min, $this->integral_max, $this->ext, $this->size,
 		$this->page, $this->sort, $this->order);
 		die(json_encode(array('list' => $list)));
         exit();
@@ -109,21 +109,25 @@ class ExchangeController extends CommonController {
         $this->assign('goods_id', $goods_id);
         $this->assign('pictures', model('GoodsBase')->get_goods_gallery($goods_id));
         $this->assign('cfg', C('CFG'));
-        //更新团购商品点击次数
-        $count = $this->model->table('goods')->field('COUNT(*)')->where('goods_id =' . $goods['goods_id'])->getOne();
-        if ($count) {
-            $this->model->table('goods')->data('click_count = click_count + 1')->where('goods_id = ' . $goods['goods_id'])->update();
-        } else {
-            $data['goods_id'] = $goods['goods_id'];
-            $data['click_count'] = 1;
-            $this->model->table('goods')->data($data)->insert();
-        }
-        //
+        //更新商品点击次数
+        $this->model->table('goods')->data('click_count = click_count + 1')->where('goods_id = ' . $goods['goods_id'])->update();
+
+        // 微信JSSDK分享
+        $share_data = array(
+            'title' => '积分商品' . '_' . $goods['goods_name'],
+            'desc' => $goods['goods_brief'],
+            'link' => '',
+            'img' => $goods['goods_img'],
+        );
+        $this->assign('share_data', $this->get_wechat_share_content($share_data));
+
+        $this->assign('meta_keywords', $goods['keywords']);
+        $this->assign('meta_description', $goods['goods_brief']);
+
         $this->display('exchange_info.dwt');
     }
 
     /* ------------------------------------------------------ */
-
     //-- 积分商城 -  积分兑换
     /* ------------------------------------------------------ */
     public function buy() {

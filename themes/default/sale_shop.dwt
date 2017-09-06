@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="description" content="{$meta_description}"/>
+    <meta name="keywords" content="{$meta_keywords}"/>
 	<title>{if $drp_info.shop_name}{$drp_info.shop_name}{else}{$page_title}{/if}</title>
 	<link rel="stylesheet" type="text/css" href="__TPL__/css/index.css"/>
 	<link rel="stylesheet" type="text/css" href="__TPL__/css/search_index.css"/>
 	<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
 	<link rel="stylesheet" href="__TPL__/statics/css/search.css" />
-    <!-- <link rel="stylesheet" href="__TPL__/statics/css/ectouch.css" /> -->
     <script type="text/javascript">var tpl = '__TPL__';</script>
     <style>
     .search {position: relative;padding:0;}
@@ -25,23 +28,23 @@
     .a-text-more span {line-height: 2.6rem;}
     .a-text-one span {line-height: 0rem;}
     </style>
-    <script type="text/javascript" >var tpl = '__TPL__';</script>
+    {include file="/library/js_sdk.lbi"}
 </head>
 <body>
 <div class="con">
-<div class="index-max-box">
-{if !$subscribe}
-<div class="ect-attention dis-box" >
-	<div class="attention-text box-flex">
-		<p style="font-size: 1rem;"><span style="color:#fff">欢迎进入</span><span style="color:#57C850"> 微商城</span></p>
-		<p style="font-size: 1rem;"><span style="color:#fff">关注公众号,享专属服务</span></p>
-	</div>
-	<div class="attention-button" style="  padding-top:0.8rem;">
-		<a class='lizhuanz'><button class="button">立即关注</button></a>
-	</div>
-</div>
-{/if}
-</div>
+    <div class="index-max-box">
+        {if !$subscribe}
+        <div class="ect-attention dis-box" >
+        	<div class="attention-text box-flex">
+        		<p style="font-size: 1rem;"><span style="color:#fff">欢迎进入</span><span style="color:#57C850"> 微商城</span></p>
+        		<p style="font-size: 1rem;"><span style="color:#fff">关注公众号,享专属服务</span></p>
+        	</div>
+        	<div class="attention-button" style="  padding-top:0.8rem;">
+        		<a class='lizhuanz'><button class="button">立即关注</button></a>
+        	</div>
+        </div>
+        {/if}
+    </div>
 
 <div class="index-main comWidth" >
 <div class="share-div">
@@ -117,7 +120,7 @@
                 <a href="javascript:;" class="box-flex nav-list j-search-input ">
                     <i class="nav-box i-search"></i><span>搜索</span>
                 </a>
-                
+
                 <a href="{:url('flow/cart')}" class="box-flex position-rel nav-list">
                     <i class="nav-box i-flow"></i><span>购物车</span>
                 </a>

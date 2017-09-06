@@ -59,7 +59,7 @@ class AuctionController extends CommonController {
         $asyn_last = intval(I('post.last')) + 1;
         $this->size = I('post.amount');
         $this->page = ($asyn_last > 0) ? ceil($asyn_last / $this->size) : 1;
-        
+
         $list = model('Auction')->auction_list($this->size, $this->page, $this->sort, $this->order);
         foreach ($list as $key => $auction) {
             $this->assign('auction', $auction);
@@ -140,6 +140,19 @@ class AuctionController extends CommonController {
                 "WHERE goods_id = '" . $auction['goods_id'] . "'";
         $this->model->query($sql);
         $this->assign('now_time', gmtime());           // 当前系统时间
+
+        // 微信JSSDK分享
+        $share_data = array(
+            'title' => '拍卖商品_' . $goods['goods_name'],
+            'desc' => $goods['goods_brief'],
+            'link' => '',
+            'img' => $goods['goods_img'],
+        );
+        $this->assign('share_data', $this->get_wechat_share_content($share_data));
+
+        $this->assign('meta_keywords', $goods['keywords']);
+        $this->assign('meta_description', $goods['goods_brief']);
+
         $this->assign('title', L('auction_goods_info'));
         $this->display('aution.dwt');
     }

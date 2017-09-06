@@ -143,10 +143,16 @@ class GoodsController extends CommonController
         /* meta */
         $this->assign('meta_keywords', htmlspecialchars($goods['keywords']));
         $this->assign('meta_description', htmlspecialchars($goods['goods_brief']));
-        // 微信JSSDK分享图片
-        $this->assign('page_img', $goods['goods_img']);
         $this->assign('ur_here', $page_info['ur_here']);
         $this->assign('page_title', $page_info['title']);
+        // 微信JSSDK分享
+        $share_data = array(
+            'title' => $goods['goods_name'],
+            'desc' => $goods['goods_brief'],
+            'link' => '',
+            'img' => $goods['goods_img'],
+        );
+        $this->assign('share_data', $this->get_wechat_share_content($share_data));
         //组合套餐名 start
         $comboTabIndex = array(' ','一', '二', '三','四','五','六','七','八','九','十');
         $this->assign('comboTab',$comboTabIndex);
@@ -250,7 +256,7 @@ class GoodsController extends CommonController
             $attr_id = count($attr_id) > 1 ? str_replace(',', '|', $_REQUEST ['attr']) : $attr_id['0'];
             $condition = 'goods_attr = '."'".$attr_id."'";
             $product = $this->model->table('products')->field('product_number')->where($condition)->find();
-           
+
             // 查询：系统启用了库存，检查输入的商品数量是否有效
 // 			if (intval ( C('use_storage') ) > 0 && $goods ['extension_code'] != 'package_buy') {
 // 				if ($goods ['goods_number'] < $number) {

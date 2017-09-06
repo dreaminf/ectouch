@@ -111,6 +111,20 @@ class BrandController extends CommonController {
         $this->assign('brand_goods_hot',$res['count']);
 
         $this->assign('page_title', $brand_info['brand_name']);
+
+        // 微信JSSDK分享
+        $brand_img = $brand_info['brand_logo'];
+        $share_data = array(
+            'title' => $brand_info['brand_name'],
+            'desc' => $brand_info['brand_desc'],
+            'link' => '',
+            'img' => $brand_img,
+        );
+        $this->assign('share_data', $this->get_wechat_share_content($share_data));
+
+        $this->assign('meta_keywords', $brand_info['brand_name']);
+        $this->assign('meta_description', $brand_info['brand_desc']);
+
         $this->display('brand_goods_list.dwt');
     }
 

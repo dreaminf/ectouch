@@ -112,6 +112,20 @@ class ArticleController extends CommonController {
         $this->assign('meta_keywords', htmlspecialchars($article['keywords']));
         $this->assign('meta_description', htmlspecialchars($article['description']));
 
+        // 微信JSSDK分享
+        if (!empty($article['file_url'])) {
+            $article_img = get_image_path($article['file_url']);
+        } else {
+            $article_img = $article['album'][0]; // 文章内容第一张图片
+        }
+        $share_data = array(
+            'title' => $article['title'],
+            'desc' => $article['description'],
+            'link' => '',
+            'img' => $article_img,
+        );
+        $this->assign('share_data', $this->get_wechat_share_content($share_data));
+
         $this->display('article_info.dwt');
     }
 
@@ -120,15 +134,24 @@ class ArticleController extends CommonController {
     /* ------------------------------------------------------ */
     public function wechat_news_info() {
         /* 文章详情 */
-        $news_id = intval(I('get.id'));
-        $data = $this->model->table('wechat_media')->field('title, content,file,is_show, digest')->where('id = ' . $news_id)->find();
+        $news_id = I('get.id', 0, 'intval');
+        $data = $this->model->table('wechat_media')->field('title, content, file, is_show, digest')->where('id = ' . $news_id)->find();
         $data['content'] = htmlspecialchars_decode($data['content']);
         $data['image'] =  $data['is_show'] ? __URL__ . '/' . $data['file'] : '';
         $this->assign('article', $data);
         $this->assign('page_title', $data['title']);
-        /* meta */
-        $this->assign('meta_description', htmlspecialchars($data['digest']));
-        $this->assign('page_img', htmlspecialchars($data['image']));
+        $this->assign('meta_keywords', $data['title']);
+        $this->assign('meta_description', strip_tags($data['digest']));
+
+        // 微信JSSDK分享
+        $share_data = array(
+            'title' => $data['title'],
+            'desc' => strip_tags($data['digest']),
+            'link' => '',
+            'img' => get_image_path($data['file']),
+        );
+        $this->assign('share_data', $this->get_wechat_share_content($share_data));
+
         $this->display('article_info.dwt');
     }
 

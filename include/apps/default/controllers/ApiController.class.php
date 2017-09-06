@@ -19,16 +19,8 @@ defined('IN_ECTOUCH') or die('Deny Access');
 
 class ApiController extends CommonController
 {
-    // 会员ID
-    public $user_id = 0;
-    // 消息标识
-    public $code = '';
-    // 消息内容
-    public $pushData = '';
-    // 消息链接
-    public $url = '';
-    // 微信类对象
     private $weObj = '';
+    private $wechat_id = 0;
 
     /**
      * 构造方法
@@ -36,26 +28,73 @@ class ApiController extends CommonController
     public function __construct()
     {
         parent::__construct();
-        $this->user_id = I('get.user_id',0,'intval');
-        $this->code = I('get.code','','trim');
-        $this->pushData = I('get.pushData','','trim');
-		$this->url = I('get.url','');
-		$this->url = $this->url ? base64_decode(urldecode($this->url)) : '';
+        // 获取公众号配置
+        $wxConf = $this->getConfig();
+        $this->weObj = new Wechat($wxConf);
+
+        $this->wechat_id = $wxConf['id'];
     }
 
     /**
-     * 接口方法
+     * PC后台发送发货通知模板消息接口方法
+     *
      */
     public function index()
     {
-        $this->pushData = stripslashes(urldecode($this->pushData));
-        //转换成数组
-        $this->pushData = unserialize($this->pushData);
-        pushTemplate($this->code, $this->pushData, $this->url, $this->user_id);
+        $user_id = I('get.user_id', 0, 'intval');
+        $code = I('get.code', '', 'trim');
+        $pushData = I('get.pushData', '', 'trim');
+        $url = I('get.url', '');
+        $url = $url ? base64_decode(urldecode($url)) : '';
+
+        if ($user_id && $code) {
+            $pushData = stripslashes(urldecode($pushData));
+            //转换成数组
+            $pushData = unserialize($pushData);
+            // 发送微信通模板消息
+            pushTemplate($code, $pushData, $url, $user_id);
+        }
     }
+
+    /**
+     * JSSDK 参数
+     * @return
+     */
+    public function jssdk()
+    {
+        $url = I('url', '', 'addslashes');
+        if (!empty($url)) {
+            $sdk = $this->weObj->getJsSign($url);
+            $data = array('status' => '200', 'data' => $sdk);
+        } else {
+            $data = array('status' => '100', 'message' => '缺少参数');
+        }
+        exit(json_encode($data));
+    }
+
+
 
     public function qrcode(){
         $userid = I('userid', '0', 'intval');
         echo call_user_func(array('WechatController', 'rec_qrcode'), $userid);
     }
+
+
+    /**
+     * 获取公众号配置
+     *
+     * @return array
+     */
+    private function getConfig()
+    {
+        $config = $this->model->table('wechat')
+                ->field('id, token, appid, appsecret')
+                ->where(array('status' => 1, 'default_wx' => 1))
+                ->find();
+        if (empty($config)) {
+            $config = array();
+        }
+        return $config;
+    }
+
 }

@@ -30,6 +30,20 @@ class StoreController extends CommonController {
         $this->assign('cat_new', $cat_rec[2]);
         $this->assign('cat_hot', $cat_rec[3]);
         $this->assign('is_drp', 1);
+
+        // 微信JSSDK分享
+        $description = '快来参观我的店铺吧，惊喜多多优惠多多';
+        $share_data = array(
+            'title' => $drp_shop['shop_name'],
+            'desc' => $description,
+            'link' => '',
+            'img' => $drp_shop['headimgurl'],
+        );
+        $this->assign('share_data', $this->get_wechat_share_content($share_data));
+
+        $this->assign('meta_keywords', $drp_shop['shop_name']);
+        $this->assign('meta_description', $description);
+
         $this->display('sale_shop.dwt');
     }
 

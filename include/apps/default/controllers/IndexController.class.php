@@ -47,8 +47,9 @@ class IndexController extends CommonController {
             $this->assign('brand_list', model('Brand')->get_brands($app = 'brand', C('page_size'), 1));
             // 分类下的文章
             $this->assign('cat_articles', model('Article')->assign_articles(1,5)); // 1 是文章分类id ,5 是文章显示数量
-
         }
+        // 关注按钮 是否显示
+        $this->assign('subscribe', $_SESSION['subscribe']);
         $this->display('index.dwt', $cache_id);
     }
 
