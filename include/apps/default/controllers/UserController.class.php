@@ -281,7 +281,7 @@ class UserController extends CommonController {
     /**
      * 资金管理
      */
-         public function account_list() {
+    public function account_list() {
         // 获取剩余余额
         $surplus_amount = model('ClipsBase')->get_user_surplus($this->user_id);
         if (empty($surplus_amount)) {
@@ -1787,22 +1787,19 @@ class UserController extends CommonController {
     public function login() {
         // 登录处理
         if (IS_POST) {
-            $username = I('post.username');
-            $password = I('post.password');
-            $this->back_act = urldecode(I('post.back_act'));
+            $username = I('post.username','', 'trim');
+            $password = I('post.password','', 'trim');
+            $back_act = I('back_act','', 'trim');
+            $this->back_act = empty($back_act) ? url('user/index') : $back_act;
 
             $captcha = intval(C('captcha'));
             if (($captcha & CAPTCHA_LOGIN) && (!($captcha & CAPTCHA_LOGIN_FAIL) || (($captcha & CAPTCHA_LOGIN_FAIL) && $_SESSION['login_fail'] > 2))) {
                 if (empty($_POST['captcha'])) {
-                    show_message(L('invalid_captcha'), L('relogin_lnk'), url('login', array(
-                        'referer' => urlencode($this->back_act)
-                            )), 'error');
+                    show_message(L('invalid_captcha'), L('relogin_lnk'), url('login', array('back_act' => urlencode($this->back_act))), 'error');
                 }
                 // 检查验证码
                 if ($_SESSION['ectouch_verify'] !== strtoupper($_POST['captcha'])) {
-                    show_message(L('invalid_captcha'), L('relogin_lnk'), url('login', array(
-                        'referer' => urlencode($this->back_act)
-                            )), 'error');
+                    show_message(L('invalid_captcha'), L('relogin_lnk'), url('login', array('back_act' => urlencode($this->back_act))), 'error');
                 }
             }
 
@@ -1840,21 +1837,23 @@ class UserController extends CommonController {
             } else {
                 $_SESSION['login_fail']++;
                 show_message(L('login_failure'), L('relogin_lnk'), url('login', array(
-                    'referer' => urlencode($this->back_act)
+                    'back_act' => urlencode($this->back_act)
                         )), 'error');
             }
             exit();
         }
 
         // 登录页面显示
-        if (isset($_GET['referer']) && !empty($_GET['referer'])) {
-            $this->back_act = I('get.referer');
+        $back_act = I('back_act', '', 'urldecode');
+        if (empty($back_act)) {
+            if (empty($back_act) && isset($GLOBALS['_SERVER']['HTTP_REFERER'])) {
+                $back_act = strpos($GLOBALS['_SERVER']['HTTP_REFERER'], url('user/index')) ? url('user/index') : $GLOBALS['_SERVER']['HTTP_REFERER'];
+            } else {
+                $back_act = url('user/index');
+            }
         }
-
-        if (empty($this->back_act) && isset($GLOBALS['_SERVER']['HTTP_REFERER'])) {
-            $this->back_act = strpos($GLOBALS['_SERVER']['HTTP_REFERER'], 'c=user') ? url('index/index') : $GLOBALS['_SERVER']['HTTP_REFERER'];
-            $this->back_act = urlencode($this->back_act);
-        }
+        //来源是退出地址时 默认会员中心
+        $this->back_act = strpos($back_act, url('user/logout')) ? url('user/index') : $back_act;
 
         // 验证码相关设置
         $captcha = intval(C('captcha'));
@@ -2005,7 +2004,7 @@ class UserController extends CommonController {
 
         } else {
             $back_url = __HOST__ . $_SERVER['REQUEST_URI'];
-            $this->redirect(url('user/third_login', array('type' => 'weixin', 'backurl' => urlencode($back_url))));
+            $this->redirect(url('user/third_login', array('type' => 'weixin', 'back_url' => urlencode($back_url))));
         }
 
         // 验证码相关设置
@@ -2190,16 +2189,23 @@ class UserController extends CommonController {
                 }*/
 
                 $ucdata = empty(self::$user->ucdata) ? "" : self::$user->ucdata;
-                show_message(sprintf(L('register_success'), $username . $ucdata), array(L('back_up_page'), L('profile_lnk')), array($this->back_act,url('index')), 'info');
+                show_message(sprintf(L('register_success'), $username . $ucdata), array(L('back_up_page'), L('profile_lnk')), array($this->back_act, url('index')), 'info');
             } else {
                 ECTouch::err()->show(L('sign_up'), url('register'));
             }
             exit();
         }
         // 注册页面显示
-        if (empty($this->back_act) && isset($GLOBALS['_SERVER']['HTTP_REFERER'])) {
-            $this->back_act = strpos($GLOBALS['_SERVER']['HTTP_REFERER'], 'c=user') ? url('index/index') : $GLOBALS['_SERVER']['HTTP_REFERER'];
+        $back_act = I('back_act', '', 'urldecode');
+        if (empty($back_act)) {
+            if (empty($back_act) && isset($GLOBALS['_SERVER']['HTTP_REFERER'])) {
+                $back_act = strpos($GLOBALS['_SERVER']['HTTP_REFERER'], url('user/index')) ? url('user/index') : $GLOBALS['_SERVER']['HTTP_REFERER'];
+            } else {
+                $back_act = url('user/index');
+            }
         }
+        //来源是退出地址时 默认会员中心
+        $this->back_act = strpos($back_act, url('user/logout')) ? url('user/index') : $back_act;
 
         // 验证码相关设置
         if (intval(C('captcha')) & CAPTCHA_REGISTER) {
@@ -2245,23 +2251,22 @@ class UserController extends CommonController {
      */
     public function third_login() {
         $type = I('get.type');
+        $back_url = I('get.back_url', '', 'urldecode');
+        $this->back_act = empty($back_url) ? url('user/index') : $back_url;
+
         $file = ROOT_PATH . 'plugins/connect/' . $type . '.php';
         if (file_exists($file)) {
             include_once ($file);
         } else {
-            show_message(L('process_false'), L('relogin_lnk'), url('login', array('referer' => urlencode($this->back_act))), 'error');
-        }
-        if (empty($this->back_act) && isset($GLOBALS['_SERVER']['HTTP_REFERER'])) {
-            $this->back_act = $GLOBALS['_SERVER']['HTTP_REFERER'];
+            show_message(L('process_false'), L('relogin_lnk'), url('login', array('back_act' => $this->back_act)), 'error');
         }
 
-        $back_url = empty($_GET['backurl']) ? __URL__ : $_GET['backurl'];
-        $url = __URL__ . '/index.php?m=default&c=user&a=third_login&type=' . $type . '&backurl=' . urlencode($back_url) . '&u='.$_GET['u'];
+        $url = __URL__ . '/index.php?m=default&c=user&a=third_login&type=' . $type . '&back_url=' . $this->back_act;
 
         $info = model('ClipsBase')->get_third_user_info($type);
         // 判断是否安装
         if (!$info) {
-            show_message(L('no_register_auth'), L('relogin_lnk'), url('login', array('referer' => urlencode($this->back_act))), 'error');
+            show_message(L('no_register_auth'), L('relogin_lnk'), url('login', array('back_act' => $this->back_act)), 'error');
         }
         $obj = new $type($info);
 
@@ -2279,13 +2284,13 @@ class UserController extends CommonController {
 
                 // 授权登录
                 if ($this->oauthLogin($res, $type) === true) {
-                    $this->redirect($back_url);
+                    $this->redirect($this->back_act);
                 }
 
                 // 未登录注册 则自动注册
-                $this->doRegister($res, $type, $back_url);
+                $this->doRegister($res, $type, $this->back_act);
             } else {
-                show_message(L('process_false'), L('relogin_lnk'), url('login', array('referer' => urlencode($this->back_act))), 'error');
+                show_message(L('process_false'), L('relogin_lnk'), url('login', array('back_act' => urlencode($this->back_act))), 'error');
             }
             return;
         } else {
@@ -2656,7 +2661,7 @@ class UserController extends CommonController {
             $this->display('user_edit_password.dwt');
         } else {
             $this->redirect(url('login', array(
-                'referer' => urlencode(url($this->action))
+                'back_act' => urlencode(url($this->action))
             )));
         }
     }
@@ -2721,10 +2726,8 @@ class UserController extends CommonController {
         );
         // 未登录处理
         if (empty($_SESSION['user_id']) && !in_array($this->action, $without)) {
-            $url = __HOST__ . $_SERVER['REQUEST_URI'];
-            $this->redirect(url('login', array(
-                'referer' => urlencode($url)
-            )));
+            $back_act = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : __HOST__ . $_SERVER['REQUEST_URI'];
+            $this->redirect(url('login', array('back_act' => urlencode($back_act))));
             exit();
         }
 

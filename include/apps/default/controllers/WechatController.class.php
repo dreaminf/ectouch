@@ -756,7 +756,7 @@ class WechatController extends CommonController
                         $callback = rtrim($wxinfo['oauth_redirecturi'], '/')  .'/'. $_SERVER['REQUEST_URI'];
                     }
                     if (!isset($callback)) {
-                        $callback = __HOST__ . $_SERVER['REQUEST_URI'];
+                        $callback = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : __HOST__ . $_SERVER['REQUEST_URI'];;
                     }
                     $obj->getOauthRedirect($callback, 'repeat', 'snsapi_base');
                 }
@@ -775,9 +775,9 @@ class WechatController extends CommonController
                 $callback = rtrim($wxinfo['oauth_redirecturi'], '/')  .'/'. $_SERVER['REQUEST_URI'];
             }
             if (! isset($_SESSION['redirect_url'])) {
-                $callback = __HOST__ . $_SERVER['REQUEST_URI'];
+                $callback = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : __HOST__ . $_SERVER['REQUEST_URI'];;
             }
-            $url = url('user/third_login', array('type'=>'weixin', 'backurl'=> $callback), $org_mode == 'org_mode' );
+            $url = url('user/third_login', array('type'=>'weixin', 'back_url'=> $callback), 'org_mode');
             header("Location: ".$url);
             exit;
         }

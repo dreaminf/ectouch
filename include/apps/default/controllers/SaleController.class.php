@@ -690,8 +690,8 @@ class SaleController extends CommonController {
     private function check_login() {
         // 是否登陆
         if(empty($this->user_id)){
-            $url = 'http://'.$_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-            redirect(url('user/login', array('referer' => urlencode($url)) ));
+            $back_act = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : __HOST__ . $_SERVER['REQUEST_URI'];
+            redirect(url('user/login', array('back_act' => urlencode($back_act))));
             exit();
         }
         $shareArr = array(
