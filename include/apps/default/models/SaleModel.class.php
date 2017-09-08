@@ -735,7 +735,7 @@ class SaleModel extends BaseModel {
     public function update_order_sale($order_id){
         if($order_id > 0){
             $order_sn = $this->model->table('order_info')->where('order_id='.$order_id)->field('order_sn')->getOne();
-            $goodsArr = $this->model->table('order_goods')->where('order_id='.$order_id)->field('goods_id,goods_number')->select();
+            $goodsArr = $this->model->table('order_goods')->where('order_id='.$order_id)->field('goods_id,goods_number,goods_attr_id')->select();
             if($goodsArr){
                 // 初始化分销商三级利润
                 $sale_money = array(
@@ -745,8 +745,17 @@ class SaleModel extends BaseModel {
                 );
                 foreach($goodsArr as $key=>$val){
                     $goods_sale = $this->model->table('drp_goods')->where('goods_id = '.$val['goods_id'])->field('touch_sale,touch_fencheng')->select();
+                    //增加属性佣金；
+                    $attr_sale_price = 0;
+                    if(!empty($val['goods_attr_id'])){
+                        $sql = "select sum(attr_sale_price) from {pre}goods_attr where " . db_create_in($val['goods_attr_id'], 'goods_attr_id') . " AND goods_id = '".$val['goods_id']."' ";
+                        $sale_price = $this->model->getRow($sql);
+                        $attr_sale_price = $sale_price['sum(attr_sale_price)'];
+                    }
+                    //增加属性佣金；
+
                     if($goods_sale){
-                        $data['touch_sale'] = $goods_sale['0']['touch_sale'];
+                        $data['touch_sale'] = $goods_sale['0']['touch_sale'] + $attr_sale_price;
                         $data['touch_fencheng'] = $goods_sale['0']['touch_fencheng'];
                         $data['goods_id'] = $val['goods_id'];
                         $data['order_id'] = $order_id;
@@ -767,13 +776,16 @@ class SaleModel extends BaseModel {
             if(!empty($drp_id['id'])){
                 $drp_id1 = $drp_id['id'];
             }
+            if(!empty($data['touch_sale'])){
+                unset($data);
+                $data['drp_id'] = $drp_id1;
+                $data['shop_separate'] = 0;
+                $data['order_id'] = $order_id;
+                //插入订单所属店铺
+                $this->model->table('drp_order_info')->data($data)->insert();
 
-            unset($data);
-            $data['drp_id'] = $drp_id1;
-            $data['shop_separate'] = 0;
-            $data['order_id'] = $order_id;
-            //插入订单所属店铺
-            $this->model->table('drp_order_info')->data($data)->insert();
+            }
+
         }
 
         // 获取订单所属店铺信息
@@ -904,7 +916,7 @@ class SaleModel extends BaseModel {
      */
     public function refund_drp($order) {
         $order_sn = $order['order_sn'];
-        $order_id = $order['order_id']; 
+        $order_id = $order['order_id'];
         $change_desc = '订单分成，订单号：'.$order_sn.',分成金额：0';
         $sql = "UPDATE ".$this->pre."drp_log set user_money = 0, change_desc = '$change_desc'"."where order_id = '$order_id'";
         $this->query($sql);

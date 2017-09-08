@@ -620,7 +620,7 @@ function get_attr_list($cat_id, $goods_id = 0)
     }
 
     // 查询属性值及商品的属性值
-    $sql = "SELECT a.attr_id, a.attr_name, a.attr_input_type, a.attr_type, a.attr_values, v.attr_value, v.attr_price ".
+    $sql = "SELECT a.attr_id, a.attr_name, a.attr_input_type, a.attr_type, a.attr_values, v.attr_value, v.attr_price, v.attr_sale_price ".
             "FROM " .$GLOBALS['ecs']->table('attribute'). " AS a ".
             "LEFT JOIN " .$GLOBALS['ecs']->table('goods_attr'). " AS v ".
             "ON v.attr_id = a.attr_id AND v.goods_id = '$goods_id' ".
@@ -713,6 +713,10 @@ function build_attr_html($cat_id, $goods_id = 0)
         $html .= ($val['attr_type'] == 1 || $val['attr_type'] == 2) ?
             $GLOBALS['_LANG']['spec_price'].' <input type="text" name="attr_price_list[]" value="' . $val['attr_price'] . '" size="5" maxlength="10" />' :
             ' <input type="hidden" name="attr_price_list[]" value="0" />';
+        //分销属性佣金
+        $html .= ($val['attr_type'] == 1 || $val['attr_type'] == 2) ?
+            '分销佣金'.' <input type="text" name="attr_sale_price_list[]" value="' . $val['attr_sale_price'] . '" size="5" maxlength="10" />' :
+            ' <input type="hidden" name="attr_sale_price_list[]" value="0" />';
 
         $html .= '</td></tr>';
     }

@@ -405,7 +405,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
         $goods_article_list = get_goods_articles($goods['goods_id']);   // 关联文章
         if(is_array($group_goods_list)){ //by mike add
             foreach($group_goods_list as $k=>$val){
-                $group_goods_list[$k]['goods_name'] = '[套餐'.$val['group_id'].']'.$val['goods_name'];    
+                $group_goods_list[$k]['goods_name'] = '[套餐'.$val['group_id'].']'.$val['goods_name'];
             }
         }
 
@@ -444,18 +444,18 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
 
     /* 创建 html editor */
     create_html_editor('goods_desc', $goods['goods_desc']);
-    
+
     /*DRP_START*/
     $sql = "SELECT touch_sale,touch_fencheng FROM " . $ecs->table('drp_goods') . " WHERE goods_id = '$_REQUEST[goods_id]'";
     $goods_sale = $db->getRow($sql);
     $goods['touch_sale'] = $goods_sale['touch_sale'];
     $goods['touch_fencheng'] = $goods_sale['touch_fencheng'];
     /*DRP_END*/
-    
-    
-    
-    
-    
+
+
+
+
+
     /* 模板赋值 */
     $smarty->assign('code',    $code);
     $smarty->assign('ur_here', $is_add ? (empty($code) ? $_LANG['02_goods_add'] : $_LANG['51_virtual_card_add']) : ($_REQUEST['act'] == 'edit' ? $_LANG['edit_goods'] : $_LANG['copy_goods']));
@@ -493,7 +493,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
     {
     $volume_price_list = get_volume_price_list($_REQUEST['goods_id']);
     }
- 
+
     if (empty($volume_price_list))
     {
         $volume_price_list = array('0'=>array('number'=>'','price'=>''));
@@ -682,12 +682,12 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         }
         elseif ($_POST['goods_img_url'])
         {
-            
+
             if(preg_match('/(.jpg|.png|.gif|.jpeg)$/',$_POST['goods_img_url']) && copy(trim($_POST['goods_img_url']), ROOT_PATH . 'data/caches/' . basename($_POST['goods_img_url'])))
             {
                   $original_img = 'data/caches/' . basename($_POST['goods_img_url']);
             }
-            
+
         }
 
         if ($original_img === false)
@@ -870,7 +870,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     $astrict_num = isset($_POST['astrict_num']) ? $_POST['astrict_num'] : 0;
     $tc_id = isset($_POST['tc_id']) ? $_POST['tc_id'] : 0;
     //拼团end
-    
+
     $goods_name_style = $_POST['goods_name_color'] . '+' . $_POST['goods_name_style'];
     $catgory_id = empty($_POST['cat_id']) ? '' : intval($_POST['cat_id']);
     $brand_id = empty($_POST['brand_id']) ? '' : intval($_POST['brand_id']);
@@ -1001,7 +1001,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
             "WHERE goods_id = '$goods_id' LIMIT 1";
     }else{
         $sql = "INSERT INTO " . $ecs->table('drp_goods') . " (goods_id, touch_sale, touch_fencheng)" .
-            "VALUES ( '$goods_id', '$touch_sale', '$touch_fencheng')";    
+            "VALUES ( '$goods_id', '$touch_sale', '$touch_fencheng')";
     }
     $db->query($sql);
     /*DRP_END*/
@@ -1060,6 +1060,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
             {
                 $attr_value = $_POST['attr_value_list'][$key];
                 $attr_price = $_POST['attr_price_list'][$key];
+                $attr_sale_price = $_POST['attr_sale_price_list'][$key];//分销属性佣金
                 if (!empty($attr_value))
                 {
                     if (isset($goods_attr_list[$attr_id][$attr_value]))
@@ -1067,12 +1068,14 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
                         // 如果原来有，标记为更新
                         $goods_attr_list[$attr_id][$attr_value]['sign'] = 'update';
                         $goods_attr_list[$attr_id][$attr_value]['attr_price'] = $attr_price;
+                        $goods_attr_list[$attr_id][$attr_value]['attr_sale_price'] = $attr_sale_price;//分销属性佣金
                     }
                     else
                     {
                         // 如果原来没有，标记为新增
                         $goods_attr_list[$attr_id][$attr_value]['sign'] = 'insert';
                         $goods_attr_list[$attr_id][$attr_value]['attr_price'] = $attr_price;
+                        $goods_attr_list[$attr_id][$attr_value]['attr_sale_price'] = $attr_sale_price;//分销属性佣金
                     }
                     $val_arr = explode(' ', $attr_value);
                     foreach ($val_arr AS $k => $v)
@@ -1090,7 +1093,6 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         $sql = "UPDATE " .$ecs->table('goods'). " SET keywords = '$keywords' WHERE goods_id = '$goods_id' LIMIT 1";
 
         $db->query($sql);
-
         /* 插入、更新、删除数据 */
         foreach ($goods_attr_list as $attr_id => $attr_value_list)
         {
@@ -1098,12 +1100,12 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
             {
                 if ($info['sign'] == 'insert')
                 {
-                    $sql = "INSERT INTO " .$ecs->table('goods_attr'). " (attr_id, goods_id, attr_value, attr_price)".
-                            "VALUES ('$attr_id', '$goods_id', '$attr_value', '$info[attr_price]')";
+                    $sql = "INSERT INTO " .$ecs->table('goods_attr'). " (attr_id, goods_id, attr_value, attr_price, attr_sale_price)".
+                            "VALUES ('$attr_id', '$goods_id', '$attr_value', '$info[attr_price]', '$info[attr_sale_price]')";
                 }
                 elseif ($info['sign'] == 'update')
                 {
-                    $sql = "UPDATE " .$ecs->table('goods_attr'). " SET attr_price = '$info[attr_price]' WHERE goods_attr_id = '$info[goods_attr_id]' LIMIT 1";
+                    $sql = "UPDATE " .$ecs->table('goods_attr'). " SET attr_price = '$info[attr_price]', attr_sale_price = '$info[attr_sale_price]' WHERE goods_attr_id = '$info[goods_attr_id]' LIMIT 1";
                 }
                 else
                 {
