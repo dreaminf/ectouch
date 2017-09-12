@@ -507,6 +507,8 @@ class CategoryController extends CommonController
             /* 页面标题 */
             $this->assign('page_title', L('catalog'));
         }
+        $uid = $_SESSION['user_id'] > 0 ? $_SESSION['user_id'] : 0;
+        $this->assign('uid', $uid);
         $this->display('category_top_all.dwt', $cache_id);
     }
 

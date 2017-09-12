@@ -71,7 +71,7 @@
 		localData.remove('cat_'+ id +'_page');
 		localData.remove('cat_'+ id +'_page_min');
 		localData.remove('cat_'+ id +'_page_max');
-		window.location.href = 'index.php?c=category&id=' + id;
+		window.location.href = 'index.php?c=category&id=' + id+ '&u={$uid}';
 	}
 </script>
 </body>
