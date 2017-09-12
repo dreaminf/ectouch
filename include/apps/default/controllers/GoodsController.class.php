@@ -268,7 +268,7 @@ class GoodsController extends CommonController
             'qty' => 1
         );
         // 获取参数
-        $attr_id = isset($_REQUEST ['attr']) ? explode(',', $_REQUEST ['attr']) : array();
+        $attr_id = (isset($_REQUEST ['attr']) && !empty($_REQUEST ['attr'])) ? explode(',', $_REQUEST ['attr']) : array();
         $goods_attr_id = isset($_REQUEST ['attr']) ? intval($_REQUEST ['attr']) : 0;
         $number = (isset($_REQUEST ['number'])) ? intval($_REQUEST ['number']) : 1;
 
@@ -280,9 +280,13 @@ class GoodsController extends CommonController
             // 查询
             $condition = 'goods_id =' . $this->goods_id;
             $goods = $this->model->table('goods')->field('goods_name , goods_number ,extension_code')->where($condition)->find();
-            $attr_id = count($attr_id) > 1 ? str_replace(',', '|', $_REQUEST ['attr']) : $attr_id['0'];
-            $condition = 'goods_attr = '."'".$attr_id."'";
-            $product = $this->model->table('products')->field('product_number')->where($condition)->find();
+            //属性库存
+            if(!empty($attr_id)){
+                $product = model('ProductsBase')->get_products_info($this->goods_id, $attr_id);
+                if(!empty($product['product_number'])) {
+                    $res ['product_number'] = '库存：'.$product['product_number'];
+                }
+            }
 
             if ($number <= 0) {
                 $res ['qty'] = $number = 1;
@@ -291,9 +295,6 @@ class GoodsController extends CommonController
             }
             $shop_price = model('GoodsBase')->get_final_price($this->goods_id, $number, true, $attr_id);
             $res ['result'] = price_format($shop_price * $number);
-            if(!empty($product['product_number'])) {
-                $res ['product_number'] = '库存：'.$product['product_number'];
-            }
         }
         die(json_encode($res));
     }
@@ -311,7 +312,7 @@ class GoodsController extends CommonController
             'qty' => 1
         );
         // 获取参数
-        $attr_id = isset($_REQUEST ['attr']) ? explode(',', $_REQUEST ['attr']) : array();
+        $attr_id = (isset($_REQUEST ['attr']) && !empty($_REQUEST ['attr'])) ? explode(',', $_REQUEST ['attr']) : array();
         $number = (isset($_REQUEST ['number'])) ? intval($_REQUEST ['number']) : 1;
         // 如果商品id错误
         if ($this->goods_id == 0) {
@@ -333,10 +334,15 @@ class GoodsController extends CommonController
                 $res ['err_no'] = 1;
                 $res ['qty'] = $goods ['astrict_num'];
             }
-
+            //属性库存
+            if(!empty($attr_id)){
+                $product = model('ProductsBase')->get_products_info($this->goods_id, $attr_id);
+                if(!empty($product['product_number'])) {
+                    $res ['product_number'] = '库存：'.$product['product_number'];
+                }
+            }
 
             $shop_price = model('GoodsBase')->team_get_final_price($this->goods_id, $number, true, $attr_id);
-            //$res ['result'] = price_format($shop_price * $number);
             $res ['result'] = '￥'.$shop_price * $number.'元';
         }
         die(json_encode($res));
@@ -398,7 +404,6 @@ class GoodsController extends CommonController
             $product_info = model('ProductsBase')->get_products_info($goods_id, $_specs);
         }
         empty($product_info) ? $product_info = array('product_number' => 0, 'product_id' => 0) : '';
-
         /* 查询：判断指定规格的货品数量是否足够 */
         if ($specs && $number > $product_info['product_number']) {
             show_message(L('gb_error_goods_lacking'), '', '', 'error');
@@ -419,10 +424,9 @@ class GoodsController extends CommonController
 
         /* 更新：清空购物车中所有团购商品 */
         model('Order')->clear_cart(CART_TEAM_GOODS);
-
         /* 更新：加入购物车 */
-        $goods_price = $goods ['team_price'];
-        //$goods_price = model('GoodsBase')->get_final_price($goods_id, $number, true, $spec);
+        //$goods_price = $goods ['team_price'];
+        $goods_price = model('GoodsBase')->team_get_final_price($goods_id, $number, true, $_specs);
         $cart = array(
             'user_id' => $_SESSION['user_id'],
             'session_id' => SESS_ID,

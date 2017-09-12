@@ -618,7 +618,7 @@
 													￥{$goods.team_price}元
 												</span>
 											</p>
-											<!-- <p class="dis-box p-t-remark"><span class="box-flex">库存:{$goods.goods_number}</span></p> -->
+											<!-- <p class="dis-box p-t-remark"><span class="box-flex" id="ECS_PRODUCT_TEAM_NUMBER">库存:{$goods.goods_number}</span></p> -->
 											<p class="dis-box p-t-remark"><span class="box-flex">拼团限购:{$goods.astrict_num} 件</span></p>
 										</div>
 									</div>
@@ -820,6 +820,9 @@
 				} else {
 					if(document.getElementById('TEAM_GOODS_AMOUNT'))
 						document.getElementById('TEAM_GOODS_AMOUNT').innerHTML = res.result;
+					if(res.product_number != null){
+					    document.getElementById('ECS_PRODUCT_TEAM_NUMBER').innerHTML = res.product_number;
+					}
 				}
 			}
 						//滚动-nav
