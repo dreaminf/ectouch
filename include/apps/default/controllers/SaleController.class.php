@@ -646,6 +646,9 @@ class SaleController extends CommonController {
      *  设置完成
      */
     public function sale_set_end(){
+        if(empty($this->user_id)){  
+            show_message('遇到未知错误，请电话联系管理员告知请况，谢谢配合！！！');
+        }
         // 是否选择商品
         if($this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id'],'cat_id'=>''))->count() > 0){
             redirect(url('sale/sale_set_category'));
@@ -655,15 +658,16 @@ class SaleController extends CommonController {
         $_SESSION['enable_drp_shop']['create_time'] = gmtime();
         $_SESSION['enable_drp_shop']['audit'] = ($audit == 'open') ? 0:1;
         $_SESSION['enable_drp_shop']['open'] = ($audit == 'open') ? 0:1;
-        $where['user_id'] = $_SESSION['user_id'];
+        $where['user_id'] = $this->user_id;
+        $_SESSION['enable_drp_shop']['user_id'] = $this->user_id;
         $this->model->table('drp_shop')->data($_SESSION['enable_drp_shop'])->insert();
 
         $novice = $this->model->table('drp_config')->field("value")->where(array("keyword"=>'novice'))->getOne();
         $this->assign('novice',$novice);
         // 设置分销商店铺地址
-        $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$_SESSION['user_id'])->getOne();
+        $drp_id = M()->table('drp_shop')->field('id')->where("user_id=".$this->user_id)->getOne();
         $this->assign('drp_id', $drp_id);
-        $this->assign('sale_url','http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?u='.$_SESSION['user_id'].'&drp_id='.$drp_id);
+        $this->assign('sale_url','http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?u='.$this->user_id.'&drp_id='.$drp_id);
 
         // 模板消息 分销商申请成功提醒
         $message_status = M()->table('drp_config')->field('value')->where('keyword = "msg_open"')->getOne();
@@ -677,7 +681,7 @@ class SaleController extends CommonController {
                 'remark'   => array('value' => '如有疑问，请联系管理员，我们将第一时间为您服务。')
             );
             $url = __HOST__ . U('sale/index',array('order_id'=>$new_order_id));
-            pushTemplate('OPENTM207126233', $pushData, $url, $_SESSION['user_id']);
+            pushTemplate('OPENTM207126233', $pushData, $url, $this->user_id);
         }
 
         $this->assign('title',L('sale_set_category'));
