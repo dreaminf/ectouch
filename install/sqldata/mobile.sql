@@ -610,12 +610,7 @@ INSERT INTO `ecs_service_type` (`service_id`, `service_name`, `service_desc`, `r
 ALTER TABLE `ecs_brand` ADD COLUMN `brand_banner` varchar(80)  DEFAULT '';
 ALTER TABLE `ecs_goods_activity` ADD COLUMN `touch_img` VARCHAR (50)  DEFAULT '';
 ALTER TABLE `ecs_favourable_activity` ADD COLUMN `touch_img` VARCHAR (50)  DEFAULT '';
-
-ALTER TABLE `ecs_cart`
-  ADD COLUMN `group_id` varchar(255) NOT NULL ;
-ALTER TABLE `ecs_group_goods`
-  ADD COLUMN `group_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-ALTER TABLE `ecs_goods`
-  ADD COLUMN `virtual_sales` varchar( 10 ) NOT NULL DEFAULT '0'
-ALTER TABLE  `ecs_order_info` 
-  ADD COLUMN `inv_text_id` varchar(120) NOT NULL DEFAULT '' AFTER `inv_content`;
+ALTER TABLE `ecs_cart` ADD COLUMN `group_id` varchar(255) NOT NULL ;
+ALTER TABLE `ecs_group_goods` ADD COLUMN `group_id` tinyint(3) unsigned NOT NULL DEFAULT '0';
+ALTER TABLE `ecs_goods` ADD COLUMN `virtual_sales` varchar( 10 ) NOT NULL DEFAULT '0';
+ALTER TABLE `ecs_order_info` ADD COLUMN `inv_text_id` varchar(120) NOT NULL DEFAULT '' AFTER `inv_content`;
