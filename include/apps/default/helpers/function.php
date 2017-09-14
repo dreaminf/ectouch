@@ -986,6 +986,34 @@ function set_affiliate($u = '') {
     }
 }
 
+
+/**
+ * 获取推荐uid
+ *
+ * @access  public
+ * @param   void
+ *
+ * @return int
+ * @author xuanyan
+ **/
+function get_affiliate()
+{
+    if (!empty($_COOKIE['ecshop_affiliate_uid']))
+    {
+        $uid = intval($_COOKIE['ecshop_affiliate_uid']);
+        $uid = M()->table('users')->field('user_id')->where('user_id = ' . $uid)->getOne();
+        if ($uid)
+        {
+            return $uid;
+        }
+        else
+        {
+            setcookie('ecshop_affiliate_uid', '', 1);
+        }
+    }
+
+    return 0;
+}
 /**
  * 授权信息内容
  *
