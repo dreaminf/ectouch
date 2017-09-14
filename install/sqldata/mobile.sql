@@ -342,6 +342,9 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_bank` (
   `bank_user_name` varchar(50) DEFAULT NULL COMMENT '开户名称',
   `bank_card` varchar(50) DEFAULT NULL COMMENT '银行卡号',
   `user_id` int(10) unsigned DEFAULT '0' COMMENT '用户id',
+  `zfb_bank_user_name` VARCHAR(255) NOT NULL ,
+  `zfb_bank_card` VARCHAR(255) NOT NULL ,
+  `type` INT( 10 ) NOT NULL DEFAULT  '1' COMMENT  '1 支付宝，2银行卡',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
