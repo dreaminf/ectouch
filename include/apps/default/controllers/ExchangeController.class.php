@@ -131,7 +131,7 @@ class ExchangeController extends CommonController {
     //-- 积分商城 -  积分兑换
     /* ------------------------------------------------------ */
     public function buy() {
-        if (!isset($back_act))) {
+        if (!isset($back_act)) {
             $back_act = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : __HOST__ . $_SERVER['REQUEST_URI'];
         }
         /* 查询：判断是否登录 */
