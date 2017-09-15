@@ -1580,9 +1580,8 @@ class WechatController extends AdminController
                         ->find();
                     $artinfo['content'] = strip_tags(html_out($artinfo['content']));
                     // 上传多媒体文件
-                    $rs = $this->weObj->uploadMedia(array(
-                        'media' => '@' . ROOT_PATH . $artinfo['file']
-                    ), 'image');
+                    $filename = ROOT_PATH . $artinfo['file'];
+                    $rs = $this->weObj->uploadMedia(array('media' => realpath_wechat($filename)), 'image');
                     if (empty($rs)) {
                         $this->message(L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg, NULL, 'error');
                     }
@@ -1598,9 +1597,8 @@ class WechatController extends AdminController
             } else {
                 // 单图文
                 // 上传多媒体文件
-                $rs = $this->weObj->uploadMedia(array(
-                    'media' => '@' . ROOT_PATH . $article_info['file']
-                ), 'image');
+                $filename = ROOT_PATH . $article_info['file'];
+                $rs = $this->weObj->uploadMedia(array('media' => realpath_wechat($filename)), 'image');
                 if (empty($rs)) {
                     $this->message(L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg, NULL, 'error');
                 }
@@ -1622,16 +1620,28 @@ class WechatController extends AdminController
             if (empty($rs1)) {
                 $this->message(L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg, NULL, 'error');
             }
-            // $rs1 = array('type'=>'image', 'media_id'=>'joUuDBc-9-sJp1U6vZpWYKiaS5XskqxJxGMm5HBf9q9Zs7DoKlSXVKUR3JIsfW_7', 'created_at'=>'1407482934');
-            // 根据分组进行群发sendGroupMassMessage
+            /**
+             * 根据标签组进行群发sendGroupMassMessage
+             * 群发接口新增原创校验流程
+             * 当 send_ignore_reprint 参数设置为1时，文章被判定为转载时，将继续进行群发操作。
+             * 当 send_ignore_reprint 参数设置为0时，文章被判定为转载时，将停止群发操作。
+             * send_ignore_reprint 默认为0。
+             * clientmsgid  群发接口新增 clientmsgid 参数，开发者调用群发接口时可以主动设置，避免重复推送。
+             *
+             */
+            $mass_id = $this->model->table('wechat_mass_history')->field('id')->where(array('wechat_id' => $this->wechat_id))->order('id DESC')->getOne();
+            $clientmsgid = !empty($mass_id) ? $mass_id + 1 : 0;
             $massmsg = array(
                 'filter' => array(
+                    'is_to_all' => false,
                     'group_id' => $group_id
                 ),
                 'mpnews' => array(
                     'media_id' => $rs1['media_id']
                 ),
-                'msgtype' => 'mpnews'
+                'msgtype' => 'mpnews',
+                'send_ignore_reprint' => 0,
+                'clientmsgid' => $clientmsgid
             );
             $rs2 = $this->weObj->sendGroupMassMessage($massmsg);
             if (empty($rs2)) {
@@ -1673,6 +1683,7 @@ class WechatController extends AdminController
             }
             $article[$key]['content'] = strip_tags(html_out($val['content']));
         }
+
         $this->assign('groups', $groups);
         $this->assign('article', $article);
         $this->display();
@@ -1691,7 +1702,12 @@ class WechatController extends AdminController
         if (empty($msg_id)) {
             $this->message('消息不存在', NULL, 'error');
         }
-        $rs = $this->weObj->deleteMassMessage($msg_id);
+        // 删除群发接口新增 article_idx 参数, 默认 0 删除全部文章
+        $delmass = array(
+            'msg_id' => $msg_id,
+            'article_idx' => 0
+        );
+        $rs = $this->weObj->deleteMassMessage($delmass);
         if (empty($rs)) {
             $this->message(L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg, NULL, 'error');
         }

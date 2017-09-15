@@ -413,10 +413,13 @@ class WechatController extends CommonController
                 if ($replyInfo['media']['type'] == 'news') {
                     $replyInfo['media']['type'] = 'image';
                 }
+
                 // 上传多媒体文件
-                $rs = $this->weObj->uploadMedia(array(
-                    'media' => '@' . ROOT_PATH . $replyInfo['media']['file']
-                ), $replyInfo['media']['type']);
+                $filename = ROOT_PATH . $replyInfo['media']['file'];
+                $rs = $this->weObj->uploadMedia(array('media' => realpath_wechat($filename)), $replyInfo['media']['type']);
+                if (empty($rs)) {
+                    logResult($this->weObj->errMsg);
+                }
 
                 // 回复数据重组
                 if ($rs['type'] == 'image' || $rs['type'] == 'voice') {
@@ -479,10 +482,11 @@ class WechatController extends CommonController
                 // 回复数据重组
                 if ($result[0]['reply_type'] == 'image' || $result[0]['reply_type'] == 'voice') {
                     // 上传多媒体文件
-                    $rs = $this->weObj->uploadMedia(array(
-                        'media' => '@' . ROOT_PATH . $mediaInfo['file']
-                    ), $result[0]['reply_type']);
-
+                    $filename = ROOT_PATH . $mediaInfo['file'];
+                    $rs = $this->weObj->uploadMedia(array('media' => realpath_wechat($filename)), $result[0]['reply_type']);
+                    if (empty($rs)) {
+                        logResult($this->weObj->errMsg);
+                    }
                     $replyData = array(
                         'ToUserName' => $this->weObj->getRev()->getRevFrom(),
                         'FromUserName' => $this->weObj->getRev()->getRevTo(),
@@ -497,10 +501,11 @@ class WechatController extends CommonController
                     $endrs = true;
                 } elseif ('video' == $result[0]['reply_type']) {
                     // 上传多媒体文件
-                    $rs = $this->weObj->uploadMedia(array(
-                        'media' => '@' . ROOT_PATH . $mediaInfo['file']
-                    ), $result[0]['reply_type']);
-
+                    $filename = ROOT_PATH . $mediaInfo['file'];
+                    $rs = $this->weObj->uploadMedia(array('media' => realpath_wechat($filename)), $result[0]['reply_type']);
+                    if (empty($rs)) {
+                        logResult($this->weObj->errMsg);
+                    }
                     $replyData = array(
                         'ToUserName' => $this->weObj->getRev()->getRevFrom(),
                         'FromUserName' => $this->weObj->getRev()->getRevTo(),
@@ -586,6 +591,16 @@ class WechatController extends CommonController
                     $this->weObj->news($data['content'])->reply();
                     //记录用户操作信息
                     $this->record_msg($fromusername, '图文消息', 1);
+                } elseif ($data['type'] == 'image') {
+                    // 上传多媒体文件
+                    $filename = dirname(ROOT_PATH) . '/' . $data['path'];
+                    $rs = $this->weObj->uploadMedia(array('media' => realpath_wechat($filename)), 'image');
+                    if (empty($rs)) {
+                        logResult($this->weObj->errMsg);
+                    }
+                    $this->weObj->image($rs['media_id'])->reply();
+                    //记录用户操作信息
+                    $this->record_msg($fromusername, '图片', 1);
                 }
                 $return = true;
             }

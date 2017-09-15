@@ -103,6 +103,21 @@ function pushTemplate($code = '', $data = array(), $url = '',$uid = ''){
 }
 
 /**
+ * 处理微信素材路径 兼容php5.6+
+ * @param  $file 图片完整路径 D:/www/data/123.png
+ * @return
+ */
+function realpath_wechat($file)
+{
+    if (class_exists('\CURLFile')) {
+        return new \CURLFile(realpath($file));
+    } else {
+        return '@' . realpath($file);
+    }
+}
+
+
+/**
  * 发送模板消息
  * $code 模板标识
  * $openid 发送人的openid
