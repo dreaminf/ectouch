@@ -87,6 +87,16 @@ class WechatController extends CommonController
                 // 取消关注
                 $this->unsubscribe($wedata['FromUserName']);
                 exit();
+            } elseif ('CLICK' == $wedata['Event']) {
+                // 点击菜单
+                $keywords = $wedata['EventKey'];
+            } elseif ('VIEW' == $wedata['Event']) {
+                $this->redirect($wedata['EventKey']);
+            } elseif ('SCAN' == $wedata['Event']) {
+                $scene_id = $this->weObj->getRevSceneId();
+            } elseif ('LOCATION' == $wedata['Event']) {
+                // 关注开启地理位置响应
+                exit('success');
             } elseif ('MASSSENDJOBFINISH' == $wedata['Event']) {
                 // 群发结果
                 $data['status'] = $wedata['Status'];
@@ -100,17 +110,23 @@ class WechatController extends CommonController
                     ->where('msg_id = "' . $wedata['MsgID'] . '"')
                     ->update();
                 exit();
-            } elseif ('CLICK' == $wedata['Event']) {
-                // 点击菜单
-                $keywords = $wedata['EventKey'];
-            } elseif ('VIEW' == $wedata['Event']) {
-                $this->redirect($wedata['EventKey']);
-            } elseif ('SCAN' == $wedata['Event']) {
-                $scene_id = $this->weObj->getRevSceneId();
-            } elseif ('LOCATION' == $wedata['Event']) {
-                // 关注开启地理位置响应
-                exit('success');
+            } elseif ($wedata['Event'] == 'TEMPLATESENDJOBFINISH') {
+                // 模板消息发送结束事件
+                if ($wedata['Status'] == 'success') {
+                    // 推送成功
+                    $data = array('status' => 1);
+                } elseif ($wedata['Status'] == 'failed:user block') {
+                    // 用户拒收
+                    $data = array('status' => 2);
+                } else {
+                    // 发送失败
+                    $data = array('status' => 0); // status 0 发送失败，1 发送与接收成功，2 用户拒收
+                }
+                // 更新模板消息发送状态
+                $this->model->table('wechat_template_log')->data($data)->where(array('msgid' => $wedata['MsgID'], 'openid' => $wedata['FromUserName']))->update();
+                exit();
             }
+            exit();
         } else {
             $this->msg_reply('msg');
             exit();
@@ -397,10 +413,13 @@ class WechatController extends CommonController
                 if ($replyInfo['media']['type'] == 'news') {
                     $replyInfo['media']['type'] = 'image';
                 }
+
                 // 上传多媒体文件
-                $rs = $this->weObj->uploadMedia(array(
-                    'media' => '@' . ROOT_PATH . $replyInfo['media']['file']
-                ), $replyInfo['media']['type']);
+                $filename = ROOT_PATH . $replyInfo['media']['file'];
+                $rs = $this->weObj->uploadMedia(array('media' => realpath_wechat($filename)), $replyInfo['media']['type']);
+                if (empty($rs)) {
+                    logResult($this->weObj->errMsg);
+                }
 
                 // 回复数据重组
                 if ($rs['type'] == 'image' || $rs['type'] == 'voice') {
@@ -463,10 +482,11 @@ class WechatController extends CommonController
                 // 回复数据重组
                 if ($result[0]['reply_type'] == 'image' || $result[0]['reply_type'] == 'voice') {
                     // 上传多媒体文件
-                    $rs = $this->weObj->uploadMedia(array(
-                        'media' => '@' . ROOT_PATH . $mediaInfo['file']
-                    ), $result[0]['reply_type']);
-
+                    $filename = ROOT_PATH . $mediaInfo['file'];
+                    $rs = $this->weObj->uploadMedia(array('media' => realpath_wechat($filename)), $result[0]['reply_type']);
+                    if (empty($rs)) {
+                        logResult($this->weObj->errMsg);
+                    }
                     $replyData = array(
                         'ToUserName' => $this->weObj->getRev()->getRevFrom(),
                         'FromUserName' => $this->weObj->getRev()->getRevTo(),
@@ -481,10 +501,11 @@ class WechatController extends CommonController
                     $endrs = true;
                 } elseif ('video' == $result[0]['reply_type']) {
                     // 上传多媒体文件
-                    $rs = $this->weObj->uploadMedia(array(
-                        'media' => '@' . ROOT_PATH . $mediaInfo['file']
-                    ), $result[0]['reply_type']);
-
+                    $filename = ROOT_PATH . $mediaInfo['file'];
+                    $rs = $this->weObj->uploadMedia(array('media' => realpath_wechat($filename)), $result[0]['reply_type']);
+                    if (empty($rs)) {
+                        logResult($this->weObj->errMsg);
+                    }
                     $replyData = array(
                         'ToUserName' => $this->weObj->getRev()->getRevFrom(),
                         'FromUserName' => $this->weObj->getRev()->getRevTo(),
@@ -552,7 +573,7 @@ class WechatController extends CommonController
         $return = false;
         $rs = $this->model->table('wechat_extend')
             ->field('name, command, config')
-            ->where('keywords like "%' . $keywords . '%" and enable = 1 and wechat_id = ' . $this->wechat_id)
+            ->where('(keywords like "%' . $keywords . '%" or command like "%' . $keywords . '%") and enable = 1 and wechat_id = ' . $this->wechat_id)
             ->order('id asc')
             ->find();
         $file = ROOT_PATH . 'plugins/wechat/' . $rs['command'] . '/' . $rs['command'] . '.class.php';
@@ -570,6 +591,16 @@ class WechatController extends CommonController
                     $this->weObj->news($data['content'])->reply();
                     //记录用户操作信息
                     $this->record_msg($fromusername, '图文消息', 1);
+                } elseif ($data['type'] == 'image') {
+                    // 上传多媒体文件
+                    $filename = dirname(ROOT_PATH) . '/' . $data['path'];
+                    $rs = $this->weObj->uploadMedia(array('media' => realpath_wechat($filename)), 'image');
+                    if (empty($rs)) {
+                        logResult($this->weObj->errMsg);
+                    }
+                    $this->weObj->image($rs['media_id'])->reply();
+                    //记录用户操作信息
+                    $this->record_msg($fromusername, '图片', 1);
                 }
                 $return = true;
             }

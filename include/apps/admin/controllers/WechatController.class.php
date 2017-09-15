@@ -1580,9 +1580,8 @@ class WechatController extends AdminController
                         ->find();
                     $artinfo['content'] = strip_tags(html_out($artinfo['content']));
                     // 上传多媒体文件
-                    $rs = $this->weObj->uploadMedia(array(
-                        'media' => '@' . ROOT_PATH . $artinfo['file']
-                    ), 'image');
+                    $filename = ROOT_PATH . $artinfo['file'];
+                    $rs = $this->weObj->uploadMedia(array('media' => realpath_wechat($filename)), 'image');
                     if (empty($rs)) {
                         $this->message(L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg, NULL, 'error');
                     }
@@ -1598,9 +1597,8 @@ class WechatController extends AdminController
             } else {
                 // 单图文
                 // 上传多媒体文件
-                $rs = $this->weObj->uploadMedia(array(
-                    'media' => '@' . ROOT_PATH . $article_info['file']
-                ), 'image');
+                $filename = ROOT_PATH . $article_info['file'];
+                $rs = $this->weObj->uploadMedia(array('media' => realpath_wechat($filename)), 'image');
                 if (empty($rs)) {
                     $this->message(L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg, NULL, 'error');
                 }
@@ -1622,16 +1620,28 @@ class WechatController extends AdminController
             if (empty($rs1)) {
                 $this->message(L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg, NULL, 'error');
             }
-            // $rs1 = array('type'=>'image', 'media_id'=>'joUuDBc-9-sJp1U6vZpWYKiaS5XskqxJxGMm5HBf9q9Zs7DoKlSXVKUR3JIsfW_7', 'created_at'=>'1407482934');
-            // 根据分组进行群发sendGroupMassMessage
+            /**
+             * 根据标签组进行群发sendGroupMassMessage
+             * 群发接口新增原创校验流程
+             * 当 send_ignore_reprint 参数设置为1时，文章被判定为转载时，将继续进行群发操作。
+             * 当 send_ignore_reprint 参数设置为0时，文章被判定为转载时，将停止群发操作。
+             * send_ignore_reprint 默认为0。
+             * clientmsgid  群发接口新增 clientmsgid 参数，开发者调用群发接口时可以主动设置，避免重复推送。
+             *
+             */
+            $mass_id = $this->model->table('wechat_mass_history')->field('id')->where(array('wechat_id' => $this->wechat_id))->order('id DESC')->getOne();
+            $clientmsgid = !empty($mass_id) ? $mass_id + 1 : 0;
             $massmsg = array(
                 'filter' => array(
+                    'is_to_all' => false,
                     'group_id' => $group_id
                 ),
                 'mpnews' => array(
                     'media_id' => $rs1['media_id']
                 ),
-                'msgtype' => 'mpnews'
+                'msgtype' => 'mpnews',
+                'send_ignore_reprint' => 0,
+                'clientmsgid' => $clientmsgid
             );
             $rs2 = $this->weObj->sendGroupMassMessage($massmsg);
             if (empty($rs2)) {
@@ -1673,6 +1683,7 @@ class WechatController extends AdminController
             }
             $article[$key]['content'] = strip_tags(html_out($val['content']));
         }
+
         $this->assign('groups', $groups);
         $this->assign('article', $article);
         $this->display();
@@ -1691,7 +1702,12 @@ class WechatController extends AdminController
         if (empty($msg_id)) {
             $this->message('消息不存在', NULL, 'error');
         }
-        $rs = $this->weObj->deleteMassMessage($msg_id);
+        // 删除群发接口新增 article_idx 参数, 默认 0 删除全部文章
+        $delmass = array(
+            'msg_id' => $msg_id,
+            'article_idx' => 0
+        );
+        $rs = $this->weObj->deleteMassMessage($delmass);
         if (empty($rs)) {
             $this->message(L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg, NULL, 'error');
         }
@@ -2184,6 +2200,119 @@ class WechatController extends AdminController
     }
 
     /**
+     * 模板消息
+     */
+    public function template_massage_list(){
+        $list = $this->model->table('wechat_template')
+            ->order('id asc')
+            ->select();
+        if($list){
+            foreach($list as $key=>$val){
+                $list[$key]['add_time'] = local_date('Y-m-d H:i',$val['add_time']);
+            }
+        }
+        $this->assign('list', $list);
+        $this->display();
+    }
+
+    /**
+     * 开关按钮
+     */
+    public function is_switch(){
+        if(IS_GET){
+            $id = I('get.id', 0, 'intval');
+            $status = I('get.status', 0, 'intval');
+            if(empty($id)){
+                $this->message('请选择模板消息', NULL, 'error');
+            }
+            $condition['id'] = $id;
+            $condition['wechat_id'] = $this->wechat_id;
+
+            $data = array();
+            $data['add_time'] = gmtime();
+
+            // 启用模板消息
+            if ($status == 1) {
+                // 模板ID为空
+                $template = $this->model->table('wechat_template')->field('template_id, code')->where($condition)->find();
+                if (empty($template['template_id'])) {
+                    $template_id = $this->weObj->addTemplateMessage($template['code']);
+                    // 已经存在模板ID
+                    if ($template_id) {
+                        $data['template_id'] = $template_id;
+                        $this->model->table('wechat_template')->data($data)->where($condition)->update();
+                    } else {
+                        // $this->message($this->weObj->errMsg, null, 2);
+                        exit(json_encode(array('status'=> 0, 'message'=> $this->weObj->errMsg)));
+                    }
+                }
+                // 重新启用 更新状态status
+                $data['status'] = 1;
+                $this->model->table('wechat_template')->data($data)->where($condition)->update();
+                exit(json_encode(array('status'=> 200, 'message'=> '已启用')));
+            } else {
+                // 禁用 更新状态status
+                $data['status'] = 0;
+                $this->model->table('wechat_template')->data($data)->where($condition)->update();
+                exit(json_encode(array('status'=> 200, 'message'=> '已禁用')));
+            }
+        }
+    }
+
+    /**
+     * 编辑模板消息
+     */
+    public function edit_template(){
+        if(IS_AJAX){
+            $id = I('post.id');
+            $data = I('post.data','','trim');
+            if($id){
+                $this->model->table('wechat_template')->data($data)->where(array('id'=>$id))->update();
+                exit(json_encode(array('status'=>1)));
+            }else{
+                exit(json_encode(array('status'=>0, 'msg'=>'编辑失败')));
+            }
+        }
+        $id = I('get.id');
+        if($id){
+            $template = $this->model->table('wechat_template')->where(array('id'=>$id))->find();
+            $this->assign('template', $template);
+        }
+        $this->display();
+    }
+
+    /**
+     * 重置模板消息
+     * @return
+     */
+    public function reset_template()
+    {
+        if (IS_AJAX) {
+            $json_result = array('error' => 0, 'msg' => '', 'url' => '');
+
+            $id = I('get.id', 0, 'intval');
+            if (!empty($id)) {
+                $condition['id'] = $id;
+                $condition['wechat_id'] = $this->wechat_id;
+                $template = $this->model->table('wechat_template')->field('template_id')->where($condition)->find();
+                if(!empty($template['template_id'])){
+                    $rs = $this->weObj->delTemplate($template['template_id']);
+                    if (empty($rs)) {
+                        $json_result['msg'] = L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg;
+                        exit(json_encode($json_result));
+                    }
+                    $this->model->table('wechat_template')->data(array('template_id' => '', 'status' => 0))->where(array('id' => $id))->update();
+                    $json_result['msg'] = '重置成功！';
+                    exit(json_encode($json_result));
+                }
+            }
+            $json_result['error'] = 1;
+            $json_result['msg'] = '重置失败！';
+            exit(json_encode($json_result));
+        }
+    }
+
+    /**
      * 获取配置信息
      */
     private function get_config()
@@ -2231,71 +2360,5 @@ class WechatController extends AdminController
             }
         }
     }
-
-
-    /**
-     * 模板消息
-     */
-    public function template_massage_list(){
-        $list = $this->model->table('wechat_template')
-            ->order('id asc')
-            ->select();
-        if($list){
-            foreach($list as $key=>$val){
-                $list[$key]['add_time'] = local_date('Y-m-d H:i',$val['add_time']);
-            }
-        }
-        $this->assign('list',$list);
-        $this->display();
-    }
-
-    /**
-     * 开关按钮
-     */
-    public function is_switch(){
-        if(IS_GET){
-            $id = I('get.id',0, 'intval');
-            $status = I('get.status',0, 'intval');
-            if(empty($id)){
-                $this->message('请选择模板消息', NULL, 'error');
-            }
-            //开启模板消息
-            if(1 == $status){
-                $template = $this->model->table('wechat_template')->field('template_id, code')->where(array('id'=>$id))->find();
-                if(empty($template['template_id'])){
-                    $template_id = $this->weObj->addTemplateMessage($template['code']);
-                    if(!$template_id){
-                        $this->message($this->weObj->errMsg, NULL, 'error');
-                    }
-                    $this->model->table('wechat_template')->data(array('template_id'=>$template_id, 'add_time' => gmtime()))->where(array('id'=>$id))->update();
-                }
-            }
-            $this->model->table('wechat_template')->data(array('status'=>$status))->where(array('id'=>$id))->update();
-            exit(json_encode(array('status'=> 200, 'message'=>'ok')));
-        }
-
-    }
-    /**
-     * 编辑模板消息
-     */
-    public function editTemplate(){
-        if(IS_AJAX){
-            $id = I('post.id');
-            $data = I('post.data','','trim');
-            if($id){
-                $this->model->table('wechat_template')->data($data)->where(array('id'=>$id))->update();
-                exit(json_encode(array('status'=>1)));
-            }else{
-                exit(json_encode(array('status'=>0, 'msg'=>'编辑失败')));
-            }
-        }
-        $id = I('get.id');
-        if($id){
-            $template = $this->model->table('wechat_template')->where(array('id'=>$id))->find();
-            $this->assign('template', $template);
-        }
-        $this->display();
-    }
-
 
 }

@@ -23,11 +23,14 @@
     			<td class="text-center">{$val['title']}</td>
                 <td class="text-center">{$val['code']}</td>
                 <td class="text-center">{$val['add_time']}</td>
-    			<td class="text-center"><input id="number" value="{$val['id']}" type="hidden">
+    			<td class="text-center">
+                    <input id="number" value="{$val['id']}" type="hidden">
                     <div class="btn-group"  data-toggle="buttons" id="btn1">
                         <label class="btn btn-primary {if $val['status'] == 1}active{/if}" ><input type="radio" name="data[status]" value="1" {if $val['status'] == 1}checked{/if} > {$lang['wechat_open']}</label>
                         <label class="btn btn-primary {if $val['status'] == 0}active{/if}" ><input type="radio" name="data[status]" value="0"  {if $val['status'] == 0}checked{/if} >{$lang['wechat_close']}</label>
                     </div>
+                    <!-- <a href="{url('edit_template', array('id' => $val['id']))}" class="btn btn-primary">编辑</a> -->
+                    <a class="btn btn-default reset-template" href="javascript:;" data-href="{url('reset_template', array('id' => $val['id']))}"  title="{$lang['reset']}" >{$lang['reset']}</a>
     			</td>
     		</tr>
     		{/loop}
@@ -38,7 +41,8 @@
 </div>
 <script type="text/javascript">
 $(function(){
-	$('.btn-primary input').bind('change',function(){
+    // 开启或禁用模板消息
+    $('.btn-primary input').bind('change',function(){
 		var toggle = 0,id = '';
 		if(parseInt($(this).val())){
 			toggle = 1;
@@ -46,12 +50,54 @@ $(function(){
 			toggle = 0;
 		}
 		id = $(this).parents('td').find('#number').val();
-		$.get('<?php echo url('wechat/is_switch');?>',{"id":id,"status":toggle},function(data){
-                if(data.status == 200){
-                    alert('修改成功');
-                }
-			},'json');
-		})
+		$.get("{url('wechat/is_switch')}",{"id":id,"status":toggle},function(data){
+            if(data.status == 200){
+                art.dialog({
+                    icon: 'succeed',
+                    time: 2,
+                    content: data.message
+                });
+            } else {
+                art.dialog({
+                    time: 2,
+                    content: data.message
+                });
+                return false;
+            }
+		},'json');
+	});
+
+    // 重置模板消息
+    $(".reset-template").click(function(){
+        var url = $(this).attr("data-href");
+        //询问框
+        art.dialog({
+            lock: true,
+            background: '#000', // 背景色
+            opacity: 0.3,  // 透明度
+            content: '您确定要重置模板消息吗？',
+            ok: function () {
+                $.get(url, '', function(data){
+                    art.dialog({
+                        time: 2,
+                        content: data.msg
+                    });
+                    if (data.error == 0 ){
+                        if (data.url) {
+                            window.location.href = data.url;
+                        }else{
+                            window.location.reload();
+                        }
+                    }
+                    return false;
+                }, 'json');
+            },
+            cancelVal: '关闭',
+            cancel: true //为true等价于function(){}
+        });
+
+    });
+
 })
 </script>
 {include file="pagefooter"}

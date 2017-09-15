@@ -1939,19 +1939,17 @@ class UserController extends CommonController {
             }
 
             // 检查验证码
-            if (empty($captcha)) {
-                show_message(L('invalid_captcha'), L('msg_go_back'), '', 'error');
-            }
-            if ($_SESSION['ectouch_verify'] !== strtoupper($captcha)) {
+            if (empty($captcha) && $_SESSION['ectouch_verify'] !== strtoupper($captcha)) {
                 show_message(L('invalid_captcha'), L('msg_go_back'), '', 'error');
             }
 
             $bind_user_id = self::$user->check_user($username, $password);
             if ($bind_user_id > 0 && !empty($_SESSION['unionid'])) {
-                // 不能关联已登录账号
-                if ($bind_user_id != $this->user_id) {
+                // 查询users用户是否被其他人绑定
+                $connect_user_id = $this->model->table('connect_user')->where(array('user_id' => $bind_user_id, 'connect_code' => 'sns_wechat'))->count();
+                if ($connect_user_id == 0 && $bind_user_id != $this->user_id) {
                     // 更新关联表用户ID
-                    $res = $this->model->table('connect_user')->data(array('user_id' => $bind_user_id))->where(array('user_id' => $this->user_id))->update();
+                    $res = $this->model->table('connect_user')->data(array('user_id' => $bind_user_id, 'connect_code' => 'sns_wechat'))->where(array('user_id' => $this->user_id))->update();
                     // 重新登录
                     if (!empty($username) && $res) {
                         unset($_SESSION['user_id']);
@@ -1962,10 +1960,10 @@ class UserController extends CommonController {
                         model('Users')->update_user_info();
                         model('Users')->recalculate_price();
                     }
-
                     show_message('已关联账号'.$username, '' , url('user/index'));
+                    exit;
                 } else {
-                    show_message('不能关联已登录账号', L('msg_go_back'), '', 'error');
+                    show_message('该账号已被关联！', L('msg_go_back'), '', 'error');
                 }
             } else {
                 show_message('账号不存在，请重新输入！', L('msg_go_back'), '', 'error');
@@ -2077,7 +2075,7 @@ class UserController extends CommonController {
                 if (!empty($userinfo)) {
                     // 更新关联表记录
                     $data = array('user_id' => $main_user_id);
-                    $this->model->table('connect_user')->data($data)->where(array('user_id' => $relation_user_id))->update();
+                    $this->model->table('connect_user')->data($data)->where(array('user_id' => $relation_user_id, 'connect_code' => 'sns_wechat'))->update();
 
                     unset($_SESSION['user_id']);
                     unset($_SESSION['user_name']);

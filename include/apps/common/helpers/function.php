@@ -79,44 +79,56 @@ function pushTemplate($code = '', $data = array(), $url = '',$uid = ''){
         }
     }
     $openid = '';
-    if($user_id){
-        $openid = M()->table('wechat_user')->field('openid')->where(array('ect_uid'=>$user_id))->getOne();
-    }
-    elseif($_SESSION['openid']){
+    if ($user_id) {
+        $openid = M()->table('wechat_user')->field('openid')->where(array('ect_uid'=> $user_id))->getOne();
+    } elseif ($_SESSION['openid']) {
         $openid = $_SESSION['openid'];
     }
-    if(!$openid){
-        return false;
-    }
-    $template = M()->table('wechat_template')->field('title,content')->where(array('code'=>$code, 'status'=>1))->find();
-    if(empty($template['title'])){
-        return false;
-    }
 
-    $data['first'] = !empty($data['first']) ? $data['first'] : array('value' => $template['title'],'color' => '#173177');
-    $data['remark'] = !empty($template['content']) ? array('value' => $template['content'],'color' => '#FF0000') : $data['remark'];
-    // logResult($data);
-    $rs['code'] = $code;
-    $rs['openid'] = $openid;
-    $rs['data'] = serialize($data);
-    $rs['url'] = $url;
-    M()->table('wechat_template_log')->data($rs)->insert();
-    // 查询消息记录表未发送的，执行发送
-    sendTemplate($code);
+    $template = M()->table('wechat_template')->field('title, content')->where(array('code'=>$code, 'status'=>1))->find();
+    if ($openid && $template['title']) {
+        $data['first'] = !empty($data['first']) ? $data['first'] : array('value' => $template['title'],'color' => '#173177');
+        $data['remark'] = !empty($template['content']) ? array('value' => $template['content'],'color' => '#FF0000') : $data['remark'];
+
+        $rs['code'] = $code;
+        $rs['openid'] = $openid;
+        $rs['data'] = serialize($data);
+        $rs['url'] = $url;
+        M()->table('wechat_template_log')->data($rs)->insert();
+        // 查询消息记录表未发送的，执行发送
+        sendTemplate($openid, $code);
+    } else {
+        return false;
+    }
 }
+
+/**
+ * 处理微信素材路径 兼容php5.6+
+ * @param  $file 图片完整路径 D:/www/data/123.png
+ * @return
+ */
+function realpath_wechat($file)
+{
+    if (class_exists('\CURLFile')) {
+        return new \CURLFile(realpath($file));
+    } else {
+        return '@' . realpath($file);
+    }
+}
+
 
 /**
  * 发送模板消息
  * $code 模板标识
  * $openid 发送人的openid
  */
-function sendTemplate($code = '' ){
+function sendTemplate($openid, $code = '' ){
     //公众号信息
-    $config = M()->table('wechat')->field('token, appid, appsecret')->where(array('id'=>1, 'status'=>1))->find();
+    $config = M()->table('wechat')->field('token, appid, appsecret')->where(array('id'=> 1, 'status'=> 1))->find();
     if(!$config){
         return false;
     }
-    $sql = "SELECT d.code, d.openid, d.data, d.url, t.template_id FROM {pre}wechat_template_log d LEFT JOIN {pre}wechat_template t ON d.code = t.code WHERE d.status = 0  and d.code = '" .$code. "' ORDER BY d.id ASC";
+    $sql = "SELECT d.code, d.openid, d.data, d.url, t.template_id FROM {pre}wechat_template_log d LEFT JOIN {pre}wechat_template t ON d.code = t.code WHERE d.status = 0 and d.openid = '" . $openid. "'  and d.code = '" .$code. "' ORDER BY d.id ASC";
     $list = M()->query($sql);
     if($list){
         foreach($list as $k=>$v){
@@ -132,7 +144,7 @@ function sendTemplate($code = '' ){
                 // logResult($weObj->errMsg);
                 return false;
             }
-            M()->table('wechat_template_log')->data(array('status'=>1))->where(array('code'=>$v['code']))->update();
+            M()->table('wechat_template_log')->data(array('msgid' => $rs['msgid']))->where(array('code' => $v['code'], 'openid' => $v['openid']))->update();
             return true;
         }
     }
