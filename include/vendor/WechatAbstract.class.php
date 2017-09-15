@@ -43,73 +43,76 @@
  */
 class WechatAbstract
 {
-	const MSGTYPE_TEXT = 'text';
-	const MSGTYPE_IMAGE = 'image';
-	const MSGTYPE_LOCATION = 'location';
-	const MSGTYPE_LINK = 'link';
-	const MSGTYPE_EVENT = 'event';
-	const MSGTYPE_MUSIC = 'music';
-	const MSGTYPE_NEWS = 'news';
-	const MSGTYPE_VOICE = 'voice';
-	const MSGTYPE_VIDEO = 'video';
-	const EVENT_SUBSCRIBE = 'subscribe';       //订阅
-	const EVENT_UNSUBSCRIBE = 'unsubscribe';   //取消订阅
-	const EVENT_SCAN = 'SCAN';                 //扫描带参数二维码
-	const EVENT_LOCATION = 'LOCATION';         //上报地理位置
-	const EVENT_MENU_VIEW = 'VIEW';                     //菜单 - 点击菜单跳转链接
-	const EVENT_MENU_CLICK = 'CLICK';                   //菜单 - 点击菜单拉取消息
-	const EVENT_MENU_SCAN_PUSH = 'scancode_push';       //菜单 - 扫码推事件(客户端跳URL)
-	const EVENT_MENU_SCAN_WAITMSG = 'scancode_waitmsg'; //菜单 - 扫码推事件(客户端不跳URL)
-	const EVENT_MENU_PIC_SYS = 'pic_sysphoto';          //菜单 - 弹出系统拍照发图
-	const EVENT_MENU_PIC_PHOTO = 'pic_photo_or_album';  //菜单 - 弹出拍照或者相册发图
-	const EVENT_MENU_PIC_WEIXIN = 'pic_weixin';         //菜单 - 弹出微信相册发图器
-	const EVENT_MENU_LOCATION = 'location_select';      //菜单 - 弹出地理位置选择器
-	const EVENT_SEND_MASS = 'MASSSENDJOBFINISH';        //发送结果 - 高级群发完成
-	const EVENT_SEND_TEMPLATE = 'TEMPLATESENDJOBFINISH';//发送结果 - 模板消息发送结果
-	const EVENT_KF_SEESION_CREATE = 'kfcreatesession';  //多客服 - 接入会话
-	const EVENT_KF_SEESION_CLOSE = 'kfclosesession';    //多客服 - 关闭会话
-	const EVENT_KF_SEESION_SWITCH = 'kfswitchsession';  //多客服 - 转接会话
-	const EVENT_CARD_PASS = 'card_pass_check';          //卡券 - 审核通过
-	const EVENT_CARD_NOTPASS = 'card_not_pass_check';   //卡券 - 审核未通过
-	const EVENT_CARD_USER_GET = 'user_get_card';        //卡券 - 用户领取卡券
-	const EVENT_CARD_USER_DEL = 'user_del_card';        //卡券 - 用户删除卡券
-	const EVENT_MERCHANT_ORDER = 'merchant_order';        //微信小店 - 订单付款通知
-	const API_URL_PREFIX = 'https://api.weixin.qq.com/cgi-bin';
-	const AUTH_URL = '/token?grant_type=client_credential&';
-	const MENU_CREATE_URL = '/menu/create?';
-	const MENU_GET_URL = '/menu/get?';
-	const MENU_DELETE_URL = '/menu/delete?';
-	const GET_TICKET_URL = '/ticket/getticket?';
-	const CALLBACKSERVER_GET_URL = '/getcallbackip?';
-	const QRCODE_CREATE_URL='/qrcode/create?';
-	const QR_SCENE = 0;
-	const QR_LIMIT_SCENE = 1;
-	const QRCODE_IMG_URL='https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=';
-	const SHORT_URL='/shorturl?';
-	const USER_GET_URL='/user/get?';
-	const USER_INFO_URL='/user/info?';
-	const USER_UPDATEREMARK_URL='/user/info/updateremark?';
-	const GROUP_GET_URL='/groups/get?';
-	const USER_GROUP_URL='/groups/getid?';
-	const GROUP_CREATE_URL='/groups/create?';
-	const GROUP_UPDATE_URL='/groups/update?';
-	const GROUP_MEMBER_UPDATE_URL='/groups/members/update?';
-	const GROUP_MEMBER_BATCHUPDATE_URL='/groups/members/batchupdate?';
-	const CUSTOM_SEND_URL='/message/custom/send?';
-	const MEDIA_UPLOADNEWS_URL = '/media/uploadnews?';
-	const MASS_SEND_URL = '/message/mass/send?';
-	const TEMPLATE_SET_INDUSTRY_URL = '/message/template/api_set_industry?';
-	const TEMPLATE_ADD_TPL_URL = '/template/api_add_template?';
-	const TEMPLATE_SEND_URL = '/message/template/send?';
-	const MASS_SEND_GROUP_URL = '/message/mass/sendall?';
-	const MASS_DELETE_URL = '/message/mass/delete?';
-	const MASS_PREVIEW_URL = '/message/mass/preview?';
-	const MASS_QUERY_URL = '/message/mass/get?';
-	const UPLOAD_MEDIA_URL = 'http://file.api.weixin.qq.com/cgi-bin';
-	const MEDIA_UPLOAD_URL = '/media/upload?';
-	const MEDIA_UPLOADIMG_URL = '/media/uploadimg?';//图片上传接口
-	const MEDIA_GET_URL = '/media/get?';
-	const MEDIA_VIDEO_UPLOAD = '/media/uploadvideo?';
+    const MSGTYPE_TEXT = 'text';
+    const MSGTYPE_IMAGE = 'image';
+    const MSGTYPE_LOCATION = 'location';
+    const MSGTYPE_LINK = 'link';
+    const MSGTYPE_EVENT = 'event';
+    const MSGTYPE_MUSIC = 'music';
+    const MSGTYPE_NEWS = 'news';
+    const MSGTYPE_VOICE = 'voice';
+    const MSGTYPE_VIDEO = 'video';
+    const MSGTYPE_SHORTVIDEO = 'shortvideo';
+    const EVENT_SUBSCRIBE = 'subscribe';       //订阅
+    const EVENT_UNSUBSCRIBE = 'unsubscribe';   //取消订阅
+    const EVENT_SCAN = 'SCAN';                 //扫描带参数二维码
+    const EVENT_LOCATION = 'LOCATION';         //上报地理位置
+    const EVENT_MENU_VIEW = 'VIEW';                     //菜单 - 点击菜单跳转链接
+    const EVENT_MENU_CLICK = 'CLICK';                   //菜单 - 点击菜单拉取消息
+    const EVENT_MENU_SCAN_PUSH = 'scancode_push';       //菜单 - 扫码推事件(客户端跳URL)
+    const EVENT_MENU_SCAN_WAITMSG = 'scancode_waitmsg'; //菜单 - 扫码推事件(客户端不跳URL)
+    const EVENT_MENU_PIC_SYS = 'pic_sysphoto';          //菜单 - 弹出系统拍照发图
+    const EVENT_MENU_PIC_PHOTO = 'pic_photo_or_album';  //菜单 - 弹出拍照或者相册发图
+    const EVENT_MENU_PIC_WEIXIN = 'pic_weixin';         //菜单 - 弹出微信相册发图器
+    const EVENT_MENU_LOCATION = 'location_select';      //菜单 - 弹出地理位置选择器
+    const EVENT_SEND_MASS = 'MASSSENDJOBFINISH';        //发送结果 - 高级群发完成
+    const EVENT_SEND_TEMPLATE = 'TEMPLATESENDJOBFINISH';//发送结果 - 模板消息发送结果
+    const EVENT_KF_SEESION_CREATE = 'kfcreatesession';  //多客服 - 接入会话
+    const EVENT_KF_SEESION_CLOSE = 'kfclosesession';    //多客服 - 关闭会话
+    const EVENT_KF_SEESION_SWITCH = 'kfswitchsession';  //多客服 - 转接会话
+    const EVENT_CARD_PASS = 'card_pass_check';          //卡券 - 审核通过
+    const EVENT_CARD_NOTPASS = 'card_not_pass_check';   //卡券 - 审核未通过
+    const EVENT_CARD_USER_GET = 'user_get_card';        //卡券 - 用户领取卡券
+    const EVENT_CARD_USER_DEL = 'user_del_card';        //卡券 - 用户删除卡券
+    const EVENT_MERCHANT_ORDER = 'merchant_order';        //微信小店 - 订单付款通知
+    const API_URL_PREFIX = 'https://api.weixin.qq.com/cgi-bin';
+    const AUTH_URL = '/token?grant_type=client_credential&';
+    const MENU_CREATE_URL = '/menu/create?';
+    const MENU_GET_URL = '/menu/get?';
+    const MENU_DELETE_URL = '/menu/delete?';
+    const GET_TICKET_URL = '/ticket/getticket?';
+    const CALLBACKSERVER_GET_URL = '/getcallbackip?';
+    const QRCODE_CREATE_URL='/qrcode/create?';
+    const QR_SCENE = 0;
+    const QR_LIMIT_SCENE = 1;
+    const QRCODE_IMG_URL='https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=';
+    const SHORT_URL='/shorturl?';
+    const USER_GET_URL='/user/get?';
+    const USER_INFO_URL='/user/info?';
+    const USER_UPDATEREMARK_URL='/user/info/updateremark?';
+    const GROUP_GET_URL='/groups/get?';
+    const USER_GROUP_URL='/groups/getid?';
+    const GROUP_CREATE_URL='/groups/create?';
+    const GROUP_UPDATE_URL='/groups/update?';
+    const GROUP_MEMBER_UPDATE_URL='/groups/members/update?';
+    const GROUP_MEMBER_BATCHUPDATE_URL='/groups/members/batchupdate?';
+    const CUSTOM_SEND_URL='/message/custom/send?';
+    const MEDIA_UPLOADNEWS_URL = '/media/uploadnews?';
+    const MASS_SEND_URL = '/message/mass/send?';
+    const TEMPLATE_SET_INDUSTRY_URL = '/template/api_set_industry?';
+    const TEMPLATE_GET_INDUSTRY_URL = '/template/get_industry?'; // 获取设置的行业信息
+    const TEMPLATE_ADD_TPL_URL = '/template/api_add_template?';
+    const TEMPLATE_DEL_TPL_URL = '/template/del_private_template?'; // 删除模板
+    const TEMPLATE_SEND_URL = '/message/template/send?';
+    const MASS_SEND_GROUP_URL = '/message/mass/sendall?';
+    const MASS_DELETE_URL = '/message/mass/delete?';
+    const MASS_PREVIEW_URL = '/message/mass/preview?';
+    const MASS_QUERY_URL = '/message/mass/get?';
+    const UPLOAD_MEDIA_URL = 'http://file.api.weixin.qq.com/cgi-bin';
+    const MEDIA_UPLOAD_URL = '/media/upload?';
+    const MEDIA_UPLOADIMG_URL = '/media/uploadimg?';//图片上传接口
+    const MEDIA_GET_URL = '/media/get?';
+    const MEDIA_VIDEO_UPLOAD = '/media/uploadvideo?';
     const MEDIA_FOREVER_UPLOAD_URL = '/material/add_material?';
     const MEDIA_FOREVER_NEWS_UPLOAD_URL = '/material/add_news?';
     const MEDIA_FOREVER_NEWS_UPDATE_URL = '/material/update_news?';
@@ -1086,65 +1089,74 @@ class WechatAbstract
 	    return sprintf($format, $encrypt, $signature, $timestamp, $nonce);
 	}
 
-	/**
-	 * GET 请求
-	 * @param string $url
-	 */
-	private function http_get($url){
-		$oCurl = curl_init();
-		if(stripos($url,"https://")!==FALSE){
-			curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, FALSE);
-			curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, FALSE);
-			curl_setopt($oCurl, CURLOPT_SSLVERSION, 1); //CURL_SSLVERSION_TLSv1
-		}
-		curl_setopt($oCurl, CURLOPT_URL, $url);
-		curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1 );
-		$sContent = curl_exec($oCurl);
-		$aStatus = curl_getinfo($oCurl);
-		curl_close($oCurl);
-		if(intval($aStatus["http_code"])==200){
-			return $sContent;
-		}else{
-			return false;
-		}
-	}
+    /**
+     * GET 请求
+     * @param string $url
+     */
+    private function http_get($url)
+    {
+        $oCurl = curl_init();
+        if (stripos($url, "https://")!==false) {
+            curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($oCurl, CURLOPT_SSLVERSION, 1); //CURL_SSLVERSION_TLSv1
+        }
+        curl_setopt($oCurl, CURLOPT_URL, $url);
+        curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1);
+        $sContent = curl_exec($oCurl);
+        $aStatus = curl_getinfo($oCurl);
+        curl_close($oCurl);
+        if (intval($aStatus["http_code"])==200) {
+            return $sContent;
+        } else {
+            return false;
+        }
+    }
 
-	/**
-	 * POST 请求
-	 * @param string $url
-	 * @param array $param
-	 * @param boolean $post_file 是否文件上传
-	 * @return string content
-	 */
-	private function http_post($url,$param,$post_file=false){
-		$oCurl = curl_init();
-		if(stripos($url,"https://")!==FALSE){
-			curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, FALSE);
-			curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
-			curl_setopt($oCurl, CURLOPT_SSLVERSION, 1); //CURL_SSLVERSION_TLSv1
-		}
-		if (is_string($param) || $post_file) {
-			$strPOST = $param;
-		} else {
-			$aPOST = array();
-			foreach($param as $key=>$val){
-				$aPOST[] = $key."=".urlencode($val);
-			}
-			$strPOST =  join("&", $aPOST);
-		}
-		curl_setopt($oCurl, CURLOPT_URL, $url);
-		curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1 );
-		curl_setopt($oCurl, CURLOPT_POST,true);
-		curl_setopt($oCurl, CURLOPT_POSTFIELDS,$strPOST);
-		$sContent = curl_exec($oCurl);
-		$aStatus = curl_getinfo($oCurl);
-		curl_close($oCurl);
-		if(intval($aStatus["http_code"])==200){
-			return $sContent;
-		}else{
-			return false;
-		}
-	}
+    /**
+     * POST 请求
+     * @param string $url
+     * @param array $param
+     * @param boolean $post_file 是否文件上传
+     * @return string content
+     */
+    private function http_post($url, $param, $post_file=false)
+    {
+        $oCurl = curl_init();
+        if (stripos($url, "https://")!==false) {
+            curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($oCurl, CURLOPT_SSLVERSION, 1); //CURL_SSLVERSION_TLSv1
+        }
+        if (is_string($param) || $post_file) {
+            $strPOST = $param;
+        } else {
+            $aPOST = array();
+            foreach ($param as $key=>$val) {
+                $aPOST[] = $key."=".urlencode($val);
+            }
+            $strPOST =  join("&", $aPOST);
+        }
+        if (class_exists('\CURLFile')) {
+            curl_setopt($oCurl, CURLOPT_SAFE_UPLOAD, true);
+        } else {
+            if (defined('CURLOPT_SAFE_UPLOAD')) {
+                curl_setopt($oCurl, CURLOPT_SAFE_UPLOAD, false);
+            }
+        }
+        curl_setopt($oCurl, CURLOPT_URL, $url);
+        curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($oCurl, CURLOPT_POST, true);
+        curl_setopt($oCurl, CURLOPT_POSTFIELDS, $strPOST);
+        $sContent = curl_exec($oCurl);
+        $aStatus = curl_getinfo($oCurl);
+        curl_close($oCurl);
+        if (intval($aStatus["http_code"])==200) {
+            return $sContent;
+        } else {
+            return false;
+        }
+    }
 
 	/**
 	 * 设置缓存，按需重载
@@ -1970,26 +1982,29 @@ class WechatAbstract
 		return false;
 	}
 
-	/**
-	 * 高级群发消息, 删除群发图文消息(认证后的订阅号可用)
-	 * @param int $msg_id 消息id
-	 * @return boolean|array
-	 */
-	public function deleteMassMessage($msg_id){
-		if (!$this->access_token && !$this->checkAuth()) return false;
-		$result = $this->http_post(self::API_URL_PREFIX.self::MASS_DELETE_URL.'access_token='.$this->access_token,self::json_encode(array('msg_id'=>$msg_id)));
-		if ($result)
-		{
-			$json = json_decode($result,true);
-			if (!$json || !empty($json['errcode'])) {
-				$this->errCode = $json['errcode'];
-				$this->errMsg = $json['errmsg'];
-				return false;
-			}
-			return true;
-		}
-		return false;
-	}
+    /**
+     * 高级群发消息, 删除群发图文消息(认证后的订阅号可用)
+     * 删除群发接口新增 article_idx 参数
+     * @param array('msg_id' => $msg_id, 'article_idx' => 0)
+     * @return boolean|array
+     */
+    public function deleteMassMessage($data)
+    {
+        if (!$this->access_token && !$this->checkAuth()) {
+            return false;
+        }
+        $result = $this->http_post(self::API_URL_PREFIX.self::MASS_DELETE_URL.'access_token='.$this->access_token, self::json_encode($data));
+        if ($result) {
+            $json = json_decode($result, true);
+            if (!$json || !empty($json['errcode'])) {
+                $this->errCode = $json['errcode'];
+                $this->errMsg = $json['errmsg'];
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
 
 	/**
 	 * 高级群发消息, 预览群发消息(认证后的订阅号可用)
@@ -2046,63 +2061,79 @@ class WechatAbstract
 		return false;
 	}
 
-	/**
-	 * 创建二维码ticket
-	 * @param int|string $scene_id 自定义追踪id,临时二维码只能用数值型
-	 * @param int $type 0:临时二维码；1:数值型永久二维码(此时expire参数无效)；2:字符串型永久二维码(此时expire参数无效)
-	 * @param int $expire 临时二维码有效期，最大为604800秒
-	 * @return array('ticket'=>'qrcode字串','expire_seconds'=>604800,'url'=>'二维码图片解析后的地址')
-	 */
-	public function getQRCode($scene_id,$type=0,$expire=604800){
-		if (!$this->access_token && !$this->checkAuth()) return false;
-		if (!isset($scene_id)) return false;
-		switch ($type) {
-			case '0':
-				if (!is_numeric($scene_id))
-					return false;
-				$action_name = 'QR_SCENE';
-				$action_info = array('scene'=>(array('scene_id'=>$scene_id)));
-				break;
+    /**
+     * 创建二维码ticket
+     * @param int|string $scene_id 自定义追踪id,临时二维码只能用数值型
+     * @param int $type 0:临时二维码；1:数值型永久二维码(此时expire参数无效)；2:字符串型永久二维码(此时expire参数无效)
+     * @param int $expire 临时二维码有效期，最大为604800秒
+     * @return array('ticket'=>'qrcode字串','expire_seconds'=>604800,'url'=>'二维码图片解析后的地址')
+     */
+    public function getQRCode($scene_id, $type=0, $expire=604800)
+    {
+        if (!$this->access_token && !$this->checkAuth()) {
+            return false;
+        }
+        if (!isset($scene_id)) {
+            return false;
+        }
+        switch ($type) {
+            case '0':
+                if (!is_numeric($scene_id)) {
+                    return false;
+                }
+                $action_name = 'QR_SCENE';
+                $action_info = array('scene'=>(array('scene_id'=>$scene_id)));
+                break;
 
-			case '1':
-				if (!is_numeric($scene_id))
-					return false;
-				$action_name = 'QR_LIMIT_SCENE';
-				$action_info = array('scene'=>(array('scene_id'=>$scene_id)));
-				break;
+            case '1':
+                if (!is_numeric($scene_id)) {
+                    return false;
+                }
+                $action_name = 'QR_LIMIT_SCENE';
+                $action_info = array('scene'=>(array('scene_id'=>$scene_id)));
+                break;
 
-			case '2':
-				if (!is_string($scene_id))
-					return false;
-				$action_name = 'QR_LIMIT_STR_SCENE';
-				$action_info = array('scene'=>(array('scene_str'=>$scene_id)));
-				break;
+            case '2':
+                if (!is_string($scene_id)) {
+                    return false;
+                }
+                $action_name = 'QR_LIMIT_STR_SCENE';
+                $action_info = array('scene'=>(array('scene_str'=>$scene_id)));
+                break;
 
-			default:
-				return false;
-		}
+            case '3':
+                if (!is_string($scene_id)) {
+                    return false;
+                }
+                $action_name = 'QR_STR_SCENE'; // QR_STR_SCENE为临时的字符串参数值
+                $action_info = array('scene'=>(array('scene_str'=>$scene_id)));
+                break;
 
-		$data = array(
-			'action_name'    => $action_name,
-			'expire_seconds' => $expire,
-			'action_info'    => $action_info
-		);
-		if ($type) {
-			unset($data['expire_seconds']);
-		}
+            default:
+                return false;
+        }
 
-		$result = $this->http_post(self::API_URL_PREFIX.self::QRCODE_CREATE_URL.'access_token='.$this->access_token,self::json_encode($data));
-		if ($result) {
-			$json = json_decode($result,true);
-			if (!$json || !empty($json['errcode'])) {
-				$this->errCode = $json['errcode'];
-				$this->errMsg = $json['errmsg'];
-				return false;
-			}
-			return $json;
-		}
-		return false;
-	}
+        $data = array(
+            'action_name'    => $action_name,
+            'expire_seconds' => $expire,
+            'action_info'    => $action_info
+        );
+        if ($type == 1 || $type == 2) {
+            unset($data['expire_seconds']);
+        }
+
+        $result = $this->http_post(self::API_URL_PREFIX.self::QRCODE_CREATE_URL.'access_token='.$this->access_token, self::json_encode($data));
+        if ($result) {
+            $json = json_decode($result, true);
+            if (!$json || !empty($json['errcode'])) {
+                $this->errCode = $json['errcode'];
+                $this->errMsg = $json['errmsg'];
+                return false;
+            }
+            return $json;
+        }
+        return false;
+    }
 
 	/**
 	 * 获取二维码图片
@@ -2497,94 +2528,160 @@ class WechatAbstract
 	    return false;
 	}
 
-	/**
-	 * 模板消息 设置所属行业
-	 * @param int $id1  公众号模板消息所属行业编号，参看官方开发文档 行业代码
-	 * @param int $id2  同$id1。但如果只有一个行业，此参数可省略
-	 * @return boolean|array
-	 */
-	public function setTMIndustry($id1,$id2=''){
-	    if ($id1) $data['industry_id1'] = $id1;
-	    if ($id2) $data['industry_id2'] = $id2;
-	    if (!$this->access_token && !$this->checkAuth()) return false;
-	    $result = $this->http_post(self::API_URL_PREFIX.self::TEMPLATE_SET_INDUSTRY_URL.'access_token='.$this->access_token,self::json_encode($data));
-	    if($result){
-	        $json = json_decode($result,true);
-	        if (!$json || !empty($json['errcode'])) {
-	            $this->errCode = $json['errcode'];
-	            $this->errMsg = $json['errmsg'];
-	            return false;
-	        }
-	        return $json;
-	    }
-	    return false;
-	}
+    /**
+     * 模板消息 设置所属行业
+     * @param int $id1  公众号模板消息所属行业编号，参看官方开发文档 行业代码
+     * @param int $id2  同$id1。但如果只有一个行业，此参数可省略
+     * @return boolean|array
+     */
+    public function setTMIndustry($id1, $id2='')
+    {
+        if ($id1) {
+            $data['industry_id1'] = $id1;
+        }
+        if ($id2) {
+            $data['industry_id2'] = $id2;
+        }
+        if (!$this->access_token && !$this->checkAuth()) {
+            return false;
+        }
+        $result = $this->http_post(self::API_URL_PREFIX.self::TEMPLATE_SET_INDUSTRY_URL.'access_token='.$this->access_token, self::json_encode($data));
+        if ($result) {
+            $json = json_decode($result, true);
+            if (!$json || !empty($json['errcode'])) {
+                $this->errCode = $json['errcode'];
+                $this->errMsg = $json['errmsg'];
+                return false;
+            }
+            return $json;
+        }
+        return false;
+    }
 
-	/**
-	 * 模板消息 添加消息模板
-	 * 成功返回消息模板的调用id
-	 * @param string $tpl_id 模板库中模板的编号，有“TM**”和“OPENTMTM**”等形式
-	 * @return boolean|string
-	 */
-	public function addTemplateMessage($tpl_id){
-	    $data = array ('template_id_short' =>$tpl_id);
-	    if (!$this->access_token && !$this->checkAuth()) return false;
-	    $result = $this->http_post(self::API_URL_PREFIX.self::TEMPLATE_ADD_TPL_URL.'access_token='.$this->access_token,self::json_encode($data));
-	    if($result){
-	        $json = json_decode($result,true);
-	        if (!$json || !empty($json['errcode'])) {
-	            $this->errCode = $json['errcode'];
-	            $this->errMsg = $json['errmsg'];
-	            return false;
-	        }
-	        return $json['template_id'];
-	    }
-	    return false;
-	}
+    /**
+     * 模板消息 获取设置的行业信息
+     * primary_industry 帐号设置的主营行业  secondary_industry 帐号设置的副营行业
+     * @return boolean | array
+     * {
+     *   "primary_industry":{"first_class":"运输与仓储","second_class":"快递"},
+     *   "secondary_industry":{"first_class":"IT科技","second_class":"互联网|电子商务"}
+     * }
+     */
+    public function getTMIndustry()
+    {
+        if (!$this->access_token && !$this->checkAuth()) {
+            return false;
+        }
+        $result = $this->http_get(self::API_URL_PREFIX.self::TEMPLATE_GET_INDUSTRY_URL.'access_token='.$this->access_token);
+        if ($result) {
+            $json = json_decode($result, true);
+            if (!$json || !empty($json['errcode'])) {
+                $this->errCode = $json['errcode'];
+                $this->errMsg = $json['errmsg'];
+                return false;
+            }
+            return $json;
+        }
+        return false;
+    }
 
-	/**
-	 * 发送模板消息
-	 * @param array $data 消息结构
-	 * ｛
-			"touser":"OPENID",
-			"template_id":"ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY",
-			"url":"http://weixin.qq.com/download",
-			"topcolor":"#FF0000",
-			"data":{
-				"参数名1": {
-					"value":"参数",
-					"color":"#173177"	 //参数颜色
-					},
-				"Date":{
-					"value":"06月07日 19时24分",
-					"color":"#173177"
-					},
-				"CardNumber":{
-					"value":"0426",
-					"color":"#173177"
-					},
-				"Type":{
-					"value":"消费",
-					"color":"#173177"
-					}
-			}
-		}
-	 * @return boolean|array
-	 */
-	public function sendTemplateMessage($data){
-		if (!$this->access_token && !$this->checkAuth()) return false;
-		$result = $this->http_post(self::API_URL_PREFIX.self::TEMPLATE_SEND_URL.'access_token='.$this->access_token,self::json_encode($data));
-		if($result){
-			$json = json_decode($result,true);
-			if (!$json || !empty($json['errcode'])) {
-				$this->errCode = $json['errcode'];
-				$this->errMsg = $json['errmsg'];
-				return false;
-			}
-			return $json;
-		}
-		return false;
-	}
+    /**
+     * 模板消息 添加消息模板
+     * 成功返回消息模板的调用id
+     * @param string $tpl_id 模板库中模板的编号，有“TM**”和“OPENTMTM**”等形式
+     * @return boolean|string
+     */
+    public function addTemplateMessage($tpl_id)
+    {
+        $data = array('template_id_short' =>$tpl_id);
+        if (!$this->access_token && !$this->checkAuth()) {
+            return false;
+        }
+        $result = $this->http_post(self::API_URL_PREFIX.self::TEMPLATE_ADD_TPL_URL.'access_token='.$this->access_token, self::json_encode($data));
+        if ($result) {
+            $json = json_decode($result, true);
+            if (!$json || !empty($json['errcode'])) {
+                $this->errCode = $json['errcode'];
+                $this->errMsg = $json['errmsg'];
+                return false;
+            }
+            return $json['template_id'];
+        }
+        return false;
+    }
+
+    /**
+     * 删除模板消息
+     * @param string $template_id 模板消息ID
+     * @return boolean|array
+     */
+    public function delTemplate($template_id)
+    {
+        if (!$this->access_token && !$this->checkAuth()) {
+            return false;
+        }
+        $data = array(
+            'template_id' => $template_id
+        );
+        $result = $this->http_post(self::API_URL_PREFIX.self::TEMPLATE_DEL_TPL_URL.'access_token='.$this->access_token, self::json_encode($data));
+        if ($result) {
+            $json = json_decode($result, true);
+            if (!$json || !empty($json['errcode'])) {
+                $this->errCode = $json['errcode'];
+                $this->errMsg = $json['errmsg'];
+                return false;
+            }
+            return $json;
+        }
+        return false;
+    }
+
+    /**
+     * 发送模板消息
+     * @param array $data 消息结构
+     * ｛
+            "touser":"OPENID",
+            "template_id":"ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY",
+            "url":"http://weixin.qq.com/download",
+            "topcolor":"#FF0000",
+            "data":{
+                "参数名1": {
+                    "value":"参数",
+                    "color":"#173177"	 //参数颜色
+                    },
+                "Date":{
+                    "value":"06月07日 19时24分",
+                    "color":"#173177"
+                    },
+                "CardNumber":{
+                    "value":"0426",
+                    "color":"#173177"
+                    },
+                "Type":{
+                    "value":"消费",
+                    "color":"#173177"
+                    }
+            }
+        }
+     * @return boolean|array
+     */
+    public function sendTemplateMessage($data)
+    {
+        if (!$this->access_token && !$this->checkAuth()) {
+            return false;
+        }
+        $result = $this->http_post(self::API_URL_PREFIX.self::TEMPLATE_SEND_URL.'access_token='.$this->access_token, self::json_encode($data));
+        if ($result) {
+            $json = json_decode($result, true);
+            if (!$json || !empty($json['errcode'])) {
+                $this->errCode = $json['errcode'];
+                $this->errMsg = $json['errmsg'];
+                return false;
+            }
+            return $json;
+        }
+        return false;
+    }
 
 	/**
 	 * 获取多客服会话记录

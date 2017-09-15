@@ -459,12 +459,18 @@ class Wechat extends WechatAbstract
      * 获取标签下粉丝列表
      * @return boolean|array
      */
-    public function getUserTag(){
-        if (!$this->get_access_token() && !$this->checkAuth()) return false;
-        $result = $this->http_get(self::API_URL_PREFIX.self::USER_TAG_URL.'access_token='.$this->get_access_token());
-        if ($result)
-        {
-            $json = json_decode($result,true);
+    public function getTagUserlist($tagid, $next_openid = '')
+    {
+        if (!$this->get_access_token() && !$this->checkAuth()) {
+            return false;
+        }
+        $data = array(
+            'tagid' => $tagid,
+            'next_openid' => $next_openid
+        );
+        $result = $this->http_get(self::API_URL_PREFIX.self::USER_TAG_URL.'access_token='.$this->get_access_token(), self::json_encode($data));
+        if ($result) {
+            $json = json_decode($result, true);
             if (isset($json['errcode'])) {
                 $this->errCode = $json['errcode'];
                 $this->errMsg = $json['errmsg'];
@@ -480,21 +486,24 @@ class Wechat extends WechatAbstract
      * @param string $openid
      * @return boolean|array 成功则返回用户标签list
      */
-    public function getUserTaglist($openid){
-        if (!$this->get_access_token() && !$this->checkAuth()) return false;
+    public function getUserTaglist($openid)
+    {
+        if (!$this->get_access_token() && !$this->checkAuth()) {
+            return false;
+        }
         $data = array(
                 'openid'=>$openid
         );
-        $result = $this->http_post(self::API_URL_PREFIX.self::TAGS_GETIDLIST_URL.'access_token='.$this->get_access_token(),self::json_encode($data));
-        if ($result)
-        {
-            $json = json_decode($result,true);
+        $result = $this->http_post(self::API_URL_PREFIX.self::TAGS_GETIDLIST_URL.'access_token='.$this->get_access_token(), self::json_encode($data));
+        if ($result) {
+            $json = json_decode($result, true);
             if (!$json || !empty($json['errcode'])) {
                 $this->errCode = $json['errcode'];
                 $this->errMsg = $json['errmsg'];
                 return false;
-            } else
-                if (isset($json['tagid_list'])) return $json['tagid_list'];
+            } elseif (isset($json['tagid_list'])) {
+                return $json['tagid_list'];
+            }
         }
         return false;
     }

@@ -87,6 +87,16 @@ class WechatController extends CommonController
                 // 取消关注
                 $this->unsubscribe($wedata['FromUserName']);
                 exit();
+            } elseif ('CLICK' == $wedata['Event']) {
+                // 点击菜单
+                $keywords = $wedata['EventKey'];
+            } elseif ('VIEW' == $wedata['Event']) {
+                $this->redirect($wedata['EventKey']);
+            } elseif ('SCAN' == $wedata['Event']) {
+                $scene_id = $this->weObj->getRevSceneId();
+            } elseif ('LOCATION' == $wedata['Event']) {
+                // 关注开启地理位置响应
+                exit('success');
             } elseif ('MASSSENDJOBFINISH' == $wedata['Event']) {
                 // 群发结果
                 $data['status'] = $wedata['Status'];
@@ -100,17 +110,23 @@ class WechatController extends CommonController
                     ->where('msg_id = "' . $wedata['MsgID'] . '"')
                     ->update();
                 exit();
-            } elseif ('CLICK' == $wedata['Event']) {
-                // 点击菜单
-                $keywords = $wedata['EventKey'];
-            } elseif ('VIEW' == $wedata['Event']) {
-                $this->redirect($wedata['EventKey']);
-            } elseif ('SCAN' == $wedata['Event']) {
-                $scene_id = $this->weObj->getRevSceneId();
-            } elseif ('LOCATION' == $wedata['Event']) {
-                // 关注开启地理位置响应
-                exit('success');
+            } elseif ($wedata['Event'] == 'TEMPLATESENDJOBFINISH') {
+                // 模板消息发送结束事件
+                if ($wedata['Status'] == 'success') {
+                    // 推送成功
+                    $data = array('status' => 1);
+                } elseif ($wedata['Status'] == 'failed:user block') {
+                    // 用户拒收
+                    $data = array('status' => 2);
+                } else {
+                    // 发送失败
+                    $data = array('status' => 0); // status 0 发送失败，1 发送与接收成功，2 用户拒收
+                }
+                // 更新模板消息发送状态
+                $this->model->table('wechat_template_log')->data($data)->where(array('msgid' => $wedata['MsgID'], 'openid' => $wedata['FromUserName']))->update();
+                exit();
             }
+            exit();
         } else {
             $this->msg_reply('msg');
             exit();
