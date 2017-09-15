@@ -573,7 +573,7 @@ class WechatController extends CommonController
         $return = false;
         $rs = $this->model->table('wechat_extend')
             ->field('name, command, config')
-            ->where('keywords like "%' . $keywords . '%" and enable = 1 and wechat_id = ' . $this->wechat_id)
+            ->where('(keywords like "%' . $keywords . '%" or command like "%' . $keywords . '%") and enable = 1 and wechat_id = ' . $this->wechat_id)
             ->order('id asc')
             ->find();
         $file = ROOT_PATH . 'plugins/wechat/' . $rs['command'] . '/' . $rs['command'] . '.class.php';
