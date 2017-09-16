@@ -934,7 +934,7 @@ INSERT INTO `ecs_service_type` (`service_id`, `service_name`, `service_desc`, `r
 --
 -- 增加分销商品属性佣金
 --
-ALTER TABLE  `ecs_goods_attr` ADD  ` attr_sale_price` varchar(255) NOT NULL DEFAULT '' AFTER `attr_price`;
+ALTER TABLE  `ecs_goods_attr` ADD  `attr_sale_price` varchar(255) NOT NULL DEFAULT '' AFTER `attr_price`;
 
 --
 -- 分销提现类型  字段 `type,zfb_bank_user_name,zfb_bank_card`

@@ -7,7 +7,7 @@
 -- 字段 `attr_sale_price`
 --
 
-ALTER TABLE  `{pre}goods_attr` ADD  `	attr_sale_price` varchar(255) NOT NULL DEFAULT '' AFTER `attr_price`;
+ALTER TABLE  `{pre}goods_attr` ADD  `attr_sale_price` varchar(255) NOT NULL DEFAULT '' AFTER `attr_price`;
 
 
 --
