@@ -5,7 +5,7 @@
  * ============================================================================
  * Copyright (c) 2012-2014 http://ectouch.cn All rights reserved.
  * ----------------------------------------------------------------------------
- * 文件名称：sina.php
+ * 文件名称：weibo.php
  * ----------------------------------------------------------------------------
  * 功能描述：新浪微博登录插件
  * ----------------------------------------------------------------------------
@@ -28,9 +28,9 @@ if (isset($set_modules) && $set_modules == TRUE) {
     /* 类名 */
     $modules[$i]['name'] = '新浪微博登录';
     // 文件名，不包含后缀
-    $modules[$i]['type'] = 'sina';
+    $modules[$i]['type'] = 'weibo';
 
-    $modules[$i]['className'] = 'sina';
+    $modules[$i]['className'] = 'weibo';
     // 作者信息
     $modules[$i]['author'] = 'ECTouch Team';
 
@@ -60,7 +60,7 @@ if (isset($set_modules) && $set_modules == TRUE) {
 /**
  * 新浪微博 API client
  */
-class sina {
+class weibo {
 
     public $api_url = 'https://api.weibo.com/2/';
     public $format = 'json';

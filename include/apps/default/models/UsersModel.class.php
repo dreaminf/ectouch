@@ -1006,7 +1006,7 @@ class UsersModel extends BaseModel {
         if($order['order_status'] == 1 && $order['shipping_status'] == 0 && $order['pay_status'] == 2 && $pay['pay_code'] == 'alipay'){
             $order['can_cancle'] = 1;
         }
-       
+
 
         /* 无配送时的处理 */
         $order['shipping_id'] == -1 and $order['shipping_name'] = L('shipping_not_need');
@@ -1884,7 +1884,7 @@ class UsersModel extends BaseModel {
 
     /**
      * 更新社会化登录用户信息
-     * @param  [type] $res, $type:qq,sina,wechat
+     * @param   $res, $type:qq,weibo,wechat
      * @return
      */
     function update_connnect_user($res, $type = '')
@@ -1898,7 +1898,7 @@ class UsersModel extends BaseModel {
             'country' => $res['country'],
             'headimgurl' => $res['headimgurl'],
         );
-        $type = $type == 'weixin' ? 'wechat' : 'weixin'; // 兼容统一命名wechat
+        $type = $type == 'weixin' ? 'wechat' : $type; // 兼容统一命名wechat
         $data = array(
             'connect_code' => 'sns_' . $type,
             'user_id' => $res['user_id'],
@@ -2484,7 +2484,7 @@ class UsersModel extends BaseModel {
             case 'qq':
                 $prefix = 'qq';
                 break;
-            case 'sina':
+            case 'weibo':
                 $prefix = 'wb';
                 break;
             case 'facebook':
@@ -2494,7 +2494,7 @@ class UsersModel extends BaseModel {
                 $prefix = 'sc';
                 break;
         }
-        return $prefix . substr(md5($unionid), -2) . substr(time(), -7) . rand(1000, 9999);
+        return $prefix . substr(md5($unionid), -5) . substr(time(), 0, 4) . mt_rand(1000, 9999);
     }
 
     /**
@@ -2506,7 +2506,7 @@ class UsersModel extends BaseModel {
      *
      * @return   bool                     退款状态
      */
-    function get_refund_order($order_id, $user_id = 0) 
+    function get_refund_order($order_id, $user_id = 0)
     {
         $order_id = intval($order_id);
         if ($order_id <= 0) {
@@ -2534,10 +2534,10 @@ class UsersModel extends BaseModel {
             /* 调用相应的支付方式文件 */
             include_once(ROOT_PATH . 'plugins/payment/' . $pay['pay_code'] . '.php');
              /* 在线退款*/
-            $pay_obj = new $pay['pay_code'];            
+            $pay_obj = new $pay['pay_code'];
             $result = $pay_obj->refund($order, $payment);
             //退款成功
-            return  $result;           
+            return  $result;
         }
         return false;
     }

@@ -273,7 +273,7 @@ class WechatController extends CommonController
                     $template = str_replace(array('[$username]', '[$password]'), array($username, $password), $reg_config['template']);
                 } else {
                     // $username = 'wx_' . time().mt_rand(1, 99);
-                    $username = model('Users')->get_wechat_username($data['unionid'],'weixin');
+                    $username = model('Users')->get_wechat_username($data['unionid'], 'weixin');
                     $password = mt_rand(100000, 999999);
                     // 通知模版
                     $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
@@ -300,7 +300,6 @@ class WechatController extends CommonController
                         'nickname' => $data['nickname'],
                         );
                     model('Users')->update_connnect_user($res, 'wechat');
-
                     model('Users')->update_user_info();
                 } else {
                     exit('null');
@@ -808,7 +807,7 @@ class WechatController extends CommonController
             if (! isset($_SESSION['redirect_url'])) {
                 $callback = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : __HOST__ . $_SERVER['REQUEST_URI'];;
             }
-            $url = url('user/third_login', array('type'=>'weixin', 'back_url'=> $callback), 'org_mode');
+            $url = url('oauth/index', array('type' => 'weixin', 'back_url' => $callback), 'org_mode');
             header("Location: ".$url);
             exit;
         }

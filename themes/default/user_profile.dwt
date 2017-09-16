@@ -75,6 +75,15 @@
 		</div>
 	</a>
 
+	<a href="{:url('user/account_bind')}">
+		<div class="s-user-top">
+			<div class="dis-box s-xian-box s-user-top-1">
+				<h3 class="box-flex text-all-span my-u-title-size">授权管理</h3>
+				<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
+			</div>
+		</div>
+	</a>
+
 	{if $is_wechat == 1}
 	<a href="{:url('user/account_relation')}">
 		<div class="s-user-top">
