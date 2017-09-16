@@ -5,7 +5,7 @@
  * ============================================================================
  * Copyright (c) 2012-2014 http://ectouch.cn All rights reserved.
  * ----------------------------------------------------------------------------
- * 文件名称：sina.php
+ * 文件名称：weibo.php
  * ----------------------------------------------------------------------------
  * 功能描述：新浪微博登录插件
  * ----------------------------------------------------------------------------
@@ -26,11 +26,11 @@ if (file_exists($payment_lang)) {
 if (isset($set_modules) && $set_modules == TRUE) {
     $i = isset($modules) ? count($modules) : 0;
     /* 类名 */
-    $modules[$i]['name'] = 'Sina';
+    $modules[$i]['name'] = 'Weibo';
     // 文件名，不包含后缀
-    $modules[$i]['type'] = 'sina';
+    $modules[$i]['type'] = 'weibo';
 
-    $modules[$i]['className'] = 'sina';
+    $modules[$i]['className'] = 'weibo';
     // 作者信息
     $modules[$i]['author'] = 'Zhulin';
 

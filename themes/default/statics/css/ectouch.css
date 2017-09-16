@@ -2918,6 +2918,12 @@ h5.title-hrbg hr {background: #CCCBD9;height: 1px;border: 0;position: absolute;l
 .raise-cate-nav a .icon-viewlist{font-size:1.6rem;}
 .n-checkout-btn{border-radius: 0}
 
+/*授权管理*/
+.user_profile_bind{border-bottom:1px solid #f6f6f9;position: relative;}
+.user_profile_bind img{border-radius: 50%;width:3.6rem;height:3.6rem;}
+.user_profile_bind .cont{padding:.4rem 0 0 .8rem;}
+.user_profile_bind .right .user_profile_bind_btn{font-size:1.4rem;position:absolute; right:2.5rem;top:50%;margin-top:-1.3rem;}
+.user_profile_bind .right .user_profile_bind_btn label{padding:0 .5rem;color:#ccc;}
 
 /*账号关联*/
 .remove-relation-button2 { background: #ddd; color: #555;outline: none;border:none}

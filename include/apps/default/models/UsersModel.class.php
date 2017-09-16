@@ -1917,7 +1917,7 @@ class UsersModel extends BaseModel {
 
     /**
      * 更新社会化登录用户信息
-     * @param  [type] $res, $type:qq,sina,wechat
+     * @param   $res, $type:qq,weibo,wechat
      * @return
      */
     function update_connnect_user($res, $type = '')
@@ -1931,7 +1931,7 @@ class UsersModel extends BaseModel {
             'country' => $res['country'],
             'headimgurl' => $res['headimgurl'],
         );
-        $type = $type == 'weixin' ? 'wechat' : 'weixin'; // 兼容统一命名wechat
+        $type = $type == 'weixin' ? 'wechat' : $type; // 兼容统一命名wechat
         $data = array(
             'connect_code' => 'sns_' . $type,
             'user_id' => $res['user_id'],
@@ -2590,7 +2590,7 @@ class UsersModel extends BaseModel {
             case 'qq':
                 $prefix = 'qq';
                 break;
-            case 'sina':
+            case 'weibo':
                 $prefix = 'wb';
                 break;
             case 'facebook':
@@ -2600,7 +2600,7 @@ class UsersModel extends BaseModel {
                 $prefix = 'sc';
                 break;
         }
-        return $prefix . substr(md5($unionid), -2) . substr(time(), -7) . rand(1000, 9999);
+        return $prefix . substr(md5($unionid), -5) . substr(time(), 0, 4) . mt_rand(1000, 9999);
     }
 
     /**
