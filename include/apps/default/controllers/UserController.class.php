@@ -2279,11 +2279,11 @@ class UserController extends CommonController {
 
                 if (!empty($users)) {
                     if (!empty($users['mobile_phone'])) {
-                        // $connect_where = array('user_id' => $this->user_id, 'open_id' => $users['open_id']);
-                        // $this->model->table('connect_user')->where($connect_where)->delete();
-                        // // 兼容PC
-                        // $auth_where = array('user_id' => $this->user_id, 'identifier' => $users['open_id']);
-                        // $this->model->table('users_auth')->where($auth_where)->delete();
+                        $connect_where = array('user_id' => $this->user_id, 'open_id' => $users['open_id']);
+                        $this->model->table('connect_user')->where($connect_where)->delete();
+                        // 兼容PC
+                        $auth_where = array('user_id' => $this->user_id, 'identifier' => $users['open_id']);
+                        $this->model->table('users_auth')->where($auth_where)->delete();
 
                         $json_result = array('error' => 0, 'msg' => '解绑成功');
                         exit(json_encode($json_result));
