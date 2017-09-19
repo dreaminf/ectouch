@@ -186,6 +186,7 @@ class UsersModel extends BaseModel {
                 }
                 $update_data = array_merge($update_data, $other);
             }
+            $parent_id = $update_data['parent_id'];
             $condition['user_id'] = $_SESSION['user_id'];
             $this->update($condition, $update_data);
             $where['mobile_phone'] = $username;
@@ -206,9 +207,10 @@ class UsersModel extends BaseModel {
                 empty($affiliate) && $affiliate = array();
                 $affiliate['config']['level_register_all'] = intval($affiliate['config']['level_register_all']);
                 $affiliate['config']['level_register_up'] = intval($affiliate['config']['level_register_up']);
-                if ($up_uid) {
+                if ($up_uid || $parent_id) {
                     if (!empty($affiliate['config']['level_register_all'])) {
                         if (!empty($affiliate['config']['level_register_up'])) {
+                            $up_uid =  $up_uid > 0 ? $up_uid : $parent_id;
                             $res = $this->row("SELECT rank_points FROM " . $this->pre . "users WHERE user_id = '$up_uid'");
                             if ($res['rank_points'] + $affiliate['config']['level_register_all'] <= $affiliate['config']['level_register_up']) {
                                 model('ClipsBase')->log_account_change($up_uid, 0, 0, $affiliate['config']['level_register_all'], 0, sprintf(L('register_affiliate'), $_SESSION['user_id'], $username));
@@ -222,9 +224,9 @@ class UsersModel extends BaseModel {
                     $res = $this->row($sql);
                     if(!empty($res)){
                     /*DRP_END*/
-                        //设置推荐人
-                        $sql = 'UPDATE ' . $this->pre . 'users SET parent_id = ' . $up_uid . ' WHERE user_id = ' . $_SESSION['user_id'];
-                        $this->query($sql);
+                    //设置推荐人
+                    $sql = 'UPDATE ' . $this->pre . 'users SET parent_id = ' . $up_uid . ' WHERE user_id = ' . $_SESSION['user_id'];
+                    $this->query($sql);
                     /*DRP_START*/
                     }
                     /*DRP_END*/
