@@ -1603,7 +1603,7 @@ function exchange_points($uid, $fromcredits, $tocredits, $toappid, $netamount) {
  * @param  $title 提醒标题
  * @param  $msg 提醒内容
  * @param  $url 页面链接 base64_decode(urldecode($url));
- * @param  $order_id 订单id 
+ * @param  $order_id 订单id
  *
  */
 function send_wechat_message($type = '', $title = '', $msg = '', $url = '', $order_id = '') {
@@ -1652,7 +1652,7 @@ function get_goods_count($goods_id)
         $ext = " AND o . add_time > '" . local_strtotime(' - 1 months') . "'";
     }
   /* 查询该商品销量 */
-      
+
 
     $sql = 'SELECT IFNULL(SUM(g.goods_number), 0) as count ' .
         'FROM '. M()->pre .'order_info AS o, '. M()->pre .'order_goods AS g ' .
@@ -1661,17 +1661,17 @@ function get_goods_count($goods_id)
         " AND o . shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)) .
         " AND o . pay_status " . db_create_in(array(PS_PAYED, PS_PAYING)) .
         " AND g . goods_id = '$goods_id'";
-    $result = M()->getRow($sql);  
+    $result = M()->getRow($sql);
     $sql_goods = "SELECT virtual_sales FROM " . M()->pre .'goods' . " WHERE goods_id = '$goods_id'";
-    $rs = M()->getRow($sql_goods); 
+    $rs = M()->getRow($sql_goods);
     $virtual_sales = $rs["virtual_sales"];
-        
+
      $result["count"] += $virtual_sales;
     //$result += M()->getRow($sql_goods);
     //dump($result);exit;
     return $result['count'];
 }
- 
+
 /**
  * 得到新服务单号
  * @return  string
@@ -1682,4 +1682,38 @@ function get_service_sn() {
 
     return date('Ymd') . str_pad(mt_rand(1, 99999), 3, '0',STR_PAD_LEFT);
 }
-    
+
+/**
+ * 兼容更新平台粉丝unionid 已经存在wechat_user 且 unionid 为空的情况 用openid 更新一下 unionid
+ * @param
+ * @return
+ */
+function update_wechat_unionid($info, $wechat_id = 0)
+{
+    //公众号id
+    $wechat_id = !empty($wechat_id) ? $wechat_id : M()->table('wechat')->field('id')->where(array('status' => 1, 'default_wx' => 1))->getOne();
+    // 组合数据
+    $data = array(
+        'wechat_id' => $wechat_id,
+        'openid' => $info['openid'],
+        'unionid' => $info['unionid']
+    );
+    // unionid 微信开放平台唯一标识
+    if (!empty($info['unionid'])) {
+        // 兼容查询用户openid
+        $where = array('openid' => $info['openid'], 'wechat_id' => $wechat_id);
+        $res = M()->table('wechat_user')->field('unionid, ect_uid')->where($where)->find();
+        if (empty($res['unionid'])) {
+            M()->table('wechat_user')->data($data)->where($where)->update();
+            if (!empty($res['ect_uid'])) {
+                // 更新社会化登录用户信息
+                $connect_userinfo = model('Users')->get_connect_user($info['unionid']);
+                if (empty($connect_userinfo)) {
+                    M()->table('connect_user')->data(array('open_id' => $info['unionid']))->where(array('open_id' => $info['openid']))->update();
+                }
+                $info['user_id'] = $res['ect_uid'];
+                model('Users')->update_connnect_user($info, 'wechat');
+            }
+        }
+    }
+}
