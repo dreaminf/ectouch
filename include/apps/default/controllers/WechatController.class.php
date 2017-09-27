@@ -126,7 +126,6 @@ class WechatController extends CommonController
                 $this->model->table('wechat_template_log')->data($data)->where(array('msgid' => $wedata['MsgID'], 'openid' => $wedata['FromUserName']))->update();
                 exit();
             }
-            exit();
         } else {
             $this->msg_reply('msg');
             exit();
