@@ -1686,3 +1686,37 @@ function get_service_sn() {
     return date('Ymd') . str_pad(mt_rand(1, 99999), 3, '0',STR_PAD_LEFT);
 }
 
+/**
+ * 兼容更新平台粉丝unionid 已经存在wechat_user 且 unionid 为空的情况 用openid 更新一下 unionid
+ * @param
+ * @return
+ */
+function update_wechat_unionid($info, $wechat_id = 0)
+{
+    //公众号id
+    $wechat_id = !empty($wechat_id) ? $wechat_id : M()->table('wechat')->field('id')->where(array('status' => 1, 'default_wx' => 1))->getOne();
+    // 组合数据
+    $data = array(
+        'wechat_id' => $wechat_id,
+        'openid' => $info['openid'],
+        'unionid' => $info['unionid']
+    );
+    // unionid 微信开放平台唯一标识
+    if (!empty($info['unionid'])) {
+        // 兼容查询用户openid
+        $where = array('openid' => $info['openid'], 'wechat_id' => $wechat_id);
+        $res = M()->table('wechat_user')->field('unionid, ect_uid')->where($where)->find();
+        if (empty($res['unionid'])) {
+            M()->table('wechat_user')->data($data)->where($where)->update();
+            if (!empty($res['ect_uid'])) {
+                // 更新社会化登录用户信息
+                $connect_userinfo = model('Users')->get_connect_user($info['unionid']);
+                if (empty($connect_userinfo)) {
+                    M()->table('connect_user')->data(array('open_id' => $info['unionid']))->where(array('open_id' => $info['openid']))->update();
+                }
+                $info['user_id'] = $res['ect_uid'];
+                model('Users')->update_connnect_user($info, 'wechat');
+            }
+        }
+    }
+}

@@ -205,6 +205,8 @@ class WechatController extends CommonController
             exit('null');
         }
         // 已关注用户基本信息
+        update_wechat_unionid($info, $this->wechat_id); //兼容更新平台粉丝unionid
+
         // $condition = array('openid' => $data['openid'], 'wechat_id' => $this->wechat_id);
         $condition = array('unionid' => $data['unionid'], 'wechat_id' => $this->wechat_id);
         $result = $this->model->table('wechat_user')->field('ect_uid, openid, unionid')->where($condition)->find();
