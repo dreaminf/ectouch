@@ -34,7 +34,7 @@
               <li>{$lang.card_password}:<span class="ect-color">{$card.card_password}</span> </li>
               <!--{/if}--> 
               <!--{if $card.end_date}-->
-              <li>{$lang.end_date}:<<span class="ect-color">{$card.end_date}</span></li>
+              <li>{$lang.end_date}:<span class="ect-color">{$card.end_date}</span></li>
               <!--{/if}-->
             </div>
         	<!--{/foreach}--> 

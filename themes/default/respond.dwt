@@ -6,24 +6,11 @@
   </div>
   <div  style="text-align:center; margin-top:2em; font-size:1.3em;">
 <p>{$message}</p>
-    <!--{if $virtual_card}-->
-    <div class="alert alert-warning" role="alert">
-    <!--{foreach from=$virtual_card item=vgoods}-->
-        <h3 style="color:#2359B1; font-size:12px;">{$vgoods.goods_name}</h3>
-        <!--{foreach from=$vgoods.info item=card}-->
-        <ul style="list-style:none;padding:0;margin:0;clear:both">
-          <!--{if $card.card_sn}-->
-          <li style="margin-right:50px;float:left;"> <strong>{$lang.card_sn}:</strong><span style="color:red;">{$card.card_sn}</span> </li>
-          <!--{/if}--> 
-          <!--{if $card.card_password}-->
-          <li style="margin-right:50px;float:left;"> <strong>{$lang.card_password}:</strong><span style="color:red;">{$card.card_password}</span> </li>
-          <!--{/if}--> 
-          <!--{if $card.end_date}-->
-          <li style="float:left;"> <strong>{$lang.end_date}:</strong>{$card.end_date} </li>
-          <!--{/if}-->
-        </ul>
-        <!--{/foreach}--> 
-    <!--{/foreach}--> 
+    <!--{if $team_id}-->
+    <div class="n-flow-done-box"> 
+      <a href="{:url('goods/team_goods_wait',array('team_id'=>$this->_var['order']['team_id']))}"> 
+       <div class=" text-center btn btn-default">查看我的拼团</div>
+      </a>
     </div>
     <!-- {/if} -->
 <div> 
@@ -31,6 +18,26 @@
 </div>
 <div style="width:1px; height:1px; overflow:hidden">{foreach from=$lang.p_y item=pv}{$pv}{/foreach}</div>
 </div>
+<!--{if $virtual_card}-->
+        <div class="alert-warning b-color-f n-flow-list-box" role="alert">
+      <!--{foreach from=$virtual_card item=vgoods}-->
+            <h3>{$vgoods.goods_name}</h3>
+            <!--{foreach from=$vgoods.info item=card}-->
+            <div class="n-flow-list">
+              <!--{if $card.card_sn}-->
+              <li>{$lang.card_sn}:<span class="ect-color">{$card.card_sn}</span> </li>
+              <!--{/if}--> 
+              <!--{if $card.card_password}-->
+              <li>{$lang.card_password}:<span class="ect-color">{$card.card_password}</span> </li>
+              <!--{/if}--> 
+              <!--{if $card.end_date}-->
+              <li>{$lang.end_date}:<span class="ect-color">{$card.end_date}</span></li>
+              <!--{/if}-->
+            </div>
+          <!--{/foreach}--> 
+        <!--{/foreach}--> 
+    </div>
+        <!-- {/if} -->
 </div>
 <!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
