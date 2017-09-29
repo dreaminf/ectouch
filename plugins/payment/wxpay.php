@@ -63,7 +63,7 @@ class wxpay
         $jsApiParameters = $this->getParameters($prepay_id);
         // wxjsbridge
         $js = '<script language="javascript">
-            function jsApiCall(){WeixinJSBridge.invoke("getBrandWCPayRequest",' . $jsApiParameters . ',function(res){if(res.err_msg == "get_brand_wcpay_request:ok"){location.href="' . return_url(basename(__FILE__, '.php')) . '&status=1"}else{location.href="' . return_url(basename(__FILE__, '.php')) . '&status=0"}})};function callpay(){if (typeof WeixinJSBridge == "undefined"){if( document.addEventListener ){document.addEventListener("WeixinJSBridgeReady", jsApiCall, false);}else if (document.attachEvent){document.attachEvent("WeixinJSBridgeReady", jsApiCall);document.attachEvent("onWeixinJSBridgeReady", jsApiCall);}}else{jsApiCall();}}
+            function jsApiCall(){WeixinJSBridge.invoke("getBrandWCPayRequest",' . $jsApiParameters . ',function(res){if(res.err_msg == "get_brand_wcpay_request:ok"){location.href="' . return_url(basename(__FILE__, '.php')) .'&log_id='.$order['log_id']. '&status=1"}else{location.href="' . return_url(basename(__FILE__, '.php')) . '&status=0"}})};function callpay(){if (typeof WeixinJSBridge == "undefined"){if( document.addEventListener ){document.addEventListener("WeixinJSBridgeReady", jsApiCall, false);}else if (document.attachEvent){document.attachEvent("WeixinJSBridgeReady", jsApiCall);document.attachEvent("onWeixinJSBridgeReady", jsApiCall);}}else{jsApiCall();}}
             </script>';
 
         $button = '<div class="n-flow-alipay" style=" text-align:center"><button class="btn btn-info ect-btn-info ect-colorf ect-bg" style="background-color:#44b549;" type="button" onclick="callpay()">立即付款</button></div>' . $js;
@@ -104,6 +104,7 @@ class wxpay
     public function callback($data)
     {
         if ($_GET['status'] == 1) {
+            model('Payment')->team_payment_info($_GET['log_id']);
             return true;
         } else {
             return false;

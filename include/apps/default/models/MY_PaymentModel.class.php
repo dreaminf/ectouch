@@ -269,4 +269,16 @@ class MY_PaymentModel extends PaymentModel {
         }
     }
 
+    /**
+     * @param $log_id
+     * 拼团支付显示拼团链接
+     */
+    function team_payment_info($log_id){
+        $sql = "select o.team_id from ".$this->pre ."pay_log as p inner join ".$this->pre ."order_info as o on o.order_id = p.order_id where p.log_id = ".$log_id;
+        $order = $this->row($sql);
+        if($order['team_id'] > 0){
+            ECTouch::view()->assign('team_id', $order['team_id']);
+        }
+    }
+
 }
