@@ -59,4 +59,28 @@ class RespondController extends CommonController
         $this->assign('shop_url', __URL__);
         $this->display('respond.dwt');
     }
+
+    /**
+     * 微信支付h5同步通知中间页面
+     * @return
+     */
+    public function wxh5()
+    {
+        //显示页面
+        if(isset($_GET) && isset($_GET['order_id'])){
+            $order = [];
+            $order['order_id']= intval($_GET['order_id']);
+            $order['order_sn']= trim($_GET['order_sn']);
+            $order_url = url('user/order_detail', array('order_id' => $order['order_id']));
+
+            $repond_url = __URL__ . "/respond.php?code=" .$this->data['code']. "&status=1&order_id=".$order['order_id']."&order_sn=".$order['order_sn'];
+        }else{
+            $repond_url = __URL__ . "/respond.php?code=" .$this->data['code']. "&status=0";
+        }
+        $is_wxh5 = ($this->data['code'] == 'wxpay' && !is_wechat_browser()) ? 1 : 0;
+        $this->assign('is_wxh5', $is_wxh5);
+        $this->assign('repond_url', $repond_url);
+        $this->assign('order_url', $order_url);
+        $this->display('respond_wxh5.dwt');
+    }
 }

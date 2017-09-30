@@ -69,14 +69,13 @@ class wxpay
 
             // $redirect_url = __HOST__ . url('user/order/detail', array('order_id' => $order['order_id']));
             if(isset($respond['mweb_url'])){
-                if($respond['result_code'] == 'SUCCESS'){
-                    $redirect_url = return_url(basename(__FILE__, '.php')). "&status=1";
-                }else{
-                    $redirect_url = notify_url(basename(__FILE__, '.php')). "&status=0";
-                }
+
+                $redirect_url = __URL__ . "/respond_wxh5.php?code=wxpay&order_id=".$order['order_id']."&order_sn=".$order['order_sn'];
+
                 $button = '<div class="n-flow-alipay" style=" text-align:center"><button class="btn btn-info ect-btn-info ect-colorf ect-bg" style="background-color:#44b549;" type="button" onclick="window.open(\'' . $respond['mweb_url']. '&redirect_url='. urlencode($redirect_url) . '\')">微信支付</button></div>';
             }else{
                 $button = '';
+                return false;
             }
         }else{
             // 网页授权获取用户openid
@@ -118,8 +117,12 @@ class wxpay
      */
     public function callback($data)
     {
-        if ($_GET['status'] == 1) {
-            return true;
+        if (isset($_GET) && $_GET['status'] == 1) {
+            $order = [];
+            $order['order_id']= intval($_GET['order_id']);
+            $order['order_sn']= trim($_GET['order_sn']);
+            $payment = model('Payment')->get_payment($data['code']);
+            return $this->queryOrder($order, $payment);
         } else {
             return false;
         }
@@ -323,6 +326,154 @@ class wxpay
             echo "curl出错，错误码:$error" . "<br>";
             curl_close($ch);
             return false;
+        }
+    }
+
+    /**
+     * 查询订单
+     * 当商户后台、网络、服务器等出现异常，商户系统最终未接收到支付通知
+     *
+     * @param $order
+     * @param $payment
+     */
+    public function queryOrder($order, $payment)
+    {
+        // 查询未支付的订单
+        $res = model('Base')->model->table('pay_log')->field('transid, is_paid, log_id, order_amount')->where(array('order_id' => $order['order_id']))->find();
+        if ($res['is_paid'] == 0 && $order['pay_status'] == 0) {
+            $options = array(
+                     'appid' => $payment['wxpay_appid'], //填写高级调用功能的app id
+                     'mch_id' => $payment['wxpay_mchid'], //微信支付商户号
+                     'key' => $payment['wxpay_key'], //微信支付API密钥
+                 );
+            $weObj = new Wechat($options);
+
+            // 微信订单号  商户订单号  二选一 ， 微信的订单号，建议优先使用
+            $order_amount = $res['order_amount'] * 100;
+            $out_trade_no = $order['order_sn'] . 'A' . $order_amount . 'B' . $res['log_id'];
+
+            // $this->setParameter("transaction_id", $transaction_id); // 微信订单号
+            $this->setParameter("out_trade_no", $out_trade_no); // 商户订单号
+
+            $respond = $weObj->PayQueryOrder($this->parameters);
+            // $OrderParameters = json_encode($respond);
+            if ($respond['result_code'] == 'SUCCESS' && $respond['trade_state'] == 'SUCCESS') {
+                // 获取log_id
+                $out_trade_no = explode('B', $respond['out_trade_no']);
+                $order_sn = $out_trade_no[1]; // 订单号log_id
+                // 修改订单信息(openid，tranid)
+                // model('Base')->model->table('pay_log')->data(array('openid' => $respond['openid'], 'transid' => $respond['transaction_id']))->where(array('log_id' => $order_sn))->update();
+                // 改变订单状态
+                // order_paid($order_sn, 2);
+                return true;
+            } else {
+                return false;
+            }
+        } elseif ($res['is_paid'] == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 退款申请
+     * array(
+     *     'order_id' => '1',
+     *     'order_sn' => '2017061609464501623',
+     *     'pay_id' => '',
+     *     'pay_status' => 2
+     * )
+     *
+     * @param $order
+     * @param $payment
+     * @return bool
+     */
+    public function payRefund($order, $payment)
+    {
+        // 查询已支付的订单
+        $res = model('Base')->model->table('pay_log')->field('transid, is_paid, log_id, order_amount')->where(array('order_id' => $order['order_id']))->find();
+
+        if ($res['is_paid'] == 1 && $order['pay_status'] == 2) {
+            $options = array(
+                     'appid' => $payment['wxpay_appid'], //填写高级调用功能的app id
+                     'mch_id' => $payment['wxpay_mchid'], //微信支付商户号
+                     'key' => $payment['wxpay_key'], //微信支付API密钥
+                 );
+            $weObj = new Wechat($options);
+
+            $order_amount = $res['order_amount'] * 100;
+            $out_trade_no = $order['order_sn'] . 'A' . $order_amount . 'B' . $res['log_id']; // 商户订单号
+
+            $order_return_info = model('Base')->model->table('order_return')->field('return_sn, order_sn, return_status, refound_status')->where(array('order_id' => $order['order_id']))->find();
+
+            $out_refund_no = $order_return_info['return_sn']; // 商户退款单号
+            $total_fee = $order_amount;
+            $refund_fee = isset($order['should_return']) ? $order['should_return'] : $order_amount;   // 退款金额 默认退全款
+
+            $this->setParameter("out_trade_no", $out_trade_no); // 商户订单号
+            $this->setParameter("out_refund_no", $out_refund_no);// 商户退款单号
+            $this->setParameter("total_fee", $total_fee);//总金额
+            $this->setParameter("refund_fee", $refund_fee);//退款金额
+            $this->setParameter("op_user_id", $payment['wxpay_mchid']);//操作员
+
+            $respond = $weObj->PayRefund($this->parameters);
+            // 退款申请接收成功
+            if ($respond['result_code'] == 'SUCCESS') {
+                $out_refund_no = $respond['out_refund_no']; // 商户退款单号
+                return $out_refund_no;
+            } else {
+                logResult($respond);
+                return false;
+            }
+        }
+    }
+
+    /**
+     * 查询退款
+     *
+     * @param $order
+     * @param $payment
+     * @return bool
+     */
+    public function payRefundQuery($order, $payment)
+    {
+        // 查询已退款的订单
+        $order_return_info = model('Base')->model->table('order_return')->field('return_sn, order_sn, return_status, refound_status')->where(array('order_id' => $order['order_id']))->find();
+        if ($order_return_info && $order_return_info['refound_status'] == 1) {
+            $options = array(
+                     'appid' => $payment['wxpay_appid'], //填写高级调用功能的app id
+                     'mch_id' => $payment['wxpay_mchid'], //微信支付商户号
+                     'key' => $payment['wxpay_key'], //微信支付API密钥
+                 );
+            $weObj = new Wechat($options);
+
+            // 微信订单号 transaction_id， 商户订单号 out_trade_no， 商户退款单号 out_refund_no，微信退款单号 refund_id 四选一
+            // $this->setParameter("out_trade_no", $out_trade_no);
+            $this->setParameter("out_refund_no", $order_return_info['return_sn']);// 商户退款单号
+            // $this->setParameter("transaction_id", $transaction_id);
+            // $this->setParameter("refund_id", $refund_id);
+
+            $respond = $weObj->PayRefundQuery($this->parameters);
+            // 退款查询
+            if ($respond['result_code'] == 'SUCCESS' && $respond['refund_status'] == 'SUCCESS') {
+                /*
+                refund_status_$n $n为下标，从0开始编号。
+                退款状态：
+                SUCCESS—退款成功
+                REFUNDCLOSE—退款关闭。
+                PROCESSING—退款处理中
+                CHANGE—退款异常，退款到银行发现用户的卡作废或者冻结了
+                 */
+                $out_refund_no = $respond['out_refund_no']; // 商户退款单号
+                $refund_count = $respond['refund_count']; // 退款笔数
+                $refund_fee = $respond['refund_fee']; // 退款金额
+
+                return $out_refund_no;
+            } else {
+                logResult($respond);
+                return false;
+            }
         }
     }
 
