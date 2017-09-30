@@ -70,7 +70,7 @@ class wxpay
             // $redirect_url = __HOST__ . url('user/order/detail', array('order_id' => $order['order_id']));
             if(isset($respond['mweb_url'])){
 
-                $redirect_url = __URL__ . "/respond_wxh5.php?code=wxpay&order_id=".$order['order_id']."&order_sn=".$order['order_sn'];
+                $redirect_url = __URL__ . "/respond_wxh5.php?code=wxpay&order_id=".$order['order_id'];
 
                 $button = '<div class="n-flow-alipay" style=" text-align:center"><button class="btn btn-info ect-btn-info ect-colorf ect-bg" style="background-color:#44b549;" type="button" onclick="window.open(\'' . $respond['mweb_url']. '&redirect_url='. urlencode($redirect_url) . '\')">微信支付</button></div>';
             }else{
@@ -102,7 +102,7 @@ class wxpay
             $jsApiParameters = $this->getParameters($prepay_id);
             // wxjsbridge
             $js = '<script language="javascript">
-            function jsApiCall(){WeixinJSBridge.invoke("getBrandWCPayRequest",' . $jsApiParameters . ',function(res){if(res.err_msg == "get_brand_wcpay_request:ok"){location.href="' . return_url(basename(__FILE__, '.php')) . '&status=1"}else{location.href="' . return_url(basename(__FILE__, '.php')) . '&status=0"}})};function callpay(){if (typeof WeixinJSBridge == "undefined"){if( document.addEventListener ){document.addEventListener("WeixinJSBridgeReady", jsApiCall, false);}else if (document.attachEvent){document.attachEvent("WeixinJSBridgeReady", jsApiCall);document.attachEvent("onWeixinJSBridgeReady", jsApiCall);}}else{jsApiCall();}}
+            function jsApiCall(){WeixinJSBridge.invoke("getBrandWCPayRequest",' . $jsApiParameters . ',function(res){if(res.err_msg == "get_brand_wcpay_request:ok"){location.href="' . return_url(basename(__FILE__, '.php')) . '&status=1&order_id='.$order['order_id'].'"}else{location.href="' . return_url(basename(__FILE__, '.php')) . '&status=0&order_id='.$order['order_id'].'"}})};function callpay(){if (typeof WeixinJSBridge == "undefined"){if( document.addEventListener ){document.addEventListener("WeixinJSBridgeReady", jsApiCall, false);}else if (document.attachEvent){document.attachEvent("WeixinJSBridgeReady", jsApiCall);document.attachEvent("onWeixinJSBridgeReady", jsApiCall);}}else{jsApiCall();}}
             </script>';
 
             $button = '<div style="text-align:center"><button class="btn btn-info ect-btn-info ect-colorf ect-bg" style="background-color:#44b549;" type="button" onclick="callpay()">立即付款</button></div>' . $js;
@@ -120,7 +120,6 @@ class wxpay
         if (isset($_GET) && $_GET['status'] == 1) {
             $order = [];
             $order['order_id']= intval($_GET['order_id']);
-            $order['order_sn']= trim($_GET['order_sn']);
             $payment = model('Payment')->get_payment($data['code']);
             return $this->queryOrder($order, $payment);
         } else {
@@ -340,7 +339,7 @@ class wxpay
     {
         // 查询未支付的订单
         $res = model('Base')->model->table('pay_log')->field('transid, is_paid, log_id, order_amount')->where(array('order_id' => $order['order_id']))->find();
-        if ($res['is_paid'] == 0 && $order['pay_status'] == 0) {
+        if ($res['is_paid'] == 0) {
             $options = array(
                      'appid' => $payment['wxpay_appid'], //填写高级调用功能的app id
                      'mch_id' => $payment['wxpay_mchid'], //微信支付商户号
@@ -350,7 +349,9 @@ class wxpay
 
             // 微信订单号  商户订单号  二选一 ， 微信的订单号，建议优先使用
             $order_amount = $res['order_amount'] * 100;
-            $out_trade_no = $order['order_sn'] . 'A' . $order_amount . 'B' . $res['log_id'];
+            $order_sn = model('Base')->model->table('order_info')->field('order_sn')->where(array('order_id' => $order['order_id']))->getOne();
+
+            $out_trade_no = $order_sn . 'A' . $order_amount . 'B' . $res['log_id'];
 
             // $this->setParameter("transaction_id", $transaction_id); // 微信订单号
             $this->setParameter("out_trade_no", $out_trade_no); // 商户订单号

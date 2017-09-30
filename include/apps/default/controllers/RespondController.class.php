@@ -70,10 +70,9 @@ class RespondController extends CommonController
         if(isset($_GET) && isset($_GET['order_id'])){
             $order = [];
             $order['order_id']= intval($_GET['order_id']);
-            $order['order_sn']= trim($_GET['order_sn']);
             $order_url = url('user/order_detail', array('order_id' => $order['order_id']));
 
-            $repond_url = __URL__ . "/respond.php?code=" .$this->data['code']. "&status=1&order_id=".$order['order_id']."&order_sn=".$order['order_sn'];
+            $repond_url = __URL__ . "/respond.php?code=" .$this->data['code']. "&status=1&order_id=".$order['order_id'];
         }else{
             $repond_url = __URL__ . "/respond.php?code=" .$this->data['code']. "&status=0";
         }
