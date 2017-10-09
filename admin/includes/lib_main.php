@@ -736,9 +736,9 @@ function get_filter($param_str = '')
  * @param   string  $url  参数字符串，一个urld地址,对url地址进行校正
  * @return  返回校正过的url;
  */
-function sanitize_url($url , $check = 'http://')
+function sanitize_url($url , $check = 'http://', $check2 = 'https://')
 {
-    if (strpos( $url, $check ) === false)
+    if (strpos( $url, $check ) === false && strpos( $url, $check2 ) === false)
     {
         $url = $check . $url;
     }
