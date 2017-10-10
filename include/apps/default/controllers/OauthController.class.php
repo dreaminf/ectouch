@@ -22,7 +22,7 @@ class OauthController extends CommonController
         parent::__construct();
     }
 
-    public function Index()
+    public function index()
     {
         $type = I('get.type');
         $back_url = I('get.back_url', '', 'urldecode');
@@ -37,8 +37,8 @@ class OauthController extends CommonController
         } else {
             show_message(L('process_false'), L('relogin_lnk'), url('login', array('back_act' => $this->back_act)), 'error');
         }
-
-        $url = __URL__ . '/index.php?m=default&c=oauth&a=index&type=' . $type . '&back_url=' . $this->back_act;
+        // 处理url
+        $url = U('index/', array('type' => $type, 'back_url' => $this->back_act), false, true);
 
         $info = model('ClipsBase')->get_third_user_info($type);
         // 判断是否安装

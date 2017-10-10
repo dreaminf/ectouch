@@ -205,17 +205,19 @@ class CommonController extends BaseController
         session('parent_id',$_SESSION['user_id'] ? 0 : $_GET['u'] ? $_GET['u'] : 0);
     }
 
+    /**
+     * 初始化微信
+     * @return
+     */
     protected function wechat_init()
     {
         // 微信oauth处理
-        if(class_exists('WechatController')){
-            if (method_exists('WechatController', 'snsapi_base')) {
-                call_user_func(array('WechatController', 'snsapi_base'));
-                /*DRP_START*/
-                $this->drp();
-                /*DRP_END*/
-            }
-        }
+        $this->init_oauth();
+
+        /*DRP_START*/
+        $this->drp();
+        /*DRP_END*/
+
         if(class_exists('WechatController') && is_wechat_browser()){
             //是否显示关注按钮
             // $condition['openid'] = !empty($_SESSION['openid']) ? $_SESSION['openid'] : 0;
@@ -337,6 +339,27 @@ class CommonController extends BaseController
         }
 
         return __HOST__ . $uri;
+    }
+
+    /**
+     * 自动授权跳转
+     */
+    private function init_oauth()
+    {
+        if (is_wechat_browser() && empty($_SESSION['unionid']) && strtolower(CONTROLLER_NAME) != 'oauth') {
+            $sql = "SELECT `auth_config` FROM " . $this->model->pre . "touch_auth WHERE `from` = 'weixin' ";
+            $auth_config = $this->model->getRow($sql);
+            if ($auth_config) {
+                $res = unserialize($auth_config['auth_config']);
+                $config = array();
+                foreach ($res as $key => $value) {
+                    $config[$value['name']] = $value['value'];
+                }
+                $back_url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : __HOST__ . $_SERVER['REQUEST_URI'];
+                $url = url('oauth/index', array('type' => 'weixin', 'back_url' => $back_url));
+                $this->redirect($url);
+            }
+        }
     }
 }
 

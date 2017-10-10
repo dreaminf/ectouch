@@ -35,6 +35,9 @@
       }
     });
 
+    setTimeout(function () {
+        window.location.href = url.replace('respond_wxh5', 'index');
+    }, 5000);
   }
 
   function redirect(url) {
