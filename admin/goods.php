@@ -109,8 +109,8 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
     $is_add = $_REQUEST['act'] == 'add'; // 添加还是编辑的标识
     $is_copy = $_REQUEST['act'] == 'copy'; //是否复制
     $code = empty($_REQUEST['extension_code']) ? '' : trim($_REQUEST['extension_code']);
-    $code=$code=='virual_card' ? 'virual_card': '';
-    if ($code == 'virual_card')
+    $code=$code =='virtual_card' ? 'virtual_card': '';
+    if ($code == 'virtual_card')
     {
         admin_priv('virualcard'); // 检查权限
     }

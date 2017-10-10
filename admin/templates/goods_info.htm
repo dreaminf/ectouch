@@ -163,7 +163,8 @@
             <td><input type="text" name="virtual_sales" value="{$goods.virtual_sales}" size="20" />
             </td>
           </tr>
-         <!--拼团s--> 
+         <!--拼团s-->
+         {if $code neq 'virtual_card'} 
             <tr>
 			<td class="label"><label for="is_team"><input type="checkbox" id="is_team" name="is_team" value="1" {if $goods.is_team}checked="checked"{/if} onclick="handleTeam(this.checked);" /> 拼团价格</label></td>
             <!-- <td class="label">拼团价格</td> -->
@@ -204,6 +205,7 @@
           </select>
          {$lang.require_field}</td>
       </tr>
+      {/if}
          <!--拼团e--> 
           <tr>
               
