@@ -767,9 +767,8 @@ class WechatController extends CommonController
     }
 
     public static function snsapi_base(){
-        $wxinfo = model('Base')->model->table('wechat')->field('token, appid, appsecret, status')->find();
-        if(!empty($wxinfo['appid']) && is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['openid']))){
-            $_SESSION['openid'] = isset($_COOKIE['openid']) ? addslashes($_COOKIE['openid']) : '';
+        $wxinfo = model('Base')->model->table('wechat')->field('token, appid, appsecret, status, oauth_redirecturi')->find();
+        if(!empty($wxinfo['appid']) && is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['unionid']))){
             if($wxinfo['status']){
                 self::snsapi_userinfo();
             }else{
@@ -780,7 +779,6 @@ class WechatController extends CommonController
                     if(isset($_GET['code']) && $_GET['state'] == 'repeat'){
                         $token = $obj->getOauthAccessToken();
                         $_SESSION['openid'] = $token['openid'];
-                        setcookie('openid', $token['openid'], gmtime() + 86400 * 7);
                     }
                     // 生成请求链接
                     if (!empty($wxinfo['oauth_redirecturi'])) {
@@ -799,16 +797,16 @@ class WechatController extends CommonController
      * 跳转到第三方登录
      */
     public static function snsapi_userinfo(){
-        if(is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['unionid'])) && ACTION_NAME != 'third_login'){
-            $wxinfo   = model('Base')->model->table('wechat')->field('token, appid, appsecret, status')->find();
+        if(is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['unionid'])) && strtolower(CONTROLLER_NAME) != 'oauth'){
+            $wxinfo   = model('Base')->model->table('wechat')->field('token, appid, appsecret, status, oauth_redirecturi')->find();
             if(!$wxinfo['status']){return false;}
-            if (! empty($wxinfo['oauth_redirecturi'])) {
+            if (!empty($wxinfo['oauth_redirecturi'])) {
                 $callback = rtrim($wxinfo['oauth_redirecturi'], '/')  .'/'. $_SERVER['REQUEST_URI'];
             }
             if (! isset($_SESSION['redirect_url'])) {
                 $callback = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : __HOST__ . $_SERVER['REQUEST_URI'];;
             }
-            $url = url('oauth/index', array('type' => 'weixin', 'back_url' => $callback), 'org_mode');
+            $url = url('oauth/index', array('type' => 'weixin', 'back_url' => urlencode($callback)), 'org_mode');
             header("Location: ".$url);
             exit;
         }
