@@ -2433,7 +2433,7 @@ class UserController extends CommonController {
 
             $main_user_id = $this->model->table('wechat_user')->field('ect_uid')->where(array('unionid' => $_SESSION['unionid'], 'wechat_id' => $wechat_id))->getOne();
 
-            $main_user_info = model('users')->get_users($main_user_id);
+            $main_user_info = model('Users')->get_users($main_user_id);
             if (!empty($main_user_info)) {
                 $main_user_info['user_name'] = $main_user_info['user_name'] . '(系统默认分配账号)';
                 $main_user_info['user_picture'] = $this->model->table('wechat_user')->field('headimgurl')->where(array('unionid' => $_SESSION['unionid'], 'wechat_id' => $wechat_id))->getOne();
@@ -2441,8 +2441,8 @@ class UserController extends CommonController {
             $this->assign('main_user_info', $main_user_info); // 主会员信息
 
             // 关联会员信息
-            $relation_user_info = model('users')->get_connect_user($_SESSION['unionid']);
-            $relation_users = model('users')->get_users($relation_user_info['user_id']);
+            $relation_user_info = model('Users')->get_connect_user($_SESSION['unionid']);
+            $relation_users = model('Users')->get_users($relation_user_info['user_id']);
             if (!empty($relation_users)) {
                 $relation_user_info['user_picture'] = $relation_users['user_picture'];
                 $relation_user_info['mobile_phone'] = $relation_users['mobile_phone'];
@@ -2450,7 +2450,7 @@ class UserController extends CommonController {
             $this->assign('relation_user_info', $relation_user_info); // 已关联会员
 
             // 当前登录会员
-            $now_user_info = model('users')->get_users($this->user_id);
+            $now_user_info = model('Users')->get_users($this->user_id);
 
             if (!empty($main_user_info) && !empty($now_user_info) && $main_user_info['user_id'] == $now_user_info['user_id']) {
                 $now_user_info['user_name'] = $main_user_info['user_name'];
