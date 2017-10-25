@@ -904,7 +904,7 @@ class SaleModel extends BaseModel {
      */
     public function is_drp_shop($user_id = 0){
         if($user_id > 0){
-            $sql = "select dp.id,dp.audit,dp.open,u.parent_id from {pre}users as u left join {pre}drp_shop as dp on u.parent_id = dp.user_id where u.user_id = $user_id";
+            $sql = "select dp.id,dp.audit,dp.open,u.parent_id from {pre}users as u left join {pre}drp_shop as dp on u.parent_id = dp.user_id where u.user_id = $user_id and dp.user_id = $user_id";
             $shop_info = $this->model->getRow($sql);
             return $shop_info;
         }
