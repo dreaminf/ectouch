@@ -2931,6 +2931,12 @@ class UserController extends CommonController {
         $rec_id = empty($_REQUEST['rec_id']) ? '' : $_REQUEST['rec_id'];
         $order_id = empty($_REQUEST['order_id']) ? '' : $_REQUEST['order_id'];
         $total_exchange_goods = empty($_REQUEST['total_exchange_goods']) ? '' : $_REQUEST['total_exchange_goods'];
+        $service_id = empty($_REQUEST['service_id']) ? '' : $_REQUEST['service_id'];
+        if($service_id == 1){
+            $should_return_price = $_REQUEST['return_price'] * $_REQUEST['back_num'];
+        }else{
+            $should_return_price = 0;
+        }
         $num = 0;
 
         if ($rec_id) {
@@ -2964,7 +2970,7 @@ class UserController extends CommonController {
                 'addressee' => $order['consignee'], /*联系人*/
                 //'phone' => $order['mobile'], /*联系方式*/
                 'remark' => empty($_REQUEST['description']) ? '' : $_REQUEST['description'], /*退款说明*/
-                'should_return' => 0, /*应退金额*/
+                'should_return' => $should_return_price, /*应退金额*/
                 'cause_id' => intval(I('post.reason')), /*退换货原因*/
                 'add_time' => gmtime(),
                 'return_status' => RF_APPLICATION,
@@ -2975,8 +2981,8 @@ class UserController extends CommonController {
                 'address'=>I('address')
 
             );
-            //dump($order_return);
-            //exit;
+
+           
             if ($claim['service_type'] == ST_RETURN_GOODS) {
                 $regin =  model('RegionBase')->get_regions();
                 $order_return['country'] =  $regin['region_id'] ;
@@ -2984,7 +2990,6 @@ class UserController extends CommonController {
                 $order_return['city'] = $order['city'];
                 $order_return['district'] = $order['district'];
                 $order_return['address'] = $order['address'];
-                $order_return['should_return'] = $total_exchange_goods;/*应退金额*/
             };
             /* 插入退换货表 */
             $this->model->table('order_return ')->data($order_return)->insert();
