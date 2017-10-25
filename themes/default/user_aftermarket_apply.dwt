@@ -148,6 +148,7 @@
                 </div>
                 -->
 								<!--上传凭证 end-->
+								<input name="return_price" value="{$goods_return_price}" type="hidden">
 								<input name="order_id" value="{$order.order_id}" type="hidden">
 								<input name="rec_id" value="{$rec_id}" type="hidden">
 								<input name="goods_id" value="{$goods_id}" type="hidden">
