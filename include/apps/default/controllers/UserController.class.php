@@ -1889,7 +1889,7 @@ class UserController extends CommonController {
             }
         }
         //来源是退出地址时 默认会员中心
-        $this->back_act = strpos($back_act, url('user/logout')) ? url('user/index') : $back_act;
+        $this->back_act = strpos($back_act, 'logout') ? url('user/index') : $back_act;
 
         // 验证码相关设置
         $captcha = intval(C('captcha'));
