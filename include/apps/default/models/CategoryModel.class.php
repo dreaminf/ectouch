@@ -358,7 +358,8 @@ class CategoryModel extends BaseModel
         {
             case 'best':
                 //$type   = ' g.is_best = 1 ORDER BY g.sort_orderDESC';
-                $type   = '  ORDER BY g.limit_num DESC';
+                $type   = 'AND g.is_best = 1 ORDER BY g.sort_order DESC';
+                //$type   = '  ORDER BY g.limit_num DESC';
                 break;
             case 'new':
                 $type   = 'AND g.is_new = 1 ORDER BY g.add_time DESC';
