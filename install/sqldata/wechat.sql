@@ -239,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `ecs_wechat_template_log` (
 `url` varchar(255) NOT NULL DEFAULT '',
 `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
 PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 ALTER TABLE `ecs_wechat_template_log` ADD COLUMN `msgid` bigint unsigned NOT NULL DEFAULT 0 COMMENT '微信消息ID' AFTER `id`;
 
