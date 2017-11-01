@@ -2543,6 +2543,25 @@ class UsersModel extends BaseModel {
         }
         return false;
     }
+    /**
+     * 非退货退款订单
+     * @access  public
+     * @param   id $user_id 原会员id
+     * @return  string      $v 非退货退款订单字符串
+     */
+    public function order_rec_id($user_id){
+        $sql = "SELECT rec_id FROM ". $this->pre ."order_return where user_id = '$user_id' and service_id = 1";
+        $result = $this->query($sql);
+
+        foreach($result as $key =>$val){
+            if($val['rec_id']){
+                $t = $val['rec_id'];
+                $v .= $t.",";
+            }
+        }
+        $v = substr($v,0,-1) ;
+        return $v;
+    }
 
 
 }
