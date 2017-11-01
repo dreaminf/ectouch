@@ -2093,16 +2093,17 @@ class UsersModel extends BaseModel {
                         show_message(L('time_out'));
                     }
                 } elseif ($order['shipping_status'] == SS_RECEIVED) {
-                    //已收货 退货换货，退款, 换货, 维修
-                    $action = $this->model->table('order_action')->field('log_time')->where(array('shipping_status' => SS_RECEIVED, 'order_id' => $order['order_id']))->find(); //获取发货时间
+                    //已收货 退货换货，退款
+                    $action = $this->model->table('order_action')->field('log_time')->where(array('shipping_status' => SS_RECEIVED, 'order_id' => $order['order_id']))->find(); //获取发货时间                    
                     /* 退货退款 现在时间-发货时时间 得到天数 */
                     $days = (($time - $action['log_time']) / 3600 / 24);
-                    if ($days <= $service_return['unreceived_days']) {
+
+                    if ($days <= $service_return['received_days']) {
                         $type_list[] = ST_RETURN_GOODS;
                     } else {
                         show_message(L('time_out'));
                     }
-                    if ($days <= $service_exchange['unreceived_days']) {
+                    if ($days <= $service_exchange['received_days']) {
                         $type_list[] = ST_EXCHANGE;
                     } else {
                         show_message(L('time_out'));
