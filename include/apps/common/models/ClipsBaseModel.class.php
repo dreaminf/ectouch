@@ -949,15 +949,19 @@ class ClipsBaseModel extends BaseModel {
             }
         }
         $v = substr($v,0,-1) ;
-        
-        $sql="select  count(b.goods_id)  from " . $this->pre . "order_info as o  LEFT JOIN " .$this->pre. "order_goods  as b on o.order_id=b.order_id "." where o.user_id='$user_id' ".
+        $rec_id = model('Users')->order_rec_id($user_id);
+
+        $sql="select  count(b.goods_id)   from " . $this->pre . "order_info as o  LEFT JOIN " .$this->pre. "order_goods  as b on o.order_id=b.order_id left join ".$this->pre."order_return as r on r.rec_id = b.rec_id " ." where o.user_id='$user_id' ".
             " AND o.shipping_status " . db_create_in(array(SS_RECEIVED)).
             " AND o.order_status " . db_create_in(array(OS_CONFIRMED, OS_SPLITED)).
-            " AND o.pay_status " . db_create_in(array(PS_PAYED, PS_PAYING));         
+            " AND o.pay_status " . db_create_in(array(PS_PAYED, PS_PAYING));
+        if($rec_id) {
+            $sql .= ' AND b.rec_id NOT IN ( '. $rec_id .' )';
+        }         
         if ($v) {
             $sql .= ' AND b.rec_id NOT IN ( '. $v .' )';
-        }
-        $res = $this->query($sql);         
+        }        
+        $res = $this->query($sql);        
         $row = $res[0]['count(b.goods_id)'];
         return $row;
     }

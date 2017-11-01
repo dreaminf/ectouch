@@ -2731,13 +2731,17 @@ class UserController extends CommonController {
             }
         }
         $v = substr($v,0,-1) ;
-       $sql = "select g.goods_name,g.goods_id,g.rec_id,i.add_time,g.order_id,gg.goods_img from ".$this->model->pre ."order_info as i left join ".
-                $this->model->pre."order_goods as g on i.order_id = g.order_id left join ".$this->model->pre."goods as gg on g.goods_id = gg.goods_id ".
+        $rec_id = model('Users')->order_rec_id($user_id);
+        $sql = "select g.goods_name,g.goods_id,g.rec_id,i.add_time,g.order_id,gg.goods_img from ".$this->model->pre ."order_info as i left join ".
+                $this->model->pre."order_goods as g on i.order_id = g.order_id left join ".$this->model->pre."order_return as r on r.rec_id = g.rec_id left join ".$this->model->pre."goods as gg on g.goods_id = gg.goods_id ".
                 "where i.user_id='$user_id' ".
                 " AND i.shipping_status " . db_create_in(array(SS_RECEIVED)).
                 " AND i.order_status " . db_create_in(array(OS_CONFIRMED, OS_SPLITED)).
                 " AND i.pay_status " . db_create_in(array(PS_PAYED, PS_PAYING));
 
+        if($rec_id) {
+            $sql .= ' AND g.rec_id NOT IN ( '. $rec_id .' )';
+        }
         if(!empty($v)){
             $sql .= ' AND g.rec_id NOT IN ( '. $v .' )';
         }
