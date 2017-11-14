@@ -570,6 +570,7 @@ class WechatController extends AdminController
             }
             $data['send_time'] = gmtime();
 			$data['iswechat'] = 1;
+            $data['msg'] = strip_tags(html_out($data['msg']));
             // 微信端发送消息
             $msg = array(
                 'touser' => $openid,
@@ -1589,7 +1590,7 @@ class WechatController extends AdminController
                     $article[$key]['thumb_media_id'] = $rs['media_id'];
                     $article[$key]['author'] = $artinfo['author'];
                     $article[$key]['title'] = $artinfo['title'];
-                    $article[$key]['content_source_url'] = $artinfo['link'];
+                    $article[$key]['content_source_url'] = empty($article_info['link']) ? __HOST__ . url('article/wechat_news_info', array('id'=>$article_info['id'])) : strip_tags(html_out($article_info['link']));
                     $article[$key]['content'] = $artinfo['content'];
                     $article[$key]['digest'] = $artinfo['digest'];
                     $article[$key]['show_cover_pic'] = $artinfo['is_show'];
@@ -1607,7 +1608,7 @@ class WechatController extends AdminController
                 $article[0]['thumb_media_id'] = $rs['media_id'];
                 $article[0]['author'] = $article_info['author'];
                 $article[0]['title'] = $article_info['title'];
-                $article[0]['content_source_url'] = $article_info['link'];
+                $article[0]['content_source_url'] = empty($article_info['link']) ? __HOST__ . url('article/wechat_news_info', array('id'=>$article_info['id'])) : strip_tags(html_out($article_info['link']));
                 $article[0]['content'] = $article_info['content'];
                 $article[0]['digest'] = $article_info['digest'];
                 $article[0]['show_cover_pic'] = $article_info['is_show'];
