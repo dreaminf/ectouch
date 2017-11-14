@@ -851,6 +851,10 @@ class WechatController extends CommonController
      */
     public function plugin_show()
     {
+        if (is_wechat_browser() && (!isset($_SESSION['unionid']) || empty($_SESSION['unionid']) || empty($_SESSION['openid']))) {
+            $back_url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : __HOST__ . $_SERVER['REQUEST_URI'];
+            $this->redirect('oauth/index', ['type' => 'weixin', 'back_url' => urlencode($back_url)]);
+        }
         $plugin = I('get.name');
         $file = ADDONS_PATH . 'wechat/' . $plugin . '/' . $plugin . '.class.php';
         if (file_exists($file)) {
