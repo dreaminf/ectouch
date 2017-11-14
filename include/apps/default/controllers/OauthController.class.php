@@ -35,7 +35,7 @@ class OauthController extends CommonController
         if (file_exists($file)) {
             include_once ($file);
         } else {
-            show_message(L('process_false'), L('relogin_lnk'), url('login', array('back_act' => $this->back_act)), 'error');
+            show_message(L('process_false'), L('relogin_lnk'), url('user/login/index', array('back_act' => $this->back_act)), 'error');
         }
         // 处理url
         $url = U('index/', array('type' => $type, 'back_url' => $this->back_act), false, true);
@@ -43,7 +43,7 @@ class OauthController extends CommonController
         $info = model('ClipsBase')->get_third_user_info($type);
         // 判断是否安装
         if (!$info) {
-            show_message(L('no_register_auth'), L('relogin_lnk'), url('login', array('back_act' => $this->back_act)), 'error');
+            show_message(L('no_register_auth'), L('relogin_lnk'), url('user/login/index', array('back_act' => $this->back_act)), 'error');
         }
         $obj = new $type($info);
 
@@ -81,7 +81,7 @@ class OauthController extends CommonController
                 }
                 return;
             } else {
-                show_message(L('process_false'), L('relogin_lnk'), url('login', array('back_act' => urlencode($this->back_act))), 'error');
+                show_message(L('process_false'), L('relogin_lnk'), url('user/login/index', array('back_act' => urlencode($this->back_act))), 'error');
             }
             return;
         } else {
