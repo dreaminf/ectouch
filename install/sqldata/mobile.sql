@@ -55,7 +55,7 @@ INSERT INTO `ecs_admin_action` (`action_id`, `parent_id`, `action_code`, `releva
 CREATE TABLE IF NOT EXISTS `ecs_touch_activity` (
   `act_id` int(10) NOT NULL,
   `act_banner` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_touch_topic`
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_topic` (
   `keywords` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`topic_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `ecs_touch_ad`
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_category` (
   `cat_id` int(10) unsigned DEFAULT NULL COMMENT '外键',
   `cat_image` varchar(255) DEFAULT NULL COMMENT '分类ICO图标',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_touch_feedback`
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_feedback` (
   `msg_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `msg_read` int(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_touch_goods`
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_goods` (
   `goods_id` int(10) unsigned default '0' COMMENT '外键',
   `sales_volume` int(10) unsigned default '0' COMMENT '销量统计',
   UNIQUE KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_touch_goods_activity`
@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_goods_activity` (
   `click_num` int(10) NOT NULL DEFAULT '0',
   `cur_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   UNIQUE KEY `act_id` (`act_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_touch_nav`
@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_nav` (
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `ifshow` (`ifshow`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `ecs_touch_nav`
@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_auth` (
   `auth_config` text NOT NULL DEFAULT '',
   `from` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='登录插件';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='登录插件';
 
 --
 -- 表的结构 `ecs_touch_user_info`
@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `ecs_touch_auth` (
 CREATE TABLE IF NOT EXISTS `ecs_touch_user_info` (
   `user_id` int(10) NOT NULL DEFAULT '0',
   `aite_id` varchar(200) NOT NULL DEFAULT '' COMMENT '标识'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户信息';
 
 
 CREATE TABLE IF NOT EXISTS `ecs_connect_user` (
@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_config` (
   `type` varchar(20) DEFAULT 'text' COMMENT '数据类型',
   `value` TEXT COMMENT '默认值',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- 表的结构 `ecs_drp_log`
@@ -248,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_log` (
   `status` int(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`log_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- 表的结构 `drp_invalid_log`
@@ -278,7 +278,7 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_profit` (
   `profit2` float(20,2) DEFAULT '0.00' COMMENT '分销利润2级',
   `profit3` float(20,2) DEFAULT '0.00' COMMENT '分销利润3级',
   PRIMARY KEY (`profit_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- 表的结构 `ecs_drp_shop`
@@ -299,7 +299,113 @@ CREATE TABLE IF NOT EXISTS `ecs_drp_shop` (
   `open` int(1) NOT NULL DEFAULT '0' COMMENT '店铺是否开启',
   `bank` int(10) NOT NULL DEFAULT '0' COMMENT '默认银行卡',
   PRIMARY KEY (`id`,`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+
+-- ----------------------------
+-- Table structure for `ecs_drp_bank`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `ecs_drp_bank` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `bank_region` VARCHAR( 255 ) DEFAULT NULL COMMENT '所在地',
+  `bank_name` varchar(50) DEFAULT NULL COMMENT '银行名称',
+  `bank_user_name` varchar(50) DEFAULT NULL COMMENT '开户名称',
+  `bank_card` varchar(50) DEFAULT NULL COMMENT '银行卡号',
+  `user_id` int(10) DEFAULT '0' COMMENT '用户id',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `ecs_drp_visiter`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `ecs_drp_visiter` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL DEFAULT '0',
+  `drp_id` int(10) NOT NULL DEFAULT '0',
+  `visit_time` int(12) NOT NULL DEFAULT '0' COMMENT '访问时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `ecs_drp_goods`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `ecs_drp_goods` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `goods_id` int(10) NOT NULL DEFAULT '0',
+  `touch_sale` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `touch_fencheng` decimal(10,2) NOT NULL DEFAULT '0.00',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `ecs_drp_order_goods`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `ecs_drp_order_goods` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `goods_id` int(10) DEFAULT '0',
+  `touch_sale` decimal(10,2) DEFAULT '0.00',
+  `touch_fencheng` decimal(10,2) DEFAULT '0.00',
+  `order_id` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `ecs_drp_order_info`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `ecs_drp_order_info` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `drp_id` int(10) NOT NULL DEFAULT '0',
+  `shop_separate` int(1) unsigned NOT NULL DEFAULT '0',
+  `order_id` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `ecs_drp_apply`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `ecs_drp_apply` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `apply` int(1) DEFAULT '1',
+  `user_id` int(10) DEFAULT '0',
+  `time` int(12) DEFAULT '0',
+  `amount` decimal(10,2) DEFAULT '0.00',
+  PRIMARY KEY (`id`)
+)  ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ecs_drp_config
+-- ----------------------------
+
+CREATE TABLE IF NOT EXISTS `ecs_drp_invalid_log` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `user_money` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `pay_points` mediumint(9) NOT NULL DEFAULT '0',
+  `change_time` int(10) unsigned NOT NULL DEFAULT '0',
+  `change_desc` varchar(255) NOT NULL DEFAULT '',
+  `change_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `invalid_desc`  text COMMENT '无效说明',
+  `order_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+INSERT INTO `ecs_drp_config` VALUES ('1', '', 'apply', '温馨提示', '申请分销商时，提示用户需要注意的信息', 'textarea', '亲，您的佣金由三部分组成：<br>1.本店所销售的商品，我所获得的佣金（即本店销售佣金）<br>2.下级分店所销售的商品，我所获得的佣金（即一级分店佣金）<br>3.下级分店发展的分店所销售的商品，我所获得的佣金（即二级分店佣金）');
+INSERT INTO `ecs_drp_config` VALUES ('2', '', 'novice', '新手必读', '分销商申请成功后，用户要注意的事项', 'textarea', '1、开微店收入来源之一：您已成功注册微店，已经取得整个商城的商品销售权，只要有人在您的微店购物，即可获得“本店销售佣金”。<br>2、开微店收入来源之二：邀请您的朋友注册微店，他就会成为你的分销商，他店内销售的商品，您即可获得“一级分店佣金”。<br>3、开微店收入来源之三：您的分销商邀请他的朋友注册微店，他店内销售的商品，您即可获得“二级分店佣金”。');
+INSERT INTO `ecs_drp_config` VALUES ('3', '', 'fxts', '间隔', '下单并付款之后经过间隔天数才可以对订单分成', 'text', '1');
+INSERT INTO `ecs_drp_config` VALUES ('4', '', 'txxz', '提现标准', '申请提现时，少于该值将无法提现', 'text', '10');
+INSERT INTO `ecs_drp_config` VALUES ('5', 'open,close', 'msg_open', '消息推送', '是否开启消息推送', 'radio', 'open');
+INSERT INTO `ecs_drp_config` VALUES ('6', 'open,close', 'examine', '购买分销商', '是否开启购买成为分销商', 'radio', 'open');
+INSERT INTO `ecs_drp_config` VALUES ('7', '', 'money', '购买金额', '购买分销商金额', 'text', '1');
+INSERT INTO `ecs_drp_config` VALUES ('8', 'open,close', 'audit', '分销商审核', '是否对新申请的分销商进行审核', 'radio', 'open');
+INSERT INTO `ecs_drp_config` VALUES ('9', 'open,close', 'buy_money', '累计消费金额', '是否开启购物累计消费金额满足设置才能开店', 'radio', 'close');
+INSERT INTO `ecs_drp_config` VALUES ('10', '', 'buy', '设置累计消费金额', '设置会员累计消费金额', 'text', '0');
+INSERT INTO `ecs_drp_config` VALUES ('11', '', 'custom_distributor', '自定义“分销商”名称', '替换设定的分销商名称', 'text', '代言人');
+INSERT INTO `ecs_drp_config` VALUES ('12', '', 'custom_distribution', '自定义“分销”名称', '替换设定的分销名称', 'text', '代言');
+ALTER TABLE `ecs_users` ADD COLUMN `apply_sale` int(1) unsigned NOT NULL DEFAULT '0';
+
+-- /*DRP_END*/
 
 
 --
@@ -354,110 +460,6 @@ CREATE TABLE IF NOT EXISTS `ecs_term_relationship` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100 ;
 
 
--- ----------------------------
--- Table structure for `ecs_drp_bank`
--- ----------------------------
-CREATE TABLE IF NOT EXISTS `ecs_drp_bank` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `bank_region` VARCHAR( 255 ) DEFAULT NULL COMMENT '所在地',
-  `bank_name` varchar(50) DEFAULT NULL COMMENT '银行名称',
-  `bank_user_name` varchar(50) DEFAULT NULL COMMENT '开户名称',
-  `bank_card` varchar(50) DEFAULT NULL COMMENT '银行卡号',
-  `user_id` int(10) DEFAULT '0' COMMENT '用户id',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for `ecs_drp_visiter`
--- ----------------------------
-CREATE TABLE IF NOT EXISTS `ecs_drp_visiter` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) NOT NULL DEFAULT '0',
-  `drp_id` int(10) NOT NULL DEFAULT '0',
-  `visit_time` int(12) NOT NULL DEFAULT '0' COMMENT '访问时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for `ecs_drp_goods`
--- ----------------------------
-CREATE TABLE IF NOT EXISTS `ecs_drp_goods` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `goods_id` int(10) NOT NULL DEFAULT '0',
-  `touch_sale` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `touch_fencheng` decimal(10,2) NOT NULL DEFAULT '0.00',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for `ecs_drp_order_goods`
--- ----------------------------
-CREATE TABLE IF NOT EXISTS `ecs_drp_order_goods` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `goods_id` int(10) DEFAULT '0',
-  `touch_sale` decimal(10,2) DEFAULT '0.00',
-  `touch_fencheng` decimal(10,2) DEFAULT '0.00',
-  `order_id` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for `ecs_drp_order_info`
--- ----------------------------
-CREATE TABLE IF NOT EXISTS `ecs_drp_order_info` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `drp_id` int(10) NOT NULL DEFAULT '0',
-  `shop_separate` int(1) unsigned NOT NULL DEFAULT '0',
-  `order_id` int(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for `ecs_drp_apply`
--- ----------------------------
-CREATE TABLE IF NOT EXISTS `ecs_drp_apply` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `apply` int(1) DEFAULT '1',
-  `user_id` int(10) DEFAULT '0',
-  `time` int(12) DEFAULT '0',
-  `amount` decimal(10,2) DEFAULT '0.00',
-  PRIMARY KEY (`id`)
-)  ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of ecs_drp_config
--- ----------------------------
-
-CREATE TABLE IF NOT EXISTS `ecs_drp_invalid_log` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `user_money` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `pay_points` mediumint(9) NOT NULL DEFAULT '0',
-  `change_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `change_desc` varchar(255) NOT NULL DEFAULT '',
-  `change_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `invalid_desc`  text COMMENT '无效说明',
-  `order_id` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-
-INSERT INTO `ecs_drp_config` VALUES ('1', '', 'apply', '温馨提示', '申请分销商时，提示用户需要注意的信息', 'textarea', '亲，您的佣金由三部分组成：<br>1.本店所销售的商品，我所获得的佣金（即本店销售佣金）<br>2.下级分店所销售的商品，我所获得的佣金（即一级分店佣金）<br>3.下级分店发展的分店所销售的商品，我所获得的佣金（即二级分店佣金）');
-INSERT INTO `ecs_drp_config` VALUES ('2', '', 'novice', '新手必读', '分销商申请成功后，用户要注意的事项', 'textarea', '1、开微店收入来源之一：您已成功注册微店，已经取得整个商城的商品销售权，只要有人在您的微店购物，即可获得“本店销售佣金”。<br>2、开微店收入来源之二：邀请您的朋友注册微店，他就会成为你的分销商，他店内销售的商品，您即可获得“一级分店佣金”。<br>3、开微店收入来源之三：您的分销商邀请他的朋友注册微店，他店内销售的商品，您即可获得“二级分店佣金”。');
-INSERT INTO `ecs_drp_config` VALUES ('3', '', 'fxts', '间隔', '下单并付款之后经过间隔天数才可以对订单分成', 'text', '1');
-INSERT INTO `ecs_drp_config` VALUES ('4', '', 'txxz', '提现标准', '申请提现时，少于该值将无法提现', 'text', '10');
-INSERT INTO `ecs_drp_config` VALUES ('5', 'open,close', 'msg_open', '消息推送', '是否开启消息推送', 'radio', 'open');
-INSERT INTO `ecs_drp_config` VALUES ('6', 'open,close', 'examine', '购买分销商', '是否开启购买成为分销商', 'radio', 'open');
-INSERT INTO `ecs_drp_config` VALUES ('7', '', 'money', '购买金额', '购买分销商金额', 'text', '1');
-INSERT INTO `ecs_drp_config` VALUES ('8', 'open,close', 'audit', '分销商审核', '是否对新申请的分销商进行审核', 'radio', 'open');
-INSERT INTO `ecs_drp_config` VALUES ('9', 'open,close', 'buy_money', '累计消费金额', '是否开启购物累计消费金额满足设置才能开店', 'radio', 'close');
-INSERT INTO `ecs_drp_config` VALUES ('10', '', 'buy', '设置累计消费金额', '设置会员累计消费金额', 'text', '0');
-INSERT INTO `ecs_drp_config` VALUES ('11', '', 'custom_distributor', '自定义“分销商”名称', '替换设定的分销商名称', 'text', '代言人');
-INSERT INTO `ecs_drp_config` VALUES ('12', '', 'custom_distribution', '自定义“分销”名称', '替换设定的分销名称', 'text', '代言');
-ALTER TABLE `ecs_users` ADD COLUMN `apply_sale` int(1) unsigned NOT NULL DEFAULT '0';
-
--- /*DRP_END*/
 --
 -- 表的结构 `ecs_order_return`
 --
