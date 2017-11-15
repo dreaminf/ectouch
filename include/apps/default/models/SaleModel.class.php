@@ -22,7 +22,7 @@ class SaleModel extends BaseModel {
      */
     function get_shop_list($key=1){
         $res = array();
-        $sql = "select d.* from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id = ".$_SESSION['user_id'];
+        $sql = "select d.* from {pre}users as u JOIN {pre}drp_shop d ON  u.user_id=d.user_id WHERE u.parent_id = ".$_SESSION['user_id']." order by d.create_time desc";
         $list = M()->query($sql);
         if($key == 1){
             $res = $list;
