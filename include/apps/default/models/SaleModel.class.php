@@ -71,7 +71,7 @@ class SaleModel extends BaseModel {
      * 获取我的下线会员
      */
     function get_user_list(){
-        $sql = "select reg_time,user_id,user_name from {pre}users  WHERE parent_id = ".$_SESSION['user_id'];
+        $sql = "select reg_time,user_id,user_name from {pre}users  WHERE parent_id = ".$_SESSION['user_id']." order by reg_time desc";
         $list = M()->query($sql);
         foreach($list as $key => $val){
             $list[$key]['time'] = local_date(C('date_format'), $val['reg_time']);;
