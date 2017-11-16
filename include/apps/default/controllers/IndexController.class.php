@@ -59,6 +59,14 @@ class IndexController extends CommonController {
             }
             // 获取频道
             $this->assign('team_categories', model('Index')->team_categories_tree());
+            // 微信JSSDK分享
+            $share_data = array(
+                'title' => C('shop_name'),
+                'desc' => C('shop_desc'),
+                'link' => '',
+                'img' => '',
+            );
+            $this->assign('share_data', $this->get_wechat_share_content($share_data));
         }
         // 关注按钮 是否显示
         $this->assign('subscribe', $_SESSION['subscribe']);
