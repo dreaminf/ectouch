@@ -165,7 +165,7 @@ wx.error(function(res){
     /**
      * 积分赠送处理
      */
-    public function do_point($fromusername, $info, $rank_points, $pay_points)
+    public function do_point($fromusername, $info, $rank_points = 0, $pay_points = 0)
     {
         $time = time();
         $user_id = model('Base')->model->table('wechat_user')
