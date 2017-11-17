@@ -32,12 +32,6 @@ if (isset($set_modules) && $set_modules == TRUE){
         array('name' => 'alipay_key',               'type' => 'text',   'value' => ''),
         array('name' => 'alipay_partner',           'type' => 'text',   'value' => ''),
         // array('name' => 'alipay_pay_method',        'type' => 'select', 'value' => '')
-        array('name' => 'use_sandbox',              'type' => 'select', 'value' => ''),
-        array('name' => 'app_id',                   'type' => 'text',   'value' => ''),
-        array('name' => 'sign_type',                'type' => 'select', 'value' => ''),
-        array('name' => 'ali_public_key',           'type' => 'textarea', 'value' => ''),
-        array('name' => 'rsa_private_key',          'type' => 'textarea', 'value' => ''),
-
     );
     return;
 }

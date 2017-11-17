@@ -301,57 +301,7 @@ class PaymentModel extends BaseModel {
             }
         }       
     }
-
-    /**
-     * 修改支付宝订单退款的状态
-     *
-     * @access  public
-     * @param   array   $order     订单信息
-     * @param   string  $log_id     支付编号
-     * @param   integer $pay_status 状态
-     * @return  void
-     */
-    function refund_order($order , $log_id, $pay_status = PS_UNPAYED){        
-        $log_id = intval($log_id);
-        $note = '买家已退款';
-        /* 取得要修改的支付记录信息 */
-        $sql = "SELECT * FROM " . $this->pre .
-                "pay_log WHERE log_id = '$log_id'";
-        $pay_log = $this->row($sql);
-        if($pay_log && $pay_log['is_paid'] == 1){
-            /* 修改此次支付操作的状态为未付款 */
-            $sql = 'UPDATE ' . $this->pre .
-                    "pay_log SET is_paid = '0' WHERE log_id = '$log_id'";
-            $this->query($sql);
-            $order_id = $order['order_id'];
-            $order_sn = $order['order_sn'];
-
-            /* 修改订单状态为取消*/
-            $sql = 'UPDATE ' . $this->pre .
-                    "order_info SET order_status = '" . OS_CANCELED . "', " .
-                    " confirm_time = '" . gmtime() . "', " .
-                    " pay_status = '$pay_status', " .
-                    " shipping_status = '" . SS_UNSHIPPED . "', " .
-                    " pay_time = '" . gmtime() . "', " .
-                    " money_paid = order_amount," .
-                    " order_amount = 0 " .
-                    "WHERE order_id = '$order_id'";
-            $this->query($sql);
-            /* 记录订单操作记录 */
-            model('OrderBase')->order_action($order_sn, OS_CANCELED, SS_UNSHIPPED, $pay_status, $note, L('buyer'));
-            /*DRP_START*/
-            //判断订单是否已分成（未分成则分销佣金归0）
-            $row  =  M()->getRow("select order_id,shop_separate from {pre}drp_order_info where order_id = '".$order_id."'");
-            if($row['shop_separate'] == 0){                
-                model('Sale')->refund_drp($order);//退款减去分销佣金                 
-            }
-            /*DRP_END*/
-            return true;
-        }else{
-            logResult('订单异常！退款已成功，未修改订单状态。');
-            return false;
-        }      
-    }
+    
     /**
      * 根据out_trade_no订单号获取log_id;
      */

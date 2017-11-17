@@ -3442,18 +3442,4 @@ class UserController extends CommonController {
 
         $this->display('team/user_sign_detail.html');
     }
-    /**
-     * 支付宝退款
-     */
-    function ali_refund_order(){
-        $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
-        $result = model('Users')->get_refund_order($order_id, $this->user_id);
-        if($result == true){
-            show_message('已退款成功', '个人中心', url('user/index'));
-        }else{
-            show_message('退款失败', '', url('index/index'));
-        }
-    }
-
-
 }

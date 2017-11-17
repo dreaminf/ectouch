@@ -50,7 +50,7 @@
           
           </dd>
 
-         
+   
         </dl>
       </li>
       <!-- {/foreach} -->
@@ -64,9 +64,6 @@
   {$order.handler}
     <!-- {if $order.order_tracking}-->
     <a href="{:url('order_tracking', array('order_id'=>$this->_var['order']['order_id']))}" type="button" class="btn  btn-reset" style="margin-top:1rem">{$lang.order_tracking}</a>
-    <!--{/if}-->
-    <!-- {if $order.can_cancle eq 1}-->
-    <a style="background-color: #b0d8a7; margin-top:1rem;" href="{:url('ali_refund_order', array('order_id'=>$this->_var['order']['order_id']))}" type="button" class="btn  btn-reset" style="margin-top:1rem">立即退款</a>
     <!--{/if}-->
 </div>
 <section class="order-detail-info ect-margin-tb" style="margin-bottom:0;">
