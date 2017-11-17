@@ -897,17 +897,4 @@ class SaleModel extends BaseModel {
             return $shop_info;
         }
     }
-
-    /**
-     * @param array $order
-     * 支付宝退款，移除未分销佣金
-     */
-    public function refund_drp($order) {
-        $order_sn = $order['order_sn'];
-        $order_id = $order['order_id']; 
-        $change_desc = '订单分成，订单号：'.$order_sn.',分成金额：0';
-        $sql = "UPDATE ".$this->pre."drp_log set user_money = 0, change_desc = '$change_desc'"."where order_id = '$order_id'";
-        $this->query($sql);
-    }
-
 }

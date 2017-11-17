@@ -65,9 +65,6 @@
     <!-- {if $order.order_tracking}-->
     <a href="{:url('order_tracking', array('order_id'=>$this->_var['order']['order_id']))}" type="button" class="btn btn-info ect-btn-info ect-colorf ect-bg">{$lang.order_tracking}</a>
     <!--{/if}-->
-    <!-- {if $order.can_cancle eq 1}-->
-     <a  type="button" class="btn btn-info ect-colorf ect-bg" href="{:url('ali_refund_order', array('order_id'=>$this->_var['order']['order_id']))}">立即退款</a>
-    <!--{/if}-->
 </div>
 <section class="order-detail-info ect-margin-tb" style="margin-bottom:0;">
   <ul>
