@@ -515,7 +515,7 @@ $(function($) {
 					num -= 1;
 					$(this).siblings("input").val(num);
 				} else {
-					d_messages_btn("不能小于最小数量", "确定", "取消");
+					
 				}
 				return false;
 			}
