@@ -502,16 +502,23 @@ class FlowController extends CommonController {
         );
         $shipping_list = model('Shipping')->available_shipping_list($region);
         $cart_weight_price = model('Order')->cart_weight_price($flow_type);
+        $cart_weight_price['old_preic'] = $cart_weight_price ['amount'];
         $insure_disabled = true;
         $cod_disabled = true;
 
+        //团购商品计算商品价格
+        if ($order['extension_code'] == 'group_buy') {
+            $group_buy = model('GroupBuyBase')->group_buy_info($order['extension_id']);
+
+        }
         // 查看购物车中是否全为免运费商品，若是则把运费赋为零
         $condition = "`session_id` = '" . SESS_ID . "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0";
         $shipping_count = $this->model->table('cart')->field('count(*)')->where($condition)->getOne();
+      
         foreach ($shipping_list as $key => $val) {
 
             $shipping_cfg = unserialize_config($val ['configure']);
-            $shipping_fee = ($shipping_count == 0 and $cart_weight_price ['free_shipping'] == 1) ? 0 : shipping_fee($val['shipping_code'], unserialize($val ['configure']), $cart_weight_price ['weight'], $cart_weight_price ['amount'], $cart_weight_price ['number']);
+            $shipping_fee = ($shipping_count == 0 and $cart_weight_price ['free_shipping'] == 1) ? 0 : shipping_fee($val['shipping_code'], unserialize($val ['configure']), $cart_weight_price ['weight'], $cart_weight_price['old_preic'] = $group_buy['cur_price'] > 0 ? $group_buy['cur_price'] : cart_weight_price['old_preic'], $cart_weight_price ['number']);
 
             $shipping_list [$key] ['format_shipping_fee'] = price_format($shipping_fee, false);
             $shipping_list [$key] ['shipping_fee'] = $shipping_fee;

@@ -250,6 +250,11 @@ class GroupbuyController extends CommonController {
             'rec_type' => CART_GROUP_BUY_GOODS,
             'is_gift' => 0
         );
+        //商品是否是免邮商品
+        if($goods['is_shipping']){
+            $cart['is_shipping'] = 1;
+        }
+        
         $new_cart = model('Common')->filter_field('cart', $cart);
         $this->model->table('cart')->data($new_cart)->insert();
 
