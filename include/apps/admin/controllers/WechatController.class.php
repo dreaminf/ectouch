@@ -1590,7 +1590,7 @@ class WechatController extends AdminController
                     $article[$key]['thumb_media_id'] = $rs['media_id'];
                     $article[$key]['author'] = $artinfo['author'];
                     $article[$key]['title'] = $artinfo['title'];
-                    $article[$key]['content_source_url'] = empty($article_info['link']) ? __HOST__ . url('article/wechat_news_info', array('id'=>$article_info['id'])) : strip_tags(html_out($article_info['link']));
+                    $article[$key]['content_source_url'] = empty($artinfo['link']) ? __HOST__ . url('article/wechat_news_info', array('id'=>$artinfo['id'])) : strip_tags(html_out($artinfo['link']));
                     $article[$key]['content'] = $artinfo['content'];
                     $article[$key]['digest'] = $artinfo['digest'];
                     $article[$key]['show_cover_pic'] = $artinfo['is_show'];
