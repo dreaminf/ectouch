@@ -1588,7 +1588,7 @@ class UsersModel extends BaseModel {
             $region['city'] = $consignee['city'];
             $region['district'] = $consignee['district'];
             $shipping_info = model('Shipping')->shipping_area_info($order['shipping_id'], $region);
-
+            $old_price = $total['goods_price'];
             if (!empty($shipping_info)) {
                 if ($order['extension_code'] == 'group_buy') {
                     $weight_price = model('Order')->cart_weight_price(CART_GROUP_BUY_GOODS);
@@ -1604,7 +1604,7 @@ class UsersModel extends BaseModel {
                 }
                 $res = $this->row($sql);
                 $shipping_count = $res['count'];              
-                $total['shipping_fee'] = ($shipping_count == 0 AND $weight_price['free_shipping'] == 1) ? 0 : shipping_fee($shipping_info['shipping_code'], $shipping_info['configure'], $weight_price['weight'], $total['goods_price'], $weight_price['number']);
+                $total['shipping_fee'] = ($shipping_count == 0 AND $weight_price['free_shipping'] == 1) ? 0 : shipping_fee($shipping_info['shipping_code'], $shipping_info['configure'], $weight_price['weight'], $old_price = $group_buy['cur_price'] > 0 ? $group_buy['cur_price'] : $old_price, $weight_price['number']);
 
                 if (!empty($order['need_insure']) && $shipping_info['insure'] > 0) {
                     $total['shipping_insure'] = shipping_insure_fee($shipping_info['shipping_code'], $total['goods_price'], $shipping_info['insure']);
@@ -1628,7 +1628,7 @@ class UsersModel extends BaseModel {
 
         /* 计算订单总额 */
         if ($order['extension_code'] == 'group_buy' && $group_buy['deposit'] > 0) {
-            $total['amount'] = $total['goods_price'];
+            $total['amount'] = $total['goods_price'] + $total['shipping_fee'];
         } else {
             $total['amount'] = $total['goods_price'] - $total['discount'] + $total['tax'] + $total['pack_fee'] + $total['card_fee'] +
                     $total['shipping_fee'] + $total['shipping_insure'] + $total['cod_fee'];
