@@ -40,7 +40,7 @@ class IndexModel extends CommonModel {
                 break;
             case 'promotion':
                 $time    = gmtime();
-                $type   = " g.promote_price > 0 AND g.promote_start_date <= '$time' AND g.promote_end_date >= '$time'";
+                $type   = "AND g.promote_price > 0 AND g.promote_start_date <= '$time' AND g.promote_end_date >= '$time'";
                 break;
             default:
                 $type   = '1';
