@@ -579,7 +579,7 @@ class FlowController extends CommonController {
         foreach ($shipping_list as $key => $val) {
 
             $shipping_cfg = unserialize_config($val ['configure']);
-            $shipping_fee = ($shipping_count == 0 and $cart_weight_price ['free_shipping'] == 1) ? 0 : shipping_fee($val['shipping_code'], unserialize($val ['configure']), $cart_weight_price ['weight'], $cart_weight_price['old_preic'] = $group_buy['cur_price'] > 0 ? $group_buy['cur_price'] : cart_weight_price['old_preic'], $cart_weight_price ['number']);
+            $shipping_fee = ($shipping_count == 0 and $cart_weight_price ['free_shipping'] == 1) ? 0 : shipping_fee($val['shipping_code'], unserialize($val ['configure']), $cart_weight_price ['weight'], $cart_weight_price['old_preic'] = $group_buy['cur_price'] > 0 ? $group_buy['cur_price'] : $cart_weight_price['old_preic'], $cart_weight_price ['number']);
 
             $shipping_list [$key] ['format_shipping_fee'] = price_format($shipping_fee, false);
             $shipping_list [$key] ['shipping_fee'] = $shipping_fee;
