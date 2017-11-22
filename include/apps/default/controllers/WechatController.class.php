@@ -252,33 +252,11 @@ class WechatController extends CommonController
 
             // 是否绑定注册
             if (empty($userinfo)){
-                // 设置的用户注册信息
-                $reg_condition = array(
-                    'enable' => 1,
-                    'command' => 'register_remind',
-                    'register_remind' => $this->wechat_id
-                );
-                $reg_config = $this->model->table('wechat_extend')->field('config')->where($this->wechat_id)->find();
-                if (!empty($reg_config)) {
-                    $reg_config = unserialize($reg_config['config']);
-                    $username = msubstr($reg_config['user_pre'], 3, 0, 'utf-8', false) . time() . mt_rand(100, 999);
-                    $pwd_rand = array();
-                    $arr_rand = range(0, 9);
-                    $reg_config['pwd_rand'] = $reg_config['pwd_rand'] ? $reg_config['pwd_rand'] : 6;
-                    for ($i = 0; $i < $reg_config['pwd_rand']; $i ++) {
-                        $pwd_rand[] = array_rand($arr_rand);
-                    }
-                    $pwd_rand = implode('', $pwd_rand);
-                    $password = $reg_config['pwd_pre'] . $pwd_rand;
-                    // 通知模版
-                    $template = str_replace(array('[$username]', '[$password]'), array($username, $password), $reg_config['template']);
-                } else {
-                    // $username = 'wx_' . time().mt_rand(1, 99);
-                    $username = model('Users')->get_wechat_username($data['unionid'], 'weixin');
-                    $password = mt_rand(100000, 999999);
-                    // 通知模版
-                    $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;
-                }
+                // 设置的用户注册信息               
+                $username = model('Users')->get_wechat_username($data['unionid'], 'weixin');
+                $password = mt_rand(100000, 999999);
+                // 通知模版
+                $template = '默认用户名：' . $username . "\r\n" . '默认密码：' . $password;              
                 $email = $username . '@qq.com';
                 // 查询推荐人ID
                 if(!empty($scene_id)){

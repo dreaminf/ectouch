@@ -346,7 +346,7 @@ class CommonController extends BaseController
      */
     private function init_oauth()
     {
-        if (is_wechat_browser() && empty($_SESSION['unionid']) && strtolower(CONTROLLER_NAME) != 'oauth') {
+        if (is_wechat_browser() && (empty($_SESSION['unionid']) && empty($_SESSION['user_id'])) && strtolower(CONTROLLER_NAME) != 'oauth') {
             $sql = "SELECT `auth_config` FROM " . $this->model->pre . "touch_auth WHERE `from` = 'weixin' ";
             $auth_config = $this->model->getRow($sql);
             if ($auth_config) {
