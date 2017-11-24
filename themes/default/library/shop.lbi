@@ -1,6 +1,5 @@
 {if $drp_info}
 <script type="text/javascript" src="__PUBLIC__/js/jquery.min.js" ></script>
-<link rel="stylesheet" href="__TPL__/sale/css/iphone.css">
     <div class="box">
         <div class="header-box">
             <div class="header-color">
