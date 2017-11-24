@@ -47,14 +47,6 @@ class IndexController extends CommonController {
             $this->assign('brand_list', model('Brand')->get_brands($app = 'brand', C('page_size'), 1));
             // 分类下的文章
             $this->assign('cat_articles', model('Article')->assign_articles(1,5)); // 1 是文章分类id ,5 是文章显示数量
-            // 微信JSSDK分享
-            $share_data = array(
-                'title' => C('shop_name'),
-                'desc' => C('shop_desc'),
-                'link' => '',
-                'img' => '',
-            );
-            $this->assign('share_data', $this->get_wechat_share_content($share_data));
         }
         // 关注按钮 是否显示
         $this->assign('subscribe', $_SESSION['subscribe']);
