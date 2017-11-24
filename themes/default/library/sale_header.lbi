@@ -9,9 +9,7 @@
     <meta name="description" content="{$meta_description}"/>
     <meta name="keywords" content="{$meta_keywords}"/>
     <title>{$title}</title>
-    <link rel="stylesheet" href="__TPL__/sale/css/iphone.css" type="text/css" />
     <link href="__TPL__/sale/css/iconfont.css" rel="stylesheet" type="text/css" />
-    <link href="__TPL__/sale/css/style.css" rel="stylesheet" type="text/css" />
     <link href="__TPL__/sale/css/my_style.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="__TPL__/sale/js/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="__TPL__/sale/js/my_js.js"></script>
