@@ -636,6 +636,7 @@ class UserController extends CommonController {
 		}
         $this->assign('pay', $pay);
         $this->assign('title', L('order_list_lnk'));
+        $this->assign('show_asynclist', C('show_asynclist'));
         $this->assign('pager', $this->pageShow($count));
         $this->assign('orders_list', $orders);
         $this->display('user_order_list.dwt');
