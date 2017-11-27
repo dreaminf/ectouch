@@ -35,15 +35,16 @@ class OauthController extends CommonController
         if (file_exists($file)) {
             include_once ($file);
         } else {
-            show_message(L('process_false'), L('relogin_lnk'), url('user/login/index', array('back_act' => $this->back_act)), 'error');
+            show_message(L('process_false'), L('relogin_lnk'), url('user/login', array('back_act' => $this->back_act)), 'error');
         }
+
         // 处理url
         $url = U('index/', array('type' => $type, 'back_url' => $this->back_act), false, true);
 
         $info = model('ClipsBase')->get_third_user_info($type);
         // 判断是否安装
         if (!$info) {
-            show_message(L('no_register_auth'), L('relogin_lnk'), url('user/login/index', array('back_act' => $this->back_act)), 'error');
+            show_message(L('no_register_auth'), L('relogin_lnk'), url('user/login', array('back_act' => $this->back_act)), 'error');
         }
         $obj = new $type($info);
 
@@ -77,11 +78,11 @@ class OauthController extends CommonController
                     // $res['headimgurl'] = session('headimgurl');
                     $this->doRegister($res, $type, $this->back_act);
                 } else {
-                    show_message(L('msg_author_register_error'), L('msg_go_back'), url('user/login/index'), 'error');
+                    show_message(L('msg_author_register_error'), L('msg_go_back'), url('user/login'), 'error');
                 }
                 return;
             } else {
-                show_message(L('process_false'), L('relogin_lnk'), url('user/login/index', array('back_act' => urlencode($this->back_act))), 'error');
+                show_message(L('process_false'), L('relogin_lnk'), url('user/login', array('back_act' => urlencode($this->back_act))), 'error');
             }
             return;
         } else {
@@ -241,12 +242,12 @@ class OauthController extends CommonController
                 $back_url = empty($back_url) ? url('user/index') : $back_url;
                 $this->redirect($back_url);
             } else {
-                show_message(L('msg_author_register_error'), L('msg_re_registration'), url('index'), 'error');
+                show_message(L('msg_author_register_error'), L('msg_re_registration'), url('user/login'), 'error');
             }
             return;
 
         } else {
-            show_message(L('msg_account_bound'), L('msg_go_back'), url('user/index'), 'error');
+            show_message(L('msg_account_bound'), L('msg_go_back'), url('user/login'), 'error');
         }
         return;
 
