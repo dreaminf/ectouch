@@ -90,11 +90,7 @@ class weixin {
      */
     public function act_login($callback_url, $state = 'wechat_oauth', $snsapi = 'snsapi_userinfo'){
         // 微信浏览器浏览
-        if (is_wechat_browser() && ($_SESSION['user_id'] === 0 || empty($_SESSION['unionid']))) {
-            return $this->weObj->getOauthRedirect($callback_url, $state, $snsapi);
-        }else{
-            show_message("请在微信内访问或者已经登录。", L('relogin_lnk'), url('login', array('referer' => urlencode($callback_url))), 'error');
-        }
+        return $this->weObj->getOauthRedirect($callback_url, $state, $snsapi);
     }
 
     /**
