@@ -2,7 +2,9 @@
 
 namespace App\Libraries;
 
+use Yii;
 use yii\helpers\Html;
+use yii\web\Response;
 
 /**
  * 模版类
@@ -72,15 +74,35 @@ class Template
 
     /**
      * 显示页面函数
-     *
-     * @access  public
-     * @param   string $filename
-     * @param   sting $cache_id
-     *
-     * @return  void
+     * @param $filename
+     * @param string $cache_id
+     * @return sring|null|string|string[]
      */
     public function display($filename, $cache_id = '')
     {
+        /**
+         * 自动返回ajax对象
+         */
+        if (!defined('ECS_ADMIN') && (Yii::$app->request->getIsAjax() || isset($_GET['_ajax']))) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            // 过滤语言包
+            unset($this->_var['lang']);
+            // 过滤敏感配置
+            $ignore = [
+                'certificate_id', 'token', 'ent_id', 'ent_ac', 'ent_sign', 'ent_email',
+                'smtp_user', 'smtp_pass', 'integrate_config', 'hash_code', 'install_date',
+                'sms_user_name', 'sms_password', 'points_rule'
+            ];
+            foreach ($ignore as $value) {
+                unset($this->_var['cfg'][$value]);
+                unset($this->_var['config'][$value]);
+            }
+            // 封装数据
+            $output['status'] = is_array($this->_var) ? 'success' : 'fail';
+            $output['data'] = $this->_var;
+            return $output;
+        }
+
         $this->_seterror++;
         error_reporting(E_ALL ^ E_NOTICE);
 

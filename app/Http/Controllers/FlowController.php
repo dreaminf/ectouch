@@ -145,8 +145,6 @@ class FlowController extends Controller
         }
 
         if ($_REQUEST['step'] == 'login') {
-            load_lang('user');
-
             /*
              * 用户登录注册
              */

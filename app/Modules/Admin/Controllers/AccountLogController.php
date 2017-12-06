@@ -46,7 +46,6 @@ class AccountLogController extends Controller
             $this->smarty->assign('record_count', $account_list['record_count']);
             $this->smarty->assign('page_count', $account_list['page_count']);
 
-
             return $this->smarty->display('account_list.htm');
         }
 

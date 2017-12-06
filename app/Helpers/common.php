@@ -1793,11 +1793,15 @@ function get_image_path($image = '', $path = '')
     if (strtolower(substr($image, 0, 4)) == 'http') {
         return $image;
     } else {
-        $image = (empty($path) ? '' : rtrim($path, '/') . '/') . $image;
-        $url = empty($image) ? $GLOBALS['_CFG']['no_picture'] : $image;
-    }
+        if (empty($image)) {
+            return asset($GLOBALS['_CFG']['no_picture']);
+        } else {
+            $static = config('app.static');
+            $image = (empty($path) ? '' : rtrim($path, '/') . '/') . $image;
 
-    return asset($url);
+            return empty($static) ? asset($image) : rtrim($static, '/') . '/' . ltrim($image, '/');
+        }
+    }
 }
 
 function get_data_path($url = '', $path = '')
