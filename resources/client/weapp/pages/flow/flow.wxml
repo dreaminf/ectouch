@@ -1,0 +1,56 @@
+<view class="container p-bottom">
+  <view class="flow-list">
+    <view wx:if="{{flowLists.goods!=''}}">
+      <view wx:for="{{flowLists.goods}}" wx:key="id" wx:for-item="flowList">
+        <view class="dish-item b-f">
+          <view class="dish-item-wrp">
+            <view class="dish-item-pic" bindtap="siteDetail" data-index="{{index}}">
+              <image class="image" src="{{flowList.goods_thumb}}" />
+            </view>
+            <view class="dish-item-info" style="">
+              <view>
+                <text class="onelist-hidden h4" bindtap="siteDetail" data-index="{{index}}">{{flowList.goods_name}}</text>
+              </view>
+              <view>
+                <text class="p" bindtap="siteDetail" data-index="{{index}}">{{flowList.goods_attr}}</text>
+              </view>
+              <view>
+                <text class="dish-item-money" bindtap="siteDetail" data-index="{{index}}">¥{{flowList.goods_price}}</text>
+              </view>
+              <view class="div-num dis-box">
+                <text class="num-less flex-box" hidden="{{flowList.goods_number == 0}}" data-id="{{flowList.rec_id}}" data-cid="{{flowList.goods_id}}" bindtap="minusCount"></text>
+                <view class="input dish-item-count-text dish-item-tab">
+                  <text hidden="{{flowList.goods_number == 0}}">{{flowList.goods_number}}</text>
+                </view>
+                <text class="num-plus flex-box" data-id="{{flowList.rec_id}}" data-cid="{{flowList.goods_id}}" bindtap="addCount"></text>
+              </view>
+
+              <!---删除-->
+              <view class="flow-dete" catchtap="del" data-index="{{index}}" data-id="{{flowList.rec_id}}">
+                <image src="../../res/images/dete.png"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:else>
+      <view class="ectouch-notcont">
+        <image src="../../res/images/not.png"></image>
+        <text>亲，购物车还没有商品哦</text>
+        <view class="flow-btn" bindtap="flowcartBtn">去购物</view>
+      </view>
+    </view>
+  </view>
+  <view class="index" wx:if="{{flowLists.goods!=''}}">
+    <view class="cart-tab-wrp">
+      <view class="cart-item-total cart-tab-item">
+        <text class="cart-item-total-price h4">合计：￥{{flowLists.total_price}}</text>
+      </view>
+      <view class="cart-tab-item">
+        <navigator url="{{flowMoney.checkoutUrl}}" class="cart-tab-item-btn h4" hover-class="navigator-hover">结算({{flowLists.total_amount}})</navigator>
+      </view>
+    </view>
+  </view>
+</view>
+<loading hidden="{{hidden}}">加载中…</loading>

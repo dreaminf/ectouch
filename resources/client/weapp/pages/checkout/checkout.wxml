@@ -1,0 +1,110 @@
+<view class="container p-bottom">
+  <scroll-view scroll-y="true">
+
+    <!--地址-s-->
+    <navigator url="{{addresss_link}}" hover-class="navigator-hover">
+      <view wx:if="{{addresss!=''}}">
+        <view class="b-f">
+          <view class="flow-checkout-header b-f dis-box">
+            <view class="flow-header-left p-l15">
+              <view class="flow-checkout-admin h3">{{addresss.consignee}}
+                <text>{{addresss.mobile}}</text>
+                <text class="col-1cbb7f"></text>
+              </view>
+              <view class="flow-checkout-address">{{addresss.address}}</view>
+            </view>
+            <view class="flow-header-right p-r15">
+              <image class="user-orderJtou" src="{{orderJtou}}" />
+            </view>
+          </view>
+        </view>
+      </view>
+      <view wx:else>
+        <view class="flow-checkout-header dis-box">
+          <view class="flow-header-left p-l15">
+            <view class="h4">请选择配送地址
+            </view>
+          </view>
+          <view class="flow-header-right no-flow p-r15">
+            <image class="user-orderJtou" src="{{orderJtou}}" />
+          </view>
+        </view>
+      </view>
+    </navigator>
+
+    <!--地址-e-->
+
+    <!--留言-s
+    <view class="flow-message-box b-f m-top10">
+      <view class="flow-message-title h5">买家留言</view>
+      <textarea placeholder="留言（选填）" class="h5" maxlength="300" bindinput='getmsg' />
+      <text class="flow-message-num">300</text>
+    </view>-->
+
+    <!--商品列表-s-->
+    <view class="padding-box b-f">
+      <block wx:for="{{checkList}}" wx:key="checkList">
+        <view class="dis-box flow-shopList b-f m-top10" bindtap="siteDetail" data-index="{{index}}">
+          <view class="flow-list-left">
+            <image src="{{item.goods_thumb}}" mode="aspectFit" />
+          </view>
+          <view class="flow-list-right">
+            <text class="h4 twolist-hidden">{{item.goods_name}}</text>
+            <text class="p">{{item.goods_attr}}</text>
+            <view class="flow-list-cont">
+              <text class="flow-cont">￥{{item.goods_price}}</text>
+              <text class="small">×{{item.goods_number}}</text>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!--商品列表-e-->
+
+    <!--配送方式-s-->
+    <view class="select b-f">
+      <picker bindchange="shippingChange" range="{{shipping.name}}" value='{{index}}'>
+        <view class="flow-distribution dis-box m-top10">
+          <view class="flow-distribution-left p-l15">
+            <text class="flow-dis col-7">配送方式</text>
+            <text class="m-l flow-dis">{{shipping.name[index]}}</text>
+          </view>
+          <view class="flow-distribution-right p-r15">
+            <image class="user-orderJtou" src="{{orderJtou}}" />
+          </view>
+        </view>
+      </picker>
+      <view class="flow-num-box b-f">{{flowCont}}
+        <text class="flow-money">￥{{flowMoney}}</text>
+      </view>
+    </view>
+
+    <!--商品金额-s-->
+    <view class="flow-all-money b-f padding-box m-top10">
+      <view class="dis-box flow-all-list">
+        <text class="flex-five">商品金额</text>
+        <text class="flex-five col-1cbb7f text-r">￥{{goods_total}}</text>
+      </view>
+      <block wx:if="{{payfee != '' && payfee != undefined}}">
+      <view class="dis-box flow-all-list-cont">
+        <text class="flex-five col-7">{{payname}}</text>
+        <text class="flex-five col-1cbb7f text-r">+￥{{payfee}}</text>
+      </view>
+      </block>
+    </view>
+  </scroll-view>
+
+  <!--btn-->
+  <view class="flow-fixed-footer b-f m-top10">
+    <view class="dis-box chackout-box">
+      <view class="flex-five chackout-left p-l15">实付款：
+        <text class="col-1cbb7f">￥{{total}}</text>
+      </view>
+      <view class="flex-five chackout-right" bindtap="submitOrder">
+        <text class="flow-btn">提交订单</text>
+      </view>
+    </view>
+  </view>
+</view>
+<loading hidden="{{hidden}}">加载中…</loading>

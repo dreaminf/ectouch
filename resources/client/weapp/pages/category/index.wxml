@@ -1,0 +1,47 @@
+<view class="container">
+  <!--搜索框-->
+  <view class="index-search-box">
+    <view class="index-search" bindtap="bindSearchTap">
+      <view class="index-cont-search ">
+        <icon type="search" class="text-center" size="{{searchSize}}" color="{{searchColor}}" />
+        <text>{{searchName}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="cate-content">
+    <!-- left s -->
+    <scroll-view class="cate-left f-28" scroll-y="true">
+      <block wx:for="{{cateLeft}}" wx:key="cateLeft">
+        <text class="type-nav {{curNav == item.cat_id ? 'selected' : ''}}" bindtap="selectNav" data-index="{{index}}" data-id="{{item.cat_id}}">{{item.cat_name}}</text>
+      </block>
+    </scroll-view>
+    <!-- left e -->
+    <scroll-view class="cate-right" scroll-y="true" scroll-top="{{scrollTop}}">
+      <view wx:if="{{cateRight[curIndex]}}">
+        <view class="cate-right-cont">
+          <view class="cate-two-box">
+            <!--二级分类-s-->
+            <view class=" cate-cont-box dis-flex">
+              <view wx:for="{{cateRight[curIndex]}}" wx:key="cit" class="flex-three" data-list="{{index}}">
+                <navigator url="../category/list?id={{item.cat_id}}" hover-class="navigator-hover">
+                  <view id="{{item.id}}" class="cate-img">
+                    <image src="{{item.goods_thumb}}"></image>
+                  </view>
+                  <text>{{item.cat_name}}</text>
+                </navigator>
+              </view>
+            </view>
+            <!--二级分类-e-->
+          </view>
+        </view>
+      </view>
+      <view wx:else>
+        <!-- <view class="ectouch-notcont">
+          <image src="../../res/images/not.png"></image>
+          <text>亲，请稍等片刻</text>
+        </view> -->
+      </view>
+    </scroll-view>
+  </view>
+</view>
+<loading hidden="{{hidden}}">加载中…</loading>

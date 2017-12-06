@@ -1,0 +1,36 @@
+<view class="container">
+  <view class="cate-content">
+
+    <!-- left aside -->
+    <scroll-view class="cate-left h6" scroll-y="true">
+      <block wx:for="{{cateLeft}}" wx:key="cateLeft">
+        <text class="type-nav {{curNav == item.cat_id ? 'selected' : ''}}" bindtap="selectNav" data-index="{{index}}" data-id="{{item.cat_id}}">{{item.cat_name}}</text>
+      </block>
+    </scroll-view>
+
+    <!-- content -->
+    <scroll-view class="cate-right" scroll-y="true" scroll-top="{{scrollTop}}">
+      <view wx:if="{{cateRight[curIndex]}}">
+        <view class="cate-right-cont">
+          <block wx:for="{{cateRight[curIndex]}}" wx:key="cateRight">
+            <view class="cate-right-cont-list" data-dish="{{item.id}}">
+              <navigator url="../product_list/product_list?id={{item.cat_id}}" hover-class="navigator-hover">
+                <view class="cate-img">
+                  <image mode="aspectFit" src="{{item.goods_thumb}}" />
+                </view>
+                <view class="cate-title h6">{{item.cat_name}}</view>
+              </navigator>
+            </view>
+          </block>
+        </view>
+      </view>
+      <view wx:else>
+        <view class="ectouch-notcont">
+          <image src="../../res/images/not.png"></image>
+          <text>亲，请稍等片刻</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+<loading hidden="{{hidden}}">加载中…</loading>

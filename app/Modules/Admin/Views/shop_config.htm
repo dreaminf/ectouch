@@ -1,0 +1,76 @@
+<!-- $Id: shop_config.htm 16865 2009-12-10 06:05:32Z sxc_shop $ -->
+{include file="pageheader.htm"}
+{insert_scripts files="../js/utils.js,../js/region.js"}
+
+<form enctype="multipart/form-data" name="theForm" action="?act=post" method="post">
+  <div class="layui-tab">
+    <ul class="layui-tab-title">
+      {foreach from=$group_list item=group name="bar_group"}
+      <li{if $smarty.foreach.bar_group.iteration eq 1} class="layui-this"{/if}>{$group.name}</li>
+      {/foreach}
+    </ul>
+    <div class="layui-tab-content">
+      {foreach from=$group_list item=group name="body_group"}
+      <div class="layui-tab-item{if $smarty.foreach.body_group.iteration eq 1} layui-show{/if}">
+        <table class="layui-table" lay-even id="{$group.code}-table">
+        {foreach from=$group.vars item=var key=key}
+          {include file="shop_config_form.htm"}
+        {/foreach}
+        </table>
+      </div>
+      {/foreach}
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <input name="submit" type="submit" value="{$lang.button_submit}" class="layui-btn" />
+      <input name="reset" type="reset" value="{$lang.button_reset}" class="layui-btn layui-btn-primary" />
+    </div>
+  </div>
+</form>
+
+{insert_scripts files="tab.js,validator.js"}
+{literal}
+<script language="JavaScript">
+region.isAdmin = true;
+onload = function()
+{
+    // 开始检查订单
+    startCheckOrder();
+}
+var ReWriteSelected = null;
+var ReWriteRadiobox = document.getElementsByName("value[209]");
+
+for (var i=0; i<ReWriteRadiobox.length; i++)
+{
+  if (ReWriteRadiobox[i].checked)
+  {
+    ReWriteSelected = ReWriteRadiobox[i];
+  }
+}
+
+function ReWriterConfirm(sender)
+{
+  if (sender == ReWriteSelected) return true;
+  var res = true;
+  if (sender != ReWriteRadiobox[0]) {
+    var res = confirm('{$rewrite_confirm}');
+  }
+
+  if (res==false)
+  {
+      ReWriteSelected.checked = true;
+  }
+  else
+  {
+    ReWriteSelected = sender;
+  }
+  return res;
+}
+
+layui.use('element', function(){
+    var element = layui.element;
+});
+</script>
+{/literal}
+{include file="pagefooter.htm"}

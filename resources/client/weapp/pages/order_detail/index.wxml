@@ -1,0 +1,107 @@
+<view class="container p-bottom">
+  <scroll-view scroll-y="true">
+
+    <!--地址-s-->
+    <view class="b-f">
+      <view class="flow-checkout-header b-f dis-box">
+        <view class="flow-header-left p-l15">
+          <view class="flow-checkout-admin">{{orders.consignee}}
+            <text>{{orders.mobile}}</text>
+            <text class="col-1cbb7f"></text>
+          </view>
+          <view class="flow-checkout-address">{{orders.address}}</view>
+        </view>
+      </view>
+    </view>
+    <block wx:if="{{orders.comment!=''}}">
+      <view class="flow-message-box b-f m-top10">
+        <view class="flow-message-title h5">买家留言</view>
+        <view class="cont h5">{{orders.comment}}</view>
+      </view>
+    </block>
+
+    <!--商品列表-s-->
+    <view class="order-cont b-f m-top10">
+      <view class="order-header dis-box">
+        <view class="flex-box">
+          <text class="title">商品列表</text>
+        </view>
+        <view class="flex-box">
+          <text class="cont fr col-1cbb7f">{{orders.pay_status}} {{orders.shipping_status}} {{orders.order_status}}</text>
+        </view>
+      </view>
+      <view class="order-num">
+        <text>订单号：</text>{{orders.order_sn}}</view>
+      <view class="time">
+        <text>{{orders.add_time}}</text>
+      </view>
+    </view>
+    <view class="padding-box b-f">
+      <block wx:for="{{goodsList}}" wx:key="orders">
+        <view class="dis-box flow-shopList b-f" bindtap="siteDetail" data-index="{{index}}">
+          <view class="flow-list-left">
+            <image src="{{item.goods_thumb}}" mode="aspectFit" />
+          </view>
+          <view class="flow-list-right">
+            <text class="h4 twolist-hidden">{{item.goods_name}}</text>
+            <text class="p">{{item.goods_attr}}</text>
+            <view class="flow-list-cont">
+              <text class="flow-cont">{{item.goods_price}}</text>
+              <text class="small">×{{item.goods_number}}</text>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!--商品列表-e-->
+
+    <!--配送方式-s-->
+    <view class="select b-f">
+      <view class="flow-distribution dis-box m-top10">
+        <view class="flow-distribution-left p-l15">
+          <text class="flow-dis col-7">配送方式</text>
+          <text class="m-l flow-dis">{{orders.shipping_name}}</text>
+        </view>
+      </view>
+      <view class="flow-num-box b-f">共{{orders.total_number}}件商品,合计：
+        <text class="flow-money">{{orders.goods_amount}}</text>
+      </view>
+    </view>
+
+    <!--商品金额-s-->
+    <view class="flow-all-money b-f padding-box m-top10">
+      <view class="dis-box flow-all-list">
+        <text class="flex-five">商品金额</text>
+        <text class="flex-five col-1cbb7f text-r">￥{{orders.goods_amount}}</text>
+      </view>
+      <block wx:if="{{orders.shipping_fee >= 0}}">
+        <view class="dis-box flow-all-list-cont">
+          <text class="flex-five col-7">{{orders.shipping_name}}</text>
+          <text class="flex-five col-1cbb7f text-r">+￥{{orders.shipping_fee}}</text>
+        </view>
+      </block>
+      <view class="dis-box flow-all-list-cont">
+          <text class="flex-five col-7">已付金额</text>
+          <text class="flex-five col-1cbb7f text-r">￥{{orders.money_paid}}</text>
+        </view>
+        <view class="dis-box flow-all-list-cont">
+          <text class="flex-five col-7">应付金额</text>
+          <text class="flex-five col-1cbb7f text-r">￥{{orders.order_amount}}</text>
+        </view>
+    </view>
+  </scroll-view>
+
+  <!--btn-->
+  <view class="flow-fixed-footer b-f">
+    <view class="dis-box chackout-box" wx:if="{{orders.pay_status == '未付款'}}">
+      <view class="flex-box chackout-left text-c" bindtap='cancel_order'>取消订单</view>
+      <view class="flex-box chackout-right" bindtap="submitOrder">
+        <text class="flow-btn" data-id='{{orders.order_id}}' bindtap="pay_order" wx:if="{{orders.pay_status == '未付款'}}">去付款</text>
+      </view>
+    </view>
+    <view class="flow-btn h3" wx:if="{{orders.shipping_status == '已发货'}}">
+        <view bindtap='confirm_order' data-id="{{orders.order_id}}">确认收货</view>
+    </view>
+  </view>
+</view>

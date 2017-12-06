@@ -1,0 +1,41 @@
+<view class="container">
+  <view class="section">
+    <view wx:if="{{list!=''}}">
+
+      <!--分类nav-->
+      <view class="header h5" name="top" id="top">
+        <view class='{{current == 0?"active":""}}' data-index="0" catchtap="bindHeaderTap">默认</view>
+        <view class='{{current == 1?"active":""}}' data-index="1" bindtap="bindHeaderTap">销量</view>
+        <view class='{{current == 2?"active":""}}' data-index="2" bindtap="bindHeaderTap">价格</view>
+      </view>
+
+      <!--list-->
+      <scroll-view class="list" scroll-y="true" style="height:{{scrollHeight}}px;" bindscrolltolower="bindDownLoad" scroll-top="{{scrollTop}}" bindscroll="scroll">
+        <view class="index-goods-list dis-flex b-f">
+          <view class="flex-five list-box" wx:for="{{list}}" wx:key="list" bindtap="goodsDetail" data-index="{{index}}">
+            <image src="{{item.pic}}" mode="aspectFit" class="goodsImg" />
+            <text class="h4 onelist-hidden">{{item.title}}</text>
+            <text class="price h3">￥{{item.money}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    <view wx:else>
+      <view class="ectouch-notcont">
+        <image src="../../res/images/not.png"></image>
+        <text>亲，目前没有您想要的商品哦！</text>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{list}}">
+    <loading hidden="{{hidden}}" bindtap="loadingChange">加载中…</loading>
+  </view>
+  <view wx:else>
+    <view class="production-cont" hidden="{{hidden}}">没有更多了</view>
+  </view>
+
+  <!--top-->
+  <view class="production-top {{scrollTop>200?'active':''}}" bindtap="goToTop">
+    <image src="../../res/images/top.png"></image>
+  </view>
+</view>

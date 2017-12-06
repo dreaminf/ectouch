@@ -1,0 +1,50 @@
+<import src="../../wxParse/wxParse.wxml" />
+<view class="container m-b5">
+  <view class="goods-header">
+    <view class="nav h5">
+      <view bindtap="toNew" class="top-btn {{new}}">商品</view>
+      <view bindtap="toGood" class="top-btn {{good}}">详情</view>
+      <view bindtap="toChild" class="top-btn {{child}}">评论</view>
+    </view>
+  </view>
+  <view class="top-nav" style="margin-top:90rpx">
+    <view class="top-nav-bar">
+      <view bindtap="toOrder" id="top-nav-bar-{{!hiddenOrder ? true : 0}}">商品描述</view>
+      <view bindtap="toAddress" id="top-nav-bar-{{!hiddenAddress ? true : 0}}">规格参数</view>
+    </view>
+  </view>
+
+  <!--商品描述-->
+  <view hidden="{{hiddenOrder}}" class="order">
+    <view wx:if="{{goods.goods_desc!= ''}}">
+      <view class="b-f cont-box cont-box-detail">
+        <template is="wxParse" data="{{wxParseData:goods_desc.nodes}}" />
+      </view>
+    </view>
+    <view wx:else>
+      <view class="ectouch-notcont">
+        <image src="../../res/images/not.png"></image>
+        <text>亲,此处暂无数据</text>
+      </view>
+    </view>
+  </view>
+
+  <!--规格参数-->
+  <view hidden="{{hiddenAddress}}" class="address">
+    <view wx:if="{{parameteCont!=''}}">
+      <view class="dis-box paramete-cont" wx:for="{{parameteCont}}" wx:for-item="cont">
+        <view class="li flex-five">{{cont.name}}：</view>
+        <view class="li flex-five">
+          <text>{{cont.value}}</text>
+        </view>
+      </view>
+    </view>
+    <view wx:else>
+      <view class="ectouch-notcont">
+        <image src="../../res/images/not.png"></image>
+        <text>亲,此处暂无数据</text>
+      </view>
+    </view>
+  </view>
+</view>
+<loading hidden="{{hidden}}">加载中…</loading>

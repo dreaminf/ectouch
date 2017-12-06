@@ -1,0 +1,34 @@
+<view class="container m-b5">
+  <view class="goods-header">
+    <view class="nav h5">
+      <view bindtap="toNew" class="top-btn {{new}}">商品</view>
+      <view bindtap="toGood" class="top-btn {{good}}">详情</view>
+      <view bindtap="toChild" class="top-btn {{child}}">评论</view>
+    </view>
+  </view>
+  <view class="m-top44">
+    <view wx:if="{{goodsComment!=''}}">
+      <block wx:for="{{goodsComment}}" wx:for-item="comment">
+        <view class="cont-box goods-comment-box b-t b-f">
+          <view class="dis-box">
+            <view class="flex-five">
+              <text class="admin twolist-hidden">{{comment.name}}</text>
+            </view>
+            <view class="flex-five">
+              <view class="admin text-r">{{comment.time}}</view>
+            </view>
+          </view>
+          <view class="goods-comment-cont twolist-hidden">{{comment.cont}}</view>
+        </view>
+      </block>
+
+    </view>
+    <view wx:else>
+      <view class="ectouch-notcont">
+        <image src="../../res/images/not.png"></image>
+        <text>亲,此处暂无数据</text>
+      </view>
+    </view>
+  </view>
+</view>
+<loading hidden="{{hidden}}">加载中…</loading>

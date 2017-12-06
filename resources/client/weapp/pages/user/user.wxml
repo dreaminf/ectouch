@@ -1,0 +1,83 @@
+
+<!--index.wxml-->
+<view class="container">
+  <view class="user-header p-r">
+    <image class="header-bg" src="{{userHeader}}" />
+    <view class="user-box">
+      <view class="header-img-box">
+        <image class="profile-user" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      </view>
+      <text class="user-admin">{{userInfo.nickName}}</text>
+    </view>
+  </view>
+
+  <!--orderList-s-->
+  <view class="user-order">
+    <view class="user-order-title dis-box" bindtap="bindOrder">
+      <view class="flex-box">
+        <image class="user-orderIcon" src="{{orderIcon}}" />
+        <text class="user-orderName h4">我的订单</text>
+      </view>
+      <view class="flex-box">
+        <view class="user-orderContBox">
+          <text class="h6">全部订单</text>
+          <image class="user-orderJtou" src="{{orderJtou}}" />
+        </view>
+      </view>
+    </view>
+    <view class="user-order-cont dis-box">
+      <block wx:for="{{userOrder}}" wx:for-item="Orders" wx:key="userOrder">
+        <view class="flex-box p-r">
+          <navigator url="{{Orders.link}}" hover-class="navigator-hover">
+            <image class="orderListIcon" src="{{Orders.pic}}" />
+            <text class="listCont p">{{Orders.cont}}</text>
+
+            <!--<text class="user-tag p-a">{{Orders.num}}</text>-->
+          </navigator>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!--list-->
+  <block wx:for="{{userLists}}" wx:for-item="list" wx:key="userLists">
+    <navigator url="{{list.link}}">
+      <view class="user-order-title dis-box b-f m-top10">
+        <view class="flex-box">
+          <image class="user-orderIcon" src="{{list.pic}}" />
+          <text class="user-orderName h4">{{list.name}}</text>
+        </view>
+        <view class="flex-box">
+          <view class="user-orderContBox">
+            <image class="user-orderJtou" src="{{orderJtou}}" />
+          </view>
+        </view>
+      </view>
+    </navigator>
+  </block>
+
+  <!--标题-->
+  <view class="user-list">
+    <view class="h4 text-c">猜您还喜欢</view>
+    <view class="p text-c">为您推荐您最喜欢的！</view>
+  </view>
+
+  <!--推荐商品列表-->
+  <view class="index-list b-f">
+    <block wx:for="{{indexGoods}}"  wx:key="indexGoods">
+        <view class="index-goods-list  dis-box" bindtap="siteDetail" data-index="{{index}}">
+          <view class="user-left">
+            <image src="{{item.goods_thumb}}" mode="aspectFit" class="goodsImg" />
+          </view>
+          <view class="user-right">
+            <text class="h4 twolist-hidden">{{item.goods_name}}</text>
+            <text class="price col-1cbb7f h3">￥{{item.shop_price}}</text>
+          </view>
+        </view>
+    </block>
+  </view>
+  <view class="cont-box">
+    <text class="p text-c">没有更多了</text>
+  </view>
+</view>
+<loading hidden="{{hidden}}">加载中…</loading>

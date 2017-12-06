@@ -1,0 +1,47 @@
+<scroll-view scroll-y="true" bindscroll="scroll" scroll-top="{{scrollTop}}" style="position:absolute; top:0; left:0; right:0; bottom:0;">
+  <view class="container">
+    <!--首页banner-->
+    <view class="index-banner">
+      <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="banner-box swiper-box ">
+        <block wx:for="{{banner}}" wx:key="banner">
+          <navigator url="{{item.link}}" hover-class="navigator-hover">
+            <swiper-item>
+              <image src="{{item.pic}}" class="slide-image" />
+            </swiper-item>
+          </navigator>
+        </block>
+      </swiper>
+      <!--header-bg-->
+      <!--搜索框-->
+      <view class="index-search-box col-f">
+        <view class="dis-box">
+          <view class="right-title" bindtap="bindCateTap">
+            <text class="iconfont icon-fenlei f-34"></text>
+          </view>
+          <view class="index-search box-flex">
+            <view class="cont t-c" bindtap="bindSearchTap">
+              <text class="iconfont icon-sousuo f-26"></text>
+              <text class="f-28">搜索商品</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="linear"></view>
+    </view>
+    <view class="index-list m-top10">
+      <view class="index-goods-list dis-flex b-f">
+        <block wx:for="{{indexGoods}}" wx:key="indexGoods">
+          <view class="flex-five list-box" bindtap="siteDetail" data-index="{{index}}">
+            <image src="{{item.goods_thumb}}" mode="aspectFit" class="goodsImg" />
+            <text class="title f-30 col-3 twolist-hidden">{{item.goods_name}}</text>
+            <text class="price f-32 col-m f-w">￥{{item.shop_price}}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+    <view class="cont-box">
+      <text class="f-24 col-9  t-c">没有更多了</text>
+    </view>
+  </view>
+</scroll-view>
+<loading hidden="{{hidden}}">加载中…</loading>
