@@ -1,28 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="Keywords" content="{$keywords}" />
-<meta name="Description" content="{$description}" />
-<!-- TemplateBeginEditable name="doctitle" -->
-<title>{$page_title}</title>
-<!-- TemplateEndEditable --><!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
-<link rel="shortcut icon" href="favicon.ico" />
-<link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
-{* 包含脚本文件 *}
-{insert_scripts files='common.js,shopping_flow.js'}
-</head>
-<body>
+
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
-<!--当前位置 start-->
-<div class="block box">
- <div id="ur_here">
-  <!-- #BeginLibraryItem "/library/ur_here.lbi" --><!-- #EndLibraryItem -->
- </div>
-</div>
-<!--当前位置 end-->
-<div class="blank"></div>
+
+
 <div class="block">
   <!-- {if $step eq "cart"} -->
   <!-- 购物车内容 -->
@@ -123,7 +102,6 @@
           </tr>
         </table>
        <!-- {if $smarty.session.user_id gt 0} -->
-       {insert_scripts files='transport.js'}
        <script type="text/javascript" charset="utf-8">
         function collect_to_flow(goodsId)
         {
@@ -185,7 +163,6 @@
   <!-- {/if} -->
 
   <!-- {if $fittings_list} 商品配件 -->
-  {insert_scripts files='transport.js'}
   <script type="text/javascript" charset="utf-8">
   function fittings_to_flow(goodsId,parentId)
   {
@@ -303,7 +280,7 @@
 
         <!-- {if $step eq "consignee"} -->
         <!-- 开始收货人信息填写界面 -->
-        {insert_scripts files='region.js,utils.js'}
+        {insert_scripts files='region.js'}
         <script type="text/javascript">
           region.isAdmin = false;
           {foreach from=$lang.flow_js item=item key=key}
@@ -694,7 +671,7 @@
         </div>
         <!-- {/if} -->
         <!-- {if $step eq "login"} -->
-        {insert_scripts files='utils.js,user.js'}
+        {insert_scripts files='user.js'}
         <script type="text/javascript">
         {foreach from=$lang.flow_login_register item=item key=key}
           var {$key} = "{$item}";
@@ -848,42 +825,8 @@
         <!-- 结束用户登录注册界面 -->
         <!-- {/if} -->
 
-
-
-
 </div>
-<div class="blank5"></div>
-<!--帮助-->
-<div class="block">
-  <div class="box">
-   <div class="helpTitBg clearfix">
-    <!-- #BeginLibraryItem "/library/help.lbi" --><!-- #EndLibraryItem -->
-   </div>
-  </div>
-</div>
-<div class="blank"></div>
-<!--帮助-->
-<!--友情链接 start-->
-<!--{if $img_links  or $txt_links }-->
-<div id="bottomNav" class="box">
- <div class="box_1">
-  <div class="links clearfix">
-    <!--开始图片类型的友情链接{foreach from=$img_links item=link}-->
-    <a href="{$link.url}" target="_blank" title="{$link.name}"><img src="{$link.logo}" alt="{$link.name}" border="0" /></a>
-    <!--结束图片类型的友情链接{/foreach}-->
-    <!-- {if $txt_links} -->
-    <!--开始文字类型的友情链接{foreach from=$txt_links item=link}-->
-    [<a href="{$link.url}" target="_blank" title="{$link.name}">{$link.name}</a>]
-    <!--结束文字类型的友情链接{/foreach}-->
-    <!-- {/if} -->
-  </div>
- </div>
-</div>
-<!--{/if}-->
-<!--友情链接 end-->
-<div class="blank"></div>
-<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
-</body>
+
 <script type="text/javascript">
 var process_request = "{$lang.process_request}";
 {foreach from=$lang.passport_js item=item key=key}
@@ -895,4 +838,5 @@ var btn_buy = "{$lang.btn_buy}";
 var is_cancel = "{$lang.is_cancel}";
 var select_spe = "{$lang.select_spe}";
 </script>
-</html>
+
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

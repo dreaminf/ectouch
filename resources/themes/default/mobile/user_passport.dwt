@@ -1,28 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="Keywords" content="{$keywords}" />
-<meta name="Description" content="{$description}" />
-<!-- TemplateBeginEditable name="doctitle" -->
-<title>{$page_title}</title>
-<!-- TemplateEndEditable --><!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
-<link rel="shortcut icon" href="favicon.ico" />
-<link rel="icon" href="animated_favicon.gif" type="image/gif" />
-<link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
-{* 包含脚本文件 *}
-{insert_scripts files='common.js,user.js,transport.js'}
-
-<body>
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
-<!--当前位置 start-->
-<div class="block box">
- <div id="ur_here">
-  <!-- #BeginLibraryItem "/library/ur_here.lbi" --><!-- #EndLibraryItem -->
-  </div>
-</div>
-<!--当前位置 end-->
-<div class="blank"></div>
+
 <!--#登录界面 start-->
 <!-- {if $action eq 'login'} -->
 <div class="usBox clearfix">
@@ -316,7 +293,6 @@
 <div class="usBox">
   <div class="usBox_2 clearfix">
     <form action="user.php" method="post" name="getPassword2" onSubmit="return submitPwd()">
-      <br />
       <table width="80%" border="0" align="center">
         <tr>
           <td>{$lang.new_password}</td>
@@ -335,20 +311,18 @@
           </td>
         </tr>
       </table>
-      <br />
     </form>
   </div>
 </div>
 <!--{/if}-->
 <!--#找回密码界面 end-->
-<div class="blank"></div>
-<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
-</body>
+
 <script type="text/javascript">
-var process_request = "{$lang.process_request}";
-{foreach from=$lang.passport_js item=item key=key}
-var {$key} = "{$item}";
-{/foreach}
-var username_exist = "{$lang.username_exist}";
+    var process_request = "{$lang.process_request}";
+    {foreach from=$lang.passport_js item=item key=key}
+    var {$key} = "{$item}";
+    {/foreach}
+        var username_exist = "{$lang.username_exist}";
 </script>
-</html>
+
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

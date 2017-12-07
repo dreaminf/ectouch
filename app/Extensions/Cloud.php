@@ -2,14 +2,17 @@
 
 namespace App\Extensions;
 
-// =====Api 说明======
-// get.license 获取授权信息，参数 domain=网站域名
-// get.competence 判断帐号权限是否正常
-// get.latestversion 获取最新版本号，无参数
-// get.notice 远程通知
-// get.sms.abc 
-// post.record 记录站点信息
-
+/**
+ * Class Cloud
+ * @package App\Extensions
+ * =====Api 说明======
+ * get.license 获取授权信息，参数 domain=网站域名
+ * get.competence 判断帐号权限是否正常
+ * get.latestversion 获取最新版本号，无参数
+ * get.notice 远程通知
+ * get.sms.abc
+ * post.record 记录站点信息
+ */
 class Cloud {
 
     //错误信息

@@ -1,8 +1,29 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
-{* 包含脚本文件 *}
-{insert_scripts files='common.js,index.js'}
 
-ddd
+<div class="page">
+
+    <div class="swiper-container">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide"><img src="https://jqweui.cn/dist/demos/images/swiper-1.jpg" /></div>
+            <div class="swiper-slide"><img src="https://jqweui.cn/dist/demos/images/swiper-2.jpg" /></div>
+            <div class="swiper-slide"><img src="https://jqweui.cn/dist/demos/images/swiper-3.jpg" /></div>
+        </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+</div>
+
+<script>
+    $(function () {
+        $(".swiper-container").swiper({
+            loop: true,
+            autoplay: 3000
+        });
+    })
+</script>
+
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
-</body>
-</html>
+

@@ -943,9 +943,9 @@ class Template
             if (in_array($val, $scripts) == false) {
                 $scripts[] = $val;
                 if ($val{0} == '.') {
-                    $str .= '<script type="text/javascript" src="' . asset(str_replace('../', '', $val)) . '"></script>' . "\n";
+                    $str .= '<script src="' . asset(str_replace('../', '', $val)) . '" type="text/javascript"></script>' . "\n";
                 } else {
-                    $str .= '<script type="text/javascript" src="' . asset((defined('ECS_ADMIN') ? 'static/dashboard/' : '') . 'js/' . $val) . '"></script>' . "\n";
+                    $str .= '<script src="' . asset((defined('ECS_ADMIN') ? 'static/dashboard/' : '') . 'js/' . $val) . '" type="text/javascript"></script>' . "\n";
                 }
             }
         }
