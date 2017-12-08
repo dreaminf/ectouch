@@ -1,6 +1,6 @@
 <?php
 
-namespace app\repositorys;
+namespace app\repositories;
 
 use app\models\Article;
 use app\contracts\repositories\ArticleInterface;

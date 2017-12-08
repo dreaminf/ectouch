@@ -9,10 +9,10 @@ return [
     'tablePrefix' => 'ecs_',
     'on afterOpen' => function($event) {
         $event->sender->createCommand("set session sql_mode=''")->execute();
-    }
+    },
 
     // Schema cache options (for production environment)
-    //'enableSchemaCache' => true,
-    //'schemaCacheDuration' => 60,
-    //'schemaCache' => 'cache',
+    'enableSchemaCache' => !YII_DEBUG,
+    'schemaCacheDuration' => 60,
+    'schemaCache' => 'cache',
 ];

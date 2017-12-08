@@ -73,7 +73,7 @@ class Controller extends BaseController
 
         define('__ROOT__', asset('/'));
         define('__PUBLIC__', asset('/static'));
-        define('__TPL__', asset('/static/dashboard'));
+        define('__TPL__', asset('/static/admin'));
 
         /* 创建 Smarty 对象。*/
         $this->smarty = $GLOBALS['smarty'] = new Template();

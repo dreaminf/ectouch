@@ -93,7 +93,7 @@ class Controller extends BaseController
 
             $this->smarty = $GLOBALS['smarty'] = new Template();
             $this->smarty->cache_lifetime = $GLOBALS['_CFG']['cache_time'];
-            $this->smarty->template_dir = resource_path('themes/' . $GLOBALS['_CFG']['template']);
+            $this->smarty->template_dir = resource_path('views/themes/' . $GLOBALS['_CFG']['template']);
             $this->smarty->cache_dir = storage_path('framework/temp/caches');
             $this->smarty->compile_dir = storage_path('framework/temp/compiled');
 

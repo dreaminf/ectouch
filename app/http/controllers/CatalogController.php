@@ -11,6 +11,24 @@ class CatalogController extends Controller
 {
     public function actionIndex()
     {
+        $content = file_get_contents(base_path('docs/mock/jd.php'));
+
+        preg_match_all('/jsonp(.*?)\}\)/', $content, $childs);
+        $list = [];
+        foreach($childs[0] as $item) {
+            preg_match_all('/expoSrv(.*?)pictureUrl":"(.*?)"(.*?)name":"(.*?)"(.*?)picHeight/', $item, $matches);
+            $list[] = array_combine($matches[4], $matches[2]);
+        }
+
+        // 一级类别
+        preg_match_all('/\<li class=""\>(.*?)\<\/li\>/', $content, $matches);
+        $category = [];
+        foreach ($matches[1] as $key => $item) {
+            $category[$item] = $list[$key];
+        }
+
+        dd($category);
+
         if (!$this->smarty->is_cached('catalog.dwt')) {
             /* 取出所有分类 */
             $cat_list = cat_list(0, 0, false);

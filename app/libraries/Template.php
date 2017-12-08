@@ -267,7 +267,7 @@ class Template
         if (!defined('ECS_ADMIN')) {
             $source = $this->smarty_prefilter_preCompile($source);
         } else {
-            $tmp_dir = asset('static/dashboard') . '/';
+            $tmp_dir = asset('static/admin') . '/';
             $pattern = [
                 '/(href=["|\'])(styles\/.*?)(["|\'])/i',  // 替换相对链接
                 '/((?:background|src)\s*=\s*["|\'])(?:\.\/|\.\.\/)?(images\/.*?["|\'])/is', // 在images前加上 $tmp_dir
@@ -945,7 +945,7 @@ class Template
                 if ($val{0} == '.') {
                     $str .= '<script src="' . asset(str_replace('../', '', $val)) . '" type="text/javascript"></script>' . "\n";
                 } else {
-                    $str .= '<script src="' . asset((defined('ECS_ADMIN') ? 'static/dashboard/' : '') . 'js/' . $val) . '" type="text/javascript"></script>' . "\n";
+                    $str .= '<script src="' . asset((defined('ECS_ADMIN') ? 'static/admin/' : '') . 'js/' . $val) . '" type="text/javascript"></script>' . "\n";
                 }
             }
         }

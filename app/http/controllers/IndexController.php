@@ -135,7 +135,7 @@ class IndexController extends Controller
         $all = $GLOBALS['db']->getAll($sql);
 
         foreach ($all as $key => $row) {
-            $plugin = '\\App\\Plugins\\Shipping\\' . camel_case($row['shipping_code'], true);
+            $plugin = '\\app\\plugins\\shipping\\' . camel_case($row['shipping_code'], true);
 
             if (class_exists($plugin)) {
                 $shipping = new $plugin;

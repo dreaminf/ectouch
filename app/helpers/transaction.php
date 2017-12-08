@@ -524,7 +524,7 @@ function get_order_detail($order_id, $user_id = 0)
     /* 对发货号处理 */
     if (!empty($order['invoice_no'])) {
         $shipping_code = $GLOBALS['db']->getOne("SELECT shipping_code FROM " . $GLOBALS['ecs']->table('shipping') . " WHERE shipping_id = '$order[shipping_id]'");
-        $plugin = '\\App\\Plugins\\Shipping\\' . camel_case($shipping_code, true);
+        $plugin = '\\app\\plugins\\shipping\\' . camel_case($shipping_code, true);
         if (class_exists($plugin)) {
             $shipping = new $plugin;
             $order['invoice_no'] = $shipping->query($order['invoice_no']);
