@@ -14,20 +14,13 @@ class ChaoshiController extends Controller
 
     private $childCategoryUrl = 'https://h5api.m.tmall.com/h5/com.taobao.tmallsearch.service.tmallnavservice/1.0/?jsv=2.4.8&appKey=12574478&t=1512702305029&sign=a8008b28cdfeecd3bd5a0b681de96b36&api=com.taobao.tmallsearch.service.TmallNavService&v=1.0&type=jsonp&dataType=jsonp&callback=mtopjsonp3&';
 
-    /**
-     * ChaoshiController constructor.
-     * @param Client $http
-     */
-    public function __construct(Client $http)
-    {
-        $this->http = $http;
-    }
-
     public function actionIndex()
     {
+        $this->http = new Client();
+
         $category = $this->getAllCategory();
 
-        foreach ($category as $item){
+        foreach ($category as $item) {
             $this->getCategoryDetail($item);
         }
 
@@ -40,8 +33,9 @@ class ChaoshiController extends Controller
         dd($res);
     }
 
-    private function getCategoryDetail($id) {
-        $res = $this->http->get($this->childCategoryUrl . 'data=%7B%22ver%22%3A1%2C%22rootName%22%3A%22chaoshi%22%2C%22catId%22%3A%22'. $id .'%22%7');
+    private function getCategoryDetail($id)
+    {
+        $res = $this->http->get($this->childCategoryUrl . 'data=%7B%22ver%22%3A1%2C%22rootName%22%3A%22chaoshi%22%2C%22catId%22%3A%22' . $id . '%22%7');
 
         return $res;
     }
