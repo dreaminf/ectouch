@@ -118,7 +118,7 @@ class wxpay
     public function callback($data)
     {
         if (isset($_GET) && $_GET['status'] == 1) {
-            $order = [];
+            $order = array();
             $order['order_id']= intval($_GET['order_id']);
             $payment = model('Payment')->get_payment($data['code']);
             return $this->queryOrder($order, $payment);
