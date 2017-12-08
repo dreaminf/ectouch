@@ -146,7 +146,7 @@ h4.title-hrbg hr {background: #f6f6f9;height: 1px;border: 0;position: absolute;l
 */
 .show-search-div .search-div{top:0;opacity:1;}
 .show-search-div .mask-search-div{ display: inherit;}
-.search-div{background:#fff; position:fixed; height:100%; width:100%; left: 0; top: 100%; right: 0; bottom:0; z-index: 112;opacity:0;}
+
 .search-div .search{background:#F6F6F9;}
 .search-con{padding:2rem 1rem; padding-bottom:0; background:#fff;}
 .search-con ul{overflow: hidden; color:#555}
@@ -200,13 +200,17 @@ address, cite, dfn, em, var {
 .search-div {
     background: #fff;
     position: fixed;
+    margin: 0 auto;
+    max-width: 640px;
     height: 100%;
     width: 100%;
     left: 0;
     top: 100%;
     right: 0;
     bottom: 0;
-    z-index: 1020;
+    z-index: 1112;
+    visibility: visible;
+    display: none;
     opacity: 0;
 }
 .input-text input {

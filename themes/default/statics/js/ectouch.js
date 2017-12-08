@@ -368,7 +368,7 @@ $(function($) {
 	$(".j-search-input").click(function() {
 		document.addEventListener("touchmove", handler, false);
 		$(".search-div,.new-maxbox").addClass("active");
-		$('#newinput').focus();
+		// $('#newinput').focus();
 	});
 	/*关闭搜索层*/
 	$(".j-close-search").click(function() {
