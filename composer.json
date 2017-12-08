@@ -53,11 +53,11 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "app\\": "app/"
         },
         "files": [
             "config/constant.php",
-            "app/Support/helpers.php"
+            "app/support/helpers.php"
         ]
     },
     "config": {

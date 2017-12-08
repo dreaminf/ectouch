@@ -13,6 +13,7 @@
 {/if}
 <link rel="stylesheet" href="__PUBLIC__/plugins/jquery-weui/lib/weui.min.css">
 <link rel="stylesheet" href="__PUBLIC__/plugins/jquery-weui/css/jquery-weui.min.css">
+<link rel="stylesheet" href="__TPL__/fonts/iconfont.css">
 <link href="{$ecs_css_path}" rel="stylesheet" type="text/css">
 <script src="__PUBLIC__/common/js/jquery.min.js" type="text/javascript"></script>
 <script src="__PUBLIC__/plugins/jquery-weui/js/jquery-weui.min.js" type="text/javascript"></script>

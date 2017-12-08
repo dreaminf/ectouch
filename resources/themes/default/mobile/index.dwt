@@ -1,19 +1,401 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 
-<div class="page">
+<div class="weui-tab">
+    <div class="weui-tab__bd">
+        <div class="weui-tab__bd-item weui-tab__bd-item--active">
 
-    <div class="swiper-container">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper">
-            <!-- Slides -->
-            <div class="swiper-slide"><img src="https://jqweui.cn/dist/demos/images/swiper-1.jpg" /></div>
-            <div class="swiper-slide"><img src="https://jqweui.cn/dist/demos/images/swiper-2.jpg" /></div>
-            <div class="swiper-slide"><img src="https://jqweui.cn/dist/demos/images/swiper-3.jpg" /></div>
+            <div class="swiper-container">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide"><img
+                            src="//img.alicdn.com/tfs/TB1EvfMgMvD8KJjSsplXXaIEFXa-1125-543.jpg_760x760Q75s50.jpg_.webp"/>
+                    </div>
+                    <div class="swiper-slide"><img
+                            src="//img.alicdn.com/imgextra/i3/1910146537/TB2aybwb3fN8KJjSZFIXXc0UFXa_!!1910146537.jpg_760x760Q75s50.jpg_.webp"/>
+                    </div>
+                    <div class="swiper-slide"><img
+                            src="//img.alicdn.com/imgextra/i2/2108418347/TB2Ui0xg4rI8KJjy0FpXXb5hVXa_!!2108418347.jpg_760x760Q75s50.jpg_.webp"/>
+                    </div>
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <div class="index-nav">
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_0.png" alt="">
+                            <p class="weui-grid__label">
+                                生鲜水果
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_1.png" alt="">
+                            <p class="weui-grid__label">
+                                休闲零食
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_2.png" alt="">
+                            <p class="weui-grid__label">
+                                奶品水饮
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_3.png" alt="">
+                            <p class="weui-grid__label">
+                                粮油厨房
+                            </p>
+                        </a>
+                    </div>
+                </div>
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_4.png" alt="">
+                            <p class="weui-grid__label">
+                                生鲜水果
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_5.png" alt="">
+                            <p class="weui-grid__label">
+                                休闲零食
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_6.png" alt="">
+                            <p class="weui-grid__label">
+                                奶品水饮
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_7.png" alt="">
+                            <p class="weui-grid__label">
+                                粮油厨房
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="swiper-container">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide"><img
+                            src="//img.alicdn.com/tfs/TB1EvfMgMvD8KJjSsplXXaIEFXa-1125-543.jpg_760x760Q75s50.jpg_.webp"/>
+                    </div>
+                    <div class="swiper-slide"><img
+                            src="//img.alicdn.com/imgextra/i3/1910146537/TB2aybwb3fN8KJjSZFIXXc0UFXa_!!1910146537.jpg_760x760Q75s50.jpg_.webp"/>
+                    </div>
+                    <div class="swiper-slide"><img
+                            src="//img.alicdn.com/imgextra/i2/2108418347/TB2Ui0xg4rI8KJjy0FpXXb5hVXa_!!2108418347.jpg_760x760Q75s50.jpg_.webp"/>
+                    </div>
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <div class="index-nav">
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_0.png" alt="">
+                            <p class="weui-grid__label">
+                                生鲜水果
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_1.png" alt="">
+                            <p class="weui-grid__label">
+                                休闲零食
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_2.png" alt="">
+                            <p class="weui-grid__label">
+                                奶品水饮
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_3.png" alt="">
+                            <p class="weui-grid__label">
+                                粮油厨房
+                            </p>
+                        </a>
+                    </div>
+                </div>
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_4.png" alt="">
+                            <p class="weui-grid__label">
+                                生鲜水果
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_5.png" alt="">
+                            <p class="weui-grid__label">
+                                休闲零食
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_6.png" alt="">
+                            <p class="weui-grid__label">
+                                奶品水饮
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_7.png" alt="">
+                            <p class="weui-grid__label">
+                                粮油厨房
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-container">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide"><img
+                            src="//img.alicdn.com/tfs/TB1EvfMgMvD8KJjSsplXXaIEFXa-1125-543.jpg_760x760Q75s50.jpg_.webp"/>
+                    </div>
+                    <div class="swiper-slide"><img
+                            src="//img.alicdn.com/imgextra/i3/1910146537/TB2aybwb3fN8KJjSZFIXXc0UFXa_!!1910146537.jpg_760x760Q75s50.jpg_.webp"/>
+                    </div>
+                    <div class="swiper-slide"><img
+                            src="//img.alicdn.com/imgextra/i2/2108418347/TB2Ui0xg4rI8KJjy0FpXXb5hVXa_!!2108418347.jpg_760x760Q75s50.jpg_.webp"/>
+                    </div>
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <div class="index-nav">
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_0.png" alt="">
+                            <p class="weui-grid__label">
+                                生鲜水果
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_1.png" alt="">
+                            <p class="weui-grid__label">
+                                休闲零食
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_2.png" alt="">
+                            <p class="weui-grid__label">
+                                奶品水饮
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_3.png" alt="">
+                            <p class="weui-grid__label">
+                                粮油厨房
+                            </p>
+                        </a>
+                    </div>
+                </div>
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_4.png" alt="">
+                            <p class="weui-grid__label">
+                                生鲜水果
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_5.png" alt="">
+                            <p class="weui-grid__label">
+                                休闲零食
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_6.png" alt="">
+                            <p class="weui-grid__label">
+                                奶品水饮
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_7.png" alt="">
+                            <p class="weui-grid__label">
+                                粮油厨房
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-container">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide"><img
+                            src="//img.alicdn.com/tfs/TB1EvfMgMvD8KJjSsplXXaIEFXa-1125-543.jpg_760x760Q75s50.jpg_.webp"/>
+                    </div>
+                    <div class="swiper-slide"><img
+                            src="//img.alicdn.com/imgextra/i3/1910146537/TB2aybwb3fN8KJjSZFIXXc0UFXa_!!1910146537.jpg_760x760Q75s50.jpg_.webp"/>
+                    </div>
+                    <div class="swiper-slide"><img
+                            src="//img.alicdn.com/imgextra/i2/2108418347/TB2Ui0xg4rI8KJjy0FpXXb5hVXa_!!2108418347.jpg_760x760Q75s50.jpg_.webp"/>
+                    </div>
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <div class="index-nav">
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_0.png" alt="">
+                            <p class="weui-grid__label">
+                                生鲜水果
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_1.png" alt="">
+                            <p class="weui-grid__label">
+                                休闲零食
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_2.png" alt="">
+                            <p class="weui-grid__label">
+                                奶品水饮
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_3.png" alt="">
+                            <p class="weui-grid__label">
+                                粮油厨房
+                            </p>
+                        </a>
+                    </div>
+                </div>
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_4.png" alt="">
+                            <p class="weui-grid__label">
+                                生鲜水果
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_5.png" alt="">
+                            <p class="weui-grid__label">
+                                休闲零食
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_6.png" alt="">
+                            <p class="weui-grid__label">
+                                奶品水饮
+                            </p>
+                        </a>
+                    </div>
+                    <div class="weui-flex__item">
+                        <a href="">
+                            <img src="__TPL__/images/nav/nav_7.png" alt="">
+                            <p class="weui-grid__label">
+                                粮油厨房
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- If we need pagination -->
-        <div class="swiper-pagination"></div>
     </div>
 
+    <div class="weui-tabbar">
+        <a href="index.php" class="weui-tabbar__item weui-bar__item--on">
+            <div class="weui-tabbar__icon">
+                <i class="iconfont icon-wxbzhuye"></i>
+            </div>
+            <p class="weui-tabbar__label">首页</p>
+        </a>
+        <a href="catalog.php" class="weui-tabbar__item">
+            <div class="weui-tabbar__icon">
+                <i class="iconfont icon-all"></i>
+            </div>
+            <p class="weui-tabbar__label">分类</p>
+        </a>
+        <a href="discover.php" class="weui-tabbar__item">
+            <div class="weui-tabbar__icon">
+                <i class="iconfont icon-compass"></i>
+            </div>
+            <p class="weui-tabbar__label">发现</p>
+        </a>
+        <a href="flow.php" class="weui-tabbar__item">
+            <span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>
+            <div class="weui-tabbar__icon">
+                <i class="iconfont icon-gouwuche"></i>
+            </div>
+            <p class="weui-tabbar__label">购物车</p>
+        </a>
+        <a href="user.php" class="weui-tabbar__item">
+            <div class="weui-tabbar__icon">
+                <i class="iconfont icon-account"></i>
+            </div>
+            <p class="weui-tabbar__label">我</p>
+        </a>
+    </div>
 </div>
 
 <script>

@@ -33,7 +33,7 @@ $config = [
     'runtimePath' => '@runtime',
     'vendorPath' => '@vendor',
     'bootstrap' => ['log'],
-    'controllerNamespace' => 'App\Http\Controllers',
+    'controllerNamespace' => 'app\http\controllers',
     'defaultRoute' => 'index',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -62,13 +62,13 @@ $config = [
         ],
         'admin' => [
             'class' => 'yii\web\User',
-            'identityClass' => 'App\Models\AdminUser',
+            'identityClass' => 'app\models\AdminUser',
             'enableAutoLogin' => true,
             'loginUrl' => ['admin/login/index'],
             'identityCookie' => ['name' => '_admin_identity', 'httpOnly' => true]
         ],
         'user' => [
-            'identityClass' => 'App\Models\User',
+            'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
             'loginUrl' => ['user/login/index'],
             'identityCookie' => ['name' => '_identity', 'httpOnly' => true]
