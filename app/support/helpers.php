@@ -336,9 +336,9 @@ function load_helper($files = [], $module = '')
         $files = [$files];
     }
     if (empty($module)) {
-        $base_path = app_path('Helpers/');
+        $base_path = app_path('helpers/');
     } else {
-        $base_path = app_path('Modules/' . ucfirst($module) . '/Helpers/');
+        $base_path = app_path('modules/' . ucfirst($module) . '/helpers/');
     }
     foreach ($files as $vo) {
         $helper = $base_path . $vo . '.php';
@@ -362,7 +362,7 @@ function load_lang($files = [], $module = '')
     if (empty($module)) {
         $base_path = resource_path('lang/' . $GLOBALS['_CFG']['lang'] . '/');
     } else {
-        $base_path = app_path('Modules/' . ucfirst($module) . '/Languages/' . $GLOBALS['_CFG']['lang'] . '/');
+        $base_path = app_path('modules/' . ucfirst($module) . '/languages/' . $GLOBALS['_CFG']['lang'] . '/');
     }
     foreach ($files as $vo) {
         $helper = $base_path . $vo . '.php';

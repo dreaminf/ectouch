@@ -77,7 +77,7 @@ class Controller extends BaseController
 
         /* 创建 Smarty 对象。*/
         $this->smarty = $GLOBALS['smarty'] = new Template();
-        $this->smarty->template_dir = dirname(__DIR__) . '/Views';
+        $this->smarty->template_dir = dirname(__DIR__) . '/views';
         $this->smarty->compile_dir = storage_path('framework/temp/compiled/admin');
         if (config('app.debug')) {
             $this->smarty->force_compile = true;
