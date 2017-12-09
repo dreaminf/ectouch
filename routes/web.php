@@ -43,7 +43,9 @@ return [
     'certi.php' => 'certi/index',
     'comment.php' => 'comment/index',
     'compare.php' => 'compare/index',
+    'crowd_funding.php' => 'crowd-funding/index',
     'cycle_image.php' => 'cycle-image/index',
+    'discover.php' => 'discover/index',
 
     [
         'pattern' => 'exchange-id<id:\d+><s:.*>.html',
@@ -76,9 +78,11 @@ return [
         'defaults' => ['act' => 'view'],
     ],
     'group_buy.php' => 'group-buy/index',
+    'groupon.php' => 'groupon/index',
 
     'message.php' => 'message/index',
     'myship.php' => 'myship/index',
+    'oauth.php' => 'oauth/index',
     'package.php' => 'package/index',
     'pick_out.php' => 'pick-out/index',
     'pm.php' => 'pm/index',
@@ -86,6 +90,8 @@ return [
     'receive.php' => 'receive/index',
     'region.php' => 'region/index',
     'respond.php' => 'respond/index',
+
+    'sales.php' => 'sales/index',
 
     'tag-<keywords:.*>.html' => 'search/index',
     'search.php' => 'search/index',
@@ -99,5 +105,6 @@ return [
     'topic.php' => 'topic/index',
     'user.php' => 'user/index',
     'vote.php' => 'vote/index',
+    'wechat.php' => 'wechat/index',
     'wholesale.php' => 'wholesale/index',
 ];

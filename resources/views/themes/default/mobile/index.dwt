@@ -298,7 +298,7 @@
         <i class="aui-iconfont aui-icon-menu"></i>
         <div class="aui-bar-tab-label">分类</div>
     </div>
-    <div class="aui-bar-tab-item" tapmode onclick="window.location.href = 'drx.php'">
+    <div class="aui-bar-tab-item" tapmode onclick="window.location.href = 'discover.php'">
         <i class="aui-iconfont aui-icon-wechat-circle"></i>
         <div class="aui-bar-tab-label">发现</div>
     </div>
