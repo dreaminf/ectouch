@@ -11,24 +11,6 @@ class CatalogController extends Controller
 {
     public function actionIndex()
     {
-        $content = file_get_contents(base_path('docs/mock/jd.php'));
-
-        preg_match_all('/jsonp(.*?)\}\)/', $content, $childs);
-        $list = [];
-        foreach($childs[0] as $item) {
-            preg_match_all('/expoSrv(.*?)pictureUrl":"(.*?)"(.*?)name":"(.*?)"(.*?)picHeight/', $item, $matches);
-            $list[] = array_combine($matches[4], $matches[2]);
-        }
-
-        // 一级类别
-        preg_match_all('/\<li class=""\>(.*?)\<\/li\>/', $content, $matches);
-        $category = [];
-        foreach ($matches[1] as $key => $item) {
-            $category[$item] = $list[$key];
-        }
-
-        dd($category);
-
         if (!$this->smarty->is_cached('catalog.dwt')) {
             /* 取出所有分类 */
             $cat_list = cat_list(0, 0, false);
@@ -49,6 +31,27 @@ class CatalogController extends Controller
             $this->smarty->assign('cat_list', $cat_list);       // 分类列表
             $this->smarty->assign('brand_list', get_brands());    // 所以品牌赋值
             $this->smarty->assign('promotion_info', get_promotion_info());
+
+            /**
+             * 模拟数据
+             */
+            $content = file_get_contents(base_path('docs/mock/jd.php'));
+
+            preg_match_all('/jsonp(.*?)\}\)/', $content, $childs);
+            $list = [];
+            foreach($childs[0] as $item) {
+                preg_match_all('/expoSrv(.*?)pictureUrl":"(.*?)"(.*?)name":"(.*?)"(.*?)picHeight/', $item, $matches);
+                $list[] = array_combine($matches[4], $matches[2]);
+            }
+
+            // 一级类别
+            preg_match_all('/\<li class=""\>(.*?)\<\/li\>/', $content, $matches);
+            $category = [];
+            foreach ($matches[1] as $key => $item) {
+                $category[$item] = $list[$key];
+            }
+
+            $this->smarty->assign('category', $category);       // 分类列表
         }
 
         return $this->smarty->display('catalog.dwt');

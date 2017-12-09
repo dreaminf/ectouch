@@ -1,410 +1,337 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 
-<div class="weui-tab">
-    <div class="weui-tab__bd">
-        <div class="weui-tab__bd-item weui-tab__bd-item--active">
+<div id="ectouch-slide" style="position: relative;">
+    <div class="aui-slide-wrap" >
+        <div class="aui-slide-node bg-dark">
+            <img src="https://m.360buyimg.com/mobilecms/s1125x549_jfs/t14479/94/322468645/195052/3fea566a/5a2a3120N9582aa3d.jpg!q70.jpg" />
+        </div>
+        <div class="aui-slide-node bg-dark">
+            <img src="https://m.360buyimg.com/mobilecms/s1125x549_jfs/t15325/236/253405785/131333/d9e0e5a6/5a27e1d9Nfcd6536d.jpg!q70.jpg" />
+        </div>
+        <div class="aui-slide-node bg-dark">
+            <img src="https://img1.360buyimg.com/da/jfs/t13918/229/166921035/186022/1305d29b/5a1fde9cN453e1f3f.jpg" />
+        </div>
+    </div>
+    <div class="aui-slide-page-wrap"><!--分页容器--></div>
 
-            <div class="swiper-container">
-                <!-- Additional required wrapper -->
-                <div class="swiper-wrapper">
-                    <!-- Slides -->
-                    <div class="swiper-slide"><img
-                            src="//img.alicdn.com/tfs/TB1EvfMgMvD8KJjSsplXXaIEFXa-1125-543.jpg_760x760Q75s50.jpg_.webp"/>
-                    </div>
-                    <div class="swiper-slide"><img
-                            src="//img.alicdn.com/imgextra/i3/1910146537/TB2aybwb3fN8KJjSZFIXXc0UFXa_!!1910146537.jpg_760x760Q75s50.jpg_.webp"/>
-                    </div>
-                    <div class="swiper-slide"><img
-                            src="//img.alicdn.com/imgextra/i2/2108418347/TB2Ui0xg4rI8KJjy0FpXXb5hVXa_!!2108418347.jpg_760x760Q75s50.jpg_.webp"/>
-                    </div>
-                </div>
-                <!-- If we need pagination -->
-                <div class="swiper-pagination"></div>
-            </div>
-
-            <div class="index-nav">
-                <div class="weui-flex">
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_0.png" alt="">
-                            <p class="weui-grid__label">
-                                生鲜水果
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_1.png" alt="">
-                            <p class="weui-grid__label">
-                                休闲零食
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_2.png" alt="">
-                            <p class="weui-grid__label">
-                                奶品水饮
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_3.png" alt="">
-                            <p class="weui-grid__label">
-                                粮油厨房
-                            </p>
-                        </a>
-                    </div>
-                </div>
-                <div class="weui-flex">
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_4.png" alt="">
-                            <p class="weui-grid__label">
-                                生鲜水果
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_5.png" alt="">
-                            <p class="weui-grid__label">
-                                休闲零食
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_6.png" alt="">
-                            <p class="weui-grid__label">
-                                奶品水饮
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_7.png" alt="">
-                            <p class="weui-grid__label">
-                                粮油厨房
-                            </p>
-                        </a>
+    <section class="aui-content slider-bg">
+        <div class="aui-flex-col aui-flex-middle">
+            <div class="aui-flex-item-11">
+                <div class="aui-searchbar" id="search" style="background: none;">
+                    <div class="aui-searchbar-input aui-border-radius" tapmode>
+                        <i class="aui-iconfont aui-icon-search"></i>
+                        <form action="javascript:doSearch();">
+                            <input type="search" placeholder="请输入搜索内容" id="search-input">
+                        </form>
                     </div>
                 </div>
             </div>
-
-
-            <div class="swiper-container">
-                <!-- Additional required wrapper -->
-                <div class="swiper-wrapper">
-                    <!-- Slides -->
-                    <div class="swiper-slide"><img
-                            src="//img.alicdn.com/tfs/TB1EvfMgMvD8KJjSsplXXaIEFXa-1125-543.jpg_760x760Q75s50.jpg_.webp"/>
-                    </div>
-                    <div class="swiper-slide"><img
-                            src="//img.alicdn.com/imgextra/i3/1910146537/TB2aybwb3fN8KJjSZFIXXc0UFXa_!!1910146537.jpg_760x760Q75s50.jpg_.webp"/>
-                    </div>
-                    <div class="swiper-slide"><img
-                            src="//img.alicdn.com/imgextra/i2/2108418347/TB2Ui0xg4rI8KJjy0FpXXb5hVXa_!!2108418347.jpg_760x760Q75s50.jpg_.webp"/>
-                    </div>
-                </div>
-                <!-- If we need pagination -->
-                <div class="swiper-pagination"></div>
+            <div class="aui-flex-item-1 aui-text-center">
+                <i class="aui-iconfont aui-icon-my"></i>
             </div>
+        </div>
+    </section>
+</div>
 
-            <div class="index-nav">
-                <div class="weui-flex">
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_0.png" alt="">
-                            <p class="weui-grid__label">
-                                生鲜水果
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_1.png" alt="">
-                            <p class="weui-grid__label">
-                                休闲零食
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_2.png" alt="">
-                            <p class="weui-grid__label">
-                                奶品水饮
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_3.png" alt="">
-                            <p class="weui-grid__label">
-                                粮油厨房
-                            </p>
-                        </a>
-                    </div>
-                </div>
-                <div class="weui-flex">
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_4.png" alt="">
-                            <p class="weui-grid__label">
-                                生鲜水果
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_5.png" alt="">
-                            <p class="weui-grid__label">
-                                休闲零食
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_6.png" alt="">
-                            <p class="weui-grid__label">
-                                奶品水饮
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_7.png" alt="">
-                            <p class="weui-grid__label">
-                                粮油厨房
-                            </p>
-                        </a>
-                    </div>
-                </div>
+<section class="aui-grid aui-margin-b-5 touch-nav">
+    <div class="aui-row">
+        <div class="aui-col-xs-3 touch-nav-item">
+            <img src="http://shop.ectouch.cn/v2/themes/default/images/nav/nav_0.png" alt="">
+            <div class="aui-grid-label">全部分类</div>
+        </div>
+        <div class="aui-col-xs-3 touch-nav-item">
+            <img src="http://shop.ectouch.cn/v2/themes/default/images/nav/nav_1.png" alt="">
+            <div class="aui-grid-label">我的订单</div>
+        </div>
+        <div class="aui-col-xs-3 touch-nav-item">
+            <img src="http://shop.ectouch.cn/v2/themes/default/images/nav/nav_2.png" alt="">
+            <div class="aui-grid-label">最新团购</div>
+        </div>
+        <div class="aui-col-xs-3 touch-nav-item">
+            <img src="http://shop.ectouch.cn/v2/themes/default/images/nav/nav_3.png" alt="">
+            <div class="aui-grid-label">促销活动</div>
+        </div>
+        <div class="aui-col-xs-3 touch-nav-item">
+            <img src="http://shop.ectouch.cn/v2/themes/default/images/nav/nav_4.png" alt="">
+            <div class="aui-grid-label">热门搜索</div>
+        </div>
+        <div class="aui-col-xs-3 touch-nav-item">
+            <img src="http://shop.ectouch.cn/v2/themes/default/images/nav/nav_5.png" alt="">
+            <div class="aui-grid-label">品牌街</div>
+        </div>
+        <div class="aui-col-xs-3 touch-nav-item">
+            <img src="http://shop.ectouch.cn/v2/themes/default/images/nav/nav_6.png" alt="">
+            <div class="aui-grid-label">个人中心</div>
+        </div>
+        <div class="aui-col-xs-3 touch-nav-item">
+            <img src="http://shop.ectouch.cn/v2/themes/default/images/nav/nav_7.png" alt="">
+            <div class="aui-grid-label">购物车</div>
+        </div>
+    </div>
+</section>
+
+<section class="aui-margin-b-5">此处为文章快报</section>
+
+<section class="aui-content aui-margin-b-5">
+    <img src="https://m.360buyimg.com/mobilecms/jfs/t12565/161/1816311379/196762/8cab586a/5a2aa998Ne212316d.gif" alt="">
+</section>
+
+<section class="aui-margin-b-5">此处为秒杀模块</section>
+
+<section class="aui-content aui-margin-b-5">
+    <div class="aui-row">
+        <img src="https://m.360buyimg.com/mobilecms/jfs/t15187/144/343575150/203847/b83d9bba/5a2a85dbNc1f8d610.gif" alt="">
+    </div>
+    <div class="aui-flex-col">
+        <div class="aui-flex-item-6 aui-flex-row">
+            <img src="https://m.360buyimg.com/mobilecms/jfs/t14539/237/162208854/71475/322aac37/5a25880bN07b23ff7.jpg!q70.jpg">
+        </div>
+        <div class="aui-flex-item-6 aui-flex-row">
+            <img src="https://m.360buyimg.com/mobilecms/jfs/t13849/363/323110414/117725/484cc24c/5a2673afN5138d818.jpg!q70.jpg">
+        </div>
+        <div class="aui-flex-item-6 aui-flex-row">
+            <img src="https://m.360buyimg.com/mobilecms/jfs/t14260/297/206385636/45054/591b036a/5a2676b0Nbb7f0163.png!q70.jpg">
+        </div>
+        <div class="aui-flex-item-6 aui-flex-row">
+            <img src="https://m.360buyimg.com/mobilecms/jfs/t14617/287/201170927/143083/74051c49/5a2674a6N44dfeee3.jpg!q70.jpg">
+        </div>
+    </div>
+    <div class="aui-flex-col" style="background-color: #ffffff">
+        <div class="aui-flex-item-3 aui-flex-row aui-padded-5">
+            <div class="graphic-text">
+                <h3>白条商城</h3>
+                <p>一元免息~</p>
             </div>
-
-            <div class="swiper-container">
-                <!-- Additional required wrapper -->
-                <div class="swiper-wrapper">
-                    <!-- Slides -->
-                    <div class="swiper-slide"><img
-                            src="//img.alicdn.com/tfs/TB1EvfMgMvD8KJjSsplXXaIEFXa-1125-543.jpg_760x760Q75s50.jpg_.webp"/>
-                    </div>
-                    <div class="swiper-slide"><img
-                            src="//img.alicdn.com/imgextra/i3/1910146537/TB2aybwb3fN8KJjSZFIXXc0UFXa_!!1910146537.jpg_760x760Q75s50.jpg_.webp"/>
-                    </div>
-                    <div class="swiper-slide"><img
-                            src="//img.alicdn.com/imgextra/i2/2108418347/TB2Ui0xg4rI8KJjy0FpXXb5hVXa_!!2108418347.jpg_760x760Q75s50.jpg_.webp"/>
-                    </div>
-                </div>
-                <!-- If we need pagination -->
-                <div class="swiper-pagination"></div>
+            <div class="graphic-img">
+                <img src="https://m.360buyimg.com/mobilecms/s240x240_jfs/t13168/248/1724630692/18092/56b11619/5a27af8cN0c1309f6.jpg!q70.jpg">
             </div>
+        </div>
+        <div class="aui-flex-item-3 aui-flex-row aui-padded-5 aui-border-l">
+            <div class="graphic-text">
+                <h3>白条商城</h3>
+                <p>一元免息~</p>
+            </div>
+            <div class="graphic-img">
+            <img src="https://m.360buyimg.com/mobilecms/s240x240_jfs/t15463/90/337343188/32324/9fb0bd8a/5a2a603fN4b6800a9.jpg!q70.jpg">
+            </div>
+        </div>
+        <div class="aui-flex-item-3 aui-flex-row aui-padded-5 aui-border-l">
+            <div class="graphic-text">
+                <h3>白条商城</h3>
+                <p>一元免息~</p>
+            </div>
+            <div class="graphic-img">
+            <img src="https://m.360buyimg.com/n1/jfs/t7474/81/3065190987/104698/5d083dfa/59b8c271N0d20b78b.jpg!q70.jpg">
+            </div>
+        </div>
+        <div class="aui-flex-item-3 aui-flex-row aui-padded-5 aui-border-l">
+            <div class="graphic-text">
+                <h3>白条商城</h3>
+                <p>一元免息~</p>
+            </div>
+            <div class="graphic-img">
+            <img src="https://m.360buyimg.com/mobilecms/s240x240_jfs/t12715/202/723679964/31153/c3ad84a6/5a12aa06N0b215114.jpg!q70.jpg">
+            </div>
+        </div>
+        <div class="aui-flex-item-3 aui-flex-row aui-padded-5 aui-border-t">
+            <div class="graphic-text">
+                <h3>白条商城</h3>
+                <p>一元免息~</p>
+            </div>
+            <div class="graphic-img">
+            <img src="https://m.360buyimg.com/n1/jfs/t3655/88/292527321/88355/38cead25/58096c24Nfb0efc86.jpg!q70.jpg">
+            </div>
+        </div>
+        <div class="aui-flex-item-3 aui-flex-row aui-padded-5 aui-border-t aui-border-l">
+            <div class="graphic-text">
+                <h3>白条商城</h3>
+                <p>一元免息~</p>
+            </div>
+            <div class="graphic-img">
+            <img src="https://m.360buyimg.com/n1/jfs/t10729/52/2477178142/36950/45576b86/59f7d2bdNc661bf04.jpg!q70.jpg">
+            </div>
+        </div>
+        <div class="aui-flex-item-3 aui-flex-row aui-padded-5 aui-border-t aui-border-l">
+            <div class="graphic-text">
+                <h3>白条商城</h3>
+                <p>一元免息~</p>
+            </div>
+            <div class="graphic-img">
+            <img src="https://m.360buyimg.com/n1/jfs/t4540/12/570322528/123778/f8a46247/58d1eee3Nfc5e5e7f.jpg!q70.jpg">
+            </div>
+        </div>
+        <div class="aui-flex-item-3 aui-flex-row aui-padded-5 aui-border-t aui-border-l">
+            <div class="graphic-text">
+                <h3>白条商城</h3>
+                <p>一元免息~</p>
+            </div>
+            <div class="graphic-img">
+            <img src="https://m.360buyimg.com/mobilecms/s240x240_jfs/t14668/280/202796252/73147/49de3096/5a266740N6b58c4de.png!q70.jpg">
+            </div>
+        </div>
+    </div>
+</section>
 
-            <div class="index-nav">
-                <div class="weui-flex">
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_0.png" alt="">
-                            <p class="weui-grid__label">
-                                生鲜水果
-                            </p>
-                        </a>
+
+<section class="aui-content aui-margin-b-5" style="background-color: #fff;">
+    <div class="aui-row">
+        <img src="https://m.360buyimg.com/mobilecms/jfs/t4270/297/570405700/13314/a46c9b82/58b64705Nce641d00.jpg!q70.jpg" alt="" width="auto">
+    </div>
+    <div class="aui-flex-col aui-flex-center aui-border-tb">
+        <div class="aui-flex-item-4 aui-flex-row aui-flex-middle aui-padded-10">
+            <h3 class="aui-text-danger">淘抢购</h3>
+            <p>可爱的你会喜欢</p>
+            <img src="__PUBLIC__/plugins/auicss/image/f1.jpg">
+        </div>
+        <div class="aui-flex-item-8 aui-border-l">
+            <div class="aui-flex-col aui-padded-10 aui-border-b">
+                <div class="aui-flex-item-12">
+                    <div class="aui-flex-item-9">
+                        <h3 class="aui-text-info">有好货</h3>
+                        <p>好品味从挑剔开始</p>
                     </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_1.png" alt="">
-                            <p class="weui-grid__label">
-                                休闲零食
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_2.png" alt="">
-                            <p class="weui-grid__label">
-                                奶品水饮
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_3.png" alt="">
-                            <p class="weui-grid__label">
-                                粮油厨房
-                            </p>
-                        </a>
-                    </div>
-                </div>
-                <div class="weui-flex">
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_4.png" alt="">
-                            <p class="weui-grid__label">
-                                生鲜水果
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_5.png" alt="">
-                            <p class="weui-grid__label">
-                                休闲零食
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_6.png" alt="">
-                            <p class="weui-grid__label">
-                                奶品水饮
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_7.png" alt="">
-                            <p class="weui-grid__label">
-                                粮油厨房
-                            </p>
-                        </a>
-                    </div>
+                    <div class="aui-flex-item-3 aui-text-right"><img src="__PUBLIC__/plugins/auicss/image/f2.jpg"></div>
                 </div>
             </div>
-
-            <div class="swiper-container">
-                <!-- Additional required wrapper -->
-                <div class="swiper-wrapper">
-                    <!-- Slides -->
-                    <div class="swiper-slide"><img
-                            src="//img.alicdn.com/tfs/TB1EvfMgMvD8KJjSsplXXaIEFXa-1125-543.jpg_760x760Q75s50.jpg_.webp"/>
-                    </div>
-                    <div class="swiper-slide"><img
-                            src="//img.alicdn.com/imgextra/i3/1910146537/TB2aybwb3fN8KJjSZFIXXc0UFXa_!!1910146537.jpg_760x760Q75s50.jpg_.webp"/>
-                    </div>
-                    <div class="swiper-slide"><img
-                            src="//img.alicdn.com/imgextra/i2/2108418347/TB2Ui0xg4rI8KJjy0FpXXb5hVXa_!!2108418347.jpg_760x760Q75s50.jpg_.webp"/>
-                    </div>
+            <div class="aui-flex-col">
+                <div class="aui-flex-item-6 aui-padded-10" style="position: relative;">
+                    <h5 class="aui-text-warning">爱逛街</h5>
+                    <p>疯狂赛车来袭</p>
+                    <img src="__PUBLIC__/plugins/auicss/image/f3.jpg">
                 </div>
-                <!-- If we need pagination -->
-                <div class="swiper-pagination"></div>
-            </div>
-
-            <div class="index-nav">
-                <div class="weui-flex">
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_0.png" alt="">
-                            <p class="weui-grid__label">
-                                生鲜水果
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_1.png" alt="">
-                            <p class="weui-grid__label">
-                                休闲零食
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_2.png" alt="">
-                            <p class="weui-grid__label">
-                                奶品水饮
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_3.png" alt="">
-                            <p class="weui-grid__label">
-                                粮油厨房
-                            </p>
-                        </a>
-                    </div>
-                </div>
-                <div class="weui-flex">
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_4.png" alt="">
-                            <p class="weui-grid__label">
-                                生鲜水果
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_5.png" alt="">
-                            <p class="weui-grid__label">
-                                休闲零食
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_6.png" alt="">
-                            <p class="weui-grid__label">
-                                奶品水饮
-                            </p>
-                        </a>
-                    </div>
-                    <div class="weui-flex__item">
-                        <a href="">
-                            <img src="__TPL__/images/nav/nav_7.png" alt="">
-                            <p class="weui-grid__label">
-                                粮油厨房
-                            </p>
-                        </a>
-                    </div>
+                <div class="aui-flex-item-6 aui-padded-10 aui-border-l">
+                    <h5 class="aui-text-success">必买清单</h5>
+                    <p>都帮你整理好啦</p>
+                    <img src="__PUBLIC__/plugins/auicss/image/f5.jpg">
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <div class="weui-tabbar">
-        <a href="index.php" class="weui-tabbar__item weui-bar__item--on">
-            <div class="weui-tabbar__icon">
-                <i class="iconfont icon-wxbzhuye"></i>
-            </div>
-            <p class="weui-tabbar__label">首页</p>
-        </a>
-        <a href="catalog.php" class="weui-tabbar__item">
-            <div class="weui-tabbar__icon">
-                <i class="iconfont icon-all"></i>
-            </div>
-            <p class="weui-tabbar__label">分类</p>
-        </a>
-        <a href="discover.php" class="weui-tabbar__item">
-            <div class="weui-tabbar__icon">
-                <i class="iconfont icon-compass"></i>
-            </div>
-            <p class="weui-tabbar__label">发现</p>
-        </a>
-        <a href="flow.php" class="weui-tabbar__item">
-            <span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>
-            <div class="weui-tabbar__icon">
-                <i class="iconfont icon-gouwuche"></i>
-            </div>
-            <p class="weui-tabbar__label">购物车</p>
-        </a>
-        <a href="user.php" class="weui-tabbar__item">
-            <div class="weui-tabbar__icon">
-                <i class="iconfont icon-account"></i>
-            </div>
-            <p class="weui-tabbar__label">我</p>
-        </a>
+<section class="aui-content" style="margin-bottom: 2.8rem;">
+    <div class="aui-row">
+        <img src="https://m.360buyimg.com/mobilecms/jfs/t6001/187/8772591725/44285/dbab5007/598c3eaaNcabae5fd.jpg!q70.jpg"
+             alt="">
     </div>
-</div>
+    <div class="aui-flex-col" id="recommendList">
+        <div class="aui-flex-item-6 aui-flex-row similar-li">
+            <div class="similar-product">
+                <div class="similar-posre">
+                    <img src="//m.360buyimg.com//mobilecms/s276x276_jfs/t10198/341/2049136605/181101/89253dbc/59ec3325N906f107e.jpg!q70.jpg"
+                         alt="">
+                </div>
+                <span class="similar-product-text">Apple 苹果  iPhone X 全面屏手机 深空灰色 全网通 64GB</span>
+                <p class="similar-product-info">
+                <span class="similar-product-price">
+                    <span class="big-price">￥8500</span>
+                    <span class="small-price">.00</span>
+                </span>
+                    <span class="similar-icon">
+                    <img src="https://commonst.360buyimg.com/images/fullcut-icon.png" alt="">
+                </span>
+                </p>
+            </div>
+        </div>
+        <div class="aui-flex-item-6 aui-flex-row similar-li">
+            <div class="similar-product">
+                <div class="similar-posre">
+                    <img src="//m.360buyimg.com//mobilecms/s276x276_jfs/t10198/341/2049136605/181101/89253dbc/59ec3325N906f107e.jpg!q70.jpg"
+                         alt="">
+                </div>
+                <span class="similar-product-text">Apple 苹果  iPhone X 全面屏手机 深空灰色 全网通 64GB</span>
+                <p class="similar-product-info">
+                <span class="similar-product-price">
+                    <span class="big-price">￥8500</span>
+                    <span class="small-price">.00</span>
+                </span>
+                    <span class="similar-icon">
+                    <img src="https://commonst.360buyimg.com/images/fullcut-icon.png" alt="">
+                </span>
+                </p>
+            </div>
+        </div>
+        <div class="aui-flex-item-6 aui-flex-row similar-li">
+            <div class="similar-product">
+                <div class="similar-posre">
+                    <img src="//m.360buyimg.com//mobilecms/s276x276_jfs/t10198/341/2049136605/181101/89253dbc/59ec3325N906f107e.jpg!q70.jpg"
+                         alt="">
+                </div>
+                <span class="similar-product-text">Apple 苹果  iPhone X 全面屏手机 深空灰色 全网通 64GB</span>
+                <p class="similar-product-info">
+                <span class="similar-product-price">
+                    <span class="big-price">￥8500</span>
+                    <span class="small-price">.00</span>
+                </span>
+                    <span class="similar-icon">
+                    <img src="https://commonst.360buyimg.com/images/fullcut-icon.png" alt="">
+                </span>
+                </p></div>
+        </div>
+        <div class="aui-flex-item-6 aui-flex-row similar-li">
+            <div class="similar-product">
+                <div class="similar-posre">
+                    <img src="//m.360buyimg.com//mobilecms/s276x276_jfs/t10198/341/2049136605/181101/89253dbc/59ec3325N906f107e.jpg!q70.jpg"
+                         alt="">
+                </div>
+                <span class="similar-product-text">Apple 苹果  iPhone X 全面屏手机 深空灰色 全网通 64GB</span>
+                <p class="similar-product-info">
+                <span class="similar-product-price">
+                    <span class="big-price">￥8500</span>
+                    <span class="small-price">.00</span>
+                </span>
+                    <span class="similar-icon">
+                    <img src="https://commonst.360buyimg.com/images/fullcut-icon.png" alt="">
+                </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="aui-bar aui-bar-tab" id="footer">
+    <div class="aui-bar-tab-item aui-active" tapmode onclick="window.location.href = 'index.php'">
+        <i class="aui-iconfont aui-icon-home"></i>
+        <div class="aui-bar-tab-label">首页</div>
+    </div>
+    <div class="aui-bar-tab-item" tapmode onclick="window.location.href = 'catalog.php'">
+        <i class="aui-iconfont aui-icon-menu"></i>
+        <div class="aui-bar-tab-label">分类</div>
+    </div>
+    <div class="aui-bar-tab-item" tapmode onclick="window.location.href = 'drx.php'">
+        <i class="aui-iconfont aui-icon-wechat-circle"></i>
+        <div class="aui-bar-tab-label">发现</div>
+    </div>
+    <div class="aui-bar-tab-item" tapmode onclick="window.location.href = 'flow.php'">
+        <div class="aui-badge">99</div>
+        <i class="aui-iconfont aui-icon-cart"></i>
+        <div class="aui-bar-tab-label">购物车</div>
+    </div>
+    <div class="aui-bar-tab-item" tapmode onclick="window.location.href = 'user.php'">
+        <div class="aui-dot"></div>
+        <i class="aui-iconfont aui-icon-my"></i>
+        <div class="aui-bar-tab-label">我的</div>
+    </div>
+</footer>
 
 <script>
-    $(function () {
-        $(".swiper-container").swiper({
-            loop: true,
-            autoplay: 3000
-        });
+    var slide = new auiSlide({
+        container:document.getElementById("ectouch-slide"),
+        "height":180,
+        "speed":500,
+        "autoPlay": 3000, //自动播放
+        "loop":true,
+        "pageShow":true,
+        "pageStyle":'dot',
+        'dotPosition':'center'
     })
+
+    function doSearch(){
+        var searchValue = document.getElementById("search-input").value;
+        if(searchValue){
+            alert("您输入的内容是:"+searchValue);
+        }
+    }
 </script>
 
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
