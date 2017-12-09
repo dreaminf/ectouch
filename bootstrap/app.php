@@ -34,7 +34,7 @@ define('API_TIME', '2017-08-02 09:20:18');
 |
 */
 
-if (!in_array(@$_SERVER['REMOTE_ADDR'], ['127.0.0.1', '192.168.10.1'])) {
+if (!in_array(@$_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'])) {
     defined('YII_DEBUG') or define('YII_DEBUG', false);
     defined('YII_ENV') or define('YII_ENV', 'prod');
 } else {
