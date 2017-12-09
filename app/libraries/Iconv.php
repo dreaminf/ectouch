@@ -64,7 +64,7 @@ class Iconv
      */
     public function __construct()
     {
-        $this->config['codetable_dir'] = __DIR__ . "/Codetable/";
+        $this->config['codetable_dir'] = resource_path('codetable/');
 
         if (function_exists('iconv')) {
             $this->iconv_enabled = true;
