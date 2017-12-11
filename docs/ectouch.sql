@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50718
+Source Server Version : 50719
 Source Host           : localhost:3306
-Source Database       : ecshop
+Source Database       : ectouch
 
 Target Server Type    : MYSQL
-Target Server Version : 50718
+Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2017-07-26 09:31:52
+Date: 2017-12-11 13:14:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,18 +20,18 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `account_log`;
 CREATE TABLE `account_log` (
-  `log_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` mediumint(8) unsigned NOT NULL,
+  `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
   `user_money` decimal(10,2) NOT NULL,
   `frozen_money` decimal(10,2) NOT NULL,
-  `rank_points` mediumint(9) NOT NULL,
-  `pay_points` mediumint(9) NOT NULL,
+  `rank_points` int(10) NOT NULL,
+  `pay_points` int(10) NOT NULL,
   `change_time` int(10) unsigned NOT NULL,
   `change_desc` varchar(255) NOT NULL,
   `change_type` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`log_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of account_log
@@ -77,8 +77,8 @@ INSERT INTO `account_log` VALUES ('35', '1', '-500.00', '0.00', '0', '0', '12450
 -- ----------------------------
 DROP TABLE IF EXISTS `ad`;
 CREATE TABLE `ad` (
-  `ad_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `position_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `ad_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `position_id` int(10) unsigned NOT NULL DEFAULT '0',
   `media_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `ad_name` varchar(60) NOT NULL DEFAULT '',
   `ad_link` varchar(255) NOT NULL DEFAULT '',
@@ -88,12 +88,12 @@ CREATE TABLE `ad` (
   `link_man` varchar(60) NOT NULL DEFAULT '',
   `link_email` varchar(60) NOT NULL DEFAULT '',
   `link_phone` varchar(60) NOT NULL DEFAULT '',
-  `click_count` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `click_count` int(10) unsigned NOT NULL DEFAULT '0',
   `enabled` tinyint(3) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`ad_id`),
   KEY `position_id` (`position_id`),
   KEY `enabled` (`enabled`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of ad
@@ -110,7 +110,7 @@ CREATE TABLE `admin_action` (
   `relevance` varchar(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`action_id`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=136 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of admin_action
@@ -133,21 +133,17 @@ INSERT INTO `admin_action` VALUES ('24', '1', 'cat_drop', 'cat_manage');
 INSERT INTO `admin_action` VALUES ('25', '1', 'attr_manage', '');
 INSERT INTO `admin_action` VALUES ('26', '1', 'brand_manage', '');
 INSERT INTO `admin_action` VALUES ('27', '1', 'comment_priv', '');
-INSERT INTO `admin_action` VALUES ('84', '1', 'tag_manage', '');
 INSERT INTO `admin_action` VALUES ('30', '2', 'article_cat', '');
 INSERT INTO `admin_action` VALUES ('31', '2', 'article_manage', '');
 INSERT INTO `admin_action` VALUES ('32', '2', 'shopinfo_manage', '');
 INSERT INTO `admin_action` VALUES ('33', '2', 'shophelp_manage', '');
 INSERT INTO `admin_action` VALUES ('34', '2', 'vote_priv', '');
 INSERT INTO `admin_action` VALUES ('35', '7', 'topic_manage', '');
-INSERT INTO `admin_action` VALUES ('74', '4', 'template_manage', '');
-INSERT INTO `admin_action` VALUES ('73', '3', 'feedback_priv', '');
 INSERT INTO `admin_action` VALUES ('38', '3', 'integrate_users', '');
 INSERT INTO `admin_action` VALUES ('39', '3', 'sync_users', 'integrate_users');
 INSERT INTO `admin_action` VALUES ('40', '3', 'users_manage', '');
 INSERT INTO `admin_action` VALUES ('41', '3', 'users_drop', 'users_manage');
 INSERT INTO `admin_action` VALUES ('42', '3', 'user_rank', '');
-INSERT INTO `admin_action` VALUES ('85', '3', 'surplus_manage', 'account_manage');
 INSERT INTO `admin_action` VALUES ('43', '4', 'admin_manage', '');
 INSERT INTO `admin_action` VALUES ('44', '4', 'admin_drop', 'admin_manage');
 INSERT INTO `admin_action` VALUES ('45', '4', 'allot_priv', 'admin_manage');
@@ -168,16 +164,20 @@ INSERT INTO `admin_action` VALUES ('59', '6', 'repay_manage', '');
 INSERT INTO `admin_action` VALUES ('60', '6', 'booking', '');
 INSERT INTO `admin_action` VALUES ('61', '6', 'sale_order_stats', '');
 INSERT INTO `admin_action` VALUES ('62', '6', 'client_flow_stats', '');
-INSERT INTO `admin_action` VALUES ('78', '7', 'snatch_manage', '');
-INSERT INTO `admin_action` VALUES ('83', '7', 'ad_manage', '');
-INSERT INTO `admin_action` VALUES ('80', '7', 'gift_manage', '');
-INSERT INTO `admin_action` VALUES ('81', '7', 'card_manage', '');
 INSERT INTO `admin_action` VALUES ('70', '1', 'goods_type', '');
-INSERT INTO `admin_action` VALUES ('82', '7', 'pack', '');
-INSERT INTO `admin_action` VALUES ('79', '7', 'bonus_manage', '');
+INSERT INTO `admin_action` VALUES ('73', '3', 'feedback_priv', '');
+INSERT INTO `admin_action` VALUES ('74', '4', 'template_manage', '');
 INSERT INTO `admin_action` VALUES ('75', '5', 'friendlink', '');
 INSERT INTO `admin_action` VALUES ('76', '5', 'db_backup', '');
 INSERT INTO `admin_action` VALUES ('77', '5', 'db_renew', 'db_backup');
+INSERT INTO `admin_action` VALUES ('78', '7', 'snatch_manage', '');
+INSERT INTO `admin_action` VALUES ('79', '7', 'bonus_manage', '');
+INSERT INTO `admin_action` VALUES ('80', '7', 'gift_manage', '');
+INSERT INTO `admin_action` VALUES ('81', '7', 'card_manage', '');
+INSERT INTO `admin_action` VALUES ('82', '7', 'pack', '');
+INSERT INTO `admin_action` VALUES ('83', '7', 'ad_manage', '');
+INSERT INTO `admin_action` VALUES ('84', '1', 'tag_manage', '');
+INSERT INTO `admin_action` VALUES ('85', '3', 'surplus_manage', 'account_manage');
 INSERT INTO `admin_action` VALUES ('86', '4', 'agency_manage', '');
 INSERT INTO `admin_action` VALUES ('87', '3', 'account_manage', '');
 INSERT INTO `admin_action` VALUES ('88', '5', 'flash_manage', '');
@@ -238,7 +238,7 @@ CREATE TABLE `admin_log` (
   PRIMARY KEY (`log_id`),
   KEY `log_time` (`log_time`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=464 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=464 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of admin_log
@@ -712,7 +712,7 @@ INSERT INTO `admin_log` VALUES ('463', '1245223611', '1', '还原数据库备份
 -- ----------------------------
 DROP TABLE IF EXISTS `admin_message`;
 CREATE TABLE `admin_message` (
-  `message_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `message_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `sender_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `receiver_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `sent_time` int(11) unsigned NOT NULL DEFAULT '0',
@@ -724,7 +724,7 @@ CREATE TABLE `admin_message` (
   PRIMARY KEY (`message_id`),
   KEY `sender_id` (`sender_id`,`receiver_id`),
   KEY `receiver_id` (`receiver_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of admin_message
@@ -735,7 +735,7 @@ CREATE TABLE `admin_message` (
 -- ----------------------------
 DROP TABLE IF EXISTS `admin_user`;
 CREATE TABLE `admin_user` (
-  `user_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_name` varchar(60) NOT NULL DEFAULT '',
   `email` varchar(60) NOT NULL DEFAULT '',
   `password` varchar(32) NOT NULL DEFAULT '',
@@ -746,14 +746,14 @@ CREATE TABLE `admin_user` (
   `action_list` text NOT NULL,
   `nav_list` text NOT NULL,
   `lang_type` varchar(50) NOT NULL DEFAULT '',
-  `agency_id` smallint(5) unsigned NOT NULL,
-  `suppliers_id` smallint(5) unsigned DEFAULT '0',
+  `agency_id` int(10) unsigned NOT NULL,
+  `suppliers_id` int(10) unsigned DEFAULT '0',
   `todolist` longtext,
-  `role_id` smallint(5) DEFAULT NULL,
+  `role_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   KEY `user_name` (`user_name`),
   KEY `agency_id` (`agency_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of admin_user
@@ -767,11 +767,11 @@ INSERT INTO `admin_user` VALUES ('3', 'shhaigonghuo1', 'shanghai@163.com', '4146
 -- ----------------------------
 DROP TABLE IF EXISTS `adsense`;
 CREATE TABLE `adsense` (
-  `from_ad` smallint(5) NOT NULL DEFAULT '0',
+  `from_ad` int(10) NOT NULL DEFAULT '0',
   `referer` varchar(255) NOT NULL DEFAULT '',
   `clicks` int(10) unsigned NOT NULL DEFAULT '0',
   KEY `from_ad` (`from_ad`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of adsense
@@ -782,7 +782,7 @@ CREATE TABLE `adsense` (
 -- ----------------------------
 DROP TABLE IF EXISTS `ad_custom`;
 CREATE TABLE `ad_custom` (
-  `ad_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `ad_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ad_type` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `ad_name` varchar(60) DEFAULT NULL,
   `add_time` int(10) unsigned NOT NULL DEFAULT '0',
@@ -790,7 +790,7 @@ CREATE TABLE `ad_custom` (
   `url` varchar(255) DEFAULT NULL,
   `ad_status` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ad_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of ad_custom
@@ -803,12 +803,12 @@ DROP TABLE IF EXISTS `ad_position`;
 CREATE TABLE `ad_position` (
   `position_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `position_name` varchar(60) NOT NULL DEFAULT '',
-  `ad_width` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `ad_height` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `ad_width` int(10) unsigned NOT NULL DEFAULT '0',
+  `ad_height` int(10) unsigned NOT NULL DEFAULT '0',
   `position_desc` varchar(255) NOT NULL DEFAULT '',
   `position_style` text NOT NULL,
   PRIMARY KEY (`position_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of ad_position
@@ -819,16 +819,16 @@ CREATE TABLE `ad_position` (
 -- ----------------------------
 DROP TABLE IF EXISTS `affiliate_log`;
 CREATE TABLE `affiliate_log` (
-  `log_id` mediumint(8) NOT NULL AUTO_INCREMENT,
-  `order_id` mediumint(8) NOT NULL,
+  `log_id` int(10) NOT NULL AUTO_INCREMENT,
+  `order_id` int(10) NOT NULL,
   `time` int(10) NOT NULL,
-  `user_id` mediumint(8) NOT NULL,
+  `user_id` int(10) NOT NULL,
   `user_name` varchar(60) DEFAULT NULL,
   `money` decimal(10,2) NOT NULL DEFAULT '0.00',
   `point` int(10) NOT NULL DEFAULT '0',
   `separate_type` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`log_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of affiliate_log
@@ -839,12 +839,12 @@ CREATE TABLE `affiliate_log` (
 -- ----------------------------
 DROP TABLE IF EXISTS `agency`;
 CREATE TABLE `agency` (
-  `agency_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `agency_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `agency_name` varchar(255) NOT NULL,
   `agency_desc` text NOT NULL,
   PRIMARY KEY (`agency_id`),
   KEY `agency_name` (`agency_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of agency
@@ -855,10 +855,10 @@ CREATE TABLE `agency` (
 -- ----------------------------
 DROP TABLE IF EXISTS `area_region`;
 CREATE TABLE `area_region` (
-  `shipping_area_id` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `region_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `shipping_area_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `region_id` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`shipping_area_id`,`region_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of area_region
@@ -878,8 +878,8 @@ INSERT INTO `area_region` VALUES ('4', '32');
 -- ----------------------------
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
-  `article_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `cat_id` smallint(5) NOT NULL DEFAULT '0',
+  `article_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cat_id` int(10) NOT NULL DEFAULT '0',
   `title` varchar(150) NOT NULL DEFAULT '',
   `content` longtext NOT NULL,
   `author` varchar(30) NOT NULL DEFAULT '',
@@ -894,7 +894,7 @@ CREATE TABLE `article` (
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`article_id`),
   KEY `cat_id` (`cat_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of article
@@ -911,6 +911,8 @@ INSERT INTO `article` VALUES ('9', '5', '售后流程', '', '', '', '', '0', '1'
 INSERT INTO `article` VALUES ('10', '5', '购物流程', '', '', '', '', '0', '1', '1242576717', '', '0', 'http://', null);
 INSERT INTO `article` VALUES ('11', '5', '订购方式', '', '', '', '', '0', '1', '1242576727', '', '0', 'http://', null);
 INSERT INTO `article` VALUES ('12', '6', '如何分辨原装电池', '<p><font size=\"2\">一般在购买时主要是依靠观察外观特征的方法来鉴别电池，而原装电池一般应具有以下一些特征：&nbsp;<br />\n<br />\n1、 电池外观整齐，外表面有一定的粗糙度且手感舒适，内表面手感光滑，灯光下能看见细密的纵向划痕&nbsp;<br />\n<br />\n2、 生产厂家字样应该轮廓清晰，且防伪标志亮度高，看上去有立体感，电池标贴 字迹清晰，有与电池类型相一致的电池件号<br />\n3、 电池标贴采用二次印刷技术，在一定光线下从斜面看，条形码部分的颜色比其他部分要黑，且用手触摸有凹凸感<br />\n<br />\n4、 原装电池电极与手机电池片宽度相等，电池电极下方标有&ldquo; + &rdquo;、&ldquo; - &rdquo;标志，电池电极片之间的隔离材料与外壳材料一致，但不是一体<br />\n<br />\n5、 原装电池装入手机时手感舒适，安装自如，电池按压部分卡位适当而且牢固<br />\n<br />\n6、 原装电池的金属触点采用优质的铜片，只有在正面看时才会有反光，而从其它角度看的话，都是比较暗淡的</font></p>', '', '', '', '1', '1', '1242576826', '', '0', 'http://', null);
+INSERT INTO `article` VALUES ('13', '6', '如何分辨水货手机 ', '<p>\n<div class=\"artibody\">\n<p><font size=\"2\"><strong>1、&nbsp;什么是水货？</strong><br />\n提及水货手机，按照行业内的说法，可以将水货手机分成三类：A类、B类和C类。 </font></p>\n<p><font size=\"2\">A类水货手机是指由国外、港澳台等地区在没有经过正常海关渠道的情况下进入国内市场的产品，就是我们常说的走私货， 与行货的主要差异是在输入法上，这类手机都是英文输入法或者是港澳台地区的繁体中文输入法。这类手机其最主要的目的是为了逃避国家关税或者因为该种产品曾 经过不正当改装而不能够通过正常渠道入关，质量一般没有大的问题。但由于逃避关税本身就是违法的，所以购买这类手机的用户根本得不到任何售后保障服务； </font></p>\n<p><font size=\"2\">B类水货手机就是走私者将手机的系统软件由英文版升级至中文版后，偷运到内地，然后贴上非法渠道购买的入网标志，作为行货手机充数。 </font></p>\n<p><font size=\"2\">C类水货手机则是那些由其他型号机改装、更换芯片等等方法做假&ldquo;生产&rdquo;出来的，或者就是从各地购买手机的部件，自己组装然后再贴上非法购买的入网标志。 </font></p>\n<p><font size=\"2\">水货手机虽然不排除它是原厂正货的可能，但通过市场调研发现，绝大多数水货手机都是改版的次货，而且产品基本没有受国内厂商的保修许可。</font></p>\n<p><font size=\"2\"><strong>2、水货有哪些？</strong>水货有两种，一种俗称港行，也称作水行，这种产品原本是在香港 及周边地区销售的，但是经过非法途径进入大陆地区销售。另一种是欧版水改机，也称作欧版，水改等，此种产品以英文改版机为主，通过刷改机内软件达到英文改 中文的目的，原来这类产品是销往欧美地区的，由于和大陆地区有相当大的价格差，所以通过走私进入中国市场。</font></p>\n<p><font size=\"2\"><strong>3、水货手机的危害</strong><br />\n1、售后服务无保障 <br />\n手机作为精密类电子产品，软件、硬件方面都有可能产生不同的问题。购买正规渠道的手机，一旦出现问题，只要将问题反映给厂商客户服务中心并静候佳音就 可以了。大多数走私手机的贩卖点规模较小，根本没有资金和技术能力建立起自己的维修网点，因此他们往往制定非常苛刻的保修条件，将国家明令的一年保修期缩 短为三个月，并加入完全对走私手机经销商有利的诸如&ldquo;认为摔打&rdquo;等概念难以界定的排除条件(众所周知，手机很有可能发生摔撞事件)，是确确实实的霸王条 款。规定时间内手机出了故障，走私手机经销商会通过曲解条款尽可能地开脱保修责任。即使他们愿意承担保修服务，也需将手机发往广州、深圳等地，委托他人维 修。一来路途漫长，二来经手人繁多，小问题&ldquo;修&rdquo;成了大问题。最终走私手机经销商会以无法维修为由劝客户自行去当地正规客服维修。至于维修费用，他们自然 也不愿意出了。<br />\n<br />\n2、产品本身质量不过关<br />\n&nbsp;&nbsp;&nbsp; 现在很多奸商为了谋取暴利，经常使用C类的翻修或者组装手机冒充A类水货手机进行销售。作为消费者来说面对和正规行货之间巨大的价格差异，他们无法分辨想要购买的手机是否象销售商说的那样质量过硬，在销售商的巧舌如簧下只能眼看自己的钱包&ldquo;减肥&rdquo;。 </font></p>\n<p><font size=\"2\">但是这类翻修或者组装的水货手机往往为了降低成本，其采用的配件往往也是不合格产品，甚至也是伪劣产品，可以想象由这样产品组装起来的手机的质量究竟可以好到那里去。目前在经常看到手机电池爆炸伤人的事件的报道，究其原因也是消费者购买了这些组装的水货手机。</font></p>\n<p><font size=\"2\">而且不光这类手机硬件存在问题，包括手机使用的软件。由于组装的水货硬件规格根本无法保证和原场产品一致，手机使用的软件也会造成和手机硬件的冲突。频繁死机就是家常便饭，更有甚者会造成经常性的电话本丢失，无法联系到好友。</font></p>\n<p><br />\n<font size=\"2\"><strong>4、如何分辨行、水货手机？</strong><br />\n1、看手机上是否贴有信息产业部&ldquo;进网许可&rdquo;标志。水货与正品的入网标志稍微有一点不同：真的入网标志一般都是针式打印机打印的，数字清晰，颜色较浅，仔细看有针打的凹痕；假的入网标志一般是普通喷墨打印机打印的，数字不很清晰，颜色较深，没有凹痕。 </font></p>\n<p><font size=\"2\">2、检查手机的配置，包括中文说明书、电池、充电器等，如果是厂家原配，一般均贴有厂家的激光防伪标志。原厂配置的 中文说明书通常印刷精美，并与其他语言的说明书及相关产品资料的印刷质量、格式、风格等保持一致。不是原厂家配置的中文说明书通常印刷质量低劣，常出现错 别字，甚至字迹模糊。正品手机的包装盒中均附带有原厂合格证、原厂条码卡、原厂保修卡，而水货则没有。 </font></p>\n<p><font size=\"2\">3、确认经销商的保修条例是否与厂家一致，在购买手机时应索要发票和保修卡。 </font></p>\n<p><font size=\"2\">4、电子串号是否一致也是验证是否水货手机的重要途径。首先在手机上按&ldquo;*#06#&rdquo;，一般会在手机上显示15个数 字，这就是本手机的IMEI码。然后打开手机的电池盖，在手机里有一张贴纸，上面也有一个IMEI码，这个码应该同手机上显示的IMEI码完全一致。然后 再检查手机的外包装盒上的贴纸，上面也应该有一个IMEI码，这个码也应该同手机上显示的IMEI码完全一致。如果此三个码有不一致的地方，这个手机就有 问题。</font></p>\n</div>\n<p>&nbsp;</p>\n</p>', '', '', '', '0', '1', '1242576911', '', '0', 'http://', null);
+INSERT INTO `article` VALUES ('14', '6', '如何享受全国联保', '', '', '', '', '0', '1', '1242576927', '', '0', 'http://', null);
 INSERT INTO `article` VALUES ('15', '7', '货到付款区域', '', '', '', '', '0', '1', '1242577023', '', '0', 'http://', null);
 INSERT INTO `article` VALUES ('16', '7', '配送支付智能查询 ', '', '', '', '', '0', '1', '1242577032', '', '0', 'http://', null);
 INSERT INTO `article` VALUES ('17', '7', '支付方式说明', '', '', '', '', '0', '1', '1242577041', '', '0', 'http://', null);
@@ -927,8 +929,6 @@ INSERT INTO `article` VALUES ('27', '4', '800万像素超强拍照机 LG Viewty 
 INSERT INTO `article` VALUES ('28', '11', '飞利浦9@9促销', '<p>&nbsp;</p>\r\n<div class=\"boxCenterList RelaArticle\" id=\"com_v\">\r\n<p align=\"left\">作为一款性价比极高的入门级<font size=\"3\" color=\"#ff0000\"><strong>商务手机</strong></font>，飞利浦<a href=\"mailto:9@9v\">Xenium&nbsp; 9@9v</a>三围大小为105&times;44&times;15.8mm，机身重量仅为<strong><font size=\"3\" color=\"#ff0000\">75g</font></strong>，装配了一块低规格1.75英寸128&times;160像素65000色CSTN显示屏。身正面采用月银色功能键区与屏幕数字键区相分隔，键盘设计较为<font size=\"3\"><strong><font color=\"#ff0000\">别</font><font color=\"#ff0000\">致</font></strong></font>，中部导航键区采用钛金色的&ldquo;腰带&rdquo;彰显出浓郁的商务气息。</p>\r\n<p align=\"left\">&nbsp;</p>\r\n<p align=\"left\">此款手机采用<strong><font size=\"3\" color=\"#ff0000\">触摸屏</font></strong>设计，搭配精致的手写笔，可支持手写中文和英文两个版本。增强的内置系统还能识别潦草字迹，确保在移动中和匆忙时输入文字的识别率。手写指令功能还支持特定图案的瞬间调用，独特的手写记事本功能，可以在触摸屏上随意绘制个性化的图案并进行<strong><font size=\"3\" color=\"#ff0000\">记事提醒</font></strong>，让商务应用更加随意。</p>\r\n<p align=\"left\">&nbsp;</p>\r\n<p align=\"left\">&nbsp;作为入门级为数不多支持<strong><font size=\"3\" color=\"#ff0000\">双卡功能</font></strong>的手机，可以同时插入两张SIM卡，通过菜单随意切换，只需开启漫游自动切换模式，<a href=\"mailto:9@9V\">9@9V</a>在该模式下能够判断网络情况，自动切换适合的手机号。</p>\r\n<p align=\"left\">&nbsp;</p>\r\n<p align=\"left\">&nbsp;</p>\r\n</div>\r\n<p>&nbsp;</p>', '', '', '', '0', '1', '1242578199', '', '0', 'http://', null);
 INSERT INTO `article` VALUES ('29', '11', '诺基亚5320 促销', '<p>&nbsp;</p>\r\n<div id=\"com_v\" class=\"boxCenterList RelaArticle\">\r\n<p>诺基亚5320XpressMusic音乐手机采用XpressMusic系列常见的黑红、黑蓝配色方案，而材质方便则选用的是经过<strong><font size=\"3\" color=\"#ff0000\">抛光处理</font></strong>的工程塑料；三围/体重为，为108&times;46&times;15mm/<strong><font size=\"3\" color=\"#ff0000\">90g</font></strong>，手感舒适。</p>\r\n<p>&nbsp;</p>\r\n<p>诺基亚5320采用的是一块可视面积为2.0英寸的<font size=\"3\" color=\"#ff0000\"><strong>1600万色</strong></font>屏幕，分辨率是常见的240&times;320像素（QVGA）。虽然屏幕不是特别大，但效果非常精细，色彩还原不错。</p>\r\n<p>&nbsp;</p>\r\n<p>手机背面，诺基亚为5320XM配备一颗<strong><font size=\"3\" color=\"#ff0000\">200W像素</font></strong>的摄像头，并且带有<strong><font size=\"3\" color=\"#ff0000\">两个LED的补光灯</font></strong>，可以实现拍照、摄像功能，并能通过彩信、邮件方式发送给朋友。</p>\r\n<p>&nbsp;</p>\r\n</div>\r\n<p>&nbsp;</p>', '', '', '', '1', '1', '1242578676', '', '0', 'http://', null);
 INSERT INTO `article` VALUES ('30', '11', '促销诺基亚N96', '<p>&nbsp;</p>\r\n<div class=\"boxCenterList RelaArticle\" id=\"com_v\">\r\n<p>诺基亚N96采用了<strong><font size=\"3\" color=\"#ff0000\">双向滑盖</font></strong>设计，机身整体呈灰黑色，沉稳、大气，机身材质采用了高强度的塑料材质，手机背面采用了抛光面板的设计风格。N96三维体积103*55*20mm，重量为125g。屏幕方面，诺基亚N96配备一块<strong><font size=\"3\" color=\"#ff0000\">2.8英寸</font></strong>的屏幕，支持<strong><font size=\"3\" color=\"#ff0000\">1670万色</font></strong>显示，分辨率达到QVGA（320&times;240）水准。</p>\r\n<p>&nbsp;<img src=\"http://img2.zol.com.cn/product/21/896/ceN6LBMCid3X6.jpg\" alt=\"\" /></p>\r\n<p>&nbsp;</p>\r\n<p>诺基亚N96设置有专门的<strong><font size=\"3\" color=\"#ff0000\">音乐播放键</font></strong>和标准的3.5毫米音频插口，支持多格式音乐播放。内置了<strong><font size=\"3\" color=\"#ff0000\">多媒体播放器</font></strong>，支持FM调频收音机等娱乐功能。N96手机支持<strong><font size=\"3\" color=\"#ff0000\">N-Gage游戏平台</font></strong>，内置包括<font size=\"3\" color=\"#ff0000\"><strong>《PinBall》完整版</strong></font>在内的四款N-Gage游戏，除了手机本身内置的游戏，还可以从N-Gage的网站下载或者购买最新的游戏，而且可以在论坛里和其他玩家一起讨论。</p>\r\n<p>&nbsp;</p>\r\n</div>\r\n<p>&nbsp;<img src=\"http://img2.zol.com.cn/product/21/898/cekkw57qJjSI.jpg\" alt=\"\" /></p>', '', '', '', '1', '1', '1242578826', '', '0', 'http://', null);
-INSERT INTO `article` VALUES ('13', '6', '如何分辨水货手机 ', '<p>\n<div class=\"artibody\">\n<p><font size=\"2\"><strong>1、&nbsp;什么是水货？</strong><br />\n提及水货手机，按照行业内的说法，可以将水货手机分成三类：A类、B类和C类。 </font></p>\n<p><font size=\"2\">A类水货手机是指由国外、港澳台等地区在没有经过正常海关渠道的情况下进入国内市场的产品，就是我们常说的走私货， 与行货的主要差异是在输入法上，这类手机都是英文输入法或者是港澳台地区的繁体中文输入法。这类手机其最主要的目的是为了逃避国家关税或者因为该种产品曾 经过不正当改装而不能够通过正常渠道入关，质量一般没有大的问题。但由于逃避关税本身就是违法的，所以购买这类手机的用户根本得不到任何售后保障服务； </font></p>\n<p><font size=\"2\">B类水货手机就是走私者将手机的系统软件由英文版升级至中文版后，偷运到内地，然后贴上非法渠道购买的入网标志，作为行货手机充数。 </font></p>\n<p><font size=\"2\">C类水货手机则是那些由其他型号机改装、更换芯片等等方法做假&ldquo;生产&rdquo;出来的，或者就是从各地购买手机的部件，自己组装然后再贴上非法购买的入网标志。 </font></p>\n<p><font size=\"2\">水货手机虽然不排除它是原厂正货的可能，但通过市场调研发现，绝大多数水货手机都是改版的次货，而且产品基本没有受国内厂商的保修许可。</font></p>\n<p><font size=\"2\"><strong>2、水货有哪些？</strong>水货有两种，一种俗称港行，也称作水行，这种产品原本是在香港 及周边地区销售的，但是经过非法途径进入大陆地区销售。另一种是欧版水改机，也称作欧版，水改等，此种产品以英文改版机为主，通过刷改机内软件达到英文改 中文的目的，原来这类产品是销往欧美地区的，由于和大陆地区有相当大的价格差，所以通过走私进入中国市场。</font></p>\n<p><font size=\"2\"><strong>3、水货手机的危害</strong><br />\n1、售后服务无保障 <br />\n手机作为精密类电子产品，软件、硬件方面都有可能产生不同的问题。购买正规渠道的手机，一旦出现问题，只要将问题反映给厂商客户服务中心并静候佳音就 可以了。大多数走私手机的贩卖点规模较小，根本没有资金和技术能力建立起自己的维修网点，因此他们往往制定非常苛刻的保修条件，将国家明令的一年保修期缩 短为三个月，并加入完全对走私手机经销商有利的诸如&ldquo;认为摔打&rdquo;等概念难以界定的排除条件(众所周知，手机很有可能发生摔撞事件)，是确确实实的霸王条 款。规定时间内手机出了故障，走私手机经销商会通过曲解条款尽可能地开脱保修责任。即使他们愿意承担保修服务，也需将手机发往广州、深圳等地，委托他人维 修。一来路途漫长，二来经手人繁多，小问题&ldquo;修&rdquo;成了大问题。最终走私手机经销商会以无法维修为由劝客户自行去当地正规客服维修。至于维修费用，他们自然 也不愿意出了。<br />\n<br />\n2、产品本身质量不过关<br />\n&nbsp;&nbsp;&nbsp; 现在很多奸商为了谋取暴利，经常使用C类的翻修或者组装手机冒充A类水货手机进行销售。作为消费者来说面对和正规行货之间巨大的价格差异，他们无法分辨想要购买的手机是否象销售商说的那样质量过硬，在销售商的巧舌如簧下只能眼看自己的钱包&ldquo;减肥&rdquo;。 </font></p>\n<p><font size=\"2\">但是这类翻修或者组装的水货手机往往为了降低成本，其采用的配件往往也是不合格产品，甚至也是伪劣产品，可以想象由这样产品组装起来的手机的质量究竟可以好到那里去。目前在经常看到手机电池爆炸伤人的事件的报道，究其原因也是消费者购买了这些组装的水货手机。</font></p>\n<p><font size=\"2\">而且不光这类手机硬件存在问题，包括手机使用的软件。由于组装的水货硬件规格根本无法保证和原场产品一致，手机使用的软件也会造成和手机硬件的冲突。频繁死机就是家常便饭，更有甚者会造成经常性的电话本丢失，无法联系到好友。</font></p>\n<p><br />\n<font size=\"2\"><strong>4、如何分辨行、水货手机？</strong><br />\n1、看手机上是否贴有信息产业部&ldquo;进网许可&rdquo;标志。水货与正品的入网标志稍微有一点不同：真的入网标志一般都是针式打印机打印的，数字清晰，颜色较浅，仔细看有针打的凹痕；假的入网标志一般是普通喷墨打印机打印的，数字不很清晰，颜色较深，没有凹痕。 </font></p>\n<p><font size=\"2\">2、检查手机的配置，包括中文说明书、电池、充电器等，如果是厂家原配，一般均贴有厂家的激光防伪标志。原厂配置的 中文说明书通常印刷精美，并与其他语言的说明书及相关产品资料的印刷质量、格式、风格等保持一致。不是原厂家配置的中文说明书通常印刷质量低劣，常出现错 别字，甚至字迹模糊。正品手机的包装盒中均附带有原厂合格证、原厂条码卡、原厂保修卡，而水货则没有。 </font></p>\n<p><font size=\"2\">3、确认经销商的保修条例是否与厂家一致，在购买手机时应索要发票和保修卡。 </font></p>\n<p><font size=\"2\">4、电子串号是否一致也是验证是否水货手机的重要途径。首先在手机上按&ldquo;*#06#&rdquo;，一般会在手机上显示15个数 字，这就是本手机的IMEI码。然后打开手机的电池盖，在手机里有一张贴纸，上面也有一个IMEI码，这个码应该同手机上显示的IMEI码完全一致。然后 再检查手机的外包装盒上的贴纸，上面也应该有一个IMEI码，这个码也应该同手机上显示的IMEI码完全一致。如果此三个码有不一致的地方，这个手机就有 问题。</font></p>\n</div>\n<p>&nbsp;</p>\n</p>', '', '', '', '0', '1', '1242576911', '', '0', 'http://', null);
-INSERT INTO `article` VALUES ('14', '6', '如何享受全国联保', '', '', '', '', '0', '1', '1242576927', '', '0', 'http://', null);
 INSERT INTO `article` VALUES ('31', '12', '诺基亚6681手机广告欣赏', '<object>\n<param value=\"always\" name=\"allowScriptAccess\" />\n<param value=\"transparent\" name=\"wmode\" />\n<param value=\"http://6.cn/player.swf?flag=0&amp;vid=nZNyu3nGNWWYjmtPQDY9nQ\" name=\"movie\" /><embed width=\"480\" height=\"385\" src=\"http://6.cn/player.swf?flag=0&amp;vid=nZNyu3nGNWWYjmtPQDY9nQ\" allowscriptaccess=\"always\" wmode=\"transparent\" type=\"application/x-shockwave-flash\"></embed></object>', '', '', '', '0', '1', '1242579069', '', '0', 'http://', null);
 INSERT INTO `article` VALUES ('32', '12', '手机游戏下载', '<p>三星SGHU308说明书下载，点击相关链接下载</p>', '', '', '', '1', '1', '1242579189', '', '0', 'http://soft.imobile.com.cn/index-a-list_softs-cid-1.html', null);
 INSERT INTO `article` VALUES ('33', '12', '三星SGHU308说明书下载', '<p>三星SGHU308说明书下载</p>', '', '', '', '1', '1', '1242579559', 'data/article/1245043292228851198.rar', '2', 'http://', null);
@@ -940,19 +940,19 @@ INSERT INTO `article` VALUES ('35', '4', '“沃”的世界我做主', '<p><str
 -- ----------------------------
 DROP TABLE IF EXISTS `article_cat`;
 CREATE TABLE `article_cat` (
-  `cat_id` smallint(5) NOT NULL AUTO_INCREMENT,
+  `cat_id` int(10) NOT NULL AUTO_INCREMENT,
   `cat_name` varchar(255) NOT NULL DEFAULT '',
   `cat_type` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `keywords` varchar(255) NOT NULL DEFAULT '',
   `cat_desc` varchar(255) NOT NULL DEFAULT '',
   `sort_order` tinyint(3) unsigned NOT NULL DEFAULT '50',
   `show_in_nav` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`cat_id`),
   KEY `cat_type` (`cat_type`),
   KEY `sort_order` (`sort_order`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of article_cat
@@ -975,8 +975,8 @@ INSERT INTO `article_cat` VALUES ('12', '站内快讯', '1', '', '', '50', '0', 
 -- ----------------------------
 DROP TABLE IF EXISTS `attribute`;
 CREATE TABLE `attribute` (
-  `attr_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `cat_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `attr_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cat_id` int(10) unsigned NOT NULL DEFAULT '0',
   `attr_name` varchar(60) NOT NULL DEFAULT '',
   `attr_input_type` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `attr_type` tinyint(1) unsigned NOT NULL DEFAULT '1',
@@ -987,7 +987,7 @@ CREATE TABLE `attribute` (
   `attr_group` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`attr_id`),
   KEY `cat_id` (`cat_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=211 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=211 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of attribute
@@ -1208,14 +1208,14 @@ INSERT INTO `attribute` VALUES ('210', '9', '配件', '1', '2', '线控耳机\r\
 -- ----------------------------
 DROP TABLE IF EXISTS `auction_log`;
 CREATE TABLE `auction_log` (
-  `log_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `act_id` mediumint(8) unsigned NOT NULL,
-  `bid_user` mediumint(8) unsigned NOT NULL,
+  `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `act_id` int(10) unsigned NOT NULL,
+  `bid_user` int(10) unsigned NOT NULL,
   `bid_price` decimal(10,2) unsigned NOT NULL,
   `bid_time` int(10) unsigned NOT NULL,
   PRIMARY KEY (`log_id`),
   KEY `act_id` (`act_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of auction_log
@@ -1227,12 +1227,12 @@ INSERT INTO `auction_log` VALUES ('1', '4', '1', '170.00', '1242144083');
 -- ----------------------------
 DROP TABLE IF EXISTS `auto_manage`;
 CREATE TABLE `auto_manage` (
-  `item_id` mediumint(8) NOT NULL,
+  `item_id` int(10) NOT NULL,
   `type` varchar(10) NOT NULL,
   `starttime` int(10) NOT NULL,
   `endtime` int(10) NOT NULL,
   PRIMARY KEY (`item_id`,`type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of auto_manage
@@ -1243,21 +1243,21 @@ CREATE TABLE `auto_manage` (
 -- ----------------------------
 DROP TABLE IF EXISTS `back_goods`;
 CREATE TABLE `back_goods` (
-  `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `back_id` mediumint(8) unsigned DEFAULT '0',
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `product_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `rec_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `back_id` int(10) unsigned DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `product_id` int(10) unsigned NOT NULL DEFAULT '0',
   `product_sn` varchar(60) DEFAULT NULL,
   `goods_name` varchar(120) DEFAULT NULL,
   `brand_name` varchar(60) DEFAULT NULL,
   `goods_sn` varchar(60) DEFAULT NULL,
   `is_real` tinyint(1) unsigned DEFAULT '0',
-  `send_number` smallint(5) unsigned DEFAULT '0',
+  `send_number` int(10) unsigned DEFAULT '0',
   `goods_attr` text,
   PRIMARY KEY (`rec_id`),
   KEY `back_id` (`back_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of back_goods
@@ -1268,22 +1268,22 @@ CREATE TABLE `back_goods` (
 -- ----------------------------
 DROP TABLE IF EXISTS `back_order`;
 CREATE TABLE `back_order` (
-  `back_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `back_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `delivery_sn` varchar(20) NOT NULL,
   `order_sn` varchar(20) NOT NULL,
-  `order_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `order_id` int(10) unsigned NOT NULL DEFAULT '0',
   `invoice_no` varchar(50) DEFAULT NULL,
   `add_time` int(10) unsigned DEFAULT '0',
   `shipping_id` tinyint(3) unsigned DEFAULT '0',
   `shipping_name` varchar(120) DEFAULT NULL,
-  `user_id` mediumint(8) unsigned DEFAULT '0',
+  `user_id` int(10) unsigned DEFAULT '0',
   `action_user` varchar(30) DEFAULT NULL,
   `consignee` varchar(60) DEFAULT NULL,
   `address` varchar(250) DEFAULT NULL,
-  `country` smallint(5) unsigned DEFAULT '0',
-  `province` smallint(5) unsigned DEFAULT '0',
-  `city` smallint(5) unsigned DEFAULT '0',
-  `district` smallint(5) unsigned DEFAULT '0',
+  `country` int(10) unsigned DEFAULT '0',
+  `province` int(10) unsigned DEFAULT '0',
+  `city` int(10) unsigned DEFAULT '0',
+  `district` int(10) unsigned DEFAULT '0',
   `sign_building` varchar(120) DEFAULT NULL,
   `email` varchar(60) DEFAULT NULL,
   `zipcode` varchar(60) DEFAULT NULL,
@@ -1295,14 +1295,14 @@ CREATE TABLE `back_order` (
   `insure_fee` decimal(10,2) unsigned DEFAULT '0.00',
   `shipping_fee` decimal(10,2) unsigned DEFAULT '0.00',
   `update_time` int(10) unsigned DEFAULT '0',
-  `suppliers_id` smallint(5) DEFAULT '0',
+  `suppliers_id` int(10) DEFAULT '0',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `return_time` int(10) unsigned DEFAULT '0',
-  `agency_id` smallint(5) unsigned DEFAULT '0',
+  `agency_id` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`back_id`),
   KEY `user_id` (`user_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of back_order
@@ -1317,7 +1317,7 @@ INSERT INTO `back_order` VALUES ('4', '20090615064331475', '2009061503335', '17'
 -- ----------------------------
 DROP TABLE IF EXISTS `bonus_type`;
 CREATE TABLE `bonus_type` (
-  `type_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `type_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `type_name` varchar(60) NOT NULL DEFAULT '',
   `type_money` decimal(10,2) NOT NULL DEFAULT '0.00',
   `send_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -1329,7 +1329,7 @@ CREATE TABLE `bonus_type` (
   `use_end_date` int(11) NOT NULL DEFAULT '0',
   `min_goods_amount` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`type_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of bonus_type
@@ -1344,14 +1344,14 @@ INSERT INTO `bonus_type` VALUES ('4', '线下红包', '5.00', '3', '0.00', '0.00
 -- ----------------------------
 DROP TABLE IF EXISTS `booking_goods`;
 CREATE TABLE `booking_goods` (
-  `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `rec_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `email` varchar(60) NOT NULL DEFAULT '',
   `link_man` varchar(60) NOT NULL DEFAULT '',
   `tel` varchar(60) NOT NULL DEFAULT '',
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
   `goods_desc` varchar(255) NOT NULL DEFAULT '',
-  `goods_number` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `goods_number` int(10) unsigned NOT NULL DEFAULT '0',
   `booking_time` int(10) unsigned NOT NULL DEFAULT '0',
   `is_dispose` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `dispose_user` varchar(30) NOT NULL DEFAULT '',
@@ -1359,7 +1359,7 @@ CREATE TABLE `booking_goods` (
   `dispose_note` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`rec_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of booking_goods
@@ -1372,7 +1372,7 @@ INSERT INTO `booking_goods` VALUES ('2', '3', 'text@ecshop.com', '叶先生', '1
 -- ----------------------------
 DROP TABLE IF EXISTS `brand`;
 CREATE TABLE `brand` (
-  `brand_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `brand_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `brand_name` varchar(60) NOT NULL DEFAULT '',
   `brand_logo` varchar(80) NOT NULL DEFAULT '',
   `brand_desc` text NOT NULL,
@@ -1381,7 +1381,7 @@ CREATE TABLE `brand` (
   `is_show` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`brand_id`),
   KEY `is_show` (`is_show`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of brand
@@ -1410,7 +1410,7 @@ CREATE TABLE `card` (
   `free_money` decimal(6,2) unsigned NOT NULL DEFAULT '0.00',
   `card_desc` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`card_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of card
@@ -1422,28 +1422,28 @@ INSERT INTO `card` VALUES ('1', '祝福贺卡', '1242108754847457261.jpg', '5.00
 -- ----------------------------
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
-  `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `rec_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `session_id` char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
   `goods_sn` varchar(60) NOT NULL DEFAULT '',
-  `product_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `product_id` int(10) unsigned NOT NULL DEFAULT '0',
   `goods_name` varchar(120) NOT NULL DEFAULT '',
   `market_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
   `goods_price` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `goods_number` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `goods_number` int(10) unsigned NOT NULL DEFAULT '0',
   `goods_attr` text NOT NULL,
   `is_real` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `extension_code` varchar(30) NOT NULL DEFAULT '',
-  `parent_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
   `rec_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `is_gift` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `is_gift` int(10) unsigned NOT NULL DEFAULT '0',
   `is_shipping` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `can_handsel` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `goods_attr_id` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`rec_id`),
   KEY `session_id` (`session_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of cart
@@ -1456,11 +1456,11 @@ INSERT INTO `cart` VALUES ('42', '1', 'bcbcc1492eca623e624aa93a978ee66d', '24', 
 -- ----------------------------
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
-  `cat_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `cat_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `cat_name` varchar(90) NOT NULL DEFAULT '',
   `keywords` varchar(255) NOT NULL DEFAULT '',
   `cat_desc` varchar(255) NOT NULL DEFAULT '',
-  `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
   `sort_order` tinyint(1) unsigned NOT NULL DEFAULT '50',
   `template_file` varchar(50) NOT NULL DEFAULT '',
   `measure_unit` varchar(15) NOT NULL DEFAULT '',
@@ -1471,7 +1471,7 @@ CREATE TABLE `category` (
   `filter_attr` varchar(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`cat_id`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of category
@@ -1496,10 +1496,10 @@ INSERT INTO `category` VALUES ('15', '联通手机充值卡', '', '', '12', '50'
 -- ----------------------------
 DROP TABLE IF EXISTS `cat_recommend`;
 CREATE TABLE `cat_recommend` (
-  `cat_id` smallint(5) NOT NULL,
+  `cat_id` int(10) NOT NULL,
   `recommend_type` tinyint(1) NOT NULL,
   PRIMARY KEY (`cat_id`,`recommend_type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of cat_recommend
@@ -1524,16 +1524,16 @@ INSERT INTO `cat_recommend` VALUES ('15', '2');
 -- ----------------------------
 DROP TABLE IF EXISTS `collect_goods`;
 CREATE TABLE `collect_goods` (
-  `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `rec_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
   `add_time` int(11) unsigned NOT NULL DEFAULT '0',
   `is_attention` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`rec_id`),
   KEY `user_id` (`user_id`),
   KEY `goods_id` (`goods_id`),
   KEY `is_attention` (`is_attention`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of collect_goods
@@ -1546,7 +1546,7 @@ DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
   `comment_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `comment_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `id_value` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id_value` int(10) unsigned NOT NULL DEFAULT '0',
   `email` varchar(60) NOT NULL DEFAULT '',
   `user_name` varchar(60) NOT NULL DEFAULT '',
   `content` text NOT NULL,
@@ -1559,7 +1559,7 @@ CREATE TABLE `comment` (
   PRIMARY KEY (`comment_id`),
   KEY `parent_id` (`parent_id`),
   KEY `id_value` (`id_value`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of comment
@@ -1592,7 +1592,7 @@ CREATE TABLE `crons` (
   KEY `nextime` (`nextime`),
   KEY `enable` (`enable`),
   KEY `cron_code` (`cron_code`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of crons
@@ -1603,23 +1603,23 @@ CREATE TABLE `crons` (
 -- ----------------------------
 DROP TABLE IF EXISTS `delivery_goods`;
 CREATE TABLE `delivery_goods` (
-  `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `delivery_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `product_id` mediumint(8) unsigned DEFAULT '0',
+  `rec_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `delivery_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `product_id` int(10) unsigned DEFAULT '0',
   `product_sn` varchar(60) DEFAULT NULL,
   `goods_name` varchar(120) DEFAULT NULL,
   `brand_name` varchar(60) DEFAULT NULL,
   `goods_sn` varchar(60) DEFAULT NULL,
   `is_real` tinyint(1) unsigned DEFAULT '0',
   `extension_code` varchar(30) DEFAULT NULL,
-  `parent_id` mediumint(8) unsigned DEFAULT '0',
-  `send_number` smallint(5) unsigned DEFAULT '0',
+  `parent_id` int(10) unsigned DEFAULT '0',
+  `send_number` int(10) unsigned DEFAULT '0',
   `goods_attr` text,
   PRIMARY KEY (`rec_id`),
   KEY `delivery_id` (`delivery_id`,`goods_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of delivery_goods
@@ -1638,22 +1638,22 @@ INSERT INTO `delivery_goods` VALUES ('8', '5', '24', '0', null, 'P806', '联想'
 -- ----------------------------
 DROP TABLE IF EXISTS `delivery_order`;
 CREATE TABLE `delivery_order` (
-  `delivery_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `delivery_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `delivery_sn` varchar(20) NOT NULL,
   `order_sn` varchar(20) NOT NULL,
-  `order_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `order_id` int(10) unsigned NOT NULL DEFAULT '0',
   `invoice_no` varchar(50) DEFAULT NULL,
   `add_time` int(10) unsigned DEFAULT '0',
   `shipping_id` tinyint(3) unsigned DEFAULT '0',
   `shipping_name` varchar(120) DEFAULT NULL,
-  `user_id` mediumint(8) unsigned DEFAULT '0',
+  `user_id` int(10) unsigned DEFAULT '0',
   `action_user` varchar(30) DEFAULT NULL,
   `consignee` varchar(60) DEFAULT NULL,
   `address` varchar(250) DEFAULT NULL,
-  `country` smallint(5) unsigned DEFAULT '0',
-  `province` smallint(5) unsigned DEFAULT '0',
-  `city` smallint(5) unsigned DEFAULT '0',
-  `district` smallint(5) unsigned DEFAULT '0',
+  `country` int(10) unsigned DEFAULT '0',
+  `province` int(10) unsigned DEFAULT '0',
+  `city` int(10) unsigned DEFAULT '0',
+  `district` int(10) unsigned DEFAULT '0',
   `sign_building` varchar(120) DEFAULT NULL,
   `email` varchar(60) DEFAULT NULL,
   `zipcode` varchar(60) DEFAULT NULL,
@@ -1665,13 +1665,13 @@ CREATE TABLE `delivery_order` (
   `insure_fee` decimal(10,2) unsigned DEFAULT '0.00',
   `shipping_fee` decimal(10,2) unsigned DEFAULT '0.00',
   `update_time` int(10) unsigned DEFAULT '0',
-  `suppliers_id` smallint(5) DEFAULT '0',
+  `suppliers_id` int(10) DEFAULT '0',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `agency_id` smallint(5) unsigned DEFAULT '0',
+  `agency_id` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`delivery_id`),
   KEY `user_id` (`user_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of delivery_order
@@ -1687,12 +1687,12 @@ INSERT INTO `delivery_order` VALUES ('5', '20090615064331475', '2009061503335', 
 -- ----------------------------
 DROP TABLE IF EXISTS `email_list`;
 CREATE TABLE `email_list` (
-  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `email` varchar(60) NOT NULL,
   `stat` tinyint(1) NOT NULL DEFAULT '0',
   `hash` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of email_list
@@ -1703,15 +1703,15 @@ CREATE TABLE `email_list` (
 -- ----------------------------
 DROP TABLE IF EXISTS `email_sendlist`;
 CREATE TABLE `email_sendlist` (
-  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
-  `template_id` mediumint(8) NOT NULL,
+  `template_id` int(10) NOT NULL,
   `email_content` text NOT NULL,
   `error` tinyint(1) NOT NULL DEFAULT '0',
   `pri` tinyint(10) NOT NULL,
   `last_send` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of email_sendlist
@@ -1728,7 +1728,7 @@ CREATE TABLE `error_log` (
   `time` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `time` (`time`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of error_log
@@ -1739,25 +1739,25 @@ CREATE TABLE `error_log` (
 -- ----------------------------
 DROP TABLE IF EXISTS `exchange_goods`;
 CREATE TABLE `exchange_goods` (
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
   `exchange_integral` int(10) unsigned NOT NULL DEFAULT '0',
   `is_exchange` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `is_hot` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`goods_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of exchange_goods
 -- ----------------------------
-INSERT INTO `exchange_goods` VALUES ('24', '17000', '1', '0');
 INSERT INTO `exchange_goods` VALUES ('19', '80000', '1', '0');
+INSERT INTO `exchange_goods` VALUES ('24', '17000', '1', '0');
 
 -- ----------------------------
 -- Table structure for favourable_activity
 -- ----------------------------
 DROP TABLE IF EXISTS `favourable_activity`;
 CREATE TABLE `favourable_activity` (
-  `act_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `act_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `act_name` varchar(255) NOT NULL,
   `start_time` int(10) unsigned NOT NULL,
   `end_time` int(10) unsigned NOT NULL,
@@ -1772,7 +1772,7 @@ CREATE TABLE `favourable_activity` (
   `sort_order` tinyint(3) unsigned NOT NULL DEFAULT '50',
   PRIMARY KEY (`act_id`),
   KEY `act_name` (`act_name`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of favourable_activity
@@ -1784,9 +1784,9 @@ INSERT INTO `favourable_activity` VALUES ('1', '5.1诺基亚优惠活动', '1241
 -- ----------------------------
 DROP TABLE IF EXISTS `feedback`;
 CREATE TABLE `feedback` (
-  `msg_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `parent_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `msg_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `user_name` varchar(60) NOT NULL DEFAULT '',
   `user_email` varchar(60) NOT NULL DEFAULT '',
   `msg_title` varchar(200) NOT NULL DEFAULT '',
@@ -1799,7 +1799,7 @@ CREATE TABLE `feedback` (
   `msg_area` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`msg_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of feedback
@@ -1811,14 +1811,14 @@ INSERT INTO `feedback` VALUES ('1', '0', '1', 'ecshop', 'ecshop@ecshop.com', '�
 -- ----------------------------
 DROP TABLE IF EXISTS `friend_link`;
 CREATE TABLE `friend_link` (
-  `link_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `link_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `link_name` varchar(255) NOT NULL DEFAULT '',
   `link_url` varchar(255) NOT NULL DEFAULT '',
   `link_logo` varchar(255) NOT NULL DEFAULT '',
   `show_order` tinyint(3) unsigned NOT NULL DEFAULT '50',
   PRIMARY KEY (`link_id`),
   KEY `show_order` (`show_order`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of friend_link
@@ -1832,15 +1832,15 @@ INSERT INTO `friend_link` VALUES ('3', '免费开独立网店', 'http://www.wdwd
 -- ----------------------------
 DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods` (
-  `goods_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `cat_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cat_id` int(10) unsigned NOT NULL DEFAULT '0',
   `goods_sn` varchar(60) NOT NULL DEFAULT '',
   `goods_name` varchar(120) NOT NULL DEFAULT '',
   `goods_name_style` varchar(60) NOT NULL DEFAULT '+',
   `click_count` int(10) unsigned NOT NULL DEFAULT '0',
-  `brand_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `brand_id` int(10) unsigned NOT NULL DEFAULT '0',
   `provider_name` varchar(100) NOT NULL DEFAULT '',
-  `goods_number` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `goods_number` int(10) unsigned NOT NULL DEFAULT '0',
   `goods_weight` decimal(10,3) unsigned NOT NULL DEFAULT '0.000',
   `market_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
   `shop_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
@@ -1861,7 +1861,7 @@ CREATE TABLE `goods` (
   `is_shipping` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `integral` int(10) unsigned NOT NULL DEFAULT '0',
   `add_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `sort_order` smallint(4) unsigned NOT NULL DEFAULT '100',
+  `sort_order` int(10) unsigned NOT NULL DEFAULT '100',
   `is_delete` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `is_best` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `is_new` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -1869,11 +1869,11 @@ CREATE TABLE `goods` (
   `is_promote` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `bonus_type_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `last_update` int(10) unsigned NOT NULL DEFAULT '0',
-  `goods_type` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `goods_type` int(10) unsigned NOT NULL DEFAULT '0',
   `seller_note` varchar(255) NOT NULL DEFAULT '',
   `give_integral` int(11) NOT NULL DEFAULT '-1',
   `rank_integral` int(11) NOT NULL DEFAULT '-1',
-  `suppliers_id` smallint(5) unsigned DEFAULT NULL,
+  `suppliers_id` int(10) unsigned DEFAULT NULL,
   `is_check` tinyint(1) unsigned DEFAULT NULL,
   PRIMARY KEY (`goods_id`),
   KEY `goods_sn` (`goods_sn`),
@@ -1885,14 +1885,14 @@ CREATE TABLE `goods` (
   KEY `promote_start_date` (`promote_start_date`),
   KEY `goods_number` (`goods_number`),
   KEY `sort_order` (`sort_order`)
-) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
 INSERT INTO `goods` VALUES ('1', '4', 'ECS000000', 'KD876', '+', '7', '8', '', '1', '0.110', '1665.60', '1388.00', '0.00', '0', '0', '1', 'LG 3g 876 支持 双模 2008年04月 灰色 GSM,850,900,1800,1900', '', '<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 很多朋友都已经抢先体验了3G网络的可视通话、高速上网等功能。LG KD876手机<span style=\"font-size: x-large;\"><span style=\"color: rgb(255, 0, 0);\"><strong>支持TD-SCDMA/GSM双模单待</strong></span></span>，便于测试初期GSM网络和TD网络之间的切换和共享。</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LG KD876手机整体采用银色塑料材质，<strong><span style=\"font-size: x-large;\"><span style=\"color: rgb(255, 0, 0);\">特殊的旋转屏设计是本机的亮点</span></span></strong>，而机身背部的300万像素摄像头也是首发的六款TD-SCDMA手机中配置最高的。LG KD876手机屏幕下方设置有外键盘，该键盘由左/右软键、通话/挂机键、返回键、五维摇杆组成，摇杆灵敏度很高，定位准确。KD876的内键盘由标准12个电话键和三个功能键、一个内置摄像头组成。三个功能键分别为视频通话、MP3、和菜单键，所有按键的手感都比较一般，键程适中，当由于按键排列过于紧密，快速发短信时很容易误按，用户在使用时一定要多加注意。LG KD876手机机身周边的接口设计非常简洁，手机的厚度主要来自屏幕旋转轴的长度，如果舍弃旋屏设计的话，估计<span style=\"font-size: x-large;\"><strong><span style=\"color: rgb(255, 0, 0);\">厚度可以做到10mm以下</span></strong></span>。</p>', 'images/200905/thumb_img/1_thumb_G_1240902890710.jpg', 'images/200905/goods_img/1_G_1240902890755.jpg', 'images/200905/source_img/1_G_1240902890895.gif', '1', '', '1', '1', '0', '13', '1240902890', '100', '0', '1', '1', '1', '0', '0', '1269589545', '9', '', '-1', '-1', null, null);
-INSERT INTO `goods` VALUES ('4', '8', 'ECS000004', '诺基亚N85原装充电器', '+', '0', '1', '', '17', '0.000', '69.60', '58.00', '0.00', '0', '0', '1', '', '', '', 'images/200905/thumb_img/4_thumb_G_1241422402467.jpg', 'images/200905/goods_img/4_G_1241422402722.jpg', 'images/200905/source_img/4_G_1241422402919.jpg', '1', '', '1', '0', '0', '0', '1241422402', '100', '0', '0', '0', '0', '0', '0', '1242110662', '6', '', '-1', '-1', null, null);
 INSERT INTO `goods` VALUES ('3', '8', 'ECS000002', '诺基亚原装5800耳机', '+', '3', '1', '', '24', '0.000', '81.60', '68.00', '0.00', '0', '0', '1', '', '', '', 'images/200905/thumb_img/3_thumb_G_1241422082679.jpg', 'images/200905/goods_img/3_G_1241422082168.jpg', 'images/200905/source_img/3_G_1241422082367.jpg', '1', '', '1', '1', '0', '0', '1241422082', '100', '0', '0', '0', '0', '0', '0', '1241972255', '6', '', '-1', '-1', null, null);
+INSERT INTO `goods` VALUES ('4', '8', 'ECS000004', '诺基亚N85原装充电器', '+', '0', '1', '', '17', '0.000', '69.60', '58.00', '0.00', '0', '0', '1', '', '', '', 'images/200905/thumb_img/4_thumb_G_1241422402467.jpg', 'images/200905/goods_img/4_G_1241422402722.jpg', 'images/200905/source_img/4_G_1241422402919.jpg', '1', '', '1', '0', '0', '0', '1241422402', '100', '0', '0', '0', '0', '0', '0', '1242110662', '6', '', '-1', '-1', null, null);
 INSERT INTO `goods` VALUES ('5', '11', 'ECS000005', '索爱原装M2卡读卡器', '+', '3', '7', '', '8', '0.000', '24.00', '20.00', '0.00', '0', '0', '1', '', '', '', 'images/200905/thumb_img/5_thumb_G_1241422518886.jpg', 'images/200905/goods_img/5_G_1241422518773.jpg', 'images/200905/source_img/5_G_1241422518470.jpg', '1', '', '1', '1', '0', '0', '1241422518', '100', '0', '1', '1', '0', '0', '0', '1241972241', '2', '', '-1', '-1', null, null);
 INSERT INTO `goods` VALUES ('6', '11', 'ECS000006', '胜创KINGMAX内存卡', '+', '0', '0', '', '15', '0.000', '50.40', '42.00', '0.00', '0', '0', '1', '', '', '', '', '', '', '1', '', '1', '0', '0', '0', '1241422573', '100', '0', '0', '0', '0', '0', '0', '1241972238', '6', '', '-1', '-1', null, null);
 INSERT INTO `goods` VALUES ('7', '8', 'ECS000007', '诺基亚N85原装立体声耳机HS-82', '+', '0', '1', '', '20', '0.000', '120.00', '100.00', '0.00', '0', '0', '1', '', '', '', 'images/200905/thumb_img/7_thumb_G_1241422785492.jpg', 'images/200905/goods_img/7_G_1241422785856.jpg', 'images/200905/source_img/7_G_1241422785657.jpg', '1', '', '1', '1', '0', '1', '1241422785', '100', '0', '0', '0', '0', '0', '0', '1241972232', '2', '', '-1', '-1', null, null);
@@ -1927,12 +1927,12 @@ INSERT INTO `goods` VALUES ('32', '3', 'ECS000032', '诺基亚N85', '+', '9', '1
 -- ----------------------------
 DROP TABLE IF EXISTS `goods_activity`;
 CREATE TABLE `goods_activity` (
-  `act_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `act_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `act_name` varchar(255) NOT NULL,
   `act_desc` text NOT NULL,
   `act_type` tinyint(3) unsigned NOT NULL,
-  `goods_id` mediumint(8) unsigned NOT NULL,
-  `product_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL,
+  `product_id` int(10) unsigned NOT NULL DEFAULT '0',
   `goods_name` varchar(255) NOT NULL,
   `start_time` int(10) unsigned NOT NULL,
   `end_time` int(10) unsigned NOT NULL,
@@ -1940,7 +1940,7 @@ CREATE TABLE `goods_activity` (
   `ext_info` text NOT NULL,
   PRIMARY KEY (`act_id`),
   KEY `act_name` (`act_name`,`act_type`,`goods_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of goods_activity
@@ -1959,11 +1959,11 @@ INSERT INTO `goods_activity` VALUES ('8', 'P806', '团购第2期', '1', '24', '0
 -- ----------------------------
 DROP TABLE IF EXISTS `goods_article`;
 CREATE TABLE `goods_article` (
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `article_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `article_id` int(10) unsigned NOT NULL DEFAULT '0',
   `admin_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`goods_id`,`article_id`,`admin_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of goods_article
@@ -1986,93 +1986,18 @@ INSERT INTO `goods_article` VALUES ('32', '30', '0');
 DROP TABLE IF EXISTS `goods_attr`;
 CREATE TABLE `goods_attr` (
   `goods_attr_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `attr_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `attr_id` int(10) unsigned NOT NULL DEFAULT '0',
   `attr_value` text NOT NULL,
   `attr_price` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`goods_attr_id`),
   KEY `goods_id` (`goods_id`),
   KEY `attr_id` (`attr_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=241 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=241 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of goods_attr
 -- ----------------------------
-INSERT INTO `goods_attr` VALUES ('238', '1', '173', 'GSM,850,900,1800,1900', '0');
-INSERT INTO `goods_attr` VALUES ('237', '1', '185', '灰色', '');
-INSERT INTO `goods_attr` VALUES ('236', '1', '191', '支持', '0');
-INSERT INTO `goods_attr` VALUES ('235', '1', '190', '支持', '0');
-INSERT INTO `goods_attr` VALUES ('234', '1', '189', '2.4英寸', '0');
-INSERT INTO `goods_attr` VALUES ('233', '1', '172', '2008年04月', '0');
-INSERT INTO `goods_attr` VALUES ('228', '9', '178', '滑盖', '0');
-INSERT INTO `goods_attr` VALUES ('227', '9', '185', '白色', '0');
-INSERT INTO `goods_attr` VALUES ('226', '9', '185', '黑色', '10');
-INSERT INTO `goods_attr` VALUES ('232', '8', '178', '直板', '0');
-INSERT INTO `goods_attr` VALUES ('231', '8', '185', '黑色', '');
-INSERT INTO `goods_attr` VALUES ('230', '8', '190', '支持', '0');
-INSERT INTO `goods_attr` VALUES ('229', '8', '189', '1.75英寸', '0');
-INSERT INTO `goods_attr` VALUES ('217', '13', '185', '黑色', '');
-INSERT INTO `goods_attr` VALUES ('216', '13', '189', '2.0英寸', '0');
-INSERT INTO `goods_attr` VALUES ('215', '13', '172', '2008年07月', '0');
-INSERT INTO `goods_attr` VALUES ('225', '10', '178', '直板', '0');
-INSERT INTO `goods_attr` VALUES ('221', '13', '178', '直板', '0');
-INSERT INTO `goods_attr` VALUES ('222', '10', '172', '2008年05月', '0');
-INSERT INTO `goods_attr` VALUES ('223', '10', '189', '2.2英寸', '0');
-INSERT INTO `goods_attr` VALUES ('224', '10', '173', 'GSM,850,900,1800,1900', '0');
-INSERT INTO `goods_attr` VALUES ('220', '13', '175', '300小时', '0');
-INSERT INTO `goods_attr` VALUES ('219', '13', '174', '4小时', '0');
-INSERT INTO `goods_attr` VALUES ('212', '14', '172', '2008年10月', '0');
-INSERT INTO `goods_attr` VALUES ('213', '14', '185', '黑色', '0');
-INSERT INTO `goods_attr` VALUES ('214', '14', '178', '直板', '0');
-INSERT INTO `goods_attr` VALUES ('218', '13', '173', 'GSM,850,900,1800,1900', '0');
-INSERT INTO `goods_attr` VALUES ('211', '15', '178', '直板', '0');
-INSERT INTO `goods_attr` VALUES ('210', '15', '210', '线控耳机', '50');
-INSERT INTO `goods_attr` VALUES ('200', '17', '189', '2.8英寸', '0');
-INSERT INTO `goods_attr` VALUES ('201', '17', '185', '黑色', '');
-INSERT INTO `goods_attr` VALUES ('202', '17', '173', 'CDMA', '0');
-INSERT INTO `goods_attr` VALUES ('203', '17', '174', '8小时', '0');
-INSERT INTO `goods_attr` VALUES ('204', '17', '175', '300小时', '0');
-INSERT INTO `goods_attr` VALUES ('205', '17', '178', '直板', '0');
-INSERT INTO `goods_attr` VALUES ('206', '15', '189', '2.2英寸', '0');
-INSERT INTO `goods_attr` VALUES ('207', '15', '185', '黑色', '');
-INSERT INTO `goods_attr` VALUES ('208', '15', '185', '白色', '20');
-INSERT INTO `goods_attr` VALUES ('209', '15', '210', '数据线', '20');
-INSERT INTO `goods_attr` VALUES ('196', '19', '185', '黑色', '');
-INSERT INTO `goods_attr` VALUES ('197', '19', '185', '金色', '10');
-INSERT INTO `goods_attr` VALUES ('198', '19', '185', '白色', '20');
-INSERT INTO `goods_attr` VALUES ('199', '19', '178', '滑盖', '0');
-INSERT INTO `goods_attr` VALUES ('195', '20', '173', 'GSM,900,1800,1900,2100', '0');
-INSERT INTO `goods_attr` VALUES ('193', '20', '172', '2008年07月', '0');
-INSERT INTO `goods_attr` VALUES ('194', '20', '185', '黑色', '');
-INSERT INTO `goods_attr` VALUES ('187', '21', '180', 'T-Flash', '0');
-INSERT INTO `goods_attr` VALUES ('189', '21', '210', '线控耳机', '50');
-INSERT INTO `goods_attr` VALUES ('188', '21', '185', '黑色', '');
-INSERT INTO `goods_attr` VALUES ('186', '22', '178', '直板', '0');
-INSERT INTO `goods_attr` VALUES ('182', '22', '185', '黑色', '');
-INSERT INTO `goods_attr` VALUES ('183', '22', '173', 'GSM,850,900,1800,1900', '0');
-INSERT INTO `goods_attr` VALUES ('184', '22', '174', '6.5小时', '0');
-INSERT INTO `goods_attr` VALUES ('185', '22', '175', '450小时', '0');
-INSERT INTO `goods_attr` VALUES ('181', '22', '181', '288MB', '0');
-INSERT INTO `goods_attr` VALUES ('180', '22', '180', 'microSD', '0');
-INSERT INTO `goods_attr` VALUES ('179', '22', '172', '2008年12月', '0');
-INSERT INTO `goods_attr` VALUES ('192', '21', '175', '100小时', '0');
-INSERT INTO `goods_attr` VALUES ('191', '21', '174', '2.5小时', '0');
-INSERT INTO `goods_attr` VALUES ('178', '23', '178', '滑盖', '0');
-INSERT INTO `goods_attr` VALUES ('190', '21', '210', '数据线', '20');
-INSERT INTO `goods_attr` VALUES ('176', '23', '174', '2.5小时', '0');
-INSERT INTO `goods_attr` VALUES ('177', '23', '175', '200小时', '0');
-INSERT INTO `goods_attr` VALUES ('173', '23', '188', '320×240 像素', '0');
-INSERT INTO `goods_attr` VALUES ('174', '23', '189', '2.8英寸', '0');
-INSERT INTO `goods_attr` VALUES ('175', '23', '185', '黑色', '');
-INSERT INTO `goods_attr` VALUES ('172', '23', '182', 'Symbian OS 9.3操作系统', '0');
-INSERT INTO `goods_attr` VALUES ('171', '23', '181', '256MB', '0');
-INSERT INTO `goods_attr` VALUES ('170', '23', '172', '2008年09月', '0');
-INSERT INTO `goods_attr` VALUES ('169', '24', '179', 'SMS', '0');
-INSERT INTO `goods_attr` VALUES ('166', '24', '190', '支持', '0');
-INSERT INTO `goods_attr` VALUES ('167', '24', '185', '灰色', '');
-INSERT INTO `goods_attr` VALUES ('168', '24', '210', '数据线', '20');
-INSERT INTO `goods_attr` VALUES ('165', '24', '183', '支持', '0');
-INSERT INTO `goods_attr` VALUES ('164', '24', '172', '2008年06月', '0');
 INSERT INTO `goods_attr` VALUES ('152', '32', '172', '2008年10月', '0');
 INSERT INTO `goods_attr` VALUES ('153', '32', '180', 'MicroSD', '0');
 INSERT INTO `goods_attr` VALUES ('154', '32', '181', '78MB', '0');
@@ -2085,6 +2010,81 @@ INSERT INTO `goods_attr` VALUES ('160', '32', '173', 'GSM,850,900,1800,1900', '0
 INSERT INTO `goods_attr` VALUES ('161', '32', '174', '6.9 小时', '0');
 INSERT INTO `goods_attr` VALUES ('162', '32', '175', '363 小时', '0');
 INSERT INTO `goods_attr` VALUES ('163', '32', '185', '黑色', '');
+INSERT INTO `goods_attr` VALUES ('164', '24', '172', '2008年06月', '0');
+INSERT INTO `goods_attr` VALUES ('165', '24', '183', '支持', '0');
+INSERT INTO `goods_attr` VALUES ('166', '24', '190', '支持', '0');
+INSERT INTO `goods_attr` VALUES ('167', '24', '185', '灰色', '');
+INSERT INTO `goods_attr` VALUES ('168', '24', '210', '数据线', '20');
+INSERT INTO `goods_attr` VALUES ('169', '24', '179', 'SMS', '0');
+INSERT INTO `goods_attr` VALUES ('170', '23', '172', '2008年09月', '0');
+INSERT INTO `goods_attr` VALUES ('171', '23', '181', '256MB', '0');
+INSERT INTO `goods_attr` VALUES ('172', '23', '182', 'Symbian OS 9.3操作系统', '0');
+INSERT INTO `goods_attr` VALUES ('173', '23', '188', '320×240 像素', '0');
+INSERT INTO `goods_attr` VALUES ('174', '23', '189', '2.8英寸', '0');
+INSERT INTO `goods_attr` VALUES ('175', '23', '185', '黑色', '');
+INSERT INTO `goods_attr` VALUES ('176', '23', '174', '2.5小时', '0');
+INSERT INTO `goods_attr` VALUES ('177', '23', '175', '200小时', '0');
+INSERT INTO `goods_attr` VALUES ('178', '23', '178', '滑盖', '0');
+INSERT INTO `goods_attr` VALUES ('179', '22', '172', '2008年12月', '0');
+INSERT INTO `goods_attr` VALUES ('180', '22', '180', 'microSD', '0');
+INSERT INTO `goods_attr` VALUES ('181', '22', '181', '288MB', '0');
+INSERT INTO `goods_attr` VALUES ('182', '22', '185', '黑色', '');
+INSERT INTO `goods_attr` VALUES ('183', '22', '173', 'GSM,850,900,1800,1900', '0');
+INSERT INTO `goods_attr` VALUES ('184', '22', '174', '6.5小时', '0');
+INSERT INTO `goods_attr` VALUES ('185', '22', '175', '450小时', '0');
+INSERT INTO `goods_attr` VALUES ('186', '22', '178', '直板', '0');
+INSERT INTO `goods_attr` VALUES ('187', '21', '180', 'T-Flash', '0');
+INSERT INTO `goods_attr` VALUES ('188', '21', '185', '黑色', '');
+INSERT INTO `goods_attr` VALUES ('189', '21', '210', '线控耳机', '50');
+INSERT INTO `goods_attr` VALUES ('190', '21', '210', '数据线', '20');
+INSERT INTO `goods_attr` VALUES ('191', '21', '174', '2.5小时', '0');
+INSERT INTO `goods_attr` VALUES ('192', '21', '175', '100小时', '0');
+INSERT INTO `goods_attr` VALUES ('193', '20', '172', '2008年07月', '0');
+INSERT INTO `goods_attr` VALUES ('194', '20', '185', '黑色', '');
+INSERT INTO `goods_attr` VALUES ('195', '20', '173', 'GSM,900,1800,1900,2100', '0');
+INSERT INTO `goods_attr` VALUES ('196', '19', '185', '黑色', '');
+INSERT INTO `goods_attr` VALUES ('197', '19', '185', '金色', '10');
+INSERT INTO `goods_attr` VALUES ('198', '19', '185', '白色', '20');
+INSERT INTO `goods_attr` VALUES ('199', '19', '178', '滑盖', '0');
+INSERT INTO `goods_attr` VALUES ('200', '17', '189', '2.8英寸', '0');
+INSERT INTO `goods_attr` VALUES ('201', '17', '185', '黑色', '');
+INSERT INTO `goods_attr` VALUES ('202', '17', '173', 'CDMA', '0');
+INSERT INTO `goods_attr` VALUES ('203', '17', '174', '8小时', '0');
+INSERT INTO `goods_attr` VALUES ('204', '17', '175', '300小时', '0');
+INSERT INTO `goods_attr` VALUES ('205', '17', '178', '直板', '0');
+INSERT INTO `goods_attr` VALUES ('206', '15', '189', '2.2英寸', '0');
+INSERT INTO `goods_attr` VALUES ('207', '15', '185', '黑色', '');
+INSERT INTO `goods_attr` VALUES ('208', '15', '185', '白色', '20');
+INSERT INTO `goods_attr` VALUES ('209', '15', '210', '数据线', '20');
+INSERT INTO `goods_attr` VALUES ('210', '15', '210', '线控耳机', '50');
+INSERT INTO `goods_attr` VALUES ('211', '15', '178', '直板', '0');
+INSERT INTO `goods_attr` VALUES ('212', '14', '172', '2008年10月', '0');
+INSERT INTO `goods_attr` VALUES ('213', '14', '185', '黑色', '0');
+INSERT INTO `goods_attr` VALUES ('214', '14', '178', '直板', '0');
+INSERT INTO `goods_attr` VALUES ('215', '13', '172', '2008年07月', '0');
+INSERT INTO `goods_attr` VALUES ('216', '13', '189', '2.0英寸', '0');
+INSERT INTO `goods_attr` VALUES ('217', '13', '185', '黑色', '');
+INSERT INTO `goods_attr` VALUES ('218', '13', '173', 'GSM,850,900,1800,1900', '0');
+INSERT INTO `goods_attr` VALUES ('219', '13', '174', '4小时', '0');
+INSERT INTO `goods_attr` VALUES ('220', '13', '175', '300小时', '0');
+INSERT INTO `goods_attr` VALUES ('221', '13', '178', '直板', '0');
+INSERT INTO `goods_attr` VALUES ('222', '10', '172', '2008年05月', '0');
+INSERT INTO `goods_attr` VALUES ('223', '10', '189', '2.2英寸', '0');
+INSERT INTO `goods_attr` VALUES ('224', '10', '173', 'GSM,850,900,1800,1900', '0');
+INSERT INTO `goods_attr` VALUES ('225', '10', '178', '直板', '0');
+INSERT INTO `goods_attr` VALUES ('226', '9', '185', '黑色', '10');
+INSERT INTO `goods_attr` VALUES ('227', '9', '185', '白色', '0');
+INSERT INTO `goods_attr` VALUES ('228', '9', '178', '滑盖', '0');
+INSERT INTO `goods_attr` VALUES ('229', '8', '189', '1.75英寸', '0');
+INSERT INTO `goods_attr` VALUES ('230', '8', '190', '支持', '0');
+INSERT INTO `goods_attr` VALUES ('231', '8', '185', '黑色', '');
+INSERT INTO `goods_attr` VALUES ('232', '8', '178', '直板', '0');
+INSERT INTO `goods_attr` VALUES ('233', '1', '172', '2008年04月', '0');
+INSERT INTO `goods_attr` VALUES ('234', '1', '189', '2.4英寸', '0');
+INSERT INTO `goods_attr` VALUES ('235', '1', '190', '支持', '0');
+INSERT INTO `goods_attr` VALUES ('236', '1', '191', '支持', '0');
+INSERT INTO `goods_attr` VALUES ('237', '1', '185', '灰色', '');
+INSERT INTO `goods_attr` VALUES ('238', '1', '173', 'GSM,850,900,1800,1900', '0');
 INSERT INTO `goods_attr` VALUES ('239', '10', '185', '黑色', '');
 INSERT INTO `goods_attr` VALUES ('240', '10', '185', '白色', '');
 
@@ -2093,10 +2093,10 @@ INSERT INTO `goods_attr` VALUES ('240', '10', '185', '白色', '');
 -- ----------------------------
 DROP TABLE IF EXISTS `goods_cat`;
 CREATE TABLE `goods_cat` (
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `cat_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `cat_id` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`goods_id`,`cat_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of goods_cat
@@ -2111,15 +2111,15 @@ INSERT INTO `goods_cat` VALUES ('16', '5');
 -- ----------------------------
 DROP TABLE IF EXISTS `goods_gallery`;
 CREATE TABLE `goods_gallery` (
-  `img_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `img_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
   `img_url` varchar(255) NOT NULL DEFAULT '',
   `img_desc` varchar(255) NOT NULL DEFAULT '',
   `thumb_url` varchar(255) NOT NULL DEFAULT '',
   `img_original` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`img_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of goods_gallery
@@ -2172,12 +2172,12 @@ INSERT INTO `goods_gallery` VALUES ('43', '10', 'images/200905/goods_img/10_P_12
 -- ----------------------------
 DROP TABLE IF EXISTS `goods_type`;
 CREATE TABLE `goods_type` (
-  `cat_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `cat_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `cat_name` varchar(60) NOT NULL DEFAULT '',
   `enabled` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `attr_group` varchar(255) NOT NULL,
   PRIMARY KEY (`cat_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of goods_type
@@ -2197,18 +2197,18 @@ INSERT INTO `goods_type` VALUES ('9', '精品手机', '1', '');
 -- ----------------------------
 DROP TABLE IF EXISTS `group_goods`;
 CREATE TABLE `group_goods` (
-  `parent_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
   `goods_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
   `admin_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`parent_id`,`goods_id`,`admin_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of group_goods
 -- ----------------------------
-INSERT INTO `group_goods` VALUES ('9', '4', '58.00', '1');
 INSERT INTO `group_goods` VALUES ('9', '3', '68.00', '1');
+INSERT INTO `group_goods` VALUES ('9', '4', '58.00', '1');
 INSERT INTO `group_goods` VALUES ('9', '7', '100.00', '1');
 INSERT INTO `group_goods` VALUES ('14', '5', '20.00', '1');
 INSERT INTO `group_goods` VALUES ('14', '6', '42.00', '1');
@@ -2222,9 +2222,9 @@ CREATE TABLE `keywords` (
   `date` date NOT NULL DEFAULT '1000-01-01',
   `searchengine` varchar(20) NOT NULL DEFAULT '',
   `keyword` varchar(90) NOT NULL DEFAULT '',
-  `count` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `count` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`date`,`searchengine`,`keyword`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of keywords
@@ -2235,11 +2235,11 @@ INSERT INTO `keywords` VALUES ('2009-05-04', 'ecshop', '斤', '1');
 INSERT INTO `keywords` VALUES ('2009-05-10', 'ecshop', '诺基亚', '1');
 INSERT INTO `keywords` VALUES ('2009-05-11', 'ecshop', '智能手机', '1');
 INSERT INTO `keywords` VALUES ('2009-05-11', 'ecshop', '诺基亚', '1');
-INSERT INTO `keywords` VALUES ('2009-05-12', 'ecshop', '三星', '1');
-INSERT INTO `keywords` VALUES ('2009-05-12', 'ecshop', '智能手机', '1');
 INSERT INTO `keywords` VALUES ('2009-05-12', 'ecshop', 'p806', '1');
-INSERT INTO `keywords` VALUES ('2009-05-12', 'ecshop', '诺基亚', '1');
+INSERT INTO `keywords` VALUES ('2009-05-12', 'ecshop', '三星', '1');
 INSERT INTO `keywords` VALUES ('2009-05-12', 'ecshop', '夏新', '1');
+INSERT INTO `keywords` VALUES ('2009-05-12', 'ecshop', '智能手机', '1');
+INSERT INTO `keywords` VALUES ('2009-05-12', 'ecshop', '诺基亚', '1');
 INSERT INTO `keywords` VALUES ('2009-05-18', 'ecshop', '52', '2');
 INSERT INTO `keywords` VALUES ('2009-05-22', 'ecshop', 'p', '1');
 
@@ -2248,25 +2248,25 @@ INSERT INTO `keywords` VALUES ('2009-05-22', 'ecshop', 'p', '1');
 -- ----------------------------
 DROP TABLE IF EXISTS `link_goods`;
 CREATE TABLE `link_goods` (
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `link_goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `link_goods_id` int(10) unsigned NOT NULL DEFAULT '0',
   `is_double` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `admin_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`goods_id`,`link_goods_id`,`admin_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of link_goods
 -- ----------------------------
+INSERT INTO `link_goods` VALUES ('9', '13', '1', '1');
 INSERT INTO `link_goods` VALUES ('12', '9', '0', '1');
 INSERT INTO `link_goods` VALUES ('12', '10', '0', '1');
 INSERT INTO `link_goods` VALUES ('12', '11', '0', '1');
-INSERT INTO `link_goods` VALUES ('9', '13', '1', '1');
 INSERT INTO `link_goods` VALUES ('13', '9', '1', '1');
+INSERT INTO `link_goods` VALUES ('13', '23', '1', '1');
 INSERT INTO `link_goods` VALUES ('14', '9', '0', '1');
 INSERT INTO `link_goods` VALUES ('14', '13', '0', '1');
 INSERT INTO `link_goods` VALUES ('23', '9', '0', '1');
-INSERT INTO `link_goods` VALUES ('13', '23', '1', '1');
 INSERT INTO `link_goods` VALUES ('23', '13', '1', '1');
 
 -- ----------------------------
@@ -2285,7 +2285,7 @@ CREATE TABLE `mail_templates` (
   PRIMARY KEY (`template_id`),
   UNIQUE KEY `template_code` (`template_code`),
   KEY `type` (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of mail_templates
@@ -2310,13 +2310,13 @@ INSERT INTO `mail_templates` VALUES ('14', 'recomment', '1', '用户评论回复
 -- ----------------------------
 DROP TABLE IF EXISTS `member_price`;
 CREATE TABLE `member_price` (
-  `price_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `price_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
   `user_rank` tinyint(3) NOT NULL DEFAULT '0',
   `user_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`price_id`),
   KEY `goods_id` (`goods_id`,`user_rank`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of member_price
@@ -2331,9 +2331,9 @@ INSERT INTO `member_price` VALUES ('4', '13', '2', '1200.00');
 -- ----------------------------
 DROP TABLE IF EXISTS `nav`;
 CREATE TABLE `nav` (
-  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `ctype` varchar(10) DEFAULT NULL,
-  `cid` smallint(5) unsigned DEFAULT NULL,
+  `cid` int(10) unsigned DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `ifshow` tinyint(1) NOT NULL,
   `vieworder` tinyint(1) NOT NULL,
@@ -2343,7 +2343,7 @@ CREATE TABLE `nav` (
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `ifshow` (`ifshow`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of nav
@@ -2375,8 +2375,8 @@ INSERT INTO `nav` VALUES ('27', 'c', '6', '手机配件', '1', '15', '0', 'categ
 -- ----------------------------
 DROP TABLE IF EXISTS `order_action`;
 CREATE TABLE `order_action` (
-  `action_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `order_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `action_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int(10) unsigned NOT NULL DEFAULT '0',
   `action_user` varchar(30) NOT NULL DEFAULT '',
   `order_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `shipping_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -2386,7 +2386,7 @@ CREATE TABLE `order_action` (
   `log_time` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`action_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of order_action
@@ -2424,26 +2424,26 @@ INSERT INTO `order_action` VALUES ('27', '19', 'admin', '1', '1', '2', '0', '', 
 -- ----------------------------
 DROP TABLE IF EXISTS `order_goods`;
 CREATE TABLE `order_goods` (
-  `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `order_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `rec_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
   `goods_name` varchar(120) NOT NULL DEFAULT '',
   `goods_sn` varchar(60) NOT NULL DEFAULT '',
-  `product_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `goods_number` smallint(5) unsigned NOT NULL DEFAULT '1',
+  `product_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `goods_number` int(10) unsigned NOT NULL DEFAULT '1',
   `market_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   `goods_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   `goods_attr` text NOT NULL,
-  `send_number` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `send_number` int(10) unsigned NOT NULL DEFAULT '0',
   `is_real` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `extension_code` varchar(30) NOT NULL DEFAULT '',
-  `parent_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `is_gift` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `is_gift` int(10) unsigned NOT NULL DEFAULT '0',
   `goods_attr_id` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`rec_id`),
   KEY `order_id` (`order_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of order_goods
@@ -2485,17 +2485,17 @@ INSERT INTO `order_goods` VALUES ('31', '19', '24', 'P806', 'ECS000024', '0', '2
 -- ----------------------------
 DROP TABLE IF EXISTS `order_info`;
 CREATE TABLE `order_info` (
-  `order_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `order_sn` varchar(20) NOT NULL DEFAULT '',
-  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `order_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `shipping_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `pay_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `consignee` varchar(60) NOT NULL DEFAULT '',
-  `country` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `province` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `city` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `district` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `country` int(10) unsigned NOT NULL DEFAULT '0',
+  `province` int(10) unsigned NOT NULL DEFAULT '0',
+  `city` int(10) unsigned NOT NULL DEFAULT '0',
+  `district` int(10) unsigned NOT NULL DEFAULT '0',
   `address` varchar(255) NOT NULL DEFAULT '',
   `zipcode` varchar(60) NOT NULL DEFAULT '',
   `tel` varchar(60) NOT NULL DEFAULT '',
@@ -2527,7 +2527,7 @@ CREATE TABLE `order_info` (
   `integral_money` decimal(10,2) NOT NULL DEFAULT '0.00',
   `bonus` decimal(10,2) NOT NULL DEFAULT '0.00',
   `order_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `from_ad` smallint(5) NOT NULL DEFAULT '0',
+  `from_ad` int(10) NOT NULL DEFAULT '0',
   `referer` varchar(255) NOT NULL DEFAULT '',
   `add_time` int(10) unsigned NOT NULL DEFAULT '0',
   `confirm_time` int(10) unsigned NOT NULL DEFAULT '0',
@@ -2535,17 +2535,17 @@ CREATE TABLE `order_info` (
   `shipping_time` int(10) unsigned NOT NULL DEFAULT '0',
   `pack_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `card_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `bonus_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `bonus_id` int(10) unsigned NOT NULL DEFAULT '0',
   `invoice_no` varchar(255) NOT NULL DEFAULT '',
   `extension_code` varchar(30) NOT NULL DEFAULT '',
-  `extension_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `extension_id` int(10) unsigned NOT NULL DEFAULT '0',
   `to_buyer` varchar(255) NOT NULL DEFAULT '',
   `pay_note` varchar(255) NOT NULL DEFAULT '',
-  `agency_id` smallint(5) unsigned NOT NULL,
+  `agency_id` int(10) unsigned NOT NULL,
   `inv_type` varchar(60) NOT NULL,
   `tax` decimal(10,2) NOT NULL,
   `is_separate` tinyint(1) NOT NULL DEFAULT '0',
-  `parent_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
   `discount` decimal(10,2) NOT NULL,
   PRIMARY KEY (`order_id`),
   UNIQUE KEY `order_sn` (`order_sn`),
@@ -2557,7 +2557,7 @@ CREATE TABLE `order_info` (
   KEY `pay_id` (`pay_id`),
   KEY `extension_code` (`extension_code`,`extension_id`),
   KEY `agency_id` (`agency_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of order_info
@@ -2591,10 +2591,10 @@ CREATE TABLE `pack` (
   `pack_name` varchar(120) NOT NULL DEFAULT '',
   `pack_img` varchar(255) NOT NULL DEFAULT '',
   `pack_fee` decimal(6,2) unsigned NOT NULL DEFAULT '0.00',
-  `free_money` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `free_money` int(10) unsigned NOT NULL DEFAULT '0',
   `pack_desc` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`pack_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of pack
@@ -2606,23 +2606,23 @@ INSERT INTO `pack` VALUES ('1', '精品包装', '1242108360911825791.jpg', '5.00
 -- ----------------------------
 DROP TABLE IF EXISTS `package_goods`;
 CREATE TABLE `package_goods` (
-  `package_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `product_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `goods_number` smallint(5) unsigned NOT NULL DEFAULT '1',
+  `package_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `product_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `goods_number` int(10) unsigned NOT NULL DEFAULT '1',
   `admin_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`package_id`,`goods_id`,`admin_id`,`product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of package_goods
 -- ----------------------------
-INSERT INTO `package_goods` VALUES ('5', '6', '0', '1', '1');
 INSERT INTO `package_goods` VALUES ('5', '5', '0', '1', '1');
+INSERT INTO `package_goods` VALUES ('5', '6', '0', '1', '1');
+INSERT INTO `package_goods` VALUES ('5', '31', '0', '1', '1');
 INSERT INTO `package_goods` VALUES ('6', '4', '0', '1', '1');
 INSERT INTO `package_goods` VALUES ('6', '7', '0', '1', '1');
 INSERT INTO `package_goods` VALUES ('6', '32', '0', '1', '1');
-INSERT INTO `package_goods` VALUES ('5', '31', '0', '1', '1');
 
 -- ----------------------------
 -- Table structure for payment
@@ -2641,7 +2641,7 @@ CREATE TABLE `payment` (
   `is_online` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`pay_id`),
   UNIQUE KEY `pay_code` (`pay_code`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of payment
@@ -2656,12 +2656,12 @@ INSERT INTO `payment` VALUES ('3', 'cod', '货到付款', '0', '开通城市：�
 DROP TABLE IF EXISTS `pay_log`;
 CREATE TABLE `pay_log` (
   `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `order_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `order_id` int(10) unsigned NOT NULL DEFAULT '0',
   `order_amount` decimal(10,2) unsigned NOT NULL,
   `order_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `is_paid` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`log_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of pay_log
@@ -2696,7 +2696,7 @@ CREATE TABLE `plugins` (
   `assign` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `install_date` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`code`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of plugins
@@ -2707,13 +2707,13 @@ CREATE TABLE `plugins` (
 -- ----------------------------
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
-  `product_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `product_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
   `goods_attr` varchar(50) DEFAULT NULL,
   `product_sn` varchar(60) DEFAULT NULL,
-  `product_number` smallint(5) unsigned DEFAULT '0',
+  `product_number` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`product_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of products
@@ -2738,16 +2738,16 @@ INSERT INTO `products` VALUES ('14', '1', '237', '', '1');
 -- ----------------------------
 DROP TABLE IF EXISTS `region`;
 CREATE TABLE `region` (
-  `region_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `region_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
   `region_name` varchar(120) NOT NULL DEFAULT '',
   `region_type` tinyint(1) NOT NULL DEFAULT '2',
-  `agency_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `agency_id` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`region_id`),
   KEY `parent_id` (`parent_id`),
   KEY `region_type` (`region_type`),
   KEY `agency_id` (`agency_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3409 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3409 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of region
@@ -6167,11 +6167,11 @@ INSERT INTO `region` VALUES ('3408', '3401', '肥西县', '3', '0');
 DROP TABLE IF EXISTS `reg_extend_info`;
 CREATE TABLE `reg_extend_info` (
   `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` mediumint(8) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
   `reg_field_id` int(10) unsigned NOT NULL,
   `content` text NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of reg_extend_info
@@ -6189,7 +6189,7 @@ CREATE TABLE `reg_fields` (
   `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `is_need` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of reg_fields
@@ -6206,13 +6206,13 @@ INSERT INTO `reg_fields` VALUES ('6', '密码找回问题', '0', '1', '1', '1');
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
-  `role_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `role_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `role_name` varchar(60) NOT NULL DEFAULT '',
   `action_list` text NOT NULL,
   `role_describe` text,
   PRIMARY KEY (`role_id`),
   KEY `user_name` (`role_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of role
@@ -6225,9 +6225,9 @@ DROP TABLE IF EXISTS `searchengine`;
 CREATE TABLE `searchengine` (
   `date` date NOT NULL DEFAULT '1000-01-01',
   `searchengine` varchar(20) NOT NULL DEFAULT '',
-  `count` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `count` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`date`,`searchengine`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of searchengine
@@ -6240,8 +6240,8 @@ DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE `sessions` (
   `sesskey` char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
   `expiry` int(10) unsigned NOT NULL DEFAULT '0',
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `adminid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `userid` int(10) unsigned NOT NULL DEFAULT '0',
+  `adminid` int(10) unsigned NOT NULL DEFAULT '0',
   `ip` char(15) NOT NULL DEFAULT '',
   `user_name` varchar(60) NOT NULL,
   `user_rank` tinyint(3) NOT NULL,
@@ -6266,7 +6266,7 @@ CREATE TABLE `sessions_data` (
   `data` longtext NOT NULL,
   PRIMARY KEY (`sesskey`),
   KEY `expiry` (`expiry`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of sessions_data
@@ -6291,7 +6291,7 @@ CREATE TABLE `shipping` (
   `shipping_order` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`shipping_id`),
   KEY `shipping_code` (`shipping_code`,`enabled`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of shipping
@@ -6309,13 +6309,13 @@ INSERT INTO `shipping` VALUES ('7', 'fpd', '运费到付', '所购商品到达�
 -- ----------------------------
 DROP TABLE IF EXISTS `shipping_area`;
 CREATE TABLE `shipping_area` (
-  `shipping_area_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `shipping_area_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `shipping_area_name` varchar(150) NOT NULL DEFAULT '',
   `shipping_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `configure` text NOT NULL,
   PRIMARY KEY (`shipping_area_id`),
   KEY `shipping_id` (`shipping_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of shipping_area
@@ -6330,8 +6330,8 @@ INSERT INTO `shipping_area` VALUES ('4', '运费到付', '7', 'a:2:{i:0;a:2:{s:4
 -- ----------------------------
 DROP TABLE IF EXISTS `shop_config`;
 CREATE TABLE `shop_config` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
   `code` varchar(30) NOT NULL DEFAULT '',
   `type` varchar(10) NOT NULL DEFAULT '',
   `store_range` varchar(255) NOT NULL DEFAULT '',
@@ -6341,7 +6341,7 @@ CREATE TABLE `shop_config` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=904 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=904 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of shop_config
@@ -6527,14 +6527,14 @@ INSERT INTO `shop_config` VALUES ('903', '2', 'message_check', 'select', '1,0', 
 -- ----------------------------
 DROP TABLE IF EXISTS `snatch_log`;
 CREATE TABLE `snatch_log` (
-  `log_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `snatch_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `bid_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   `bid_time` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`log_id`),
   KEY `snatch_id` (`snatch_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of snatch_log
@@ -6549,7 +6549,7 @@ DROP TABLE IF EXISTS `stats`;
 CREATE TABLE `stats` (
   `access_time` int(10) unsigned NOT NULL DEFAULT '0',
   `ip_address` varchar(15) NOT NULL DEFAULT '',
-  `visit_times` smallint(5) unsigned NOT NULL DEFAULT '1',
+  `visit_times` int(10) unsigned NOT NULL DEFAULT '1',
   `browser` varchar(60) NOT NULL DEFAULT '',
   `system` varchar(20) NOT NULL DEFAULT '',
   `language` varchar(20) NOT NULL DEFAULT '',
@@ -6558,7 +6558,7 @@ CREATE TABLE `stats` (
   `referer_path` varchar(200) NOT NULL DEFAULT '',
   `access_url` varchar(255) NOT NULL DEFAULT '',
   KEY `access_time` (`access_time`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of stats
@@ -6617,12 +6617,12 @@ INSERT INTO `stats` VALUES ('1245222219', '0.0.0.0', '500', 'FireFox 3.0.11', 'W
 -- ----------------------------
 DROP TABLE IF EXISTS `suppliers`;
 CREATE TABLE `suppliers` (
-  `suppliers_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `suppliers_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `suppliers_name` varchar(255) DEFAULT NULL,
   `suppliers_desc` mediumtext,
   `is_check` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`suppliers_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of suppliers
@@ -6635,14 +6635,14 @@ INSERT INTO `suppliers` VALUES ('2', '上海供货商', '上海供货商', '1');
 -- ----------------------------
 DROP TABLE IF EXISTS `tag`;
 CREATE TABLE `tag` (
-  `tag_id` mediumint(8) NOT NULL AUTO_INCREMENT,
-  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `tag_id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
   `tag_words` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`tag_id`),
   KEY `user_id` (`user_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of tag
@@ -6664,7 +6664,7 @@ CREATE TABLE `template` (
   `region` varchar(40) NOT NULL DEFAULT '',
   `library` varchar(40) NOT NULL DEFAULT '',
   `sort_order` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) unsigned NOT NULL DEFAULT '0',
   `number` tinyint(1) unsigned NOT NULL DEFAULT '5',
   `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `theme` varchar(60) NOT NULL DEFAULT '',
@@ -6672,7 +6672,7 @@ CREATE TABLE `template` (
   KEY `filename` (`filename`,`region`),
   KEY `theme` (`theme`),
   KEY `remarks` (`remarks`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of template
@@ -6720,7 +6720,7 @@ CREATE TABLE `topic` (
   `keywords` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   KEY `topic_id` (`topic_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of topic
@@ -6732,7 +6732,7 @@ INSERT INTO `topic` VALUES ('1', '夏新优惠大酬宾', '<p>夏新产品优惠
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
-  `user_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(60) NOT NULL DEFAULT '',
   `user_name` varchar(60) NOT NULL DEFAULT '',
   `password` varchar(32) NOT NULL DEFAULT '',
@@ -6744,17 +6744,17 @@ CREATE TABLE `users` (
   `frozen_money` decimal(10,2) NOT NULL DEFAULT '0.00',
   `pay_points` int(10) unsigned NOT NULL DEFAULT '0',
   `rank_points` int(10) unsigned NOT NULL DEFAULT '0',
-  `address_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `address_id` int(10) unsigned NOT NULL DEFAULT '0',
   `reg_time` int(10) unsigned NOT NULL DEFAULT '0',
   `last_login` int(11) unsigned NOT NULL DEFAULT '0',
   `last_time` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   `last_ip` varchar(15) NOT NULL DEFAULT '',
-  `visit_count` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `visit_count` int(10) unsigned NOT NULL DEFAULT '0',
   `user_rank` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `is_special` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `ec_salt` varchar(10) DEFAULT NULL,
   `salt` varchar(10) NOT NULL DEFAULT '0',
-  `parent_id` mediumint(9) NOT NULL DEFAULT '0',
+  `parent_id` int(10) NOT NULL DEFAULT '0',
   `flag` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `alias` varchar(60) NOT NULL,
   `msn` varchar(60) NOT NULL,
@@ -6771,7 +6771,7 @@ CREATE TABLE `users` (
   KEY `email` (`email`),
   KEY `parent_id` (`parent_id`),
   KEY `flag` (`flag`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of users
@@ -6786,8 +6786,8 @@ INSERT INTO `users` VALUES ('5', 'zuanshi@ecshop.com', 'zuanshi', '815a71fb33441
 -- ----------------------------
 DROP TABLE IF EXISTS `user_account`;
 CREATE TABLE `user_account` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `admin_user` varchar(255) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `add_time` int(10) NOT NULL DEFAULT '0',
@@ -6800,7 +6800,7 @@ CREATE TABLE `user_account` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `is_paid` (`is_paid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of user_account
@@ -6811,15 +6811,15 @@ CREATE TABLE `user_account` (
 -- ----------------------------
 DROP TABLE IF EXISTS `user_address`;
 CREATE TABLE `user_address` (
-  `address_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `address_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `address_name` varchar(50) NOT NULL DEFAULT '',
-  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `consignee` varchar(60) NOT NULL DEFAULT '',
   `email` varchar(60) NOT NULL DEFAULT '',
-  `country` smallint(5) NOT NULL DEFAULT '0',
-  `province` smallint(5) NOT NULL DEFAULT '0',
-  `city` smallint(5) NOT NULL DEFAULT '0',
-  `district` smallint(5) NOT NULL DEFAULT '0',
+  `country` int(10) NOT NULL DEFAULT '0',
+  `province` int(10) NOT NULL DEFAULT '0',
+  `city` int(10) NOT NULL DEFAULT '0',
+  `district` int(10) NOT NULL DEFAULT '0',
   `address` varchar(120) NOT NULL DEFAULT '',
   `zipcode` varchar(60) NOT NULL DEFAULT '',
   `tel` varchar(60) NOT NULL DEFAULT '',
@@ -6828,7 +6828,7 @@ CREATE TABLE `user_address` (
   `best_time` varchar(120) NOT NULL DEFAULT '',
   PRIMARY KEY (`address_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of user_address
@@ -6841,16 +6841,16 @@ INSERT INTO `user_address` VALUES ('2', '', '3', '叶先生', 'text@ecshop.com',
 -- ----------------------------
 DROP TABLE IF EXISTS `user_bonus`;
 CREATE TABLE `user_bonus` (
-  `bonus_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `bonus_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `bonus_type_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `bonus_sn` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `used_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `order_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `order_id` int(10) unsigned NOT NULL DEFAULT '0',
   `emailed` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`bonus_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of user_bonus
@@ -6880,14 +6880,14 @@ INSERT INTO `user_bonus` VALUES ('31', '3', '0', '1', '0', '0', '0');
 -- ----------------------------
 DROP TABLE IF EXISTS `user_feed`;
 CREATE TABLE `user_feed` (
-  `feed_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `value_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `feed_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `value_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
   `feed_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `is_feed` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`feed_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of user_feed
@@ -6906,7 +6906,7 @@ CREATE TABLE `user_rank` (
   `show_price` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `special_rank` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`rank_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of user_rank
@@ -6920,8 +6920,8 @@ INSERT INTO `user_rank` VALUES ('3', '代销用户', '0', '0', '90', '0', '1');
 -- ----------------------------
 DROP TABLE IF EXISTS `virtual_card`;
 CREATE TABLE `virtual_card` (
-  `card_id` mediumint(8) NOT NULL AUTO_INCREMENT,
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `card_id` int(10) NOT NULL AUTO_INCREMENT,
+  `goods_id` int(10) unsigned NOT NULL DEFAULT '0',
   `card_sn` varchar(60) NOT NULL DEFAULT '',
   `card_password` varchar(60) NOT NULL DEFAULT '',
   `add_date` int(11) NOT NULL DEFAULT '0',
@@ -6933,7 +6933,7 @@ CREATE TABLE `virtual_card` (
   KEY `goods_id` (`goods_id`),
   KEY `car_sn` (`card_sn`),
   KEY `is_saled` (`is_saled`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of virtual_card
@@ -6960,11 +6960,11 @@ INSERT INTO `virtual_card` VALUES ('15', '30', 'QFtbRhRaQRZVEw', 'Rl1aQRRaQRZUEl
 DROP TABLE IF EXISTS `volume_price`;
 CREATE TABLE `volume_price` (
   `price_type` tinyint(1) unsigned NOT NULL,
-  `goods_id` mediumint(8) unsigned NOT NULL,
-  `volume_number` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `goods_id` int(10) unsigned NOT NULL,
+  `volume_number` int(10) unsigned NOT NULL DEFAULT '0',
   `volume_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`price_type`,`goods_id`,`volume_number`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of volume_price
@@ -6972,22 +6972,22 @@ CREATE TABLE `volume_price` (
 INSERT INTO `volume_price` VALUES ('1', '1', '5', '1366.00');
 INSERT INTO `volume_price` VALUES ('1', '9', '3', '2200.00');
 INSERT INTO `volume_price` VALUES ('1', '9', '5', '2100.00');
-INSERT INTO `volume_price` VALUES ('1', '13', '5', '1150.00');
 INSERT INTO `volume_price` VALUES ('1', '13', '3', '1200.00');
+INSERT INTO `volume_price` VALUES ('1', '13', '5', '1150.00');
 
 -- ----------------------------
 -- Table structure for vote
 -- ----------------------------
 DROP TABLE IF EXISTS `vote`;
 CREATE TABLE `vote` (
-  `vote_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `vote_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `vote_name` varchar(250) NOT NULL DEFAULT '',
   `start_time` int(11) unsigned NOT NULL DEFAULT '0',
   `end_time` int(11) unsigned NOT NULL DEFAULT '0',
   `can_multi` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `vote_count` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`vote_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of vote
@@ -6999,13 +6999,13 @@ INSERT INTO `vote` VALUES ('1', '您从哪里知道我们的网站', '1213200000
 -- ----------------------------
 DROP TABLE IF EXISTS `vote_log`;
 CREATE TABLE `vote_log` (
-  `log_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `vote_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `vote_id` int(10) unsigned NOT NULL DEFAULT '0',
   `ip_address` varchar(15) NOT NULL DEFAULT '',
   `vote_time` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`log_id`),
   KEY `vote_id` (`vote_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of vote_log
@@ -7016,14 +7016,14 @@ CREATE TABLE `vote_log` (
 -- ----------------------------
 DROP TABLE IF EXISTS `vote_option`;
 CREATE TABLE `vote_option` (
-  `option_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `vote_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `option_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `vote_id` int(10) unsigned NOT NULL DEFAULT '0',
   `option_name` varchar(250) NOT NULL DEFAULT '',
   `option_count` int(8) unsigned NOT NULL DEFAULT '0',
   `option_order` tinyint(3) unsigned NOT NULL DEFAULT '100',
   PRIMARY KEY (`option_id`),
   KEY `vote_id` (`vote_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of vote_option
@@ -7037,15 +7037,15 @@ INSERT INTO `vote_option` VALUES ('3', '1', '友情链接', '0', '100');
 -- ----------------------------
 DROP TABLE IF EXISTS `wholesale`;
 CREATE TABLE `wholesale` (
-  `act_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `goods_id` mediumint(8) unsigned NOT NULL,
+  `act_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `goods_id` int(10) unsigned NOT NULL,
   `goods_name` varchar(255) NOT NULL,
   `rank_ids` varchar(255) NOT NULL,
   `prices` text NOT NULL,
   `enabled` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`act_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of wholesale
