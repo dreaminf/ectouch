@@ -175,7 +175,7 @@ function session($name, $value = '')
 {
     if (is_null($name)) {
         // 清除
-        unset($_SESSION);
+        app('session')->destroy();
     } elseif ('' === $value) {
         // 判断或获取
         return 0 === strpos($name, '?') ? app('session')->has(substr($name, 1)) : app('session')->get($name);

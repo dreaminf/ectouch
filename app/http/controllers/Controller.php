@@ -70,8 +70,7 @@ class Controller extends BaseController
         }
 
         if (!defined('INIT_NO_USERS')) {
-            $this->sess = $GLOBALS['sess'] = new Session($this->db, $this->ecs->table('sessions'), $this->ecs->table('sessions_data'));
-            define('SESS_ID', $this->sess->get_session_id());
+            define('SESS_ID', 0); // TODO $this->sess->get_session_id());
         }
 
         if (isset($_SERVER['PHP_SELF'])) {

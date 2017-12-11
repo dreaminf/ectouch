@@ -4,9 +4,6 @@ namespace app\http\controllers;
 
 use app\libraries\rss\RSSBuilder;
 
-define('INIT_NO_USERS', true);
-define('INIT_NO_SMARTY', true);
-
 /**
  * RSS Feed 生成程序
  * Class FeedController

@@ -2,12 +2,10 @@
 
 namespace app\modules\admin\controllers;
 
-use yii\helpers\Url;
 use app\libraries\Shop;
 use app\libraries\Error;
 use app\libraries\Mysql;
 use app\libraries\Captcha;
-use app\libraries\Session;
 use app\libraries\Template;
 use yii\web\Controller as BaseController;
 
@@ -57,9 +55,6 @@ class Controller extends BaseController
 
         /* 载入系统参数 */
         $this->_CFG = $GLOBALS['_CFG'] = load_config();
-
-        /* 初始化session */
-        $this->sess = $GLOBALS['sess'] = new Session($this->db, $this->ecs->table('sessions'), $this->ecs->table('sessions_data'), 'ECSCP_ID');
 
         // TODO : 登录部分准备拿出去做，到时候把以下操作一起挪过去
         if ($_REQUEST['act'] == 'captcha') {
@@ -150,7 +145,6 @@ class Controller extends BaseController
      */
     public function redirect($url, $statusCode = 302)
     {
-        $url = ADMIN_PATH . '/' . $url;
-        return parent::redirect($url, $statusCode);
+        return parent::redirect('/' . ADMIN_PATH . '/' . $url, $statusCode);
     }
 }

@@ -4,9 +4,6 @@ namespace app\http\controllers;
 
 use app\libraries\Json;
 
-define('INIT_NO_USERS', true);
-define('INIT_NO_SMARTY', true);
-
 /**
  * Class RegionController
  * @package app\http\controllers

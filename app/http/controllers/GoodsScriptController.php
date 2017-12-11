@@ -2,8 +2,6 @@
 
 namespace app\http\controllers;
 
-define('INIT_NO_USERS', true);
-
 /**
  * 生成商品列表
  * Class GoodsScriptController

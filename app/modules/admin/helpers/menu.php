@@ -120,9 +120,9 @@ $modules['09_priv_admin']['admin_role'] = 'role.php?act=list';
 $modules['01_system']['mail_template_manage'] = 'mail_template.php?act=list';
 
 
-$modules['11_backup']['02_db_manage'] = 'database.php?act=backup';
-$modules['11_backup']['03_db_optimize'] = 'database.php?act=optimize';
-$modules['11_backup']['04_sql_query'] = 'sql.php?act=main';
+//$modules['11_backup']['02_db_manage'] = 'database.php?act=backup';
+//$modules['11_backup']['03_db_optimize'] = 'database.php?act=optimize';
+//$modules['11_backup']['04_sql_query'] = 'sql.php?act=main';
 //$modules['11_backup']['05_synchronous']             = 'integrate.php?act=sync';
 //$modules['11_backup']['convert'] = 'convert.php?act=main';
 

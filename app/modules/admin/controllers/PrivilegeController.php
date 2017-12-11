@@ -2,7 +2,6 @@
 
 namespace app\modules\admin\controllers;
 
-
 use app\libraries\Captcha;
 use app\libraries\Exchange;
 
@@ -382,7 +381,7 @@ class PrivilegeController extends Controller
 
             /* 如果修改了密码，则需要将session中该管理员的数据清空 */
             if ($pwd_modified && $_REQUEST['act'] == 'update_self') {
-                $sess->delete_spec_admin_session(session('admin_id'));
+                $this->delete_spec_admin_session(session('admin_id'));
                 $msg = $GLOBALS['_LANG']['edit_password_succeed'];
             } else {
                 $msg = $GLOBALS['_LANG']['edit_profile_succeed'];
@@ -586,7 +585,7 @@ class PrivilegeController extends Controller
             }
 
             if ($exc->drop($id)) {
-                $sess->delete_spec_admin_session($id); // 删除session中该管理员的记录
+                $this->delete_spec_admin_session($id); // 删除session中该管理员的记录
 
                 admin_log(addslashes($admin_name), 'remove', 'privilege');
                 clear_cache_files();
@@ -614,20 +613,21 @@ class PrivilegeController extends Controller
 
         return $list;
     }
+    
+    private function delete_spec_admin_session($adminid)
+    {
+        if (!empty($GLOBALS['_SESSION']['admin_id']) && $adminid) {
+            return $this->db->query('DELETE FROM ' . $this->session_table . " WHERE adminid = '$adminid'"); // TODO
+        } else {
+            return false;
+        }
+    }
 
     /* 清除购物车中过期的数据 */
     private function clear_cart()
     {
-        /* 取得有效的session */
-        $sql = "SELECT DISTINCT session_id " .
-            "FROM " . $GLOBALS['ecs']->table('cart') . " AS c, " .
-            $GLOBALS['ecs']->table('sessions') . " AS s " .
-            "WHERE c.session_id = s.sesskey ";
-        $valid_sess = $GLOBALS['db']->getCol($sql);
-
         // 删除cart中无效的数据
-        $sql = "DELETE FROM " . $GLOBALS['ecs']->table('cart') .
-            " WHERE session_id NOT " . db_create_in($valid_sess);
+        $sql = "DELETE FROM " . $GLOBALS['ecs']->table('cart') . " WHERE user_id <= 0";
         $GLOBALS['db']->query($sql);
     }
 

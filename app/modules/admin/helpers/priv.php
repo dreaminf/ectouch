@@ -99,7 +99,6 @@ $purview['report_sell'] = 'sale_order_stats';
 $purview['sale_list'] = 'sale_order_stats';
 $purview['sell_stats'] = 'sale_order_stats';
 
-
 //模板管理
 $purview['02_template_select'] = 'template_select';
 $purview['03_template_setup'] = 'template_setup';

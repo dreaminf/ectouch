@@ -27,7 +27,7 @@ class CloudController extends Controller
         $data['mysql_ver'] = $this->db->version();
         $data['shop_url'] = urlencode($this->ecs->url());
         $data['admin_url'] = urlencode($this->ecs->url() . ADMIN_PATH);
-        $data['sess_id'] = $GLOBALS['sess']->get_session_id();
+        $data['sess_id'] = ''; // $GLOBALS['sess']->get_session_id(); // TODO
         $data['stamp'] = mktime();
         $data['ent_id'] = $GLOBALS['_CFG']['ent_id'];
         $data['ent_ac'] = $GLOBALS['_CFG']['ent_ac'];

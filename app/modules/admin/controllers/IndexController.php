@@ -10,6 +10,7 @@ use app\libraries\Image;
  */
 class IndexController extends Controller
 {
+
     public function actionIndex()
     {
         load_helper('order');
@@ -18,6 +19,12 @@ class IndexController extends Controller
          * 控制台首页
          */
         if ($_REQUEST['act'] == 'list') {
+            // 强制访问index.php，避免url异常
+            $absolute_url = app('request')->getAbsoluteUrl();
+            if (stripos($absolute_url, 'index.php') === false) {
+                return $this->redirect('index.php');
+            }
+
             load_helper(['menu', 'priv'], 'admin');
 
             $modules = $GLOBALS['modules'];
@@ -187,14 +194,9 @@ class IndexController extends Controller
                 }
             }
 
-            $result = file_mode_info(storage_path('temp'));
+            $result = file_mode_info(storage_path('framework/temp'));
             if ($result < 2) {
                 $warning[] = sprintf($GLOBALS['_LANG']['not_writable'], 'temp', $GLOBALS['_LANG']['tpl_cannt_write']);
-            }
-
-            $result = file_mode_info(storage_path('temp/backup'));
-            if ($result < 2) {
-                $warning[] = sprintf($GLOBALS['_LANG']['not_writable'], 'backup', $GLOBALS['_LANG']['tpl_backup_cannt_write']);
             }
 
             if (!is_writeable(public_path(DATA_DIR . '/order_print.html'))) {
@@ -300,7 +302,7 @@ class IndexController extends Controller
             $today_visit = $this->db->getOne($sql);
             $this->smarty->assign('today_visit', $today_visit);
 
-            $online_users = $this->sess->get_users_count();
+            $online_users = 0; // $this->sess->get_users_count(); // TODO
             $this->smarty->assign('online_users', $online_users);
 
             /* 鏈€杩戝弽棣 */
