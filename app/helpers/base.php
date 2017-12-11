@@ -681,7 +681,7 @@ function ecs_geoip($ip)
 {
     static $fp = null, $offset = [], $index = null;
 
-    $ip = gethostbyname($ip);
+    $ip = gethostbyname(($ip === '::1' ? '127.0.0.1' : $ip));
     $ipdot = explode('.', $ip);
     $ip = pack('N', ip2long($ip));
 
