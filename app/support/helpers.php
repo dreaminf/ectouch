@@ -214,11 +214,14 @@ function cookie($name, $value = '', $option = null)
         return app('response')->cookies->remove($name);
     } else {
         // 设置
-        return app('response')->cookies->add(new \yii\web\Cookie([
+        $options = [
             'name' => $name,
             'value' => $value,
-            'expire' => local_gettime() + $option * 60
-        ]));
+        ];
+        if (!is_null($option)) {
+            $options['expire'] = local_gettime() + $option * 60;
+        }
+        return app('response')->cookies->add(new \yii\web\Cookie($options));
     }
 }
 
