@@ -6,8 +6,6 @@ namespace app\plugins\shipping;
  * 到付运费插件 FPD(freight payable at destination)
  */
 
-load_lang('shipping/fpd');
-
 /* 模块的基本信息 */
 if (isset($set_modules) && $set_modules == true) {
     $i = (isset($modules)) ? count($modules) : 0;
@@ -24,10 +22,10 @@ if (isset($set_modules) && $set_modules == true) {
     $modules[$i]['cod']     = false;
 
     /* 插件的作者 */
-    $modules[$i]['author']  = 'ECSHOP TEAM';
+    $modules[$i]['author']  = 'ECTouch Team';
 
     /* 插件作者的官方网站 */
-    $modules[$i]['website'] = 'http://www.ecshop.com';
+    $modules[$i]['website'] = 'http://www.ectouch.cn';
 
     /* 配送接口需要的参数 */
     $modules[$i]['configure'] = [];

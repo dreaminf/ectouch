@@ -19,7 +19,7 @@ class ShippingController extends Controller
          * 配送方式列表
          */
         if ($_REQUEST['act'] == 'list') {
-            $modules = read_modules(app_path('Plugins/Shipping'));
+            $modules = read_modules(app_path('plugins/shipping'));
 
             for ($i = 0; $i < count($modules); $i++) {
                 $code = strtolower($modules[$i]['code']);

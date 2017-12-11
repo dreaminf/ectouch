@@ -2,8 +2,6 @@
 
 namespace app\plugins\payment;
 
-load_lang('payment/cod');
-
 /* 模块的基本信息 */
 if (isset($set_modules) && $set_modules == true) {
     $i = isset($modules) ? count($modules) : 0;
@@ -24,10 +22,10 @@ if (isset($set_modules) && $set_modules == true) {
     $modules[$i]['pay_fee'] = '0';
 
     /* 作者 */
-    $modules[$i]['author']  = 'ECSHOP TEAM';
+    $modules[$i]['author']  = 'ECTouch Team';
 
     /* 网址 */
-    $modules[$i]['website'] = 'http://www.ecshop.com';
+    $modules[$i]['website'] = 'http://www.ectouch.cn';
 
     /* 版本号 */
     $modules[$i]['version'] = '1.0.0';

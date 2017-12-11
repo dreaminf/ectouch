@@ -28,9 +28,11 @@ class PaymentController extends Controller
             }
 
             /* 取得插件文件中的支付方式 */
-            $modules = read_modules(app_path('Plugins/Payment'));
+            $modules = read_modules(app_path('plugins/payment'));
             for ($i = 0; $i < count($modules); $i++) {
                 $code = strtolower($modules[$i]['code']);
+                load_lang('payment/' . $code);
+
                 $modules[$i]['pay_code'] = $modules[$i]['code'];
                 /* 如果数据库中有，取数据库中的名称和描述 */
                 if (isset($pay_list[$code])) {

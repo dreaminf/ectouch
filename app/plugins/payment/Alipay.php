@@ -2,8 +2,6 @@
 
 namespace app\plugins\payment;
 
-load_lang('payment/alipay');
-
 /* 模块的基本信息 */
 if (isset($set_modules) && $set_modules == true) {
     $i = isset($modules) ? count($modules) : 0;
@@ -21,7 +19,7 @@ if (isset($set_modules) && $set_modules == true) {
     $modules[$i]['is_online'] = '1';
 
     /* 作者 */
-    $modules[$i]['author'] = 'ECSHOP TEAM';
+    $modules[$i]['author'] = 'ECTouch Team';
 
     /* 网址 */
     $modules[$i]['website'] = 'http://www.alipay.com';

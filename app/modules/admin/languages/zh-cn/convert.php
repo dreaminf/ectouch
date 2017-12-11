@@ -8,7 +8,7 @@ $_LANG['confirm_convert'] = '注意：执行转换程序将会使现有数据丢
 $_LANG['backup_data'] = '如果现有数据对您可能还有价值，请您先做好备份。';
 $_LANG['backup'] = '现在就去备份';
 $_LANG['select_system'] = '请选择您要转换的系统：';
-$_LANG['note_select_system'] = '（如果您的系统不在左边的列表中，您可以到<a href="http://www.ecshop.com" target="_blank"><strong>我们的网站</strong></a>寻求帮助）';
+$_LANG['note_select_system'] = '（如果您的系统不在左边的列表中，您可以到<a href="http://www.ectouch.cn" target="_blank"><strong>我们的网站</strong></a>寻求帮助）';
 $_LANG['select_charset'] = '请选择您要转换的系统使用的字符集：';
 $_LANG['note_select_charset'] = '（如果你的系统使用的不是 UTF-8 字符集，转换可能需要较长时间）';
 $_LANG['dir_notes'] = '请注意原商城的根目录路径请使用相对于admin目录的路径。<br />例如：原商城的目录在根目录下的shop，而ecshop放在根目录下，则该路径为 ../shop';
