@@ -69,16 +69,7 @@ class IndexController extends Controller
                 }
             }
 
-            $this->smarty->assign('menus', $menus);
-
-            return $this->smarty->display('index.htm');
-        }
-
-        /**
-         * 头部导航
-         */
-        if ($_REQUEST['act'] == 'top') {
-            // 鑾峰緱绠＄悊鍛樿?缃?殑鑿滃崟
+            // 管理自定义菜单
             $lst = [];
             $nav = $this->db->getOne('SELECT nav_list FROM ' . $this->ecs->table('admin_user') . " WHERE user_id = '" . session('admin_id') . "'");
 
@@ -94,9 +85,11 @@ class IndexController extends Controller
             $this->smarty->assign('send_mail_on', $GLOBALS['_CFG']['send_mail_on']);
             $this->smarty->assign('nav_list', $lst);
             $this->smarty->assign('admin_id', session('admin_id'));
+            $this->smarty->assign('admin_name', session('admin_name'));
             $this->smarty->assign('certi', $GLOBALS['_CFG']['certi']);
+            $this->smarty->assign('menus', $menus);
 
-            return $this->smarty->display('top.htm');
+            return $this->smarty->display('index.htm');
         }
 
         /**

@@ -32,7 +32,7 @@ class SearchengineStatsController extends Controller
             /* --综合流量
             /* ------------------------------------- */
             $max = 0;
-            $general_xml = "<chart caption='{$GLOBALS['_LANG'][tab_keywords]}' shownames='1' showvalues='0' decimals='0' numberPrefix='' outCnvBaseFontSize='12' baseFontSize='12'>";
+            $general_xml = "<chart caption='{$GLOBALS['_LANG']['tab_keywords']}' shownames='1' showvalues='0' decimals='0' numberPrefix='' outCnvBaseFontSize='12' baseFontSize='12'>";
             $sql = "SELECT keyword, count, searchengine " .
                 " FROM " . $this->ecs->table('keywords') .
                 " WHERE date >= '$start_date' AND date <= '" . $end_date . "'";

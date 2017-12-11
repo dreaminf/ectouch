@@ -75,7 +75,7 @@ class FlowStatsController extends Controller
                 $key = 0;
 
                 foreach ($res as $val) {
-                    $val['access_date'] = gmdate('m-d', $val['access_time'] + $GLOBALS['_CFG']['DEFAULT_TIMEZONE'] * 3600);
+                    $val['access_date'] = gmdate('m-d', $val['access_time'] + $GLOBALS['_CFG']['timezone'] * 3600);
                     $general_xml .= "<set name='$val[access_date]' value='$val[access_count]' color='" . chart_color($key) . "' />";
                     if ($val['access_count'] > $max) {
                         $max = $val['access_count'];
@@ -100,7 +100,7 @@ class FlowStatsController extends Controller
                     $lastDay = 0;
 
                     foreach ($res as $val) {
-                        $day = gmdate('d', $val['access_time'] + C('DEFAULT_TIMEZONE') * 3600);
+                        $day = gmdate('d', $val['access_time'] + $GLOBALS['_CFG']['timezone'] * 3600);
 
                         if ($lastDay == 0) {
                             $time_span = (($day - 1) - $lastDay);
@@ -196,7 +196,7 @@ class FlowStatsController extends Controller
              * 来源网站
              */
             if (!$is_multi) {
-                $from_xml = "<graph caption='{$GLOBALS['_LANG'][from_stats]}' shownames='1' showvalues='1' decimalPrecision='2' outCnvBaseFontSize='12' baseFontSize='12' pieYScale='45' pieBorderAlpha='40' pieFillAlpha='70' pieSliceDepth='15' pieRadius='100' bgAngle='460'>";
+                $from_xml = "<graph caption='{$GLOBALS['_LANG']['from_stats']}' shownames='1' showvalues='1' decimalPrecision='2' outCnvBaseFontSize='12' baseFontSize='12' pieYScale='45' pieBorderAlpha='40' pieFillAlpha='70' pieSliceDepth='15' pieRadius='100' bgAngle='460'>";
 
                 $sql = "SELECT COUNT(*) AS access_count, referer_domain FROM " . $this->ecs->table('stats') .
                     " WHERE access_time >= '$start_date' AND access_time <= " . ($end_date + 86400) .
@@ -283,8 +283,8 @@ class FlowStatsController extends Controller
             $this->smarty->assign('start_date_arr', $start_date_arr);
 
             if (!$is_multi) {
-                $filename = gmdate($GLOBALS['_CFG']['date_format'], $start_date + C('DEFAULT_TIMEZONE') * 3600) . '_' .
-                    gmdate($GLOBALS['_CFG']['date_format'], $end_date + C('DEFAULT_TIMEZONE') * 3600);
+                $filename = gmdate($GLOBALS['_CFG']['date_format'], $start_date + $GLOBALS['_CFG']['timezone'] * 3600) . '_' .
+                    gmdate($GLOBALS['_CFG']['date_format'], $end_date + $GLOBALS['_CFG']['timezone'] * 3600);
 
                 $this->smarty->assign('action_link', ['text' => $GLOBALS['_LANG']['down_flow_stats'],
                     'href' => 'flow_stats.php?act=download&filename=' . $filename .
@@ -315,7 +315,7 @@ class FlowStatsController extends Controller
             $data .= $GLOBALS['_LANG']['access_count'] . "\t\n";
 
             foreach ($res as $val) {
-                $val['access_date'] = gmdate('m-d', $val['access_time'] + C('DEFAULT_TIMEZONE') * 3600);
+                $val['access_date'] = gmdate('m-d', $val['access_time'] + $GLOBALS['_CFG']['timezone'] * 3600);
                 $data .= $val['access_date'] . "\t";
                 $data .= $val['access_count'] . "\t\n";
             }

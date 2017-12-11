@@ -89,7 +89,7 @@ class UsersOrderController extends Controller
      * @param   bool  $is_pagination  是否分页
      * @return  array   取得会员订单量/购物额排名统计数据
      */
-    private function get_user_orderinfo($is_pagination = true)
+    private function get_user_orderinfo($is_pagination = true, $start_date = 0, $end_date = 0)
     {
         $filter['start_date'] = empty($_REQUEST['start_date']) ? $start_date : local_strtotime($_REQUEST['start_date']);
         $filter['end_date'] = empty($_REQUEST['end_date']) ? $end_date : local_strtotime($_REQUEST['end_date']);
