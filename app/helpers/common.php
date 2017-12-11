@@ -33,6 +33,22 @@ function db_create_in($item_list, $field_name = '')
 }
 
 /**
+ * 验证输入的手机号是否合法
+ *
+ * @param $mobile
+ * @return bool
+ */
+function is_mobile($mobile)
+{
+    $chars = "/^1(3[0-9]|4[0-9]|5[0-35-9]|6[6]|7[01345678]|8[0-9]|9[89])\d{8}\$/";
+    if (preg_match($chars, $mobile)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
  * 验证输入的邮件地址是否合法
  *
  * @access  public
