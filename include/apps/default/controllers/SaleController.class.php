@@ -652,6 +652,10 @@ class SaleController extends CommonController {
         if(empty($this->user_id)){  
             show_message('遇到未知错误，请电话联系管理员告知请况，谢谢配合！！！');
         }
+        //判断重复开店
+        if($this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id']))->count() > 0){
+            show_message('您已提交申请，请等待管理员审核','返回个人中心',url('user/index'));
+        }
         // 是否选择商品
         if($this->model->table('drp_shop')->where(array("user_id"=>$_SESSION['user_id'],'cat_id'=>''))->count() > 0){
             redirect(url('sale/sale_set_category'));
