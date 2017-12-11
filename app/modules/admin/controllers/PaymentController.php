@@ -19,7 +19,7 @@ class PaymentController extends Controller
          * 支付方式列表 ?act=list
          */
         if ($_REQUEST['act'] == 'list') {
-            /* 查询数据库中启用的支付方式 */
+            // 查询数据库中启用的支付方式 
             $pay_list = [];
             $sql = "SELECT * FROM " . $this->ecs->table('payment') . " WHERE enabled = '1' ORDER BY pay_order";
             $res = $this->db->query($sql);
@@ -27,14 +27,14 @@ class PaymentController extends Controller
                 $pay_list[$row['pay_code']] = $row;
             }
 
-            /* 取得插件文件中的支付方式 */
+            // 取得插件文件中的支付方式 
             $modules = read_modules(app_path('plugins/payment'));
             for ($i = 0; $i < count($modules); $i++) {
                 $code = strtolower($modules[$i]['code']);
                 load_lang('payment/' . $code);
 
                 $modules[$i]['pay_code'] = $modules[$i]['code'];
-                /* 如果数据库中有，取数据库中的名称和描述 */
+                // 如果数据库中有，取数据库中的名称和描述 
                 if (isset($pay_list[$code])) {
                     $modules[$i]['name'] = $pay_list[$code]['pay_name'];
                     $modules[$i]['pay_fee'] = $pay_list[$code]['pay_fee'];
@@ -65,12 +65,12 @@ class PaymentController extends Controller
         if ($_REQUEST['act'] == 'install') {
             admin_priv('payment');
 
-            /* 取相应插件信息 */
+            // 取相应插件信息 
             $set_modules = true;
             include_once(ROOT_PATH . 'includes/modules/payment/' . $_REQUEST['code'] . '.php');
 
             $data = $modules[0];
-            /* 对支付费用判断。如果data['pay_fee']为false无支付费用，为空则说明以配送有关，其它可以修改 */
+            // 对支付费用判断。如果data['pay_fee']为false无支付费用，为空则说明以配送有关，其它可以修改 
             if (isset($data['pay_fee'])) {
                 $data['pay_fee'] = trim($data['pay_fee']);
             } else {
@@ -107,7 +107,7 @@ class PaymentController extends Controller
 
             $code = $_REQUEST['code'];
 
-            /* 取相应插件信息 */
+            // 取相应插件信息 
             $set_modules = true;
             include_once(ROOT_PATH . 'includes/modules/payment/' . $code . '.php');
             $data = $modules[0]['config'];
@@ -150,7 +150,7 @@ class PaymentController extends Controller
         if ($_REQUEST['act'] == 'edit') {
             admin_priv('payment');
 
-            /* 查询该支付方式内容 */
+            // 查询该支付方式内容 
             if (isset($_REQUEST['code'])) {
                 $_REQUEST['code'] = trim($_REQUEST['code']);
             } else {
@@ -164,22 +164,22 @@ class PaymentController extends Controller
                 return sys_msg($GLOBALS['_LANG']['payment_not_available'], 0, $links);
             }
 
-            /* 取相应插件信息 */
+            // 取相应插件信息 
             $set_modules = true;
             include_once(ROOT_PATH . 'includes/modules/payment/' . $_REQUEST['code'] . '.php');
             $data = $modules[0];
 
-            /* 取得配置信息 */
+            // 取得配置信息 
             if (is_string($pay['pay_config'])) {
                 $store = unserialize($pay['pay_config']);
-                /* 取出已经设置属性的code */
+                // 取出已经设置属性的code 
                 $code_list = [];
                 foreach ($store as $key => $value) {
                     $code_list[$value['name']] = $value['value'];
                 }
                 $pay['pay_config'] = [];
 
-                /* 循环插件中所有属性 */
+                // 循环插件中所有属性 
                 foreach ($data['config'] as $key => $value) {
                     $pay['pay_config'][$key]['desc'] = (isset($GLOBALS['_LANG'][$value['name'] . '_desc'])) ? $GLOBALS['_LANG'][$value['name'] . '_desc'] : '';
                     $pay['pay_config'][$key]['label'] = $GLOBALS['_LANG'][$value['name']];
@@ -199,7 +199,7 @@ class PaymentController extends Controller
                 }
             }
 
-            /* 如果以前没设置支付费用，编辑时补上 */
+            // 如果以前没设置支付费用，编辑时补上 
             if (!isset($pay['pay_fee'])) {
                 if (isset($data['pay_fee'])) {
                     $pay['pay_fee'] = $data['pay_fee'];
@@ -219,7 +219,7 @@ class PaymentController extends Controller
         elseif (isset($_POST['Submit'])) {
             admin_priv('payment');
 
-            /* 检查输入 */
+            // 检查输入 
             if (empty($_POST['pay_name'])) {
                 return sys_msg($GLOBALS['_LANG']['payment_name'] . $GLOBALS['_LANG']['empty']);
             }
@@ -230,7 +230,7 @@ class PaymentController extends Controller
                 return sys_msg($GLOBALS['_LANG']['payment_name'] . $GLOBALS['_LANG']['repeat'], 1);
             }
 
-            /* 取得配置信息 */
+            // 取得配置信息 
             $pay_config = [];
             if (isset($_POST['cfg_value']) && is_array($_POST['cfg_value'])) {
                 for ($i = 0; $i < count($_POST['cfg_value']); $i++) {
@@ -241,13 +241,13 @@ class PaymentController extends Controller
                 }
             }
             $pay_config = serialize($pay_config);
-            /* 取得和验证支付手续费 */
+            // 取得和验证支付手续费 
             $pay_fee = empty($_POST['pay_fee']) ? 0 : $_POST['pay_fee'];
 
-            /* 检查是编辑还是安装 */
+            // 检查是编辑还是安装 
             $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'payment.php?act=list'];
             if ($_POST['pay_id']) {
-                /* 编辑 */
+                // 编辑 
                 $sql = "UPDATE " . $this->ecs->table('payment') .
                     "SET pay_name = '$_POST[pay_name]'," .
                     "    pay_desc = '$_POST[pay_desc]'," .
@@ -256,15 +256,15 @@ class PaymentController extends Controller
                     "WHERE pay_code = '$_POST[pay_code]' LIMIT 1";
                 $this->db->query($sql);
 
-                /* 记录日志 */
+                // 记录日志 
                 admin_log($_POST['pay_name'], 'edit', 'payment');
 
                 return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $link);
             } else {
-                /* 安装，检查该支付方式是否曾经安装过 */
+                // 安装，检查该支付方式是否曾经安装过 
                 $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('payment') . " WHERE pay_code = '$_REQUEST[pay_code]'";
                 if ($this->db->getOne($sql) > 0) {
-                    /* 该支付方式已经安装过, 将该支付方式的状态设置为 enable */
+                    // 该支付方式已经安装过, 将该支付方式的状态设置为 enable 
                     $sql = "UPDATE " . $this->ecs->table('payment') .
                         "SET pay_name = '$_POST[pay_name]'," .
                         "    pay_desc = '$_POST[pay_desc]'," .
@@ -274,13 +274,13 @@ class PaymentController extends Controller
                         "WHERE pay_code = '$_POST[pay_code]' LIMIT 1";
                     $this->db->query($sql);
                 } else {
-                    /* 该支付方式没有安装过, 将该支付方式的信息添加到数据库 */
+                    // 该支付方式没有安装过, 将该支付方式的信息添加到数据库 
                     $sql = "INSERT INTO " . $this->ecs->table('payment') . " (pay_code, pay_name, pay_desc, pay_config, is_cod, pay_fee, enabled, is_online)" .
                         "VALUES ('$_POST[pay_code]', '$_POST[pay_name]', '$_POST[pay_desc]', '$pay_config', '$_POST[is_cod]', '$pay_fee', 1, '$_POST[is_online]')";
                     $this->db->query($sql);
                 }
 
-                /* 记录日志 */
+                // 记录日志 
                 admin_log($_POST['pay_name'], 'install', 'payment');
 
                 return sys_msg($GLOBALS['_LANG']['install_ok'], 0, $link);
@@ -293,13 +293,13 @@ class PaymentController extends Controller
         if ($_REQUEST['act'] == 'uninstall') {
             admin_priv('payment');
 
-            /* 把 enabled 设为 0 */
+            // 把 enabled 设为 0 
             $sql = "UPDATE " . $this->ecs->table('payment') .
                 "SET enabled = '0' " .
                 "WHERE pay_code = '$_REQUEST[code]' LIMIT 1";
             $this->db->query($sql);
 
-            /* 记录日志 */
+            // 记录日志 
             admin_log($_REQUEST['code'], 'uninstall', 'payment');
 
             $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'payment.php?act=list'];
@@ -310,24 +310,24 @@ class PaymentController extends Controller
          * 修改支付方式名称
          */
         if ($_REQUEST['act'] == 'edit_name') {
-            /* 检查权限 */
+            // 检查权限 
             check_authz_json('payment');
 
-            /* 取得参数 */
+            // 取得参数 
             $code = json_str_iconv(trim($_POST['id']));
             $name = json_str_iconv(trim($_POST['val']));
 
-            /* 检查名称是否为空 */
+            // 检查名称是否为空 
             if (empty($name)) {
                 return make_json_error($GLOBALS['_LANG']['name_is_null']);
             }
 
-            /* 检查名称是否重复 */
+            // 检查名称是否重复 
             if (!$exc->is_only('pay_name', $name, $code)) {
                 return make_json_error($GLOBALS['_LANG']['name_exists']);
             }
 
-            /* 更新支付方式名称 */
+            // 更新支付方式名称 
             $exc->edit("pay_name = '$name'", $code);
             return make_json_result(stripcslashes($name));
         }
@@ -336,14 +336,14 @@ class PaymentController extends Controller
          * 修改支付方式描述
          */
         if ($_REQUEST['act'] == 'edit_desc') {
-            /* 检查权限 */
+            // 检查权限 
             check_authz_json('payment');
 
-            /* 取得参数 */
+            // 取得参数 
             $code = json_str_iconv(trim($_POST['id']));
             $desc = json_str_iconv(trim($_POST['val']));
 
-            /* 更新描述 */
+            // 更新描述 
             $exc->edit("pay_desc = '$desc'", $code);
             return make_json_result(stripcslashes($desc));
         }
@@ -352,14 +352,14 @@ class PaymentController extends Controller
          * 修改支付方式排序
          */
         if ($_REQUEST['act'] == 'edit_order') {
-            /* 检查权限 */
+            // 检查权限 
             check_authz_json('payment');
 
-            /* 取得参数 */
+            // 取得参数 
             $code = json_str_iconv(trim($_POST['id']));
             $order = intval($_POST['val']);
 
-            /* 更新排序 */
+            // 更新排序 
             $exc->edit("pay_order = '$order'", $code);
             return make_json_result(stripcslashes($order));
         }
@@ -368,10 +368,10 @@ class PaymentController extends Controller
          * 修改支付方式费用
          */
         if ($_REQUEST['act'] == 'edit_pay_fee') {
-            /* 检查权限 */
+            // 检查权限 
             check_authz_json('payment');
 
-            /* 取得参数 */
+            // 取得参数 
             $code = json_str_iconv(trim($_POST['id']));
             $pay_fee = json_str_iconv(trim($_POST['val']));
             if (empty($pay_fee)) {
@@ -385,7 +385,7 @@ class PaymentController extends Controller
                 }
             }
 
-            /* 更新支付费用 */
+            // 更新支付费用 
             $exc->edit("pay_fee = '$pay_fee'", $code);
             return make_json_result(stripcslashes($pay_fee));
         }

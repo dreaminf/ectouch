@@ -429,7 +429,7 @@ class Template
                     $t = $this->get_para(substr($tag, 7), 0);
 
                     if ($t['value']{0} == '$') {
-                        /* 如果传进来的值是变量，就不用用引号 */
+                        // 如果传进来的值是变量，就不用用引号 
                         $tmp = '$this->assign(\'' . $t['var'] . '\',' . $t['value'] . ');';
                     } else {
                         $tmp = '$this->assign(\'' . $t['var'] . '\',\'' . addcslashes($t['value'], "'") . '\');';
@@ -856,7 +856,7 @@ class Template
      */
     public function _compile_smarty_ref(&$indexes)
     {
-        /* Extract the reference name. */
+        // Extract the reference name. 
         $_ref = $indexes[0];
 
         switch ($_ref) {
@@ -962,13 +962,13 @@ class Template
          * 处理模板文件
          */
         if ($file_type == '.dwt') {
-            /* 将模板中所有library替换为链接 */
+            // 将模板中所有library替换为链接 
             $pattern = '/<!--\s#BeginLibraryItem\s\"\/(.*?)\"\s-->.*?<!--\s#EndLibraryItem\s-->/s';
             $source = preg_replace_callback($pattern, function ($r) {
                 return '{include file=' . strtolower($r[1]) . '}';
             }, $source);
 
-            /* 检查有无动态库文件，如果有为其赋值 */
+            // 检查有无动态库文件，如果有为其赋值 
             $dyna_libs = get_dyna_libs($GLOBALS['_CFG']['template'], $this->_current_file);
             if ($dyna_libs) {
                 foreach ($dyna_libs as $region => $libs) {
@@ -976,40 +976,40 @@ class Template
 
                     if (preg_match($pattern, $source, $reg_match)) {
                         $reg_content = $reg_match[1];
-                        /* 生成匹配字串 */
+                        // 生成匹配字串 
                         $keys = array_keys($libs);
                         $lib_pattern = '';
                         foreach ($keys as $lib) {
                             $lib_pattern .= '|' . str_replace('/', '\/', substr($lib, 1));
                         }
                         $lib_pattern = '/{include\sfile=(' . substr($lib_pattern, 1) . ')}/';
-                        /* 修改$reg_content中的内容 */
+                        // 修改$reg_content中的内容 
                         $GLOBALS['libs'] = $libs;
                         $reg_content = preg_replace_callback($lib_pattern, 'dyna_libs_replace', $reg_content);
 
-                        /* 用修改过的内容替换原来当前区域中内容 */
+                        // 用修改过的内容替换原来当前区域中内容 
                         $source = preg_replace($pattern, $reg_content, $source);
                     }
                 }
             }
 
-            /* 在头部加入版本信息 */
+            // 在头部加入版本信息 
             $source = preg_replace('/<head>/i', "<head>\r\n<meta name=\"Generator\" content=\"" . APPNAME . ' ' . VERSION . "\" />", $source);
 
-            /* 修正css路径 */
+            // 修正css路径 
             $source = preg_replace('/(<link\shref=["|\'])(?:\.\/|\.\.\/)?(css\/)?([a-z0-9A-Z_]+\.css["|\']\srel=["|\']stylesheet["|\']\stype=["|\']text\/css["|\'])/i', '\1' . $tmp_dir . '\2\3', $source);
 
-            /* 修正js目录下js的路径 */
+            // 修正js目录下js的路径 
             $source = preg_replace('/(<script\s(?:type|language)=["|\']text\/javascript["|\']\ssrc=["|\'])(?:\.\/|\.\.\/)?(js\/[a-z0-9A-Z_\-\.]+\.(?:js|vbs)["|\']><\/script>)/', '\1' . $tmp_dir . '\2', $source);
 
-            /* 更换编译模板的编码类型 */
+            // 更换编译模板的编码类型 
             $source = preg_replace('/<meta\shttp-equiv=["|\']Content-Type["|\']\scontent=["|\']text\/html;\scharset=(?:.*?)["|\'][^>]*?>\r?\n?/i', '<meta http-equiv="Content-Type" content="text/html; charset=' . CHARSET . '" />' . "\n", $source);
         } elseif ($file_type == '.lbi') {
-            /* 去除meta */
+            // 去除meta 
             $source = preg_replace('/<meta\shttp-equiv=["|\']Content-Type["|\']\scontent=["|\']text\/html;\scharset=(?:.*?)["|\']>\r?\n?/i', '', $source);
         }
 
-        /* 替换文件编码头部 */
+        // 替换文件编码头部 
         if (strpos($source, "\xEF\xBB\xBF") !== false) {
             $source = str_replace("\xEF\xBB\xBF", '', $source);
         }
@@ -1044,7 +1044,7 @@ class Template
 
     public function str_trim($str)
     {
-        /* 处理'a=b c=d k = f '类字符串，返回数组 */
+        // 处理'a=b c=d k = f '类字符串，返回数组 
         while (strpos($str, '= ') != 0) {
             $str = str_replace('= ', '=', $str);
         }

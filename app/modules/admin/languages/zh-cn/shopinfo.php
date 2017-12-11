@@ -10,7 +10,7 @@ $_LANG['back_list'] = '返回列表';
 $_LANG['continue_add'] = '继续添加';
 $_LANG['articleadd_succeed']= '添加成功';
 
-/* 提示信息 */
+// 提示信息 
 $_LANG['title_exist'] = '文章名 %s 已经存在';
 $_LANG['articleedit_succeed'] = '文章  %s 更新成功';
 $_LANG['back_list'] = '返回网店信息列表';

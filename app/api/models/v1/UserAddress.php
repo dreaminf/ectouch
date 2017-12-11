@@ -98,7 +98,7 @@ class UserAddress extends Foundation
             return self::find()->where(['address_id' => $consignee])->one();
         }
         if ($uid > 0) {
-            /* 取默认地址 */
+            // 取默认地址 
             // $sql = "SELECT ua.*".
             //         " FROM " . $GLOBALS['ecs']->table('user_address') . "AS ua, ".$GLOBALS['ecs']->table('users').' AS u '.
             //         " WHERE u.user_id='$uid' AND ua.address_id = u.address_id";

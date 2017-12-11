@@ -11,55 +11,55 @@ use app\libraries\Mysql;
  */
 class Integrate
 {
-    /* 整合对象使用的数据库主机 */
+    // 整合对象使用的数据库主机 
     public $db_host = '';
 
-    /* 整合对象使用的数据库名 */
+    // 整合对象使用的数据库名 
     public $db_name = '';
 
-    /* 整合对象使用的数据库用户名 */
+    // 整合对象使用的数据库用户名 
     public $db_user = '';
 
-    /* 整合对象使用的数据库密码 */
+    // 整合对象使用的数据库密码 
     public $db_pass = '';
 
-    /* 整合对象数据表前缀 */
+    // 整合对象数据表前缀 
     public $prefix = '';
 
-    /* 数据库所使用编码 */
+    // 数据库所使用编码 
     public $charset = '';
 
-    /* 整合对象使用的cookie的domain */
+    // 整合对象使用的cookie的domain 
     public $cookie_domain = '';
 
-    /* 整合对象使用的cookie的path */
+    // 整合对象使用的cookie的path 
     public $cookie_path = '/';
 
-    /* 整合对象会员表名 */
+    // 整合对象会员表名 
     public $user_table = '';
 
-    /* 会员ID的字段名 */
+    // 会员ID的字段名 
     public $field_id = '';
 
-    /* 会员名称的字段名 */
+    // 会员名称的字段名 
     public $field_name = '';
 
-    /* 会员密码的字段名 */
+    // 会员密码的字段名 
     public $field_pass = '';
 
-    /* 会员邮箱的字段名 */
+    // 会员邮箱的字段名 
     public $field_email = '';
 
-    /* 会员性别 */
+    // 会员性别 
     public $field_gender = '';
 
-    /* 会员生日 */
+    // 会员生日 
     public $field_bday = '';
 
-    /* 注册日期的字段名 */
+    // 注册日期的字段名 
     public $field_reg_date = '';
 
-    /* 是否需要同步数据到商城 */
+    // 是否需要同步数据到商城 
     public $need_sync = true;
 
     public $error = 0;
@@ -80,7 +80,7 @@ class Integrate
         $this->cookie_path = isset($cfg['cookie_path']) ? $cfg['cookie_path'] : '/';
         $this->need_sync = true;
 
-        /* 初始化数据库 */
+        // 初始化数据库 
         if (empty($cfg['db_host'])) {
             $this->db_name = $GLOBALS['ecs']->db_name;
             $this->prefix = $GLOBALS['ecs']->prefix;
@@ -138,13 +138,13 @@ class Integrate
      */
     public function add_user($username, $password, $email, $gender = -1, $bday = 0, $reg_date = 0, $md5password = '')
     {
-        /* 将用户添加到整合方 */
+        // 将用户添加到整合方 
         if ($this->check_user($username) > 0) {
             $this->error = ERR_USERNAME_EXISTS;
 
             return false;
         }
-        /* 检查email是否重复 */
+        // 检查email是否重复 
         $sql = "SELECT " . $this->field_id .
             " FROM " . $this->table($this->user_table) .
             " WHERE " . $this->field_email . " = '$email'";
@@ -216,7 +216,7 @@ class Integrate
         }
 
         if ((!empty($cfg['email'])) && $this->field_email != 'NULL') {
-            /* 检查email是否重复 */
+            // 检查email是否重复 
             $sql = "SELECT " . $this->field_id .
                 " FROM " . $this->table($this->user_table) .
                 " WHERE " . $this->field_email . " = '$cfg[email]' " .
@@ -278,7 +278,7 @@ class Integrate
         $post_id = $id;
 
         if ($this->need_sync || (isset($this->is_ecshop) && $this->is_ecshop)) {
-            /* 如果需要同步或是ecshop插件执行这部分代码 */
+            // 如果需要同步或是ecshop插件执行这部分代码 
             $sql = "SELECT user_id FROM " . $GLOBALS['ecs']->table('users') . " WHERE ";
             $sql .= (is_array($post_id)) ? db_create_in($post_id, 'user_name') : "user_name='" . $post_id . "' LIMIT 1";
             $col = $GLOBALS['db']->getCol($sql);
@@ -288,7 +288,7 @@ class Integrate
                 $GLOBALS['db']->query($sql);
                 $sql = "DELETE FROM " . $GLOBALS['ecs']->table('users') . " WHERE " . db_create_in($col, 'user_id'); //删除用户
                 $GLOBALS['db']->query($sql);
-                /* 删除用户订单 */
+                // 删除用户订单 
                 $sql = "SELECT order_id FROM " . $GLOBALS['ecs']->table('order_info') . " WHERE " . db_create_in($col, 'user_id');
                 $GLOBALS['db']->query($sql);
                 $col_order_id = $GLOBALS['db']->getCol($sql);
@@ -319,7 +319,7 @@ class Integrate
         }
 
         if (isset($this->ecshop) && $this->ecshop) {
-            /* 如果是ecshop插件直接退出 */
+            // 如果是ecshop插件直接退出 
             return;
         }
 
@@ -412,7 +412,7 @@ class Integrate
     {
         $post_username = $username;
 
-        /* 如果没有定义密码则只检查用户名 */
+        // 如果没有定义密码则只检查用户名 
         if ($password === null) {
             $sql = "SELECT " . $this->field_id .
                 " FROM " . $this->table($this->user_table) .
@@ -439,7 +439,7 @@ class Integrate
     public function check_email($email)
     {
         if (!empty($email)) {
-            /* 检查email是否重复 */
+            // 检查email是否重复 
             $sql = "SELECT " . $this->field_id .
                 " FROM " . $this->table($this->user_table) .
                 " WHERE " . $this->field_email . " = '$email' ";
@@ -475,12 +475,12 @@ class Integrate
     public function set_cookie($username = '', $remember = null)
     {
         if (empty($username)) {
-            /* 摧毁cookie */
+            // 摧毁cookie 
             $time = 0;
             cookie("user_id", null);
             cookie("password", null);
         } elseif ($remember) {
-            /* 设置cookie */
+            // 设置cookie 
             $time = 3600 * 24 * 15;
 
             cookie("username", $username, $time);
@@ -600,7 +600,7 @@ class Integrate
 
         $profile = $GLOBALS['db']->getRow($sql);
         if (empty($profile)) {
-            /* 向商城表插入一条新记录 */
+            // 向商城表插入一条新记录 
             if (empty($md5password)) {
                 $sql = "INSERT INTO " . $GLOBALS['ecs']->table('users') .
                     "(user_name, email, sex, birthday, reg_time)" .

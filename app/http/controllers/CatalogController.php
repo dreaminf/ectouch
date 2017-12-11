@@ -12,7 +12,7 @@ class CatalogController extends Controller
     public function actionIndex()
     {
         if (!$this->smarty->is_cached('catalog.dwt')) {
-            /* 取出所有分类 */
+            // 取出所有分类 
             $cat_list = cat_list(0, 0, false);
 
             foreach ($cat_list as $key => $val) {

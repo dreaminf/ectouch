@@ -490,7 +490,7 @@ region.isAdmin=true;
   {
     var eles = document.forms['theForm'].elements;
 
-    /* 如果搜索会员，检查是否找到 */
+    // 如果搜索会员，检查是否找到
     if (document.getElementById('user_useridname').checked && eles['user'].options.length == 0)
     {
       alert(pls_search_user);
@@ -583,7 +583,7 @@ region.isAdmin=true;
   {
     var eles = document.forms['theForm'].elements;
 
-    /* 填充列表 */
+    // 填充列表
     var idName = Utils.trim(eles['keyword'].value);
     if (idName != '')
     {
@@ -602,7 +602,7 @@ region.isAdmin=true;
     {
       var eles = document.forms['theForm'].elements;
 
-      /* 清除列表 */
+      // 清除列表
       var selLen = eles['user'].options.length;
       for (var i = selLen - 1; i >= 0; i--)
       {
@@ -628,7 +628,7 @@ region.isAdmin=true;
   {
     var eles = document.forms['goodsForm'].elements;
 
-    /* 填充列表 */
+    // 填充列表
     var keyword = Utils.trim(eles['keyword'].value);
     if (keyword != '')
     {
@@ -647,7 +647,7 @@ region.isAdmin=true;
     {
       var eles = document.forms['goodsForm'].elements;
 
-      /* 清除列表 */
+      // 清除列表
       var selLen = eles['goodslist'].options.length;
       for (var i = selLen - 1; i >= 0; i--)
       {

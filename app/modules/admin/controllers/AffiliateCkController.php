@@ -223,7 +223,7 @@ class AffiliateCkController extends Controller
 
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
         $logdb = [];
-        /* 分页大小 */
+        // 分页大小 
         $filter = page_and_size($filter);
 
         if (!empty($affiliate['on'])) {

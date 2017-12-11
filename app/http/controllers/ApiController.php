@@ -18,12 +18,12 @@ class ApiController extends Controller
 
         define('RETURN_TYPE', empty($_POST['return_data']) ? 1 : ($_POST['return_data'] == 'json' ? 2 : 1));
 
-        /* 接收传递参数并初步检验 */
+        // 接收传递参数并初步检验
         if (empty($_POST) || empty($_POST['ac'])) {
             $this->api_err('0x003', 'no parameter');   //输出系统级错误:数据异常
         }
 
-        /* 根据请求类型进入相应的接口处理程序 */
+        // 根据请求类型进入相应的接口处理程序
         switch ($_POST['act']) {
             case 'search_goods_list':
                 $this->search_goods_list();
@@ -90,7 +90,7 @@ class ApiController extends Controller
                 $re_arr['data_info'] = $date_arr;
             }
 
-            /* 处理更新时间等于0的数据 */
+            // 处理更新时间等于0的数据
             $sql = 'UPDATE ' . $GLOBALS['ecs']->table('goods') .
                 " SET last_update = 1 WHERE is_delete = 0 AND is_on_sale = 1 AND last_update = 0";
             $GLOBALS['db']->query($sql, 'SILENT');
@@ -243,7 +243,7 @@ class ApiController extends Controller
             $this->api_err('0x009');   //输出系统级错误:签名无效
         }
 
-        /* 对应用申请的session进行验证 */
+        // 对应用申请的session进行验证
         $certi['certificate_id'] = $license['certificate_id']; // 网店证书ID
         $certi['app_id'] = 'ectouch'; // 说明客户端来源
         $certi['app_instance_id'] = 'webcollect'; // 应用服务ID
@@ -292,7 +292,7 @@ class ApiController extends Controller
      */
     private function api_err($err_type, $err_info = '')
     {
-        /* 系统级错误列表 */
+        // 系统级错误列表
         $err_arr = [];
         $err_arr['0x001'] = 'Verify fail';          //身份验证失败
         $err_arr['0x002'] = 'Time out';             //请求/执行超时
@@ -323,12 +323,12 @@ class ApiController extends Controller
      */
     private function data_back($info, $msg = '', $post, $result = 'success')
     {
-        /* 分为xml和json两种方式 */
+        // 分为xml和json两种方式
         $data_arr = ['result' => $result, 'msg' => $msg, 'info' => $info];
         $data_arr = to_utf8_iconv($data_arr);  //确保传递的编码为UTF-8
 
         if ($post == 1) {
-            /* xml方式 */
+            // xml方式
             if (class_exists('DOMDocument')) {
                 $doc = new DOMDocument('1.0', 'UTF-8');
                 $doc->formatOutput = true;
@@ -353,7 +353,7 @@ class ApiController extends Controller
 
             die('<?xml version="1.0" encoding="UTF-8"?>' . $this->array2xml($data_arr));
         } else {
-            /* json方式 */
+            // json方式
             $json = new Json();
             die($json->encode($data_arr));    //把生成的返回字符串打印出来
         }
@@ -444,7 +444,7 @@ class ApiController extends Controller
      */
     private function create_goods_properties($goods_id)
     {
-        /* 获得商品的规格 */
+        // 获得商品的规格
         $sql = "SELECT a.attr_id, a.attr_name, a.attr_group, a.is_linked, a.attr_type, " .
             "g.goods_attr_id, g.attr_value, g.attr_price " .
             'FROM ' . $GLOBALS['ecs']->table('goods_attr') . ' AS g ' .

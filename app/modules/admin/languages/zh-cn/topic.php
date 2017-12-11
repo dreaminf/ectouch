@@ -15,7 +15,7 @@ $_LANG['default_class'] = '无分类';
 $_LANG['publish_to_player'] = '发布到Flash播放列表';
 $_LANG['publish_to_ads'] = '发布到广告';
 
-/* 提示信息 */
+// 提示信息
 $_LANG['succed'] = '操作成功!';
 $_LANG['notice_template_file'] = '填写当前专题的模板文件名,模板文件应上传到当前商城模板目录下,不填写将调用默认模板。';
 $_LANG['notice_css'] = '填写当前专题的CSS样式代码,不填写将调用模板默认CSS文件';
@@ -31,7 +31,7 @@ $_LANG['js_languages']['start_lt_end'] = '专题开始时间不能大于结束�
 $_LANG['invalid_type'] = '您上传的图片格式不正确！';
 $_LANG['web_url_no'] = '远程地址错误。请填写完整的 URL 地址！';
 
-/* 专题信息字段 */
+// 专题信息字段
 $_LANG['topic_id'] = '编号';
 $_LANG['topic_title'] = '专题名称';
 $_LANG['topic_desc'] = '专题介绍';

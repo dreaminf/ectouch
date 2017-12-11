@@ -205,11 +205,11 @@ class IndexController extends Controller
             $res = $GLOBALS['db']->query($sql);
 
             foreach ($res as $row) {
-                /* 如果缩略图为空，使用默认图片 */
+                // 如果缩略图为空，使用默认图片 
                 $row['goods_img'] = get_image_path($row['goods_img']);
                 $row['thumb'] = get_image_path($row['goods_thumb']);
 
-                /* 根据价格阶梯，计算最低价 */
+                // 根据价格阶梯，计算最低价 
                 $ext_info = unserialize($row['ext_info']);
                 $price_ladder = $ext_info['price_ladder'];
                 if (!is_array($price_ladder) || empty($price_ladder)) {

@@ -4,12 +4,12 @@
  *  管理中心团购商品语言文件
  */
 
-/* 当前页面标题及可用链接名称 */
+// 当前页面标题及可用链接名称 
 $_LANG['group_buy_list'] = '团购活动列表';
 $_LANG['add_group_buy'] = '添加团购活动';
 $_LANG['edit_group_buy'] = '编辑团购活动';
 
-/* 活动列表页 */
+// 活动列表页 
 $_LANG['goods_name'] = '商品名称';
 $_LANG['start_date'] = '开始时间';
 $_LANG['end_date'] = '结束时间';
@@ -22,7 +22,7 @@ $_LANG['current_price'] = '当前价格';
 $_LANG['current_status'] = '状态';
 $_LANG['view_order'] = '查看订单';
 
-/* 添加/编辑活动页 */
+// 添加/编辑活动页 
 $_LANG['goods_cat'] = '商品分类';
 $_LANG['all_cat'] = '所有分类';
 $_LANG['goods_brand'] = '商品品牌';
@@ -73,7 +73,7 @@ $_LANG['edit_success'] = '编辑团购活动成功。';
 $_LANG['back_list'] = '返回团购活动列表。';
 $_LANG['continue_add'] = '继续添加团购活动。';
 
-/* 添加/编辑活动提交 */
+// 添加/编辑活动提交 
 $_LANG['error_goods_null'] = '您没有选择团购商品！';
 $_LANG['error_goods_exist'] = '您选择的商品目前有一个团购活动正在进行！';
 $_LANG['error_price_ladder'] = '您没有输入有效的价格阶梯！';
@@ -85,13 +85,13 @@ $_LANG['js_languages']['error_restrict_amount'] = '您输入的限购数量不�
 $_LANG['js_languages']['error_gift_integral'] = '您输入的赠送积分数不是整数！';
 $_LANG['js_languages']['search_is_null'] = '没有搜索到任何商品，请重新搜索';
 
-/* 删除团购活动 */
+// 删除团购活动 
 $_LANG['js_languages']['batch_drop_confirm'] = '您确定要删除选定的团购活动吗？';
 $_LANG['error_exist_order'] = '该团购活动已经有订单，不能删除！';
 $_LANG['batch_drop_success'] = '成功删除了 %s 条团购活动记录（已经有订单的团购活动不能删除）。';
 $_LANG['no_select_group_buy'] = '您现在没有团购活动记录！';
 
-/* 操作日志 */
+// 操作日志 
 $_LANG['log_action']['group_buy'] = '团购商品';
 
 return $_LANG;

@@ -137,7 +137,7 @@ function local_getdate($timestamp = null)
 {
     $timezone = session('?timezone') ? session('timezone') : $GLOBALS['_CFG']['timezone'];
 
-    /* 如果时间戳为空，则获得服务器的当前时间 */
+    // 如果时间戳为空，则获得服务器的当前时间 
     if ($timestamp === null) {
         $timestamp = time();
     }

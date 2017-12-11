@@ -54,7 +54,7 @@ class MessageController extends Controller
          * 留言发送页面
          */
         if ($_REQUEST['act'] == 'send') {
-            /* 获取管理员列表 */
+            // 获取管理员列表
             $admin_list = $this->db->getAll('SELECT user_id, user_name FROM ' . $this->ecs->table('admin_user'));
 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['send_msg']);
@@ -72,9 +72,9 @@ class MessageController extends Controller
         if ($_REQUEST['act'] == 'insert') {
             $rec_arr = $_POST['receiver_id'];
 
-            /* 向所有管理员发送留言 */
+            // 向所有管理员发送留言
             if ($rec_arr[0] == 0) {
-                /* 获取管理员信息 */
+                // 获取管理员信息
                 $result = $this->db->query('SELECT user_id FROM ' . $this->ecs->table('admin_user') . 'WHERE user_id !=' . session('admin_id'));
                 foreach ($result as $rows) {
                     $sql = "INSERT INTO " . $this->ecs->table('admin_message') . " (sender_id, receiver_id, sent_time, " .
@@ -93,10 +93,10 @@ class MessageController extends Controller
 
                 return sys_msg($GLOBALS['_LANG']['send_msg'] . "&nbsp;" . $GLOBALS['_LANG']['action_succeed'], 0, $link);
 
-                /* 记录管理员操作 */
+                // 记录管理员操作
                 admin_log(admin_log($GLOBALS['_LANG']['send_msg']), 'add', 'admin_message');
             } else {
-                /* 如果是发送给指定的管理员 */
+                // 如果是发送给指定的管理员
                 foreach ($rec_arr as $key => $id) {
                     $sql = "INSERT INTO " . $this->ecs->table('admin_message') . " (sender_id, receiver_id, " .
                         "sent_time, read_time, readed, deleted, title, message) " .
@@ -121,10 +121,10 @@ class MessageController extends Controller
         if ($_REQUEST['act'] == 'edit') {
             $id = intval($_REQUEST['id']);
 
-            /* 获取管理员列表 */
+            // 获取管理员列表
             $admin_list = $this->db->getAll('SELECT user_id, user_name FROM ' . $this->ecs->table('admin_user'));
 
-            /* 获得留言数据*/
+            // 获得留言数据
             $sql = 'SELECT message_id, receiver_id, title, message' .
                 'FROM ' . $this->ecs->table('admin_message') . " WHERE message_id='$id'";
             $msg_arr = $this->db->getRow($sql);
@@ -139,7 +139,7 @@ class MessageController extends Controller
         }
 
         if ($_REQUEST['act'] == 'update') {
-            /* 获得留言数据*/
+            // 获得留言数据
             $msg_arr = [];
             $msg_arr = $this->db->getRow('SELECT * FROM ' . $this->ecs->table('admin_message') . " WHERE message_id='$_POST[id]'");
 
@@ -154,7 +154,7 @@ class MessageController extends Controller
 
             return sys_msg($GLOBALS['_LANG']['edit_msg'] . ' ' . $GLOBALS['_LANG']['action_succeed'], 0, $link);
 
-            /* 记录管理员操作 */
+            // 记录管理员操作
             admin_log(addslashes($GLOBALS['_LANG']['edit_msg']), 'edit', 'admin_message');
         }
 
@@ -164,7 +164,7 @@ class MessageController extends Controller
         if ($_REQUEST['act'] == 'view') {
             $msg_id = intval($_REQUEST['id']);
 
-            /* 获得管理员留言数据 */
+            // 获得管理员留言数据
             $msg_arr = [];
             $sql = "SELECT a.*, b.user_name " .
                 "FROM " . $this->ecs->table('admin_message') . " AS a " .
@@ -174,7 +174,7 @@ class MessageController extends Controller
             $msg_arr['title'] = nl2br(htmlspecialchars($msg_arr['title']));
             $msg_arr['message'] = nl2br(htmlspecialchars($msg_arr['message']));
 
-            /* 如果还未阅读 */
+            // 如果还未阅读
             if ($msg_arr['readed'] == 0) {
                 $msg_arr['read_time'] = gmtime(); //阅读日期为当前日期
 
@@ -201,7 +201,7 @@ class MessageController extends Controller
         if ($_REQUEST['act'] == 'reply') {
             $msg_id = intval($_REQUEST['id']);
 
-            /* 获得留言数据 */
+            // 获得留言数据
             $msg_val = [];
             $sql = "SELECT a.*, b.user_name " .
                 "FROM " . $this->ecs->table('admin_message') . " AS a " .
@@ -234,7 +234,7 @@ class MessageController extends Controller
 
             return sys_msg($GLOBALS['_LANG']['send_msg'] . ' ' . $GLOBALS['_LANG']['action_succeed'], 0, $link);
 
-            /* 记录管理员操作 */
+            // 记录管理员操作
             admin_log(addslashes($GLOBALS['_LANG']['send_msg']), 'add', 'admin_message');
         }
 
@@ -284,12 +284,12 @@ class MessageController extends Controller
      */
     private function get_message_list()
     {
-        /* 查询条件 */
+        // 查询条件
         $filter['sort_by'] = empty($_REQUEST['sort_by']) ? 'sent_time' : trim($_REQUEST['sort_by']);
         $filter['sort_order'] = empty($_REQUEST['sort_order']) ? 'DESC' : trim($_REQUEST['sort_order']);
         $filter['msg_type'] = empty($_REQUEST['msg_type']) ? 0 : intval($_REQUEST['msg_type']);
 
-        /* 查询条件 */
+        // 查询条件
         switch ($filter['msg_type']) {
             case 1:
                 $where = " a.receiver_id='" . session('admin_id') . "'";
@@ -310,7 +310,7 @@ class MessageController extends Controller
         $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('admin_message') . " AS a WHERE 1 AND " . $where;
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-        /* 分页大小 */
+        // 分页大小
         $filter = page_and_size($filter);
 
         $sql = "SELECT a.message_id,a.sender_id,a.receiver_id,a.sent_time,a.read_time,a.deleted,a.title,a.message,b.user_name" .

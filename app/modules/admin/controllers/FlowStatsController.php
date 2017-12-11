@@ -15,7 +15,7 @@ class FlowStatsController extends Controller
 
         $this->smarty->assign('lang', $GLOBALS['_LANG']);
 
-        /* act操作项的初始化 */
+        // act操作项的初始化 
         if (empty($_REQUEST['act'])) {
             $_REQUEST['act'] = 'view';
         } else {
@@ -30,7 +30,7 @@ class FlowStatsController extends Controller
             admin_priv('client_flow_stats');
             $is_multi = empty($_POST['is_multi']) ? false : true;
 
-            /* 时间参数 */
+            // 时间参数 
             if (isset($_POST['start_date']) && !empty($_POST['end_date'])) {
                 $start_date = local_strtotime($_POST['start_date']);
                 $end_date = local_strtotime($_POST['end_date']);
@@ -262,13 +262,13 @@ class FlowStatsController extends Controller
                 $from_xml .= "</chart>";
             }
 
-            /* 模板赋值 */
+            // 模板赋值 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['flow_stats']);
             $this->smarty->assign('general_data', $general_xml);
             $this->smarty->assign('area_data', $area_xml);
             $this->smarty->assign('is_multi', $is_multi);
             $this->smarty->assign('from_data', $from_xml);
-            /* 显示日期 */
+            // 显示日期 
 
             $this->smarty->assign('start_date', local_date('Y-m-d', $start_date));
             $this->smarty->assign('end_date', local_date('Y-m-d', $end_date));

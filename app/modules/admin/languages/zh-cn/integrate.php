@@ -8,7 +8,7 @@ $_LANG['integrate_name'] = '名称';
 $_LANG['integrate_version'] = '版本';
 $_LANG['integrate_author'] = '作者';
 
-/* 插件列表 */
+// 插件列表 
 $_LANG['update_success'] = '设置会员数据整合插件已经成功。';
 $_LANG['install_confirm'] = '您确定要安装该会员数据整合插件吗？';
 $_LANG['need_not_setup'] = '当您采用ECSHOP会员系统时，无须进行设置。';
@@ -27,11 +27,11 @@ $_LANG['user_help'] = '<pre>
          3:如果不需要整合任何用户系统，请选择安装 ecshop 插件，即可卸载所有的整合插件。
                            </pre>';
 
-/* 查看安装日志 */
+// 查看安装日志 
 $_LANG['lost_install_log'] = '未找到安装日志';
 $_LANG['empty_install_log'] = '安装日志为空';
 
-/* 表单相关语言项 */
+// 表单相关语言项 
 $_LANG['db_notice'] = '点击“<font color="#000000">下一步</font>”将引导你到将商城用户数据同步到整合论坛。如果不需同步数据请点击“<font color="#000000">直接保存配置信息</font>”';
 
 $_LANG['lable_db_host'] = '数据库服务器主机名：';
@@ -42,7 +42,7 @@ $_LANG['lable_db_user'] = '数据库帐号：';
 $_LANG['lable_db_pass'] = '数据库密码：';
 $_LANG['lable_prefix'] = '数据表前缀：';
 $_LANG['lable_url'] = '被整合系统的完整 URL：';
-/* 表单相关语言项(discus5x) */
+// 表单相关语言项(discus5x) 
 $_LANG['cookie_prefix']          = 'COOKIE前缀：';
 $_LANG['cookie_salt']          = 'COOKIE加密串：';
 $_LANG['button_next'] = '下一步';
@@ -60,7 +60,7 @@ $_LANG['error_is_latin1'] = '整合数据库检测到是lantin1编码！请重�
 $_LANG['invalid_db_charset'] = '整合数据库检测到是%s 字符集，而非%s 字符集';
 $_LANG['error_latin1'] = '你填写的整合信息会导致严重错误，无法完成整合';
 
-/* 检查同名用户 */
+// 检查同名用户 
 $_LANG['conflict_username_check'] = '检查商城用户是否和整合论坛用户有重名';
 $_LANG['check_notice'] = '本页将检测商城已有用户和论坛用户是否有重名，点击“开始检查前”，请为商城重名用户选择一个默认处理方法';
 $_LANG['default_method'] = '如果检测出商城有重名用户，请为这些用户选择一个默认处理方法';
@@ -72,7 +72,7 @@ $_LANG['checking'] = '正在检查...(请不要关闭浏览器)';
 $_LANG['notice'] = '已经检查 %s / %s ';
 $_LANG['check_complete'] = '检查完成';
 
-/* 同名用户处理 */
+// 同名用户处理 
 $_LANG['conflict_username_modify'] = '商城重名用户列表';
 $_LANG['modify_notice'] = '以下列出了所有商城与论坛的重名用户及处理方法。如果您已确认所有操作，请点击“开始整合”；您对重名用户的操作的更改需要点击按钮“保存本页更改”才能生效。';
 $_LANG['page_default_method'] = '本页面中重名用户默认处理方法';
@@ -95,7 +95,7 @@ $_LANG['submit_modify'] = '保存本页变更';
 $_LANG['button_confirm_next'] = '开始整合';
 
 
-/* 用户同步 */
+// 用户同步 
 $_LANG['user_sync'] = '同步商城数据到论坛，并完成整合';
 $_LANG['button_pre'] = '上一步';
 $_LANG['task_name'] = '任务名';
@@ -115,7 +115,7 @@ $_LANG['sync_ok'] = '恭喜您。整合成功';
 
 $_LANG['save_ok'] = '保存成功';
 
-/* 积分设置 */
+// 积分设置 
 $_LANG['no_points'] = '没有检测到论坛有可以兑换的积分';
 $_LANG['bbs'] = '论坛';
 $_LANG['shop_pay_points'] = '商城消费积分';
@@ -125,7 +125,7 @@ $_LANG['modify'] = '修改';
 $_LANG['rule_name'] = '兑换规则';
 $_LANG['rule_rate'] = '兑换比例';
 
-/* JS语言项 */
+// JS语言项 
 $_LANG['js_languages']['no_host'] = '数据库服务器主机名不能为空。';
 $_LANG['js_languages']['no_user'] = '数据库帐号不能为空。';
 $_LANG['js_languages']['no_name'] = '数据库名不能为空。';
@@ -144,7 +144,7 @@ $_LANG['js_languages']['rate_not_int'] = '比例只能填整数';
 $_LANG['js_languages']['rate_invailed'] = '你填写了一个无效的比例';
 $_LANG['js_languages']['user_importing'] = '正在导入用户到UCenter中...';
 
-/* UCenter设置语言项 */
+// UCenter设置语言项 
 $_LANG['ucenter_tab_base'] = '基本设置';
 $_LANG['ucenter_tab_show'] = '显示设置';
 $_LANG['ucenter_lab_id'] = 'UCenter 应用 ID:';

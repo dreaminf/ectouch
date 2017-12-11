@@ -198,10 +198,10 @@ class MagazineListController extends Controller
             $sql = "SELECT count(*) FROM " . $GLOBALS['ecs']->table('mail_templates') . " WHERE type = 'magazine'";
             $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-            /* 分页大小 */
+            // 分页大小 
             $filter = page_and_size($filter);
 
-            /* 查询 */
+            // 查询 
             $sql = "SELECT * " .
                 " FROM " . $GLOBALS['ecs']->table('mail_templates') .
                 " WHERE type = 'magazine'" .

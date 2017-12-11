@@ -23,7 +23,7 @@ class SmsController extends Controller
         $sms = new Sms();
 
         switch ($action) {
-//    /* 注册短信服务。*/
+//    // 注册短信服务。
 //    case 'register' :
 //        $email      = isset($_POST['email'])    ? $_POST['email']       : '';
 //        $password   = isset($_POST['password']) ? $_POST['password']    : '';
@@ -48,7 +48,7 @@ class SmsController extends Controller
 //
 //        break;
 //
-//    /* 启用短信服务。 */
+//    // 启用短信服务。 
 //    case 'enable' :
 //        $username = isset($_POST['email'])      ? $_POST['email']       : '';
 //        //由于md5函数对空串也加密，所以要进行判空操作
@@ -74,7 +74,7 @@ class SmsController extends Controller
 //
 //        break;
 //
-//    /* 注销短信特服信息 */
+//    // 注销短信特服信息 
 //    case 'disable' :
 //        $result = $sms->clear_my_info();
 //
@@ -92,9 +92,9 @@ class SmsController extends Controller
 //
 //        break;
 
-            /* 显示短信发送界面，如果尚未注册或启用短信服务则显示注册界面。 */
+            // 显示短信发送界面，如果尚未注册或启用短信服务则显示注册界面。 
             case 'display_send_ui':
-                /* 检查权限 */
+                // 检查权限 
                 admin_priv('sms_send');
 
                 if ($sms->has_registered()) {
@@ -191,7 +191,7 @@ class SmsController extends Controller
                                 $this->shop_config_update('default_sms_sign', $content_y);
                             }
                             $this->shop_config_update('sms_sign', $sms_sign);
-                            /* 清除缓存 */
+                            // 清除缓存 
                             clear_all_files();
                             return sys_msg($GLOBALS['_LANG']['insert_succ'], 1, [], false);
                         } else {
@@ -204,7 +204,7 @@ class SmsController extends Controller
                     } else {
                         $this->shop_config_update('default_sms_sign', $content_y);
                         $this->shop_config_update('sms_sign', '');
-                        /* 清除缓存 */
+                        // 清除缓存 
                         clear_all_files();
                         return sys_msg($GLOBALS['_LANG']['error_smg'], 1, [], false);
                     }
@@ -266,7 +266,7 @@ class SmsController extends Controller
                             }
                             $this->shop_config_update('sms_sign', $sms_sign);
 
-                            /* 清除缓存 */
+                            // 清除缓存 
                             clear_all_files();
                             return sys_msg($GLOBALS['_LANG']['edit_succ'], 1, [], false);
                         } else {
@@ -279,7 +279,7 @@ class SmsController extends Controller
                     } else {
                         $this->shop_config_update('default_sms_sign', $content_y);
                         $this->shop_config_update('sms_sign', '');
-                        /* 清除缓存 */
+                        // 清除缓存 
                         clear_all_files();
                         return sys_msg($GLOBALS['_LANG']['error_smg'], 1, [], false);
                     }
@@ -308,7 +308,7 @@ class SmsController extends Controller
                         $sms_sign_default = $sms_sign[$GLOBALS['_CFG'][ent_id]][$extend_no];
                         if (!empty($sms_sign_default)) {
                             $this->shop_config_update('default_sms_sign', $sms_sign_default);
-                            /* 清除缓存 */
+                            // 清除缓存 
                             clear_all_files();
                             return sys_msg($GLOBALS['_LANG']['default_succ'], 1, [], false);
                         } else {
@@ -317,7 +317,7 @@ class SmsController extends Controller
                     } else {
                         $this->shop_config_update('default_sms_sign', $content_y);
                         $this->shop_config_update('sms_sign', '');
-                        /* 清除缓存 */
+                        // 清除缓存 
                         clear_all_files();
                         return sys_msg($GLOBALS['_LANG']['error_smg'], 1, [], false);
                     }
@@ -330,7 +330,7 @@ class SmsController extends Controller
                 break;
 
 
-            /* 发送短信 */
+            // 发送短信 
             case 'send_sms':
                 $send_num = isset($_POST['send_num']) ? $_POST['send_num'] : '';
 
@@ -391,9 +391,9 @@ class SmsController extends Controller
 
                 break;
 
-//    /* 显示发送记录的查询界面，如果尚未注册或启用短信服务则显示注册界面。 */
+//    // 显示发送记录的查询界面，如果尚未注册或启用短信服务则显示注册界面。 
 //    case 'display_send_history_ui' :
-//        /* 检查权限 */
+//        // 检查权限 
 //         admin_priv('send_history');
 //        if ($sms->has_registered())
 //        {
@@ -437,7 +437,7 @@ class SmsController extends Controller
 //                $this->smarty->assign('sms_send_history', $result);
 //                $this->smarty->assign('ur_here', $GLOBALS['_LANG']['05_sms_send_history']);
 //
-//                /* 分页信息 */
+//                // 分页信息 
 //                $turn_page = array( 'total_records' => $result['count'],
 //                                    'total_pages'   => intval(ceil($result['count']/$page_size)),
 //                                    'page'          => $page,
@@ -464,9 +464,9 @@ class SmsController extends Controller
 //
 //        break;
 //
-//    /* 显示充值页面 */
+//    // 显示充值页面 
 //    case 'display_charge_ui' :
-//        /* 检查权限 */
+//        // 检查权限 
 //         admin_priv('sms_charge');
 //        if ($sms->has_registered())
 //        {
@@ -488,9 +488,9 @@ class SmsController extends Controller
 //
 //        break;
 //
-//    /* 显示充值记录的查询界面，如果尚未注册或启用短信服务则显示注册界面。 */
+//    // 显示充值记录的查询界面，如果尚未注册或启用短信服务则显示注册界面。 
 //    case 'display_charge_history_ui' :
-//         /* 检查权限 */
+//         // 检查权限 
 //         admin_priv('charge_history');
 //        if ($sms->has_registered())
 //        {
@@ -532,7 +532,7 @@ class SmsController extends Controller
 //            {
 //                $this->smarty->assign('sms_charge_history', $result);
 //
-//                /* 分页信息 */
+//                // 分页信息 
 //                $turn_page = array( 'total_records' => $result['count'],
 //                                    'total_pages'   => intval(ceil($result['count']/$page_size)),
 //                                    'page'          => $page,
@@ -559,9 +559,9 @@ class SmsController extends Controller
 //
 //        break;
 //
-//    /* 显示我的短信服务个人信息 */
+//    // 显示我的短信服务个人信息 
 //    default :
-//        /* 检查权限 */
+//        // 检查权限 
 //         admin_priv('my_info');
 //        $sms_my_info = $sms->get_my_info();
 //        if (!$sms_my_info)
@@ -579,13 +579,13 @@ class SmsController extends Controller
 //        }
 //        else
 //        {
-//            /* 立即更新短信特服信息 */
+//            // 立即更新短信特服信息 
 //            $sms->restore($sms_my_info['sms_user_name'], $sms_my_info['sms_password']);
 //
-//            /* 再次获取个人数据，保证显示的数据是最新的 */
+//            // 再次获取个人数据，保证显示的数据是最新的 
 //            $sms_my_info = $sms->get_my_info();//这里不再进行判空处理，主要是因为如果前个式子不出错，这里一般不会出错
 //
-//            /* 格式化时间输出 */
+//            // 格式化时间输出 
 //            $sms_last_request = $sms_my_info['sms_last_request']
 //                    ? $sms_my_info['sms_last_request']
 //                    : 0;//赋0防出错

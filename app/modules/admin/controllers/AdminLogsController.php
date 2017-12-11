@@ -15,14 +15,14 @@ class AdminLogsController extends Controller
          * 获取所有日志列表
          */
         if ($_REQUEST['act'] == 'list') {
-            /* 权限的判断 */
+            // 权限的判断 
             admin_priv('logs_manage');
 
             $user_id = !empty($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
             $admin_ip = !empty($_REQUEST['ip']) ? $_REQUEST['ip'] : '';
             $log_date = !empty($_REQUEST['log_date']) ? $_REQUEST['log_date'] : '';
 
-            /* 查询IP地址列表 */
+            // 查询IP地址列表 
             $ip_list = [];
             $res = $this->db->query("SELECT DISTINCT ip_address FROM " . $this->ecs->table('admin_log'));
             foreach ($res as $row) {
@@ -72,7 +72,7 @@ class AdminLogsController extends Controller
 
             $drop_type_date = isset($_POST['drop_type_date']) ? $_POST['drop_type_date'] : '';
 
-            /* 按日期删除日志 */
+            // 按日期删除日志 
             if ($drop_type_date) {
                 if ($_POST['log_date'] == '0') {
                     return $this->redirect("admin_logs.php?act=list");
@@ -109,7 +109,7 @@ class AdminLogsController extends Controller
                         return sys_msg($GLOBALS['_LANG']['drop_sueeccud'], 1, $link);
                     }
                 }
-            } /* 如果不是按日期来删除, 就按ID删除日志 */
+            } // 如果不是按日期来删除, 就按ID删除日志 
             else {
                 $count = 0;
                 foreach ($_POST['checkboxes'] as $key => $id) {
@@ -150,13 +150,13 @@ class AdminLogsController extends Controller
             $where .= " AND al.ip_address = '$admin_ip' ";
         }
 
-        /* 获得总记录数据 */
+        // 获得总记录数据 
         $sql = 'SELECT COUNT(*) FROM ' . $GLOBALS['ecs']->table('admin_log') . ' AS al ' . $where;
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
         $filter = page_and_size($filter);
 
-        /* 获取管理员日志记录 */
+        // 获取管理员日志记录 
         $list = [];
         $sql = 'SELECT al.*, u.user_name FROM ' . $GLOBALS['ecs']->table('admin_log') . ' AS al ' .
             'LEFT JOIN ' . $GLOBALS['ecs']->table('admin_user') . ' AS u ON u.user_id = al.user_id ' .

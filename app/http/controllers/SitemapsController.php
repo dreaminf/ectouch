@@ -26,7 +26,7 @@ class SitemapsController extends Controller
                 'priority' => $config['homepage_priority'],
             ];
             $sitemap->item($item);
-            /* 商品分类 */
+            // 商品分类 
             $sql = "SELECT cat_id,cat_name FROM " . $this->ecs->table('category') . " ORDER BY parent_id";
             $res = $this->db->query($sql);
 
@@ -39,7 +39,7 @@ class SitemapsController extends Controller
                 ];
                 $sitemap->item($item);
             }
-            /* 文章分类 */
+            // 文章分类 
             $sql = "SELECT cat_id,cat_name FROM " . $this->ecs->table('article_cat') . " WHERE cat_type=1";
             $res = $this->db->query($sql);
 
@@ -52,7 +52,7 @@ class SitemapsController extends Controller
                 ];
                 $sitemap->item($item);
             }
-            /* 商品 */
+            // 商品 
             $sql = "SELECT goods_id, goods_name, last_update FROM " . $this->ecs->table('goods') . " WHERE is_delete = 0 LIMIT 300";
             $res = $this->db->query($sql);
 
@@ -65,7 +65,7 @@ class SitemapsController extends Controller
                 ];
                 $sitemap->item($item);
             }
-            /* 文章 */
+            // 文章 
             $sql = "SELECT article_id,title,file_url,open_type, add_time FROM " . $this->ecs->table('article') . " WHERE is_open=1";
             $res = $this->db->query($sql);
 

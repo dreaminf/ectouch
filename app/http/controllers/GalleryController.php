@@ -11,20 +11,20 @@ class GalleryController extends Controller
 {
     public function actionIndex()
     {
-        /* 参数 */
+        // 参数 
         $_REQUEST['id'] = isset($_REQUEST['id']) ? intval($_REQUEST['id']) : 0; // 商品编号
         $_REQUEST['img'] = isset($_REQUEST['img']) ? intval($_REQUEST['img']) : 0; // 图片编号
 
-        /* 获得商品名称 */
+        // 获得商品名称 
         $sql = 'SELECT goods_name FROM ' . $this->ecs->table('goods') . "WHERE goods_id = '$_REQUEST[id]'";
         $goods_name = $this->db->getOne($sql);
 
-        /* 如果该商品不存在，返回首页 */
+        // 如果该商品不存在，返回首页 
         if ($goods_name === false) {
             return $this->redirect('/');
         }
 
-        /* 获得所有的图片 */
+        // 获得所有的图片 
         $sql = 'SELECT img_id, img_desc, thumb_url, img_url' .
             ' FROM ' . $this->ecs->table('goods_gallery') .
             " WHERE goods_id = '$_REQUEST[id]' ORDER BY img_id";
@@ -34,7 +34,7 @@ class GalleryController extends Controller
 
         $gallery = ['goods_name' => htmlspecialchars($goods_name, ENT_QUOTES), 'list' => []];
         if ($img_count == 0) {
-            /* 如果没有图片，返回商品详情页 */
+            // 如果没有图片，返回商品详情页 
             return $this->redirect('goods.php?id=' . $_REQUEST['id']);
         } else {
             foreach ($img_list as $key => $img) {

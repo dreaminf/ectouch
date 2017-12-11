@@ -33,12 +33,12 @@ class UserController extends Controller
         $not_login_arr =
             ['login', 'act_login', 'register', 'act_register', 'act_edit_password', 'get_password', 'send_pwd_email', 'password', 'signin', 'add_tag', 'collect', 'return_to_cart', 'logout', 'email_list', 'validate_email', 'send_hash_mail', 'order_query', 'is_registered', 'check_email', 'clear_history', 'qpassword_name', 'get_passwd_question', 'check_answer'];
 
-        /* 显示页面的action列表 */
+        // 显示页面的action列表 
         $ui_arr = ['register', 'login', 'profile', 'order_list', 'order_detail', 'address_list', 'collection_list',
             'message_list', 'tag_list', 'get_password', 'reset_password', 'booking_list', 'add_booking', 'account_raply',
             'account_deposit', 'account_log', 'account_detail', 'act_account', 'pay', 'default', 'bonus', 'group_buy', 'group_buy_detail', 'affiliate', 'comment_list', 'validate_email', 'track_packages', 'transform_points', 'qpassword_name', 'get_passwd_question', 'check_answer'];
 
-        /* 未登录处理 */
+        // 未登录处理 
         if (empty(session('user_id'))) {
             if (!in_array($action, $not_login_arr)) {
                 if (in_array($action, $ui_arr)) {
@@ -75,7 +75,7 @@ class UserController extends Controller
             $row = $this->db->getRow($sql);
             $car_off = $row['value'];
             $this->smarty->assign('car_off', $car_off);
-            /* 是否显示积分兑换 */
+            // 是否显示积分兑换 
             if (!empty($GLOBALS['_CFG']['points_rule']) && unserialize($GLOBALS['_CFG']['points_rule'])) {
                 $this->smarty->assign('show_transform_points', 1);
             }
@@ -110,21 +110,21 @@ class UserController extends Controller
                 $back_act = strpos($GLOBALS['_SERVER']['HTTP_REFERER'], 'user.php') ? './index.php' : $GLOBALS['_SERVER']['HTTP_REFERER'];
             }
 
-            /* 取出注册扩展字段 */
+            // 取出注册扩展字段 
             $sql = 'SELECT * FROM ' . $this->ecs->table('reg_fields') . ' WHERE type < 2 AND display = 1 ORDER BY dis_order, id';
             $extend_info_list = $this->db->getAll($sql);
             $this->smarty->assign('extend_info_list', $extend_info_list);
 
-            /* 验证码相关设置 */
+            // 验证码相关设置 
             if ((intval($GLOBALS['_CFG']['captcha']) & CAPTCHA_REGISTER) && gd_version() > 0) {
                 $this->smarty->assign('enabled_captcha', 1);
                 $this->smarty->assign('rand', mt_rand());
             }
 
-            /* 密码提示问题 */
+            // 密码提示问题 
             $this->smarty->assign('passwd_questions', $GLOBALS['_LANG']['passwd_questions']);
 
-            /* 增加是否关闭注册 */
+            // 增加是否关闭注册 
             $this->smarty->assign('shop_reg_closed', $GLOBALS['_CFG']['shop_reg_closed']);
 //    $this->smarty->assign('back_act', $back_act);
             return $this->smarty->display('user_passport.dwt');
@@ -134,7 +134,7 @@ class UserController extends Controller
          * 注册会员的处理
          */
         if ($action == 'act_register') {
-            /* 增加是否关闭注册 */
+            // 增加是否关闭注册 
             if ($GLOBALS['_CFG']['shop_reg_closed']) {
                 $this->smarty->assign('action', 'register');
                 $this->smarty->assign('shop_reg_closed', $GLOBALS['_CFG']['shop_reg_closed']);
@@ -171,13 +171,13 @@ class UserController extends Controller
                     return show_message($GLOBALS['_LANG']['passwd_balnk']);
                 }
 
-                /* 验证码检查 */
+                // 验证码检查 
                 if ((intval($GLOBALS['_CFG']['captcha']) & CAPTCHA_REGISTER) && gd_version() > 0) {
                     if (empty($_POST['captcha'])) {
                         return show_message($GLOBALS['_LANG']['invalid_captcha'], $GLOBALS['_LANG']['sign_up'], 'user.php?act=register', 'error');
                     }
 
-                    /* 检查验证码 */
+                    // 检查验证码 
                     $validator = new Captcha();
                     if (!$validator->check_word($_POST['captcha'])) {
                         return show_message($GLOBALS['_LANG']['invalid_captcha'], $GLOBALS['_LANG']['sign_up'], 'user.php?act=register', 'error');
@@ -204,12 +204,12 @@ class UserController extends Controller
                         $this->db->query($sql);
                     }
 
-                    /* 写入密码提示问题和答案 */
+                    // 写入密码提示问题和答案 
                     if (!empty($passwd_answer) && !empty($sel_question)) {
                         $sql = 'UPDATE ' . $this->ecs->table('users') . " SET `passwd_question`='$sel_question', `passwd_answer`='$passwd_answer'  WHERE `user_id`='" . session('user_id') . "'";
                         $this->db->query($sql);
                     }
-                    /* 判断是否需要自动发送注册邮件 */
+                    // 判断是否需要自动发送注册邮件 
                     if ($GLOBALS['_CFG']['member_email_validate'] && $GLOBALS['_CFG']['send_verify_email']) {
                         send_regiter_hash(session('user_id'));
                     }
@@ -304,7 +304,7 @@ class UserController extends Controller
                     return show_message($GLOBALS['_LANG']['invalid_captcha'], $GLOBALS['_LANG']['relogin_lnk'], 'user.php', 'error');
                 }
 
-                /* 检查验证码 */
+                // 检查验证码 
                 $validator = new Captcha();
                 $validator->session_word = 'captcha_login';
                 if (!$validator->check_word($_POST['captcha'])) {
@@ -343,7 +343,7 @@ class UserController extends Controller
                     die($json->encode($result));
                 }
 
-                /* 检查验证码 */
+                // 检查验证码 
                 $validator = new Captcha();
                 $validator->session_word = 'captcha_login';
                 if (!$validator->check_word($_POST['captcha'])) {
@@ -392,7 +392,7 @@ class UserController extends Controller
             load_helper('transaction');
             $user_info = get_profile($user_id);
 
-            /* 取出注册扩展字段 */
+            // 取出注册扩展字段 
             $sql = 'SELECT * FROM ' . $this->ecs->table('reg_fields') . ' WHERE type < 2 AND display = 1 ORDER BY dis_order, id';
             $extend_info_list = $this->db->getAll($sql);
 
@@ -430,7 +430,7 @@ class UserController extends Controller
 
             $this->smarty->assign('extend_info_list', $extend_info_list);
 
-            /* 密码提示问题 */
+            // 密码提示问题 
             $this->smarty->assign('passwd_questions', $GLOBALS['_LANG']['passwd_questions']);
 
             $this->smarty->assign('profile', $user_info);
@@ -454,7 +454,7 @@ class UserController extends Controller
             $sel_question = empty($_POST['sel_question']) ? '' : compile_str($_POST['sel_question']);
             $passwd_answer = isset($_POST['passwd_answer']) ? compile_str(trim($_POST['passwd_answer'])) : '';
 
-            /* 更新用户扩展字段的数据 */
+            // 更新用户扩展字段的数据 
             $sql = 'SELECT id FROM ' . $this->ecs->table('reg_fields') . ' WHERE type = 0 AND display = 1 ORDER BY dis_order, id';   //读出所有扩展字段的id
             $fields_arr = $this->db->getAll($sql);
 
@@ -472,7 +472,7 @@ class UserController extends Controller
                 }
             }
 
-            /* 写入密码提示问题和答案 */
+            // 写入密码提示问题和答案 
             if (!empty($passwd_answer) && !empty($sel_question)) {
                 $sql = 'UPDATE ' . $this->ecs->table('users') . " SET `passwd_question`='$sel_question', `passwd_answer`='$passwd_answer'  WHERE `user_id`='" . session('user_id') . "'";
                 $this->db->query($sql);
@@ -529,7 +529,7 @@ class UserController extends Controller
                 $code = trim($_GET['code']);
                 $uid = intval($_GET['uid']);
 
-                /* 判断链接的合法性 */
+                // 判断链接的合法性 
                 $user_info = $this->user->get_profile_by_id($uid);
                 if (empty($user_info) || ($user_info && md5($user_info['user_id'] . $GLOBALS['_CFG']['hash_code'] . $user_info['reg_time']) != $code)) {
                     return show_message($GLOBALS['_LANG']['parm_error'], $GLOBALS['_LANG']['back_home_lnk'], './', 'info');
@@ -596,7 +596,7 @@ class UserController extends Controller
                     return show_message($GLOBALS['_LANG']['invalid_captcha'], $GLOBALS['_LANG']['back_retry_answer'], 'user.php?act=qpassword_name', 'error');
                 }
 
-                /* 检查验证码 */
+                // 检查验证码 
                 $validator = new Captcha();
                 $validator->session_word = 'captcha_login';
                 if (!$validator->check_word($_POST['captcha'])) {
@@ -623,7 +623,7 @@ class UserController extends Controller
         if ($action == 'send_pwd_email') {
             load_helper('passport');
 
-            /* 初始化会员用户名和邮件地址 */
+            // 初始化会员用户名和邮件地址 
             $user_name = !empty($_POST['user_name']) ? trim($_POST['user_name']) : '';
             $email = !empty($_POST['email']) ? trim($_POST['email']) : '';
 
@@ -731,7 +731,7 @@ class UserController extends Controller
 
             $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
 
-            /* 订单详情 */
+            // 订单详情 
             $order = get_order_detail($order_id, $user_id);
 
             if ($order === false) {
@@ -740,12 +740,12 @@ class UserController extends Controller
                 exit;
             }
 
-            /* 是否显示添加到购物车 */
+            // 是否显示添加到购物车 
             if ($order['extension_code'] != 'group_buy' && $order['extension_code'] != 'exchange_goods') {
                 $this->smarty->assign('allow_to_cart', 1);
             }
 
-            /* 订单商品 */
+            // 订单商品 
             $goods_list = order_goods($order_id);
             foreach ($goods_list as $key => $value) {
                 $goods_list[$key]['market_price'] = price_format($value['market_price'], false);
@@ -753,7 +753,7 @@ class UserController extends Controller
                 $goods_list[$key]['subtotal'] = price_format($value['subtotal'], false);
             }
 
-            /* 设置能否修改使用余额数 */
+            // 设置能否修改使用余额数 
             if ($order['order_amount'] > 0) {
                 if ($order['order_status'] == OS_UNCONFIRMED || $order['order_status'] == OS_CONFIRMED) {
                     $user = user_info($order['user_id']);
@@ -764,11 +764,11 @@ class UserController extends Controller
                 }
             }
 
-            /* 未发货，未付款时允许更换支付方式 */
+            // 未发货，未付款时允许更换支付方式 
             if ($order['order_amount'] > 0 && $order['pay_status'] == PS_UNPAYED && $order['shipping_status'] == SS_UNSHIPPED) {
                 $payment_list = available_payment_list(false, 0, true);
 
-                /* 过滤掉当前支付方式和余额支付方式 */
+                // 过滤掉当前支付方式和余额支付方式 
                 if (is_array($payment_list)) {
                     foreach ($payment_list as $key => $payment) {
                         if ($payment['pay_id'] == $order['pay_id'] || $payment['pay_code'] == 'balance') {
@@ -779,7 +779,7 @@ class UserController extends Controller
                 $this->smarty->assign('payment_list', $payment_list);
             }
 
-            /* 订单 支付 配送 状态语言项 */
+            // 订单 支付 配送 状态语言项 
             $order['order_status'] = $GLOBALS['_LANG']['os'][$order['order_status']];
             $order['pay_status'] = $GLOBALS['_LANG']['ps'][$order['pay_status']];
             $order['shipping_status'] = $GLOBALS['_LANG']['ss'][$order['shipping_status']];
@@ -812,15 +812,15 @@ class UserController extends Controller
             load_lang('flow');
             $this->smarty->assign('lang', $GLOBALS['_LANG']);
 
-            /* 取得国家列表、商店所在国家、商店所在国家的省列表 */
+            // 取得国家列表、商店所在国家、商店所在国家的省列表 
             $this->smarty->assign('country_list', get_regions());
             $this->smarty->assign('shop_province_list', get_regions(1, $GLOBALS['_CFG']['shop_country']));
 
-            /* 获得用户所有的收货人信息 */
+            // 获得用户所有的收货人信息 
             $consignee_list = get_consignee_list(session('user_id'));
 
             if (count($consignee_list) < 5 && session('user_id') > 0) {
-                /* 如果用户收货人信息的总数小于5 则增加一个新的收货人信息 */
+                // 如果用户收货人信息的总数小于5 则增加一个新的收货人信息 
                 $consignee_list[] = ['country' => $GLOBALS['_CFG']['shop_country'], 'email' => session('email', '')];
             }
 
@@ -837,7 +837,7 @@ class UserController extends Controller
                 $district_list[$region_id] = get_regions(3, $consignee['city']);
             }
 
-            /* 获取默认收货ID */
+            // 获取默认收货ID 
             $address_id = $this->db->getOne("SELECT address_id FROM " . $this->ecs->table('users') . " WHERE user_id='$user_id'");
 
             //赋值于模板
@@ -973,7 +973,7 @@ class UserController extends Controller
             $order_id = empty($_GET['order_id']) ? 0 : intval($_GET['order_id']);
             $order_info = [];
 
-            /* 获取用户留言的数量 */
+            // 获取用户留言的数量 
             if ($order_id) {
                 $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('feedback') .
                     " WHERE parent_id = 0 AND order_id = '$order_id' AND user_id = '$user_id'";
@@ -1007,7 +1007,7 @@ class UserController extends Controller
 
             $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
 
-            /* 获取用户留言的数量 */
+            // 获取用户留言的数量 
             $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('comment') .
                 " WHERE parent_id = 0 AND user_id = '$user_id'";
             $record_count = $this->db->getOne($sql);
@@ -1076,7 +1076,7 @@ class UserController extends Controller
 
             $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
 
-            /* 获取缺货登记的数量 */
+            // 获取缺货登记的数量 
             $sql = "SELECT COUNT(*) " .
                 "FROM " . $this->ecs->table('booking_goods') . " AS bg, " .
                 $this->ecs->table('goods') . " AS g " .
@@ -1100,7 +1100,7 @@ class UserController extends Controller
                 return show_message($GLOBALS['_LANG']['no_goods_id'], $GLOBALS['_LANG']['back_page_up'], '', 'error');
             }
 
-            /* 根据规格属性获取货品规格信息 */
+            // 根据规格属性获取货品规格信息 
             $goods_attr = '';
             if ($_GET['spec'] != '') {
                 $goods_attr_id = $_GET['spec'];
@@ -1216,7 +1216,7 @@ class UserController extends Controller
 
             $account_type = 'user_money';
 
-            /* 获取记录条数 */
+            // 获取记录条数 
             $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('account_log') .
                 " WHERE user_id = '$user_id'" .
                 " AND $account_type <> 0 ";
@@ -1265,7 +1265,7 @@ class UserController extends Controller
 
             $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
 
-            /* 获取记录条数 */
+            // 获取记录条数 
             $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('user_account') .
                 " WHERE user_id = '$user_id'" .
                 " AND process_type " . db_create_in([SURPLUS_SAVE, SURPLUS_RETURN]);
@@ -1300,7 +1300,7 @@ class UserController extends Controller
                 return show_message($GLOBALS['_LANG']['amount_gt_zero']);
             }
 
-            /* 变量初始化 */
+            // 变量初始化 
             $surplus = [
                 'user_id' => $user_id,
                 'rec_id' => !empty($_POST['rec_id']) ? intval($_POST['rec_id']) : 0,
@@ -1310,9 +1310,9 @@ class UserController extends Controller
                 'amount' => $amount
             ];
 
-            /* 退款申请的处理 */
+            // 退款申请的处理 
             if ($surplus['process_type'] == 1) {
-                /* 判断是否有足够的余额的进行退款的操作 */
+                // 判断是否有足够的余额的进行退款的操作 
                 $sur_amount = get_user_surplus($user_id);
                 if ($amount > $sur_amount) {
                     $content = $GLOBALS['_LANG']['surplus_amount_error'];
@@ -1324,7 +1324,7 @@ class UserController extends Controller
                 $surplus['payment'] = '';
                 $surplus['rec_id'] = insert_user_account($surplus, $amount);
 
-                /* 如果成功提交 */
+                // 如果成功提交 
                 if ($surplus['rec_id'] > 0) {
                     $content = $GLOBALS['_LANG']['surplus_appl_submit'];
                     return show_message($content, $GLOBALS['_LANG']['back_account_log'], 'user.php?act=account_log', 'info');
@@ -1333,7 +1333,7 @@ class UserController extends Controller
                     return show_message($content, $GLOBALS['_LANG']['back_page_up'], '', 'info');
                 }
             } else {
-                /* 如果是会员预付款，跳转到下一步，进行线上支付的操作 */
+                // 如果是会员预付款，跳转到下一步，进行线上支付的操作 
                 if ($surplus['payment_id'] <= 0) {
                     return show_message($GLOBALS['_LANG']['select_payment_pls']);
                 }
@@ -1371,14 +1371,14 @@ class UserController extends Controller
                 //记录支付log
                 $order['log_id'] = insert_pay_log($surplus['rec_id'], $order['order_amount'], $type = PAY_SURPLUS, 0);
 
-                /* 调用相应的支付方式文件 */
+                // 调用相应的支付方式文件 
                 include_once(ROOT_PATH . 'includes/modules/payment/' . $payment_info['pay_code'] . '.php');
 
-                /* 取得在线支付方式的支付按钮 */
+                // 取得在线支付方式的支付按钮 
                 $pay_obj = new $payment_info['pay_code'];
                 $payment_info['pay_button'] = $pay_obj->get_code($order, $payment);
 
-                /* 模板赋值 */
+                // 模板赋值 
                 $this->smarty->assign('payment', $payment_info);
                 $this->smarty->assign('pay_fee', price_format($payment_info['pay_fee'], false));
                 $this->smarty->assign('amount', price_format($amount, false));
@@ -1431,7 +1431,7 @@ class UserController extends Controller
             $payment_info = [];
             $payment_info = payment_info($payment_id);
 
-            /* 如果当前支付方式没有被禁用，进行支付的操作 */
+            // 如果当前支付方式没有被禁用，进行支付的操作 
             if (!empty($payment_info)) {
                 //取得支付信息，生成支付代码
                 $payment = unserialize_config($payment_info['pay_config']);
@@ -1458,21 +1458,21 @@ class UserController extends Controller
                         " SET order_amount = '$order[order_amount]' WHERE log_id = '$order[log_id]'");
                 }
 
-                /* 调用相应的支付方式文件 */
+                // 调用相应的支付方式文件 
                 include_once(ROOT_PATH . 'includes/modules/payment/' . $payment_info['pay_code'] . '.php');
 
-                /* 取得在线支付方式的支付按钮 */
+                // 取得在线支付方式的支付按钮 
                 $pay_obj = new $payment_info['pay_code'];
                 $payment_info['pay_button'] = $pay_obj->get_code($order, $payment);
 
-                /* 模板赋值 */
+                // 模板赋值 
                 $this->smarty->assign('payment', $payment_info);
                 $this->smarty->assign('order', $order);
                 $this->smarty->assign('pay_fee', price_format($payment_info['pay_fee'], false));
                 $this->smarty->assign('amount', price_format($order['surplus_amount'], false));
                 $this->smarty->assign('action', 'act_account');
                 return $this->smarty->display('user_transaction.dwt');
-            } /* 重新选择支付方式 */
+            } // 重新选择支付方式 
             else {
                 load_helper('clips');
 
@@ -1494,14 +1494,14 @@ class UserController extends Controller
             $tag = isset($_POST['tag']) ? json_str_iconv(trim($_POST['tag'])) : '';
 
             if ($user_id == 0) {
-                /* 用户没有登录 */
+                // 用户没有登录 
                 $result['error'] = 1;
                 $result['message'] = $GLOBALS['_LANG']['tag_anonymous'];
             } else {
                 add_tag($id, $tag); // 添加tag
                 clear_cache_files('goods'); // 删除缓存
 
-                /* 重新获得该商品的所有缓存 */
+                // 重新获得该商品的所有缓存 
                 $arr = get_tags($id);
 
                 foreach ($arr as $row) {
@@ -1528,7 +1528,7 @@ class UserController extends Controller
                 $result['message'] = $GLOBALS['_LANG']['login_please'];
                 die($json->encode($result));
             } else {
-                /* 检查是否已经存在于用户的收藏夹 */
+                // 检查是否已经存在于用户的收藏夹 
                 $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('collect_goods') .
                     " WHERE user_id='" . session('user_id') . "' AND goods_id = '$goods_id'";
                 if ($GLOBALS['db']->getOne($sql) > 0) {
@@ -1564,7 +1564,7 @@ class UserController extends Controller
                 $sql = 'SELECT user_id, message_img FROM ' . $this->ecs->table('feedback') . " WHERE msg_id = '$id' LIMIT 1";
                 $row = $this->db->getRow($sql);
                 if ($row && $row['user_id'] == $user_id) {
-                    /* 验证通过，删除留言，回复，及相应文件 */
+                    // 验证通过，删除留言，回复，及相应文件 
                     if ($row['message_img']) {
                         @unlink(ROOT_PATH . DATA_DIR . '/feedbackimg/' . $row['message_img']);
                     }
@@ -1617,13 +1617,13 @@ class UserController extends Controller
             }
 
             if ($user_id == 0) {
-                /* 用户没有登录 */
+                // 用户没有登录 
                 $result['error'] = 1;
                 $result['message'] = $GLOBALS['_LANG']['login_please'];
                 die($json->encode($result));
             }
 
-            /* 检查订单是否属于该用户 */
+            // 检查订单是否属于该用户 
             $order_user = $this->db->getOne("SELECT user_id FROM " . $this->ecs->table('order_info') . " WHERE order_id = '$order_id'");
             if (empty($order_user)) {
                 $result['error'] = 1;
@@ -1654,18 +1654,18 @@ class UserController extends Controller
          * 编辑使用余额支付的处理
          */
         if ($action == 'act_edit_surplus') {
-            /* 检查是否登录 */
+            // 检查是否登录 
             if (session('user_id') <= 0) {
                 return $this->redirect('/');
             }
 
-            /* 检查订单号 */
+            // 检查订单号 
             $order_id = intval($_POST['order_id']);
             if ($order_id <= 0) {
                 return $this->redirect('/');
             }
 
-            /* 检查余额 */
+            // 检查余额 
             $surplus = floatval($_POST['surplus']);
             if ($surplus <= 0) {
                 $this->err->add($GLOBALS['_LANG']['error_surplus_invalid']);
@@ -1674,41 +1674,41 @@ class UserController extends Controller
 
             load_helper('order');
 
-            /* 取得订单 */
+            // 取得订单 
             $order = order_info($order_id);
             if (empty($order)) {
                 return $this->redirect('/');
             }
 
-            /* 检查订单用户跟当前用户是否一致 */
+            // 检查订单用户跟当前用户是否一致 
             if (session('user_id') != $order['user_id']) {
                 return $this->redirect('/');
             }
 
-            /* 检查订单是否未付款，检查应付款金额是否大于0 */
+            // 检查订单是否未付款，检查应付款金额是否大于0 
             if ($order['pay_status'] != PS_UNPAYED || $order['order_amount'] <= 0) {
                 $this->err->add($GLOBALS['_LANG']['error_order_is_paid']);
                 return $this->err->show($GLOBALS['_LANG']['order_detail'], 'user.php?act=order_detail&order_id=' . $order_id);
             }
 
-            /* 计算应付款金额（减去支付费用） */
+            // 计算应付款金额（减去支付费用） 
             $order['order_amount'] -= $order['pay_fee'];
 
-            /* 余额是否超过了应付款金额，改为应付款金额 */
+            // 余额是否超过了应付款金额，改为应付款金额 
             if ($surplus > $order['order_amount']) {
                 $surplus = $order['order_amount'];
             }
 
-            /* 取得用户信息 */
+            // 取得用户信息 
             $user = user_info(session('user_id'));
 
-            /* 用户帐户余额是否足够 */
+            // 用户帐户余额是否足够 
             if ($surplus > $user['user_money'] + $user['credit_line']) {
                 $this->err->add($GLOBALS['_LANG']['error_surplus_not_enough']);
                 return $this->err->show($GLOBALS['_LANG']['order_detail'], 'user.php?act=order_detail&order_id=' . $order_id);
             }
 
-            /* 修改订单，重新计算支付费用 */
+            // 修改订单，重新计算支付费用 
             $order['surplus'] += $surplus;
             $order['order_amount'] -= $surplus;
             if ($order['order_amount'] > 0) {
@@ -1730,7 +1730,7 @@ class UserController extends Controller
                 $order['order_amount'] += $pay_fee;
             }
 
-            /* 如果全部支付，设为已确认、已付款 */
+            // 如果全部支付，设为已确认、已付款 
             if ($order['order_amount'] == 0) {
                 if ($order['order_status'] == OS_UNCONFIRMED) {
                     $order['order_status'] = OS_CONFIRMED;
@@ -1742,11 +1742,11 @@ class UserController extends Controller
             $order = addslashes_deep($order);
             update_order($order_id, $order);
 
-            /* 更新用户余额 */
+            // 更新用户余额 
             $change_desc = sprintf($GLOBALS['_LANG']['pay_order_by_surplus'], $order['order_sn']);
             log_account_change($user['user_id'], (-1) * $surplus, 0, 0, 0, $change_desc);
 
-            /* 跳转 */
+            // 跳转 
             return $this->redirect('user.php?act=order_detail&order_id=' . $order_id . "");
         }
 
@@ -1754,12 +1754,12 @@ class UserController extends Controller
          * 编辑使用余额支付的处理
          */
         if ($action == 'act_edit_payment') {
-            /* 检查是否登录 */
+            // 检查是否登录 
             if (session('user_id') <= 0) {
                 return $this->redirect('/');
             }
 
-            /* 检查支付方式 */
+            // 检查支付方式 
             $pay_id = intval($_POST['pay_id']);
             if ($pay_id <= 0) {
                 return $this->redirect('/');
@@ -1771,24 +1771,24 @@ class UserController extends Controller
                 return $this->redirect('/');
             }
 
-            /* 检查订单号 */
+            // 检查订单号 
             $order_id = intval($_POST['order_id']);
             if ($order_id <= 0) {
                 return $this->redirect('/');
             }
 
-            /* 取得订单 */
+            // 取得订单 
             $order = order_info($order_id);
             if (empty($order)) {
                 return $this->redirect('/');
             }
 
-            /* 检查订单用户跟当前用户是否一致 */
+            // 检查订单用户跟当前用户是否一致 
             if (session('user_id') != $order['user_id']) {
                 return $this->redirect('/');
             }
 
-            /* 检查订单是否未付款和未发货 以及订单金额是否为0 和支付id是否为改变*/
+            // 检查订单是否未付款和未发货 以及订单金额是否为0 和支付id是否为改变
             if ($order['pay_status'] != PS_UNPAYED || $order['shipping_status'] != SS_UNSHIPPED || $order['goods_amount'] <= 0 || $order['pay_id'] == $pay_id) {
                 return $this->redirect("/user.php?act=order_detail&order_id=$order_id");
             }
@@ -1802,7 +1802,7 @@ class UserController extends Controller
                 " WHERE order_id = '$order_id'";
             $this->db->query($sql);
 
-            /* 跳转 */
+            // 跳转 
             return $this->redirect("/user.php?act=order_detail&order_id=$order_id");
         }
 
@@ -2134,7 +2134,7 @@ class UserController extends Controller
             $result = ['error' => 0, 'message' => '', 'content' => ''];
 
             if ($user_id == 0) {
-                /* 用户没有登录 */
+                // 用户没有登录 
                 $result['error'] = 1;
                 $result['message'] = $GLOBALS['_LANG']['login_please'];
                 die($json->encode($result));
@@ -2242,7 +2242,7 @@ class UserController extends Controller
             }
 
             $order_query['user_id'] = $row['user_id'];
-            /* 如果是匿名用户显示发货时间 */
+            // 如果是匿名用户显示发货时间 
             if ($row['user_id'] == 0 && $row['shipping_time'] > 0) {
                 $order_query['shipping_date'] = local_date($GLOBALS['_CFG']['date_format'], $row['shipping_time']);
             }
@@ -2291,13 +2291,13 @@ class UserController extends Controller
                 $bbs_points_name = $this->user->get_points_name();
                 $total_bbs_points = $this->user->get_points($row['user_name']);
 
-                /* 论坛积分 */
+                // 论坛积分 
                 $bbs_points = [];
                 foreach ($bbs_points_name as $key => $val) {
                     $bbs_points[$key] = ['title' => $GLOBALS['_LANG']['bbs'] . $val['title'], 'value' => $total_bbs_points[$key]];
                 }
 
-                /* 兑换规则 */
+                // 兑换规则 
                 $rule_list = [];
                 foreach ($rule as $key => $val) {
                     $rule_key = substr($key, 0, 1);
@@ -2352,7 +2352,7 @@ class UserController extends Controller
 
             $max_num = 0;
 
-            /* 取出用户数据 */
+            // 取出用户数据 
             $sql = "SELECT user_name, user_id, pay_points, rank_points FROM " . $this->ecs->table('users') . " WHERE user_id='$user_id'";
             $row = $this->db->getRow($sql);
             $bbs_points = $this->user->get_points($row['user_name']);
@@ -2379,7 +2379,7 @@ class UserController extends Controller
                     $max_points = $row['rank_points'];
             }
 
-            /* 检查积分是否超过最大值 */
+            // 检查积分是否超过最大值 
             if ($max_points <= 0 || $num > $max_points) {
                 return show_message($GLOBALS['_LANG']['overflow_points'], $GLOBALS['_LANG']['transform_points'], 'user.php?act=transform_points');
             }

@@ -43,7 +43,7 @@ $_LANG['email'] = 'email';
 $_LANG['msg_for_order'] = '对订单 %s 的留言';
 $_LANG['order_detail'] = '订单详情';
 $_LANG['confirm_delete'] = '你是否确认要删除该留言';
-/* js */
+// js 
 $_LANG['js_languages']['no_content'] = '内容不能为空';
 $_LANG['js_languages']['no_reply_content'] = '回复内容不能为空';
 $_LANG['js_languages']['no_title'] = '主题不能为空';

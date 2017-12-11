@@ -18,7 +18,7 @@ $_LANG['package_goods'] = '该礼包的商品';
 $_LANG['goods_number'] = '数量';
 $_LANG['saving'] = '立即节省';
 
-/* 提示信息 */
+// 提示信息 
 $_LANG['no_goods'] = '你输入的商品不存在，请查证后再输入';
 $_LANG['package_exist'] = '超值礼包 %s 已经存在';
 $_LANG['back_list'] = '返回活动列表';
@@ -28,7 +28,7 @@ $_LANG['edit_succeed'] = '编辑成功';
 $_LANG['edit_fail'] = '编辑失败';
 $_LANG['no_name'] = '活动名不能为空';
 
-/* 帮助信息 */
+// 帮助信息 
 $_LANG['notice_goodsid'] = '需要先搜索商品，生成商品列表，然后再选择';
 $_LANG['notice_package_price'] = '购买礼包的价格';
 

@@ -118,7 +118,7 @@ class AffiliateController extends Controller
          * Ajax修改设置
          */
         if ($_REQUEST['act'] == 'edit_point') {
-            /* 取得参数 */
+            // 取得参数 
             $key = trim($_POST['id']) - 1;
             $val = (float)trim($_POST['val']);
             $maxpoint = 100;

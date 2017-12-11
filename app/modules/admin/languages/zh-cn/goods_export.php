@@ -24,7 +24,7 @@ $_LANG['post_express_not_null'] = '平邮价格必须大于0';
 $_LANG['express_not_null'] = '快递价格必须大于0';
 $_LANG['ems_not_null'] = 'EMS价格必须大于0';
 
-/* 淘宝 */
+// 淘宝 
 $_LANG['taobao']['goods_name'] = '宝贝名称';
 $_LANG['taobao']['goods_class'] = '宝贝类目';
 $_LANG['taobao']['shop_class'] = '店铺类目';

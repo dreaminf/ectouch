@@ -15,7 +15,7 @@ $_LANG['shipping_print_edit'] = '编辑打印模板';
 $_LANG['shipping_print_template'] = '快递单模板';
 $_LANG['shipping_template_info'] = '订单模板变量说明:<br/>{$shop_name}表示网店名称<br/>{$province}表示网店所属省份<br/>{$city}表示网店所属城市<br/>{$shop_address}表示网店地址<br/>{$service_phone}表示网店联系电话<br/>{$order.order_amount}表示订单金额<br/>{$order.region}表示收件人地区<br/>{$order.tel}表示收件人电话<br/>{$order.mobile}表示收件人手机<br/>{$order.zipcode}表示收件人邮编<br/>{$order.address}表示收件人详细地址<br/>{$order.consignee}表示收件人名称<br/>{$order.order_sn}表示订单号';
 
-/* 表单部分 */
+// 表单部分 
 $_LANG['shipping_install'] = '安装配送方式';
 $_LANG['install_succeess'] = '配送方式 %s 安装成功！';
 $_LANG['del_lable'] = '删除标签';
@@ -24,7 +24,7 @@ $_LANG['del_shipping_bg'] = '删除打印单图片';
 $_LANG['save_setting'] = '保存设置';
 $_LANG['recovery_default'] = '恢复默认';
 
-/* 快递单部分 */
+// 快递单部分 
 $_LANG['lable_select_notice'] = '--选择插入标签--';
 $_LANG['lable_box']['shop_country'] = '网店-国家';
 $_LANG['lable_box']['shop_province'] = '网店-省份';
@@ -51,7 +51,7 @@ $_LANG['lable_box']['order_best_time'] = '送货时间-订单';
 $_LANG['lable_box']['pigeon'] = '√-对号';
 //$_LANG['lable_box']['custom_content'] = '自定义内容';
 
-/* 提示信息 */
+// 提示信息 
 $_LANG['no_shipping_name'] = '对不起，配送方式名称不能为空。';
 $_LANG['no_shipping_desc'] = '对不起，配送方式描述内容不能为空。';
 $_LANG['repeat_shipping_name'] = '对不起，已经存在一个同名的配送方式。';
@@ -63,7 +63,7 @@ $_LANG['invalid_insure'] = '配送保价费用不是一个合法价格';
 $_LANG['no_shipping_install'] = '您的配送方式尚未安装，暂不能编辑模板';
 $_LANG['edit_template_success'] = '快递模板已经成功编辑。';
 
-/* JS 语言 */
+// JS 语言 
 $_LANG['js_languages']['lang_removeconfirm'] = '您确定要卸载该配送方式吗？';
 $_LANG['js_languages']['shipping_area'] = '设置区域';
 $_LANG['js_languages']['upload_falid'] = '错误：文件类型不正确。请上传“%s”类型的文件！';

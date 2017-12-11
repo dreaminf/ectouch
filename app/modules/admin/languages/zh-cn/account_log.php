@@ -4,11 +4,11 @@
  *  管理中心帐户变动记录语言文件
  */
 
-/* 菜单 */
+// 菜单 
 $_LANG['add_account'] = '调节会员帐户';
 $_LANG['account_list'] = '会员帐户变动明细';
 
-/* 列表页 */
+// 列表页 
 $_LANG['user_not_exist'] = '该用户不存在';
 $_LANG['all_account'] = '所有帐户';
 $_LANG['label_user_name'] = '当前会员：';

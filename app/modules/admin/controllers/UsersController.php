@@ -15,7 +15,7 @@ class UsersController extends Controller
          * 用户帐号列表
          */
         if ($_REQUEST['act'] == 'list') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('users_manage');
             $sql = "SELECT rank_id, rank_name, min_points FROM " . $this->ecs->table('user_rank') . " ORDER BY min_points ASC ";
             $rs = $this->db->query($sql);
@@ -62,7 +62,7 @@ class UsersController extends Controller
          * 添加会员帐号
          */
         if ($_REQUEST['act'] == 'add') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('users_manage');
 
             $user = ['rank_points' => $GLOBALS['_CFG']['register_points'],
@@ -70,7 +70,7 @@ class UsersController extends Controller
                 'sex' => 0,
                 'credit_line' => 0
             ];
-            /* 取出注册扩展字段 */
+            // 取出注册扩展字段 
             $sql = 'SELECT * FROM ' . $this->ecs->table('reg_fields') . ' WHERE type < 2 AND display = 1 AND id != 6 ORDER BY dis_order, id';
             $extend_info_list = $this->db->getAll($sql);
             $this->smarty->assign('extend_info_list', $extend_info_list);
@@ -88,7 +88,7 @@ class UsersController extends Controller
          * 添加会员帐号
          */
         if ($_REQUEST['act'] == 'insert') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('users_manage');
             $username = empty($_POST['username']) ? '' : trim($_POST['username']);
             $password = empty($_POST['password']) ? '' : trim($_POST['password']);
@@ -102,7 +102,7 @@ class UsersController extends Controller
             $users =& init_users();
 
             if (!$users->add_user($username, $password, $email)) {
-                /* 插入会员数据失败 */
+                // 插入会员数据失败 
                 if ($users->error == ERR_INVALID_USERNAME) {
                     $msg = $GLOBALS['_LANG']['username_invalid'];
                 } elseif ($users->error == ERR_USERNAME_NOT_ALLOW) {
@@ -121,7 +121,7 @@ class UsersController extends Controller
                 return sys_msg($msg, 1);
             }
 
-            /* 注册送积分 */
+            // 注册送积分 
             if (!empty($GLOBALS['_CFG']['register_points'])) {
                 log_account_change(session('user_id'), 0, 0, $GLOBALS['_CFG']['register_points'], $GLOBALS['_CFG']['register_points'], $GLOBALS['_LANG']['register_points']);
             }
@@ -146,7 +146,7 @@ class UsersController extends Controller
                 $this->db->query($sql);
             }
 
-            /* 更新会员的其它信息 */
+            // 更新会员的其它信息 
             $other = [];
             $other['credit_line'] = $credit_line;
             $other['user_rank'] = $rank;
@@ -162,10 +162,10 @@ class UsersController extends Controller
 
             $this->db->autoExecute($this->ecs->table('users'), $other, 'UPDATE', "user_name = '$username'");
 
-            /* 记录管理员操作 */
+            // 记录管理员操作 
             admin_log($_POST['username'], 'add', 'users');
 
-            /* 提示信息 */
+            // 提示信息 
             $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'users.php?act=list'];
             return sys_msg(sprintf($GLOBALS['_LANG']['add_success'], htmlspecialchars(stripslashes($_POST['username']))), 0, $link);
         }
@@ -174,7 +174,7 @@ class UsersController extends Controller
          * 编辑用户帐号
          */
         if ($_REQUEST['act'] == 'edit') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('users_manage');
 
             $sql = "SELECT u.user_name, u.sex, u.birthday, u.pay_points, u.rank_points, u.user_rank , u.user_money, u.frozen_money, u.credit_line, u.parent_id, u2.user_name as parent_username, u.qq, u.msn, u.office_phone, u.home_phone, u.mobile_phone" .
@@ -223,7 +223,7 @@ class UsersController extends Controller
 //        $user['formated_frozen_money'] = price_format(0);
             }
 
-            /* 取出注册扩展字段 */
+            // 取出注册扩展字段 
             $sql = 'SELECT * FROM ' . $this->ecs->table('reg_fields') . ' WHERE type < 2 AND display = 1 AND id != 6 ORDER BY dis_order, id';
             $extend_info_list = $this->db->getAll($sql);
 
@@ -261,7 +261,7 @@ class UsersController extends Controller
 
             $this->smarty->assign('extend_info_list', $extend_info_list);
 
-            /* 当前会员推荐信息 */
+            // 当前会员推荐信息 
             $affiliate = unserialize($GLOBALS['_CFG']['affiliate']);
             $this->smarty->assign('affiliate', $affiliate);
 
@@ -303,7 +303,7 @@ class UsersController extends Controller
          * 更新用户帐号
          */
         if ($_REQUEST['act'] == 'update') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('users_manage');
             $username = empty($_POST['username']) ? '' : trim($_POST['username']);
             $password = empty($_POST['password']) ? '' : trim($_POST['password']);
@@ -328,7 +328,7 @@ class UsersController extends Controller
                 $sql = "UPDATE " . $this->ecs->table('users') . "SET `ec_salt`='0' WHERE user_name= '" . $username . "'";
                 $this->db->query($sql);
             }
-            /* 更新用户扩展字段的数据 */
+            // 更新用户扩展字段的数据 
             $sql = 'SELECT id FROM ' . $this->ecs->table('reg_fields') . ' WHERE type = 0 AND display = 1 ORDER BY dis_order, id';   //读出所有扩展字段的id
             $fields_arr = $this->db->getAll($sql);
             $user_id_arr = $users->get_profile_by_name($username);
@@ -350,7 +350,7 @@ class UsersController extends Controller
             }
 
 
-            /* 更新会员的其它信息 */
+            // 更新会员的其它信息 
             $other = [];
             $other['credit_line'] = $credit_line;
             $other['user_rank'] = $rank;
@@ -363,10 +363,10 @@ class UsersController extends Controller
 
             $this->db->autoExecute($this->ecs->table('users'), $other, 'UPDATE', "user_name = '$username'");
 
-            /* 记录管理员操作 */
+            // 记录管理员操作 
             admin_log($username, 'edit', 'users');
 
-            /* 提示信息 */
+            // 提示信息 
             $links[0]['text'] = $GLOBALS['_LANG']['goto_list'];
             $links[0]['href'] = 'users.php?act=list&' . list_link_postfix();
             $links[1]['text'] = $GLOBALS['_LANG']['go_back'];
@@ -379,7 +379,7 @@ class UsersController extends Controller
          * 批量删除会员帐号
          */
         if ($_REQUEST['act'] == 'batch_remove') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('users_drop');
 
             if (isset($_POST['checkboxes'])) {
@@ -387,7 +387,7 @@ class UsersController extends Controller
                 $col = $this->db->getCol($sql);
                 $usernames = implode(',', addslashes_deep($col));
                 $count = count($col);
-                /* 通过插件来删除用户 */
+                // 通过插件来删除用户 
                 $users =& init_users();
                 $users->remove_user($col);
 
@@ -401,9 +401,9 @@ class UsersController extends Controller
             }
         }
 
-        /* 编辑用户名 */
+        // 编辑用户名 
         if ($_REQUEST['act'] == 'edit_username') {
-            /* 检查权限 */
+            // 检查权限 
             check_authz_json('users_manage');
 
             $username = empty($_REQUEST['val']) ? '' : json_str_iconv(trim($_REQUEST['val']));
@@ -423,7 +423,7 @@ class UsersController extends Controller
 
             if ($users->edit_user($id, $username)) {
                 if ($GLOBALS['_CFG']['integrate_code'] != 'ecshop') {
-                    /* 更新商城会员表 */
+                    // 更新商城会员表 
                     $this->db->query('UPDATE ' . $this->ecs->table('users') . " SET user_name = '$username' WHERE user_id = '$id'");
                 }
 
@@ -439,7 +439,7 @@ class UsersController extends Controller
          * 编辑email
          */
         if ($_REQUEST['act'] == 'edit_email') {
-            /* 检查权限 */
+            // 检查权限 
             check_authz_json('users_manage');
 
             $id = empty($_REQUEST['id']) ? 0 : intval($_REQUEST['id']);
@@ -469,19 +469,19 @@ class UsersController extends Controller
          * 删除会员帐号
          */
         if ($_REQUEST['act'] == 'remove') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('users_drop');
 
             $sql = "SELECT user_name FROM " . $this->ecs->table('users') . " WHERE user_id = '" . $_GET['id'] . "'";
             $username = $this->db->getOne($sql);
-            /* 通过插件来删除用户 */
+            // 通过插件来删除用户 
             $users =& init_users();
             $users->remove_user($username); //已经删除用户所有数据
 
-            /* 记录管理员操作 */
+            // 记录管理员操作 
             admin_log(addslashes($username), 'remove', 'users');
 
-            /* 提示信息 */
+            // 提示信息 
             $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'users.php?act=list'];
             return sys_msg(sprintf($GLOBALS['_LANG']['remove_success'], $username), 0, $link);
         }
@@ -510,18 +510,18 @@ class UsersController extends Controller
          * 脱离推荐关系
          */
         if ($_REQUEST['act'] == 'remove_parent') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('users_manage');
 
             $sql = "UPDATE " . $this->ecs->table('users') . " SET parent_id = 0 WHERE user_id = '" . $_GET['id'] . "'";
             $this->db->query($sql);
 
-            /* 记录管理员操作 */
+            // 记录管理员操作 
             $sql = "SELECT user_name FROM " . $this->ecs->table('users') . " WHERE user_id = '" . $_GET['id'] . "'";
             $username = $this->db->getOne($sql);
             admin_log(addslashes($username), 'edit', 'users');
 
-            /* 提示信息 */
+            // 提示信息 
             $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'users.php?act=list'];
             return sys_msg(sprintf($GLOBALS['_LANG']['update_success'], $username), 0, $link);
         }
@@ -530,7 +530,7 @@ class UsersController extends Controller
          * 查看用户推荐会员列表
          */
         if ($_REQUEST['act'] == 'aff_list') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('users_manage');
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['03_users_list']);
 
@@ -594,7 +594,7 @@ class UsersController extends Controller
     {
         $result = get_filter();
         if ($result === false) {
-            /* 过滤条件 */
+            // 过滤条件 
             $filter['keywords'] = empty($_REQUEST['keywords']) ? '' : trim($_REQUEST['keywords']);
             if (isset($_REQUEST['is_ajax']) && $_REQUEST['is_ajax'] == 1) {
                 $filter['keywords'] = json_str_iconv($filter['keywords']);
@@ -614,7 +614,7 @@ class UsersController extends Controller
                 $sql = "SELECT min_points, max_points, special_rank FROM " . $GLOBALS['ecs']->table('user_rank') . " WHERE rank_id = '$filter[rank]'";
                 $row = $GLOBALS['db']->getRow($sql);
                 if ($row['special_rank'] > 0) {
-                    /* 特殊等级 */
+                    // 特殊等级 
                     $ex_where .= " AND user_rank = '$filter[rank]' ";
                 } else {
                     $ex_where .= " AND rank_points >= " . intval($row['min_points']) . " AND rank_points < " . intval($row['max_points']);
@@ -629,7 +629,7 @@ class UsersController extends Controller
 
             $filter['record_count'] = $GLOBALS['db']->getOne("SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('users') . $ex_where);
 
-            /* 分页大小 */
+            // 分页大小 
             $filter = page_and_size($filter);
             $sql = "SELECT user_id, user_name, email, is_validated, user_money, frozen_money, rank_points, pay_points, reg_time " .
                 " FROM " . $GLOBALS['ecs']->table('users') . $ex_where .

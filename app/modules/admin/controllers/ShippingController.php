@@ -25,12 +25,12 @@ class ShippingController extends Controller
                 $code = strtolower($modules[$i]['code']);
                 load_lang('shipping/' . $code);
 
-                /* 检查该插件是否已经安装 */
+                // 检查该插件是否已经安装 
                 $sql = "SELECT shipping_id, shipping_name, shipping_desc, insure, support_cod,shipping_order FROM " . $this->ecs->table('shipping') . " WHERE shipping_code='" . $code . "' ORDER BY shipping_order";
                 $row = $this->db->getRow($sql);
 
                 if ($row) {
-                    /* 插件已经安装了，获得名称以及描述 */
+                    // 插件已经安装了，获得名称以及描述 
                     $modules[$i]['id'] = $row['shipping_id'];
                     $modules[$i]['name'] = $row['shipping_name'];
                     $modules[$i]['desc'] = $row['shipping_desc'];
@@ -68,15 +68,15 @@ class ShippingController extends Controller
             $set_modules = true;
             include_once(ROOT_PATH . 'includes/modules/shipping/' . $_GET['code'] . '.php');
 
-            /* 检查该配送方式是否已经安装 */
+            // 检查该配送方式是否已经安装 
             $sql = "SELECT shipping_id FROM " . $this->ecs->table('shipping') . " WHERE shipping_code = '$_GET[code]'";
             $id = $this->db->getOne($sql);
 
             if ($id > 0) {
-                /* 该配送方式已经安装过, 将该配送方式的状态设置为 enable */
+                // 该配送方式已经安装过, 将该配送方式的状态设置为 enable 
                 $this->db->query("UPDATE " . $this->ecs->table('shipping') . " SET enabled = 1 WHERE shipping_code = '$_GET[code]' LIMIT 1");
             } else {
-                /* 该配送方式没有安装过, 将该配送方式的信息添加到数据库 */
+                // 该配送方式没有安装过, 将该配送方式的信息添加到数据库 
                 $insure = empty($modules[0]['insure']) ? 0 : $modules[0]['insure'];
                 $sql = "INSERT INTO " . $this->ecs->table('shipping') . " (" .
                     "shipping_code, shipping_name, shipping_desc, insure, support_cod, enabled, print_bg, config_lable, print_model" .
@@ -87,10 +87,10 @@ class ShippingController extends Controller
                 $id = $this->db->insert_Id();
             }
 
-            /* 记录管理员操作 */
+            // 记录管理员操作 
             admin_log(addslashes($GLOBALS['_LANG'][$modules[0]['code']]), 'install', 'shipping');
 
-            /* 提示信息 */
+            // 提示信息 
             $lnk[] = ['text' => $GLOBALS['_LANG']['add_shipping_area'], 'href' => 'shipping_area.php?act=add&shipping=' . $id];
             $lnk[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'shipping.php?act=list'];
             return sys_msg(sprintf($GLOBALS['_LANG']['install_succeess'], $GLOBALS['_LANG'][$modules[0]['code']]), 0, $lnk);
@@ -103,12 +103,12 @@ class ShippingController extends Controller
 
             admin_priv('ship_manage');
 
-            /* 获得该配送方式的ID */
+            // 获得该配送方式的ID 
             $row = $this->db->getRow("SELECT shipping_id, shipping_name, print_bg FROM " . $this->ecs->table('shipping') . " WHERE shipping_code='$_GET[code]'");
             $shipping_id = $row['shipping_id'];
             $shipping_name = $row['shipping_name'];
 
-            /* 删除 shipping_fee 以及 shipping 表中的数据 */
+            // 删除 shipping_fee 以及 shipping 表中的数据 
             if ($row) {
                 $all = $this->db->getCol("SELECT shipping_area_id FROM " . $this->ecs->table('shipping_area') . " WHERE shipping_id='$shipping_id'");
                 $in = db_create_in(join(',', $all));
@@ -139,7 +139,7 @@ class ShippingController extends Controller
 
             $shipping_id = !empty($_GET['shipping']) ? intval($_GET['shipping']) : 0;
 
-            /* 检查该插件是否已经安装 取值 */
+            // 检查该插件是否已经安装 取值 
             $sql = "SELECT * FROM " . $this->ecs->table('shipping') . " WHERE shipping_id = '$shipping_id' LIMIT 0,1";
             $row = $this->db->getRow($sql);
             if ($row) {
@@ -157,19 +157,19 @@ class ShippingController extends Controller
          * 模板Flash编辑器
          */
         if ($_REQUEST['act'] == 'recovery_default_template') {
-            /* 检查登录权限 */
+            // 检查登录权限 
             admin_priv('ship_manage');
 
             $shipping_id = !empty($_POST['shipping']) ? intval($_POST['shipping']) : 0;
 
-            /* 取配送代码 */
+            // 取配送代码 
             $sql = "SELECT shipping_code FROM " . $this->ecs->table('shipping') . " WHERE shipping_id = '$shipping_id'";
             $code = $this->db->getOne($sql);
 
             $set_modules = true;
             include_once(ROOT_PATH . 'includes/modules/shipping/' . $code . '.php');
 
-            /* 恢复默认 */
+            // 恢复默认 
             $this->db->query("UPDATE " . $this->ecs->table('shipping') . " SET print_bg = '" . addslashes($modules[0]['print_bg']) . "',  config_lable = '" . addslashes($modules[0]['config_lable']) . "' WHERE shipping_code = '$code' LIMIT 1");
 
             $url = "shipping.php?act=edit_print_template&shipping=$shipping_id";
@@ -223,13 +223,13 @@ class ShippingController extends Controller
          * 模板Flash编辑器 删除图片
          */
         if ($_REQUEST['act'] == 'print_del') {
-            /* 检查权限 */
+            // 检查权限 
             check_authz_json('ship_manage');
 
             $shipping_id = !empty($_GET['shipping']) ? intval($_GET['shipping']) : 0;
             $shipping_id = json_str_iconv($shipping_id);
 
-            /* 检查该插件是否已经安装 取值 */
+            // 检查该插件是否已经安装 取值 
             $sql = "SELECT print_bg FROM " . $this->ecs->table('shipping') . " WHERE shipping_id = '$shipping_id' LIMIT 0,1";
             $row = $this->db->getRow($sql);
             if ($row) {
@@ -254,7 +254,7 @@ class ShippingController extends Controller
 
             $shipping_id = !empty($_GET['shipping']) ? intval($_GET['shipping']) : 0;
 
-            /* 检查该插件是否已经安装 */
+            // 检查该插件是否已经安装 
             $sql = "SELECT * FROM " . $this->ecs->table('shipping') . " WHERE shipping_id=$shipping_id";
             $row = $this->db->getRow($sql);
             if ($row) {
@@ -280,14 +280,14 @@ class ShippingController extends Controller
          * 编辑打印模板
          */
         if ($_REQUEST['act'] == 'do_edit_print_template') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('ship_manage');
 
-            /* 参数处理 */
+            // 参数处理 
             $print_model = !empty($_POST['print_model']) ? intval($_POST['print_model']) : 0;
             $shipping_id = !empty($_REQUEST['shipping']) ? intval($_REQUEST['shipping']) : 0;
 
-            /* 处理不同模式编辑的表单 */
+            // 处理不同模式编辑的表单 
             if ($print_model == 2) {
                 //所见即所得模式
                 $this->db->query("UPDATE " . $this->ecs->table('shipping') . " SET config_lable = '" . $_POST['config_lable'] . "', print_model = '$print_model'  WHERE shipping_id = '$shipping_id'");
@@ -298,7 +298,7 @@ class ShippingController extends Controller
                 $this->db->query("UPDATE " . $this->ecs->table('shipping') . " SET shipping_print = '" . $template . "', print_model = '$print_model' WHERE shipping_id = '$shipping_id'");
             }
 
-            /* 记录管理员操作 */
+            // 记录管理员操作 
             admin_log(addslashes($_POST['shipping_name']), 'edit', 'shipping');
 
             $lnk[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'shipping.php?act=list'];
@@ -310,24 +310,24 @@ class ShippingController extends Controller
          * 编辑配送方式名称
          */
         if ($_REQUEST['act'] == 'edit_name') {
-            /* 检查权限 */
+            // 检查权限 
             check_authz_json('ship_manage');
 
-            /* 取得参数 */
+            // 取得参数 
             $id = json_str_iconv(trim($_POST['id']));
             $val = json_str_iconv(trim($_POST['val']));
 
-            /* 检查名称是否为空 */
+            // 检查名称是否为空 
             if (empty($val)) {
                 return make_json_error($GLOBALS['_LANG']['no_shipping_name']);
             }
 
-            /* 检查名称是否重复 */
+            // 检查名称是否重复 
             if (!$exc->is_only('shipping_name', $val, $id)) {
                 return make_json_error($GLOBALS['_LANG']['repeat_shipping_name']);
             }
 
-            /* 更新支付方式名称 */
+            // 更新支付方式名称 
             $exc->edit("shipping_name = '$val'", $id);
             return make_json_result(stripcslashes($val));
         }
@@ -336,14 +336,14 @@ class ShippingController extends Controller
          * 编辑配送方式描述
          */
         if ($_REQUEST['act'] == 'edit_desc') {
-            /* 检查权限 */
+            // 检查权限 
             check_authz_json('ship_manage');
 
-            /* 取得参数 */
+            // 取得参数 
             $id = json_str_iconv(trim($_POST['id']));
             $val = json_str_iconv(trim($_POST['val']));
 
-            /* 更新描述 */
+            // 更新描述 
             $exc->edit("shipping_desc = '$val'", $id);
             return make_json_result(stripcslashes($val));
         }
@@ -352,10 +352,10 @@ class ShippingController extends Controller
          * 修改配送方式保价费
          */
         if ($_REQUEST['act'] == 'edit_insure') {
-            /* 检查权限 */
+            // 检查权限 
             check_authz_json('ship_manage');
 
-            /* 取得参数 */
+            // 取得参数 
             $id = json_str_iconv(trim($_POST['id']));
             $val = json_str_iconv(trim($_POST['val']));
             if (empty($val)) {
@@ -369,14 +369,14 @@ class ShippingController extends Controller
                 }
             }
 
-            /* 检查该插件是否支持保价 */
+            // 检查该插件是否支持保价 
             $set_modules = true;
             include_once(ROOT_PATH . 'includes/modules/shipping/' . $id . '.php');
             if (isset($modules[0]['insure']) && $modules[0]['insure'] === false) {
                 return make_json_error($GLOBALS['_LANG']['not_support_insure']);
             }
 
-            /* 更新保价费用 */
+            // 更新保价费用 
             $exc->edit("insure = '$val'", $id);
             return make_json_result(stripcslashes($val));
         }
@@ -391,14 +391,14 @@ class ShippingController extends Controller
          * 修改配送方式排序
          */
         if ($_REQUEST['act'] == 'edit_order') {
-            /* 检查权限 */
+            // 检查权限 
             check_authz_json('ship_manage');
 
-            /* 取得参数 */
+            // 取得参数 
             $code = json_str_iconv(trim($_POST['id']));
             $order = intval($_POST['val']);
 
-            /* 更新排序 */
+            // 更新排序 
             $exc->edit("shipping_order = '$order'", $code);
             return make_json_result(stripcslashes($order));
         }

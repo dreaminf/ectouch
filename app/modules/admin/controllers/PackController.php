@@ -56,7 +56,7 @@ class PackController extends Controller
          * 添加新包装
          */
         if ($_REQUEST['act'] == 'add') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('pack');
 
             $pack['pack_fee'] = 0;
@@ -71,7 +71,7 @@ class PackController extends Controller
         }
 
         if ($_REQUEST['act'] == 'insert') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('pack');
 
             /*检查包装名是否重复*/
@@ -81,7 +81,7 @@ class PackController extends Controller
                 return sys_msg(sprintf($GLOBALS['_LANG']['packname_exist'], stripslashes($_POST['pack_name'])), 1);
             }
 
-            /* 处理图片 */
+            // 处理图片 
             if (!empty($_FILES['pack_img'])) {
                 $upload_img = $image->upload_image($_FILES['pack_img'], "packimg", $_POST['old_packimg']);
                 if ($upload_img == false) {
@@ -110,7 +110,7 @@ class PackController extends Controller
          * 编辑包装
          */
         if ($_REQUEST['act'] == 'edit') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('pack');
 
             $sql = "SELECT pack_id, pack_name, pack_fee, free_money, pack_desc, pack_img FROM " . $this->ecs->table('pack') . " WHERE pack_id='$_REQUEST[id]'";
@@ -123,7 +123,7 @@ class PackController extends Controller
         }
 
         if ($_REQUEST['act'] == 'update') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('pack');
             if ($_POST['pack_name'] != $_POST['old_packname']) {
                 /*检查品牌名是否相同*/
@@ -135,7 +135,7 @@ class PackController extends Controller
             }
 
             $param = "pack_name = '$_POST[pack_name]', pack_fee = '$_POST[pack_fee]', free_money= '$_POST[free_money]', pack_desc = '$_POST[pack_desc]' ";
-            /* 处理图片 */
+            // 处理图片 
             if (!empty($_FILES['pack_img']['name'])) {
                 $upload_img = $image->upload_image($_FILES['pack_img'], "packimg", $_POST['old_packimg']);
                 if ($upload_img == false) {
@@ -165,11 +165,11 @@ class PackController extends Controller
          * 删除卡片图片
          */
         if ($_REQUEST['act'] == 'drop_pack_img') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('pack');
             $pack_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-            /* 取得logo名称 */
+            // 取得logo名称 
             $sql = "SELECT pack_img FROM " . $this->ecs->table('pack') . " WHERE pack_id = '$pack_id'";
             $img_name = $this->db->getOne($sql);
 
@@ -191,7 +191,7 @@ class PackController extends Controller
             $id = intval($_POST['id']);
             $val = json_str_iconv(trim($_POST['val']));
 
-            /* 取得该属性所属商品类型id */
+            // 取得该属性所属商品类型id 
             $pack_name = $exc->get_name($id);
 
             if (!$exc->is_only('pack_name', $val, $id)) {
@@ -213,7 +213,7 @@ class PackController extends Controller
             $id = intval($_POST['id']);
             $val = floatval($_POST['val']);
 
-            /* 取得该属性所属商品类型id */
+            // 取得该属性所属商品类型id 
             $pack_name = $exc->get_name($id);
 
             $exc->edit("pack_fee='$val'", $id);
@@ -230,7 +230,7 @@ class PackController extends Controller
             $id = intval($_POST['id']);
             $val = floatval($_POST['val']);
 
-            /* 取得该属性所属商品类型id */
+            // 取得该属性所属商品类型id 
             $pack_name = $exc->get_name($id);
 
             $exc->edit("free_money='$val'", $id);
@@ -249,7 +249,7 @@ class PackController extends Controller
             $img = $exc->get_name($id, 'pack_img');
 
             if ($exc->drop($id)) {
-                /* 删除图片 */
+                // 删除图片 
                 if (!empty($img)) {
                     @unlink('../' . DATA_DIR . '/packimg/' . $img);
                 }
@@ -275,10 +275,10 @@ class PackController extends Controller
             $sql = "SELECT count(*) FROM " . $GLOBALS['ecs']->table('pack');
             $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-            /* 分页大小 */
+            // 分页大小 
             $filter = page_and_size($filter);
 
-            /* 查询 */
+            // 查询 
             $sql = "SELECT pack_id, pack_name, pack_img, pack_fee, free_money, pack_desc" .
                 " FROM " . $GLOBALS['ecs']->table('pack') .
                 " ORDER by " . $filter['sort_by'] . ' ' . $filter['sort_order'] .

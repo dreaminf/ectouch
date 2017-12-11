@@ -17,14 +17,14 @@ class ArticleController extends Controller
         /*初始化数据交换对象 */
         $exc = new Exchange($this->ecs->table("article"), $this->db, 'article_id', 'title');
 
-        /* 允许上传的文件类型 */
+        // 允许上传的文件类型
         $allow_file_types = '|GIF|JPG|PNG|BMP|SWF|DOC|XLS|PPT|MID|WAV|ZIP|RAR|PDF|CHM|RM|TXT|';
 
         /**
          * 文章列表
          */
         if ($_REQUEST['act'] == 'list') {
-            /* 取得过滤条件 */
+            // 取得过滤条件
             $filter = [];
             $this->smarty->assign('cat_select', article_cat_list(0));
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['03_article_list']);
@@ -69,21 +69,21 @@ class ArticleController extends Controller
          * 添加文章
          */
         if ($_REQUEST['act'] == 'add') {
-            /* 权限判断 */
+            // 权限判断
             admin_priv('article_manage');
 
-            /* 创建 html editor */
+            // 创建 html editor
             create_html_editor('editor1');
 
             /*初始化*/
             $article = [];
             $article['is_open'] = 1;
 
-            /* 取得分类、品牌 */
+            // 取得分类、品牌
             $this->smarty->assign('goods_cat_list', cat_list());
             $this->smarty->assign('brand_list', get_brand_list());
 
-            /* 清理关联商品 */
+            // 清理关联商品
             $sql = "DELETE FROM " . $this->ecs->table('goods_article') . " WHERE article_id = 0";
             $this->db->query($sql);
 
@@ -103,7 +103,7 @@ class ArticleController extends Controller
          * 添加文章
          */
         if ($_REQUEST['act'] == 'insert') {
-            /* 权限判断 */
+            // 权限判断
             admin_priv('article_manage');
 
             /*检查是否重复*/
@@ -113,7 +113,7 @@ class ArticleController extends Controller
                 return sys_msg(sprintf($GLOBALS['_LANG']['title_exist'], stripslashes($_POST['title'])), 1);
             }
 
-            /* 取得文件地址 */
+            // 取得文件地址
             $file_url = '';
             if ((isset($_FILES['file']['error']) && $_FILES['file']['error'] == 0) || (!isset($_FILES['file']['error']) && isset($_FILES['file']['tmp_name']) && $_FILES['file']['tmp_name'] != 'none')) {
                 // 检查文件格式
@@ -132,7 +132,7 @@ class ArticleController extends Controller
                 $file_url = $_POST['file_url'];
             }
 
-            /* 计算文章打开方式 */
+            // 计算文章打开方式
             if ($file_url == '') {
                 $open_type = 0;
             } else {
@@ -151,7 +151,7 @@ class ArticleController extends Controller
                 "'$add_time', '$file_url', '$open_type', '$_POST[link_url]', '$_POST[description]')";
             $this->db->query($sql);
 
-            /* 处理关联商品 */
+            // 处理关联商品
             $article_id = $this->db->insert_id();
             $sql = "UPDATE " . $this->ecs->table('goods_article') . " SET article_id = '$article_id' WHERE article_id = 0";
             $this->db->query($sql);
@@ -173,21 +173,21 @@ class ArticleController extends Controller
          * 编辑
          */
         if ($_REQUEST['act'] == 'edit') {
-            /* 权限判断 */
+            // 权限判断
             admin_priv('article_manage');
 
-            /* 取文章数据 */
+            // 取文章数据
             $sql = "SELECT * FROM " . $this->ecs->table('article') . " WHERE article_id='$_REQUEST[id]'";
             $article = $this->db->getRow($sql);
 
-            /* 创建 html editor */
+            // 创建 html editor
             create_html_editor('editor1', $article['content']);
 
-            /* 取得分类、品牌 */
+            // 取得分类、品牌
             $this->smarty->assign('goods_cat_list', cat_list());
             $this->smarty->assign('brand_list', get_brand_list());
 
-            /* 取得关联商品 */
+            // 取得关联商品
             $goods_list = $this->get_article_goods($_REQUEST['id']);
             $this->smarty->assign('goods_list', $goods_list);
 
@@ -204,7 +204,7 @@ class ArticleController extends Controller
          * 更新
          */
         if ($_REQUEST['act'] == 'update') {
-            /* 权限判断 */
+            // 权限判断
             admin_priv('article_manage');
 
             /*检查文章名是否相同*/
@@ -219,7 +219,7 @@ class ArticleController extends Controller
                 $_POST['cat_id'] = 0;
             }
 
-            /* 取得文件地址 */
+            // 取得文件地址
             $file_url = '';
             if (empty($_FILES['file']['error']) || (!isset($_FILES['file']['error']) && isset($_FILES['file']['tmp_name']) && $_FILES['file']['tmp_name'] != 'none')) {
                 // 检查文件格式
@@ -238,14 +238,14 @@ class ArticleController extends Controller
                 $file_url = $_POST['file_url'];
             }
 
-            /* 计算文章打开方式 */
+            // 计算文章打开方式
             if ($file_url == '') {
                 $open_type = 0;
             } else {
                 $open_type = $_POST['editor1'] == '' ? 1 : 2;
             }
 
-            /* 如果 file_url 跟以前不一样，且原来的文件是本地文件，删除原来的文件 */
+            // 如果 file_url 跟以前不一样，且原来的文件是本地文件，删除原来的文件
             $sql = "SELECT file_url FROM " . $this->ecs->table('article') . " WHERE article_id = '$_POST[id]'";
             $old_url = $this->db->getOne($sql);
             if ($old_url != '' && $old_url != $file_url && strpos($old_url, 'http://') === false && strpos($old_url, 'https://') === false) {
@@ -276,7 +276,7 @@ class ArticleController extends Controller
             $id = intval($_POST['id']);
             $title = json_str_iconv(trim($_POST['val']));
 
-            /* 检查文章标题是否重复 */
+            // 检查文章标题是否重复
             if ($exc->num("title", $title, $id) != 0) {
                 return make_json_error(sprintf($GLOBALS['_LANG']['title_exist'], $title));
             } else {
@@ -328,7 +328,7 @@ class ArticleController extends Controller
 
             $id = intval($_GET['id']);
 
-            /* 删除原来的文件 */
+            // 删除原来的文件
             $sql = "SELECT file_url FROM " . $this->ecs->table('article') . " WHERE article_id = '$id'";
             $old_url = $this->db->getOne($sql);
             if ($old_url != '' && strpos($old_url, 'http://') === false && strpos($old_url, 'https://') === false) {
@@ -371,7 +371,7 @@ class ArticleController extends Controller
                 $this->db->query($sql, 'SILENT');
             }
 
-            /* 重新载入 */
+            // 重新载入
             $arr = $this->get_article_goods($article_id);
             $opt = [];
 
@@ -405,7 +405,7 @@ class ArticleController extends Controller
                 " WHERE article_id = '$article_id' AND goods_id " . db_create_in($drop_goods);
             $this->db->query($sql, 'SILENT');
 
-            /* 重新载入 */
+            // 重新载入
             $arr = $this->get_article_goods($article_id);
             $opt = [];
 
@@ -443,7 +443,7 @@ class ArticleController extends Controller
          * 批量操作
          */
         if ($_REQUEST['act'] == 'batch') {
-            /* 批量删除 */
+            // 批量删除
             if (isset($_POST['type'])) {
                 if ($_POST['type'] == 'button_remove') {
                     admin_priv('article_manage');
@@ -452,7 +452,7 @@ class ArticleController extends Controller
                         return sys_msg($GLOBALS['_LANG']['no_select_article'], 1);
                     }
 
-                    /* 删除原来的文件 */
+                    // 删除原来的文件
                     $sql = "SELECT file_url FROM " . $this->ecs->table('article') .
                         " WHERE article_id " . db_create_in(join(',', $_POST['checkboxes'])) .
                         " AND file_url <> ''";
@@ -473,7 +473,7 @@ class ArticleController extends Controller
                     }
                 }
 
-                /* 批量隐藏 */
+                // 批量隐藏
                 if ($_POST['type'] == 'button_hide') {
                     check_authz_json('article_manage');
                     if (!isset($_POST['checkboxes']) || !is_array($_POST['checkboxes'])) {
@@ -485,7 +485,7 @@ class ArticleController extends Controller
                     }
                 }
 
-                /* 批量显示 */
+                // 批量显示
                 if ($_POST['type'] == 'button_show') {
                     check_authz_json('article_manage');
                     if (!isset($_POST['checkboxes']) || !is_array($_POST['checkboxes'])) {
@@ -497,7 +497,7 @@ class ArticleController extends Controller
                     }
                 }
 
-                /* 批量移动分类 */
+                // 批量移动分类
                 if ($_POST['type'] == 'move_to') {
                     check_authz_json('article_manage');
                     if (!isset($_POST['checkboxes']) || !is_array($_POST['checkboxes'])) {
@@ -514,7 +514,7 @@ class ArticleController extends Controller
                 }
             }
 
-            /* 清除缓存 */
+            // 清除缓存
             clear_cache_files();
             $lnk[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'article.php?act=list'];
             return sys_msg($GLOBALS['_LANG']['batch_handle_ok'], 0, $lnk);
@@ -576,7 +576,7 @@ class ArticleController extends Controller
                 $where .= " AND a." . get_article_children($filter['cat_id']);
             }
 
-            /* 文章总数 */
+            // 文章总数
             $sql = 'SELECT COUNT(*) FROM ' . $GLOBALS['ecs']->table('article') . ' AS a ' .
                 'LEFT JOIN ' . $GLOBALS['ecs']->table('article_cat') . ' AS ac ON ac.cat_id = a.cat_id ' .
                 'WHERE 1 ' . $where;
@@ -584,7 +584,7 @@ class ArticleController extends Controller
 
             $filter = page_and_size($filter);
 
-            /* 获取文章数据 */
+            // 获取文章数据
             $sql = 'SELECT a.* , ac.cat_name ' .
                 'FROM ' . $GLOBALS['ecs']->table('article') . ' AS a ' .
                 'LEFT JOIN ' . $GLOBALS['ecs']->table('article_cat') . ' AS ac ON ac.cat_id = a.cat_id ' .
@@ -615,7 +615,7 @@ class ArticleController extends Controller
     private function upload_article_file($upload)
     {
         if (!make_dir("../" . DATA_DIR . "/article")) {
-            /* 创建目录失败 */
+            // 创建目录失败
             return false;
         }
 

@@ -42,7 +42,7 @@ $_LANG['edit_surplus_notic'] = '现在的状态已经是 已完成，如果您�
 $_LANG['back_list'] = '返回充值和提现申请';
 $_LANG['continue_add'] = '继续添加申请';
 
-/* JS语言项 */
+// JS语言项
 $_LANG['js_languages']['user_id_empty'] = '会员名称不能为空！';
 $_LANG['js_languages']['deposit_amount_empty'] = '请输入充值的金额！';
 $_LANG['js_languages']['pay_code_empty'] = '请选择支付方式';

@@ -4,8 +4,6 @@ namespace app\http\controllers;
 
 use app\libraries\Captcha;
 
-define('INIT_NO_SMARTY', true);
-
 /**
  * 生成验证码
  * Class CaptchaController

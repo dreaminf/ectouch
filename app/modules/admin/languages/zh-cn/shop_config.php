@@ -387,7 +387,7 @@ $_LANG['msg_invalid_file'] = '您上传了一个非法的文件类型。该文�
 $_LANG['msg_upload_failed'] = '上传文件 %s 失败，请检查 %s 目录是否可写。';
 $_LANG['smtp_ssl_confirm'] = '此功能要求您的php必须支持OpenSSL模块, 如果您要使用此功能，请联系您的空间商确认支持此模块';
 
-/* 邮件设置语言项 */
+// 邮件设置语言项 
 $_LANG['cfg_name']['mail_service'] = '邮件服务';
 $_LANG['cfg_desc']['mail_service'] = '如果您选择了采用服务器内置的 Mail 服务，您不需要填写下面的内容。';
 $_LANG['cfg_range']['mail_service'][0] = '采用服务器内置的 Mail 服务';

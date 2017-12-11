@@ -53,7 +53,7 @@
 
 var orgContent = '';
 
-/* 定义页面状态变量 */
+// 定义页面状态变量
 var STATUS_is_html = {$template.is_html}; //文本邮件|HTML邮件
 
 /**
@@ -63,7 +63,7 @@ function update_page_status_variables()
 {
   var em = document.forms['theForm'].elements;
 
-  /* STATUS_is_html */
+  // STATUS_is_html
   var em_radio = em['mail_type'];
 
   for (i = 0; i < em_radio.length; i++)

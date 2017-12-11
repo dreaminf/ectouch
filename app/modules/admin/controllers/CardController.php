@@ -56,7 +56,7 @@ class CardController extends Controller
          * 删除贺卡
          */
         if ($_REQUEST['act'] == 'remove') {
-            /* 检查权限 */
+            // 检查权限 
             check_authz_json('card_manage');
 
             $card_id = empty($_REQUEST['id']) ? 0 : intval($_REQUEST['id']);
@@ -65,7 +65,7 @@ class CardController extends Controller
             $img = $exc->get_name($card_id, 'card_img');
 
             if ($exc->drop($card_id)) {
-                /* 删除图片 */
+                // 删除图片 
                 if (!empty($img)) {
                     @unlink('../' . DATA_DIR . '/cardimg/' . $img);
                 }
@@ -83,7 +83,7 @@ class CardController extends Controller
          * 添加新包装
          */
         if ($_REQUEST['act'] == 'add') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('card_manage');
 
             /*初始化显示*/
@@ -102,7 +102,7 @@ class CardController extends Controller
          * 插入新包装
          */
         if ($_REQUEST['act'] == 'insert') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('card_manage');
 
             /*检查包装名是否重复*/
@@ -136,7 +136,7 @@ class CardController extends Controller
          * 编辑包装
          */
         if ($_REQUEST['act'] == 'edit') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('card_manage');
 
             $sql = "SELECT card_id, card_name, card_fee, free_money, card_desc, card_img FROM " . $this->ecs->table('card') . " WHERE card_id='$_REQUEST[id]'";
@@ -155,7 +155,7 @@ class CardController extends Controller
          * 更新包装
          */
         if ($_REQUEST['act'] == 'update') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('card_manage');
 
             if ($_POST['card_name'] != $_POST['old_cardname']) {
@@ -167,7 +167,7 @@ class CardController extends Controller
                 }
             }
             $param = "card_name = '$_POST[card_name]', card_fee = '$_POST[card_fee]', free_money= $_POST[free_money], card_desc = '$_POST[card_desc]'";
-            /* 处理图片 */
+            // 处理图片 
             $img_name = basename($image->upload_image($_FILES['card_img'], "cardimg", $_POST['old_cardimg']));
             if ($img_name) {
                 $param .= "  ,card_img ='$img_name' ";
@@ -190,11 +190,11 @@ class CardController extends Controller
          * 删除卡片图片
          */
         if ($_REQUEST['act'] == 'drop_card_img') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('card_manage');
             $card_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-            /* 取得logo名称 */
+            // 取得logo名称 
             $sql = "SELECT card_img FROM " . $this->ecs->table('card') . " WHERE card_id = '$card_id'";
             $img_name = $this->db->getOne($sql);
 
@@ -272,13 +272,13 @@ class CardController extends Controller
             $filter['sort_by'] = empty($_REQUEST['sort_by']) ? 'card_id' : trim($_REQUEST['sort_by']);
             $filter['sort_order'] = empty($_REQUEST['sort_order']) ? 'DESC' : trim($_REQUEST['sort_order']);
 
-            /* 分页大小 */
+            // 分页大小 
             $sql = "SELECT count(*) FROM " . $GLOBALS['ecs']->table('card');
             $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
             $filter = page_and_size($filter);
 
-            /* 查询 */
+            // 查询 
             $sql = "SELECT card_id, card_name, card_img, card_fee, free_money, card_desc" .
                 " FROM " . $GLOBALS['ecs']->table('card') .
                 " ORDER by " . $filter['sort_by'] . ' ' . $filter['sort_order'] .

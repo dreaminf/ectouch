@@ -11,17 +11,17 @@ class CategoryController extends Controller
 {
     public function actionIndex()
     {
-        /* 获得请求的分类 ID */
+        // 获得请求的分类 ID 
         if (isset($_REQUEST['id'])) {
             $cat_id = intval($_REQUEST['id']);
         } elseif (isset($_REQUEST['category'])) {
             $cat_id = intval($_REQUEST['category']);
         } else {
-            /* 如果分类ID为0，则返回首页 */
+            // 如果分类ID为0，则返回首页 
             return $this->redirect('/');
         }
 
-        /* 初始化分页信息 */
+        // 初始化分页信息 
         $page = isset($_REQUEST['page']) && intval($_REQUEST['page']) > 0 ? intval($_REQUEST['page']) : 1;
         $size = isset($GLOBALS['_CFG']['page_size']) && intval($GLOBALS['_CFG']['page_size']) > 0 ? intval($GLOBALS['_CFG']['page_size']) : 10;
         $brand = isset($_REQUEST['brand']) && intval($_REQUEST['brand']) > 0 ? intval($_REQUEST['brand']) : 0;
@@ -34,7 +34,7 @@ class CategoryController extends Controller
         $filter_attr = empty($filter_attr_str) ? '' : explode('.', $filter_attr_str);
 
 
-        /* 排序、显示方式以及类型 */
+        // 排序、显示方式以及类型 
         $default_display_type = $GLOBALS['_CFG']['show_order_type'] == '0' ? 'list' : ($GLOBALS['_CFG']['show_order_type'] == '1' ? 'grid' : 'text');
         $default_sort_order_method = $GLOBALS['_CFG']['sort_order_method'] == '0' ? 'DESC' : 'ASC';
         $default_sort_order_type = $GLOBALS['_CFG']['sort_order_type'] == '0' ? 'goods_id' : ($GLOBALS['_CFG']['sort_order_type'] == '1' ? 'shop_price' : 'last_update');
@@ -46,12 +46,12 @@ class CategoryController extends Controller
         $display = in_array($display, ['list', 'grid', 'text']) ? $display : 'text';
         cookie('display', $display, 1440 * 7);
 
-        /* 页面的缓存ID */
+        // 页面的缓存ID 
         $cache_id = sprintf('%X', crc32($cat_id . '-' . $display . '-' . $sort . '-' . $order . '-' . $page . '-' . $size . '-' . session('user_rank') . '-' .
             $GLOBALS['_CFG']['lang'] . '-' . $brand . '-' . $price_max . '-' . $price_min . '-' . $filter_attr_str));
 
         if (!$this->smarty->is_cached('category.dwt', $cache_id)) {
-            /* 如果页面没有被缓存则重新获取页面的内容 */
+            // 如果页面没有被缓存则重新获取页面的内容 
 
             $children = get_children($cat_id);
 
@@ -62,11 +62,11 @@ class CategoryController extends Controller
                 $this->smarty->assign('description', htmlspecialchars($cat['cat_desc']));
                 $this->smarty->assign('cat_style', htmlspecialchars($cat['style']));
             } else {
-                /* 如果分类不存在则返回首页 */
+                // 如果分类不存在则返回首页 
                 return $this->redirect('/');
             }
 
-            /* 赋值固定内容 */
+            // 赋值固定内容 
             if ($brand > 0) {
                 $sql = "SELECT brand_name FROM " . $GLOBALS['ecs']->table('brand') . " WHERE brand_id = '$brand'";
                 $brand_name = $this->db->getOne($sql);
@@ -74,13 +74,13 @@ class CategoryController extends Controller
                 $brand_name = '';
             }
 
-            /* 获取价格分级 */
+            // 获取价格分级 
             if ($cat['grade'] == 0 && $cat['parent_id'] != 0) {
                 $cat['grade'] = $this->get_parent_grade($cat_id); //如果当前分类级别为空，取最近的上级分类
             }
 
             if ($cat['grade'] > 1) {
-                /* 需要价格分级 */
+                // 需要价格分级 
 
                 /*
                     算法思路：
@@ -153,7 +153,7 @@ class CategoryController extends Controller
                     $price_grade[$temp_key]['formated_end'] = price_format($price_grade[$temp_key]['end']);
                     $price_grade[$temp_key]['url'] = build_uri('category', ['cid' => $cat_id, 'bid' => $brand, 'price_min' => $price_grade[$temp_key]['start'], 'price_max' => $price_grade[$temp_key]['end'], 'filter_attr' => $filter_attr_str], $cat['cat_name']);
 
-                    /* 判断价格区间是否被选中 */
+                    // 判断价格区间是否被选中 
                     if (isset($_REQUEST['price_min']) && $price_grade[$temp_key]['start'] == $price_min && $price_grade[$temp_key]['end'] == $price_max) {
                         $price_grade[$temp_key]['selected'] = 1;
                     } else {
@@ -170,7 +170,7 @@ class CategoryController extends Controller
                 $this->smarty->assign('price_grade', $price_grade);
             }
 
-            /* 品牌筛选 */
+            // 品牌筛选 
             $sql = "SELECT b.brand_id, b.brand_name, COUNT(*) AS goods_num " .
                 "FROM " . $GLOBALS['ecs']->table('brand') . "AS b, " .
                 $GLOBALS['ecs']->table('goods') . " AS g LEFT JOIN " . $GLOBALS['ecs']->table('goods_cat') . " AS gc ON g.goods_id = gc.goods_id " .
@@ -185,7 +185,7 @@ class CategoryController extends Controller
                 $brands[$temp_key]['brand_name'] = $val['brand_name'];
                 $brands[$temp_key]['url'] = build_uri('category', ['cid' => $cat_id, 'bid' => $val['brand_id'], 'price_min' => $price_min, 'price_max' => $price_max, 'filter_attr' => $filter_attr_str], $cat['cat_name']);
 
-                /* 判断品牌是否被选中 */
+                // 判断品牌是否被选中 
                 if ($brand == $brands[$key]['brand_id']) {
                     $brands[$temp_key]['selected'] = 1;
                 } else {
@@ -199,7 +199,7 @@ class CategoryController extends Controller
 
             $this->smarty->assign('brands', $brands);
 
-            /* 属性筛选 */
+            // 属性筛选 
             $ext = ''; //商品查询条件扩展
             if ($cat['filter_attr'] > 0) {
                 $cat_filter_attr = explode(',', $cat['filter_attr']);       //提取出此分类的筛选属性
@@ -248,7 +248,7 @@ class CategoryController extends Controller
                 }
 
                 $this->smarty->assign('filter_attr_list', $all_attr_list);
-                /* 扩展商品查询条件 */
+                // 扩展商品查询条件 
                 if (!empty($filter_attr)) {
                     $ext_sql = "SELECT DISTINCT(b.goods_id) FROM " . $this->ecs->table('goods_attr') . " AS a, " . $this->ecs->table('goods_attr') . " AS b " . "WHERE ";
                     $ext_group_goods = [];
@@ -297,7 +297,7 @@ class CategoryController extends Controller
             $this->smarty->assign('brand_list', $brand_list);
             $this->smarty->assign('promotion_info', get_promotion_info());
 
-            /* 调查 */
+            // 调查 
             $vote = get_vote();
             if (!empty($vote)) {
                 $this->smarty->assign('vote_id', $vote['id']);
@@ -367,7 +367,7 @@ class CategoryController extends Controller
             $where .= " AND g.shop_price <= $max ";
         }
 
-        /* 获得商品列表 */
+        // 获得商品列表 
         $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' .
             "IFNULL(mp.user_price, g.shop_price * '". session('discount') ."') AS shop_price, g.promote_price, g.goods_type, " .
             'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img ' .
@@ -385,7 +385,7 @@ class CategoryController extends Controller
                 $promote_price = 0;
             }
 
-            /* 处理商品水印图片 */
+            // 处理商品水印图片 
             $watermark_img = '';
 
             if ($promote_price != 0) {
@@ -446,7 +446,7 @@ class CategoryController extends Controller
             $where .= " AND g.shop_price <= $max ";
         }
 
-        /* 返回商品总数 */
+        // 返回商品总数 
         return $GLOBALS['db']->getOne('SELECT COUNT(*) FROM ' . $GLOBALS['ecs']->table('goods') . " AS g WHERE $where $ext");
     }
 

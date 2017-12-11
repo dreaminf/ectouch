@@ -74,17 +74,17 @@ $_LANG['attradd_succed'] = '操作成功!';
 $_LANG['todolist'] = '记事本';
 $_LANG['n_a'] = 'N/A';
 
-/* 提示 */
+// 提示 
 $_LANG['sys']['wrong'] = '错误：';
 
-/* 编码 */
+// 编码 
 $_LANG['charset']['utf8'] = '国际化编码（utf8）';
 $_LANG['charset']['zh_cn'] = '简体中文';
 $_LANG['charset']['zh_tw'] = '繁体中文';
 $_LANG['charset']['en_us'] = '美国英语';
 $_LANG['charset']['en_uk'] = '英文';
 
-/* 新订单通知 */
+// 新订单通知 
 $_LANG['order_notify'] = '新订单通知';
 $_LANG['new_order_1'] = '您有 ';
 $_LANG['new_order_2'] = ' 个新订单以及 ';
@@ -95,7 +95,7 @@ $_LANG['new_order_link'] = '点击查看新订单';
 $_LANG['chinese_simplified'] = '简体中文';
 $_LANG['english'] = '英文';
 
-/* 分页 */
+// 分页 
 $_LANG['total_records'] = '总计 ';
 $_LANG['total_pages'] = '个记录分为';
 $_LANG['page_size'] = '页，每页';
@@ -106,11 +106,11 @@ $_LANG['page_next'] = '下一页';
 $_LANG['page_last'] = '最末页';
 $_LANG['admin_home'] = '起始页';
 
-/* 重量 */
+// 重量 
 $_LANG['gram'] = '克';
 $_LANG['kilogram'] = '千克';
 
-/* 菜单分类部分 */
+// 菜单分类部分 
 $_LANG['00_menu_dashboard'] = '控制台';
 $_LANG['01_system'] = '设置';
 $_LANG['02_cat_and_goods'] = '商品';
@@ -132,7 +132,7 @@ $_LANG['01_dashboard_welcome'] = '欢迎页面';
 //$_LANG['03_notepad'] = '记事本';
 //$_LANG['04_calc'] = '计算器';
 
-/* 商品管理 */
+// 商品管理 
 $_LANG['01_goods_list'] = '商品列表';
 $_LANG['02_goods_add'] = '添加新商品';
 $_LANG['03_category_list'] = '商品分类';
@@ -162,7 +162,7 @@ $_LANG['goods_auto'] = '商品自动上下架';
 $_LANG['article_auto'] = '文章自动发布';
 $_LANG['navigator'] = '自定义导航栏';
 
-/* 促销管理 */
+// 促销管理 
 $_LANG['02_snatch_list'] = '夺宝奇兵';
 $_LANG['snatch_add'] = '添加夺宝奇兵';
 $_LANG['04_bonustype_list'] = '红包类型';
@@ -186,7 +186,7 @@ $_LANG['package_add'] = '添加超值礼包';
 $_LANG['16_crowd_funding'] = '众筹活动';
 $_LANG['17_group_booking'] = '拼团活动';
 
-/* 订单管理 */
+// 订单管理 
 $_LANG['02_order_list'] = '订单列表';
 $_LANG['03_order_query'] = '订单查询';
 $_LANG['04_merge_order'] = '合并订单';
@@ -196,11 +196,11 @@ $_LANG['08_add_order'] = '添加订单';
 $_LANG['09_delivery_order'] = '发货单列表';
 $_LANG['10_back_order'] = '退货单列表';
 
-/* 广告管理 */
+// 广告管理 
 $_LANG['ad_position'] = '广告位置';
 $_LANG['ad_list'] = '广告列表';
 
-/* 报表统计 */
+// 报表统计 
 $_LANG['flow_stats'] = '流量分析';
 $_LANG['searchengine_stats'] = '搜索引擎';
 $_LANG['report_order'] = '订单统计';
@@ -212,7 +212,7 @@ $_LANG['report_users'] = '会员排行';
 $_LANG['visit_buy_per'] = '访问购买率';
 $_LANG['z_clicks_stats'] = '站外投放JS';
 
-/* 文章管理 */
+// 文章管理 
 $_LANG['02_articlecat_list'] = '文章分类';
 $_LANG['articlecat_add'] = '添加文章分类';
 $_LANG['03_article_list'] = '文章列表';
@@ -222,7 +222,7 @@ $_LANG['shop_info'] = '网店信息';
 $_LANG['shop_help'] = '网店帮助';
 $_LANG['vote_list'] = '在线调查';
 
-/* 会员管理 */
+// 会员管理 
 $_LANG['08_unreply_msg'] = '会员留言';
 $_LANG['03_users_list'] = '会员列表';
 $_LANG['04_users_add'] = '添加会员';
@@ -231,7 +231,7 @@ $_LANG['06_list_integrate'] = '会员整合';
 $_LANG['09_user_account'] = '充值和提现申请';
 $_LANG['10_user_account_manage'] = '资金管理';
 
-/* 权限管理 */
+// 权限管理 
 $_LANG['admin_list'] = '管理员列表';
 $_LANG['admin_list_role'] = '角色列表';
 $_LANG['admin_role'] = '角色管理';
@@ -242,7 +242,7 @@ $_LANG['admin_logs'] = '管理员日志';
 $_LANG['agency_list'] = '办事处列表';
 $_LANG['suppliers_list'] = '供货商列表';
 
-/* 系统设置 */
+// 系统设置 
 $_LANG['01_shop_config'] = '商店设置';
 $_LANG['shop_authorized'] = '授权证书';
 $_LANG['shp_webcollect'] = '网罗天下';
@@ -261,21 +261,21 @@ $_LANG['ucenter_setup'] = 'UCenter设置';
 $_LANG['file_check'] = '文件校验';
 $_LANG['021_reg_fields'] = '会员注册项设置';
 
-/* 模板管理 */
+// 模板管理 
 $_LANG['02_template_select'] = '模板选择';
 $_LANG['03_template_setup'] = '设置模板';
 $_LANG['04_template_library'] = '库项目管理';
 $_LANG['mail_template_manage'] = '邮件模板';
 $_LANG['05_edit_languages'] = '语言项编辑';
 $_LANG['06_template_backup'] = '模板设置备份';
-/* 数据库管理 */
+// 数据库管理 
 $_LANG['02_db_manage'] = '数据备份';
 $_LANG['03_db_optimize'] = '数据表优化';
 $_LANG['04_sql_query'] = 'SQL查询';
 $_LANG['05_synchronous'] = '同步数据';
 $_LANG['convert'] = '转换数据';
 
-/* 短信管理 */
+// 短信管理 
 $_LANG['02_sms_my_info'] = '账号信息';
 $_LANG['03_sms_send'] = '发送短信';
 $_LANG['04_sms_charge'] = '账户充值';
@@ -291,12 +291,12 @@ $_LANG['magazine_list'] = '杂志管理';
 $_LANG['attention_list'] = '关注管理';
 $_LANG['view_sendlist'] = '邮件队列管理';
 
-/* 积分兑换管理 */
+// 积分兑换管理 
 $_LANG['15_exchange_goods'] = '积分商城商品';
 $_LANG['15_exchange_goods_list'] = '积分商城商品列表';
 $_LANG['exchange_goods_add'] = '添加新商品';
 
-/* Image 类的语言项 */
+// Image 类的语言项 
 $_LANG['directory_readonly'] = '目录 % 不存在或不可写';
 $_LANG['invalid_upload_image_type'] = '不是允许的图片格式';
 $_LANG['upload_failure'] = '文件 %s 上传失败。';
@@ -312,7 +312,7 @@ $_LANG['create_origin_image_res'] = '创建原始图片资源失败，原始图�
 $_LANG['invalid_image_type'] = '无法识别水印图片 %s ';
 $_LANG['file_unavailable'] = '文件 %s 不存在或不可读';
 
-/* 邮件发送错误信息 */
+// 邮件发送错误信息 
 $_LANG['smtp_setting_error'] = '邮件服务器设置信息不完整';
 $_LANG['smtp_connect_failure'] = '无法连接到邮件服务器 %s';
 $_LANG['smtp_login_failure'] = '邮件服务器验证帐号或密码不正确';
@@ -320,7 +320,7 @@ $_LANG['sendemail_false'] = '邮件发送失败，请检查您的邮件服务器
 $_LANG['smtp_refuse'] = '服务器拒绝发送该邮件';
 $_LANG['disabled_fsockopen'] = '服务器已禁用 fsocketopen 函数。';
 
-/* 虚拟卡 */
+// 虚拟卡 
 $_LANG['virtual_card_oos'] = '虚拟卡已缺货';
 
 $_LANG['span_edit_help'] = '点击修改内容';

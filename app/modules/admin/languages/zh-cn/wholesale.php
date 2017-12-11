@@ -4,7 +4,7 @@
  *  管理中心批发管理语言文件
  */
 
-/* menu */
+// menu
 $_LANG['wholesale_list'] = '批发方案列表';
 $_LANG['add_wholesale'] = '添加批发方案';
 $_LANG['add_batch_wholesale'] = '批量添加批发方案';
@@ -15,7 +15,7 @@ $_LANG['add_wholesale_ok'] = '添加批发方案成功';
 $_LANG['edit_wholesale_ok'] = '编辑批发方案成功';
 $_LANG['save_wholesale_falid'] = '部分规格商品在商品“%s”的货品表中不存在，无法全部保存';
 
-/* list */
+// list
 $_LANG['goods_name'] = '商品名称';
 $_LANG['rank_name'] = '适用会员等级';
 $_LANG['wholesale_not_exist'] = '您要操作的批发方案不存在';
@@ -23,7 +23,7 @@ $_LANG['js_languages']['batch_drop_confirm'] = '您确实要删除选中的批�
 $_LANG['batch_drop_ok'] = '批量删除成功';
 $_LANG['no_record_selected'] = '没有选择记录';
 
-/* info */
+// info
 $_LANG['label_search_goods'] = '商品编号、名称或货号';
 $_LANG['label_goods_name'] = '批发商品名称：';
 $_LANG['label_rank_name'] = '适用会员等级：';
@@ -38,7 +38,7 @@ $_LANG['custom_goods_brand'] = '所有品牌';
 
 $_LANG['js_languages']['act_name_not_null'] = '请输入批发方案名称';
 
-/* post */
+// post
 $_LANG['pls_set_user_rank'] = '请设置会员等级';
 $_LANG['user_rank_exist'] = '已经存在该商品针对您选择的会员等级的批发方案了';
 

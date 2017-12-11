@@ -13,11 +13,11 @@
  */
 function register($username, $password, $email, $other = [])
 {
-    /* 检查注册是否关闭 */
+    // 检查注册是否关闭 
     if (!empty($GLOBALS['_CFG']['shop_reg_closed'])) {
         $GLOBALS['err']->add($GLOBALS['_LANG']['shop_register_closed']);
     }
-    /* 检查username */
+    // 检查username 
     if (empty($username)) {
         $GLOBALS['err']->add($GLOBALS['_LANG']['username_empty']);
     } else {
@@ -26,7 +26,7 @@ function register($username, $password, $email, $other = [])
         }
     }
 
-    /* 检查email */
+    // 检查email 
     if (empty($email)) {
         $GLOBALS['err']->add($GLOBALS['_LANG']['email_empty']);
     } else {
@@ -39,7 +39,7 @@ function register($username, $password, $email, $other = [])
         return false;
     }
 
-    /* 检查是否和管理员重名 */
+    // 检查是否和管理员重名 
     if (admin_registered($username)) {
         $GLOBALS['err']->add(sprintf($GLOBALS['_LANG']['username_exist'], $username));
         return false;
@@ -67,11 +67,11 @@ function register($username, $password, $email, $other = [])
     } else {
         //注册成功
 
-        /* 设置成登录状态 */
+        // 设置成登录状态 
         $GLOBALS['user']->set_session($username);
         $GLOBALS['user']->set_cookie($username);
 
-        /* 注册送积分 */
+        // 注册送积分 
         if (!empty($GLOBALS['_CFG']['register_points'])) {
             log_account_change(session('user_id'), 0, 0, $GLOBALS['_CFG']['register_points'], $GLOBALS['_CFG']['register_points'], $GLOBALS['_LANG']['register_points']);
         }
@@ -136,7 +136,7 @@ function register($username, $password, $email, $other = [])
  */
 function logout()
 {
-    /* todo */
+    // todo 
 }
 
 /**
@@ -180,7 +180,7 @@ function check_userinfo($user_name, $email)
         return $this->redirect("user.php?act=get_password");
     }
 
-    /* 检测用户名和邮件地址是否匹配 */
+    // 检测用户名和邮件地址是否匹配 
     $user_info = $GLOBALS['user']->check_pwd_info($user_name, $email);
     if (!empty($user_info)) {
         return $user_info;
@@ -206,7 +206,7 @@ function send_pwd_email($uid, $user_name, $email, $code)
         return $this->redirect("user.php?act=get_password");
     }
 
-    /* 设置重置邮件模板所需要的内容信息 */
+    // 设置重置邮件模板所需要的内容信息 
     $template = get_mail_template('send_password');
     $reset_email = $GLOBALS['ecs']->url() . 'user.php?act=get_password&uid=' . $uid . '&code=' . $code;
 
@@ -218,7 +218,7 @@ function send_pwd_email($uid, $user_name, $email, $code)
 
     $content = $GLOBALS['smarty']->fetch('str:' . $template['template_content']);
 
-    /* 发送确认重置密码的确认邮件 */
+    // 发送确认重置密码的确认邮件 
     if (send_mail($user_name, $email, $template['template_subject'], $content, $template['is_html'])) {
         return true;
     } else {
@@ -236,7 +236,7 @@ function send_pwd_email($uid, $user_name, $email, $code)
  */
 function send_regiter_hash($user_id)
 {
-    /* 设置验证邮件模板所需要的内容信息 */
+    // 设置验证邮件模板所需要的内容信息 
     $template = get_mail_template('register_validate');
     $hash = register_hash('encode', $user_id);
     $validate_email = $GLOBALS['ecs']->url() . 'user.php?act=validate_email&hash=' . $hash;
@@ -251,7 +251,7 @@ function send_regiter_hash($user_id)
 
     $content = $GLOBALS['smarty']->fetch('str:' . $template['template_content']);
 
-    /* 发送激活验证邮件 */
+    // 发送激活验证邮件 
     if (send_mail($row['user_name'], $row['email'], $template['template_subject'], $content, $template['is_html'])) {
         return true;
     } else {

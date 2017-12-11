@@ -13,21 +13,21 @@ class SnatchController extends Controller
     {
         $_REQUEST['act'] = !empty($_REQUEST['act']) ? $_REQUEST['act'] : 'main';
 
-        /* 设置活动的SESSION */
+        // 设置活动的SESSION
         if (empty($_REQUEST['id'])) {
             $id = $this->get_last_snatch();
             if ($id) {
                 $page = build_uri('snatch', ['sid' => $id]);
                 return $this->redirect("$page");
             } else {
-                /* 当前没有任何可默认的活动 */
+                // 当前没有任何可默认的活动
                 $id = 0;
             }
         } else {
             $id = intval($_REQUEST['id']);
         }
 
-        /* 显示页面部分 */
+        // 显示页面部分
         if ($_REQUEST['act'] == 'main') {
             $goods = $this->get_snatch($id);
             if ($goods) {
@@ -57,7 +57,7 @@ class SnatchController extends Controller
                 return show_message($GLOBALS['_LANG']['now_not_snatch']);
             }
 
-            /* 调查 */
+            // 调查
             $vote = get_vote();
             if (!empty($vote)) {
                 $this->smarty->assign('vote_id', $vote['id']);
@@ -98,14 +98,14 @@ class SnatchController extends Controller
             $price = isset($_POST['price']) ? floatval($_POST['price']) : 0;
             $price = round($price, 2);
 
-            /* 测试是否登陆 */
+            // 测试是否登陆
             if (empty(session('user_id'))) {
                 $result['error'] = 1;
                 $result['content'] = $GLOBALS['_LANG']['not_login'];
                 die($json->encode($result));
             }
 
-            /* 获取活动基本信息用于校验 */
+            // 获取活动基本信息用于校验
             $sql = 'SELECT act_name AS snatch_name, end_time, ext_info FROM ' . $GLOBALS['ecs']->table('goods_activity') . " WHERE act_id ='$id'";
             $row = $this->db->getRow($sql, 'SILENT');
 
@@ -130,14 +130,14 @@ class SnatchController extends Controller
                 die($json->encode($result));
             }
 
-            /* 检查出价是否合理 */
+            // 检查出价是否合理
             if ($price < $row['start_price'] || $price > $row['end_price']) {
                 $result['error'] = 1;
                 $result['content'] = sprintf($GLOBALS['_LANG']['not_in_range'], $row['start_price'], $row['end_price']);
                 die($json->encode($result));
             }
 
-            /* 检查用户是否已经出同一价格 */
+            // 检查用户是否已经出同一价格
             $sql = 'SELECT COUNT(*) FROM ' . $GLOBALS['ecs']->table('snatch_log') . " WHERE snatch_id = '$id' AND user_id = '" . session('user_id') . "' AND bid_price = '$price'";
             if ($GLOBALS['db']->getOne($sql) > 0) {
                 $result['error'] = 1;
@@ -145,7 +145,7 @@ class SnatchController extends Controller
                 die($json->encode($result));
             }
 
-            /* 检查用户积分是否足够 */
+            // 检查用户积分是否足够
             $sql = 'SELECT pay_points FROM ' . $this->ecs->table('users') . " WHERE user_id = '" . session('user_id') . "'";
             $pay_points = $this->db->getOne($sql);
             if ($row['cost_points'] > $pay_points) {
@@ -184,7 +184,7 @@ class SnatchController extends Controller
                 return $this->redirect('/');
             }
 
-            /* 未结束，不能购买 */
+            // 未结束，不能购买
             if (empty($snatch['is_end'])) {
                 $page = build_uri('snatch', ['sid' => $id]);
                 return $this->redirect("$page");
@@ -201,7 +201,7 @@ class SnatchController extends Controller
                 return show_message($GLOBALS['_LANG']['order_placed']);
             }
 
-            /* 处理规格属性 */
+            // 处理规格属性
             $goods_attr = '';
             $goods_attr_id = '';
             if ($snatch['product_id'] > 0) {
@@ -224,11 +224,11 @@ class SnatchController extends Controller
                 $snatch['product_id'] = 0;
             }
 
-            /* 清空购物车中所有商品 */
+            // 清空购物车中所有商品
             load_helper('order');
             clear_cart(CART_SNATCH_GOODS);
 
-            /* 加入购物车 */
+            // 加入购物车
             $cart = [
                 'user_id' => session('user_id'),
                 'session_id' => SESS_ID,
@@ -250,12 +250,12 @@ class SnatchController extends Controller
 
             $this->db->autoExecute($this->ecs->table('cart'), $cart, 'INSERT');
 
-            /* 记录购物流程类型：夺宝奇兵 */
+            // 记录购物流程类型：夺宝奇兵
             session('flow_type', CART_SNATCH_GOODS);
             session('extension_code', 'snatch');
             session('extension_id', $id);
 
-            /* 进入收货人页面 */
+            // 进入收货人页面
             return $this->redirect("/flow.php?step=consignee");
         }
     }
@@ -275,12 +275,12 @@ class SnatchController extends Controller
         $pay_points = 0;
         $bid_price = [];
         if (!empty(session('user_id'))) {
-            /* 取得用户所有价格 */
+            // 取得用户所有价格
             $sql = 'SELECT bid_price FROM ' . $GLOBALS['ecs']->table('snatch_log') . " WHERE snatch_id = '$id' AND user_id = '" . session('user_id') . "' ORDER BY bid_time DESC";
             $my_price = $GLOBALS['db']->getCol($sql);
 
             if ($my_price) {
-                /* 取得用户唯一价格 */
+                // 取得用户唯一价格
                 $sql = 'SELECT bid_price , count(*) AS num FROM ' . $GLOBALS['ecs']->table('snatch_log') . "  WHERE snatch_id ='$id' AND bid_price " . db_create_in(join(',', $my_price)) . ' GROUP BY bid_price HAVING num = 1';
                 $my_only_price = $GLOBALS['db']->getCol($sql);
             }
@@ -296,7 +296,7 @@ class SnatchController extends Controller
             $pay_points = $pay_points . $GLOBALS['_CFG']['integral_name'];
         }
 
-        /* 活动结束时间 */
+        // 活动结束时间
         $sql = 'SELECT end_time FROM ' . $GLOBALS['ecs']->table('goods_activity') .
             " WHERE act_id = '$id' AND act_type=" . GAT_SNATCH;
         $end_time = $GLOBALS['db']->getOne($sql);
@@ -399,7 +399,7 @@ class SnatchController extends Controller
                 $goods['formated_end_price'] = price_format($goods['end_price']);
                 $goods['formated_max_price'] = price_format($goods['max_price']);
             }
-            /* 将结束日期格式化为格林威治标准时间时间戳 */
+            // 将结束日期格式化为格林威治标准时间时间戳
             $goods['gmt_end_time'] = $goods['end_time'];
             $goods['end_time'] = local_date($GLOBALS['_CFG']['time_format'], $goods['end_time']);
             $goods['snatch_time'] = sprintf($GLOBALS['_LANG']['snatch_start_time'], $goods['start_time'], $goods['end_time']);

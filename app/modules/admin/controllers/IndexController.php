@@ -120,7 +120,7 @@ class IndexController extends Controller
 
             $gd = gd_version();
 
-            /* 妫€鏌ユ枃浠剁洰褰曞睘鎬 */
+            // 妫€鏌ユ枃浠剁洰褰曞睘鎬 
             $warning = [];
 
             if ($GLOBALS['_CFG']['shop_closed']) {
@@ -129,7 +129,7 @@ class IndexController extends Controller
 
             $open_basedir = ini_get('open_basedir');
             if (!empty($open_basedir)) {
-                /* 濡傛灉 open_basedir 涓嶄负绌猴紝鍒欐?鏌ユ槸鍚﹀寘鍚?簡 upload_tmp_dir  */
+                // 濡傛灉 open_basedir 涓嶄负绌猴紝鍒欐?鏌ユ槸鍚﹀寘鍚?簡 upload_tmp_dir  
                 $open_basedir = str_replace(["\\", "\\\\"], ["/", "/"], $open_basedir);
                 $upload_tmp_dir = ini_get('upload_tmp_dir');
 
@@ -199,7 +199,7 @@ class IndexController extends Controller
 
             $this->smarty->assign('warning_arr', $warning);
 
-            /* 绠＄悊鍛樼暀瑷€淇℃伅 */
+            // 绠＄悊鍛樼暀瑷€淇℃伅 
             $sql = 'SELECT message_id, sender_id, receiver_id, sent_time, readed, deleted, title, message, user_name ' .
                 'FROM ' . $this->ecs->table('admin_message') . ' AS a, ' . $this->ecs->table('admin_user') . ' AS b ' .
                 "WHERE a.sender_id = b.user_id AND a.receiver_id = '" . session('admin_id') . "' AND " .
@@ -208,32 +208,32 @@ class IndexController extends Controller
 
             $this->smarty->assign('admin_msg', $admin_msg);
 
-            /* 鍙栧緱鏀?寔璐у埌浠樻?鍜屼笉鏀?寔璐у埌浠樻?鐨勬敮浠樻柟寮 */
+            // 鍙栧緱鏀?寔璐у埌浠樻?鍜屼笉鏀?寔璐у埌浠樻?鐨勬敮浠樻柟寮 
             $ids = get_pay_ids();
 
-            /* 宸插畬鎴愮殑璁㈠崟 */
+            // 宸插畬鎴愮殑璁㈠崟 
             $order['finished'] = $this->db->getOne('SELECT COUNT(*) FROM ' . $this->ecs->table('order_info') .
                 " WHERE 1 " . order_query_sql('finished'));
             $status['finished'] = CS_FINISHED;
 
-            /* 寰呭彂璐х殑璁㈠崟锛 */
+            // 寰呭彂璐х殑璁㈠崟锛 
             $order['await_ship'] = $this->db->getOne('SELECT COUNT(*)' .
                 ' FROM ' . $this->ecs->table('order_info') .
                 " WHERE 1 " . order_query_sql('await_ship'));
             $status['await_ship'] = CS_AWAIT_SHIP;
 
-            /* 寰呬粯娆剧殑璁㈠崟锛 */
+            // 寰呬粯娆剧殑璁㈠崟锛 
             $order['await_pay'] = $this->db->getOne('SELECT COUNT(*)' .
                 ' FROM ' . $this->ecs->table('order_info') .
                 " WHERE 1 " . order_query_sql('await_pay'));
             $status['await_pay'] = CS_AWAIT_PAY;
 
-            /* 鈥滄湭纭??鈥濈殑璁㈠崟 */
+            // 鈥滄湭纭??鈥濈殑璁㈠崟 
             $order['unconfirmed'] = $this->db->getOne('SELECT COUNT(*) FROM ' . $this->ecs->table('order_info') .
                 " WHERE 1 " . order_query_sql('unconfirmed'));
             $status['unconfirmed'] = OS_UNCONFIRMED;
 
-            /* 鈥滈儴鍒嗗彂璐р€濈殑璁㈠崟 */
+            // 鈥滈儴鍒嗗彂璐р€濈殑璁㈠崟 
             $order['shipped_part'] = $this->db->getOne('SELECT COUNT(*) FROM ' . $this->ecs->table('order_info') .
                 " WHERE  shipping_status=" . SS_SHIPPED_PART);
             $status['shipped_part'] = OS_SHIPPED_PART;
@@ -245,7 +245,7 @@ class IndexController extends Controller
             $this->smarty->assign('order', $order);
             $this->smarty->assign('status', $status);
 
-            /* 鍟嗗搧淇℃伅 */
+            // 鍟嗗搧淇℃伅 
             $goods['total'] = $this->db->getOne('SELECT COUNT(*) FROM ' . $this->ecs->table('goods') .
                 ' WHERE is_delete = 0 AND is_alone_sale = 1 AND is_real = 1');
             $virtual_card['total'] = $this->db->getOne('SELECT COUNT(*) FROM ' . $this->ecs->table('goods') .
@@ -274,7 +274,7 @@ class IndexController extends Controller
                 ' WHERE is_delete = 0 AND promote_price>0' .
                 " AND promote_start_date <= '$time' AND promote_end_date >= '$time' AND is_real=0 AND extension_code='virtual_card'");
 
-            /* 缂鸿揣鍟嗗搧 */
+            // 缂鸿揣鍟嗗搧 
             if ($GLOBALS['_CFG']['use_storage']) {
                 $sql = 'SELECT COUNT(*) FROM ' . $this->ecs->table('goods') . ' WHERE is_delete = 0 AND goods_number <= warn_number AND is_real = 1';
                 $goods['warn'] = $this->db->getOne($sql);
@@ -287,7 +287,7 @@ class IndexController extends Controller
             $this->smarty->assign('goods', $goods);
             $this->smarty->assign('virtual_card', $virtual_card);
 
-            /* 璁块棶缁熻?淇℃伅 */
+            // 璁块棶缁熻?淇℃伅 
             $today = local_getdate();
             $sql = 'SELECT COUNT(*) FROM ' . $this->ecs->table('stats') .
                 ' WHERE access_time > ' . (mktime(0, 0, 0, $today['mon'], $today['mday'], $today['year']) - date('Z'));
@@ -298,20 +298,20 @@ class IndexController extends Controller
             $online_users = 0; // $this->sess->get_users_count(); // TODO
             $this->smarty->assign('online_users', $online_users);
 
-            /* 鏈€杩戝弽棣 */
+            // 鏈€杩戝弽棣 
             $sql = "SELECT COUNT(f.msg_id) " .
                 "FROM " . $this->ecs->table('feedback') . " AS f " .
                 "LEFT JOIN " . $this->ecs->table('feedback') . " AS r ON r.parent_id=f.msg_id " .
                 'WHERE f.parent_id=0 AND ISNULL(r.msg_id) ';
             $this->smarty->assign('feedback_number', $this->db->getOne($sql));
 
-            /* 鏈??鏍歌瘎璁 */
+            // 鏈??鏍歌瘎璁 
             $this->smarty->assign('comment_number', $this->db->getOne('SELECT COUNT(*) FROM ' . $this->ecs->table('comment') .
                 ' WHERE status = 0 AND parent_id = 0'));
 
             $mysql_ver = $this->db->version();   // 鑾峰緱 MySQL 鐗堟湰
 
-            /* 绯荤粺淇℃伅 */
+            // 绯荤粺淇℃伅 
             $sys_info['os'] = PHP_OS;
             $sys_info['ip'] = $_SERVER['SERVER_ADDR'];
             $sys_info['web_server'] = $_SERVER['SERVER_SOFTWARE'];
@@ -334,7 +334,7 @@ class IndexController extends Controller
 
                 $sys_info['gd'] .= ' (';
 
-                /* 妫€鏌ョ郴缁熸敮鎸佺殑鍥剧墖绫诲瀷 */
+                // 妫€鏌ョ郴缁熸敮鎸佺殑鍥剧墖绫诲瀷 
                 if ($gd && (imagetypes() & IMG_JPG) > 0) {
                     $sys_info['gd'] .= ' JPEG';
                 }
@@ -350,18 +350,18 @@ class IndexController extends Controller
                 $sys_info['gd'] .= ')';
             }
 
-            /* IP搴撶増鏈 */
+            // IP搴撶増鏈 
             $sys_info['ip_version'] = ecs_geoip('255.255.255.0');
 
-            /* 鍏佽?涓婁紶鐨勬渶澶ф枃浠跺ぇ灏 */
+            // 鍏佽?涓婁紶鐨勬渶澶ф枃浠跺ぇ灏 
             $sys_info['max_filesize'] = ini_get('upload_max_filesize');
 
             $this->smarty->assign('sys_info', $sys_info);
 
-            /* 缂鸿揣鐧昏? */
+            // 缂鸿揣鐧昏? 
             $this->smarty->assign('booking_goods', $this->db->getOne('SELECT COUNT(*) FROM ' . $this->ecs->table('booking_goods') . ' WHERE is_dispose = 0'));
 
-            /* 閫€娆剧敵璇 */
+            // 閫€娆剧敵璇 
             $this->smarty->assign('new_repay', $this->db->getOne('SELECT COUNT(*) FROM ' . $this->ecs->table('user_account') . ' WHERE process_type = ' . SURPLUS_RETURN . ' AND is_paid = 0 '));
 
             $this->smarty->assign('ecs_version', VERSION);
@@ -539,7 +539,7 @@ class IndexController extends Controller
                         $config[$count]['name'] = 'free_money';
                         $config[$count]['value'] = 0;
 
-                        /* 濡傛灉鏀?寔璐у埌浠樻?锛屽垯鍏佽?璁剧疆璐у埌浠樻?鏀?粯璐圭敤 */
+                        // 濡傛灉鏀?寔璐у埌浠樻?锛屽垯鍏佽?璁剧疆璐у埌浠樻?鏀?粯璐圭敤 
                         if ($modules[0]['cod']) {
                             $count++;
                             $config[$count]['name'] = 'pay_fee';
@@ -558,7 +558,7 @@ class IndexController extends Controller
                     $region_id = empty($_POST['shipping_city']) ? $region_id : intval($_POST['shipping_city']);
                     $region_id = empty($_POST['shipping_district']) ? $region_id : intval($_POST['shipping_district']);
 
-                    /* 娣诲姞閫夊畾鐨勫煄甯傚拰鍦板尯 */
+                    // 娣诲姞閫夊畾鐨勫煄甯傚拰鍦板尯 
                     $sql = "REPLACE INTO " . $this->ecs->table('area_region') . " (shipping_area_id, region_id) VALUES ('$area_id', '$region_id')";
                     $this->db->query($sql);
                 }
@@ -567,7 +567,7 @@ class IndexController extends Controller
             unset($modules);
 
             if (!empty($payment)) {
-                /* 鍙栫浉搴旀彃浠朵俊鎭 */
+                // 鍙栫浉搴旀彃浠朵俊鎭 
                 $set_modules = true;
                 include_once(ROOT_PATH . 'includes/modules/payment/' . $payment . '.php');
 
@@ -582,7 +582,7 @@ class IndexController extends Controller
                 }
 
                 $pay_config = serialize($pay_config);
-                /* 瀹夎?锛屾?鏌ヨ?鏀?粯鏂瑰紡鏄?惁鏇剧粡瀹夎?杩 */
+                // 瀹夎?锛屾?鏌ヨ?鏀?粯鏂瑰紡鏄?惁鏇剧粡瀹夎?杩 
                 $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('payment') . " WHERE pay_code = '$payment'";
                 if ($this->db->getOne($sql) > 0) {
                     $sql = "UPDATE " . $this->ecs->table('payment') .
@@ -631,7 +631,7 @@ class IndexController extends Controller
 
             if (!empty($good_category)) {
                 if (cat_exists($good_category, 0)) {
-                    /* 鍚岀骇鍒?笅涓嶈兘鏈夐噸澶嶇殑鍒嗙被鍚嶇О */
+                    // 鍚岀骇鍒?笅涓嶈兘鏈夐噸澶嶇殑鍒嗙被鍚嶇О 
                     $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
                     return sys_msg($GLOBALS['_LANG']['catname_exist'], 0, $link);
                 }
@@ -639,7 +639,7 @@ class IndexController extends Controller
 
             if (!empty($good_brand)) {
                 if (brand_exists($good_brand)) {
-                    /* 鍚岀骇鍒?笅涓嶈兘鏈夐噸澶嶇殑鍝佺墝鍚嶇О */
+                    // 鍚岀骇鍒?笅涓嶈兘鏈夐噸澶嶇殑鍝佺墝鍚嶇О 
                     $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
                     return sys_msg($GLOBALS['_LANG']['brand_name_exist'], 0, $link);
                 }
@@ -670,7 +670,7 @@ class IndexController extends Controller
                 $image = new Image($GLOBALS['_CFG']['bgcolor']);
 
                 if (!empty($good_name)) {
-                    /* 妫€鏌ュ浘鐗囷細濡傛灉鏈夐敊璇?紝妫€鏌ュ昂瀵告槸鍚﹁秴杩囨渶澶у€硷紱鍚﹀垯锛屾?鏌ユ枃浠剁被鍨 */
+                    // 妫€鏌ュ浘鐗囷細濡傛灉鏈夐敊璇?紝妫€鏌ュ昂瀵告槸鍚﹁秴杩囨渶澶у€硷紱鍚﹀垯锛屾?鏌ユ枃浠剁被鍨 
                     if (isset($_FILES['goods_img']['error'])) { // php 4.2 鐗堟湰鎵嶆敮鎸 error
                         // 鏈€澶т笂浼犳枃浠跺ぇ灏
                         $php_maxsize = ini_get('upload_max_filesize');
@@ -686,7 +686,7 @@ class IndexController extends Controller
                         } elseif ($_FILES['goods_img']['error'] == 2) {
                             return sys_msg(sprintf($GLOBALS['_LANG']['goods_img_too_big'], $htm_maxsize), 1, [], false);
                         }
-                    } /* 4銆?鐗堟湰 */
+                    } // 4銆?鐗堟湰 
                     else {
                         // 鍟嗗搧鍥剧墖
                         if ($_FILES['goods_img']['tmp_name'] != 'none') {
@@ -707,7 +707,7 @@ class IndexController extends Controller
                         }
                         $goods_img = $original_img;   // 鍟嗗搧鍥剧墖
 
-                        /* 澶嶅埗涓€浠界浉鍐屽浘鐗 */
+                        // 澶嶅埗涓€浠界浉鍐屽浘鐗 
                         $img = $original_img;   // 鐩稿唽鍥剧墖
                         $pos = strpos(basename($img), '.');
                         $newname = dirname($img) . '/' . $image->random_filename() . substr(basename($img), $pos);
@@ -754,7 +754,7 @@ class IndexController extends Controller
                                 }
                             }
                         } else {
-                            /* 澶嶅埗涓€浠藉師鍥 */
+                            // 澶嶅埗涓€浠藉師鍥 
                             $pos = strpos(basename($img), '.');
                             $gallery_img = dirname($img) . '/' . $image->random_filename() . substr(basename($img), $pos);
                             if (!copy('../' . $img, '../' . $gallery_img)) {
@@ -784,7 +784,7 @@ class IndexController extends Controller
 
                     $this->db->query($sql);
                     $good_id = $this->db->insert_id();
-                    /* 濡傛灉鏈夊浘鐗囷紝鎶婂晢鍝佸浘鐗囧姞鍏ュ浘鐗囩浉鍐 */
+                    // 濡傛灉鏈夊浘鐗囷紝鎶婂晢鍝佸浘鐗囧姞鍏ュ浘鐗囩浉鍐 
                     if (isset($img)) {
                         $sql = "INSERT INTO " . $this->ecs->table('goods_gallery') . " (goods_id, img_url, img_desc, thumb_url, img_original) " .
                             "VALUES ('$good_id', '$gallery_img', '', '$gallery_thumb', '$img')";
@@ -822,12 +822,12 @@ class IndexController extends Controller
                 return make_json_result('', '', ['new_orders' => 0, 'new_paid' => 0]);
             }
 
-            /* 鏂拌?鍗 */
+            // 鏂拌?鍗 
             $sql = 'SELECT COUNT(*) FROM ' . $this->ecs->table('order_info') .
                 " WHERE add_time >= '" . session('last_check') . "'";
             $arr['new_orders'] = $this->db->getOne($sql);
 
-            /* 鏂颁粯娆剧殑璁㈠崟 */
+            // 鏂颁粯娆剧殑璁㈠崟 
             $sql = 'SELECT COUNT(*) FROM ' . $this->ecs->table('order_info') .
                 ' WHERE pay_time >= ' . session('last_check');
             $arr['new_paid'] = $this->db->getOne($sql);

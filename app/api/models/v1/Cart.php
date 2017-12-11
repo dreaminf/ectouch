@@ -32,14 +32,14 @@ use yii\log\Logger;
  */
 class Cart extends Foundation
 {
-    /* 购物车商品类型 */
+    // 购物车商品类型
     const CART_GENERAL_GOODS        = 0; // 普通商品
     const CART_GROUP_BUY_GOODS      = 1; // 团购商品
     const CART_AUCTION_GOODS        = 2; // 拍卖商品
     const CART_SNATCH_GOODS         = 3; // 夺宝奇兵
     const CART_EXCHANGE_GOODS       = 4; // 积分商城
 
-    /* 减库存时机 */
+    // 减库存时机
     const SDT_SHIP                  = 0; // 发货时
     const SDT_PLACE                 = 1; // 下订单时
     /**
@@ -119,14 +119,14 @@ class Cart extends Foundation
             // 商品不存在
             return self::formatError(self::NOT_FOUND);
         }
-        /* 如果是作为配件添加到购物车的，需要先检查购物车里面是否已经有基本件*/
+        // 如果是作为配件添加到购物车的，需要先检查购物车里面是否已经有基本件
 
-        /* 是否正在销售 */
+        // 是否正在销售
         if ($good['is_on_sale'] == 0) {
             return self::formatError(self::BAD_REQUEST,trans('app', 'message.good.off_sale'));
         }
 
-        /* 不是配件时检查是否允许单独销售 */
+        // 不是配件时检查是否允许单独销售
         if ($good['is_alone_sale'] == 0) {
             //不能单独销售
             return self::formatError(self::BAD_REQUEST,trans('app', 'message.good.not_alone'));
@@ -137,7 +137,7 @@ class Cart extends Foundation
             $property = [];
         }
 
-        /* 如果商品有规格则取规格商品信息 配件除外 property */
+        // 如果商品有规格则取规格商品信息 配件除外 property
         $prod = Products::find()
             ->where(['goods_id'=>$product])
             ->one();
@@ -150,7 +150,7 @@ class Cart extends Foundation
         {
             $product_info = array('product_number' => '', 'product_id' => 0);
         }
-        /* 检查：库存 */
+        // 检查：库存
         //检查：商品购买数量是否大于总库存
         if ($amount > $good['goods_number'])
         {
@@ -161,20 +161,20 @@ class Cart extends Foundation
         {
             if (!empty($property))
             {
-                /* 取规格的货品库存 */
+                // 取规格的货品库存
                 if ($amount > $product_info['product_number'])
                 {
                     return self::formatError(self::BAD_REQUEST,trans('app', 'message.good.out_storage'));
                 }
             }
         }
-        /* 计算商品的促销价格 */
+        // 计算商品的促销价格
         $property_price         = GoodsAttr::property_price($property);
         $goods_price            = Goods::get_final_price($product, $amount, true, $property);
         $good['market_price']  += $property_price;
         $goods_attr             = Attribute::get_goods_attr_info($property);
         $goods_attr_id          = join(',', (array)$property);
-        /* 初始化要插入购物车的基本件数据 */
+        // 初始化要插入购物车的基本件数据
 
         $parent = array(
             'user_id'       => Token::authorization(), //uid
@@ -192,9 +192,9 @@ class Cart extends Foundation
             'is_shipping'   => $good['is_shipping'],
             'rec_type'      => Cart::CART_GENERAL_GOODS,
         );
-        /* 如果该配件在添加为基本件的配件时，所设置的“配件价格”比原价低，即此配件在价格上提供了优惠， */
-        /* 则按照该配件的优惠价格卖，但是每一个基本件只能购买一个优惠价格的“该配件”，多买的“该配件”不享 */
-        /* 受此优惠 */
+        // 如果该配件在添加为基本件的配件时，所设置的“配件价格”比原价低，即此配件在价格上提供了优惠，
+        // 则按照该配件的优惠价格卖，但是每一个基本件只能购买一个优惠价格的“该配件”，多买的“该配件”不享
+        // 受此优惠
         $basic_list = array();
 
         $res = GoodsGroup::find()
@@ -208,7 +208,7 @@ class Cart extends Foundation
             $basic_list[$row['parent_id']] = $row['goods_price'];
         }
 
-        /* 取得购物车中该商品每个基本件的数量 */
+        // 取得购物车中该商品每个基本件的数量
 
         $basic_count_list = array();
         if ($basic_list)
@@ -227,8 +227,8 @@ class Cart extends Foundation
             }
         }
 
-        /* 取得购物车中该商品每个基本件已有该商品配件数量，计算出每个基本件还能有几个该商品配件 */
-        /* 一个基本件对应一个该商品配件 */
+        // 取得购物车中该商品每个基本件已有该商品配件数量，计算出每个基本件还能有几个该商品配件
+        // 一个基本件对应一个该商品配件
 
         if ($basic_count_list)
         {
@@ -247,33 +247,33 @@ class Cart extends Foundation
             }
         }
 
-        /* 循环插入配件 如果是配件则用其添加数量依次为购物车中所有属于其的基本件添加足够数量的该配件 */
+        // 循环插入配件 如果是配件则用其添加数量依次为购物车中所有属于其的基本件添加足够数量的该配件
         foreach ($basic_list as $parent_id => $fitting_price)
         {
-            /* 如果已全部插入，退出 */
+            // 如果已全部插入，退出
             if ($amount <= 0)
             {
                 break;
             }
 
-            /* 如果该基本件不再购物车中，执行下一个 */
+            // 如果该基本件不再购物车中，执行下一个
             if (!isset($basic_count_list[$parent_id]))
             {
                 continue;
             }
 
-            /* 如果该基本件的配件数量已满，执行下一个基本件 */
+            // 如果该基本件的配件数量已满，执行下一个基本件
             if ($basic_count_list[$parent_id] <= 0)
             {
                 continue;
             }
 
-            /* 作为该基本件的配件插入 */
+            // 作为该基本件的配件插入
             $parent['goods_price']  = max($fitting_price, 0) + $property_price; //允许该配件优惠价格为0
             $parent['goods_number'] = min($amount, $basic_count_list[$parent_id]);
             $parent['parent_id']    = $parent_id;
 
-            /* 添加 */
+            // 添加
             // $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('cart'), $parent, 'INSERT');
             $cartModel = new Cart();
             foreach ($parent as $k => $v) {
@@ -282,14 +282,14 @@ class Cart extends Foundation
             $cartModel->insert(false);
 
 //            Cart::insert($parent);
-            /* 改变数量 */
+            // 改变数量
             $amount -= $parent['goods_number'];
         }
-        /* 如果数量不为0，作为基本件插入 */
+        // 如果数量不为0，作为基本件插入
 
         if ($amount > 0)
         {
-            /* 检查该商品是否已经存在在购物车中 */
+            // 检查该商品是否已经存在在购物车中
             $user_id = Token::authorization();
 
             $row = Cart::find()
@@ -359,7 +359,7 @@ class Cart extends Foundation
 
             }
         }
-        /* 把赠品删除 */
+        // 把赠品删除
 
         $cart_is_gift = Cart::find()
             ->where(['!=','is_gift',0])
@@ -582,7 +582,7 @@ class Cart extends Foundation
 
         $arr = self::find()->where(['rec_type'=>$type])->andWhere(['user_id'=> $uid])->asArray()->all();
 
-        /* 格式化价格及礼包商品 */
+        // 格式化价格及礼包商品
         foreach ($arr as $key => $value)
         {
             $goods_thumb = Goods::find()
@@ -619,13 +619,13 @@ class Cart extends Foundation
         $uid = Token::authorization();
 
         //-- 完成所有订单操作，提交到数据库
-        /* 取得购物类型 */
+        // 取得购物类型
         $flow_type = self::CART_GENERAL_GOODS;
 
-        /* 检查购物车中是否有商品 */
+        // 检查购物车中是否有商品
 
-        /* 检查商品库存 */
-        /* 如果使用库存，且下订单时减库存，则减少库存 */
+        // 检查商品库存
+        // 如果使用库存，且下订单时减库存，则减少库存
         if (ShopConfig::findByCode('use_storage') == '1')
         {
             $cart_goods_stock = self::get_cart_goods();
@@ -683,11 +683,11 @@ class Cart extends Foundation
             'agency_id'       => 0 ,//办事处的id
         );
 
-        /* 扩展信息 */
+        // 扩展信息
         $order['extension_code'] = '';
         $order['extension_id'] = 0;
 
-        /* 订单中的商品 */
+        // 订单中的商品
         $cart_goods = self::cart_goods($flow_type, $uid);
         $cart_good_ids = [];
         foreach ($cart_goods as $k => $v) {
@@ -700,7 +700,7 @@ class Cart extends Foundation
             return self::formatError(self::BAD_REQUEST, trans('app', 'message.cart.no_goods'));
         }
 
-        /* 检查积分余额是否合法 */
+        // 检查积分余额是否合法
         if ($user_id > 0)
         {
             $user_info = Member::user_info($user_id);
@@ -742,7 +742,7 @@ class Cart extends Foundation
         }
 
 
-        /* 检查红包是否存在 */
+        // 检查红包是否存在
         if ($order['bonus_id'] > 0)
         {
             $bonus = BonusType::bonus_info($order['bonus_id']);
@@ -753,21 +753,21 @@ class Cart extends Foundation
             }
         }
 
-        /* 订单中的商品 */
+        // 订单中的商品
 
         if (empty($cart_goods))
         {
             return self::formatError(self::BAD_REQUEST,trans('message.cart.no_goods'));
         }
 
-        /* 检查商品总额是否达到最低限购金额 */
+        // 检查商品总额是否达到最低限购金额
         // app和web有区别，购物车到结算不同
         // app 可以选择要结算的商品
         if ($flow_type == self::CART_GENERAL_GOODS && self::getCartAmount($cart_good_ids) < ShopConfig::findByCode('min_goods_amount')->value)
         {
             return self::formatError(self::BAD_REQUEST,trans('message.good.min_goods_amount'));
         }
-        /* 收货人信息 */
+        // 收货人信息
         $order['consignee'] = $consignee_info->consignee;
         $order['country'] = $consignee_info->country;
         $order['province'] = $consignee_info->province;
@@ -777,10 +777,10 @@ class Cart extends Foundation
         $order['zipcode'] = $consignee_info->zipcode;
         $order['district'] = $consignee_info->district;
         $order['address'] = $consignee_info->address;
-        /* 判断是不是实体商品 */
+        // 判断是不是实体商品
         foreach ($cart_goods AS $val)
         {
-            /* 统计实体商品的个数 */
+            // 统计实体商品的个数
             if ($val['is_real'])
             {
                 $is_real_good=1;
@@ -796,9 +796,9 @@ class Cart extends Foundation
                 // show_message($_LANG['flow_no_shipping']);
             }
         }
-        /* 订单中的总额 */
+        // 订单中的总额
         $total = Order::order_fee($order, $cart_goods, $consignee_info,$cart_good_ids,$shipping,$consignee);
-        /* 红包 */
+        // 红包
         if (!empty($order['bonus_id']))
         {
             $bonus          = BonusType::bonus_info($order['bonus_id']);
@@ -823,7 +823,7 @@ class Cart extends Foundation
             $order['bonus_id'] = 0;
         }
 
-        /* 配送方式 */
+        // 配送方式
         if ($order['shipping_id'] > 0)
         {
             $shipping = Shipping::find()->where(['shipping_id' => $order['shipping_id']])
@@ -833,7 +833,7 @@ class Cart extends Foundation
         }
         $order['shipping_fee'] = $total['shipping_fee'];
         $order['insure_fee']   = 0;
-        /* 支付方式 */
+        // 支付方式
         if ($order['pay_id'] > 0)
         {
 //            $payment = payment_info($order['pay_id']);
@@ -843,14 +843,14 @@ class Cart extends Foundation
         $order['pay_fee'] = $total['pay_fee'];
         $order['cod_fee'] = $total['cod_fee'];
 
-        /* 商品包装 */
+        // 商品包装
 
-        /* 祝福贺卡 */
+        // 祝福贺卡
 
-        /* 如果全部使用余额支付，检查余额是否足够 没有余额支付*/
+        // 如果全部使用余额支付，检查余额是否足够 没有余额支付
         $order['order_amount']  = number_format($total['amount'], 2, '.', '');
 
-        /* 如果订单金额为0（使用余额或积分或红包支付），修改订单状态为已确认、已付款 */
+        // 如果订单金额为0（使用余额或积分或红包支付），修改订单状态为已确认、已付款
         if ($order['order_amount'] <= 0)
         {
             $order['order_status'] = Order::OS_CONFIRMED;
@@ -866,7 +866,7 @@ class Cart extends Foundation
         $order['parent_id'] = 0;
         $order['order_sn'] = Order::get_order_sn(); //获取新订单号
 
-        /* 插入订单表 */
+        // 插入订单表
 
         unset($order['timestamps']);
         unset($order['perPage']);
@@ -881,7 +881,7 @@ class Cart extends Foundation
 
         $new_order_id = Order::insertGetId($order);
         $order['order_id'] = $new_order_id;
-        /* 插入订单商品 */
+        // 插入订单商品
         foreach ($cart_goods as $key => $cart_good) {
             $order_good                 = new OrderGoods;
             $order_good->order_id       = $new_order_id;
@@ -901,9 +901,9 @@ class Cart extends Foundation
             $order_good->save(false);
         }
 
-        /* 修改拍卖活动状态 */
+        // 修改拍卖活动状态
 
-        /* 处理余额、积分、红包 */
+        // 处理余额、积分、红包
 
         if ($order['user_id'] > 0 && $order['integral'] > 0)
         {
@@ -916,16 +916,16 @@ class Cart extends Foundation
             UserBonus::useBonus($order['bonus_id'], $new_order_id);
         }
 
-        /* 如果使用库存，且下订单时减库存，则减少库存 */
+        // 如果使用库存，且下订单时减库存，则减少库存
         if (ShopConfig::findByCode('use_storage')->value == '1' && ShopConfig::findByCode('stock_dec_time')->value == self::SDT_PLACE)
         {
             Order::change_order_goods_storage($order['order_id'], true, self::SDT_PLACE);
         }
 
-        /* 给商家发邮件 */
-        /* 增加是否给客服发送邮件选项 */
-        /* 如果需要，发短信 */
-        /* 如果订单金额为0 处理虚拟卡 */
+        // 给商家发邮件
+        // 增加是否给客服发送邮件选项
+        // 如果需要，发短信
+        // 如果订单金额为0 处理虚拟卡
         if ($order['order_amount'] <= 0)
         {
             // $sql = "SELECT goods_id, goods_name, goods_number AS num FROM ".
@@ -949,10 +949,10 @@ class Cart extends Foundation
 
             if ($virtual_goods AND $flow_type != self::CART_GROUP_BUY_GOODS)
             {
-                /* 虚拟卡发货 */
+                // 虚拟卡发货
                 if (virtual_goods_ship($virtual_goods,$msg, $order['order_sn'], true))
                 {
-                    /* 如果没有实体商品，修改发货状态，送积分和红包 */
+                    // 如果没有实体商品，修改发货状态，送积分和红包
                     // $sql = "SELECT COUNT(*)" .
                     //         " FROM " . $ecs->table('order_goods') .
                     //         " WHERE order_id = '$order[order_id]' " .
@@ -963,20 +963,20 @@ class Cart extends Foundation
 
                     if ($get_count <= 0)
                     {
-                        /* 修改订单状态 */
+                        // 修改订单状态
                         update_order($order['order_id'], array('shipping_status' => SS_SHIPPED, 'shipping_time' => time()));
 
-                        /* 如果订单用户不为空，计算积分，并发给用户；发红包 */
+                        // 如果订单用户不为空，计算积分，并发给用户；发红包
                         if ($order['user_id'] > 0)
                         {
-                            /* 取得用户信息 */
+                            // 取得用户信息
                             $user = Member::user_info($order['user_id']);
 
-                            /* 计算并发放积分 */
+                            // 计算并发放积分
                             $integral = integral_to_give($order);
                             AccountLog::logAccountChange( 0, 0, intval($integral['rank_points']), intval($integral['custom_points']), trans('message.score.register'), $order['order_sn']);
 
-                            /* 发放红包 */
+                            // 发放红包
                             send_order_bonus($order['order_id']);
                         }
                     }
@@ -984,13 +984,13 @@ class Cart extends Foundation
             }
 
         }
-        /* 清空购物车 */
+        // 清空购物车
         self::clear_cart_ids($cart_good_ids,$flow_type);
-        /* 清除缓存，否则买了商品，但是前台页面读取缓存，商品数量不减少 */
+        // 清除缓存，否则买了商品，但是前台页面读取缓存，商品数量不减少
         // clear_all_files();
 
 
-        /* 插入支付日志 */
+        // 插入支付日志
         // $order['log_id'] = insert_pay_log($new_order_id, $order['order_amount'], PAY_ORDER);
 
 
@@ -1013,7 +1013,7 @@ class Cart extends Foundation
      */
     public static function get_cart_goods($cart_good_ids = [])
     {
-        /* 初始化 */
+        // 初始化
         $uid = Token::authorization();
         $goods_list = array();
         $total = array(
@@ -1024,14 +1024,14 @@ class Cart extends Foundation
             'goods_amount' => 0, // 本店售价合计（无格式）
         );
 
-        /* 循环、统计 */
+        // 循环、统计
 
         $res = self::find()
             ->where(['rec_type',self::CART_GENERAL_GOODS])
             ->andWhere(['user_id', $uid])
             ->orderBy('parent_id')
             ->all();
-        /* 用于统计购物车中实体商品和虚拟商品的个数 */
+        // 用于统计购物车中实体商品和虚拟商品的个数
         $virtual_goods_count = 0;
         $real_goods_count    = 0;
         foreach ($res as $key => $row) {
@@ -1043,7 +1043,7 @@ class Cart extends Foundation
             $row['goods_price']  = Goods::price_format($row['goods_price'], false);
             $row['market_price'] = Goods::price_format($row['market_price'], false);
 
-            /* 统计实体商品和虚拟商品的个数 */
+            // 统计实体商品和虚拟商品的个数
             if ($row['is_real'])
             {
                 $real_goods_count++;
@@ -1053,9 +1053,9 @@ class Cart extends Foundation
                 $virtual_goods_count++;
             }
 
-            /* 查询规格 */
+            // 查询规格
 
-            /* 增加是否在购物车里显示商品图 */
+            // 增加是否在购物车里显示商品图
 
             $goods_list[] = $row;
         }
@@ -1123,7 +1123,7 @@ class Cart extends Foundation
 
                 }
 
-                /* 是货品 */
+                // 是货品
                 $row['product_id'] = trim($row['product_id']);
                 if (!empty($row['product_id']))
                 {
@@ -1191,7 +1191,7 @@ class Cart extends Foundation
      */
     public static function compute_discount_amount($cart_good_ids)
     {
-        /* 查询优惠活动 */
+        // 查询优惠活动
         $now = time();
         $user_rank = UserRank::getUserRankByUid();
         $user_rank = ',' . $user_rank['rank_id'] . ',';
@@ -1227,11 +1227,11 @@ class Cart extends Foundation
             return 0;
         }
 
-        /* 初始化折扣 */
+        // 初始化折扣
         $discount = 0;
         $favourable_name = array();
 
-        /* 循环计算每个优惠活动的折扣 */
+        // 循环计算每个优惠活动的折扣
         foreach ($favourable_list as $favourable)
         {
 
@@ -1245,7 +1245,7 @@ class Cart extends Foundation
             }
             elseif ($favourable['act_range'] == FavourableActivity::FAR_CATEGORY)
             {
-                // /* 找出分类id的子分类id */
+                // // 找出分类id的子分类id
                 // $id_list = array();
                 // $raw_id_list = explode(',', $favourable['act_range_ext']);
                 // foreach ($raw_id_list as $id)
@@ -1309,7 +1309,7 @@ class Cart extends Foundation
      */
     public static function compute_discount_check($order_products)
     {
-        /* 查询优惠活动 */
+        // 查询优惠活动
         $now = time();
         $user_rank = UserRank::getUserRankByUid();
         $user_rank = ',' . $user_rank['rank_id'] . ',';
@@ -1339,11 +1339,11 @@ class Cart extends Foundation
             return 0;
         }
 
-        /* 初始化折扣 */
+        // 初始化折扣
         $discount = 0;
         $favourable_name = array();
 
-        /* 循环计算每个优惠活动的折扣 */
+        // 循环计算每个优惠活动的折扣
         foreach ($favourable_list as $favourable)
         {
             $total_amount = 0;
@@ -1357,7 +1357,7 @@ class Cart extends Foundation
             }
             elseif ($favourable['act_range'] == FavourableActivity::FAR_CATEGORY)
             {
-                // /* 找出分类id的子分类id */
+                // // 找出分类id的子分类id
                 // $id_list = array();
                 // $raw_id_list = explode(',', $favourable['act_range_ext']);
                 // foreach ($raw_id_list as $id)

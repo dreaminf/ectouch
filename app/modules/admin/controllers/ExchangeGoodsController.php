@@ -20,10 +20,10 @@ class ExchangeGoodsController extends Controller
          * 商品列表
          */
         if ($_REQUEST['act'] == 'list') {
-            /* 权限判断 */
+            // 权限判断
             admin_priv('exchange_goods');
 
-            /* 取得过滤条件 */
+            // 取得过滤条件
             $filter = [];
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['15_exchange_goods_list']);
             $this->smarty->assign('action_link', ['text' => $GLOBALS['_LANG']['exchange_goods_add'], 'href' => 'exchange_goods.php?act=add']);
@@ -67,7 +67,7 @@ class ExchangeGoodsController extends Controller
          * 添加商品
          */
         if ($_REQUEST['act'] == 'add') {
-            /* 权限判断 */
+            // 权限判断
             admin_priv('exchange_goods');
 
             /*初始化*/
@@ -89,7 +89,7 @@ class ExchangeGoodsController extends Controller
          * 添加商品
          */
         if ($_REQUEST['act'] == 'insert') {
-            /* 权限判断 */
+            // 权限判断
             admin_priv('exchange_goods');
 
             /*检查是否重复*/
@@ -125,10 +125,10 @@ class ExchangeGoodsController extends Controller
          * 编辑
          */
         if ($_REQUEST['act'] == 'edit') {
-            /* 权限判断 */
+            // 权限判断
             admin_priv('exchange_goods');
 
-            /* 取商品数据 */
+            // 取商品数据
             $sql = "SELECT eg.goods_id, eg.exchange_integral,eg.is_exchange, eg.is_hot, g.goods_name " .
                 " FROM " . $this->ecs->table('exchange_goods') . " AS eg " .
                 "  LEFT JOIN " . $this->ecs->table('goods') . " AS g ON g.goods_id = eg.goods_id " .
@@ -148,7 +148,7 @@ class ExchangeGoodsController extends Controller
          * 编辑
          */
         if ($_REQUEST['act'] == 'update') {
-            /* 权限判断 */
+            // 权限判断
             admin_priv('exchange_goods');
 
             if (empty($_POST['goods_id'])) {
@@ -177,7 +177,7 @@ class ExchangeGoodsController extends Controller
             $id = intval($_POST['id']);
             $exchange_integral = floatval($_POST['val']);
 
-            /* 检查文章标题是否重复 */
+            // 检查文章标题是否重复
             if ($exchange_integral < 0 || $exchange_integral == 0 && $_POST['val'] != "$goods_price") {
                 return make_json_error($GLOBALS['_LANG']['exchange_integral_invalid']);
             } else {
@@ -276,7 +276,7 @@ class ExchangeGoodsController extends Controller
         }
     }
 
-    /* 获得商品列表 */
+    // 获得商品列表
     private function get_exchange_goodslist()
     {
         $result = get_filter();
@@ -294,7 +294,7 @@ class ExchangeGoodsController extends Controller
                 $where = " AND g.goods_name LIKE '%" . mysql_like_quote($filter['keyword']) . "%'";
             }
 
-            /* 文章总数 */
+            // 文章总数
             $sql = 'SELECT COUNT(*) FROM ' . $GLOBALS['ecs']->table('exchange_goods') . ' AS eg ' .
                 'LEFT JOIN ' . $GLOBALS['ecs']->table('goods') . ' AS g ON g.goods_id = eg.goods_id ' .
                 'WHERE 1 ' . $where;
@@ -302,7 +302,7 @@ class ExchangeGoodsController extends Controller
 
             $filter = page_and_size($filter);
 
-            /* 获取文章数据 */
+            // 获取文章数据
             $sql = 'SELECT eg.* , g.goods_name ' .
                 'FROM ' . $GLOBALS['ecs']->table('exchange_goods') . ' AS eg ' .
                 'LEFT JOIN ' . $GLOBALS['ecs']->table('goods') . ' AS g ON g.goods_id = eg.goods_id ' .

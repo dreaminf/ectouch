@@ -84,7 +84,7 @@ class GoodsBookingController extends Controller
          * 处理提交数据
          */
         if ($_REQUEST['act'] == 'update') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('booking');
 
             $dispose_note = !empty($_POST['dispose_note']) ? trim($_POST['dispose_note']) : '';
@@ -95,7 +95,7 @@ class GoodsBookingController extends Controller
                 " WHERE rec_id='$_REQUEST[rec_id]'";
             $this->db->query($sql);
 
-            /* 邮件通知处理流程 */
+            // 邮件通知处理流程 
             if (!empty($_POST['send_email_notice']) or isset($_POST['remail'])) {
                 //获取邮件中的必要内容
                 $sql = 'SELECT bg.email, bg.link_man, bg.goods_id, g.goods_name ' .
@@ -103,7 +103,7 @@ class GoodsBookingController extends Controller
                     "WHERE bg.goods_id = g.goods_id AND bg.rec_id='$_REQUEST[rec_id]'";
                 $booking_info = $this->db->getRow($sql);
 
-                /* 设置缺货回复模板所需要的内容信息 */
+                // 设置缺货回复模板所需要的内容信息 
                 $template = get_mail_template('goods_booking');
                 $goods_link = $this->ecs->url() . 'goods.php?id=' . $booking_info['goods_id'];
 
@@ -116,7 +116,7 @@ class GoodsBookingController extends Controller
 
                 $content = $this->smarty->fetch('str:' . $template['template_content']);
 
-                /* 发送邮件 */
+                // 发送邮件 
                 if (send_mail($booking_info['link_man'], $booking_info['email'], $template['template_subject'], $content, $template['is_html'])) {
                     $send_ok = 0;
                 } else {
@@ -137,7 +137,7 @@ class GoodsBookingController extends Controller
      */
     private function get_bookinglist()
     {
-        /* 查询条件 */
+        // 查询条件 
         $filter['keywords'] = empty($_REQUEST['keywords']) ? '' : trim($_REQUEST['keywords']);
         if (isset($_REQUEST['is_ajax']) && $_REQUEST['is_ajax'] == 1) {
             $filter['keywords'] = json_str_iconv($filter['keywords']);
@@ -154,10 +154,10 @@ class GoodsBookingController extends Controller
             "WHERE bg.goods_id = g.goods_id $where";
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-        /* 分页大小 */
+        // 分页大小 
         $filter = page_and_size($filter);
 
-        /* 获取活动数据 */
+        // 获取活动数据 
         $sql = 'SELECT bg.rec_id, bg.link_man, g.goods_id, g.goods_name, bg.goods_number, bg.booking_time, bg.is_dispose ' .
             'FROM ' . $GLOBALS['ecs']->table('booking_goods') . ' AS bg, ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
             "WHERE bg.goods_id = g.goods_id $where " .
@@ -194,7 +194,7 @@ class GoodsBookingController extends Controller
 
         $res = $this->db->getRow($sql);
 
-        /* 格式化时间 */
+        // 格式化时间 
         $res['booking_time'] = local_date($GLOBALS['_CFG']['time_format'], $res['booking_time']);
         if (!empty($res['dispose_time'])) {
             $res['dispose_time'] = local_date($GLOBALS['_CFG']['time_format'], $res['dispose_time']);

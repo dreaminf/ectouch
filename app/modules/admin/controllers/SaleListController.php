@@ -17,7 +17,7 @@ class SaleListController extends Controller
         $this->smarty->assign('lang', $GLOBALS['_LANG']);
 
         if (isset($_REQUEST['act']) && ($_REQUEST['act'] == 'query' || $_REQUEST['act'] == 'download')) {
-            /* 检查权限 */
+            // 检查权限 
             check_authz_json('sale_order_stats');
             if (strstr($_REQUEST['start_date'], '-') === false) {
                 $_REQUEST['start_date'] = local_date('Y-m-d', $_REQUEST['start_date']);
@@ -32,10 +32,10 @@ class SaleListController extends Controller
                 header("Content-type: application/vnd.ms-excel; charset=utf-8");
                 header("Content-Disposition: attachment; filename=$file_name.xls");
 
-                /* 文件标题 */
+                // 文件标题 
                 echo ecs_iconv(CHARSET, 'GB2312', $_REQUEST['start_date'] . $GLOBALS['_LANG']['to'] . $_REQUEST['end_date'] . $GLOBALS['_LANG']['sales_list']) . "\t\n";
 
-                /* 商品名称,订单号,商品数量,销售价格,销售日期 */
+                // 商品名称,订单号,商品数量,销售价格,销售日期 
                 echo ecs_iconv(CHARSET, 'GB2312', $GLOBALS['_LANG']['goods_name']) . "\t";
                 echo ecs_iconv(CHARSET, 'GB2312', $GLOBALS['_LANG']['order_sn']) . "\t";
                 echo ecs_iconv(CHARSET, 'GB2312', $GLOBALS['_LANG']['amount']) . "\t";
@@ -65,9 +65,9 @@ class SaleListController extends Controller
          *商品明细列表
          */
         else {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('sale_order_stats');
-            /* 时间参数 */
+            // 时间参数 
             if (!isset($_REQUEST['start_date'])) {
                 $start_date = local_strtotime('-7 days');
             }
@@ -76,7 +76,7 @@ class SaleListController extends Controller
             }
 
             $sale_list_data = $this->get_sale_list();
-            /* 赋值到模板 */
+            // 赋值到模板 
             $this->smarty->assign('filter', $sale_list_data['filter']);
             $this->smarty->assign('record_count', $sale_list_data['record_count']);
             $this->smarty->assign('page_count', $sale_list_data['page_count']);
@@ -89,7 +89,7 @@ class SaleListController extends Controller
             $this->smarty->assign('cfg_lang', $GLOBALS['_CFG']['lang']);
             $this->smarty->assign('action_link', ['text' => $GLOBALS['_LANG']['down_sales'], 'href' => '#download']);
 
-            /* 显示页面 */
+            // 显示页面 
 
             return $this->smarty->display('sale_list.htm');
         }
@@ -105,11 +105,11 @@ class SaleListController extends Controller
     private function get_sale_list($is_pagination = true)
     {
 
-        /* 时间参数 */
+        // 时间参数 
         $filter['start_date'] = empty($_REQUEST['start_date']) ? local_strtotime('-7 days') : local_strtotime($_REQUEST['start_date']);
         $filter['end_date'] = empty($_REQUEST['end_date']) ? local_strtotime('today') : local_strtotime($_REQUEST['end_date']);
 
-        /* 查询数据的条件 */
+        // 查询数据的条件 
         $where = " WHERE og.order_id = oi.order_id" . order_query_sql('finished', 'oi.') .
             " AND oi.add_time >= '" . $filter['start_date'] . "' AND oi.add_time < '" . ($filter['end_date'] + 86400) . "'";
 
@@ -119,7 +119,7 @@ class SaleListController extends Controller
             $where;
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-        /* 分页大小 */
+        // 分页大小 
         $filter = page_and_size($filter);
 
         $sql = 'SELECT og.goods_id, og.goods_sn, og.goods_name, og.goods_number AS goods_num, og.goods_price ' .

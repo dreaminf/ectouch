@@ -4,7 +4,7 @@
  *  地区列表管理语言文件
  */
 
-/* 字段信息 */
+// 字段信息 
 $_LANG['region_id'] = '地区编号';
 $_LANG['region_name'] = '地区名称';
 $_LANG['region_type'] = '地区类型';
@@ -23,7 +23,7 @@ $_LANG['add_province'] = '新增二级地区';
 $_LANG['add_city'] = '增加三级地区';
 $_LANG['add_cantonal'] = '增加四级地区';
 
-/* JS语言项 */
+// JS语言项 
 $_LANG['js_languages']['region_name_empty'] = '您必须输入地区的名称!';
 $_LANG['js_languages']['option_name_empty'] = '必须输入调查选项名称!';
 $_LANG['js_languages']['drop_confirm'] = '您确定要删除这条记录吗?';
@@ -33,7 +33,7 @@ $_LANG['js_languages']['province'] = '二级地区';
 $_LANG['js_languages']['city'] = '三级地区';
 $_LANG['js_languages']['cantonal'] = '四级地区';
 
-/* 提示信息 */
+// 提示信息 
 $_LANG['add_area_error'] = '添加新地区失败!';
 $_LANG['region_name_exist'] = '已经有相同的地区名称存在!';
 $_LANG['parent_id_exist'] = '该区域下有其它下级地区存在, 不能删除!';

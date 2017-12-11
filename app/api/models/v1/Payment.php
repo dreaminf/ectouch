@@ -236,7 +236,7 @@ class Payment extends Foundation
                 return false;
             }
 
-            /* 创建支付应答对象 */
+            // 创建支付应答对象 
             $resHandler = new WxResponse();
 
             $inputParams = $resHandler->xmlToArray($postStr);

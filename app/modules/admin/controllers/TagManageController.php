@@ -11,10 +11,10 @@ class TagManageController extends Controller
     public function actionIndex()
     {
         if ($_REQUEST['act'] == 'list') {
-            /* 鏉冮檺鍒ゆ柇 */
+            // 鏉冮檺鍒ゆ柇 
             admin_priv('tag_manage');
 
-            /* 妯℃澘璧嬪€ */
+            // 妯℃澘璧嬪€ 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['tag_list']);
             $this->smarty->assign('action_link', ['href' => 'tag_manage.php?act=add', 'text' => $GLOBALS['_LANG']['add_tag']]);
             $this->smarty->assign('full_page', 1);
@@ -28,7 +28,7 @@ class TagManageController extends Controller
             $sort_flag = sort_flag($tag_list['filter']);
             $this->smarty->assign($sort_flag['tag'], $sort_flag['img']);
 
-            /* 椤甸潰鏄剧ず */
+            // 椤甸潰鏄剧ず 
 
             return $this->smarty->display('tag_manage.htm');
         }
@@ -83,7 +83,7 @@ class TagManageController extends Controller
 
                 admin_log($tag_words, 'add', 'tag');
 
-                /* 娓呴櫎缂撳瓨 */
+                // 娓呴櫎缂撳瓨 
                 clear_cache_files();
 
                 $link[0]['text'] = $GLOBALS['_LANG']['back_list'];
@@ -93,7 +93,7 @@ class TagManageController extends Controller
             } else {
                 $this->edit_tag($tag_words, $id, $goods_id);
 
-                /* 娓呴櫎缂撳瓨 */
+                // 娓呴櫎缂撳瓨 
                 clear_cache_files();
 
                 $link[0]['text'] = $GLOBALS['_LANG']['back_list'];
@@ -167,13 +167,13 @@ class TagManageController extends Controller
 
             $id = intval($_GET['id']);
 
-            /* 鑾峰彇鍒犻櫎鐨勬爣绛剧殑鍚嶇О */
+            // 鑾峰彇鍒犻櫎鐨勬爣绛剧殑鍚嶇О 
             $tag_name = $this->db->getOne("SELECT tag_words FROM " . $this->ecs->table('tag') . " WHERE tag_id = '$id'");
 
             $sql = "DELETE FROM " . $this->ecs->table('tag') . " WHERE tag_id = '$id'";
             $result = $GLOBALS['db']->query($sql);
             if ($result) {
-                /* 绠＄悊鍛樻棩蹇 */
+                // 绠＄悊鍛樻棩蹇 
                 admin_log(addslashes($tag_name), 'remove', 'tag_manage');
 
                 $url = 'tag_manage.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);

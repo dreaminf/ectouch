@@ -61,14 +61,14 @@ class AttributeController extends Controller
          * 添加/编辑属性
          */
         if ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('attr_manage');
 
-            /* 添加还是编辑的标识 */
+            // 添加还是编辑的标识 
             $is_add = $_REQUEST['act'] == 'add';
             $this->smarty->assign('form_act', $is_add ? 'insert' : 'update');
 
-            /* 取得属性信息 */
+            // 取得属性信息 
             if ($is_add) {
                 $goods_type = isset($_GET['goods_type']) ? intval($_GET['goods_type']) : 0;
                 $attr = [
@@ -89,14 +89,14 @@ class AttributeController extends Controller
             $this->smarty->assign('attr', $attr);
             $this->smarty->assign('attr_groups', get_attr_groups($attr['cat_id']));
 
-            /* 取得商品分类列表 */
+            // 取得商品分类列表 
             $this->smarty->assign('goods_type_list', goods_type_list($attr['cat_id']));
 
-            /* 模板赋值 */
+            // 模板赋值 
             $this->smarty->assign('ur_here', $is_add ? $GLOBALS['_LANG']['10_attribute_add'] : $GLOBALS['_LANG']['52_attribute_add']);
             $this->smarty->assign('action_link', ['href' => 'attribute.php?act=list', 'text' => $GLOBALS['_LANG']['09_attribute_list']]);
 
-            /* 显示模板 */
+            // 显示模板 
 
             return $this->smarty->display('attribute_info.htm');
         }
@@ -105,13 +105,13 @@ class AttributeController extends Controller
          * 插入/更新属性
          */
         if ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('attr_manage');
 
-            /* 插入还是更新的标识 */
+            // 插入还是更新的标识 
             $is_insert = $_REQUEST['act'] == 'insert';
 
-            /* 检查名称是否重复 */
+            // 检查名称是否重复 
             $exclude = empty($_POST['attr_id']) ? 0 : intval($_POST['attr_id']);
             if (!$exc->is_only('attr_name', $_POST['attr_name'], $exclude, " cat_id = '$_POST[cat_id]'")) {
                 return sys_msg($GLOBALS['_LANG']['name_exist'], 1);
@@ -119,7 +119,7 @@ class AttributeController extends Controller
 
             $cat_id = $_REQUEST['cat_id'];
 
-            /* 取得属性信息 */
+            // 取得属性信息 
             $attr = [
                 'cat_id' => $_POST['cat_id'],
                 'attr_name' => $_POST['attr_name'],
@@ -131,7 +131,7 @@ class AttributeController extends Controller
                 'attr_group' => isset($_POST['attr_group']) ? intval($_POST['attr_group']) : 0
             ];
 
-            /* 入库、记录日志、提示信息 */
+            // 入库、记录日志、提示信息 
             if ($is_insert) {
                 $this->db->autoExecute($this->ecs->table('attribute'), $attr, 'INSERT');
                 admin_log($_POST['attr_name'], 'add', 'attribute');
@@ -154,10 +154,10 @@ class AttributeController extends Controller
          * 删除属性(一个或多个)
          */
         if ($_REQUEST['act'] == 'batch') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('attr_manage');
 
-            /* 取得要操作的编号 */
+            // 取得要操作的编号 
             if (isset($_POST['checkboxes'])) {
                 $count = count($_POST['checkboxes']);
                 $ids = isset($_POST['checkboxes']) ? join(',', $_POST['checkboxes']) : 0;
@@ -168,7 +168,7 @@ class AttributeController extends Controller
                 $sql = "DELETE FROM " . $this->ecs->table('goods_attr') . " WHERE attr_id " . db_create_in($ids);
                 $this->db->query($sql);
 
-                /* 记录日志 */
+                // 记录日志 
                 admin_log('', 'batch_remove', 'attribute');
                 clear_cache_files();
 
@@ -189,10 +189,10 @@ class AttributeController extends Controller
             $id = intval($_POST['id']);
             $val = json_str_iconv(trim($_POST['val']));
 
-            /* 取得该属性所属商品类型id */
+            // 取得该属性所属商品类型id 
             $cat_id = $exc->get_name($id, 'cat_id');
 
-            /* 检查属性名称是否重复 */
+            // 检查属性名称是否重复 
             if (!$exc->is_only('attr_name', $val, $id, " cat_id = '$cat_id'")) {
                 return make_json_error($GLOBALS['_LANG']['name_exist']);
             }
@@ -280,7 +280,7 @@ class AttributeController extends Controller
      */
     private function get_attrlist()
     {
-        /* 查询条件 */
+        // 查询条件 
         $filter = [];
         $filter['goods_type'] = empty($_REQUEST['goods_type']) ? 0 : intval($_REQUEST['goods_type']);
         $filter['sort_by'] = empty($_REQUEST['sort_by']) ? 'sort_order' : trim($_REQUEST['sort_by']);
@@ -291,10 +291,10 @@ class AttributeController extends Controller
         $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('attribute') . " AS a $where";
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-        /* 分页大小 */
+        // 分页大小 
         $filter = page_and_size($filter);
 
-        /* 查询 */
+        // 查询 
         $sql = "SELECT a.*, t.cat_name " .
             " FROM " . $GLOBALS['ecs']->table('attribute') . " AS a " .
             " LEFT JOIN " . $GLOBALS['ecs']->table('goods_type') . " AS t ON a.cat_id = t.cat_id " . $where .

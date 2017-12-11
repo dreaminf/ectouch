@@ -48,7 +48,7 @@ class ArticlecatController extends Controller
          * 添加分类
          */
         if ($_REQUEST['act'] == 'add') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('article_cat');
 
             $this->smarty->assign('cat_select', article_cat_list(0));
@@ -63,7 +63,7 @@ class ArticlecatController extends Controller
          * 添加数据
          */
         if ($_REQUEST['act'] == 'insert') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('article_cat');
 
             /*检查分类名是否重复*/
@@ -112,7 +112,7 @@ class ArticlecatController extends Controller
          * 编辑文章分类
          */
         if ($_REQUEST['act'] == 'edit') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('article_cat');
 
             $sql = "SELECT cat_id, cat_name, cat_type, cat_desc, show_in_nav, keywords, parent_id,sort_order FROM " .
@@ -153,7 +153,7 @@ class ArticlecatController extends Controller
          * 更新数据
          */
         if ($_REQUEST['act'] == 'update') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('article_cat');
 
             /*检查重名*/
@@ -175,7 +175,7 @@ class ArticlecatController extends Controller
                 $_POST['parent_id'] = $row['parent_id'];
             }
 
-            /* 检查设定的分类的父分类是否合法 */
+            // 检查设定的分类的父分类是否合法 
             $child_cat = article_cat_list($_POST['id'], 0, false);
             if (!empty($child_cat)) {
                 foreach ($child_cat as $child_data) {
@@ -248,7 +248,7 @@ class ArticlecatController extends Controller
             $id = intval($_POST['id']);
             $order = json_str_iconv(trim($_POST['val']));
 
-            /* 检查输入的值是否合法 */
+            // 检查输入的值是否合法 
             if (!preg_match("/^[0-9]+$/", $order)) {
                 return make_json_error(sprintf($GLOBALS['_LANG']['enter_int'], $order));
             } else {
@@ -272,17 +272,17 @@ class ArticlecatController extends Controller
             $sql = "SELECT cat_type FROM " . $this->ecs->table('article_cat') . " WHERE cat_id = '$id'";
             $cat_type = $this->db->getOne($sql);
             if ($cat_type == 2 || $cat_type == 3 || $cat_type == 4) {
-                /* 系统保留分类，不能删除 */
+                // 系统保留分类，不能删除 
                 return make_json_error($GLOBALS['_LANG']['not_allow_remove']);
             }
 
             $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('article_cat') . " WHERE parent_id = '$id'";
             if ($this->db->getOne($sql) > 0) {
-                /* 还有子分类，不能删除 */
+                // 还有子分类，不能删除 
                 return make_json_error($GLOBALS['_LANG']['is_fullcat']);
             }
 
-            /* 非空的分类不允许删除 */
+            // 非空的分类不允许删除 
             $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('article') . " WHERE cat_id = '$id'";
             if ($this->db->getOne($sql) > 0) {
                 return make_json_error(sprintf($GLOBALS['_LANG']['not_emptycat']));

@@ -3,7 +3,7 @@
 /**
  *  管理中心管理员操作内容语言文件
  */
-/* 字段信息 */
+// 字段信息 
 $_LANG['log_id'] = '编号';
 $_LANG['log_time'] = '操作日期';
 $_LANG['user_id'] = '操作者';
@@ -27,7 +27,7 @@ $_LANG['back_list'] = '返回日志列表';
 
 $_LANG['js_languages']['select_date_value'] = '如果您要清除日志,请选择清除的日期';
 
-/* 提示信息 */
+// 提示信息 
 $_LANG['drop_sueeccud'] = '操作成功!';
 $_LANG['batch_drop_success'] = '成功删除了 %d 个日志记录';
 

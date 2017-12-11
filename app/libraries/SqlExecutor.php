@@ -117,7 +117,7 @@ class SqlExecutor
      */
     public function run_all($sql_files)
     {
-        /* 如果传入参数不是数组，程序直接返回 */
+        // 如果传入参数不是数组，程序直接返回 
         if (!is_array($sql_files)) {
             return false;
         }
@@ -125,13 +125,13 @@ class SqlExecutor
         foreach ($sql_files as $sql_file) {
             $query_items = $this->parse_sql_file($sql_file);
 
-            /* 如果解析失败，则跳过 */
+            // 如果解析失败，则跳过 
             if (!$query_items) {
                 continue;
             }
 
             foreach ($query_items as $query_item) {
-                /* 如果查询项为空，则跳过 */
+                // 如果查询项为空，则跳过 
                 if (!$query_item) {
                     continue;
                 }
@@ -154,32 +154,32 @@ class SqlExecutor
      */
     public function parse_sql_file($file_path)
     {
-        /* 如果SQL文件不存在则返回false */
+        // 如果SQL文件不存在则返回false 
         if (!file_exists($file_path)) {
             return false;
         }
 
-        /* 记录当前正在运行的SQL文件 */
+        // 记录当前正在运行的SQL文件 
         $this->current_file = $file_path;
 
-        /* 读取SQL文件 */
+        // 读取SQL文件 
         $sql = implode('', file($file_path));
 
-        /* 删除SQL注释，由于执行的是replace操作，所以不需要进行检测。下同。 */
+        // 删除SQL注释，由于执行的是replace操作，所以不需要进行检测。下同。 
         $sql = $this->remove_comment($sql);
 
-        /* 删除SQL串首尾的空白符 */
+        // 删除SQL串首尾的空白符 
         $sql = trim($sql);
 
-        /* 如果SQL文件中没有查询语句则返回false */
+        // 如果SQL文件中没有查询语句则返回false 
         if (!$sql) {
             return false;
         }
 
-        /* 替换表前缀 */
+        // 替换表前缀 
         $sql = $this->replace_prefix($sql);
 
-        /* 解析查询项 */
+        // 解析查询项 
         $sql = str_replace("\r", '', $sql);
         $query_items = explode(";\n", $sql);
 
@@ -195,25 +195,25 @@ class SqlExecutor
      */
     public function query($query_item)
     {
-        /* 删除查询项首尾的空白符 */
+        // 删除查询项首尾的空白符 
         $query_item = trim($query_item);
 
-        /* 如果查询项为空则返回false */
+        // 如果查询项为空则返回false 
         if (!$query_item) {
             return false;
         }
 
-        /* 处理建表操作 */
+        // 处理建表操作 
         if (preg_match('/^\s*CREATE\s+TABLE\s*/i', $query_item)) {
             if (!$this->create_table($query_item)) {
                 return false;
             }
-        } /* 处理ALTER TABLE语句，此时程序将对表的结构进行修改 */
+        } // 处理ALTER TABLE语句，此时程序将对表的结构进行修改 
         elseif ($this->auto_match && preg_match('/^\s*ALTER\s+TABLE\s*/i', $query_item)) {
             if (!$this->alter_table($query_item)) {
                 return false;
             }
-        } /* 处理其它修改操作，如数据添加、更新、删除等 */
+        } // 处理其它修改操作，如数据添加、更新、删除等 
         else {
             if (!$this->do_other($query_item)) {
                 return false;
@@ -232,10 +232,10 @@ class SqlExecutor
      */
     public function remove_comment($sql)
     {
-        /* 删除SQL行注释，行注释不匹配换行符 */
+        // 删除SQL行注释，行注释不匹配换行符 
         $sql = preg_replace('/^\s*(?:--|#).*/m', '', $sql);
 
-        /* 删除SQL块注释，匹配换行符，且为非贪婪匹配 */
+        // 删除SQL块注释，匹配换行符，且为非贪婪匹配 
         //$sql = preg_replace('/^\s*\/\*(?:.|\n)*\*\//m', '', $sql);
         $sql = preg_replace('/^\s*\/\*.*?\*\//ms', '', $sql);
 
@@ -286,12 +286,12 @@ class SqlExecutor
         $matches = [];
         $table_name = '';
 
-        /* 如果没指定$query_type，则自动获取 */
+        // 如果没指定$query_type，则自动获取 
         if (!$query_type && preg_match('/^\s*(\w+)/', $query_item, $matches)) {
             $query_type = $matches[1];
         }
 
-        /* 获取相应的正则表达式 */
+        // 获取相应的正则表达式 
         $query_type = strtoupper($query_type);
         switch ($query_type) {
             case 'ALTER':
@@ -353,7 +353,7 @@ class SqlExecutor
      */
     public function create_table($query_item)
     {
-        /* 获取建表主体串以及表属性声明串，不区分大小写，匹配换行符，且为贪婪匹配 */
+        // 获取建表主体串以及表属性声明串，不区分大小写，匹配换行符，且为贪婪匹配 
         $pattern = '/^\s*(CREATE\s+TABLE[^(]+\(.*\))(.*)$/is';
         if (!preg_match($pattern, $query_item, $matches)) {
             return false;
@@ -361,23 +361,23 @@ class SqlExecutor
         $main = $matches[1];
         $postfix = $matches[2];
 
-        /* 从表属性声明串中查找表的类型 */
+        // 从表属性声明串中查找表的类型 
         $pattern = '/.*(?:ENGINE|TYPE)\s*=\s*([a-z]+).*$/is';
         $type = preg_match($pattern, $postfix, $matches) ? $matches[1] : 'MYISAM';
 
-        /* 从表属性声明串中查找自增语句 */
+        // 从表属性声明串中查找自增语句 
         $pattern = '/.*(AUTO_INCREMENT\s*=\s*\d+).*$/is';
         $auto_incr = preg_match($pattern, $postfix, $matches) ? $matches[1] : '';
 
-        /* 重新设置表属性声明串 */
+        // 重新设置表属性声明串 
         $postfix = $this->db->version() > '4.1' ? " ENGINE=$type DEFAULT CHARACTER SET " . $this->db_charset
             : " TYPE=$type";
         $postfix .= ' ' . $auto_incr;
 
-        /* 重新构造建表语句 */
+        // 重新构造建表语句 
         $sql = $main . $postfix;
 
-        /* 开始创建表 */
+        // 开始创建表 
         if (!$this->db->query($sql, 'SILENT')) {
             $this->handle_error($sql);
             return false;
@@ -401,13 +401,13 @@ class SqlExecutor
      */
     public function alter_table($query_item)
     {
-        /* 获取表名 */
+        // 获取表名 
         $table_name = $this->get_table_name($query_item, 'ALTER');
         if (!$table_name) {
             return false;
         }
 
-        /* 先把CHANGE操作提取出来执行，再过滤掉它们 */
+        // 先把CHANGE操作提取出来执行，再过滤掉它们 
         $result = $this->parse_change_query($query_item, $table_name);
         if ($result[0] && !$this->db->query($result[0], 'SILENT')) {
             $this->handle_error($result[0]);
@@ -417,7 +417,7 @@ class SqlExecutor
             return true;
         }
 
-        /* 把DROP [COLUMN]提取出来执行，再过滤掉它们 */
+        // 把DROP [COLUMN]提取出来执行，再过滤掉它们 
         $result = $this->parse_drop_column_query($result[1], $table_name);
         if ($result[0] && !$this->db->query($result[0], 'SILENT')) {
             $this->handle_error($result[0]);
@@ -427,7 +427,7 @@ class SqlExecutor
             return true;
         }
 
-        /* 把ADD [COLUMN]提取出来执行，再过滤掉它们 */
+        // 把ADD [COLUMN]提取出来执行，再过滤掉它们 
         $result = $this->parse_add_column_query($result[1], $table_name);
         if ($result[0] && !$this->db->query($result[0], 'SILENT')) {
             $this->handle_error($result[0]);
@@ -437,7 +437,7 @@ class SqlExecutor
             return true;
         }
 
-        /* 把DROP INDEX提取出来执行，再过滤掉它们 */
+        // 把DROP INDEX提取出来执行，再过滤掉它们 
         $result = $this->parse_drop_index_query($result[1], $table_name);
         if ($result[0] && !$this->db->query($result[0], 'SILENT')) {
             $this->handle_error($result[0]);
@@ -447,13 +447,13 @@ class SqlExecutor
             return true;
         }
 
-        /* 把ADD INDEX提取出来执行，再过滤掉它们 */
+        // 把ADD INDEX提取出来执行，再过滤掉它们 
         $result = $this->parse_add_index_query($result[1], $table_name);
         if ($result[0] && !$this->db->query($result[0], 'SILENT')) {
             $this->handle_error($result[0]);
             return false;
         }
-        /* 执行其它的修改操作 */
+        // 执行其它的修改操作 
         if ($result[1] && !$this->db->query($result[1], 'SILENT')) {
             $this->handle_error($result[1]);
             return false;
@@ -479,20 +479,20 @@ class SqlExecutor
         }
 
         $matches = [];
-        /* 第1个子模式匹配old_col_name，第2个子模式匹配column_definition，第3个子模式匹配new_col_name */
+        // 第1个子模式匹配old_col_name，第2个子模式匹配column_definition，第3个子模式匹配new_col_name 
         $pattern = '/\s*CHANGE\s*`?(\w+)`?\s*`?(\w+)`?([^,(]+\([^,]+?(?:,[^,)]+)*\)[^,]+|[^,;]+)\s*,?/i';
         if (preg_match_all($pattern, $query_item, $matches, PREG_SET_ORDER)) {
             $fields = $this->get_fields($table_name);
             $num = count($matches);
             $sql = '';
             for ($i = 0; $i < $num; $i++) {
-                /* 如果表中存在原列名 */
+                // 如果表中存在原列名 
                 if (in_array($matches[$i][1], $fields)) {
                     $sql .= $matches[$i][0];
-                } /* 如果表中存在新列名 */
+                } // 如果表中存在新列名 
                 elseif (in_array($matches[$i][2], $fields)) {
                     $sql .= 'CHANGE ' . $matches[$i][2] . ' ' . $matches[$i][2] . ' ' . $matches[$i][3] . ',';
-                } else /* 如果两个列名都不存在 */ {
+                } else // 如果两个列名都不存在  {
                     $sql .= 'ADD ' . $matches[$i][2] . ' ' . $matches[$i][3] . ',';
                     $sql = preg_replace('/(\s+AUTO_INCREMENT)/i', '\1 PRIMARY KEY', $sql);
                 }
@@ -524,7 +524,7 @@ class SqlExecutor
         }
 
         $matches = [];
-        /* 子模式存储列名 */
+        // 子模式存储列名 
         $pattern = '/\s*DROP(?:\s+COLUMN)?(?!\s+(?:INDEX|PRIMARY))\s*`?(\w+)`?\s*,?/i';
         if (preg_match_all($pattern, $query_item, $matches, PREG_SET_ORDER)) {
             $fields = $this->get_fields($table_name);
@@ -563,7 +563,7 @@ class SqlExecutor
         }
 
         $matches = [];
-        /* 第1个子模式存储列定义，第2个子模式存储列名 */
+        // 第1个子模式存储列定义，第2个子模式存储列名 
         $pattern = '/\s*ADD(?:\s+COLUMN)?(?!\s+(?:INDEX|UNIQUE|PRIMARY))\s*(`?(\w+)`?(?:[^,(]+\([^,]+?(?:,[^,)]+)*\)[^,]+|[^,;]+))\s*,?/i';
         if (preg_match_all($pattern, $query_item, $matches, PREG_SET_ORDER)) {
             $fields = $this->get_fields($table_name);
@@ -572,7 +572,7 @@ class SqlExecutor
             $sql = '';
             for ($i = 0; $i < $num; $i++) {
                 if (in_array($matches[$i][2], $fields)) {
-                    /* 如果为低版本MYSQL，则把非法关键字过滤掉 */
+                    // 如果为低版本MYSQL，则把非法关键字过滤掉 
                     if ($mysql_ver < '4.0.1') {
                         $matches[$i][1] = preg_replace('/\s*(?:AFTER|FIRST)\s*.*$/i', '', $matches[$i][1]);
                     }
@@ -607,17 +607,17 @@ class SqlExecutor
             $table_name = $this->get_table_name($query_item, 'ALTER');
         }
 
-        /* 子模式存储键名 */
+        // 子模式存储键名 
         $pattern = '/\s*DROP\s+(?:PRIMARY\s+KEY|INDEX\s*`?(\w+)`?)\s*,?/i';
         if (preg_match_all($pattern, $query_item, $matches, PREG_SET_ORDER)) {
             $indexes = $this->get_indexes($table_name);
             $num = count($matches);
             $sql = '';
             for ($i = 0; $i < $num; $i++) {
-                /* 如果子模式为空，删除主键 */
+                // 如果子模式为空，删除主键 
                 if (empty($matches[$i][1])) {
                     $sql .= 'DROP PRIMARY KEY,';
-                } /* 否则删除索引 */
+                } // 否则删除索引 
                 elseif (in_array($matches[$i][1], $indexes)) {
                     $sql .= 'DROP INDEX ' . $matches[$i][1] . ',';
                 }
@@ -649,7 +649,7 @@ class SqlExecutor
             $table_name = $this->get_table_name($query_item, 'ALTER');
         }
 
-        /* 第1个子模式存储索引定义，第2个子模式存储"PRIMARY KEY"，第3个子模式存储键名，第4个子模式存储列名 */
+        // 第1个子模式存储索引定义，第2个子模式存储"PRIMARY KEY"，第3个子模式存储键名，第4个子模式存储列名 
         $pattern = '/\s*ADD\s+((?:INDEX|UNIQUE|(PRIMARY\s+KEY))\s*(?:`?(\w+)`?)?\s*\(\s*`?(\w+)`?\s*(?:,[^,)]+)*\))\s*,?/i';
         if (preg_match_all($pattern, $query_item, $matches, PREG_SET_ORDER)) {
             $indexes = $this->get_indexes($table_name);
@@ -783,7 +783,7 @@ class SqlExecutor
             . "File Path:\r\n " . $this->current_file
             . "\r\n\r\n\r\n\r\n";
 
-        /* 过滤一些错误 */
+        // 过滤一些错误 
         if (!in_array($this->db->errno(), $this->ignored_errors)) {
             $this->error = $error_str;
         }

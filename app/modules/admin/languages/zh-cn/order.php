@@ -4,7 +4,7 @@
  *  订单管理语言文件
  */
 
-/* 订单搜索 */
+// 订单搜索 
 $_LANG['order_sn'] = '订单号';
 $_LANG['consignee'] = '收货人';
 $_LANG['all_status'] = '订单状态';
@@ -19,7 +19,7 @@ $_LANG['cs'][OS_INVALID] = '无效';
 $_LANG['cs'][OS_RETURNED] = '退货';
 $_LANG['cs'][OS_SHIPPED_PART] = '部分发货';
 
-/* 订单状态 */
+// 订单状态 
 $_LANG['os'][OS_UNCONFIRMED] = '未确认';
 $_LANG['os'][OS_CONFIRMED] = '已确认';
 $_LANG['os'][OS_CANCELED] = '<font color="red"> 取消</font>';
@@ -40,7 +40,7 @@ $_LANG['ps'][PS_PAYING] = '付款中';
 $_LANG['ps'][PS_PAYED] = '已付款';
 
 $_LANG['ss_admin'][SS_SHIPPED_ING] = '发货中（前台状态：未发货）';
-/* 订单操作 */
+// 订单操作 
 $_LANG['label_operable_act'] = '当前可执行操作：';
 $_LANG['label_action_note'] = '操作备注：';
 $_LANG['label_invoice_note'] = '发货备注：';
@@ -72,7 +72,7 @@ $_LANG['op_you_can'] = '您可进行的操作';
 $_LANG['op_split'] = '生成发货单';
 $_LANG['op_to_delivery'] = '去发货';
 
-/* 订单列表 */
+// 订单列表 
 $_LANG['order_amount'] = '应付金额';
 $_LANG['total_fee'] = '总金额';
 $_LANG['shipping_name'] = '配送方式';
@@ -87,7 +87,7 @@ $_LANG['exchange_goods'] = '（积分兑换）';
 
 $_LANG['js_languages']['remove_confirm'] = '删除订单将清除该订单的所有信息。您确定要这么做吗？';
 
-/* 订单搜索 */
+// 订单搜索 
 $_LANG['label_order_sn'] = '订单号：';
 $_LANG['label_all_status'] = '订单状态：';
 $_LANG['label_user_name'] = '购货人：';
@@ -105,7 +105,7 @@ $_LANG['label_shipping_status'] = '发货状态：';
 $_LANG['label_area'] = '所在地区：';
 $_LANG['label_time'] = '下单时间：';
 
-/* 订单详情 */
+// 订单详情 
 $_LANG['prev'] = '前一个订单';
 $_LANG['next'] = '后一个订单';
 $_LANG['print_order'] = '打印订单';
@@ -199,12 +199,12 @@ $_LANG['order_splited_sms'] = '您的订单%s,%s正在%s [%s]';
 $_LANG['order_removed'] = '订单删除成功。';
 $_LANG['return_list'] = '返回订单列表';
 
-/* 订单处理提示 */
+// 订单处理提示 
 $_LANG['surplus_not_enough'] = '该订单使用 %s 余额支付，现在用户余额不足';
 $_LANG['integral_not_enough'] = '该订单使用 %s 积分支付，现在用户积分不足';
 $_LANG['bonus_not_available'] = '该订单使用红包支付，现在红包不可用';
 
-/* 购货人信息 */
+// 购货人信息 
 $_LANG['display_buyer'] = '显示购货人信息';
 $_LANG['buyer_info'] = '购货人信息';
 $_LANG['pay_points'] = '消费积分';
@@ -217,7 +217,7 @@ $_LANG['zipcode'] = '邮编';
 $_LANG['tel'] = '电话';
 $_LANG['mobile'] = '备用电话';
 
-/* 合并订单 */
+// 合并订单 
 $_LANG['order_sn_not_null'] = '请填写要合并的订单号';
 $_LANG['two_order_sn_same'] = '要合并的两个订单号不能相同';
 $_LANG['order_not_exist'] = '定单 %s 不存在';
@@ -233,7 +233,7 @@ $_LANG['merge'] = '合并';
 $_LANG['notice_order_sn'] = '当两个订单不一致时，合并后的订单信息（如：支付方式、配送方式、包装、贺卡、红包等）以主订单为准。';
 $_LANG['js_languages']['confirm_merge'] = '您确实要合并这两个订单吗？';
 
-/* 批处理 */
+// 批处理 
 $_LANG['pls_select_order'] = '请选择您要操作的订单';
 $_LANG['no_fulfilled_order'] = '没有满足操作条件的订单。';
 $_LANG['updated_order'] = '更新的订单：';
@@ -243,7 +243,7 @@ $_LANG['invalid_order'] = '以下订单无法设置为无效';
 $_LANG['cancel_order'] = '以下订单无法取消';
 $_LANG['remove_order'] = '以下订单无法被移除';
 
-/* 编辑订单打印模板 */
+// 编辑订单打印模板 
 $_LANG['edit_order_templates'] = '编辑订单打印模板';
 $_LANG['template_resetore'] = '还原模板';
 $_LANG['edit_template_success'] = '编辑订单打印模板操作成功!';
@@ -252,14 +252,14 @@ $_LANG['remark_gift'] = '（赠品）';
 $_LANG['remark_favourable'] = '（特惠品）';
 $_LANG['remark_package'] = '（礼包）';
 
-/* 订单来源统计 */
+// 订单来源统计 
 $_LANG['from_order'] = '订单来源：';
 $_LANG['from_ad_js'] = '广告：';
 $_LANG['from_goods_js'] = '商品站外JS投放';
 $_LANG['from_self_site'] = '来自本站';
 $_LANG['from'] = '来自站点：';
 
-/* 添加、编辑订单 */
+// 添加、编辑订单 
 $_LANG['add_order'] = '添加订单';
 $_LANG['edit_order'] = '编辑订单';
 $_LANG['step']['user'] = '请选择您要为哪个会员下订单';
@@ -340,7 +340,7 @@ $_LANG['js_languages']['pls_select_agency'] = '请选择办事处！';
 $_LANG['js_languages']['pls_select_other_agency'] = '该订单现在就属于这个办事处，请选择其他办事处！';
 $_LANG['js_languages']['loading'] = '加载中...';
 
-/* 订单操作 */
+// 订单操作 
 $_LANG['order_operate'] = '订单操作：';
 $_LANG['label_refund_amount'] = '退款金额：';
 $_LANG['label_handle_refund'] = '退款方式：';
@@ -356,20 +356,20 @@ $_LANG['send_mail_fail'] = '发送邮件失败';
 
 $_LANG['send_message'] = '发送/查看留言';
 
-/* 发货单操作 */
+// 发货单操作 
 $_LANG['delivery_operate'] = '发货单操作：';
 $_LANG['delivery_sn_number'] = '发货单流水号：';
 $_LANG['invoice_no_sms'] = '请填写发货单号！';
 
-/* 发货单搜索 */
+// 发货单搜索 
 $_LANG['delivery_sn'] = '发货单';
 
-/* 发货单状态 */
+// 发货单状态 
 $_LANG['delivery_status'][0] = '已发货';
 $_LANG['delivery_status'][1] = '退货';
 $_LANG['delivery_status'][2] = '正常';
 
-/* 发货单标签 */
+// 发货单标签 
 $_LANG['label_delivery_status'] = '发货单状态';
 $_LANG['label_suppliers_name'] = '供货商';
 $_LANG['label_delivery_time'] = '生成时间';
@@ -378,17 +378,17 @@ $_LANG['label_add_time'] = '下单时间';
 $_LANG['label_update_time'] = '发货时间';
 $_LANG['label_send_number'] = '发货数量';
 
-/* 发货单提示 */
+// 发货单提示 
 $_LANG['tips_delivery_del'] = '发货单删除成功！';
 
-/* 退货单操作 */
+// 退货单操作 
 $_LANG['back_operate'] = '退货单操作：';
 
-/* 退货单标签 */
+// 退货单标签 
 $_LANG['return_time'] = '退货时间：';
 $_LANG['label_return_time'] = '退货时间';
 
-/* 退货单提示 */
+// 退货单提示 
 $_LANG['tips_back_del'] = '退货单删除成功！';
 
 $_LANG['goods_num_err'] = '库存不足，请重新选择！';

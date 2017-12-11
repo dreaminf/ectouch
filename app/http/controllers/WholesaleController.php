@@ -14,7 +14,7 @@ class WholesaleController extends Controller
 {
     public function actionIndex()
     {
-        /* 如果没登录，提示登录 */
+        // 如果没登录，提示登录 
         if (session('user_rank') <= 0) {
             return show_message($GLOBALS['_LANG']['ws_user_rank'], $GLOBALS['_LANG']['ws_return_home'], 'index.php');
         }
@@ -29,19 +29,19 @@ class WholesaleController extends Controller
             $search_keywords = isset($_REQUEST['search_keywords']) ? trim($_REQUEST['search_keywords']) : '';
             $param = []; // 翻页链接所带参数列表
 
-            /* 查询条件：当前用户的会员等级（搜索关键字） */
+            // 查询条件：当前用户的会员等级（搜索关键字） 
             $where = " WHERE g.goods_id = w.goods_id
                AND w.enabled = 1
                AND CONCAT(',', w.rank_ids, ',') LIKE '" . '%,' . session('user_rank') . ',%' . "' ";
 
-            /* 搜索 */
-            /* 搜索类别 */
+            // 搜索 
+            // 搜索类别 
             if ($search_category) {
                 $where .= " AND g.cat_id = '$search_category' ";
                 $param['search_category'] = $search_category;
                 $this->smarty->assign('search_category', $search_category);
             }
-            /* 搜索商品名称和关键字 */
+            // 搜索商品名称和关键字 
             if ($search_keywords) {
                 $where .= " AND (g.keywords LIKE '%$search_keywords%'
                     OR g.goods_name LIKE '%$search_keywords%') ";
@@ -49,7 +49,7 @@ class WholesaleController extends Controller
                 $this->smarty->assign('search_keywords', $search_keywords);
             }
 
-            /* 取得批发商品总数 */
+            // 取得批发商品总数 
             $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('wholesale') . " AS w, " . $this->ecs->table('goods') . " AS g " . $where;
             $count = $this->db->getOne($sql);
 
@@ -60,17 +60,17 @@ class WholesaleController extends Controller
                 $display = in_array($display, ['list', 'grid', 'text']) ? $display : 'text';
                 cookie('display', $display, 1440 * 7);
 
-                /* 取得每页记录数 */
+                // 取得每页记录数 
                 $size = isset($GLOBALS['_CFG']['page_size']) && intval($GLOBALS['_CFG']['page_size']) > 0 ? intval($GLOBALS['_CFG']['page_size']) : 10;
 
-                /* 计算总页数 */
+                // 计算总页数 
                 $page_count = ceil($count / $size);
 
-                /* 取得当前页 */
+                // 取得当前页 
                 $page = isset($_REQUEST['page']) && intval($_REQUEST['page']) > 0 ? intval($_REQUEST['page']) : 1;
                 $page = $page > $page_count ? $page_count : $page;
 
-                /* 取得当前页的批发商品 */
+                // 取得当前页的批发商品 
                 $wholesale_list = $this->wholesale_list($size, $page, $where);
                 $this->smarty->assign('wholesale_list', $wholesale_list);
 
@@ -79,11 +79,11 @@ class WholesaleController extends Controller
                 $pager['display'] = $display;
                 $this->smarty->assign('pager', $pager);
 
-                /* 批发商品购物车 */
+                // 批发商品购物车 
                 $this->smarty->assign('cart_goods', session('wholesale_goods', []));
             }
 
-            /* 模板赋值 */
+            // 模板赋值 
             assign_template();
             $position = assign_ur_here();
             $this->smarty->assign('page_title', $position['title']);    // 页面标题
@@ -94,7 +94,7 @@ class WholesaleController extends Controller
 
             assign_dynamic('wholesale');
 
-            /* 显示模板 */
+            // 显示模板 
             return $this->smarty->display('wholesale_list.dwt');
         }
 
@@ -135,7 +135,7 @@ class WholesaleController extends Controller
          * 加入购物车
          */
         if ($_REQUEST['act'] == 'add_to_cart') {
-            /* 取得参数 */
+            // 取得参数 
             $act_id = intval($_POST['act_id']);
             $goods_number = $_POST['goods_number'][$act_id];
             $attr_id = isset($_POST['attr_id']) ? $_POST['attr_id'] : [];
@@ -143,14 +143,14 @@ class WholesaleController extends Controller
                 $goods_attr = $attr_id[$act_id];
             }
 
-            /* 用户提交必须全部通过检查，才能视为完成操作 */
+            // 用户提交必须全部通过检查，才能视为完成操作 
 
-            /* 检查数量 */
+            // 检查数量 
             if (empty($goods_number) || (is_array($goods_number) && array_sum($goods_number) <= 0)) {
                 return show_message($GLOBALS['_LANG']['ws_invalid_goods_number']);
             }
 
-            /* 确定购买商品列表 */
+            // 确定购买商品列表 
             $goods_list = [];
             if (is_array($goods_number)) {
                 foreach ($goods_number as $key => $value) {
@@ -165,10 +165,10 @@ class WholesaleController extends Controller
                 $goods_list[0] = ['number' => $goods_number, 'goods_attr' => ''];
             }
 
-            /* 取批发相关数据 */
+            // 取批发相关数据 
             $wholesale = wholesale_info($act_id);
 
-            /* 检查session中该商品，该属性是否存在 */
+            // 检查session中该商品，该属性是否存在 
             if (session('?wholesale_goods')) {
                 foreach (session('wholesale_goods') as $goods) {
                     if ($goods['goods_id'] == $wholesale['goods_id']) {
@@ -181,7 +181,7 @@ class WholesaleController extends Controller
                 }
             }
 
-            /* 获取购买商品的批发方案的价格阶梯 （一个方案多个属性组合、一个属性组合、一个属性、无属性） */
+            // 获取购买商品的批发方案的价格阶梯 （一个方案多个属性组合、一个属性组合、一个属性、无属性） 
             $attr_matching = false;
             foreach ($wholesale['price_list'] as $attr_price) {
                 // 没有属性
@@ -199,7 +199,7 @@ class WholesaleController extends Controller
                 return show_message($GLOBALS['_LANG']['ws_attr_not_matching']);
             }
 
-            /* 检查数量是否达到最低要求 */
+            // 检查数量是否达到最低要求 
             foreach ($goods_list as $goods_key => $goods) {
                 if ($goods['number'] < $goods['qp_list'][0]['quantity']) {
                     return show_message($GLOBALS['_LANG']['ws_goods_number_not_enough']);
@@ -215,7 +215,7 @@ class WholesaleController extends Controller
                 }
             }
 
-            /* 写入session */
+            // 写入session 
             foreach ($goods_list as $goods_key => $goods) {
                 // 属性名称
                 $goods_attr_name = '';
@@ -248,7 +248,7 @@ class WholesaleController extends Controller
 
             unset($goods_attr, $attr_id, $goods_list, $wholesale, $goods_attr_name);
 
-            /* 刷新页面 */
+            // 刷新页面 
             return $this->redirect("/wholesale.php");
         }
 
@@ -261,7 +261,7 @@ class WholesaleController extends Controller
                 session('wholesale_goods.' . $key, null);
             }
 
-            /* 刷新页面 */
+            // 刷新页面 
             return $this->redirect("/wholesale.php");
         }
 
@@ -271,17 +271,17 @@ class WholesaleController extends Controller
         if ($_REQUEST['act'] == 'submit_order') {
             load_helper('order');
 
-            /* 检查购物车中是否有商品 */
+            // 检查购物车中是否有商品 
             if (count(session('wholesale_goods')) == 0) {
                 return show_message($GLOBALS['_LANG']['no_goods_in_cart']);
             }
 
-            /* 检查备注信息 */
+            // 检查备注信息 
             if (empty($_POST['remark'])) {
                 return show_message($GLOBALS['_LANG']['ws_remark']);
             }
 
-            /* 计算商品总额 */
+            // 计算商品总额 
             $goods_amount = 0;
             foreach (session('wholesale_goods') as $goods) {
                 $goods_amount += $goods['subtotal'];
@@ -298,7 +298,7 @@ class WholesaleController extends Controller
                 'order_amount' => $goods_amount,
             ];
 
-            /* 插入订单表 */
+            // 插入订单表 
             $error_no = 0;
             do {
                 $order['order_sn'] = get_order_sn(); //获取新订单号
@@ -314,7 +314,7 @@ class WholesaleController extends Controller
             $new_order_id = $this->db->insert_id();
             $order['order_id'] = $new_order_id;
 
-            /* 插入订单商品 */
+            // 插入订单商品 
             foreach (session('wholesale_goods') as $goods) {
                 //如果存在货品
                 $product_id = 0;
@@ -341,7 +341,7 @@ class WholesaleController extends Controller
                 $this->db->query($sql);
             }
 
-            /* 给商家发邮件 */
+            // 给商家发邮件 
             if ($GLOBALS['_CFG']['service_email'] != '') {
                 $tpl = get_mail_template('remind_of_new_order');
                 $this->smarty->assign('order', $order);
@@ -351,17 +351,17 @@ class WholesaleController extends Controller
                 send_mail($GLOBALS['_CFG']['shop_name'], $GLOBALS['_CFG']['service_email'], $tpl['template_subject'], $content, $tpl['is_html']);
             }
 
-            /* 如果需要，发短信 */
+            // 如果需要，发短信 
             if ($GLOBALS['_CFG']['sms_order_placed'] == '1' && $GLOBALS['_CFG']['sms_shop_mobile'] != '') {
                 $sms = new Sms();
                 $msg = $GLOBALS['_LANG']['order_placed_sms'];
                 $sms->send($GLOBALS['_CFG']['sms_shop_mobile'], sprintf($msg, $order['consignee'], $order['tel']), '', 13, 1);
             }
 
-            /* 清空购物车 */
+            // 清空购物车 
             session('wholesale_goods', null);
 
-            /* 提示 */
+            // 提示 
             return show_message(sprintf($GLOBALS['_LANG']['ws_order_submitted'], $order['order_sn']), $GLOBALS['_LANG']['ws_return_home'], 'index.php');
         }
     }
@@ -406,7 +406,7 @@ class WholesaleController extends Controller
      */
     private function get_price_ladder($goods_id)
     {
-        /* 显示商品规格 */
+        // 显示商品规格 
         $goods_attr_list = array_values(get_goods_attr($goods_id));
         $sql = "SELECT prices FROM " . $GLOBALS['ecs']->table('wholesale') .
             "WHERE goods_id = " . $goods_id;

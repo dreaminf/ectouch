@@ -20,7 +20,7 @@ class VoteController extends Controller
          * 投票列表页面
          */
         if ($_REQUEST['act'] == 'list') {
-            /* 模板赋值 */
+            // 模板赋值 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['list_vote']);
             $this->smarty->assign('action_link', ['text' => $GLOBALS['_LANG']['add_vote'], 'href' => 'vote.php?act=add']);
             $this->smarty->assign('full_page', 1);
@@ -54,13 +54,13 @@ class VoteController extends Controller
          * 添加新的投票页面
          */
         if ($_REQUEST['act'] == 'add') {
-            /* 权限检查 */
+            // 权限检查 
             admin_priv('vote_priv');
 
-            /* 日期初始化 */
+            // 日期初始化 
             $vote = ['start_time' => local_date('Y-m-d'), 'end_time' => local_date('Y-m-d', local_strtotime('+2 weeks'))];
 
-            /* 模板赋值 */
+            // 模板赋值 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['add_vote']);
             $this->smarty->assign('action_link', ['href' => 'vote.php?act=list', 'text' => $GLOBALS['_LANG']['list_vote']]);
 
@@ -75,27 +75,27 @@ class VoteController extends Controller
         if ($_REQUEST['act'] == 'insert') {
             admin_priv('vote_priv');
 
-            /* 获得广告的开始时期与结束日期 */
+            // 获得广告的开始时期与结束日期 
             $start_time = local_strtotime($_POST['start_time']);
             $end_time = local_strtotime($_POST['end_time']);
 
-            /* 查看广告名称是否有重复 */
+            // 查看广告名称是否有重复 
             $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('vote') . " WHERE vote_name='$_POST[vote_name]'";
             if ($this->db->getOne($sql) == 0) {
-                /* 插入数据 */
+                // 插入数据 
                 $sql = "INSERT INTO " . $this->ecs->table('vote') . " (vote_name, start_time, end_time, can_multi, vote_count)
         VALUES ('$_POST[vote_name]', '$start_time', '$end_time', '$_POST[can_multi]', '0')";
                 $this->db->query($sql);
 
                 $new_id = $this->db->Insert_ID();
 
-                /* 记录管理员操作 */
+                // 记录管理员操作 
                 admin_log($_POST['vote_name'], 'add', 'vote');
 
-                /* 清除缓存 */
+                // 清除缓存 
                 clear_cache_files();
 
-                /* 提示信息 */
+                // 提示信息 
                 $link[0]['text'] = $GLOBALS['_LANG']['continue_add_option'];
                 $link[0]['href'] = 'vote.php?act=option&id=' . $new_id;
 
@@ -118,12 +118,12 @@ class VoteController extends Controller
         if ($_REQUEST['act'] == 'edit') {
             admin_priv('vote_priv');
 
-            /* 获取数据 */
+            // 获取数据 
             $vote_arr = $this->db->getRow("SELECT * FROM " . $this->ecs->table('vote') . " WHERE vote_id='$_REQUEST[id]'");
             $vote_arr['start_time'] = local_date('Y-m-d', $vote_arr['start_time']);
             $vote_arr['end_time'] = local_date('Y-m-d', $vote_arr['end_time']);
 
-            /* 模板赋值 */
+            // 模板赋值 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['edit_vote']);
             $this->smarty->assign('action_link', ['href' => 'vote.php?act=list', 'text' => $GLOBALS['_LANG']['list_vote']]);
             $this->smarty->assign('form_act', 'update');
@@ -133,11 +133,11 @@ class VoteController extends Controller
         }
 
         if ($_REQUEST['act'] == 'update') {
-            /* 获得广告的开始时期与结束日期 */
+            // 获得广告的开始时期与结束日期 
             $start_time = local_strtotime($_POST['start_time']);
             $end_time = local_strtotime($_POST['end_time']);
 
-            /* 更新信息 */
+            // 更新信息 
             $sql = "UPDATE " . $this->ecs->table('vote') . " SET " .
                 "vote_name     = '$_POST[vote_name]', " .
                 "start_time    = '$start_time', " .
@@ -146,13 +146,13 @@ class VoteController extends Controller
                 "WHERE vote_id = '$_REQUEST[id]'";
             $this->db->query($sql);
 
-            /* 清除缓存 */
+            // 清除缓存 
             clear_cache_files();
 
-            /* 记录管理员操作 */
+            // 记录管理员操作 
             admin_log($_POST['vote_name'], 'edit', 'vote');
 
-            /* 提示信息 */
+            // 提示信息 
             $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'vote.php?act=list'];
             return sys_msg($GLOBALS['_LANG']['edit'] . ' ' . $_POST['vote_name'] . ' ' . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
         }
@@ -163,7 +163,7 @@ class VoteController extends Controller
         if ($_REQUEST['act'] == 'option') {
             $id = !empty($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
 
-            /* 模板赋值 */
+            // 模板赋值 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['list_vote_option']);
             $this->smarty->assign('action_link', ['href' => 'vote.php?act=list', 'text' => $GLOBALS['_LANG']['list_vote']]);
             $this->smarty->assign('full_page', 1);
@@ -196,7 +196,7 @@ class VoteController extends Controller
             $vote_id = intval($_POST['id']);
 
             if (!empty($option_name)) {
-                /* 查看调查标题是否有重复 */
+                // 查看调查标题是否有重复 
                 $sql = 'SELECT COUNT(*) FROM ' . $this->ecs->table('vote_option') .
                     " WHERE option_name = '$option_name' AND vote_id = '$vote_id'";
                 if ($this->db->getOne($sql) != 0) {
@@ -227,7 +227,7 @@ class VoteController extends Controller
             $id = intval($_POST['id']);
             $vote_name = json_str_iconv(trim($_POST['val']));
 
-            /* 检查名称是否重复 */
+            // 检查名称是否重复 
             if ($exc->num("vote_name", $vote_name, $id) != 0) {
                 return make_json_error(sprintf($GLOBALS['_LANG']['vote_name_exist'], $vote_name));
             } else {
@@ -247,7 +247,7 @@ class VoteController extends Controller
             $id = intval($_POST['id']);
             $option_name = json_str_iconv(trim($_POST['val']));
 
-            /* 检查名称是否重复 */
+            // 检查名称是否重复 
             $vote_id = $this->db->getOne('SELECT vote_id FROM ' . $this->ecs->table('vote_option') . " WHERE option_id='$id'");
 
             $sql = 'SELECT COUNT(*) FROM ' . $this->ecs->table('vote_option') .
@@ -286,7 +286,7 @@ class VoteController extends Controller
             $id = intval($_GET['id']);
 
             if ($exc->drop($id)) {
-                /* 同时删除调查选项 */
+                // 同时删除调查选项 
                 $this->db->query("DELETE FROM " . $this->ecs->table('vote_option') . " WHERE vote_id = '$id'");
                 clear_cache_files();
                 admin_log('', 'remove', 'ads_position');
@@ -317,18 +317,18 @@ class VoteController extends Controller
         }
     }
 
-    /* 获取在线调查数据列表 */
+    // 获取在线调查数据列表 
     private function get_votelist()
     {
         $filter = [];
 
-        /* 记录总数以及页数 */
+        // 记录总数以及页数 
         $sql = 'SELECT COUNT(*) FROM ' . $GLOBALS['ecs']->table('vote');
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
         $filter = page_and_size($filter);
 
-        /* 查询数据 */
+        // 查询数据 
         $sql = 'SELECT * FROM ' . $GLOBALS['ecs']->table('vote') . ' ORDER BY vote_id DESC';
         $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 
@@ -342,7 +342,7 @@ class VoteController extends Controller
         return ['list' => $list, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']];
     }
 
-    /* 获取调查选项列表 */
+    // 获取调查选项列表 
     private function get_optionlist($id)
     {
         $list = [];

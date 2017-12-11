@@ -133,12 +133,12 @@ function get_regions($type = 0, $parent = 0)
  */
 function get_shipping_config($area_id)
 {
-    /* 获得配置信息 */
+    // 获得配置信息 
     $sql = 'SELECT configure FROM ' . $GLOBALS['ecs']->table('shipping_area') . " WHERE shipping_area_id = '$area_id'";
     $cfg = $GLOBALS['db']->getOne($sql);
 
     if ($cfg) {
-        /* 拆分成配置信息的数组 */
+        // 拆分成配置信息的数组 
         $arr = unserialize($cfg);
     } else {
         $arr = [];
@@ -249,7 +249,7 @@ function cat_list($cat_id = 0, $selected = 0, $re_type = true, $level = 0, $is_s
         }
     }
 
-    /* 截取到指定的缩减级别 */
+    // 截取到指定的缩减级别 
     if ($level > 0) {
         if ($cat_id == 0) {
             $end_level = $level;
@@ -258,7 +258,7 @@ function cat_list($cat_id = 0, $selected = 0, $re_type = true, $level = 0, $is_s
             $end_level = $first_item['level'] + $level;
         }
 
-        /* 保留level小于end_level的部分 */
+        // 保留level小于end_level的部分 
         foreach ($options as $key => $val) {
             if ($val['level'] >= $end_level) {
                 unset($options[$key]);
@@ -436,7 +436,7 @@ function load_config()
             $arr[$row['code']] = $row['value'];
         }
 
-        /* 对数值型设置处理 */
+        // 对数值型设置处理 
         $arr['watermark_alpha'] = intval($arr['watermark_alpha']);
         $arr['market_price_rate'] = floatval($arr['market_price_rate']);
         $arr['integral_scale'] = floatval($arr['integral_scale']);
@@ -634,7 +634,7 @@ function get_promotion_info($goods_id = '')
                 $favourable[$rows['act_id']]['sort'] = $rows['start_time'];
                 $favourable[$rows['act_id']]['type'] = 'favourable';
             } elseif ($rows['act_range'] == FAR_CATEGORY) {
-                /* 找出分类id的子分类id */
+                // 找出分类id的子分类id 
                 $id_list = [];
                 $raw_id_list = explode(',', $rows['act_range_ext']);
                 foreach ($raw_id_list as $id) {
@@ -839,7 +839,7 @@ function virtual_goods_ship(&$virtual_goods, &$msg, $order_sn, $return_result = 
 {
     $virtual_card = [];
     foreach ($virtual_goods as $code => $goods_list) {
-        /* 只处理虚拟卡 */
+        // 只处理虚拟卡 
         if ($code == 'virtual_card') {
             foreach ($goods_list as $goods) {
                 if (virtual_card_shipping($goods, $order_sn, $msg, $process)) {
@@ -870,10 +870,10 @@ function virtual_goods_ship(&$virtual_goods, &$msg, $order_sn, $return_result = 
  */
 function virtual_card_shipping($goods, $order_sn, &$msg, $process = 'other')
 {
-    /* 包含加密解密函数所在文件 */
+    // 包含加密解密函数所在文件 
     load_helper('code');
 
-    /* 检查有没有缺货 */
+    // 检查有没有缺货 
     $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('virtual_card') . " WHERE goods_id = '$goods[goods_id]' AND is_saled = 0 ";
     $num = $GLOBALS['db']->getOne($sql);
 
@@ -883,7 +883,7 @@ function virtual_card_shipping($goods, $order_sn, &$msg, $process = 'other')
         return false;
     }
 
-    /* 取出卡片信息 */
+    // 取出卡片信息 
     $sql = "SELECT card_id, card_sn, card_password, end_date, crc32 FROM " . $GLOBALS['ecs']->table('virtual_card') . " WHERE goods_id = '$goods[goods_id]' AND is_saled = 0  LIMIT " . $goods['num'];
     $arr = $GLOBALS['db']->getAll($sql);
 
@@ -893,7 +893,7 @@ function virtual_card_shipping($goods, $order_sn, &$msg, $process = 'other')
     foreach ($arr as $virtual_card) {
         $card_info = [];
 
-        /* 卡号和密码解密 */
+        // 卡号和密码解密 
         if ($virtual_card['crc32'] == 0 || $virtual_card['crc32'] == crc32(AUTH_KEY)) {
             $card_info['card_sn'] = decrypt($virtual_card['card_sn']);
             $card_info['card_password'] = decrypt($virtual_card['card_password']);
@@ -910,7 +910,7 @@ function virtual_card_shipping($goods, $order_sn, &$msg, $process = 'other')
         $cards[] = $card_info;
     }
 
-    /* 标记已经取出的卡片 */
+    // 标记已经取出的卡片 
     $sql = "UPDATE " . $GLOBALS['ecs']->table('virtual_card') . " SET " .
         "is_saled = 1 ," .
         "order_sn = '$order_sn' " .
@@ -921,16 +921,16 @@ function virtual_card_shipping($goods, $order_sn, &$msg, $process = 'other')
         return false;
     }
 
-    /* 更新库存 */
+    // 更新库存 
     $sql = "UPDATE " . $GLOBALS['ecs']->table('goods') . " SET goods_number = goods_number - '$goods[num]' WHERE goods_id = '$goods[goods_id]'";
     $GLOBALS['db']->query($sql);
 
     if (true) {
-        /* 获取订单信息 */
+        // 获取订单信息 
         $sql = "SELECT order_id, order_sn, consignee, email FROM " . $GLOBALS['ecs']->table('order_info') . " WHERE order_sn = '$order_sn'";
         $order = $GLOBALS['db']->getRow($sql);
 
-        /* 更新订单信息 */
+        // 更新订单信息 
         if ($process == 'split') {
             $sql = "UPDATE " . $GLOBALS['ecs']->table('order_goods') . "
                     SET send_number = send_number + '" . $goods['num'] . "'
@@ -950,7 +950,7 @@ function virtual_card_shipping($goods, $order_sn, &$msg, $process = 'other')
         }
     }
 
-    /* 发送邮件 */
+    // 发送邮件 
     $GLOBALS['smarty']->assign('virtual_card', $cards);
     $GLOBALS['smarty']->assign('order', $order);
     $GLOBALS['smarty']->assign('goods', $goods);
@@ -977,17 +977,17 @@ function virtual_card_shipping($goods, $order_sn, &$msg, $process = 'other')
  */
 function virtual_card_result($order_sn, $goods)
 {
-    /* 包含加密解密函数所在文件 */
+    // 包含加密解密函数所在文件 
     load_helper('code');
 
-    /* 获取已经发送的卡片数据 */
+    // 获取已经发送的卡片数据 
     $sql = "SELECT card_sn, card_password, end_date, crc32 FROM " . $GLOBALS['ecs']->table('virtual_card') . " WHERE goods_id= '$goods[goods_id]' AND order_sn = '$order_sn' ";
     $res = $GLOBALS['db']->query($sql);
 
     $cards = [];
 
     foreach ($res as $row) {
-        /* 卡号和密码解密 */
+        // 卡号和密码解密 
         if ($row['crc32'] == 0 || $row['crc32'] == crc32(AUTH_KEY)) {
             $row['card_sn'] = decrypt($row['card_sn']);
             $row['card_password'] = decrypt($row['card_password']);
@@ -1028,7 +1028,7 @@ function get_snatch_result($id)
         $rec['bid_time'] = local_date($GLOBALS['_CFG']['time_format'], $rec['bid_time']);
         $rec['formated_bid_price'] = price_format($rec['bid_price'], false);
 
-        /* 活动信息 */
+        // 活动信息 
         $sql = 'SELECT ext_info " .
                " FROM ' . $GLOBALS['ecs']->table('goods_activity') .
             " WHERE act_id= '$id' AND act_type=" . GAT_SNATCH .
@@ -1043,7 +1043,7 @@ function get_snatch_result($id)
         }
 
 
-        /* 检查订单 */
+        // 检查订单 
         $sql = "SELECT COUNT(*)" .
             " FROM " . $GLOBALS['ecs']->table('order_info') .
             " WHERE extension_code = 'snatch'" .
@@ -1105,7 +1105,7 @@ function clear_tpl_files($is_cache = true, $ext = '')
                 continue;
             }
             if (is_file($dir . $file)) {
-                /* 如果有文件名则判断是否匹配 */
+                // 如果有文件名则判断是否匹配 
                 $pos = ($is_cache) ? strrpos($file, '_') : strrpos($file, '.');
 
                 if ($str_len > 0 && $pos !== false) {
@@ -1510,10 +1510,10 @@ function formated_weight($weight)
     $weight = round(floatval($weight), 3);
     if ($weight > 0) {
         if ($weight < 1) {
-            /* 小于1千克，用克表示 */
+            // 小于1千克，用克表示 
             return intval($weight * 1000) . $GLOBALS['_LANG']['gram'];
         } else {
-            /* 大于1千克，用千克表示 */
+            // 大于1千克，用千克表示 
             return $weight . $GLOBALS['_LANG']['kilogram'];
         }
     } else {
@@ -1534,7 +1534,7 @@ function formated_weight($weight)
  */
 function log_account_change($user_id, $user_money = 0, $frozen_money = 0, $rank_points = 0, $pay_points = 0, $change_desc = '', $change_type = ACT_OTHER)
 {
-    /* 插入帐户变动记录 */
+    // 插入帐户变动记录 
     $account_log = [
         'user_id' => $user_id,
         'user_money' => $user_money,
@@ -1547,7 +1547,7 @@ function log_account_change($user_id, $user_money = 0, $frozen_money = 0, $rank_
     ];
     $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('account_log'), $account_log, 'INSERT');
 
-    /* 更新用户信息 */
+    // 更新用户信息 
     $sql = "UPDATE " . $GLOBALS['ecs']->table('users') .
         " SET user_money = user_money + ('$user_money')," .
         " frozen_money = frozen_money + ('$frozen_money')," .
@@ -1594,7 +1594,7 @@ function article_cat_list($cat_id = 0, $selected = 0, $re_type = true, $level = 
 
     $options = article_cat_options($cat_id, $res); // 获得指定分类下的子分类的数组
 
-    /* 截取到指定的缩减级别 */
+    // 截取到指定的缩减级别 
     if ($level > 0) {
         if ($cat_id == 0) {
             $end_level = $level;
@@ -1603,7 +1603,7 @@ function article_cat_list($cat_id = 0, $selected = 0, $re_type = true, $level = 
             $end_level = $first_item['level'] + $level;
         }
 
-        /* 保留level小于end_level的部分 */
+        // 保留level小于end_level的部分 
         foreach ($options as $key => $val) {
             if ($val['level'] >= $end_level) {
                 unset($options[$key]);
@@ -1910,7 +1910,7 @@ function get_final_price($goods_id, $goods_num = '1', $is_spec_price = false, $s
     }
 
     //取得商品促销价格列表
-    /* 取得商品信息 */
+    // 取得商品信息 
     $sql = "SELECT g.promote_price, g.promote_start_date, g.promote_end_date, " .
         "IFNULL(mp.user_price, g.shop_price * '" . session('discount') . "') AS shop_price " .
         " FROM " . $GLOBALS['ecs']->table('goods') . " AS g " .
@@ -1920,7 +1920,7 @@ function get_final_price($goods_id, $goods_num = '1', $is_spec_price = false, $s
         " AND g.is_delete = 0";
     $goods = $GLOBALS['db']->getRow($sql);
 
-    /* 计算商品的促销价格 */
+    // 计算商品的促销价格 
     if ($goods['promote_price'] > 0) {
         $promote_price = bargain_price($goods['promote_price'], $goods['promote_start_date'], $goods['promote_end_date']);
     } else {
@@ -2054,7 +2054,7 @@ function get_package_info($id)
 
     $package = $GLOBALS['db']->getRow($sql);
 
-    /* 将时间转成可阅读格式 */
+    // 将时间转成可阅读格式 
     if ($package['start_time'] <= $now && $package['end_time'] >= $now) {
         $package['is_on_sale'] = "1";
     } else {
@@ -2092,7 +2092,7 @@ function get_package_info($id)
         $goods_res[$key]['market_price_format'] = price_format($val['market_price']);
         $goods_res[$key]['rank_price_format'] = price_format($val['rank_price']);
         $market_price += $val['market_price'] * $val['goods_number'];
-        /* 统计实体商品和虚拟商品的个数 */
+        // 统计实体商品和虚拟商品的个数 
         if ($val['is_real']) {
             $real_goods_count++;
         } else {
@@ -2138,17 +2138,17 @@ function get_package_goods($package_id)
 
     $row = [];
 
-    /* 生成结果数组 取存在货品的商品id 组合商品id与货品id */
+    // 生成结果数组 取存在货品的商品id 组合商品id与货品id 
     $good_product_str = '';
     foreach ($resource as $_row) {
         if ($_row['product_id'] > 0) {
-            /* 取存商品id */
+            // 取存商品id 
             $good_product_str .= ',' . $_row['goods_id'];
 
-            /* 组合商品id与货品id */
+            // 组合商品id与货品id 
             $_row['g_p'] = $_row['goods_id'] . '_' . $_row['product_id'];
         } else {
-            /* 组合商品id与货品id */
+            // 组合商品id与货品id 
             $_row['g_p'] = $_row['goods_id'];
         }
 
@@ -2157,10 +2157,10 @@ function get_package_goods($package_id)
     }
     $good_product_str = trim($good_product_str, ',');
 
-    /* 释放空间 */
+    // 释放空间 
     unset($resource, $_row, $sql);
 
-    /* 取商品属性 */
+    // 取商品属性 
     if ($good_product_str != '') {
         $sql = "SELECT goods_attr_id, attr_value FROM " . $GLOBALS['ecs']->table('goods_attr') . " WHERE goods_id IN ($good_product_str)";
         $result_goods_attr = $GLOBALS['db']->getAll($sql);
@@ -2171,7 +2171,7 @@ function get_package_goods($package_id)
         }
     }
 
-    /* 过滤货品 */
+    // 过滤货品 
     $format[0] = '%s[%s]--[%d]';
     $format[1] = '%s--[%d]';
     foreach ($row as $key => $value) {
@@ -2221,11 +2221,11 @@ function get_good_products($goods_id, $conditions = '')
             break;
     }
 
-    /* 取货品 */
+    // 取货品 
     $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('products') . " WHERE $_goods_id $conditions";
     $result_products = $GLOBALS['db']->getAll($sql);
 
-    /* 取商品属性 */
+    // 取商品属性 
     $sql = "SELECT goods_attr_id, attr_value FROM " . $GLOBALS['ecs']->table('goods_attr') . " WHERE $_goods_id";
     $result_goods_attr = $GLOBALS['db']->getAll($sql);
 
@@ -2234,7 +2234,7 @@ function get_good_products($goods_id, $conditions = '')
         $_goods_attr[$value['goods_attr_id']] = $value['attr_value'];
     }
 
-    /* 过滤货品 */
+    // 过滤货品 
     foreach ($result_products as $key => $value) {
         $goods_attr_array = explode('|', $value['goods_attr']);
         if (is_array($goods_attr_array)) {
@@ -2285,7 +2285,7 @@ function get_good_products_select($goods_id)
  */
 function get_specifications_list($goods_id, $conditions = '')
 {
-    /* 取商品属性 */
+    // 取商品属性 
     $sql = "SELECT ga.goods_attr_id, ga.attr_id, ga.attr_value, a.attr_name
             FROM " . $GLOBALS['ecs']->table('goods_attr') . " AS ga, " . $GLOBALS['ecs']->table('attribute') . " AS a
             WHERE ga.attr_id = a.attr_id

@@ -17,41 +17,41 @@ class GroupBuyController extends Controller
          * 团购商品 --> 团购活动商品列表
          */
         if ($_REQUEST['act'] == 'list') {
-            /* 取得团购活动总数 */
+            // 取得团购活动总数 
             $count = $this->group_buy_count();
             if ($count > 0) {
-                /* 取得每页记录数 */
+                // 取得每页记录数 
                 $size = isset($GLOBALS['_CFG']['page_size']) && intval($GLOBALS['_CFG']['page_size']) > 0 ? intval($GLOBALS['_CFG']['page_size']) : 10;
 
-                /* 计算总页数 */
+                // 计算总页数 
                 $page_count = ceil($count / $size);
 
-                /* 取得当前页 */
+                // 取得当前页 
                 $page = isset($_REQUEST['page']) && intval($_REQUEST['page']) > 0 ? intval($_REQUEST['page']) : 1;
                 $page = $page > $page_count ? $page_count : $page;
 
-                /* 缓存id：语言 - 每页记录数 - 当前页 */
+                // 缓存id：语言 - 每页记录数 - 当前页 
                 $cache_id = $GLOBALS['_CFG']['lang'] . '-' . $size . '-' . $page;
                 $cache_id = sprintf('%X', crc32($cache_id));
             } else {
-                /* 缓存id：语言 */
+                // 缓存id：语言 
                 $cache_id = $GLOBALS['_CFG']['lang'];
                 $cache_id = sprintf('%X', crc32($cache_id));
             }
 
-            /* 如果没有缓存，生成缓存 */
+            // 如果没有缓存，生成缓存 
             if (!$this->smarty->is_cached('group_buy_list.dwt', $cache_id)) {
                 if ($count > 0) {
-                    /* 取得当前页的团购活动 */
+                    // 取得当前页的团购活动 
                     $gb_list = $this->group_buy_list($size, $page);
                     $this->smarty->assign('gb_list', $gb_list);
 
-                    /* 设置分页链接 */
+                    // 设置分页链接 
                     $pager = get_pager('group_buy.php', ['act' => 'list'], $count, $page, $size);
                     $this->smarty->assign('pager', $pager);
                 }
 
-                /* 模板赋值 */
+                // 模板赋值 
                 $this->smarty->assign('cfg', $GLOBALS['_CFG']);
                 assign_template();
                 $position = assign_ur_here();
@@ -66,7 +66,7 @@ class GroupBuyController extends Controller
                 assign_dynamic('group_buy_list');
             }
 
-            /* 显示模板 */
+            // 显示模板 
             return $this->smarty->display('group_buy_list.dwt', $cache_id);
         }
 
@@ -74,13 +74,13 @@ class GroupBuyController extends Controller
          * 团购商品 --> 商品详情
          */
         if ($_REQUEST['act'] == 'view') {
-            /* 取得参数：团购活动id */
+            // 取得参数：团购活动id 
             $group_buy_id = isset($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
             if ($group_buy_id <= 0) {
                 return $this->redirect('/');
             }
 
-            /* 取得团购活动信息 */
+            // 取得团购活动信息 
             $group_buy = group_buy_info($group_buy_id);
 
             if (empty($group_buy)) {
@@ -92,19 +92,19 @@ class GroupBuyController extends Controller
 //        exit;
 //    }
 
-            /* 缓存id：语言，团购活动id，状态，（如果是进行中）当前数量和是否登录 */
+            // 缓存id：语言，团购活动id，状态，（如果是进行中）当前数量和是否登录 
             $cache_id = $GLOBALS['_CFG']['lang'] . '-' . $group_buy_id . '-' . $group_buy['status'];
             if ($group_buy['status'] == GBS_UNDER_WAY) {
                 $cache_id = $cache_id . '-' . $group_buy['valid_goods'] . '-' . intval(session('user_id') > 0);
             }
             $cache_id = sprintf('%X', crc32($cache_id));
 
-            /* 如果没有缓存，生成缓存 */
+            // 如果没有缓存，生成缓存 
             if (!$this->smarty->is_cached('group_buy_goods.dwt', $cache_id)) {
                 $group_buy['gmt_end_date'] = $group_buy['end_date'];
                 $this->smarty->assign('group_buy', $group_buy);
 
-                /* 取得团购商品信息 */
+                // 取得团购商品信息 
                 $goods_id = $group_buy['goods_id'];
                 $goods = goods_info($goods_id);
                 if (empty($goods)) {
@@ -113,7 +113,7 @@ class GroupBuyController extends Controller
                 $goods['url'] = build_uri('goods', ['gid' => $goods_id], $goods['goods_name']);
                 $this->smarty->assign('gb_goods', $goods);
 
-                /* 取得商品的规格 */
+                // 取得商品的规格 
                 $properties = get_goods_properties($goods_id);
                 $this->smarty->assign('specification', $properties['spe']); // 商品规格
 
@@ -146,44 +146,44 @@ class GroupBuyController extends Controller
          */
 
         if ($_REQUEST['act'] == 'buy') {
-            /* 查询：判断是否登录 */
+            // 查询：判断是否登录 
             if (session('user_id') <= 0) {
                 return show_message($GLOBALS['_LANG']['gb_error_login'], '', '', 'error');
             }
 
-            /* 查询：取得参数：团购活动id */
+            // 查询：取得参数：团购活动id 
             $group_buy_id = isset($_POST['group_buy_id']) ? intval($_POST['group_buy_id']) : 0;
             if ($group_buy_id <= 0) {
                 return $this->redirect('/');
             }
 
-            /* 查询：取得数量 */
+            // 查询：取得数量 
             $number = isset($_POST['number']) ? intval($_POST['number']) : 1;
             $number = $number < 1 ? 1 : $number;
 
-            /* 查询：取得团购活动信息 */
+            // 查询：取得团购活动信息 
             $group_buy = group_buy_info($group_buy_id, $number);
             if (empty($group_buy)) {
                 return $this->redirect('/');
             }
 
-            /* 查询：检查团购活动是否是进行中 */
+            // 查询：检查团购活动是否是进行中 
             if ($group_buy['status'] != GBS_UNDER_WAY) {
                 return show_message($GLOBALS['_LANG']['gb_error_status'], '', '', 'error');
             }
 
-            /* 查询：取得团购商品信息 */
+            // 查询：取得团购商品信息 
             $goods = goods_info($group_buy['goods_id']);
             if (empty($goods)) {
                 return $this->redirect('/');
             }
 
-            /* 查询：判断数量是否足够 */
+            // 查询：判断数量是否足够 
             if (($group_buy['restrict_amount'] > 0 && $number > ($group_buy['restrict_amount'] - $group_buy['valid_goods'])) || $number > $goods['goods_number']) {
                 return show_message($GLOBALS['_LANG']['gb_error_goods_lacking'], '', '', 'error');
             }
 
-            /* 查询：取得规格 */
+            // 查询：取得规格 
             $specs = '';
             foreach ($_POST as $key => $value) {
                 if (strpos($key, 'spec_') !== false) {
@@ -192,7 +192,7 @@ class GroupBuyController extends Controller
             }
             $specs = trim($specs, ',');
 
-            /* 查询：如果商品有规格则取规格商品信息 配件除外 */
+            // 查询：如果商品有规格则取规格商品信息 配件除外 
             if ($specs) {
                 $_specs = explode(',', $specs);
                 $product_info = get_products_info($goods['goods_id'], $_specs);
@@ -200,12 +200,12 @@ class GroupBuyController extends Controller
 
             empty($product_info) ? $product_info = ['product_number' => 0, 'product_id' => 0] : '';
 
-            /* 查询：判断指定规格的货品数量是否足够 */
+            // 查询：判断指定规格的货品数量是否足够 
             if ($specs && $number > $product_info['product_number']) {
                 return show_message($GLOBALS['_LANG']['gb_error_goods_lacking'], '', '', 'error');
             }
 
-            /* 查询：查询规格名称和值，不考虑价格 */
+            // 查询：查询规格名称和值，不考虑价格 
             $attr_list = [];
             $sql = "SELECT a.attr_name, g.attr_value " .
                 "FROM " . $this->ecs->table('goods_attr') . " AS g, " .
@@ -218,11 +218,11 @@ class GroupBuyController extends Controller
             }
             $goods_attr = join(chr(13) . chr(10), $attr_list);
 
-            /* 更新：清空购物车中所有团购商品 */
+            // 更新：清空购物车中所有团购商品 
             load_helper('order');
             clear_cart(CART_GROUP_BUY_GOODS);
 
-            /* 更新：加入购物车 */
+            // 更新：加入购物车 
             $goods_price = $group_buy['deposit'] > 0 ? $group_buy['deposit'] : $group_buy['cur_price'];
             $cart = [
                 'user_id' => session('user_id'),
@@ -244,17 +244,17 @@ class GroupBuyController extends Controller
             ];
             $this->db->autoExecute($this->ecs->table('cart'), $cart, 'INSERT');
 
-            /* 更新：记录购物流程类型：团购 */
+            // 更新：记录购物流程类型：团购 
             session('flow_type', CART_GROUP_BUY_GOODS);
             session('extension_code', 'group_buy');
             session('extension_id', $group_buy_id);
 
-            /* 进入收货人页面 */
+            // 进入收货人页面 
             return $this->redirect("/flow.php?step=consignee");
         }
     }
 
-    /* 取得团购活动总数 */
+    // 取得团购活动总数 
     private function group_buy_count()
     {
         $now = gmtime();
@@ -274,7 +274,7 @@ class GroupBuyController extends Controller
      */
     private function group_buy_list($size, $page)
     {
-        /* 取得团购活动 */
+        // 取得团购活动 
         $gb_list = [];
         $now = gmtime();
         $sql = "SELECT b.*, IFNULL(g.goods_thumb, '') AS goods_thumb, b.act_id AS group_buy_id, " .
@@ -288,14 +288,14 @@ class GroupBuyController extends Controller
             $ext_info = unserialize($group_buy['ext_info']);
             $group_buy = array_merge($group_buy, $ext_info);
 
-            /* 格式化时间 */
+            // 格式化时间 
             $group_buy['formated_start_date'] = local_date($GLOBALS['_CFG']['time_format'], $group_buy['start_date']);
             $group_buy['formated_end_date'] = local_date($GLOBALS['_CFG']['time_format'], $group_buy['end_date']);
 
-            /* 格式化保证金 */
+            // 格式化保证金 
             $group_buy['formated_deposit'] = price_format($group_buy['deposit'], false);
 
-            /* 处理价格阶梯 */
+            // 处理价格阶梯 
             $price_ladder = $group_buy['price_ladder'];
             if (!is_array($price_ladder) || empty($price_ladder)) {
                 $price_ladder = [['amount' => 0, 'price' => 0]];
@@ -306,13 +306,13 @@ class GroupBuyController extends Controller
             }
             $group_buy['price_ladder'] = $price_ladder;
 
-            /* 处理图片 */
+            // 处理图片 
             if (empty($group_buy['goods_thumb'])) {
                 $group_buy['goods_thumb'] = get_image_path($group_buy['goods_thumb']);
             }
-            /* 处理链接 */
+            // 处理链接 
             $group_buy['url'] = build_uri('group_buy', ['gbid' => $group_buy['group_buy_id']]);
-            /* 加入数组 */
+            // 加入数组 
             $gb_list[] = $group_buy;
         }
 

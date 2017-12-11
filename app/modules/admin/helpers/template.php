@@ -1,6 +1,6 @@
 <?php
 
-/* 可以设置内容的模板 */
+// 可以设置内容的模板 
 $template_files = [
     'index.dwt',
     'article.dwt',
@@ -31,7 +31,7 @@ $template_files = [
     'exchange_list.dwt',
 ];
 
-/* 每个模板允许设置的库项目 */
+// 每个模板允许设置的库项目 
 $page_libs = [
     'article' => [
         '/library/ur_here.lbi' => 0,
@@ -244,7 +244,7 @@ $page_libs = [
     ],
 ];
 
-/* 动态库项目 */
+// 动态库项目 
 $dyna_libs = [
     'cat_goods',
     'brand_goods',
@@ -252,7 +252,7 @@ $dyna_libs = [
     'ad_position',
 ];
 
-///* 插件的 library */
+//// 插件的 library 
 //$sql = 'SELECT code, library FROM ' . $ecs->table('plugins') . " WHERE assign = 1 AND library > ''";
 //$res = $db->query($sql);
 //
@@ -354,10 +354,10 @@ function get_template_region($tmp_name, $tmp_file, $lib = true)
 
     $file = '../themes/' . $tmp_name . '/' . $tmp_file;
 
-    /* 将模版文件的内容读入内存 */
+    // 将模版文件的内容读入内存 
     $content = file_get_contents($file);
 
-    /* 获得所有编辑区域 */
+    // 获得所有编辑区域 
     static $regions = [];
 
     if (empty($regions)) {
@@ -378,13 +378,13 @@ function get_template_region($tmp_name, $tmp_file, $lib = true)
     }
 
     $libs = [];
-    /* 遍历所有编辑区 */
+    // 遍历所有编辑区 
     foreach ($regions as $key => $val) {
         $matches = [];
         $pattern = '/(<!--\\s*TemplateBeginEditable\\sname="%s"\\s*-->)(.*?)(<!--\\s*TemplateEndEditable\\s*-->)/s';
 
         if (preg_match(sprintf($pattern, $val), $content, $matches)) {
-            /* 找出该编辑区域内所有库项目 */
+            // 找出该编辑区域内所有库项目 
             $lib_matches = [];
 
             $result = preg_match_all('/([\s|\S]{0,20})(<!--\\s#BeginLibraryItem\\s")([^"]+)("\\s-->)/',

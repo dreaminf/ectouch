@@ -127,11 +127,11 @@ function searchGoodsResponse(result)
 
   if (result.error == 0)
   {
-    /* 清除 options */
+    // 清除 options
     sel.length = 0;
     sp.length = 0;
 
-    /* 创建 options */
+    // 创建 options
     var goods = result.content.goods;
     if (goods)
     {
@@ -151,7 +151,7 @@ function searchGoodsResponse(result)
       sel.options.add(opt);
     }
 
-    /* 创建 product options */
+    // 创建 product options
     var products = result.content.products;
     if (products)
     {
@@ -197,10 +197,10 @@ function searchProductsResponse(result)
 
   if (result.error == 0)
   {
-    /* 清除 options */
+    // 清除 options
     sp.length = 0;
 
-    /* 创建 product options */
+    // 创建 product options
     var products = result.content.products;
     if (products.length)
     {

@@ -27,7 +27,7 @@ class CronController extends Controller
             for ($i = 0; $i < count($modules); $i++) {
                 $code = $modules[$i]['code'];
 
-                /* 如果数据库中有，取数据库中的名称和描述 */
+                // 如果数据库中有，取数据库中的名称和描述
                 if (isset($cron_list[$code])) {
                     $modules[$i]['name'] = $cron_list[$code]['cron_name'];
                     $modules[$i]['desc'] = $cron_list[$code]['cron_desc'];
@@ -52,7 +52,7 @@ class CronController extends Controller
 
         if ($_REQUEST['act'] == 'install') {
             if (empty($_POST['step'])) {
-                /* 取相应插件信息 */
+                // 取相应插件信息
                 $set_modules = true;
                 include_once(ROOT_PATH . 'includes/modules/cron/' . $_REQUEST['code'] . '.php');
 
@@ -108,7 +108,7 @@ class CronController extends Controller
                     return sys_msg($GLOBALS['_LANG']['cron_code'] . $GLOBALS['_LANG']['repeat'], 1);
                 }
 
-                /* 取得配置信息 */
+                // 取得配置信息
                 $cron_config = [];
                 if (isset($_POST['cfg_value']) && is_array($_POST['cfg_value'])) {
                     $temp = count($_POST['cfg_value']);
@@ -161,12 +161,12 @@ class CronController extends Controller
                     $links[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'cron.php?act=list'];
                     return sys_msg($GLOBALS['_LANG']['cron_not_available'], 0, $links);
                 }
-                /* 取相应插件信息 */
+                // 取相应插件信息
                 $set_modules = true;
                 include_once(ROOT_PATH . 'includes/modules/cron/' . $_REQUEST['code'] . '.php');
                 $data = $modules[0];
 
-                /* 取得配置信息 */
+                // 取得配置信息
                 $cron['cron_config'] = unserialize($cron['cron_config']);
                 if (!empty($cron['cron_config'])) {
                     foreach ($cron['cron_config'] as $key => $value) {

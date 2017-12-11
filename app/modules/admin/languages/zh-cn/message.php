@@ -1,6 +1,6 @@
 <?php
 
-/* 这段信息 */
+// 这段信息 
 $_LANG['sender_id'] = '留言者';
 $_LANG['receiver_id'] = '接收者';
 $_LANG['send_date'] = '发送日期';
@@ -24,7 +24,7 @@ $_LANG['action_succeed'] = '操作成功!';
 $_LANG['back_list'] = '返回留言列表';
 $_LANG['continue_send_msg'] = '继续发送留言';
 
-/* 提示信息 */
+// 提示信息 
 $_LANG['js_languages']['title_empty'] = '请填写留言主题!';
 $_LANG['js_languages']['message_empty'] = '请填写留言内容!';
 

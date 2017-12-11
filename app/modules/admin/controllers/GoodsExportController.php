@@ -11,7 +11,7 @@ class GoodsExportController extends Controller
     public function actionIndex()
     {
         if ($_REQUEST['act'] == 'goods_export') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('goods_export');
 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['14_goods_export']);
@@ -35,7 +35,7 @@ class GoodsExportController extends Controller
         }
 
         if ($_REQUEST['act'] == 'act_export_taobao') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('goods_export');
 
             $zip = new PHPZip;
@@ -77,7 +77,7 @@ class GoodsExportController extends Controller
 
             $res = $this->db->query($sql);
 
-            /* csv文件数组 */
+            // csv文件数组 
             $goods_value = ['goods_name' => '""', 'goods_class' => $goods_class, 'shop_class' => 0, 'new_level' => 5, 'province' => $shop_province, 'city' => $shop_city, 'sell_type' => '"b"', 'shop_price' => 0, 'add_price' => 0, 'goods_number' => 0, 'die_day' => 14, 'load_type' => 1, 'post_express' => $post_express, 'ems' => $ems, 'express' => $express, 'pay_type' => 2, 'allow_alipay' => 1, 'invoice' => 0, 'repair' => 0, 'resend' => 1, 'is_store' => 0, 'window' => 0, 'add_time' => '"1980-1-1  0:00:00"', 'story' => '""', 'goods_desc' => '""', 'goods_img' => '""', 'goods_attr' => '""', 'group_buy' => 0, 'group_buy_num' => 0, 'template' => 0, 'discount' => 0, 'modify_time' => '""', 'upload_status' => 100, 'img_status' => 1];
 
             $content = implode(",", $GLOBALS['_LANG']['taobao']) . "\n";
@@ -91,7 +91,7 @@ class GoodsExportController extends Controller
 
                 $content .= implode("\t", $goods_value) . "\n";
 
-                /* 压缩图片 */
+                // 压缩图片 
                 if (!empty($row['goods_img']) && is_file(ROOT_PATH . $row['goods_img'])) {
                     $zip->add_file(file_get_contents(ROOT_PATH . $row['goods_img']), $row['goods_img']);
                 }
@@ -108,7 +108,7 @@ class GoodsExportController extends Controller
         }
 
         if ($_REQUEST['act'] == 'act_export_taobao V4.3') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('goods_export');
 
             $zip = new PHPZip;
@@ -150,7 +150,7 @@ class GoodsExportController extends Controller
 
             $res = $this->db->query($sql);
 
-            /* csv文件数组 */
+            // csv文件数组 
             $goods_value = ['goods_name' => '""', 'goods_class' => $goods_class, 'shop_class' => 0, 'new_level' => 5, 'province' => $shop_province, 'city' => $shop_city, 'sell_type' => '"b"', 'shop_price' => 0, 'add_price' => 0, 'goods_number' => 0, 'die_day' => 14, 'load_type' => 1, 'post_express' => $post_express, 'ems' => $ems, 'express' => $express, 'pay_type' => 2, 'allow_alipay' => 1, 'invoice' => 0, 'repair' => 0, 'resend' => 1, 'is_store' => 0, 'window' => 0, 'add_time' => '"1980-1-1  0:00:00"', 'story' => '""', 'goods_desc' => '""', 'goods_img' => '""', 'goods_attr' => '""', 'group_buy' => 0, 'group_buy_num' => 0, 'template' => 0, 'discount' => 0, 'modify_time' => '""', 'upload_status' => 100, 'img_status' => 1];
 
             $content = implode("\t", $GLOBALS['_LANG']['taobao']) . "\n";
@@ -164,7 +164,7 @@ class GoodsExportController extends Controller
 
                 $content .= implode("\t", $goods_value) . "\n";
 
-                /* 压缩图片 */
+                // 压缩图片 
                 if (!empty($row['goods_img']) && is_file(ROOT_PATH . $row['goods_img'])) {
                     $zip->add_file(file_get_contents(ROOT_PATH . $row['goods_img']), $row['goods_img']);
                 }
@@ -187,7 +187,7 @@ class GoodsExportController extends Controller
         }
 
         if ($_REQUEST['act'] == 'act_export_ecshop') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('goods_export');
 
             $zip = new PHPZip;
@@ -200,7 +200,7 @@ class GoodsExportController extends Controller
 
             $res = $this->db->query($sql);
 
-            /* csv文件数组 */
+            // csv文件数组 
             $goods_value = [];
             $goods_value['goods_name'] = '""';
             $goods_value['goods_sn'] = '""';
@@ -250,7 +250,7 @@ class GoodsExportController extends Controller
 
                 $content .= implode(",", $goods_value) . "\n";
 
-                /* 压缩图片 */
+                // 压缩图片 
                 if (!empty($row['goods_img']) && is_file(ROOT_PATH . $row['goods_img'])) {
                     $zip->add_file(file_get_contents(ROOT_PATH . $row['goods_img']), $row['goods_img']);
                 }
@@ -271,7 +271,7 @@ class GoodsExportController extends Controller
         }
 
         if ($_REQUEST['act'] == 'act_export_paipai') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('goods_export');
 
 
@@ -370,7 +370,7 @@ class GoodsExportController extends Controller
 
                 $content .= implode(",", $goods_value) . "\n";
 
-                /* 压缩图片 */
+                // 压缩图片 
                 if (!empty($row['goods_img']) && is_file(ROOT_PATH . $row['goods_img'])) {
                     $zip->add_file(file_get_contents(ROOT_PATH . $row['goods_img']), $row['goods_img']);
                 }
@@ -388,7 +388,7 @@ class GoodsExportController extends Controller
         }
 
         if ($_REQUEST['act'] == 'act_export_paipai4') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('goods_export');
 
 
@@ -479,7 +479,7 @@ class GoodsExportController extends Controller
 
                 $content .= implode(",", $goods_value) . "\n";
 
-                /* 压缩图片 */
+                // 压缩图片 
                 if (!empty($row['goods_img']) && is_file(ROOT_PATH . $row['goods_img'])) {
                     $zip->add_file(file_get_contents(ROOT_PATH . $row['goods_img']), $row['goods_img']);
                 }
@@ -513,12 +513,12 @@ class GoodsExportController extends Controller
         }
 
         if ($_REQUEST['act'] == 'act_export_custom') {
-            /* 检查输出列 */
+            // 检查输出列 
             if (empty ($_POST['custom_goods_export'])) {
                 return sys_msg($GLOBALS['_LANG']['custom_goods_field_not_null'], 1, [], false);
             }
 
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('goods_export');
 
             $zip = new PHPZip;
@@ -534,7 +534,7 @@ class GoodsExportController extends Controller
             $goods_fields = explode(',', $_POST['custom_goods_export']);
             $goods_field_name = $this->set_goods_field_name($goods_fields, $GLOBALS['_LANG']['custom']);
 
-            /* csv文件数组 */
+            // csv文件数组 
             $goods_field_value = [];
             foreach ($goods_fields as $field) {
                 if ($field == 'market_price' || $field == 'shop_price' || $field == 'integral' || $field == 'goods_weight' || $field == 'goods_number' || $field == 'warn_number' || $field == 'is_best' || $field == 'is_new' || $field == 'is_hot') {
@@ -579,7 +579,7 @@ class GoodsExportController extends Controller
 
                 $content .= implode(",", $goods_value) . "\n";
 
-                /* 压缩图片 */
+                // 压缩图片 
                 if (!empty($row['goods_img']) && is_file(ROOT_PATH . $row['goods_img'])) {
                     $zip->add_file(file_get_contents(ROOT_PATH . $row['goods_img']), $row['goods_img']);
                 }
@@ -608,7 +608,7 @@ class GoodsExportController extends Controller
         }
 
         if ($_REQUEST['act'] == 'act_export_taobao V4.6') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('goods_export');
 
             $zip = new PHPZip;
@@ -650,14 +650,14 @@ class GoodsExportController extends Controller
 
             $res = $this->db->query($sql);
 
-            /* csv文件数组 */
+            // csv文件数组 
             $goods_value = ['goods_name' => '', 'goods_class' => $goods_class, 'shop_class' => 0, 'new_level' => 0, 'province' => $shop_province, 'city' => $shop_city, 'sell_type' => '"b"', 'shop_price' => 0, 'add_price' => 0, 'goods_number' => 0, 'die_day' => 14, 'load_type' => 1, 'post_express' => $post_express, 'ems' => $ems, 'express' => $express, 'pay_type' => '', 'allow_alipay' => '', 'invoice' => 0, 'repair' => 0, 'resend' => 1, 'is_store' => 0, 'window' => 0, 'add_time' => '"1980-1-1  0:00:00"', 'story' => '', 'goods_desc' => '', 'goods_img' => '', 'goods_attr' => '', 'group_buy' => '', 'group_buy_num' => '', 'template' => 0, 'discount' => 0, 'modify_time' => '"2011-5-1  0:00:00"', 'upload_status' => 100, 'img_status' => 1, 'img_status' => '', 'rebate_proportion' => 0, 'new_goods_img' => '', 'video' => '', 'marketing_property_mix' => '', 'user_input_ID_numbers' => '', 'input_user_name_value' => '', 'sellers_code' => '', 'another_of_marketing_property' => '', 'charge_type' => '0', 'treasure_number' => '', 'ID_number' => '',];
 
             $content = implode("\t", $GLOBALS['_LANG']['taobao46']) . "\n";
 
             foreach ($res as $row) {
 
-                /* 压缩图片 */
+                // 压缩图片 
                 if (!empty($row['goods_img']) && is_file(ROOT_PATH . $row['goods_img'])) {
                     $row['new_goods_img'] = preg_replace("/(^images\/)+(.*)(.gif|.jpg|.jpeg|.png)$/", "\${2}.tbi", $row['goods_img']);
                     @copy(ROOT_PATH . $row['goods_img'], ROOT_PATH . "images\/" . $row['new_goods_img']);
@@ -711,7 +711,7 @@ class GoodsExportController extends Controller
                 $start += 1;
             } else {
                 if ($num < 192) {
-                    /* 无效字节 */
+                    // 无效字节 
                     $start++;
                 } elseif ($num < 224) {
                     if ($start + 1 < $len) {
@@ -741,12 +741,12 @@ class GoodsExportController extends Controller
                     $start += 4;
                 } elseif ($num < 252) {
                     if ($start + 4 < $len) {
-                        /* 不做处理 */
+                        // 不做处理 
                     }
                     $start += 5;
                 } else {
                     if ($start + 5 < $len) {
-                        /* 不做处理 */
+                        // 不做处理 
                     }
                     $start += 6;
                 }

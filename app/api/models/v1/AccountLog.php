@@ -65,7 +65,7 @@ class AccountLog extends BaseModel
     {
         $uid = Token::authorization();
         $flag = 0;
-        /* 更新用户信息 */
+        // 更新用户信息 
         if($member = Member::where('user_id', $uid)->first()){
             $member->user_money += $user_money;
             $member->frozen_money += $frozen_money;
@@ -76,7 +76,7 @@ class AccountLog extends BaseModel
 
         if($flag)
         {
-            /* 插入帐户变动记录 */
+            // 插入帐户变动记录 
             $model = new AccountLog;
             $model->user_id             = $uid;
             $model->pay_points          = $pay_points;

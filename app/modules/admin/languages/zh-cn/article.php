@@ -48,7 +48,7 @@ $_LANG['tab_goods'] = '关联商品';
 $_LANG['link_goods'] = '跟该文章关联的商品';
 $_LANG['keyword'] = '关键字';
 
-/* 提示信息 */
+// 提示信息 
 $_LANG['title_exist'] ='文章 %s 已经存在';
 $_LANG['back_list'] ='返回文章列表';
 $_LANG['continue_add'] ='继续添加新文章';

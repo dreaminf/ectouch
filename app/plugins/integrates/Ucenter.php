@@ -2,26 +2,26 @@
 
 namespace app\plugins\integrates;
 
-/* 模块的基本信息 */
+// 模块的基本信息
 if (isset($set_modules) && $set_modules == true) {
     $i = (isset($modules)) ? count($modules) : 0;
 
-    /* 会员数据整合插件的代码必须和文件名保持一致 */
+    // 会员数据整合插件的代码必须和文件名保持一致
     $modules[$i]['code'] = 'ucenter';
 
-    /* 被整合的第三方程序的名称 */
+    // 被整合的第三方程序的名称
     $modules[$i]['name'] = 'UCenter';
 
-    /* 被整合的第三方程序的版本 */
+    // 被整合的第三方程序的版本
     $modules[$i]['version'] = '1.x';
 
-    /* 插件的作者 */
+    // 插件的作者
     $modules[$i]['author'] = 'ECTouch R&D TEAM';
 
-    /* 插件作者的官方网站 */
+    // 插件作者的官方网站
     $modules[$i]['website'] = 'https://www.ectouch.cn';
 
-    /* 插件的初始的默认值 */
+    // 插件的初始的默认值
     $modules[$i]['default']['db_host'] = 'localhost';
     $modules[$i]['default']['db_user'] = 'root';
     $modules[$i]['default']['prefix'] = 'uc_';
@@ -54,7 +54,7 @@ class Ucenter extends Integrate
         $this->need_sync = false;
         $this->is_ecshop = 1;
 
-        /* 初始化UC需要常量 */
+        // 初始化UC需要常量
         if (!defined('UC_CONNECT') && isset($cfg['uc_id']) && isset($cfg['db_host']) && isset($cfg['db_user']) && isset($cfg['db_name'])) {
             if (strpos($cfg['db_pre'], '`' . $cfg['db_name'] . '`') === 0) {
                 $db_pre = $cfg['db_pre'];
@@ -155,7 +155,7 @@ class Ucenter extends Integrate
     /*添加用户*/
     public function add_user($username, $password, $email)
     {
-        /* 检测用户名 */
+        // 检测用户名
         if ($this->check_user($username)) {
             $this->error = ERR_USERNAME_EXISTS;
             return false;
@@ -234,7 +234,7 @@ class Ucenter extends Integrate
         return true;
     }
 
-    /* 编辑用户信息 */
+    // 编辑用户信息
     public function edit_user($cfg, $forget_pwd = '0')
     {
         $real_username = $cfg['username'];
@@ -359,12 +359,12 @@ class Ucenter extends Integrate
     public function set_cookie($username = '')
     {
         if (empty($username)) {
-            /* 摧毁cookie */
+            // 摧毁cookie
             $time = 0;
             cookie("user_id", null);
             cookie("password", null);
         } else {
-            /* 设置cookie */
+            // 设置cookie
             $time = 3600 * 24 * 30;
 
             cookie("username", stripslashes($username), $time);
@@ -444,7 +444,7 @@ class Ucenter extends Integrate
             $post_id = $id;
         }
 
-        /* 如果需要同步或是ecshop插件执行这部分代码 */
+        // 如果需要同步或是ecshop插件执行这部分代码
         $sql = "SELECT user_id FROM " . $GLOBALS['ecs']->table('users') . " WHERE ";
         $sql .= (is_array($post_id)) ? db_create_in($post_id, 'user_name') : "user_name='" . $post_id . "' LIMIT 1";
         $col = $GLOBALS['db']->getCol($sql);
@@ -454,7 +454,7 @@ class Ucenter extends Integrate
             $GLOBALS['db']->query($sql);
             $sql = "DELETE FROM " . $GLOBALS['ecs']->table('users') . " WHERE " . db_create_in($col, 'user_id'); //删除用户
             $GLOBALS['db']->query($sql);
-            /* 删除用户订单 */
+            // 删除用户订单
             $sql = "SELECT order_id FROM " . $GLOBALS['ecs']->table('order_info') . " WHERE " . db_create_in($col, 'user_id');
             $GLOBALS['db']->query($sql);
             $col_order_id = $GLOBALS['db']->getCol($sql);
@@ -484,7 +484,7 @@ class Ucenter extends Integrate
         }
 
         if (isset($this->ecshop) && $this->ecshop) {
-            /* 如果是ecshop插件直接退出 */
+            // 如果是ecshop插件直接退出
             return;
         }
 

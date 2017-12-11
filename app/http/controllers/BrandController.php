@@ -11,7 +11,7 @@ class BrandController extends Controller
 {
     public function actionIndex()
     {
-        /* 获得请求的分类 ID */
+        // 获得请求的分类 ID
         if (!empty($_REQUEST['id'])) {
             $brand_id = intval($_REQUEST['id']);
         }
@@ -19,7 +19,7 @@ class BrandController extends Controller
             $brand_id = intval($_REQUEST['brand']);
         }
         if (empty($brand_id)) {
-            /* 缓存编号 */
+            // 缓存编号
             $cache_id = sprintf('%X', crc32($GLOBALS['_CFG']['lang']));
             if (!$this->smarty->is_cached('brand_list.dwt', $cache_id)) {
                 assign_template();
@@ -36,12 +36,12 @@ class BrandController extends Controller
             return $this->smarty->display('brand_list.dwt', $cache_id);
         }
 
-        /* 初始化分页信息 */
+        // 初始化分页信息
         $page = !empty($_REQUEST['page']) && intval($_REQUEST['page']) > 0 ? intval($_REQUEST['page']) : 1;
         $size = !empty($GLOBALS['_CFG']['page_size']) && intval($GLOBALS['_CFG']['page_size']) > 0 ? intval($GLOBALS['_CFG']['page_size']) : 10;
         $cate = !empty($_REQUEST['cat']) && intval($_REQUEST['cat']) > 0 ? intval($_REQUEST['cat']) : 0;
 
-        /* 排序、显示方式以及类型 */
+        // 排序、显示方式以及类型
         $default_display_type = $GLOBALS['_CFG']['show_order_type'] == '0' ? 'list' : ($GLOBALS['_CFG']['show_order_type'] == '1' ? 'grid' : 'text');
         $default_sort_order_method = $GLOBALS['_CFG']['sort_order_method'] == '0' ? 'DESC' : 'ASC';
         $default_sort_order_type = $GLOBALS['_CFG']['sort_order_type'] == '0' ? 'goods_id' : ($GLOBALS['_CFG']['sort_order_type'] == '1' ? 'shop_price' : 'last_update');
@@ -53,7 +53,7 @@ class BrandController extends Controller
         $display = in_array($display, ['list', 'grid', 'text']) ? $display : 'text';
         cookie('display', $display, 1440 * 7);
 
-        /* 页面的缓存ID */
+        // 页面的缓存ID
         $cache_id = sprintf('%X', crc32($brand_id . '-' . $display . '-' . $sort . '-' . $order . '-' . $page . '-' . $size . '-' . session('user_rank') . '-' . $GLOBALS['_CFG']['lang'] . '-' . $cate));
 
         if (!$this->smarty->is_cached('brand.dwt', $cache_id)) {
@@ -67,7 +67,7 @@ class BrandController extends Controller
             $this->smarty->assign('keywords', htmlspecialchars($brand_info['brand_desc']));
             $this->smarty->assign('description', htmlspecialchars($brand_info['brand_desc']));
 
-            /* 赋值固定内容 */
+            // 赋值固定内容
             assign_template();
             $position = assign_ur_here($cate, $brand_info['brand_name']);
             $this->smarty->assign('page_title', $position['title']);   // 页面标题
@@ -82,7 +82,7 @@ class BrandController extends Controller
             $this->smarty->assign('brand_cat_list', $this->brand_related_cat($brand_id)); // 相关分类
             $this->smarty->assign('feed_url', ($GLOBALS['_CFG']['rewrite'] == 1) ? "feed-b$brand_id.xml" : 'feed.php?brand=' . $brand_id);
 
-            /* 调查 */
+            // 调查
             $vote = get_vote();
             if (!empty($vote)) {
                 $this->smarty->assign('vote_id', $vote['id']);
@@ -163,7 +163,7 @@ class BrandController extends Controller
             $result = $GLOBALS['db']->getAll($sql);
         }
 
-        /* 取得每一项的数量限制 */
+        // 取得每一项的数量限制
         $num = 0;
         $type2lib = ['best' => 'recommend_best', 'new' => 'recommend_new', 'hot' => 'recommend_hot', 'promote' => 'recommend_promotion'];
         $num = get_library_number($type2lib[$type]);
@@ -235,7 +235,7 @@ class BrandController extends Controller
     {
         $cate_where = ($cate > 0) ? 'AND ' . get_children($cate) : '';
 
-        /* 获得商品列表 */
+        // 获得商品列表
         $sql = 'SELECT g.goods_id, g.goods_name, g.market_price, g.shop_price AS org_price, ' .
             "IFNULL(mp.user_price, g.shop_price * '". session('discount') ."') AS shop_price, g.promote_price, " .
             'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img ' .

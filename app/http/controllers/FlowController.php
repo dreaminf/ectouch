@@ -56,7 +56,7 @@ class FlowController extends Controller
 
             $goods = $json->decode($_POST['goods']);
 
-            /* 检查：如果商品有规格，而post的数据没有规格，把商品的规格属性通过JSON传到前台 */
+            // 检查：如果商品有规格，而post的数据没有规格，把商品的规格属性通过JSON传到前台
             if (empty($goods->spec) and empty($goods->quick)) {
                 $sql = "SELECT a.attr_id, a.attr_name, a.attr_type, " .
                     "g.goods_attr_id, g.attr_value, g.attr_price " .
@@ -93,16 +93,16 @@ class FlowController extends Controller
                 }
             }
 
-            /* 更新：如果是一步购物，先清空购物车 */
+            // 更新：如果是一步购物，先清空购物车
             if ($GLOBALS['_CFG']['one_step_buy'] == '1') {
                 clear_cart();
             }
 
-            /* 检查：商品数量是否合法 */
+            // 检查：商品数量是否合法
             if (!is_numeric($goods->number) || intval($goods->number) <= 0) {
                 $result['error'] = 1;
                 $result['message'] = $GLOBALS['_LANG']['invalid_number'];
-            } /* 更新：购物车 */
+            } // 更新：购物车
             else {
                 if (!empty($goods->spec)) {
                     foreach ($goods->spec as $key => $val) {
@@ -151,14 +151,14 @@ class FlowController extends Controller
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 $this->smarty->assign('anonymous_buy', $GLOBALS['_CFG']['anonymous_buy']);
 
-                /* 检查是否有赠品，如果有提示登录后重新选择赠品 */
+                // 检查是否有赠品，如果有提示登录后重新选择赠品
                 $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('cart') .
                     " WHERE session_id = '" . SESS_ID . "' AND is_gift > 0";
                 if ($this->db->getOne($sql) > 0) {
                     $this->smarty->assign('need_rechoose_gift', 1);
                 }
 
-                /* 检查是否需要注册码 */
+                // 检查是否需要注册码
                 $captcha = intval($GLOBALS['_CFG']['captcha']);
                 if (($captcha & CAPTCHA_LOGIN) && (!($captcha & CAPTCHA_LOGIN_FAIL) || (($captcha & CAPTCHA_LOGIN_FAIL) && session('login_fail') > 2)) && gd_version() > 0) {
                     $this->smarty->assign('enabled_login_captcha', 1);
@@ -178,7 +178,7 @@ class FlowController extends Controller
                             return show_message($GLOBALS['_LANG']['invalid_captcha']);
                         }
 
-                        /* 检查验证码 */
+                        // 检查验证码
                         $validator = new Captcha();
                         $validator->session_word = 'captcha_login';
                         if (!$validator->check_word($_POST['captcha'])) {
@@ -191,7 +191,7 @@ class FlowController extends Controller
                         update_user_info();  //更新用户信息
                         recalculate_price(); // 重新计算购物车中的商品价格
 
-                        /* 检查购物车中是否有商品 没有商品则跳转到首页 */
+                        // 检查购物车中是否有商品 没有商品则跳转到首页
                         $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('cart') . " WHERE session_id = '" . SESS_ID . "' ";
                         if ($this->db->getOne($sql) > 0) {
                             return $this->redirect("/flow.php?step=checkout");
@@ -208,7 +208,7 @@ class FlowController extends Controller
                             return show_message($GLOBALS['_LANG']['invalid_captcha']);
                         }
 
-                        /* 检查验证码 */
+                        // 检查验证码
                         $validator = new Captcha();
                         if (!$validator->check_word($_POST['captcha'])) {
                             return show_message($GLOBALS['_LANG']['invalid_captcha']);
@@ -216,7 +216,7 @@ class FlowController extends Controller
                     }
 
                     if (register(trim($_POST['username']), trim($_POST['password']), trim($_POST['email']))) {
-                        /* 用户注册成功 */
+                        // 用户注册成功
                         return $this->redirect("/flow.php?step=consignee");
                     } else {
                         return $this->err->show();
@@ -234,7 +234,7 @@ class FlowController extends Controller
             load_helper('transaction');
 
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-                /* 取得购物类型 */
+                // 取得购物类型
                 $flow_type = session('?flow_type') ? session('flow_type') : CART_GENERAL_GOODS;
 
                 /*
@@ -245,17 +245,17 @@ class FlowController extends Controller
                     session('direct_shopping', 1);
                 }
 
-                /* 取得国家列表、商店所在国家、商店所在国家的省列表 */
+                // 取得国家列表、商店所在国家、商店所在国家的省列表
                 $this->smarty->assign('country_list', get_regions());
                 $this->smarty->assign('shop_country', $GLOBALS['_CFG']['shop_country']);
                 $this->smarty->assign('shop_province_list', get_regions(1, $GLOBALS['_CFG']['shop_country']));
 
-                /* 获得用户所有的收货人信息 */
+                // 获得用户所有的收货人信息
                 if (session('user_id') > 0) {
                     $consignee_list = get_consignee_list(session('user_id'));
 
                     if (count($consignee_list) < 5) {
-                        /* 如果用户收货人信息的总数小于 5 则增加一个新的收货人信息 */
+                        // 如果用户收货人信息的总数小于 5 则增加一个新的收货人信息
                         $consignee_list[] = ['country' => $GLOBALS['_CFG']['shop_country'], 'email' => session('email', '')];
                     }
                 } else {
@@ -268,7 +268,7 @@ class FlowController extends Controller
                 $this->smarty->assign('name_of_region', [$GLOBALS['_CFG']['name_of_region_1'], $GLOBALS['_CFG']['name_of_region_2'], $GLOBALS['_CFG']['name_of_region_3'], $GLOBALS['_CFG']['name_of_region_4']]);
                 $this->smarty->assign('consignee_list', $consignee_list);
 
-                /* 取得每个收货地址的省市区列表 */
+                // 取得每个收货地址的省市区列表
                 $province_list = [];
                 $city_list = [];
                 $district_list = [];
@@ -285,7 +285,7 @@ class FlowController extends Controller
                 $this->smarty->assign('city_list', $city_list);
                 $this->smarty->assign('district_list', $district_list);
 
-                /* 返回收货人页面代码 */
+                // 返回收货人页面代码
                 $this->smarty->assign('real_goods_count', exist_real_goods(0, $flow_type) ? 1 : 0);
             } else {
                 /*
@@ -310,13 +310,13 @@ class FlowController extends Controller
                 if (session('user_id') > 0) {
                     load_helper('transaction');
 
-                    /* 如果用户已经登录，则保存收货人信息 */
+                    // 如果用户已经登录，则保存收货人信息
                     $consignee['user_id'] = session('user_id');
 
                     save_consignee($consignee, true);
                 }
 
-                /* 保存到session */
+                // 保存到session
                 session('flow_consignee', stripslashes_deep($consignee));
 
                 return $this->redirect("/flow.php?step=checkout");
@@ -343,13 +343,13 @@ class FlowController extends Controller
             //-- 订单确认
             /*------------------------------------------------------ */
 
-            /* 取得购物类型 */
+            // 取得购物类型
             $flow_type = session('?flow_type') ? session('flow_type') : CART_GENERAL_GOODS;
 
-            /* 团购标志 */
+            // 团购标志
             if ($flow_type == CART_GROUP_BUY_GOODS) {
                 $this->smarty->assign('is_group_buy', 1);
-            } /* 积分兑换商品 */
+            } // 积分兑换商品
             elseif ($flow_type == CART_EXCHANGE_GOODS) {
                 $this->smarty->assign('is_exchange_goods', 1);
             } else {
@@ -357,7 +357,7 @@ class FlowController extends Controller
                 session('flow_order.extension_code', '');
             }
 
-            /* 检查购物车中是否有商品 */
+            // 检查购物车中是否有商品
             $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('cart') .
                 " WHERE session_id = '" . SESS_ID . "' " .
                 "AND parent_id = 0 AND is_gift = 0 AND rec_type = '$flow_type'";
@@ -372,26 +372,26 @@ class FlowController extends Controller
              * 如果没有登录则跳转到登录和注册页面
              */
             if (empty(session('direct_shopping')) && session('user_id') == 0) {
-                /* 用户没有登录且没有选定匿名购物，转向到登录页面 */
+                // 用户没有登录且没有选定匿名购物，转向到登录页面
                 return $this->redirect("/flow.php?step=login");
             }
 
             $consignee = get_consignee(session('user_id'));
 
-            /* 检查收货人信息是否完整 */
+            // 检查收货人信息是否完整
             if (!check_consignee_info($consignee, $flow_type)) {
-                /* 如果不完整则转向到收货人信息填写界面 */
+                // 如果不完整则转向到收货人信息填写界面
                 return $this->redirect("/flow.php?step=consignee");
             }
 
             session('flow_consignee', $consignee);
             $this->smarty->assign('consignee', $consignee);
 
-            /* 对商品信息赋值 */
+            // 对商品信息赋值
             $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
             $this->smarty->assign('goods_list', $cart_goods);
 
-            /* 对是否允许修改购物车赋值 */
+            // 对是否允许修改购物车赋值
             if ($flow_type != CART_GENERAL_GOODS || $GLOBALS['_CFG']['one_step_buy'] == '1') {
                 $this->smarty->assign('allow_edit_cart', 0);
             } else {
@@ -408,7 +408,7 @@ class FlowController extends Controller
             $order = flow_order_info();
             $this->smarty->assign('order', $order);
 
-            /* 计算折扣 */
+            // 计算折扣
             if ($flow_type != CART_EXCHANGE_GOODS && $flow_type != CART_GROUP_BUY_GOODS) {
                 $discount = compute_discount();
                 $this->smarty->assign('discount', $discount['discount']);
@@ -425,7 +425,7 @@ class FlowController extends Controller
             $this->smarty->assign('shopping_money', sprintf($GLOBALS['_LANG']['shopping_money'], $total['formated_goods_price']));
             $this->smarty->assign('market_price_desc', sprintf($GLOBALS['_LANG']['than_market_price'], $total['formated_market_price'], $total['formated_saving'], $total['save_rate']));
 
-            /* 取得配送列表 */
+            // 取得配送列表
             $region = [$consignee['country'], $consignee['province'], $consignee['city'], $consignee['district']];
             $shipping_list = available_shipping_list($region);
             $cart_weight_price = cart_weight_price($flow_type);
@@ -447,7 +447,7 @@ class FlowController extends Controller
                 $shipping_list[$key]['insure_formated'] = strpos($val['insure'], '%') === false ?
                     price_format($val['insure'], false) : $val['insure'];
 
-                /* 当前的配送方式是否支持保价 */
+                // 当前的配送方式是否支持保价
                 if ($val['shipping_id'] == $order['shipping_id']) {
                     $insure_disabled = ($val['insure'] == 0);
                     $cod_disabled = ($val['support_cod'] == 0);
@@ -458,7 +458,7 @@ class FlowController extends Controller
             $this->smarty->assign('insure_disabled', $insure_disabled);
             $this->smarty->assign('cod_disabled', $cod_disabled);
 
-            /* 取得支付列表 */
+            // 取得支付列表
             if ($order['shipping_id'] == 0) {
                 $cod = true;
                 $cod_fee = 0;
@@ -467,7 +467,7 @@ class FlowController extends Controller
                 $cod = $shipping['support_cod'];
 
                 if ($cod) {
-                    /* 如果是团购，且保证金大于0，不能使用货到付款 */
+                    // 如果是团购，且保证金大于0，不能使用货到付款
                     if ($flow_type == CART_GROUP_BUY_GOODS) {
                         $group_buy_id = session('extension_id');
                         if ($group_buy_id <= 0) {
@@ -482,7 +482,7 @@ class FlowController extends Controller
                             $cod = false;
                             $cod_fee = 0;
 
-                            /* 赋值保证金 */
+                            // 赋值保证金
                             $this->smarty->assign('gb_deposit', $group_buy['deposit']);
                         }
                     }
@@ -503,13 +503,13 @@ class FlowController extends Controller
                     if ($payment['is_cod'] == '1') {
                         $payment_list[$key]['format_pay_fee'] = '<span id="ECS_CODFEE">' . $payment['format_pay_fee'] . '</span>';
                     }
-                    /* 如果有易宝神州行支付 如果订单金额大于300 则不显示 */
+                    // 如果有易宝神州行支付 如果订单金额大于300 则不显示
                     if ($payment['pay_code'] == 'yeepayszx' && $total['amount'] > 300) {
                         unset($payment_list[$key]);
                     }
-                    /* 如果有余额支付 */
+                    // 如果有余额支付
                     if ($payment['pay_code'] == 'balance') {
-                        /* 如果未登录，不显示 */
+                        // 如果未登录，不显示
                         if (session('user_id') == 0) {
                             unset($payment_list[$key]);
                         } else {
@@ -522,15 +522,15 @@ class FlowController extends Controller
             }
             $this->smarty->assign('payment_list', $payment_list);
 
-            /* 取得包装与贺卡 */
+            // 取得包装与贺卡
             if ($total['real_goods_count'] > 0) {
-                /* 只有有实体商品,才要判断包装和贺卡 */
+                // 只有有实体商品,才要判断包装和贺卡
                 if (!isset($GLOBALS['_CFG']['use_package']) || $GLOBALS['_CFG']['use_package'] == '1') {
-                    /* 如果使用包装，取得包装列表及用户选择的包装 */
+                    // 如果使用包装，取得包装列表及用户选择的包装
                     $this->smarty->assign('pack_list', pack_list());
                 }
 
-                /* 如果使用贺卡，取得贺卡列表及用户选择的贺卡 */
+                // 如果使用贺卡，取得贺卡列表及用户选择的贺卡
                 if (!isset($GLOBALS['_CFG']['use_card']) || $GLOBALS['_CFG']['use_card'] == '1') {
                     $this->smarty->assign('card_list', card_list());
                 }
@@ -538,7 +538,7 @@ class FlowController extends Controller
 
             $user_info = user_info(session('user_id'));
 
-            /* 如果使用余额，取得用户余额 */
+            // 如果使用余额，取得用户余额
             if ((!isset($GLOBALS['_CFG']['use_surplus']) || $GLOBALS['_CFG']['use_surplus'] == '1')
                 && session('user_id') > 0
                 && $user_info['user_money'] > 0) {
@@ -547,7 +547,7 @@ class FlowController extends Controller
                 $this->smarty->assign('your_surplus', $user_info['user_money']);
             }
 
-            /* 如果使用积分，取得用户可用积分及本订单最多可以使用的积分 */
+            // 如果使用积分，取得用户可用积分及本订单最多可以使用的积分
             if ((!isset($GLOBALS['_CFG']['use_integral']) || $GLOBALS['_CFG']['use_integral'] == '1')
                 && session('user_id') > 0
                 && $user_info['pay_points'] > 0
@@ -558,7 +558,7 @@ class FlowController extends Controller
                 $this->smarty->assign('your_integral', $user_info['pay_points']); // 用户积分
             }
 
-            /* 如果使用红包，取得用户可以使用的红包及用户选择的红包 */
+            // 如果使用红包，取得用户可以使用的红包及用户选择的红包
             if ((!isset($GLOBALS['_CFG']['use_bonus']) || $GLOBALS['_CFG']['use_bonus'] == '1')
                 && ($flow_type != CART_GROUP_BUY_GOODS && $flow_type != CART_EXCHANGE_GOODS)) {
                 // 取得用户可用红包
@@ -574,14 +574,14 @@ class FlowController extends Controller
                 $this->smarty->assign('allow_use_bonus', 1);
             }
 
-            /* 如果使用缺货处理，取得缺货处理列表 */
+            // 如果使用缺货处理，取得缺货处理列表
             if (!isset($GLOBALS['_CFG']['use_how_oos']) || $GLOBALS['_CFG']['use_how_oos'] == '1') {
                 if (is_array($GLOBALS['_LANG']['oos']) && !empty($GLOBALS['_LANG']['oos'])) {
                     $this->smarty->assign('how_oos_list', $GLOBALS['_LANG']['oos']);
                 }
             }
 
-            /* 如果能开发票，取得发票内容列表 */
+            // 如果能开发票，取得发票内容列表
             if ((!isset($GLOBALS['_CFG']['can_invoice']) || $GLOBALS['_CFG']['can_invoice'] == '1')
                 && isset($GLOBALS['_CFG']['invoice_content'])
                 && trim($GLOBALS['_CFG']['invoice_content']) != '' && $flow_type != CART_EXCHANGE_GOODS) {
@@ -597,7 +597,7 @@ class FlowController extends Controller
                 $this->smarty->assign('inv_type_list', $inv_type_list);
             }
 
-            /* 保存 session */
+            // 保存 session
             session('flow_order', $order);
         }
 
@@ -608,37 +608,37 @@ class FlowController extends Controller
             $json = new Json();
             $result = ['error' => '', 'content' => '', 'need_insure' => 0];
 
-            /* 取得购物类型 */
+            // 取得购物类型
             $flow_type = session('?flow_type') ? session('flow_type') : CART_GENERAL_GOODS;
 
-            /* 获得收货人信息 */
+            // 获得收货人信息
             $consignee = get_consignee(session('user_id'));
 
-            /* 对商品信息赋值 */
+            // 对商品信息赋值
             $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
 
             if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type)) {
                 $result['error'] = $GLOBALS['_LANG']['no_goods_in_cart'];
             } else {
-                /* 取得购物流程设置 */
+                // 取得购物流程设置
                 $this->smarty->assign('config', $GLOBALS['_CFG']);
 
-                /* 取得订单信息 */
+                // 取得订单信息
                 $order = flow_order_info();
 
                 $order['shipping_id'] = intval($_REQUEST['shipping']);
                 $regions = [$consignee['country'], $consignee['province'], $consignee['city'], $consignee['district']];
                 $shipping_info = shipping_area_info($order['shipping_id'], $regions);
 
-                /* 计算订单的费用 */
+                // 计算订单的费用
                 $total = order_fee($order, $cart_goods, $consignee);
                 $this->smarty->assign('total', $total);
 
-                /* 取得可以得到的积分和红包 */
+                // 取得可以得到的积分和红包
                 $this->smarty->assign('total_integral', cart_amount(false, $flow_type) - $total['bonus'] - $total['integral_money']);
                 $this->smarty->assign('total_bonus', price_format(get_total_bonus(), false));
 
-                /* 团购标志 */
+                // 团购标志
                 if ($flow_type == CART_GROUP_BUY_GOODS) {
                     $this->smarty->assign('is_group_buy', 1);
                 }
@@ -662,38 +662,38 @@ class FlowController extends Controller
             $json = new Json();
             $result = ['error' => '', 'content' => '', 'need_insure' => 0];
 
-            /* 取得购物类型 */
+            // 取得购物类型
             $flow_type = session('?flow_type') ? session('flow_type') : CART_GENERAL_GOODS;
 
-            /* 获得收货人信息 */
+            // 获得收货人信息
             $consignee = get_consignee(session('user_id'));
 
-            /* 对商品信息赋值 */
+            // 对商品信息赋值
             $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
 
             if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type)) {
                 $result['error'] = $GLOBALS['_LANG']['no_goods_in_cart'];
             } else {
-                /* 取得购物流程设置 */
+                // 取得购物流程设置
                 $this->smarty->assign('config', $GLOBALS['_CFG']);
 
-                /* 取得订单信息 */
+                // 取得订单信息
                 $order = flow_order_info();
 
                 $order['need_insure'] = intval($_REQUEST['insure']);
 
-                /* 保存 session */
+                // 保存 session
                 session('flow_order', $order);
 
-                /* 计算订单的费用 */
+                // 计算订单的费用
                 $total = order_fee($order, $cart_goods, $consignee);
                 $this->smarty->assign('total', $total);
 
-                /* 取得可以得到的积分和红包 */
+                // 取得可以得到的积分和红包
                 $this->smarty->assign('total_integral', cart_amount(false, $flow_type) - $total['bonus'] - $total['integral_money']);
                 $this->smarty->assign('total_bonus', price_format(get_total_bonus(), false));
 
-                /* 团购标志 */
+                // 团购标志
                 if ($flow_type == CART_GROUP_BUY_GOODS) {
                     $this->smarty->assign('is_group_buy', 1);
                 }
@@ -712,40 +712,40 @@ class FlowController extends Controller
             $json = new Json();
             $result = ['error' => '', 'content' => '', 'need_insure' => 0, 'payment' => 1];
 
-            /* 取得购物类型 */
+            // 取得购物类型
             $flow_type = session('?flow_type') ? session('flow_type') : CART_GENERAL_GOODS;
 
-            /* 获得收货人信息 */
+            // 获得收货人信息
             $consignee = get_consignee(session('user_id'));
 
-            /* 对商品信息赋值 */
+            // 对商品信息赋值
             $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
 
             if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type)) {
                 $result['error'] = $GLOBALS['_LANG']['no_goods_in_cart'];
             } else {
-                /* 取得购物流程设置 */
+                // 取得购物流程设置
                 $this->smarty->assign('config', $GLOBALS['_CFG']);
 
-                /* 取得订单信息 */
+                // 取得订单信息
                 $order = flow_order_info();
 
                 $order['pay_id'] = intval($_REQUEST['payment']);
                 $payment_info = payment_info($order['pay_id']);
                 $result['pay_code'] = $payment_info['pay_code'];
 
-                /* 保存 session */
+                // 保存 session
                 session('flow_order', $order);
 
-                /* 计算订单的费用 */
+                // 计算订单的费用
                 $total = order_fee($order, $cart_goods, $consignee);
                 $this->smarty->assign('total', $total);
 
-                /* 取得可以得到的积分和红包 */
+                // 取得可以得到的积分和红包
                 $this->smarty->assign('total_integral', cart_amount(false, $flow_type) - $total['bonus'] - $total['integral_money']);
                 $this->smarty->assign('total_bonus', price_format(get_total_bonus(), false));
 
-                /* 团购标志 */
+                // 团购标志
                 if ($flow_type == CART_GROUP_BUY_GOODS) {
                     $this->smarty->assign('is_group_buy', 1);
                 }
@@ -764,38 +764,38 @@ class FlowController extends Controller
             $json = new Json();
             $result = ['error' => '', 'content' => '', 'need_insure' => 0];
 
-            /* 取得购物类型 */
+            // 取得购物类型
             $flow_type = session('?flow_type') ? session('flow_type') : CART_GENERAL_GOODS;
 
-            /* 获得收货人信息 */
+            // 获得收货人信息
             $consignee = get_consignee(session('user_id'));
 
-            /* 对商品信息赋值 */
+            // 对商品信息赋值
             $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
 
             if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type)) {
                 $result['error'] = $GLOBALS['_LANG']['no_goods_in_cart'];
             } else {
-                /* 取得购物流程设置 */
+                // 取得购物流程设置
                 $this->smarty->assign('config', $GLOBALS['_CFG']);
 
-                /* 取得订单信息 */
+                // 取得订单信息
                 $order = flow_order_info();
 
                 $order['pack_id'] = intval($_REQUEST['pack']);
 
-                /* 保存 session */
+                // 保存 session
                 session('flow_order', $order);
 
-                /* 计算订单的费用 */
+                // 计算订单的费用
                 $total = order_fee($order, $cart_goods, $consignee);
                 $this->smarty->assign('total', $total);
 
-                /* 取得可以得到的积分和红包 */
+                // 取得可以得到的积分和红包
                 $this->smarty->assign('total_integral', cart_amount(false, $flow_type) - $total['bonus'] - $total['integral_money']);
                 $this->smarty->assign('total_bonus', price_format(get_total_bonus(), false));
 
-                /* 团购标志 */
+                // 团购标志
                 if ($flow_type == CART_GROUP_BUY_GOODS) {
                     $this->smarty->assign('is_group_buy', 1);
                 }
@@ -814,38 +814,38 @@ class FlowController extends Controller
             $json = new Json();
             $result = ['error' => '', 'content' => '', 'need_insure' => 0];
 
-            /* 取得购物类型 */
+            // 取得购物类型
             $flow_type = session('?flow_type') ? session('flow_type') : CART_GENERAL_GOODS;
 
-            /* 获得收货人信息 */
+            // 获得收货人信息
             $consignee = get_consignee(session('user_id'));
 
-            /* 对商品信息赋值 */
+            // 对商品信息赋值
             $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
 
             if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type)) {
                 $result['error'] = $GLOBALS['_LANG']['no_goods_in_cart'];
             } else {
-                /* 取得购物流程设置 */
+                // 取得购物流程设置
                 $this->smarty->assign('config', $GLOBALS['_CFG']);
 
-                /* 取得订单信息 */
+                // 取得订单信息
                 $order = flow_order_info();
 
                 $order['card_id'] = intval($_REQUEST['card']);
 
-                /* 保存 session */
+                // 保存 session
                 session('flow_order', $order);
 
-                /* 计算订单的费用 */
+                // 计算订单的费用
                 $total = order_fee($order, $cart_goods, $consignee);
                 $this->smarty->assign('total', $total);
 
-                /* 取得可以得到的积分和红包 */
+                // 取得可以得到的积分和红包
                 $this->smarty->assign('total_integral', cart_amount(false, $flow_type) - $order['bonus'] - $total['integral_money']);
                 $this->smarty->assign('total_bonus', price_format(get_total_bonus(), false));
 
-                /* 团购标志 */
+                // 团购标志
                 if ($flow_type == CART_GROUP_BUY_GOODS) {
                     $this->smarty->assign('is_group_buy', 1);
                 }
@@ -867,30 +867,30 @@ class FlowController extends Controller
             if ($user_info['user_money'] + $user_info['credit_line'] < $surplus) {
                 $result['error'] = $GLOBALS['_LANG']['surplus_not_enough'];
             } else {
-                /* 取得购物类型 */
+                // 取得购物类型
                 $flow_type = session('?flow_type') ? session('flow_type') : CART_GENERAL_GOODS;
 
-                /* 取得购物流程设置 */
+                // 取得购物流程设置
                 $this->smarty->assign('config', $GLOBALS['_CFG']);
 
-                /* 获得收货人信息 */
+                // 获得收货人信息
                 $consignee = get_consignee(session('user_id'));
 
-                /* 对商品信息赋值 */
+                // 对商品信息赋值
                 $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
 
                 if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type)) {
                     $result['error'] = $GLOBALS['_LANG']['no_goods_in_cart'];
                 } else {
-                    /* 取得订单信息 */
+                    // 取得订单信息
                     $order = flow_order_info();
                     $order['surplus'] = $surplus;
 
-                    /* 计算订单的费用 */
+                    // 计算订单的费用
                     $total = order_fee($order, $cart_goods, $consignee);
                     $this->smarty->assign('total', $total);
 
-                    /* 团购标志 */
+                    // 团购标志
                     if ($flow_type == CART_GROUP_BUY_GOODS) {
                         $this->smarty->assign('is_group_buy', 1);
                     }
@@ -910,7 +910,7 @@ class FlowController extends Controller
             $points = floatval($_GET['points']);
             $user_info = user_info(session('user_id'));
 
-            /* 取得订单信息 */
+            // 取得订单信息
             $order = flow_order_info();
 
             $flow_points = $this->flow_available_points();  // 该订单允许使用的积分
@@ -921,26 +921,26 @@ class FlowController extends Controller
             } elseif ($points > $flow_points) {
                 $result['error'] = sprintf($GLOBALS['_LANG']['integral_too_much'], $flow_points);
             } else {
-                /* 取得购物类型 */
+                // 取得购物类型
                 $flow_type = session('?flow_type') ? session('flow_type') : CART_GENERAL_GOODS;
 
                 $order['integral'] = $points;
 
-                /* 获得收货人信息 */
+                // 获得收货人信息
                 $consignee = get_consignee(session('user_id'));
 
-                /* 对商品信息赋值 */
+                // 对商品信息赋值
                 $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
 
                 if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type)) {
                     $result['error'] = $GLOBALS['_LANG']['no_goods_in_cart'];
                 } else {
-                    /* 计算订单的费用 */
+                    // 计算订单的费用
                     $total = order_fee($order, $cart_goods, $consignee);
                     $this->smarty->assign('total', $total);
                     $this->smarty->assign('config', $GLOBALS['_CFG']);
 
-                    /* 团购标志 */
+                    // 团购标志
                     if ($flow_type == CART_GROUP_BUY_GOODS) {
                         $this->smarty->assign('is_group_buy', 1);
                     }
@@ -960,22 +960,22 @@ class FlowController extends Controller
             /*------------------------------------------------------ */
             $result = ['error' => '', 'content' => ''];
 
-            /* 取得购物类型 */
+            // 取得购物类型
             $flow_type = session('?flow_type') ? session('flow_type') : CART_GENERAL_GOODS;
 
-            /* 获得收货人信息 */
+            // 获得收货人信息
             $consignee = get_consignee(session('user_id'));
 
-            /* 对商品信息赋值 */
+            // 对商品信息赋值
             $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
 
             if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type)) {
                 $result['error'] = $GLOBALS['_LANG']['no_goods_in_cart'];
             } else {
-                /* 取得购物流程设置 */
+                // 取得购物流程设置
                 $this->smarty->assign('config', $GLOBALS['_CFG']);
 
-                /* 取得订单信息 */
+                // 取得订单信息
                 $order = flow_order_info();
 
                 $bonus = bonus_info(intval($_GET['bonus']));
@@ -987,11 +987,11 @@ class FlowController extends Controller
                     $result['error'] = $GLOBALS['_LANG']['invalid_bonus'];
                 }
 
-                /* 计算订单的费用 */
+                // 计算订单的费用
                 $total = order_fee($order, $cart_goods, $consignee);
                 $this->smarty->assign('total', $total);
 
-                /* 团购标志 */
+                // 团购标志
                 if ($flow_type == CART_GROUP_BUY_GOODS) {
                     $this->smarty->assign('is_group_buy', 1);
                 }
@@ -1013,23 +1013,23 @@ class FlowController extends Controller
             $_GET['invPayee'] = !empty($_GET['invPayee']) ? json_str_iconv(urldecode($_GET['invPayee'])) : '';
             $_GET['inv_content'] = !empty($_GET['inv_content']) ? json_str_iconv(urldecode($_GET['inv_content'])) : '';
 
-            /* 取得购物类型 */
+            // 取得购物类型
             $flow_type = session('?flow_type') ? session('flow_type') : CART_GENERAL_GOODS;
 
-            /* 获得收货人信息 */
+            // 获得收货人信息
             $consignee = get_consignee(session('user_id'));
 
-            /* 对商品信息赋值 */
+            // 对商品信息赋值
             $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
 
             if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type)) {
                 $result['error'] = $GLOBALS['_LANG']['no_goods_in_cart'];
                 die($json->encode($result));
             } else {
-                /* 取得购物流程设置 */
+                // 取得购物流程设置
                 $this->smarty->assign('config', $GLOBALS['_CFG']);
 
-                /* 取得订单信息 */
+                // 取得订单信息
                 $order = flow_order_info();
 
                 if (isset($_GET['need_inv']) && intval($_GET['need_inv']) == 1) {
@@ -1044,11 +1044,11 @@ class FlowController extends Controller
                     $order['inv_content'] = '';
                 }
 
-                /* 计算订单的费用 */
+                // 计算订单的费用
                 $total = order_fee($order, $cart_goods, $consignee);
                 $this->smarty->assign('total', $total);
 
-                /* 团购标志 */
+                // 团购标志
                 if ($flow_type == CART_GROUP_BUY_GOODS) {
                     $this->smarty->assign('is_group_buy', 1);
                 }
@@ -1062,12 +1062,12 @@ class FlowController extends Controller
             //-- 改变缺货处理时的方式
             /*------------------------------------------------------ */
 
-            /* 取得订单信息 */
+            // 取得订单信息
             $order = flow_order_info();
 
             $order['how_oos'] = intval($_GET['oos']);
 
-            /* 保存 session */
+            // 保存 session
             session('flow_order', $order);
         }
 
@@ -1110,10 +1110,10 @@ class FlowController extends Controller
         if ($_REQUEST['step'] == 'done') {
             load_helper(['clips', 'payment']);
 
-            /* 取得购物类型 */
+            // 取得购物类型
             $flow_type = session('?flow_type') ? session('flow_type') : CART_GENERAL_GOODS;
 
-            /* 检查购物车中是否有商品 */
+            // 检查购物车中是否有商品
             $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('cart') .
                 " WHERE session_id = '" . SESS_ID . "' " .
                 "AND parent_id = 0 AND is_gift = 0 AND rec_type = '$flow_type'";
@@ -1121,8 +1121,8 @@ class FlowController extends Controller
                 return show_message($GLOBALS['_LANG']['no_goods_in_cart'], '', '', 'warning');
             }
 
-            /* 检查商品库存 */
-            /* 如果使用库存，且下订单时减库存，则减少库存 */
+            // 检查商品库存
+            // 如果使用库存，且下订单时减库存，则减少库存
             if ($GLOBALS['_CFG']['use_storage'] == '1' && $GLOBALS['_CFG']['stock_dec_time'] == SDT_PLACE) {
                 $cart_goods_stock = get_cart_goods();
                 $_cart_goods_stock = [];
@@ -1139,15 +1139,15 @@ class FlowController extends Controller
              * 如果没有登录则跳转到登录和注册页面
              */
             if (empty(session('direct_shopping')) && session('user_id') == 0) {
-                /* 用户没有登录且没有选定匿名购物，转向到登录页面 */
+                // 用户没有登录且没有选定匿名购物，转向到登录页面
                 return $this->redirect("/flow.php?step=login");
             }
 
             $consignee = get_consignee(session('user_id'));
 
-            /* 检查收货人信息是否完整 */
+            // 检查收货人信息是否完整
             if (!check_consignee_info($consignee, $flow_type)) {
-                /* 如果不完整则转向到收货人信息填写界面 */
+                // 如果不完整则转向到收货人信息填写界面
                 return $this->redirect("/flow.php?step=consignee");
             }
 
@@ -1182,7 +1182,7 @@ class FlowController extends Controller
                 'agency_id' => get_agency_by_regions([$consignee['country'], $consignee['province'], $consignee['city'], $consignee['district']])
             ];
 
-            /* 扩展信息 */
+            // 扩展信息
             if (session('?flow_type') && intval(session('flow_type')) != CART_GENERAL_GOODS) {
                 $order['extension_code'] = session('extension_code');
                 $order['extension_id'] = session('extension_id');
@@ -1191,7 +1191,7 @@ class FlowController extends Controller
                 $order['extension_id'] = 0;
             }
 
-            /* 检查积分余额是否合法 */
+            // 检查积分余额是否合法
             $user_id = session('user_id');
             if ($user_id > 0) {
                 $user_info = user_info($user_id);
@@ -1214,7 +1214,7 @@ class FlowController extends Controller
                 $order['integral'] = 0;
             }
 
-            /* 检查红包是否存在 */
+            // 检查红包是否存在
             if ($order['bonus_id'] > 0) {
                 $bonus = bonus_info($order['bonus_id']);
 
@@ -1236,26 +1236,26 @@ class FlowController extends Controller
                 }
             }
 
-            /* 订单中的商品 */
+            // 订单中的商品
             $cart_goods = cart_goods($flow_type);
 
             if (empty($cart_goods)) {
                 return show_message($GLOBALS['_LANG']['no_goods_in_cart'], $GLOBALS['_LANG']['back_home'], './', 'warning');
             }
 
-            /* 检查商品总额是否达到最低限购金额 */
+            // 检查商品总额是否达到最低限购金额
             if ($flow_type == CART_GENERAL_GOODS && cart_amount(true, CART_GENERAL_GOODS) < $GLOBALS['_CFG']['min_goods_amount']) {
                 return show_message(sprintf($GLOBALS['_LANG']['goods_amount_not_enough'], price_format($GLOBALS['_CFG']['min_goods_amount'], false)));
             }
 
-            /* 收货人信息 */
+            // 收货人信息
             foreach ($consignee as $key => $value) {
                 $order[$key] = addslashes($value);
             }
 
-            /* 判断是不是实体商品 */
+            // 判断是不是实体商品
             foreach ($cart_goods as $val) {
-                /* 统计实体商品的个数 */
+                // 统计实体商品的个数
                 if ($val['is_real']) {
                     $is_real_good = 1;
                 }
@@ -1266,7 +1266,7 @@ class FlowController extends Controller
                     return show_message($GLOBALS['_LANG']['flow_no_shipping']);
                 }
             }
-            /* 订单中的总额 */
+            // 订单中的总额
             $total = order_fee($order, $cart_goods, $consignee);
             $order['bonus'] = $total['bonus'];
             $order['goods_amount'] = $total['goods_price'];
@@ -1282,7 +1282,7 @@ class FlowController extends Controller
                 $order['bonus_id'] = 0;
             }
 
-            /* 配送方式 */
+            // 配送方式
             if ($order['shipping_id'] > 0) {
                 $shipping = shipping_info($order['shipping_id']);
                 $order['shipping_name'] = addslashes($shipping['shipping_name']);
@@ -1290,7 +1290,7 @@ class FlowController extends Controller
             $order['shipping_fee'] = $total['shipping_fee'];
             $order['insure_fee'] = $total['shipping_insure'];
 
-            /* 支付方式 */
+            // 支付方式
             if ($order['pay_id'] > 0) {
                 $payment = payment_info($order['pay_id']);
                 $order['pay_name'] = addslashes($payment['pay_name']);
@@ -1298,14 +1298,14 @@ class FlowController extends Controller
             $order['pay_fee'] = $total['pay_fee'];
             $order['cod_fee'] = $total['cod_fee'];
 
-            /* 商品包装 */
+            // 商品包装
             if ($order['pack_id'] > 0) {
                 $pack = pack_info($order['pack_id']);
                 $order['pack_name'] = addslashes($pack['pack_name']);
             }
             $order['pack_fee'] = $total['pack_fee'];
 
-            /* 祝福贺卡 */
+            // 祝福贺卡
             if ($order['card_id'] > 0) {
                 $card = card_info($order['card_id']);
                 $order['card_name'] = addslashes($card['card_name']);
@@ -1314,7 +1314,7 @@ class FlowController extends Controller
 
             $order['order_amount'] = number_format($total['amount'], 2, '.', '');
 
-            /* 如果全部使用余额支付，检查余额是否足够 */
+            // 如果全部使用余额支付，检查余额是否足够
             if ($payment['pay_code'] == 'balance' && $order['order_amount'] > 0) {
                 if ($order['surplus'] > 0) { //余额支付里如果输入了一个金额
                     $order['order_amount'] = $order['order_amount'] + $order['surplus'];
@@ -1328,7 +1328,7 @@ class FlowController extends Controller
                 }
             }
 
-            /* 如果订单金额为0（使用余额或积分或红包支付），修改订单状态为已确认、已付款 */
+            // 如果订单金额为0（使用余额或积分或红包支付），修改订单状态为已确认、已付款
             if ($order['order_amount'] <= 0) {
                 $order['order_status'] = OS_CONFIRMED;
                 $order['confirm_time'] = gmtime();
@@ -1348,7 +1348,7 @@ class FlowController extends Controller
             $order['from_ad'] = session('?from_ad') ? session('from_ad') : '0';
             $order['referer'] = addslashes(session('referer', ''));
 
-            /* 记录扩展信息 */
+            // 记录扩展信息
             if ($flow_type != CART_GENERAL_GOODS) {
                 $order['extension_code'] = session('extension_code');
                 $order['extension_id'] = session('extension_id');
@@ -1370,7 +1370,7 @@ class FlowController extends Controller
             }
             $order['parent_id'] = $parent_id;
 
-            /* 插入订单表 */
+            // 插入订单表
             $error_no = 0;
             do {
                 $order['order_sn'] = get_order_sn(); //获取新订单号
@@ -1386,7 +1386,7 @@ class FlowController extends Controller
             $new_order_id = $this->db->insert_id();
             $order['order_id'] = $new_order_id;
 
-            /* 插入订单商品 */
+            // 插入订单商品
             $sql = "INSERT INTO " . $this->ecs->table('order_goods') . "( " .
                 "order_id, goods_id, goods_name, goods_sn, product_id, goods_number, market_price, " .
                 "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id) " .
@@ -1395,13 +1395,13 @@ class FlowController extends Controller
                 " FROM " . $this->ecs->table('cart') .
                 " WHERE session_id = '" . SESS_ID . "' AND rec_type = '$flow_type'";
             $this->db->query($sql);
-            /* 修改拍卖活动状态 */
+            // 修改拍卖活动状态
             if ($order['extension_code'] == 'auction') {
                 $sql = "UPDATE " . $this->ecs->table('goods_activity') . " SET is_finished='2' WHERE act_id=" . $order['extension_id'];
                 $this->db->query($sql);
             }
 
-            /* 处理余额、积分、红包 */
+            // 处理余额、积分、红包
             if ($order['user_id'] > 0 && $order['surplus'] > 0) {
                 log_account_change($order['user_id'], $order['surplus'] * (-1), 0, 0, 0, sprintf($GLOBALS['_LANG']['pay_order'], $order['order_sn']));
             }
@@ -1414,13 +1414,13 @@ class FlowController extends Controller
                 use_bonus($order['bonus_id'], $new_order_id);
             }
 
-            /* 如果使用库存，且下订单时减库存，则减少库存 */
+            // 如果使用库存，且下订单时减库存，则减少库存
             if ($GLOBALS['_CFG']['use_storage'] == '1' && $GLOBALS['_CFG']['stock_dec_time'] == SDT_PLACE) {
                 change_order_goods_storage($order['order_id'], true, SDT_PLACE);
             }
 
-            /* 给商家发邮件 */
-            /* 增加是否给客服发送邮件选项 */
+            // 给商家发邮件
+            // 增加是否给客服发送邮件选项
             if ($GLOBALS['_CFG']['send_service_email'] && $GLOBALS['_CFG']['service_email'] != '') {
                 $tpl = get_mail_template('remind_of_new_order');
                 $this->smarty->assign('order', $order);
@@ -1431,7 +1431,7 @@ class FlowController extends Controller
                 send_mail($GLOBALS['_CFG']['shop_name'], $GLOBALS['_CFG']['service_email'], $tpl['template_subject'], $content, $tpl['is_html']);
             }
 
-            /* 如果需要，发短信 */
+            // 如果需要，发短信
             if ($GLOBALS['_CFG']['sms_order_placed'] == '1' && $GLOBALS['_CFG']['sms_shop_mobile'] != '') {
                 $sms = new Sms();
                 $msg = $order['pay_status'] == PS_UNPAYED ?
@@ -1439,7 +1439,7 @@ class FlowController extends Controller
                 $sms->send($GLOBALS['_CFG']['sms_shop_mobile'], sprintf($msg, $order['consignee'], $order['tel']), '', 13, 1);
             }
 
-            /* 如果订单金额为0 处理虚拟卡 */
+            // 如果订单金额为0 处理虚拟卡
             if ($order['order_amount'] <= 0) {
                 $sql = "SELECT goods_id, goods_name, goods_number AS num FROM " .
                     $GLOBALS['ecs']->table('cart') .
@@ -1454,27 +1454,27 @@ class FlowController extends Controller
                 }
 
                 if ($virtual_goods and $flow_type != CART_GROUP_BUY_GOODS) {
-                    /* 虚拟卡发货 */
+                    // 虚拟卡发货
                     if (virtual_goods_ship($virtual_goods, $msg, $order['order_sn'], true)) {
-                        /* 如果没有实体商品，修改发货状态，送积分和红包 */
+                        // 如果没有实体商品，修改发货状态，送积分和红包
                         $sql = "SELECT COUNT(*)" .
                             " FROM " . $this->ecs->table('order_goods') .
                             " WHERE order_id = '$order[order_id]' " .
                             " AND is_real = 1";
                         if ($this->db->getOne($sql) <= 0) {
-                            /* 修改订单状态 */
+                            // 修改订单状态
                             update_order($order['order_id'], ['shipping_status' => SS_SHIPPED, 'shipping_time' => gmtime()]);
 
-                            /* 如果订单用户不为空，计算积分，并发给用户；发红包 */
+                            // 如果订单用户不为空，计算积分，并发给用户；发红包
                             if ($order['user_id'] > 0) {
-                                /* 取得用户信息 */
+                                // 取得用户信息
                                 $user = user_info($order['user_id']);
 
-                                /* 计算并发放积分 */
+                                // 计算并发放积分
                                 $integral = integral_to_give($order);
                                 log_account_change($order['user_id'], 0, 0, intval($integral['rank_points']), intval($integral['custom_points']), sprintf($GLOBALS['_LANG']['order_gift_integral'], $order['order_sn']));
 
-                                /* 发放红包 */
+                                // 发放红包
                                 send_order_bonus($order['order_id']);
                             }
                         }
@@ -1482,15 +1482,15 @@ class FlowController extends Controller
                 }
             }
 
-            /* 清空购物车 */
+            // 清空购物车
             clear_cart($flow_type);
-            /* 清除缓存，否则买了商品，但是前台页面读取缓存，商品数量不减少 */
+            // 清除缓存，否则买了商品，但是前台页面读取缓存，商品数量不减少
             clear_all_files();
 
-            /* 插入支付日志 */
+            // 插入支付日志
             $order['log_id'] = insert_pay_log($new_order_id, $order['order_amount'], PAY_ORDER);
 
-            /* 取得支付信息，生成支付代码 */
+            // 取得支付信息，生成支付代码
             if ($order['order_amount'] > 0) {
                 $payment = payment_info($order['pay_id']);
 
@@ -1508,7 +1508,7 @@ class FlowController extends Controller
                 $order['shipping_name'] = trim(stripcslashes($order['shipping_name']));
             }
 
-            /* 订单信息 */
+            // 订单信息
             $this->smarty->assign('order', $order);
             $this->smarty->assign('total', $total);
             $this->smarty->assign('goods_list', $cart_goods);
@@ -1541,35 +1541,35 @@ class FlowController extends Controller
             $this->flow_drop_cart_goods($rec_id);
 
             return $this->redirect("/flow.php");
-        } /* 把优惠活动加入购物车 */
+        } // 把优惠活动加入购物车
 
         if ($_REQUEST['step'] == 'add_favourable') {
-            /* 取得优惠活动信息 */
+            // 取得优惠活动信息
             $act_id = intval($_POST['act_id']);
             $favourable = favourable_info($act_id);
             if (empty($favourable)) {
                 return show_message($GLOBALS['_LANG']['favourable_not_exist']);
             }
 
-            /* 判断用户能否享受该优惠 */
+            // 判断用户能否享受该优惠
             if (!$this->favourable_available($favourable)) {
                 return show_message($GLOBALS['_LANG']['favourable_not_available']);
             }
 
-            /* 检查购物车中是否已有该优惠 */
+            // 检查购物车中是否已有该优惠
             $cart_favourable = $this->cart_favourable();
             if ($this->favourable_used($favourable, $cart_favourable)) {
                 return show_message($GLOBALS['_LANG']['favourable_used']);
             }
 
-            /* 赠品（特惠品）优惠 */
+            // 赠品（特惠品）优惠
             if ($favourable['act_type'] == FAT_GOODS) {
-                /* 检查是否选择了赠品 */
+                // 检查是否选择了赠品
                 if (empty($_POST['gift'])) {
                     return show_message($GLOBALS['_LANG']['pls_select_gift']);
                 }
 
-                /* 检查是否已在购物车 */
+                // 检查是否已在购物车
                 $sql = "SELECT goods_name" .
                     " FROM " . $this->ecs->table('cart') .
                     " WHERE session_id = '" . SESS_ID . "'" .
@@ -1581,13 +1581,13 @@ class FlowController extends Controller
                     return show_message(sprintf($GLOBALS['_LANG']['gift_in_cart'], join(',', $gift_name)));
                 }
 
-                /* 检查数量是否超过上限 */
+                // 检查数量是否超过上限
                 $count = isset($cart_favourable[$act_id]) ? $cart_favourable[$act_id] : 0;
                 if ($favourable['act_type_ext'] > 0 && $count + count($_POST['gift']) > $favourable['act_type_ext']) {
                     return show_message($GLOBALS['_LANG']['gift_count_exceed']);
                 }
 
-                /* 添加赠品到购物车 */
+                // 添加赠品到购物车
                 foreach ($favourable['gift'] as $gift) {
                     if (in_array($gift['id'], $_POST['gift'])) {
                         $this->add_gift_to_cart($act_id, $gift['id'], $gift['price']);
@@ -1599,7 +1599,7 @@ class FlowController extends Controller
                 $this->add_favourable_to_cart($act_id, $favourable['act_name'], $favourable['act_type_ext']);
             }
 
-            /* 刷新购物车 */
+            // 刷新购物车
             return $this->redirect("/flow.php");
         }
 
@@ -1624,7 +1624,7 @@ class FlowController extends Controller
                 $this->flow_drop_cart_goods($rec_id);
             }
             return $this->redirect("/flow.php");
-        } /* 验证红包序列号 */
+        } // 验证红包序列号
 
         if ($_REQUEST['step'] == 'validate_bonus') {
             $bonus_sn = trim($_REQUEST['bonus_sn']);
@@ -1647,22 +1647,22 @@ class FlowController extends Controller
 
             $result = ['error' => '', 'content' => ''];
 
-            /* 取得购物类型 */
+            // 取得购物类型
             $flow_type = session('?flow_type') ? session('flow_type') : CART_GENERAL_GOODS;
 
-            /* 获得收货人信息 */
+            // 获得收货人信息
             $consignee = get_consignee(session('user_id'));
 
-            /* 对商品信息赋值 */
+            // 对商品信息赋值
             $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
 
             if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type)) {
                 $result['error'] = $GLOBALS['_LANG']['no_goods_in_cart'];
             } else {
-                /* 取得购物流程设置 */
+                // 取得购物流程设置
                 $this->smarty->assign('config', $GLOBALS['_CFG']);
 
-                /* 取得订单信息 */
+                // 取得订单信息
                 $order = flow_order_info();
 
 
@@ -1682,19 +1682,19 @@ class FlowController extends Controller
                     $result['error'] = $GLOBALS['_LANG']['invalid_bonus'];
                 }
 
-                /* 计算订单的费用 */
+                // 计算订单的费用
                 $total = order_fee($order, $cart_goods, $consignee);
 
                 if ($total['goods_price'] < $bonus['min_goods_amount']) {
                     $order['bonus_id'] = '';
-                    /* 重新计算订单 */
+                    // 重新计算订单
                     $total = order_fee($order, $cart_goods, $consignee);
                     $result['error'] = sprintf($GLOBALS['_LANG']['bonus_min_amount_error'], price_format($bonus['min_goods_amount'], false));
                 }
 
                 $this->smarty->assign('total', $total);
 
-                /* 团购标志 */
+                // 团购标志
                 if ($flow_type == CART_GROUP_BUY_GOODS) {
                     $this->smarty->assign('is_group_buy', 1);
                 }
@@ -1720,17 +1720,17 @@ class FlowController extends Controller
 
             $package = $json->decode($_POST['package_info']);
 
-            /* 如果是一步购物，先清空购物车 */
+            // 如果是一步购物，先清空购物车
             if ($GLOBALS['_CFG']['one_step_buy'] == '1') {
                 clear_cart();
             }
 
-            /* 商品数量是否合法 */
+            // 商品数量是否合法
             if (!is_numeric($package->number) || intval($package->number) <= 0) {
                 $result['error'] = 1;
                 $result['message'] = $GLOBALS['_LANG']['invalid_number'];
             } else {
-                /* 添加到购物车 */
+                // 添加到购物车
                 if (add_package_to_cart($package->package_id, $package->number)) {
                     if ($GLOBALS['_CFG']['cart_confirm'] > 2) {
                         $result['message'] = '';
@@ -1751,15 +1751,15 @@ class FlowController extends Controller
         }
 
         if ($_REQUEST['step'] == 'cart') {
-            /* 标记购物流程为普通商品 */
+            // 标记购物流程为普通商品
             session('flow_type', CART_GENERAL_GOODS);
 
-            /* 如果是一步购物，跳到结算中心 */
+            // 如果是一步购物，跳到结算中心
             if ($GLOBALS['_CFG']['one_step_buy'] == '1') {
                 return $this->redirect("/flow.php?step=checkout");
             }
 
-            /* 取得商品列表，计算合计 */
+            // 取得商品列表，计算合计
             $cart_goods = get_cart_goods();
             $this->smarty->assign('goods_list', $cart_goods['goods_list']);
             $this->smarty->assign('total', $cart_goods['total']);
@@ -1776,25 +1776,25 @@ class FlowController extends Controller
                 $this->smarty->assign('collection_goods', $collection_goods);
             }
 
-            /* 取得优惠活动 */
+            // 取得优惠活动
             $favourable_list = $this->favourable_list(session('user_rank'));
             usort($favourable_list, [$this, 'cmp_favourable']);
 
             $this->smarty->assign('favourable_list', $favourable_list);
 
-            /* 计算折扣 */
+            // 计算折扣
             $discount = compute_discount();
             $this->smarty->assign('discount', $discount['discount']);
             $favour_name = empty($discount['name']) ? '' : join(',', $discount['name']);
             $this->smarty->assign('your_discount', sprintf($GLOBALS['_LANG']['your_discount'], $favour_name, price_format($discount['discount'])));
 
-            /* 增加是否在购物车里显示商品图 */
+            // 增加是否在购物车里显示商品图
             $this->smarty->assign('show_goods_thumb', $GLOBALS['_CFG']['show_goods_in_cart']);
 
-            /* 增加是否在购物车里显示商品属性 */
+            // 增加是否在购物车里显示商品属性
             $this->smarty->assign('show_goods_attribute', $GLOBALS['_CFG']['show_attr_in_cart']);
 
-            /* 购物车中商品配件列表 */
+            // 购物车中商品配件列表
             //取得购物车中基本件ID
             $sql = "SELECT goods_id " .
                 "FROM " . $GLOBALS['ecs']->table('cart') .
@@ -1845,7 +1845,7 @@ class FlowController extends Controller
      */
     private function flow_update_cart($arr)
     {
-        /* 处理 */
+        // 处理
         foreach ($arr as $key => $val) {
             $val = intval(make_semiangle($val));
             if ($val <= 0 || !is_numeric($key)) {
@@ -1869,7 +1869,7 @@ class FlowController extends Controller
                     return show_message(sprintf($GLOBALS['_LANG']['stock_insufficiency'], $row['goods_name'],
                         $row['goods_number'], $row['goods_number']));
                 }
-                /* 是货品 */
+                // 是货品
                 $goods['product_id'] = trim($goods['product_id']);
                 if (!empty($goods['product_id'])) {
                     $sql = "SELECT product_number FROM " . $GLOBALS['ecs']->table('products') . " WHERE goods_id = '" . $goods['goods_id'] . "' AND product_id = '" . $goods['product_id'] . "'";
@@ -1886,8 +1886,8 @@ class FlowController extends Controller
                 }
             }
 
-            /* 查询：检查该项是否为基本件 以及是否存在配件 */
-            /* 此处配件是指添加商品时附加的并且是设置了优惠价格的配件 此类配件都有parent_id goods_number为1 */
+            // 查询：检查该项是否为基本件 以及是否存在配件
+            // 此处配件是指添加商品时附加的并且是设置了优惠价格的配件 此类配件都有parent_id goods_number为1
             $sql = "SELECT b.goods_number, b.rec_id
                 FROM " . $GLOBALS['ecs']->table('cart') . " a, " . $GLOBALS['ecs']->table('cart') . " b
                 WHERE a.rec_id = '$key'
@@ -1900,7 +1900,7 @@ class FlowController extends Controller
 
             //订货数量大于0
             if ($val > 0) {
-                /* 判断是否为超出数量的优惠价格的配件 删除*/
+                // 判断是否为超出数量的优惠价格的配件 删除
                 $row_num = 1;
                 foreach ($offers_accessories_res as $offers_accessories_row) {
                     if ($row_num > $val) {
@@ -1913,12 +1913,12 @@ class FlowController extends Controller
                     $row_num++;
                 }
 
-                /* 处理超值礼包 */
+                // 处理超值礼包
                 if ($goods['extension_code'] == 'package_buy') {
                     //更新购物车中的商品数量
                     $sql = "UPDATE " . $GLOBALS['ecs']->table('cart') .
                         " SET goods_number = '$val' WHERE rec_id='$key' AND session_id='" . SESS_ID . "'";
-                } /* 处理普通商品或非优惠的配件 */
+                } // 处理普通商品或非优惠的配件
                 else {
                     $attr_id = empty($goods['goods_attr_id']) ? [] : explode(',', $goods['goods_attr_id']);
                     $goods_price = get_final_price($goods['goods_id'], $val, true, $attr_id);
@@ -1929,7 +1929,7 @@ class FlowController extends Controller
                 }
             } //订货数量等于0
             else {
-                /* 如果是基本件并且有优惠价格的配件则删除优惠价格的配件 */
+                // 如果是基本件并且有优惠价格的配件则删除优惠价格的配件
                 foreach ($offers_accessories_res as $offers_accessories_row) {
                     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('cart') .
                         " WHERE session_id = '" . SESS_ID . "' " .
@@ -1944,7 +1944,7 @@ class FlowController extends Controller
             $GLOBALS['db']->query($sql);
         }
 
-        /* 删除所有赠品 */
+        // 删除所有赠品
         $sql = "DELETE FROM " . $GLOBALS['ecs']->table('cart') . " WHERE session_id = '" . SESS_ID . "' AND is_gift <> 0";
         $GLOBALS['db']->query($sql);
     }
@@ -1982,7 +1982,7 @@ class FlowController extends Controller
                         $row['goods_number'], $row['goods_number']));
                 }
 
-                /* 是货品 */
+                // 是货品
                 $row['product_id'] = trim($row['product_id']);
                 if (!empty($row['product_id'])) {
                     $sql = "SELECT product_number FROM " . $GLOBALS['ecs']->table('products') . " WHERE goods_id = '" . $goods['goods_id'] . "' AND product_id = '" . $row['product_id'] . "'";
@@ -2009,7 +2009,7 @@ class FlowController extends Controller
      */
     private function flow_drop_cart_goods($id)
     {
-        /* 取得商品id */
+        // 取得商品id
         $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('cart') . " WHERE rec_id = '$id'";
         $row = $GLOBALS['db']->getRow($sql);
         if ($row) {
@@ -2020,7 +2020,7 @@ class FlowController extends Controller
                     "AND rec_id = '$id' LIMIT 1";
             } //如果是普通商品，同时删除所有赠品及其配件
             elseif ($row['parent_id'] == 0 && $row['is_gift'] == 0) {
-                /* 检查购物车中该普通商品的不可单独销售的配件并删除 */
+                // 检查购物车中该普通商品的不可单独销售的配件并删除
                 $sql = "SELECT c.rec_id
                     FROM " . $GLOBALS['ecs']->table('cart') . " AS c, " . $GLOBALS['ecs']->table('group_goods') . " AS gg, " . $GLOBALS['ecs']->table('goods') . " AS g
                     WHERE gg.parent_id = '" . $row['goods_id'] . "'
@@ -2060,7 +2060,7 @@ class FlowController extends Controller
      */
     private function flow_clear_cart_alone()
     {
-        /* 查询：购物车中所有不可以单独销售的配件 */
+        // 查询：购物车中所有不可以单独销售的配件
         $sql = "SELECT c.rec_id, gg.parent_id
             FROM " . $GLOBALS['ecs']->table('cart') . " AS c
                 LEFT JOIN " . $GLOBALS['ecs']->table('group_goods') . " AS gg ON c.goods_id = gg.goods_id
@@ -2079,7 +2079,7 @@ class FlowController extends Controller
             return;
         }
 
-        /* 查询：购物车中所有商品 */
+        // 查询：购物车中所有商品
         $sql = "SELECT DISTINCT goods_id
             FROM " . $GLOBALS['ecs']->table('cart') . "
             WHERE session_id = '" . SESS_ID . "'
@@ -2094,7 +2094,7 @@ class FlowController extends Controller
             return;
         }
 
-        /* 如果购物车中不可以单独销售配件的基本件不存在则删除该配件 */
+        // 如果购物车中不可以单独销售配件的基本件不存在则删除该配件
         $del_rec_id = '';
         foreach ($rec_id as $key => $value) {
             foreach ($value as $v) {
@@ -2111,7 +2111,7 @@ class FlowController extends Controller
             return;
         }
 
-        /* 删除 */
+        // 删除
         $sql = "DELETE FROM " . $GLOBALS['ecs']->table('cart') . "
             WHERE session_id = '" . SESS_ID . "'
             AND rec_id IN ($del_rec_id)";
@@ -2144,10 +2144,10 @@ class FlowController extends Controller
      */
     private function favourable_list($user_rank)
     {
-        /* 购物车中已有的优惠活动及数量 */
+        // 购物车中已有的优惠活动及数量
         $used_list = $this->cart_favourable();
 
-        /* 当前用户可享受的优惠活动 */
+        // 当前用户可享受的优惠活动
         $favourable_list = [];
         $user_rank = ',' . $user_rank . ',';
         $now = gmtime();
@@ -2177,10 +2177,10 @@ class FlowController extends Controller
             $favourable['act_range_desc'] = $this->act_range_desc($favourable);
             $favourable['act_type_desc'] = sprintf($GLOBALS['_LANG']['fat_ext'][$favourable['act_type']], $favourable['act_type_ext']);
 
-            /* 是否能享受 */
+            // 是否能享受
             $favourable['available'] = $this->favourable_available($favourable);
             if ($favourable['available']) {
-                /* 是否尚未享受 */
+                // 是否尚未享受
                 $favourable['available'] = !$this->favourable_used($favourable, $used_list);
             }
 
@@ -2197,16 +2197,16 @@ class FlowController extends Controller
      */
     private function favourable_available($favourable)
     {
-        /* 会员等级是否符合 */
+        // 会员等级是否符合
         $user_rank = session('user_rank');
         if (strpos(',' . $favourable['user_rank'] . ',', ',' . $user_rank . ',') === false) {
             return false;
         }
 
-        /* 优惠范围内的商品总额 */
+        // 优惠范围内的商品总额
         $amount = $this->cart_favourable_amount($favourable);
 
-        /* 金额上限为0表示没有上限 */
+        // 金额上限为0表示没有上限
         return $amount >= $favourable['min_amount'] &&
             ($amount <= $favourable['max_amount'] || $favourable['max_amount'] == 0);
     }
@@ -2313,7 +2313,7 @@ class FlowController extends Controller
      */
     private function cart_favourable_amount($favourable)
     {
-        /* 查询优惠范围内商品总额的sql */
+        // 查询优惠范围内商品总额的sql
         $sql = "SELECT SUM(c.goods_price * c.goods_number) " .
             "FROM " . $GLOBALS['ecs']->table('cart') . " AS c, " . $GLOBALS['ecs']->table('goods') . " AS g " .
             "WHERE c.goods_id = g.goods_id " .
@@ -2322,11 +2322,11 @@ class FlowController extends Controller
             "AND c.is_gift = 0 " .
             "AND c.goods_id > 0 ";
 
-        /* 根据优惠范围修正sql */
+        // 根据优惠范围修正sql
         if ($favourable['act_range'] == FAR_ALL) {
             // sql do not change
         } elseif ($favourable['act_range'] == FAR_CATEGORY) {
-            /* 取得优惠范围分类的所有下级分类 */
+            // 取得优惠范围分类的所有下级分类
             $id_list = [];
             $cat_list = explode(',', $favourable['act_range_ext']);
             foreach ($cat_list as $id) {
@@ -2344,7 +2344,7 @@ class FlowController extends Controller
             $sql .= "AND g.goods_id " . db_create_in($id_list);
         }
 
-        /* 优惠范围内的商品总额 */
+        // 优惠范围内的商品总额
         return $GLOBALS['db']->getOne($sql);
     }
 }

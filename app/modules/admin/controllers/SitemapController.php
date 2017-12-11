@@ -14,7 +14,7 @@ class SitemapController extends Controller
 {
     public function actionIndex()
     {
-        /* 检查权限 */
+        // 检查权限 
         admin_priv('sitemap');
 
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {

@@ -56,7 +56,7 @@ class Member extends Foundation
     const GENDER_MALE = 1;
     const GENDER_FEMALE = 2;
 
-    /* 帐号变动类型 */
+    // 帐号变动类型 
     const ACT_SAVING = 0;     // 帐户冲值
     const ACT_DRAWING = 1;     // 帐户提款
     const ACT_ADJUSTING = 2;     // 调节帐户
@@ -748,7 +748,7 @@ class Member extends Foundation
         unset($user['question']);
         unset($user['answer']);
 
-        /* 格式化帐户余额 */
+        // 格式化帐户余额 
         if ($user) {
             //        if ($user['user_money'] < 0)
             //        {
@@ -807,7 +807,7 @@ class Member extends Foundation
      */
     public static function log_account_change($user_id, $user_money = 0, $frozen_money = 0, $rank_points = 0, $pay_points = 0, $change_desc = '', $change_type = self::ACT_OTHER)
     {
-        /* 插入帐户变动记录 */
+        // 插入帐户变动记录 
         $account_log = array(
             'user_id' => $user_id,
             'user_money' => $user_money,
@@ -819,7 +819,7 @@ class Member extends Foundation
             'change_type' => $change_type
         );
         AccountLog::insert($account_log);
-        // /* 更新用户信息 */
+        // // 更新用户信息 
         self::where('user_id', $user_id)
             ->increment('user_money', $user_money)
             ->increment('frozen_money', $frozen_money)

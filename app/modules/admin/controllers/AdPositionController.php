@@ -42,7 +42,7 @@ class AdPositionController extends Controller
         if ($_REQUEST['act'] == 'add') {
             admin_priv('ad_manage');
 
-            /* 模板赋值 */
+            // 模板赋值 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['position_add']);
             $this->smarty->assign('form_act', 'insert');
 
@@ -58,23 +58,23 @@ class AdPositionController extends Controller
         if ($_REQUEST['act'] == 'insert') {
             admin_priv('ad_manage');
 
-            /* 对POST上来的值进行处理并去除空格 */
+            // 对POST上来的值进行处理并去除空格 
             $position_name = !empty($_POST['position_name']) ? trim($_POST['position_name']) : '';
             $position_desc = !empty($_POST['position_desc']) ? nl2br(htmlspecialchars($_POST['position_desc'])) : '';
             $ad_width = !empty($_POST['ad_width']) ? intval($_POST['ad_width']) : 0;
             $ad_height = !empty($_POST['ad_height']) ? intval($_POST['ad_height']) : 0;
 
-            /* 查看广告位是否有重复 */
+            // 查看广告位是否有重复 
             if ($exc->num("position_name", $position_name) == 0) {
-                /* 将广告位置的信息插入数据表 */
+                // 将广告位置的信息插入数据表 
                 $sql = 'INSERT INTO ' . $this->ecs->table('ad_position') . ' (position_name, ad_width, ad_height, position_desc, position_style) ' .
                     "VALUES ('$position_name', '$ad_width', '$ad_height', '$position_desc', '$_POST[position_style]')";
 
                 $this->db->query($sql);
-                /* 记录管理员操作 */
+                // 记录管理员操作 
                 admin_log($position_name, 'add', 'ads_position');
 
-                /* 提示信息 */
+                // 提示信息 
                 $link[0]['text'] = $GLOBALS['_LANG']['ads_add'];
                 $link[0]['href'] = 'ads.php?act=add';
 
@@ -99,7 +99,7 @@ class AdPositionController extends Controller
 
             $id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 
-            /* 获取广告位数据 */
+            // 获取广告位数据 
             $sql = 'SELECT * FROM ' . $this->ecs->table('ad_position') . " WHERE position_id='$id'";
             $posit_arr = $this->db->getRow($sql);
 
@@ -117,13 +117,13 @@ class AdPositionController extends Controller
         if ($_REQUEST['act'] == 'update') {
             admin_priv('ad_manage');
 
-            /* 对POST上来的值进行处理并去除空格 */
+            // 对POST上来的值进行处理并去除空格 
             $position_name = !empty($_POST['position_name']) ? trim($_POST['position_name']) : '';
             $position_desc = !empty($_POST['position_desc']) ? nl2br(htmlspecialchars($_POST['position_desc'])) : '';
             $ad_width = !empty($_POST['ad_width']) ? intval($_POST['ad_width']) : 0;
             $ad_height = !empty($_POST['ad_height']) ? intval($_POST['ad_height']) : 0;
             $position_id = !empty($_POST['id']) ? intval($_POST['id']) : 0;
-            /* 查看广告位是否与其它有重复 */
+            // 查看广告位是否与其它有重复 
             $sql = 'SELECT COUNT(*) FROM ' . $this->ecs->table('ad_position') .
                 " WHERE position_name = '$position_name' AND position_id <> '$position_id'";
             if ($this->db->getOne($sql) == 0) {
@@ -135,13 +135,13 @@ class AdPositionController extends Controller
                     "position_style   = '$_POST[position_style]' " .
                     "WHERE position_id = '$position_id'";
                 if ($this->db->query($sql)) {
-                    /* 记录管理员操作 */
+                    // 记录管理员操作 
                     admin_log($position_name, 'edit', 'ads_position');
 
-                    /* 清除缓存 */
+                    // 清除缓存 
                     clear_cache_files();
 
-                    /* 提示信息 */
+                    // 提示信息 
                     $link[] = ['text' => $GLOBALS['_LANG']['back_position_list'], 'href' => 'ad_position.php?act=list'];
                     return sys_msg($GLOBALS['_LANG']['edit'] . ' ' . stripslashes($position_name) . ' ' . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
                 }
@@ -175,7 +175,7 @@ class AdPositionController extends Controller
             $id = intval($_POST['id']);
             $position_name = json_str_iconv(trim($_POST['val']));
 
-            /* 检查名称是否重复 */
+            // 检查名称是否重复 
             if ($exc->num("position_name", $position_name, $id) != 0) {
                 return make_json_error(sprintf($GLOBALS['_LANG']['posit_name_exist'], $position_name));
             } else {
@@ -197,12 +197,12 @@ class AdPositionController extends Controller
             $id = intval($_POST['id']);
             $ad_width = json_str_iconv(trim($_POST['val']));
 
-            /* 宽度值必须是数字 */
+            // 宽度值必须是数字 
             if (!preg_match("/^[\.0-9]+$/", $ad_width)) {
                 return make_json_error($GLOBALS['_LANG']['width_number']);
             }
 
-            /* 广告位宽度应在1-1024之间 */
+            // 广告位宽度应在1-1024之间 
             if ($ad_width > 1024 || $ad_width < 1) {
                 return make_json_error($GLOBALS['_LANG']['width_value']);
             }
@@ -225,12 +225,12 @@ class AdPositionController extends Controller
             $id = intval($_POST['id']);
             $ad_height = json_str_iconv(trim($_POST['val']));
 
-            /* 高度值必须是数字 */
+            // 高度值必须是数字 
             if (!preg_match("/^[\.0-9]+$/", $ad_height)) {
                 return make_json_error($GLOBALS['_LANG']['height_number']);
             }
 
-            /* 广告位宽度应在1-1024之间 */
+            // 广告位宽度应在1-1024之间 
             if ($ad_height > 1024 || $ad_height < 1) {
                 return make_json_error($GLOBALS['_LANG']['height_value']);
             }
@@ -252,7 +252,7 @@ class AdPositionController extends Controller
 
             $id = intval($_GET['id']);
 
-            /* 查询广告位下是否有广告存在 */
+            // 查询广告位下是否有广告存在 
             $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('ad') . " WHERE position_id = '$id'";
 
             if ($this->db->getOne($sql) > 0) {
@@ -277,13 +277,13 @@ class AdPositionController extends Controller
     {
         $filter = [];
 
-        /* 记录总数以及页数 */
+        // 记录总数以及页数 
         $sql = 'SELECT COUNT(*) FROM ' . $GLOBALS['ecs']->table('ad_position');
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
         $filter = page_and_size($filter);
 
-        /* 查询数据 */
+        // 查询数据 
         $arr = [];
         $sql = 'SELECT * FROM ' . $GLOBALS['ecs']->table('ad_position') . ' ORDER BY position_id DESC';
         $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);

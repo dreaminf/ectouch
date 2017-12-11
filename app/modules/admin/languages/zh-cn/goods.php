@@ -245,7 +245,7 @@ $_LANG['js_languages']['volume_price_not_number'] = '优惠价格不是数字';
 
 $_LANG['js_languages']['cancel_color'] = '无样式';
 
-/* 虚拟卡 */
+// 虚拟卡
 $_LANG['card'] = '查看虚拟卡信息';
 $_LANG['replenish'] = '补货';
 $_LANG['batch_card_add'] = '批量补货';

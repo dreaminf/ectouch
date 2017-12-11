@@ -37,7 +37,7 @@ class IntegrateController extends Controller
         if ($_REQUEST['act'] == 'install') {
             admin_priv('integrate_users', '');
 
-            /* 增加ucenter设置时先检测uc_client与uc_client/data是否可写 */
+            // 增加ucenter设置时先检测uc_client与uc_client/data是否可写 
             if ($_GET['code'] == 'ucenter') {
                 $uc_client_dir = file_mode_info(ROOT_PATH . 'uc_client/data');
                 if ($uc_client_dir === false) {
@@ -53,7 +53,7 @@ class IntegrateController extends Controller
                 $sql = "UPDATE " . $GLOBALS['ecs']->table('shop_config') . " SET value = '' WHERE code = 'points_rule'";
                 $GLOBALS['db']->query($sql);
 
-                /* 清除shopconfig表的sql的缓存 */
+                // 清除shopconfig表的sql的缓存 
                 clear_cache_files();
 
                 $links[0]['text'] = $GLOBALS['_LANG']['go_back'];
@@ -78,7 +78,7 @@ class IntegrateController extends Controller
                 $cfg['integrate_url'] = "http://";
 //        }
 
-                /* 判断 */
+                // 判断 
 
                 $this->smarty->assign('cfg', $cfg);
                 $this->smarty->assign('save', 0);
@@ -143,7 +143,7 @@ class IntegrateController extends Controller
             $cls_user = new $code($_POST['cfg']);
 
             if ($cls_user->error) {
-                /* 出错提示 */
+                // 出错提示 
                 if ($cls_user->error == 1) {
                     return sys_msg($GLOBALS['_LANG']['error_db_msg']);
                 } elseif ($cls_user->error == 2) {
@@ -156,7 +156,7 @@ class IntegrateController extends Controller
             }
 
             if ($cls_user->db->version >= '4.1') {
-                /* 检测数据表字符集 */
+                // 检测数据表字符集 
                 $sql = "SHOW TABLE STATUS FROM `" . $cls_user->db_name . "` LIKE '" . $cls_user->prefix . $cls_user->user_table . "'";
                 $row = $cls_user->db->getRow($sql);
                 if (isset($row['Collation'])) {
@@ -177,7 +177,7 @@ class IntegrateController extends Controller
                     }
                 }
             }
-            /* 中文检测 */
+            // 中文检测 
             $test_str = '测试中文字符';
             if ($_POST['cfg']['db_charset'] != 'UTF8') {
                 $test_str = ecs_iconv('UTF8', $_POST['cfg']['db_charset']);
@@ -193,7 +193,7 @@ class IntegrateController extends Controller
             }
 
             if (!empty($_POST['save'])) {
-                /* 直接保存修改 */
+                // 直接保存修改 
                 if ($this->save_integrate_config($code, $_POST['cfg'])) {
                     return sys_msg($GLOBALS['_LANG']['save_ok'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
                 } else {
@@ -205,12 +205,12 @@ class IntegrateController extends Controller
             $total = $this->db->getOne($sql);
 
             if ($total == 0) {
-                /* 商城没有用户时，直接保存完成整合 */
+                // 商城没有用户时，直接保存完成整合 
                 $this->save_integrate_config($_POST['code'], $_POST['cfg']);
                 return $this->redirect("integrate.php?act=complete");
             }
 
-            /* 检测成功临时保存论坛配置参数 */
+            // 检测成功临时保存论坛配置参数 
             session('cfg', $_POST['cfg']);
             session('code', $code);
 
@@ -236,7 +236,7 @@ class IntegrateController extends Controller
             $cls_user = new $code($_POST['cfg']);
 
             if ($cls_user->error) {
-                /* 出错提示 */
+                // 出错提示 
                 if ($cls_user->error == 1) {
                     return sys_msg($GLOBALS['_LANG']['error_db_msg']);
                 } elseif ($cls_user->error == 2) {
@@ -248,10 +248,10 @@ class IntegrateController extends Controller
                 }
             }
 
-            /* 合并数组，保存原值 */
+            // 合并数组，保存原值 
             $cfg = array_merge($cfg, $_POST['cfg']);
 
-            /* 直接保存修改 */
+            // 直接保存修改 
             if ($this->save_integrate_config($code, $cfg)) {
                 return sys_msg($GLOBALS['_LANG']['save_ok'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
             } else {
@@ -270,7 +270,7 @@ class IntegrateController extends Controller
             $cls_user = new $code($_POST['cfg']);
 
             if ($cls_user->error) {
-                /* 出错提示 */
+                // 出错提示 
                 if ($cls_user->error == 1) {
                     return sys_msg($GLOBALS['_LANG']['error_db_msg']);
                 } elseif ($cls_user->error == 2) {
@@ -298,14 +298,14 @@ class IntegrateController extends Controller
                 'db_pre' => $uctablepre,
                 'db_charset' => $ucdbcharset,
             ];
-            /* 增加UC语言项 */
+            // 增加UC语言项 
             $cfg['uc_lang'] = $GLOBALS['_LANG']['uc_lang'];
 
-            /* 检测成功临时保存论坛配置参数 */
+            // 检测成功临时保存论坛配置参数 
             session('cfg', $cfg);
             session('code', $code);
 
-            /* 直接保存修改 */
+            // 直接保存修改 
             if (!empty($_POST['save'])) {
                 if ($this->save_integrate_config($code, $cfg)) {
                     return sys_msg($GLOBALS['_LANG']['save_ok'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
@@ -322,7 +322,7 @@ class IntegrateController extends Controller
                 $maxuid = 0;
             }
 
-            /* 保存完成整合 */
+            // 保存完成整合 
             $this->save_integrate_config($code, $cfg);
 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['ucenter_import_username']);
@@ -360,7 +360,7 @@ class IntegrateController extends Controller
             $post_user_list = $cls_user->test_conflict($user_list);
 
             if ($post_user_list) {
-                /* 标记重名用户 */
+                // 标记重名用户 
                 if ($method == 2) {
                     $sql = "UPDATE " . $GLOBALS['ecs']->table('users') . " SET flag = '$method', alias = CONCAT(user_name, '$domain') WHERE " . db_create_in($post_user_list, 'user_name');
                 } else {
@@ -371,13 +371,13 @@ class IntegrateController extends Controller
                 $GLOBALS['db']->query($sql);
 
                 if ($method == 2) {
-                    /* 需要改名,验证是否能成功改名 */
+                    // 需要改名,验证是否能成功改名 
                     $count = count($post_user_list);
                     $test_user_list = [];
                     for ($i = 0; $i < $count; $i++) {
                         $test_user_list[] = $post_user_list[$i] . $domain;
                     }
-                    /* 检查改名后用户是否和论坛用户有重名 */
+                    // 检查改名后用户是否和论坛用户有重名 
                     $error_user_list = $cls_user->test_conflict($test_user_list);   //检查
                     if ($error_user_list) {
                         $domain_len = 0 - str_len($domain);
@@ -385,11 +385,11 @@ class IntegrateController extends Controller
                         for ($i = 0; $i < $count; $i++) {
                             $error_user_list[$i] = substr($error_user_list[$i], 0, $domain_len);
                         }
-                        /* 将用户标记为改名失败 */
+                        // 将用户标记为改名失败 
                         $sql = "UPDATE " . $GLOBALS['ecs']->table('users') . " SET flag = '1' WHERE " . db_create_in($error_user_list, 'user_name');
                     }
 
-                    /* 检查改名后用户是否与商城用户重名 */
+                    // 检查改名后用户是否与商城用户重名 
                     $sql = "SELECT user_name FROM " . $GLOBALS['ecs']->table('users') . " WHERE " . db_create_in($test_user_list, 'user_name');
                     $error_user_list = $GLOBALS['db']->getCol($sql);
                     if ($error_user_list) {
@@ -398,7 +398,7 @@ class IntegrateController extends Controller
                         for ($i = 0; $i < $count; $i++) {
                             $error_user_list[$i] = substr($error_user_list[$i], 0, $domain_len);
                         }
-                        /* 将用户标记为改名失败 */
+                        // 将用户标记为改名失败 
                         $sql = "UPDATE " . $GLOBALS['ecs']->table('users') . " SET flag = '1' WHERE " . db_create_in($error_user_list, 'user_name');
                     }
                 }
@@ -412,7 +412,7 @@ class IntegrateController extends Controller
                 $result['content'] = $GLOBALS['_LANG']['check_complete'];
                 $result['is_end'] = 1;
 
-                /* 查找有无重名用户,无重名用户则直接同步，有则查看重名用户 */
+                // 查找有无重名用户,无重名用户则直接同步，有则查看重名用户 
                 $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('users') . " WHERE flag > 0 ";
                 if ($this->db->getOne($sql) > 0) {
                     $result['href'] = "integrate.php?act=modify";
@@ -498,7 +498,7 @@ class IntegrateController extends Controller
          * 重名用户处理
          */
         if ($_REQUEST['act'] == 'modify') {
-            /* 检查是否有改名失败的用户 */
+            // 检查是否有改名失败的用户 
             $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('users') . " WHERE flag = 1";
             if ($this->db->getOne($sql) > 0) {
                 $_REQUEST['flag'] = 1;
@@ -508,7 +508,7 @@ class IntegrateController extends Controller
                 $this->smarty->assign('default_flag', 0);
             }
 
-            /* 显示重名用户及处理方法 */
+            // 显示重名用户及处理方法 
             $flags = [0 => $GLOBALS['_LANG']['all_user'], 1 => $GLOBALS['_LANG']['error_user'], 2 => $GLOBALS['_LANG']['rename_user'], 3 => $GLOBALS['_LANG']['delete_user'], 4 => $GLOBALS['_LANG']['ignore_user']];
             $this->smarty->assign('flags', $flags);
 
@@ -542,7 +542,7 @@ class IntegrateController extends Controller
          * 重名用户处理过程
          */
         if ($_REQUEST['act'] == 'act_modify') {
-            /* 先处理要改名的用户，改名用户要先检查是否有重名情况，有则标记出来 */
+            // 先处理要改名的用户，改名用户要先检查是否有重名情况，有则标记出来 
             $alias = [];
             foreach ($_POST['opt'] as $user_id => $val) {
                 if ($val = 2) {
@@ -550,11 +550,11 @@ class IntegrateController extends Controller
                 }
             }
             if ($alias) {
-                /* 检查改名后用户名是否会重名 */
+                // 检查改名后用户名是否会重名 
                 $sql = 'SELECT user_name FROM ' . $GLOBALS['ecs']->table('users') . ' WHERE ' . db_create_in($alias, 'user_name');
                 $ecs_error_list = $this->db->getCol($sql);
 
-                /* 检查和商城是否有重名 */
+                // 检查和商城是否有重名 
                 $code = session('code');
                 include_once(ROOT_PATH . "includes/modules/integrates/" . $code . ".php");
                 $cls_user = new $code(session('cfg'));
@@ -564,14 +564,14 @@ class IntegrateController extends Controller
                 $error_list = array_unique(array_merge($ecs_error_list, $bbs_error_list));
 
                 if ($error_list) {
-                    /* 将重名用户标记 */
+                    // 将重名用户标记 
                     foreach ($_POST['opt'] as $user_id => $val) {
                         if ($val = 2) {
                             if (in_array($_POST['alias'][$user_id], $error_list)) {
-                                /* 重名用户，需要标记 */
+                                // 重名用户，需要标记 
                                 $sql = "UPDATE " . $GLOBALS['ecs']->table('users') . " SET flag = 1,  alias='' WHERE user_id = '$user_id'";
                             } else {
-                                /* 用户名无重复，可以正常改名 */
+                                // 用户名无重复，可以正常改名 
                                 $sql = "UPDATE " . $GLOBALS['ecs']->table('users') .
                                     " SET flag = 2, alias = '" . $_POST['alias'][$user_id] . "'" .
                                     " WHERE user_id = '$user_id'";
@@ -580,7 +580,7 @@ class IntegrateController extends Controller
                         }
                     }
                 } else {
-                    /* 处理没有重名的情况 */
+                    // 处理没有重名的情况 
                     foreach ($_POST['opt'] as $user_id => $val) {
                         $sql = "UPDATE " . $GLOBALS['ecs']->table('users') .
                             " SET flag = 2, alias = '" . $_POST['alias'][$user_id] . "'" .
@@ -590,7 +590,7 @@ class IntegrateController extends Controller
                 }
             }
 
-            /* 处理删除和保留情况 */
+            // 处理删除和保留情况 
             foreach ($_POST['opt'] as $user_id => $val) {
                 if ($val == 3 || $val == 4) {
                     $sql = "UPDATE " . $GLOBALS['ecs']->table('users') . " SET flag='$val' WHERE user_id='$user_id'";
@@ -598,7 +598,7 @@ class IntegrateController extends Controller
                 }
             }
 
-            /* 跳转  */
+            // 跳转  
             return $this->redirect("integrate.php?act=modify");
         }
 
@@ -643,7 +643,7 @@ class IntegrateController extends Controller
 
             $tasks[] = ['task_name' => $GLOBALS['_LANG']['task_save'], 'task_status' => '<span id="task_save">' . $GLOBALS['_LANG']['task_uncomplete'] . '</span>'];
 
-            /* 保存修改日志 */
+            // 保存修改日志 
             $fp = @fopen(ROOT_PATH . DATA_DIR . '/integrate_' . session('code') . '_log.php', 'wb');
             $log = '';
             if (isset($del_list)) {
@@ -679,12 +679,12 @@ class IntegrateController extends Controller
             $result = ['message' => '', 'error' => 0, 'content' => '', 'id' => '', 'end' => 0, 'size' => $size];
 
             if (session('task.del.start') < session('task.del.total')) {
-                /* 执行操作 */
-                /* 查找要删除用户 */
+                // 执行操作 
+                // 查找要删除用户 
                 $arr = $this->db->getCol("SELECT user_name FROM " . $this->ecs->table('users') . " WHERE flag = 3 LIMIT " . session('task.del.start') . ',' . $result['size']);
                 $this->db->query("DELETE FROM " . $this->ecs->table('users') . " WHERE " . db_create_in($arr, 'user_name'));
 
-                /* 保存设置 */
+                // 保存设置 
                 $result['id'] = 'task_del';
                 if (session('task.del.start') + $result['size'] >= session('task.del.total')) {
                     session('task.del.start', session('task.del.total'));
@@ -696,11 +696,11 @@ class IntegrateController extends Controller
 
                 die($json->encode($result));
             } elseif (session('task.rename.start') < session('task.rename.total')) {
-                /* 查找要改名用户 */
+                // 查找要改名用户 
                 $arr = $this->db->getCol("SELECT user_name FROM " . $this->ecs->table('users') . " WHERE flag = 2 LIMIT " . session('task.del.start') . ',' . $result['size']);
                 $this->db->query("UPDATE " . $this->ecs->table('users') . " SET user_name=alias, alias='' WHERE " . db_create_in($arr, 'user_name'));
 
-                /* 保存设置 */
+                // 保存设置 
                 $result['id'] = 'task_rename';
                 if (session('task.rename.start') + $result['size'] >= session('task.rename.total')) {
                     session('task.rename.start', session('task.rename.total'));
@@ -723,7 +723,7 @@ class IntegrateController extends Controller
                     @$cls_user->add_user($user['user_name'], '', $user['email'], $user['sex'], $user['birthday'], $user['reg_time'], $user['password']);
                 }
 
-                /* 保存设置 */
+                // 保存设置 
                 $result['id'] = 'task_sync';
                 if (session('task.sync.start') + $result['size'] >= session('task.sync.total')) {
                     session('task.sync.start', session('task.sync.total'));
@@ -734,9 +734,9 @@ class IntegrateController extends Controller
                 }
                 die($json->encode($result));
             } else {
-                /* 记录合并用户 */
+                // 记录合并用户 
 
-                /* 插入code到shop_config表 */
+                // 插入code到shop_config表 
                 $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('shop_config') . " WHERE code = 'integrate_code'";
 
                 if ($this->db->getOne($sql) == 0) {
@@ -747,14 +747,14 @@ class IntegrateController extends Controller
                 }
                 $this->db->query($sql);
 
-                /* 序列化设置信息，并保存到数据库 */
+                // 序列化设置信息，并保存到数据库 
                 $this->save_integrate_config(session('code'), session('cfg'));
 
                 $result['content'] = $GLOBALS['_LANG']['task_complete'];
                 $result['id'] = 'task_save';
                 $result['end'] = 1;
 
-                /* 清理多余信息 */
+                // 清理多余信息 
                 session('cfg', null);
                 session('code', null);
                 session('task', null);
@@ -834,7 +834,7 @@ class IntegrateController extends Controller
             die($json->encode($result));
         }
 
-        /* 显示整合成功信息 */
+        // 显示整合成功信息 
         if ($_REQUEST['act'] == 'complete') {
             return sys_msg($GLOBALS['_LANG']['sync_ok'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
         }
@@ -891,7 +891,7 @@ class IntegrateController extends Controller
                 }
             }
 
-            /* 判断是否还能添加新规则 */
+            // 判断是否还能添加新规则 
             if (($rule_index && isset($rule[$rule_index])) || empty($select_rule)) {
                 $allow_add = 0;
             } else {
@@ -927,7 +927,7 @@ class IntegrateController extends Controller
             }
 
             if (isset($_POST['from_val']) && isset($_POST['to_val'])) {
-                /* 添加rule */
+                // 添加rule 
                 $from_val = empty($_POST['from_val']) ? 0 : intval($_POST['from_val']);
                 $to_val = empty($_POST['to_val']) ? 1 : intval($_POST['to_val']);
                 $old_rule_index = empty($_POST['old_rule_index']) ? '' : trim($_POST['old_rule_index']);
@@ -947,7 +947,7 @@ class IntegrateController extends Controller
                     $rule = $tmp_rule;
                 }
             } else {
-                /* 删除rule */
+                // 删除rule 
                 unset($rule[$rule_index]);
             }
 
@@ -1002,7 +1002,7 @@ class IntegrateController extends Controller
 
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-        /* 分页大小 */
+        // 分页大小 
         $filter = page_and_size($filter);
         $sql = "SELECT user_id, user_name, email, reg_time, flag, alias " .
             " FROM " . $GLOBALS['ecs']->table('users') . $where .
@@ -1035,7 +1035,7 @@ class IntegrateController extends Controller
         } else {
             $sql = "SELECT value FROM " . $GLOBALS['ecs']->table('shop_config') . " WHERE code = 'integrate_code'";
             if ($code != $GLOBALS['db']->getOne($sql)) {
-                /* 有缺换整合插件，需要把积分设置也清除 */
+                // 有缺换整合插件，需要把积分设置也清除 
                 $sql = "UPDATE " . $GLOBALS['ecs']->table('shop_config') . " SET value = '' WHERE code = 'points_rule'";
                 $GLOBALS['db']->query($sql);
             }
@@ -1044,7 +1044,7 @@ class IntegrateController extends Controller
 
         $GLOBALS['db']->query($sql);
 
-        /* 当前的域名 */
+        // 当前的域名 
         if (isset($_SERVER['HTTP_X_FORWARDED_HOST'])) {
             $cur_domain = $_SERVER['HTTP_X_FORWARDED_HOST'];
         } elseif (isset($_SERVER['HTTP_HOST'])) {
@@ -1057,7 +1057,7 @@ class IntegrateController extends Controller
             }
         }
 
-        /* 整合对象的域名 */
+        // 整合对象的域名 
         $int_domain = str_replace(['http://', 'https://'], ['', ''], $cfg['integrate_url']);
         if (strrpos($int_domain, '/')) {
             $int_domain = substr($int_domain, 0, strrpos($int_domain, '/'));
@@ -1067,15 +1067,15 @@ class IntegrateController extends Controller
             $same_domain = true;
             $domain = '';
 
-            /* 域名不一样，检查是否在同一域下 */
+            // 域名不一样，检查是否在同一域下 
             $cur_domain_arr = explode(".", $cur_domain);
             $int_domain_arr = explode(".", $int_domain);
 
             if (count($cur_domain_arr) != count($int_domain_arr) || $cur_domain_arr[0] == '' || $int_domain_arr[0] == '') {
-                /* 域名结构不相同 */
+                // 域名结构不相同 
                 $same_domain = false;
             } else {
-                /* 域名结构一致，检查除第一节以外的其他部分是否相同 */
+                // 域名结构一致，检查除第一节以外的其他部分是否相同 
                 $count = count($cur_domain_arr);
 
                 for ($i = 1; $i < $count; $i++) {
@@ -1090,7 +1090,7 @@ class IntegrateController extends Controller
             }
 
             if ($same_domain == false) {
-                /* 不在同一域，设置提示信息 */
+                // 不在同一域，设置提示信息 
                 $cfg['cookie_domain'] = '';
                 $cfg['cookie_path'] = '/';
             } else {

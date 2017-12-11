@@ -139,16 +139,16 @@ function searchGoodsResponse(result)
 
   if (result.error == 0)
   {
-    /* 清除 options */
+    // 清除 options
     sel.length = 0;
 
-    /* 创建 options */
+    // 创建 options
     var goods = result.content;
     if (goods)
     {
         for (i = 0; i < goods.length; i++)
         {
-            /* 货品 options */
+            // 货品 options
             if (goods[i].products.length > 0)
             {
               for (var j = 0; goods[i].products[j]; j++)
@@ -183,7 +183,7 @@ function searchGoodsResponse(result)
   }
 }
 
-/* 关联商品函数 */
+// 关联商品函数
 //function searchGoods_list(szObject, catId, brandId, keyword)
 //{
 //  var filters = new Object;

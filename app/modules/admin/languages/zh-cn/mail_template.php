@@ -11,7 +11,7 @@ $_LANG['mail_type'] = '邮件类型';
 $_LANG['mail_plain_text'] = '纯文本邮件';
 $_LANG['mail_html'] = 'HTML 邮件';
 
-/* 模板描述 */
+// 模板描述 
 $_LANG['order_confirm'] = '订单确认模板';
 $_LANG['deliver_notice'] = '发货通知模板';
 $_LANG['send_password'] = '发送密码模板';

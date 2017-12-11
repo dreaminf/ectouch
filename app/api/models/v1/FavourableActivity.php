@@ -29,7 +29,7 @@ class FavourableActivity extends Foundation
     const 	FAT_PRICE                 = 1; // 现金减免
     const 	FAT_DISCOUNT              = 2; // 价格打折优惠
 
-    /* 优惠活动的优惠范围 */
+    // 优惠活动的优惠范围 
     const   FAR_ALL                   = 0; // 全部商品
     const   FAR_CATEGORY              = 1; // 按分类选择
     const   FAR_BRAND                 = 2; // 按品牌选择

@@ -40,7 +40,7 @@ class BrandController extends Controller
          * 添加品牌
          */
         if ($_REQUEST['act'] == 'add') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('brand_manage');
 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['07_brand_add']);
@@ -85,7 +85,7 @@ class BrandController extends Controller
 
             admin_log($_POST['brand_name'], 'add', 'brand');
 
-            /* 清除缓存 */
+            // 清除缓存 
             clear_cache_files();
 
             $link[0]['text'] = $GLOBALS['_LANG']['continue_add'];
@@ -101,7 +101,7 @@ class BrandController extends Controller
          * 编辑品牌
          */
         if ($_REQUEST['act'] == 'edit') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('brand_manage');
             $sql = "SELECT brand_id, brand_name, site_url, brand_logo, brand_desc, brand_logo, is_show, sort_order " .
                 "FROM " . $this->ecs->table('brand') . " WHERE brand_id='$_REQUEST[id]'";
@@ -138,7 +138,7 @@ class BrandController extends Controller
             /*处理URL*/
             $site_url = sanitize_url($_POST['site_url']);
 
-            /* 处理图片 */
+            // 处理图片 
             $img_name = basename($image->upload_image($_FILES['brand_logo'], 'brandlogo'));
             $param = "brand_name = '$_POST[brand_name]',  site_url='$site_url', brand_desc='$_POST[brand_desc]', is_show='$is_show', sort_order='$_POST[sort_order]' ";
             if (!empty($img_name)) {
@@ -147,7 +147,7 @@ class BrandController extends Controller
             }
 
             if ($exc->edit($param, $_POST['id'])) {
-                /* 清除缓存 */
+                // 清除缓存 
                 clear_cache_files();
 
                 admin_log($_POST['brand_name'], 'edit', 'brand');
@@ -170,7 +170,7 @@ class BrandController extends Controller
             $id = intval($_POST['id']);
             $name = json_str_iconv(trim($_POST['val']));
 
-            /* 检查名称是否重复 */
+            // 检查名称是否重复 
             if ($exc->num("brand_name", $name, $id) != 0) {
                 return make_json_error(sprintf($GLOBALS['_LANG']['brandname_exist'], $name));
             } else {
@@ -245,7 +245,7 @@ class BrandController extends Controller
 
             $id = intval($_GET['id']);
 
-            /* 删除该品牌的图标 */
+            // 删除该品牌的图标 
             $sql = "SELECT brand_logo FROM " . $this->ecs->table('brand') . " WHERE brand_id = '$id'";
             $logo_name = $this->db->getOne($sql);
             if (!empty($logo_name)) {
@@ -254,7 +254,7 @@ class BrandController extends Controller
 
             $exc->drop($id);
 
-            /* 更新商品的品牌编号 */
+            // 更新商品的品牌编号 
             $sql = "UPDATE " . $this->ecs->table('goods') . " SET brand_id=0 WHERE brand_id='$id'";
             $this->db->query($sql);
 
@@ -267,11 +267,11 @@ class BrandController extends Controller
          * 删除品牌图片
          */
         if ($_REQUEST['act'] == 'drop_logo') {
-            /* 权限判断 */
+            // 权限判断 
             admin_priv('brand_manage');
             $brand_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-            /* 取得logo名称 */
+            // 取得logo名称 
             $sql = "SELECT brand_logo FROM " . $this->ecs->table('brand') . " WHERE brand_id = '$brand_id'";
             $logo_name = $this->db->getOne($sql);
 
@@ -309,10 +309,10 @@ class BrandController extends Controller
     {
         $result = get_filter();
         if ($result === false) {
-            /* 分页大小 */
+            // 分页大小 
             $filter = [];
 
-            /* 记录总数以及页数 */
+            // 记录总数以及页数 
             if (isset($_POST['brand_name'])) {
                 $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('brand') . ' WHERE brand_name = \'' . $_POST['brand_name'] . '\'';
             } else {
@@ -323,7 +323,7 @@ class BrandController extends Controller
 
             $filter = page_and_size($filter);
 
-            /* 查询记录 */
+            // 查询记录 
             if (isset($_POST['brand_name'])) {
                 if (strtoupper(CHARSET) == 'GBK') {
                     $keyword = iconv("UTF-8", "gb2312", $_POST['brand_name']);

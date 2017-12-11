@@ -12,7 +12,7 @@ class UserBonus extends BaseModel {
     public    $timestamps = false;
     protected $primaryKey = 'bonus_id';
 
-    /* 红包发放的方式 */
+    // 红包发放的方式 
     const SEND_BY_USER               = 0; // 按用户发放
     const SEND_BY_GOODS              = 1; // 按商品发放
     const SEND_BY_ORDER              = 2; // 按订单发放

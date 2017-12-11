@@ -16,7 +16,7 @@ class PictureBatchController extends Controller
         load_helper('goods', 'admin');
         $image = new Image($GLOBALS['_CFG']['bgcolor']);
 
-        /* 权限检查 */
+        // 权限检查 
         admin_priv('picture_batch');
 
         if (empty($_GET['is_ajax'])) {
@@ -75,7 +75,7 @@ class PictureBatchController extends Controller
             }
 
 
-            /* 设置最长执行时间为5分钟 */
+            // 设置最长执行时间为5分钟 
             @set_time_limit(300);
 
             if (isset($_GET['start'])) {
@@ -85,12 +85,12 @@ class PictureBatchController extends Controller
                 $change = empty($_GET['change']) ? 0 : 1;
                 $silent = empty($_GET['silent']) ? 0 : 1;
 
-                /* 检查GD */
+                // 检查GD 
                 if ($image->gd_version() < 1) {
                     return make_json_error($GLOBALS['_LANG']['missing_gd']);
                 }
 
-                /* 如果需要添加水印，检查水印文件 */
+                // 如果需要添加水印，检查水印文件 
                 if ((!empty($GLOBALS['_CFG']['watermark'])) && ($GLOBALS['_CFG']['watermark_place'] > 0) && $watermark && (!$image->validate_image($GLOBALS['_CFG']['watermark']))) {
                     return make_json_error($image->error_msg());
                 }
@@ -135,11 +135,11 @@ class PictureBatchController extends Controller
                 /*------------------------------------------------------ */
                 if ($result['module_no'] == 0) {
                     $count = $GLOBALS['db']->getOne("SELECT COUNT(*) FROM " . $this->ecs->table('goods') . " AS g WHERE g.original_img > ''" . $goods_where);
-                    /* 页数在许可范围内 */
+                    // 页数在许可范围内 
                     if ($result['page'] <= ceil($count / $result['page_size'])) {
                         $start_time = gmtime(); //开始执行时间
 
-                        /* 开始处理 */
+                        // 开始处理 
                         if ($proc_thumb) {
                             $this->process_image_ex($result['page'], $result['page_size'], $result['module_no'], $result['thumb'], $result['watermark'], $result['change'], $result['silent']);
                         } else {
@@ -160,7 +160,7 @@ class PictureBatchController extends Controller
                         --$result['page'];
                         $result['done'] = 0;
                         $result['message'] = ($do_album) ? '' : $GLOBALS['_LANG']['done'];
-                        /* 清除缓存 */
+                        // 清除缓存 
                         clear_cache_files();
                         die($json->encode($result));
                     }
@@ -170,7 +170,7 @@ class PictureBatchController extends Controller
 
                     if ($result['page'] <= ceil($count / $result['page_size'])) {
                         $start_time = gmtime(); // 开始执行时间
-                        /* 开始处理 */
+                        // 开始处理 
                         if ($proc_thumb) {
                             $this->process_image_ex($result['page'], $result['page_size'], $result['module_no'], $result['thumb'], $result['watermark'], $result['change'], $result['silent']);
                         } else {
@@ -195,10 +195,10 @@ class PictureBatchController extends Controller
                         $result['row']['new_total'] = sprintf($GLOBALS['_LANG']['total_format'], ceil($count / $result['page_size']));
                         $result['row']['new_time'] = $GLOBALS['_LANG']['wait'];
 
-                        /* 执行结束 */
+                        // 执行结束 
                         $result['done'] = 0;
                         $result['message'] = $GLOBALS['_LANG']['done'];
-                        /* 清除缓存 */
+                        // 清除缓存 
                         clear_cache_files();
                     }
                 }
@@ -235,9 +235,9 @@ class PictureBatchController extends Controller
                 $goods_thumb = '';
                 $image = '';
 
-                /* 水印 */
+                // 水印 
                 if ($watermark) {
-                    /* 获取加水印图片的目录 */
+                    // 获取加水印图片的目录 
                     if (empty($row['goods_img'])) {
                         $dir = dirname(ROOT_PATH . $row['original_img']) . '/';
                     } else {
@@ -270,14 +270,14 @@ class PictureBatchController extends Controller
                         }
                     }
 
-                    /* 重新格式化图片名称 */
+                    // 重新格式化图片名称 
                     $image = reformat_image_name('goods', $row['goods_id'], $image, 'goods');
                     if ($change || empty($row['goods_img'])) {
-                        /* 要生成新链接的处理过程 */
+                        // 要生成新链接的处理过程 
                         if ($image != $row['goods_img']) {
                             $sql = "UPDATE " . $GLOBALS['ecs']->table('goods') . " SET goods_img = '$image' WHERE goods_id = '" . $row['goods_id'] . "'";
                             $GLOBALS['db']->query($sql);
-                            /* 防止原图被删除 */
+                            // 防止原图被删除 
                             if ($row['goods_img'] != $row['original_img']) {
                                 @unlink(ROOT_PATH . $row['goods_img']);
                             }
@@ -287,7 +287,7 @@ class PictureBatchController extends Controller
                     }
                 }
 
-                /* 缩略图 */
+                // 缩略图 
                 if ($thumb) {
                     if (empty($row['goods_thumb'])) {
                         $dir = dirname(ROOT_PATH . $row['original_img']) . '/';
@@ -297,7 +297,7 @@ class PictureBatchController extends Controller
 
                     $goods_thumb = $GLOBALS['image']->make_thumb(ROOT_PATH . $row['original_img'], $GLOBALS['_CFG']['thumb_width'], $GLOBALS['_CFG']['thumb_height'], $dir);
 
-                    /* 出错处理 */
+                    // 出错处理 
                     if (!$goods_thumb) {
                         $msg = sprintf($GLOBALS['_LANG']['error_pos'], $row['goods_id']) . "\n" . $GLOBALS['image']->error_msg();
                         if ($silent) {
@@ -307,13 +307,13 @@ class PictureBatchController extends Controller
                             return make_json_error($msg);
                         }
                     }
-                    /* 重新格式化图片名称 */
+                    // 重新格式化图片名称 
                     $goods_thumb = reformat_image_name('goods_thumb', $row['goods_id'], $goods_thumb, 'thumb');
                     if ($change || empty($row['goods_thumb'])) {
                         if ($row['goods_thumb'] != $goods_thumb) {
                             $sql = "UPDATE " . $GLOBALS['ecs']->table('goods') . " SET goods_thumb = '$goods_thumb' WHERE goods_id = '" . $row['goods_id'] . "'";
                             $GLOBALS['db']->query($sql);
-                            /* 防止原图被删除 */
+                            // 防止原图被删除 
                             if ($row['goods_thumb'] != $row['original_img']) {
                                 @unlink(ROOT_PATH . $row['goods_thumb']);
                             }
@@ -324,7 +324,7 @@ class PictureBatchController extends Controller
                 }
             }
         } else {
-            /* 遍历商品相册 */
+            // 遍历商品相册 
             $sql = "SELECT album.goods_id, album.img_id, album.img_url, album.thumb_url, album.img_original FROM " . $GLOBALS['ecs']->table('goods_gallery') . " AS album " . $GLOBALS['album_where'];
             $res = $GLOBALS['db']->selectLimit($sql, $page_size, ($page - 1) * $page_size);
 
@@ -332,7 +332,7 @@ class PictureBatchController extends Controller
                 $thumb_url = '';
                 $image = '';
 
-                /* 水印 */
+                // 水印 
                 if ($watermark && file_exists(ROOT_PATH . $row['img_original'])) {
                     if (empty($row['img_url'])) {
                         $dir = dirname(ROOT_PATH . $row['img_original']) . '/';
@@ -355,7 +355,7 @@ class PictureBatchController extends Controller
                             return make_json_error($msg);
                         }
                     }
-                    /* 重新格式化图片名称 */
+                    // 重新格式化图片名称 
                     $image = reformat_image_name('gallery', $row['goods_id'], $image, 'goods');
                     if ($change || empty($row['img_url']) || $row['img_original'] == $row['img_url']) {
                         if ($image != $row['img_url']) {
@@ -370,7 +370,7 @@ class PictureBatchController extends Controller
                     }
                 }
 
-                /* 缩略图 */
+                // 缩略图 
                 if ($thumb) {
                     if (empty($row['thumb_url'])) {
                         $dir = dirname(ROOT_PATH . $row['img_original']) . '/';
@@ -389,7 +389,7 @@ class PictureBatchController extends Controller
                             return make_json_error($msg);
                         }
                     }
-                    /* 重新格式化图片名称 */
+                    // 重新格式化图片名称 
                     $thumb_url = reformat_image_name('gallery_thumb', $row['goods_id'], $thumb_url, 'thumb');
                     if ($change || empty($row['thumb_url'])) {
                         if ($thumb_url != $row['thumb_url']) {

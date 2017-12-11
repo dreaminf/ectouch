@@ -190,7 +190,7 @@ function insert_comments($arr)
     $GLOBALS['smarty']->caching = false;
     $GLOBALS['smarty']->force_compile = true;
 
-    /* 验证码相关设置 */
+    // 验证码相关设置
     if ((intval($GLOBALS['_CFG']['captcha']) & CAPTCHA_COMMENT) && gd_version() > 0) {
         $GLOBALS['smarty']->assign('enabled_captcha', 1);
         $GLOBALS['smarty']->assign('rand', mt_rand());
@@ -227,7 +227,7 @@ function insert_bought_notes($arr)
     $GLOBALS['smarty']->caching = false;
     $GLOBALS['smarty']->force_compile = true;
 
-    /* 商品购买记录 */
+    // 商品购买记录
     $sql = 'SELECT u.user_name, og.goods_number, oi.add_time, IF(oi.order_status IN (2, 3, 4), 0, 1) AS order_status ' .
         'FROM ' . $GLOBALS['ecs']->table('order_info') . ' AS oi LEFT JOIN ' . $GLOBALS['ecs']->table('users') . ' AS u ON oi.user_id = u.user_id, ' . $GLOBALS['ecs']->table('order_goods') . ' AS og ' .
         'WHERE oi.order_id = og.order_id AND ' . time() . ' - oi.add_time < 2592000 AND og.goods_id = ' . $arr['id'] . ' ORDER BY oi.add_time DESC LIMIT 5';
@@ -243,7 +243,7 @@ function insert_bought_notes($arr)
     $count = $GLOBALS['db']->getOne($sql);
 
 
-    /* 商品购买记录分页样式 */
+    // 商品购买记录分页样式
     $pager = [];
     $pager['page'] = $page = 1;
     $pager['size'] = $size = 5;

@@ -396,7 +396,7 @@ class Goods extends Foundation
         }
 
         $goods['shop_price'] = (isset($user_price) && !empty($user_price)) ? $user_price : $member_price;
-        /* 计算商品的促销价格 */
+        // 计算商品的促销价格 
         if (is_array($goods) && array_key_exists('promote_price',$goods) &&$goods['promote_price'] > 0) {
             $promote_price = self::bargain_price($goods['promote_price'], $goods['promote_start_date'], $goods['promote_end_date']);
         }else{

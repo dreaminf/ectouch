@@ -21,7 +21,7 @@ class PackageController extends Controller
         $this->smarty->assign('page_title', $position['title']);    // 页面标题
         $this->smarty->assign('ur_here', $position['ur_here']);  // 当前位置
 
-        /* 读出所有礼包信息 */
+        // 读出所有礼包信息 
         $now = gmtime();
 
         $sql = "SELECT * FROM " . $this->ecs->table('goods_activity') . " WHERE `start_time` <= '$now' AND `end_time` >= '$now' AND `act_type` = '4' ORDER BY `end_time`";

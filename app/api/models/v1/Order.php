@@ -83,7 +83,7 @@ class Order extends Foundation
     const STATUS_FINISHED    = 4; // 已完成
     const STATUS_CANCELLED   = 5; // 已取消
 
-    /* 订单状态 */
+    // 订单状态 
     const OS_UNCONFIRMED     = 0; // 未确认
     const OS_CONFIRMED       = 1; // 已确认
     const OS_CANCELED        = 2; // 已取消
@@ -92,12 +92,12 @@ class Order extends Foundation
     const OS_SPLITED         = 5; // 已分单
     const OS_SPLITING_PART   = 6; // 部分分单
 
-    /* 支付状态 */
+    // 支付状态 
     const PS_UNPAYED         = 0; // 未付款
     const PS_PAYING          = 1; // 付款中
     const PS_PAYED           = 2; // 已付款
 
-    /* 配送状态 */
+    // 配送状态 
     const SS_UNSHIPPED       = 0; // 未发货
     const SS_SHIPPED         = 1; // 已发货
     const SS_RECEIVED        = 2; // 已收货
@@ -215,7 +215,7 @@ class Order extends Foundation
      */
     public static function order_fee($order, $goods, $consignee,$cart_good_id = 0,$shipping,$consignee_id)
     {
-        /* 初始化订单的扩展code */
+        // 初始化订单的扩展code 
         if (!isset($order['extension_code']))
         {
             $order['extension_code'] = '';
@@ -237,10 +237,10 @@ class Order extends Foundation
             'pay_fee'          => 0,
             'tax'              => 0);
         $weight = 0;
-        /* 商品总价 */
+        // 商品总价 
         foreach ($goods AS $val)
         {
-            /* 统计实体商品的个数 */
+            // 统计实体商品的个数 
             if ($val['is_real'])
             {
                 $total['real_goods_count']++;
@@ -256,7 +256,7 @@ class Order extends Foundation
         $total['goods_price_formated']  = Goods::price_format($total['goods_price'], false);
         $total['market_price_formated'] = Goods::price_format($total['market_price'], false);
         $total['saving_formated']       = Goods::price_format($total['saving'], false);
-        /* 折扣 */
+        // 折扣 
         $total['discount'] = Cart::compute_discount_check($goods);
         if ($total['discount'] > $total['goods_price'])
         {
@@ -265,10 +265,10 @@ class Order extends Foundation
 
         $total['discount_formated'] = Goods::price_format($total['discount'], false);
 
-        /* 税额 */
+        // 税额 
         if (!empty($order['need_inv']) && $order['inv_type'] != '')
         {
-            /* 查税率 */
+            // 查税率 
             $rate = 0;
             foreach ($GLOBALS['_CFG']['invoice_type']['type'] as $key => $type)
             {
@@ -285,11 +285,11 @@ class Order extends Foundation
         }
         $total['tax_formated'] = Goods::price_format($total['tax'], false);
 
-        /* 包装费用 */
+        // 包装费用 
 
-        /* 贺卡费用 */
+        // 贺卡费用 
 
-        /* 红包 */
+        // 红包 
 
         if (!empty($order['bonus_id']))
         {
@@ -298,7 +298,7 @@ class Order extends Foundation
         }
         $total['bonus_formated'] = Goods::price_format($total['bonus'], false);
 
-        /* 线下红包 */
+        // 线下红包 
         if (!empty($order['bonus_kill']))
         {
             $bonus          = BonusType::bonus_info(0,$order['bonus_kill']);
@@ -307,7 +307,7 @@ class Order extends Foundation
         }
 
 
-        /* 配送费用 */
+        // 配送费用 
         $shipping_cod_fee = NULL;
 
         if ($order['shipping_id'] > 0 && $total['real_goods_count'] > 0)
@@ -325,7 +325,7 @@ class Order extends Foundation
         // 红包和积分最多能支付的金额为商品总额
         $max_amount = $total['goods_price'] == 0 ? $total['goods_price'] : $total['goods_price'] - $bonus_amount;
 
-        /* 计算订单总额 */
+        // 计算订单总额 
         if ($order['extension_code'] == 'group_buy' && $group_buy['deposit'] > 0)
         {
             $total['amount'] = $total['goods_price'];
@@ -350,7 +350,7 @@ class Order extends Foundation
 
         }
 
-        /* 积分 */
+        // 积分 
         $order['integral'] = $order['integral'] > 0 ? $order['integral'] : 0;
         if ($total['amount'] > 0 && $max_amount > 0 && $order['integral'] > 0)
         {
@@ -370,12 +370,12 @@ class Order extends Foundation
         $total['integral'] = $order['integral'];
         $total['integral_formated'] = Goods::price_format($total['integral_money'], false);
 
-        /* 保存订单信息 */
+        // 保存订单信息 
         // $_SESSION['flow_order'] = $order;
 
         $se_flow_type = isset($_SESSION['flow_type']) ? $_SESSION['flow_type'] : '';
 
-        /* 支付费用 */
+        // 支付费用 
         // if (!empty($order['pay_id']) && ($total['real_goods_count'] > 0 || $se_flow_type != CART_EXCHANGE_GOODS))
         // {
         //     $total['pay_fee']      = pay_fee($order['pay_id'], $total['amount'], $shipping_cod_fee);
@@ -386,7 +386,7 @@ class Order extends Foundation
         // $total['amount']           += $total['pay_fee']; // 订单总额累加上支付费用
         // $total['amount_formated']  = price_format($total['amount'], false);
 
-        /* 取得可以得到的积分和红包 */
+        // 取得可以得到的积分和红包 
         if ($order['extension_code'] == 'group_buy')
         {
             $total['will_get_integral'] = $group_buy['gift_integral'];
@@ -496,7 +496,7 @@ class Order extends Foundation
      */
     public static function get_order_sn()
     {
-        /* 选择一个随机的方案 */
+        // 选择一个随机的方案 
         mt_srand((double) microtime() * 1000000);
 
         return date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
@@ -525,7 +525,7 @@ class Order extends Foundation
      */
     public static function change_order_goods_storage($order_id, $is_dec = true, $storage = 0)
     {
-        /* 查询订单商品信息 */
+        // 查询订单商品信息 
         switch ($storage)
         {
             case 0 :
@@ -616,7 +616,7 @@ class Order extends Foundation
         }
 
         $number = ($number > 0) ? '+ ' . $number : $number;
-        /* 处理货品库存 */
+        // 处理货品库存 
         $products_query = true;
         if (!empty($product_id))
         {
@@ -635,7 +635,7 @@ class Order extends Foundation
 //                ->increment('product_number' ,$number);
         }
 
-        /* 处理商品库存 */
+        // 处理商品库存 
         // $sql = "UPDATE " . $GLOBALS['ecs']->table('goods') ."
         //         SET goods_number = goods_number $number
         //         WHERE goods_id = '$good_id'
@@ -787,13 +787,13 @@ class Order extends Foundation
         $uid = Token::authorization();
         if($order = self::find()->where(['user_id' => $uid])->andWhere(['order_id' => $order_id])->one()){
 
-            /* 处理积分 */
+            // 处理积分 
             if($order->user_id >0 && $order->integral >0)
             {
                 AccountLog::logAccountChange( 0, 0, 0, $order->integral, trans('app', 'message.score.cancel').$order_id.trans('app', 'message.score.order'));
             }
 
-            /* 处理红包 */
+            // 处理红包 
             if($order->bonus_id >0)
             {
                 UserBonus::unuseBonus($order->bonus_id);

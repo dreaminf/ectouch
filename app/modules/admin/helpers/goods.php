@@ -46,7 +46,7 @@ function get_user_rank_list()
  */
 function get_member_price_list($goods_id)
 {
-    /* 取得会员价格 */
+    // 取得会员价格 
     $price_list = [];
     $sql = "SELECT user_rank, user_price FROM " .
         $GLOBALS['ecs']->table('member_price') .
@@ -72,7 +72,7 @@ function handle_goods_attr($goods_id, $id_list, $is_spec_list, $value_price_list
 {
     $goods_attr_id = [];
 
-    /* 循环处理每个属性 */
+    // 循环处理每个属性 
     foreach ($id_list as $key => $id) {
         $is_spec = $is_spec_list[$key];
         if ($is_spec == 'false') {
@@ -128,16 +128,16 @@ function handle_goods_attr($goods_id, $id_list, $is_spec_list, $value_price_list
  */
 function handle_member_price($goods_id, $rank_list, $price_list)
 {
-    /* 循环处理每个会员等级 */
+    // 循环处理每个会员等级 
     foreach ($rank_list as $key => $rank) {
-        /* 会员等级对应的价格 */
+        // 会员等级对应的价格 
         $price = $price_list[$key];
 
         // 插入或更新记录
         $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('member_price') .
             " WHERE goods_id = '$goods_id' AND user_rank = '$rank'";
         if ($GLOBALS['db']->getOne($sql) > 0) {
-            /* 如果会员价格是小于0则删除原来价格，不是则更新为新的价格 */
+            // 如果会员价格是小于0则删除原来价格，不是则更新为新的价格 
             if ($price < 0) {
                 $sql = "DELETE FROM " . $GLOBALS['ecs']->table('member_price') .
                     " WHERE goods_id = '$goods_id' AND user_rank = '$rank' LIMIT 1";
@@ -170,12 +170,12 @@ function handle_member_price($goods_id, $rank_list, $price_list)
  */
 function handle_other_cat($goods_id, $cat_list)
 {
-    /* 查询现有的扩展分类 */
+    // 查询现有的扩展分类 
     $sql = "SELECT cat_id FROM " . $GLOBALS['ecs']->table('goods_cat') .
         " WHERE goods_id = '$goods_id'";
     $exist_list = $GLOBALS['db']->getCol($sql);
 
-    /* 删除不再有的分类 */
+    // 删除不再有的分类 
     $delete_list = array_diff($exist_list, $cat_list);
     if ($delete_list) {
         $sql = "DELETE FROM " . $GLOBALS['ecs']->table('goods_cat') .
@@ -184,7 +184,7 @@ function handle_other_cat($goods_id, $cat_list)
         $GLOBALS['db']->query($sql);
     }
 
-    /* 添加新加的分类 */
+    // 添加新加的分类 
     $add_list = array_diff($cat_list, $exist_list, [0]);
     foreach ($add_list as $cat_id) {
         // 插入记录
@@ -252,10 +252,10 @@ function handle_goods_article($goods_id)
  */
 function handle_gallery_image($goods_id, $image_files, $image_descs, $image_urls)
 {
-    /* 是否处理缩略图 */
+    // 是否处理缩略图 
     $proc_thumb = (isset($GLOBALS['shop_id']) && $GLOBALS['shop_id'] > 0) ? false : true;
     foreach ($image_descs as $key => $img_desc) {
-        /* 是否成功上传 */
+        // 是否成功上传 
         $flag = false;
         if (isset($image_files['error'])) {
             if ($image_files['error'][$key] == 0) {
@@ -302,14 +302,14 @@ function handle_gallery_image($goods_id, $image_files, $image_descs, $image_urls
                 $GLOBALS['image']->add_watermark('../' . $img_url, '', $GLOBALS['_CFG']['watermark'], $GLOBALS['_CFG']['watermark_place'], $GLOBALS['_CFG']['watermark_alpha']);
             }
 
-            /* 重新格式化图片名称 */
+            // 重新格式化图片名称 
             $img_original = reformat_image_name('gallery', $goods_id, $img_original, 'source');
             $img_url = reformat_image_name('gallery', $goods_id, $img_url, 'goods');
             $thumb_url = reformat_image_name('gallery_thumb', $goods_id, $thumb_url, 'thumb');
             $sql = "INSERT INTO " . $GLOBALS['ecs']->table('goods_gallery') . " (goods_id, img_url, img_desc, thumb_url, img_original) " .
                 "VALUES ('$goods_id', '$img_url', '$img_desc', '$thumb_url', '$img_original')";
             $GLOBALS['db']->query($sql);
-            /* 不保留商品原图的时候删除原图 */
+            // 不保留商品原图的时候删除原图 
             if ($proc_thumb && !$GLOBALS['_CFG']['retain_original_img'] && !empty($img_original)) {
                 $GLOBALS['db']->query("UPDATE " . $GLOBALS['ecs']->table('goods_gallery') . " SET img_original='' WHERE `goods_id`='{$goods_id}'");
                 @unlink('../' . $img_original);
@@ -331,7 +331,7 @@ function handle_gallery_image($goods_id, $image_files, $image_descs, $image_urls
                 $thumb_url = htmlspecialchars($image_url);
             }
 
-            /* 重新格式化图片名称 */
+            // 重新格式化图片名称 
             $img_url = $img_original = htmlspecialchars($image_url);
             $sql = "INSERT INTO " . $GLOBALS['ecs']->table('goods_gallery') . " (goods_id, img_url, img_desc, thumb_url, img_original) " .
                 "VALUES ('$goods_id', '$img_url', '$img_desc', '$thumb_url', '$img_original')";
@@ -352,7 +352,7 @@ function handle_gallery_image($goods_id, $image_files, $image_descs, $image_urls
 function update_goods($goods_id, $field, $value)
 {
     if ($goods_id) {
-        /* 清除缓存 */
+        // 清除缓存 
         clear_cache_files();
 
         $sql = "UPDATE " . $GLOBALS['ecs']->table('goods') .
@@ -375,7 +375,7 @@ function delete_goods($goods_id)
         return;
     }
 
-    /* 取得有效商品id */
+    // 取得有效商品id 
     $sql = "SELECT DISTINCT goods_id FROM " . $GLOBALS['ecs']->table('goods') .
         " WHERE goods_id " . db_create_in($goods_id) . " AND is_delete = 1";
     $goods_id = $GLOBALS['db']->getCol($sql);
@@ -383,7 +383,7 @@ function delete_goods($goods_id)
         return;
     }
 
-    /* 删除商品图片和轮播图片文件 */
+    // 删除商品图片和轮播图片文件 
     $sql = "SELECT goods_thumb, goods_img, original_img " .
         "FROM " . $GLOBALS['ecs']->table('goods') .
         " WHERE goods_id " . db_create_in($goods_id);
@@ -400,17 +400,17 @@ function delete_goods($goods_id)
         }
     }
 
-    /* 删除商品 */
+    // 删除商品 
     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('goods') .
         " WHERE goods_id " . db_create_in($goods_id);
     $GLOBALS['db']->query($sql);
 
-    /* 删除商品的货品记录 */
+    // 删除商品的货品记录 
     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('products') .
         " WHERE goods_id " . db_create_in($goods_id);
     $GLOBALS['db']->query($sql);
 
-    /* 删除商品相册的图片文件 */
+    // 删除商品相册的图片文件 
     $sql = "SELECT img_url, thumb_url, img_original " .
         "FROM " . $GLOBALS['ecs']->table('goods_gallery') .
         " WHERE goods_id " . db_create_in($goods_id);
@@ -427,11 +427,11 @@ function delete_goods($goods_id)
         }
     }
 
-    /* 删除商品相册 */
+    // 删除商品相册 
     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('goods_gallery') . " WHERE goods_id " . db_create_in($goods_id);
     $GLOBALS['db']->query($sql);
 
-    /* 删除相关表记录 */
+    // 删除相关表记录 
     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('collect_goods') . " WHERE goods_id " . db_create_in($goods_id);
     $GLOBALS['db']->query($sql);
     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('goods_article') . " WHERE goods_id " . db_create_in($goods_id);
@@ -455,13 +455,13 @@ function delete_goods($goods_id)
     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('comment') . " WHERE comment_type = 0 AND id_value " . db_create_in($goods_id);
     $GLOBALS['db']->query($sql);
 
-    /* 删除相应虚拟商品记录 */
+    // 删除相应虚拟商品记录 
     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('virtual_card') . " WHERE goods_id " . db_create_in($goods_id);
     if (!$GLOBALS['db']->query($sql, 'SILENT') && $GLOBALS['db']->errno() != 1146) {
         die($GLOBALS['db']->error());
     }
 
-    /* 清除缓存 */
+    // 清除缓存 
     clear_cache_files();
 }
 
@@ -713,7 +713,7 @@ function get_goods_articles($goods_id)
  */
 function goods_list($is_delete, $real_goods = 1, $conditions = '')
 {
-    /* 过滤条件 */
+    // 过滤条件 
     $param_str = '-' . $is_delete . '-' . $real_goods;
     $result = get_filter($param_str);
     if ($result === false) {
@@ -739,7 +739,7 @@ function goods_list($is_delete, $real_goods = 1, $conditions = '')
 
         $where = $filter['cat_id'] > 0 ? " AND " . get_children($filter['cat_id']) : '';
 
-        /* 推荐类型 */
+        // 推荐类型 
         switch ($filter['intro_type']) {
             case 'is_best':
                 $where .= " AND is_best=1";
@@ -757,22 +757,22 @@ function goods_list($is_delete, $real_goods = 1, $conditions = '')
                 $where .= " AND (is_best=1 OR is_hot=1 OR is_new=1 OR (is_promote = 1 AND promote_price > 0 AND promote_start_date <= '" . $today . "' AND promote_end_date >= '" . $today . "'))";
         }
 
-        /* 库存警告 */
+        // 库存警告 
         if ($filter['stock_warning']) {
             $where .= ' AND goods_number <= warn_number ';
         }
 
-        /* 品牌 */
+        // 品牌 
         if ($filter['brand_id']) {
             $where .= " AND brand_id='$filter[brand_id]'";
         }
 
-        /* 扩展 */
+        // 扩展 
         if ($filter['extension_code']) {
             $where .= " AND extension_code='$filter[extension_code]'";
         }
 
-        /* 关键字 */
+        // 关键字 
         if (!empty($filter['keyword'])) {
             $where .= " AND (goods_sn LIKE '%" . mysql_like_quote($filter['keyword']) . "%' OR goods_name LIKE '%" . mysql_like_quote($filter['keyword']) . "%')";
         }
@@ -781,23 +781,23 @@ function goods_list($is_delete, $real_goods = 1, $conditions = '')
             $where .= " AND is_real='$real_goods'";
         }
 
-        /* 上架 */
+        // 上架 
         if ($filter['is_on_sale'] !== '') {
             $where .= " AND (is_on_sale = '" . $filter['is_on_sale'] . "')";
         }
 
-        /* 供货商 */
+        // 供货商 
         if (!empty($filter['suppliers_id'])) {
             $where .= " AND (suppliers_id = '" . $filter['suppliers_id'] . "')";
         }
 
         $where .= $conditions;
 
-        /* 记录总数 */
+        // 记录总数 
         $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('goods') . " AS g WHERE is_delete='$is_delete' $where";
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-        /* 分页大小 */
+        // 分页大小 
         $filter = page_and_size($filter);
 
         $sql = "SELECT goods_id, goods_name, goods_type, goods_sn, shop_price, is_on_sale, is_best, is_new, is_hot, sort_order, goods_number, integral, " .
@@ -928,7 +928,7 @@ function get_goods_specifications_list($goods_id)
  */
 function product_list($goods_id, $conditions = '')
 {
-    /* 过滤条件 */
+    // 过滤条件 
     $param_str = '-' . $goods_id;
     $result = get_filter($param_str);
     if ($result === false) {
@@ -949,19 +949,19 @@ function product_list($goods_id, $conditions = '')
 
         $where = '';
 
-        /* 库存警告 */
+        // 库存警告 
         if ($filter['stock_warning']) {
             $where .= ' AND goods_number <= warn_number ';
         }
 
-        /* 关键字 */
+        // 关键字 
         if (!empty($filter['keyword'])) {
             $where .= " AND (product_sn LIKE '%" . $filter['keyword'] . "%')";
         }
 
         $where .= $conditions;
 
-        /* 记录总数 */
+        // 记录总数 
         $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('products') . " AS p WHERE goods_id = $goods_id $where";
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
@@ -978,7 +978,7 @@ function product_list($goods_id, $conditions = '')
     }
     $row = $GLOBALS['db']->getAll($sql);
 
-    /* 处理规格属性 */
+    // 处理规格属性 
     $goods_attr = product_goods_attr_list($goods_id);
     foreach ($row as $key => $value) {
         $_goods_attr_array = explode('|', $value['goods_attr']);

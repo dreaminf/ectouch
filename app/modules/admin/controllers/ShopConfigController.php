@@ -15,10 +15,10 @@ class ShopConfigController extends Controller
          * 列表编辑 ?act=list_edit
          */
         if ($_REQUEST['act'] == 'list_edit') {
-            /* 检查权限 */
+            // 检查权限
             admin_priv('shop_config');
 
-            /* 可选语言 */
+            // 可选语言
             $dir = scandir(resource_path('lang'));
             $lang_list = [];
             foreach ($dir as $file) {
@@ -54,7 +54,7 @@ class ShopConfigController extends Controller
          * 邮件服务器设置
          */
         if ($_REQUEST['act'] == 'mail_settings') {
-            /* 检查权限 */
+            // 检查权限
             admin_priv('shop_config');
 
             $arr = $this->get_settings([5]);
@@ -70,13 +70,13 @@ class ShopConfigController extends Controller
         if ($_REQUEST['act'] == 'post') {
             $type = empty($_POST['type']) ? '' : $_POST['type'];
 
-            /* 检查权限 */
+            // 检查权限
             admin_priv('shop_config');
 
-            /* 允许上传的文件类型 */
+            // 允许上传的文件类型
             $allow_file_types = '|GIF|JPG|PNG|BMP|SWF|DOC|XLS|PPT|MID|WAV|ZIP|RAR|PDF|CHM|RM|TXT|CERT|';
 
-            /* 保存变量值 */
+            // 保存变量值
             $count = count($_POST['value']);
 
             $arr = [];
@@ -92,7 +92,7 @@ class ShopConfigController extends Controller
                 }
             }
 
-            /* 处理上传文件 */
+            // 处理上传文件
             $file_var_list = [];
             $sql = "SELECT * FROM " . $this->ecs->table('shop_config') . " WHERE parent_id > 0 AND type = 'file'";
             $res = $this->db->query($sql);
@@ -101,9 +101,9 @@ class ShopConfigController extends Controller
             }
 
             foreach ($_FILES AS $code => $file) {
-                /* 判断用户是否选择了文件 */
+                // 判断用户是否选择了文件
                 if ((isset($file['error']) && $file['error'] == 0) || (!isset($file['error']) && $file['tmp_name'] != 'none')) {
-                    /* 检查上传的文件类型是否合法 */
+                    // 检查上传的文件类型是否合法
                     if (!check_file_type($file['tmp_name'], $file['name'], $allow_file_types)) {
                         return sys_msg(sprintf($GLOBALS['_LANG']['msg_invalid_file'], $file['name']));
                     } else {
@@ -128,7 +128,7 @@ class ShopConfigController extends Controller
                             $file_name = $file_var_list[$code]['store_dir'] . $file['name'];
                         }
 
-                        /* 判断是否上传成功 */
+                        // 判断是否上传成功
                         if (move_upload_file($file['tmp_name'], $file_name)) {
                             $sql = "UPDATE " . $this->ecs->table('shop_config') . " SET value = '$file_name' WHERE code = '$code'";
                             $this->db->query($sql);
@@ -139,7 +139,7 @@ class ShopConfigController extends Controller
                 }
             }
 
-            /* 处理发票类型及税率 */
+            // 处理发票类型及税率
             if (!empty($_POST['invoice_rate'])) {
                 foreach ($_POST['invoice_rate'] as $key => $rate) {
                     $rate = round(floatval($rate), 2);
@@ -156,10 +156,10 @@ class ShopConfigController extends Controller
                 $this->db->query($sql);
             }
 
-            /* 记录日志 */
+            // 记录日志
             admin_log('', 'edit', 'shop_config');
 
-            /* 清除缓存 */
+            // 清除缓存
             clear_all_files();
 
             $GLOBALS['_CFG'] = load_config();
@@ -195,13 +195,13 @@ class ShopConfigController extends Controller
          * 发送测试邮件
          */
         if ($_REQUEST['act'] == 'send_test_email') {
-            /* 检查权限 */
+            // 检查权限
             check_authz_json('shop_config');
 
-            /* 取得参数 */
+            // 取得参数
             $email = trim($_POST['email']);
 
-            /* 更新配置 */
+            // 更新配置
             $GLOBALS['_CFG']['mail_service'] = intval($_POST['mail_service']);
             $GLOBALS['_CFG']['smtp_host'] = trim($_POST['smtp_host']);
             $GLOBALS['_CFG']['smtp_port'] = trim($_POST['smtp_port']);
@@ -221,10 +221,10 @@ class ShopConfigController extends Controller
          * 删除上传文件
          */
         if ($_REQUEST['act'] == 'del') {
-            /* 检查权限 */
+            // 检查权限
             check_authz_json('shop_config');
 
-            /* 取得参数 */
+            // 取得参数
             $code = trim($_GET['code']);
 
             $filename = $GLOBALS['_CFG'][$code];
@@ -235,10 +235,10 @@ class ShopConfigController extends Controller
             //更新设置
             $this->update_configure($code, '');
 
-            /* 记录日志 */
+            // 记录日志
             admin_log('', 'edit', 'shop_config');
 
-            /* 清除缓存 */
+            // 清除缓存
             clear_all_files();
 
             return sys_msg($GLOBALS['_LANG']['save_success'], 0);
@@ -291,12 +291,12 @@ class ShopConfigController extends Controller
             }
         }
 
-        /* 取出全部数据：分组和变量 */
+        // 取出全部数据：分组和变量
         $sql = "SELECT * FROM " . $this->ecs->table('shop_config') .
             " WHERE type<>'hidden' $config_groups $excludes_groups ORDER BY parent_id, sort_order, id";
         $item_list = $this->db->getAll($sql);
 
-        /* 整理数据 */
+        // 整理数据
         $group_list = [];
         foreach ($item_list AS $key => $item) {
             $pid = $item['parent_id'];
@@ -307,12 +307,12 @@ class ShopConfigController extends Controller
                 $item['url'] = 1;
             }
             if ($pid == 0) {
-                /* 分组 */
+                // 分组
                 if ($item['type'] == 'group') {
                     $group_list[$item['id']] = $item;
                 }
             } else {
-                /* 变量 */
+                // 变量
                 if (isset($group_list[$pid])) {
                     if ($item['store_range']) {
                         $item['store_options'] = explode(',', $item['store_range']);

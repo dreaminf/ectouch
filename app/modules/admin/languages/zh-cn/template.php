@@ -18,7 +18,7 @@ $_LANG['display'] = '显示';
 $_LANG['select_plz'] = '请选择...';
 $_LANG['button_restore'] = '还原到上一修改';
 
-/* 提示信息 */
+// 提示信息
 $_LANG['library_not_written'] = '库文件 %s 没有修改权限，该库文件将无法修改';
 $_LANG['install_template_success'] = '启用模板成功。';
 $_LANG['setup_success'] = '设置模板内容成功。';
@@ -29,7 +29,7 @@ $_LANG['backup_success'] = "所有模板文件已备份到templates/backup目录
 $_LANG['backup_failed'] = '备份模板文件失败，请检查templates/backup 目录是否可以写入。';
 $_LANG['not_editable'] = '非可编辑区库文件无选择项';
 
-/* 每一个模板文件对应的语言 */
+// 每一个模板文件对应的语言
 $_LANG['template_files']['article'] = '文章内容模板';
 $_LANG['template_files']['article_cat'] = '文章分类模板';
 $_LANG['template_files']['brand'] = '品牌专区';
@@ -51,7 +51,7 @@ $_LANG['template_files']['message_board'] = '留言板';
 //$_LANG['template_files']['quotation'] = '报价单';
 $_LANG['template_files']['exchange_list'] = '积分商城列表';
 
-/* 每一个库项目的描述 */
+// 每一个库项目的描述
 $_LANG['template_libs']['ad_position'] = '广告位';
 $_LANG['template_libs']['index_ad'] = '首页主广告位';
 $_LANG['template_libs']['cat_articles'] = '文章列表';
@@ -113,7 +113,7 @@ $_LANG['template_libs']['message_list'] = '留言列表';
 $_LANG['template_libs']['exchange_hot'] = '积分商城热卖商品';
 $_LANG['template_libs']['exchange_list'] = '积分商城列表商品';
 
-/* 模板布局备份 */
+// 模板布局备份
 $_LANG['backup_setting'] = '备份模板设置';
 $_LANG['cur_setting_template'] = '当前可备份的模板设置';
 $_LANG['no_setting_template'] = '没有可备份的模板设置';
@@ -127,7 +127,7 @@ $_LANG['backup_template_ok'] = '备份设置成功';
 $_LANG['del_backup_ok'] = '备份删除成功';
 $_LANG['restore_backup_ok'] = '恢复备份成功';
 
-/* JS 语言项 */
+// JS 语言项
 $_LANG['js_languages']['setupConfirm'] = '启用新的模板将覆盖原来的模板。\n您确定要启用选定的模板吗？';
 $_LANG['js_languages']['reinstall'] = '重新安装当前模板';
 $_LANG['backup'] = '备份当前模板';

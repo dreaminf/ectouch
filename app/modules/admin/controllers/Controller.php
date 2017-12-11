@@ -42,18 +42,18 @@ class Controller extends BaseController
         load_helper(['time', 'base', 'common']);
         load_helper(['main', 'exchange'], 'admin');
 
-        /* 初始化 Shop 类 */
+        // 初始化 Shop 类 
         $this->ecs = $GLOBALS['ecs'] = new Shop();
         define('DATA_DIR', $this->ecs->data_dir());
         define('IMAGE_DIR', $this->ecs->image_dir());
 
-        /* 初始化数据库类 */
+        // 初始化数据库类 
         $this->db = $GLOBALS['db'] = new Mysql();
 
-        /* 创建错误处理对象 */
+        // 创建错误处理对象 
         $this->err = $GLOBALS['err'] = new Error();
 
-        /* 载入系统参数 */
+        // 载入系统参数 
         $this->_CFG = $GLOBALS['_CFG'] = load_config();
 
         // TODO : 登录部分准备拿出去做，到时候把以下操作一起挪过去
@@ -70,7 +70,7 @@ class Controller extends BaseController
         define('__PUBLIC__', asset('/static'));
         define('__TPL__', asset('/static/admin'));
 
-        /* 创建 Smarty 对象。*/
+        // 创建 Smarty 对象。
         $this->smarty = $GLOBALS['smarty'] = new Template();
         $this->smarty->template_dir = dirname(__DIR__) . '/views';
         $this->smarty->compile_dir = storage_path('framework/temp/compiled/admin');
@@ -82,11 +82,11 @@ class Controller extends BaseController
         $this->smarty->assign('help_open', $GLOBALS['_CFG']['help_open']);
         $this->smarty->assign('enable_order_check', $GLOBALS['_CFG']['enable_order_check']);
 
-        /* 验证管理员身份 */
+        // 验证管理员身份 
         if ((!session('?admin_id') || intval(session('admin_id')) <= 0) &&
             $_REQUEST['act'] != 'login' && $_REQUEST['act'] != 'signin' &&
             $_REQUEST['act'] != 'forget_pwd' && $_REQUEST['act'] != 'reset_pwd' && $_REQUEST['act'] != 'check_order') {
-            /* session 不存在，检查cookie */
+            // session 不存在，检查cookie 
             $cp_admin_id = cookie('cp_admin_id');
             $cp_admin_pass = cookie('cp_admin_pass');
             if (!empty($cp_admin_id) && !empty($cp_admin_pass)) {

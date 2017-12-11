@@ -75,7 +75,7 @@ function get_booking_rec($user_id, $goods_id)
  */
 function get_message_list($user_id, $user_name, $num, $start, $order_id = 0)
 {
-    /* 获取留言数据 */
+    // 获取留言数据 
     $msg = [];
     $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('feedback');
     if ($order_id) {
@@ -87,7 +87,7 @@ function get_message_list($user_id, $user_name, $num, $start, $order_id = 0)
     $res = $GLOBALS['db']->selectLimit($sql, $num, $start);
 
     foreach ($res as $rows) {
-        /* 取得留言的回复 */
+        // 取得留言的回复 
         //if (empty($order_id))
         //{
         $reply = [];
@@ -449,19 +449,19 @@ function get_account_log($user_id, $num, $start)
             $rows['pay_status'] = ($rows['is_paid'] == 0) ? $GLOBALS['_LANG']['un_confirm'] : $GLOBALS['_LANG']['is_confirm'];
             $rows['amount'] = price_format(abs($rows['amount']), false);
 
-            /* 会员的操作类型： 冲值，提现 */
+            // 会员的操作类型： 冲值，提现 
             if ($rows['process_type'] == 0) {
                 $rows['type'] = $GLOBALS['_LANG']['surplus_type_0'];
             } else {
                 $rows['type'] = $GLOBALS['_LANG']['surplus_type_1'];
             }
 
-            /* 支付方式的ID */
+            // 支付方式的ID 
             $sql = 'SELECT pay_id FROM ' . $GLOBALS['ecs']->table('payment') .
                 " WHERE pay_name = '$rows[payment]' AND enabled = 1";
             $pid = $GLOBALS['db']->getOne($sql);
 
-            /* 如果是预付款而且还没有付款, 允许付款 */
+            // 如果是预付款而且还没有付款, 允许付款 
             if (($rows['is_paid'] == 0) && ($rows['process_type'] == 0)) {
                 $rows['handle'] = '<a href="user.php?act=pay&id=' . $rows['id'] . '&pid=' . $pid . '">' . $GLOBALS['_LANG']['pay'] . '</a>';
             }
@@ -523,7 +523,7 @@ function get_user_default($user_id)
     $info['username'] = stripslashes(session('user_name'));
     $info['shop_name'] = $GLOBALS['_CFG']['shop_name'];
     $info['integral'] = $row['pay_points'] . $GLOBALS['_CFG']['integral_name'];
-    /* 增加是否开启会员邮件验证开关 */
+    // 增加是否开启会员邮件验证开关 
     $info['is_validate'] = ($GLOBALS['_CFG']['member_email_validate'] && !$row['is_validated']) ? 0 : 1;
     $info['credit_line'] = $row['credit_line'];
     $info['formated_credit_line'] = price_format($info['credit_line'], false);
@@ -570,7 +570,7 @@ function add_tag($id, $tag)
     $arr = explode(',', $tag);
 
     foreach ($arr as $val) {
-        /* 检查是否重复 */
+        // 检查是否重复 
         $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table("tag") .
             " WHERE user_id = '" . session('user_id') . "' AND goods_id = '$id' AND tag_words = '$val'";
 
@@ -625,7 +625,7 @@ function color_tag(&$tags)
 
     $rewrite = intval($GLOBALS['_CFG']['rewrite']) > 0;
 
-    /* 遍历所有标签，根据引用次数设定字体大小 */
+    // 遍历所有标签，根据引用次数设定字体大小 
     foreach ($tags as $key => $val) {
         $lvl = $scount[$val['tag_count']]; // 着色数组key
 
@@ -688,7 +688,7 @@ function get_user_prompt($user_id)
 {
     $prompt = [];
     $now = gmtime();
-    /* 夺宝奇兵 */
+    // 夺宝奇兵 
     $sql = "SELECT act_id, goods_name, end_time " .
         "FROM " . $GLOBALS['ecs']->table('goods_activity') .
         " WHERE act_type = '" . GAT_SNATCH . "'" .
@@ -712,7 +712,7 @@ function get_user_prompt($user_id)
     }
 
 
-    /* 竞拍 */
+    // 竞拍 
 
     $sql = "SELECT act_id, goods_name, end_time " .
         "FROM " . $GLOBALS['ecs']->table('goods_activity') .
@@ -730,7 +730,7 @@ function get_user_prompt($user_id)
         }
     }
 
-    /* 排序 */
+    // 排序 
     usort($prompt, function ($a, $b) {
         if ($a["add_time"] == $b["add_time"]) {
             return 0;
@@ -738,7 +738,7 @@ function get_user_prompt($user_id)
         return $a["add_time"] < $b["add_time"] ? 1 : -1;
     });
 
-    /* 格式化时间 */
+    // 格式化时间 
     foreach ($prompt as $key => $val) {
         $prompt[$key]['formated_time'] = local_date($GLOBALS['_CFG']['time_format'], $val['add_time']);
     }

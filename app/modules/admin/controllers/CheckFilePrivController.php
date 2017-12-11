@@ -12,10 +12,10 @@ class CheckFilePrivController extends Controller
     public function actionIndex()
     {
         if ($_REQUEST['act'] == 'check') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('file_priv');
 
-            /* 要检查目录文件列表 */
+            // 要检查目录文件列表 
             $goods_img_dir = [];
             $folder = scandir(public_path('images'));
             foreach ($folder as $dir) {
@@ -48,7 +48,7 @@ class CheckFilePrivController extends Controller
             $dir_subdir['temp'][] = 'temp/query_caches';
             $dir_subdir['temp'][] = 'temp/static_caches';
 
-            /* 将商品图片目录加入检查范围 */
+            // 将商品图片目录加入检查范围 
             foreach ($goods_img_dir as $val) {
                 $dir_subdir['images'][] = $val;
             }
@@ -58,13 +58,13 @@ class CheckFilePrivController extends Controller
 
             $list = [];
 
-            /* 检查目录 */
+            // 检查目录 
             foreach ($dir as $val) {
                 $mark = file_mode_info(ROOT_PATH . $val);
                 $list[] = ['item' => $val . $GLOBALS['_LANG']['dir'], 'r' => $mark & 1, 'w' => $mark & 2, 'm' => $mark & 4];
             }
 
-            /* 检查目录及子目录 */
+            // 检查目录及子目录 
             $keys = array_unique(array_keys($dir_subdir));
             foreach ($keys as $key) {
                 $err_msg = [];
@@ -72,7 +72,7 @@ class CheckFilePrivController extends Controller
                 $list[] = ['item' => $key . $GLOBALS['_LANG']['dir_subdir'], 'r' => $mark & 1, 'w' => $mark & 2, 'm' => $mark & 4, 'err_msg' => $err_msg];
             }
 
-            /* 检查当前模板可写性 */
+            // 检查当前模板可写性 
             $dwt = scandir(ROOT_PATH . $tpl);
             $tpl_file = []; //获取要检查的文件
             foreach ($dwt as $file) {
@@ -88,18 +88,18 @@ class CheckFilePrivController extends Controller
                 }
             }
 
-            /* 开始检查 */
+            // 开始检查 
             $err_msg = [];
             $mark = $this->check_file_in_array($tpl_file, $err_msg);
             $list[] = ['item' => $tpl . $GLOBALS['_LANG']['tpl_file'], 'r' => $mark & 1, 'w' => $mark & 2, 'm' => $mark & 4, 'err_msg' => $err_msg];
 
-            /* 检查smarty的缓存目录和编译目录及image目录是否有执行rename()函数的权限 */
+            // 检查smarty的缓存目录和编译目录及image目录是否有执行rename()函数的权限 
             $tpl_list = [];
             $tpl_dirs[] = 'temp/caches';
             $tpl_dirs[] = 'temp/compiled';
             $tpl_dirs[] = 'temp/compiled/admin';
 
-            /* 将商品图片目录加入检查范围 */
+            // 将商品图片目录加入检查范围 
             foreach ($goods_img_dir as $val) {
                 $tpl_dirs[] = $val;
             }
@@ -108,7 +108,7 @@ class CheckFilePrivController extends Controller
                 $mask = file_mode_info(ROOT_PATH . $dir);
 
                 if (($mask & 4) > 0) {
-                    /* 之前已经检查过修改权限，只有有修改权限才检查rename权限 */
+                    // 之前已经检查过修改权限，只有有修改权限才检查rename权限 
                     if (($mask & 8) < 1) {
                         $tpl_list[] = $dir;
                     }

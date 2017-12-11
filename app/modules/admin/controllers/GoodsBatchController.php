@@ -19,13 +19,13 @@ class GoodsBatchController extends Controller
          * 批量上传
          */
         if ($_REQUEST['act'] == 'add') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('goods_batch');
 
-            /* 取得分类列表 */
+            // 取得分类列表 
             $this->smarty->assign('cat_list', cat_list());
 
-            /* 取得可选语言 */
+            // 取得可选语言 
             $dir = scandir(resource_path('lang'));
             $lang_list = [
                 'UTF8' => $GLOBALS['_LANG']['charset']['utf8'],
@@ -49,7 +49,7 @@ class GoodsBatchController extends Controller
             $this->smarty->assign('lang_list', $lang_list);
             $this->smarty->assign('download_list', $download_list);
 
-            /* 参数赋值 */
+            // 参数赋值 
             $ur_here = $GLOBALS['_LANG']['13_batch_add'];
             $this->smarty->assign('ur_here', $ur_here);
 
@@ -60,10 +60,10 @@ class GoodsBatchController extends Controller
          * 批量上传：处理
          */
         if ($_REQUEST['act'] == 'upload') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('goods_batch');
 
-            /* 将文件按行读入数组，逐行进行解析 */
+            // 将文件按行读入数组，逐行进行解析 
             $line_number = 0;
             $arr = [];
             $goods_list = [];
@@ -303,7 +303,7 @@ class GoodsBatchController extends Controller
             // 显示的字段列表
             $this->smarty->assign('field_show', ['goods_name' => true, 'goods_sn' => true, 'brand_name' => true, 'market_price' => true, 'shop_price' => true]);
 
-            /* 参数赋值 */
+            // 参数赋值 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['goods_upload_confirm']);
 
             return $this->smarty->display('goods_batch_confirm.htm');
@@ -313,14 +313,14 @@ class GoodsBatchController extends Controller
          * 批量上传：入库
          */
         if ($_REQUEST['act'] == 'insert') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('goods_batch');
 
             if (isset($_POST['checked'])) {
 
                 $image = new Image($GLOBALS['_CFG']['bgcolor']);
 
-                /* 字段默认值 */
+                // 字段默认值 
                 $default_value = [
                     'brand_id' => 0,
                     'goods_number' => 0,
@@ -338,7 +338,7 @@ class GoodsBatchController extends Controller
                     'goods_type' => 0,
                 ];
 
-                /* 查询品牌列表 */
+                // 查询品牌列表 
                 $brand_list = [];
                 $sql = "SELECT brand_id, brand_name FROM " . $this->ecs->table('brand');
                 $res = $this->db->query($sql);
@@ -346,14 +346,14 @@ class GoodsBatchController extends Controller
                     $brand_list[$row['brand_name']] = $row['brand_id'];
                 }
 
-                /* 字段列表 */
+                // 字段列表 
                 $field_list = array_keys($GLOBALS['_LANG']['upload_goods']);
                 $field_list[] = 'goods_class'; //实体或虚拟商品
 
-                /* 获取商品good id */
+                // 获取商品good id 
                 $max_id = $this->db->getOne("SELECT MAX(goods_id) + 1 FROM " . $this->ecs->table('goods'));
 
-                /* 循环插入商品数据 */
+                // 循环插入商品数据 
                 foreach ($_POST['checked'] AS $key => $value) {
                     // 合并
                     $field_arr = [
@@ -366,7 +366,7 @@ class GoodsBatchController extends Controller
                         // 转换编码
                         $field_value = isset($_POST[$field][$value]) ? $_POST[$field][$value] : '';
 
-                        /* 虚拟商品处理 */
+                        // 虚拟商品处理 
                         if ($field == 'goods_class') {
                             $field_value = intval($field_value);
                             if ($field_value == G_CARD) {
@@ -424,7 +424,7 @@ class GoodsBatchController extends Controller
                         $field_arr['goods_sn'] = generate_goods_sn($max_id);
                     }
 
-                    /* 如果是虚拟商品，库存为0 */
+                    // 如果是虚拟商品，库存为0 
                     if ($field_arr['is_real'] == 0) {
                         $field_arr['goods_number'] = 0;
                     }
@@ -432,7 +432,7 @@ class GoodsBatchController extends Controller
 
                     $max_id = $this->db->insert_id() + 1;
 
-                    /* 如果图片不为空,修改商品图片，插入商品相册*/
+                    // 如果图片不为空,修改商品图片，插入商品相册
                     if (!empty($field_arr['original_img']) || !empty($field_arr['goods_img']) || !empty($field_arr['goods_thumb'])) {
                         $goods_img = '';
                         $goods_thumb = '';
@@ -493,7 +493,7 @@ class GoodsBatchController extends Controller
             // 记录日志
             admin_log('', 'batch_upload', 'goods');
 
-            /* 显示提示信息，返回商品列表 */
+            // 显示提示信息，返回商品列表 
             $link[] = ['href' => 'goods.php?act=list', 'text' => $GLOBALS['_LANG']['01_goods_list']];
             return sys_msg($GLOBALS['_LANG']['batch_upload_ok'], 0, $link);
         }
@@ -502,20 +502,20 @@ class GoodsBatchController extends Controller
          * 批量修改：选择商品
          */
         if ($_REQUEST['act'] == 'select') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('goods_batch');
 
-            /* 取得分类列表 */
+            // 取得分类列表 
             $this->smarty->assign('cat_list', cat_list());
 
-            /* 取得品牌列表 */
+            // 取得品牌列表 
             $this->smarty->assign('brand_list', get_brand_list());
 
-            /* 参数赋值 */
+            // 参数赋值 
             $ur_here = $GLOBALS['_LANG']['15_batch_edit'];
             $this->smarty->assign('ur_here', $ur_here);
 
-            /* 显示模板 */
+            // 显示模板 
 
             return $this->smarty->display('goods_batch_select.htm');
         }
@@ -524,10 +524,10 @@ class GoodsBatchController extends Controller
          * 批量修改：修改
          */
         if ($_REQUEST['act'] == 'edit') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('goods_batch');
 
-            /* 取得商品列表 */
+            // 取得商品列表 
             if ($_POST['select_method'] == 'cat') {
                 $where = " WHERE goods_id " . db_create_in($_POST['goods_ids']);
             } else {
@@ -540,7 +540,7 @@ class GoodsBatchController extends Controller
             $sql = "SELECT DISTINCT goods_id, goods_sn, goods_name, market_price, shop_price, goods_number, integral, give_integral, brand_id, is_real FROM " . $this->ecs->table('goods') . $where;
             $this->smarty->assign('goods_list', $this->db->getAll($sql));
 
-            /* 取编辑商品的货品列表 */
+            // 取编辑商品的货品列表 
             $product_exists = false;
             $sql = "SELECT * FROM " . $this->ecs->table('products') . $where;
             $product_list = $this->db->getAll($sql);
@@ -569,7 +569,7 @@ class GoodsBatchController extends Controller
 
             $this->smarty->assign('product_exists', $product_exists);
 
-            /* 取得会员价格 */
+            // 取得会员价格 
             $member_price_list = [];
             $sql = "SELECT DISTINCT goods_id, user_rank, user_price FROM " . $this->ecs->table('member_price') . $where;
             $res = $this->db->query($sql);
@@ -578,23 +578,23 @@ class GoodsBatchController extends Controller
             }
             $this->smarty->assign('member_price_list', $member_price_list);
 
-            /* 取得会员等级 */
+            // 取得会员等级 
             $sql = "SELECT rank_id, rank_name, discount " .
                 "FROM " . $this->ecs->table('user_rank') .
                 " ORDER BY discount DESC";
             $this->smarty->assign('rank_list', $this->db->getAll($sql));
 
-            /* 取得品牌列表 */
+            // 取得品牌列表 
             $this->smarty->assign('brand_list', get_brand_list());
 
-            /* 赋值编辑方式 */
+            // 赋值编辑方式 
             $this->smarty->assign('edit_method', $_POST['edit_method']);
 
-            /* 参数赋值 */
+            // 参数赋值 
             $ur_here = $GLOBALS['_LANG']['15_batch_edit'];
             $this->smarty->assign('ur_here', $ur_here);
 
-            /* 显示模板 */
+            // 显示模板 
 
             return $this->smarty->display('goods_batch_edit.htm');
         }
@@ -603,7 +603,7 @@ class GoodsBatchController extends Controller
          * 批量修改：提交
          */
         if ($_REQUEST['act'] == 'update') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('goods_batch');
 
             if ($_POST['edit_method'] == 'each') {
@@ -636,7 +636,7 @@ class GoodsBatchController extends Controller
                         if (!empty($_POST['rank_id'])) {
                             foreach ($_POST['rank_id'] AS $rank_id) {
                                 if (trim($_POST['member_price'][$goods_id][$rank_id]) == '') {
-                                    /* 为空时不做处理 */
+                                    // 为空时不做处理 
                                     continue;
                                 }
 
@@ -732,7 +732,7 @@ class GoodsBatchController extends Controller
          * 下载文件
          */
         if ($_REQUEST['act'] == 'download') {
-            /* 检查权限 */
+            // 检查权限 
             admin_priv('goods_batch');
 
             // 文件标签
@@ -749,7 +749,7 @@ class GoodsBatchController extends Controller
                 }
             }
             if (isset($GLOBALS['_LANG']['upload_goods'])) {
-                /* 创建字符集转换对象 */
+                // 创建字符集转换对象 
                 if ($_GET['charset'] == 'zh_cn' || $_GET['charset'] == 'zh_tw') {
                     $to_charset = $_GET['charset'] == 'zh_cn' ? 'GB2312' : 'BIG5';
                     echo ecs_iconv(CHARSET, $to_charset, join(',', $GLOBALS['_LANG']['upload_goods']));

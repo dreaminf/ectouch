@@ -47,10 +47,10 @@ class MyshipController extends Controller
         $this->smarty->assign('city_list', $city_list);
         $this->smarty->assign('district_list', $district_list);
 
-        /* 取得国家列表、商店所在国家、商店所在国家的省列表 */
+        // 取得国家列表、商店所在国家、商店所在国家的省列表 
         $this->smarty->assign('country_list', get_regions());
 
-        /* 取得配送列表 */
+        // 取得配送列表 
         $region = [$choose['country'], $choose['province'], $choose['city'], $choose['district']];
         $shipping_list = available_shipping_list($region);
         $cart_weight_price = 0;

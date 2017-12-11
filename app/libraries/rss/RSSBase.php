@@ -27,7 +27,7 @@ namespace app\libraries\rss;
 class RSSBase
 {
     /*-----------------------*/
-    /* C O N S T R U C T O R */
+    // C O N S T R U C T O R 
     /*-----------------------*/
 
     //-------------------------------------------------

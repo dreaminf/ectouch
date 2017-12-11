@@ -221,7 +221,7 @@ function start_response(result)
         document.getElementById('time_1').id = first_act + 'done';
         first_act = 'icon';
         restart = 1;
-        /* 结束时，删除多余的最后一行 */
+        // 结束时，删除多余的最后一行
         var tbl = document.getElementById("listTable"); //获取表格对象
         tbl.deleteRow(tbl.rows.length - 1);
       }
@@ -236,12 +236,12 @@ function start_response(result)
           if (result.module_no > 0 )
           {
             if (tbl.rows.length >1)
-            /* 已经换模块，删除多余的最后一行 */
+            // 已经换模块，删除多余的最后一行
             {
                 tbl.deleteRow(tbl.rows.length - 1);
             }
           }
-          /* 产生一个标题行 */
+          // 产生一个标题行
           var row = tbl.insertRow(-1);
 
           cell = row.insertCell(0);

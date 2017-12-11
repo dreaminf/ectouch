@@ -16,7 +16,7 @@ class VisitSoldController extends Controller
 
         $this->smarty->assign('lang', $GLOBALS['_LANG']);
 
-        /* act操作项的初始化 */
+        // act操作项的初始化 
         if (empty($_REQUEST['act'])) {
             $_REQUEST['act'] = 'list';
         } else {
@@ -29,15 +29,15 @@ class VisitSoldController extends Controller
          *访问购买比例
          */
         if ($_REQUEST['act'] == 'list' || $_REQUEST['act'] == 'download') {
-            /* 变量的初始化 */
+            // 变量的初始化 
             $cat_id = (!empty($_REQUEST['cat_id'])) ? intval($_REQUEST['cat_id']) : 0;
             $brand_id = (!empty($_REQUEST['brand_id'])) ? intval($_REQUEST['brand_id']) : 0;
             $show_num = (!empty($_REQUEST['show_num'])) ? intval($_REQUEST['show_num']) : 15;
 
-            /* 获取访问购买的比例数据 */
+            // 获取访问购买的比例数据 
             $click_sold_info = $this->click_sold_info($cat_id, $brand_id, $show_num);
 
-            /* 下载报表 */
+            // 下载报表 
             if ($_REQUEST['act'] == "download") {
                 $filename = 'visit_sold';
                 header("Content-type: application/vnd.ms-excel; charset=utf-8");
@@ -52,7 +52,7 @@ class VisitSoldController extends Controller
                 exit;
             }
 
-            /* 赋值到模板 */
+            // 赋值到模板 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['visit_buy_per']);
 
             $this->smarty->assign('show_num', $show_num);
@@ -103,7 +103,7 @@ class VisitSoldController extends Controller
             if ($item['click_count'] <= 0) {
                 $item['scale'] = 0;
             } else {
-                /* 每一百个点击的订单比率 */
+                // 每一百个点击的订单比率 
                 $item['scale'] = sprintf("%0.2f", ($item['sold_times'] / $item['click_count']) * 100) . '%';
             }
 

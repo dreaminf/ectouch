@@ -11,7 +11,7 @@ class FilecheckController extends Controller
 {
     public function actionIndex()
     {
-        /* 检查权限 */
+        // 检查权限 
         admin_priv('file_check');
 
         if (!$ecshopfiles = @file('./ecshopfiles.md5')) {

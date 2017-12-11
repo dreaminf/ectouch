@@ -55,7 +55,7 @@ $_LANG['batch_drop_success'] = '执行成功!';
 
 $_LANG['back_list'] = '返回评论列表';
 
-/* JS提示信息 */
+// JS提示信息 
 $_LANG['js_languages']['no_content'] = '回复的评论内容不能为空!';
 $_LANG['have_reply_content'] = '提示: 此条评论已有回复, 如果继续回复将更新原来回复的内容!';
 

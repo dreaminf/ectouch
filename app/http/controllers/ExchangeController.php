@@ -19,14 +19,14 @@ class ExchangeController extends Controller
          * 积分兑换商品列表
          */
         if ($_REQUEST['act'] == 'list') {
-            /* 初始化分页信息 */
+            // 初始化分页信息 
             $page = isset($_REQUEST['page']) && intval($_REQUEST['page']) > 0 ? intval($_REQUEST['page']) : 1;
             $size = isset($GLOBALS['_CFG']['page_size']) && intval($GLOBALS['_CFG']['page_size']) > 0 ? intval($GLOBALS['_CFG']['page_size']) : 10;
             $cat_id = isset($_REQUEST['cat_id']) && intval($_REQUEST['cat_id']) > 0 ? intval($_REQUEST['cat_id']) : 0;
             $integral_max = isset($_REQUEST['integral_max']) && intval($_REQUEST['integral_max']) > 0 ? intval($_REQUEST['integral_max']) : 0;
             $integral_min = isset($_REQUEST['integral_min']) && intval($_REQUEST['integral_min']) > 0 ? intval($_REQUEST['integral_min']) : 0;
 
-            /* 排序、显示方式以及类型 */
+            // 排序、显示方式以及类型 
             $default_display_type = $GLOBALS['_CFG']['show_order_type'] == '0' ? 'list' : ($GLOBALS['_CFG']['show_order_type'] == '1' ? 'grid' : 'text');
             $default_sort_order_method = $GLOBALS['_CFG']['sort_order_method'] == '0' ? 'DESC' : 'ASC';
             $default_sort_order_type = $GLOBALS['_CFG']['sort_order_type'] == '0' ? 'goods_id' : ($GLOBALS['_CFG']['sort_order_type'] == '1' ? 'exchange_integral' : 'last_update');
@@ -38,12 +38,12 @@ class ExchangeController extends Controller
             $display = in_array($display, ['list', 'grid', 'text']) ? $display : 'text';
             cookie('display', $display, 1440 * 7);
 
-            /* 页面的缓存ID */
+            // 页面的缓存ID 
             $cache_id = sprintf('%X', crc32($cat_id . '-' . $display . '-' . $sort . '-' . $order . '-' . $page . '-' . $size . '-' . session('user_rank') . '-' .
                 $GLOBALS['_CFG']['lang'] . '-' . $integral_max . '-' . $integral_min));
 
             if (!$this->smarty->is_cached('exchange.dwt', $cache_id)) {
-                /* 如果页面没有被缓存则重新获取页面的内容 */
+                // 如果页面没有被缓存则重新获取页面的内容 
 
                 $children = get_children($cat_id);
 
@@ -65,7 +65,7 @@ class ExchangeController extends Controller
                 $this->smarty->assign('top_goods', get_top10());                  // 销售排行
                 $this->smarty->assign('promotion_info', get_promotion_info());         // 促销活动信息
 
-                /* 调查 */
+                // 调查 
                 $vote = get_vote();
                 if (!empty($vote)) {
                     $this->smarty->assign('vote_id', $vote['id']);
@@ -119,11 +119,11 @@ class ExchangeController extends Controller
                 $this->smarty->assign('type', 0);
                 $this->smarty->assign('cfg', $GLOBALS['_CFG']);
 
-                /* 获得商品的信息 */
+                // 获得商品的信息 
                 $goods = $this->get_exchange_goods_info($goods_id);
 
                 if ($goods === false) {
-                    /* 如果没有找到任何记录则跳回到首页 */
+                    // 如果没有找到任何记录则跳回到首页 
                     return $this->redirect('/');
                 } else {
                     if ($goods['brand_id'] > 0) {
@@ -136,13 +136,13 @@ class ExchangeController extends Controller
                     $this->smarty->assign('goods_id', $goods['goods_id']);
                     $this->smarty->assign('categories', get_categories_tree());  // 分类树
 
-                    /* meta */
+                    // meta 
                     $this->smarty->assign('keywords', htmlspecialchars($goods['keywords']));
                     $this->smarty->assign('description', htmlspecialchars($goods['goods_brief']));
 
                     assign_template();
 
-                    /* 上一个商品下一个商品 */
+                    // 上一个商品下一个商品 
                     $sql = "SELECT eg.goods_id FROM " . $this->ecs->table('exchange_goods') . " AS eg," . $GLOBALS['ecs']->table('goods') . " AS g WHERE eg.goods_id = g.goods_id AND eg.goods_id > " . $goods['goods_id'] . " AND eg.is_exchange = 1 AND g.is_delete = 0 LIMIT 1";
                     $prev_gid = $this->db->getOne($sql);
                     if (!empty($prev_gid)) {
@@ -157,7 +157,7 @@ class ExchangeController extends Controller
                         $this->smarty->assign('next_good', $next_good);//下一个商品
                     }
 
-                    /* current position */
+                    // current position 
                     $position = assign_ur_here('exchange', $goods['goods_name']);
                     $this->smarty->assign('page_title', $position['title']);                    // 页面标题
                     $this->smarty->assign('ur_here', $position['ur_here']);                  // 当前位置
@@ -179,32 +179,32 @@ class ExchangeController extends Controller
          * 兑换
          */
         if ($_REQUEST['act'] == 'buy') {
-            /* 查询：判断是否登录 */
+            // 查询：判断是否登录 
             if (!isset($back_act) && isset($GLOBALS['_SERVER']['HTTP_REFERER'])) {
                 $back_act = strpos($GLOBALS['_SERVER']['HTTP_REFERER'], 'exchange') ? $GLOBALS['_SERVER']['HTTP_REFERER'] : './index.php';
             }
 
-            /* 查询：判断是否登录 */
+            // 查询：判断是否登录 
             if (session('user_id') <= 0) {
                 return show_message($GLOBALS['_LANG']['eg_error_login'], [$GLOBALS['_LANG']['back_up_page']], [$back_act], 'error');
             }
 
-            /* 查询：取得参数：商品id */
+            // 查询：取得参数：商品id 
             $goods_id = isset($_POST['goods_id']) ? intval($_POST['goods_id']) : 0;
             if ($goods_id <= 0) {
                 return $this->redirect('/');
             }
 
-            /* 查询：取得兑换商品信息 */
+            // 查询：取得兑换商品信息 
             $goods = $this->get_exchange_goods_info($goods_id);
             if (empty($goods)) {
                 return $this->redirect('/');
             }
-            /* 查询：检查兑换商品是否有库存 */
+            // 查询：检查兑换商品是否有库存 
             if ($goods['goods_number'] == 0 && $GLOBALS['_CFG']['use_storage'] == 1) {
                 return show_message($GLOBALS['_LANG']['eg_error_number'], [$GLOBALS['_LANG']['back_up_page']], [$back_act], 'error');
             }
-            /* 查询：检查兑换商品是否是取消 */
+            // 查询：检查兑换商品是否是取消 
             if ($goods['is_exchange'] == 0) {
                 return show_message($GLOBALS['_LANG']['eg_error_status'], [$GLOBALS['_LANG']['back_up_page']], [$back_act], 'error');
             }
@@ -215,7 +215,7 @@ class ExchangeController extends Controller
                 return show_message($GLOBALS['_LANG']['eg_error_integral'], [$GLOBALS['_LANG']['back_up_page']], [$back_act], 'error');
             }
 
-            /* 查询：取得规格 */
+            // 查询：取得规格 
             $specs = '';
             foreach ($_POST as $key => $value) {
                 if (strpos($key, 'spec_') !== false) {
@@ -224,7 +224,7 @@ class ExchangeController extends Controller
             }
             $specs = trim($specs, ',');
 
-            /* 查询：如果商品有规格则取规格商品信息 配件除外 */
+            // 查询：如果商品有规格则取规格商品信息 配件除外 
             if (!empty($specs)) {
                 $_specs = explode(',', $specs);
 
@@ -239,7 +239,7 @@ class ExchangeController extends Controller
                 return show_message($GLOBALS['_LANG']['eg_error_number'], [$GLOBALS['_LANG']['back_up_page']], [$back_act], 'error');
             }
 
-            /* 查询：查询规格名称和值，不考虑价格 */
+            // 查询：查询规格名称和值，不考虑价格 
             $attr_list = [];
             $sql = "SELECT a.attr_name, g.attr_value " .
                 "FROM " . $this->ecs->table('goods_attr') . " AS g, " .
@@ -252,11 +252,11 @@ class ExchangeController extends Controller
             }
             $goods_attr = join(chr(13) . chr(10), $attr_list);
 
-            /* 更新：清空购物车中所有团购商品 */
+            // 更新：清空购物车中所有团购商品 
             load_helper('order');
             clear_cart(CART_EXCHANGE_GOODS);
 
-            /* 更新：加入购物车 */
+            // 更新：加入购物车 
             $number = 1;
             $cart = [
                 'user_id' => session('user_id'),
@@ -278,12 +278,12 @@ class ExchangeController extends Controller
             ];
             $this->db->autoExecute($this->ecs->table('cart'), $cart, 'INSERT');
 
-            /* 记录购物流程类型：团购 */
+            // 记录购物流程类型：团购 
             session('flow_type', CART_EXCHANGE_GOODS);
             session('extension_code', 'exchange_goods');
             session('extension_id', $goods_id);
 
-            /* 进入收货人页面 */
+            // 进入收货人页面 
             return $this->redirect("/flow.php?step=consignee");
         }
     }
@@ -321,7 +321,7 @@ class ExchangeController extends Controller
             $where .= " AND eg.exchange_integral <= $max ";
         }
 
-        /* 获得商品列表 */
+        // 获得商品列表 
         $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, eg.exchange_integral, ' .
             'g.goods_type, g.goods_brief, g.goods_thumb , g.goods_img, eg.is_hot ' .
             'FROM ' . $GLOBALS['ecs']->table('exchange_goods') . ' AS eg, ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
@@ -330,7 +330,7 @@ class ExchangeController extends Controller
 
         $arr = [];
         foreach ($res as $row) {
-            /* 处理商品水印图片 */
+            // 处理商品水印图片 
             $watermark_img = '';
 
 //        if ($row['is_new'] != 0)
@@ -392,7 +392,7 @@ class ExchangeController extends Controller
         $sql = 'SELECT COUNT(*) FROM ' . $GLOBALS['ecs']->table('exchange_goods') . ' AS eg, ' .
             $GLOBALS['ecs']->table('goods') . " AS g WHERE eg.goods_id = g.goods_id AND $where $ext";
 
-        /* 返回商品总数 */
+        // 返回商品总数 
         return $GLOBALS['db']->getOne($sql);
     }
 
@@ -483,7 +483,7 @@ class ExchangeController extends Controller
         $row = $GLOBALS['db']->getRow($sql);
 
         if ($row !== false) {
-            /* 处理商品水印图片 */
+            // 处理商品水印图片 
             $watermark_img = '';
 
             if ($row['is_new'] != 0) {
@@ -498,15 +498,15 @@ class ExchangeController extends Controller
                 $row['watermark_img'] = $watermark_img;
             }
 
-            /* 修正重量显示 */
+            // 修正重量显示 
             $row['goods_weight'] = (intval($row['goods_weight']) > 0) ?
                 $row['goods_weight'] . $GLOBALS['_LANG']['kilogram'] :
                 ($row['goods_weight'] * 1000) . $GLOBALS['_LANG']['gram'];
 
-            /* 修正上架时间显示 */
+            // 修正上架时间显示 
             $row['add_time'] = local_date($GLOBALS['_CFG']['date_format'], $row['add_time']);
 
-            /* 修正商品图片 */
+            // 修正商品图片 
             $row['goods_img'] = get_image_path($row['goods_img']);
             $row['goods_thumb'] = get_image_path($row['goods_thumb']);
 
