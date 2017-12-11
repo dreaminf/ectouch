@@ -644,7 +644,7 @@ function list_link_postfix()
  */
 function set_filter($filter, $sql, $param_str = '')
 {
-    $filterfile = strtolower(Request::controller());
+    $filterfile = strtolower(PHP_SELF);
     if ($param_str) {
         $filterfile .= $param_str;
     }
@@ -660,7 +660,7 @@ function set_filter($filter, $sql, $param_str = '')
  */
 function get_filter($param_str = '')
 {
-    $filterfile = strtolower(Request::controller());
+    $filterfile = strtolower(PHP_SELF);
     if ($param_str) {
         $filterfile .= $param_str;
     }
