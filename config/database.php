@@ -5,8 +5,7 @@ return [
     'dsn' => 'mysql:host=localhost;dbname=ectouch',
     'username' => 'homestead',
     'password' => 'secret',
-    'charset' => 'utf8',
-    'tablePrefix' => 'ecs_',
+    'charset' => 'utf8mb4',
     'on afterOpen' => function($event) {
         $event->sender->createCommand("set session sql_mode=''")->execute();
     },
