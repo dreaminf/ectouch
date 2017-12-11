@@ -31,7 +31,7 @@ CREATE TABLE `account_log` (
   `change_type` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`log_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of account_log
@@ -110,7 +110,7 @@ CREATE TABLE `admin_action` (
   `relevance` varchar(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`action_id`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of admin_action
@@ -238,7 +238,7 @@ CREATE TABLE `admin_log` (
   PRIMARY KEY (`log_id`),
   KEY `log_time` (`log_time`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=464 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of admin_log
@@ -753,7 +753,7 @@ CREATE TABLE `admin_user` (
   PRIMARY KEY (`user_id`),
   KEY `user_name` (`user_name`),
   KEY `agency_id` (`agency_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of admin_user
@@ -894,7 +894,7 @@ CREATE TABLE `article` (
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`article_id`),
   KEY `cat_id` (`cat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of article
@@ -952,7 +952,7 @@ CREATE TABLE `article_cat` (
   KEY `cat_type` (`cat_type`),
   KEY `sort_order` (`sort_order`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of article_cat
@@ -987,7 +987,7 @@ CREATE TABLE `attribute` (
   `attr_group` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`attr_id`),
   KEY `cat_id` (`cat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=211 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of attribute
@@ -1215,7 +1215,7 @@ CREATE TABLE `auction_log` (
   `bid_time` int(10) unsigned NOT NULL,
   PRIMARY KEY (`log_id`),
   KEY `act_id` (`act_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of auction_log
@@ -1302,7 +1302,7 @@ CREATE TABLE `back_order` (
   PRIMARY KEY (`back_id`),
   KEY `user_id` (`user_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of back_order
@@ -1329,7 +1329,7 @@ CREATE TABLE `bonus_type` (
   `use_end_date` int(11) NOT NULL DEFAULT '0',
   `min_goods_amount` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of bonus_type
@@ -1359,7 +1359,7 @@ CREATE TABLE `booking_goods` (
   `dispose_note` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`rec_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of booking_goods
@@ -1381,7 +1381,7 @@ CREATE TABLE `brand` (
   `is_show` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`brand_id`),
   KEY `is_show` (`is_show`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of brand
@@ -1410,7 +1410,7 @@ CREATE TABLE `card` (
   `free_money` decimal(6,2) unsigned NOT NULL DEFAULT '0.00',
   `card_desc` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`card_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of card
@@ -1443,7 +1443,7 @@ CREATE TABLE `cart` (
   `goods_attr_id` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`rec_id`),
   KEY `session_id` (`session_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of cart
@@ -1471,7 +1471,7 @@ CREATE TABLE `category` (
   `filter_attr` varchar(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`cat_id`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of category
@@ -1559,7 +1559,7 @@ CREATE TABLE `comment` (
   PRIMARY KEY (`comment_id`),
   KEY `parent_id` (`parent_id`),
   KEY `id_value` (`id_value`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of comment
@@ -1619,7 +1619,7 @@ CREATE TABLE `delivery_goods` (
   PRIMARY KEY (`rec_id`),
   KEY `delivery_id` (`delivery_id`,`goods_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of delivery_goods
@@ -1671,7 +1671,7 @@ CREATE TABLE `delivery_order` (
   PRIMARY KEY (`delivery_id`),
   KEY `user_id` (`user_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of delivery_order
@@ -1772,7 +1772,7 @@ CREATE TABLE `favourable_activity` (
   `sort_order` tinyint(3) unsigned NOT NULL DEFAULT '50',
   PRIMARY KEY (`act_id`),
   KEY `act_name` (`act_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of favourable_activity
@@ -1799,7 +1799,7 @@ CREATE TABLE `feedback` (
   `msg_area` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`msg_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of feedback
@@ -1818,14 +1818,15 @@ CREATE TABLE `friend_link` (
   `show_order` tinyint(3) unsigned NOT NULL DEFAULT '50',
   PRIMARY KEY (`link_id`),
   KEY `show_order` (`show_order`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of friend_link
 -- ----------------------------
-INSERT INTO `friend_link` VALUES ('1', 'ECSHOP 网上商店管理系统', 'http://www.ecshop.com/', 'http://www.ecshop.com/images/logo/ecshop_logo.gif', '50');
-INSERT INTO `friend_link` VALUES ('2', '买否网', 'http://www.maifou.net/', '', '51');
-INSERT INTO `friend_link` VALUES ('3', '免费开独立网店', 'http://www.wdwd.com/', '', '52');
+INSERT INTO `friend_link` VALUES ('1', 'ECTouch 网上商店管理系统', 'https://www.ectouch.cn/', 'https://www.ectouch.cn/images/common/logo.png', '50');
+INSERT INTO `friend_link` VALUES ('2', '模板堂', 'http://www.ecmoban.com/', '', '50');
+INSERT INTO `friend_link` VALUES ('3', '大商创', 'http://www.dscmall.cn/', '', '50');
+INSERT INTO `friend_link` VALUES ('4', 'ECJia', 'http://www.ecjia.com/', '', '50');
 
 -- ----------------------------
 -- Table structure for goods
@@ -1885,7 +1886,7 @@ CREATE TABLE `goods` (
   KEY `promote_start_date` (`promote_start_date`),
   KEY `goods_number` (`goods_number`),
   KEY `sort_order` (`sort_order`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of goods
@@ -1940,7 +1941,7 @@ CREATE TABLE `goods_activity` (
   `ext_info` text NOT NULL,
   PRIMARY KEY (`act_id`),
   KEY `act_name` (`act_name`,`act_type`,`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of goods_activity
@@ -1993,7 +1994,7 @@ CREATE TABLE `goods_attr` (
   PRIMARY KEY (`goods_attr_id`),
   KEY `goods_id` (`goods_id`),
   KEY `attr_id` (`attr_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=241 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of goods_attr
@@ -2119,7 +2120,7 @@ CREATE TABLE `goods_gallery` (
   `img_original` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`img_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of goods_gallery
@@ -2177,7 +2178,7 @@ CREATE TABLE `goods_type` (
   `enabled` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `attr_group` varchar(255) NOT NULL,
   PRIMARY KEY (`cat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of goods_type
@@ -2285,7 +2286,7 @@ CREATE TABLE `mail_templates` (
   PRIMARY KEY (`template_id`),
   UNIQUE KEY `template_code` (`template_code`),
   KEY `type` (`type`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of mail_templates
@@ -2316,7 +2317,7 @@ CREATE TABLE `member_price` (
   `user_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`price_id`),
   KEY `goods_id` (`goods_id`,`user_rank`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of member_price
@@ -2343,7 +2344,7 @@ CREATE TABLE `nav` (
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `ifshow` (`ifshow`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of nav
@@ -2362,7 +2363,7 @@ INSERT INTO `nav` VALUES ('12', null, null, '批发方案', '1', '6', '0', 'whol
 INSERT INTO `nav` VALUES ('14', null, null, '配送方式', '1', '7', '0', 'myship.php', 'bottom');
 INSERT INTO `nav` VALUES ('15', null, null, '留言板', '1', '99', '0', 'message.php', 'middle');
 INSERT INTO `nav` VALUES ('18', 'c', '4', '双模手机', '1', '14', '0', 'category.php?id=5', 'middle');
-INSERT INTO `nav` VALUES ('20', '', '0', 'EC论坛', '1', '100', '1', 'http://bbs.ecshop.com/', 'middle');
+INSERT INTO `nav` VALUES ('20', '', '0', '论坛', '1', '100', '1', 'http://wenda.ecmoban.com', 'middle');
 INSERT INTO `nav` VALUES ('21', null, null, '优惠活动', '1', '21', '0', 'activity.php', 'middle');
 INSERT INTO `nav` VALUES ('23', null, null, '报价单', '1', '6', '0', 'quotation.php', 'top');
 INSERT INTO `nav` VALUES ('24', null, null, '拍卖活动', '1', '23', '0', 'auction.php', 'middle');
@@ -2386,7 +2387,7 @@ CREATE TABLE `order_action` (
   `log_time` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`action_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of order_action
@@ -2443,7 +2444,7 @@ CREATE TABLE `order_goods` (
   PRIMARY KEY (`rec_id`),
   KEY `order_id` (`order_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of order_goods
@@ -2557,7 +2558,7 @@ CREATE TABLE `order_info` (
   KEY `pay_id` (`pay_id`),
   KEY `extension_code` (`extension_code`,`extension_id`),
   KEY `agency_id` (`agency_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of order_info
@@ -2594,7 +2595,7 @@ CREATE TABLE `pack` (
   `free_money` int(10) unsigned NOT NULL DEFAULT '0',
   `pack_desc` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`pack_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of pack
@@ -2641,7 +2642,7 @@ CREATE TABLE `payment` (
   `is_online` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`pay_id`),
   UNIQUE KEY `pay_code` (`pay_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of payment
@@ -2661,7 +2662,7 @@ CREATE TABLE `pay_log` (
   `order_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `is_paid` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of pay_log
@@ -2713,7 +2714,7 @@ CREATE TABLE `products` (
   `product_sn` varchar(60) DEFAULT NULL,
   `product_number` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of products
@@ -2747,7 +2748,7 @@ CREATE TABLE `region` (
   KEY `parent_id` (`parent_id`),
   KEY `region_type` (`region_type`),
   KEY `agency_id` (`agency_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3409 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of region
@@ -6189,7 +6190,7 @@ CREATE TABLE `reg_fields` (
   `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `is_need` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of reg_fields
@@ -6291,7 +6292,7 @@ CREATE TABLE `shipping` (
   `shipping_order` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`shipping_id`),
   KEY `shipping_code` (`shipping_code`,`enabled`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of shipping
@@ -6315,7 +6316,7 @@ CREATE TABLE `shipping_area` (
   `configure` text NOT NULL,
   PRIMARY KEY (`shipping_area_id`),
   KEY `shipping_id` (`shipping_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of shipping_area
@@ -6341,7 +6342,7 @@ CREATE TABLE `shop_config` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=904 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of shop_config
@@ -6375,7 +6376,7 @@ INSERT INTO `shop_config` VALUES ('117', '1', 'close_comment', 'textarea', '', '
 INSERT INTO `shop_config` VALUES ('118', '1', 'shop_logo', 'file', '', '../themes/{$template}/images/', '', '1');
 INSERT INTO `shop_config` VALUES ('119', '1', 'licensed', 'select', '0,1', '', '1', '1');
 INSERT INTO `shop_config` VALUES ('120', '1', 'user_notice', 'textarea', '', '', '用户中心公告！', '1');
-INSERT INTO `shop_config` VALUES ('121', '1', 'shop_notice', 'textarea', '', '', '欢迎光临手机网,我们的宗旨：诚信经营、服务客户！\r\n<MARQUEE onmouseover=this.stop() onmouseout=this.start() \r\nscrollAmount=3><U><FONT color=red>\r\n<P>咨询电话010-10124444  010-21252454 8465544</P></FONT></U></MARQUEE>', '1');
+INSERT INTO `shop_config` VALUES ('121', '1', 'shop_notice', 'textarea', '', '', '欢迎光临，我们的宗旨：诚信经营、服务客户！\r\n<MARQUEE onmouseover=this.stop() onmouseout=this.start() \r\nscrollAmount=3><U><FONT color=red>\r\n<P>咨询电话021-84688888</P></FONT></U></MARQUEE>', '1');
 INSERT INTO `shop_config` VALUES ('122', '1', 'shop_reg_closed', 'select', '1,0', '', '0', '1');
 INSERT INTO `shop_config` VALUES ('201', '2', 'lang', 'manual', '', '', 'zh_cn', '1');
 INSERT INTO `shop_config` VALUES ('202', '2', 'icp_number', 'text', '', '', '', '1');
@@ -6389,7 +6390,7 @@ INSERT INTO `shop_config` VALUES ('209', '2', 'rewrite', 'select', '0,1,2', '', 
 INSERT INTO `shop_config` VALUES ('210', '2', 'integral_name', 'text', '', '', '积分', '1');
 INSERT INTO `shop_config` VALUES ('211', '2', 'integral_scale', 'text', '', '', '1', '1');
 INSERT INTO `shop_config` VALUES ('212', '2', 'integral_percent', 'text', '', '', '1', '1');
-INSERT INTO `shop_config` VALUES ('213', '2', 'sn_prefix', 'text', '', '', 'ECS', '1');
+INSERT INTO `shop_config` VALUES ('213', '2', 'sn_prefix', 'text', '', '', 'SN', '1');
 INSERT INTO `shop_config` VALUES ('214', '2', 'comment_check', 'select', '0,1', '', '1', '1');
 INSERT INTO `shop_config` VALUES ('215', '2', 'no_picture', 'file', '', '../images/', '', '1');
 INSERT INTO `shop_config` VALUES ('218', '2', 'stats_code', 'textarea', '', '', '', '1');
@@ -6412,7 +6413,7 @@ INSERT INTO `shop_config` VALUES ('235', '2', 'member_email_validate', 'select',
 INSERT INTO `shop_config` VALUES ('236', '2', 'message_board', 'select', '1,0', '', '1', '1');
 INSERT INTO `shop_config` VALUES ('239', '2', 'certificate_id', 'hidden', '', '', '', '1');
 INSERT INTO `shop_config` VALUES ('240', '2', 'token', 'hidden', '', '', '', '1');
-INSERT INTO `shop_config` VALUES ('241', '2', 'certi', 'hidden', '', '', 'http://service.shopex.cn/openapi/api.php', '1');
+INSERT INTO `shop_config` VALUES ('241', '2', 'certi', 'hidden', '', '', 'https://service.ectouch.cn/openapi/api.php', '1');
 INSERT INTO `shop_config` VALUES ('242', '2', 'send_verify_email', 'select', '1,0', '', '0', '1');
 INSERT INTO `shop_config` VALUES ('243', '2', 'ent_id', 'hidden', '', '', '', '1');
 INSERT INTO `shop_config` VALUES ('244', '2', 'ent_ac', 'hidden', '', '', '', '1');
@@ -6482,10 +6483,10 @@ INSERT INTO `shop_config` VALUES ('502', '5', 'smtp_port', 'text', '', '', '25',
 INSERT INTO `shop_config` VALUES ('503', '5', 'smtp_user', 'text', '', '', '', '1');
 INSERT INTO `shop_config` VALUES ('504', '5', 'smtp_pass', 'password', '', '', '', '1');
 INSERT INTO `shop_config` VALUES ('505', '5', 'smtp_mail', 'text', '', '', '', '1');
-INSERT INTO `shop_config` VALUES ('506', '5', 'mail_charset', 'select', 'utf8mb4,GB2312,BIG5', '', 'utf8mb4', '1');
+INSERT INTO `shop_config` VALUES ('506', '5', 'mail_charset', 'select', 'utf8,GB2312,BIG5', '', 'utf8', '1');
 INSERT INTO `shop_config` VALUES ('507', '5', 'mail_service', 'select', '0,1', '', '0', '0');
 INSERT INTO `shop_config` VALUES ('508', '5', 'smtp_ssl', 'select', '0,1', '', '0', '0');
-INSERT INTO `shop_config` VALUES ('601', '6', 'integrate_code', 'hidden', '', '', 'ecshop', '1');
+INSERT INTO `shop_config` VALUES ('601', '6', 'integrate_code', 'hidden', '', '', 'passport', '1');
 INSERT INTO `shop_config` VALUES ('602', '6', 'integrate_config', 'hidden', '', '', '', '1');
 INSERT INTO `shop_config` VALUES ('603', '6', 'hash_code', 'hidden', '', '', '56e15787453578edee065f7ec1f391cc', '1');
 INSERT INTO `shop_config` VALUES ('604', '6', 'template', 'hidden', '', '', 'default', '1');
@@ -6534,7 +6535,7 @@ CREATE TABLE `snatch_log` (
   `bid_time` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`log_id`),
   KEY `snatch_id` (`snatch_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of snatch_log
@@ -6622,7 +6623,7 @@ CREATE TABLE `suppliers` (
   `suppliers_desc` mediumtext,
   `is_check` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`suppliers_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of suppliers
@@ -6642,7 +6643,7 @@ CREATE TABLE `tag` (
   PRIMARY KEY (`tag_id`),
   KEY `user_id` (`user_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of tag
@@ -6720,7 +6721,7 @@ CREATE TABLE `topic` (
   `keywords` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   KEY `topic_id` (`topic_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of topic
@@ -6771,7 +6772,7 @@ CREATE TABLE `users` (
   KEY `email` (`email`),
   KEY `parent_id` (`parent_id`),
   KEY `flag` (`flag`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of users
@@ -6828,7 +6829,7 @@ CREATE TABLE `user_address` (
   `best_time` varchar(120) NOT NULL DEFAULT '',
   PRIMARY KEY (`address_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of user_address
@@ -6850,7 +6851,7 @@ CREATE TABLE `user_bonus` (
   `emailed` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`bonus_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of user_bonus
@@ -6906,7 +6907,7 @@ CREATE TABLE `user_rank` (
   `show_price` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `special_rank` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`rank_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of user_rank
@@ -6933,7 +6934,7 @@ CREATE TABLE `virtual_card` (
   KEY `goods_id` (`goods_id`),
   KEY `car_sn` (`card_sn`),
   KEY `is_saled` (`is_saled`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of virtual_card
@@ -6987,7 +6988,7 @@ CREATE TABLE `vote` (
   `can_multi` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `vote_count` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`vote_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of vote
@@ -7023,7 +7024,7 @@ CREATE TABLE `vote_option` (
   `option_order` tinyint(3) unsigned NOT NULL DEFAULT '100',
   PRIMARY KEY (`option_id`),
   KEY `vote_id` (`vote_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of vote_option
@@ -7045,7 +7046,7 @@ CREATE TABLE `wholesale` (
   `enabled` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`act_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of wholesale
