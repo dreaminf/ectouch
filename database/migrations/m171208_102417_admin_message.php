@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102417_admin_message extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,11 +13,11 @@ class m171208_102417_admin_message extends Migration
         $this->createTable(
             '{{%admin_message}}',
             [
-                'message_id'=> $this->primaryKey(5)->unsigned(),
+                'message_id'=> $this->primaryKey(10)->unsigned(),
                 'sender_id'=> $this->smallInteger(3)->unsigned()->notNull()->defaultValue(0),
                 'receiver_id'=> $this->smallInteger(3)->unsigned()->notNull()->defaultValue(0),
-                'sent_time'=> $this->integer(11)->unsigned()->notNull()->defaultValue('0'),
-                'read_time'=> $this->integer(11)->unsigned()->notNull()->defaultValue('0'),
+                'sent_time'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
+                'read_time'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'readed'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(0),
                 'deleted'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(0),
                 'title'=> $this->string(150)->notNull()->defaultValue(''),

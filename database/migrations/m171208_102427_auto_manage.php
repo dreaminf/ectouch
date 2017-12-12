@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102427_auto_manage extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,7 +13,7 @@ class m171208_102427_auto_manage extends Migration
         $this->createTable(
             '{{%auto_manage}}',
             [
-                'item_id'=> $this->integer(8)->notNull(),
+                'item_id'=> $this->integer(10)->notNull(),
                 'type'=> $this->string(10)->notNull(),
                 'starttime'=> $this->integer(10)->notNull(),
                 'endtime'=> $this->integer(10)->notNull(),

@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102531_user_rank extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,7 +13,7 @@ class m171208_102531_user_rank extends Migration
         $this->createTable(
             '{{%user_rank}}',
             [
-                'rank_id'=> $this->primaryKey(3)->unsigned(),
+                'rank_id'=> $this->primaryKey(10)->unsigned(),
                 'rank_name'=> $this->string(30)->notNull()->defaultValue(''),
                 'min_points'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'max_points'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),

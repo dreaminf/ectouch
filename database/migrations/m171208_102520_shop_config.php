@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102520_shop_config extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,8 +13,8 @@ class m171208_102520_shop_config extends Migration
         $this->createTable(
             '{{%shop_config}}',
             [
-                'id'=> $this->primaryKey(5)->unsigned(),
-                'parent_id'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(0),
+                'id'=> $this->primaryKey(10)->unsigned(),
+                'parent_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue(0),
                 'code'=> $this->string(30)->notNull()->defaultValue(''),
                 'type'=> $this->string(10)->notNull()->defaultValue(''),
                 'store_range'=> $this->string(255)->notNull()->defaultValue(''),

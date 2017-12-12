@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102428_back_goods extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,16 +13,16 @@ class m171208_102428_back_goods extends Migration
         $this->createTable(
             '{{%back_goods}}',
             [
-                'rec_id'=> $this->primaryKey(8)->unsigned(),
-                'back_id'=> $this->integer(8)->unsigned()->null()->defaultValue('0'),
-                'goods_id'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
-                'product_id'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
+                'rec_id'=> $this->primaryKey(10)->unsigned(),
+                'back_id'=> $this->integer(10)->unsigned()->null()->defaultValue('0'),
+                'goods_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
+                'product_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'product_sn'=> $this->string(60)->null()->defaultValue(null),
                 'goods_name'=> $this->string(120)->null()->defaultValue(null),
                 'brand_name'=> $this->string(60)->null()->defaultValue(null),
                 'goods_sn'=> $this->string(60)->null()->defaultValue(null),
                 'is_real'=> $this->smallInteger(1)->unsigned()->null()->defaultValue(0),
-                'send_number'=> $this->smallInteger(5)->unsigned()->null()->defaultValue(0),
+                'send_number'=> $this->integer(10)->unsigned()->null()->defaultValue(0),
                 'goods_attr'=> $this->text()->null()->defaultValue(null),
             ],$tableOptions
         );

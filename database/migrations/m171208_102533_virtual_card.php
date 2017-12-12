@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102533_virtual_card extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,12 +13,12 @@ class m171208_102533_virtual_card extends Migration
         $this->createTable(
             '{{%virtual_card}}',
             [
-                'card_id'=> $this->primaryKey(8),
-                'goods_id'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
+                'card_id'=> $this->primaryKey(10),
+                'goods_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'card_sn'=> $this->string(60)->notNull()->defaultValue(''),
                 'card_password'=> $this->string(60)->notNull()->defaultValue(''),
-                'add_date'=> $this->integer(11)->notNull()->defaultValue(0),
-                'end_date'=> $this->integer(11)->notNull()->defaultValue(0),
+                'add_date'=> $this->integer(10)->notNull()->defaultValue(0),
+                'end_date'=> $this->integer(10)->notNull()->defaultValue(0),
                 'is_saled'=> $this->smallInteger(1)->notNull()->defaultValue(0),
                 'order_sn'=> $this->string(20)->notNull()->defaultValue(''),
                 'crc32'=> $this->string(12)->notNull()->defaultValue('0'),

@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102534_volume_price extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -20,8 +14,8 @@ class m171208_102534_volume_price extends Migration
             '{{%volume_price}}',
             [
                 'price_type'=> $this->smallInteger(1)->unsigned()->notNull(),
-                'goods_id'=> $this->integer(8)->unsigned()->notNull(),
-                'volume_number'=> $this->smallInteger(5)->unsigned()->notNull(),
+                'goods_id'=> $this->integer(10)->unsigned()->notNull(),
+                'volume_number'=> $this->integer(10)->unsigned()->notNull(),
                 'volume_price'=> $this->decimal(10, 2)->notNull()->defaultValue('0.00'),
             ],$tableOptions
         );

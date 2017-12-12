@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102412_ad extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,18 +13,18 @@ class m171208_102412_ad extends Migration
         $this->createTable(
             '{{%ad}}',
             [
-                'ad_id'=> $this->primaryKey(5)->unsigned(),
-                'position_id'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(0),
+                'ad_id'=> $this->primaryKey(10)->unsigned(),
+                'position_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue(0),
                 'media_type'=> $this->smallInteger(3)->unsigned()->notNull()->defaultValue(0),
                 'ad_name'=> $this->string(60)->notNull()->defaultValue(''),
                 'ad_link'=> $this->string(255)->notNull()->defaultValue(''),
                 'ad_code'=> $this->text()->notNull(),
-                'start_time'=> $this->integer(11)->notNull()->defaultValue(0),
-                'end_time'=> $this->integer(11)->notNull()->defaultValue(0),
+                'start_time'=> $this->integer(10)->notNull()->defaultValue(0),
+                'end_time'=> $this->integer(10)->notNull()->defaultValue(0),
                 'link_man'=> $this->string(60)->notNull()->defaultValue(''),
                 'link_email'=> $this->string(60)->notNull()->defaultValue(''),
                 'link_phone'=> $this->string(60)->notNull()->defaultValue(''),
-                'click_count'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
+                'click_count'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'enabled'=> $this->smallInteger(3)->unsigned()->notNull()->defaultValue(1),
             ],$tableOptions
         );

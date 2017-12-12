@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102504_order_info extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,17 +13,17 @@ class m171208_102504_order_info extends Migration
         $this->createTable(
             '{{%order_info}}',
             [
-                'order_id'=> $this->primaryKey(8)->unsigned(),
+                'order_id'=> $this->primaryKey(10)->unsigned(),
                 'order_sn'=> $this->string(20)->notNull()->defaultValue(''),
-                'user_id'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
+                'user_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'order_status'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(0),
                 'shipping_status'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(0),
                 'pay_status'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(0),
                 'consignee'=> $this->string(60)->notNull()->defaultValue(''),
-                'country'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(0),
-                'province'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(0),
-                'city'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(0),
-                'district'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(0),
+                'country'=> $this->integer(10)->unsigned()->notNull()->defaultValue(0),
+                'province'=> $this->integer(10)->unsigned()->notNull()->defaultValue(0),
+                'city'=> $this->integer(10)->unsigned()->notNull()->defaultValue(0),
+                'district'=> $this->integer(10)->unsigned()->notNull()->defaultValue(0),
                 'address'=> $this->string(255)->notNull()->defaultValue(''),
                 'zipcode'=> $this->string(60)->notNull()->defaultValue(''),
                 'tel'=> $this->string(60)->notNull()->defaultValue(''),
@@ -61,7 +55,7 @@ class m171208_102504_order_info extends Migration
                 'integral_money'=> $this->decimal(10, 2)->notNull()->defaultValue('0.00'),
                 'bonus'=> $this->decimal(10, 2)->notNull()->defaultValue('0.00'),
                 'order_amount'=> $this->decimal(10, 2)->notNull()->defaultValue('0.00'),
-                'from_ad'=> $this->smallInteger(5)->notNull()->defaultValue(0),
+                'from_ad'=> $this->integer(10)->notNull()->defaultValue(0),
                 'referer'=> $this->string(255)->notNull()->defaultValue(''),
                 'add_time'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'confirm_time'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
@@ -69,17 +63,17 @@ class m171208_102504_order_info extends Migration
                 'shipping_time'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'pack_id'=> $this->smallInteger(3)->unsigned()->notNull()->defaultValue(0),
                 'card_id'=> $this->smallInteger(3)->unsigned()->notNull()->defaultValue(0),
-                'bonus_id'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
+                'bonus_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'invoice_no'=> $this->string(255)->notNull()->defaultValue(''),
                 'extension_code'=> $this->string(30)->notNull()->defaultValue(''),
-                'extension_id'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
+                'extension_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'to_buyer'=> $this->string(255)->notNull()->defaultValue(''),
                 'pay_note'=> $this->string(255)->notNull()->defaultValue(''),
-                'agency_id'=> $this->smallInteger(5)->unsigned()->notNull(),
+                'agency_id'=> $this->integer(10)->unsigned()->notNull(),
                 'inv_type'=> $this->string(60)->notNull(),
                 'tax'=> $this->decimal(10, 2)->notNull(),
                 'is_separate'=> $this->smallInteger(1)->notNull()->defaultValue(0),
-                'parent_id'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
+                'parent_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'discount'=> $this->decimal(10, 2)->notNull(),
             ],$tableOptions
         );

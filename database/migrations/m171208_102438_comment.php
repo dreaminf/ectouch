@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102438_comment extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -21,7 +15,7 @@ class m171208_102438_comment extends Migration
             [
                 'comment_id'=> $this->primaryKey(10)->unsigned(),
                 'comment_type'=> $this->smallInteger(3)->unsigned()->notNull()->defaultValue(0),
-                'id_value'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
+                'id_value'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'email'=> $this->string(60)->notNull()->defaultValue(''),
                 'user_name'=> $this->string(60)->notNull()->defaultValue(''),
                 'content'=> $this->text()->notNull(),

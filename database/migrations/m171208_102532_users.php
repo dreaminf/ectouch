@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102532_users extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,7 +13,7 @@ class m171208_102532_users extends Migration
         $this->createTable(
             '{{%users}}',
             [
-                'user_id'=> $this->primaryKey(8)->unsigned(),
+                'user_id'=> $this->primaryKey(10)->unsigned(),
                 'email'=> $this->string(60)->notNull()->defaultValue(''),
                 'user_name'=> $this->string(60)->notNull()->defaultValue(''),
                 'password'=> $this->string(32)->notNull()->defaultValue(''),
@@ -31,17 +25,17 @@ class m171208_102532_users extends Migration
                 'frozen_money'=> $this->decimal(10, 2)->notNull()->defaultValue('0.00'),
                 'pay_points'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'rank_points'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
-                'address_id'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
+                'address_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'reg_time'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
-                'last_login'=> $this->integer(11)->unsigned()->notNull()->defaultValue('0'),
+                'last_login'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'last_time'=> $this->datetime()->notNull()->defaultValue('1000-01-01 00:00:00'),
                 'last_ip'=> $this->string(15)->notNull()->defaultValue(''),
-                'visit_count'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(0),
+                'visit_count'=> $this->integer(10)->unsigned()->notNull()->defaultValue(0),
                 'user_rank'=> $this->smallInteger(3)->unsigned()->notNull()->defaultValue(0),
                 'is_special'=> $this->smallInteger(3)->unsigned()->notNull()->defaultValue(0),
                 'ec_salt'=> $this->string(10)->null()->defaultValue(null),
                 'salt'=> $this->string(10)->notNull()->defaultValue('0'),
-                'parent_id'=> $this->integer(9)->notNull()->defaultValue(0),
+                'parent_id'=> $this->integer(10)->notNull()->defaultValue(0),
                 'flag'=> $this->smallInteger(3)->unsigned()->notNull()->defaultValue(0),
                 'alias'=> $this->string(60)->notNull(),
                 'msn'=> $this->string(60)->notNull(),

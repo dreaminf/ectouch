@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102526_topic extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -22,7 +16,7 @@ class m171208_102526_topic extends Migration
                 'topic_id'=> $this->integer(10)->unsigned()->notNull(),
                 'title'=> $this->string(255)->notNull()->defaultValue(''''),
                 'intro'=> $this->text()->notNull(),
-                'start_time'=> $this->integer(11)->notNull()->defaultValue(0),
+                'start_time'=> $this->integer(10)->notNull()->defaultValue(0),
                 'end_time'=> $this->integer(10)->notNull()->defaultValue(0),
                 'data'=> $this->text()->notNull(),
                 'template'=> $this->string(255)->notNull()->defaultValue(''''),

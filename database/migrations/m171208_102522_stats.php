@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102522_stats extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -21,7 +15,7 @@ class m171208_102522_stats extends Migration
             [
                 'access_time'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'ip_address'=> $this->string(15)->notNull()->defaultValue(''),
-                'visit_times'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(1),
+                'visit_times'=> $this->integer(10)->unsigned()->notNull()->defaultValue(1),
                 'browser'=> $this->string(60)->notNull()->defaultValue(''),
                 'system'=> $this->string(20)->notNull()->defaultValue(''),
                 'language'=> $this->string(20)->notNull()->defaultValue(''),

@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102508_payment extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,7 +13,7 @@ class m171208_102508_payment extends Migration
         $this->createTable(
             '{{%payment}}',
             [
-                'pay_id'=> $this->primaryKey(3)->unsigned(),
+                'pay_id'=> $this->primaryKey(10)->unsigned(),
                 'pay_code'=> $this->string(20)->notNull()->defaultValue(''),
                 'pay_name'=> $this->string(120)->notNull()->defaultValue(''),
                 'pay_fee'=> $this->string(10)->notNull()->defaultValue('0'),

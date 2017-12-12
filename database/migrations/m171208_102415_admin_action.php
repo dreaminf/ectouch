@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102415_admin_action extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,7 +13,7 @@ class m171208_102415_admin_action extends Migration
         $this->createTable(
             '{{%admin_action}}',
             [
-                'action_id'=> $this->primaryKey(3)->unsigned(),
+                'action_id'=> $this->primaryKey(10)->unsigned(),
                 'parent_id'=> $this->smallInteger(3)->unsigned()->notNull()->defaultValue(0),
                 'action_code'=> $this->string(20)->notNull()->defaultValue(''),
                 'relevance'=> $this->string(20)->notNull()->defaultValue(''),

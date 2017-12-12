@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102536_vote_log extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,8 +13,8 @@ class m171208_102536_vote_log extends Migration
         $this->createTable(
             '{{%vote_log}}',
             [
-                'log_id'=> $this->primaryKey(8)->unsigned(),
-                'vote_id'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(0),
+                'log_id'=> $this->primaryKey(10)->unsigned(),
+                'vote_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue(0),
                 'ip_address'=> $this->string(15)->notNull()->defaultValue(''),
                 'vote_time'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
             ],$tableOptions

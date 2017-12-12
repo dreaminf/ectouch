@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102525_template extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -23,7 +17,7 @@ class m171208_102525_template extends Migration
                 'region'=> $this->string(40)->notNull()->defaultValue(''),
                 'library'=> $this->string(40)->notNull()->defaultValue(''),
                 'sort_order'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(0),
-                'id'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(0),
+                'id'=> $this->integer(10)->unsigned()->notNull()->defaultValue(0),
                 'number'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(5),
                 'type'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(0),
                 'theme'=> $this->string(60)->notNull()->defaultValue(''),

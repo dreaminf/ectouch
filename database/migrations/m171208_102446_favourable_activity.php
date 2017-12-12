@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102446_favourable_activity extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,7 +13,7 @@ class m171208_102446_favourable_activity extends Migration
         $this->createTable(
             '{{%favourable_activity}}',
             [
-                'act_id'=> $this->primaryKey(5)->unsigned(),
+                'act_id'=> $this->primaryKey(10)->unsigned(),
                 'act_name'=> $this->string(255)->notNull(),
                 'start_time'=> $this->integer(10)->unsigned()->notNull(),
                 'end_time'=> $this->integer(10)->unsigned()->notNull(),

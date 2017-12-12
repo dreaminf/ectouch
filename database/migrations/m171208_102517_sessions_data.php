@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102517_sessions_data extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';

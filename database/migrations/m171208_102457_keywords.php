@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102457_keywords extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -22,7 +16,7 @@ class m171208_102457_keywords extends Migration
                 'date'=> $this->date()->notNull(),
                 'searchengine'=> $this->string(20)->notNull(),
                 'keyword'=> $this->string(90)->notNull(),
-                'count'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
+                'count'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
             ],$tableOptions
         );
         $this->addPrimaryKey('pk_on_ecs_keywords','{{%keywords}}',['date','searchengine','keyword']);

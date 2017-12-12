@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102459_mail_templates extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,7 +13,7 @@ class m171208_102459_mail_templates extends Migration
         $this->createTable(
             '{{%mail_templates}}',
             [
-                'template_id'=> $this->primaryKey(1)->unsigned(),
+                'template_id'=> $this->primaryKey(10)->unsigned(),
                 'template_code'=> $this->string(30)->notNull()->defaultValue(''),
                 'is_html'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(0),
                 'template_subject'=> $this->string(200)->notNull()->defaultValue(''),

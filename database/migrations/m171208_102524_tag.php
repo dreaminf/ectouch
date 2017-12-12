@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102524_tag extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,9 +13,9 @@ class m171208_102524_tag extends Migration
         $this->createTable(
             '{{%tag}}',
             [
-                'tag_id'=> $this->primaryKey(8),
-                'user_id'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
-                'goods_id'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
+                'tag_id'=> $this->primaryKey(10),
+                'user_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
+                'goods_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'tag_words'=> $this->string(255)->notNull()->defaultValue(''),
             ],$tableOptions
         );

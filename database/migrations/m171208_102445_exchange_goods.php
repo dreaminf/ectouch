@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102445_exchange_goods extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,7 +13,7 @@ class m171208_102445_exchange_goods extends Migration
         $this->createTable(
             '{{%exchange_goods}}',
             [
-                'goods_id'=> $this->primaryKey(8)->unsigned(),
+                'goods_id'=> $this->primaryKey(10)->unsigned(),
                 'exchange_integral'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'is_exchange'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(0),
                 'is_hot'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(0),

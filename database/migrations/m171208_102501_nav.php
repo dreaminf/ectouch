@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102501_nav extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,9 +13,9 @@ class m171208_102501_nav extends Migration
         $this->createTable(
             '{{%nav}}',
             [
-                'id'=> $this->primaryKey(8),
+                'id'=> $this->primaryKey(10),
                 'ctype'=> $this->string(10)->null()->defaultValue(null),
-                'cid'=> $this->smallInteger(5)->unsigned()->null()->defaultValue(null),
+                'cid'=> $this->integer(10)->unsigned()->null()->defaultValue(null),
                 'name'=> $this->string(255)->notNull(),
                 'ifshow'=> $this->smallInteger(1)->notNull(),
                 'vieworder'=> $this->smallInteger(1)->notNull(),

@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102449_goods extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,21 +13,21 @@ class m171208_102449_goods extends Migration
         $this->createTable(
             '{{%goods}}',
             [
-                'goods_id'=> $this->primaryKey(8)->unsigned(),
-                'cat_id'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(0),
+                'goods_id'=> $this->primaryKey(10)->unsigned(),
+                'cat_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue(0),
                 'goods_sn'=> $this->string(60)->notNull()->defaultValue(''),
                 'goods_name'=> $this->string(120)->notNull()->defaultValue(''),
                 'goods_name_style'=> $this->string(60)->notNull()->defaultValue('+'),
                 'click_count'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
-                'brand_id'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(0),
+                'brand_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue(0),
                 'provider_name'=> $this->string(100)->notNull()->defaultValue(''),
-                'goods_number'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(0),
+                'goods_number'=> $this->integer(10)->unsigned()->notNull()->defaultValue(0),
                 'goods_weight'=> $this->decimal(10, 3)->unsigned()->notNull()->defaultValue('0.000'),
                 'market_price'=> $this->decimal(10, 2)->unsigned()->notNull()->defaultValue('0.00'),
                 'shop_price'=> $this->decimal(10, 2)->unsigned()->notNull()->defaultValue('0.00'),
                 'promote_price'=> $this->decimal(10, 2)->unsigned()->notNull()->defaultValue('0.00'),
-                'promote_start_date'=> $this->integer(11)->unsigned()->notNull()->defaultValue('0'),
-                'promote_end_date'=> $this->integer(11)->unsigned()->notNull()->defaultValue('0'),
+                'promote_start_date'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
+                'promote_end_date'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'warn_number'=> $this->smallInteger(3)->unsigned()->notNull()->defaultValue(1),
                 'keywords'=> $this->string(255)->notNull()->defaultValue(''),
                 'goods_brief'=> $this->string(255)->notNull()->defaultValue(''),
@@ -48,7 +42,7 @@ class m171208_102449_goods extends Migration
                 'is_shipping'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(0),
                 'integral'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'add_time'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
-                'sort_order'=> $this->smallInteger(4)->unsigned()->notNull()->defaultValue(100),
+                'sort_order'=> $this->integer(10)->unsigned()->notNull()->defaultValue(100),
                 'is_delete'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(0),
                 'is_best'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(0),
                 'is_new'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(0),
@@ -56,11 +50,11 @@ class m171208_102449_goods extends Migration
                 'is_promote'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(0),
                 'bonus_type_id'=> $this->smallInteger(3)->unsigned()->notNull()->defaultValue(0),
                 'last_update'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
-                'goods_type'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(0),
+                'goods_type'=> $this->integer(10)->unsigned()->notNull()->defaultValue(0),
                 'seller_note'=> $this->string(255)->notNull()->defaultValue(''),
-                'give_integral'=> $this->integer(11)->notNull()->defaultValue(-1),
-                'rank_integral'=> $this->integer(11)->notNull()->defaultValue(-1),
-                'suppliers_id'=> $this->smallInteger(5)->unsigned()->null()->defaultValue(null),
+                'give_integral'=> $this->integer(10)->notNull()->defaultValue(-1),
+                'rank_integral'=> $this->integer(10)->notNull()->defaultValue(-1),
+                'suppliers_id'=> $this->integer(10)->unsigned()->null()->defaultValue(null),
                 'is_check'=> $this->smallInteger(1)->unsigned()->null()->defaultValue(null),
             ],$tableOptions
         );

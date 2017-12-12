@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102432_brand extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,7 +13,7 @@ class m171208_102432_brand extends Migration
         $this->createTable(
             '{{%brand}}',
             [
-                'brand_id'=> $this->primaryKey(5)->unsigned(),
+                'brand_id'=> $this->primaryKey(10)->unsigned(),
                 'brand_name'=> $this->string(60)->notNull()->defaultValue(''),
                 'brand_logo'=> $this->string(80)->notNull()->defaultValue(''),
                 'brand_desc'=> $this->text()->notNull(),

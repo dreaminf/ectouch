@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102513_region extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,11 +13,11 @@ class m171208_102513_region extends Migration
         $this->createTable(
             '{{%region}}',
             [
-                'region_id'=> $this->primaryKey(5)->unsigned(),
-                'parent_id'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(0),
+                'region_id'=> $this->primaryKey(10)->unsigned(),
+                'parent_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue(0),
                 'region_name'=> $this->string(120)->notNull()->defaultValue(''),
                 'region_type'=> $this->smallInteger(1)->notNull()->defaultValue(2),
-                'agency_id'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(0),
+                'agency_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue(0),
             ],$tableOptions
         );
         $this->createIndex('parent_id','{{%region}}',['parent_id'],false);

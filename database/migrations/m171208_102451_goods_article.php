@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102451_goods_article extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,8 +13,8 @@ class m171208_102451_goods_article extends Migration
         $this->createTable(
             '{{%goods_article}}',
             [
-                'goods_id'=> $this->integer(8)->unsigned()->notNull(),
-                'article_id'=> $this->integer(8)->unsigned()->notNull(),
+                'goods_id'=> $this->integer(10)->unsigned()->notNull(),
+                'article_id'=> $this->integer(10)->unsigned()->notNull(),
                 'admin_id'=> $this->smallInteger(3)->unsigned()->notNull(),
             ],$tableOptions
         );

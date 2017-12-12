@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102516_sessions extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -21,8 +15,8 @@ class m171208_102516_sessions extends Migration
             [
                 'sesskey'=> $this->char(32)->notNull(),
                 'expiry'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
-                'userid'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
-                'adminid'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
+                'userid'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
+                'adminid'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'ip'=> $this->char(15)->notNull()->defaultValue(''),
                 'user_name'=> $this->string(60)->notNull(),
                 'user_rank'=> $this->smallInteger(3)->notNull(),

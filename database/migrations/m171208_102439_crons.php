@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102439_crons extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,7 +13,7 @@ class m171208_102439_crons extends Migration
         $this->createTable(
             '{{%crons}}',
             [
-                'cron_id'=> $this->primaryKey(3)->unsigned(),
+                'cron_id'=> $this->primaryKey(10)->unsigned(),
                 'cron_code'=> $this->string(20)->notNull(),
                 'cron_name'=> $this->string(120)->notNull(),
                 'cron_desc'=> $this->text()->null()->defaultValue(null),
@@ -27,7 +21,7 @@ class m171208_102439_crons extends Migration
                 'cron_config'=> $this->text()->notNull(),
                 'thistime'=> $this->integer(10)->notNull()->defaultValue(0),
                 'nextime'=> $this->integer(10)->notNull(),
-                'day'=> $this->smallInteger(2)->notNull(),
+                'day'=> $this->smallInteger(3)->notNull(),
                 'week'=> $this->string(1)->notNull(),
                 'hour'=> $this->string(2)->notNull(),
                 'minute'=> $this->string(255)->notNull(),

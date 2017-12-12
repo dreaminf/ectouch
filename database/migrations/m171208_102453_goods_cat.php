@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102453_goods_cat extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,8 +13,8 @@ class m171208_102453_goods_cat extends Migration
         $this->createTable(
             '{{%goods_cat}}',
             [
-                'goods_id'=> $this->integer(8)->unsigned()->notNull(),
-                'cat_id'=> $this->smallInteger(5)->unsigned()->notNull(),
+                'goods_id'=> $this->integer(10)->unsigned()->notNull(),
+                'cat_id'=> $this->integer(10)->unsigned()->notNull(),
             ],$tableOptions
         );
         $this->addPrimaryKey('pk_on_ecs_goods_cat','{{%goods_cat}}',['goods_id','cat_id']);

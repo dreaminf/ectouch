@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102511_reg_extend_info extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -20,7 +14,7 @@ class m171208_102511_reg_extend_info extends Migration
             '{{%reg_extend_info}}',
             [
                 'Id'=> $this->primaryKey(10)->unsigned(),
-                'user_id'=> $this->integer(8)->unsigned()->notNull(),
+                'user_id'=> $this->integer(10)->unsigned()->notNull(),
                 'reg_field_id'=> $this->integer(10)->unsigned()->notNull(),
                 'content'=> $this->text()->notNull(),
             ],$tableOptions

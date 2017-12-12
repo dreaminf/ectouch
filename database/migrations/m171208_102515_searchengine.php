@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102515_searchengine extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -21,7 +15,7 @@ class m171208_102515_searchengine extends Migration
             [
                 'date'=> $this->date()->notNull(),
                 'searchengine'=> $this->string(20)->notNull(),
-                'count'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
+                'count'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
             ],$tableOptions
         );
         $this->addPrimaryKey('pk_on_ecs_searchengine','{{%searchengine}}',['date','searchengine']);

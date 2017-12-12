@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102435_cat_recommend extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,7 +13,7 @@ class m171208_102435_cat_recommend extends Migration
         $this->createTable(
             '{{%cat_recommend}}',
             [
-                'cat_id'=> $this->smallInteger(5)->notNull(),
+                'cat_id'=> $this->integer(10)->notNull(),
                 'recommend_type'=> $this->smallInteger(1)->notNull(),
             ],$tableOptions
         );

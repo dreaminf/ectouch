@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102527_user_account extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,8 +13,8 @@ class m171208_102527_user_account extends Migration
         $this->createTable(
             '{{%user_account}}',
             [
-                'id'=> $this->primaryKey(8)->unsigned(),
-                'user_id'=> $this->integer(8)->unsigned()->notNull()->defaultValue('0'),
+                'id'=> $this->primaryKey(10)->unsigned(),
+                'user_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue('0'),
                 'admin_user'=> $this->string(255)->notNull(),
                 'amount'=> $this->decimal(10, 2)->notNull(),
                 'add_time'=> $this->integer(10)->notNull()->defaultValue(0),

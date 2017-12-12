@@ -6,12 +6,6 @@ use yii\db\Migration;
 class m171208_102424_article_cat extends Migration
 {
 
-    public function init()
-    {
-        $this->db = 'db';
-        parent::init();
-    }
-
     public function safeUp()
     {
         $tableOptions = 'ENGINE=InnoDB';
@@ -19,14 +13,14 @@ class m171208_102424_article_cat extends Migration
         $this->createTable(
             '{{%article_cat}}',
             [
-                'cat_id'=> $this->primaryKey(5),
+                'cat_id'=> $this->primaryKey(10),
                 'cat_name'=> $this->string(255)->notNull()->defaultValue(''),
                 'cat_type'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(1),
                 'keywords'=> $this->string(255)->notNull()->defaultValue(''),
                 'cat_desc'=> $this->string(255)->notNull()->defaultValue(''),
                 'sort_order'=> $this->smallInteger(3)->unsigned()->notNull()->defaultValue(50),
                 'show_in_nav'=> $this->smallInteger(1)->unsigned()->notNull()->defaultValue(0),
-                'parent_id'=> $this->smallInteger(5)->unsigned()->notNull()->defaultValue(0),
+                'parent_id'=> $this->integer(10)->unsigned()->notNull()->defaultValue(0),
             ],$tableOptions
         );
         $this->createIndex('cat_type','{{%article_cat}}',['cat_type'],false);
