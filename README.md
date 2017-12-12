@@ -55,6 +55,15 @@ http://localhost/ectouch/public/
 
 从 [ectouch.cn](http://www.ectouch.cn/download/) 下载压缩包并解压后，将解压后的目录命名为 ectouch 后放到 Web 根目录下。
 
+设置 `config/config.php` 文件中的 validation key 参数，使得您项目的 Cookie 得到应有的保护。
+
+```php
+'request' => [
+    // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+    'cookieValidationKey' => '<secret random string goes here>',
+],
+```
+
 您应该能够通过下面的URL访问应用程序:
 
 ~~~
@@ -70,29 +79,13 @@ http://localhost/ectouch/public/
 编辑数据库配置文件 `config/database.php`，示例：
 
 ```php
-
 return [
-    // 数据库类型
-    'type'            => 'mysql',
-    // 服务器地址
-    'hostname'        => '127.0.0.1',
-    // 数据库名
-    'database'        => 'ectouch',
-    // 用户名
-    'username'        => 'homestead',
-    // 密码
-    'password'        => 'secret',
-    // 端口
-    'hostport'        => '3306',
-    // 连接dsn
-    'dsn'             => '',
-    // 数据库连接参数
-    'params'          => [],
-    // 数据库编码默认采用utf8
-    'charset'         => 'utf8',
-    // 数据库表前缀
-    'prefix'          => 'ecs_',
-
+    'class' => 'yii\db\Connection',
+    'dsn' => 'mysql:host=localhost;dbname=ectouch',
+    'username' => 'root',
+    'password' => '1234',
+    'charset' => 'utf8mb4',
+];
 ```
 
 
