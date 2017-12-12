@@ -29,9 +29,9 @@
   </ul>
   <div class="layui-tab-content">
     <div class="layui-tab-item layui-show">
-      <table class="layui-table" id="general-table">
+      <table class="layui-table" id="general-table" lay-even lay-skin="nob">
         <tr>
-          <td class="label">{$lang.lab_goods_name}</td>
+          <td style="text-align: right; width: 36%;">{$lang.lab_goods_name}</td>
           <td><input type="text" name="goods_name" value="{$goods.goods_name|escape}" style="float:left;color:{$goods_name_color};" size="30" /><div style="background-color:{$goods_name_color};float:left;margin-left:2px;" id="font_color" onclick="ColorSelecter.Show(this);"><img src="images/color_selecter.gif" style="margin-top:-1px;" /></div><input type="hidden" id="goods_name_color" name="goods_name_color" value="{$goods_name_color}" />&nbsp;
             <select name="goods_name_style">
               <option value="">{$lang.select_font}</option>
@@ -40,13 +40,13 @@
             {$lang.require_field}</td>
         </tr>
         <tr>
-          <td class="label">
+          <td style="text-align: right;">
             <a href="javascript:showNotice('noticeGoodsSN');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a> {$lang.lab_goods_sn} </td>
           <td><input type="text" name="goods_sn" value="{$goods.goods_sn|escape}" size="20" onblur="checkGoodsSn(this.value,'{$goods.goods_id}')" /><span id="goods_sn_notice"></span><br />
             <span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="noticeGoodsSN">{$lang.notice_goods_sn}</span></td>
         </tr>
         <tr>
-          <td class="label">{$lang.lab_goods_cat}</td>
+          <td style="text-align: right;">{$lang.lab_goods_cat}</td>
           <td><select name="cat_id" onchange="hideCatDiv()" ><option value="0">{$lang.select_please}</option>{$cat_list}</select>
             {if $is_add}
             <a href="javascript:void(0)" onclick="rapidCatAdd()" title="{$lang.rapid_add_cat}" class="special">{$lang.rapid_add_cat}</a>
@@ -61,7 +61,7 @@
           </td>
         </tr>
         <tr>
-          <td class="label">{$lang.lab_other_cat}</td>
+          <td style="text-align: right;">{$lang.lab_other_cat}</td>
           <td>
             <input type="button" value="{$lang.add}" onclick="addOtherCat(this.parentNode)" class="button" />
             {foreach from=$goods.other_cat item=cat_id}
@@ -70,7 +70,7 @@
           </td>
         </tr>
         <tr>
-          <td class="label">{$lang.lab_goods_brand}</td>
+          <td style="text-align: right;">{$lang.lab_goods_brand}</td>
           <td><select name="brand_id" onchange="hideBrandDiv()" ><option value="0">{$lang.select_please}{html_options options=$brand_list selected=$goods.brand_id}</select>
             {if $is_add}
             <a href="javascript:void(0)" title="{$lang.rapid_add_brand}" onclick="rapidBrandAdd()" class="special" >{$lang.rapid_add_brand}</a>
@@ -85,7 +85,7 @@
         </tr>
         {if $suppliers_exists eq 1}
         <tr>
-          <td class="label">{$lang.label_suppliers}</td>
+          <td style="text-align: right;">{$lang.label_suppliers}</td>
           <td><select name="suppliers_id" id="suppliers_id">
             <option value="0">{$lang.suppliers_no}</option>
             {html_options options=$suppliers_list_name selected=$goods.suppliers_id}
@@ -93,14 +93,14 @@
         </tr>
         {/if}
         <tr>
-          <td class="label">{$lang.lab_shop_price}</td>
+          <td style="text-align: right;">{$lang.lab_shop_price}</td>
           <td><input type="text" name="shop_price" value="{$goods.shop_price}" size="20" onblur="priceSetted()"/>
             <input type="button" value="{$lang.compute_by_mp}" onclick="marketPriceSetted()" />
             {$lang.require_field}</td>
         </tr>
         {if $user_rank_list}
         <tr>
-          <td class="label"><a href="javascript:showNotice('noticeUserPrice');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a>{$lang.lab_user_price}</td>
+          <td style="text-align: right;"><a href="javascript:showNotice('noticeUserPrice');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a>{$lang.lab_user_price}</td>
           <td>
             {foreach from=$user_rank_list item=user_rank}
             {$user_rank.rank_name}<span id="nrank_{$user_rank.rank_id}"></span><input type="text" id="rank_{$user_rank.rank_id}" name="user_price[]" value="{$member_price_list[$user_rank.rank_id]|default:-1}" onkeyup="if(parseInt(this.value)<-1){this.value='-1';};set_price_note({$user_rank.rank_id})" size="8" />
@@ -114,7 +114,7 @@
 
         <!--鍟嗗搧浼樻儬浠锋牸-->
         <tr>
-          <td class="label"><a href="javascript:showNotice('volumePrice');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a>{$lang.lab_volume_price}</td>
+          <td style="text-align: right;"><a href="javascript:showNotice('volumePrice');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a>{$lang.lab_volume_price}</td>
           <td>
             <table width="100%" id="tbody-volume" align="center">
               {foreach from=$volume_price_list item=volume_price name="volume_price_tab"}
@@ -137,39 +137,39 @@
         <!--鍟嗗搧浼樻儬浠锋牸 end -->
 
         <tr>
-          <td class="label">{$lang.lab_market_price}</td>
+          <td style="text-align: right;">{$lang.lab_market_price}</td>
           <td><input type="text" name="market_price" value="{$goods.market_price}" size="20" />
             <input type="button" value="{$lang.integral_market_price}" onclick="integral_market_price()" />
           </td>
         </tr>
         <tr>
-          <td class="label"><a href="javascript:showNotice('giveIntegral');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a> {$lang.lab_give_integral}</td>
+          <td style="text-align: right;"><a href="javascript:showNotice('giveIntegral');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a> {$lang.lab_give_integral}</td>
           <td><input type="text" name="give_integral" value="{$goods.give_integral}" size="20" />
             <br /><span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="giveIntegral">{$lang.notice_give_integral}</span></td>
         </tr>
         <tr>
-          <td class="label"><a href="javascript:showNotice('rankIntegral');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a> {$lang.lab_rank_integral}</td>
+          <td style="text-align: right;"><a href="javascript:showNotice('rankIntegral');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a> {$lang.lab_rank_integral}</td>
           <td><input type="text" name="rank_integral" value="{$goods.rank_integral}" size="20" />
             <br /><span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="rankIntegral">{$lang.notice_rank_integral}</span></td>
         </tr>
         <tr>
-          <td class="label"><a href="javascript:showNotice('noticPoints');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a> {$lang.lab_integral}</td>
+          <td style="text-align: right;"><a href="javascript:showNotice('noticPoints');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a> {$lang.lab_integral}</td>
           <td><input type="text" name="integral" value="{$goods.integral}" size="20" onblur="parseint_integral()";/>
             <br /><span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="noticPoints">{$lang.notice_integral}</span>
           </td>
         </tr>
         <tr>
-          <td class="label"><label for="is_promote"><input type="checkbox" id="is_promote" name="is_promote" value="1" {if $goods.is_promote}checked="checked"{/if} onclick="handlePromote(this.checked);" /> {$lang.lab_promote_price}</label></td>
+          <td style="text-align: right;"><label for="is_promote"><input type="checkbox" id="is_promote" name="is_promote" value="1" {if $goods.is_promote}checked="checked"{/if} onclick="handlePromote(this.checked);" /> {$lang.lab_promote_price}</label></td>
           <td id="promote_3"><input type="text" id="promote_1" name="promote_price" value="{$goods.promote_price}" size="20" /></td>
         </tr>
         <tr id="promote_4">
-          <td class="label" id="promote_5">{$lang.lab_promote_date}</td>
+          <td style="text-align: right;" id="promote_5">{$lang.lab_promote_date}</td>
           <td id="promote_6">
             <input name="promote_start_date" type="text" id="promote_start_date" size="12" value='{$goods.promote_start_date}' readonly="readonly" /><input name="selbtn1" type="button" id="selbtn1" onclick="return showCalendar('promote_start_date', '%Y-%m-%d', false, false, 'selbtn1');" value="{$lang.btn_select}" class="button"/> - <input name="promote_end_date" type="text" id="promote_end_date" size="12" value='{$goods.promote_end_date}' readonly="readonly" /><input name="selbtn2" type="button" id="selbtn2" onclick="return showCalendar('promote_end_date', '%Y-%m-%d', false, false, 'selbtn2');" value="{$lang.btn_select}" class="button"/>
           </td>
         </tr>
         <tr>
-          <td class="label">{$lang.lab_picture}</td>
+          <td style="text-align: right;">{$lang.lab_picture}</td>
           <td>
             <input type="file" name="goods_img" size="35" />
             {if $goods.goods_img}
@@ -181,7 +181,7 @@
           </td>
         </tr>
         <tr id="auto_thumb_1">
-          <td class="label"> {$lang.lab_thumb}</td>
+          <td style="text-align: right;"> {$lang.lab_thumb}</td>
           <td id="auto_thumb_3">
             <input type="file" name="goods_thumb" size="35" />
             {if $goods.goods_thumb}
@@ -204,51 +204,51 @@
       </table>
     </div>
     <div class="layui-tab-item">
-      <table class="layui-table" id="mix-table">
+      <table class="layui-table" id="mix-table" lay-even lay-skin="nob">
         {if $code eq ''}
         <tr>
-          <td class="label">{$lang.lab_goods_weight}</td>
+          <td style="text-align: right; width: 36%;">{$lang.lab_goods_weight}</td>
           <td><input type="text" name="goods_weight" value="{$goods.goods_weight_by_unit}" size="20" /> <select name="weight_unit">{html_options options=$unit_list selected=$weight_unit}</select></td>
         </tr>
         {/if}
         {if $cfg.use_storage}
         <tr>
-          <td class="label"><a href="javascript:showNotice('noticeStorage');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a> {$lang.lab_goods_number}</td>
+          <td style="text-align: right;"><a href="javascript:showNotice('noticeStorage');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a> {$lang.lab_goods_number}</td>
           <!--            <td><input type="text" name="goods_number" value="{$goods.goods_number}" size="20" {if $code neq '' || $goods._attribute neq ''}readonly="readonly"{/if} /><br />-->
           <td><input type="text" name="goods_number" value="{$goods.goods_number}" size="20" /><br />
             <span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="noticeStorage">{$lang.notice_storage}</span></td>
         </tr>
         <tr>
-          <td class="label">{$lang.lab_warn_number}</td>
+          <td style="text-align: right;">{$lang.lab_warn_number}</td>
           <td><input type="text" name="warn_number" value="{$goods.warn_number}" size="20" /></td>
         </tr>
         {/if}
         <tr>
-          <td class="label">{$lang.lab_intro}</td>
+          <td style="text-align: right;">{$lang.lab_intro}</td>
           <td><input type="checkbox" name="is_best" value="1" {if $goods.is_best}checked="checked"{/if} />{$lang.is_best} <input type="checkbox" name="is_new" value="1" {if $goods.is_new}checked="checked"{/if} />{$lang.is_new} <input type="checkbox" name="is_hot" value="1" {if $goods.is_hot}checked="checked"{/if} />{$lang.is_hot}</td>
         </tr>
         <tr id="alone_sale_1">
-          <td class="label" id="alone_sale_2">{$lang.lab_is_on_sale}</td>
+          <td style="text-align: right;" id="alone_sale_2">{$lang.lab_is_on_sale}</td>
           <td id="alone_sale_3"><input type="checkbox" name="is_on_sale" value="1" {if $goods.is_on_sale}checked="checked"{/if} /> {$lang.on_sale_desc}</td>
         </tr>
         <tr>
-          <td class="label">{$lang.lab_is_alone_sale}</td>
+          <td style="text-align: right;">{$lang.lab_is_alone_sale}</td>
           <td><input type="checkbox" name="is_alone_sale" value="1" {if $goods.is_alone_sale}checked="checked"{/if} /> {$lang.alone_sale}</td>
         </tr>
         <tr>
-          <td class="label">{$lang.lab_is_free_shipping}</td>
+          <td style="text-align: right;">{$lang.lab_is_free_shipping}</td>
           <td><input type="checkbox" name="is_shipping" value="1" {if $goods.is_shipping}checked="checked"{/if} /> {$lang.free_shipping}</td>
         </tr>
         <tr>
-          <td class="label">{$lang.lab_keywords}</td>
+          <td style="text-align: right;">{$lang.lab_keywords}</td>
           <td><input type="text" name="keywords" value="{$goods.keywords|escape}" size="40" /> {$lang.notice_keywords}</td>
         </tr>
         <tr>
-          <td class="label">{$lang.lab_goods_brief}</td>
+          <td style="text-align: right;">{$lang.lab_goods_brief}</td>
           <td><textarea name="goods_brief" cols="40" rows="3">{$goods.goods_brief|escape}</textarea></td>
         </tr>
         <tr>
-          <td class="label">
+          <td style="text-align: right;">
             <a href="javascript:showNotice('noticeSellerNote');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a> {$lang.lab_seller_note} </td>
           <td><textarea name="seller_note" cols="40" rows="3">{$goods.seller_note}</textarea><br />
             <span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="noticeSellerNote">{$lang.notice_seller_note}</span></td>
@@ -259,7 +259,7 @@
     <div class="layui-tab-item">
       <table class="layui-table" id="properties-table">
         <tr>
-          <td class="label"><a href="javascript:showNotice('noticeGoodsType');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a>{$lang.lab_goods_type}</td>
+          <td style="text-align: right;"><a href="javascript:showNotice('noticeGoodsType');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a>{$lang.lab_goods_type}</td>
           <td>
             <select name="goods_type" onchange="getAttrList({$goods.goods_id})">
               <option value="0">{$lang.sel_goods_type}</option>
