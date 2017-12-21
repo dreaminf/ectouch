@@ -1579,7 +1579,7 @@ class WechatController extends AdminController
                         ->field('title, author, file, is_show, digest, content, link')
                         ->where('id = ' . $val)
                         ->find();
-                    $artinfo['content'] = strip_tags(html_out($artinfo['content']));
+                    $artinfo['content'] = html_out($artinfo['content']);
                     // 上传多媒体文件
                     $filename = ROOT_PATH . $artinfo['file'];
                     $rs = $this->weObj->uploadMedia(array('media' => realpath_wechat($filename)), 'image');
@@ -1591,7 +1591,7 @@ class WechatController extends AdminController
                     $article[$key]['author'] = $artinfo['author'];
                     $article[$key]['title'] = $artinfo['title'];
                     $article[$key]['content_source_url'] = empty($artinfo['link']) ? __HOST__ . url('article/wechat_news_info', array('id'=>$artinfo['id'])) : strip_tags(html_out($artinfo['link']));
-                    $article[$key]['content'] = $artinfo['content'];
+                    $article[$key]['content'] = $this->uploadMassMessageContentImg($artinfo['content']);
                     $article[$key]['digest'] = $artinfo['digest'];
                     $article[$key]['show_cover_pic'] = $artinfo['is_show'];
                 }
@@ -1603,13 +1603,13 @@ class WechatController extends AdminController
                 if (empty($rs)) {
                     $this->message(L('errcode') . $this->weObj->errCode . L('errmsg') . $this->weObj->errMsg, NULL, 'error');
                 }
-                $article_info['content'] = strip_tags(html_out($article_info['content']));
+                $article_info['content'] = html_out($article_info['content']);
                 // 重组数据
                 $article[0]['thumb_media_id'] = $rs['media_id'];
                 $article[0]['author'] = $article_info['author'];
                 $article[0]['title'] = $article_info['title'];
                 $article[$key]['content_source_url'] = empty($article_info['link']) ? __HOST__ . url('article/wechat_news_info', array('id'=>$article_info['id'])) : strip_tags(html_out($article_info['link']));
-                $article[0]['content'] = $article_info['content'];
+                $article[0]['content'] = $this->uploadMassMessageContentImg($article_info['content']);
                 $article[0]['digest'] = $article_info['digest'];
                 $article[0]['show_cover_pic'] = $article_info['is_show'];
             }
@@ -1688,6 +1688,33 @@ class WechatController extends AdminController
         $this->assign('groups', $groups);
         $this->assign('article', $article);
         $this->display();
+    }
+
+    /**
+     * 群发消息 内容上传图片（不是封面上传）
+     * @param  string $content
+     * @return
+     */
+    public function uploadMassMessageContentImg ($content = '')
+    {   
+        $content = html_out($content);
+        $pattern = "/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.bmp|\.jpeg]))[\'|\"].*?[\/]?>/";
+        preg_match_all($pattern, $content, $match);
+
+        if (count($match[1]) > 0) {
+            foreach ($match[1] as $img) {
+                if (strtolower(substr($img, 0, 4)) != 'http') {
+                    $filename = dirname(ROOT_PATH)  . $img;   
+                    $rs = $this->weObj->uploadImg(array('media' => realpath_wechat($filename)), 'image');
+                    if (!empty($rs)) {
+                        $replace = $rs['url'];// http://mmbiz.qpic.cn/mmbiz/gLO17UPS6FS2xsypf378iaNhWacZ1G1UplZYWEYfwvuU6Ont96b1roYs CNFwaRrSaKTPCUdBK9DgEHicsKwWCBRQ/0
+                        $content = str_replace($img, $replace, $content);
+                    }
+                }
+            }
+        }
+                            
+        return $content;
     }
 
     /**
