@@ -80,8 +80,13 @@ class wxpay
         }else{
             // 网页授权获取用户openid
             $openid = empty($_SESSION['openid']) ? $_SESSION['wechat_user']['openid'] : $_SESSION['openid'];
+            $user = model('Users')->get_openid($_SESSION['user_id']);
             if (!isset($openid) || empty($openid)) {
-                return false;
+                if(!empty($user)){
+                    $openid = $user;
+                }else{
+                    return false;
+                }
             }
 
             // 设置必填参数
@@ -118,6 +123,9 @@ class wxpay
     public function callback($data)
     {
         if (isset($_GET) && $_GET['status'] == 1) {
+            if(empty($_GET['order_id'])) {
+                return true;
+            }
             $order = array();
             $order['order_id']= intval($_GET['order_id']);
             $payment = model('Payment')->get_payment($data['code']);
