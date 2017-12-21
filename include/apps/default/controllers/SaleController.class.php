@@ -75,13 +75,13 @@ class SaleController extends CommonController {
         if(IS_POST){
             $data = $_POST['data'];
             $data = I('data');
-            if (empty($data['shop_name'])){
+            if (empty(preg_replace('# #','',$data['shop_name']))){
                 show_message(L('shop_name_empty'));
             }
-            if (empty($data['real_name'])){
+            if (empty(preg_replace('# #','',$data['real_name']))){
                 show_message(L('real_name_empty'));
             }
-            if (empty($data['shop_mobile'])){
+            if (empty(preg_replace('# #','',$data['shop_mobile']))){
                 show_message(L('shop_mobile_empty'));
             }
             if(!empty($_FILES['shop_img']['name'])){
@@ -579,13 +579,13 @@ class SaleController extends CommonController {
 		}
         if (IS_POST){
             $data = I('data');
-            if (empty($data['shop_name'])){
+            if (empty(preg_replace('# #','',$data['shop_name']))){
                 show_message(L('shop_name_empty'));
             }
-            if (empty($data['real_name'])){
+            if (empty(preg_replace('# #','',$data['real_name']))){
                 show_message(L('real_name_empty'));
             }
-            if (empty($data['shop_mobile'])){
+            if (empty(preg_replace('# #','',$data['shop_mobile']))){
                 show_message(L('shop_mobile_empty'));
             }
             // if (empty($data['shop_qq'])){
