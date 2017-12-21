@@ -2605,5 +2605,16 @@ class UsersModel extends BaseModel {
         $v = substr($v,0,-1) ;
         return $v;
     }
+    /**
+     * 查询用户openid
+     * @access  public
+     * @param  $user_id 原会员id
+     * @return $openid  用户openid
+     */
+    function get_openid($user_id) {
+        $result = $this->model->table('wechat_user')->field('openid')->where(array('ect_uid' => $user_id))->find();
+        return $result['openid'];
+    }
+
 
 }
