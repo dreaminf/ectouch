@@ -115,7 +115,7 @@ class SuppliersController extends BaseController
                 $order_exists = $this->db->getOne($sql, true);
                 if ($order_exists > 0) {
                     $url = 'suppliers.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
-                    return $this->redirect($url);
+                    return redirect($url);
                 }
 
                 // 判断供货商是否存在商品 
@@ -125,7 +125,7 @@ class SuppliersController extends BaseController
                 $goods_exists = $this->db->getOne($sql, true);
                 if ($goods_exists > 0) {
                     $url = 'suppliers.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
-                    return $this->redirect($url);
+                    return redirect($url);
                 }
 
                 $sql = "DELETE FROM " . $this->ecs->table('suppliers') . "
@@ -147,7 +147,7 @@ class SuppliersController extends BaseController
             }
 
             $url = 'suppliers.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
-            return $this->redirect($url);
+            return redirect($url);
         }
 
         /**

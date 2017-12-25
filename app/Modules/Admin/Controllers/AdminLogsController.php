@@ -75,7 +75,7 @@ class AdminLogsController extends BaseController
             // 按日期删除日志 
             if ($drop_type_date) {
                 if ($_POST['log_date'] == '0') {
-                    return $this->redirect("admin_logs.php?act=list");
+                    return redirect("admin_logs.php?act=list");
                 } elseif ($_POST['log_date'] > '0') {
                     $where = " WHERE 1 ";
                     switch ($_POST['log_date']) {

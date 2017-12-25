@@ -60,7 +60,7 @@ class BrandController extends BaseController
             $brand_info = $this->get_brand_info($brand_id);
 
             if (empty($brand_info)) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             $this->smarty->assign('data_dir', DATA_DIR);

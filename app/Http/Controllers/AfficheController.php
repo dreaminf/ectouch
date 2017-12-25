@@ -13,7 +13,7 @@ class AfficheController extends BaseController
     {
         // 没有指定广告的id及跳转地址 
         if (empty($_GET['ad_id'])) {
-            return $this->redirect('/');
+            return redirect('/');
         } else {
             $ad_id = intval($_GET['ad_id']);
         }
@@ -106,7 +106,7 @@ class AfficheController extends BaseController
 
                 $uri = build_uri('goods', ['gid' => $goods_id], $row['goods_name']);
 
-                return $this->redirect($uri);
+                return redirect($uri);
             } else {
                 // 更新站内广告的点击次数 
                 $this->db->query('UPDATE ' . $this->ecs->table('ad') . " SET click_count = click_count + 1 WHERE ad_id = '$ad_id'");
@@ -128,7 +128,7 @@ class AfficheController extends BaseController
                     $uri = $this->ecs->url();
                 }
 
-                return $this->redirect($uri);
+                return redirect($uri);
             }
         }
     }

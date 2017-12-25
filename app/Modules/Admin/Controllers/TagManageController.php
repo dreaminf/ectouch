@@ -177,7 +177,7 @@ class TagManageController extends BaseController
                 admin_log(addslashes($tag_name), 'remove', 'tag_manage');
 
                 $url = 'tag_manage.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
-                return $this->redirect($url);
+                return redirect($url);
             } else {
                 return make_json_error($this->db->error());
             }

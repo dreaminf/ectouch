@@ -12,7 +12,7 @@ class VoteController extends BaseController
     public function actionIndex()
     {
         if (!isset($_REQUEST['vote']) || !isset($_REQUEST['options']) || !isset($_REQUEST['type'])) {
-            return $this->redirect('/');
+            return redirect('/');
         }
 
         $res = ['error' => 0, 'message' => '', 'content' => ''];

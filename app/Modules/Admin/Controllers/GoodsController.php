@@ -1363,7 +1363,7 @@ class GoodsController extends BaseController
 
                 $url = 'goods.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-                return $this->redirect($url);
+                return redirect($url);
             }
         }
 
@@ -1384,7 +1384,7 @@ class GoodsController extends BaseController
 
             $url = 'goods.php?act=query&' . str_replace('act=restore_goods', '', $_SERVER['QUERY_STRING']);
 
-            return $this->redirect($url);
+            return redirect($url);
         }
 
         /**
@@ -1496,7 +1496,7 @@ class GoodsController extends BaseController
             clear_cache_files();
             $url = 'goods.php?act=query&' . str_replace('act=drop_goods', '', $_SERVER['QUERY_STRING']);
 
-            return $this->redirect($url);
+            return redirect($url);
         }
 
         /**
@@ -1963,7 +1963,7 @@ class GoodsController extends BaseController
 
                 $url = 'goods.php?act=product_query&' . str_replace('act=product_remove', '', $_SERVER['QUERY_STRING']);
 
-                return $this->redirect($url);
+                return redirect($url);
             }
         }
 

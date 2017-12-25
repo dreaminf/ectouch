@@ -592,7 +592,7 @@ class GroupBuyController extends BaseController
 
             $url = 'group_buy.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-            return $this->redirect($url);
+            return redirect($url);
         }
     }
 

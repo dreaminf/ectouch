@@ -17,7 +17,7 @@ class ArticleCatController extends BaseController
         } elseif (!empty($_GET['category'])) {
             $cat_id = intval($_GET['category']);
         } else {
-            return $this->redirect('/');
+            return redirect('/');
         }
 
         // 获得当前页码 
@@ -50,7 +50,7 @@ class ArticleCatController extends BaseController
 
             if ($meta === false || empty($meta)) {
                 // 如果没有找到任何记录则返回首页 
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             $this->smarty->assign('keywords', htmlspecialchars($meta['keywords']));

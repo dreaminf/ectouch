@@ -18,7 +18,7 @@ class SnatchController extends BaseController
             $id = $this->get_last_snatch();
             if ($id) {
                 $page = build_uri('snatch', ['sid' => $id]);
-                return $this->redirect("$page");
+                return redirect("$page");
             } else {
                 // 当前没有任何可默认的活动
                 $id = 0;
@@ -170,7 +170,7 @@ class SnatchController extends BaseController
          */
         if ($_REQUEST['act'] == 'buy') {
             if (empty($id)) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             if (empty(session('user_id'))) {
@@ -181,13 +181,13 @@ class SnatchController extends BaseController
 
 
             if (empty($snatch)) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             // 未结束，不能购买
             if (empty($snatch['is_end'])) {
                 $page = build_uri('snatch', ['sid' => $id]);
-                return $this->redirect("$page");
+                return redirect("$page");
             }
 
             $result = get_snatch_result($id);
@@ -256,7 +256,7 @@ class SnatchController extends BaseController
             session('extension_id', $id);
 
             // 进入收货人页面
-            return $this->redirect("/flow.php?step=consignee");
+            return redirect("/flow.php?step=consignee");
         }
     }
 

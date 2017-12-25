@@ -233,7 +233,7 @@ class AttributeController extends BaseController
 
             $url = 'attribute.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-            return $this->redirect($url);
+            return redirect($url);
         }
 
         /**

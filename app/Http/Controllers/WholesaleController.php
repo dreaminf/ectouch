@@ -249,7 +249,7 @@ class WholesaleController extends BaseController
             unset($goods_attr, $attr_id, $goods_list, $wholesale, $goods_attr_name);
 
             // 刷新页面 
-            return $this->redirect("/wholesale.php");
+            return redirect("/wholesale.php");
         }
 
         /**
@@ -262,7 +262,7 @@ class WholesaleController extends BaseController
             }
 
             // 刷新页面 
-            return $this->redirect("/wholesale.php");
+            return redirect("/wholesale.php");
         }
 
         /**

@@ -63,7 +63,7 @@ class GoodsBookingController extends BaseController
 
             $url = 'goods_booking.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-            return $this->redirect($url);
+            return redirect($url);
         }
 
         /**
@@ -124,7 +124,7 @@ class GoodsBookingController extends BaseController
                 }
             }
 
-            return $this->redirect("goods_booking.php?act=detail&id=" . $_REQUEST['rec_id'] . "&send_ok=$send_ok");
+            return redirect("goods_booking.php?act=detail&id=" . $_REQUEST['rec_id'] . "&send_ok=$send_ok");
         }
     }
 

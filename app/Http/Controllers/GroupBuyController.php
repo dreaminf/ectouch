@@ -77,14 +77,14 @@ class GroupBuyController extends BaseController
             // 取得参数：团购活动id 
             $group_buy_id = isset($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
             if ($group_buy_id <= 0) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             // 取得团购活动信息 
             $group_buy = group_buy_info($group_buy_id);
 
             if (empty($group_buy)) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 //    elseif ($group_buy['is_on_sale'] == 0 || $group_buy['is_alone_sale'] == 0)
 //    {
@@ -108,7 +108,7 @@ class GroupBuyController extends BaseController
                 $goods_id = $group_buy['goods_id'];
                 $goods = goods_info($goods_id);
                 if (empty($goods)) {
-                    return $this->redirect('/');
+                    return redirect('/');
                 }
                 $goods['url'] = build_uri('goods', ['gid' => $goods_id], $goods['goods_name']);
                 $this->smarty->assign('gb_goods', $goods);
@@ -154,7 +154,7 @@ class GroupBuyController extends BaseController
             // 查询：取得参数：团购活动id 
             $group_buy_id = isset($_POST['group_buy_id']) ? intval($_POST['group_buy_id']) : 0;
             if ($group_buy_id <= 0) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             // 查询：取得数量 
@@ -164,7 +164,7 @@ class GroupBuyController extends BaseController
             // 查询：取得团购活动信息 
             $group_buy = group_buy_info($group_buy_id, $number);
             if (empty($group_buy)) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             // 查询：检查团购活动是否是进行中 
@@ -175,7 +175,7 @@ class GroupBuyController extends BaseController
             // 查询：取得团购商品信息 
             $goods = goods_info($group_buy['goods_id']);
             if (empty($goods)) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             // 查询：判断数量是否足够 
@@ -250,7 +250,7 @@ class GroupBuyController extends BaseController
             session('extension_id', $group_buy_id);
 
             // 进入收货人页面 
-            return $this->redirect("/flow.php?step=consignee");
+            return redirect("/flow.php?step=consignee");
         }
     }
 

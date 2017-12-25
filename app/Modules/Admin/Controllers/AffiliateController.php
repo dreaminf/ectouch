@@ -63,7 +63,7 @@ class AffiliateController extends BaseController
                 return make_json_error($GLOBALS['_LANG']['level_error']);
             }
 
-            return $this->redirect("affiliate.php?act=query");
+            return redirect("affiliate.php?act=query");
         }
 
         /**
@@ -173,7 +173,7 @@ class AffiliateController extends BaseController
             $config['on'] = 1;
             $config['config']['separate_by'] = 0;
             $this->put_affiliate($config);
-            return $this->redirect("affiliate.php?act=list");
+            return redirect("affiliate.php?act=list");
         }
     }
 

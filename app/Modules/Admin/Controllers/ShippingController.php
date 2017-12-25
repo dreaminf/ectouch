@@ -173,7 +173,7 @@ class ShippingController extends BaseController
             $this->db->query("UPDATE " . $this->ecs->table('shipping') . " SET print_bg = '" . addslashes($modules[0]['print_bg']) . "',  config_lable = '" . addslashes($modules[0]['config_lable']) . "' WHERE shipping_code = '$code' LIMIT 1");
 
             $url = "shipping.php?act=edit_print_template&shipping=$shipping_id";
-            return $this->redirect($url);
+            return redirect($url);
         }
 
         /**

@@ -276,7 +276,7 @@ class FriendLinkController extends BaseController
 
             $url = 'friend_link.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-            return $this->redirect($url);
+            return redirect($url);
         }
 
         /**

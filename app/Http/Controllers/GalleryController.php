@@ -21,7 +21,7 @@ class GalleryController extends BaseController
 
         // 如果该商品不存在，返回首页 
         if ($goods_name === false) {
-            return $this->redirect('/');
+            return redirect('/');
         }
 
         // 获得所有的图片 
@@ -35,7 +35,7 @@ class GalleryController extends BaseController
         $gallery = ['goods_name' => htmlspecialchars($goods_name, ENT_QUOTES), 'list' => []];
         if ($img_count == 0) {
             // 如果没有图片，返回商品详情页 
-            return $this->redirect('goods.php?id=' . $_REQUEST['id']);
+            return redirect('goods.php?id=' . $_REQUEST['id']);
         } else {
             foreach ($img_list as $key => $img) {
                 $gallery['list'][] = [

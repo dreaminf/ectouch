@@ -8,6 +8,7 @@ use App\Libraries\Mysql;
 use App\Libraries\Captcha;
 use App\Libraries\Template;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 /**
  * Class BaseController
@@ -22,7 +23,7 @@ class BaseController extends Controller
     protected $smarty;
     protected $_CFG;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         define('ECS_ADMIN', true);
         $urls = parse_url($_SERVER['REQUEST_URI']);
@@ -31,8 +32,8 @@ class BaseController extends Controller
         /**
          * 重新获取 REQUEST 参数
          */
-        $_GET = app('request')->get();
-        $_POST = app('request')->post();
+        $_GET = $request->query() + $request->route()->parameters();
+        $_POST = $request->post();
         $_REQUEST = $_GET + $_POST;
         $_REQUEST['act'] = isset($_REQUEST['act']) ? $_REQUEST['act'] : 'list';
 
@@ -67,8 +68,8 @@ class BaseController extends Controller
         load_lang(['common', 'log_action', PHP_SELF], 'admin');
 
         define('__ROOT__', asset('/'));
-        define('__PUBLIC__', asset('/static'));
-        define('__TPL__', asset('/static/admin'));
+        define('__PUBLIC__', asset('/assets'));
+        define('__TPL__', asset('/assets/admin'));
 
         // 创建 Smarty 对象。
         $this->smarty = $GLOBALS['smarty'] = new Template();
@@ -104,7 +105,7 @@ class BaseController extends Controller
                     if (!empty($_REQUEST['is_ajax'])) {
                         return make_json_error($GLOBALS['_LANG']['priv_error']);
                     } else {
-                        $this->redirect('privilege.php?act=login');
+                        redirect('privilege.php?act=login');
                     }
                 } else {
                     // 检查密码是否正确
@@ -123,7 +124,7 @@ class BaseController extends Controller
                         if (!empty($_REQUEST['is_ajax'])) {
                             return make_json_error($GLOBALS['_LANG']['priv_error']);
                         } else {
-                            $this->redirect('privilege.php?act=login');
+                            redirect('privilege.php?act=login');
                         }
                     }
                 }
@@ -131,7 +132,7 @@ class BaseController extends Controller
                 if (!empty($_REQUEST['is_ajax'])) {
                     return make_json_error($GLOBALS['_LANG']['priv_error']);
                 } else {
-                    $this->redirect('privilege.php?act=login');
+                    redirect('privilege.php?act=login');
                 }
             }
         }

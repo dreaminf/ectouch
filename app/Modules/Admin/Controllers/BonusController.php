@@ -129,7 +129,7 @@ class BonusController extends BaseController
 
             $url = 'bonus.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-            return $this->redirect($url);
+            return redirect($url);
         }
 
         /**
@@ -730,7 +730,7 @@ class BonusController extends BaseController
 
             $url = 'bonus.php?act=query_bonus&' . str_replace('act=remove_bonus', '', $_SERVER['QUERY_STRING']);
 
-            return $this->redirect($url);
+            return redirect($url);
         }
 
         /**

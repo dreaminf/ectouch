@@ -20,7 +20,7 @@ class SearchController extends BaseController
             $string['search_encode_time'] = time();
             $string = str_replace('+', '%2b', base64_encode(serialize($string)));
 
-            return $this->redirect("/search.php?encode=$string");
+            return redirect("/search.php?encode=$string");
         } else {
             $string = base64_decode(trim($_GET['encode']));
             if ($string !== false) {

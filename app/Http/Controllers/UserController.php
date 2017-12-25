@@ -798,7 +798,7 @@ class UserController extends BaseController
             $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
 
             if (cancel_order($order_id, $user_id)) {
-                return $this->redirect("/user.php?act=order_list");
+                return redirect("/user.php?act=order_list");
             } else {
                 return $this->err->show($GLOBALS['_LANG']['order_list_lnk'], 'user.php?act=order_list');
             }
@@ -894,7 +894,7 @@ class UserController extends BaseController
             $consignee_id = intval($_GET['id']);
 
             if (drop_consignee($consignee_id)) {
-                return $this->redirect("/user.php?act=address_list");
+                return redirect("/user.php?act=address_list");
             } else {
                 return show_message($GLOBALS['_LANG']['del_address_false']);
             }
@@ -937,7 +937,7 @@ class UserController extends BaseController
                 $this->db->query('DELETE FROM ' . $this->ecs->table('collect_goods') . " WHERE rec_id='$collection_id' AND user_id ='$user_id'");
             }
 
-            return $this->redirect("/user.php?act=collection_list");
+            return redirect("/user.php?act=collection_list");
         }
 
         /**
@@ -948,7 +948,7 @@ class UserController extends BaseController
             if ($rec_id) {
                 $this->db->query('UPDATE ' . $this->ecs->table('collect_goods') . "SET is_attention = 1 WHERE rec_id='$rec_id' AND user_id ='$user_id'");
             }
-            return $this->redirect("/user.php?act=collection_list");
+            return redirect("/user.php?act=collection_list");
         }
 
         /**
@@ -959,7 +959,7 @@ class UserController extends BaseController
             if ($rec_id) {
                 $this->db->query('UPDATE ' . $this->ecs->table('collect_goods') . "SET is_attention = 0 WHERE rec_id='$rec_id' AND user_id ='$user_id'");
             }
-            return $this->redirect("/user.php?act=collection_list");
+            return redirect("/user.php?act=collection_list");
         }
 
         /**
@@ -1065,7 +1065,7 @@ class UserController extends BaseController
             $tag_words = isset($_GET['tag_words']) ? trim($_GET['tag_words']) : '';
             delete_tag($tag_words, $user_id);
 
-            return $this->redirect("/user.php?act=tag_list");
+            return redirect("/user.php?act=tag_list");
         }
 
         /**
@@ -1161,12 +1161,12 @@ class UserController extends BaseController
 
             $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
             if ($id == 0 || $user_id == 0) {
-                return $this->redirect("/user.php?act=booking_list");
+                return redirect("/user.php?act=booking_list");
             }
 
             $result = delete_booking($id, $user_id);
             if ($result) {
-                return $this->redirect("/user.php?act=booking_list");
+                return redirect("/user.php?act=booking_list");
             }
         }
 
@@ -1179,7 +1179,7 @@ class UserController extends BaseController
             $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
 
             if (affirm_received($order_id, $user_id)) {
-                return $this->redirect("/user.php?act=order_list");
+                return redirect("/user.php?act=order_list");
             } else {
                 return $this->err->show($GLOBALS['_LANG']['order_list_lnk'], 'user.php?act=order_list');
             }
@@ -1395,12 +1395,12 @@ class UserController extends BaseController
 
             $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
             if ($id == 0 || $user_id == 0) {
-                return $this->redirect("/user.php?act=account_log");
+                return redirect("/user.php?act=account_log");
             }
 
             $result = del_user_account($id, $user_id);
             if ($result) {
-                return $this->redirect("/user.php?act=account_log");
+                return redirect("/user.php?act=account_log");
             }
         }
 
@@ -1415,12 +1415,12 @@ class UserController extends BaseController
             $payment_id = isset($_GET['pid']) ? intval($_GET['pid']) : 0;
 
             if ($surplus_id == 0) {
-                return $this->redirect("/user.php?act=account_log");
+                return redirect("/user.php?act=account_log");
             }
 
             //如果原来的支付方式已禁用或者已删除, 重新选择支付方式
             if ($payment_id == 0) {
-                return $this->redirect("/user.php?act=account_deposit&id=" . $surplus_id . "");
+                return redirect("/user.php?act=account_deposit&id=" . $surplus_id . "");
             }
 
             //获取单条会员帐目信息
@@ -1572,7 +1572,7 @@ class UserController extends BaseController
                     $this->db->query($sql);
                 }
             }
-            return $this->redirect("/user.php?act=message_list&order_id=$order_id");
+            return redirect("/user.php?act=message_list&order_id=$order_id");
         }
 
         /**
@@ -1584,7 +1584,7 @@ class UserController extends BaseController
                 $sql = "DELETE FROM " . $this->ecs->table('comment') . " WHERE comment_id = '$id' AND user_id = '$user_id'";
                 $this->db->query($sql);
             }
-            return $this->redirect("/user.php?act=comment_list");
+            return redirect("/user.php?act=comment_list");
         }
 
         /**
@@ -1656,13 +1656,13 @@ class UserController extends BaseController
         if ($action == 'act_edit_surplus') {
             // 检查是否登录 
             if (session('user_id') <= 0) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             // 检查订单号 
             $order_id = intval($_POST['order_id']);
             if ($order_id <= 0) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             // 检查余额 
@@ -1677,12 +1677,12 @@ class UserController extends BaseController
             // 取得订单 
             $order = order_info($order_id);
             if (empty($order)) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             // 检查订单用户跟当前用户是否一致 
             if (session('user_id') != $order['user_id']) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             // 检查订单是否未付款，检查应付款金额是否大于0 
@@ -1747,7 +1747,7 @@ class UserController extends BaseController
             log_account_change($user['user_id'], (-1) * $surplus, 0, 0, 0, $change_desc);
 
             // 跳转 
-            return $this->redirect('user.php?act=order_detail&order_id=' . $order_id . "");
+            return redirect('user.php?act=order_detail&order_id=' . $order_id . "");
         }
 
         /**
@@ -1756,41 +1756,41 @@ class UserController extends BaseController
         if ($action == 'act_edit_payment') {
             // 检查是否登录 
             if (session('user_id') <= 0) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             // 检查支付方式 
             $pay_id = intval($_POST['pay_id']);
             if ($pay_id <= 0) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             load_helper('order');
             $payment_info = payment_info($pay_id);
             if (empty($payment_info)) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             // 检查订单号 
             $order_id = intval($_POST['order_id']);
             if ($order_id <= 0) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             // 取得订单 
             $order = order_info($order_id);
             if (empty($order)) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             // 检查订单用户跟当前用户是否一致 
             if (session('user_id') != $order['user_id']) {
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             // 检查订单是否未付款和未发货 以及订单金额是否为0 和支付id是否为改变
             if ($order['pay_status'] != PS_UNPAYED || $order['shipping_status'] != SS_UNSHIPPED || $order['goods_amount'] <= 0 || $order['pay_id'] == $pay_id) {
-                return $this->redirect("/user.php?act=order_detail&order_id=$order_id");
+                return redirect("/user.php?act=order_detail&order_id=$order_id");
             }
 
             $order_amount = $order['order_amount'] - $order['pay_fee'];
@@ -1803,7 +1803,7 @@ class UserController extends BaseController
             $this->db->query($sql);
 
             // 跳转 
-            return $this->redirect("/user.php?act=order_detail&order_id=$order_id");
+            return redirect("/user.php?act=order_detail&order_id=$order_id");
         }
 
         /**
@@ -1824,7 +1824,7 @@ class UserController extends BaseController
                 'order_id' => isset($_POST['order_id']) ? intval($_POST['order_id']) : 0
             ];
             if (save_order_address($address, $user_id)) {
-                return $this->redirect('user.php?act=order_detail&order_id=' . $address['order_id'] . "");
+                return redirect('user.php?act=order_detail&order_id=' . $address['order_id'] . "");
             } else {
                 return $this->err->show($GLOBALS['_LANG']['order_list_lnk'], 'user.php?act=order_list');
             }

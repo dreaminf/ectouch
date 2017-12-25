@@ -257,7 +257,7 @@ class PackController extends BaseController
 
                 $url = 'pack.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-                return $this->redirect($url);
+                return redirect($url);
             } else {
                 return make_json_error($GLOBALS['_LANG']['packremove_falure']);
                 return false;

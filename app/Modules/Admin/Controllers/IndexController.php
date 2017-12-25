@@ -20,9 +20,9 @@ class IndexController extends BaseController
          */
         if ($_REQUEST['act'] == 'list') {
             // 强制访问index.php，避免url异常
-            $absolute_url = app('request')->getAbsoluteUrl();
+            $absolute_url = request()->fullUrl();
             if (stripos($absolute_url, 'index.php') === false) {
-                return $this->redirect('index.php');
+                return redirect('index.php');
             }
 
             load_helper(['menu', 'priv'], 'admin');
@@ -115,7 +115,7 @@ class IndexController extends BaseController
             //寮€搴楀悜瀵肩?涓€姝
             if (session('?shop_guide') && session('shop_guide') === true) {
                 session('shop_guide', null);
-                return $this->redirect("index.php?act=first");
+                return redirect("index.php?act=first");
             }
 
             $gd = gd_version();

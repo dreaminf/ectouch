@@ -439,7 +439,7 @@ class AdsController extends BaseController
 
             $url = 'ads.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-            return $this->redirect($url);
+            return redirect($url);
         }
     }
 

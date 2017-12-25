@@ -177,7 +177,7 @@ function edit_password($user_id, $old_password, $new_password = '', $code = '')
 function check_userinfo($user_name, $email)
 {
     if (empty($user_name) || empty($email)) {
-        return $this->redirect("user.php?act=get_password");
+        return redirect("user.php?act=get_password");
     }
 
     // 检测用户名和邮件地址是否匹配 
@@ -203,7 +203,7 @@ function check_userinfo($user_name, $email)
 function send_pwd_email($uid, $user_name, $email, $code)
 {
     if (empty($uid) || empty($user_name) || empty($email) || empty($code)) {
-        return $this->redirect("user.php?act=get_password");
+        return redirect("user.php?act=get_password");
     }
 
     // 设置重置邮件模板所需要的内容信息 

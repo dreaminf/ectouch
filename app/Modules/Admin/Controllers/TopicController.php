@@ -259,7 +259,7 @@ class TopicController extends BaseController
 
             if (!empty($_REQUEST['is_ajax'])) {
                 $url = 'topic.php?act=query&' . str_replace('act=delete', '', $_SERVER['QUERY_STRING']);
-                return $this->redirect($url);
+                return redirect($url);
             }
 
             $links[] = ['href' => 'topic.php', 'text' => $GLOBALS['_LANG']['back_list']];

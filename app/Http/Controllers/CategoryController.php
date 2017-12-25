@@ -18,7 +18,7 @@ class CategoryController extends BaseController
             $cat_id = intval($_REQUEST['category']);
         } else {
             // 如果分类ID为0，则返回首页 
-            return $this->redirect('/');
+            return redirect('/');
         }
 
         // 初始化分页信息 
@@ -63,7 +63,7 @@ class CategoryController extends BaseController
                 $this->smarty->assign('cat_style', htmlspecialchars($cat['style']));
             } else {
                 // 如果分类不存在则返回首页 
-                return $this->redirect('/');
+                return redirect('/');
             }
 
             // 赋值固定内容 

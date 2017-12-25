@@ -73,7 +73,7 @@ class CardController extends BaseController
 
                 $url = 'card.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-                return $this->redirect($url);
+                return redirect($url);
             } else {
                 return make_json_error($this->db->error());
             }

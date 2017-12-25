@@ -211,7 +211,7 @@ class VoteController extends BaseController
 
                     $url = 'vote.php?act=query_option&vid=' . $vote_id . '&' . str_replace('act=new_option', '', $_SERVER['QUERY_STRING']);
 
-                    return $this->redirect($url);
+                    return redirect($url);
                 }
             } else {
                 return make_json_error($GLOBALS['_LANG']['js_languages']['option_name_empty']);
@@ -294,7 +294,7 @@ class VoteController extends BaseController
 
             $url = 'vote.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-            return $this->redirect($url);
+            return redirect($url);
         }
 
         /**
@@ -313,7 +313,7 @@ class VoteController extends BaseController
 
             $url = 'vote.php?act=query_option&vid=' . $vote_id . '&' . str_replace('act=remove_option', '', $_SERVER['QUERY_STRING']);
 
-            return $this->redirect($url);
+            return redirect($url);
         }
     }
 

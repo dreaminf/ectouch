@@ -81,7 +81,7 @@ class BaseController extends Controller
         }
 
         define('__ROOT__', asset('/'));
-        define('__PUBLIC__', asset('/static'));
+        define('__PUBLIC__', asset('/assets'));
         define('__TPL__', asset('/themes/' . $GLOBALS['_CFG']['template']));
 
         $this->smarty = $GLOBALS['smarty'] = new Template();

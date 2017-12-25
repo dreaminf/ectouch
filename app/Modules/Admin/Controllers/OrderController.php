@@ -1094,7 +1094,7 @@ class OrderController extends BaseController
                 $this->db->query($sql);
 
                 // 下一步 
-                return $this->redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=goods");
+                return redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=goods");
             } // 编辑商品信息 
             elseif ('edit_goods' == $step) {
                 if (isset($_POST['rec_id'])) {
@@ -1147,7 +1147,7 @@ class OrderController extends BaseController
                 }
 
                 // 跳回订单商品 
-                return $this->redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=goods");
+                return redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=goods");
             } // 添加商品 
             elseif ('add_goods' == $step) {
                 // 取得参数 
@@ -1268,12 +1268,12 @@ class OrderController extends BaseController
                 admin_log($sn, 'edit', 'order');
 
                 // 跳回订单商品 
-                return $this->redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=goods");
+                return redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=goods");
             } // 商品 
             elseif ('goods' == $step) {
                 // 下一步 
                 if (isset($_POST['next'])) {
-                    return $this->redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=consignee");
+                    return redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=consignee");
                 } // 完成 
                 elseif (isset($_POST['finish'])) {
                     // 初始化提示信息和链接 
@@ -1289,7 +1289,7 @@ class OrderController extends BaseController
                         return sys_msg(join(chr(13), $msgs), 0, $links);
                     } else {
                         // 跳转到订单详情 
-                        return $this->redirect("order.php?act=info&order_id=" . $order_id . "");
+                        return redirect("order.php?act=info&order_id=" . $order_id . "");
                     }
                 }
             } // 保存收货人信息 
@@ -1310,10 +1310,10 @@ class OrderController extends BaseController
                     // 下一步 
                     if (exist_real_goods($order_id)) {
                         // 存在实体商品，去配送方式 
-                        return $this->redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=shipping");
+                        return redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=shipping");
                     } else {
                         // 不存在实体商品，去支付方式 
-                        return $this->redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=payment");
+                        return redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=payment");
                     }
                 } elseif (isset($_POST['finish'])) {
                     // 如果是编辑且存在实体商品，检查收货人地区的改变是否影响原来选的配送 
@@ -1346,9 +1346,9 @@ class OrderController extends BaseController
 
                     // 完成 
                     if ($agency_changed) {
-                        return $this->redirect("order.php?act=list");
+                        return redirect("order.php?act=list");
                     } else {
-                        return $this->redirect("order.php?act=info&order_id=" . $order_id . "");
+                        return redirect("order.php?act=info&order_id=" . $order_id . "");
                     }
                 }
             } // 保存配送信息 
@@ -1398,7 +1398,7 @@ class OrderController extends BaseController
 
                 if (isset($_POST['next'])) {
                     // 下一步 
-                    return $this->redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=payment");
+                    return redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=payment");
                 } elseif (isset($_POST['finish'])) {
                     // 初始化提示信息和链接 
                     $msgs = [];
@@ -1424,7 +1424,7 @@ class OrderController extends BaseController
                         return sys_msg(join(chr(13), $msgs), 0, $links);
                     } else {
                         // 完成 
-                        return $this->redirect("order.php?act=info&order_id=" . $order_id);
+                        return redirect("order.php?act=info&order_id=" . $order_id);
                     }
                 }
             } // 保存支付信息 
@@ -1468,7 +1468,7 @@ class OrderController extends BaseController
 
                 if (isset($_POST['next'])) {
                     // 下一步 
-                    return $this->redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=other");
+                    return redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=other");
                 } elseif (isset($_POST['finish'])) {
                     // 初始化提示信息和链接 
                     $msgs = [];
@@ -1483,7 +1483,7 @@ class OrderController extends BaseController
                         return sys_msg(join(chr(13), $msgs), 0, $links);
                     } else {
                         // 完成 
-                        return $this->redirect("order.php?act=info&order_id=" . $order_id);
+                        return redirect("order.php?act=info&order_id=" . $order_id);
                     }
                 }
             } elseif ('other' == $step) {
@@ -1529,10 +1529,10 @@ class OrderController extends BaseController
 
                 if (isset($_POST['next'])) {
                     // 下一步 
-                    return $this->redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=money");
+                    return redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=money");
                 } elseif (isset($_POST['finish'])) {
                     // 完成 
-                    return $this->redirect("order.php?act=info&order_id=" . $order_id);
+                    return redirect("order.php?act=info&order_id=" . $order_id);
                 }
             } elseif ('money' == $step) {
                 // 取得订单信息 
@@ -1697,7 +1697,7 @@ class OrderController extends BaseController
                     if (!empty($msgs)) {
                         return sys_msg(join(chr(13), $msgs), 0, $links);
                     } else {
-                        return $this->redirect("order.php?act=info&order_id=" . $order_id);
+                        return redirect("order.php?act=info&order_id=" . $order_id);
                     }
                 }
             } // 保存发货后的配送方式和发货单号 
@@ -1724,7 +1724,7 @@ class OrderController extends BaseController
                 admin_log($sn, 'edit', 'order');
 
                 if (isset($_POST['finish'])) {
-                    return $this->redirect("order.php?act=info&order_id=" . $order_id);
+                    return redirect("order.php?act=info&order_id=" . $order_id);
                 }
             }
         }
@@ -1995,7 +1995,7 @@ class OrderController extends BaseController
                 $this->update_order_amount($order_id);
 
                 // 跳回订单商品 
-                return $this->redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=goods");
+                return redirect("order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=goods");
             } // 取消刚添加或编辑的订单 
             elseif ('cancel_order' == $func) {
                 $step_act = $_GET['step_act'];
@@ -2007,10 +2007,10 @@ class OrderController extends BaseController
                             " WHERE order_id = '$order_id' LIMIT 1";
                         $this->db->query($sql);
                     }
-                    return $this->redirect("order.php?act=list");
+                    return redirect("order.php?act=list");
                 } else {
                     // 如果是编辑，返回订单信息 
-                    return $this->redirect("order.php?act=info&order_id=" . $order_id);
+                    return redirect("order.php?act=info&order_id=" . $order_id);
                 }
             } // 编辑订单时由于订单已付款且金额减少而退款 
             elseif ('refund' == $func) {
@@ -2026,7 +2026,7 @@ class OrderController extends BaseController
                 update_order($order_id, ['order_amount' => 0, 'money_paid' => $order['money_paid'] - $refund_amount]);
 
                 // 返回订单详情 
-                return $this->redirect("order.php?act=info&order_id=" . $order_id);
+                return redirect("order.php?act=info&order_id=" . $order_id);
             } // 载入退款页面 
             elseif ('load_refund' == $func) {
                 $refund_amount = floatval($_REQUEST['refund_amount']);
@@ -2560,7 +2560,7 @@ class OrderController extends BaseController
             elseif (isset($_POST['to_delivery'])) {
                 $url = 'order.php?act=delivery_list&order_sn=' . $_REQUEST['order_sn'];
 
-                return $this->redirect($url);
+                return redirect($url);
             }
 
             // 直接处理还是跳到详细页面 
@@ -2585,11 +2585,11 @@ class OrderController extends BaseController
                 // 直接处理 
                 if (!$batch) {
                     // 一个订单 
-                    return $this->redirect("order.php?act=operate_post&order_id=" . $order_id .
+                    return redirect("order.php?act=operate_post&order_id=" . $order_id .
                         "&operation=" . $operation . "&action_note=" . urlencode($action_note));
                 } else {
                     // 多个订单 
-                    return $this->redirect("order.php?act=batch_operate_post&order_id=" . $order_id .
+                    return redirect("order.php?act=batch_operate_post&order_id=" . $order_id .
                         "&operation=" . $operation . "&action_note=" . urlencode($action_note));
                 }
             }
@@ -3591,7 +3591,7 @@ class OrderController extends BaseController
             if ($GLOBALS['db']->errno() == 0) {
                 $url = 'order.php?act=query&' . str_replace('act=remove_order', '', $_SERVER['QUERY_STRING']);
 
-                return $this->redirect($url);
+                return redirect($url);
             } else {
                 return make_json_error($GLOBALS['db']->errorMsg());
             }
