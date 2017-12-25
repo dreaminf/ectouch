@@ -1,26 +1,40 @@
 <?php
+//
 
-namespace app\api\controllers\v2;
+namespace App\Http\Controllers\v2;
 
-use Yii;
-use yii\rest\Controller;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\v2\Article;
+use App\Models\v2\ArticleCategory;
 
 class ArticleController extends Controller
 {
-
     /**
-     * @return array
-     */
-    public function actionIndex()
+    * POST ecapi.article.list
+    */
+    public function index(Request $request)
     {
-        return [
-            'code' => 200,
-            'message' => 'article.v2.api.ok'
+        $rules = [
+            'id'        => 'required|integer',
+            'page'      => 'required|integer|min:1',
+            'per_page'  => 'required|integer|min:1',
         ];
+
+        if ($error = $this->validateInput($rules)) {
+            return $error;
+        }
+
+        $model = ArticleCategory::getList($this->validated);
+
+        return $this->json($model);
     }
 
-    public function actionGet($id = 0)
+    /**
+    * GET article.{id:[0-9]+}
+    */
+    public function show($id)
     {
-        return $id;
+        return Article::getArticle($id);
     }
 }

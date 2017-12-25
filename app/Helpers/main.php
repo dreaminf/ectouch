@@ -828,9 +828,9 @@ function visit_stats()
     }
     $time = gmtime();
     // 检查客户端是否存在访问统计的cookie 
-    $visit_times = cookie('visit_times');
+    $visit_times = request()->cookie('visit_times');
     $visit_times = !empty($visit_times) ? intval($visit_times) + 1 : 1;
-    cookie('visit_times', $visit_times, 1440 * 365);
+    \Cookie::queue('visit_times', $visit_times, 1440 * 365);
 
     $browser = get_user_browser();
     $os = get_os();

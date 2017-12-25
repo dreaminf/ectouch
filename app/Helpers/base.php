@@ -51,7 +51,7 @@ function sub_str($str, $length = 0, $append = true)
  */
 function real_ip()
 {
-    return Yii::$app->request->getUserIP();
+    return request()->ip();
 }
 
 /**

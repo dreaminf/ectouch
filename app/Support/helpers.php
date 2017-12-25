@@ -21,67 +21,6 @@ function is_mobile_device()
 }
 
 /**
- * Get / set the specified session value.
- *
- * @param $name
- * @param string $value
- * @return bool|mixed
- */
-function ec_session($name, $value = '')
-{
-    if (is_null($name)) {
-        // 清除
-        app('session')->destroy();
-    } elseif ('' === $value) {
-        // 判断或获取
-        return 0 === strpos($name, '?') ? app('session')->has(substr($name, 1)) : app('session')->get($name);
-    } elseif (is_null($value)) {
-        // 删除
-        return app('session')->remove($name);
-    } else {
-        // 设置
-        return app('session')->set($name, $value);
-    }
-}
-
-/**
- * Cookie管理
- * @param string|array $name cookie名称，如果为数组表示进行cookie设置
- * @param mixed $value cookie值
- * @param mixed $option 参数
- * @return mixed
- */
-function ec_cookie($name, $value = '', $option = null)
-{
-    if (is_null($name)) {
-        // 清除指定前缀的所有cookie
-        if (empty($_COOKIE)) {
-            return;
-        }
-        foreach ($_COOKIE as $key => $val) {
-            setcookie($key, '', $_SERVER['REQUEST_TIME'] - 3600);
-            unset($_COOKIE[$key]);
-        }
-    } elseif ('' === $value) {
-        // 获取
-        return 0 === strpos($name, '?') ? app('request')->cookies->has(substr($name, 1)) : app('request')->cookies->getValue($name);
-    } elseif (is_null($value)) {
-        // 删除
-        return app('response')->cookies->remove($name);
-    } else {
-        // 设置
-        $options = [
-            'name' => $name,
-            'value' => $value,
-        ];
-        if (!is_null($option)) {
-            $options['expire'] = local_gettime() + $option * 60;
-        }
-        return app('response')->cookies->add(new \yii\web\Cookie($options));
-    }
-}
-
-/**
  * 加载函数库
  * @param array $files
  * @param string $module
@@ -92,9 +31,9 @@ function load_helper($files = [], $module = '')
         $files = [$files];
     }
     if (empty($module)) {
-        $base_path = app_path('helpers/');
+        $base_path = app_path('Helpers/');
     } else {
-        $base_path = app_path('modules/' . ucfirst($module) . '/helpers/');
+        $base_path = app_path('Modules/' . ucfirst($module) . '/Helpers/');
     }
     foreach ($files as $vo) {
         $helper = $base_path . $vo . '.php';
@@ -118,7 +57,7 @@ function load_lang($files = [], $module = '')
     if (empty($module)) {
         $base_path = resource_path('lang/' . $GLOBALS['_CFG']['lang'] . '/');
     } else {
-        $base_path = app_path('modules/' . ucfirst($module) . '/languages/' . $GLOBALS['_CFG']['lang'] . '/');
+        $base_path = app_path('Modules/' . ucfirst($module) . '/Languages/' . $GLOBALS['_CFG']['lang'] . '/');
     }
     foreach ($files as $vo) {
         $helper = $base_path . $vo . '.php';
