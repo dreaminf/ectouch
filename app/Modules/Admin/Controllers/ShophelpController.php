@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Exchange;
+use App\Libraries\Exchange;
 
 /**
  * 帮助信息管理
  * Class ShophelpController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class ShophelpController extends Controller
+class ShophelpController extends BaseController
 {
     public function actionIndex()
     {

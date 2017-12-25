@@ -1,13 +1,13 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * 轮播图片程序
  * Class CycleImageController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class CycleImageController extends Controller
+class CycleImageController extends BaseController
 {
     public function actionIndex()
     {

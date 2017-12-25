@@ -1,13 +1,13 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * 文章分类
  * Class ArticleCatController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class ArticleCatController extends Controller
+class ArticleCatController extends BaseController
 {
     public function actionIndex()
     {

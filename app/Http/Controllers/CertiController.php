@@ -1,13 +1,13 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * 证书反查文件
  * Class CertiController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class CertiController extends Controller
+class CertiController extends BaseController
 {
     public function actionIndex()
     {

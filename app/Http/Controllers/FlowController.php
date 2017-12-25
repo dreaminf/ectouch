@@ -1,17 +1,17 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
-use app\libraries\Sms;
-use app\libraries\Json;
-use app\libraries\Captcha;
+use App\Libraries\Sms;
+use App\Libraries\Json;
+use App\Libraries\Captcha;
 
 /**
  * 购物流程
  * Class FlowController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class FlowController extends Controller
+class FlowController extends BaseController
 {
     public function actionIndex()
     {

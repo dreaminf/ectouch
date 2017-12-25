@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Exchange;
+use App\Libraries\Exchange;
 
 /**
  * 拍卖活动管理
  * Class AuctionController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class AuctionController extends Controller
+class AuctionController extends BaseController
 {
     public function actionIndex()
     {

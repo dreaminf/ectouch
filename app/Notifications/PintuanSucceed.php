@@ -1,11 +1,11 @@
 <?php
 
-namespace app\notifications;
+namespace App\Notifications;
 
 /**
  * 拼团成功通知
  * Class PintuanSucceed
- * @package app\notifications
+ * @package App\Notifications
  */
 class PintuanSucceed
 {

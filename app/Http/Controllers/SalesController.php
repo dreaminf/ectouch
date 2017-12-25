@@ -1,12 +1,12 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * Class SalesController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class SalesController extends Controller
+class SalesController extends BaseController
 {
     public function actionIndex()
     {

@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Exchange;
+use App\Libraries\Exchange;
 
 /**
  * 优惠活动管理
  * Class FavourableController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class FavourableController extends Controller
+class FavourableController extends BaseController
 {
     public function actionIndex()
     {

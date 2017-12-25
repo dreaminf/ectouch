@@ -1,11 +1,11 @@
 <?php
 
-namespace app\notifications;
+namespace App\Notifications;
 
 /**
  * 拼团退款通知
  * Class PintuanRefund
- * @package app\notifications
+ * @package App\Notifications
  */
 class PintuanRefund
 {

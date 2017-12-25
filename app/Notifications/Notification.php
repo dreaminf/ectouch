@@ -1,11 +1,11 @@
 <?php
 
-namespace app\notifications;
+namespace App\Notifications;
 
 /**
  * 通知服务抽象构造
  * Class Notification
- * @package app\notifications
+ * @package App\Notifications
  */
 abstract class Notification
 {

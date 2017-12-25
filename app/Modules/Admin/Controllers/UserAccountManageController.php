@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * 会员资金管理程序
  * Class UserAccountManageController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class UserAccountManageController extends Controller
+class UserAccountManageController extends BaseController
 {
     public function actionIndex()
     {

@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * 会员帐目管理(包括预付款，余额)
  * Class UserAccountController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class UserAccountController extends Controller
+class UserAccountController extends BaseController
 {
     public function actionIndex()
     {

@@ -1,14 +1,14 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
-use app\libraries\Json;
+use App\Libraries\Json;
 
 /**
  * Class RegionController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class RegionController extends Controller
+class RegionController extends BaseController
 {
     public function actionIndex()
     {

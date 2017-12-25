@@ -27,7 +27,7 @@ function is_mobile_device()
  * @param string $value
  * @return bool|mixed
  */
-function session($name, $value = '')
+function ec_session($name, $value = '')
 {
     if (is_null($name)) {
         // 清除
@@ -51,7 +51,7 @@ function session($name, $value = '')
  * @param mixed $option 参数
  * @return mixed
  */
-function cookie($name, $value = '', $option = null)
+function ec_cookie($name, $value = '', $option = null)
 {
     if (is_null($name)) {
         // 清除指定前缀的所有cookie
@@ -141,7 +141,7 @@ function load_lang($files = [], $module = '')
  * @param boolean $strict 是否严谨 默认为true
  * @return void|string
  */
-function dd($var, $echo = true, $label = null, $strict = true)
+function d($var, $echo = true, $label = null, $strict = true)
 {
     $label = ($label === null) ? '' : rtrim($label) . ' ';
     if (!$strict) {

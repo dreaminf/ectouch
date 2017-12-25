@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Exchange;
+use App\Libraries\Exchange;
 
 /**
  * 支付方式管理
  * Class PaymentController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class PaymentController extends Controller
+class PaymentController extends BaseController
 {
     public function actionIndex()
     {

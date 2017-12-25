@@ -1,13 +1,13 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * 标签云
  * Class TagCloudController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class TagCloudController extends Controller
+class TagCloudController extends BaseController
 {
     public function actionIndex()
     {

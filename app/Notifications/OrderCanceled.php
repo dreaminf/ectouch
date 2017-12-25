@@ -1,11 +1,11 @@
 <?php
 
-namespace app\notifications;
+namespace App\Notifications;
 
 /**
  * 订单取消
  * Class OrderCanceled
- * @package app\notifications
+ * @package App\Notifications
  */
 class OrderCanceled
 {

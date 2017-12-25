@@ -1,15 +1,14 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
-use app\libraries\Shop;
-use app\libraries\Error;
-use app\libraries\Mysql;
-use app\libraries\Session;
-use app\libraries\Template;
-use yii\web\Controller as BaseController;
+use App\Libraries\Shop;
+use App\Libraries\Error;
+use App\Libraries\Mysql;
+use App\Libraries\Session;
+use App\Libraries\Template;
 
-class Controller extends BaseController
+class BaseController extends Controller
 {
     protected $ecs;
     protected $db;
@@ -19,7 +18,7 @@ class Controller extends BaseController
     protected $_CFG;
     protected $user;
 
-    public function init()
+    public function __construct()
     {
         define('PHP_SELF', basename(substr(basename($_SERVER['REQUEST_URI']), 0, stripos(basename($_SERVER['REQUEST_URI']), '?')), '.php'));
 

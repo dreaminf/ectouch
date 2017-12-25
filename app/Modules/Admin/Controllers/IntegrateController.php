@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Mysql;
+use App\Libraries\Mysql;
 
 /**
  * 第三方程序会员数据整合插件管理
  * Class IntegrateController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class IntegrateController extends Controller
+class IntegrateController extends BaseController
 {
     public function actionIndex()
     {

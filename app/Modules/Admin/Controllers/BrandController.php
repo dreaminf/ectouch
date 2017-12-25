@@ -1,16 +1,16 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Image;
-use app\libraries\Exchange;
+use App\Libraries\Image;
+use App\Libraries\Exchange;
 
 /**
  * 品牌管理
  * Class BrandController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class BrandController extends Controller
+class BrandController extends BaseController
 {
     public function actionIndex()
     {

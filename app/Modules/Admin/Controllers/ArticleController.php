@@ -1,16 +1,16 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Image;
-use app\libraries\Exchange;
+use App\Libraries\Image;
+use App\Libraries\Exchange;
 
 /**
  * 文章管理
  * Class ArticleController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class ArticleController extends Controller
+class ArticleController extends BaseController
 {
     public function actionIndex()
     {

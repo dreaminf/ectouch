@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Exchange;
+use App\Libraries\Exchange;
 
 /**
  * 积分兑换商品
  * Class ExchangeGoodsController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class ExchangeGoodsController extends Controller
+class ExchangeGoodsController extends BaseController
 {
     public function actionIndex()
     {

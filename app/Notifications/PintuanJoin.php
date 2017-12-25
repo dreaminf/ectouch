@@ -1,11 +1,11 @@
 <?php
 
-namespace app\notifications;
+namespace App\Notifications;
 
 /**
  * 参与拼团
  * Class PintuanJoin
- * @package app\notifications
+ * @package App\Notifications
  */
 class PintuanJoin
 {

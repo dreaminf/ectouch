@@ -1,10 +1,10 @@
 <?php
 
-namespace app\extensions;
+namespace App\Extensions;
 
 /**
  * Class Cloud
- * @package app\extensions
+ * @package App\Extensions
  * =====Api 说明======
  * get.license 获取授权信息，参数 domain=网站域名
  * get.competence 判断帐号权限是否正常

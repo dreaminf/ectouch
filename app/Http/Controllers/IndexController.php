@@ -1,14 +1,14 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
-use app\libraries\Json;
+use App\Libraries\Json;
 
 /**
  * Class IndexController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class IndexController extends Controller
+class IndexController extends BaseController
 {
 
     /**

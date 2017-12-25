@@ -1,16 +1,16 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Image;
-use app\libraries\Exchange;
+use App\Libraries\Image;
+use App\Libraries\Exchange;
 
 /**
  * 友情链接管理
  * Class FriendLinkController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class FriendLinkController extends Controller
+class FriendLinkController extends BaseController
 {
     public function actionIndex()
     {

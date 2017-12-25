@@ -1,6 +1,6 @@
 <?php
 
-namespace app\channels;
+namespace App\Channels;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;

@@ -1,11 +1,11 @@
 <?php
 
-namespace app\notifications;
+namespace App\Notifications;
 
 /**
  * 订单发货完成
  * Class OrderDelivery
- * @package app\notifications
+ * @package App\Notifications
  */
 class OrderDelivery
 {

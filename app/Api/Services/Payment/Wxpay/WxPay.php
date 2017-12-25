@@ -16,9 +16,7 @@
  *
  */
 
-namespace app\services\payment\wxpay;
-
-use app\services\payment\wxpay\TenpayHttpClient;
+namespace App\Services\Payment\Wxpay;
 
 class WxPay {
 

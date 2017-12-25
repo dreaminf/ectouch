@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Exchange;
+use App\Libraries\Exchange;
 
 /**
  * 商品分类管理
  * Class CategoryController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class CategoryController extends Controller
+class CategoryController extends BaseController
 {
     public function actionIndex()
     {

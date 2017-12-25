@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * 邮件列表管理
  * Class EmailListController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class EmailListController extends Controller
+class EmailListController extends BaseController
 {
     public function actionIndex()
     {

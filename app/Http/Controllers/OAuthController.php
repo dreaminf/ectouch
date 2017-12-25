@@ -1,12 +1,12 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * Class OAuthController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class OAuthController extends Controller
+class OAuthController extends BaseController
 {
     public function actionIndex()
     {

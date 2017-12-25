@@ -1,16 +1,16 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\sitemap\GoogleSitemap;
-use app\libraries\sitemap\GoogleSitemapItem;
+use App\Libraries\Sitemap\GoogleSitemap;
+use App\Libraries\Sitemap\GoogleSitemapItem;
 
 /**
  * 站点地图生成程序
  * Class SitemapController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class SitemapController extends Controller
+class SitemapController extends BaseController
 {
     public function actionIndex()
     {

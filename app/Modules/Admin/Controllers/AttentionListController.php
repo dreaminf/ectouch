@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * Class AttentionListController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class AttentionListController extends Controller
+class AttentionListController extends BaseController
 {
     public function actionIndex()
     {

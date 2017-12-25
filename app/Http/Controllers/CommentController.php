@@ -1,16 +1,16 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
-use app\libraries\Json;
-use app\libraries\Captcha;
+use App\Libraries\Json;
+use App\Libraries\Captcha;
 
 /**
  * 提交用户评论
  * Class CommentController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class CommentController extends Controller
+class CommentController extends BaseController
 {
     public function actionIndex()
     {

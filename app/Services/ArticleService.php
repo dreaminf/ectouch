@@ -1,9 +1,9 @@
 <?php
 
-namespace app\services;
+namespace App\Services;
 
-use app\repositorys\ArticleRepository;
-use app\contracts\services\ArticleInterface;
+use App\Repositorys\ArticleRepository;
+use App\Contracts\Services\ArticleInterface;
 
 class ArticleService implements ArticleInterface
 {

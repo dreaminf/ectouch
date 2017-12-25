@@ -1,13 +1,13 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * 广告处理
  * Class AfficheController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class AfficheController extends Controller
+class AfficheController extends BaseController
 {
     public function actionIndex()
     {

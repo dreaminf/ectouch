@@ -1,11 +1,11 @@
 <?php
 
-namespace app\notifications;
+namespace App\Notifications;
 
 /**
  * 分销下线
  * Class DrpDirectReferrals
- * @package app\notifications
+ * @package App\Notifications
  */
 class DrpDirectReferrals
 {

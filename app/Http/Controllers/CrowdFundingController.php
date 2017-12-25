@@ -1,12 +1,12 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * Class CrowdFundingController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class CrowdFundingController extends Controller
+class CrowdFundingController extends BaseController
 {
     public function actionIndex()
     {

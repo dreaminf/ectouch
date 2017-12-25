@@ -1,16 +1,16 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 use DOMDocument;
-use app\libraries\Json;
+use App\Libraries\Json;
 
 /**
  * OPEN API统一接口
  * Class ApiController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class ApiController extends Controller
+class ApiController extends BaseController
 {
     public function actionIndex()
     {

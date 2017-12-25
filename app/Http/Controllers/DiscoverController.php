@@ -1,12 +1,12 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * Class DiscoverController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class DiscoverController extends Controller
+class DiscoverController extends BaseController
 {
     public function actionIndex()
     {

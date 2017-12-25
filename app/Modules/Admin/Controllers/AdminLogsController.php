@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * 记录管理员操作日志
  * Class AdminLogsController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class AdminLogsController extends Controller
+class AdminLogsController extends BaseController
 {
     public function actionIndex()
     {

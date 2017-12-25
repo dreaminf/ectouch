@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * 虚拟卡商品管理
  * Class VirtualCardController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class VirtualCardController extends Controller
+class VirtualCardController extends BaseController
 {
     public function actionIndex()
     {

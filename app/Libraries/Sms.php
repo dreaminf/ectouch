@@ -1,12 +1,12 @@
 <?php
 
-namespace app\libraries;
+namespace App\Libraries;
 
 
 /**
  * 短信模块主类
  * Class Sms
- * @package app\libraries\
+ * @package App\Libraries\
  */
 class Sms
 {

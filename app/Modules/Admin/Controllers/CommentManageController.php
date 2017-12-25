@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * 用户评论管理
  * Class CommentManageController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class CommentManageController extends Controller
+class CommentManageController extends BaseController
 {
     public function actionIndex()
     {

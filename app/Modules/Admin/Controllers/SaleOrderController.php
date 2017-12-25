@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * 商品销售排行
  * Class SaleOrderController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class SaleOrderController extends Controller
+class SaleOrderController extends BaseController
 {
     public function actionIndex()
     {

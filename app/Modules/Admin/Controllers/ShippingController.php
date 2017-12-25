@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Exchange;
+use App\Libraries\Exchange;
 
 /**
  * 配送方式管理
  * Class ShippingController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class ShippingController extends Controller
+class ShippingController extends BaseController
 {
     public function actionIndex()
     {

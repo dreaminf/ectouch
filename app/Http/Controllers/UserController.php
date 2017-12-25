@@ -1,17 +1,17 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 
-use app\libraries\Json;
-use app\libraries\Captcha;
+use App\Libraries\Json;
+use App\Libraries\Captcha;
 
 /**
  * 会员中心
  * Class UserController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class UserController extends Controller
+class UserController extends BaseController
 {
     public function actionIndex()
     {

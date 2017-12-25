@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * 专题管理
  * Class TopicController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class TopicController extends Controller
+class TopicController extends BaseController
 {
     public function actionIndex()
     {

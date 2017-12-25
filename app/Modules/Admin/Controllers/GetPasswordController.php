@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * 找回管理员密码
  * Class GetPasswordController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class GetPasswordController extends Controller
+class GetPasswordController extends BaseController
 {
     public function actionIndex()
     {

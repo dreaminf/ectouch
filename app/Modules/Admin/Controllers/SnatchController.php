@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Exchange;
+use App\Libraries\Exchange;
 
 /**
  * 夺宝奇兵管理
  * Class SnatchController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class SnatchController extends Controller
+class SnatchController extends BaseController
 {
     public function actionIndex()
     {

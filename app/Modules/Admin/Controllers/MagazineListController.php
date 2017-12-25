@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * Class MagazineListController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class MagazineListController extends Controller
+class MagazineListController extends BaseController
 {
     public function actionIndex()
     {

@@ -1,11 +1,11 @@
 <?php
 
-namespace app\notifications;
+namespace App\Notifications;
 
 /**
  * 分销商审核
  * Class DrpAccountChecked
- * @package app\notifications
+ * @package App\Notifications
  */
 class DrpAccountChecked
 {

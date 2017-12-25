@@ -1,6 +1,6 @@
 <?php
 
-namespace app\http\proxy;
+namespace App\Http\Proxy;
 
 use yii\httpclient\Client;
 

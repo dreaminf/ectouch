@@ -1,11 +1,11 @@
 <?php
 
-namespace app\notifications;
+namespace App\Notifications;
 
 /**
  * 商品降价
  * Class GoodsReducePrice
- * @package app\notifications
+ * @package App\Notifications
  */
 class GoodsReducePrice
 {

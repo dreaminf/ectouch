@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * 客户统计
  * Class GuestStatsController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class GuestStatsController extends Controller
+class GuestStatsController extends BaseController
 {
     public function actionIndex()
     {

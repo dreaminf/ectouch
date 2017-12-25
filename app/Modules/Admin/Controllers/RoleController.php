@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Exchange;
+use App\Libraries\Exchange;
 
 /**
  * 角色管理信息以及权限管理
  * Class RoleController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class RoleController extends Controller
+class RoleController extends BaseController
 {
     public function actionIndex()
     {

@@ -1,15 +1,15 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
-use app\libraries\rss\RSSBuilder;
+use App\Libraries\Rss\RSSBuilder;
 
 /**
  * RSS Feed 生成程序
  * Class FeedController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class FeedController extends Controller
+class FeedController extends BaseController
 {
     public function actionIndex()
     {

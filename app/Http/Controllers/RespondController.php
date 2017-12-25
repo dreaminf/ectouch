@@ -1,12 +1,12 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * Class RespondController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class RespondController extends Controller
+class RespondController extends BaseController
 {
     public function actionIndex()
     {

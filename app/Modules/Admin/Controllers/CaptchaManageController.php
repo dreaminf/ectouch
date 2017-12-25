@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * Class CaptchaManageController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class CaptchaManageController extends Controller
+class CaptchaManageController extends BaseController
 {
     public function actionIndex()
     {

@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Exchange;
+use App\Libraries\Exchange;
 
 /**
  * 调查管理程序
  * Class VoteController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class VoteController extends Controller
+class VoteController extends BaseController
 {
     public function actionIndex()
     {

@@ -1,17 +1,17 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 
-use app\libraries\Image;
-use app\libraries\Exchange;
+use App\Libraries\Image;
+use App\Libraries\Exchange;
 
 /**
  * 供货商商品
  * Class SuppliersGoodsController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class SuppliersGoodsController extends Controller
+class SuppliersGoodsController extends BaseController
 {
     public function actionIndex()
     {

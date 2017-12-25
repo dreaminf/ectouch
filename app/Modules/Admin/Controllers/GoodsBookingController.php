@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * 缺货处理管理
  * Class GoodsBookingController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class GoodsBookingController extends Controller
+class GoodsBookingController extends BaseController
 {
     public function actionIndex()
     {

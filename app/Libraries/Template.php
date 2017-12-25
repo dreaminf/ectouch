@@ -1,6 +1,6 @@
 <?php
 
-namespace app\libraries;
+namespace App\Libraries;
 
 use Yii;
 use yii\helpers\Html;
@@ -9,7 +9,7 @@ use yii\web\Response;
 /**
  * 模版类
  * Class Template
- * @package app\libraries
+ * @package App\Libraries
  */
 class Template
 {

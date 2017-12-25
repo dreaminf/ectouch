@@ -1,6 +1,6 @@
 <?php
 
-namespace app\extensions;
+namespace App\Extensions;
 
 use Yii;
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * 管理员留言
  * Class MessageController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class MessageController extends Controller
+class MessageController extends BaseController
 {
     public function actionIndex()
     {

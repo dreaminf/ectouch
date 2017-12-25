@@ -1,13 +1,13 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * 商品相册
  * Class GalleryController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class GalleryController extends Controller
+class GalleryController extends BaseController
 {
     public function actionIndex()
     {

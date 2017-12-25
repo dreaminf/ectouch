@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Exchange;
+use App\Libraries\Exchange;
 
 /**
  * 管理中心办事处管理
  * Class AgencyController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class AgencyController extends Controller
+class AgencyController extends BaseController
 {
     public function actionIndex()
     {

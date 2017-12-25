@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * Class GoodsAutoController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class GoodsAutoController extends Controller
+class GoodsAutoController extends BaseController
 {
     public function actionIndex()
     {

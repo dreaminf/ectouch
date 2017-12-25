@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * 供货商管理
  * Class SuppliersController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class SuppliersController extends Controller
+class SuppliersController extends BaseController
 {
     public function actionIndex()
     {

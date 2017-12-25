@@ -1,19 +1,19 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Shop;
-use app\libraries\Error;
-use app\libraries\Mysql;
-use app\libraries\Captcha;
-use app\libraries\Template;
-use yii\web\Controller as BaseController;
+use App\Libraries\Shop;
+use App\Libraries\Error;
+use App\Libraries\Mysql;
+use App\Libraries\Captcha;
+use App\Libraries\Template;
+use App\Http\Controllers\Controller;
 
 /**
- * Class Controller
- * @package app\modules\admin\controllers
+ * Class BaseController
+ * @package App\Modules\Admin\Controllers
  */
-class Controller extends BaseController
+class BaseController extends Controller
 {
     protected $ecs;
     protected $db;
@@ -22,7 +22,7 @@ class Controller extends BaseController
     protected $smarty;
     protected $_CFG;
 
-    public function init()
+    public function __construct()
     {
         define('ECS_ADMIN', true);
         $urls = parse_url($_SERVER['REQUEST_URI']);

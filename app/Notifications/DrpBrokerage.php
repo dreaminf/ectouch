@@ -1,11 +1,11 @@
 <?php
 
-namespace app\notifications;
+namespace App\Notifications;
 
 /**
  * 分销佣金提醒
  * Class DrpBrokerage
- * @package app\notifications
+ * @package App\Notifications
  */
 class DrpBrokerage
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * 调查程序
  * Class VoteController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class VoteController extends Controller
+class VoteController extends BaseController
 {
     public function actionIndex()
     {

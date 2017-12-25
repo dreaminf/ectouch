@@ -1,12 +1,12 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * Class GrouponController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class GrouponController extends Controller
+class GrouponController extends BaseController
 {
     public function actionIndex()
     {

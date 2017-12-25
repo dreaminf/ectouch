@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
 /**
  * 团购商品管理
  * Class GroupBuyController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class GroupBuyController extends Controller
+class GroupBuyController extends BaseController
 {
     public function actionIndex()
     {

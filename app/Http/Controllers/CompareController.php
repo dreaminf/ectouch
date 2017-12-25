@@ -1,13 +1,13 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * 商品比较程序
  * Class CompareController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class CompareController extends Controller
+class CompareController extends BaseController
 {
     public function actionIndex()
     {

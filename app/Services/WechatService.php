@@ -1,8 +1,8 @@
 <?php
 
-namespace app\services;
+namespace App\Services;
 
-use app\repositorys\ArticleRepository;
+use App\Repositorys\ArticleRepository;
 
 class WechatService
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Image;
+use App\Libraries\Image;
 
 /**
  * 商品批量上传、修改
  * Class GoodsBatchController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class GoodsBatchController extends Controller
+class GoodsBatchController extends BaseController
 {
     public function actionIndex()
     {

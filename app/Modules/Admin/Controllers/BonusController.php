@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Exchange;
+use App\Libraries\Exchange;
 
 /**
  * 红包类型的处理
  * Class BonusController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class BonusController extends Controller
+class BonusController extends BaseController
 {
     public function actionIndex()
     {

@@ -1,11 +1,11 @@
 <?php
 
-namespace app\notifications;
+namespace App\Notifications;
 
 /**
  * 用户找回密码
  * Class UserForgotPassword
- * @package app\notifications
+ * @package App\Notifications
  */
 class UserForgotPassword
 {

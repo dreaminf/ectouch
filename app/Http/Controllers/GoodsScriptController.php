@@ -1,13 +1,13 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * 生成商品列表
  * Class GoodsScriptController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class GoodsScriptController extends Controller
+class GoodsScriptController extends BaseController
 {
     public function actionIndex()
     {

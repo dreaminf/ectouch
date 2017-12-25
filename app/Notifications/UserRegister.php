@@ -1,11 +1,11 @@
 <?php
 
-namespace app\notifications;
+namespace App\Notifications;
 
 /**
  * 新用户注册
  * Class UserRegister
- * @package app\notifications
+ * @package App\Notifications
  */
 class UserRegister
 {

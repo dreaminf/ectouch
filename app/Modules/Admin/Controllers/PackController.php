@@ -1,16 +1,16 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Image;
-use app\libraries\Exchange;
+use App\Libraries\Image;
+use App\Libraries\Exchange;
 
 /**
  * 包装管理程序
  * Class PackController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class PackController extends Controller
+class PackController extends BaseController
 {
     public function actionIndex()
     {

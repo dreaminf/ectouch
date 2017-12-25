@@ -10,7 +10,7 @@
 //getDebugInfo(),获取debug信息
 //============================================================================
 
-namespace app\services\payment\wxpay;
+namespace App\Services\Payment\Wxpay;
 
 class WxResponse
 {

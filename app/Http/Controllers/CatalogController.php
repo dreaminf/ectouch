@@ -1,13 +1,13 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * 所有分类及品牌
  * Class CatalogController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class CatalogController extends Controller
+class CatalogController extends BaseController
 {
     public function actionIndex()
     {

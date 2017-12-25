@@ -1,13 +1,13 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * 商品分类
  * Class CategoryController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class CategoryController extends Controller
+class CategoryController extends BaseController
 {
     public function actionIndex()
     {

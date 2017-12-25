@@ -1,16 +1,16 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 
-use app\libraries\Sms;
+use App\Libraries\Sms;
 
 /**
  * 批发
  * Class WholesaleController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class WholesaleController extends Controller
+class WholesaleController extends BaseController
 {
     public function actionIndex()
     {

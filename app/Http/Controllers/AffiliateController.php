@@ -1,12 +1,12 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * Class AffiliateController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class AffiliateController extends Controller
+class AffiliateController extends BaseController
 {
     public function actionIndex()
     {

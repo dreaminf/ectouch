@@ -1,14 +1,14 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Exchange;
+use App\Libraries\Exchange;
 
 /**
  * Class NavigatorController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class NavigatorController extends Controller
+class NavigatorController extends BaseController
 {
     public function actionIndex()
     {

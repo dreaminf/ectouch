@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace App\Modules\Admin\Controllers;
 
-use app\libraries\Exchange;
+use App\Libraries\Exchange;
 
 /**
  * 属性规格管理
  * Class AttributeController
- * @package app\modules\admin\controllers
+ * @package App\Modules\Admin\Controllers
  */
-class AttributeController extends Controller
+class AttributeController extends BaseController
 {
     public function actionIndex()
     {

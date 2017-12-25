@@ -1,12 +1,12 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * Class WechatController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class WechatController extends Controller
+class WechatController extends BaseController
 {
     public function actionIndex()
     {

@@ -1,13 +1,13 @@
 <?php
 
-namespace app\http\controllers;
+namespace App\Http\Controllers;
 
 /**
  * 报价单
  * Class QuotationController
- * @package app\http\controllers
+ * @package App\Http\Controllers
  */
-class QuotationController extends Controller
+class QuotationController extends BaseController
 {
     public function actionIndex()
     {
