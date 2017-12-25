@@ -26,8 +26,8 @@ class PrivilegeController extends BaseController
          */
         if ($_REQUEST['act'] == 'logout') {
             // 清除cookie 
-            cookie('cp_admin_id', null);
-            cookie('cp_admin_pass', null);
+            \Cookie::queue('cp_admin_id', null);
+            \Cookie::queue('cp_admin_pass', null);
 
             session(null);
 
@@ -110,8 +110,8 @@ class PrivilegeController extends BaseController
 
                 if (isset($_POST['remember'])) {
                     $time = 60 * 24 * 365;
-                    cookie('cp_admin_id', $row['user_id'], $time);
-                    cookie('cp_admin_pass', md5($row['password'] . $GLOBALS['_CFG']['hash_code']), $time);
+                    \Cookie::queue('cp_admin_id', $row['user_id'], $time);
+                    \Cookie::queue('cp_admin_pass', md5($row['password'] . $GLOBALS['_CFG']['hash_code']), $time);
                 }
 
                 // 清除购物车中过期的数据

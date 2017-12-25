@@ -55,10 +55,10 @@ class WholesaleController extends BaseController
 
             if ($count > 0) {
                 $default_display_type = $GLOBALS['_CFG']['show_order_type'] == '0' ? 'list' : 'text';
-                $display = cookie('display');
+                $display = request()->cookie('display');
                 $display = (isset($_REQUEST['display']) && in_array(trim(strtolower($_REQUEST['display'])), ['list', 'grid', 'text'])) ? trim($_REQUEST['display']) : ($display ? $display : $default_display_type);
                 $display = in_array($display, ['list', 'grid', 'text']) ? $display : 'text';
-                cookie('display', $display, 1440 * 7);
+                \Cookie::queue('display', $display, 1440 * 7);
 
                 // 取得每页记录数 
                 $size = isset($GLOBALS['_CFG']['page_size']) && intval($GLOBALS['_CFG']['page_size']) > 0 ? intval($GLOBALS['_CFG']['page_size']) : 10;

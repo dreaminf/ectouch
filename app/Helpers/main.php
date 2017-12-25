@@ -1368,9 +1368,9 @@ function set_affiliate()
             } else {
                 $c = 1;
             }
-            cookie('affiliate_uid', intval($_GET['u']), 60 * $config['config']['expire'] * $c);
+            \Cookie::queue('affiliate_uid', intval($_GET['u']), 60 * $config['config']['expire'] * $c);
         } else {
-            cookie('affiliate_uid', intval($_GET['u']), 60 * 24); // 过期时间为 1 天
+            \Cookie::queue('affiliate_uid', intval($_GET['u']), 60 * 24); // 过期时间为 1 天
         }
     }
 }
@@ -1386,13 +1386,13 @@ function set_affiliate()
  **/
 function get_affiliate()
 {
-    $affiliate_uid = cookie('affiliate_uid');
+    $affiliate_uid = request()->cookie('affiliate_uid');
     if (!empty($affiliate_uid)) {
         $uid = intval($affiliate_uid);
         if ($GLOBALS['db']->getOne('SELECT user_id FROM ' . $GLOBALS['ecs']->table('users') . "WHERE user_id = '$uid'")) {
             return $uid;
         } else {
-            cookie('affiliate_uid', null);
+            \Cookie::queue('affiliate_uid', null);
         }
     }
 

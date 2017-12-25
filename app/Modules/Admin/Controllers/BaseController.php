@@ -87,8 +87,8 @@ class BaseController extends Controller
             $_REQUEST['act'] != 'login' && $_REQUEST['act'] != 'signin' &&
             $_REQUEST['act'] != 'forget_pwd' && $_REQUEST['act'] != 'reset_pwd' && $_REQUEST['act'] != 'check_order') {
             // session 不存在，检查cookie 
-            $cp_admin_id = cookie('cp_admin_id');
-            $cp_admin_pass = cookie('cp_admin_pass');
+            $cp_admin_id = request()->cookie('cp_admin_id');
+            $cp_admin_pass = request()->cookie('cp_admin_pass');
             if (!empty($cp_admin_id) && !empty($cp_admin_pass)) {
                 // 找到了cookie, 验证cookie信息
                 $sql = 'SELECT user_id, user_name, password, action_list, last_login ' .
@@ -98,8 +98,8 @@ class BaseController extends Controller
 
                 if (!$row) {
                     // 没有找到这个记录
-                    cookie('cp_admin_id', null);
-                    cookie('cp_admin_pass', null);
+                    \Cookie::queue('cp_admin_id', null);
+                    \Cookie::queue('cp_admin_pass', null);
 
                     if (!empty($_REQUEST['is_ajax'])) {
                         return make_json_error($GLOBALS['_LANG']['priv_error']);
@@ -117,8 +117,8 @@ class BaseController extends Controller
                             " SET last_login = '" . gmtime() . "', last_ip = '" . real_ip() . "'" .
                             " WHERE user_id = '" . session('admin_id') . "'");
                     } else {
-                        cookie('cp_admin_id', null);
-                        cookie('cp_admin_pass', null);
+                        \Cookie::queue('cp_admin_id', null);
+                        \Cookie::queue('cp_admin_pass', null);
 
                         if (!empty($_REQUEST['is_ajax'])) {
                             return make_json_error($GLOBALS['_LANG']['priv_error']);

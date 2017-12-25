@@ -2466,7 +2466,7 @@ class UserController extends BaseController
          * 清除商品浏览历史
          */
         if ($action == 'clear_history') {
-            cookie('history', null);
+            \Cookie::queue('history', null);
         }
     }
 }

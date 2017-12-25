@@ -98,7 +98,7 @@ class SuppliersGoodsController extends BaseController
             if ($is_add) {
                 // 默认值 
                 $last_choose = [0, 0];
-                $cp_last_choose = cookie('cp_last_choose');
+                $cp_last_choose = request()->cookie('cp_last_choose');
                 if (!empty($cp_last_choose)) {
                     $last_choose = explode('|', $cp_last_choose);
                 }
@@ -883,7 +883,7 @@ class SuppliersGoodsController extends BaseController
             }
 
             // 记录上一次选择的分类和品牌 
-            cookie('cp_last_choose', $catgory_id . '|' . $brand_id, 1440);
+            \Cookie::queue('cp_last_choose', $catgory_id . '|' . $brand_id, 1440);
             // 清空缓存 
             clear_cache_files();
 

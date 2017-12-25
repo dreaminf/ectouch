@@ -560,7 +560,7 @@ function sort_flag($filter)
  */
 function page_and_size($filter)
 {
-    $cp_page_size = cookie('cp_page_size');
+    $cp_page_size = request()->cookie('cp_page_size');
     if (isset($_REQUEST['page_size']) && intval($_REQUEST['page_size']) > 0) {
         $filter['page_size'] = intval($_REQUEST['page_size']);
     } elseif (!empty($cp_page_size) && intval($cp_page_size) > 0) {
@@ -648,9 +648,9 @@ function set_filter($filter, $sql, $param_str = '')
     if ($param_str) {
         $filterfile .= $param_str;
     }
-    cookie('cp_lastfilterfile', sprintf('%X', crc32($filterfile)), 600);
-    cookie('cp_lastfilter', urlencode(serialize($filter)), 600);
-    cookie('cp_lastfiltersql', base64_encode($sql), 600);
+    \Cookie::queue('cp_lastfilterfile', sprintf('%X', crc32($filterfile)), 600);
+    \Cookie::queue('cp_lastfilter', urlencode(serialize($filter)), 600);
+    \Cookie::queue('cp_lastfiltersql', base64_encode($sql), 600);
 }
 
 /**
@@ -665,9 +665,9 @@ function get_filter($param_str = '')
         $filterfile .= $param_str;
     }
 
-    $lastfilterfile = cookie('cp_lastfilterfile');
-    $lastfilter = cookie('cp_lastfilter');
-    $lastfiltersql = cookie('cp_lastfiltersql');
+    $lastfilterfile = request()->cookie('cp_lastfilterfile');
+    $lastfilter = request()->cookie('cp_lastfilter');
+    $lastfiltersql = request()->cookie('cp_lastfiltersql');
     if (isset($_GET['uselastfilter']) && !empty($lastfilterfile) && $lastfilterfile == sprintf('%X', crc32($filterfile))) {
         return [
             'filter' => unserialize(urldecode($lastfilter)),

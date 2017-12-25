@@ -126,7 +126,7 @@ class OrderController extends BaseController
             }
 
             // 取得上一个、下一个订单号 
-            $cp_lastfilter = cookie('cp_lastfilter');
+            $cp_lastfilter = request()->cookie('cp_lastfilter');
             if (!empty($cp_lastfilter)) {
                 $filter = unserialize(urldecode($cp_lastfilter));
                 if (!empty($filter['composite_status'])) {
@@ -4214,7 +4214,7 @@ class OrderController extends BaseController
             // 分页大小 
             $filter['page'] = empty($_REQUEST['page']) || (intval($_REQUEST['page']) <= 0) ? 1 : intval($_REQUEST['page']);
 
-            $cp_page_size = cookie('cp_page_size');
+            $cp_page_size = request()->cookie('cp_page_size');
             if (isset($_REQUEST['page_size']) && intval($_REQUEST['page_size']) > 0) {
                 $filter['page_size'] = intval($_REQUEST['page_size']);
             } elseif (!empty($cp_page_size) && intval($cp_page_size) > 0) {
@@ -4837,7 +4837,7 @@ class OrderController extends BaseController
             // 分页大小 
             $filter['page'] = empty($_REQUEST['page']) || (intval($_REQUEST['page']) <= 0) ? 1 : intval($_REQUEST['page']);
 
-            $cp_page_size = cookie('cp_page_size');
+            $cp_page_size = request()->cookie('cp_page_size');
             if (isset($_REQUEST['page_size']) && intval($_REQUEST['page_size']) > 0) {
                 $filter['page_size'] = intval($_REQUEST['page_size']);
             } elseif (!empty($cp_page_size) && intval($cp_page_size) > 0) {
@@ -4945,7 +4945,7 @@ class OrderController extends BaseController
             // 分页大小 
             $filter['page'] = empty($_REQUEST['page']) || (intval($_REQUEST['page']) <= 0) ? 1 : intval($_REQUEST['page']);
 
-            $cp_page_size = cookie('cp_page_size');
+            $cp_page_size = request()->cookie('cp_page_size');
             if (isset($_REQUEST['page_size']) && intval($_REQUEST['page_size']) > 0) {
                 $filter['page_size'] = intval($_REQUEST['page_size']);
             } elseif (!empty($cp_page_size) && intval($cp_page_size) > 0) {

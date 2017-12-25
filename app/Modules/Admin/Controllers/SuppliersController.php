@@ -423,7 +423,7 @@ class SuppliersController extends BaseController
             // 分页大小 
             $filter['page'] = empty($_REQUEST['page']) || (intval($_REQUEST['page']) <= 0) ? 1 : intval($_REQUEST['page']);
 
-            $cp_page_size = cookie('cp_page_size');
+            $cp_page_size = request()->cookie('cp_page_size');
             if (isset($_REQUEST['page_size']) && intval($_REQUEST['page_size']) > 0) {
                 $filter['page_size'] = intval($_REQUEST['page_size']);
             } elseif (!empty($cp_page_size) && intval($cp_page_size) > 0) {

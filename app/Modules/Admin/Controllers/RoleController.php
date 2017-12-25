@@ -28,8 +28,8 @@ class RoleController extends BaseController
          */
         if ($_REQUEST['act'] == 'logout') {
             // 清除cookie 
-            cookie('cp_admin_id', null);
-            cookie('cp_admin_pass', null);
+            \Cookie::queue('cp_admin_id', null);
+            \Cookie::queue('cp_admin_pass', null);
 
             session(null);
 
