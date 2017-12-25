@@ -21,15 +21,13 @@ defined('IN_ECTOUCH') or die('Deny Access');
  */
 class wxpay
 {
-
-    var $parameters; // cft 参数
-    var $payment; // 配置信息
+    private $parameters; // cft 参数
+    private $payment; // 配置信息
 
     /**
      * 生成支付代码
-     *
-     * @param array $order 订单信息
-     * @param array $payment 支付方式信息
+     * @param   array $order 订单信息
+     * @param   array $payment 支付方式信息
      */
     public function get_code($order, $payment)
     {
@@ -47,8 +45,7 @@ class wxpay
 
         // 判断是否是微信浏览器 调用H5支付 MWEB, 需要商户另外申请
         if(!is_wechat_browser()){
-            $scene_info = array('h5_info' => array('type' => 'Wap','wap_url' => __URL__,'wap_name' => C('shop_name')));
-            $scene_info = json_encode($scene_info);
+            $scene_info = json_encode(array('h5_info' => array('type' => 'Wap','wap_url' => __URL__,'wap_name' => C('shop_name'))));
 
             $this->setParameter("body", $order['order_sn']); // 商品描述
             $this->setParameter("out_trade_no", $order['order_sn'] . 'A' . $order_amount . 'B' . $order['log_id']); // 商户订单号
@@ -67,10 +64,10 @@ class wxpay
 
             $respond = $weObj->PayUnifiedOrder($this->parameters);
 
-            // $redirect_url = __HOST__ . url('user/order/detail', array('order_id' => $order['order_id']));
             if(isset($respond['mweb_url'])){
-
-                $redirect_url = __URL__ . "/respond_wxh5.php?code=wxpay&order_id=".$order['order_id'];
+                if ($respond['result_code'] == 'SUCCESS') {
+                    $redirect_url = __URL__ . "/respond.php?code=wxpay&style=wxh5&log_id=".$order['log_id'];
+                }
 
                 $button = '<div class="n-flow-alipay" style=" text-align:center"><button class="btn btn-info ect-btn-info ect-colorf ect-bg" style="background-color:#44b549;" type="button" onclick="window.open(\'' . $respond['mweb_url']. '&redirect_url='. urlencode($redirect_url) . '\')">微信支付</button></div>';
             }else{
@@ -88,14 +85,11 @@ class wxpay
                     return false;
                 }
             }
-
-            // 设置必填参数
-            // 根目录url
-            $this->setParameter("openid", "$openid"); // 商品描述
+            $this->setParameter("openid", $openid); // 用户openid
             $this->setParameter("body", $order['order_sn']); // 商品描述
             $this->setParameter("out_trade_no", $order['order_sn'] . 'A' . $order_amount . 'B' . $order['log_id']); // 商户订单号
             $this->setParameter("total_fee", $order_amount); // 总金额
-            $this->setParameter("notify_url", notify_url(basename(__FILE__, '.php'), true)); // 通知地址
+            $this->setParameter("notify_url", notify_url(basename(__FILE__, '.php'), true)); // 异步通知地址
             $this->setParameter("trade_type", "JSAPI"); // 交易类型
             if($order['apply'] == 1){
                 $this->setParameter("attach", "drp");
@@ -107,7 +101,7 @@ class wxpay
             $jsApiParameters = $this->getParameters($prepay_id);
             // wxjsbridge
             $js = '<script language="javascript">
-            function jsApiCall(){WeixinJSBridge.invoke("getBrandWCPayRequest",' . $jsApiParameters . ',function(res){if(res.err_msg == "get_brand_wcpay_request:ok"){location.href="' . return_url(basename(__FILE__, '.php')) . '&status=1&order_id='.$order['order_id'].'"}else{location.href="' . return_url(basename(__FILE__, '.php')) . '&status=0&order_id='.$order['order_id'].'"}})};function callpay(){if (typeof WeixinJSBridge == "undefined"){if( document.addEventListener ){document.addEventListener("WeixinJSBridgeReady", jsApiCall, false);}else if (document.attachEvent){document.attachEvent("WeixinJSBridgeReady", jsApiCall);document.attachEvent("onWeixinJSBridgeReady", jsApiCall);}}else{jsApiCall();}}
+            function jsApiCall(){WeixinJSBridge.invoke("getBrandWCPayRequest",' . $jsApiParameters . ',function(res){if(res.err_msg == "get_brand_wcpay_request:ok"){location.href="' . return_url(basename(__FILE__, '.php')) . '&status=1&log_id='.$order['log_id'].'"}else{location.href="' . return_url(basename(__FILE__, '.php')) . '&status=0&log_id='.$order['log_id'].'"}})};function callpay(){if (typeof WeixinJSBridge == "undefined"){if( document.addEventListener ){document.addEventListener("WeixinJSBridgeReady", jsApiCall, false);}else if (document.attachEvent){document.attachEvent("WeixinJSBridgeReady", jsApiCall);document.attachEvent("onWeixinJSBridgeReady", jsApiCall);}}else{jsApiCall();}}
             </script>';
 
             $button = '<div style="text-align:center"><button class="btn btn-info ect-btn-info ect-colorf ect-bg" style="background-color:#44b549;" type="button" onclick="callpay()">立即付款</button></div>' . $js;
@@ -118,16 +112,15 @@ class wxpay
     }
 
     /**
-     * 响应操作
+     * 同步通知
+     * @param $data
+     * @return mixed
      */
     public function callback($data)
     {
         if (isset($_GET) && $_GET['status'] == 1) {
-            if(empty($_GET['order_id'])) {
-                return true;
-            }
             $order = array();
-            $order['order_id']= intval($_GET['order_id']);
+            $order['log_id']= intval($_GET['log_id']);
             $payment = model('Payment')->get_payment($data['code']);
             return $this->queryOrder($order, $payment);
         } else {
@@ -136,7 +129,9 @@ class wxpay
     }
 
     /**
-     * 响应操作
+     * 异步通知
+     * @param $data
+     * @return mixed
      */
     public function notify($data)
     {
@@ -208,16 +203,16 @@ class wxpay
         foreach ($returndata as $key => $val) {
             if (is_numeric($val)) {
                 $xml .= "<" . $key . ">" . $val . "</" . $key . ">";
-            } else
+            } else {
                 $xml .= "<" . $key . "><![CDATA[" . $val . "]]></" . $key . ">";
+            }
         }
         $xml .= "</xml>";
 
-        echo $xml;
-        exit();
+        exit($xml);
     }
 
-    private function trimString($value)
+    public function trimString($value)
     {
         $ret = null;
         if (null != $value) {
@@ -232,7 +227,7 @@ class wxpay
     /**
      * 作用：产生随机字符串，不长于32位
      */
-    private function createNoncestr($length = 32)
+    public function createNoncestr($length = 32)
     {
         $chars = "abcdefghijklmnopqrstuvwxyz0123456789";
         $str = "";
@@ -245,7 +240,7 @@ class wxpay
     /**
      * 作用：设置请求参数
      */
-    private function setParameter($parameter, $parameterValue)
+    public function setParameter($parameter, $parameterValue)
     {
         $this->parameters[$this->trimString($parameter)] = $this->trimString($parameterValue);
     }
@@ -253,7 +248,7 @@ class wxpay
     /**
      * 作用：生成签名
      */
-    private function getSign($Obj)
+    public function getSign($Obj)
     {
         foreach ($Obj as $k => $v) {
             $Parameters[$k] = $v;
@@ -277,9 +272,9 @@ class wxpay
         $String = md5($String);
         // echo "【string3】 ".$String."</br>";
         // 签名步骤四：所有字符转为大写
-        $result = strtoupper($String);
+        $result_ = strtoupper($String);
         // echo "【result】 ".$result_."</br>";
-        return $result;
+        return $result_;
     }
 
     /**
@@ -299,11 +294,10 @@ class wxpay
         return $cip;
     }
 
-
     /**
      * 作用：以post方式提交xml到对应的接口url
      */
-    private function postXmlCurl($xml, $url, $second = 30)
+    public function postXmlCurl($xml, $url, $second = 30)
     {
         // 初始化curl
         $ch = curl_init();
@@ -313,14 +307,14 @@ class wxpay
         // curl_setopt($ch,CURLOPT_PROXY, '8.8.8.8');
         // curl_setopt($ch,CURLOPT_PROXYPORT, 8080);
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         // 设置header
-        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_HEADER, false);
         // 要求结果为字符串且输出到屏幕上
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         // post提交方式
-        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
         // 运行curl
         $data = curl_exec($ch);
@@ -331,6 +325,7 @@ class wxpay
         } else {
             $error = curl_errno($ch);
             echo "curl出错，错误码:$error" . "<br>";
+            echo "<a href='http://curl.haxx.se/libcurl/c/libcurl-errors.html'>错误原因查询</a></br>";
             curl_close($ch);
             return false;
         }
@@ -340,13 +335,13 @@ class wxpay
      * 查询订单
      * 当商户后台、网络、服务器等出现异常，商户系统最终未接收到支付通知
      *
-     * @param $order
+     * @param $order['log_id']
      * @param $payment
      */
     public function queryOrder($order, $payment)
     {
         // 查询未支付的订单
-        $res = model('Base')->model->table('pay_log')->field('transid, is_paid, log_id, order_amount')->where(array('order_id' => $order['order_id']))->find();
+        $res = model('Base')->model->table('pay_log')->field('transid, is_paid, log_id')->where(array('log_id' => $order['log_id']))->find();
         if ($res['is_paid'] == 0) {
             $options = array(
                      'appid' => $payment['wxpay_appid'], //填写高级调用功能的app id
@@ -356,24 +351,13 @@ class wxpay
             $weObj = new Wechat($options);
 
             // 微信订单号  商户订单号  二选一 ， 微信的订单号，建议优先使用
-            $order_amount = $res['order_amount'] * 100;
-            $order_sn = model('Base')->model->table('order_info')->field('order_sn')->where(array('order_id' => $order['order_id']))->getOne();
-
-            $out_trade_no = $order_sn . 'A' . $order_amount . 'B' . $res['log_id'];
-
-            // $this->setParameter("transaction_id", $transaction_id); // 微信订单号
-            $this->setParameter("out_trade_no", $out_trade_no); // 商户订单号
+            $transaction_id = $res['transid'];
+            $this->setParameter("transaction_id", $transaction_id); // 微信订单号
 
             $respond = $weObj->PayQueryOrder($this->parameters);
-            // $OrderParameters = json_encode($respond);
             if ($respond['result_code'] == 'SUCCESS' && $respond['trade_state'] == 'SUCCESS') {
-                // 获取log_id
-                $out_trade_no = explode('B', $respond['out_trade_no']);
-                $order_sn = $out_trade_no[1]; // 订单号log_id
-                // 修改订单信息(openid，tranid)
-                // model('Base')->model->table('pay_log')->data(array('openid' => $respond['openid'], 'transid' => $respond['transaction_id']))->where(array('log_id' => $order_sn))->update();
                 // 改变订单状态
-                // order_paid($order_sn, 2);
+                order_paid($order['log_id'], 2);
                 return true;
             } else {
                 return false;
