@@ -70,7 +70,7 @@ class BaseController extends Controller
                 session(['discount' =>  1.00]);
             }
 
-            define('SESS_ID', session()->getId());
+            define('SESS_ID', substr(session()->getId(), 0, 32));
 
             if (isset($_SERVER['PHP_SELF'])) {
                 $_SERVER['PHP_SELF'] = htmlspecialchars($_SERVER['PHP_SELF']);

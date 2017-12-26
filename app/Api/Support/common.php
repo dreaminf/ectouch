@@ -13,7 +13,6 @@ if (!function_exists('config_path')) {
     }
 }
 
-
 if (!function_exists('trans')) {
     /**
      * Translate the given message.
@@ -34,7 +33,6 @@ if (!function_exists('trans')) {
     }
 }
 
-
 if (!function_exists('bcrypt')) {
     /**
      * Hash the given value.
@@ -48,7 +46,6 @@ if (!function_exists('bcrypt')) {
         return app('hash')->make($value, $options);
     }
 }
-
 
 if (!function_exists('endWith')) {
     /**
@@ -177,7 +174,7 @@ if (!function_exists('show_error')) {
     }
 }
 
-if (!function_exists('make_semiangle')) {
+if (!function_exists('api_make_semiangle')) {
 
     /**
      *  将一个字串中含有全角的数字字符、字母、空格或'%+-()'字符转换为相应半角字符
@@ -187,7 +184,7 @@ if (!function_exists('make_semiangle')) {
      *
      * @return  string       $str         处理后字串
      */
-    function make_semiangle($str)
+    function api_make_semiangle($str)
     {
         $arr = array('０' => '0', '１' => '1', '２' => '2', '３' => '3', '４' => '4',
             '５' => '5', '６' => '6', '７' => '7', '８' => '8', '９' => '9',
@@ -236,7 +233,7 @@ if (!function_exists('keyToPem')) {
     }
 }
 
-if (!function_exists('unserialize_config')) {
+if (!function_exists('api_unserialize_config')) {
     /**
      * 处理序列化的支付、配送的配置参数
      * 返回一个以name为索引的数组
@@ -245,7 +242,7 @@ if (!function_exists('unserialize_config')) {
      * @param   string $cfg
      * @return  void
      */
-    function unserialize_config($cfg)
+    function api_unserialize_config($cfg)
     {
         if (is_string($cfg) && ($arr = unserialize($cfg)) !== false) {
             $config = array();
@@ -293,7 +290,6 @@ if (!function_exists('format_array')) {
         return $array;
     }
 }
-
 
 if (!function_exists('filterSpecialchar')) {
     /**

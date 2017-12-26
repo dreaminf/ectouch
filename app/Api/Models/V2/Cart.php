@@ -853,7 +853,7 @@ class Cart extends BaseModel
     public static function flow_cart_stock($arr)
     {
         foreach ($arr AS $key => $val) {
-            $val = intval(make_semiangle($val));
+            $val = intval(api_make_semiangle($val));
             if ($val <= 0 || !is_numeric($key)) {
                 continue;
             }

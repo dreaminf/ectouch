@@ -119,7 +119,7 @@ class IndexController extends BaseController
         $all = $GLOBALS['db']->getAll($sql);
 
         foreach ($all as $key => $row) {
-            $plugin = '\\app\\plugins\\shipping\\' . camel_case($row['shipping_code'], true);
+            $plugin = '\\App\\Plugins\\Shipping\\' . camel_case($row['shipping_code'], true);
 
             if (class_exists($plugin)) {
                 $shipping = new $plugin;

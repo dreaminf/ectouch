@@ -1092,7 +1092,7 @@ function clear_tpl_files($is_cache = true, $ext = '')
 
     foreach ($dirs as $dir) {
         if (!is_dir($dir)) {
-            mkdir($dir, true);
+            mkdir($dir, 0755, true);
         }
         $folder = scandir($dir);
 

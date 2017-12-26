@@ -117,7 +117,7 @@ function shipping_fee($shipping_code, $shipping_config, $goods_weight, $goods_am
         $shipping_config = unserialize($shipping_config);
     }
 
-    $shippingClass = 'app\\plugins\\shipping\\' . camel_case($shipping_code, true);
+    $shippingClass = 'App\\Plugins\\Shipping\\' . camel_case($shipping_code, true);
 
     if (class_exists($shippingClass)) {
         $obj = new $shippingClass($shipping_config);
@@ -143,7 +143,7 @@ function shipping_insure_fee($shipping_code, $goods_amount, $insure)
         // 如果保价费用不是百分比则直接返回该数值 
         return floatval($insure);
     } else {
-        $shippingClass = 'app\\plugins\\shipping\\' . camel_case($shipping_code, true);
+        $shippingClass = 'App\\Plugins\\Shipping\\' . camel_case($shipping_code, true);
 
         if (class_exists($shippingClass)) {
             $shipping = new $shippingClass();
@@ -1935,7 +1935,7 @@ function &get_shipping_object($shipping_id)
         return $object;
     }
 
-    $shippingClass = 'app\\plugins\\shipping\\' . camel_case($shipping['shipping_code'], true);
+    $shippingClass = 'App\\Plugins\\Shipping\\' . camel_case($shipping['shipping_code'], true);
     $object = new $shippingClass();
     
     return $object;

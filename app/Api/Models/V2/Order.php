@@ -639,7 +639,7 @@ class Order extends BaseModel
             ->first();
 
         if (!empty($row)) {
-            $shipping_config = unserialize_config($row['configure']);
+            $shipping_config = api_unserialize_config($row['configure']);
             if (isset($shipping_config['pay_fee'])) {
                 if (strpos($shipping_config['pay_fee'], '%') !== false) {
                     $row['pay_fee'] = floatval($shipping_config['pay_fee']) . '%';

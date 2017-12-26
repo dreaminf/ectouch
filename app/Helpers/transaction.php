@@ -524,7 +524,7 @@ function get_order_detail($order_id, $user_id = 0)
     // 对发货号处理 
     if (!empty($order['invoice_no'])) {
         $shipping_code = $GLOBALS['db']->getOne("SELECT shipping_code FROM " . $GLOBALS['ecs']->table('shipping') . " WHERE shipping_id = '$order[shipping_id]'");
-        $plugin = '\\app\\plugins\\shipping\\' . camel_case($shipping_code, true);
+        $plugin = '\\App\\Plugins\\Shipping\\' . camel_case($shipping_code, true);
         if (class_exists($plugin)) {
             $shipping = new $plugin;
             $order['invoice_no'] = $shipping->query($order['invoice_no']);
@@ -565,7 +565,7 @@ function get_order_detail($order_id, $user_id = 0)
             $order['pay_desc'] = $payment_info['pay_desc'];
 
             // 调用相应的支付方式文件 
-            $paymentClass = 'app\\plugins\\payment\\' . camel_case($payment_info['pay_code'], true);
+            $paymentClass = 'App\\Plugins\\Payment\\' . camel_case($payment_info['pay_code'], true);
 
             // 取得在线支付方式的支付按钮 
             $pay_obj = new $paymentClass();

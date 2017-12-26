@@ -33,7 +33,7 @@ class Mysql
 
     public function insert_id()
     {
-        return DB::Query('SELECT LAST_INSERT_ID()');
+        return $this->getOne('SELECT LAST_INSERT_ID()');
     }
 
     public function query($sql)
