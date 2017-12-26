@@ -1,14 +1,14 @@
 <?php
 //
 
-namespace App\Http\Controllers\v2;
+namespace App\Api\Controllers\V2;
 
-use App\Http\Controllers\Controller;
+use App\Api\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\v2\Order;
-use App\Models\v2\Payment;
-use App\Models\v2\Features;
+use App\Models\V2\Order;
+use App\Models\V2\Payment;
+use App\Models\V2\Features;
 class OrderController extends Controller
 {
     /**

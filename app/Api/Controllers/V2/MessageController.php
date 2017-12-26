@@ -1,12 +1,12 @@
 <?php
 //
 
-namespace App\Http\Controllers\v2;
+namespace App\Api\Controllers\V2;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\v2\Push;
-use App\Models\v2\Device;
+use App\Api\Controllers\Controller;
+use App\Models\V2\Push;
+use App\Models\V2\Device;
 
 class MessageController extends Controller {
 

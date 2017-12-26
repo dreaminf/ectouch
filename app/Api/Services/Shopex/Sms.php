@@ -3,7 +3,7 @@ namespace App\Services\Shopex;
 
 use Log;
 use Cache;
-use App\Models\v2\ShopConfig;
+use App\Models\V2\ShopConfig;
 
 class Sms
 {

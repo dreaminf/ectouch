@@ -19,7 +19,7 @@ use ResponseHandler;
 use RequestHandler;
 use App\Http\Requests;
 use Illuminate\Validation\Validator;
-use App\Http\Controllers\Controller;
+use App\Api\Controllers\Controller;
 use \Illuminate\Database\Eloquent\Collection as Collection;
 use \Trade;
 use \Callback;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\v2;
+namespace App\Models\V2;
 
 use App\Models\BaseModel;
 
@@ -64,6 +64,6 @@ class GoodsGroup extends BaseModel
     }
     // public function goods()
     // {
-    //     return $this->belongsTo('App\Models\v2\Goods','goods_id','goods_id');
+    //     return $this->belongsTo('App\Models\V2\Goods','goods_id','goods_id');
     // }
 }

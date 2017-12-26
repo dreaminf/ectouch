@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\v2;
+namespace App\Models\V2;
 use App\Models\BaseModel;
 
 use App\Helper\Token;
@@ -131,7 +131,7 @@ class Comment extends BaseModel {
 
     public function author()
     {
-        return $this->belongsTo('App\Models\v2\Member', 'user_id', 'user_id');
+        return $this->belongsTo('App\Models\V2\Member', 'user_id', 'user_id');
     }
 
 

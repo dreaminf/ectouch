@@ -1,11 +1,11 @@
 <?php
 //
 
-namespace App\Http\Controllers\v2;
+namespace App\Api\Controllers\V2;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\v2\Invoice;
+use App\Api\Controllers\Controller;
+use App\Models\V2\Invoice;
 
 class InvoiceController extends Controller {
 

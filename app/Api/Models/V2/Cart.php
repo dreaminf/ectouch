@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\v2;
+namespace App\Models\V2;
 
 use App\Models\BaseModel;
 use App\Helper\Token;
@@ -816,13 +816,13 @@ class Cart extends BaseModel
 
     public function product()
     {
-        return $this->belongsTo('App\Models\v2\Goods', 'goods_id', 'goods_id')->with('properties');
+        return $this->belongsTo('App\Models\V2\Goods', 'goods_id', 'goods_id')->with('properties');
     }
 
 
     public function properties()
     {
-        return $this->belongsToMany('App\Models\v2\Attribute','goods_attr','goods_id','attr_id')->where('attribute.attr_type', '!=',0)->groupBy('attr_id');
+        return $this->belongsToMany('App\Models\V2\Attribute','goods_attr','goods_id','attr_id')->where('attribute.attr_type', '!=',0)->groupBy('attr_id');
     }
 
 

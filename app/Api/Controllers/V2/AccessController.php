@@ -1,10 +1,10 @@
 <?php
 //
 
-namespace App\Http\Controllers\v2;
+namespace App\Api\Controllers\V2;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Api\Controllers\Controller;
 use App\Models\BaseModel;
 use App\Helper\XXTEA;
 use Log;

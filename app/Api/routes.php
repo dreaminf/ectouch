@@ -8,7 +8,7 @@ $app->get('/', function () use ($app) {
 });
 
 //Other
-$app->group(['namespace' => 'App\Http\Controllers\v2', 'prefix' => 'v2'], function($app)
+$app->group(['namespace' => 'App\Api\Controllers\V2', 'prefix' => 'v2'], function($app)
 {
 
     $app->get('article.{id:[0-9]+}', 'ArticleController@show');
@@ -28,7 +28,7 @@ $app->group(['namespace' => 'App\Http\Controllers\v2', 'prefix' => 'v2'], functi
 });
 
 //Guest
-$app->group(['namespace' => 'App\Http\Controllers\v2','prefix' => 'v2', 'middleware' => ['xss']], function($app)
+$app->group(['namespace' => 'App\Api\Controllers\V2','prefix' => 'v2', 'middleware' => ['xss']], function($app)
 {
     $app->post('ecapi.access.dns', 'AccessController@dns');
     
@@ -130,7 +130,7 @@ $app->group(['namespace' => 'App\Http\Controllers\v2','prefix' => 'v2', 'middlew
 });
 
 //Authorization
-$app->group(['prefix' => 'v2', 'namespace' => 'App\Http\Controllers\v2', 'middleware' => ['token', 'xss']], function($app)
+$app->group(['prefix' => 'v2', 'namespace' => 'App\Api\Controllers\V2', 'middleware' => ['token', 'xss']], function($app)
 {
     $app->post('ecapi.user.profile.get', 'UserController@profile');
 

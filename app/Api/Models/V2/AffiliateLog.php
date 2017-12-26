@@ -1,5 +1,5 @@
 <?php
-namespace App\Models\v2;
+namespace App\Models\V2;
 
 use App\Models\BaseModel;
 use App\Helper\Token;

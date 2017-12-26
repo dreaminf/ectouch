@@ -1,18 +1,18 @@
 <?php
 //
 
-namespace App\Http\Controllers\v2;
+namespace App\Api\Controllers\V2;
 
-use App\Http\Controllers\Controller;
+use App\Api\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Helper\Token;
-use App\Models\v2\Shipping;
-use App\Models\v2\Goods;
-use App\Models\v2\Comment;
-use App\Models\v2\GoodsCategory;
-use App\Models\v2\CollectGoods;
-use App\Models\v2\Products;
+use App\Models\V2\Shipping;
+use App\Models\V2\Goods;
+use App\Models\V2\Comment;
+use App\Models\V2\GoodsCategory;
+use App\Models\V2\CollectGoods;
+use App\Models\V2\Products;
 use Log;
 
 class GoodsController extends Controller

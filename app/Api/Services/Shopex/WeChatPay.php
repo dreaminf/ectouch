@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\Shopex;
 
-use App\Models\v2\ShopConfig;
+use App\Models\V2\ShopConfig;
 
 /**
 * 

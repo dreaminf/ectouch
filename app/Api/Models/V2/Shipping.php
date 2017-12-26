@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\v2;
+namespace App\Models\V2;
 
 use App\Models\BaseModel;
 use App\Helper\Token;
@@ -242,7 +242,7 @@ class Shipping extends BaseModel
 
     public function shippingArea()
     {
-        return  $this->hasMany('App\Models\v2\ShippingArea', 'shipping_id', 'shipping_id');
+        return  $this->hasMany('App\Models\V2\ShippingArea', 'shipping_id', 'shipping_id');
     }
 
     /**

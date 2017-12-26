@@ -1,9 +1,9 @@
 <?php
-namespace App\Models\v2;
+namespace App\Models\V2;
 
 use App\Models\BaseModel;
 use App\Helper\Token;
-use App\Models\v2\AccountLog;
+use App\Models\V2\AccountLog;
 use DB;
 
 class UserAccount extends BaseModel

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\v2;
+namespace App\Models\V2;
 use App\Models\BaseModel;
 use App\Helper\Token;
 use DB;
@@ -610,7 +610,7 @@ class Order extends BaseModel {
 
     public function goods()
     {
-        return $this->hasMany('App\Models\v2\OrderGoods','order_id','order_id');
+        return $this->hasMany('App\Models\V2\OrderGoods','order_id','order_id');
     }
 
     private static function convertOrderStatus($order_id, $order_status, $pay_status, $shipping_status)

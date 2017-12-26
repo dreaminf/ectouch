@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\v2;
+namespace App\Models\V2;
 
 use App\Models\BaseModel;
 
@@ -108,7 +108,7 @@ class CollectGoods extends BaseModel
 
     public function goods()
     {
-      return $this->hasOne('App\Models\v2\Goods', 'goods_id', 'goods_id');
+      return $this->hasOne('App\Models\V2\Goods', 'goods_id', 'goods_id');
     }
 
 }

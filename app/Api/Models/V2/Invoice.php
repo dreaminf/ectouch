@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\v2;
+namespace App\Models\V2;
 
-use App\Models\v2\ShopConfig;
+use App\Models\V2\ShopConfig;
 use App\Models\BaseModel;
 
 class Invoice

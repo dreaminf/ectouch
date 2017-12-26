@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\v2;
+namespace App\Models\V2;
 use App\Models\BaseModel;
 
 use App\Helper\Token;
@@ -319,34 +319,34 @@ class Goods extends BaseModel
 
     public function tags()
     {
-        return $this->hasMany('App\Models\v2\Tags', 'goods_id', 'goods_id');
+        return $this->hasMany('App\Models\V2\Tags', 'goods_id', 'goods_id');
 
     }
 
     // public function promos()
     // {
-    //     return $this->hasMany('App\Models\v2\GoodsActivity', 'goods_id', 'goods_id');
+    //     return $this->hasMany('App\Models\V2\GoodsActivity', 'goods_id', 'goods_id');
 
     // }
 
     public function properties()
     {
-        return $this->belongsToMany('App\Models\v2\Attribute','goods_attr','goods_id','attr_id')->where('attribute.attr_type', '!=',0)->groupBy('attr_id');
+        return $this->belongsToMany('App\Models\V2\Attribute','goods_attr','goods_id','attr_id')->where('attribute.attr_type', '!=',0)->groupBy('attr_id');
     }
 
     public function attachments()
     {
-        return $this->hasMany('App\Models\v2\GoodsGroup', 'parent_id', 'goods_id');
+        return $this->hasMany('App\Models\V2\GoodsGroup', 'parent_id', 'goods_id');
     }
 
     public function stock()
     {
-        return $this->hasMany('App\Models\v2\Products', 'goods_id', 'goods_id');
+        return $this->hasMany('App\Models\V2\Products', 'goods_id', 'goods_id');
     }
 
     public function comments()
     {
-        return $this->hasMany('App\Models\v2\Comment', 'id_value', 'goods_id')->where('comment.comment_type', 0)->where('comment_rank','>',3); //商品
+        return $this->hasMany('App\Models\V2\Comment', 'id_value', 'goods_id')->where('comment.comment_type', 0)->where('comment_rank','>',3); //商品
     }
 
     public function getSkuAttribute()

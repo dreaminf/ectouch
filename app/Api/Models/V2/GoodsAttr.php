@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\v2;
+namespace App\Models\V2;
 use App\Models\BaseModel;
 
 use App\Helper\Token;
@@ -86,6 +86,6 @@ class GoodsAttr extends BaseModel {
 
     public function attributes()
     {
-        return $this->belongsTo('App\Models\v2\Attribute','attr_id','attr_id');
+        return $this->belongsTo('App\Models\V2\Attribute','attr_id','attr_id');
     }
 }

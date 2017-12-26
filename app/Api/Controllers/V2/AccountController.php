@@ -1,13 +1,13 @@
 <?php
 //
 
-namespace App\Http\Controllers\v2;
+namespace App\Api\Controllers\V2;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\v2\UserAccount;
+use App\Api\Controllers\Controller;
+use App\Models\V2\UserAccount;
 use App\Helper\Token;
-use App\Models\v2\Account;
+use App\Models\V2\Account;
 
 class AccountController extends Controller {
 
