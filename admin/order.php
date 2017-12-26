@@ -869,11 +869,13 @@ elseif ($_REQUEST['act'] == 'delivery_ship')
             send_order_bonus($order_id);
         }
 
+        $order['invoice_no'] = $invoice_no;
+        
         /* 发送邮件 */
         $cfg = $_CFG['send_ship_email'];
         if ($cfg == '1')
         {
-            $order['invoice_no'] = $invoice_no;
+            
             $tpl = get_mail_template('deliver_notice');
             $smarty->assign('order', $order);
             $smarty->assign('send_time', local_date($_CFG['time_format']));
