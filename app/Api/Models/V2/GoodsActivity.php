@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
-
+use App\Api\Models\BaseModel;
 use DB;
 
 class GoodsActivity extends BaseModel
 {
-    protected $connection = 'shop';
 
-    protected $table      = 'goods_activity';
+    protected $table = 'goods_activity';
 
-    public    $timestamps = false;
+    public $timestamps = false;
 
     protected $visible = ['promo', 'name'];
 

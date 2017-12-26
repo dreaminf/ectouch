@@ -1,30 +1,31 @@
 <?php
 
-namespace App\Models\V2;
-use App\Models\BaseModel;
+namespace App\Api\Models\V2;
 
-use App\Helper\Token;
+use App\Api\Models\BaseModel;
 
+class OrderGoods extends BaseModel
+{
 
-class OrderGoods extends BaseModel {
+    protected $table = 'order_goods';
 
-    protected $connection = 'shop';
-    protected $table      = 'order_goods';
     protected $primaryKey = 'rec_id';
-    public    $timestamps = false;
+
+    public $timestamps = false;
 
     protected $guarded = [];
+
     protected $appends = ['id', 'product', 'property', 'attachment', 'total_amount', 'total_price', 'product_price', 'is_reviewed'];
+
     protected $visible = ['id', 'product', 'property', 'attachment', 'total_amount', 'total_price', 'product_price', 'is_reviewed'];
 
-
     /**
-    * 获取商品出售总数
-    *
-    * @access public
-    * @param integer $goods_id
-    * @return integer
-    */
+     * 获取商品出售总数
+     *
+     * @access public
+     * @param integer $goods_id
+     * @return integer
+     */
     public static function getSalesCountById($goods_id)
     {
         // return self::where(['goods_id' => $goods_id])->sum('goods_number');
@@ -34,35 +35,34 @@ class OrderGoods extends BaseModel {
         return self::leftJoin('order_info', 'order_info.order_id', '=', 'order_goods.order_id')
             ->where('goods_id', $goods_id)
             ->where('order_status', 5)
-	    ->sum('goods_number');
+            ->sum('goods_number');
     }
 
     /**
      * 取得某订单应该赠送的积分数
-     * @param   array   $order  订单
+     * @param   array $order 订单
      * @return  int     积分数
      */
     public static function integralToGive($order_id)
     {
         $model = self::select('goods.give_integral', 'order_goods.goods_price', 'order_goods.goods_number', 'goods.goods_id', 'order_goods.goods_id', 'goods.goods_name', 'order_goods.goods_attr')->join('goods', 'goods.goods_id', '=', 'order_goods.goods_id')
-                ->where('order_goods.order_id', $order_id)
-                ->where('order_goods.goods_id', '>', 0)
-                ->where('order_goods.parent_id', 0)
-                ->where('order_goods.is_gift', 0)
-                ->where('order_goods.extension_code', '<>', 'package_buy')
-                ->get();
+            ->where('order_goods.order_id', $order_id)
+            ->where('order_goods.goods_id', '>', 0)
+            ->where('order_goods.parent_id', 0)
+            ->where('order_goods.is_gift', 0)
+            ->where('order_goods.extension_code', '<>', 'package_buy')
+            ->get();
 
-        if(count($model)>0)
-        {
+        if (count($model) > 0) {
             $integral = 0;
             $sum = 0;
 
             foreach ($model as $order_goods) {
                 $integral = $order_goods->goods_price;
-                if($order_goods->give_integral > -1){
+                if ($order_goods->give_integral > -1) {
                     $integral = $order_goods->give_integral;
                 }
-                $sum += $order_goods->goods_number *$integral;
+                $sum += $order_goods->goods_number * $integral;
             }
 
             return $sum;
@@ -73,7 +73,7 @@ class OrderGoods extends BaseModel {
 
     public function orderinfo()
     {
-        return $this->belongsTo('App\Models\V2\OrderInfo','order_id','order_id');
+        return $this->belongsTo('App\Api\Models\V2\OrderInfo', 'order_id', 'order_id');
     }
 
     public function getIdAttribute()

@@ -211,8 +211,8 @@ class IntegrateController extends BaseController
             }
 
             // 检测成功临时保存论坛配置参数 
-            session('cfg', $_POST['cfg']);
-            session('code', $code);
+            session(['cfg' =>  $_POST['cfg']]);
+            session(['code' =>  $code]);
 
             $size = 100;
 
@@ -302,8 +302,8 @@ class IntegrateController extends BaseController
             $cfg['uc_lang'] = $GLOBALS['_LANG']['uc_lang'];
 
             // 检测成功临时保存论坛配置参数 
-            session('cfg', $cfg);
-            session('code', $code);
+            session(['cfg' =>  $cfg]);
+            session(['code' =>  $code]);
 
             // 直接保存修改 
             if (!empty($_POST['save'])) {
@@ -347,7 +347,7 @@ class IntegrateController extends BaseController
             if ($size < 2) {
                 $size = 2;
             }
-            session('domain', $domain);
+            session(['domain' =>  $domain]);
 
             $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('users');
             $total = $this->db->getOne($sql);
@@ -613,7 +613,7 @@ class IntegrateController extends BaseController
             $task_ignore = $this->db->getOne("SELECT COUNT(*) FROM " . $this->ecs->table("users") . " WHERE flag = 4");
             $task_sync = $total - $task_del - $task_ignore;
 
-            session('task', ['del' => ['total' => $task_del, 'start' => 0], 'rename' => ['total' => $task_rename, 'start' => 0], 'sync' => ['total' => $task_sync, 'start' => 0]]);
+            session(['task' =>  ['del' => ['total' => $task_del, 'start' => 0], 'rename' => ['total' => $task_rename, 'start' => 0], 'sync' => ['total' => $task_sync, 'start' => 0]]]);
 
             $del_list = "";
             $rename_list = "";
@@ -687,11 +687,11 @@ class IntegrateController extends BaseController
                 // 保存设置 
                 $result['id'] = 'task_del';
                 if (session('task.del.start') + $result['size'] >= session('task.del.total')) {
-                    session('task.del.start', session('task.del.total'));
+                    session(['task.del.start' =>  session('task.del.total')]);
                     $result['content'] = $GLOBALS['_LANG']['task_complete'];
                 } else {
-                    session('task.del.start', session('task.del.start') + $result['size']);
                     $result['content'] = sprintf($GLOBALS['_LANG']['task_run'], session('task.del.start'), session('task.del.total'));
+                    session(['task.del.start' =>  session('task.del.start') + $result['size']]);
                 }
 
                 die($json->encode($result));
@@ -703,11 +703,11 @@ class IntegrateController extends BaseController
                 // 保存设置 
                 $result['id'] = 'task_rename';
                 if (session('task.rename.start') + $result['size'] >= session('task.rename.total')) {
-                    session('task.rename.start', session('task.rename.total'));
+                    session(['task.rename.start' =>  session('task.rename.total')]);
                     $result['content'] = $GLOBALS['_LANG']['task_complete'];
                 } else {
-                    session('task.rename.start', session('task.rename.start') + $result['size']);
                     $result['content'] = sprintf($GLOBALS['_LANG']['task_run'], session('task.rename.start'), session('task.rename.total'));
+                    session(['task.rename.start' =>  session('task.rename.start') + $result['size']]);
                 }
                 die($json->encode($result));
             } elseif (session('task.sync.start') < session('task.sync.total')) {
@@ -726,11 +726,11 @@ class IntegrateController extends BaseController
                 // 保存设置 
                 $result['id'] = 'task_sync';
                 if (session('task.sync.start') + $result['size'] >= session('task.sync.total')) {
-                    session('task.sync.start', session('task.sync.total'));
+                    session(['task.sync.start' =>  session('task.sync.total')]);
                     $result['content'] = $GLOBALS['_LANG']['task_complete'];
                 } else {
-                    session('task.sync.start', session('task.sync.start') + $result['size']);
                     $result['content'] = sprintf($GLOBALS['_LANG']['task_run'], session('task.sync.start'), session('task.sync.total'));
+                    session(['task.sync.start' =>  session('task.sync.start') + $result['size']]);
                 }
                 die($json->encode($result));
             } else {
@@ -755,10 +755,10 @@ class IntegrateController extends BaseController
                 $result['end'] = 1;
 
                 // 清理多余信息 
-                session('cfg', null);
-                session('code', null);
-                session('task', null);
-                session('domain', null);
+                session(['cfg' =>  null]);
+                session(['code' =>  null]);
+                session(['task' =>  null]);
+                session(['domain' =>  null]);
                 $sql = "UPDATE " . $this->ecs->table('users') . " set flag = 0, alias = '' WHERE flag > 0";
                 $this->db->query($sql);
                 die($json->encode($result));

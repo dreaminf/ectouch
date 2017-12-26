@@ -1,19 +1,13 @@
 <?php
-//
 
 namespace App\Api\Controllers\V2;
 
 use App\Api\Controllers\Controller;
-use Illuminate\Http\Request;
-
-use App\Helper\Token;
-use App\Models\V2\Shipping;
-use App\Models\V2\Goods;
-use App\Models\V2\Comment;
-use App\Models\V2\GoodsCategory;
-use App\Models\V2\CollectGoods;
-use App\Models\V2\Products;
-use Log;
+use App\Api\Models\V2\Goods;
+use App\Api\Models\V2\Comment;
+use App\Api\Models\V2\GoodsCategory;
+use App\Api\Models\V2\CollectGoods;
+use App\Api\Models\V2\Products;
 
 class GoodsController extends Controller
 {
@@ -37,8 +31,7 @@ class GoodsController extends Controller
             'per_page'        => 'required|integer|min:1',
             'brand'           => 'integer|min:1',
             'category'        => 'integer|min:1',
-            'shop'            => 'integer|min:1',
-            'keyword'         => 'string|min:1',
+                        'keyword'         => 'string|min:1',
             'sort_key'        => 'string|min:1',
             'sort_value'      => 'required_with:sort_key|string|min:1',
         ];
@@ -62,8 +55,7 @@ class GoodsController extends Controller
             'per_page'        => 'required|integer|min:1',
             'brand'           => 'integer|min:1',
             'category'        => 'integer|min:1',
-            'shop'            => 'integer|min:1',
-            'keyword'         => 'string|min:1',
+                        'keyword'         => 'string|min:1',
             'sort_key'        => 'string|min:1',
             'sort_value'      => 'required_with:sort_key|string|min:1',
         ];
@@ -138,7 +130,6 @@ class GoodsController extends Controller
      */
     public function review()
     {
-
         $rules = [
             'page'     => 'required|integer|min:1',
             'per_page' => 'required|integer|min:1',
@@ -160,7 +151,6 @@ class GoodsController extends Controller
      */
     public function subtotal()
     {
-
         $rules = [
             'product'  => 'required|integer|min:1',
         ];
@@ -168,11 +158,11 @@ class GoodsController extends Controller
         if ($error = $this->validateInput($rules)) {
             return $error;
         }
+
         $data = Comment::getSubtotal($this->validated);
 
         return $this->json($data);
     }
-
 
     public function recommendList()
     {
@@ -182,8 +172,7 @@ class GoodsController extends Controller
             'product'         => 'integer|min:1',
             'brand'           => 'integer|min:1',
             'category'        => 'integer|min:1',
-            'shop'            => 'integer|min:1',
-            'sort_key'        => 'string|min:1',
+                        'sort_key'        => 'string|min:1',
             'sort_value'      => 'required_with:sort_key|string|min:1',
         ];
 
@@ -220,7 +209,6 @@ class GoodsController extends Controller
             'page'            => 'required|integer|min:1',
             'per_page'        => 'required|integer|min:1',
         ];
-
     }
 
     public function category()
@@ -229,8 +217,7 @@ class GoodsController extends Controller
             'page'     => 'required|integer|min:1',
             'per_page' => 'required|integer|min:1',
             'category' => 'integer|min:1',
-            'shop'     => 'integer|min:1',
-            // 'paging'     => 'required',
+                        // 'paging'     => 'required',
         ];
 
         if ($error = $this->validateInput($rules)) {
@@ -249,8 +236,7 @@ class GoodsController extends Controller
             'page'     => 'required|integer|min:1',
             'per_page' => 'required|integer|min:1',
             'category' => 'integer|min:1',
-            'shop'     => 'integer|min:1',
-            'keyword'  => 'string',
+                        'keyword'  => 'string',
         ];
 
         if ($error = $this->validateInput($rules)) {

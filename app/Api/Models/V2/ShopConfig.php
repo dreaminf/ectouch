@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Models\V2;
-use App\Models\BaseModel;
+namespace App\Api\Models\V2;
 
-use App\Helper\Header;
+use App\Api\Models\BaseModel;
 
-class ShopConfig extends BaseModel {
+use App\Extensions\Header;
 
-    protected $connection = 'shop';
-    protected $table      = 'shop_config';
-    public    $timestamps = true;
+class ShopConfig extends BaseModel
+{
+
+    protected $table = 'shop_config';
+
+    public $timestamps = true;
 
     public static function findByCode($code)
     {
@@ -18,8 +20,8 @@ class ShopConfig extends BaseModel {
 
     public static function getSiteInfo()
     {
-        return[
-            'site_info'=> [
+        return [
+            'site_info' => [
                 'name' => self::findByCode('shop_name'),
                 'desc' => self::findByCode('shop_desc'),
                 'logo' => formatPhoto(self::findByCode('shop_logo')),

@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
+use App\Api\Models\BaseModel;
 
 class LinkGoods extends BaseModel
 {
-    protected $connection = 'shop';
 
-    protected $table      = 'link_goods';
+    protected $table = 'link_goods';
 
-    public    $timestamps = false;
+    public $timestamps = false;
 
     protected $visible = [];
 
@@ -28,14 +27,13 @@ class LinkGoods extends BaseModel
     // {
     //     return $this->act_name;
     // }
-    
+
     public static function getLinkGoodIds($id)
-    {	
-        if($model = self::where('goods_id', $id)->get(['link_goods_id']))
-        {
-        	return $model;
+    {
+        if ($model = self::where('goods_id', $id)->get(['link_goods_id'])) {
+            return $model;
         }
+
         return [0];
-       
     }
 }

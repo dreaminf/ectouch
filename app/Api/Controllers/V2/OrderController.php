@@ -1,14 +1,11 @@
 <?php
-//
 
 namespace App\Api\Controllers\V2;
 
 use App\Api\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Api\Models\V2\Order;
+use App\Api\Models\V2\Payment;
 
-use App\Models\V2\Order;
-use App\Models\V2\Payment;
-use App\Models\V2\Features;
 class OrderController extends Controller
 {
     /**
@@ -17,9 +14,9 @@ class OrderController extends Controller
     public function index()
     {
         $rules = [
-            'page'            => 'required|integer|min:1',
-            'per_page'        => 'required|integer|min:1',
-            'status'          => 'integer|min:0',
+            'page' => 'required|integer|min:1',
+            'per_page' => 'required|integer|min:1',
+            'status' => 'integer|min:0',
         ];
 
         if ($error = $this->validateInput($rules)) {
@@ -27,6 +24,7 @@ class OrderController extends Controller
         }
 
         $data = Order::getList($this->validated);
+
         return $this->json($data);
     }
 
@@ -44,6 +42,7 @@ class OrderController extends Controller
         }
 
         $data = Order::getInfo($this->validated);
+
         return $this->json($data);
     }
 
@@ -61,6 +60,7 @@ class OrderController extends Controller
         }
 
         $data = Order::confirm($this->validated);
+
         return $this->json($data);
     }
 
@@ -70,7 +70,7 @@ class OrderController extends Controller
     public function cancel()
     {
         $rules = [
-            'order'  => 'required|integer|min:1',
+            'order' => 'required|integer|min:1',
             'reason' => 'required|integer|min:1',
         ];
 
@@ -79,6 +79,7 @@ class OrderController extends Controller
         }
 
         $data = Order::cancel($this->validated);
+
         return $this->json($data);
     }
 
@@ -88,13 +89,13 @@ class OrderController extends Controller
     public function price()
     {
         $rules = [
-            "shop"             => "integer|min:1",          // 店铺ID
-            "consignee"        => "integer|min:1",          // 收货人ID
-            "shipping"         => "integer|min:1",          // 快递ID
-            "coupon"           => "string|min:1",           // 优惠券ID
-            "cashgift"         => "string|min:1",           // 红包ID
-            "score"            => "integer",                // 积分
-            "order_product"    => "required|string",        // 商品id数组
+            "shop" => "integer|min:1",          // 店铺ID
+            "consignee" => "integer|min:1",          // 收货人ID
+            "shipping" => "integer|min:1",          // 快递ID
+            "coupon" => "string|min:1",           // 优惠券ID
+            "cashgift" => "string|min:1",           // 红包ID
+            "score" => "integer",                // 积分
+            "order_product" => "required|string",        // 商品id数组
         ];
 
         if ($error = $this->validateInput($rules)) {
@@ -102,6 +103,7 @@ class OrderController extends Controller
         }
 
         $data = Order::price($this->validated);
+
         return $this->json($data);
     }
 
@@ -123,8 +125,8 @@ class OrderController extends Controller
         $items = json_decode($this->validated['review'], true);
 
         $items_rules = [
-            '*.goods'   => 'required|integer|min:1',
-            '*.grade'   => 'required|integer|in:1,2,3',
+            '*.goods' => 'required|integer|min:1',
+            '*.grade' => 'required|integer|in:1,2,3',
             '*.content' => 'string'
         ];
 
@@ -133,6 +135,7 @@ class OrderController extends Controller
         }
 
         $data = Order::review($this->validated, $items);
+
         return $this->json($data);
     }
 
@@ -142,14 +145,14 @@ class OrderController extends Controller
     public function paymentList()
     {
         $rules = [
-            'shop' => 'integer|min:1',
-        ];
+                    ];
 
         if ($error = $this->validateInput($rules)) {
             return $error;
         }
 
         $data = Payment::getList($this->validated);
+
         return $this->json($data);
     }
 
@@ -160,7 +163,7 @@ class OrderController extends Controller
     {
         $rules = [
             'order' => 'required|integer|min:1',
-            'code' => 'required|string|in:alipay.app,wxpay.app,unionpay.app,cod.app,wxpay.web,teegon.wap,alipay.wap,wxpay.wxa,balance',            
+            'code' => 'required|string|in:alipay.app,wxpay.app,unionpay.app,cod.app,wxpay.web,teegon.wap,alipay.wap,wxpay.wxa,balance',
             'openid' => 'required_if:code,wxpay.web|string',
             'channel' => 'string',
             'referer' => 'string',
@@ -171,7 +174,7 @@ class OrderController extends Controller
         }
 
         extract($this->validated);
-        $payarr = ['alipay.app' => 'pay.alipay', 'wxpay.app' => 'pay.weixin', 'unionpay.app' => 'pay.unionpay', 'cod.app' => 'pay.cod','wxpay.web' => 'pay.wxweb','teegon.wap' => 'pay.teegon','alipay.wap' => 'pay.alipaywap','wxpay.wxa'=>'pay.wxa','balance'=>'balance'];
+        $payarr = ['alipay.app' => 'pay.alipay', 'wxpay.app' => 'pay.weixin', 'unionpay.app' => 'pay.unionpay', 'cod.app' => 'pay.cod', 'wxpay.web' => 'pay.wxweb', 'teegon.wap' => 'pay.teegon', 'alipay.wap' => 'pay.alipaywap', 'wxpay.wxa' => 'pay.wxa', 'balance' => 'balance'];
 
         // if($res = Features::check($payarr[$code]))
         // {
@@ -179,6 +182,7 @@ class OrderController extends Controller
         // }
 
         $data = Payment::pay($this->validated);
+
         return $this->json($data);
     }
 

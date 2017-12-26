@@ -1,8 +1,6 @@
 <?php
-//
 
-if ( ! function_exists('config_path'))
-{
+if (!function_exists('config_path')) {
     /**
      * Get the configuration path.
      *
@@ -16,14 +14,14 @@ if ( ! function_exists('config_path'))
 }
 
 
-if (! function_exists('trans')) {
+if (!function_exists('trans')) {
     /**
      * Translate the given message.
      *
-     * @param  string  $id
-     * @param  array   $parameters
-     * @param  string  $domain
-     * @param  string  $locale
+     * @param  string $id
+     * @param  array $parameters
+     * @param  string $domain
+     * @param  string $locale
      * @return string
      */
     function trans($id = null, $parameters = [], $domain = 'messages', $locale = null)
@@ -37,12 +35,12 @@ if (! function_exists('trans')) {
 }
 
 
-if (! function_exists('bcrypt')) {
+if (!function_exists('bcrypt')) {
     /**
      * Hash the given value.
      *
-     * @param  string  $value
-     * @param  array   $options
+     * @param  string $value
+     * @param  array $options
      * @return string
      */
     function bcrypt($value, $options = [])
@@ -52,7 +50,7 @@ if (! function_exists('bcrypt')) {
 }
 
 
-if (! function_exists('endWith')) {
+if (!function_exists('endWith')) {
     /**
      * 第一个是原串,第二个是 部份串
      * @param  [type] $haystack [description]
@@ -62,22 +60,21 @@ if (! function_exists('endWith')) {
     function endWith($haystack, $needle)
     {
         $length = strlen($needle);
-        if($length == 0)
-        {
-          return true;
+        if ($length == 0) {
+            return true;
         }
         return (substr($haystack, -$length) === $needle);
     }
 }
 
-if (! function_exists('formatPhoto')) {
+if (!function_exists('formatPhoto')) {
     /**
      * Format Photo
      *
      * @param  string $photo
      * @return array
      */
-     function formatPhoto($img, $thumb = null, $domain = null)
+    function formatPhoto($img, $thumb = null, $domain = null)
     {
         if ($img == null) {
             return null;
@@ -85,30 +82,30 @@ if (! function_exists('formatPhoto')) {
         if ($thumb == null) {
             $thumb = $img;
         }
-        
-        $domain = $domain == null ?  config('app.shop_url') : $domain ;
 
-          if(!preg_match('/^http/', $thumb)  &&!preg_match('/^https/', $thumb) ){
-           $thumb =  $domain.'/'.$thumb ;
+        $domain = $domain == null ? config('app.shop_url') : $domain;
+
+        if (!preg_match('/^http/', $thumb) && !preg_match('/^https/', $thumb)) {
+            $thumb = $domain . '/' . $thumb;
         }
 
 
-        if(!preg_match('/^http/', $img)  &&!preg_match('/^https/', $img) ){
-           $img =  $domain.'/'.$img ;
-        }         
+        if (!preg_match('/^http/', $img) && !preg_match('/^https/', $img)) {
+            $img = $domain . '/' . $img;
+        }
 
         return [
-            'width'  => null,
+            'width' => null,
             'height' => null,
 
             //定义图片服务器
-            'thumb'  => $thumb,
-            'large'  => $img
+            'thumb' => $thumb,
+            'large' => $img
         ];
     }
 }
 
-if (! function_exists('curl_request')) {
+if (!function_exists('curl_request')) {
     /**
      * CURL Request
      */
@@ -151,9 +148,9 @@ if (! function_exists('curl_request')) {
             $error = curl_error($curl);
             curl_close($curl);
             return FALSE;
-        }else{
+        } else {
             // 解决windows 服务器 BOM 问题
-            $response = trim($response,chr(239).chr(187).chr(191));
+            $response = trim($response, chr(239) . chr(187) . chr(191));
             $response = json_decode($response, true);
         }
 
@@ -163,7 +160,7 @@ if (! function_exists('curl_request')) {
     }
 }
 
-if (! function_exists('show_error')) {
+if (!function_exists('show_error')) {
     /**
      * Show Error
      */
@@ -174,62 +171,62 @@ if (! function_exists('show_error')) {
             'error_code' => $code,
             'error_desc' => $message
         ]);
-        $response->header('X-'.config('app.name').'-ErrorCode', $code);
-        $response->header('X-'.config('app.name').'-ErrorDesc', urlencode($message));
+        $response->header('X-' . config('app.name') . '-ErrorCode', $code);
+        $response->header('X-' . config('app.name') . '-ErrorDesc', urlencode($message));
         return $response;
     }
 }
 
-if (! function_exists('make_semiangle')) {
+if (!function_exists('make_semiangle')) {
 
     /**
      *  将一个字串中含有全角的数字字符、字母、空格或'%+-()'字符转换为相应半角字符
      *
      * @access  public
-     * @param   string       $str         待转换字串
+     * @param   string $str 待转换字串
      *
      * @return  string       $str         处理后字串
      */
     function make_semiangle($str)
     {
         $arr = array('０' => '0', '１' => '1', '２' => '2', '３' => '3', '４' => '4',
-                     '５' => '5', '６' => '6', '７' => '7', '８' => '8', '９' => '9',
-                     'Ａ' => 'A', 'Ｂ' => 'B', 'Ｃ' => 'C', 'Ｄ' => 'D', 'Ｅ' => 'E',
-                     'Ｆ' => 'F', 'Ｇ' => 'G', 'Ｈ' => 'H', 'Ｉ' => 'I', 'Ｊ' => 'J',
-                     'Ｋ' => 'K', 'Ｌ' => 'L', 'Ｍ' => 'M', 'Ｎ' => 'N', 'Ｏ' => 'O',
-                     'Ｐ' => 'P', 'Ｑ' => 'Q', 'Ｒ' => 'R', 'Ｓ' => 'S', 'Ｔ' => 'T',
-                     'Ｕ' => 'U', 'Ｖ' => 'V', 'Ｗ' => 'W', 'Ｘ' => 'X', 'Ｙ' => 'Y',
-                     'Ｚ' => 'Z', 'ａ' => 'a', 'ｂ' => 'b', 'ｃ' => 'c', 'ｄ' => 'd',
-                     'ｅ' => 'e', 'ｆ' => 'f', 'ｇ' => 'g', 'ｈ' => 'h', 'ｉ' => 'i',
-                     'ｊ' => 'j', 'ｋ' => 'k', 'ｌ' => 'l', 'ｍ' => 'm', 'ｎ' => 'n',
-                     'ｏ' => 'o', 'ｐ' => 'p', 'ｑ' => 'q', 'ｒ' => 'r', 'ｓ' => 's',
-                     'ｔ' => 't', 'ｕ' => 'u', 'ｖ' => 'v', 'ｗ' => 'w', 'ｘ' => 'x',
-                     'ｙ' => 'y', 'ｚ' => 'z',
-                     '（' => '(', '）' => ')', '〔' => '[', '〕' => ']', '【' => '[',
-                     '】' => ']', '〖' => '[', '〗' => ']', '“' => '[', '”' => ']',
-                     '‘' => '[', '’' => ']', '｛' => '{', '｝' => '}', '《' => '<',
-                     '》' => '>',
-                     '％' => '%', '＋' => '+', '—' => '-', '－' => '-', '～' => '-',
-                     '：' => ':', '。' => '.', '、' => ',', '，' => '.', '、' => '.',
-                     '；' => ',', '？' => '?', '！' => '!', '…' => '-', '‖' => '|',
-                     '”' => '"', '’' => '`', '‘' => '`', '｜' => '|', '〃' => '"',
-                     '　' => ' ');
+            '５' => '5', '６' => '6', '７' => '7', '８' => '8', '９' => '9',
+            'Ａ' => 'A', 'Ｂ' => 'B', 'Ｃ' => 'C', 'Ｄ' => 'D', 'Ｅ' => 'E',
+            'Ｆ' => 'F', 'Ｇ' => 'G', 'Ｈ' => 'H', 'Ｉ' => 'I', 'Ｊ' => 'J',
+            'Ｋ' => 'K', 'Ｌ' => 'L', 'Ｍ' => 'M', 'Ｎ' => 'N', 'Ｏ' => 'O',
+            'Ｐ' => 'P', 'Ｑ' => 'Q', 'Ｒ' => 'R', 'Ｓ' => 'S', 'Ｔ' => 'T',
+            'Ｕ' => 'U', 'Ｖ' => 'V', 'Ｗ' => 'W', 'Ｘ' => 'X', 'Ｙ' => 'Y',
+            'Ｚ' => 'Z', 'ａ' => 'a', 'ｂ' => 'b', 'ｃ' => 'c', 'ｄ' => 'd',
+            'ｅ' => 'e', 'ｆ' => 'f', 'ｇ' => 'g', 'ｈ' => 'h', 'ｉ' => 'i',
+            'ｊ' => 'j', 'ｋ' => 'k', 'ｌ' => 'l', 'ｍ' => 'm', 'ｎ' => 'n',
+            'ｏ' => 'o', 'ｐ' => 'p', 'ｑ' => 'q', 'ｒ' => 'r', 'ｓ' => 's',
+            'ｔ' => 't', 'ｕ' => 'u', 'ｖ' => 'v', 'ｗ' => 'w', 'ｘ' => 'x',
+            'ｙ' => 'y', 'ｚ' => 'z',
+            '（' => '(', '）' => ')', '〔' => '[', '〕' => ']', '【' => '[',
+            '】' => ']', '〖' => '[', '〗' => ']', '“' => '[', '”' => ']',
+            '‘' => '[', '’' => ']', '｛' => '{', '｝' => '}', '《' => '<',
+            '》' => '>',
+            '％' => '%', '＋' => '+', '—' => '-', '－' => '-', '～' => '-',
+            '：' => ':', '。' => '.', '、' => ',', '，' => '.', '、' => '.',
+            '；' => ',', '？' => '?', '！' => '!', '…' => '-', '‖' => '|',
+            '”' => '"', '’' => '`', '‘' => '`', '｜' => '|', '〃' => '"',
+            '　' => ' ');
 
         return strtr($str, $arr);
     }
 }
 
-if (! function_exists('keyToPem')) {
+if (!function_exists('keyToPem')) {
     /**
      * key To Pem
      */
-    function keyToPem($key, $private=false)
+    function keyToPem($key, $private = false)
     {
         //Split lines:
         $lines = str_split($key, 65);
         $body = implode("\n", $lines);
         //Get title:
-        $title = $private? 'RSA PRIVATE KEY' : 'PUBLIC KEY';
+        $title = $private ? 'RSA PRIVATE KEY' : 'PUBLIC KEY';
         //Add wrapping:
         $result = "-----BEGIN {$title}-----\n";
         $result .= $body . "\n";
@@ -239,36 +236,32 @@ if (! function_exists('keyToPem')) {
     }
 }
 
-if (! function_exists('unserialize_config')) {
+if (!function_exists('unserialize_config')) {
     /**
      * 处理序列化的支付、配送的配置参数
      * 返回一个以name为索引的数组
      *
      * @access  public
-     * @param   string       $cfg
+     * @param   string $cfg
      * @return  void
      */
     function unserialize_config($cfg)
     {
-        if (is_string($cfg) && ($arr = unserialize($cfg)) !== false)
-        {
+        if (is_string($cfg) && ($arr = unserialize($cfg)) !== false) {
             $config = array();
 
-            foreach ($arr AS $key => $val)
-            {
+            foreach ($arr AS $key => $val) {
                 $config[$val['name']] = $val['value'];
             }
 
             return $config;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 }
 
-if (! function_exists('is_dev')) {
+if (!function_exists('is_dev')) {
     function is_dev()
     {
         if (request()->cookie('78b5od367n99we5w') == '882q20qxt3089s0s') {
@@ -279,7 +272,7 @@ if (! function_exists('is_dev')) {
     }
 }
 
-if (! function_exists('format_array')) {
+if (!function_exists('format_array')) {
     function format_array($array)
     {
         if (is_array($array)) {
@@ -288,7 +281,7 @@ if (! function_exists('format_array')) {
                     $array[$key] = '';
                 } else if (is_array($value)) {
                     $value = format_array($value);
-                    if($value === null) {
+                    if ($value === null) {
                         $array[$key] = '';
                     } else {
                         $array[$key] = $value;
@@ -302,15 +295,16 @@ if (! function_exists('format_array')) {
 }
 
 
-if (! function_exists('filterSpecialchar')) {
+if (!function_exists('filterSpecialchar')) {
     /**
      * 正则去除特殊字符
      *
      * @access  public
-     * @param   string       $osstr
+     * @param   string $osstr
      * @return  string
      */
-    function filterSpecialchar($ostr){
+    function filterSpecialchar($ostr)
+    {
         $regex = "/\/|\~|\!|\@|\#|\\$|\%|\^|\&|\*|\(|\)|\_|\+|\{|\}|\:|\<|\>|\?|\[|\]|\,|\.|\/|\;|\'|\`|\-|\=|\\\|\|/";
         return preg_replace($regex, "", $ostr);
     }

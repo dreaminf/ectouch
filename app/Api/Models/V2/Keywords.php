@@ -1,26 +1,24 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
+use App\Api\Models\BaseModel;
 use DB;
 
 class Keywords extends BaseModel
 {
-    protected $connection = 'shop';
 
-    protected $table      = 'keywords';
+    protected $table = 'keywords';
 
-    public    $timestamps = false;
+    public $timestamps = false;
 
-
-	public static function getHot()
+    public static function getHot()
     {
         $goods_search_history = Keywords::select('keyword', DB::raw(' sum(`count`) as count'))
-                                        ->groupBy('keyword')
-                                        ->orderBy('count', 'DESC')
-                                        ->limit(10)
-                                        ->get();
+            ->groupBy('keyword')
+            ->orderBy('count', 'DESC')
+            ->limit(10)
+            ->get();
 
         $data = [];
         foreach ($goods_search_history as $key => $value) {
@@ -33,7 +31,7 @@ class Keywords extends BaseModel
     public static function updateHistory($keyword)
     {
         $keyword = strip_tags($keyword);
-        if(empty($keyword)){
+        if (empty($keyword)) {
             return false;
         }
 

@@ -1,26 +1,27 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
+use App\Api\Models\BaseModel;
 
-// 商品配件表
+/**
+ * Class GoodsGroup
+ * @package App\Api\Models\V2
+ */
 class GoodsGroup extends BaseModel
 {
-    protected $connection = 'shop';
 
-    protected $table      = 'group_goods';
+    protected $table = 'group_goods';
 
-    public    $timestamps = false;
+    public $timestamps = false;
 
-    protected $visible = ['id', 'name','photo', 'price','created_at','updated_at'];
+    protected $visible = ['id', 'name', 'photo', 'price', 'created_at', 'updated_at'];
 
-    protected $appends = ['id', 'name','photo', 'price','created_at','updated_at'];
+    protected $appends = ['id', 'name', 'photo', 'price', 'created_at', 'updated_at'];
 
     protected $guarded = [];
 
     // protected $with = ['goods'];
-
 
     public function getIdAttribute()
     {
@@ -31,9 +32,10 @@ class GoodsGroup extends BaseModel
     {
         return GoodsGallery::getPhotosById($this->goods_id);
     }
+
     public function getNameAttribute()
     {
-        return Goods::where('goods_id',$this->goods_id)->value('goods_name');
+        return Goods::where('goods_id', $this->goods_id)->value('goods_name');
     }
 
     public function getPriceAttribute()
@@ -45,6 +47,7 @@ class GoodsGroup extends BaseModel
     {
         return time();
     }
+
     public function getUpdatedatAttribute()
     {
         return time();
@@ -54,16 +57,16 @@ class GoodsGroup extends BaseModel
     {
         return Goods::getIntro($id);
     }
+
     public static function getAccessories($parent_id)
     {
-        if($model = self::where('parent_id', $parent_id)->pluck('goods_id'))
-        {
+        if ($model = self::where('parent_id', $parent_id)->pluck('goods_id')) {
             return $model;
         }
         return [];
     }
     // public function goods()
     // {
-    //     return $this->belongsTo('App\Models\V2\Goods','goods_id','goods_id');
+    //     return $this->belongsTo('App\Api\Models\V2\Goods','goods_id','goods_id');
     // }
 }

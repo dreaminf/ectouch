@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Models\V2;
-use App\Models\BaseModel;
+namespace App\Api\Models\V2;
 
-class Cert extends BaseModel {
+use App\Api\Models\BaseModel;
 
-    protected $connection = 'shop';
-    protected $table      = 'cert';
-    public    $timestamps = true;
+class Cert extends BaseModel
+{
+    protected $table = 'cert';
+
+    public $timestamps = true;
 }

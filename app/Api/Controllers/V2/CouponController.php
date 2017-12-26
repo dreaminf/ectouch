@@ -1,12 +1,10 @@
 <?php
-//
 
 namespace App\Api\Controllers\V2;
 
 use App\Api\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\V2\Features;
-use App\Models\V2\Coupon;
+use App\Api\Models\V2\Features;
+use App\Api\Models\V2\Coupon;
 
 class CouponController extends Controller
 {
@@ -14,16 +12,15 @@ class CouponController extends Controller
     public function index()
     {
         $rules = [
-            'page'          => 'required|integer|min:1',
-            'per_page'      => 'required|integer|min:1',
-            'status'        => 'required|integer',
-            'total_price'   => 'integer',
-            'total_amount'  => 'integer',
-            'goods'         => 'json',
+            'page' => 'required|integer|min:1',
+            'per_page' => 'required|integer|min:1',
+            'status' => 'required|integer',
+            'total_price' => 'integer',
+            'total_amount' => 'integer',
+            'goods' => 'json',
         ];
 
-        if($res = Features::check('coupon'))
-        {
+        if ($res = Features::check('coupon')) {
             return $this->json($res);
         }
 
@@ -33,21 +30,19 @@ class CouponController extends Controller
 
         $model = Coupon::getList($this->validated);
 
-       return $this->json($model);
+        return $this->json($model);
     }
 
     //POST  ecapi.coupon.available
     public function available()
     {
         $rules = [
-            'page'          => 'required|integer|min:1',
-            'per_page'      => 'required|integer|min:1',
-            'total_price'   => 'required',
-            'shop'          => 'integer',
-        ];
+            'page' => 'required|integer|min:1',
+            'per_page' => 'required|integer|min:1',
+            'total_price' => 'required',
+                    ];
 
-        if($res = Features::check('coupon'))
-        {
+        if ($res = Features::check('coupon')) {
             return $this->json($res);
         }
 
@@ -57,6 +52,6 @@ class CouponController extends Controller
 
         $model = Coupon::getAvailable($this->validated);
 
-       return $this->json($model);
+        return $this->json($model);
     }
 }

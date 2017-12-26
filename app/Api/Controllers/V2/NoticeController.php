@@ -1,23 +1,23 @@
 <?php
-//
 
 namespace App\Api\Controllers\V2;
 
 use Illuminate\Http\Request;
 use App\Api\Controllers\Controller;
-use App\Models\V2\Card;
-use App\Models\V2\Notice;
+use App\Api\Models\V2\Card;
+use App\Api\Models\V2\Notice;
 
-class NoticeController extends Controller {
+class NoticeController extends Controller
+{
 
     /**
-    * POST ecapi.notice.list
-    */
+     * POST ecapi.notice.list
+     */
     public function index(Request $request)
     {
         $rules = [
-            'page'      => 'required|integer|min:1',
-            'per_page'  => 'required|integer|min:1',
+            'page' => 'required|integer|min:1',
+            'per_page' => 'required|integer|min:1',
         ];
 
         if ($error = $this->validateInput($rules)) {
@@ -30,8 +30,8 @@ class NoticeController extends Controller {
     }
 
     /**
-    * GET notice.{id:[0-9]+}
-    */
+     * GET notice.{id:[0-9]+}
+     */
     public function show($id)
     {
         return Notice::getNotice($id);

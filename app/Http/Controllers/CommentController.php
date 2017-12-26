@@ -108,8 +108,8 @@ class CommentController extends BaseController
                     }
                 } else {
                     // 没有验证码时，用时间来限制机器人发帖或恶意发评论 
-                    if (!session('?send_time')) {
-                        session('send_time', 0);
+                    if (!session()->has('send_time')) {
+                        session(['send_time' =>  0]);
                     }
 
                     $cur_time = gmtime();
@@ -175,7 +175,7 @@ class CommentController extends BaseController
                         // 无错误就保存留言 
                         if (empty($result['error'])) {
                             $this->add_comment($cmt);
-                            session('send_time', $cur_time);
+                            session(['send_time' =>  $cur_time]);
                         }
                     }
                 }
@@ -227,7 +227,7 @@ class CommentController extends BaseController
         // 评论是否需要审核 
         $status = 1 - $GLOBALS['_CFG']['comment_check'];
 
-        $user_id = session('?user_id') ? session('user_id') : 0;
+        $user_id = session()->has('user_id') ? session('user_id') : 0;
         $email = empty($cmt->email) ? session('email') : trim($cmt->email);
         $user_name = empty($cmt->username) ? session('user_name') : '';
         $email = htmlspecialchars($email);

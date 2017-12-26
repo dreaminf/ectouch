@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Models\V2;
-use App\Models\BaseModel;
+namespace App\Api\Models\V2;
 
-class RegExtendInfo extends BaseModel {
+use App\Api\Models\BaseModel;
 
-    protected $connection = 'shop';
-    protected $table      = 'reg_extend_info';
-    public    $timestamps = false;
+class RegExtendInfo extends BaseModel
+{
+
+    protected $table = 'reg_extend_info';
+
+    public $timestamps = false;
 
     protected $guarded = [];
 
@@ -19,14 +21,14 @@ class RegExtendInfo extends BaseModel {
 
         // users 表预留字段
         if ($field->type == 1) {
-           
+
             if ($member = Member::where('user_id', $user_id)->first()) {
-            
+
                 switch ($id) {
                     case '1':
                         $member->msn = $value;
                         break;
-                    
+
                     case '2':
                         $member->qq = $value;
                         break;
@@ -55,7 +57,7 @@ class RegExtendInfo extends BaseModel {
 
         //reg_extend_info 表扩展字段
         if ($field->type == 0) {
-            
+
             UserRegStatus::toUpdate($user_id, 1);
             return self::updateOrCreate(['reg_field_id' => $id], ['user_id' => $user_id, 'reg_field_id' => $id, 'content' => $value]);
         }

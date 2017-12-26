@@ -1,57 +1,58 @@
 <?php
 
-namespace App\Models\V2;
-use App\Models\BaseModel;
+namespace App\Api\Models\V2;
+
+use App\Api\Models\BaseModel;
 
 class Notice extends BaseModel
 {
-     protected $connection = 'shop';
-     protected $table      = 'shop_config';
-     public    $timestamps = true;
+    protected $table = 'shop_config';
 
-     protected $appends = ['title', 'url', 'created_at', 'updated_at'];
+    public $timestamps = true;
 
-     protected $visible = ['id', 'title', 'url', 'created_at', 'updated_at'];
+    protected $appends = ['title', 'url', 'created_at', 'updated_at'];
 
-     public static function getList(array $attributes)
-     {
-         extract($attributes);
-         $model = self::where('code', 'like', '%notice%');
+    protected $visible = ['id', 'title', 'url', 'created_at', 'updated_at'];
 
-         $total = $model->count();
+    public static function getList(array $attributes)
+    {
+        extract($attributes);
+        $model = self::where('code', 'like', '%notice%');
 
-         $data = $model
-             ->paginate($per_page)
-             ->toArray();
+        $total = $model->count();
 
-         return self::formatBody(['notices' => $data['data'],'paged' => self::formatPaged($page, $per_page, $total)]);
-     }
+        $data = $model
+            ->paginate($per_page)
+            ->toArray();
 
-     public static function getNotice($id)
-     {
-         if ($model = Notice::where('id', $id)->first()) {
-             $data['content'] = $model->value;
-             return view('notice.mobile', ['notice' => $data]);
-         }
-     }
+        return self::formatBody(['notices' => $data['data'], 'paged' => self::formatPaged($page, $per_page, $total)]);
+    }
 
-     public function getTitleAttribute()
-     {
-         return mb_substr($this->attributes['value'], 0, 20, 'utf-8') . '...';
-     }
+    public static function getNotice($id)
+    {
+        if ($model = Notice::where('id', $id)->first()) {
+            $data['content'] = $model->value;
+            return view('notice.mobile', ['notice' => $data]);
+        }
+    }
 
-     public function getUrlAttribute()
-     {
-         return url('/v2/notice.'.$this->attributes['id']);
-     }
+    public function getTitleAttribute()
+    {
+        return mb_substr($this->attributes['value'], 0, 20, 'utf-8') . '...';
+    }
 
-     public function getCreatedAtAttribute()
-     {
-         return time();
-     }
+    public function getUrlAttribute()
+    {
+        return url('/v2/notice.' . $this->attributes['id']);
+    }
 
-     public function getUpdatedAtAttribute()
-     {
-         return time();
-     }
+    public function getCreatedAtAttribute()
+    {
+        return time();
+    }
+
+    public function getUpdatedAtAttribute()
+    {
+        return time();
+    }
 }

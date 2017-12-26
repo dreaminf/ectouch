@@ -1,40 +1,33 @@
 <?php
 
-/**
- * GoodsCategory Model
- * @authors XiaoGai (xiaogai@geek-zoo.com)
- * Copyright (c) 2015-2016, Geek Zoo Studio
- * http://www.geek-zoo.com
- */
+namespace App\Api\Models\V2;
 
-namespace App\Models\V2;
+use App\Api\Models\BaseModel;
 
-use App\Models\BaseModel;
+class GoodsCategory extends BaseModel
+{
 
+    protected $table = 'category';
 
-class GoodsCategory extends BaseModel {
-
-    protected $connection = 'shop';
-    protected $table      = 'category';
-    public    $timestamps = false;
+    public $timestamps = false;
 
     protected $with = [];
-    
+
     protected $guarded = [];
 
-    protected $visible = ['id','name','desc','photo','more','categories'];
+    protected $visible = ['id', 'name', 'desc', 'photo', 'more', 'categories'];
 
-    protected $appends = ['id','name','desc','photo','more','categories'];
+    protected $appends = ['id', 'name', 'desc', 'photo', 'more', 'categories'];
 
     public static function getList(array $attributes)
     {
         extract($attributes);
-        
+
         $model = self::where('is_show', 1);
 
         if (isset($category) && $category) {
             //指定分类
-            $model->where(function($query) use ($category){
+            $model->where(function ($query) use ($category) {
                 $query->where('cat_id', $category)->orWhere('parent_id', $category);
             });
 
@@ -44,7 +37,7 @@ class GoodsCategory extends BaseModel {
 
         if (isset($keyword) && $keyword) {
             $model->where(function ($query) use ($keyword) {
-                 $query->where('cat_name', 'like', '%'.strip_tags($keyword).'%')->orWhere('cat_id', strip_tags($keyword));
+                $query->where('cat_name', 'like', '%' . strip_tags($keyword) . '%')->orWhere('cat_id', strip_tags($keyword));
             });
         }
 
@@ -54,18 +47,15 @@ class GoodsCategory extends BaseModel {
             ->orderBy('sort_order', 'ASC')
             ->paginate($per_page)->toArray();
 
-        return self::formatBody(['categories' => $data['data'],'paged' => self::formatPaged($page, $per_page, $total)]);
-
+        return self::formatBody(['categories' => $data['data'], 'paged' => self::formatPaged($page, $per_page, $total)]);
     }
-
 
     public static function getCategoryIds($id)
     {
-        if($model = GoodsCategory::where('cat_id', $id)->where('is_show', 1)->orderBy('cat_id', 'ASC')->first())
-        {
-            $ids = GoodsCategory::where('parent_id', $id)->where('is_show', 1)->orderBy('cat_id', 'ASC')->lists('cat_id')->toArray();
+        if ($model = GoodsCategory::where('cat_id', $id)->where('is_show', 1)->orderBy('cat_id', 'ASC')->first()) {
+            $ids = GoodsCategory::where('parent_id', $id)->where('is_show', 1)->orderBy('cat_id', 'ASC')->pluck('cat_id')->toArray();
             if (is_array($ids)) {
-                $moreids = GoodsCategory::whereIn('parent_id', $ids)->where('is_show', 1)->orderBy('cat_id', 'ASC')->lists('cat_id')->toArray();
+                $moreids = GoodsCategory::whereIn('parent_id', $ids)->where('is_show', 1)->orderBy('cat_id', 'ASC')->pluck('cat_id')->toArray();
                 @array_merge($ids, $moreids);
             }
             @array_push($ids, $model->cat_id);
@@ -88,14 +78,17 @@ class GoodsCategory extends BaseModel {
     {
         return $this->cat_id;
     }
+
     public function getNameAttribute()
     {
         return $this->cat_name;
     }
+
     public function getDescAttribute()
     {
         return $this->cat_desc;
     }
+
     public function getPhotoAttribute()
     {
         if ($this->parent_id == 0) {
@@ -117,12 +110,12 @@ class GoodsCategory extends BaseModel {
 
     public function parentCategory()
     {
-        return $this->belongsTo('App\Models\V2\GoodsCategory', 'parent_id', 'id');
+        return $this->belongsTo('App\Api\Models\V2\GoodsCategory', 'parent_id', 'id');
     }
 
     public function categories()
     {
-        return $this->hasMany('App\Models\V2\GoodsCategory', 'parent_id', 'id');
+        return $this->hasMany('App\Api\Models\V2\GoodsCategory', 'parent_id', 'id');
     }
 
 }

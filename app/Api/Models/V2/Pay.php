@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
+use App\Api\Models\BaseModel;
 
-class Pay extends BaseModel {
+class Pay extends BaseModel
+{
 
-    protected $connection = 'shop';
+    protected $table = 'payment';
 
-    protected $table      = 'payment';
-    
-    public    $timestamps = false;
+    public $timestamps = false;
 
     public static function checkConfig($pay_code)
     {
-    	// $sql = "SELECT * FROM " . $ecs->table('payment') . " WHERE pay_code = '$_REQUEST[code]' AND enabled = '1'";
-    	if ($payment = self::where('pay_code', $pay_code)->where('enabled', '1')->first()) {
-    		return true;
-    	}
-    	return false;
+        // $sql = "SELECT * FROM " . $ecs->table('payment') . " WHERE pay_code = '$_REQUEST[code]' AND enabled = '1'";
+        if ($payment = self::where('pay_code', $pay_code)->where('enabled', '1')->first()) {
+            return true;
+        }
+
+        return false;
     }
 }

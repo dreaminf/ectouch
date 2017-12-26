@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Models\V2;
-use App\Models\BaseModel;
+namespace App\Api\Models\V2;
+
+use App\Api\Models\BaseModel;
 
 class Avatar extends BaseModel
 {
-    protected $connection = 'shop';
-    protected $table      = 'avatar';
-    public    $timestamps = false;
+    protected $table = 'avatar';
+
+    public $timestamps = false;
+
     protected $guarded = [];
 }

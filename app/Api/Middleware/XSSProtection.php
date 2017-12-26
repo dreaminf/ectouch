@@ -1,7 +1,6 @@
 <?php
-//
 
-namespace App\Http\Middleware;
+namespace App\Api\Middleware;
 
 use Closure;
 
@@ -10,8 +9,8 @@ class XSSProtection
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -22,7 +21,7 @@ class XSSProtection
 
         $input = $request->all();
 
-        array_walk_recursive($input, function(&$input) {
+        array_walk_recursive($input, function (&$input) {
             $input = strip_tags($input);
         });
 

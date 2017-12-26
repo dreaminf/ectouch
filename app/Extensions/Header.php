@@ -2,16 +2,14 @@
 
 namespace App\Extensions;
 
-use Yii;
-
 class Header
 {
     public static function getUserAgent($key = false)
     {
-        $headers = Yii::$app->request->headers;
         $arr = [];
 
-        if ($ua = $headers->get('X-' . Yii::$app->params['name'] . '-UserAgent')) {
+        if ($ua = app('request')->header('X-' . config('app.name') . '-UserAgent')) {
+
             $items = @explode(', ', $ua);
             if (is_array($items)) {
                 foreach ($items as $property) {
@@ -32,8 +30,8 @@ class Header
 
     public static function getVer()
     {
-        $headers = Yii::$app->request->headers;
-        if ($ver = $headers->get('X-' . Yii::$app->params['name'] . '-Ver')) {
+        if ($ver = app('request')->header('X-' . config('app.name') . '-Ver')) {
+
             $rule = '/^[(\d)+.(\d)+.(\d)+]+$/';
             if (preg_match($rule, $ver)) {
                 return $ver;
@@ -44,10 +42,10 @@ class Header
 
     public static function getUDID()
     {
-        $headers = Yii::$app->request->headers;
-        if ($UDID = $headers->get('X-' . Yii::$app->params['name'] . '-UDID')) {
+        if ($UDID = app('request')->header('X-' . config('app.name') . '-UDID')) {
             return $UDID;
         }
         return null;
     }
+
 }

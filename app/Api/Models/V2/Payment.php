@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Models\V2;
-use App\Models\BaseModel;
-use App\Helper\Token;
-use App\Helper\Header;
+namespace App\Api\Models\V2;
+
+use App\Api\Models\BaseModel;
+use App\Extensions\Token;
+use App\Extensions\Header;
 use App\Services\Payment\Alipay\AlipayRSA;
 use App\Services\Payment\Alipay\AlipayNotify;
 use App\Services\Payment\wxpay\WxPay;
@@ -14,31 +15,30 @@ use App\Services\Shopex\Erp;
 use App\Services\Shopex\Authorize;
 use App\Services\Payment\Teegon\TeegonService;
 use App\Services\Payment\AlipayWap\AlipayWapSubmit;
-use App\Services\Payment\AlipayWap\AlipayWapNotify;
 
-class Payment extends BaseModel {
+class Payment extends BaseModel
+{
 
-    protected $connection = 'shop';
-    protected $table      = 'config';
-    public    $timestamps = false;
+    protected $table = 'config';
+
+    public $timestamps = false;
 
     protected $appends = ['desc'];
+
     protected $visible = ['code', 'name', 'desc'];
 
     public static function getList(array $attributes)
     {
         $userAgent = Header::getUserAgent();
-        
+
         $model = null;
         if (isset($userAgent['Platform']) && strtolower($userAgent['Platform']) == 'wechat') {
-            $response = Authorize::info();    
-            if ($response['result'] == 'success') 
-            {
+            $response = Authorize::info();
+            if ($response['result'] == 'success') {
                 // 旗舰版授权...
-                if ($response['info']['authorize_code'] == 'NDE') 
-                {
+                if ($response['info']['authorize_code'] == 'NDE') {
                     $model = self::where(['type' => 'payment', 'status' => 1, 'code' => 'wxpay.web'])->get()->toArray();
-                } 
+                }
 
                 //天工收银
                 if ($arr = Pay::where('pay_code', 'yunqi')->where('enabled', '1')->first()) {
@@ -68,25 +68,25 @@ class Payment extends BaseModel {
                     array_push($model, $arr);
                 }
 
-                 // 支付宝wap支付
+                // 支付宝wap支付
                 if ($arr = self::where(['type' => 'payment', 'status' => 1, 'code' => 'alipay.wap'])->first()) {
                     $arr = $arr->toArray();
                     array_push($model, $arr);
-                } 
+                }
 
             }
         } else {
             $model = self::where(['type' => 'payment', 'status' => 1])->where('code', '!=', 'wxpay.web')->get()->toArray();
 
-                // if ($arr = Pay::where('pay_code', 'balance')->where('enabled', '1')->first()) {
-                //     $arr = [
-                //         'name' => '余额支付',
-                //         'code' => 'balance',
-                //         'desc' => '余额支付'
-                //     ];
+            // if ($arr = Pay::where('pay_code', 'balance')->where('enabled', '1')->first()) {
+            //     $arr = [
+            //         'name' => '余额支付',
+            //         'code' => 'balance',
+            //         'desc' => '余额支付'
+            //     ];
 
-                //     array_push($model, $arr);
-                // }            
+            //     array_push($model, $arr);
+            // }
         }
 
 
@@ -104,7 +104,7 @@ class Payment extends BaseModel {
         }
 
         $shop_name = ShopConfig::findByCode('shop_name');
-        
+
         //-------------  天工收银  -----------
         if ($code == 'teegon.wap') {
 
@@ -127,8 +127,8 @@ class Payment extends BaseModel {
             }
 
             $data['order_no'] = $order->order_sn; //订单号
-            $data['channel'] = $channel;            
-            $data['return_url'] = urldecode($referer);    
+            $data['channel'] = $channel;
+            $data['return_url'] = urldecode($referer);
             $data['amount'] = number_format($order->order_amount, 2, '.', '');
             $data['subject'] = $shop_name; // $shop_name
             $data['metadata'] = ""; // 可选
@@ -146,7 +146,7 @@ class Payment extends BaseModel {
                 return self::formatError(self::BAD_REQUEST, $res['error']);
             }
 
-            Log::error('userAgent: '.var_export($res,true));
+            Log::error('userAgent: ' . var_export($res, true));
 
             $url = $html = null;
 
@@ -154,7 +154,7 @@ class Payment extends BaseModel {
                 $url = str_replace(['window.location=', '"'], '', $res['result']['action']['params']);
             }
             if ($channel == 'chinapay') { // 银联支付
-                $html = $srv->buildRequestForm($data, 'post', '确认'); 
+                $html = $srv->buildRequestForm($data, 'post', '确认');
             }
             return self::formatBody([
                 'order' => $order, 'teegon' => ['url' => $url, 'html' => $html],
@@ -170,27 +170,27 @@ class Payment extends BaseModel {
             if (!$payment) {
                 return self::formatError(self::NOT_FOUND);
             }
-            
+
             $config = self::checkConfig(['partner_id', 'seller_id', 'private_key'], $payment);
 
             if (!$config) {
                 return self::formatError(self::UNKNOWN_ERROR);
             }
-            
+
             $parameter = array(
-                "service"         => 'alipay.wap.create.direct.pay.by.user',
-                "partner"         => $config['partner_id'],
-                "seller_id"       => $config['seller_id'],
-                "payment_type"    => '1',
-                "notify_url"      => url("/v2/order.notify.alipay.wap"),
-                "return_url"      => $referer,
-                "_input_charset"  => 'utf-8',
-                "out_trade_no"    => $order->order_sn,
-                "subject"         => $shop_name,
-                "total_fee"       => number_format($order->order_amount, 2, '.', ''),
+                "service" => 'alipay.wap.create.direct.pay.by.user',
+                "partner" => $config['partner_id'],
+                "seller_id" => $config['seller_id'],
+                "payment_type" => '1',
+                "notify_url" => url("/v2/order.notify.alipay.wap"),
+                "return_url" => $referer,
+                "_input_charset" => 'utf-8',
+                "out_trade_no" => $order->order_sn,
+                "subject" => $shop_name,
+                "total_fee" => number_format($order->order_amount, 2, '.', ''),
                 // "show_url"        => $show_url,
-                "app_pay"         => "Y",//启用此参数能唤起钱包APP支付宝
-                "body"            => $shop_name,                    
+                "app_pay" => "Y",//启用此参数能唤起钱包APP支付宝
+                "body" => $shop_name,
             );
 
             //建立请求
@@ -198,7 +198,7 @@ class Payment extends BaseModel {
             $html_text = $alipaySubmit->buildRequestForm($parameter, "get", "确认");
 
             return self::formatBody([
-                'order' => $order, 
+                'order' => $order,
                 'alipay' => ['html' => $html_text],
             ]);
             // echo $html_text;
@@ -213,10 +213,10 @@ class Payment extends BaseModel {
 
         if ($code == 'balance') {
 
-            $user_info = Member::user_info($uid); 
+            $user_info = Member::user_info($uid);
 
             /* 用户帐户余额是否足够 */
-            if ($order->order_amount > $user_info['user_money'] + $user_info['credit_line']){    
+            if ($order->order_amount > $user_info['user_money'] + $user_info['credit_line']) {
                 return self::formatError(self::BAD_REQUEST, trans('message.payment.balance'));
             }
 
@@ -224,7 +224,7 @@ class Payment extends BaseModel {
 
             $order->pay_time = time();
             $order->pay_status = 2;
-            $order->save();    
+            $order->save();
 
             $pay_order = '支付订单 %s';
 
@@ -246,18 +246,18 @@ class Payment extends BaseModel {
             }
 
             $data = [
-                "notify_url"     => url('/v2/order.notify.alipay.app'),
-                "partner"        => $config['partner_id'],
-                "seller_id"      => $config['seller_id'],
-                "out_trade_no"   => $order->order_sn,
-                "subject"        => $shop_name,
-                "body"           => $shop_name,
-                "total_fee"      => number_format($order->order_amount, 2, '.', ''),
-                "service"        => "mobile.securitypay.pay",
-                "payment_type"   => "1",
+                "notify_url" => url('/v2/order.notify.alipay.app'),
+                "partner" => $config['partner_id'],
+                "seller_id" => $config['seller_id'],
+                "out_trade_no" => $order->order_sn,
+                "subject" => $shop_name,
+                "body" => $shop_name,
+                "total_fee" => number_format($order->order_amount, 2, '.', ''),
+                "service" => "mobile.securitypay.pay",
+                "payment_type" => "1",
                 "_input_charset" => "utf-8",
-                "it_b_pay"       => "30m",
-                "show_url"       => "m.alipay.com"
+                "it_b_pay" => "30m",
+                "show_url" => "m.alipay.com"
             ];
 
             $sign = AlipayRSA::rsaSign(AlipayRSA::getSignContent($data), keyToPem($config['private_key'], true));
@@ -273,7 +273,7 @@ class Payment extends BaseModel {
 
             if (!$payment) {
                 return self::formatError(self::NOT_FOUND);
-            }            
+            }
             $config = self::checkConfig(['app_id', 'app_secret', 'mch_id', 'mch_key'], $payment);
             if (!$config) {
                 return self::formatError(self::UNKNOWN_ERROR);
@@ -349,12 +349,12 @@ class Payment extends BaseModel {
             return self::formatBody(['order' => $order, 'wxpay' => $body]);
         }
 
-        if ($code == 'wxpay.web' || $code == 'wxpay.wxa' ) {
+        if ($code == 'wxpay.web' || $code == 'wxpay.wxa') {
             $payment = self::where(['type' => 'payment', 'status' => 1, 'code' => $code])->first();
 
             if (!$payment) {
                 return self::formatError(self::NOT_FOUND);
-            }            
+            }
             $config = self::checkConfig(['app_id', 'app_secret', 'mch_id', 'mch_key'], $payment);
             if (!$config) {
                 return self::formatError(self::UNKNOWN_ERROR);
@@ -364,13 +364,12 @@ class Payment extends BaseModel {
             $wxpay->init($config['app_id'], $config['app_secret'], $config['mch_key']);
             $nonce_str = str_random(32);
             $time_stamp = (string)time();
-            if($code == 'wxpay.wxa'){
-                $notify_url = url('/v2/order.notify.wxpay.wxa');    
+            if ($code == 'wxpay.wxa') {
+                $notify_url = url('/v2/order.notify.wxpay.wxa');
+            } else {
+                $notify_url = url('/v2/order.notify.wxpay.web');
             }
-            else{
-                $notify_url = url('/v2/order.notify.wxpay.web');       
-            }
-            
+
 
             $inputParams = [
 
@@ -415,7 +414,7 @@ class Payment extends BaseModel {
             //获取prepayid
             $prepayid = $wxpay->sendPrepay($inputParams);
 
-            $pack = 'prepay_id='.$prepayid;
+            $pack = 'prepay_id=' . $prepayid;
 
             $prePayParams = [
                 'appId' => $config['app_id'],
@@ -446,9 +445,9 @@ class Payment extends BaseModel {
 
             if (!$payment) {
                 return self::formatError(self::NOT_FOUND);
-            }            
+            }
             $config = self::checkConfig(['mer_id', 'cert_pwd'], $payment);
-            $signCert = Cert::where('config_id',$payment->id)->value('file');
+            $signCert = Cert::where('config_id', $payment->id)->value('file');
 
             if (!$config || !$signCert) {
                 return self::formatError(self::UNKNOWN_ERROR);
@@ -494,11 +493,11 @@ class Payment extends BaseModel {
         //--------- 天工收银 notify ----------
         if ($code == 'teegon.wap') {
 
-            Log::info('notify:'. json_encode($_POST));
+            Log::info('notify:' . json_encode($_POST));
 
             if (isset($_POST['charge_id'])) {
-                
-                if($_POST['is_success'] == true){
+
+                if ($_POST['is_success'] == true) {
 
                     /* 修改订单状态 */
                     $order = Order::findUnpayedBySN($_POST['order_no']);
@@ -511,17 +510,16 @@ class Payment extends BaseModel {
                     AffiliateLog::affiliate($order->order_id);
                     Erp::order($order->order_sn);
 
-                    Log::info('notify_order:'. json_encode($order));
+                    Log::info('notify_order:' . json_encode($order));
 
-                    Log::info('notify_is_success:'. $_POST['is_success']);
+                    Log::info('notify_is_success:' . $_POST['is_success']);
                     return true;
-                }
-                else{
-                    Log::info('notify:'. json_encode($_POST));
+                } else {
+                    Log::info('notify:' . json_encode($_POST));
                     return false;
                 }
             } else {
-                Log::info('notify_not_post:'. json_encode($_POST));
+                Log::info('notify_not_post:' . json_encode($_POST));
                 return false;
             }
         }
@@ -544,19 +542,19 @@ class Payment extends BaseModel {
                 return false;
             }
             $alipay_config = array(
-                "partner"           => $config['partner_id'],
+                "partner" => $config['partner_id'],
                 "alipay_public_key" => keyToPem($config['public_key']),
-                "sign_type"         => strtoupper('RSA'),
-                "input_charset"     => strtolower('utf-8'),
-                "cacert"            => app()->basePath() . '/app/Services/Payment/Alipay/cacert.pem',
-                "transport"         => "http",
-                "notify_url"        => url("/v2.order.notify.alipay.app"),
+                "sign_type" => strtoupper('RSA'),
+                "input_charset" => strtolower('utf-8'),
+                "cacert" => app()->basePath() . '/app/Services/Payment/Alipay/cacert.pem',
+                "transport" => "http",
+                "notify_url" => url("/v2.order.notify.alipay.app"),
             );
 
             $alipayNotify = new AlipayNotify($alipay_config);
             $verify_result = $alipayNotify->verifyNotify();
 
-            if($verify_result) {//验证成功
+            if ($verify_result) {//验证成功
 
                 if (empty($_POST['out_trade_no']) && !empty($_POST['notify_data'])) {
                     $_POST = json_decode(json_encode(simplexml_load_string($_POST['notify_data'])), true);
@@ -565,34 +563,32 @@ class Payment extends BaseModel {
                 $trade_status = $_POST['trade_status'];
                 $trade_no = $_POST['trade_no'];
 
-                if($_POST['trade_status'] == 'TRADE_FINISHED') {
+                if ($_POST['trade_status'] == 'TRADE_FINISHED') {
                     //修改订单状态
                     $order->pay_status = Order::PS_PAYED;
-            //插入付款时间
-                $order->pay_time = time();
+                    //插入付款时间
+                    $order->pay_time = time();
                     $order->save();
                     OrderAction::toCreateOrUpdate($order->order_id, $order->order_status, $order->shipping_status, $order->pay_status, '支付宝手机支付');
-                }
-                else if ($_POST['trade_status'] == 'TRADE_SUCCESS') {
+                } else if ($_POST['trade_status'] == 'TRADE_SUCCESS') {
                     //修改订单状态
                     $order->pay_status = Order::PS_PAYED;
-            //插入付款时间
+                    //插入付款时间
                     $order->pay_time = time();
                     $order->save();
                     OrderAction::toCreateOrUpdate($order->order_id, $order->order_status, $order->shipping_status, $order->pay_status, '支付宝手机支付');
                     AffiliateLog::affiliate($order->order_id);
                     Erp::order($order->order_sn);
 
-                }else
-                {
-                    Log::error('订单支付回调处理异常: '.$out_trade_no);
-                    Log::error('TRADE_STATUS:'.$_POST['trade_status']);
+                } else {
+                    Log::error('订单支付回调处理异常: ' . $out_trade_no);
+                    Log::error('TRADE_STATUS:' . $_POST['trade_status']);
                 }
 
                 echo "success";
 
             } else {
-                Log::info('订单支付回调故障: '.$out_trade_no);
+                Log::info('订单支付回调故障: ' . $out_trade_no);
                 echo "fail";
             }
 
@@ -620,7 +616,7 @@ class Payment extends BaseModel {
 
             $inputParams = $resHandler->xmlToArray($postStr);
 
-            foreach($inputParams as $k => $v) {
+            foreach ($inputParams as $k => $v) {
                 $resHandler->setParameter($k, $v);
             }
 
@@ -636,13 +632,13 @@ class Payment extends BaseModel {
             $resHandler->setKey($config['mch_key']);
 
             //判断签名
-            if($resHandler->isTenpaySign() == true) {
+            if ($resHandler->isTenpaySign() == true) {
 
                 //支付结果
                 $return_code = $resHandler->getParameter("return_code");
 
                 //判断签名及结果
-                if ("SUCCESS"==$return_code){
+                if ("SUCCESS" == $return_code) {
 
                     //商户在收到后台通知后根据通知ID向财付通发起验证确认，采用后台系统调用交互模式
                     //商户交易单号
@@ -669,7 +665,7 @@ class Payment extends BaseModel {
             return true;
         }
 
-        if ($code == 'wxpay.web'|| $code == 'wxpay.wxa') {
+        if ($code == 'wxpay.web' || $code == 'wxpay.wxa') {
 
             if (version_compare(PHP_VERSION, '5.6.0', '<')) {
                 if (!empty($GLOBALS['HTTP_RAW_POST_DATA'])) {
@@ -690,7 +686,7 @@ class Payment extends BaseModel {
 
             $inputParams = $resHandler->xmlToArray($postStr);
 
-            foreach($inputParams as $k => $v) {
+            foreach ($inputParams as $k => $v) {
                 $resHandler->setParameter($k, $v);
             }
 
@@ -706,13 +702,13 @@ class Payment extends BaseModel {
             $resHandler->setKey($config['mch_key']);
 
             //判断签名
-            if($resHandler->isTenpaySign() == true) {
+            if ($resHandler->isTenpaySign() == true) {
 
                 //支付结果
                 $return_code = $resHandler->getParameter("return_code");
 
                 //判断签名及结果
-                if ("SUCCESS"==$return_code){
+                if ("SUCCESS" == $return_code) {
 
                     //商户在收到后台通知后根据通知ID向财付通发起验证确认，采用后台系统调用交互模式
                     //商户交易单号
@@ -768,11 +764,11 @@ class Payment extends BaseModel {
 
             $postStr = $_POST;
             $unionpay->params = $_POST;
-            if(!$unionpay->verifySign()) {
+            if (!$unionpay->verifySign()) {
                 echo 'fail';
                 return false;
             }
-            if($unionpay->params['respCode'] == '00') {
+            if ($unionpay->params['respCode'] == '00') {
                 $out_trade_no = $unionpay->params['queryId'];
                 $order_sn = $unionpay->params['orderId'];
 

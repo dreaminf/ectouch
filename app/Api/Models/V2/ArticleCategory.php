@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
+use App\Api\Models\BaseModel;
 
 class ArticleCategory extends BaseModel
 {
-    protected $connection = 'shop';
 
-    protected $table      = 'article_cat';
+    protected $table = 'article_cat';
 
-    public    $timestamps = false;
+    public $timestamps = false;
 
     protected $hidden = [];
 
@@ -24,9 +23,9 @@ class ArticleCategory extends BaseModel
     {
         extract($attributes);
 
-        if(self::where('parent_id', $id)->count() > 0){
+        if (self::where('parent_id', $id)->count() > 0) {
             $model = self::where('parent_id', $id);
-        }else{
+        } else {
             $model = Article::where('cat_id', $id);
         }
 
@@ -41,8 +40,6 @@ class ArticleCategory extends BaseModel
     }
 
 
-
-
     public function getIdAttribute()
     {
         return $this->attributes['cat_id'];
@@ -50,8 +47,9 @@ class ArticleCategory extends BaseModel
 
     public function getTitleAttribute()
     {
-        return  $this->attributes['cat_name'];
+        return $this->attributes['cat_name'];
     }
+
     public function getLinkAttribute()
     {
         return null;

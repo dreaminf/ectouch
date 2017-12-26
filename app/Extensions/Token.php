@@ -2,7 +2,10 @@
 
 namespace App\Extensions;
 
-use Yii;
+use \DomainException;
+use \UnexpectedValueException;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class Token
 {
@@ -44,8 +47,8 @@ class Token
      */
     public static function decode($jwt)
     {
-        $key = Yii::$app->params['TOKEN_SECRET'];
-        $allowed_algs = [Yii::$app->params['TOKEN_ALG']];
+        $key = config('token.secret');
+        $allowed_algs = [config('token.alg')];
 
         if (empty($key)) {
             return false;
@@ -114,11 +117,10 @@ class Token
 
     public static function authorization()
     {
-        $headers = Yii::$app->request->headers;
-        $token = $headers->get('X-' . Yii::$app->params['name'] . '-Authorization');
-        // Log::debug('Authorization', ['token' => $token]);
+        $token = app('request')->header('X-' . config('app.name') . '-Authorization');
+        Log::debug('Authorization', ['token' => $token]);
         if ($payload = self::decode($token)) {
-            // Log::debug('payload', ['payload' => $payload]);
+            Log::debug('payload', ['payload' => $payload]);
             if (is_object($payload) && property_exists($payload, 'uid')) {
                 return $payload->uid;
             }
@@ -133,8 +135,7 @@ class Token
 
     public static function refresh()
     {
-        $headers = Yii::$app->request->headers;
-        $token = $headers->get('X-' . Yii::$app->params['name'] . '-Authorization');
+        $token = app('request')->header('X-' . config('app.name') . '-Authorization');
 
         if ($token) {
             if ($payload = self::decode($token)) {
@@ -143,14 +144,14 @@ class Token
 
                     // 超过1天
                     if (property_exists($payload, 'exp')) {
-                        if ((time() + Yii::$app->params['TOKEN_TTL'] * 60 - $payload->exp) > Yii::$app->params['TOKEN_REFRESH_TTL'] * 60) {
+                        if ((time() + config('token.ttl') * 60 - $payload->exp) > config('token.refresh_ttl') * 60) {
                             return self::new_token($payload);
                         }
                     }
 
                     // 版本号不匹配
                     if (property_exists($payload, 'ver')) {
-                        if (version_compare(Yii::$app->params['TOKEN_VER'], $payload->ver) != 0) {
+                        if (version_compare(config('token.ver'), $payload->ver) != 0) {
                             return self::new_token($payload);
                         }
                     }
@@ -164,13 +165,14 @@ class Token
         }
 
         return false;
+
     }
 
     private static function new_token($payload)
     {
         return self::encode([
             'uid' => $payload->uid,
-            'ver' => Yii::$app->params['TOKEN_VER']
+            'ver' => config('token.ver')
         ]);
     }
 
@@ -212,11 +214,11 @@ class Token
      */
     public static function encode($payload, $keyId = null, $head = null)
     {
-        $key = Yii::$app->params['TOKEN_SECRET'];
-        $alg = Yii::$app->params['TOKEN_ALG'];
+        $key = config('token.secret');
+        $alg = config('token.alg');
 
         if (!isset($payload['exp'])) {
-            $payload['exp'] = time() + Yii::$app->params['TOKEN_TTL'] * 60;
+            $payload['exp'] = time() + config('token.ttl') * 60;
         }
 
         if (isset($payload['uid'])) {
@@ -440,7 +442,7 @@ class Token
         $platform = Header::getUserAgent('Platform');
         $key = "platform:{$uid}";
         // cache
-        Yii::$app->cache->set($key, $platform, 0);
+        Cache::put($key, $platform, 0);
         return $platform;
     }
 
@@ -451,7 +453,7 @@ class Token
 
         $key = "platform:{$uid}";
 
-        if ($platform == Yii::$app->cache->get($key)) {
+        if ($platform == Cache::get($key)) {
             return true;
         }
 

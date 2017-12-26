@@ -1,23 +1,20 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
-
-use App\Helper\Token;
+use App\Api\Models\BaseModel;
+use App\Extensions\Token;
 
 class CollectGoods extends BaseModel
 {
-    protected $connection = 'shop';
 
-    protected $table      = 'collect_goods';
+    protected $table = 'collect_goods';
 
     protected $primaryKey = 'rec_id';
 
-    public    $timestamps = false;
+    public $timestamps = false;
 
     protected $guarded = [];
-
 
     public static function getList(array $attributes)
     {
@@ -41,12 +38,12 @@ class CollectGoods extends BaseModel
     }
 
     /**
-    * 获取当前用户收藏此商品状态
-    *
-    * @access public
-    * @param integer $goods_id
-    * @return integer
-    */
+     * 获取当前用户收藏此商品状态
+     *
+     * @access public
+     * @param integer $goods_id
+     * @return integer
+     */
     public static function getIsLiked($goods_id)
     {
         $uid = Token::authorization();
@@ -64,20 +61,20 @@ class CollectGoods extends BaseModel
         $num = CollectGoods::where(['user_id' => $uid, 'goods_id' => $product])->count();
 
         //因为有网站和手机 所以可能$num大于1
-        if($num == 0){
+        if ($num == 0) {
             $model = new CollectGoods;
-            $model->user_id             = $uid;
-            $model->goods_id            = $product;
-            $model->add_time            = time();
-            $model->is_attention        = 1;
+            $model->user_id = $uid;
+            $model->goods_id = $product;
+            $model->add_time = time();
+            $model->is_attention = 1;
 
-            if ($model->save()){
-                return self::formatBody(['is_liked' =>true ]);
-            }else{
+            if ($model->save()) {
+                return self::formatBody(['is_liked' => true]);
+            } else {
                 return self::formatError(self::UNKNOWN_ERROR);
             }
-        }elseif ($num >0 ) {
-            return self::formatBody(['is_liked' =>true ]);
+        } elseif ($num > 0) {
+            return self::formatBody(['is_liked' => true]);
         }
 
     }
@@ -90,25 +87,22 @@ class CollectGoods extends BaseModel
         $model = self::where(['user_id' => $uid, 'goods_id' => $product]);
         $num = $model->count();
 
-        if ($num == 1)
-        {
+        if ($num == 1) {
             $model->delete();
-        }
-        else if ($num > 1)
-        {
-            for ($i=0; $i < $num; $i++) {
+        } else if ($num > 1) {
+            for ($i = 0; $i < $num; $i++) {
                 $model = $model->first();
                 $model->delete();
             }
         }
-        if($model->count() == 0){
-            return self::formatBody(['is_liked' =>false ]);
+        if ($model->count() == 0) {
+            return self::formatBody(['is_liked' => false]);
         }
     }
 
     public function goods()
     {
-      return $this->hasOne('App\Models\V2\Goods', 'goods_id', 'goods_id');
+        return $this->hasOne('App\Api\Models\V2\Goods', 'goods_id', 'goods_id');
     }
 
 }

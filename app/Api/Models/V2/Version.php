@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Models\V2;
-use App\Models\BaseModel;
-use App\Helper\Header;
+namespace App\Api\Models\V2;
 
-class Version extends BaseModel {
+use App\Api\Models\BaseModel;
+use App\Extensions\Header;
 
-    protected $connection = 'shop';
-    
-    protected $table      = 'version';
+class Version extends BaseModel
+{
 
-    public  $timestamps   = true;
+    protected $table = 'version';
+
+    public $timestamps = true;
 
     protected $appends = ['download_url'];
 
@@ -35,9 +35,9 @@ class Version extends BaseModel {
         }
 
         if (is_array($arr) && isset($arr['Platform']) && !empty($ver)) {
-            $model = Version::where('platform',  $platform)->orderBy('version', 'DESC')->first();
+            $model = Version::where('platform', $platform)->orderBy('version', 'DESC')->first();
 
-            if(isset($model->version) && version_compare($ver, $model->version) < 0){
+            if (isset($model->version) && version_compare($ver, $model->version) < 0) {
                 return self::formatBody(['version_info' => $model]);
             }
         }

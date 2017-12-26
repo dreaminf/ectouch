@@ -1,17 +1,21 @@
 <?php
 
-namespace App\Models\V2;
-use App\Models\BaseModel;
-use App\Helper\Token;
+namespace App\Api\Models\V2;
 
-class UserRank extends BaseModel {
+use App\Api\Models\BaseModel;
+use App\Extensions\Token;
 
-    protected $connection = 'shop';
-    protected $table      = 'user_rank';
-    public    $timestamps = false;
+class UserRank extends BaseModel
+{
+
+    protected $table = 'user_rank';
+
+    public $timestamps = false;
 
     protected $guarded = [];
+    
     protected $appends = ['name', 'desc', 'score_min', 'score_max'];
+
     protected $visible = ['name', 'desc', 'score_min', 'score_max'];
 
     public static function findByPoints($points)
@@ -21,7 +25,7 @@ class UserRank extends BaseModel {
 
     public static function findRankByUid($user_id)
     {
-        $user = Member::where('user_id',$user_id)->first();
+        $user = Member::where('user_id', $user_id)->first();
         if ($user->user_rank == 0) {
             return self::findByPoints($user->rank_points);
         }
@@ -30,14 +34,14 @@ class UserRank extends BaseModel {
 
     public static function getRankDiscountById($rank_id)
     {
-        return self::where('rank_id',$rank_id)->value('discount');
+        return self::where('rank_id', $rank_id)->value('discount');
     }
 
     public static function getMemberRankPriceByGid($goods_id)
     {
         $user_rank = self::getUserRankByUid();
 
-        $shop_price = Goods::where('goods_id',$goods_id)->value('shop_price');
+        $shop_price = Goods::where('goods_id', $goods_id)->value('shop_price');
 
         if ($user_rank) {
             if ($price = MemberPrice::getMemberPriceByUid($user_rank['rank_id'], $goods_id)) {
@@ -45,7 +49,7 @@ class UserRank extends BaseModel {
             }
             if ($user_rank['discount']) {
                 $member_price = $shop_price * $user_rank['discount'];
-            }else{
+            } else {
                 $member_price = $shop_price;
             }
             return $member_price;
@@ -53,32 +57,32 @@ class UserRank extends BaseModel {
             return $shop_price;
         }
     }
-    
+
     public static function getUserRankByUid()
     {
         $uid = Token::authorization();
-        $user = Member::where('user_id',$uid)->first();
+        $user = Member::where('user_id', $uid)->first();
         $data = null;
         if (!$user) {
             $data = null;
         } else {
             if ($user->user_rank == 0) {
-                $user_rank = self::where('special_rank', '=', 0)->Where(function($query) use($user) {
+                $user_rank = self::where('special_rank', '=', 0)->Where(function ($query) use ($user) {
                     $query->where('min_points', '<=', $user->rank_points)->where('max_points', '>', $user->rank_points);
                 })->first();
-                if($user_rank){
+                if ($user_rank) {
                     $data['rank_id'] = $user_rank->rank_id;
                     $data['discount'] = $user_rank->discount * 0.01;
                 }
             } else {
                 $user_rank = self::where('rank_id', $user->user_rank)->first();
-                if($user_rank){
+                if ($user_rank) {
                     $data['rank_id'] = $user_rank->rank_id;
                     $data['discount'] = $user_rank->discount * 0.01;
                 }
             }
         }
-	return $data;
+        return $data;
     }
 
     public function getNameAttribute()
@@ -88,7 +92,7 @@ class UserRank extends BaseModel {
 
     public function getDescAttribute()
     {
-        return $this->attributes['discount'].'%';
+        return $this->attributes['discount'] . '%';
     }
 
     public function getScoreMinAttribute()

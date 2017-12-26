@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
-use App\Helper\Token;
+use App\Api\Models\BaseModel;
 
-class Coupon extends BaseModel {
+class Coupon extends BaseModel
+{
 
 }

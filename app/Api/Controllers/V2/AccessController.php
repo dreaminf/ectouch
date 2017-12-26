@@ -1,13 +1,9 @@
 <?php
-//
 
 namespace App\Api\Controllers\V2;
 
-use Illuminate\Http\Request;
 use App\Api\Controllers\Controller;
-use App\Models\BaseModel;
-use App\Helper\XXTEA;
-use Log;
+use App\Api\Models\BaseModel;
 
 class AccessController extends Controller
 {
@@ -15,6 +11,7 @@ class AccessController extends Controller
     public function dns()
     {
         $hosts = json_decode(config('app.hosts'), true);
+
         return $this->json(['hosts' => $hosts]);
     }
 
@@ -37,11 +34,11 @@ class AccessController extends Controller
         $batch_data = [];
 
         foreach ($batch as $key => $value) {
-            
+
             $header_arr = [];
             if ($headers = @json_decode($value['header'], true)) {
                 foreach ($headers as $header_key => $header_value) {
-                    $header_arr[] = $header_key.': '.$header_value;
+                    $header_arr[] = $header_key . ': ' . $header_value;
                 }
             }
 

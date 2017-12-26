@@ -1,16 +1,19 @@
 <?php
 
-namespace App\Models\V2;
-use App\Models\BaseModel;
-use App\Helper\Token;
+namespace App\Api\Models\V2;
+
+use App\Api\Models\BaseModel;
 use DB;
 
-class AffiliateOrder extends BaseModel {
+class AffiliateOrder extends BaseModel
+{
 
-    protected $connection = 'shop';
-    protected $table      = 'order_info';
+    protected $table = 'order_info';
+
     protected $primaryKey = 'order_id';
-    public    $timestamps = false;
+
+    public $timestamps = false;
+
     protected $guarded = [];
-    
+
 }

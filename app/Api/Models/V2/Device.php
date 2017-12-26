@@ -1,15 +1,18 @@
 <?php
 
-namespace App\Models\V2;
-use App\Models\BaseModel;
-use App\Helper\Token;
-use App\Helper\Header;
+namespace App\Api\Models\V2;
 
-class Device extends BaseModel {
+use App\Api\Models\BaseModel;
+use App\Extensions\Token;
+use App\Extensions\Header;
 
-    protected $connection = 'shop';
-    protected $table      = 'device';
-    public    $timestamps = true;
+class Device extends BaseModel
+{
+
+    protected $table = 'device';
+
+    public $timestamps = true;
+
     protected $primaryKey = 'user_id';
 
     public static function toUpdateOrCreate($user_id, $data)
@@ -31,9 +34,8 @@ class Device extends BaseModel {
         return $model;
     }
 
-
-   public static function updateDevice(array $attributes)
-   {
+    public static function updateDevice(array $attributes)
+    {
         extract($attributes);
         $uid = Token::authorization();
         $userAgent = Header::getUserAgent();
@@ -45,15 +47,14 @@ class Device extends BaseModel {
         $device->device_type = (isset($userAgent['Device']) && $userAgent['Device']) ? strtolower($userAgent['Device']) : '';
         $device->device_id = $device_id;
 
-        if ($device->save())
-        {
+        if ($device->save()) {
             $device->user_id = $uid;
             return self::formatBody(['device' => $device->toArray()]);
 
-        }   else {
+        } else {
 
             return self::formatError(self::UNKNOWN_ERROR);
         }
-   }
+    }
 
 }

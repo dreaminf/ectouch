@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Models\V2;
-use App\Models\BaseModel;
+namespace App\Api\Models\V2;
 
-use App\Helper\Token;
+use App\Api\Models\BaseModel;
 
+class OrderAction extends BaseModel
+{
 
-class OrderAction extends BaseModel {
+    protected $table = 'order_action';
 
-    protected $connection = 'shop';
-    protected $table      = 'order_action';
     protected $primaryKey = 'action_id';
-    public    $timestamps = false;
+
+    public $timestamps = false;
 
     protected $guarded = [];
 

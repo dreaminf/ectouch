@@ -1,22 +1,22 @@
 <?php
-//
 
 namespace App\Api\Controllers\V2;
 
 use Illuminate\Http\Request;
 use App\Api\Controllers\Controller;
-use App\Models\V2\Brand;
+use App\Api\Models\V2\Brand;
 
-class BrandController extends Controller {
+class BrandController extends Controller
+{
 
     /**
-    * POST ecapi.brand.list
-    */
+     * POST ecapi.brand.list
+     */
     public function index(Request $request)
     {
         $rules = [
-            'page'      => 'required|integer|min:1',
-            'per_page'  => 'required|integer|min:1',
+            'page' => 'required|integer|min:1',
+            'per_page' => 'required|integer|min:1',
         ];
 
         if ($error = $this->validateInput($rules)) {
@@ -29,13 +29,13 @@ class BrandController extends Controller {
     }
 
     /**
-    * POST ecapi.recommend.brand.list
-    */
+     * POST ecapi.recommend.brand.list
+     */
     public function recommend(Request $request)
     {
         $rules = [
-            'page'      => 'required|integer|min:1',
-            'per_page'  => 'required|integer|min:1',
+            'page' => 'required|integer|min:1',
+            'per_page' => 'required|integer|min:1',
         ];
 
         if ($error = $this->validateInput($rules)) {

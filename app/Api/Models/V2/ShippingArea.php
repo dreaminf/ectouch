@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
+use App\Api\Models\BaseModel;
 
 class ShippingArea extends BaseModel
 {
-    protected $connection = 'shop';
 
-    protected $table      = 'shipping_area';
+    protected $table = 'shipping_area';
 
-    public    $timestamps = false;
-    
+    public $timestamps = false;
+
 }

@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
+use App\Api\Models\BaseModel;
 
 class Article extends BaseModel
 {
-    protected $connection = 'shop';
 
-    protected $table      = 'article';
+    protected $table = 'article';
 
-    public    $timestamps = false;
+    public $timestamps = false;
 
     protected $hidden = [];
 
     protected $guarded = [];
 
-    protected $appends = ['id', 'created_at', 'updated_at', 'url','more'];
+    protected $appends = ['id', 'created_at', 'updated_at', 'url', 'more'];
 
     protected $visible = ['id', 'created_at', 'updated_at', 'url', 'title', 'more'];
 
@@ -39,7 +38,7 @@ class Article extends BaseModel
     public static function getArticle($id)
     {
         $data = [];
-        if($model = Article::where('article_id', $id)->first()){
+        if ($model = Article::where('article_id', $id)->first()) {
             $data['title'] = $model->title;
             $data['content'] = $model->content;
             $data['add_time'] = $model->add_time;
@@ -56,7 +55,7 @@ class Article extends BaseModel
 
     public function getUrlAttribute()
     {
-        return url('/v2/article.'.$this->attributes['article_id']);
+        return url('/v2/article.' . $this->attributes['article_id']);
     }
 
     public function getCreatedAtAttribute()

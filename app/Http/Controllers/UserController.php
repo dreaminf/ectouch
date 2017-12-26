@@ -319,7 +319,7 @@ class UserController extends BaseController
                 $ucdata = isset($this->user->ucdata) ? $this->user->ucdata : '';
                 return show_message($GLOBALS['_LANG']['login_success'] . $ucdata, [$GLOBALS['_LANG']['back_up_page'], $GLOBALS['_LANG']['profile_lnk']], [$back_act, 'user.php'], 'info');
             } else {
-                session('login_fail', session('login_fail') + 1);
+                session(['login_fail' =>  session('login_fail') + 1]);
                 return show_message($GLOBALS['_LANG']['login_failure'], $GLOBALS['_LANG']['relogin_lnk'], 'user.php', 'error');
             }
         }
@@ -361,7 +361,7 @@ class UserController extends BaseController
                 $result['ucdata'] = $ucdata;
                 $result['content'] = $this->smarty->fetch('library/member_info.lbi');
             } else {
-                session('login_fail', session('login_fail') + 1);
+                session(['login_fail' =>  session('login_fail') + 1]);
                 if (session('login_fail') > 2) {
                     $this->smarty->assign('enabled_captcha', 1);
                     $result['html'] = $this->smarty->fetch('library/member_info.lbi');
@@ -572,9 +572,9 @@ class UserController extends BaseController
                 return show_message($GLOBALS['_LANG']['no_passwd_question'], $GLOBALS['_LANG']['back_home_lnk'], './', 'info');
             }
 
-            session('temp_user', $user_question_arr['user_id']);  //设置临时用户，不具有有效身份
-            session('temp_user_name', $user_question_arr['user_name']);  //设置临时用户，不具有有效身份
-            session('passwd_answer', $user_question_arr['passwd_answer']);   //存储密码问题答案，减少一次数据库访问
+            session(['temp_user' =>  $user_question_arr['user_id']]);  //设置临时用户，不具有有效身份
+            session(['temp_user_name' =>  $user_question_arr['user_name']]);  //设置临时用户，不具有有效身份
+            session(['passwd_answer' =>  $user_question_arr['passwd_answer']]);   //存储密码问题答案，减少一次数据库访问
 
             $captcha = intval($GLOBALS['_CFG']['captcha']);
             if (($captcha & CAPTCHA_LOGIN) && (!($captcha & CAPTCHA_LOGIN_FAIL) || (($captcha & CAPTCHA_LOGIN_FAIL) && session('login_fail') > 2)) && gd_version() > 0) {
@@ -607,10 +607,10 @@ class UserController extends BaseController
             if (empty($_POST['passwd_answer']) || $_POST['passwd_answer'] != session('passwd_answer')) {
                 return show_message($GLOBALS['_LANG']['wrong_passwd_answer'], $GLOBALS['_LANG']['back_retry_answer'], 'user.php?act=qpassword_name', 'info');
             } else {
-                session('user_id', session('temp_user'));
-                session('user_name', session('temp_user_name'));
-                session('temp_user', null);
-                session('temp_user_name', null);
+                session(['user_id' =>  session('temp_user')]);
+                session(['user_name' =>  session('temp_user_name')]);
+                session(['temp_user' =>  null]);
+                session(['temp_user_name' =>  null]);
                 $this->smarty->assign('uid', session('user_id'));
                 $this->smarty->assign('action', 'reset_password');
                 return $this->smarty->display('user_passport.dwt');
@@ -1523,7 +1523,7 @@ class UserController extends BaseController
             $result = ['error' => 0, 'message' => ''];
             $goods_id = $_GET['id'];
 
-            if (!session('?user_id') || session('user_id') == 0) {
+            if (!session()->has('user_id') || session('user_id') == 0) {
                 $result['error'] = 1;
                 $result['message'] = $GLOBALS['_LANG']['login_please'];
                 die($json->encode($result));
@@ -2042,12 +2042,12 @@ class UserController extends BaseController
             $job = $_GET['job'];
 
             if ($job == 'add' || $job == 'del') {
-                if (session('?last_email_query')) {
+                if (session()->has('last_email_query')) {
                     if (time() - session('last_email_query') <= 30) {
                         die($GLOBALS['_LANG']['order_query_toofast']);
                     }
                 }
-                session('last_email_query', time());
+                session(['last_email_query' =>  time()]);
             }
 
             $email = trim($_GET['email']);
@@ -2196,14 +2196,14 @@ class UserController extends BaseController
 
             $result = ['error' => 0, 'message' => '', 'content' => ''];
 
-            if (session('?last_order_query')) {
+            if (session()->has('last_order_query')) {
                 if (time() - session('last_order_query') <= 10) {
                     $result['error'] = 1;
                     $result['message'] = $GLOBALS['_LANG']['order_query_toofast'];
                     die($json->encode($result));
                 }
             }
-            session('last_order_query', time());
+            session(['last_order_query' =>  time()]);
 
             if (empty($order_sn)) {
                 $result['error'] = 1;

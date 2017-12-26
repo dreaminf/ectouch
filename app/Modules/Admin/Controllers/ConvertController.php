@@ -126,7 +126,7 @@ class ConvertController extends BaseController
             }
 
             // 保存配置信息 
-            session('convert_config', $config);
+            session(['convert_config' =>  $config]);
 
             // 包含插件语言文件 
             include_once(ROOT_PATH . 'languages/' . $GLOBALS['_CFG']['lang'] . '/convert/' . $config->code . '.php');

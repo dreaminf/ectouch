@@ -1,24 +1,24 @@
 <?php
-//
 
 namespace App\Api\Controllers\V2;
 
 use Illuminate\Http\Request;
 use App\Api\Controllers\Controller;
-use App\Models\V2\Article;
-use App\Models\V2\ArticleCategory;
+use App\Api\Models\V2\Article;
+use App\Api\Models\V2\ArticleCategory;
 
 class ArticleController extends Controller
 {
+
     /**
-    * POST ecapi.article.list
-    */
+     * POST ecapi.article.list
+     */
     public function index(Request $request)
     {
         $rules = [
-            'id'        => 'required|integer',
-            'page'      => 'required|integer|min:1',
-            'per_page'  => 'required|integer|min:1',
+            'id' => 'required|integer',
+            'page' => 'required|integer|min:1',
+            'per_page' => 'required|integer|min:1',
         ];
 
         if ($error = $this->validateInput($rules)) {
@@ -31,8 +31,8 @@ class ArticleController extends Controller
     }
 
     /**
-    * GET article.{id:[0-9]+}
-    */
+     * GET article.{id:[0-9]+}
+     */
     public function show($id)
     {
         return Article::getArticle($id);

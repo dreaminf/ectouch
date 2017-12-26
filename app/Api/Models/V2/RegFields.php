@@ -1,15 +1,19 @@
 <?php
 
-namespace App\Models\V2;
-use App\Models\BaseModel;
+namespace App\Api\Models\V2;
 
-class RegFields extends BaseModel {
-    protected $connection = 'shop';
-    protected $table      = 'reg_fields';
-    public    $timestamps = false;
+use App\Api\Models\BaseModel;
+
+class RegFields extends BaseModel
+{
+    protected $table = 'reg_fields';
+
+    public $timestamps = false;
 
     protected $guarded = [];
+
     protected $appends = ['name', 'value', 'is_hidden', 'is_required'];
+
     protected $visible = ['id', 'name', 'value', 'is_hidden', 'is_required'];
 
     public static function findAll()

@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Models\V2;
-use App\Models\BaseModel;
+namespace App\Api\Models\V2;
 
-use App\Helper\Token;
+use App\Api\Models\BaseModel;
 
+class OrderInfo extends BaseModel
+{
 
-class OrderInfo extends BaseModel {
+    protected $table = 'order_info';
 
-    protected $connection = 'shop';
-    protected $table      = 'order_info';
-    public    $timestamps = false;
+    public $timestamps = false;
 
 }

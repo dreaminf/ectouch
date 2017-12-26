@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
+use App\Api\Models\BaseModel;
 
 class Tags extends BaseModel
 {
-    protected $connection = 'shop';
 
-    protected $table      = 'tag';
+    protected $table = 'tag';
 
-    public    $timestamps = false;
+    public $timestamps = false;
 
-    protected $visible = ['id', 'name','created_at','updated_at'];
+    protected $visible = ['id', 'name', 'created_at', 'updated_at'];
 
-    protected $appends = ['id', 'name','created_at','updated_at'];
+    protected $appends = ['id', 'name', 'created_at', 'updated_at'];
 
     protected $guarded = [];
 

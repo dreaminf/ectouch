@@ -52,6 +52,7 @@
         },
         "files": [
             "app/Support/constant.php",
+            "app/Api/Support/common.php",
             "app/Support/helpers.php"
         ]
     },

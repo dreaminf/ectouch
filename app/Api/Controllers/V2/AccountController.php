@@ -1,19 +1,19 @@
 <?php
-//
 
 namespace App\Api\Controllers\V2;
 
 use Illuminate\Http\Request;
 use App\Api\Controllers\Controller;
-use App\Models\V2\UserAccount;
-use App\Helper\Token;
-use App\Models\V2\Account;
+use App\Api\Models\V2\UserAccount;
+use App\Extensions\Token;
+use App\Api\Models\V2\Account;
 
-class AccountController extends Controller {
+class AccountController extends Controller
+{
 
     /**
-    * POST ecapi.withdraw.list
-    */
+     * POST ecapi.withdraw.list
+     */
     public function index(Request $request)
     {
         $rules = [
@@ -25,12 +25,13 @@ class AccountController extends Controller {
         }
 
         $model = UserAccount::getList($this->validated);
+
         return $this->json($model);
     }
 
     /**
-    * POST ecapi.withdraw.info
-    */
+     * POST ecapi.withdraw.info
+     */
     public function getDetail(Request $request)
     {
         $rules = [
@@ -41,17 +42,18 @@ class AccountController extends Controller {
         }
 
         $model = UserAccount::getDetail($this->validated);
+
         return $this->json($model);
     }
 
     /**
-    * POST ecapi.withdraw.submit
-    */
+     * POST ecapi.withdraw.submit
+     */
     public function submit()
     {
         $rules = [
-            "cash"   => 'required|numeric',    // 金额
-            "memo"  => 'required|string',     // 备注
+            "cash" => 'required|numeric',    // 金额
+            "memo" => 'required|string',     // 备注
         ];
 
         if ($error = $this->validateInput($rules)) {
@@ -59,16 +61,17 @@ class AccountController extends Controller {
         }
 
         $model = UserAccount::submit($this->validated);
+
         return $this->json($model);
     }
 
     /**
-    * POST ecapi.withdraw.cancel
-    */
+     * POST ecapi.withdraw.cancel
+     */
     public function cancel(Request $request)
     {
         $rules = [
-            "id"   => 'required|integer',
+            "id" => 'required|integer',
         ];
 
         if ($error = $this->validateInput($rules)) {
@@ -76,6 +79,7 @@ class AccountController extends Controller {
         }
 
         $data = UserAccount::cancel($this->validated);
+
         return $this->json($data);
     }
 
@@ -86,24 +90,27 @@ class AccountController extends Controller {
     {
         $user_id = Token::authorization();
         $data = UserAccount::getUserSurplus($user_id);
+
         return $this->json($data);
     }
-    
+
     /**
      * POST ecapi.balance.list
      */
     public function accountDetail()
     {
         $rules = [
-                'status'   => 'integer',           // 状态   全部  收入  支出
-                'page'     => 'integer|min:1',     // 当前第几页
-                'per_page' => 'integer|min:1',     // 每页多少
+            'status' => 'integer',           // 状态   全部  收入  支出
+            'page' => 'integer|min:1',     // 当前第几页
+            'per_page' => 'integer|min:1',     // 每页多少
         ];
+
         if ($error = $this->validateInput($rules)) {
             return $error;
         }
 
         $data = Account::accountDetail($this->validated);
+
         return $this->json($data);
     }
 }

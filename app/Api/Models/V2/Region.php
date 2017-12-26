@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
+use App\Api\Models\BaseModel;
 use Cache;
 
+class Region extends BaseModel
+{
 
-class Region extends BaseModel {
+    protected $table = 'region';
 
-    protected $connection = 'shop';
-    protected $table      = 'region';
-    public    $timestamps = false;
+    public $timestamps = false;
 
     protected $appends = ['id', 'name', 'more'];
+
     protected $visible = ['id', 'name', 'more', 'regions'];
 
     public static function getRegionName($id)
@@ -33,8 +34,7 @@ class Region extends BaseModel {
     {
         $body = [];
         while (true) {
-            if($model = Region::where('region_id', $id)->first())
-            {
+            if ($model = Region::where('region_id', $id)->first()) {
                 $id = $model->parent_id;
                 $body[] = $model;
             } else {
@@ -49,8 +49,7 @@ class Region extends BaseModel {
     {
         $body = [];
         while (true) {
-            if($model = Region::where('region_id', $id)->first())
-            {
+            if ($model = Region::where('region_id', $id)->first()) {
                 $id = $model->parent_id;
 
                 switch ($model->region_type) {
@@ -63,7 +62,7 @@ class Region extends BaseModel {
                         break;
 
                     case 2:
-                        $body['city']  = $model->id;
+                        $body['city'] = $model->id;
                         break;
 
                     case 3:
@@ -95,7 +94,7 @@ class Region extends BaseModel {
 
     public function regions()
     {
-        return $this->hasMany('App\Models\V2\Region', 'parent_id')->with('regions');
+        return $this->hasMany('App\Api\Models\V2\Region', 'parent_id')->with('regions');
     }
 
     public function getIdAttribute()
@@ -110,7 +109,7 @@ class Region extends BaseModel {
 
     public function getMoreAttribute()
     {
-       if (Region::where('parent_id', $this->region_id)->count()) {
+        if (Region::where('parent_id', $this->region_id)->count()) {
             return 1;
         }
         return 0;

@@ -1,21 +1,19 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
+use App\Api\Models\BaseModel;
 
 class MemberPrice extends BaseModel
 {
-    protected $connection = 'shop';
 
-    protected $table      = 'member_price';
+    protected $table = 'member_price';
 
-    public    $timestamps = false;
+    public $timestamps = false;
 
-
-    public static function getMemberPriceByUid($rank,$goods_id)
+    public static function getMemberPriceByUid($rank, $goods_id)
     {
-        return self::where('user_rank',$rank)->where('goods_id',$goods_id)->value('user_price');
+        return self::where('user_rank', $rank)->where('goods_id', $goods_id)->value('user_price');
     }
 
 }

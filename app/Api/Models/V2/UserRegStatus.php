@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
+use App\Api\Models\BaseModel;
 
 class UserRegStatus extends BaseModel
 {
-    protected $connection = 'shop';
-    protected $table      = 'user_reg_status';
-    public    $timestamps = false;
+    protected $table = 'user_reg_status';
+
+    public $timestamps = false;
+
     protected $primaryKey = 'user_id';
+
     protected $guarded = [];
-    
+
     public static function toUpdate($uid, $is_completed)
     {
         return self::updateOrCreate(['user_id' => $uid], ['user_id' => $uid, 'is_completed' => $is_completed]);

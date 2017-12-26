@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
-
-use App\Helper\Token;
-use App\Helper\XXTEA;
+use App\Api\Models\BaseModel;
+use App\Extensions\Token;
+use App\Extensions\XXTEA;
 use App\Services\Cloud\Client;
 use App\Services\QiNiu\QiNiu;
 use App\Services\Other\JSSDK;
@@ -13,13 +12,12 @@ use App\Services\Shopex\Authorize;
 
 class Configs extends BaseModel
 {
-    protected $connection = 'shop';
-    
+
     protected $table = 'config';
 
     protected $guarded = [];
 
-    public  $timestamps   = true;
+    public $timestamps = true;
 
     public static function getList()
     {
@@ -31,12 +29,12 @@ class Configs extends BaseModel
     private static function getApplicationPlatform()
     {
         return [
-            'type'      => self::B2C,
-            'vendor'    => self::ECSHOP,
-            'version'   => '3.5.0'
+            'type' => self::B2C,
+            'vendor' => self::ECSHOP,
+            'version' => '3.5.0'
         ];
     }
-    
+
     public static function checkConfig($code)
     {
         if (!$license = Token::decode_license()) {
@@ -97,8 +95,8 @@ class Configs extends BaseModel
         foreach ($data as $value) {
             $arr = json_decode($value->config, true);
 
-	        //qiniu格式化
-            if( $value->code == 'qiniu'){
+            //qiniu格式化
+            if ($value->code == 'qiniu') {
                 if (!empty($value->config)) {
                     $qiniu = new QiNiu($arr['app_key'], $arr['secret_key']);
                     unset($arr['app_key']);
@@ -108,29 +106,27 @@ class Configs extends BaseModel
             }
 
             //wxpay.web jssdk
-            if( $value->code == 'wxpay.web' && $value->status){
+            if ($value->code == 'wxpay.web' && $value->status) {
                 if (!empty($value->config)) {
                     $jssdk = new JSSDK($arr['app_id'], $arr['app_secret']);
                     $arr = $jssdk->GetSignPackage();
                 }
             }
 
-            if(is_array($arr)){
+            if (is_array($arr)) {
                 $body[$value->code] = $arr;
             }
-        } 
+        }
 
         $body['authorize'] = false;
 
-        $response = Authorize::info();    
-        if ($response['result'] == 'success') 
-        {
+        $response = Authorize::info();
+        if ($response['result'] == 'success') {
             // 旗舰版授权...
-            if ($response['info']['authorize_code'] == 'NDE') 
-            {
+            if ($response['info']['authorize_code'] == 'NDE') {
                 $body['authorize'] = true;
             }
-        }       
+        }
 
         //安全处理
         unset($body['alipay.app']);

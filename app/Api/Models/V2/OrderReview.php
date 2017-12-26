@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
+use App\Api\Models\BaseModel;
 
 class OrderReview extends BaseModel
 {
-    protected $connection = 'shop';
-    protected $table      = 'order_review';
-    public    $timestamps = false;
+    protected $table = 'order_review';
+
+    public $timestamps = false;
+
     protected $primaryKey = 'user_id';
+
     protected $guarded = [];
-    
+
     public static function toUpdate($uid, $order_id, $goods_id)
     {
         return self::updateOrCreate(['user_id' => $uid, 'order_id' => $order_id], ['user_id' => $uid, 'order_id' => $order_id, 'goods_id' => $goods_id]);

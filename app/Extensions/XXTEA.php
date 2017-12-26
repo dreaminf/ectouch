@@ -56,14 +56,11 @@ class XXTEA
         }
         return $k;
     }
-
-    /**
-     * @param $str is the string to be encrypted.
-     * @param $key is the encrypt key. It is the same as the decrypt key.
-     * @return bool|string
-     */
+    // $str is the string to be encrypted.
+    // $key is the encrypt key. It is the same as the decrypt key.
     public static function encrypt($str, $key)
     {
+
         if ($str == "") {
             return "";
         }
@@ -91,13 +88,11 @@ class XXTEA
         return self::long2str($v, false);
     }
 
-    /**
-     * @param $str is the string to be decrypted.
-     * @param bool $key is the decrypt key. It is the same as the encrypt key.
-     * @return bool|string
-     */
+    // $str is the string to be decrypted.
+    // $key is the decrypt key. It is the same as the encrypt key.
     public static function decrypt($str, $key = false)
     {
+
         if (!$key) {
             $key = config('security.xxtea_key');
         }

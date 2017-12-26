@@ -356,9 +356,9 @@ class AuctionController extends BaseController
             $this->db->autoExecute($this->ecs->table('cart'), $cart, 'INSERT');
 
             // 记录购物流程类型：团购 
-            session('flow_type', CART_AUCTION_GOODS);
-            session('extension_code', 'auction');
-            session('extension_id', $id);
+            session(['flow_type' =>  CART_AUCTION_GOODS]);
+            session(['extension_code' =>  'auction']);
+            session(['extension_id' =>  $id]);
 
             // 进入收货人页面 
             return redirect("/flow.php?step=consignee");

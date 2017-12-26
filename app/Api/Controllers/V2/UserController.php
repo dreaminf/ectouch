@@ -1,17 +1,11 @@
 <?php
-//
 
 namespace App\Api\Controllers\V2;
 
 use App\Api\Controllers\Controller;
-use Illuminate\Http\Request;
-
-use App\Helper\Token;
-use App\Models\V2\Member;
-use App\Models\V2\RegFields;
-use App\Models\V2\Configs;
-use App\Models\V2\Features;
-use Log;
+use App\Api\Models\V2\Member;
+use App\Api\Models\V2\RegFields;
+use App\Api\Models\V2\Features;
 
 class UserController extends Controller
 {
@@ -30,6 +24,7 @@ class UserController extends Controller
         }
 
         $data = Member::login($this->validated);
+
         return $this->json($data);
     }
 
@@ -39,15 +34,14 @@ class UserController extends Controller
     public function signupByEmail()
     {
         $rules = [
-            'device_id'     => 'string',
-            'username'      => 'required|min:3|max:25|alpha_num',
-            'email'         => 'required|email',
-            'password'      => 'required|min:6|max:20',
-            'invite_code'   => 'integer', 
+            'device_id' => 'string',
+            'username' => 'required|min:3|max:25|alpha_num',
+            'email' => 'required|email',
+            'password' => 'required|min:6|max:20',
+            'invite_code' => 'integer',
         ];
 
-        if($res = Features::check('signup.default'))
-        {
+        if ($res = Features::check('signup.default')) {
             return $this->json($res);
         }
 
@@ -56,6 +50,7 @@ class UserController extends Controller
         }
 
         $data = Member::createMember($this->validated);
+
         return $this->json($data);
     }
 
@@ -64,17 +59,16 @@ class UserController extends Controller
      */
     public function signupByMobile()
     {
-        if($res = Features::check('signup.mobile'))
-        {
+        if ($res = Features::check('signup.mobile')) {
             return $this->json($res);
         }
 
         $rules = [
-            'device_id'     => 'string',
-            'password'      => 'required|min:6|max:20',
-            'mobile'        => 'required|string',
-            'code'          => 'required|string|digits:6',
-            'invite_code'   => 'integer', 
+            'device_id' => 'string',
+            'password' => 'required|min:6|max:20',
+            'mobile' => 'required|string',
+            'code' => 'required|string|digits:6',
+            'invite_code' => 'integer',
         ];
 
         if ($error = $this->validateInput($rules)) {
@@ -82,6 +76,7 @@ class UserController extends Controller
         }
 
         $data = Member::createMemberByMobile($this->validated);
+
         return $this->json($data);
     }
 
@@ -99,6 +94,7 @@ class UserController extends Controller
         }
 
         $data = Member::verifyMobile($this->validated);
+
         return $this->json($data);
     }
 
@@ -116,6 +112,7 @@ class UserController extends Controller
         }
 
         $data = Member::sendCode($this->validated);
+
         return $this->json($data);
     }
 
@@ -125,6 +122,7 @@ class UserController extends Controller
     public function profile()
     {
         $data = Member::getMemberByToken();
+
         return $this->json($data);
     }
 
@@ -134,10 +132,10 @@ class UserController extends Controller
     public function updateProfile()
     {
         $rules = [
-            'values'        => 'json',
-            'nickname'      => 'string|max:25',
-            'gender'        => 'integer|in:0,1,2',
-            'avatar_url'    => 'string'
+            'values' => 'json',
+            'nickname' => 'string|max:25',
+            'gender' => 'integer|in:0,1,2',
+            'avatar_url' => 'string'
         ];
 
         if ($error = $this->validateInput($rules)) {
@@ -145,6 +143,7 @@ class UserController extends Controller
         }
 
         $data = Member::updateMember($this->validated);
+
         return $this->json($data);
     }
 
@@ -155,7 +154,7 @@ class UserController extends Controller
     {
         $rules = [
             'old_password' => 'required|min:6|max:20',
-            'password'     => 'required|min:6|max:20'
+            'password' => 'required|min:6|max:20'
         ];
 
         if ($error = $this->validateInput($rules)) {
@@ -163,6 +162,7 @@ class UserController extends Controller
         }
 
         $data = Member::updatePassword($this->validated);
+
         return $this->json($data);
     }
 
@@ -172,13 +172,12 @@ class UserController extends Controller
     public function resetPasswordByMobile()
     {
         $rules = [
-            'mobile'   => 'required|string',
-            'code'     => 'required|string|digits:6',
+            'mobile' => 'required|string',
+            'code' => 'required|string|digits:6',
             'password' => 'required|min:6|max:20'
         ];
 
-        if($res = Features::check('findpass.default'))
-        {
+        if ($res = Features::check('findpass.default')) {
             return $this->json($res);
         }
 
@@ -187,6 +186,7 @@ class UserController extends Controller
         }
 
         $data = Member::updatePasswordByMobile($this->validated);
+
         return $this->json($data);
     }
 
@@ -199,8 +199,7 @@ class UserController extends Controller
             'email' => 'required|email'
         ];
 
-        if($res = Features::check('findpass.default'))
-        {
+        if ($res = Features::check('findpass.default')) {
             return $this->json($res);
         }
 
@@ -209,6 +208,7 @@ class UserController extends Controller
         }
 
         $data = Member::resetPassword($this->validated);
+
         return $this->json($data);
     }
 
@@ -218,11 +218,11 @@ class UserController extends Controller
     public function auth()
     {
         $rules = [
-            'device_id'     => 'string',
-            'vendor'        => 'required|integer|in:1,2,3,4,5',
-            'access_token'  => 'string',
-            'js_code'       => 'string',
-            'open_id'       => 'string',
+            'device_id' => 'string',
+            'vendor' => 'required|integer|in:1,2,3,4,5',
+            'access_token' => 'string',
+            'js_code' => 'string',
+            'open_id' => 'string',
         ];
 
         if ($error = $this->validateInput($rules)) {
@@ -230,6 +230,7 @@ class UserController extends Controller
         }
 
         $data = Member::auth($this->validated);
+
         return $this->json($data);
     }
 
@@ -239,6 +240,7 @@ class UserController extends Controller
     public function fields()
     {
         $data = RegFields::findAll();
+
         return $this->json($data);
     }
 
@@ -249,9 +251,9 @@ class UserController extends Controller
     public function webOauth()
     {
         $rules = [
-                    'vendor'        => 'required|integer|in:1,2,3,4',
-                    'referer'       => 'required|url',
-                 ];
+            'vendor' => 'required|integer|in:1,2,3,4',
+            'referer' => 'required|url',
+        ];
 
         if ($error = $this->validateInput($rules)) {
             return $error;
@@ -261,22 +263,25 @@ class UserController extends Controller
         if (isset($data['error'])) {
             return $this->json($data);
         }
+
         return redirect($data);
     }
+
     /**
      * GET /ecapi.auth.web.callback/:vendor
      */
-     public function webCallback($vendor)
-     {
-         $data = Member::webOauthCallback($vendor);
-          if (isset($data['error'])) {
-              return $this->json($data);
-          }
+    public function webCallback($vendor)
+    {
+        $data = Member::webOauthCallback($vendor);
+        if (isset($data['error'])) {
+            return $this->json($data);
+        }
 
-          if (isset($_GET['referer'])) {
-              return redirect(urldecode($_GET['referer']).'?token='.$data['token'].'&openid='.$data['openid']);
-          }
-          return $this->json(['token' => $data]);
-     }
+        if (isset($_GET['referer'])) {
+            return redirect(urldecode($_GET['referer']) . '?token=' . $data['token'] . '&openid=' . $data['openid']);
+        }
+        
+        return $this->json(['token' => $data]);
+    }
 
 }

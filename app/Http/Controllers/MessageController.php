@@ -28,8 +28,8 @@ class MessageController extends BaseController
                 }
             } else {
                 // 没有验证码时，用时间来限制机器人发帖或恶意发评论 
-                if (!session('?send_time')) {
-                    session('send_time', 0);
+                if (!session()->has('send_time')) {
+                    session(['send_time' =>  0]);
                 }
 
                 $cur_time = gmtime();
@@ -48,7 +48,7 @@ class MessageController extends BaseController
                 $user_name = htmlspecialchars(trim($_POST['user_name']));
             }
 
-            $user_id = session('?user_id') ? session('user_id') : 0;
+            $user_id = session()->has('user_id') ? session('user_id') : 0;
             $message = [
                 'user_id' => $user_id,
                 'user_name' => $user_name,
@@ -63,9 +63,9 @@ class MessageController extends BaseController
 
             if (add_message($message)) {
                 if (intval($GLOBALS['_CFG']['captcha']) & CAPTCHA_MESSAGE) {
-                    session($validator->session_word, null);
+                    session([$validator->session_word =>  null]);
                 } else {
-                    session('send_time', $cur_time);
+                    session(['send_time' =>  $cur_time]);
                 }
                 $msg_info = $GLOBALS['_CFG']['message_check'] ? $GLOBALS['_LANG']['message_submit_wait'] : $GLOBALS['_LANG']['message_submit_done'];
                 return show_message($msg_info, $GLOBALS['_LANG']['message_list_lnk'], 'message.php');

@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Models\V2;
+namespace App\Api\Models\V2;
 
-use App\Models\BaseModel;
+use App\Api\Models\BaseModel;
 
 class AreaRegion extends BaseModel
 {
-    protected $connection = 'shop';
 
-    protected $table      = 'area_region';
+    protected $table = 'area_region';
 
-    public    $timestamps = false;
+    public $timestamps = false;
 
     protected $visible = [];
 

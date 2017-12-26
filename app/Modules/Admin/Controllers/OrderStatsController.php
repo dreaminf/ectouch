@@ -46,7 +46,7 @@ class OrderStatsController extends BaseController
             $click_turnover = $click_count > 0 ? round(($order_general['total_turnover'] * 1000) / $click_count, 2) : 0;
 
             // 时区 
-            $timezone = session('?timezone') ? session('timezone') : $GLOBALS['_CFG']['timezone'];
+            $timezone = session()->has('timezone') ? session('timezone') : $GLOBALS['_CFG']['timezone'];
 
             // 时间参数 
             $is_multi = empty($_POST['is_multi']) ? false : true;
