@@ -125,7 +125,7 @@ class Wechat extends WechatAbstract
                 $this->errCode = $json['return_code'];
                 $this->errMsg = $json['return_msg'];
                 return false;
-            } else if ($json['result_code'] != "SUCCESS") { //下单失败
+            } elseif ($json['result_code'] != "SUCCESS") { //下单失败
                 $this->errCode = $json['err_code'];
                 $this->errMsg = $json['err_code_des'];
                 return false;
@@ -148,11 +148,14 @@ class Wechat extends WechatAbstract
         ksort($arrdata);
         $paramstring = "";
         foreach ($arrdata as $key => $value) {
-            if (!$value) continue;
-            if (strlen($paramstring) == 0)
+            if (!$value) {
+                continue;
+            }
+            if (strlen($paramstring) == 0) {
                 $paramstring .= $key . "=" . $value;
-            else
+            } else {
                 $paramstring .= "&" . $key . "=" . $value;
+            }
         }
 
         $paramstring = $paramstring . "&key=" . $this->key;
@@ -165,21 +168,22 @@ class Wechat extends WechatAbstract
      * GET 请求
      * @param string $url
      */
-    private function http_get($url){
+    private function http_get($url)
+    {
         $oCurl = curl_init();
-        if(stripos($url,"https://")!==FALSE){
-            curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, FALSE);
-            curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        if (stripos($url, "https://")!==false) {
+            curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($oCurl, CURLOPT_SSLVERSION, 1); //CURL_SSLVERSION_TLSv1
         }
         curl_setopt($oCurl, CURLOPT_URL, $url);
-        curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1 );
+        curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1);
         $sContent = curl_exec($oCurl);
         $aStatus = curl_getinfo($oCurl);
         curl_close($oCurl);
-        if(intval($aStatus["http_code"])==200){
+        if (intval($aStatus["http_code"])==200) {
             return $sContent;
-        }else{
+        } else {
             return false;
         }
     }
@@ -191,10 +195,11 @@ class Wechat extends WechatAbstract
      * @param boolean $post_file 是否文件上传
      * @return string content
      */
-    private function http_post($url,$param,$post_file=false){
+    private function http_post($url, $param, $post_file=false)
+    {
         $oCurl = curl_init();
-        if(stripos($url,"https://")!==FALSE){
-            curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, FALSE);
+        if (stripos($url, "https://")!==false) {
+            curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($oCurl, CURLOPT_SSLVERSION, 1); //CURL_SSLVERSION_TLSv1
         }
@@ -202,21 +207,21 @@ class Wechat extends WechatAbstract
             $strPOST = $param;
         } else {
             $aPOST = array();
-            foreach($param as $key=>$val){
+            foreach ($param as $key=>$val) {
                 $aPOST[] = $key."=".urlencode($val);
             }
             $strPOST =  join("&", $aPOST);
         }
         curl_setopt($oCurl, CURLOPT_URL, $url);
-        curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1 );
-        curl_setopt($oCurl, CURLOPT_POST,true);
-        curl_setopt($oCurl, CURLOPT_POSTFIELDS,$strPOST);
+        curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($oCurl, CURLOPT_POST, true);
+        curl_setopt($oCurl, CURLOPT_POSTFIELDS, $strPOST);
         $sContent = curl_exec($oCurl);
         $aStatus = curl_getinfo($oCurl);
         curl_close($oCurl);
-        if(intval($aStatus["http_code"])==200){
+        if (intval($aStatus["http_code"])==200) {
             return $sContent;
-        }else{
+        } else {
             return false;
         }
     }
@@ -228,18 +233,22 @@ class Wechat extends WechatAbstract
     public function postXmlSSLCurl($url,$xml,$second=30)
     {
         $ch = curl_init();
+        //设置curl默认访问为IPv4
+        if (defined('CURLOPT_IPRESOLVE') && defined('CURL_IPRESOLVE_V4')) {
+            curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+        }
         //超时时间
-        curl_setopt($ch,CURLOPT_TIMEOUT,$second);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $second);
         //这里设置代理，如果有的话
         //curl_setopt($ch,CURLOPT_PROXY, '8.8.8.8');
         //curl_setopt($ch,CURLOPT_PROXYPORT, 8080);
-        curl_setopt($ch,CURLOPT_URL, $url);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         //设置header
-        curl_setopt($ch,CURLOPT_HEADER,FALSE);
+        curl_setopt($ch, CURLOPT_HEADER, false);
         //要求结果为字符串且输出到屏幕上
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         //设置证书
         //第一种方式，cert 与 key 分别属于两个.pem文件
         //默认格式为PEM，可以注释
@@ -253,15 +262,14 @@ class Wechat extends WechatAbstract
         //curl_setopt($ch,CURLOPT_SSLCERT,getcwd().'/all.pem');
 
         //post提交方式
-        curl_setopt($ch,CURLOPT_POST, true);
-        curl_setopt($ch,CURLOPT_POSTFIELDS,$xml);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
         $data = curl_exec($ch);
         //返回结果
-        if($data){
+        if ($data) {
             curl_close($ch);
             return $data;
-        }
-        else {
+        } else {
             $error = curl_errno($ch);
             echo "curl出错，错误码:$error"."<br>";
             echo "<a href='http://curl.haxx.se/libcurl/c/libcurl-errors.html'>错误原因查询</a></br>";
@@ -277,7 +285,9 @@ class Wechat extends WechatAbstract
      */
     public function PayQueryOrder($arr = array())
     {
-        if (empty($arr)) return false;
+        if (empty($arr)) {
+            return false;
+        }
 
         $arrdata = $this->getPaySign($arr);
         $xmldata = $this->xml_encode($arrdata);
@@ -289,7 +299,7 @@ class Wechat extends WechatAbstract
                 $this->errCode = $json['return_code'];
                 $this->errMsg = $json['return_msg'];
                 return false;
-            } else if ($json['result_code'] != "SUCCESS") {
+            } elseif ($json['result_code'] != "SUCCESS") {
                 $this->errCode = $json['err_code'];
                 $this->errMsg = $json['err_code_des'];
                 return false;
@@ -309,7 +319,9 @@ class Wechat extends WechatAbstract
     */
     public function PayRefund($arr = array())
     {
-        if (empty($arr)) return false;
+        if (empty($arr)) {
+            return false;
+        }
         $arr['refund_fee_type'] = isset($arr['refund_fee_type']) ? $arr['refund_fee_type'] : "CNY";
         $arrdata = $this->getPaySign($arr);
         $xmldata = $this->xml_encode($arrdata);
@@ -321,7 +333,7 @@ class Wechat extends WechatAbstract
                 $this->errCode = $json['return_code'];
                 $this->errMsg = $json['return_msg'];
                 return false;
-            } else if ($json['result_code'] != "SUCCESS") {
+            } elseif ($json['result_code'] != "SUCCESS") {
                 $this->errCode = $json['err_code'];
                 $this->errMsg = $json['err_code_des'];
                 return false;
@@ -338,7 +350,9 @@ class Wechat extends WechatAbstract
      */
     public function PayRefundQuery($arr = array())
     {
-        if (empty($arr)) return false;
+        if (empty($arr)) {
+            return false;
+        }
 
         $arrdata = $this->getPaySign($arr);
         $xmldata = $this->xml_encode($arrdata);
@@ -350,7 +364,7 @@ class Wechat extends WechatAbstract
                 $this->errCode = $json['return_code'];
                 $this->errMsg = $json['return_msg'];
                 return false;
-            } else if ($json['result_code'] != "SUCCESS") {
+            } elseif ($json['result_code'] != "SUCCESS") {
                 $this->errCode = $json['err_code'];
                 $this->errMsg = $json['err_code_des'];
                 return false;

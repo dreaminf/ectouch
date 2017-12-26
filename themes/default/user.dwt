@@ -105,7 +105,7 @@
 		</ul>
 	</section>
 	<section class="m-top10 my-nav-box b-color-f">
-		<a href="{:url('user/account_detail')};">
+		<a href="{:url('user/account_detail')}">
 			<div class="dis-box padding-all my-bottom">
 				<h3 class="box-flex text-all-span my-u-title-size"><i class="iconfont icon-qianbao is-user-size my-qianbao-color"></i>我的钱包</h3>
 				<div class="box-flex t-goods1 text-right onelist-hidden jian-top">资金管理</div>

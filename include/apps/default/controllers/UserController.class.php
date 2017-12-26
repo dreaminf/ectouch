@@ -712,6 +712,10 @@ class UserController extends CommonController {
 
         // 订单详情
         $order = model('Users')->get_order_detail($order_id, $this->user_id);
+        if ($order === false) {
+            ECTouch::err()->show(L('back_home_lnk'), './');
+            exit();
+        }
         if ($order['order_status'] == OS_UNCONFIRMED) {
             $order['handler'] = "<a class=\"btn btn-info ect-colorf ect-bg\" href=\"" . url('user/cancel_order', array(
                         'order_id' => $order['order_id']
@@ -736,10 +740,6 @@ class UserController extends CommonController {
             }
         } else {
             $order['handler'] = '<a class="btn btn-info ect-colorf ect-bg" type="button" href="javascript:void(0);">' . L('os.' . $order['order_status']) . '</a>';
-        }
-        if ($order === false) {
-            ECTouch::err()->show(L('back_home_lnk'), './');
-            exit();
         }
 
         // 订单商品
@@ -2709,7 +2709,7 @@ class UserController extends CommonController {
         }
         if(!empty($v)){
             $sql .= ' AND g.rec_id NOT IN ( '. $v .' )';
-        }      
+        }
         $result = $this->model->query($sql);
         foreach ($result as $key => $vo) {
             $goods[$key]['goods_id'] = $vo['goods_id'];
@@ -2987,7 +2987,7 @@ class UserController extends CommonController {
 
             );
 
-           
+
             if ($claim['service_type'] == ST_RETURN_GOODS) {
                 $regin =  model('RegionBase')->get_regions();
                 $order_return['country'] =  $regin['region_id'] ;

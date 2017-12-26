@@ -36,12 +36,12 @@
     });
 
     setTimeout(function () {
-        window.location.href = url.replace('respond_wxh5', 'index');
-    }, 5000);
+        window.location.href = url.replace('respond', 'index');
+    }, 3000);
   }
 
   function redirect(url) {
-      window.location.href = url.replace('respond_wxh5', 'index');
+      window.location.href = url.replace('respond', 'index');
   }
 </script>
 
