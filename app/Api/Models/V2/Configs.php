@@ -101,7 +101,7 @@ class Configs extends BaseModel
                     $qiniu = new QiNiu($arr['app_key'], $arr['secret_key']);
                     unset($arr['app_key']);
                     unset($arr['secret_key']);
-                    $arr['token'] = $qiniu->uploadToken(array('scope' => $arr['bucket']));
+                    $arr['token'] = $qiniu->uploadToken(['scope' => $arr['bucket']]);
                 }
             }
 

@@ -19,17 +19,17 @@ class PackageController extends BaseController
          * 添加活动
          */
         if ($_REQUEST['act'] == 'add') {
-            // 权限判断 
+            // 权限判断
             admin_priv('package_manage');
 
-            // 组合商品 
+            // 组合商品
             $group_goods_list = [];
             $sql = "DELETE FROM " . $this->ecs->table('package_goods') .
                 " WHERE package_id = 0 AND admin_id = '" . session('admin_id') . "'";
 
             $this->db->query($sql);
 
-            // 初始化信息 
+            // 初始化信息
             $start_time = local_date('Y-m-d H:i');
             $end_time = local_date('Y-m-d H:i', strtotime('+1 month'));
             $package = ['package_price' => '', 'start_time' => $start_time, 'end_time' => $end_time];
@@ -45,7 +45,7 @@ class PackageController extends BaseController
         }
 
         if ($_REQUEST['act'] == 'insert') {
-            // 权限判断 
+            // 权限判断
             admin_priv('package_manage');
 
             $sql = "SELECT COUNT(*) " .
@@ -56,25 +56,25 @@ class PackageController extends BaseController
             }
 
 
-            // 将时间转换成整数 
+            // 将时间转换成整数
             $_POST['start_time'] = local_strtotime($_POST['start_time']);
             $_POST['end_time'] = local_strtotime($_POST['end_time']);
 
-            // 处理提交数据 
+            // 处理提交数据
             if (empty($_POST['package_price'])) {
                 $_POST['package_price'] = 0;
             }
 
             $info = ['package_price' => $_POST['package_price']];
 
-            // 插入数据 
+            // 插入数据
             $record = ['act_name' => $_POST['package_name'], 'act_desc' => $_POST['desc'],
                 'act_type' => GAT_PACKAGE, 'start_time' => $_POST['start_time'],
                 'end_time' => $_POST['end_time'], 'is_finished' => 0, 'ext_info' => serialize($info)];
 
             $this->db->AutoExecute($this->ecs->table('goods_activity'), $record, 'INSERT');
 
-            // 礼包编号 
+            // 礼包编号
             $package_id = $this->db->insert_id();
 
             $this->handle_packagep_goods($package_id);
@@ -89,7 +89,7 @@ class PackageController extends BaseController
          * 编辑活动
          */
         if ($_REQUEST['act'] == 'edit') {
-            // 权限判断 
+            // 权限判断
             admin_priv('package_manage');
 
             $package = get_package_info($_REQUEST['id']);
@@ -107,19 +107,19 @@ class PackageController extends BaseController
         }
 
         if ($_REQUEST['act'] == 'update') {
-            // 权限判断 
+            // 权限判断
             admin_priv('package_manage');
 
-            // 将时间转换成整数 
+            // 将时间转换成整数
             $_POST['start_time'] = local_strtotime($_POST['start_time']);
             $_POST['end_time'] = local_strtotime($_POST['end_time']);
 
-            // 处理提交数据 
+            // 处理提交数据
             if (empty($_POST['package_price'])) {
                 $_POST['package_price'] = 0;
             }
 
-            // 检查活动重名 
+            // 检查活动重名
             $sql = "SELECT COUNT(*) " .
                 " FROM " . $this->ecs->table('goods_activity') .
                 " WHERE act_type='" . GAT_PACKAGE . "' AND act_name='" . $_POST['package_name'] . "' AND act_id <> '" . $_POST['id'] . "'";
@@ -129,7 +129,7 @@ class PackageController extends BaseController
 
             $info = ['package_price' => $_POST['package_price']];
 
-            // 更新数据 
+            // 更新数据
             $record = ['act_name' => $_POST['package_name'], 'start_time' => $_POST['start_time'], 'end_time' => $_POST['end_time'],
                 'act_desc' => $_POST['desc'], 'ext_info' => serialize($info)];
             $this->db->autoExecute($this->ecs->table('goods_activity'), $record, 'UPDATE', "act_id = '" . $_POST['id'] . "' AND act_type = " . GAT_PACKAGE);
@@ -207,7 +207,7 @@ class PackageController extends BaseController
             $id = intval($_POST['id']);
             $val = json_str_iconv(trim($_POST['val']));
 
-            // 检查活动重名 
+            // 检查活动重名
             $sql = "SELECT COUNT(*) " .
                 " FROM " . $this->ecs->table('goods_activity') .
                 " WHERE act_type='" . GAT_PACKAGE . "' AND act_name='$val' AND act_id <> '$id'";
@@ -375,7 +375,7 @@ class PackageController extends BaseController
     {
         $result = get_filter();
         if ($result === false) {
-            // 查询条件 
+            // 查询条件
             $filter['keywords'] = empty($_REQUEST['keywords']) ? '' : trim($_REQUEST['keywords']);
             if (isset($_REQUEST['is_ajax']) && $_REQUEST['is_ajax'] == 1) {
                 $filter['keywords'] = json_str_iconv($filter['keywords']);
@@ -391,7 +391,7 @@ class PackageController extends BaseController
 
             $filter = page_and_size($filter);
 
-            // 获活动数据 
+            // 获活动数据
             $sql = "SELECT act_id, act_name AS package_name, start_time, end_time, is_finished, ext_info " .
                 " FROM " . $GLOBALS['ecs']->table('goods_activity') .
                 " WHERE act_type = " . GAT_PACKAGE . $where .

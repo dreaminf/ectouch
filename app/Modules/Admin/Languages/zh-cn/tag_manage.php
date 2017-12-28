@@ -24,7 +24,7 @@ $_LANG['no_select_tag'] = '您现在没有需要删除的标签';
 $_LANG['drop_success'] = '您已经成功的删除了 %d 个标签';
 $_LANG['back_list'] = '返回标签列表';
 
-// JS语言项 
+// JS语言项
 $_LANG['drop_confirm'] = '您确定要删除这条记录吗?';
 
 $_LANG['js_languages']['tag_name_not_empty'] = '标签名称不能为空！';

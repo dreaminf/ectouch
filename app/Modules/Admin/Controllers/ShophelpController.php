@@ -65,10 +65,10 @@ class ShophelpController extends BaseController
          * 添加文章
          */
         if ($_REQUEST['act'] == 'add') {
-            // 权限判断 
+            // 权限判断
             admin_priv('shophelp_manage');
 
-            // 创建 html editor 
+            // 创建 html editor
             create_html_editor('editor1');
 
             if (empty($_REQUEST['cat_id'])) {
@@ -86,13 +86,13 @@ class ShophelpController extends BaseController
         }
 
         if ($_REQUEST['act'] == 'insert') {
-            // 权限判断 
+            // 权限判断
             admin_priv('shophelp_manage');
 
-            // 判断是否重名 
+            // 判断是否重名
             $exc_article->is_only('title', $_POST['title'], $GLOBALS['_LANG']['title_exist']);
 
-            // 插入数据 
+            // 插入数据
             $add_time = gmtime();
             $sql = "INSERT INTO " . $this->ecs->table('article') . "(title, cat_id, article_type, content, add_time, author) VALUES('$_POST[title]', '$_POST[cat_id]', '$_POST[article_type]','$_POST[editor1]','$add_time', '_SHOPHELP' )";
             $this->db->query($sql);
@@ -102,7 +102,7 @@ class ShophelpController extends BaseController
             $link[1]['text'] = $GLOBALS['_LANG']['continue_add'];
             $link[1]['href'] = 'shophelp.php?act=add&cat_id=' . $_POST['cat_id'];
 
-            // 清除缓存 
+            // 清除缓存
             clear_cache_files();
 
             admin_log($_POST['title'], 'add', 'shophelp');
@@ -113,14 +113,14 @@ class ShophelpController extends BaseController
          * 编辑文章
          */
         if ($_REQUEST['act'] == 'edit') {
-            // 权限判断 
+            // 权限判断
             admin_priv('shophelp_manage');
 
-            // 取文章数据 
+            // 取文章数据
             $sql = "SELECT article_id,title, cat_id, article_type, is_open, author, author_email, keywords, content FROM " . $this->ecs->table('article') . " WHERE article_id='$_REQUEST[id]'";
             $article = $this->db->getRow($sql);
 
-            // 创建 html editor 
+            // 创建 html editor
             create_html_editor('editor1', $article['content']);
 
             $this->smarty->assign('cat_list', article_cat_list($article['cat_id'], true, 'cat_id', 0));
@@ -134,16 +134,16 @@ class ShophelpController extends BaseController
         }
 
         if ($_REQUEST['act'] == 'update') {
-            // 权限判断 
+            // 权限判断
             admin_priv('shophelp_manage');
 
-            // 检查重名 
+            // 检查重名
             if ($_POST['title'] != $_POST['old_title']) {
                 $exc_article->is_only('title', $_POST['title'], $GLOBALS['_LANG']['articlename_exist'], $_POST['id']);
             }
-            // 更新 
+            // 更新
             if ($exc_article->edit("title = '$_POST[title]', cat_id = '$_POST[cat_id]', article_type = '$_POST[article_type]', content = '$_POST[editor1]'", $_POST['id'])) {
-                // 清除缓存 
+                // 清除缓存
                 clear_cache_files();
 
                 $link[0]['text'] = $GLOBALS['_LANG']['back_list'];
@@ -163,7 +163,7 @@ class ShophelpController extends BaseController
             $id = intval($_POST['id']);
             $cat_name = json_str_iconv(trim($_POST['val']));
 
-            // 检查分类名称是否重复 
+            // 检查分类名称是否重复
             if ($exc_cat->num("cat_name", $cat_name, $id) != 0) {
                 return make_json_error(sprintf($GLOBALS['_LANG']['catname_exist'], $cat_name));
             } else {
@@ -186,7 +186,7 @@ class ShophelpController extends BaseController
             $id = intval($_POST['id']);
             $order = json_str_iconv(trim($_POST['val']));
 
-            // 检查输入的值是否合法 
+            // 检查输入的值是否合法
             if (!preg_match("/^[0-9]+$/", $order)) {
                 return make_json_result('', sprintf($GLOBALS['_LANG']['enter_int'], $order));
             } else {
@@ -205,7 +205,7 @@ class ShophelpController extends BaseController
 
             $id = intval($_GET['id']);
 
-            // 非空的分类不允许删除 
+            // 非空的分类不允许删除
             if ($exc_article->num('cat_id', $id) != 0) {
                 return make_json_error(sprintf($GLOBALS['_LANG']['not_emptycat']));
             } else {
@@ -229,7 +229,7 @@ class ShophelpController extends BaseController
             $cat_id = $this->db->getOne('SELECT cat_id FROM ' . $this->ecs->table('article') . " WHERE article_id='$id'");
 
             if ($exc_article->drop($id)) {
-                // 清除缓存 
+                // 清除缓存
                 clear_cache_files();
                 admin_log('', 'remove', 'shophelp');
             } else {
@@ -276,7 +276,7 @@ class ShophelpController extends BaseController
             $id = intval($_POST['id']);
             $title = json_str_iconv(trim($_POST['val']));
 
-            // 检查文章标题是否有重名 
+            // 检查文章标题是否有重名
             if ($exc_article->num('title', $title, $id) == 0) {
                 if ($exc_article->edit("title = '$title'", $id)) {
                     clear_cache_files();
@@ -289,7 +289,7 @@ class ShophelpController extends BaseController
         }
     }
 
-    // 获得网店帮助文章分类 
+    // 获得网店帮助文章分类
     private function get_shophelp_list()
     {
         $list = [];
@@ -307,7 +307,7 @@ class ShophelpController extends BaseController
         return $list;
     }
 
-    // 获得网店帮助某分类下的文章 
+    // 获得网店帮助某分类下的文章
     private function shophelp_article_list($cat_id)
     {
         $list = [];

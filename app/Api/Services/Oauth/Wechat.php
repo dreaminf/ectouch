@@ -85,7 +85,7 @@ class Wechat
      */
     public function getAuthorizeURL($redirect_uri, $scope = 'snsapi_userinfo', $state = null)
     {
-        $params = array();
+        $params = [];
         $params['appid'] = $this->appid;
         $params['redirect_uri'] = $redirect_uri;
         $params['response_type'] = 'code';
@@ -105,7 +105,7 @@ class Wechat
      */
     public function getWeChatAuthorizeURL($redirect_uri, $scope = 'snsapi_userinfo', $state = null)
     {
-        $params = array();
+        $params = [];
         $params['appid'] = $this->appid;
         $params['redirect_uri'] = $redirect_uri;
         $params['response_type'] = 'code';
@@ -134,7 +134,7 @@ class Wechat
      */
     public function getAccessToken($type = 'code', $key)
     {
-        $params = array();
+        $params = [];
         $params['appid'] = $this->appid;
         $params['secret'] = $this->secret;
         if ($type === 'token') {
@@ -221,7 +221,7 @@ class Wechat
      * @param string $method
      * @return array|false
      */
-    public function api($api, $params = array(), $method = 'GET')
+    public function api($api, $params = [], $method = 'GET')
     {
         if (!isset($params['access_token']) && !$this->access_token)
             return $this->error('access_token error');

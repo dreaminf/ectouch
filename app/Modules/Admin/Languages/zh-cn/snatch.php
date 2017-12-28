@@ -26,7 +26,7 @@ $_LANG['email'] = '邮件';
 $_LANG['bid_price'] = '所出价格';
 $_LANG['min_union_price'] = '最小唯一价格';
 
-// 提示信息 
+// 提示信息
 $_LANG['no_goods'] = '你输入的商品不存在，请查证后再输入';
 $_LANG['snatch_name_exist'] = '活动 %s 已经存在';
 $_LANG['goods_detail'] = '查看 %s 详情';
@@ -39,7 +39,7 @@ $_LANG['no_name'] = '活动名不能为空';
 $_LANG['enter_num'] = '请输入一个数字';
 $_LANG['enter_int'] = '请输入一个整数';
 
-// 帮助信息 
+// 帮助信息
 $_LANG['notice_goodsid'] = '需要先搜索商品，生成商品列表，然后再选择';
 $_LANG['notice_min_price'] = '用户出价范围的下限';
 $_LANG['notice_max_price'] = '用户出价范围的上限';

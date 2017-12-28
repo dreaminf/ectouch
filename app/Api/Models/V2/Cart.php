@@ -74,7 +74,7 @@ class Cart extends BaseModel
             $product_info = Products::get_products_info($product, $property);
         }
         if (empty($product_info)) {
-            $product_info = array('stock_number' => 0, 'id' => 0);
+            $product_info = ['stock_number' => 0, 'id' => 0];
         }
         /* 检查：库存 */
         //检查：商品购买数量是否大于总库存
@@ -98,7 +98,7 @@ class Cart extends BaseModel
         $goods_attr_id = join(',', $property);
         /* 初始化要插入购物车的基本件数据 */
 
-        $parent = array(
+        $parent = [
             'user_id' => Token::authorization(), //uid
             // 'session_id'    => SESS_ID,
             'goods_id' => $product,
@@ -113,11 +113,11 @@ class Cart extends BaseModel
             'is_gift' => 0,
             'is_shipping' => $good['is_shipping'],
             'rec_type' => Cart::CART_GENERAL_GOODS,
-        );
+        ];
         /* 如果该配件在添加为基本件的配件时，所设置的“配件价格”比原价低，即此配件在价格上提供了优惠， */
         /* 则按照该配件的优惠价格卖，但是每一个基本件只能购买一个优惠价格的“该配件”，多买的“该配件”不享 */
         /* 受此优惠 */
-        $basic_list = array();
+        $basic_list = [];
 
         $res = GoodsGroup::where('goods_id', $product)->where('goods_price', '<', $goods_price)->where('parent_id', $parent)->orderBy('goods_price')->get(['parent_id', 'goods_price']);
         foreach ($res as $key => $row) {
@@ -125,7 +125,7 @@ class Cart extends BaseModel
         }
 
         /* 取得购物车中该商品每个基本件的数量 */
-        $basic_count_list = array();
+        $basic_count_list = [];
         if ($basic_list) {
             $res = Cart::where('parent_id', 0)
                 ->where('extension_code', '!=', 'package_buy')
@@ -268,7 +268,7 @@ class Cart extends BaseModel
         /* 如果使用库存，且下订单时减库存，则减少库存 */
         if (ShopConfig::findByCode('use_storage') == '1') {
             $cart_goods_stock = self::get_cart_goods($cart_good_ids);
-            $_cart_goods_stock = array();
+            $_cart_goods_stock = [];
             foreach ($cart_goods_stock['goods_list'] as $value) {
                 $_cart_goods_stock[$value['rec_id']] = $value['goods_number'];
             }
@@ -293,7 +293,7 @@ class Cart extends BaseModel
         $postscript = isset($comment) ? $comment : '';
         $user_id = Token::authorization();
 
-        $order = array(
+        $order = [
             'shipping_id' => intval($shipping),
             'pay_id' => intval(0),
             'pack_id' => isset($_POST['pack']) ? intval($_POST['pack']) : 0,//包装id
@@ -316,7 +316,7 @@ class Cart extends BaseModel
             'shipping_status' => Order::SS_UNSHIPPED,
             'pay_status' => Order::PS_UNPAYED,
             'agency_id' => 0,//办事处的id
-        );
+        ];
 
         /* 扩展信息 */
         $order['extension_code'] = '';
@@ -542,9 +542,9 @@ class Cart extends BaseModel
                 ->selectRaw('goods_id,goods_name,goods_number as num')
                 ->get();
 
-            $virtual_goods = array();
+            $virtual_goods = [];
             foreach ($res AS $row) {
-                $virtual_goods['virtual_card'][] = array('goods_id' => $row['goods_id'], 'goods_name' => $row['goods_name'], 'num' => $row['num']);
+                $virtual_goods['virtual_card'][] = ['goods_id' => $row['goods_id'], 'goods_name' => $row['goods_name'], 'num' => $row['num']];
             }
 
             if ($virtual_goods AND $flow_type != self::CART_GROUP_BUY_GOODS) {
@@ -557,7 +557,7 @@ class Cart extends BaseModel
 
                     if ($get_count <= 0) {
                         /* 修改订单状态 */
-                        update_order($order['order_id'], array('shipping_status' => SS_SHIPPED, 'shipping_time' => time()));
+                        update_order($order['order_id'], ['shipping_status' => SS_SHIPPED, 'shipping_time' => time()]);
 
                         /* 如果订单用户不为空，计算积分，并发给用户；发红包 */
                         if ($order['user_id'] > 0) {
@@ -671,7 +671,7 @@ class Cart extends BaseModel
 
             //订货数量大于0
             if ($value->goods_number > 0) {
-                $attr_id = empty($value->goods_attr_id) ? array() : explode(',', $value->goods_attr_id);
+                $attr_id = empty($value->goods_attr_id) ? [] : explode(',', $value->goods_attr_id);
 
                 $goods_price = Goods::get_final_price($value->goods_id, $value->goods_number, true, $attr_id);
 
@@ -786,14 +786,14 @@ class Cart extends BaseModel
     public static function get_cart_goods($cart_good_ids = [])
     {
         /* 初始化 */
-        $goods_list = array();
-        $total = array(
+        $goods_list = [];
+        $total = [
             'goods_price' => 0, // 本店售价合计（有格式）
             'market_price' => 0, // 市场售价合计（有格式）
             'saving' => 0, // 节省金额（有格式）
             'save_rate' => 0, // 节省百分比
             'goods_amount' => 0, // 本店售价合计（无格式）
-        );
+        ];
 
         /* 循环、统计 */
         // $sql = "SELECT *, IF(parent_id, parent_id, goods_id) AS pid " .
@@ -839,7 +839,7 @@ class Cart extends BaseModel
         $total['real_goods_count'] = $real_goods_count;
         $total['virtual_goods_count'] = $virtual_goods_count;
 
-        return array('goods_list' => $goods_list, 'total' => $total);
+        return ['goods_list' => $goods_list, 'total' => $total];
     }
 
     /**
@@ -945,7 +945,7 @@ class Cart extends BaseModel
         $favourable_list = FavourableActivity::where('start_time', '<=', $now)
             ->where('end_time', '>=', $now)
             ->where(DB::raw("CONCAT(',', user_rank, ',')"), 'LIKE', "%" . $user_rank . "%")
-            ->whereIn('act_type', array(FavourableActivity::FAT_DISCOUNT, FavourableActivity::FAT_PRICE))
+            ->whereIn('act_type', [FavourableActivity::FAT_DISCOUNT, FavourableActivity::FAT_PRICE])
             ->get()->toArray();
         if (!$favourable_list) {
             return 0;
@@ -961,7 +961,7 @@ class Cart extends BaseModel
 
         /* 初始化折扣 */
         $discount = 0;
-        $favourable_name = array();
+        $favourable_name = [];
 
         /* 循环计算每个优惠活动的折扣 */
         foreach ($favourable_list as $favourable) {
@@ -1020,7 +1020,7 @@ class Cart extends BaseModel
         $favourable_list = FavourableActivity::where('start_time', '<=', $now)
             ->where('end_time', '>=', $now)
             ->where(DB::raw("CONCAT(',', user_rank, ',')"), 'LIKE', "%" . $user_rank . "%")
-            ->whereIn('act_type', array(FavourableActivity::FAT_DISCOUNT, FavourableActivity::FAT_PRICE))
+            ->whereIn('act_type', [FavourableActivity::FAT_DISCOUNT, FavourableActivity::FAT_PRICE])
             ->get()->toArray();
         if (!$favourable_list) {
             return 0;
@@ -1042,7 +1042,7 @@ class Cart extends BaseModel
 
         /* 初始化折扣 */
         $discount = 0;
-        $favourable_name = array();
+        $favourable_name = [];
 
         /* 循环计算每个优惠活动的折扣 */
         foreach ($favourable_list as $favourable) {
@@ -1103,7 +1103,7 @@ class Cart extends BaseModel
         $favourable_list = FavourableActivity::where('start_time', '<=', $now)
             ->where('end_time', '>=', $now)
             ->where(DB::raw("CONCAT(',', user_rank, ',')"), 'LIKE', "%" . $user_rank . "%")
-            ->whereIn('act_type', array(FavourableActivity::FAT_DISCOUNT, FavourableActivity::FAT_PRICE))
+            ->whereIn('act_type', [FavourableActivity::FAT_DISCOUNT, FavourableActivity::FAT_PRICE])
             ->get()->toArray();
         if (!$favourable_list) {
             return 0;
@@ -1119,7 +1119,7 @@ class Cart extends BaseModel
 
         /* 初始化折扣 */
         $discount = 0;
-        $favourable_name = array();
+        $favourable_name = [];
 
         /* 循环计算每个优惠活动的折扣 */
         foreach ($favourable_list as $favourable) {
@@ -1180,7 +1180,7 @@ class Cart extends BaseModel
         $favourable_list = FavourableActivity::where('start_time', '<=', $now)
             ->where('end_time', '>=', $now)
             ->where(DB::raw("CONCAT(',', user_rank, ',')"), 'LIKE', "%" . $user_rank . "%")
-            ->whereIn('act_type', array(FavourableActivity::FAT_DISCOUNT, FavourableActivity::FAT_PRICE))
+            ->whereIn('act_type', [FavourableActivity::FAT_DISCOUNT, FavourableActivity::FAT_PRICE])
             ->get()->toArray();
         if (!$favourable_list) {
             return 0;
@@ -1198,7 +1198,7 @@ class Cart extends BaseModel
 
         /* 初始化折扣 */
         $discount = 0;
-        $favourable_name = array();
+        $favourable_name = [];
 
         /* 循环计算每个优惠活动的折扣 */
         foreach ($favourable_list as $favourable) {

@@ -4,7 +4,7 @@
  *  统计信息语言文件
  */
 
-// 流量统计 
+// 流量统计
 $_LANG['stats_off'] = '网站流量统计已被关闭。<BR>如有需要请到: 系统设置->商店设置->基本设置 开启站点流量统计服务。';
 $_LANG['last_update'] = '最后更新日期';
 $_LANG['now_update'] = '更新记录';
@@ -37,7 +37,7 @@ $_LANG['from'] = '从';
 $_LANG['to'] = '到';
 $_LANG['view'] = '查看';
 
-// 销售概况 
+// 销售概况
 $_LANG['overall_sell_circs'] = '当前总体销售情况';
 $_LANG['order_count_trend'] = '订单数(单位:个)';
 $_LANG['sell_out_amount'] = '销出产品数量';
@@ -48,7 +48,7 @@ $_LANG['turnover_status'] = '销售额走势';
 $_LANG['sales_statistics']= '销售统计';
 $_LANG['down_sales_stats']= '销售概况报表下载';
 
-// 订单统计 
+// 订单统计
 $_LANG['overall_sum'] = '有效订单总金额';
 $_LANG['overall_choose'] = '总点击数';
 $_LANG['kilo_buy_amount'] = '每千点击订单数';
@@ -63,7 +63,7 @@ $_LANG['shipping_method'] = '配送方式';
 $_LANG['pay_method'] = '支付方式 ';
 $_LANG['down_order_statistics'] = '订单统计报表下载';
 
-// 销售排行 
+// 销售排行
 $_LANG['order_by'] = '排行';
 $_LANG['goods_name'] = '商品名称';
 $_LANG['sell_amount'] = '销售量';
@@ -74,7 +74,7 @@ $_LANG['order_by_goodsnum'] = '按销售量排序';
 $_LANG["order_by_money"] = '按销售额排序';
 $_LANG["download_sale_sort"] = "销售排行报表下载";
 
-// 客户统计 
+// 客户统计
 $_LANG['guest_order_sum'] = '匿名会员平均订单额';
 $_LANG['member_count'] = '会员总数';
 $_LANG['member_order_count'] = '会员订单总数';
@@ -99,7 +99,7 @@ $_LANG['order_all_turnover'] = '总购物额';
 $_LANG['down_guest_stats']= '客户统计报表下载';
 $_LANG['guest_statistics']= '客户统计报表';
 
-// 会员排行 
+// 会员排行
 $_LANG['show_num'] = '显示数量';
 $_LANG['member_name'] = '会员名';
 $_LANG['order_amount'] = '订单数(单位:个)';
@@ -109,7 +109,7 @@ $_LANG['order_amount_sort'] = '按订单数量排序';
 $_LANG['buy_sum_sort'] = '按购物金额排序';
 $_LANG['download_amount_sort'] = '下载购物金额报表';
 
-// 销售名细 
+// 销售名细
 $_LANG['goods_name'] = '商品名称';
 $_LANG['goods_sn'] = '货号';
 $_LANG['order_sn'] = '订单号';
@@ -120,7 +120,7 @@ $_LANG['sell_date'] = '售出日期';
 $_LANG['down_sales'] = '下载销售明细';
 $_LANG['sales_list'] = '销售明细';
 
-// 访问购买比例 
+// 访问购买比例
 $_LANG['fav_exponential'] = '人气指数';
 $_LANG['buy_times'] = '购买次数';
 $_LANG['visit_buy'] = '访问购买率';
@@ -129,7 +129,7 @@ $_LANG['download_visit_buy'] = '下载访问购买率报表';
 $_LANG['goods_cat'] = '商品分类';
 $_LANG['goods_brand'] = '商品品牌';
 
-// 搜索引擎 
+// 搜索引擎
 $_LANG['down_search_stats'] = '下载搜索关键字报表';
 $_LANG['tab_keywords'] = '关键字统计';
 $_LANG['keywords'] = '关键字';

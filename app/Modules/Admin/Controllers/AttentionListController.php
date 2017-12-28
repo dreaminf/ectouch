@@ -170,10 +170,10 @@ class AttentionListController extends BaseController
 
             $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-            // 分页大小 
+            // 分页大小
             $filter = page_and_size($filter);
 
-            // 查询 
+            // 查询
             $sql = "SELECT DISTINCT c.goods_id, g.goods_name, g.last_update FROM " . $GLOBALS['ecs']->table('collect_goods') . " c " .
                 "LEFT JOIN " . $GLOBALS['ecs']->table('goods') . " g ON c.goods_id = g.goods_id " .
                 $where .

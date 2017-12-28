@@ -46,53 +46,53 @@ class TeegonService {
     function verify_return(){
         if($_GET['charge_id']){
             if(empty($_GET['sign'])){
-                return array('status'=>"1",'error_msg'=>'天工服务端返回签名信息错误!','param'=>$_GET);
+                return ['status'=>"1",'error_msg'=>'天工服务端返回签名信息错误!','param'=>$_GET];
             }
 
             if(!$this->get_sign_veryfy($_GET,$_GET['sign'])){
-                return array('status'=>"2",'error_msg'=>'签名验证错误请检查签名算法!','param'=>$_GET);
+                return ['status'=>"2",'error_msg'=>'签名验证错误请检查签名算法!','param'=>$_GET];
             }
 
-            return array('status'=>"0",'error_msg'=>'','param'=>$_GET);
+            return ['status'=>"0",'error_msg'=>'','param'=>$_GET];
         }
     }
 
-    function post($path, $params=array()){
+    function post($path, $params=[]){
         return $this->call('post', $path, $params);
     }
 
-    function get($path, $params=array()){
+    function get($path, $params=[]){
         return $this->call('get', $path, $params);
     }
 
-    function delete($path, $params=array()){
+    function delete($path, $params=[]){
         return $this->call('delete', $path, $params);
     }
 
-    function put($path, $params=array()){
+    function put($path, $params=[]){
         return $this->call('put', $path, $params);
     }
 
-    function call($method, $path, $params=array()){
+    function call($method, $path, $params=[]){
         $url = $this->base_url.$path;
-        $options = array(
+        $options = [
             CURLOPT_HEADER => 0,
             CURLOPT_URL => $url,
             CURLOPT_FRESH_CONNECT => 1,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_FORBID_REUSE => 1,
             CURLOPT_TIMEOUT => 10,
-        );
+        ];
 
         $param_string = http_build_query($params);
         switch(strtolower($method)){
             case 'post':
-                $options += array(CURLOPT_POST => 1,
-                              CURLOPT_POSTFIELDS => $param_string);
+                $options += [CURLOPT_POST => 1,
+                              CURLOPT_POSTFIELDS => $param_string];
                 break;
             case 'put':
-                $options += array(CURLOPT_PUT => 1,
-                              CURLOPT_POSTFIELDS => $param_string);
+                $options += [CURLOPT_PUT => 1,
+                              CURLOPT_POSTFIELDS => $param_string];
                 break;
             case 'delete':
                 $options[CURLOPT_CUSTOMREQUEST] = 'DELETE';
@@ -143,7 +143,7 @@ class TeegonService {
 
 
     private function para_filter($para) {
-        $para_filter = array();
+        $para_filter = [];
         while (list ($key, $val) = each ($para)) {
             if($key == "sign")continue;
             else	$para_filter[$key] = $para[$key];

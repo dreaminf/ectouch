@@ -27,7 +27,7 @@ class GoodsScriptController extends BaseController
         if (!$this->smarty->is_cached($tpl, $cache_id)) {
             $time = gmtime();
             $sql = '';
-            // 根据参数生成查询语句 
+            // 根据参数生成查询语句
             if ($type == '') {
                 $sitename = !empty($_GET['sitename']) ? $_GET['sitename'] : '';
                 $_from = (!empty($_GET['charset']) && $_GET['charset'] != 'UTF8') ? urlencode(ecs_iconv('UTF-8', 'GBK', $sitename)) : urlencode(@$sitename);
@@ -86,10 +86,10 @@ class GoodsScriptController extends BaseController
                 $goods_list[] = $goods;
             }
 
-            // 排列方式 
+            // 排列方式
             $arrange = empty($_GET['arrange']) || !in_array($_GET['arrange'], ['h', 'v']) ? 'h' : $_GET['arrange'];
 
-            // 排列显示条目个数 
+            // 排列显示条目个数
             $goods_num = !empty($_GET['goods_num']) ? intval($_GET['goods_num']) : 10;
             $rows_num = !empty($_GET['rows_num']) ? intval($_GET['rows_num']) : '1';
             if ($arrange == 'h') {
@@ -100,18 +100,18 @@ class GoodsScriptController extends BaseController
             }
             $this->smarty->assign('goods_list', $goods_items);
 
-            // 是否需要图片 
+            // 是否需要图片
             $need_image = empty($_GET['need_image']) || $_GET['need_image'] == 'true' ? 1 : 0;
             $this->smarty->assign('need_image', $need_image);
 
-            // 图片大小 
+            // 图片大小
             $this->smarty->assign('thumb_width', intval($GLOBALS['_CFG']['thumb_width']));
             $this->smarty->assign('thumb_height', intval($GLOBALS['_CFG']['thumb_height']));
 
-            // 网站根目录 
+            // 网站根目录
             $this->smarty->assign('url', $this->ecs->url());
 
-            // 商品页面连接 
+            // 商品页面连接
             $this->smarty->assign('goods_url', $goods_url);
         }
         $output = $this->smarty->fetch($tpl, $cache_id);

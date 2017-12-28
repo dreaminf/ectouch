@@ -67,7 +67,7 @@ class Products extends BaseModel
      */
     public static function get_products_info($goods_id, $spec_goods_attr_id)
     {
-        $return_array = array();
+        $return_array = [];
 
         if (empty($spec_goods_attr_id) || !is_array($spec_goods_attr_id) || empty($goods_id)) {
             return $return_array;

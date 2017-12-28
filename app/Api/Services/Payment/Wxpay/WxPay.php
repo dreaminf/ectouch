@@ -18,7 +18,6 @@
  *
  */
 namespace App\Services\Payment\wxpay;
-use App\Services\Payment\wxpay\TenpayHttpClient;
 use Log;
 
 class WxPay {

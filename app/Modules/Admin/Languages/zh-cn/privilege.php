@@ -4,7 +4,7 @@
  *  管理中心权限管理模块语言文件
  */
 
-// 字段信息 
+// 字段信息
 $_LANG['user_id'] = '编号';
 $_LANG['user_name'] = '用户名';
 $_LANG['email'] = 'Email地址';
@@ -45,7 +45,7 @@ $_LANG['edit_pwd'] = '修改密码';
 
 $_LANG['back_admin_list'] = '返回管理员列表';
 
-// 提示信息 
+// 提示信息
 $_LANG['js_languages']['user_name_empty'] = '管理员用户名不能为空!';
 $_LANG['js_languages']['password_invaild'] = '密码必须同时包含字母及数字且长度不能小于6!';
 $_LANG['js_languages']['email_empty'] = 'Email地址不能为空!';
@@ -72,12 +72,12 @@ $_LANG['remove_cannot'] = '此管理员您不能进行删除操作!';
 $_LANG['modif_info'] = '编辑个人资料';
 $_LANG['edit_navi'] = '设置个人导航';
 
-// 帮助信息 
+// 帮助信息
 $_LANG['password_notic'] = '如果要修改密码,请先填写旧密码,如留空,密码保持不变';
 $_LANG['email_notic'] = '输入管理员的Email邮箱,必须为Email格式';
 $_LANG['confirm_notic'] = '输入管理员的确认密码,两次输入必须一致';
 
-// 登录表单 
+// 登录表单
 $_LANG['label_username'] = '管理员用户名';
 $_LANG['label_password'] = '管理员密码';
 $_LANG['label_captcha'] = '验证码';

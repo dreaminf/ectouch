@@ -2,32 +2,32 @@
 
 namespace App\Plugins\Payment;
 
-// 模块的基本信息 
+// 模块的基本信息
 if (isset($set_modules) && $set_modules == true) {
     $i = isset($modules) ? count($modules) : 0;
 
-    // 代码 
+    // 代码
     $modules[$i]['code'] = basename(__FILE__, '.php');
 
-    // 描述对应的语言项 
+    // 描述对应的语言项
     $modules[$i]['desc'] = 'alipay_desc';
 
-    // 是否支持货到付款 
+    // 是否支持货到付款
     $modules[$i]['is_cod'] = '0';
 
-    // 是否支持在线支付 
+    // 是否支持在线支付
     $modules[$i]['is_online'] = '1';
 
-    // 作者 
+    // 作者
     $modules[$i]['author'] = 'ECTouch Team';
 
-    // 网址 
+    // 网址
     $modules[$i]['website'] = 'http://www.alipay.com';
 
-    // 版本号 
+    // 版本号
     $modules[$i]['version'] = '1.0.2';
 
-    // 配置信息 
+    // 配置信息
     $modules[$i]['config'] = [
         ['name' => 'alipay_account', 'type' => 'text', 'value' => ''],
         ['name' => 'alipay_key', 'type' => 'text', 'value' => ''],
@@ -82,17 +82,17 @@ class Alipay
             '_input_charset' => $charset,
             'notify_url' => return_url(basename(__FILE__, '.php')),
             'return_url' => return_url(basename(__FILE__, '.php')),
-            // 业务参数 
+            // 业务参数
             'subject' => $order['order_sn'],
             'out_trade_no' => $order['order_sn'] . $order['log_id'],
             'price' => $order['order_amount'],
             'quantity' => 1,
             'payment_type' => 1,
-            // 物流参数 
+            // 物流参数
             'logistics_type' => 'EXPRESS',
             'logistics_fee' => 0,
             'logistics_payment' => 'BUYER_PAY_AFTER_RECEIVE',
-            // 买卖双方信息 
+            // 买卖双方信息
             'seller_email' => $payment['alipay_account']
         ];
 
@@ -130,7 +130,7 @@ class Alipay
         $order_sn = str_replace($_GET['subject'], '', $_GET['out_trade_no']);
         $order_sn = trim($order_sn);
 
-        // 检查数字签名是否正确 
+        // 检查数字签名是否正确
         ksort($_GET);
         reset($_GET);
 
@@ -146,23 +146,23 @@ class Alipay
             return false;
         }
 
-        // 检查支付的金额是否相符 
+        // 检查支付的金额是否相符
         if (!check_money($order_sn, $_GET['total_fee'])) {
             return false;
         }
 
         if ($_GET['trade_status'] == 'WAIT_SELLER_SEND_GOODS') {
-            // 改变订单状态 
+            // 改变订单状态
             order_paid($order_sn, 2);
 
             return true;
         } elseif ($_GET['trade_status'] == 'TRADE_FINISHED') {
-            // 改变订单状态 
+            // 改变订单状态
             order_paid($order_sn);
 
             return true;
         } elseif ($_GET['trade_status'] == 'TRADE_SUCCESS') {
-            // 改变订单状态 
+            // 改变订单状态
             order_paid($order_sn, 2);
 
             return true;

@@ -49,7 +49,7 @@ class ViewSendlistController extends BaseController
          * 批量删除
          */
         if ($_REQUEST['act'] == 'batch_remove') {
-            // 检查权限 
+            // 检查权限
             if (isset($_POST['checkboxes'])) {
                 $sql = "DELETE FROM " . $this->ecs->table('email_sendlist') . " WHERE id " . db_create_in($_POST['checkboxes']);
                 $this->db->query($sql);
@@ -66,7 +66,7 @@ class ViewSendlistController extends BaseController
          * 批量发送
          */
         if ($_REQUEST['act'] == 'batch_send') {
-            // 检查权限 
+            // 检查权限
             if (isset($_POST['checkboxes'])) {
                 $sql = "SELECT * FROM " . $this->ecs->table('email_sendlist') . "WHERE id " . db_create_in($_POST['checkboxes']) . " ORDER BY pri DESC, last_send ASC LIMIT 1";
                 $row = $this->db->getRow($sql);
@@ -205,10 +205,10 @@ class ViewSendlistController extends BaseController
             $sql = "SELECT count(*) FROM " . $GLOBALS['ecs']->table('email_sendlist') . " e LEFT JOIN " . $GLOBALS['ecs']->table('mail_templates') . " m ON e.template_id = m.template_id";
             $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-            // 分页大小 
+            // 分页大小
             $filter = page_and_size($filter);
 
-            // 查询 
+            // 查询
             $sql = "SELECT e.id, e.email, e.pri, e.error, FROM_UNIXTIME(e.last_send) AS last_send, m.template_subject, m.type FROM " . $GLOBALS['ecs']->table('email_sendlist') . " e LEFT JOIN " . $GLOBALS['ecs']->table('mail_templates') . " m ON e.template_id = m.template_id" .
                 " ORDER by " . $filter['sort_by'] . ' ' . $filter['sort_order'] .
                 " LIMIT " . $filter['start'] . ",$filter[page_size]";

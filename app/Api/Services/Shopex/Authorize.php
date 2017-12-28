@@ -4,8 +4,8 @@ namespace App\Services\Shopex;
 use App\Api\Models\V2\ShopConfig;
 
 /**
-* 
-*/
+ * 
+ */
 class Authorize
 {
 	
@@ -30,10 +30,10 @@ class Authorize
 		;
 		
 		//获取ecshop授权信息
-		$param = array(
+		$param = [
 		    'act' => 'get_auth_info',//固定方法
 		    'return_data' => 'json',//返回类型
-		);
+		];
 
 		$ac = self::getAc($param, $token);//验证签名
 

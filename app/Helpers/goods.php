@@ -34,7 +34,7 @@ function get_categories_tree($cat_id = 0)
     */
     $sql = 'SELECT count(*) FROM ' . $GLOBALS['ecs']->table('category') . " WHERE parent_id = '$parent_id' AND is_show = 1 ";
     if ($GLOBALS['db']->getOne($sql) || $parent_id == 0) {
-        // 获取当前分类及其子分类 
+        // 获取当前分类及其子分类
         $sql = 'SELECT cat_id,cat_name ,parent_id,is_show ' .
             'FROM ' . $GLOBALS['ecs']->table('category') .
             "WHERE parent_id = '$parent_id' AND is_show = 1 ORDER BY sort_order ASC, cat_id ASC";
@@ -94,7 +94,7 @@ function get_top10($cats = '')
     $cats = get_children($cats);
     $where = !empty($cats) ? "AND ($cats OR " . get_extension_goods($cats) . ") " : '';
 
-    // 排行统计的时间 
+    // 排行统计的时间
     switch ($GLOBALS['_CFG']['top10_time']) {
         case 1: // 一年
             $top10_time = "AND o.order_sn >= '" . date('Ymd', gmtime() - 365 * 86400) . "'";
@@ -288,7 +288,7 @@ function get_promote_goods($cats = '')
     $time = gmtime();
     $order_type = $GLOBALS['_CFG']['recommend_order'];
 
-    // 取得促销lbi的数量限制 
+    // 取得促销lbi的数量限制
     $num = get_library_number("recommend_promotion");
     $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.shop_price AS org_price, g.promote_price, ' .
         "IFNULL(mp.user_price, g.shop_price * '". session('discount') ."') AS shop_price, " .
@@ -441,21 +441,21 @@ function get_goods_info($goods_id)
     $row = $GLOBALS['db']->getRow($sql);
 
     if ($row !== false) {
-        // 用户评论级别取整 
+        // 用户评论级别取整
         $row['comment_rank'] = ceil($row['comment_rank']) == 0 ? 5 : ceil($row['comment_rank']);
 
-        // 获得商品的销售价格 
+        // 获得商品的销售价格
         $row['market_price'] = price_format($row['market_price']);
         $row['shop_price_formated'] = price_format($row['shop_price']);
 
-        // 修正促销价格 
+        // 修正促销价格
         if ($row['promote_price'] > 0) {
             $promote_price = bargain_price($row['promote_price'], $row['promote_start_date'], $row['promote_end_date']);
         } else {
             $promote_price = 0;
         }
 
-        // 处理商品水印图片 
+        // 处理商品水印图片
         $watermark_img = '';
 
         if ($promote_price != 0) {
@@ -475,15 +475,15 @@ function get_goods_info($goods_id)
         $row['promote_price_org'] = $promote_price;
         $row['promote_price'] = price_format($promote_price);
 
-        // 修正重量显示 
+        // 修正重量显示
         $row['goods_weight'] = (intval($row['goods_weight']) > 0) ?
             $row['goods_weight'] . $GLOBALS['_LANG']['kilogram'] :
             ($row['goods_weight'] * 1000) . $GLOBALS['_LANG']['gram'];
 
-        // 修正上架时间显示 
+        // 修正上架时间显示
         $row['add_time'] = local_date($GLOBALS['_CFG']['date_format'], $row['add_time']);
 
-        // 促销时间倒计时 
+        // 促销时间倒计时
         $time = gmtime();
         if ($time >= $row['promote_start_date'] && $time <= $row['promote_end_date']) {
             $row['gmt_end_time'] = $row['promote_end_date'];
@@ -491,16 +491,16 @@ function get_goods_info($goods_id)
             $row['gmt_end_time'] = 0;
         }
 
-        // 是否显示商品库存数量 
+        // 是否显示商品库存数量
         $row['goods_number'] = ($GLOBALS['_CFG']['use_storage'] == 1) ? $row['goods_number'] : '';
 
-        // 修正积分：转换为可使用多少积分（原来是可以使用多少钱的积分） 
+        // 修正积分：转换为可使用多少积分（原来是可以使用多少钱的积分）
         $row['integral'] = $GLOBALS['_CFG']['integral_scale'] ? round($row['integral'] * 100 / $GLOBALS['_CFG']['integral_scale']) : 0;
 
-        // 修正优惠券 
+        // 修正优惠券
         $row['bonus_money'] = ($row['bonus_money'] == 0) ? 0 : price_format($row['bonus_money'], false);
 
-        // 修正商品图片 
+        // 修正商品图片
         $row['goods_img'] = get_image_path($row['goods_img']);
         $row['goods_thumb'] = get_image_path($row['goods_thumb']);
 
@@ -519,7 +519,7 @@ function get_goods_info($goods_id)
  */
 function get_goods_properties($goods_id)
 {
-    // 对属性进行重新排序和分组 
+    // 对属性进行重新排序和分组
     $sql = "SELECT attr_group " .
         "FROM " . $GLOBALS['ecs']->table('goods_type') . " AS gt, " . $GLOBALS['ecs']->table('goods') . " AS g " .
         "WHERE g.goods_id='$goods_id' AND gt.cat_id=g.goods_type";
@@ -529,7 +529,7 @@ function get_goods_properties($goods_id)
         $groups = explode("\n", strtr($grp, "\r", ''));
     }
 
-    // 获得商品的规格 
+    // 获得商品的规格
     $sql = "SELECT a.attr_id, a.attr_name, a.attr_group, a.is_linked, a.attr_type, " .
         "g.goods_attr_id, g.attr_value, g.attr_price " .
         'FROM ' . $GLOBALS['ecs']->table('goods_attr') . ' AS g ' .
@@ -561,7 +561,7 @@ function get_goods_properties($goods_id)
         }
 
         if ($row['is_linked'] == 1) {
-            // 如果该属性需要关联，先保存下来 
+            // 如果该属性需要关联，先保存下来
             $arr['lnk'][$row['attr_id']]['name'] = $row['attr_name'];
             $arr['lnk'][$row['attr_id']]['value'] = $row['attr_value'];
         }
@@ -585,7 +585,7 @@ function get_same_attribute_goods($attr)
         foreach ($attr['lnk'] as $key => $val) {
             $lnk[$key]['title'] = sprintf($GLOBALS['_LANG']['same_attrbiute_goods'], $val['name'], $val['value']);
 
-            // 查找符合条件的商品 
+            // 查找符合条件的商品
             $sql = 'SELECT g.goods_id, g.goods_name, g.goods_thumb, g.goods_img, g.shop_price AS org_price, ' .
                 "IFNULL(mp.user_price, g.shop_price * '". session('discount') ."') AS shop_price, " .
                 'g.market_price, g.promote_price, g.promote_start_date, g.promote_end_date ' .
@@ -628,7 +628,7 @@ function get_goods_gallery($goods_id)
         ' FROM ' . $GLOBALS['ecs']->table('goods_gallery') .
         " WHERE goods_id = '$goods_id' LIMIT " . $GLOBALS['_CFG']['goods_gallery_number'];
     $row = $GLOBALS['db']->getAll($sql);
-    // 格式化相册图片路径 
+    // 格式化相册图片路径
     foreach ($row as $key => $gallery_img) {
         $row[$key]['img_url'] = get_image_path($gallery_img['img_url']);
         $row[$key]['thumb_url'] = get_image_path($gallery_img['thumb_url']);
@@ -693,7 +693,7 @@ function assign_cat_goods($cat_id, $num = 0, $from = 'web', $order_rule = '')
         $cat['goods'] = $goods;
     }
 
-    // 分类信息 
+    // 分类信息
     $sql = 'SELECT cat_name FROM ' . $GLOBALS['ecs']->table('category') . " WHERE cat_id = '$cat_id'";
     $cat['name'] = $GLOBALS['db']->getOne($sql);
     $cat['url'] = build_uri('category', ['cid' => $cat_id], $cat['name']);
@@ -758,7 +758,7 @@ function assign_brand_goods($brand_id, $num = 0, $cat_id = 0, $order_rule = '')
         $idx++;
     }
 
-    // 分类信息 
+    // 分类信息
     $sql = 'SELECT brand_name FROM ' . $GLOBALS['ecs']->table('brand') . " WHERE brand_id = '$brand_id'";
 
     $brand['id'] = $brand_id;
@@ -846,7 +846,7 @@ function spec_price($spec)
  */
 function group_buy_info($group_buy_id, $current_num = 0)
 {
-    // 取得团购活动信息 
+    // 取得团购活动信息
     $group_buy_id = intval($group_buy_id);
     $sql = "SELECT *, act_id AS group_buy_id, act_desc AS group_buy_desc, start_time AS start_date, end_time AS end_date " .
         "FROM " . $GLOBALS['ecs']->table('goods_activity') .
@@ -854,7 +854,7 @@ function group_buy_info($group_buy_id, $current_num = 0)
         "AND act_type = '" . GAT_GROUP_BUY . "'";
     $group_buy = $GLOBALS['db']->getRow($sql);
 
-    // 如果为空，返回空数组 
+    // 如果为空，返回空数组
     if (empty($group_buy)) {
         return [];
     }
@@ -862,14 +862,14 @@ function group_buy_info($group_buy_id, $current_num = 0)
     $ext_info = unserialize($group_buy['ext_info']);
     $group_buy = array_merge($group_buy, $ext_info);
 
-    // 格式化时间 
+    // 格式化时间
     $group_buy['formated_start_date'] = local_date('Y-m-d H:i', $group_buy['start_time']);
     $group_buy['formated_end_date'] = local_date('Y-m-d H:i', $group_buy['end_time']);
 
-    // 格式化保证金 
+    // 格式化保证金
     $group_buy['formated_deposit'] = price_format($group_buy['deposit'], false);
 
-    // 处理价格阶梯 
+    // 处理价格阶梯
     $price_ladder = $group_buy['price_ladder'];
     if (!is_array($price_ladder) || empty($price_ladder)) {
         $price_ladder = [['amount' => 0, 'price' => 0]];
@@ -880,11 +880,11 @@ function group_buy_info($group_buy_id, $current_num = 0)
     }
     $group_buy['price_ladder'] = $price_ladder;
 
-    // 统计信息 
+    // 统计信息
     $stat = group_buy_stat($group_buy_id, $group_buy['deposit']);
     $group_buy = array_merge($group_buy, $stat);
 
-    // 计算当前价 
+    // 计算当前价
     $cur_price = $price_ladder[0]['price']; // 初始化
     $cur_amount = $stat['valid_goods'] + $current_num; // 当前数量
     foreach ($price_ladder as $amount_price) {
@@ -897,12 +897,12 @@ function group_buy_info($group_buy_id, $current_num = 0)
     $group_buy['cur_price'] = $cur_price;
     $group_buy['formated_cur_price'] = price_format($cur_price, false);
 
-    // 最终价 
+    // 最终价
     $group_buy['trans_price'] = $group_buy['cur_price'];
     $group_buy['formated_trans_price'] = $group_buy['formated_cur_price'];
     $group_buy['trans_amount'] = $group_buy['valid_goods'];
 
-    // 状态 
+    // 状态
     $group_buy['status'] = group_buy_status($group_buy);
     if (isset($GLOBALS['_LANG']['gbs'][$group_buy['status']])) {
         $group_buy['status_desc'] = $GLOBALS['_LANG']['gbs'][$group_buy['status']];
@@ -928,14 +928,14 @@ function group_buy_stat($group_buy_id, $deposit)
 {
     $group_buy_id = intval($group_buy_id);
 
-    // 取得团购活动商品ID 
+    // 取得团购活动商品ID
     $sql = "SELECT goods_id " .
         "FROM " . $GLOBALS['ecs']->table('goods_activity') .
         "WHERE act_id = '$group_buy_id' " .
         "AND act_type = '" . GAT_GROUP_BUY . "'";
     $group_buy_goods_id = $GLOBALS['db']->getOne($sql);
 
-    // 取得总订单数和总商品数 
+    // 取得总订单数和总商品数
     $sql = "SELECT COUNT(*) AS total_order, SUM(g.goods_number) AS total_goods " .
         "FROM " . $GLOBALS['ecs']->table('order_info') . " AS o, " .
         $GLOBALS['ecs']->table('order_goods') . " AS g " .
@@ -949,7 +949,7 @@ function group_buy_stat($group_buy_id, $deposit)
         $stat['total_goods'] = 0;
     }
 
-    // 取得有效订单数和有效商品数 
+    // 取得有效订单数和有效商品数
     $deposit = floatval($deposit);
     if ($deposit > 0 && $stat['total_order'] > 0) {
         $sql .= " AND (o.money_paid + o.surplus) >= '$deposit'";
@@ -979,7 +979,7 @@ function group_buy_status($group_buy)
 {
     $now = gmtime();
     if ($group_buy['is_finished'] == 0) {
-        // 未处理 
+        // 未处理
         if ($now < $group_buy['start_time']) {
             $status = GBS_PRE_START;
         } elseif ($now > $group_buy['end_time']) {
@@ -992,10 +992,10 @@ function group_buy_status($group_buy)
             }
         }
     } elseif ($group_buy['is_finished'] == GBS_SUCCEED) {
-        // 已处理，团购成功 
+        // 已处理，团购成功
         $status = GBS_SUCCEED;
     } elseif ($group_buy['is_finished'] == GBS_FAIL) {
-        // 已处理，团购失败 
+        // 已处理，团购失败
         $status = GBS_FAIL;
     }
 
@@ -1029,7 +1029,7 @@ function auction_info($act_id, $config = false)
     $auction['formated_amplitude'] = price_format($auction['amplitude']);
     $auction['formated_deposit'] = price_format($auction['deposit']);
 
-    // 查询出价用户数和最后出价 
+    // 查询出价用户数和最后出价
     $sql = "SELECT COUNT(DISTINCT bid_user) FROM " . $GLOBALS['ecs']->table('auction_log') .
         " WHERE act_id = '$act_id'";
     $auction['bid_user_count'] = $GLOBALS['db']->getOne($sql);
@@ -1046,7 +1046,7 @@ function auction_info($act_id, $config = false)
         $auction['last_bid'] = $row;
     }
 
-    // 查询已确认订单数 
+    // 查询已确认订单数
     if ($auction['status_no'] > 1) {
         $sql = "SELECT COUNT(*)" .
             " FROM " . $GLOBALS['ecs']->table('order_info') .
@@ -1058,7 +1058,7 @@ function auction_info($act_id, $config = false)
         $auction['order_count'] = 0;
     }
 
-    // 当前价 
+    // 当前价
     $auction['current_price'] = isset($auction['last_bid']) ? $auction['last_bid']['bid_price'] : $auction['start_price'];
     $auction['formated_current_price'] = price_format($auction['current_price'], false);
 
@@ -1125,12 +1125,12 @@ function goods_info($goods_id)
         "WHERE g.goods_id = '$goods_id'";
     $row = $GLOBALS['db']->getRow($sql);
     if (!empty($row)) {
-        // 修正重量显示 
+        // 修正重量显示
         $row['goods_weight'] = (intval($row['goods_weight']) > 0) ?
             $row['goods_weight'] . $GLOBALS['_LANG']['kilogram'] :
             ($row['goods_weight'] * 1000) . $GLOBALS['_LANG']['gram'];
 
-        // 修正图片 
+        // 修正图片
         $row['goods_img'] = get_image_path($row['goods_img']);
     }
 

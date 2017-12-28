@@ -38,22 +38,22 @@
             </div>
             <div class="info-preview">
             <?php if (isset($goods['photos'][0]['large'])): ?>
-                <img class="info-photo" src="<?=$goods['photos'][0]['large']?>"></img>
+                <img class="info-photo" src="<?php echo $goods['photos'][0]['large']?>"></img>
             <?php else: ?>
                 <img class="info-photo" src="/img/commodity.png"></img>
             <?php endif ?>
                 
                 <div class="info-price">
-                    <span class="info-money">￥<?=$goods['current_price']?></span>
+                    <span class="info-money">￥<?php echo $goods['current_price']?></span>
                     <!-- <span class="info-discount">2.8折</span> -->
                 </div>
             </div>
             <div class="info-desc">
                 <div class="info-desc-title">
-                    <?=$goods['name']?>
+                    <?php echo $goods['name']?>
                 </div>
                 <div class="info-desc-attr">
-                    <?=$goods['brand']['name']?>
+                    <?php echo $goods['brand']['name']?>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@
                 店铺信息
             </div>
             <div class="shop-attr">
-                <span class="shop-subtitle"><?=$shop['site_info']['name']?></span>
+                <span class="shop-subtitle"><?php echo $shop['site_info']['name']?></span>
                 <span class="shop-rate">
                     <img class="shop-heart" src="/img/heart.png">
                     <img class="shop-heart" src="/img/heart.png">
@@ -72,7 +72,7 @@
                     <img class="shop-heart" src="/img/heart.png">
                 </span>
             </div>
-            <a href="tel:<?=$shop['site_info']['telephone']?>">
+            <a href="tel:<?php echo $shop['site_info']['telephone']?>">
                 <div class="shop-contact">
                     <img class="shop-contact-icon" src="/img/service.png"></img> 联系客服
                 </div>
@@ -88,14 +88,14 @@
                     <div class="comment-item">
                         <div class="comment-source">
                             <span class="comment-author">
-                                <?=$value['author']['username']?>
+                                <?php echo $value['author']['username']?>
                             </span>
                             <div class="comment-time">
-                                <?=date('Y-m-d H:i:s', $value['created_at'])?>
+                                <?php echo date('Y-m-d H:i:s', $value['created_at'])?>
                             </div>                    
                         </div>
                         <div class="comment-text">
-                            <?=$value['content']?>
+                            <?php echo $value['content']?>
                         </div>
                         <div class="comment-rate">
                         <?php for ($i=0; $i < $value['grade']; $i++): ?>

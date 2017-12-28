@@ -39,7 +39,7 @@ class GoodsController extends BaseController
                 $this->smarty->assign('add_handler', $handler_list[$code]);
             }
 
-            // 供货商名 
+            // 供货商名
             $suppliers_list_name = suppliers_list_name();
             $suppliers_exists = 1;
             if (empty($suppliers_list_name)) {
@@ -51,7 +51,7 @@ class GoodsController extends BaseController
             $this->smarty->assign('suppliers_list_name', $suppliers_list_name);
             unset($suppliers_list_name, $suppliers_exists);
 
-            // 模板赋值 
+            // 模板赋值
             $goods_ur = ['' => $GLOBALS['_LANG']['01_goods_list'], 'virtual_card' => $GLOBALS['_LANG']['50_virtual_card_list']];
             $ur_here = ($_REQUEST['act'] == 'list') ? $goods_ur[$code] : $GLOBALS['_LANG']['11_goods_trash'];
             $this->smarty->assign('ur_here', $ur_here);
@@ -77,15 +77,15 @@ class GoodsController extends BaseController
             $this->smarty->assign('page_count', $goods_list['page_count']);
             $this->smarty->assign('full_page', 1);
 
-            // 排序标记 
+            // 排序标记
             $sort_flag = sort_flag($goods_list['filter']);
             $this->smarty->assign($sort_flag['tag'], $sort_flag['img']);
 
-            // 获取商品类型存在规格的类型 
+            // 获取商品类型存在规格的类型
             $specifications = get_goods_type_specifications();
             $this->smarty->assign('specifications', $specifications);
 
-            // 显示商品列表页面 
+            // 显示商品列表页面
 
             $htm_file = ($_REQUEST['act'] == 'list') ?
                 'goods_list.htm' : (($_REQUEST['act'] == 'trash') ? 'goods_trash.htm' : 'group_list.htm');
@@ -107,7 +107,7 @@ class GoodsController extends BaseController
                 admin_priv('goods_manage'); // 检查权限
             }
 
-            // 供货商名 
+            // 供货商名
             $suppliers_list_name = suppliers_list_name();
             $suppliers_exists = 1;
             if (empty($suppliers_list_name)) {
@@ -117,21 +117,21 @@ class GoodsController extends BaseController
             $this->smarty->assign('suppliers_list_name', $suppliers_list_name);
             unset($suppliers_list_name, $suppliers_exists);
 
-            // 如果是安全模式，检查目录是否存在 
+            // 如果是安全模式，检查目录是否存在
             if (ini_get('safe_mode') == 1 && (!file_exists('../' . IMAGE_DIR . '/' . date('Ym')) || !is_dir('../' . IMAGE_DIR . '/' . date('Ym')))) {
                 if (@!mkdir('../' . IMAGE_DIR . '/' . date('Ym'), 0777)) {
                     $warning = sprintf($GLOBALS['_LANG']['safe_mode_warning'], '../' . IMAGE_DIR . '/' . date('Ym'));
                     $this->smarty->assign('warning', $warning);
                 }
-            } // 如果目录存在但不可写，提示用户 
+            } // 如果目录存在但不可写，提示用户
             elseif (file_exists('../' . IMAGE_DIR . '/' . date('Ym')) && file_mode_info('../' . IMAGE_DIR . '/' . date('Ym')) < 2) {
                 $warning = sprintf($GLOBALS['_LANG']['not_writable_warning'], '../' . IMAGE_DIR . '/' . date('Ym'));
                 $this->smarty->assign('warning', $warning);
             }
 
-            // 取得商品信息 
+            // 取得商品信息
             if ($is_add) {
-                // 默认值 
+                // 默认值
                 $last_choose = [0, 0];
                 $cp_last_choose = request()->cookie('cp_last_choose');
                 if (!empty($cp_last_choose)) {
@@ -164,33 +164,33 @@ class GoodsController extends BaseController
                     $goods['goods_number'] = 0;
                 }
 
-                // 关联商品 
+                // 关联商品
                 $link_goods_list = [];
                 $sql = "DELETE FROM " . $this->ecs->table('link_goods') .
                     " WHERE (goods_id = 0 OR link_goods_id = 0)" .
                     " AND admin_id = '" . session('admin_id') . "'";
                 $this->db->query($sql);
 
-                // 组合商品 
+                // 组合商品
                 $group_goods_list = [];
                 $sql = "DELETE FROM " . $this->ecs->table('group_goods') .
                     " WHERE parent_id = 0 AND admin_id = '" . session('admin_id') . "'";
                 $this->db->query($sql);
 
-                // 关联文章 
+                // 关联文章
                 $goods_article_list = [];
                 $sql = "DELETE FROM " . $this->ecs->table('goods_article') .
                     " WHERE goods_id = 0 AND admin_id = '" . session('admin_id') . "'";
                 $this->db->query($sql);
 
-                // 属性 
+                // 属性
                 $sql = "DELETE FROM " . $this->ecs->table('goods_attr') . " WHERE goods_id = 0";
                 $this->db->query($sql);
 
-                // 图片列表 
+                // 图片列表
                 $img_list = [];
             } else {
-                // 商品信息 
+                // 商品信息
                 $sql = "SELECT * FROM " . $this->ecs->table('goods') . " WHERE goods_id = '$_REQUEST[goods_id]'";
                 $goods = $this->db->getRow($sql);
 
@@ -200,7 +200,7 @@ class GoodsController extends BaseController
                 }
 
                 if (empty($goods) === true) {
-                    // 默认值 
+                    // 默认值
                     $goods = [
                         'goods_id' => 0,
                         'goods_desc' => '',
@@ -224,13 +224,13 @@ class GoodsController extends BaseController
                     ];
                 }
 
-                // 获取商品类型存在规格的类型 
+                // 获取商品类型存在规格的类型
                 $specifications = get_goods_type_specifications();
                 $goods['specifications_id'] = $specifications[$goods['goods_type']];
                 $_attribute = get_goods_specifications_list($goods['goods_id']);
                 $goods['_attribute'] = empty($_attribute) ? '' : 1;
 
-                // 根据商品重量的单位重新计算 
+                // 根据商品重量的单位重新计算
                 if ($goods['goods_weight'] > 0) {
                     $goods['goods_weight_by_unit'] = ($goods['goods_weight'] >= 1) ? $goods['goods_weight'] : ($goods['goods_weight'] / 0.001);
                 }
@@ -244,7 +244,7 @@ class GoodsController extends BaseController
                     $goods['keywords'] = $goods['keywords'];
                 }
 
-                // 如果不是促销，处理促销日期 
+                // 如果不是促销，处理促销日期
                 if (isset($goods['is_promote']) && $goods['is_promote'] == '0') {
                     unset($goods['promote_start_date']);
                     unset($goods['promote_end_date']);
@@ -253,7 +253,7 @@ class GoodsController extends BaseController
                     $goods['promote_end_date'] = local_date('Y-m-d', $goods['promote_end_date']);
                 }
 
-                // 如果是复制商品，处理 
+                // 如果是复制商品，处理
                 if ($_REQUEST['act'] == 'copy') {
                     // 商品信息
                     $goods['goods_id'] = 0;
@@ -341,17 +341,17 @@ class GoodsController extends BaseController
                 $group_goods_list = get_group_goods($goods['goods_id']); // 配件
                 $goods_article_list = get_goods_articles($goods['goods_id']);   // 关联文章
 
-                // 商品图片路径 
+                // 商品图片路径
                 if (isset($GLOBALS['shop_id']) && ($GLOBALS['shop_id'] > 10) && !empty($goods['original_img'])) {
                     $goods['goods_img'] = get_image_path($goods['goods_img']);
                     $goods['goods_thumb'] = get_image_path($goods['goods_thumb']);
                 }
 
-                // 图片列表 
+                // 图片列表
                 $sql = "SELECT * FROM " . $this->ecs->table('goods_gallery') . " WHERE goods_id = '$goods[goods_id]'";
                 $img_list = $this->db->getAll($sql);
 
-                // 格式化相册图片路径 
+                // 格式化相册图片路径
                 if (isset($GLOBALS['shop_id']) && ($GLOBALS['shop_id'] > 0)) {
                     foreach ($img_list as $key => $gallery_img) {
                         $gallery_img[$key]['img_url'] = get_image_path($gallery_img['img_original']);
@@ -364,13 +364,13 @@ class GoodsController extends BaseController
                 }
             }
 
-            // 拆分商品名称样式 
+            // 拆分商品名称样式
             $goods_name_style = explode('+', empty($goods['goods_name_style']) ? '+' : $goods['goods_name_style']);
 
-            // 创建 html editor 
+            // 创建 html editor
             create_html_editor('goods_desc', $goods['goods_desc']);
 
-            // 模板赋值 
+            // 模板赋值
             $this->smarty->assign('code', $code);
             $this->smarty->assign('ur_here', $is_add ? (empty($code) ? $GLOBALS['_LANG']['02_goods_add'] : $GLOBALS['_LANG']['51_virtual_card_add']) : ($_REQUEST['act'] == 'edit' ? $GLOBALS['_LANG']['edit_goods'] : $GLOBALS['_LANG']['copy_goods']));
             $this->smarty->assign('action_link', $this->list_link($is_add, $code));
@@ -407,7 +407,7 @@ class GoodsController extends BaseController
                 $volume_price_list = ['0' => ['number' => '', 'price' => '']];
             }
             $this->smarty->assign('volume_price_list', $volume_price_list);
-            // 显示商品信息页面 
+            // 显示商品信息页面
 
             return $this->smarty->display('goods_info.htm');
         }
@@ -418,7 +418,7 @@ class GoodsController extends BaseController
         if ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update') {
             $code = empty($_REQUEST['extension_code']) ? '' : trim($_REQUEST['extension_code']);
 
-            // 是否处理缩略图 
+            // 是否处理缩略图
             $proc_thumb = (isset($GLOBALS['shop_id']) && $GLOBALS['shop_id'] > 0) ? false : true;
             if ($code == 'virtual_card') {
                 admin_priv('virualcard'); // 检查权限
@@ -426,7 +426,7 @@ class GoodsController extends BaseController
                 admin_priv('goods_manage'); // 检查权限
             }
 
-            // 检查货号是否重复 
+            // 检查货号是否重复
             if ($_POST['goods_sn']) {
                 $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('goods') .
                     " WHERE goods_sn = '$_POST[goods_sn]' AND is_delete = 0 AND goods_id <> '$_POST[goods_id]'";
@@ -435,7 +435,7 @@ class GoodsController extends BaseController
                 }
             }
 
-            // 检查图片：如果有错误，检查尺寸是否超过最大值；否则，检查文件类型 
+            // 检查图片：如果有错误，检查尺寸是否超过最大值；否则，检查文件类型
             if (isset($_FILES['goods_img']['error'])) { // php 4.2 版本才支持 error
                 // 最大上传文件大小
                 $php_maxsize = ini_get('upload_max_filesize');
@@ -477,7 +477,7 @@ class GoodsController extends BaseController
                         return sys_msg(sprintf($GLOBALS['_LANG']['img_url_too_big'], $key + 1, $htm_maxsize), 1, [], false);
                     }
                 }
-            } // 4.1版本 
+            } // 4.1版本
             else {
                 // 商品图片
                 if ($_FILES['goods_img']['tmp_name'] != 'none') {
@@ -505,10 +505,10 @@ class GoodsController extends BaseController
                 }
             }
 
-            // 插入还是更新的标识 
+            // 插入还是更新的标识
             $is_insert = $_REQUEST['act'] == 'insert';
 
-            // 处理商品图片 
+            // 处理商品图片
             $goods_img = '';  // 初始化商品图片
             $goods_thumb = '';  // 初始化商品缩略图
             $original_img = '';  // 初始化原始图片
@@ -517,7 +517,7 @@ class GoodsController extends BaseController
             // 如果上传了商品图片，相应处理
             if (($_FILES['goods_img']['tmp_name'] != '' && $_FILES['goods_img']['tmp_name'] != 'none') or (($_POST['goods_img_url'] != $GLOBALS['_LANG']['lab_picture_url'] && $_POST['goods_img_url'] != 'http://') && $is_url_goods_img = 1)) {
                 if ($_REQUEST['goods_id'] > 0) {
-                    // 删除原来的图片文件 
+                    // 删除原来的图片文件
                     $sql = "SELECT goods_thumb, goods_img, original_img " .
                         " FROM " . $this->ecs->table('goods') .
                         " WHERE goods_id = '$_REQUEST[goods_id]'";
@@ -529,10 +529,10 @@ class GoodsController extends BaseController
                         @unlink('../' . $row['goods_img']);
                     }
                     if ($row['original_img'] != '' && is_file('../' . $row['original_img'])) {
-                        // 先不处理，以防止程序中途出错停止 
+                        // 先不处理，以防止程序中途出错停止
                         //$old_original_img = $row['original_img']; //记录旧图路径
                     }
-                    // 清除原来商品图片 
+                    // 清除原来商品图片
                     if ($proc_thumb === false) {
                         get_image_path($row['goods_img']);
                         get_image_path($row['goods_thumb']);
@@ -552,8 +552,8 @@ class GoodsController extends BaseController
                 }
                 $goods_img = $original_img;   // 商品图片
 
-                // 复制一份相册图片 
-                // 添加判断是否自动生成相册图片 
+                // 复制一份相册图片
+                // 添加判断是否自动生成相册图片
                 if ($GLOBALS['_CFG']['auto_generate_gallery']) {
                     $img = $original_img;   // 相册图片
                     $pos = strpos(basename($img), '.');
@@ -578,7 +578,7 @@ class GoodsController extends BaseController
                             }
                         }
 
-                        // 添加判断是否自动生成相册图片 
+                        // 添加判断是否自动生成相册图片
                         if ($GLOBALS['_CFG']['auto_generate_gallery']) {
                             $newname = dirname($img) . '/' . $image->random_filename() . substr(basename($img), $pos);
                             if (!copy('../' . $img, '../' . $newname)) {
@@ -592,7 +592,7 @@ class GoodsController extends BaseController
                             if ($image->add_watermark('../' . $goods_img, '', $GLOBALS['_CFG']['watermark'], $GLOBALS['_CFG']['watermark_place'], $GLOBALS['_CFG']['watermark_alpha']) === false) {
                                 return sys_msg($image->error_msg(), 1, [], false);
                             }
-                            // 添加判断是否自动生成相册图片 
+                            // 添加判断是否自动生成相册图片
                             if ($GLOBALS['_CFG']['auto_generate_gallery']) {
                                 if ($image->add_watermark('../' . $gallery_img, '', $GLOBALS['_CFG']['watermark'], $GLOBALS['_CFG']['watermark_place'], $GLOBALS['_CFG']['watermark_alpha']) === false) {
                                     return sys_msg($image->error_msg(), 1, [], false);
@@ -602,7 +602,7 @@ class GoodsController extends BaseController
                     }
 
                     // 相册缩略图
-                    // 添加判断是否自动生成相册图片 
+                    // 添加判断是否自动生成相册图片
                     if ($GLOBALS['_CFG']['auto_generate_gallery']) {
                         if ($GLOBALS['_CFG']['thumb_width'] != 0 || $GLOBALS['_CFG']['thumb_height'] != 0) {
                             $gallery_thumb = $image->make_thumb('../' . $img, $GLOBALS['_CFG']['thumb_width'], $GLOBALS['_CFG']['thumb_height']);
@@ -612,10 +612,10 @@ class GoodsController extends BaseController
                         }
                     }
                 }
-                // 取消该原图复制流程 
+                // 取消该原图复制流程
                 // else
                 // {
-                //     // 复制一份原图 
+                //     // 复制一份原图
                 //     $pos        = strpos(basename($img), '.');
                 //     $gallery_img = dirname($img) . '/' . $image->random_filename() . // substr(basename($img), $pos);
                 //     if (!copy('../' . $img, '../' . $gallery_img))
@@ -649,14 +649,14 @@ class GoodsController extends BaseController
                 }
             }
 
-            // 删除下载的外链原图 
+            // 删除下载的外链原图
             if (!empty($is_url_goods_img)) {
                 unlink(ROOT_PATH . $original_img);
                 empty($newname) || unlink(ROOT_PATH . $newname);
                 $url_goods_img = $goods_img = $original_img = htmlspecialchars(trim($_POST['goods_img_url']));
             }
 
-            // 如果没有输入商品货号则自动生成一个商品货号 
+            // 如果没有输入商品货号则自动生成一个商品货号
             if (empty($_POST['goods_sn'])) {
                 $max_id = $is_insert ? $this->db->getOne("SELECT MAX(goods_id) + 1 FROM " . $this->ecs->table('goods')) : $_REQUEST['goods_id'];
                 $goods_sn = generate_goods_sn($max_id);
@@ -664,7 +664,7 @@ class GoodsController extends BaseController
                 $goods_sn = $_POST['goods_sn'];
             }
 
-            // 处理商品数据 
+            // 处理商品数据
             $shop_price = !empty($_POST['shop_price']) ? $_POST['shop_price'] : 0;
             $market_price = !empty($_POST['market_price']) ? $_POST['market_price'] : 0;
             $promote_price = !empty($_POST['promote_price']) ? floatval($_POST['promote_price']) : 0;
@@ -693,7 +693,7 @@ class GoodsController extends BaseController
             $goods_thumb = (empty($goods_thumb) && !empty($_POST['goods_thumb_url']) && $this->goods_parse_url($_POST['goods_thumb_url'])) ? htmlspecialchars(trim($_POST['goods_thumb_url'])) : $goods_thumb;
             $goods_thumb = (empty($goods_thumb) && isset($_POST['auto_thumb'])) ? $goods_img : $goods_thumb;
 
-            // 入库 
+            // 入库
             if ($is_insert) {
                 if ($code == '') {
                     $sql = "INSERT INTO " . $this->ecs->table('goods') . " (goods_name, goods_name_style, goods_sn, " .
@@ -721,7 +721,7 @@ class GoodsController extends BaseController
                         " '$_POST[goods_desc]', '" . gmtime() . "', '" . gmtime() . "', '$goods_type', '$code', '$rank_integral')";
                 }
             } else {
-                // 如果有上传图片，删除原来的商品图 
+                // 如果有上传图片，删除原来的商品图
                 $sql = "SELECT goods_thumb, goods_img, original_img " .
                     " FROM " . $this->ecs->table('goods') .
                     " WHERE goods_id = '$_REQUEST[goods_id]'";
@@ -749,7 +749,7 @@ class GoodsController extends BaseController
                     "suppliers_id = '$suppliers_id', " .
                     "promote_end_date = '$promote_end_date', ";
 
-                // 如果有上传图片，需要更新数据库 
+                // 如果有上传图片，需要更新数据库
                 if ($goods_img) {
                     $sql .= "goods_img = '$goods_img', original_img = '$original_img', ";
                 }
@@ -781,17 +781,17 @@ class GoodsController extends BaseController
             }
             $this->db->query($sql);
 
-            // 商品编号 
+            // 商品编号
             $goods_id = $is_insert ? $this->db->insert_id() : $_REQUEST['goods_id'];
 
-            // 记录日志 
+            // 记录日志
             if ($is_insert) {
                 admin_log($_POST['goods_name'], 'add', 'goods');
             } else {
                 admin_log($_POST['goods_name'], 'edit', 'goods');
             }
 
-            // 处理属性 
+            // 处理属性
             if ((isset($_POST['attr_id_list']) && isset($_POST['attr_value_list'])) || (empty($_POST['attr_id_list']) && empty($_POST['attr_value_list']))) {
                 // 取得原有的属性值
                 $goods_attr_list = [];
@@ -854,7 +854,7 @@ class GoodsController extends BaseController
 
                 $this->db->query($sql);
 
-                // 插入、更新、删除数据 
+                // 插入、更新、删除数据
                 foreach ($goods_attr_list as $attr_id => $attr_value_list) {
                     foreach ($attr_value_list as $attr_value => $info) {
                         if ($info['sign'] == 'insert') {
@@ -870,12 +870,12 @@ class GoodsController extends BaseController
                 }
             }
 
-            // 处理会员价格 
+            // 处理会员价格
             if (isset($_POST['user_rank']) && isset($_POST['user_price'])) {
                 handle_member_price($goods_id, $_POST['user_rank'], $_POST['user_price']);
             }
 
-            // 处理优惠价格 
+            // 处理优惠价格
             if (isset($_POST['volume_number']) && isset($_POST['volume_price'])) {
                 $temp_num = array_count_values($_POST['volume_number']);
                 foreach ($temp_num as $v) {
@@ -887,23 +887,23 @@ class GoodsController extends BaseController
                 $this->handle_volume_price($goods_id, $_POST['volume_number'], $_POST['volume_price']);
             }
 
-            // 处理扩展分类 
+            // 处理扩展分类
             if (isset($_POST['other_cat'])) {
                 handle_other_cat($goods_id, array_unique($_POST['other_cat']));
             }
 
             if ($is_insert) {
-                // 处理关联商品 
+                // 处理关联商品
                 handle_link_goods($goods_id);
 
-                // 处理组合商品 
+                // 处理组合商品
                 handle_group_goods($goods_id);
 
-                // 处理关联文章 
+                // 处理关联文章
                 handle_goods_article($goods_id);
             }
 
-            // 重新格式化图片名称 
+            // 重新格式化图片名称
             $original_img = reformat_image_name('goods', $goods_id, $original_img, 'source');
             $goods_img = reformat_image_name('goods', $goods_id, $goods_img, 'goods');
             $goods_thumb = reformat_image_name('goods_thumb', $goods_id, $goods_thumb, 'thumb');
@@ -919,9 +919,9 @@ class GoodsController extends BaseController
                 $this->db->query("UPDATE " . $this->ecs->table('goods') . " SET goods_thumb = '$goods_thumb' WHERE goods_id='$goods_id'");
             }
 
-            // 如果有图片，把商品图片加入图片相册 
+            // 如果有图片，把商品图片加入图片相册
             if (isset($img)) {
-                // 重新格式化图片名称 
+                // 重新格式化图片名称
                 if (empty($is_url_goods_img)) {
                     $img = reformat_image_name('gallery', $goods_id, $img, 'source');
                     $gallery_img = reformat_image_name('gallery', $goods_id, $gallery_img, 'goods');
@@ -936,10 +936,10 @@ class GoodsController extends BaseController
                 $this->db->query($sql);
             }
 
-            // 处理相册图片 
+            // 处理相册图片
             handle_gallery_image($goods_id, $_FILES['img_url'], $_POST['img_desc'], $_POST['img_file']);
 
-            // 编辑时处理相册图片描述 
+            // 编辑时处理相册图片描述
             if (!$is_insert && isset($_POST['old_img_desc'])) {
                 foreach ($_POST['old_img_desc'] as $img_id => $img_desc) {
                     $sql = "UPDATE " . $this->ecs->table('goods_gallery') . " SET img_desc = '$img_desc' WHERE img_id = '$img_id' LIMIT 1";
@@ -947,7 +947,7 @@ class GoodsController extends BaseController
                 }
             }
 
-            // 不保留商品原图的时候删除原图 
+            // 不保留商品原图的时候删除原图
             if ($proc_thumb && !$GLOBALS['_CFG']['retain_original_img'] && !empty($original_img)) {
                 $this->db->query("UPDATE " . $this->ecs->table('goods') . " SET original_img='' WHERE `goods_id`='{$goods_id}'");
                 $this->db->query("UPDATE " . $this->ecs->table('goods_gallery') . " SET img_original='' WHERE `goods_id`='{$goods_id}'");
@@ -955,12 +955,12 @@ class GoodsController extends BaseController
                 @unlink('../' . $img);
             }
 
-            // 记录上一次选择的分类和品牌 
+            // 记录上一次选择的分类和品牌
             \Cookie::queue('cp_last_choose', $catgory_id . '|' . $brand_id, 1440);
-            // 清空缓存 
+            // 清空缓存
             clear_cache_files();
 
-            // 提示页面 
+            // 提示页面
             $link = [];
             if (check_goods_specifications_exist($goods_id)) {
                 $link[0] = ['href' => 'goods.php?act=product_list&goods_id=' . $goods_id, 'text' => $GLOBALS['_LANG']['product']];
@@ -991,91 +991,91 @@ class GoodsController extends BaseController
         if ($_REQUEST['act'] == 'batch') {
             $code = empty($_REQUEST['extension_code']) ? '' : trim($_REQUEST['extension_code']);
 
-            // 取得要操作的商品编号 
+            // 取得要操作的商品编号
             $goods_id = !empty($_POST['checkboxes']) ? join(',', $_POST['checkboxes']) : 0;
 
             if (isset($_POST['type'])) {
-                // 放入回收站 
+                // 放入回收站
                 if ($_POST['type'] == 'trash') {
-                    // 检查权限 
+                    // 检查权限
                     admin_priv('remove_back');
 
                     update_goods($goods_id, 'is_delete', '1');
 
-                    // 记录日志 
+                    // 记录日志
                     admin_log('', 'batch_trash', 'goods');
-                } // 上架 
+                } // 上架
                 elseif ($_POST['type'] == 'on_sale') {
-                    // 检查权限 
+                    // 检查权限
                     admin_priv('goods_manage');
                     update_goods($goods_id, 'is_on_sale', '1');
-                } // 下架 
+                } // 下架
                 elseif ($_POST['type'] == 'not_on_sale') {
-                    // 检查权限 
+                    // 检查权限
                     admin_priv('goods_manage');
                     update_goods($goods_id, 'is_on_sale', '0');
-                } // 设为精品 
+                } // 设为精品
                 elseif ($_POST['type'] == 'best') {
-                    // 检查权限 
+                    // 检查权限
                     admin_priv('goods_manage');
                     update_goods($goods_id, 'is_best', '1');
-                } // 取消精品 
+                } // 取消精品
                 elseif ($_POST['type'] == 'not_best') {
-                    // 检查权限 
+                    // 检查权限
                     admin_priv('goods_manage');
                     update_goods($goods_id, 'is_best', '0');
-                } // 设为新品 
+                } // 设为新品
                 elseif ($_POST['type'] == 'new') {
-                    // 检查权限 
+                    // 检查权限
                     admin_priv('goods_manage');
                     update_goods($goods_id, 'is_new', '1');
-                } // 取消新品 
+                } // 取消新品
                 elseif ($_POST['type'] == 'not_new') {
-                    // 检查权限 
+                    // 检查权限
                     admin_priv('goods_manage');
                     update_goods($goods_id, 'is_new', '0');
-                } // 设为热销 
+                } // 设为热销
                 elseif ($_POST['type'] == 'hot') {
-                    // 检查权限 
+                    // 检查权限
                     admin_priv('goods_manage');
                     update_goods($goods_id, 'is_hot', '1');
-                } // 取消热销 
+                } // 取消热销
                 elseif ($_POST['type'] == 'not_hot') {
-                    // 检查权限 
+                    // 检查权限
                     admin_priv('goods_manage');
                     update_goods($goods_id, 'is_hot', '0');
-                } // 转移到分类 
+                } // 转移到分类
                 elseif ($_POST['type'] == 'move_to') {
-                    // 检查权限 
+                    // 检查权限
                     admin_priv('goods_manage');
                     update_goods($goods_id, 'cat_id', $_POST['target_cat']);
-                } // 转移到供货商 
+                } // 转移到供货商
                 elseif ($_POST['type'] == 'suppliers_move_to') {
-                    // 检查权限 
+                    // 检查权限
                     admin_priv('goods_manage');
                     update_goods($goods_id, 'suppliers_id', $_POST['suppliers_id']);
-                } // 还原 
+                } // 还原
                 elseif ($_POST['type'] == 'restore') {
-                    // 检查权限 
+                    // 检查权限
                     admin_priv('remove_back');
 
                     update_goods($goods_id, 'is_delete', '0');
 
-                    // 记录日志 
+                    // 记录日志
                     admin_log('', 'batch_restore', 'goods');
-                } // 删除 
+                } // 删除
                 elseif ($_POST['type'] == 'drop') {
-                    // 检查权限 
+                    // 检查权限
                     admin_priv('remove_back');
 
                     delete_goods($goods_id);
 
-                    // 记录日志 
+                    // 记录日志
                     admin_log('', 'batch_remove', 'goods');
                 }
             }
 
-            // 清除缓存 
+            // 清除缓存
             clear_cache_files();
 
             if ($_POST['type'] == 'drop' || $_POST['type'] == 'restore') {
@@ -1127,7 +1127,7 @@ class GoodsController extends BaseController
             $goods_id = intval($_POST['id']);
             $goods_sn = json_str_iconv(trim($_POST['val']));
 
-            // 检查是否重复 
+            // 检查是否重复
             if (!$exc->is_only('goods_sn', $goods_sn, $goods_id)) {
                 return make_json_error($GLOBALS['_LANG']['goods_sn_exists']);
             }
@@ -1147,7 +1147,7 @@ class GoodsController extends BaseController
             $goods_id = intval($_REQUEST['goods_id']);
             $goods_sn = htmlspecialchars(json_str_iconv(trim($_REQUEST['goods_sn'])));
 
-            // 检查是否重复 
+            // 检查是否重复
             if (!$exc->is_only('goods_sn', $goods_sn, $goods_id)) {
                 return make_json_error($GLOBALS['_LANG']['goods_sn_exists']);
             }
@@ -1186,7 +1186,7 @@ class GoodsController extends BaseController
                     }
                 }
             }
-            // 检查是否重复 
+            // 检查是否重复
             return make_json_result('');
         }
 
@@ -1332,11 +1332,11 @@ class GoodsController extends BaseController
             $this->smarty->assign('list_type', $is_delete ? 'trash' : 'goods');
             $this->smarty->assign('use_storage', empty($GLOBALS['_CFG']['use_storage']) ? 0 : 1);
 
-            // 排序标记 
+            // 排序标记
             $sort_flag = sort_flag($goods_list['filter']);
             $this->smarty->assign($sort_flag['tag'], $sort_flag['img']);
 
-            // 获取商品类型存在规格的类型 
+            // 获取商品类型存在规格的类型
             $specifications = get_goods_type_specifications();
             $this->smarty->assign('specifications', $specifications);
 
@@ -1352,7 +1352,7 @@ class GoodsController extends BaseController
         if ($_REQUEST['act'] == 'remove') {
             $goods_id = intval($_REQUEST['id']);
 
-            // 检查权限 
+            // 检查权限
             check_authz_json('remove_back');
 
             if ($exc->edit("is_delete = 1", $goods_id)) {
@@ -1400,7 +1400,7 @@ class GoodsController extends BaseController
                 return make_json_error('invalid params');
             }
 
-            // 取得商品信息 
+            // 取得商品信息
             $sql = "SELECT goods_id, goods_name, is_delete, is_real, goods_thumb, " .
                 "goods_img, original_img " .
                 "FROM " . $this->ecs->table('goods') .
@@ -1414,7 +1414,7 @@ class GoodsController extends BaseController
                 return make_json_error($GLOBALS['_LANG']['goods_not_in_recycle_bin']);
             }
 
-            // 删除商品图片和轮播图片 
+            // 删除商品图片和轮播图片
             if (!empty($goods['goods_thumb'])) {
                 @unlink('../' . $goods['goods_thumb']);
             }
@@ -1424,18 +1424,18 @@ class GoodsController extends BaseController
             if (!empty($goods['original_img'])) {
                 @unlink('../' . $goods['original_img']);
             }
-            // 删除商品 
+            // 删除商品
             $exc->drop($goods_id);
 
-            // 删除商品的货品记录 
+            // 删除商品的货品记录
             $sql = "DELETE FROM " . $this->ecs->table('products') .
                 " WHERE goods_id = '$goods_id'";
             $this->db->query($sql);
 
-            // 记录日志 
+            // 记录日志
             admin_log(addslashes($goods['goods_name']), 'remove', 'goods');
 
-            // 删除商品相册 
+            // 删除商品相册
             $sql = "SELECT img_url, thumb_url, img_original " .
                 "FROM " . $this->ecs->table('goods_gallery') .
                 " WHERE goods_id = '$goods_id'";
@@ -1455,7 +1455,7 @@ class GoodsController extends BaseController
             $sql = "DELETE FROM " . $this->ecs->table('goods_gallery') . " WHERE goods_id = '$goods_id'";
             $this->db->query($sql);
 
-            // 删除相关表记录 
+            // 删除相关表记录
             $sql = "DELETE FROM " . $this->ecs->table('collect_goods') . " WHERE goods_id = '$goods_id'";
             $this->db->query($sql);
             $sql = "DELETE FROM " . $this->ecs->table('goods_article') . " WHERE goods_id = '$goods_id'";
@@ -1485,7 +1485,7 @@ class GoodsController extends BaseController
             $sql = "DELETE FROM " . $this->ecs->table('goods_activity') . " WHERE goods_id = '$goods_id'";
             $this->db->query($sql);
 
-            // 如果不是实体商品，删除相应虚拟商品记录 
+            // 如果不是实体商品，删除相应虚拟商品记录
             if ($goods['is_real'] != 1) {
                 $sql = "DELETE FROM " . $this->ecs->table('virtual_card') . " WHERE goods_id = '$goods_id'";
                 if (!$this->db->query($sql, 'SILENT') && $this->db->errno() != 1146) {
@@ -1521,7 +1521,7 @@ class GoodsController extends BaseController
 
             $img_id = empty($_REQUEST['img_id']) ? 0 : intval($_REQUEST['img_id']);
 
-            // 删除图片文件 
+            // 删除图片文件
             $sql = "SELECT img_url, thumb_url, img_original " .
                 " FROM " . $GLOBALS['ecs']->table('goods_gallery') .
                 " WHERE img_id = '$img_id'";
@@ -1537,7 +1537,7 @@ class GoodsController extends BaseController
                 @unlink('../' . $row['img_original']);
             }
 
-            // 删除数据 
+            // 删除数据
             $sql = "DELETE FROM " . $GLOBALS['ecs']->table('goods_gallery') . " WHERE img_id = '$img_id' LIMIT 1";
             $GLOBALS['db']->query($sql);
 
@@ -1582,7 +1582,7 @@ class GoodsController extends BaseController
 
             foreach ($linked_array as $val) {
                 if ($is_double) {
-                    // 双向关联 
+                    // 双向关联
                     $sql = "INSERT INTO " . $this->ecs->table('link_goods') . " (goods_id, link_goods_id, is_double, admin_id) " .
                         "VALUES ('$val', '$goods_id', '$is_double', '" . session('admin_id') . "')";
                     $this->db->query($sql, 'SILENT');
@@ -1815,7 +1815,7 @@ class GoodsController extends BaseController
         if ($_REQUEST['act'] == 'product_list') {
             admin_priv('goods_manage');
 
-            // 是否存在商品id 
+            // 是否存在商品id
             if (empty($_GET['goods_id'])) {
                 $link[] = ['href' => 'goods.php?act=list', 'text' => $GLOBALS['_LANG']['cannot_found_goods']];
                 return sys_msg($GLOBALS['_LANG']['cannot_found_goods'], 1, $link);
@@ -1823,7 +1823,7 @@ class GoodsController extends BaseController
                 $goods_id = intval($_GET['goods_id']);
             }
 
-            // 取出商品信息 
+            // 取出商品信息
             $sql = "SELECT goods_sn, goods_name, goods_type, shop_price FROM " . $this->ecs->table('goods') . " WHERE goods_id = '$goods_id'";
             $goods = $this->db->getRow($sql);
             if (empty($goods)) {
@@ -1836,7 +1836,7 @@ class GoodsController extends BaseController
             $this->smarty->assign('goods_sn', sprintf($GLOBALS['_LANG']['products_title_2'], $goods['goods_sn']));
 
 
-            // 获取商品规格列表 
+            // 获取商品规格列表
             $attribute = get_goods_specifications_list($goods_id);
             if (empty($attribute)) {
                 $link[] = ['href' => 'goods.php?act=edit&goods_id=' . $goods_id, 'text' => $GLOBALS['_LANG']['edit_goods']];
@@ -1856,7 +1856,7 @@ class GoodsController extends BaseController
             $this->smarty->assign('product_sn', $goods['goods_sn'] . '_');
             $this->smarty->assign('product_number', $GLOBALS['_CFG']['default_storage']);
 
-            // 取商品的货品 
+            // 取商品的货品
             $product = product_list($goods_id, '');
 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['18_product_list']);
@@ -1875,14 +1875,14 @@ class GoodsController extends BaseController
          * 货品排序、分页、查询
          */
         if ($_REQUEST['act'] == 'product_query') {
-            // 是否存在商品id 
+            // 是否存在商品id
             if (empty($_REQUEST['goods_id'])) {
                 return make_json_error($GLOBALS['_LANG']['sys']['wrong'] . $GLOBALS['_LANG']['cannot_found_goods']);
             } else {
                 $goods_id = intval($_REQUEST['goods_id']);
             }
 
-            // 取出商品信息 
+            // 取出商品信息
             $sql = "SELECT goods_sn, goods_name, goods_type, shop_price FROM " . $this->ecs->table('goods') . " WHERE goods_id = '$goods_id'";
             $goods = $this->db->getRow($sql);
             if (empty($goods)) {
@@ -1894,7 +1894,7 @@ class GoodsController extends BaseController
             $this->smarty->assign('goods_sn', sprintf($GLOBALS['_LANG']['products_title_2'], $goods['goods_sn']));
 
 
-            // 获取商品规格列表 
+            // 获取商品规格列表
             $attribute = get_goods_specifications_list($goods_id);
             if (empty($attribute)) {
                 return make_json_error($GLOBALS['_LANG']['sys']['wrong'] . $GLOBALS['_LANG']['cannot_found_goods']);
@@ -1913,7 +1913,7 @@ class GoodsController extends BaseController
             $this->smarty->assign('product_sn', $goods['goods_sn'] . '_');
             $this->smarty->assign('product_number', $GLOBALS['_CFG']['default_storage']);
 
-            // 取商品的货品 
+            // 取商品的货品
             $product = product_list($goods_id, '');
 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['18_product_list']);
@@ -1923,7 +1923,7 @@ class GoodsController extends BaseController
             $this->smarty->assign('goods_id', $goods_id);
             $this->smarty->assign('filter', $product['filter']);
 
-            // 排序标记 
+            // 排序标记
             $sort_flag = sort_flag($product['filter']);
             $this->smarty->assign($sort_flag['tag'], $sort_flag['img']);
 
@@ -1935,24 +1935,24 @@ class GoodsController extends BaseController
          * 货品删除
          */
         if ($_REQUEST['act'] == 'product_remove') {
-            // 检查权限 
+            // 检查权限
             check_authz_json('remove_back');
 
-            // 是否存在商品id 
+            // 是否存在商品id
             if (empty($_REQUEST['id'])) {
                 return make_json_error($GLOBALS['_LANG']['product_id_null']);
             } else {
                 $product_id = intval($_REQUEST['id']);
             }
 
-            // 货品库存 
+            // 货品库存
             $product = get_product_info($product_id, 'product_number, goods_id');
 
-            // 删除货品 
+            // 删除货品
             $sql = "DELETE FROM " . $this->ecs->table('products') . " WHERE product_id = '$product_id'";
             $result = $this->db->query($sql);
             if ($result) {
-                // 修改商品库存 
+                // 修改商品库存
                 if ($this->update_goods_stock($product['goods_id'], $product_number - $product['product_number'])) {
                     //记录日志
                     admin_log('', 'update', 'goods');
@@ -1981,7 +1981,7 @@ class GoodsController extends BaseController
                 return make_json_error($GLOBALS['_LANG']['sys']['wrong'] . $GLOBALS['_LANG']['exist_same_product_sn']);
             }
 
-            // 修改 
+            // 修改
             $sql = "UPDATE " . $this->ecs->table('products') . " SET product_sn = '$product_sn' WHERE product_id = '$product_id'";
             $result = $this->db->query($sql);
             if ($result) {
@@ -1999,14 +1999,14 @@ class GoodsController extends BaseController
             $product_id = intval($_POST['id']);
             $product_number = intval($_POST['val']);
 
-            // 货品库存 
+            // 货品库存
             $product = get_product_info($product_id, 'product_number, goods_id');
 
-            // 修改货品库存 
+            // 修改货品库存
             $sql = "UPDATE " . $this->ecs->table('products') . " SET product_number = '$product_number' WHERE product_id = '$product_id'";
             $result = $this->db->query($sql);
             if ($result) {
-                // 修改商品库存 
+                // 修改商品库存
                 if ($this->update_goods_stock($product['goods_id'], $product_number - $product['product_number'])) {
                     clear_cache_files();
                     return make_json_result($product_number);
@@ -2025,32 +2025,32 @@ class GoodsController extends BaseController
             $product['product_sn'] = $_POST['product_sn'];
             $product['product_number'] = $_POST['product_number'];
 
-            // 是否存在商品id 
+            // 是否存在商品id
             if (empty($product['goods_id'])) {
                 return sys_msg($GLOBALS['_LANG']['sys']['wrong'] . $GLOBALS['_LANG']['cannot_found_goods'], 1, [], false);
             }
 
-            // 判断是否为初次添加 
+            // 判断是否为初次添加
             $insert = true;
             if (product_number_count($product['goods_id']) > 0) {
                 $insert = false;
             }
 
-            // 取出商品信息 
+            // 取出商品信息
             $sql = "SELECT goods_sn, goods_name, goods_type, shop_price FROM " . $this->ecs->table('goods') . " WHERE goods_id = '" . $product['goods_id'] . "'";
             $goods = $this->db->getRow($sql);
             if (empty($goods)) {
                 return sys_msg($GLOBALS['_LANG']['sys']['wrong'] . $GLOBALS['_LANG']['cannot_found_goods'], 1, [], false);
             }
 
-            //  
+            //
             foreach ($product['product_sn'] as $key => $value) {
                 //过滤
                 $product['product_number'][$key] = empty($product['product_number'][$key]) ? (empty($GLOBALS['_CFG']['use_storage']) ? 0 : $GLOBALS['_CFG']['default_storage']) : trim($product['product_number'][$key]); //库存
 
                 //获取规格在商品属性表中的id
                 foreach ($product['attr'] as $attr_key => $attr_value) {
-                    // 检测：如果当前所添加的货品规格存在空值或0 
+                    // 检测：如果当前所添加的货品规格存在空值或0
                     if (empty($attr_value[$key])) {
                         continue 2;
                     }
@@ -2063,7 +2063,7 @@ class GoodsController extends BaseController
                 }
                 $goods_attr_id = handle_goods_attr($product['goods_id'], $id_list, $is_spec_list, $value_price_list);
 
-                // 是否为重复规格的货品 
+                // 是否为重复规格的货品
                 $goods_attr = sort_goods_attr_id_array($goods_attr_id);
                 $goods_attr = implode('|', $goods_attr['sort']);
                 if (check_goods_attr_exist($goods_attr, $product['goods_id'])) {
@@ -2072,7 +2072,7 @@ class GoodsController extends BaseController
                 }
                 //货品号不为空
                 if (!empty($value)) {
-                    // 检测：货品货号是否在商品表和货品表中重复 
+                    // 检测：货品货号是否在商品表和货品表中重复
                     if (check_goods_sn_exist($value)) {
                         continue;
                         //return sys_msg($GLOBALS['_LANG']['sys']['wrong'] . $GLOBALS['_LANG']['exist_same_goods_sn'], 1, array(), false);
@@ -2083,7 +2083,7 @@ class GoodsController extends BaseController
                     }
                 }
 
-                // 插入货品表 
+                // 插入货品表
                 $sql = "INSERT INTO " . $GLOBALS['ecs']->table('products') . " (goods_id, goods_attr, product_sn, product_number)  VALUES ('" . $product['goods_id'] . "', '$goods_attr', '$value', '" . $product['product_number'][$key] . "')";
                 if (!$GLOBALS['db']->query($sql)) {
                     continue;
@@ -2098,7 +2098,7 @@ class GoodsController extends BaseController
                     $GLOBALS['db']->query($sql);
                 }
 
-                // 修改商品表库存 
+                // 修改商品表库存
                 $product_count = product_number_count($product['goods_id']);
                 if (update_goods($product['goods_id'], 'goods_number', $product_count)) {
                     //记录日志
@@ -2108,7 +2108,7 @@ class GoodsController extends BaseController
 
             clear_cache_files();
 
-            // 返回 
+            // 返回
             if ($insert) {
                 $link[] = ['href' => 'goods.php?act=add', 'text' => $GLOBALS['_LANG']['02_goods_add']];
                 $link[] = ['href' => 'goods.php?act=list', 'text' => $GLOBALS['_LANG']['01_goods_list']];
@@ -2125,10 +2125,10 @@ class GoodsController extends BaseController
          * 货品批量操作
          */
         if ($_REQUEST['act'] == 'batch_product') {
-            // 定义返回 
+            // 定义返回
             $link[] = ['href' => 'goods.php?act=product_list&goods_id=' . $_POST['goods_id'], 'text' => $GLOBALS['_LANG']['item_list']];
 
-            // 批量操作 - 批量删除 
+            // 批量操作 - 批量删除
             if ($_POST['type'] == 'drop') {
                 //检查权限
                 admin_priv('remove_back');
@@ -2148,28 +2148,28 @@ class GoodsController extends BaseController
                     }
                     $goods_id = $product_array[0]['goods_id'];
 
-                    // 删除货品 
+                    // 删除货品
                     $sql = "DELETE FROM " . $this->ecs->table('products') . " WHERE product_id $product_bound";
                     if ($this->db->query($sql)) {
                         //记录日志
                         admin_log('', 'delete', 'products');
                     }
 
-                    // 修改商品库存 
+                    // 修改商品库存
                     if ($this->update_goods_stock($goods_id, -$sum)) {
                         //记录日志
                         admin_log('', 'update', 'goods');
                     }
 
-                    // 返回 
+                    // 返回
                     return sys_msg($GLOBALS['_LANG']['product_batch_del_success'], 0, $link);
                 } else {
-                    // 错误 
+                    // 错误
                     return sys_msg($GLOBALS['_LANG']['cannot_found_products'], 1, $link);
                 }
             }
 
-            // 返回 
+            // 返回
             return sys_msg($GLOBALS['_LANG']['no_operation'], 1, $link);
         }
     }
@@ -2247,9 +2247,9 @@ class GoodsController extends BaseController
         $GLOBALS['db']->query($sql);
 
 
-        // 循环处理每个优惠价格 
+        // 循环处理每个优惠价格
         foreach ($price_list as $key => $price) {
-            // 价格对应的数量上下限 
+            // 价格对应的数量上下限
             $volume_number = $number_list[$key];
 
             if (!empty($price)) {
@@ -2270,14 +2270,14 @@ class GoodsController extends BaseController
     private function update_goods_stock($goods_id, $value)
     {
         if ($goods_id) {
-            // $res = $goods_number - $old_product_number + $product_number; 
+            // $res = $goods_number - $old_product_number + $product_number;
             $sql = "UPDATE " . $GLOBALS['ecs']->table('goods') . "
                 SET goods_number = goods_number + $value,
                     last_update = '" . gmtime() . "'
                 WHERE goods_id = '$goods_id'";
             $result = $GLOBALS['db']->query($sql);
 
-            // 清除缓存 
+            // 清除缓存
             clear_cache_files();
 
             return $result;

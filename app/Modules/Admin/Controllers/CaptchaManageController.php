@@ -10,7 +10,7 @@ class CaptchaManageController extends BaseController
 {
     public function actionIndex()
     {
-        // 检查权限 
+        // 检查权限
         admin_priv('shop_config');
 
         /**

@@ -17,12 +17,12 @@ class Token
      */
     public static $leeway = 0;
 
-    public static $supported_algs = array(
-        'HS256' => array('hash_hmac', 'SHA256'),
-        'HS512' => array('hash_hmac', 'SHA512'),
-        'HS384' => array('hash_hmac', 'SHA384'),
-        'RS256' => array('openssl', 'SHA256'),
-    );
+    public static $supported_algs = [
+        'HS256' => ['hash_hmac', 'SHA256'],
+        'HS512' => ['hash_hmac', 'SHA512'],
+        'HS384' => ['hash_hmac', 'SHA384'],
+        'RS256' => ['openssl', 'SHA256'],
+    ];
 
     /**
      * Decodes a JWT string into a PHP object.
@@ -225,14 +225,14 @@ class Token
             $payload['platform'] = self::setPlatform($payload['uid']);
         }
 
-        $header = array('typ' => 'JWT', 'alg' => $alg);
+        $header = ['typ' => 'JWT', 'alg' => $alg];
         if ($keyId !== null) {
             $header['kid'] = $keyId;
         }
         if (isset($head) && is_array($head)) {
             $header = array_merge($head, $header);
         }
-        $segments = array();
+        $segments = [];
         $segments[] = self::urlsafeB64Encode(self::jsonEncode($header));
         $segments[] = self::urlsafeB64Encode(self::jsonEncode($payload));
         $signing_input = implode('.', $segments);
@@ -414,11 +414,11 @@ class Token
      */
     private static function handleJsonError($errno)
     {
-        $messages = array(
+        $messages = [
             JSON_ERROR_DEPTH => 'Maximum stack depth exceeded',
             JSON_ERROR_CTRL_CHAR => 'Unexpected control character found',
             JSON_ERROR_SYNTAX => 'Syntax error, malformed JSON'
-        );
+        ];
         return false;
     }
 

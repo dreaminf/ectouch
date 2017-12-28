@@ -232,7 +232,7 @@ $_LANG['js_languages']['volume_num_not_number'] = '优惠数量不是数字';
 $_LANG['js_languages']['volume_price_not_null'] = '请输入优惠价格';
 $_LANG['js_languages']['volume_price_not_number'] = '优惠价格不是数字';
 
-// 虚拟卡 
+// 虚拟卡
 $_LANG['card'] = '查看虚拟卡信息';
 $_LANG['replenish'] = '补货';
 $_LANG['batch_card_add'] = '批量补货';

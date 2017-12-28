@@ -65,7 +65,7 @@ class GoodsTypeController extends BaseController
             $type_id = !empty($_POST['id']) ? intval($_POST['id']) : 0;
             $type_name = !empty($_POST['val']) ? json_str_iconv(trim($_POST['val'])) : '';
 
-            // 检查名称是否重复 
+            // 检查名称是否重复
             $is_only = $exc->is_only('cat_name', $type_name, $type_id);
 
             if ($is_only) {
@@ -154,17 +154,17 @@ class GoodsTypeController extends BaseController
             $old_groups = get_attr_groups($cat_id);
 
             if ($this->db->autoExecute($this->ecs->table('goods_type'), $goods_type, 'UPDATE', "cat_id='$cat_id'") !== false) {
-                // 对比原来的分组 
+                // 对比原来的分组
                 $new_groups = explode("\n", str_replace("\r", '', $goods_type['attr_group']));  // 新的分组
 
                 foreach ($old_groups as $key => $val) {
                     $found = array_search($val, $new_groups);
 
                     if ($found === null || $found === false) {
-                        // 老的分组没有在新的分组中找到 
+                        // 老的分组没有在新的分组中找到
                         $this->update_attribute_group($cat_id, $key, 0);
                     } else {
-                        // 老的分组出现在新的分组中了 
+                        // 老的分组出现在新的分组中了
                         if ($key != $found) {
                             $this->update_attribute_group($cat_id, $key, $found); // 但是分组的key变了,需要更新属性的分组
                         }
@@ -191,7 +191,7 @@ class GoodsTypeController extends BaseController
             if ($exc->drop($id)) {
                 admin_log(addslashes($name), 'remove', 'goods_type');
 
-                // 清除该类型下的所有属性 
+                // 清除该类型下的所有属性
                 $sql = "SELECT attr_id FROM " . $this->ecs->table('attribute') . " WHERE cat_id = '$id'";
                 $arr = $this->db->getCol($sql);
 
@@ -217,16 +217,16 @@ class GoodsTypeController extends BaseController
     {
         $result = get_filter();
         if ($result === false) {
-            // 分页大小 
+            // 分页大小
             $filter = [];
 
-            // 记录总数以及页数 
+            // 记录总数以及页数
             $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('goods_type');
             $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
             $filter = page_and_size($filter);
 
-            // 查询记录 
+            // 查询记录
             $sql = "SELECT t.*, COUNT(a.cat_id) AS attr_count " .
                 "FROM " . $GLOBALS['ecs']->table('goods_type') . " AS t " .
                 "LEFT JOIN " . $GLOBALS['ecs']->table('attribute') . " AS a ON a.cat_id=t.cat_id " .

@@ -11,7 +11,7 @@ class TopicController extends BaseController
 {
     public function actionIndex()
     {
-        // 配置风格颜色选项 
+        // 配置风格颜色选项
         $topic_style_color = [
             '0' => '008080',
             '1' => '008000',
@@ -122,12 +122,12 @@ class TopicController extends BaseController
 
                     // 主图上传
                     if ($_FILES['topic_img']['name'] && $_FILES['topic_img']['size'] > 0) {
-                        // 检查文件合法性 
+                        // 检查文件合法性
                         if (!get_file_suffix($_FILES['topic_img']['name'], $allow_suffix)) {
                             return sys_msg($GLOBALS['_LANG']['invalid_type']);
                         }
 
-                        // 处理 
+                        // 处理
                         $name = date('Ymd');
                         for ($i = 0; $i < 6; $i++) {
                             $name .= chr(mt_rand(97, 122));
@@ -139,9 +139,9 @@ class TopicController extends BaseController
                             $topic_img = DATA_DIR . '/afficheimg/' . $name;
                         }
                     } elseif (!empty($_REQUEST['url'])) {
-                        // 来自互联网图片 不可以是服务器地址 
+                        // 来自互联网图片 不可以是服务器地址
                         if (strstr($_REQUEST['url'], 'http') && !strstr($_REQUEST['url'], $_SERVER['SERVER_NAME'])) {
-                            // 取互联网图片至本地 
+                            // 取互联网图片至本地
                             $topic_img = $this->get_url_image($_REQUEST['url']);
                         } else {
                             return sys_msg($GLOBALS['_LANG']['web_url_no']);
@@ -165,12 +165,12 @@ class TopicController extends BaseController
 
             // 标题图上传
             if ($_FILES['title_pic']['name'] && $_FILES['title_pic']['size'] > 0) {
-                // 检查文件合法性 
+                // 检查文件合法性
                 if (!get_file_suffix($_FILES['title_pic']['name'], $allow_suffix)) {
                     return sys_msg($GLOBALS['_LANG']['invalid_type']);
                 }
 
-                // 处理 
+                // 处理
                 $name = date('Ymd');
                 for ($i = 0; $i < 6; $i++) {
                     $name .= chr(mt_rand(97, 122));
@@ -182,9 +182,9 @@ class TopicController extends BaseController
                     $title_pic = DATA_DIR . '/afficheimg/' . $name;
                 }
             } elseif (!empty($_REQUEST['title_url'])) {
-                // 来自互联网图片 不可以是服务器地址 
+                // 来自互联网图片 不可以是服务器地址
                 if (strstr($_REQUEST['title_url'], 'http') && !strstr($_REQUEST['title_url'], $_SERVER['SERVER_NAME'])) {
-                    // 取互联网图片至本地 
+                    // 取互联网图片至本地
                     $title_pic = $this->get_url_image($_REQUEST['title_url']);
                 } else {
                     return sys_msg($GLOBALS['_LANG']['web_url_no']);
@@ -274,7 +274,7 @@ class TopicController extends BaseController
             $this->smarty->assign('page_count', $topic_list['page_count']);
             $this->smarty->assign('use_storage', empty($GLOBALS['_CFG']['use_storage']) ? 0 : 1);
 
-            // 排序标记 
+            // 排序标记
             $sort_flag = sort_flag($topic_list['filter']);
             $this->smarty->assign($sort_flag['tag'], $sort_flag['img']);
 
@@ -292,14 +292,14 @@ class TopicController extends BaseController
     {
         $result = get_filter();
         if ($result === false) {
-            // 查询条件 
+            // 查询条件
             $filter['sort_by'] = empty($_REQUEST['sort_by']) ? 'topic_id' : trim($_REQUEST['sort_by']);
             $filter['sort_order'] = empty($_REQUEST['sort_order']) ? 'DESC' : trim($_REQUEST['sort_order']);
 
             $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('topic');
             $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-            // 分页大小 
+            // 分页大小
             $filter = page_and_size($filter);
 
             $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('topic') . " ORDER BY $filter[sort_by] $filter[sort_order]";

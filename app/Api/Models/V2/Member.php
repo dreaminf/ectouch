@@ -60,7 +60,7 @@ class Member extends BaseModel
     public static function logAccountChange($user_id, $user_money = 0, $frozen_money = 0, $rank_points = 0, $pay_points = 0, $change_desc = '', $change_type = self::ACT_OTHER)
     {
         /* 插入帐户变动记录 */
-        $account_log = array(
+        $account_log = [
             'user_id' => $user_id,
             'user_money' => $user_money,
             'frozen_money' => $frozen_money,
@@ -69,7 +69,7 @@ class Member extends BaseModel
             'change_time' => time(),
             'change_desc' => $change_desc,
             'change_type' => $change_type
-        );
+        ];
         AccountLog::insert($account_log);
 
         /* 更新用户信息 */
@@ -912,7 +912,7 @@ class Member extends BaseModel
     public static function log_account_change($user_id, $user_money = 0, $frozen_money = 0, $rank_points = 0, $pay_points = 0, $change_desc = '', $change_type = self::ACT_OTHER)
     {
         /* 插入帐户变动记录 */
-        $account_log = array(
+        $account_log = [
             'user_id' => $user_id,
             'user_money' => $user_money,
             'frozen_money' => $frozen_money,
@@ -921,7 +921,7 @@ class Member extends BaseModel
             'change_time' => time(),
             'change_desc' => $change_desc,
             'change_type' => $change_type
-        );
+        ];
         AccountLog::insert($account_log);
         // /* 更新用户信息 */
         self::where('user_id', $user_id)

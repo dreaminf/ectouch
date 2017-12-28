@@ -26,7 +26,7 @@ class PickOutController extends BaseController
         }
 
         if (empty($cat_id)) {
-            // 获取所有符合条件的商品类型 
+            // 获取所有符合条件的商品类型
             $sql = "SELECT DISTINCT t.cat_id, t.cat_name " .
                 "FROM " . $this->ecs->table('goods_type') . " AS t, " . $this->ecs->table('attribute') . " AS a, " . $this->ecs->table('goods_attr') . " AS g " .
                 "WHERE t.cat_id = a.cat_id AND a.attr_id = g.attr_id AND t.enabled = 1";
@@ -43,7 +43,7 @@ class PickOutController extends BaseController
 
             $in_cat = "AND a.cat_id " . db_create_in($in_cat);
 
-            // 获取符合条件的属性 
+            // 获取符合条件的属性
             $sql = "SELECT DISTINCT a.attr_id " .
                 "FROM " . $this->ecs->table('goods_attr') . " AS g, " . $this->ecs->table('attribute') . " AS a " .
                 "WHERE a.attr_id = g.attr_id " . $in_cat;
@@ -51,7 +51,7 @@ class PickOutController extends BaseController
             $in_attr = $this->db->getCol($sql); //符合条件attr_id;
             $in_attr = 'AND g.attr_id ' . db_create_in($in_attr);
 
-            // 获取所有属性值 
+            // 获取所有属性值
             $sql = "SELECT DISTINCT g.attr_id, a.attr_name, a.cat_id, g.attr_value" .
                 " FROM " . $this->ecs->table('goods_attr') . " AS g, " .
                 $this->ecs->table('attribute') . " AS a" .
@@ -66,16 +66,16 @@ class PickOutController extends BaseController
                 $condition[$row['cat_id']]['cat'][$row['attr_id']]['list'][] = ['name' => $row['attr_value'], 'url' => 'pick_out.php?cat_id=' . $row['cat_id'] . '&amp;attr[' . $row['attr_id'] . ']=' . urlencode($row['attr_value'])];
             }
 
-            // 获取商品总数 
+            // 获取商品总数
             $goods_count = $this->db->getOne("SELECT COUNT(DISTINCT(goods_id)) FROM " . $this->ecs->table('goods_attr'));
-            // 获取符合条件的商品id 
+            // 获取符合条件的商品id
             //$sql = "SELECT DISTINCT goods_id FROM " .$this->ecs->table('goods_attr'). " LIMIT 100";
             $sql = "SELECT DISTINCT goods_id FROM " . $this->ecs->table('goods_attr');
             $in_goods = $this->db->getCol($sql);
             $in_goods = 'AND g.goods_id ' . db_create_in(implode(',', $in_goods));
             $url = "search.php?pickout=1";
         } else {
-            // 取得商品类型名称 
+            // 取得商品类型名称
             $sql = "SELECT cat_name FROM " . $this->ecs->table('goods_type') . " WHERE cat_id = '$cat_id'";
             $cat_name = $this->db->getOne($sql);
             $condition[0]['name'] = $cat_name;
@@ -84,7 +84,7 @@ class PickOutController extends BaseController
 
             $attr_picks = []; //选择过的attr_id
 
-            // 处理属性,获取满足属性的goods_id 
+            // 处理属性,获取满足属性的goods_id
             if (!empty($_GET['attr'])) {
                 $attr_table = '';
                 $attr_where = '';
@@ -106,31 +106,31 @@ class PickOutController extends BaseController
                     $i++;
                 }
 
-                // 获取指定attr_id的名字 
+                // 获取指定attr_id的名字
                 $sql = "SELECT attr_id, attr_name FROM " . $this->ecs->table('attribute') . " WHERE attr_id " . db_create_in(implode(',', $attr_picks));
                 $rs = $this->db->query($sql);
                 foreach ($rs as $row) {
                     $picks[] = ['name' => '<strong>' . $row['attr_name'] . ':</strong><br />' . htmlspecialchars(urldecode($_GET['attr'][$row['attr_id']])), 'url' => 'pick_out.php?cat_id=' . $cat_id . $this->search_url($attr_picks, $row['attr_id'])];
                 }
 
-                // 查出数量 
+                // 查出数量
                 $goods_count = count($goods_result);
-                // 获取符合条件的goods_id 
+                // 获取符合条件的goods_id
                 $in_goods = 'AND g.goods_id ' . db_create_in(implode(',', $goods_result));
             } else {
-                // 仅选择了商品类型的情况 
+                // 仅选择了商品类型的情况
 
-                // 查出数量 
+                // 查出数量
                 $goods_count = $this->db->getOne("SELECT COUNT(distinct(g.goods_id)) FROM " . $this->ecs->table('goods_attr') . " AS g, " . $this->ecs->table('attribute') . " AS a WHERE g.attr_id = a.attr_id AND a.cat_id = '$cat_id' ");
 
-                // 防止结果过大，最多只查出前100个goods_id 
+                // 防止结果过大，最多只查出前100个goods_id
 
                 $sql = "SELECT DISTINCT g.goods_id FROM " . $this->ecs->table('goods_attr') . " AS g, " . $this->ecs->table('attribute') . " AS a WHERE g.attr_id = a.attr_id AND a.cat_id = '$cat_id' LIMIT 100";
                 $in_goods = $this->db->getCol($sql);
                 $in_goods = 'AND g.goods_id ' . db_create_in(implode(',', $in_goods));
             }
 
-            // 获取符合条件的属性 
+            // 获取符合条件的属性
             $sql = "SELECT DISTINCT a.attr_id FROM " . $this->ecs->table('goods_attr') . " AS g, " . $this->ecs->table('attribute') . " AS a " .
                 "WHERE a.attr_id = g.attr_id " . $in_goods;
 
@@ -138,7 +138,7 @@ class PickOutController extends BaseController
             $in_attr = array_diff($in_attr, $attr_picks); // 除去已经选择过的attr_id
             $in_attr = 'AND g.attr_id ' . db_create_in(implode(',', $in_attr));
 
-            // 获取所有属性值 
+            // 获取所有属性值
             $sql = "SELECT DISTINCT g.attr_id, a.attr_name, g.attr_value FROM " . $this->ecs->table('goods_attr') . " AS g, " . $this->ecs->table('attribute') . " AS a WHERE a.attr_id = g.attr_id " . $in_attr . $in_goods;
             $rs = $this->db->query($sql);
 
@@ -149,11 +149,11 @@ class PickOutController extends BaseController
                 $condition[0]['cat'][$row['attr_id']]['list'][] = ['name' => $row['attr_value'], 'url' => 'pick_out.php?cat_id=' . $cat_id . $this->search_url($attr_picks) . '&amp;attr[' . $row['attr_id'] . ']=' . urlencode($row['attr_value'])];
             }
 
-            // 生成更多商品的url 
+            // 生成更多商品的url
             $url = "search.php?pickout=1&amp;cat_id=" . $cat_id . $this->search_url($attr_picks);
         }
 
-        // 显示商品 
+        // 显示商品
         $goods = [];
         $sql = "SELECT g.goods_id, g.goods_name, g.market_price, g.shop_price AS org_price, " .
             "IFNULL(mp.user_price, g.shop_price * '". session('discount') ."') AS shop_price, " .
@@ -165,7 +165,7 @@ class PickOutController extends BaseController
             "ORDER BY g.sort_order, g.last_update DESC";
         $res = $this->db->selectLimit($sql, 4);
 
-        // 获取品牌 
+        // 获取品牌
         $sql = "SELECT b.brand_id, b.brand_name, b.brand_logo, COUNT(g.goods_id) AS goods_num " .
             " FROM " . $this->ecs->table('goods') . " AS g " .
             " LEFT JOIN " . $this->ecs->table('brand') . " AS b ON g.brand_id=b.brand_id " .
@@ -177,7 +177,7 @@ class PickOutController extends BaseController
             $brand_list[$key]['url'] = $url . '&amp;brand=' . $val['brand_id'];
         }
 
-        // 获取分类 
+        // 获取分类
         $sql = "SELECT c.cat_id, c.cat_name, COUNT(g.goods_id) AS goods_num " .
             " FROM " . $this->ecs->table('goods') . " AS g " .
             " LEFT JOIN " . $this->ecs->table('category') . " AS c ON c.cat_id = g.cat_id " .
@@ -227,7 +227,7 @@ class PickOutController extends BaseController
         $this->smarty->assign('top_goods', get_top10());      // 销售排行
         $this->smarty->assign('data_dir', DATA_DIR);  // 数据目录
 
-        // 调查 
+        // 调查
         $vote = get_vote();
         if (!empty($vote)) {
             $this->smarty->assign('vote_id', $vote['id']);

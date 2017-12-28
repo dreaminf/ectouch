@@ -23,11 +23,11 @@ class AlipayWapSubmit {
 	var $alipay_gateway_new = 'https://mapi.alipay.com/gateway.do?';
 
 	function __construct($private_key){
-		$this->alipay_config = array(
+		$this->alipay_config = [
             'sign_type' => strtoupper('RSA'),
             'input_charset' => strtolower('utf-8'),
             'private_key' => $private_key,
-        );
+        ];
 	}
     function AlipayWapSubmit($private_key) {
     	$this->__construct($private_key);
@@ -55,10 +55,10 @@ class AlipayWapSubmit {
 	}
 
 	/**
-     * 生成要请求给支付宝的参数数组
-     * @param $para_temp 请求前的参数数组
-     * @return 要请求的参数数组
-     */
+	 * 生成要请求给支付宝的参数数组
+	 * @param $para_temp 请求前的参数数组
+	 * @return 要请求的参数数组
+	 */
 	function buildRequestPara($para_temp) {
 		//除去待签名参数数组中的空值和签名参数
 		$para_filter = paraFilter($para_temp);
@@ -77,10 +77,10 @@ class AlipayWapSubmit {
 	}
 
 	/**
-     * 生成要请求给支付宝的参数数组
-     * @param $para_temp 请求前的参数数组
-     * @return 要请求的参数数组字符串
-     */
+	 * 生成要请求给支付宝的参数数组
+	 * @param $para_temp 请求前的参数数组
+	 * @return 要请求的参数数组字符串
+	 */
 	function buildRequestParaToString($para_temp) {
 		//待请求参数数组
 		$para = $this->buildRequestPara($para_temp);
@@ -117,13 +117,13 @@ class AlipayWapSubmit {
 	
 	
 	/**
-     * 用于防钓鱼，调用接口query_timestamp来获取时间戳的处理函数
+	 * 用于防钓鱼，调用接口query_timestamp来获取时间戳的处理函数
 	 * 注意：该功能PHP5环境及以上支持，因此必须服务器、本地电脑中装有支持DOMDocument、SSL的PHP配置环境。建议本地调试时使用PHP开发软件
-     * return 时间戳字符串
+	 * return 时间戳字符串
 	 */
 	function query_timestamp() {
 		$url = $this->alipay_gateway_new."service=query_timestamp&partner=".trim(strtolower($this->alipay_config['partner']))."&_input_charset=".trim(strtolower($this->alipay_config['input_charset']));
-		$encrypt_key = "";		
+		$encrypt_key = "";
 
 		$doc = new DOMDocument();
 		$doc->load($url);

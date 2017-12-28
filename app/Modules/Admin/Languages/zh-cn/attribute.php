@@ -3,7 +3,7 @@
  *  商品类型管理语言文件
  */
 
-// 列表 
+// 列表
 $_LANG['by_goods_type'] = '按商品类型显示：';
 $_LANG['all_goods_type'] = '所有商品类型';
 
@@ -20,7 +20,7 @@ $_LANG['value_attr_input_type'][ATTR_TEXTAREA] = '多行文本框';
 
 $_LANG['drop_confirm'] = '您确实要删除该属性吗？';
 
-// 添加/编辑 
+// 添加/编辑
 $_LANG['label_attr_name'] = '属性名称：';
 $_LANG['label_cat_id'] = '所属商品类型：';
 $_LANG['label_attr_index'] = '能否进行检索：';
@@ -48,7 +48,7 @@ $_LANG['back_list'] = '返回属性列表';
 $_LANG['add_ok'] = '添加属性 [%s] 成功。';
 $_LANG['edit_ok'] = '编辑属性 [%s] 成功。';
 
-// 提示信息 
+// 提示信息
 $_LANG['name_exist'] = '该属性名称已存在，请您换一个名称。';
 $_LANG['drop_confirm'] = '您确实要删除该属性吗？';
 $_LANG['notice_drop_confirm'] = '已经有%s个商品使用该属性，您确实要删除该属性吗？';

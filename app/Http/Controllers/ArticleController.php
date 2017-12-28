@@ -20,7 +20,7 @@ class ArticleController extends BaseController
         $cache_id = sprintf('%X', crc32($_REQUEST['id'] . '-' . $GLOBALS['_CFG']['lang']));
 
         if (!$this->smarty->is_cached('article.dwt', $cache_id)) {
-            // 文章详情 
+            // 文章详情
             $article = $this->get_article_info($article_id);
 
             if (empty($article)) {
@@ -46,7 +46,7 @@ class ArticleController extends BaseController
             $this->smarty->assign('type', '1');
             $this->smarty->assign('promotion_info', get_promotion_info());
 
-            // 验证码相关设置 
+            // 验证码相关设置
             if ((intval($GLOBALS['_CFG']['captcha']) & CAPTCHA_COMMENT) && gd_version() > 0) {
                 $this->smarty->assign('enabled_captcha', 1);
                 $this->smarty->assign('rand', mt_rand());
@@ -68,14 +68,14 @@ class ArticleController extends BaseController
             $this->smarty->assign('ur_here', $position['ur_here']);  // 当前位置
             $this->smarty->assign('comment_type', 1);
 
-            // 相关商品 
+            // 相关商品
             $sql = "SELECT a.goods_id, g.goods_name " .
                 "FROM " . $this->ecs->table('goods_article') . " AS a, " . $this->ecs->table('goods') . " AS g " .
                 "WHERE a.goods_id = g.goods_id " .
                 "AND a.article_id = '$_REQUEST[id]' ";
             $this->smarty->assign('goods_list', $this->db->getAll($sql));
 
-            // 上一篇下一篇文章 
+            // 上一篇下一篇文章
             $next_article = $this->db->getRow("SELECT article_id, title FROM " . $this->ecs->table('article') . " WHERE article_id > $article_id AND cat_id=$article[cat_id] AND is_open=1 LIMIT 1");
             if (!empty($next_article)) {
                 $next_article['url'] = build_uri('article', ['aid' => $next_article['article_id']], $next_article['title']);
@@ -107,7 +107,7 @@ class ArticleController extends BaseController
      */
     private function get_article_info($article_id)
     {
-        // 获得文章的信息 
+        // 获得文章的信息
         $sql = "SELECT a.*, IFNULL(AVG(r.comment_rank), 0) AS comment_rank " .
             "FROM " . $GLOBALS['ecs']->table('article') . " AS a " .
             "LEFT JOIN " . $GLOBALS['ecs']->table('comment') . " AS r ON r.id_value = a.article_id AND comment_type = 1 " .
@@ -118,7 +118,7 @@ class ArticleController extends BaseController
             $row['comment_rank'] = ceil($row['comment_rank']);                              // 用户评论级别取整
             $row['add_time'] = local_date($GLOBALS['_CFG']['date_format'], $row['add_time']); // 修正添加时间显示
 
-            // 作者信息如果为空，则用网站名称替换 
+            // 作者信息如果为空，则用网站名称替换
             if (empty($row['author']) || $row['author'] == '_SHOPHELP') {
                 $row['author'] = $GLOBALS['_CFG']['shop_name'];
             }

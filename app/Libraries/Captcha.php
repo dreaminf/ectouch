@@ -116,13 +116,13 @@ class Captcha
             $word = $this->generate_word();
         }
 
-        // 记录验证码到session 
+        // 记录验证码到session
         $this->record_word($word);
 
-        // 验证码长度 
+        // 验证码长度
         $letters = strlen($word);
 
-        // 选择一个随机的方案 
+        // 选择一个随机的方案
         mt_srand((double)microtime() * 1000000);
 
         if (function_exists('imagecreatefromjpeg') && ((imagetypes() & IMG_JPG) > 0)) {
@@ -142,7 +142,7 @@ class Captcha
             $img_org = ((function_exists('imagecreatetruecolor')) && PHP_VERSION >= '4.3') ?
                 imagecreatetruecolor($this->width, $this->height) : imagecreate($this->width, $this->height);
 
-            // 将背景图象复制原始图象并调整大小 
+            // 将背景图象复制原始图象并调整大小
             if (function_exists('imagecopyresampled') && PHP_VERSION >= '4.3') { // GD 2.x
                 imagecopyresampled($img_org, $img_bg, 0, 0, 0, 0, $this->width, $this->height, $bg_width, $bg_height);
             } else { // GD 1.x
@@ -152,10 +152,10 @@ class Captcha
 
             $clr = imagecolorallocate($img_org, $theme[1], $theme[2], $theme[3]);
 
-            // 绘制边框 
+            // 绘制边框
             //imagerectangle($img_org, 0, 0, $this->width - 1, $this->height - 1, $clr);
 
-            // 获得验证码的高度和宽度 
+            // 获得验证码的高度和宽度
             $x = ($this->width - (imagefontwidth(5) * $letters)) / 2;
             $y = ($this->height - imagefontheight(5)) / 2;
             imagestring($img_org, 5, $x, $y, $word, $clr);

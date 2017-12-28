@@ -4,7 +4,6 @@ namespace App\Api\Models\V2;
 
 use App\Api\Models\BaseModel;
 
-use App\Extensions\Header;
 
 class ShopConfig extends BaseModel
 {

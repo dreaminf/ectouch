@@ -22,12 +22,12 @@ class FriendLinkController extends BaseController
          * 友情链接列表页面
          */
         if ($_REQUEST['act'] == 'list') {
-            // 模板赋值 
+            // 模板赋值
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['list_link']);
             $this->smarty->assign('action_link', ['text' => $GLOBALS['_LANG']['add_link'], 'href' => 'friend_link.php?act=add']);
             $this->smarty->assign('full_page', 1);
 
-            // 获取友情链接数据 
+            // 获取友情链接数据
             $links_list = $this->get_links_list();
 
             $this->smarty->assign('links_list', $links_list['list']);
@@ -45,7 +45,7 @@ class FriendLinkController extends BaseController
          * 排序、分页、查询
          */
         if ($_REQUEST['act'] == 'query') {
-            // 获取友情链接数据 
+            // 获取友情链接数据
             $links_list = $this->get_links_list();
 
             $this->smarty->assign('links_list', $links_list['list']);
@@ -78,20 +78,20 @@ class FriendLinkController extends BaseController
          * 处理添加的链接
          */
         if ($_REQUEST['act'] == 'insert') {
-            // 变量初始化 
+            // 变量初始化
             $link_logo = '';
             $show_order = (!empty($_POST['show_order'])) ? intval($_POST['show_order']) : 0;
             $link_name = (!empty($_POST['link_name'])) ? sub_str(trim($_POST['link_name']), 250, false) : '';
 
-            // 查看链接名称是否有重复 
+            // 查看链接名称是否有重复
             if ($exc->num("link_name", $link_name) == 0) {
-                // 处理上传的LOGO图片 
+                // 处理上传的LOGO图片
                 if ((isset($_FILES['link_img']['error']) && $_FILES['link_img']['error'] == 0) || (!isset($_FILES['link_img']['error']) && isset($_FILES['link_img']['tmp_name']) && $_FILES['link_img']['tmp_name'] != 'none')) {
                     $img_up_info = @basename($image->upload_image($_FILES['link_img'], 'afficheimg'));
                     $link_logo = DATA_DIR . '/afficheimg/' . $img_up_info;
                 }
 
-                // 使用远程的LOGO图片 
+                // 使用远程的LOGO图片
                 if (!empty($_POST['url_logo'])) {
                     if (strpos($_POST['url_logo'], 'http://') === false && strpos($_POST['url_logo'], 'https://') === false) {
                         $link_logo = 'http://' . trim($_POST['url_logo']);
@@ -100,30 +100,30 @@ class FriendLinkController extends BaseController
                     }
                 }
 
-                // 如果链接LOGO为空, LOGO为链接的名称 
+                // 如果链接LOGO为空, LOGO为链接的名称
                 if (((isset($_FILES['upfile_flash']['error']) && $_FILES['upfile_flash']['error'] > 0) || (!isset($_FILES['upfile_flash']['error']) && isset($_FILES['upfile_flash']['tmp_name']) && $_FILES['upfile_flash']['tmp_name'] == 'none')) && empty($_POST['url_logo'])) {
                     $link_logo = '';
                 }
 
-                // 如果友情链接的链接地址没有http://，补上 
+                // 如果友情链接的链接地址没有http://，补上
                 if (strpos($_POST['link_url'], 'http://') === false && strpos($_POST['link_url'], 'https://') === false) {
                     $link_url = 'http://' . trim($_POST['link_url']);
                 } else {
                     $link_url = trim($_POST['link_url']);
                 }
 
-                // 插入数据 
+                // 插入数据
                 $sql = "INSERT INTO " . $this->ecs->table('friend_link') . " (link_name, link_url, link_logo, show_order) " .
                     "VALUES ('$link_name', '$link_url', '$link_logo', '$show_order')";
                 $this->db->query($sql);
 
-                // 记录管理员操作 
+                // 记录管理员操作
                 admin_log($_POST['link_name'], 'add', 'friendlink');
 
-                // 清除缓存 
+                // 清除缓存
                 clear_cache_files();
 
-                // 提示信息 
+                // 提示信息
                 $link[0]['text'] = $GLOBALS['_LANG']['continue_add'];
                 $link[0]['href'] = 'friend_link.php?act=add';
 
@@ -143,12 +143,12 @@ class FriendLinkController extends BaseController
         if ($_REQUEST['act'] == 'edit') {
             admin_priv('friendlink');
 
-            // 取得友情链接数据 
+            // 取得友情链接数据
             $sql = "SELECT link_id, link_name, link_url, link_logo, show_order " .
                 "FROM " . $this->ecs->table('friend_link') . " WHERE link_id = '" . intval($_REQUEST['id']) . "'";
             $link_arr = $this->db->getRow($sql);
 
-            // 标记为图片链接还是文字链接 
+            // 标记为图片链接还是文字链接
             if (!empty($link_arr['link_logo'])) {
                 $type = 'img';
                 $link_logo = $link_arr['link_logo'];
@@ -159,7 +159,7 @@ class FriendLinkController extends BaseController
 
             $link_arr['link_name'] = sub_str($link_arr['link_name'], 250, false); // 截取字符串为250个字符避免出现非法字符的情况
 
-            // 模板赋值 
+            // 模板赋值
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['edit_link']);
             $this->smarty->assign('action_link', ['href' => 'friend_link.php?act=list&' . list_link_postfix(), 'text' => $GLOBALS['_LANG']['list_link']]);
             $this->smarty->assign('form_act', 'update');
@@ -176,19 +176,19 @@ class FriendLinkController extends BaseController
          * 编辑链接的处理页面
          */
         if ($_REQUEST['act'] == 'update') {
-            // 变量初始化 
+            // 变量初始化
             $id = (!empty($_REQUEST['id'])) ? intval($_REQUEST['id']) : 0;
             $show_order = (!empty($_POST['show_order'])) ? intval($_POST['show_order']) : 0;
             $link_name = (!empty($_POST['link_name'])) ? trim($_POST['link_name']) : '';
 
-            // 如果有图片LOGO要上传 
+            // 如果有图片LOGO要上传
             if ((isset($_FILES['link_img']['error']) && $_FILES['link_img']['error'] == 0) || (!isset($_FILES['link_img']['error']) && isset($_FILES['link_img']['tmp_name']) && $_FILES['link_img']['tmp_name'] != 'none')) {
                 $img_up_info = @basename($image->upload_image($_FILES['link_img'], 'afficheimg'));
                 $link_logo = ", link_logo = " . '\'' . DATA_DIR . '/afficheimg/' . $img_up_info . '\'';
             } elseif (!empty($_POST['url_logo'])) {
                 $link_logo = ", link_logo = '$_POST[url_logo]'";
             } else {
-                // 如果是文字链接, LOGO为链接的名称 
+                // 如果是文字链接, LOGO为链接的名称
                 $link_logo = ", link_logo = ''";
             }
 
@@ -202,14 +202,14 @@ class FriendLinkController extends BaseController
                 }
             }
 
-            // 如果友情链接的链接地址没有http://，补上 
+            // 如果友情链接的链接地址没有http://，补上
             if (strpos($_POST['link_url'], 'http://') === false && strpos($_POST['link_url'], 'https://') === false) {
                 $link_url = 'http://' . trim($_POST['link_url']);
             } else {
                 $link_url = trim($_POST['link_url']);
             }
 
-            // 更新信息 
+            // 更新信息
             $sql = "UPDATE " . $this->ecs->table('friend_link') . " SET " .
                 "link_name = '$link_name', " .
                 "link_url = '$link_url' " .
@@ -218,13 +218,13 @@ class FriendLinkController extends BaseController
                 "WHERE link_id = '$id'";
 
             $this->db->query($sql);
-            // 记录管理员操作 
+            // 记录管理员操作
             admin_log($_POST['link_name'], 'edit', 'friendlink');
 
-            // 清除缓存 
+            // 清除缓存
             clear_cache_files();
 
-            // 提示信息 
+            // 提示信息
             $link[0]['text'] = $GLOBALS['_LANG']['back_list'];
             $link[0]['href'] = 'friend_link.php?act=list&' . list_link_postfix();
 
@@ -240,7 +240,7 @@ class FriendLinkController extends BaseController
             $id = intval($_POST['id']);
             $link_name = json_str_iconv(trim($_POST['val']));
 
-            // 检查链接名称是否重复 
+            // 检查链接名称是否重复
             if ($exc->num("link_name", $link_name, $id) != 0) {
                 return make_json_error(sprintf($GLOBALS['_LANG']['link_name_exist'], $link_name));
             } else {
@@ -262,7 +262,7 @@ class FriendLinkController extends BaseController
 
             $id = intval($_GET['id']);
 
-            // 获取链子LOGO,并删除 
+            // 获取链子LOGO,并删除
             $link_logo = $exc->get_name($id, "link_logo");
 
             if ((strpos($link_logo, 'http://') === false) && (strpos($link_logo, 'https://') === false)) {
@@ -288,7 +288,7 @@ class FriendLinkController extends BaseController
             $id = intval($_POST['id']);
             $order = json_str_iconv(trim($_POST['val']));
 
-            // 检查输入的值是否合法 
+            // 检查输入的值是否合法
             if (!preg_match("/^[0-9]+$/", $order)) {
                 return make_json_error(sprintf($GLOBALS['_LANG']['enter_int'], $order));
             } else {
@@ -300,7 +300,7 @@ class FriendLinkController extends BaseController
         }
     }
 
-    // 获取友情链接数据列表 
+    // 获取友情链接数据列表
     private function get_links_list()
     {
         $result = get_filter();
@@ -309,13 +309,13 @@ class FriendLinkController extends BaseController
             $filter['sort_by'] = empty($_REQUEST['sort_by']) ? 'link_id' : trim($_REQUEST['sort_by']);
             $filter['sort_order'] = empty($_REQUEST['sort_order']) ? 'DESC' : trim($_REQUEST['sort_order']);
 
-            // 获得总记录数据 
+            // 获得总记录数据
             $sql = 'SELECT COUNT(*) FROM ' . $GLOBALS['ecs']->table('friend_link');
             $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
             $filter = page_and_size($filter);
 
-            // 获取数据 
+            // 获取数据
             $sql = 'SELECT link_id, link_name, link_url, link_logo, show_order' .
                 ' FROM ' . $GLOBALS['ecs']->table('friend_link') .
                 " ORDER by $filter[sort_by] $filter[sort_order]";

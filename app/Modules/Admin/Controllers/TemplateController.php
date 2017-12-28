@@ -19,11 +19,11 @@ class TemplateController extends BaseController
         if ($_REQUEST['act'] == 'list') {
             admin_priv('template_select');
 
-            // 获得当前的模版的信息 
+            // 获得当前的模版的信息
             $curr_template = $GLOBALS['_CFG']['template'];
             $curr_style = $GLOBALS['_CFG']['stylename'];
 
-            // 获得可用的模版 
+            // 获得可用的模版
             $available_templates = [];
             $template_path = resource_path('themes');
             $template_dir = glob($template_path);
@@ -34,7 +34,7 @@ class TemplateController extends BaseController
             }
             @closedir($template_dir);
 
-            // 获得可用的模版的可选风格数组 
+            // 获得可用的模版的可选风格数组
             $templates_style = [];
             if (count($available_templates) > 0) {
                 foreach ($available_templates as $value) {
@@ -42,7 +42,7 @@ class TemplateController extends BaseController
                 }
             }
 
-            // 清除不需要的模板设置 
+            // 清除不需要的模板设置
             $available_code = [];
             $sql = "DELETE FROM " . $this->ecs->table('template') . " WHERE 1 ";
             foreach ($available_templates as $tmp) {
@@ -87,12 +87,12 @@ class TemplateController extends BaseController
             $editable_libs = get_editable_libs($curr_template, $page_libs[$curr_template]);
 
             if (empty($editable_libs)) {
-                // 获取数据库中数据，并跟模板中数据核对,并设置动态内容 
-                // 固定内容 
+                // 获取数据库中数据，并跟模板中数据核对,并设置动态内容
+                // 固定内容
                 foreach ($page_libs[$curr_template] as $val => $number_enabled) {
                     $lib = basename(strtolower(substr($val, 0, strpos($val, '.'))));
                     if (!in_array($lib, $GLOBALS['dyna_libs'])) {
-                        // 先排除动态内容 
+                        // 先排除动态内容
                         $temp_options[$lib] = get_setted($val, $temp_libs);
                         $temp_options[$lib]['desc'] = $GLOBALS['_LANG']['template_libs'][$lib];
                         $temp_options[$lib]['library'] = $val;
@@ -101,12 +101,12 @@ class TemplateController extends BaseController
                     }
                 }
             } else {
-                // 获取数据库中数据，并跟模板中数据核对,并设置动态内容 
-                // 固定内容 
+                // 获取数据库中数据，并跟模板中数据核对,并设置动态内容
+                // 固定内容
                 foreach ($page_libs[$curr_template] as $val => $number_enabled) {
                     $lib = basename(strtolower(substr($val, 0, strpos($val, '.'))));
                     if (!in_array($lib, $GLOBALS['dyna_libs'])) {
-                        // 先排除动态内容 
+                        // 先排除动态内容
                         $temp_options[$lib] = get_setted($val, $temp_libs);
                         $temp_options[$lib]['desc'] = $GLOBALS['_LANG']['template_libs'][$lib];
                         $temp_options[$lib]['library'] = $val;
@@ -120,7 +120,7 @@ class TemplateController extends BaseController
                 }
             }
 
-            // 动态内容 
+            // 动态内容
             $cate_goods = [];
             $brand_goods = [];
             $cat_articles = [];
@@ -134,10 +134,10 @@ class TemplateController extends BaseController
             $db_dyna_libs = [];
             foreach ($rc as $row) {
                 if ($row['type'] > 0) {
-                    // 动态内容 
+                    // 动态内容
                     $db_dyna_libs[$row['region']][$row['library']][] = ['id' => $row['id'], 'number' => $row['number'], 'type' => $row['type']];
                 } else {
-                    // 固定内容 
+                    // 固定内容
                     $lib = basename(strtolower(substr($row['library'], 0, strpos($row['library'], '.'))));
                     if (isset($lib)) {
                         $temp_options[$lib]['number'] = $row['number'];
@@ -146,29 +146,29 @@ class TemplateController extends BaseController
             }
 
             foreach ($temp_libs as $val) {
-                // 对动态内容赋值 
+                // 对动态内容赋值
                 if ($val['lib'] == 'cat_goods') {
-                    // 分类下的商品 
+                    // 分类下的商品
                     if (isset($db_dyna_libs[$val['region']][$val['library']]) && ($row = array_shift($db_dyna_libs[$val['region']][$val['library']]))) {
                         $cate_goods[] = ['region' => $val['region'], 'sort_order' => $val['sort_order'], 'number' => $row['number'], 'cats' => cat_list(0, $row['id'])];
                     } else {
                         $cate_goods[] = ['region' => $val['region'], 'sort_order' => $val['sort_order'], 'number' => 0, 'cats' => cat_list(0)];
                     }
                 } elseif ($val['lib'] == 'brand_goods') {
-                    // 品牌下的商品 
+                    // 品牌下的商品
                     if (isset($db_dyna_libs[$val['region']][$val['library']]) && ($row = array_shift($db_dyna_libs[$val['region']][$val['library']]))) {
                         $brand_goods[] = ['region' => $val['region'], 'sort_order' => $val['sort_order'], 'number' => $row['number'], 'brand' => $row['id']];
                     } else {
                         $brand_goods[] = ['region' => $val['region'], 'sort_order' => $val['sort_order'], 'number' => 0, 'brand' => 0];
                     }
-                } // 文章列表 
+                } // 文章列表
                 elseif ($val['lib'] == 'cat_articles') {
                     if (isset($db_dyna_libs[$val['region']][$val['library']]) && ($row = array_shift($db_dyna_libs[$val['region']][$val['library']]))) {
                         $cat_articles[] = ['region' => $val['region'], 'sort_order' => $val['sort_order'], 'number' => $row['number'], 'cat' => article_cat_list(0, $row['id'])];
                     } else {
                         $cat_articles[] = ['region' => $val['region'], 'sort_order' => $val['sort_order'], 'number' => 0, 'cat' => article_cat_list(0)];
                     }
-                } // 广告位 
+                } // 广告位
                 elseif ($val['lib'] == 'ad_position') {
                     if (isset($db_dyna_libs[$val['region']][$val['library']]) && ($row = array_shift($db_dyna_libs[$val['region']][$val['library']]))) {
                         $ad_positions[] = ['region' => $val['region'], 'sort_order' => $val['sort_order'], 'number' => $row['number'], 'ad_pos' => $row['id']];
@@ -202,7 +202,7 @@ class TemplateController extends BaseController
             $curr_template = $GLOBALS['_CFG']['template'];
             $this->db->query("DELETE FROM " . $this->ecs->table('template') . " WHERE remarks = '' AND filename = '$_POST[template_file]' AND theme = '$curr_template'");
 
-            // 先处理固定内容 
+            // 先处理固定内容
             foreach ($_POST['regions'] as $key => $val) {
                 $number = isset($_POST['number'][$key]) ? intval($_POST['number'][$key]) : 0;
                 if (!in_array($key, $GLOBALS['dyna_libs']) and (isset($_POST['display'][$key]) and $_POST['display'][$key] == 1 or $number > 0)) {
@@ -214,7 +214,7 @@ class TemplateController extends BaseController
                 }
             }
 
-            // 分类的商品 
+            // 分类的商品
             if (isset($_POST['regions']['cat_goods'])) {
                 foreach ($_POST['regions']['cat_goods'] as $key => $val) {
                     if ($_POST['categories']['cat_goods'][$key] != '' && intval($_POST['categories']['cat_goods'][$key]) > 0) {
@@ -231,7 +231,7 @@ class TemplateController extends BaseController
                 }
             }
 
-            // 品牌的商品 
+            // 品牌的商品
             if (isset($_POST['regions']['brand_goods'])) {
                 foreach ($_POST['regions']['brand_goods'] as $key => $val) {
                     if ($_POST['brands']['brand_goods'][$key] != '' && intval($_POST['brands']['brand_goods'][$key]) > 0) {
@@ -248,7 +248,7 @@ class TemplateController extends BaseController
                 }
             }
 
-            // 文章列表 
+            // 文章列表
             if (isset($_POST['regions']['cat_articles'])) {
                 foreach ($_POST['regions']['cat_articles'] as $key => $val) {
                     if ($_POST['article_cat']['cat_articles'][$key] != '' && intval($_POST['article_cat']['cat_articles'][$key]) > 0) {
@@ -265,7 +265,7 @@ class TemplateController extends BaseController
                 }
             }
 
-            // 广告位 
+            // 广告位
             if (isset($_POST['regions']['ad_position'])) {
                 foreach ($_POST['regions']['ad_position'] as $key => $val) {
                     if ($_POST['ad_position'][$key] != '' && intval($_POST['ad_position'][$key]) > 0) {
@@ -282,7 +282,7 @@ class TemplateController extends BaseController
                 }
             }
 
-            // 对提交内容进行处理 
+            // 对提交内容进行处理
             $post_regions = [];
             foreach ($_POST['regions'] as $key => $val) {
                 switch ($key) {
@@ -347,10 +347,10 @@ class TemplateController extends BaseController
                 }
             }
 
-            // 排序 
+            // 排序
             usort($post_regions, "array_sort");
 
-            // 修改模板文件 
+            // 修改模板文件
             $template_file = '../themes/' . $curr_template . '/' . $_POST['template_file'] . '.dwt';
             $template_content = file_get_contents($template_file);
             $template_content = str_replace("\xEF\xBB\xBF", '', $template_content);
@@ -375,7 +375,7 @@ class TemplateController extends BaseController
                     }
                 }
 
-                // 替换原来区域内容 
+                // 替换原来区域内容
                 $template_content = preg_replace(sprintf($pattern, $region), sprintf($replacement, $region_content), $template_content);
             }
 
@@ -395,11 +395,11 @@ class TemplateController extends BaseController
         if ($_REQUEST['act'] == 'library') {
             admin_priv('library_manage');
 
-            // 包含插件语言项 
+            // 包含插件语言项
             $sql = "SELECT code FROM " . $this->ecs->table('plugins');
             $rs = $this->db->query($sql);
             foreach ($rs as $row) {
-                // 取得语言项 
+                // 取得语言项
                 if (file_exists(ROOT_PATH . 'plugins/' . $row['code'] . '/languages/common_' . $GLOBALS['_CFG']['lang'] . '.php')) {
                     include_once(ROOT_PATH . 'plugins/' . $row['code'] . '/languages/common_' . $GLOBALS['_CFG']['lang'] . '.php');
                 }
@@ -626,7 +626,7 @@ class TemplateController extends BaseController
                         file_put_contents($temple_file, $template_content);
                     }
 
-                    // 文件修改成功后，恢复数据库 
+                    // 文件修改成功后，恢复数据库
                     $sql = "DELETE FROM " . $this->ecs->table('template') .
                         " WHERE remarks = '' AND  theme = '" . $GLOBALS['_CFG']['template'] . "'" .
                         " AND " . db_create_in(array_keys($data), 'filename');
@@ -687,7 +687,7 @@ class TemplateController extends BaseController
             return 0;
         }
 
-        // 获得可用的模版 
+        // 获得可用的模版
         $temp = '';
         $start = 0;
         $available_templates = [];

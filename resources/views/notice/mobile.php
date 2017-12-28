@@ -24,7 +24,7 @@
   <body>
     <!-- Begin page content -->
     <div class="container" style="width:95%">
-      <p class="lead"><?=$notice['content']?></p>
+      <p class="lead"><?php echo $notice['content']?></p>
     </div>
   </body>
 </html>

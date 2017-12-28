@@ -12,7 +12,7 @@ function update_user_info()
         return false;
     }
 
-    // 查询会员信息 
+    // 查询会员信息
     $time = date('Y-m-d');
     $sql = 'SELECT u.user_money,u.email, u.pay_points, u.user_rank, u.rank_points, ' .
         ' IFNULL(b.type_money, 0) AS user_bonus, u.last_login, u.last_ip' .
@@ -23,7 +23,7 @@ function update_user_info()
         " ON b.type_id = ub.bonus_type_id AND b.use_start_date <= '$time' AND b.use_end_date >= '$time' " .
         " WHERE u.user_id = '" . session('user_id') . "'";
     if ($row = $GLOBALS['db']->getRow($sql)) {
-        // 更新SESSION 
+        // 更新SESSION
         session(['last_time' =>  $row['last_login']]);
         session(['last_ip' =>  $row['last_ip']]);
         session(['login_fail' =>  0]);
@@ -39,7 +39,7 @@ function update_user_info()
             }
         }
 
-        // 取得用户等级和折扣 
+        // 取得用户等级和折扣
         if ($row['user_rank'] == 0) {
             // 非特殊等级，根据等级积分计算用户等级（注意：不包括特殊等级）
             $sql = 'SELECT rank_id, discount FROM ' . $GLOBALS['ecs']->table('user_rank') . " WHERE special_rank = '0' AND min_points <= " . intval($row['rank_points']) . ' AND max_points > ' . intval($row['rank_points']);
@@ -63,7 +63,7 @@ function update_user_info()
         }
     }
 
-    // 更新登录时间，登录次数及登录ip 
+    // 更新登录时间，登录次数及登录ip
     $sql = "UPDATE " . $GLOBALS['ecs']->table('users') . " SET" .
         " visit_count = visit_count + 1, " .
         " last_ip = '" . real_ip() . "'," .
@@ -112,15 +112,15 @@ function assign_ur_here($cat = 0, $str = '')
 {
     $filename = empty(PHP_SELF) ? 'index' : strtolower(PHP_SELF);
 
-    // 初始化“页面标题”和“当前位置” 
+    // 初始化“页面标题”和“当前位置”
     $page_title = $GLOBALS['_CFG']['shop_title'];
     $ur_here = '<a href=".">' . $GLOBALS['_LANG']['home'] . '</a>';
 
-    // 根据文件名分别处理中间的部分 
+    // 根据文件名分别处理中间的部分
     if ($filename != 'index') {
-        // 处理有分类的 
+        // 处理有分类的
         if (in_array($filename, ['category', 'goods', 'article_cat', 'article', 'brand'])) {
-            // 商品分类或商品 
+            // 商品分类或商品
             if ('category' == $filename || 'goods' == $filename || 'brand' == $filename) {
                 if ($cat > 0) {
                     $cat_arr = get_parent_cats($cat);
@@ -130,7 +130,7 @@ function assign_ur_here($cat = 0, $str = '')
                 } else {
                     $cat_arr = [];
                 }
-            } // 文章分类或文章 
+            } // 文章分类或文章
             elseif ('article_cat' == $filename || 'article' == $filename) {
                 if ($cat > 0) {
                     $cat_arr = get_article_parent_cats($cat);
@@ -142,7 +142,7 @@ function assign_ur_here($cat = 0, $str = '')
                 }
             }
 
-            // 循环分类 
+            // 循环分类
             if (!empty($cat_arr)) {
                 krsort($cat_arr);
                 foreach ($cat_arr as $val) {
@@ -152,49 +152,49 @@ function assign_ur_here($cat = 0, $str = '')
                         htmlspecialchars($val['cat_name']) . '</a>';
                 }
             }
-        } // 处理无分类的 
+        } // 处理无分类的
         else {
-            // 团购 
+            // 团购
             if ('group_buy' == $filename) {
                 $page_title = $GLOBALS['_LANG']['group_buy_goods'] . '_' . $page_title;
                 $args = ['gbid' => '0'];
                 $ur_here .= ' <code>&gt;</code> <a href="group_buy.php">' .
                     $GLOBALS['_LANG']['group_buy_goods'] . '</a>';
-            } // 拍卖 
+            } // 拍卖
             elseif ('auction' == $filename) {
                 $page_title = $GLOBALS['_LANG']['auction'] . '_' . $page_title;
                 $args = ['auid' => '0'];
                 $ur_here .= ' <code>&gt;</code> <a href="auction.php">' .
                     $GLOBALS['_LANG']['auction'] . '</a>';
-            } // 夺宝 
+            } // 夺宝
             elseif ('snatch' == $filename) {
                 $page_title = $GLOBALS['_LANG']['snatch'] . '_' . $page_title;
                 $args = ['id' => '0'];
                 $ur_here .= ' <code> &gt; </code><a href="snatch.php">' . $GLOBALS['_LANG']['snatch_list'] . '</a>';
-            } // 批发 
+            } // 批发
             elseif ('wholesale' == $filename) {
                 $page_title = $GLOBALS['_LANG']['wholesale'] . '_' . $page_title;
                 $args = ['wsid' => '0'];
                 $ur_here .= ' <code>&gt;</code> <a href="wholesale.php">' .
                     $GLOBALS['_LANG']['wholesale'] . '</a>';
-            } // 积分兑换 
+            } // 积分兑换
             elseif ('exchange' == $filename) {
                 $page_title = $GLOBALS['_LANG']['exchange'] . '_' . $page_title;
                 $args = ['wsid' => '0'];
                 $ur_here .= ' <code>&gt;</code> <a href="exchange.php">' .
                     $GLOBALS['_LANG']['exchange'] . '</a>';
             }
-            // 其他的在这里补充 
+            // 其他的在这里补充
         }
     }
 
-    // 处理最后一部分 
+    // 处理最后一部分
     if (!empty($str)) {
         $page_title = $str . '_' . $page_title;
         $ur_here .= ' <code>&gt;</code> ' . $str;
     }
 
-    // 返回值 
+    // 返回值
     return ['title' => $page_title, 'ur_here' => $ur_here];
 }
 
@@ -306,18 +306,18 @@ function assign_dynamic($tmp)
     foreach ($res as $row) {
         switch ($row['type']) {
             case 1:
-                // 分类下的商品 
+                // 分类下的商品
                 $GLOBALS['smarty']->assign('goods_cat_' . $row['id'], assign_cat_goods($row['id'], $row['number']));
                 break;
             case 2:
-                // 品牌的商品 
+                // 品牌的商品
                 $brand_goods = assign_brand_goods($row['id'], $row['number']);
 
                 $GLOBALS['smarty']->assign('brand_goods_' . $row['id'], $brand_goods['goods']);
                 $GLOBALS['smarty']->assign('goods_brand_' . $row['id'], $brand_goods['brand']);
                 break;
             case 3:
-                // 文章列表 
+                // 文章列表
                 $cat_articles = assign_articles($row['id'], $row['number']);
 
                 $GLOBALS['smarty']->assign('articles_cat_' . $row['id'], $cat_articles['cat']);
@@ -442,7 +442,7 @@ function assign_pager($app, $cat, $record_count, $size, $sort, $order, $page = 1
             $uri_args = ['cid' => $cat, 'integral_min' => $price_min, 'integral_max' => $price_max, 'sort' => $sort, 'order' => $order, 'display' => $display_type];
             break;
     }
-    // 分页样式 
+    // 分页样式
     $pager['styleid'] = isset($GLOBALS['_CFG']['page_style']) ? intval($GLOBALS['_CFG']['page_style']) : 0;
 
     $page_prev = ($page > 1) ? $page - 1 : 1;
@@ -549,13 +549,13 @@ function get_pager($url, $param, $record_count, $page = 1, $size = 10)
     if ($page > $page_count) {
         $page = $page_count;
     }
-    // 分页样式 
+    // 分页样式
     $pager['styleid'] = isset($GLOBALS['_CFG']['page_style']) ? intval($GLOBALS['_CFG']['page_style']) : 0;
 
     $page_prev = ($page > 1) ? $page - 1 : 1;
     $page_next = ($page < $page_count) ? $page + 1 : $page_count;
 
-    // 将参数合成url字串 
+    // 将参数合成url字串
     $param_url = '?';
     foreach ($param as $key => $value) {
         $param_url .= $key . '=' . $value . '&';
@@ -623,7 +623,7 @@ function get_pager($url, $param, $record_count, $page = 1, $size = 10)
  */
 function get_vote($id = '')
 {
-    // 随机取得一个调查的主题 
+    // 随机取得一个调查的主题
     if (empty($id)) {
         $time = gmtime();
         $sql = 'SELECT vote_id, vote_name, can_multi, vote_count, RAND() AS rnd' .
@@ -639,14 +639,14 @@ function get_vote($id = '')
     $vote_arr = $GLOBALS['db']->getRow($sql);
 
     if ($vote_arr !== false && !empty($vote_arr)) {
-        // 通过调查的ID,查询调查选项 
+        // 通过调查的ID,查询调查选项
         $sql_option = 'SELECT v.*, o.option_id, o.vote_id, o.option_name, o.option_count ' .
             'FROM ' . $GLOBALS['ecs']->table('vote') . ' AS v, ' .
             $GLOBALS['ecs']->table('vote_option') . ' AS o ' .
             "WHERE o.vote_id = v.vote_id AND o.vote_id = '$vote_arr[vote_id]' ORDER BY o.option_order ASC, o.option_id DESC";
         $res = $GLOBALS['db']->getAll($sql_option);
 
-        // 总票数 
+        // 总票数
         $sql = 'SELECT SUM(option_count) AS all_option FROM ' . $GLOBALS['ecs']->table('vote_option') .
             " WHERE vote_id = '" . $vote_arr['vote_id'] . "' GROUP BY vote_id";
         $option_num = $GLOBALS['db']->getOne($sql);
@@ -827,7 +827,7 @@ function visit_stats()
         return;
     }
     $time = gmtime();
-    // 检查客户端是否存在访问统计的cookie 
+    // 检查客户端是否存在访问统计的cookie
     $visit_times = request()->cookie('visit_times');
     $visit_times = !empty($visit_times) ? intval($visit_times) + 1 : 1;
     \Cookie::queue('visit_times', $visit_times, 1440 * 365);
@@ -837,7 +837,7 @@ function visit_stats()
     $ip = real_ip();
     $area = ecs_geoip($ip);
 
-    // 语言 
+    // 语言
     if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
         $pos = strpos($_SERVER['HTTP_ACCEPT_LANGUAGE'], ';');
         $lang = addslashes(($pos !== false) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, $pos) : $_SERVER['HTTP_ACCEPT_LANGUAGE']);
@@ -845,14 +845,14 @@ function visit_stats()
         $lang = '';
     }
 
-    // 来源 
+    // 来源
     if (!empty($_SERVER['HTTP_REFERER']) && strlen($_SERVER['HTTP_REFERER']) > 9) {
         $pos = strpos($_SERVER['HTTP_REFERER'], '/', 9);
         if ($pos !== false) {
             $domain = substr($_SERVER['HTTP_REFERER'], 0, $pos);
             $path = substr($_SERVER['HTTP_REFERER'], $pos);
 
-            // 来源关键字 
+            // 来源关键字
             if (!empty($domain) && !empty($path)) {
                 save_searchengine_keyword($domain, $path);
             }
@@ -1185,7 +1185,7 @@ function parse_rate_value($str, &$operate)
  */
 function recalculate_price()
 {
-    // 取得有可能改变价格的商品：除配件和赠品之外的商品 
+    // 取得有可能改变价格的商品：除配件和赠品之外的商品
     $sql = 'SELECT c.rec_id, c.goods_id, c.goods_attr_id, g.promote_price, g.promote_start_date, c.goods_number,' .
         "g.promote_end_date, IFNULL(mp.user_price, g.shop_price * '". session('discount') ."') AS member_price " .
         'FROM ' . $GLOBALS['ecs']->table('cart') . ' AS c ' .
@@ -1210,7 +1210,7 @@ function recalculate_price()
         $GLOBALS['db']->query($goods_sql);
     }
 
-    // 删除赠品，重新选择 
+    // 删除赠品，重新选择
     $GLOBALS['db']->query('DELETE FROM ' . $GLOBALS['ecs']->table('cart') .
         " WHERE session_id = '" . SESS_ID . "' AND is_gift > 0");
 }
@@ -1226,7 +1226,7 @@ function recalculate_price()
  */
 function assign_comment($id, $type, $page = 1)
 {
-    // 取得评论列表 
+    // 取得评论列表
     $count = $GLOBALS['db']->getOne('SELECT COUNT(*) FROM ' . $GLOBALS['ecs']->table('comment') .
         " WHERE id_value = '$id' AND comment_type = '$type' AND status = 1 AND parent_id = 0");
     $size = !empty($GLOBALS['_CFG']['comments_number']) ? $GLOBALS['_CFG']['comments_number'] : 5;
@@ -1250,7 +1250,7 @@ function assign_comment($id, $type, $page = 1)
         $arr[$row['comment_id']]['rank'] = $row['comment_rank'];
         $arr[$row['comment_id']]['add_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['add_time']);
     }
-    // 取得已有回复的评论 
+    // 取得已有回复的评论
     if ($ids) {
         $sql = 'SELECT * FROM ' . $GLOBALS['ecs']->table('comment') .
             " WHERE parent_id IN( $ids )";
@@ -1262,7 +1262,7 @@ function assign_comment($id, $type, $page = 1)
             $arr[$row['parent_id']]['re_username'] = $row['user_name'];
         }
     }
-    // 分页样式 
+    // 分页样式
     //$pager['styleid'] = isset($GLOBALS['_CFG']['page_style'])? intval($GLOBALS['_CFG']['page_style']) : 0;
     $pager['page'] = $page;
     $pager['size'] = $size;
@@ -1422,14 +1422,14 @@ function article_categories_tree($cat_id = 0)
     */
     $sql = 'SELECT count(*) FROM ' . $GLOBALS['ecs']->table('article_cat') . " WHERE parent_id = '$parent_id'";
     if ($GLOBALS['db']->getOne($sql)) {
-        // 获取当前分类及其子分类 
+        // 获取当前分类及其子分类
         $sql = 'SELECT a.cat_id, a.cat_name, a.sort_order AS parent_order, a.cat_id, ' .
             'b.cat_id AS child_id, b.cat_name AS child_name, b.sort_order AS child_order ' .
             'FROM ' . $GLOBALS['ecs']->table('article_cat') . ' AS a ' .
             'LEFT JOIN ' . $GLOBALS['ecs']->table('article_cat') . ' AS b ON b.parent_id = a.cat_id ' .
             "WHERE a.parent_id = '$parent_id' AND a.cat_type=1 ORDER BY parent_order ASC, a.cat_id ASC, child_order ASC";
     } else {
-        // 获取当前分类及其父分类 
+        // 获取当前分类及其父分类
         $sql = 'SELECT a.cat_id, a.cat_name, b.cat_id AS child_id, b.cat_name AS child_name, b.sort_order ' .
             'FROM ' . $GLOBALS['ecs']->table('article_cat') . ' AS a ' .
             'LEFT JOIN ' . $GLOBALS['ecs']->table('article_cat') . ' AS b ON b.parent_id = a.cat_id ' .
@@ -1515,7 +1515,7 @@ function get_library_number($library, $template = null)
 
     static $lib_list = [];
 
-    // 如果没有该模板的信息，取得该模板的信息 
+    // 如果没有该模板的信息，取得该模板的信息
     if (!isset($lib_list[$template])) {
         $lib_list[$template] = [];
         $sql = "SELECT library, number FROM " . $GLOBALS['ecs']->table('template') .
@@ -1532,7 +1532,7 @@ function get_library_number($library, $template = null)
     if (isset($lib_list[$template][$library])) {
         $num = intval($lib_list[$template][$library]);
     } else {
-        // 模板设置文件查找默认值 
+        // 模板设置文件查找默认值
         load_helper('template', 'admin');
         static $static_page_libs = null;
         if ($static_page_libs == null) {
@@ -1622,7 +1622,7 @@ function get_navigator($ctype = '', $catlist = [])
 function license_info()
 {
     if ($GLOBALS['_CFG']['licensed'] > 0) {
-        // 获取HOST 
+        // 获取HOST
         if (isset($_SERVER['HTTP_X_FORWARDED_HOST'])) {
             $host = $_SERVER['HTTP_X_FORWARDED_HOST'];
         } elseif (isset($_SERVER['HTTP_HOST'])) {

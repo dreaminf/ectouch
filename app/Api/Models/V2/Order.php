@@ -6,7 +6,6 @@ use App\Api\Models\BaseModel;
 use App\Extensions\Token;
 use DB;
 use App\Services\Shopex\Erp;
-use Log;
 
 class Order extends BaseModel
 {
@@ -182,7 +181,7 @@ class Order extends BaseModel
         extract($attributes);
         $uid = Token::authorization();
 
-        $total = array('real_goods_count' => 0,
+        $total = ['real_goods_count' => 0,
             'gift_amount' => 0,
             'goods_price' => 0,
             'market_price' => 0,
@@ -197,7 +196,7 @@ class Order extends BaseModel
             'cod_fee' => 0,
             'pay_fee' => 0,
             'discount_price' => 0,
-            'tax' => 0);
+            'tax' => 0];
         $weight = 0;
         /* 商品总价 */
         if (!$order_products = json_decode($order_product, true)) {
@@ -670,7 +669,7 @@ class Order extends BaseModel
             $order['extension_code'] = '';
         }
 
-        $total = array('real_goods_count' => 0,
+        $total = ['real_goods_count' => 0,
             'gift_amount' => 0,
             'goods_price' => 0,
             'market_price' => 0,
@@ -684,7 +683,7 @@ class Order extends BaseModel
             'surplus' => 0,
             'cod_fee' => 0,
             'pay_fee' => 0,
-            'tax' => 0);
+            'tax' => 0];
         $weight = 0;
         /* 商品总价 */
         foreach ($goods AS $val) {
@@ -833,7 +832,7 @@ class Order extends BaseModel
             $order['extension_code'] = '';
         }
 
-        $total = array('real_goods_count' => 0,
+        $total = ['real_goods_count' => 0,
             'gift_amount' => 0,
             'goods_price' => 0,
             'market_price' => 0,
@@ -847,7 +846,7 @@ class Order extends BaseModel
             'surplus' => 0,
             'cod_fee' => 0,
             'pay_fee' => 0,
-            'tax' => 0);
+            'tax' => 0];
         $weight = 0;
         /* 商品总价 */
 

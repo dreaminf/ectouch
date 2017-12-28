@@ -19,10 +19,10 @@ class SnatchController extends BaseController
          * 添加活动
          */
         if ($_REQUEST['act'] == 'add') {
-            // 权限判断 
+            // 权限判断
             admin_priv('snatch_manage');
 
-            // 初始化信息 
+            // 初始化信息
             $start_time = local_date('Y-m-d H:i');
             $end_time = local_date('Y-m-d H:i', strtotime('+1 week'));
             $snatch = ['start_price' => '1.00', 'end_price' => '800.00', 'max_price' => '0', 'cost_points' => '1', 'start_time' => $start_time, 'end_time' => $end_time, 'option' => '<option value="0">' . $GLOBALS['_LANG']['make_option'] . '</option>'];
@@ -38,10 +38,10 @@ class SnatchController extends BaseController
         }
 
         if ($_REQUEST['act'] == 'insert') {
-            // 权限判断 
+            // 权限判断
             admin_priv('snatch_manage');
 
-            // 检查商品是否存在 
+            // 检查商品是否存在
             $sql = "SELECT goods_name FROM " . $this->ecs->table('goods') . " WHERE goods_id = '$_POST[goods_id]'";
             $_POST['goods_name'] = $this->db->getOne($sql);
             if (empty($_POST['goods_name'])) {
@@ -56,11 +56,11 @@ class SnatchController extends BaseController
                 return sys_msg(sprintf($GLOBALS['_LANG']['snatch_name_exist'], $_POST['snatch_name']), 1);
             }
 
-            // 将时间转换成整数 
+            // 将时间转换成整数
             $_POST['start_time'] = local_strtotime($_POST['start_time']);
             $_POST['end_time'] = local_strtotime($_POST['end_time']);
 
-            // 处理提交数据 
+            // 处理提交数据
             if (empty($_POST['start_price'])) {
                 $_POST['start_price'] = 0;
             }
@@ -79,7 +79,7 @@ class SnatchController extends BaseController
 
             $info = ['start_price' => $_POST['start_price'], 'end_price' => $_POST['end_price'], 'max_price' => $_POST['max_price'], 'cost_points' => $_POST['cost_points']];
 
-            // 插入数据 
+            // 插入数据
             $record = ['act_name' => $_POST['snatch_name'], 'act_desc' => $_POST['desc'],
                 'act_type' => GAT_SNATCH, 'goods_id' => $_POST['goods_id'], 'goods_name' => $_POST['goods_name'],
                 'start_time' => $_POST['start_time'], 'end_time' => $_POST['end_time'],
@@ -143,7 +143,7 @@ class SnatchController extends BaseController
             $id = intval($_POST['id']);
             $val = json_str_iconv(trim($_POST['val']));
 
-            // 检查活动重名 
+            // 检查活动重名
             $sql = "SELECT COUNT(*) " .
                 " FROM " . $this->ecs->table('goods_activity') .
                 " WHERE act_type='" . GAT_SNATCH . "' AND act_name='$val' AND act_id <> '$id'";
@@ -174,7 +174,7 @@ class SnatchController extends BaseController
          * 编辑活动
          */
         if ($_REQUEST['act'] == 'edit') {
-            // 权限判断 
+            // 权限判断
             admin_priv('snatch_manage');
 
             $snatch = $this->get_snatch_info($_REQUEST['id']);
@@ -185,7 +185,7 @@ class SnatchController extends BaseController
             $this->smarty->assign('action_link', ['text' => $GLOBALS['_LANG']['02_snatch_list'], 'href' => 'snatch.php?act=list&' . list_link_postfix()]);
             $this->smarty->assign('form_action', 'update');
 
-            // 商品货品表 
+            // 商品货品表
             $this->smarty->assign('good_products_select', get_good_products_select($snatch['goods_id']));
 
 
@@ -193,14 +193,14 @@ class SnatchController extends BaseController
         }
 
         if ($_REQUEST['act'] == 'update') {
-            // 权限判断 
+            // 权限判断
             admin_priv('snatch_manage');
 
-            // 将时间转换成整数 
+            // 将时间转换成整数
             $_POST['start_time'] = local_strtotime($_POST['start_time']);
             $_POST['end_time'] = local_strtotime($_POST['end_time']);
 
-            // 处理提交数据 
+            // 处理提交数据
             if (empty($_POST['snatch_name'])) {
                 $_POST['snatch_name'] = '';
             }
@@ -225,7 +225,7 @@ class SnatchController extends BaseController
                 $_POST['product_id'] = 0;
             }
 
-            // 检查活动重名 
+            // 检查活动重名
             $sql = "SELECT COUNT(*) " .
                 " FROM " . $this->ecs->table('goods_activity') .
                 " WHERE act_type='" . GAT_SNATCH . "' AND act_name='" . $_POST['snatch_name'] . "' AND act_id <> '" . $_POST['id'] . "'";
@@ -235,7 +235,7 @@ class SnatchController extends BaseController
 
             $info = ['start_price' => $_POST['start_price'], 'end_price' => $_POST['end_price'], 'max_price' => $_POST['max_price'], 'cost_points' => $_POST['cost_points']];
 
-            // 更新数据 
+            // 更新数据
             $record = ['act_name' => $_POST['snatch_name'], 'goods_id' => $_POST['goods_id'],
                 'goods_name' => $_POST['goods_name'], 'start_time' => $_POST['start_time'],
                 'end_time' => $_POST['end_time'], 'act_desc' => $_POST['desc'],
@@ -252,7 +252,7 @@ class SnatchController extends BaseController
          * 查看活动详情
          */
         if ($_REQUEST['act'] == 'view') {
-            // 权限判断 
+            // 权限判断
             admin_priv('snatch_manage');
 
             $id = empty($_REQUEST['snatch_id']) ? 0 : intval($_REQUEST['snatch_id']);
@@ -266,7 +266,7 @@ class SnatchController extends BaseController
 
             $sort_flag = sort_flag($bid_list['filter']);
             $this->smarty->assign($sort_flag['tag'], $sort_flag['img']);
-            // 赋值 
+            // 赋值
             $this->smarty->assign('info', $this->get_snatch_info($id));
             $this->smarty->assign('full_page', 1);
             $this->smarty->assign('result', get_snatch_result($id));
@@ -339,7 +339,7 @@ class SnatchController extends BaseController
     {
         $result = get_filter();
         if ($result === false) {
-            // 查询条件 
+            // 查询条件
             $filter['keywords'] = empty($_REQUEST['keywords']) ? '' : trim($_REQUEST['keywords']);
             if (isset($_REQUEST['is_ajax']) && $_REQUEST['is_ajax'] == 1) {
                 $filter['keywords'] = json_str_iconv($filter['keywords']);
@@ -355,7 +355,7 @@ class SnatchController extends BaseController
 
             $filter = page_and_size($filter);
 
-            // 获活动数据 
+            // 获活动数据
             $sql = "SELECT act_id, act_name AS snatch_name, goods_name, start_time, end_time, is_finished, ext_info, product_id " .
                 " FROM " . $GLOBALS['ecs']->table('goods_activity') .
                 " WHERE act_type = " . GAT_SNATCH . $where .
@@ -404,7 +404,7 @@ class SnatchController extends BaseController
 
         $snatch = $this->db->getRow($sql);
 
-        // 将时间转成可阅读格式 
+        // 将时间转成可阅读格式
         $snatch['start_time'] = local_date('Y-m-d H:i', $snatch['start_time']);
         $snatch['end_time'] = local_date('Y-m-d H:i', $snatch['end_time']);
         $row = unserialize($snatch['ext_info']);
@@ -433,13 +433,13 @@ class SnatchController extends BaseController
 
         $where = empty($filter['snatch_id']) ? '' : " WHERE snatch_id='$filter[snatch_id]'";
 
-        // 获得记录总数以及总页数 
+        // 获得记录总数以及总页数
         $sql = "SELECT count(*) FROM " . $GLOBALS['ecs']->table('snatch_log') . $where;
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
         $filter = page_and_size($filter);
 
-        // 获得活动数据 
+        // 获得活动数据
         $sql = "SELECT s.log_id, u.user_name, s.bid_price, s.bid_time " .
             " FROM " . $GLOBALS['ecs']->table('snatch_log') . " AS s " .
             " LEFT JOIN " . $GLOBALS['ecs']->table('users') . " AS u ON s.user_id = u.user_id  " . $where .

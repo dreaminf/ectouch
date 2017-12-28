@@ -88,7 +88,7 @@ function admin_log($sn = '', $action, $content)
  */
 function sys_joindate($prefix)
 {
-    // 返回年-月-日的日期格式 
+    // 返回年-月-日的日期格式
     $year = empty($_POST[$prefix . 'Year']) ? '0' : $_POST[$prefix . 'Year'];
     $month = empty($_POST[$prefix . 'Month']) ? '0' : $_POST[$prefix . 'Month'];
     $day = empty($_POST[$prefix . 'Day']) ? '0' : $_POST[$prefix . 'Day'];
@@ -298,7 +298,7 @@ function get_goods_list($filter)
     $filter->keyword = json_str_iconv($filter->keyword);
     $where = get_where_sql($filter); // 取得过滤条件
 
-    // 取得数据 
+    // 取得数据
     $sql = 'SELECT goods_id, goods_name, shop_price ' .
         'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' . $where .
         'LIMIT 50';
@@ -313,14 +313,14 @@ function get_goods_list($filter)
  */
 function get_article_list($filter)
 {
-    // 创建数据容器对象 
+    // 创建数据容器对象
     $ol = new OptionList();
 
-    // 取得过滤条件 
+    // 取得过滤条件
     $where = ' WHERE a.cat_id = c.cat_id AND c.cat_type = 1 ';
     $where .= isset($filter->title) ? " AND a.title LIKE '%" . mysql_like_quote($filter->title) . "%'" : '';
 
-    // 取得数据 
+    // 取得数据
     $sql = 'SELECT a.article_id, a.title ' .
         'FROM ' . $GLOBALS['ecs']->table('article') . ' AS a, ' . $GLOBALS['ecs']->table('article_cat') . ' AS c ' . $where;
     $res = $GLOBALS['db']->query($sql);
@@ -329,7 +329,7 @@ function get_article_list($filter)
         $ol->add_option($row['article_id'], $row['title']);
     }
 
-    // 生成列表 
+    // 生成列表
     $ol->build_select();
 }
 
@@ -406,7 +406,7 @@ function area_list($region_id)
  */
 function chart_color($n)
 {
-    // 随机显示颜色代码 
+    // 随机显示颜色代码
     $arr = ['33FF66', 'FF6600', '3399FF', '009966', 'CC3399', 'FFCC33', '6699CC', 'CC3366', '33FF66', 'FF6600', '3399FF'];
 
     if ($n > 8) {
@@ -569,13 +569,13 @@ function page_and_size($filter)
         $filter['page_size'] = 15;
     }
 
-    // 每页显示 
+    // 每页显示
     $filter['page'] = (empty($_REQUEST['page']) || intval($_REQUEST['page']) <= 0) ? 1 : intval($_REQUEST['page']);
 
-    // page 总数 
+    // page 总数
     $filter['page_count'] = (!empty($filter['record_count']) && $filter['record_count'] > 0) ? ceil($filter['record_count'] / $filter['page_size']) : 1;
 
-    // 边界处理 
+    // 边界处理
     if ($filter['page'] > $filter['page_count']) {
         $filter['page'] = $filter['page_count'];
     }
@@ -750,7 +750,7 @@ function suppliers_list_info($conditions = '')
         $where .= $conditions;
     }
 
-    // 查询 
+    // 查询
     $sql = "SELECT suppliers_id, suppliers_name, suppliers_desc
             FROM " . $GLOBALS['ecs']->table("suppliers") . "
             $where";
@@ -765,10 +765,10 @@ function suppliers_list_info($conditions = '')
  */
 function suppliers_list_name()
 {
-    // 查询 
+    // 查询
     $suppliers_list = suppliers_list_info(' is_check = 1 ');
 
-    // 供货商名字 
+    // 供货商名字
     $suppliers_name = [];
     if (count($suppliers_list) > 0) {
         foreach ($suppliers_list as $suppliers) {

@@ -15,7 +15,7 @@ class CommentManageController extends BaseController
          * 获取没有回复的评论列表
          */
         if ($_REQUEST['act'] == 'list') {
-            // 检查权限 
+            // 检查权限
             admin_priv('comment_priv');
 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['05_comment_manage']);
@@ -56,21 +56,21 @@ class CommentManageController extends BaseController
          * 回复用户评论(同时查看评论详情)
          */
         if ($_REQUEST['act'] == 'reply') {
-            // 检查权限 
+            // 检查权限
             admin_priv('comment_priv');
 
             $comment_info = [];
             $reply_info = [];
             $id_value = [];
 
-            // 获取评论详细信息并进行字符处理 
+            // 获取评论详细信息并进行字符处理
             $sql = "SELECT * FROM " . $this->ecs->table('comment') . " WHERE comment_id = '$_REQUEST[id]'";
             $comment_info = $this->db->getRow($sql);
             $comment_info['content'] = str_replace('\r\n', '<br />', htmlspecialchars($comment_info['content']));
             $comment_info['content'] = nl2br(str_replace('\n', '<br />', $comment_info['content']));
             $comment_info['add_time'] = local_date($GLOBALS['_CFG']['time_format'], $comment_info['add_time']);
 
-            // 获得评论回复内容 
+            // 获得评论回复内容
             $sql = "SELECT * FROM " . $this->ecs->table('comment') . " WHERE parent_id = '$_REQUEST[id]'";
             $reply_info = $this->db->getRow($sql);
 
@@ -81,12 +81,12 @@ class CommentManageController extends BaseController
                 $reply_info['content'] = nl2br(htmlspecialchars($reply_info['content']));
                 $reply_info['add_time'] = local_date($GLOBALS['_CFG']['time_format'], $reply_info['add_time']);
             }
-            // 获取管理员的用户名和Email地址 
+            // 获取管理员的用户名和Email地址
             $sql = "SELECT user_name, email FROM " . $this->ecs->table('admin_user') .
                 " WHERE user_id = '" . session('admin_id') . "'";
             $admin_info = $this->db->getRow($sql);
 
-            // 取得评论的对象(文章或者商品) 
+            // 取得评论的对象(文章或者商品)
             if ($comment_info['comment_type'] == 0) {
                 $sql = "SELECT goods_name FROM " . $this->ecs->table('goods') .
                     " WHERE goods_id = '$comment_info[id_value]'";
@@ -97,7 +97,7 @@ class CommentManageController extends BaseController
                 $id_value = $this->db->getOne($sql);
             }
 
-            // 模板赋值 
+            // 模板赋值
             $this->smarty->assign('msg', $comment_info); //评论信息
             $this->smarty->assign('admin_info', $admin_info);   //管理员信息
             $this->smarty->assign('reply_info', $reply_info);   //回复的内容
@@ -117,16 +117,16 @@ class CommentManageController extends BaseController
         if ($_REQUEST['act'] == 'action') {
             admin_priv('comment_priv');
 
-            // 获取IP地址 
+            // 获取IP地址
             $ip = real_ip();
 
-            // 获得评论是否有回复 
+            // 获得评论是否有回复
             $sql = "SELECT comment_id, content, parent_id FROM " . $this->ecs->table('comment') .
                 " WHERE parent_id = '$_REQUEST[comment_id]'";
             $reply_info = $this->db->getRow($sql);
 
             if (!empty($reply_info['content'])) {
-                // 更新回复的内容 
+                // 更新回复的内容
                 $sql = "UPDATE " . $this->ecs->table('comment') . " SET " .
                     "email     = '$_POST[email]', " .
                     "user_name = '$_POST[user_name]', " .
@@ -136,7 +136,7 @@ class CommentManageController extends BaseController
                     "status    = 0" .
                     " WHERE comment_id = '" . $reply_info['comment_id'] . "'";
             } else {
-                // 插入回复的评论内容 
+                // 插入回复的评论内容
                 $sql = "INSERT INTO " . $this->ecs->table('comment') . " (comment_type, id_value, email, user_name , " .
                     "content, add_time, ip_address, status, parent_id) " .
                     "VALUES('$_POST[comment_type]', '$_POST[id_value]','$_POST[email]', " .
@@ -144,11 +144,11 @@ class CommentManageController extends BaseController
             }
             $this->db->query($sql);
 
-            // 更新当前的评论状态为已回复并且可以显示此条评论 
+            // 更新当前的评论状态为已回复并且可以显示此条评论
             $sql = "UPDATE " . $this->ecs->table('comment') . " SET status = 1 WHERE comment_id = '$_POST[comment_id]'";
             $this->db->query($sql);
 
-            // 邮件通知处理流程 
+            // 邮件通知处理流程
             if (!empty($_POST['send_email_notice']) or isset($_POST['remail'])) {
                 //获取邮件中的必要内容
                 $sql = 'SELECT user_name, email, content ' .
@@ -156,7 +156,7 @@ class CommentManageController extends BaseController
                     " WHERE comment_id ='$_REQUEST[comment_id]'";
                 $comment_info = $this->db->getRow($sql);
 
-                // 设置留言回复模板所需要的内容信息 
+                // 设置留言回复模板所需要的内容信息
                 $template = get_mail_template('recomment');
 
                 $this->smarty->assign('user_name', $comment_info['user_name']);
@@ -167,7 +167,7 @@ class CommentManageController extends BaseController
 
                 $content = $this->smarty->fetch('str:' . $template['template_content']);
 
-                // 发送邮件 
+                // 发送邮件
                 if (send_mail($comment_info['user_name'], $comment_info['email'], $template['template_subject'], $content, $template['is_html'])) {
                     $send_ok = 0;
                 } else {
@@ -175,10 +175,10 @@ class CommentManageController extends BaseController
                 }
             }
 
-            // 清除缓存 
+            // 清除缓存
             clear_cache_files();
 
-            // 记录管理员操作 
+            // 记录管理员操作
             admin_log(addslashes($GLOBALS['_LANG']['reply']), 'edit', 'users_comment');
 
             return redirect("comment_manage.php?act=reply&id=$_REQUEST[comment_id]&send_ok=$send_ok");
@@ -189,22 +189,22 @@ class CommentManageController extends BaseController
          */
         if ($_REQUEST['act'] == 'check') {
             if ($_REQUEST['check'] == 'allow') {
-                // 允许评论显示 
+                // 允许评论显示
                 $sql = "UPDATE " . $this->ecs->table('comment') . " SET status = 1 WHERE comment_id = '$_REQUEST[id]'";
                 $this->db->query($sql);
 
                 //add_feed($_REQUEST['id'], COMMENT_GOODS);
 
-                // 清除缓存 
+                // 清除缓存
                 clear_cache_files();
 
                 return redirect("comment_manage.php?act=reply&id=$_REQUEST[id]");
             } else {
-                // 禁止评论显示 
+                // 禁止评论显示
                 $sql = "UPDATE " . $this->ecs->table('comment') . " SET status = 0 WHERE comment_id = '$_REQUEST[id]'";
                 $this->db->query($sql);
 
-                // 清除缓存 
+                // 清除缓存
                 clear_cache_files();
 
                 return redirect("comment_manage.php?act=reply&id=$_REQUEST[id]");
@@ -265,7 +265,7 @@ class CommentManageController extends BaseController
                 $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'comment_manage.php?act=list'];
                 return sys_msg(sprintf($GLOBALS['_LANG']['batch_drop_success'], count($_POST['checkboxes'])), 0, $link);
             } else {
-                // 提示信息 
+                // 提示信息
                 $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'comment_manage.php?act=list'];
                 return sys_msg($GLOBALS['_LANG']['no_select_comment'], 0, $link);
             }
@@ -279,7 +279,7 @@ class CommentManageController extends BaseController
      */
     private function get_comment_list()
     {
-        // 查询条件 
+        // 查询条件
         $filter['keywords'] = empty($_REQUEST['keywords']) ? 0 : trim($_REQUEST['keywords']);
         if (isset($_REQUEST['is_ajax']) && $_REQUEST['is_ajax'] == 1) {
             $filter['keywords'] = json_str_iconv($filter['keywords']);
@@ -292,10 +292,10 @@ class CommentManageController extends BaseController
         $sql = "SELECT count(*) FROM " . $GLOBALS['ecs']->table('comment') . " WHERE parent_id = 0 $where";
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-        // 分页大小 
+        // 分页大小
         $filter = page_and_size($filter);
 
-        // 获取评论数据 
+        // 获取评论数据
         $arr = [];
         $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('comment') . " WHERE parent_id = 0 $where " .
             " ORDER BY $filter[sort_by] $filter[sort_order] " .
@@ -308,7 +308,7 @@ class CommentManageController extends BaseController
                 "SELECT title FROM " . $GLOBALS['ecs']->table('article') . " WHERE article_id='$row[id_value]'";
             $row['title'] = $GLOBALS['db']->getOne($sql);
 
-            // 标记是否回复过 
+            // 标记是否回复过
 //        $sql = "SELECT COUNT(*) FROM " .$GLOBALS['ecs']->table('comment'). " WHERE parent_id = '$row[comment_id]'";
 //        $row['is_reply'] =  ($GLOBALS['db']->getOne($sql) > 0) ?
 //            $GLOBALS['_LANG']['yes_reply'] : $GLOBALS['_LANG']['no_reply'];

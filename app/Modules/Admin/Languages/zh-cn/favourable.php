@@ -4,7 +4,7 @@
  *  管理中心优惠活动语言文件
  */
 
-// menu 
+// menu
 $_LANG['favourable_list'] = '优惠活动列表';
 $_LANG['add_favourable'] = '添加优惠活动';
 $_LANG['edit_favourable'] = '编辑优惠活动';
@@ -14,7 +14,7 @@ $_LANG['back_favourable_list'] = '返回优惠活动列表';
 $_LANG['add_favourable_ok'] = '添加优惠活动成功';
 $_LANG['edit_favourable_ok'] = '编辑优惠活动成功';
 
-// list 
+// list
 $_LANG['act_is_going'] = '仅显示进行中的活动';
 $_LANG['act_name'] = '优惠活动名称';
 $_LANG['goods_name'] = '商品名称';
@@ -27,7 +27,7 @@ $_LANG['js_languages']['batch_drop_confirm'] = '您确实要删除选中的优�
 $_LANG['batch_drop_ok'] = '批量删除成功';
 $_LANG['no_record_selected'] = '没有选择记录';
 
-// info 
+// info
 $_LANG['label_act_name'] = '优惠活动名称：';
 $_LANG['label_start_time'] = '优惠开始时间：';
 $_LANG['label_end_time'] = '优惠结束时间：';
@@ -65,7 +65,7 @@ $_LANG['js_languages']['act_type_ext_not_number'] = '优惠方式后面的值不
 $_LANG['js_languages']['amount_invalid'] = '金额上限小于金额下限。';
 $_LANG['js_languages']['start_lt_end'] = '优惠开始时间不能大于结束时间';
 
-// post 
+// post
 $_LANG['pls_set_user_rank'] = '请设置享受优惠的会员等级';
 $_LANG['pls_set_act_range'] = '请设置优惠范围';
 $_LANG['amount_error'] = '金额下限不能大于金额上限';

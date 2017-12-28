@@ -177,7 +177,7 @@ class Payment extends BaseModel
                 return self::formatError(self::UNKNOWN_ERROR);
             }
 
-            $parameter = array(
+            $parameter = [
                 "service" => 'alipay.wap.create.direct.pay.by.user',
                 "partner" => $config['partner_id'],
                 "seller_id" => $config['seller_id'],
@@ -191,7 +191,7 @@ class Payment extends BaseModel
                 // "show_url"        => $show_url,
                 "app_pay" => "Y",//启用此参数能唤起钱包APP支付宝
                 "body" => $shop_name,
-            );
+            ];
 
             //建立请求
             $alipaySubmit = new AlipayWapSubmit($config['private_key']);
@@ -541,7 +541,7 @@ class Payment extends BaseModel
             if (!$config || !$order) {
                 return false;
             }
-            $alipay_config = array(
+            $alipay_config = [
                 "partner" => $config['partner_id'],
                 "alipay_public_key" => keyToPem($config['public_key']),
                 "sign_type" => strtoupper('RSA'),
@@ -549,7 +549,7 @@ class Payment extends BaseModel
                 "cacert" => app()->basePath() . '/app/Services/Payment/Alipay/cacert.pem',
                 "transport" => "http",
                 "notify_url" => url("/v2.order.notify.alipay.app"),
-            );
+            ];
 
             $alipayNotify = new AlipayNotify($alipay_config);
             $verify_result = $alipayNotify->verifyNotify();

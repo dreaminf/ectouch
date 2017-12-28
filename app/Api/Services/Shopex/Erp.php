@@ -14,7 +14,7 @@ class Erp
             return false;
         }
 
-        $certificate = unserialize($certificate_info);                    
+        $certificate = unserialize($certificate_info);
         $token = "";
         if(isset($certificate['token']))
         {
@@ -22,16 +22,16 @@ class Erp
         }
         else{
             return;
-        }        
+        }
         
 
         //获取物流信息参数
-        $param = array(
+        $param = [
             'act' => 'ecmobile_fire_event',//固定方法
             'type' => $type,
             'id' => $order_sn,//订单号
             'return_data' => 'json',//返回类型
-        );
+        ];
 
         $ac = self::get_ac($param,$token);//验证签名
 

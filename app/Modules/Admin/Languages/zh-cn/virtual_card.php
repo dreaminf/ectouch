@@ -26,7 +26,7 @@ $_LANG['separator'] = '分隔符';
 $_LANG['uploadfile'] = '上传文件';
 $_LANG['sql_error'] = '第 %s 条信息出错：<br /> ';
 
-// 提示信息 
+// 提示信息
 $_LANG['replenish_no_goods_id'] = '缺少商品ID参数，无法进行补货操作';
 $_LANG['replenish_no_get_goods_name'] = '商品ID参数有误，无法获取商品名';
 $_LANG['drop_card_success'] = '该记录已成功删除';

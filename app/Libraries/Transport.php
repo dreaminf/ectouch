@@ -92,7 +92,7 @@ class Transport
         $response = '';
         $temp_str = '';
 
-        // 格式化将要发要送的参数 
+        // 格式化将要发要送的参数
         if ($params && is_array($params)) {
             foreach ($params as $key => $value) {
                 $temp_str .= '&' . $key . '=' . $value;
@@ -100,15 +100,15 @@ class Transport
             $params = preg_replace('/^&/', '', $temp_str);
         }
 
-        // 如果fsockopen存在，且用户不指定使用curl，则调用use_socket函数 
+        // 如果fsockopen存在，且用户不指定使用curl，则调用use_socket函数
         if ($fsock_exists && !$this->use_curl) {
             $response = $this->use_socket($url, $params, $method, $my_header);
-        } // 只要上述条件中的任一个不成立，流程就转向这里，这时如果curl模块可用，就调用use_curl函数 
+        } // 只要上述条件中的任一个不成立，流程就转向这里，这时如果curl模块可用，就调用use_curl函数
         elseif ($curl_exists) {
             $response = $this->use_curl($url, $params, $method, $my_header);
         }
 
-        // 空响应或者传输过程中发生错误，程序将返回false 
+        // 空响应或者传输过程中发生错误，程序将返回false
         if (!$response) {
             return false;
         }
@@ -157,7 +157,7 @@ class Transport
                 . base64_encode($url_parts['user'] . ':' . $url_parts['pass']) . $crlf;
         }
 
-        // 格式化自定义头部信息 
+        // 格式化自定义头部信息
         if ($my_header && is_array($my_header)) {
             foreach ($my_header as $key => $value) {
                 $temp_str .= $key . ': ' . $value . $crlf;
@@ -165,7 +165,7 @@ class Transport
             $my_header = $temp_str;
         }
 
-        // 构造HTTP请求头部 
+        // 构造HTTP请求头部
         $request = "$method $path HTTP/1.0$crlf"
             . 'Host: ' . $url_parts['host'] . $crlf
             . $auth
@@ -219,10 +219,10 @@ class Transport
      */
     public function use_curl($url, $params, $method, $my_header)
     {
-        // 开始一个新会话 
+        // 开始一个新会话
         $curl_session = curl_init();
 
-        // 基本设置 
+        // 基本设置
         curl_setopt($curl_session, CURLOPT_FORBID_REUSE, true); // 处理完后，关闭连接，释放资源
         curl_setopt($curl_session, CURLOPT_HEADER, true);//结果中包含头部信息
         curl_setopt($curl_session, CURLOPT_RETURNTRANSFER, true);//把结果返回，而非直接输出
@@ -230,7 +230,7 @@ class Transport
 
         $url_parts = $this->parse_raw_url($url);
 
-        // 设置验证策略 
+        // 设置验证策略
         if (!empty($url_parts['user'])) {
             $auth = $url_parts['user'] . ':' . $url_parts['pass'];
             curl_setopt($curl_session, CURLOPT_USERPWD, $auth);
@@ -239,10 +239,10 @@ class Transport
 
         $header = [];
 
-        // 设置主机 
+        // 设置主机
         $header[] = 'Host: ' . $url_parts['host'];
 
-        // 格式化自定义头部信息 
+        // 格式化自定义头部信息
         if ($my_header && is_array($my_header)) {
             foreach ($my_header as $key => $value) {
                 $header[] = $key . ': ' . $value;
@@ -259,10 +259,10 @@ class Transport
             curl_setopt($curl_session, CURLOPT_POSTFIELDS, $params);
         }
 
-        // 设置请求地址 
+        // 设置请求地址
         curl_setopt($curl_session, CURLOPT_URL, $url);
 
-        // 设置头部信息 
+        // 设置头部信息
         curl_setopt($curl_session, CURLOPT_HTTPHEADER, $header);
 
         if ($this->connect_timeout > -1) {
@@ -273,7 +273,7 @@ class Transport
             curl_setopt($curl_session, CURLOPT_TIMEOUT, $this->stream_timeout);
         }
 
-        // 发送请求 
+        // 发送请求
         $http_response = curl_exec($curl_session);
 
         if (curl_errno($curl_session) != 0) {

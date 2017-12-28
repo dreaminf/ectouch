@@ -12,14 +12,14 @@ class RespondController extends BaseController
     {
         load_helper(['payment', 'order']);
 
-        // 支付方式代码 
+        // 支付方式代码
         $pay_code = isset($_REQUEST['code']) ? $_REQUEST['code'] : '';
 
-        // 参数是否为空 
+        // 参数是否为空
         if (empty($pay_code)) {
             $msg = $GLOBALS['_LANG']['pay_not_exist'];
         } else {
-            // 检查code里面有没有问号 
+            // 检查code里面有没有问号
             if (strpos($pay_code, '?') !== false) {
                 $arr1 = explode('?', $pay_code);
                 $arr2 = explode('=', $arr1[1]);
@@ -31,16 +31,16 @@ class RespondController extends BaseController
                 $pay_code = $arr1[0];
             }
 
-            // 判断是否启用 
+            // 判断是否启用
             $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('payment') . " WHERE pay_code = '$pay_code' AND enabled = 1";
             if ($this->db->getOne($sql) == 0) {
                 $msg = $GLOBALS['_LANG']['pay_disabled'];
             } else {
                 $plugin_file = 'includes/modules/payment/' . $pay_code . '.php';
 
-                // 检查插件文件是否存在，如果存在则验证支付是否成功，否则则返回失败信息 
+                // 检查插件文件是否存在，如果存在则验证支付是否成功，否则则返回失败信息
                 if (file_exists($plugin_file)) {
-                    // 根据支付方式代码创建支付类的对象并调用其响应操作方法 
+                    // 根据支付方式代码创建支付类的对象并调用其响应操作方法
                     include_once($plugin_file);
 
                     $payment = new $pay_code();

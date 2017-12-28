@@ -20,7 +20,7 @@ class TagCloudController extends BaseController
         $this->smarty->assign('top_goods', get_top10());           // 销售排行
         $this->smarty->assign('promotion_info', get_promotion_info());
 
-        // 调查 
+        // 调查
         $vote = get_vote();
         if (!empty($vote)) {
             $this->smarty->assign('vote_id', $vote['id']);

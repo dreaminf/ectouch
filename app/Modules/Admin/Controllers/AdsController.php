@@ -93,7 +93,7 @@ class AdsController extends BaseController
         if ($_REQUEST['act'] == 'insert') {
             admin_priv('ad_manage');
 
-            // 初始化变量 
+            // 初始化变量
             $id = !empty($_POST['id']) ? intval($_POST['id']) : 0;
             $type = !empty($_POST['type']) ? intval($_POST['type']) : 0;
             $ad_name = !empty($_POST['ad_name']) ? trim($_POST['ad_name']) : '';
@@ -104,18 +104,18 @@ class AdsController extends BaseController
                 $ad_link = !empty($_POST['ad_link2']) ? trim($_POST['ad_link2']) : '';
             }
 
-            // 获得广告的开始时期与结束日期 
+            // 获得广告的开始时期与结束日期
             $start_time = local_strtotime($_POST['start_time']);
             $end_time = local_strtotime($_POST['end_time']);
 
-            // 查看广告名称是否有重复 
+            // 查看广告名称是否有重复
             $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('ad') . " WHERE ad_name = '$ad_name'";
             if ($this->db->getOne($sql) > 0) {
                 $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
                 return sys_msg($GLOBALS['_LANG']['ad_name_exist'], 0, $link);
             }
 
-            // 添加图片类型的广告 
+            // 添加图片类型的广告
             if ($_POST['media_type'] == '0') {
                 if ((isset($_FILES['ad_img']['error']) && $_FILES['ad_img']['error'] == 0) || (!isset($_FILES['ad_img']['error']) && isset($_FILES['ad_img']['tmp_name']) && $_FILES['ad_img']['tmp_name'] != 'none')) {
                     $ad_code = basename($image->upload_image($_FILES['ad_img'], 'afficheimg'));
@@ -127,16 +127,16 @@ class AdsController extends BaseController
                     $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
                     return sys_msg($GLOBALS['_LANG']['js_languages']['ad_photo_empty'], 0, $link);
                 }
-            } // 如果添加的广告是Flash广告 
+            } // 如果添加的广告是Flash广告
             elseif ($_POST['media_type'] == '1') {
                 if ((isset($_FILES['upfile_flash']['error']) && $_FILES['upfile_flash']['error'] == 0) || (!isset($_FILES['upfile_flash']['error']) && isset($_FILES['ad_img']['tmp_name']) && $_FILES['upfile_flash']['tmp_name'] != 'none')) {
-                    // 检查文件类型 
+                    // 检查文件类型
                     if ($_FILES['upfile_flash']['type'] != "application/x-shockwave-flash") {
                         $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
                         return sys_msg($GLOBALS['_LANG']['upfile_flash_type'], 0, $link);
                     }
 
-                    // 生成文件名 
+                    // 生成文件名
                     $urlstr = date('Ymd');
                     for ($i = 0; $i < 6; $i++) {
                         $urlstr .= chr(mt_rand(97, 122));
@@ -164,7 +164,7 @@ class AdsController extends BaseController
                     $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
                     return sys_msg($GLOBALS['_LANG']['js_languages']['ad_flash_empty'], 0, $link);
                 }
-            } // 如果广告类型为代码广告 
+            } // 如果广告类型为代码广告
             elseif ($_POST['media_type'] == '2') {
                 if (!empty($_POST['ad_code'])) {
                     $ad_code = $_POST['ad_code'];
@@ -172,7 +172,7 @@ class AdsController extends BaseController
                     $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
                     return sys_msg($GLOBALS['_LANG']['js_languages']['ad_code_empty'], 0, $link);
                 }
-            } // 广告类型为文本广告 
+            } // 广告类型为文本广告
             elseif ($_POST['media_type'] == '3') {
                 if (!empty($_POST['ad_text'])) {
                     $ad_code = $_POST['ad_text'];
@@ -182,7 +182,7 @@ class AdsController extends BaseController
                 }
             }
 
-            // 插入数据 
+            // 插入数据
             $sql = "INSERT INTO " . $this->ecs->table('ad') . " (position_id,media_type,ad_name,ad_link,ad_code,start_time,end_time,link_man,link_email,link_phone,click_count,enabled)
     VALUES ('$_POST[position_id]',
             '$_POST[media_type]',
@@ -198,12 +198,12 @@ class AdsController extends BaseController
             '1')";
 
             $this->db->query($sql);
-            // 记录管理员操作 
+            // 记录管理员操作
             admin_log($_POST['ad_name'], 'add', 'ads');
 
             clear_cache_files(); // 清除缓存文件
 
-            // 提示信息 
+            // 提示信息
 
             $link[0]['text'] = $GLOBALS['_LANG']['show_ads_template'];
             $link[0]['href'] = 'template.php?act=setup';
@@ -222,12 +222,12 @@ class AdsController extends BaseController
         if ($_REQUEST['act'] == 'edit') {
             admin_priv('ad_manage');
 
-            // 获取广告数据 
+            // 获取广告数据
             $sql = "SELECT * FROM " . $this->ecs->table('ad') . " WHERE ad_id='" . intval($_REQUEST['id']) . "'";
             $ads_arr = $this->db->getRow($sql);
 
             $ads_arr['ad_name'] = htmlspecialchars($ads_arr['ad_name']);
-            // 格式化广告的有效日期 
+            // 格式化广告的有效日期
             $ads_arr['start_time'] = local_date('Y-m-d', $ads_arr['start_time']);
             $ads_arr['end_time'] = local_date('Y-m-d', $ads_arr['end_time']);
 
@@ -276,7 +276,7 @@ class AdsController extends BaseController
         if ($_REQUEST['act'] == 'update') {
             admin_priv('ad_manage');
 
-            // 初始化变量 
+            // 初始化变量
             $id = !empty($_POST['id']) ? intval($_POST['id']) : 0;
             $type = !empty($_POST['media_type']) ? intval($_POST['media_type']) : 0;
 
@@ -286,11 +286,11 @@ class AdsController extends BaseController
                 $ad_link = !empty($_POST['ad_link2']) ? trim($_POST['ad_link2']) : '';
             }
 
-            // 获得广告的开始时期与结束日期 
+            // 获得广告的开始时期与结束日期
             $start_time = local_strtotime($_POST['start_time']);
             $end_time = local_strtotime($_POST['end_time']);
 
-            // 编辑图片类型的广告 
+            // 编辑图片类型的广告
             if ($type == 0) {
                 if ((isset($_FILES['ad_img']['error']) && $_FILES['ad_img']['error'] == 0) || (!isset($_FILES['ad_img']['error']) && isset($_FILES['ad_img']['tmp_name']) && $_FILES['ad_img']['tmp_name'] != 'none')) {
                     $img_up_info = basename($image->upload_image($_FILES['ad_img'], 'afficheimg'));
@@ -301,15 +301,15 @@ class AdsController extends BaseController
                 if (!empty($_POST['img_url'])) {
                     $ad_code = "ad_code = '$_POST[img_url]', ";
                 }
-            } // 如果是编辑Flash广告 
+            } // 如果是编辑Flash广告
             elseif ($type == 1) {
                 if ((isset($_FILES['upfile_flash']['error']) && $_FILES['upfile_flash']['error'] == 0) || (!isset($_FILES['upfile_flash']['error']) && isset($_FILES['upfile_flash']['tmp_name']) && $_FILES['upfile_flash']['tmp_name'] != 'none')) {
-                    // 检查文件类型 
+                    // 检查文件类型
                     if ($_FILES['upfile_flash']['type'] != "application/x-shockwave-flash") {
                         $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
                         return sys_msg($GLOBALS['_LANG']['upfile_flash_type'], 0, $link);
                     }
-                    // 生成文件名 
+                    // 生成文件名
                     $urlstr = date('Ymd');
                     for ($i = 0; $i < 6; $i++) {
                         $urlstr .= chr(mt_rand(97, 122));
@@ -334,18 +334,18 @@ class AdsController extends BaseController
                 } else {
                     $ad_code = '';
                 }
-            } // 编辑代码类型的广告 
+            } // 编辑代码类型的广告
             elseif ($type == 2) {
                 $ad_code = "ad_code = '$_POST[ad_code]', ";
             }
 
-            // 编辑文本类型的广告 
+            // 编辑文本类型的广告
             if ($type == 3) {
                 $ad_code = "ad_code = '$_POST[ad_text]', ";
             }
 
             $ad_code = str_replace('../' . DATA_DIR . '/afficheimg/', '', $ad_code);
-            // 更新信息 
+            // 更新信息
             $sql = "UPDATE " . $this->ecs->table('ad') . " SET " .
                 "position_id = '$_POST[position_id]', " .
                 "ad_name     = '$_POST[ad_name]', " .
@@ -360,12 +360,12 @@ class AdsController extends BaseController
                 "WHERE ad_id = '$id'";
             $this->db->query($sql);
 
-            // 记录管理员操作 
+            // 记录管理员操作
             admin_log($_POST['ad_name'], 'edit', 'ads');
 
             clear_cache_files(); // 清除模版缓存
 
-            // 提示信息 
+            // 提示信息
             $href[] = ['text' => $GLOBALS['_LANG']['back_ads_list'], 'href' => 'ads.php?act=list'];
             return sys_msg($GLOBALS['_LANG']['edit'] . ' ' . $_POST['ad_name'] . ' ' . $GLOBALS['_LANG']['attradd_succed'], 0, $href);
         }
@@ -376,7 +376,7 @@ class AdsController extends BaseController
         if ($_REQUEST['act'] == 'add_js') {
             admin_priv('ad_manage');
 
-            // 编码 
+            // 编码
             $lang_list = [
                 'UTF8' => $GLOBALS['_LANG']['charset']['utf8'],
                 'GB2312' => $GLOBALS['_LANG']['charset']['zh_cn'],
@@ -406,7 +406,7 @@ class AdsController extends BaseController
             $id = intval($_POST['id']);
             $ad_name = json_str_iconv(trim($_POST['val']));
 
-            // 检查广告名称是否重复 
+            // 检查广告名称是否重复
             if ($exc->num('ad_name', $ad_name, $id) != 0) {
                 return make_json_error(sprintf($GLOBALS['_LANG']['ad_name_exist'], $ad_name));
             } else {
@@ -450,7 +450,7 @@ class AdsController extends BaseController
      */
     private function get_adslist()
     {
-        // 过滤查询 
+        // 过滤查询
         $pid = !empty($_REQUEST['pid']) ? intval($_REQUEST['pid']) : 0;
 
         $filter = [];
@@ -462,13 +462,13 @@ class AdsController extends BaseController
             $where .= " AND ad.position_id = '$pid' ";
         }
 
-        // 获得总记录数据 
+        // 获得总记录数据
         $sql = 'SELECT COUNT(*) FROM ' . $GLOBALS['ecs']->table('ad') . ' AS ad ' . $where;
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
         $filter = page_and_size($filter);
 
-        // 获得广告数据 
+        // 获得广告数据
         $arr = [];
         $sql = 'SELECT ad.*, COUNT(o.order_id) AS ad_stats, p.position_name ' .
             'FROM ' . $GLOBALS['ecs']->table('ad') . 'AS ad ' .
@@ -480,13 +480,13 @@ class AdsController extends BaseController
         $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
 
         foreach ($res as $rows) {
-            // 广告类型的名称 
+            // 广告类型的名称
             $rows['type'] = ($rows['media_type'] == 0) ? $GLOBALS['_LANG']['ad_img'] : '';
             $rows['type'] .= ($rows['media_type'] == 1) ? $GLOBALS['_LANG']['ad_flash'] : '';
             $rows['type'] .= ($rows['media_type'] == 2) ? $GLOBALS['_LANG']['ad_html'] : '';
             $rows['type'] .= ($rows['media_type'] == 3) ? $GLOBALS['_LANG']['ad_text'] : '';
 
-            // 格式化日期 
+            // 格式化日期
             $rows['start_date'] = local_date($GLOBALS['_CFG']['date_format'], $rows['start_time']);
             $rows['end_date'] = local_date($GLOBALS['_CFG']['date_format'], $rows['end_time']);
 

@@ -28,7 +28,7 @@ class UserAddress extends BaseModel
     public static function get_consignee($consignee)
     {
         $uid = Token::authorization();
-        $arr = array();
+        $arr = [];
         if ($consignee) {
             return self::where('address_id', $consignee)->first();
         }

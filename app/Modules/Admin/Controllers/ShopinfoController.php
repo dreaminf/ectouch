@@ -40,13 +40,13 @@ class ShopinfoController extends BaseController
          * 添加新文章
          */
         if ($_REQUEST['act'] == 'add') {
-            // 权限判断 
+            // 权限判断
             admin_priv('shopinfo_manage');
 
-            // 创建 html editor 
+            // 创建 html editor
             create_html_editor('editor1');
 
-            // 初始化 
+            // 初始化
             $article['article_type'] = 0;
 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['shopinfo_add']);
@@ -57,17 +57,17 @@ class ShopinfoController extends BaseController
         }
 
         if ($_REQUEST['act'] == 'insert') {
-            // 权限判断 
+            // 权限判断
             admin_priv('shopinfo_manage');
 
-            // 判断是否重名 
+            // 判断是否重名
             $is_only = $exc->is_only('title', $_POST['title']);
 
             if (!$is_only) {
                 return sys_msg(sprintf($GLOBALS['_LANG']['title_exist'], stripslashes($_POST['title'])), 1);
             }
 
-            // 插入数据 
+            // 插入数据
             $add_time = gmtime();
             $sql = "INSERT INTO " . $this->ecs->table('article') . "(title, cat_id, content, add_time) VALUES('$_POST[title]', '0', '$_POST[editor1]','$add_time' )";
             $this->db->query($sql);
@@ -78,7 +78,7 @@ class ShopinfoController extends BaseController
             $link[1]['text'] = $GLOBALS['_LANG']['back_list'];
             $link[1]['href'] = 'shopinfo.php?act=list';
 
-            // 清除缓存 
+            // 清除缓存
             clear_cache_files();
 
             admin_log($_POST['title'], 'add', 'shopinfo');
@@ -89,14 +89,14 @@ class ShopinfoController extends BaseController
          * 文章编辑
          */
         if ($_REQUEST['act'] == 'edit') {
-            // 权限判断 
+            // 权限判断
             admin_priv('shopinfo_manage');
 
-            // 取得文章数据 
+            // 取得文章数据
             $sql = "SELECT article_id, title, content FROM " . $this->ecs->table('article') . "WHERE article_id =" . $_REQUEST['id'];
             $article = $this->db->getRow($sql);
 
-            // 创建 html editor 
+            // 创建 html editor
             create_html_editor('editor1', $article['content']);
 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['article_add']);
@@ -107,10 +107,10 @@ class ShopinfoController extends BaseController
         }
 
         if ($_REQUEST['act'] == 'update') {
-            // 权限判断 
+            // 权限判断
             admin_priv('shopinfo_manage');
 
-            // 检查重名 
+            // 检查重名
             if ($_POST['title'] != $_POST['old_title']) {
                 $is_only = $exc->is_only('title', $_POST['title'], $_POST['id']);
 
@@ -119,10 +119,10 @@ class ShopinfoController extends BaseController
                 }
             }
 
-            // 更新数据 
+            // 更新数据
             $cur_time = gmtime();
             if ($exc->edit("title='$_POST[title]', content='$_POST[editor1]',add_time ='$cur_time'", $_POST['id'])) {
-                // 清除缓存 
+                // 清除缓存
                 clear_cache_files();
 
                 $link[0]['text'] = $GLOBALS['_LANG']['back_list'];
@@ -142,7 +142,7 @@ class ShopinfoController extends BaseController
             $id = intval($_POST['id']);
             $title = json_str_iconv(trim($_POST['val']));
 
-            // 检查文章标题是否有重名 
+            // 检查文章标题是否有重名
             if ($exc->num('title', $title, $id) == 0) {
                 if ($exc->edit("title = '$title'", $id)) {
                     clear_cache_files();
@@ -162,7 +162,7 @@ class ShopinfoController extends BaseController
 
             $id = intval($_GET['id']);
 
-            // 获得文章主题 
+            // 获得文章主题
             $title = $exc->get_name($id);
             if ($exc->drop($id)) {
                 clear_cache_files();
@@ -175,7 +175,7 @@ class ShopinfoController extends BaseController
         }
     }
 
-    // 获取网店信息文章数据 
+    // 获取网店信息文章数据
     private function shopinfo_article_list()
     {
         $list = [];

@@ -81,7 +81,7 @@ class Iconv
 
     public function Convert($source_lang, $target_lang, $source_string = '')
     {
-        // 如果字符串为空或者字符串不需要转换，直接返回 
+        // 如果字符串为空或者字符串不需要转换，直接返回
         if ($source_string == '' || preg_match("/[\x80-\xFF]+/", $source_string) == 0) {
             return $source_string;
         }
@@ -94,7 +94,7 @@ class Iconv
             $this->config['target_lang'] = $this->_lang($target_lang);
         }
 
-        // 如果编码相同，直接返回 
+        // 如果编码相同，直接返回
         if ($this->config['source_lang'] == $this->config['target_lang']) {
             return $source_string;
         }
@@ -105,7 +105,7 @@ class Iconv
             if ($this->config['target_lang'] != 'UNICODE') {
                 $string = $this->_convert_iconv_mbstring($this->SourceText, $this->config['target_lang'], $this->config['source_lang']);
 
-                // 如果正确转换 
+                // 如果正确转换
                 if ($string) {
                     return $string;
                 }
@@ -119,7 +119,7 @@ class Iconv
                         } else {
                             $char = substr($text, 0, 3);
                         }
-                        // 如果转换出错 
+                        // 如果转换出错
                         if ($char == '') {
                             $string = '';
 
@@ -162,7 +162,7 @@ class Iconv
                     }
                 }
 
-                // 如果正确转换 
+                // 如果正确转换
                 if ($string) {
                     return $string;
                 }

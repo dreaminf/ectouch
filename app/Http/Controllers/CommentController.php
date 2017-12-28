@@ -15,7 +15,7 @@ class CommentController extends BaseController
     public function actionIndex()
     {
         if (!isset($_REQUEST['cmt']) && !isset($_REQUEST['act'])) {
-            // 只有在没有提交评论内容以及没有act的情况下才跳转 
+            // 只有在没有提交评论内容以及没有act的情况下才跳转
             return redirect('/');
         }
         $_REQUEST['cmt'] = isset($_REQUEST['cmt']) ? json_str_iconv($_REQUEST['cmt']) : '';
@@ -41,7 +41,7 @@ class CommentController extends BaseController
                 $result['message'] = $GLOBALS['_LANG']['error_email'];
             } else {
                 if ((intval($GLOBALS['_CFG']['captcha']) & CAPTCHA_COMMENT) && gd_version() > 0) {
-                    // 检查验证码 
+                    // 检查验证码
                     $validator = new Captcha();
                     if (!$validator->check_word($cmt->captcha)) {
                         $result['error'] = 1;
@@ -49,7 +49,7 @@ class CommentController extends BaseController
                     } else {
                         $factor = intval($GLOBALS['_CFG']['comment_factor']);
                         if ($cmt->type == 0 && $factor > 0) {
-                            // 只有商品才检查评论条件 
+                            // 只有商品才检查评论条件
                             switch ($factor) {
                                 case COMMENT_LOGIN:
                                     if (session('user_id') == 0) {
@@ -101,13 +101,13 @@ class CommentController extends BaseController
                             }
                         }
 
-                        // 无错误就保存留言 
+                        // 无错误就保存留言
                         if (empty($result['error'])) {
                             $this->add_comment($cmt);
                         }
                     }
                 } else {
-                    // 没有验证码时，用时间来限制机器人发帖或恶意发评论 
+                    // 没有验证码时，用时间来限制机器人发帖或恶意发评论
                     if (!session()->has('send_time')) {
                         session(['send_time' =>  0]);
                     }
@@ -119,7 +119,7 @@ class CommentController extends BaseController
                     } else {
                         $factor = intval($GLOBALS['_CFG']['comment_factor']);
                         if ($cmt->type == 0 && $factor > 0) {
-                            // 只有商品才检查评论条件 
+                            // 只有商品才检查评论条件
                             switch ($factor) {
                                 case COMMENT_LOGIN:
                                     if (session('user_id') == 0) {
@@ -172,7 +172,7 @@ class CommentController extends BaseController
                                     }
                             }
                         }
-                        // 无错误就保存留言 
+                        // 无错误就保存留言
                         if (empty($result['error'])) {
                             $this->add_comment($cmt);
                             session(['send_time' =>  $cur_time]);
@@ -202,7 +202,7 @@ class CommentController extends BaseController
             $this->smarty->assign('comments', $comments['comments']);
             $this->smarty->assign('pager', $comments['pager']);
 
-            // 验证码相关设置 
+            // 验证码相关设置
             if ((intval($GLOBALS['_CFG']['captcha']) & CAPTCHA_COMMENT) && gd_version() > 0) {
                 $this->smarty->assign('enabled_captcha', 1);
                 $this->smarty->assign('rand', mt_rand());
@@ -224,7 +224,7 @@ class CommentController extends BaseController
      */
     private function add_comment($cmt)
     {
-        // 评论是否需要审核 
+        // 评论是否需要审核
         $status = 1 - $GLOBALS['_CFG']['comment_check'];
 
         $user_id = session()->has('user_id') ? session('user_id') : 0;
@@ -233,7 +233,7 @@ class CommentController extends BaseController
         $email = htmlspecialchars($email);
         $user_name = htmlspecialchars($user_name);
 
-        // 保存评论内容 
+        // 保存评论内容
         $sql = "INSERT INTO " . $GLOBALS['ecs']->table('comment') .
             "(comment_type, id_value, email, user_name, content, comment_rank, add_time, ip_address, status, parent_id, user_id) VALUES " .
             "('" . $cmt->type . "', '" . $cmt->id . "', '$email', '$user_name', '" . $cmt->content . "', '" . $cmt->rank . "', " . gmtime() . ", '" . real_ip() . "', '$status', '0', '$user_id')";

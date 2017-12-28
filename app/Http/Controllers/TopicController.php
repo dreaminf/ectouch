@@ -19,7 +19,7 @@ class TopicController extends BaseController
         $topic = $this->db->getRow($sql);
 
         if (empty($topic)) {
-            // 如果没有找到任何记录则跳回到首页 
+            // 如果没有找到任何记录则跳回到首页
             return redirect('/');
         }
 
@@ -88,7 +88,7 @@ class TopicController extends BaseController
                 }
             }
 
-            // 模板赋值 
+            // 模板赋值
             assign_template();
             $position = assign_ur_here();
             $this->smarty->assign('page_title', $position['title']);       // 页面标题
@@ -103,7 +103,7 @@ class TopicController extends BaseController
 
             $template_file = empty($topic['template']) ? 'topic.dwt' : $topic['template'];
         }
-        // 显示模板 
+        // 显示模板
         return $this->smarty->display($templates, $cache_id);
     }
 }

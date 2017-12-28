@@ -22,36 +22,36 @@ class OrderStatsController extends BaseController
         if ($_REQUEST['act'] == 'list') {
             admin_priv('sale_order_stats');
 
-            // 随机的颜色数组 
+            // 随机的颜色数组
             $color_array = ['33FF66', 'FF6600', '3399FF', '009966', 'CC3399', 'FFCC33', '6699CC', 'CC3366'];
 
-            // 计算订单各种费用之和的语句 
+            // 计算订单各种费用之和的语句
             $total_fee = " SUM(" . order_amount_field() . ") AS total_turnover ";
 
-            // 取得订单转化率数据 
+            // 取得订单转化率数据
             $sql = "SELECT COUNT(*) AS total_order_num, " . $total_fee .
                 " FROM " . $this->ecs->table('order_info') .
                 " WHERE 1 " . order_query_sql('finished');
             $order_general = $this->db->getRow($sql);
             $order_general['total_turnover'] = floatval($order_general['total_turnover']);
 
-            // 取得商品总点击数量 
+            // 取得商品总点击数量
             $sql = 'SELECT SUM(click_count) FROM ' . $this->ecs->table('goods') . ' WHERE is_delete = 0';
             $click_count = floatval($this->db->getOne($sql));
 
-            // 每千个点击的订单数 
+            // 每千个点击的订单数
             $click_ordernum = $click_count > 0 ? round(($order_general['total_order_num'] * 1000) / $click_count, 2) : 0;
 
-            // 每千个点击的购物额 
+            // 每千个点击的购物额
             $click_turnover = $click_count > 0 ? round(($order_general['total_turnover'] * 1000) / $click_count, 2) : 0;
 
-            // 时区 
+            // 时区
             $timezone = session()->has('timezone') ? session('timezone') : $GLOBALS['_CFG']['timezone'];
 
-            // 时间参数 
+            // 时间参数
             $is_multi = empty($_POST['is_multi']) ? false : true;
 
-            // 时间参数 
+            // 时间参数
             if (isset($_POST['start_date']) && !empty($_POST['end_date'])) {
                 $start_date = local_strtotime($_POST['start_date']);
                 $end_date = local_strtotime($_POST['end_date']);
@@ -82,9 +82,9 @@ class OrderStatsController extends BaseController
                 $end_date_arr[] = local_strtotime(local_date('Y-m') . '-31');;
             }
 
-            // 按月份交叉查询 
+            // 按月份交叉查询
             if ($is_multi) {
-                // 订单概况 
+                // 订单概况
                 $order_general_xml = "<chart caption='{$GLOBALS['_LANG'][order_circs]}' shownames='1' showvalues='0' decimals='0' outCnvBaseFontSize='12' baseFontSize='12' >";
                 $order_general_xml .= "<categories><category label='{$GLOBALS['_LANG'][confirmed]}' />" .
                     "<category label='{$GLOBALS['_LANG'][succeed]}' />" .
@@ -102,7 +102,7 @@ class OrderStatsController extends BaseController
                 }
                 $order_general_xml .= "</chart>";
 
-                // 支付方式 
+                // 支付方式
                 $pay_xml = "<chart caption='{$GLOBALS['_LANG'][pay_method]}' shownames='1' showvalues='0' decimals='0' outCnvBaseFontSize='12' baseFontSize='12' >";
 
                 $payment = [];
@@ -146,7 +146,7 @@ class OrderStatsController extends BaseController
                 }
                 $pay_xml .= "</chart>";
 
-                // 配送方式 
+                // 配送方式
                 $ship = [];
                 $ship_count = [];
 
@@ -189,9 +189,9 @@ class OrderStatsController extends BaseController
                     $ship_xml .= "</dataset>";
                 }
                 $ship_xml .= "</chart>";
-            } // 按时间段查询 
+            } // 按时间段查询
             else {
-                // 订单概况 
+                // 订单概况
                 $order_info = $this->get_orderinfo($start_date, $end_date);
 
                 $order_general_xml = "<graph caption='" . $GLOBALS['_LANG']['order_circs'] . "' decimalPrecision='2' showPercentageValues='0' showNames='1' showValues='1' showPercentageInLabel='0' pieYScale='45' pieBorderAlpha='40' pieFillAlpha='70' pieSliceDepth='15' pieRadius='100' outCnvBaseFontSize='13' baseFontSize='12'>";
@@ -205,7 +205,7 @@ class OrderStatsController extends BaseController
                 $order_general_xml .= "<set value='" . $order_info['invalid_num'] . "' name='" . $GLOBALS['_LANG']['invalid'] . "' color='" . $color_array[4] . "' />";
                 $order_general_xml .= "</graph>";
 
-                // 支付方式 
+                // 支付方式
                 $pay_xml = "<graph caption='" . $GLOBALS['_LANG']['pay_method'] . "' decimalPrecision='2' showPercentageValues='0' showNames='1' numberPrefix='' showValues='1' showPercentageInLabel='0' pieYScale='45' pieBorderAlpha='40' pieFillAlpha='70' pieSliceDepth='15' pieRadius='100' outCnvBaseFontSize='13' baseFontSize='12'>";
 
                 $sql = 'SELECT i.pay_id, p.pay_name, COUNT(i.order_id) AS order_num ' .
@@ -220,7 +220,7 @@ class OrderStatsController extends BaseController
                 }
                 $pay_xml .= "</graph>";
 
-                // 配送方式 
+                // 配送方式
                 $ship_xml = "<graph caption='" . $GLOBALS['_LANG']['shipping_method'] . "' decimalPrecision='2' showPercentageValues='0' showNames='1' numberPrefix='' showValues='1' showPercentageInLabel='0' pieYScale='45' pieBorderAlpha='40' pieFillAlpha='70' pieSliceDepth='15' pieRadius='100' outCnvBaseFontSize='13' baseFontSize='12'>";
 
                 $sql = 'SELECT sp.shipping_id, sp.shipping_name AS ship_name, COUNT(i.order_id) AS order_num ' .
@@ -237,7 +237,7 @@ class OrderStatsController extends BaseController
                 $ship_xml .= "</graph>";
 
             }
-            // 赋值到模板 
+            // 赋值到模板
             $this->smarty->assign('order_general', $order_general);
             $this->smarty->assign('total_turnover', price_format($order_general['total_turnover']));
             $this->smarty->assign('click_count', $click_count);         //商品总点击数
@@ -277,14 +277,14 @@ class OrderStatsController extends BaseController
             header("Content-Disposition: attachment; filename=$filename.xls");
             $start_date = empty($_REQUEST['start_date']) ? strtotime('-20 day') : intval($_REQUEST['start_date']);
             $end_date = empty($_REQUEST['end_date']) ? time() : intval($_REQUEST['end_date']);
-            // 订单概况 
+            // 订单概况
             $order_info = $this->get_orderinfo($start_date, $end_date);
             $data = $GLOBALS['_LANG']['order_circs'] . "\n";
             $data .= "{$GLOBALS['_LANG'][confirmed]} \t {$GLOBALS['_LANG'][succeed]} \t {$GLOBALS['_LANG'][unconfirmed]} \t {$GLOBALS['_LANG'][invalid]} \n";
             $data .= "$order_info[confirmed_num] \t $order_info[succeed_num] \t $order_info[unconfirmed_num] \t $order_info[invalid_num]\n";
             $data .= "\n{$GLOBALS['_LANG'][pay_method]}\n";
 
-            // 支付方式 
+            // 支付方式
             $sql = 'SELECT i.pay_id, p.pay_name, COUNT(i.order_id) AS order_num ' .
                 'FROM ' . $this->ecs->table('payment') . ' AS p, ' . $this->ecs->table('order_info') . ' AS i ' .
                 "WHERE p.pay_id = i.pay_id " . order_query_sql('finished') .
@@ -299,7 +299,7 @@ class OrderStatsController extends BaseController
                 $data .= $val['order_num'] . "\t";
             }
 
-            // 配送方式 
+            // 配送方式
             $sql = 'SELECT sp.shipping_id, sp.shipping_name AS ship_name, COUNT(i.order_id) AS order_num ' .
                 'FROM ' . $this->ecs->table('shipping') . ' AS sp, ' . $this->ecs->table('order_info') . ' AS i ' .
                 'WHERE sp.shipping_id = i.shipping_id ' . order_query_sql('finished') .
@@ -335,26 +335,26 @@ class OrderStatsController extends BaseController
     {
         $order_info = [];
 
-        // 未确认订单数 
+        // 未确认订单数
         $sql = 'SELECT COUNT(*) AS unconfirmed_num FROM ' . $GLOBALS['ecs']->table('order_info') .
             " WHERE order_status = '" . OS_UNCONFIRMED . "' AND add_time >= '$start_date'" .
             " AND add_time < '" . ($end_date + 86400) . "'";
 
         $order_info['unconfirmed_num'] = $GLOBALS['db']->getOne($sql);
 
-        // 已确认订单数 
+        // 已确认订单数
         $sql = 'SELECT COUNT(*) AS confirmed_num FROM ' . $GLOBALS['ecs']->table('order_info') .
             " WHERE order_status = '" . OS_CONFIRMED . "' AND shipping_status NOT " . db_create_in([SS_SHIPPED, SS_RECEIVED]) . " AND pay_status NOT" . db_create_in([PS_PAYED, PS_PAYING]) . " AND add_time >= '$start_date'" .
             " AND add_time < '" . ($end_date + 86400) . "'";
         $order_info['confirmed_num'] = $GLOBALS['db']->getOne($sql);
 
-        // 已成交订单数 
+        // 已成交订单数
         $sql = 'SELECT COUNT(*) AS succeed_num FROM ' . $GLOBALS['ecs']->table('order_info') .
             " WHERE 1 " . order_query_sql('finished') .
             " AND add_time >= '$start_date' AND add_time < '" . ($end_date + 86400) . "'";
         $order_info['succeed_num'] = $GLOBALS['db']->getOne($sql);
 
-        // 无效或已取消订单数 
+        // 无效或已取消订单数
         $sql = "SELECT COUNT(*) AS invalid_num FROM " . $GLOBALS['ecs']->table('order_info') .
             " WHERE order_status > '" . OS_CONFIRMED . "'" .
             " AND add_time >= '$start_date' AND add_time < '" . ($end_date + 86400) . "'";

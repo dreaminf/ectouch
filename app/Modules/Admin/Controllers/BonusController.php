@@ -13,7 +13,7 @@ class BonusController extends BaseController
 {
     public function actionIndex()
     {
-        // 初始化$exc对象 
+        // 初始化$exc对象
         $exc = new Exchange($this->ecs->table('bonus_type'), $this->db, 'type_id', 'type_name');
 
         /**
@@ -64,7 +64,7 @@ class BonusController extends BaseController
             $id = intval($_POST['id']);
             $val = json_str_iconv(trim($_POST['val']));
 
-            // 检查红包类型名称是否重复 
+            // 检查红包类型名称是否重复
             if (!$exc->is_only('type_name', $id, $val)) {
                 return make_json_error($GLOBALS['_LANG']['type_name_exist']);
             } else {
@@ -83,7 +83,7 @@ class BonusController extends BaseController
             $id = intval($_POST['id']);
             $val = floatval($_POST['val']);
 
-            // 检查红包类型名称是否重复 
+            // 检查红包类型名称是否重复
             if ($val <= 0) {
                 return make_json_error($GLOBALS['_LANG']['type_money_error']);
             } else {
@@ -121,10 +121,10 @@ class BonusController extends BaseController
 
             $exc->drop($id);
 
-            // 更新商品信息 
+            // 更新商品信息
             $this->db->query("UPDATE " . $this->ecs->table('goods') . " SET bonus_type_id = 0 WHERE bonus_type_id = '$id'");
 
-            // 删除用户的红包 
+            // 删除用户的红包
             $this->db->query("DELETE FROM " . $this->ecs->table('user_bonus') . " WHERE bonus_type_id = '$id'");
 
             $url = 'bonus.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
@@ -161,27 +161,27 @@ class BonusController extends BaseController
          * 红包类型添加的处理
          */
         if ($_REQUEST['act'] == 'insert') {
-            // 去掉红包类型名称前后的空格 
+            // 去掉红包类型名称前后的空格
             $type_name = !empty($_POST['type_name']) ? trim($_POST['type_name']) : '';
 
-            // 初始化变量 
+            // 初始化变量
             $type_id = !empty($_POST['type_id']) ? intval($_POST['type_id']) : 0;
             $min_amount = !empty($_POST['min_amount']) ? intval($_POST['min_amount']) : 0;
 
-            // 检查类型是否有重复 
+            // 检查类型是否有重复
             $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('bonus_type') . " WHERE type_name='$type_name'";
             if ($this->db->getOne($sql) > 0) {
                 $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
                 return sys_msg($GLOBALS['_LANG']['type_name_exist'], 0, $link);
             }
 
-            // 获得日期信息 
+            // 获得日期信息
             $send_startdate = local_strtotime($_POST['send_start_date']);
             $send_enddate = local_strtotime($_POST['send_end_date']);
             $use_startdate = local_strtotime($_POST['use_start_date']);
             $use_enddate = local_strtotime($_POST['use_end_date']);
 
-            // 插入数据库。 
+            // 插入数据库。
             $sql = "INSERT INTO " . $this->ecs->table('bonus_type') . " (type_name, type_money,send_start_date,send_end_date,use_start_date,use_end_date,send_type,min_amount,min_goods_amount)
     VALUES ('$type_name',
             '$_POST[type_money]',
@@ -193,13 +193,13 @@ class BonusController extends BaseController
             '$min_amount','" . floatval($_POST['min_goods_amount']) . "')";
 
             $this->db->query($sql);
-            // 记录管理员操作 
+            // 记录管理员操作
             admin_log($_POST['type_name'], 'add', 'bonustype');
 
-            // 清除缓存 
+            // 清除缓存
             clear_cache_files();
 
-            // 提示信息 
+            // 提示信息
             $link[0]['text'] = $GLOBALS['_LANG']['continus_add'];
             $link[0]['href'] = 'bonus.php?act=add';
 
@@ -215,7 +215,7 @@ class BonusController extends BaseController
         if ($_REQUEST['act'] == 'edit') {
             admin_priv('bonus_manage');
 
-            // 获取红包类型数据 
+            // 获取红包类型数据
             $type_id = !empty($_GET['type_id']) ? intval($_GET['type_id']) : 0;
             $bonus_arr = $this->db->getRow("SELECT * FROM " . $this->ecs->table('bonus_type') . " WHERE type_id = '$type_id'");
 
@@ -238,13 +238,13 @@ class BonusController extends BaseController
          * 红包类型编辑的处理
          */
         if ($_REQUEST['act'] == 'update') {
-            // 获得日期信息 
+            // 获得日期信息
             $send_startdate = local_strtotime($_POST['send_start_date']);
             $send_enddate = local_strtotime($_POST['send_end_date']);
             $use_startdate = local_strtotime($_POST['use_start_date']);
             $use_enddate = local_strtotime($_POST['use_end_date']);
 
-            // 对数据的处理 
+            // 对数据的处理
             $type_name = !empty($_POST['type_name']) ? trim($_POST['type_name']) : '';
             $type_id = !empty($_POST['type_id']) ? intval($_POST['type_id']) : 0;
             $min_amount = !empty($_POST['min_amount']) ? intval($_POST['min_amount']) : 0;
@@ -262,13 +262,13 @@ class BonusController extends BaseController
                 "WHERE type_id   = '$type_id'";
 
             $this->db->query($sql);
-            // 记录管理员操作 
+            // 记录管理员操作
             admin_log($_POST['type_name'], 'edit', 'bonustype');
 
-            // 清除缓存 
+            // 清除缓存
             clear_cache_files();
 
-            // 提示信息 
+            // 提示信息
             $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'bonus.php?act=list&' . list_link_postfix()];
             return sys_msg($GLOBALS['_LANG']['edit'] . ' ' . $_POST['type_name'] . ' ' . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
         }
@@ -279,7 +279,7 @@ class BonusController extends BaseController
         if ($_REQUEST['act'] == 'send') {
             admin_priv('bonus_manage');
 
-            // 取得参数 
+            // 取得参数
             $id = !empty($_REQUEST['id']) ? intval($_REQUEST['id']) : '';
 
 
@@ -292,20 +292,20 @@ class BonusController extends BaseController
 
                 return $this->smarty->display('bonus_by_user.htm');
             } elseif ($_REQUEST['send_by'] == SEND_BY_GOODS) {
-                // 查询此红包类型信息 
+                // 查询此红包类型信息
                 $bonus_type = $this->db->getRow("SELECT type_id, type_name FROM " . $this->ecs->table('bonus_type') .
                     " WHERE type_id='$_REQUEST[id]'");
 
-                // 查询红包类型的商品列表 
+                // 查询红包类型的商品列表
                 $goods_list = $this->get_bonus_goods($_REQUEST['id']);
 
-                // 查询其他红包类型的商品 
+                // 查询其他红包类型的商品
                 $sql = "SELECT goods_id FROM " . $this->ecs->table('goods') .
                     " WHERE bonus_type_id > 0 AND bonus_type_id <> '$_REQUEST[id]'";
                 $other_goods_list = $this->db->getCol($sql);
                 $this->smarty->assign('other_goods', join(',', $other_goods_list));
 
-                // 模板赋值 
+                // 模板赋值
                 $this->smarty->assign('cat_list', cat_list());
                 $this->smarty->assign('brand_list', get_brand_list());
 
@@ -331,14 +331,14 @@ class BonusController extends BaseController
             $send_count = 0;
 
             if (isset($_REQUEST['send_rank'])) {
-                // 按会员等级来发放红包 
+                // 按会员等级来发放红包
                 $rank_id = intval($_REQUEST['rank_id']);
 
                 if ($rank_id > 0) {
                     $sql = "SELECT min_points, max_points, special_rank FROM " . $this->ecs->table('user_rank') . " WHERE rank_id = '$rank_id'";
                     $row = $this->db->getRow($sql);
                     if ($row['special_rank']) {
-                        // 特殊会员组处理 
+                        // 特殊会员组处理
                         $sql = 'SELECT COUNT(*) FROM ' . $this->ecs->table('users') . " WHERE user_rank = '$rank_id'";
                         $send_count = $this->db->getOne($sql);
                         if ($validated_email) {
@@ -370,8 +370,8 @@ class BonusController extends BaseController
                     $count = count($user_list);
                 }
             } elseif (isset($_REQUEST['send_user'])) {
-                // 按会员列表发放红包 
-                // 如果是空数组，直接返回 
+                // 按会员列表发放红包
+                // 如果是空数组，直接返回
                 if (empty($_REQUEST['user'])) {
                     return sys_msg($GLOBALS['_LANG']['send_user_empty'], 1);
                 }
@@ -381,14 +381,14 @@ class BonusController extends BaseController
 
                 $id_array = array_slice($user_array, $start, $limit);
 
-                // 根据会员ID取得用户名和邮件地址 
+                // 根据会员ID取得用户名和邮件地址
                 $sql = "SELECT user_id, email, user_name FROM " . $this->ecs->table('users') .
                     " WHERE user_id " . db_create_in($id_array);
                 $user_list = $this->db->getAll($sql);
                 $count = count($user_list);
             }
 
-            // 发送红包 
+            // 发送红包
             $loop = 0;
             $bonus_type = $this->bonus_type_info($_REQUEST['id']);
 
@@ -396,7 +396,7 @@ class BonusController extends BaseController
             $today = local_date($GLOBALS['_CFG']['date_format']);
 
             foreach ($user_list as $key => $val) {
-                // 发送邮件通知 
+                // 发送邮件通知
                 $this->smarty->assign('user_name', $val['user_name']);
                 $this->smarty->assign('shop_name', $GLOBALS['_CFG']['shop_name']);
                 $this->smarty->assign('send_date', $today);
@@ -407,13 +407,13 @@ class BonusController extends BaseController
                 $content = $this->smarty->fetch('str:' . $tpl['template_content']);
 
                 if ($this->add_to_maillist($val['user_name'], $val['email'], $tpl['template_subject'], $content, $tpl['is_html'])) {
-                    // 向会员红包表录入数据 
+                    // 向会员红包表录入数据
                     $sql = "INSERT INTO " . $this->ecs->table('user_bonus') .
                         "(bonus_type_id, bonus_sn, user_id, used_time, order_id, emailed) " .
                         "VALUES ('$_REQUEST[id]', 0, '$val[user_id]', 0, 0, " . BONUS_MAIL_SUCCEED . ")";
                     $this->db->query($sql);
                 } else {
-                    // 邮件发送失败，更新数据库 
+                    // 邮件发送失败，更新数据库
                     $sql = "INSERT INTO " . $this->ecs->table('user_bonus') .
                         "(bonus_type_id, bonus_sn, user_id, used_time, order_id, emailed) " .
                         "VALUES ('$_REQUEST[id]', 0, '$val[user_id]', 0, 0, " . BONUS_MAIL_FAIL . ")";
@@ -429,7 +429,7 @@ class BonusController extends BaseController
 
             //admin_log(addslashes($GLOBALS['_LANG']['send_bonus']), 'add', 'bonustype');
             if ($send_count > ($start + $limit)) {
-                //  
+                //
                 $href = "bonus.php?act=send_by_user&start=" . ($start + $limit) . "&limit=$limit&id=$_REQUEST[id]&";
 
                 if (isset($_REQUEST['send_rank'])) {
@@ -452,20 +452,20 @@ class BonusController extends BaseController
          * 发送邮件
          */
         if ($_REQUEST['act'] == 'send_mail') {
-            // 取得参数：红包id 
+            // 取得参数：红包id
             $bonus_id = intval($_REQUEST['bonus_id']);
             if ($bonus_id <= 0) {
                 die('invalid params');
             }
 
-            // 取得红包信息 
+            // 取得红包信息
             include_once(ROOT_PATH . 'includes/lib_order.php');
             $bonus = bonus_info($bonus_id);
             if (empty($bonus)) {
                 return sys_msg($GLOBALS['_LANG']['bonus_not_exist']);
             }
 
-            // 发邮件 
+            // 发邮件
             $count = $this->send_bonus_mail($bonus['bonus_type_id'], [$bonus_id]);
 
             $link[0]['text'] = $GLOBALS['_LANG']['back_bonus_list'];
@@ -480,11 +480,11 @@ class BonusController extends BaseController
         if ($_REQUEST['act'] == 'send_by_print') {
             @set_time_limit(0);
 
-            // 红下红包的类型ID和生成的数量的处理 
+            // 红下红包的类型ID和生成的数量的处理
             $bonus_typeid = !empty($_POST['bonus_type_id']) ? $_POST['bonus_type_id'] : 0;
             $bonus_sum = !empty($_POST['bonus_sum']) ? $_POST['bonus_sum'] : 1;
 
-            // 生成红包序列号 
+            // 生成红包序列号
             $num = $this->db->getOne("SELECT MAX(bonus_sn) FROM " . $this->ecs->table('user_bonus'));
             $num = $num ? floor($num / 10000) : 100000;
 
@@ -495,13 +495,13 @@ class BonusController extends BaseController
                 $j++;
             }
 
-            // 记录管理员操作 
+            // 记录管理员操作
             admin_log($bonus_sn, 'add', 'userbonus');
 
-            // 清除缓存 
+            // 清除缓存
             clear_cache_files();
 
-            // 提示信息 
+            // 提示信息
             $link[0]['text'] = $GLOBALS['_LANG']['back_bonus_list'];
             $link[0]['href'] = 'bonus.php?act=bonus_list&bonus_type=' . $bonus_typeid;
 
@@ -514,11 +514,11 @@ class BonusController extends BaseController
         if ($_REQUEST['act'] == 'gen_excel') {
             @set_time_limit(0);
 
-            // 获得此线下红包类型的ID 
+            // 获得此线下红包类型的ID
             $tid = !empty($_GET['tid']) ? intval($_GET['tid']) : 0;
             $type_name = $this->db->getOne("SELECT type_name FROM " . $this->ecs->table('bonus_type') . " WHERE type_id = '$tid'");
 
-            // 文件名称 
+            // 文件名称
             $bonus_filename = $type_name . '_bonus_list';
             if (CHARSET != 'gbk') {
                 $bonus_filename = ecs_iconv('UTF8', 'GB2312', $bonus_filename);
@@ -527,17 +527,17 @@ class BonusController extends BaseController
             header("Content-type: application/vnd.ms-excel; charset=utf-8");
             header("Content-Disposition: attachment; filename=$bonus_filename.xls");
 
-            // 文件标题 
+            // 文件标题
             if (CHARSET != 'gbk') {
                 echo ecs_iconv('UTF8', 'GB2312', $GLOBALS['_LANG']['bonus_excel_file']) . "\t\n";
-                // 红包序列号, 红包金额, 类型名称(红包名称), 使用结束日期 
+                // 红包序列号, 红包金额, 类型名称(红包名称), 使用结束日期
                 echo ecs_iconv('UTF8', 'GB2312', $GLOBALS['_LANG']['bonus_sn']) . "\t";
                 echo ecs_iconv('UTF8', 'GB2312', $GLOBALS['_LANG']['type_money']) . "\t";
                 echo ecs_iconv('UTF8', 'GB2312', $GLOBALS['_LANG']['type_name']) . "\t";
                 echo ecs_iconv('UTF8', 'GB2312', $GLOBALS['_LANG']['use_enddate']) . "\t\n";
             } else {
                 echo $GLOBALS['_LANG']['bonus_excel_file'] . "\t\n";
-                // 红包序列号, 红包金额, 类型名称(红包名称), 使用结束日期 
+                // 红包序列号, 红包金额, 类型名称(红包名称), 使用结束日期
                 echo $GLOBALS['_LANG']['bonus_sn'] . "\t";
                 echo $GLOBALS['_LANG']['type_money'] . "\t";
                 echo $GLOBALS['_LANG']['type_name'] . "\t";
@@ -605,7 +605,7 @@ class BonusController extends BaseController
                 $this->db->query($sql, 'SILENT');
             }
 
-            // 重新载入 
+            // 重新载入
             $arr = $this->get_bonus_goods($type_id);
             $opt = [];
 
@@ -635,7 +635,7 @@ class BonusController extends BaseController
             $this->db->query("UPDATE " . $this->ecs->table('goods') . " SET bonus_type_id = 0 " .
                 "WHERE bonus_type_id = '$type_id' AND goods_id " . $drop_goods_ids);
 
-            // 重新载入 
+            // 重新载入
             $arr = $this->get_bonus_goods($type_id);
             $opt = [];
 
@@ -671,11 +671,11 @@ class BonusController extends BaseController
 
             $list = $this->get_bonus_list();
 
-            // 赋值是否显示红包序列号 
+            // 赋值是否显示红包序列号
             $bonus_type = $this->bonus_type_info(intval($_REQUEST['bonus_type']));
             if ($bonus_type['send_type'] == SEND_BY_PRINT) {
                 $this->smarty->assign('show_bonus_sn', 1);
-            } // 赋值是否显示发邮件操作和是否发过邮件 
+            } // 赋值是否显示发邮件操作和是否发过邮件
             elseif ($bonus_type['send_type'] == SEND_BY_USER) {
                 $this->smarty->assign('show_mail', 1);
             }
@@ -697,11 +697,11 @@ class BonusController extends BaseController
         if ($_REQUEST['act'] == 'query_bonus') {
             $list = $this->get_bonus_list();
 
-            // 赋值是否显示红包序列号 
+            // 赋值是否显示红包序列号
             $bonus_type = $this->bonus_type_info(intval($_REQUEST['bonus_type']));
             if ($bonus_type['send_type'] == SEND_BY_PRINT) {
                 $this->smarty->assign('show_bonus_sn', 1);
-            } // 赋值是否显示发邮件操作和是否发过邮件 
+            } // 赋值是否显示发邮件操作和是否发过邮件
             elseif ($bonus_type['send_type'] == SEND_BY_USER) {
                 $this->smarty->assign('show_mail', 1);
             }
@@ -737,17 +737,17 @@ class BonusController extends BaseController
          * 批量操作
          */
         if ($_REQUEST['act'] == 'batch') {
-            // 检查权限 
+            // 检查权限
             admin_priv('bonus_manage');
 
-            // 去掉参数：红包类型 
+            // 去掉参数：红包类型
             $bonus_type_id = intval($_REQUEST['bonus_type']);
 
-            // 取得选中的红包id 
+            // 取得选中的红包id
             if (isset($_POST['checkboxes'])) {
                 $bonus_id_list = $_POST['checkboxes'];
 
-                // 删除红包 
+                // 删除红包
                 if (isset($_POST['drop'])) {
                     $sql = "DELETE FROM " . $this->ecs->table('user_bonus') . " WHERE bonus_id " . db_create_in($bonus_id_list);
                     $this->db->query($sql);
@@ -759,7 +759,7 @@ class BonusController extends BaseController
                     $link[] = ['text' => $GLOBALS['_LANG']['back_bonus_list'],
                         'href' => 'bonus.php?act=bonus_list&bonus_type=' . $bonus_type_id];
                     return sys_msg(sprintf($GLOBALS['_LANG']['batch_drop_success'], count($bonus_id_list)), 0, $link);
-                } // 发邮件 
+                } // 发邮件
                 elseif (isset($_POST['mail'])) {
                     $count = $this->send_bonus_mail($bonus_type_id, $bonus_id_list);
                     $link[] = ['text' => $GLOBALS['_LANG']['back_bonus_list'],
@@ -779,7 +779,7 @@ class BonusController extends BaseController
      */
     private function get_type_list()
     {
-        // 获得所有红包类型的发放数量 
+        // 获得所有红包类型的发放数量
         $sql = "SELECT bonus_type_id, COUNT(*) AS sent_count" .
             " FROM " . $GLOBALS['ecs']->table('user_bonus') .
             " GROUP BY bonus_type_id";
@@ -790,7 +790,7 @@ class BonusController extends BaseController
             $sent_arr[$row['bonus_type_id']] = $row['sent_count'];
         }
 
-        // 获得所有红包类型的发放数量 
+        // 获得所有红包类型的发放数量
         $sql = "SELECT bonus_type_id, COUNT(*) AS used_count" .
             " FROM " . $GLOBALS['ecs']->table('user_bonus') .
             " WHERE used_time > 0" .
@@ -804,14 +804,14 @@ class BonusController extends BaseController
 
         $result = get_filter();
         if ($result === false) {
-            // 查询条件 
+            // 查询条件
             $filter['sort_by'] = empty($_REQUEST['sort_by']) ? 'type_id' : trim($_REQUEST['sort_by']);
             $filter['sort_order'] = empty($_REQUEST['sort_order']) ? 'DESC' : trim($_REQUEST['sort_order']);
 
             $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('bonus_type');
             $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-            // 分页大小 
+            // 分页大小
             $filter = page_and_size($filter);
 
             $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('bonus_type') . " ORDER BY $filter[sort_by] $filter[sort_order]";
@@ -861,7 +861,7 @@ class BonusController extends BaseController
      */
     private function get_bonus_list()
     {
-        // 查询条件 
+        // 查询条件
         $filter['sort_by'] = empty($_REQUEST['sort_by']) ? 'bonus_type_id' : trim($_REQUEST['sort_by']);
         $filter['sort_order'] = empty($_REQUEST['sort_order']) ? 'DESC' : trim($_REQUEST['sort_order']);
         $filter['bonus_type'] = empty($_REQUEST['bonus_type']) ? 0 : intval($_REQUEST['bonus_type']);
@@ -871,7 +871,7 @@ class BonusController extends BaseController
         $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('user_bonus') . $where;
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-        // 分页大小 
+        // 分页大小
         $filter = page_and_size($filter);
 
         $sql = "SELECT ub.*, u.user_name, u.email, o.order_sn, bt.type_name " .
@@ -915,13 +915,13 @@ class BonusController extends BaseController
      */
     private function send_bonus_mail($bonus_type_id, $bonus_id_list)
     {
-        // 取得红包类型信息 
+        // 取得红包类型信息
         $bonus_type = $this->bonus_type_info($bonus_type_id);
         if ($bonus_type['send_type'] != SEND_BY_USER) {
             return 0;
         }
 
-        // 取得属于该类型的红包信息 
+        // 取得属于该类型的红包信息
         $sql = "SELECT b.bonus_id, u.user_name, u.email " .
             "FROM " . $GLOBALS['ecs']->table('user_bonus') . " AS b, " .
             $GLOBALS['ecs']->table('users') . " AS u " .
@@ -934,10 +934,10 @@ class BonusController extends BaseController
             return 0;
         }
 
-        // 初始化成功发送数量 
+        // 初始化成功发送数量
         $send_count = 0;
 
-        // 发送邮件 
+        // 发送邮件
         $tpl = get_mail_template('send_bonus');
         $today = local_date($GLOBALS['_CFG']['date_format']);
         foreach ($bonus_list as $bonus) {

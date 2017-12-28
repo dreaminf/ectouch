@@ -15,13 +15,13 @@ class UserAccountController extends BaseController
          * 会员余额记录列表
          */
         if ($_REQUEST['act'] == 'list') {
-            // 权限判断 
+            // 权限判断
             admin_priv('surplus_manage');
 
-            // 指定会员的ID为查询条件 
+            // 指定会员的ID为查询条件
             $user_id = !empty($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
 
-            // 获得支付方式列表 
+            // 获得支付方式列表
             $payment = [];
             $sql = "SELECT pay_id, pay_name FROM " . $this->ecs->table('payment') .
                 " WHERE enabled = 1 AND pay_code != 'cod' ORDER BY pay_id";
@@ -31,7 +31,7 @@ class UserAccountController extends BaseController
                 $payment[$row['pay_name']] = $row['pay_name'];
             }
 
-            // 模板赋值 
+            // 模板赋值
             if (isset($_REQUEST['process_type'])) {
                 $this->smarty->assign('process_type_' . intval($_REQUEST['process_type']), 'selected="selected"');
             }
@@ -63,7 +63,7 @@ class UserAccountController extends BaseController
             $form_act = ($_REQUEST['act'] == 'add') ? 'insert' : 'update';
             $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-            // 获得支付方式列表, 不包括“货到付款” 
+            // 获得支付方式列表, 不包括“货到付款”
             $user_account = [];
             $payment = [];
             $sql = "SELECT pay_id, pay_name FROM " . $this->ecs->table('payment') .
@@ -75,13 +75,13 @@ class UserAccountController extends BaseController
             }
 
             if ($_REQUEST['act'] == 'edit') {
-                // 取得余额信息 
+                // 取得余额信息
                 $user_account = $this->db->getRow("SELECT * FROM " . $this->ecs->table('user_account') . " WHERE id = '$id'");
 
                 // 如果是负数，去掉前面的符号
                 $user_account['amount'] = str_replace('-', '', $user_account['amount']);
 
-                // 取得会员名称 
+                // 取得会员名称
                 $sql = "SELECT user_name FROM " . $this->ecs->table('users') . " WHERE user_id = '$user_account[user_id]'";
                 $user_name = $this->db->getOne($sql);
             } else {
@@ -89,7 +89,7 @@ class UserAccountController extends BaseController
                 $user_name = '';
             }
 
-            // 模板赋值 
+            // 模板赋值
             $this->smarty->assign('ur_here', $ur_here);
             $this->smarty->assign('form_act', $form_act);
             $this->smarty->assign('payment_list', $payment);
@@ -110,10 +110,10 @@ class UserAccountController extends BaseController
          * 添加/编辑会员余额的处理部分
          */
         if ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update') {
-            // 权限判断 
+            // 权限判断
             admin_priv('surplus_manage');
 
-            // 初始化变量 
+            // 初始化变量
             $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
             $is_paid = !empty($_POST['is_paid']) ? intval($_POST['is_paid']) : 0;
             $amount = !empty($_POST['amount']) ? floatval($_POST['amount']) : 0;
@@ -125,17 +125,17 @@ class UserAccountController extends BaseController
 
             $user_id = $this->db->getOne("SELECT user_id FROM " . $this->ecs->table('users') . " WHERE user_name = '$user_name'");
 
-            // 此会员是否存在 
+            // 此会员是否存在
             if ($user_id == 0) {
                 $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
                 return sys_msg($GLOBALS['_LANG']['username_not_exist'], 0, $link);
             }
 
-            // 退款，检查余额是否足够 
+            // 退款，检查余额是否足够
             if ($process_type == 1) {
                 $user_account = $this->get_user_surplus($user_id);
 
-                // 如果扣除的余额多于此会员拥有的余额，提示 
+                // 如果扣除的余额多于此会员拥有的余额，提示
                 if ($amount > $user_account) {
                     $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
                     return sys_msg($GLOBALS['_LANG']['surplus_amount_error'], 0, $link);
@@ -143,7 +143,7 @@ class UserAccountController extends BaseController
             }
 
             if ($_REQUEST['act'] == 'insert') {
-                // 入库的操作 
+                // 入库的操作
                 if ($process_type == 1) {
                     $amount = (-1) * $amount;
                 }
@@ -152,7 +152,7 @@ class UserAccountController extends BaseController
                 $this->db->query($sql);
                 $id = $this->db->insert_id();
             } else {
-                // 更新数据表 
+                // 更新数据表
                 $sql = "UPDATE " . $this->ecs->table('user_account') . " SET " .
                     "admin_note   = '$admin_note', " .
                     "user_note    = '$user_note', " .
@@ -172,7 +172,7 @@ class UserAccountController extends BaseController
             if ($process_type == 0 && $is_paid == 0) {
                 include_once(ROOT_PATH . 'includes/lib_order.php');
 
-                // 取支付方式信息 
+                // 取支付方式信息
                 $payment_info = [];
                 $payment_info = $this->db->getRow('SELECT * FROM ' . $this->ecs->table('payment') .
                     " WHERE pay_name = '$payment' AND enabled = '1'");
@@ -180,20 +180,20 @@ class UserAccountController extends BaseController
                 $pay_fee = pay_fee($payment_info['pay_id'], $amount, 0);
                 $total_fee = $pay_fee + $amount;
 
-                // 插入 pay_log 
+                // 插入 pay_log
                 $sql = 'INSERT INTO ' . $this->ecs->table('pay_log') . " (order_id, order_amount, order_type, is_paid)" .
                     " VALUES ('$id', '$total_fee', '" . PAY_SURPLUS . "', 0)";
                 $this->db->query($sql);
             }
 
-            // 记录管理员操作 
+            // 记录管理员操作
             if ($_REQUEST['act'] == 'update') {
                 admin_log($user_name, 'edit', 'user_surplus');
             } else {
                 admin_log($user_name, 'add', 'user_surplus');
             }
 
-            // 提示信息 
+            // 提示信息
             if ($_REQUEST['act'] == 'insert') {
                 $href = 'user_account.php?act=list';
             } else {
@@ -212,18 +212,18 @@ class UserAccountController extends BaseController
          * 审核会员余额页面
          */
         if ($_REQUEST['act'] == 'check') {
-            // 检查权限 
+            // 检查权限
             admin_priv('surplus_manage');
 
-            // 初始化 
+            // 初始化
             $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-            // 如果参数不合法，返回 
+            // 如果参数不合法，返回
             if ($id == 0) {
                 return redirect("user_account.php?act=list");
             }
 
-            // 查询当前的预付款信息 
+            // 查询当前的预付款信息
             $account = [];
             $account = $this->db->getRow("SELECT * FROM " . $this->ecs->table('user_account') . " WHERE id = '$id'");
             $account['add_time'] = local_date($GLOBALS['_CFG']['time_format'], $account['add_time']);
@@ -242,7 +242,7 @@ class UserAccountController extends BaseController
             $sql = "SELECT user_name FROM " . $this->ecs->table('users') . " WHERE user_id = '$account[user_id]'";
             $user_name = $this->db->getOne($sql);
 
-            // 模板赋值 
+            // 模板赋值
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['check']);
             $account['user_note'] = htmlspecialchars($account['user_note']);
             $this->smarty->assign('surplus', $account);
@@ -259,20 +259,20 @@ class UserAccountController extends BaseController
          * 更新会员余额的状态
          */
         if ($_REQUEST['act'] == 'action') {
-            // 检查权限 
+            // 检查权限
             admin_priv('surplus_manage');
 
-            // 初始化 
+            // 初始化
             $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
             $is_paid = isset($_POST['is_paid']) ? intval($_POST['is_paid']) : 0;
             $admin_note = isset($_POST['admin_note']) ? trim($_POST['admin_note']) : '';
 
-            // 如果参数不合法，返回 
+            // 如果参数不合法，返回
             if ($id == 0 || empty($admin_note)) {
                 return redirect("user_account.php?act=list");
             }
 
-            // 查询当前的预付款信息 
+            // 查询当前的预付款信息
             $account = [];
             $account = $this->db->getRow("SELECT * FROM " . $this->ecs->table('user_account') . " WHERE id = '$id'");
             $amount = $account['amount'];
@@ -301,7 +301,7 @@ class UserAccountController extends BaseController
                     //更新会员余额数量
                     log_account_change($account['user_id'], $amount, 0, 0, 0, $GLOBALS['_LANG']['surplus_type_0'], ACT_SAVING);
                 } elseif ($is_paid == '0') {
-                    // 否则更新信息 
+                    // 否则更新信息
                     $sql = "UPDATE " . $this->ecs->table('user_account') . " SET " .
                         "admin_user    = '" . session('admin_name') . "', " .
                         "admin_note    = '$admin_note', " .
@@ -309,10 +309,10 @@ class UserAccountController extends BaseController
                     $this->db->query($sql);
                 }
 
-                // 记录管理员日志 
+                // 记录管理员日志
                 admin_log('(' . addslashes($GLOBALS['_LANG']['check']) . ')' . $admin_note, 'edit', 'user_surplus');
 
-                // 提示信息 
+                // 提示信息
                 $link[0]['text'] = $GLOBALS['_LANG']['back_list'];
                 $link[0]['href'] = 'user_account.php?act=list&' . list_link_postfix();
 
@@ -340,7 +340,7 @@ class UserAccountController extends BaseController
          * ajax删除一条信息
          */
         if ($_REQUEST['act'] == 'remove') {
-            // 检查权限 
+            // 检查权限
             check_authz_json('surplus_manage');
             $id = @intval($_REQUEST['id']);
             $sql = "SELECT u.user_name FROM " . $this->ecs->table('users') . " AS u, " .
@@ -408,7 +408,7 @@ class UserAccountController extends BaseController
     {
         $result = get_filter();
         if ($result === false) {
-            // 过滤列表 
+            // 过滤列表
             $filter['user_id'] = !empty($_REQUEST['user_id']) ? intval($_REQUEST['user_id']) : 0;
             $filter['keywords'] = empty($_REQUEST['keywords']) ? '' : trim($_REQUEST['keywords']);
             if (isset($_REQUEST['is_ajax']) && $_REQUEST['is_ajax'] == 1) {
@@ -453,10 +453,10 @@ class UserAccountController extends BaseController
                 $GLOBALS['ecs']->table('users') . " AS u " . $where;
             $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-            // 分页大小 
+            // 分页大小
             $filter = page_and_size($filter);
 
-            // 查询数据 
+            // 查询数据
             $sql = 'SELECT ua.*, u.user_name FROM ' .
                 $GLOBALS['ecs']->table('user_account') . ' AS ua LEFT JOIN ' .
                 $GLOBALS['ecs']->table('users') . ' AS u ON ua.user_id = u.user_id' .

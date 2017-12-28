@@ -3,7 +3,7 @@
 /**
  *  广告管理语言文件
  */
-// 广告位置字段信息 
+// 广告位置字段信息
 $_LANG['position_name'] = '广告位名称';
 $_LANG['ad_width'] = '广告位宽度';
 $_LANG['ad_height'] = '广告位高度';
@@ -35,7 +35,7 @@ $_LANG['position_edit'] = '编辑广告位';
 $_LANG['posit_name_exist'] = '此广告位已经存在了!';
 $_LANG['download_ad_statistics'] = '下载广告统计报表';
 
-// JS语言提示 
+// JS语言提示
 $_LANG['js_languages']['posit_name_empty'] = '广告位名称不能为空!';
 $_LANG['js_languages']['ad_width_empty'] = '请输入广告位的宽度!';
 $_LANG['js_languages']['ad_height_empty'] = '请输入广告位的高度!';
@@ -50,14 +50,14 @@ $_LANG['height_number'] = '广告位的高度必须是一个数字!';
 $_LANG['width_value'] = '广告位的宽度值必须在1到1024之间!';
 $_LANG['not_del_adposit'] = '该广告位已经有广告存在,不能删除!';
 
-// 帮助语言项 
+// 帮助语言项
 $_LANG['position_name_notic'] = '填写广告位置的名称，如：页脚广告，LOGO广告，右侧广告,通栏二_左边部分等等';
 $_LANG['ad_width_notic'] = '广告位置的宽度,此高度将是广告显示时的宽度,单位为像素';
 
 $_LANG['howto_js'] = '如何调用JS代码显示广告';
 $_LANG['ja_adcode_notic'] = '调用JS广告代码的描述';
 
-// 广告字段信息 
+// 广告字段信息
 $_LANG['ad_id'] = '编号';
 $_LANG['position_id'] = '广告位置';
 $_LANG['media_type'] = '媒介类型';
@@ -94,7 +94,7 @@ $_LANG['continue_add_ad'] = '继续添加广告';
 $_LANG['continue_add_position'] = '继续添加广告位';
 $_LANG['show_ads_template'] = '设置在模板中显示该广告位';
 
-// 描述信息 
+// 描述信息
 $_LANG['ad_img'] = '图片';
 $_LANG['ad_flash'] = 'Flash';
 $_LANG['ad_html'] = '代码';
@@ -106,7 +106,7 @@ $_LANG['upfile_img'] = '上传广告图片';
 $_LANG['img_url'] = '或图片网址';
 $_LANG['enter_code'] = '输入广告代码';
 
-// JS语言提示 
+// JS语言提示
 $_LANG['js_languages']['ad_name_empty'] = '请输入广告名称!';
 $_LANG['js_languages']['ad_link_empty'] = '请输入广告的链接URL!';
 $_LANG['js_languages']['ad_text_empty'] = '广告的内容不能为空!';
@@ -115,7 +115,7 @@ $_LANG['js_languages']['ad_flash_empty'] = '广告的flash不能为空!';
 $_LANG['js_languages']['ad_code_empty'] = '广告的代码不能为空!';
 $_LANG['js_languages']['empty_position_style'] = '广告位的模版不能为空!';
 
-// 提示语言项 
+// 提示语言项
 $_LANG['upfile_flash_type'] = '上传的Flash文件类型不正确!';
 $_LANG['ad_code_repeat'] = '广告图片只能是上传的图片文件或者是指定远程的图片';
 $_LANG['ad_flash_repeat'] = 'Flash广告只能是上传的Flash文件或者是指定远程的Flash文件';

@@ -3,10 +3,10 @@
  *  短信模块语言文件
  */
 
-// 导航条 
+// 导航条
 $_LANG['register_sms'] = '注册或启用短信账号';
 
-// 注册和启用短信功能 
+// 注册和启用短信功能
 $_LANG['email'] = '电子邮箱';
 $_LANG['password'] = '登录密码';
 $_LANG['domain'] = '网店域名';
@@ -14,7 +14,7 @@ $_LANG['register_new'] = '注册新账号';
 $_LANG['error_tips'] = '请在商店设置->短信设置，先注册短信服务并正确配置短信服务！';
 $_LANG['enable_old'] = '启用已有账号';
 
-// 短信特服信息 
+// 短信特服信息
 $_LANG['sms_user_name'] = '用户名：';
 $_LANG['sms_password'] = '密码：';
 $_LANG['sms_domain'] = '域名：';
@@ -25,7 +25,7 @@ $_LANG['sms_balance'] = '余额：';
 $_LANG['sms_last_request'] = '最后一次请求时间：';
 $_LANG['disable'] = '注销短信服务';
 
-// 发送短信 
+// 发送短信
 $_LANG['phone'] = '接收手机号码';
 $_LANG['user_rand'] = '按用户等级发送短消息';
 $_LANG['phone_notice'] = '多个手机号码用半角逗号分开';
@@ -36,7 +36,7 @@ $_LANG['send_date_notice'] = '格式为YYYY-MM-DD HH:II。为空表示立即发�
 $_LANG['back_send_history'] = '返回发送历史列表';
 $_LANG['back_charge_history'] = '返回充值历史列表';
 
-// 记录查询界面 
+// 记录查询界面
 $_LANG['start_date'] = '开始日期';
 $_LANG['date_notice'] = '格式为YYYY-MM-DD。可为空。';
 $_LANG['end_date'] = '结束日期';
@@ -46,7 +46,7 @@ $_LANG['page'] = '页数';
 $_LANG['page_notice'] = '可为空，表示显示1页';
 $_LANG['charge'] = '请输入您想要充值的金额';
 
-// 动作确认信息 
+// 动作确认信息
 $_LANG['history_query_error'] = '对不起，在查询过程中发生错误。';
 $_LANG['enable_ok'] = '恭喜，您已成功启用短信服务！';
 $_LANG['enable_error'] = '对不起，您启用短信服务失败。';
@@ -60,12 +60,12 @@ $_LANG['error_no'] = '错误标识';
 $_LANG['error_msg'] = '错误描述';
 $_LANG['empty_info'] = '您的短信特服信息为空。';
 
-// 充值记录 
+// 充值记录
 $_LANG['order_id'] = '订单号';
 $_LANG['money'] = '充值金额';
 $_LANG['log_date'] = '充值日期';
 
-// 发送记录 
+// 发送记录
 $_LANG['sent_phones'] = '发送手机号码';
 $_LANG['content'] = '发送内容';
 $_LANG['charge_num'] = '计费条数';
@@ -76,11 +76,11 @@ $_LANG['status'][1] = '成功';
 $_LANG['user_list'] = '全体会员';
 $_LANG['please_select'] = '请选择会员等级';
 
-// 提示 
+// 提示
 $_LANG['test_now'] = '<span style="color:red;"></span>';
 $_LANG['msg_price'] = '<span style="color:green;">短信每条0.1元(RMB)</span>';
 
-// API返回的错误信息 
+// API返回的错误信息
 //--注册
 $_LANG['api_errors']['register'][1] = '域名不能为空。';
 $_LANG['api_errors']['register'][2] = '邮箱填写不正确。';
@@ -105,7 +105,7 @@ $_LANG['api_errors']['get_history'][2] = '查无记录。';
 $_LANG['api_errors']['auth'][1] = '密码错误。';
 $_LANG['api_errors']['auth'][2] = '用户不存在。';
 
-// 用户服务器检测到的错误信息 
+// 用户服务器检测到的错误信息
 $_LANG['server_errors'][1] = '注册信息无效。';//ERROR_INVALID_REGISTER_INFO
 $_LANG['server_errors'][2] = '启用信息无效。';//ERROR_INVALID_ENABLE_INFO
 $_LANG['server_errors'][3] = '发送的信息有误。';//ERROR_INVALID_SEND_INFO
@@ -118,7 +118,7 @@ $_LANG['server_errors'][9] = '无效的节点名字。';//ERROR_INVALID_NODE_NAM
 $_LANG['server_errors'][10] = '存储失败。';//ERROR_CANT_STORE
 $_LANG['server_errors'][11] = '短信功能尚未激活。';//ERROR_INVALID_PASSPORT
 
-// 客户端JS语言项 
+// 客户端JS语言项
 //--注册或启用
 $_LANG['js_languages']['password_empty_error'] = '密码不能为空。';
 $_LANG['js_languages']['username_empty_error'] = '用户名不能为空。';

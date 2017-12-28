@@ -17,14 +17,14 @@ class SaleOrderController extends BaseController
         $this->smarty->assign('lang', $GLOBALS['_LANG']);
 
         if (isset($_REQUEST['act']) && ($_REQUEST['act'] == 'query' || $_REQUEST['act'] == 'download')) {
-            // 检查权限 
+            // 检查权限
             check_authz_json('sale_order_stats');
             if (strstr($_REQUEST['start_date'], '-') === false) {
                 $_REQUEST['start_date'] = local_date('Y-m-d', $_REQUEST['start_date']);
                 $_REQUEST['end_date'] = local_date('Y-m-d', $_REQUEST['end_date']);
             }
 
-            // 下载报表 
+            // 下载报表
             if ($_REQUEST['act'] == 'download') {
                 $goods_order_data = $this->get_sales_order(false);
                 $goods_order_data = $goods_order_data['sales_order_data'];
@@ -60,10 +60,10 @@ class SaleOrderController extends BaseController
 
             return make_json_result($this->smarty->fetch('sale_order.htm'), '', ['filter' => $goods_order_data['filter'], 'page_count' => $goods_order_data['page_count']]);
         } else {
-            // 权限检查 
+            // 权限检查
             admin_priv('sale_order_stats');
 
-            // 时间参数 
+            // 时间参数
             if (!isset($_REQUEST['start_date'])) {
                 $_REQUEST['start_date'] = local_strtotime('-1 months');
             }
@@ -72,7 +72,7 @@ class SaleOrderController extends BaseController
             }
             $goods_order_data = $this->get_sales_order();
 
-            // 赋值到模板 
+            // 赋值到模板
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['sell_stats']);
             $this->smarty->assign('goods_order_data', $goods_order_data['sales_order_data']);
             $this->smarty->assign('filter', $goods_order_data['filter']);
@@ -85,7 +85,7 @@ class SaleOrderController extends BaseController
             $this->smarty->assign('end_date', local_date('Y-m-d', $_REQUEST['end_date']));
             $this->smarty->assign('action_link', ['text' => $GLOBALS['_LANG']['download_sale_sort'], 'href' => '#download']);
 
-            // 显示页面 
+            // 显示页面
 
             return $this->smarty->display('sale_order.htm');
         }
@@ -118,7 +118,7 @@ class SaleOrderController extends BaseController
             $where;
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-        // 分页大小 
+        // 分页大小
         $filter = page_and_size($filter);
 
         $sql = "SELECT og.goods_id, og.goods_sn, og.goods_name, oi.order_status, " .

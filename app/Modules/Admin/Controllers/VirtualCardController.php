@@ -17,9 +17,9 @@ class VirtualCardController extends BaseController
          * 补货处理
          */
         if ($_REQUEST['act'] == 'replenish') {
-            // 检查权限 
+            // 检查权限
             admin_priv('virualcard');
-            // 验证goods_id是否合法 
+            // 验证goods_id是否合法
             if (empty($_REQUEST['goods_id'])) {
                 $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'virtual_card.php?act=list'];
                 return sys_msg($GLOBALS['_LANG']['replenish_no_goods_id'], 1, $link);
@@ -43,9 +43,9 @@ class VirtualCardController extends BaseController
          * 编辑补货信息
          */
         if ($_REQUEST['act'] == 'edit_replenish') {
-            // 检查权限 
+            // 检查权限
             admin_priv('virualcard');
-            // 获取卡片信息 
+            // 获取卡片信息
             $sql = "SELECT T1.card_id, T1.goods_id, T2.goods_name,T1.card_sn, T1.card_password, T1.end_date, T1.crc32 FROM " .
                 $this->ecs->table('virtual_card') . " AS T1, " . $this->ecs->table('goods') . " AS T2 " .
                 "WHERE T1.goods_id = T2.goods_id AND T1.card_id = '$_REQUEST[card_id]'";
@@ -68,17 +68,17 @@ class VirtualCardController extends BaseController
         }
 
         if ($_REQUEST['act'] == 'action') {
-            // 检查权限 
+            // 检查权限
             admin_priv('virualcard');
 
             $_POST['card_sn'] = trim($_POST['card_sn']);
 
-            // 加密后的 
+            // 加密后的
             $coded_card_sn = encrypt($_POST['card_sn']);
             $coded_old_card_sn = encrypt($_POST['old_card_sn']);
             $coded_card_password = encrypt($_POST['card_password']);
 
-            // 在前后两次card_sn不一致时，检查是否有重复记录,一致时直接更新数据 
+            // 在前后两次card_sn不一致时，检查是否有重复记录,一致时直接更新数据
             if ($_POST['card_sn'] != $_POST['old_card_sn']) {
                 $sql = "SELECT count(*) FROM " . $this->ecs->table('virtual_card') . " WHERE goods_id='" . $_POST['goods_id'] . "' AND card_sn='$coded_card_sn'";
 
@@ -88,16 +88,16 @@ class VirtualCardController extends BaseController
                 }
             }
 
-            // 如果old_card_sn不存在则新加一条记录 
+            // 如果old_card_sn不存在则新加一条记录
             if (empty($_POST['old_card_sn'])) {
-                // 插入一条新记录 
+                // 插入一条新记录
                 $end_date = strtotime($_POST['end_dateYear'] . "-" . $_POST['end_dateMonth'] . "-" . $_POST['end_dateDay']);
                 $add_date = gmtime();
                 $sql = "INSERT INTO " . $this->ecs->table('virtual_card') . " (goods_id, card_sn, card_password, end_date, add_date, crc32) " .
                     "VALUES ('$_POST[goods_id]', '$coded_card_sn', '$coded_card_password', '$end_date', '$add_date', '" . crc32(AUTH_KEY) . "')";
                 $this->db->query($sql);
 
-                // 如果添加成功且原卡号为空时商品库存加1 
+                // 如果添加成功且原卡号为空时商品库存加1
                 if (empty($_POST['old_card_sn'])) {
                     $sql = "UPDATE " . $this->ecs->table('goods') . " SET goods_number= goods_number+1 WHERE goods_id='$_POST[goods_id]'";
                     $this->db->query($sql);
@@ -107,7 +107,7 @@ class VirtualCardController extends BaseController
                 $link[] = ['text' => $GLOBALS['_LANG']['continue_add'], 'href' => 'virtual_card.php?act=replenish&goods_id=' . $_POST['goods_id']];
                 return sys_msg($GLOBALS['_LANG']['action_success'], 0, $link);
             } else {
-                // 更新数据 
+                // 更新数据
                 $end_date = strtotime($_POST['end_dateYear'] . "-" . $_POST['end_dateMonth'] . "-" . $_POST['end_dateDay']);
                 $sql = "UPDATE " . $this->ecs->table('virtual_card') . " SET card_sn='$coded_card_sn', card_password='$coded_card_password', end_date='$end_date' " .
                     "WHERE card_id='$_POST[card_id]'";
@@ -123,10 +123,10 @@ class VirtualCardController extends BaseController
          * 补货列表
          */
         if ($_REQUEST['act'] == 'card') {
-            // 检查权限 
+            // 检查权限
             admin_priv('virualcard');
 
-            // 验证goods_id是否合法 
+            // 验证goods_id是否合法
             if (empty($_REQUEST['goods_id'])) {
                 $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'virtual_card.php?act=list'];
                 return sys_msg($GLOBALS['_LANG']['replenish_no_goods_id'], 1, $link);
@@ -185,13 +185,13 @@ class VirtualCardController extends BaseController
          * 批量删除card
          */
         if ($_REQUEST['act'] == 'batch_drop_card') {
-            // 检查权限 
+            // 检查权限
             admin_priv('virualcard');
 
             $num = count($_POST['checkboxes']);
             $sql = "DELETE FROM " . $this->ecs->table('virtual_card') . " WHERE card_id " . db_create_in(implode(',', $_POST['checkboxes']));
             if ($this->db->query($sql)) {
-                // 商品数量减$num 
+                // 商品数量减$num
                 $this->update_goods_number(intval($_REQUEST['goods_id']));
                 $link[] = ['text' => $GLOBALS['_LANG']['go_list'], 'href' => 'virtual_card.php?act=card&goods_id=' . $_REQUEST['goods_id']];
                 return sys_msg($GLOBALS['_LANG']['action_success'], 0, $link);
@@ -202,7 +202,7 @@ class VirtualCardController extends BaseController
          * 批量上传页面
          */
         if ($_REQUEST['act'] == 'batch_card_add') {
-            // 检查权限 
+            // 检查权限
             admin_priv('virualcard');
 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['batch_card_add']);
@@ -212,7 +212,7 @@ class VirtualCardController extends BaseController
         }
 
         if ($_REQUEST['act'] == 'batch_confirm') {
-            // 检查上传是否成功 
+            // 检查上传是否成功
             if ($_FILES['uploadfile']['tmp_name'] == '' || $_FILES['uploadfile']['tmp_name'] == 'none') {
                 return sys_msg($GLOBALS['_LANG']['uploadfile_fail'], 1);
             }
@@ -250,7 +250,7 @@ class VirtualCardController extends BaseController
          * 批量上传处理
          */
         if ($_REQUEST['act'] == 'batch_insert') {
-            // 检查权限 
+            // 检查权限
             admin_priv('virualcard');
 
             $add_time = gmtime();
@@ -266,7 +266,7 @@ class VirtualCardController extends BaseController
                 $i++;
             }
 
-            // 更新商品库存 
+            // 更新商品库存
             $this->update_goods_number(intval($_REQUEST['goods_id']));
             $link[] = ['text' => $GLOBALS['_LANG']['card'], 'href' => 'virtual_card.php?act=card&goods_id=' . $_POST['goods_id']];
             return sys_msg(sprintf($GLOBALS['_LANG']['batch_card_add_ok'], $i), 0, $link);
@@ -276,7 +276,7 @@ class VirtualCardController extends BaseController
          * 更改加密串
          */
         if ($_REQUEST['act'] == 'change') {
-            // 检查权限 
+            // 检查权限
             admin_priv('virualcard');
 
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['virtual_card_change']);
@@ -288,7 +288,7 @@ class VirtualCardController extends BaseController
          * 提交更改
          */
         if ($_REQUEST['act'] == 'submit_change') {
-            // 检查权限 
+            // 检查权限
             admin_priv('virualcard');
 
             if (isset($_POST['old_string']) && isset($_POST['new_string'])) {
@@ -340,7 +340,7 @@ class VirtualCardController extends BaseController
             $sql = "UPDATE " . $this->ecs->table('virtual_card') . " SET is_saled= '$val' WHERE card_id='$id'";
 
             if ($this->db->query($sql, 'SILENT')) {
-                // 修改商品库存 
+                // 修改商品库存
                 $sql = "SELECT goods_id FROM " . $this->ecs->table('virtual_card') . " WHERE card_id = '$id' LIMIT 1";
                 $goods_id = $this->db->getOne($sql);
 
@@ -363,7 +363,7 @@ class VirtualCardController extends BaseController
 
             $sql = 'DELETE FROM ' . $this->ecs->table('virtual_card') . " WHERE card_id = '$id'";
             if ($this->db->query($sql, 'SILENT')) {
-                // 修改商品数量 
+                // 修改商品数量
                 $this->update_goods_number($row['goods_id']);
 
                 $url = 'virtual_card.php?act=query_card&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
@@ -470,7 +470,7 @@ class VirtualCardController extends BaseController
      */
     private function get_replenish_list()
     {
-        // 查询条件 
+        // 查询条件
         $filter['goods_id'] = empty($_REQUEST['goods_id']) ? 0 : intval($_REQUEST['goods_id']);
         $filter['search_type'] = empty($_REQUEST['search_type']) ? 0 : trim($_REQUEST['search_type']);
         $filter['order_sn'] = empty($_REQUEST['order_sn']) ? 0 : trim($_REQUEST['order_sn']);
@@ -495,11 +495,11 @@ class VirtualCardController extends BaseController
         $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('virtual_card') . " WHERE 1 $where";
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-        // 分页大小 
+        // 分页大小
         $filter = page_and_size($filter);
         $start = ($filter['page'] - 1) * $filter['page_size'];
 
-        // 查询 
+        // 查询
         $sql = "SELECT card_id, goods_id, card_sn, card_password, end_date, is_saled, order_sn, crc32 " .
             " FROM " . $GLOBALS['ecs']->table('virtual_card') .
             " WHERE 1 " . $where .

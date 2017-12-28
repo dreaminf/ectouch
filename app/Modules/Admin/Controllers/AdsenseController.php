@@ -20,19 +20,19 @@ class AdsenseController extends BaseController
         if ($_REQUEST['act'] == 'list' || $_REQUEST['act'] == 'download') {
             admin_priv('ad_manage');
 
-            // 获取广告数据 
+            // 获取广告数据
             $ads_stats = [];
             $sql = "SELECT a.ad_id, a.ad_name, b.* " .
                 "FROM " . $this->ecs->table('ad') . " AS a, " . $this->ecs->table('adsense') . " AS b " .
                 "WHERE b.from_ad = a.ad_id ORDER by a.ad_name DESC";
             $res = $this->db->query($sql);
             foreach ($res as $rows) {
-                // 获取当前广告所产生的订单总数 
+                // 获取当前广告所产生的订单总数
                 $rows['referer'] = addslashes($rows['referer']);
                 $sql2 = 'SELECT COUNT(order_id) FROM ' . $this->ecs->table('order_info') . " WHERE from_ad='$rows[ad_id]' AND referer='$rows[referer]'";
                 $rows['order_num'] = $this->db->getOne($sql2);
 
-                // 当前广告所产生的已完成的有效订单 
+                // 当前广告所产生的已完成的有效订单
                 $sql3 = "SELECT COUNT(order_id) FROM " . $this->ecs->table('order_info') .
                     " WHERE from_ad    = '$rows[ad_id]'" .
                     " AND referer = '$rows[referer]' " . order_query_sql('finished');
@@ -42,17 +42,17 @@ class AdsenseController extends BaseController
             }
             $this->smarty->assign('ads_stats', $ads_stats);
 
-            // 站外JS投放商品的统计数据 
+            // 站外JS投放商品的统计数据
             $goods_stats = [];
             $goods_sql = "SELECT from_ad, referer, clicks FROM " . $this->ecs->table('adsense') .
                 " WHERE from_ad = '-1' ORDER by referer DESC";
             $goods_res = $this->db->query($goods_sql);
             foreach ($goods_res as $rows2) {
-                // 获取当前广告所产生的订单总数 
+                // 获取当前广告所产生的订单总数
                 $rows2['referer'] = addslashes($rows2['referer']);
                 $rows2['order_num'] = $this->db->getOne("SELECT COUNT(order_id) FROM " . $this->ecs->table('order_info') . " WHERE referer='$rows2[referer]'");
 
-                // 当前广告所产生的已完成的有效订单 
+                // 当前广告所产生的已完成的有效订单
 
                 $sql = "SELECT COUNT(order_id) FROM " . $this->ecs->table('order_info') .
                     " WHERE referer='$rows2[referer]'" . order_query_sql('finished');
@@ -74,13 +74,13 @@ class AdsenseController extends BaseController
             }
             $this->smarty->assign('goods_stats', $goods_stats);
 
-            // 赋值给模板 
+            // 赋值给模板
             $this->smarty->assign('action_link', ['href' => 'ads.php?act=list', 'text' => $GLOBALS['_LANG']['ad_list']]);
             $this->smarty->assign('action_link2', ['href' => 'adsense.php?act=download', 'text' => $GLOBALS['_LANG']['download_ad_statistics']]);
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['adsense_js_stats']);
             $this->smarty->assign('lang', $GLOBALS['_LANG']);
 
-            // 显示页面 
+            // 显示页面
             return $this->smarty->display('adsense.htm');
         }
     }

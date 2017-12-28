@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?=$article['title']?></title>
+    <title><?php echo $article['title']?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
@@ -27,10 +27,10 @@
     <!-- Begin page content -->
     <div class="container">
       <div class="page-header">
-        <h2><?=$article['title']?></h2>
-        <p><?=date('Y-m-d H:i:s', $article['add_time'])?></p>
+        <h2><?php echo $article['title']?></h2>
+        <p><?php echo date('Y-m-d H:i:s', $article['add_time'])?></p>
       </div>
-      <p class="lead"><?=$article['content']?></p>
+      <p class="lead"><?php echo $article['content']?></p>
     </div>
   </body>
 </html>

@@ -201,7 +201,7 @@ class NavigatorController extends BaseController
             $id = intval($_POST['id']);
             $order = json_str_iconv(trim($_POST['val']));
 
-            // 检查输入的值是否合法 
+            // 检查输入的值是否合法
             if (!preg_match("/^[0-9]+$/", $order)) {
                 return make_json_error(sprintf($GLOBALS['_LANG']['enter_int'], $order));
             } else {
@@ -263,10 +263,10 @@ class NavigatorController extends BaseController
             $sql = "SELECT count(*) FROM " . $GLOBALS['ecs']->table('nav');
             $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-            // 分页大小 
+            // 分页大小
             $filter = page_and_size($filter);
 
-            // 查询 
+            // 查询
             $sql = "SELECT id, name, ifshow, vieworder, opennew, url, type" .
                 " FROM " . $GLOBALS['ecs']->table('nav') .
                 " ORDER by " . $filter['sort_by'] . ' ' . $filter['sort_order'] .

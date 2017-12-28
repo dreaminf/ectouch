@@ -62,7 +62,7 @@ function rsaVerify($data, $alipay_public_key, $sign)  {
         echo "您的支付宝公钥格式不正确!"."<br/>"."The format of your alipay_public_key is incorrect!";
         exit();
     }
-    openssl_free_key($res);    
+    openssl_free_key($res);
     return $result;
 }
 

@@ -11,7 +11,7 @@ class GetPasswordController extends BaseController
 {
     public function actionIndex()
     {
-        // 操作项的初始化 
+        // 操作项的初始化
         if (empty($_SERVER['REQUEST_METHOD'])) {
             $_SERVER['REQUEST_METHOD'] = 'GET';
         } else {
@@ -31,7 +31,7 @@ class GetPasswordController extends BaseController
                     return redirect("privilege.php?act=login");
                 }
 
-                // 以用户的原密码，与code的值匹配 
+                // 以用户的原密码，与code的值匹配
                 $sql = 'SELECT password FROM ' . $this->ecs->table('admin_user') . " WHERE user_id = '$adminid'";
                 $password = $this->db->getOne($sql);
 
@@ -60,7 +60,7 @@ class GetPasswordController extends BaseController
          * 验证管理员帐号和email, 发送邮件
          */
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // 发送找回密码确认邮件 
+            // 发送找回密码确认邮件
             if (!empty($_POST['action']) && $_POST['action'] == 'get_pwd') {
                 $admin_username = !empty($_POST['user_name']) ? trim($_POST['user_name']) : '';
                 $admin_email = !empty($_POST['email']) ? trim($_POST['email']) : '';
@@ -69,17 +69,17 @@ class GetPasswordController extends BaseController
                     return redirect("privilege.php?act=login");
                 }
 
-                // 管理员用户名和邮件地址是否匹配，并取得原密码 
+                // 管理员用户名和邮件地址是否匹配，并取得原密码
                 $sql = 'SELECT user_id, password FROM ' . $this->ecs->table('admin_user') .
                     " WHERE user_name = '$admin_username' AND email = '$admin_email'";
                 $admin_info = $this->db->getRow($sql);
 
                 if (!empty($admin_info)) {
-                    // 生成验证的code 
+                    // 生成验证的code
                     $admin_id = $admin_info['user_id'];
                     $code = md5($admin_id . $admin_info['password']);
 
-                    // 设置重置邮件模板所需要的内容信息 
+                    // 设置重置邮件模板所需要的内容信息
                     $template = get_mail_template('send_password');
                     $reset_email = $this->ecs->url() . ADMIN_PATH . '/get_password.php?act=reset_pwd&uid=' . $admin_id . '&code=' . $code;
 
@@ -91,7 +91,7 @@ class GetPasswordController extends BaseController
 
                     $content = $this->smarty->fetch('str:' . $template['template_content']);
 
-                    // 发送确认重置密码的确认邮件 
+                    // 发送确认重置密码的确认邮件
                     if (send_mail($admin_username, $admin_email, $template['template_subject'], $content,
                         $template['is_html'])) {
                         //提示信息
@@ -103,7 +103,7 @@ class GetPasswordController extends BaseController
                         return sys_msg($GLOBALS['_LANG']['send_mail_error'], 1);
                     }
                 } else {
-                    // 提示信息 
+                    // 提示信息
                     return sys_msg($GLOBALS['_LANG']['email_username_error'], 1);
                 }
             }
@@ -120,7 +120,7 @@ class GetPasswordController extends BaseController
                     return redirect("privilege.php?act=login");
                 }
 
-                // 以用户的原密码，与code的值匹配 
+                // 以用户的原密码，与code的值匹配
                 $sql = 'SELECT password FROM ' . $this->ecs->table('admin_user') . " WHERE user_id = '$adminid'";
                 $password = $this->db->getOne($sql);
 

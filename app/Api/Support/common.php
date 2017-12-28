@@ -106,7 +106,7 @@ if (!function_exists('curl_request')) {
     /**
      * CURL Request
      */
-    function curl_request($api, $method = 'GET', $params = array(), $headers = [])
+    function curl_request($api, $method = 'GET', $params = [], $headers = [])
     {
         $curl = curl_init();
 
@@ -186,7 +186,7 @@ if (!function_exists('api_make_semiangle')) {
      */
     function api_make_semiangle($str)
     {
-        $arr = array('０' => '0', '１' => '1', '２' => '2', '３' => '3', '４' => '4',
+        $arr = ['０' => '0', '１' => '1', '２' => '2', '３' => '3', '４' => '4',
             '５' => '5', '６' => '6', '７' => '7', '８' => '8', '９' => '9',
             'Ａ' => 'A', 'Ｂ' => 'B', 'Ｃ' => 'C', 'Ｄ' => 'D', 'Ｅ' => 'E',
             'Ｆ' => 'F', 'Ｇ' => 'G', 'Ｈ' => 'H', 'Ｉ' => 'I', 'Ｊ' => 'J',
@@ -207,7 +207,7 @@ if (!function_exists('api_make_semiangle')) {
             '：' => ':', '。' => '.', '、' => ',', '，' => '.', '、' => '.',
             '；' => ',', '？' => '?', '！' => '!', '…' => '-', '‖' => '|',
             '”' => '"', '’' => '`', '‘' => '`', '｜' => '|', '〃' => '"',
-            '　' => ' ');
+            '　' => ' '];
 
         return strtr($str, $arr);
     }
@@ -245,7 +245,7 @@ if (!function_exists('api_unserialize_config')) {
     function api_unserialize_config($cfg)
     {
         if (is_string($cfg) && ($arr = unserialize($cfg)) !== false) {
-            $config = array();
+            $config = [];
 
             foreach ($arr AS $key => $val) {
                 $config[$val['name']] = $val['value'];

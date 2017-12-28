@@ -5,7 +5,6 @@ namespace App\Api\Models\V2;
 use App\Api\Models\BaseModel;
 use App\Extensions\Token;
 use App\Services\Shopex\Logistics;
-use Log;
 
 class Shipping extends BaseModel
 {
@@ -60,7 +59,7 @@ class Shipping extends BaseModel
         //格式化，拿到需要的goods_id 和数量
         $products = [];
         $IsShippingFree = true;
-        $goods_ids = array();
+        $goods_ids = [];
 
         foreach ($goods as $key => $value) {
             $products[$key]['goods_id'] = $value->goods_id;
@@ -204,7 +203,7 @@ class Shipping extends BaseModel
         $number = 0;
         $fee = 0;
 
-        $goods_ids = array();
+        $goods_ids = [];
 
         if (isset($products)) {
             $products = json_decode($products, true);

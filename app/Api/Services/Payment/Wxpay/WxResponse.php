@@ -13,7 +13,6 @@
 //============================================================================
 
 namespace App\Services\Payment\wxpay;
-use Log;
 
 class WxResponse
 {
@@ -33,7 +32,7 @@ class WxResponse
     function RequestHandler() {
         $this->gateUrl = "https://wpay.tenpay.com/wx_pub/v1.0/wx_app_api.cgi";
         $this->key = "";
-        $this->parameters = array();
+        $this->parameters = [];
         $this->debugInfo = "";
     }
 

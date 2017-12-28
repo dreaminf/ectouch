@@ -67,7 +67,7 @@ class RegFieldsController extends BaseController
         if ($_REQUEST['act'] == 'insert') {
             admin_priv('reg_fields');
 
-            // 检查是否存在重名的会员注册项 
+            // 检查是否存在重名的会员注册项
             if (!$exc->is_only('reg_field_name', trim($_POST['reg_field_name']))) {
                 return sys_msg(sprintf($GLOBALS['_LANG']['field_name_exist'], trim($_POST['reg_field_name'])), 1);
             }
@@ -78,7 +78,7 @@ class RegFieldsController extends BaseController
                 "'$_POST[reg_field_name]', '$_POST[reg_field_order]', '$_POST[reg_field_display]', '$_POST[reg_field_need]')";
             $this->db->query($sql);
 
-            // 管理员日志 
+            // 管理员日志
             admin_log(trim($_POST['reg_field_name']), 'add', 'reg_fields');
             clear_cache_files();
 
@@ -113,7 +113,7 @@ class RegFieldsController extends BaseController
         if ($_REQUEST['act'] == 'update') {
             admin_priv('reg_fields');
 
-            // 检查是否存在重名的会员注册项 
+            // 检查是否存在重名的会员注册项
             if ($_POST['reg_field_name'] != $_POST['old_field_name'] && !$exc->is_only('reg_field_name', trim($_POST['reg_field_name']))) {
                 return sys_msg(sprintf($GLOBALS['_LANG']['field_name_exist'], trim($_POST['reg_field_name'])), 1);
             }
@@ -121,7 +121,7 @@ class RegFieldsController extends BaseController
             $sql = "UPDATE " . $this->ecs->table('reg_fields') . " SET `reg_field_name` = '$_POST[reg_field_name]', `dis_order` = '$_POST[reg_field_order]', `display` = '$_POST[reg_field_display]', `is_need` = '$_POST[reg_field_need]' WHERE `id` = '$_POST[id]'";
             $this->db->query($sql);
 
-            // 管理员日志 
+            // 管理员日志
             admin_log(trim($_POST['reg_field_name']), 'edit', 'reg_fields');
             clear_cache_files();
 
@@ -139,7 +139,7 @@ class RegFieldsController extends BaseController
             $field_name = $exc->get_name($field_id);
 
             if ($exc->drop($field_id)) {
-                // 删除会员扩展信息表的相应信息 
+                // 删除会员扩展信息表的相应信息
                 $sql = "DELETE FROM " . $GLOBALS['ecs']->table('reg_extend_info') . " WHERE reg_field_id = '" . $field_id . "'";
                 @$GLOBALS['db']->query($sql);
 
@@ -161,7 +161,7 @@ class RegFieldsController extends BaseController
             check_authz_json('reg_fields');
             if ($exc->is_only('reg_field_name', $val, $id)) {
                 if ($exc->edit("reg_field_name = '$val'", $id)) {
-                    // 管理员日志 
+                    // 管理员日志
                     admin_log($val, 'edit', 'reg_fields');
                     clear_cache_files();
                     return make_json_result(stripcslashes($val));
@@ -182,7 +182,7 @@ class RegFieldsController extends BaseController
             check_authz_json('reg_fields');
             if (is_numeric($val)) {
                 if ($exc->edit("dis_order = '$val'", $id)) {
-                    // 管理员日志 
+                    // 管理员日志
                     admin_log($val, 'edit', 'reg_fields');
                     clear_cache_files();
                     return make_json_result(stripcslashes($val));

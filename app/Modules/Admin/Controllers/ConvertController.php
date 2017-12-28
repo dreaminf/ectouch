@@ -19,7 +19,7 @@ class ConvertController extends BaseController
         if ($_REQUEST['act'] == 'main') {
             admin_priv('convert');
 
-            // 取得插件文件中的转换程序 
+            // 取得插件文件中的转换程序
             $modules = read_modules('../includes/modules/convert');
             for ($i = 0; $i < count($modules); $i++) {
                 $code = $modules[$i]['code'];
@@ -31,7 +31,7 @@ class ConvertController extends BaseController
             }
             $this->smarty->assign('module_list', $modules);
 
-            // 设置默认值 
+            // 设置默认值
             $def_val = [
                 'host' => $db_host,
                 'db' => '',
@@ -42,10 +42,10 @@ class ConvertController extends BaseController
             ];
             $this->smarty->assign('def_val', $def_val);
 
-            // 取得字符集数组 
+            // 取得字符集数组
             $this->smarty->assign('charset_list', get_charset_list());
 
-            // 显示模板 
+            // 显示模板
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['convert']);
 
             return $this->smarty->display('convert_main.htm');
@@ -55,19 +55,19 @@ class ConvertController extends BaseController
          * 转换前检查
          */
         if ($_REQUEST['act'] == 'check') {
-            // 检查权限 
+            // 检查权限
             check_authz_json('convert');
 
-            // 取得参数 
+            // 取得参数
 
             $json = new Json();
 //    $_POST['JSON'] = '{"host":"localhost","db":"shopex","user":"root","pass":"123456","prefix":"sdb_","code":"shopex48","path":"../shopex","charset":"UTF8"}';
             $config = $json->decode($_POST['JSON']);
 
-            // 测试连接数据库 
+            // 测试连接数据库
             $sdb = new Mysql($config->host, $config->user, $config->pass, $config->db);
 
-            // 检查必需的表是否存在 
+            // 检查必需的表是否存在
             $sprefix = $config->prefix;
             $config->path = rtrim(str_replace('\\', '/', $config->path), '/');  // 把斜线替换为反斜线，去掉结尾的反斜线
             include_once(ROOT_PATH . 'includes/modules/convert/' . $config->code . '.php');
@@ -82,7 +82,7 @@ class ConvertController extends BaseController
                 return make_json_error(sprintf($GLOBALS['_LANG']['table_error'], join(',', $table_list)));
             }
 
-            // 检查源目录是否存在，是否可读 
+            // 检查源目录是否存在，是否可读
             $dir_list = $convert->required_dirs();
             foreach ($dir_list as $dir) {
                 $cur_dir = ($config->path . $dir);
@@ -100,13 +100,13 @@ class ConvertController extends BaseController
                 }
             }
 
-            // 创建图片目录 
+            // 创建图片目录
             $img_dir = ROOT_PATH . IMAGE_DIR . '/' . date('Ym') . '/';
             if (!file_exists($img_dir)) {
                 make_dir($img_dir);
             }
 
-            // 需要检查可写的目录 
+            // 需要检查可写的目录
             $to_dir_list = [
                 ROOT_PATH . IMAGE_DIR . '/upload/',
                 $img_dir,
@@ -114,7 +114,7 @@ class ConvertController extends BaseController
                 ROOT_PATH . 'cert/'
             ];
 
-            // 检查目的目录是否存在，是否可写 
+            // 检查目的目录是否存在，是否可写
             foreach ($to_dir_list as $to_dir) {
                 if (!file_exists($to_dir) || !is_dir($to_dir)) {
                     return make_json_error(sprintf($GLOBALS['_LANG']['dir_error'], $to_dir));
@@ -125,16 +125,16 @@ class ConvertController extends BaseController
                 }
             }
 
-            // 保存配置信息 
+            // 保存配置信息
             session(['convert_config' =>  $config]);
 
-            // 包含插件语言文件 
+            // 包含插件语言文件
             include_once(ROOT_PATH . 'languages/' . $GLOBALS['_CFG']['lang'] . '/convert/' . $config->code . '.php');
 
-            // 取得第一步操作 
+            // 取得第一步操作
             $step = $convert->next_step('');
 
-            // 返回 
+            // 返回
             return make_json_result($step, $GLOBALS['_LANG'][$step]);
         }
 
@@ -142,38 +142,38 @@ class ConvertController extends BaseController
          * 转换操作
          */
         if ($_REQUEST['act'] == 'process') {
-            // 设置执行时间 
+            // 设置执行时间
             set_time_limit(0);
 
-            // 检查权限 
+            // 检查权限
             check_authz_json('convert');
 
-            // 取得参数 
+            // 取得参数
             $step = json_str_iconv($_POST['step']);
 
-            // 连接原数据库 
+            // 连接原数据库
             $config = session('convert_config');
 
             $sdb = new Mysql($config->host, $config->user, $config->pass, $config->db);
             $sdb->set_mysql_charset($config->charset);
 
-            // 创建插件对象 
+            // 创建插件对象
             include_once(ROOT_PATH . 'includes/modules/convert/' . $config->code . '.php');
             $convert = new $config->code($sdb, $config->prefix, $config->path, $config->charset);
 
-            // 包含插件语言文件 
+            // 包含插件语言文件
             include_once(ROOT_PATH . 'languages/' . $GLOBALS['_CFG']['lang'] . '/convert/' . $config->code . '.php');
 
-            // 执行步骤 
+            // 执行步骤
             $result = $convert->process($step);
             if ($result !== true) {
                 return make_json_error($result);
             }
 
-            // 取得下一步操作 
+            // 取得下一步操作
             $step = $convert->next_step($step);
 
-            // 返回 
+            // 返回
             return make_json_result($step, empty($GLOBALS['_LANG'][$step]) ? '' : $GLOBALS['_LANG'][$step]);
         }
     }
@@ -187,7 +187,7 @@ class ConvertController extends BaseController
      */
     private function check_files_readable($dirname)
     {
-        // 遍历文件，检查文件是否可读 
+        // 遍历文件，检查文件是否可读
         $dh = scandir($dirname);
         if ($dh !== false) {
             foreach ($dh as $file) {
@@ -200,7 +200,7 @@ class ConvertController extends BaseController
             closedir($dh);
         }
 
-        // 全部可读的返回值 
+        // 全部可读的返回值
         return true;
     }
 
@@ -215,7 +215,7 @@ class ConvertController extends BaseController
      */
     private function copy_files($from_dir, $to_dir, $file_prefix = '')
     {
-        // 遍历并复制文件 
+        // 遍历并复制文件
         $dh = scandir($from_dir);
         if ($dh !== false) {
             foreach ($dh as $file) {
@@ -228,7 +228,7 @@ class ConvertController extends BaseController
             closedir($dh);
         }
 
-        // 全部复制成功，返回true 
+        // 全部复制成功，返回true
         return true;
     }
 

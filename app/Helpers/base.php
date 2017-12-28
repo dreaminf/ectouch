@@ -80,7 +80,7 @@ function str_len($str)
  */
 function get_crlf()
 {
-    // LF (Line Feed, 0x0A, \N) 和 CR(Carriage Return, 0x0D, \R) 
+    // LF (Line Feed, 0x0A, \N) 和 CR(Carriage Return, 0x0D, \R)
     if (stristr($_SERVER['HTTP_USER_AGENT'], 'Win')) {
         $the_crlf = '\r\n';
     } elseif (stristr($_SERVER['HTTP_USER_AGENT'], 'Mac')) {
@@ -106,7 +106,7 @@ function get_crlf()
  */
 function send_mail($name, $email, $subject, $content, $type = 0, $notification = false)
 {
-    // 如果邮件编码不是CHARSET，创建字符集转换对象，转换编码 
+    // 如果邮件编码不是CHARSET，创建字符集转换对象，转换编码
     if ($GLOBALS['_CFG']['mail_charset'] != CHARSET) {
         $name = ecs_iconv(CHARSET, $GLOBALS['_CFG']['mail_charset'], $name);
         $subject = ecs_iconv(CHARSET, $GLOBALS['_CFG']['mail_charset'], $subject);
@@ -118,7 +118,7 @@ function send_mail($name, $email, $subject, $content, $type = 0, $notification =
      * 使用mail函数发送邮件
      */
     if ($GLOBALS['_CFG']['mail_service'] == 0 && function_exists('mail')) {
-        // 邮件的头部信息 
+        // 邮件的头部信息
         $content_type = ($type == 0) ? 'Content-Type: text/plain; charset=' . $charset : 'Content-Type: text/html; charset=' . $charset;
         $headers = [];
         $headers[] = 'From: "' . '=?' . $charset . '?B?' . base64_encode($shop_name) . '?=' . '" <' . $GLOBALS['_CFG']['smtp_mail'] . '>';
@@ -140,7 +140,7 @@ function send_mail($name, $email, $subject, $content, $type = 0, $notification =
      * 使用smtp服务发送邮件
      */
     else {
-        // 邮件的头部信息 
+        // 邮件的头部信息
         $content_type = ($type == 0) ?
             'Content-Type: text/plain; charset=' . $charset : 'Content-Type: text/html; charset=' . $charset;
         $content = base64_encode($content);
@@ -157,7 +157,7 @@ function send_mail($name, $email, $subject, $content, $type = 0, $notification =
             $headers[] = 'Disposition-Notification-To: ' . '=?' . $charset . '?B?' . base64_encode($shop_name) . '?=' . '" <' . $GLOBALS['_CFG']['smtp_mail'] . '>';
         }
 
-        // 获得邮件服务器的参数设置 
+        // 获得邮件服务器的参数设置
         $params['host'] = $GLOBALS['_CFG']['smtp_host'];
         $params['port'] = $GLOBALS['_CFG']['smtp_port'];
         $params['user'] = $GLOBALS['_CFG']['smtp_user'];
@@ -236,7 +236,7 @@ function gd_version()
  */
 function file_mode_info($file_path)
 {
-    // 如果不存在，则不可读、不可写、不可改 
+    // 如果不存在，则不可读、不可写、不可改
     if (!file_exists($file_path)) {
         return false;
     }
@@ -244,12 +244,12 @@ function file_mode_info($file_path)
     $mark = 0;
 
     if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
-        // 测试文件 
+        // 测试文件
         $test_file = $file_path . '/cf_test.txt';
 
-        // 如果是目录 
+        // 如果是目录
         if (is_dir($file_path)) {
-            // 检查目录是否可读 
+            // 检查目录是否可读
             $dir = scandir($file_path);
             if ($dir === false) {
                 return $mark; //如果目录打开失败，直接返回目录不可修改、不可写、不可读
@@ -258,7 +258,7 @@ function file_mode_info($file_path)
                 $mark ^= 1; //目录可读 001，目录不可读 000
             }
 
-            // 检查目录是否可写 
+            // 检查目录是否可写
             $fp = @fopen($test_file, 'wb');
             if ($fp === false) {
                 return $mark; //如果目录中的文件创建失败，返回不可写。
@@ -270,7 +270,7 @@ function file_mode_info($file_path)
 
             @unlink($test_file);
 
-            // 检查目录是否可修改 
+            // 检查目录是否可修改
             $fp = @fopen($test_file, 'ab+');
             if ($fp === false) {
                 return $mark;
@@ -280,28 +280,28 @@ function file_mode_info($file_path)
             }
             @fclose($fp);
 
-            // 检查目录下是否有执行rename()函数的权限 
+            // 检查目录下是否有执行rename()函数的权限
             if (@rename($test_file, $test_file) !== false) {
                 $mark ^= 8;
             }
             @unlink($test_file);
-        } // 如果是文件 
+        } // 如果是文件
         elseif (is_file($file_path)) {
-            // 以读方式打开 
+            // 以读方式打开
             $fp = @fopen($file_path, 'rb');
             if ($fp) {
                 $mark ^= 1; //可读 001
             }
             @fclose($fp);
 
-            // 试着修改文件 
+            // 试着修改文件
             $fp = @fopen($file_path, 'ab+');
             if ($fp && @fwrite($fp, '') !== false) {
                 $mark ^= 6; //可修改可写可读 111，不可修改可写可读011...
             }
             @fclose($fp);
 
-            // 检查目录下是否有执行rename()函数的权限 
+            // 检查目录下是否有执行rename()函数的权限
             if (@rename($test_file, $test_file) !== false) {
                 $mark ^= 8;
             }
@@ -356,22 +356,22 @@ function make_dir($folder)
     $reval = false;
 
     if (!file_exists($folder)) {
-        // 如果目录不存在则尝试创建该目录 
+        // 如果目录不存在则尝试创建该目录
         @umask(0);
 
-        // 将目录路径拆分成数组 
+        // 将目录路径拆分成数组
         preg_match_all('/([^\/]*)\/?/i', $folder, $atmp);
 
-        // 如果第一个字符为/则当作物理路径处理 
+        // 如果第一个字符为/则当作物理路径处理
         $base = ($atmp[0][0] == '/') ? '/' : '';
 
-        // 遍历包含路径信息的数组 
+        // 遍历包含路径信息的数组
         foreach ($atmp[1] as $val) {
             if ('' != $val) {
                 $base .= $val;
 
                 if ('..' == $val || '.' == $val) {
-                    // 如果目录为.或者..则直接补/继续下一个循环 
+                    // 如果目录为.或者..则直接补/继续下一个循环
                     $base .= '/';
 
                     continue;
@@ -383,7 +383,7 @@ function make_dir($folder)
             $base .= '/';
 
             if (!file_exists($base)) {
-                // 尝试创建目录，如果创建失败则继续循环 
+                // 尝试创建目录，如果创建失败则继续循环
                 if (@mkdir(rtrim($base, '/'), 0777)) {
                     @chmod($base, 0777);
                     $reval = true;
@@ -391,7 +391,7 @@ function make_dir($folder)
             }
         }
     } else {
-        // 路径已经存在。返回该路径是不是一个目录 
+        // 路径已经存在。返回该路径是不是一个目录
         $reval = is_dir($folder);
     }
 
@@ -665,7 +665,7 @@ function ecs_iconv($source_lang, $target_lang, $source_string = '')
 {
     static $chs = null;
 
-    // 如果字符串为空或者字符串不需要转换，直接返回 
+    // 如果字符串为空或者字符串不需要转换，直接返回
     if ($source_lang == $target_lang || $source_string == '' || preg_match("/[\x80-\xFF]+/", $source_string) == 0) {
         return $source_string;
     }
@@ -732,15 +732,15 @@ function ecs_geoip($ip)
 function trim_right($str)
 {
     $len = strlen($str);
-    // 为空或单个字符直接返回 
+    // 为空或单个字符直接返回
     if ($len == 0 || ord($str{$len - 1}) < 127) {
         return $str;
     }
-    // 有前导字符的直接把前导字符去掉 
+    // 有前导字符的直接把前导字符去掉
     if (ord($str{$len - 1}) >= 192) {
         return substr($str, 0, $len - 1);
     }
-    // 有非独立的字符，先把非独立字符去掉，再验证非独立的字符是不是一个完整的字，不是连原来前导字符也截取掉 
+    // 有非独立的字符，先把非独立字符去掉，再验证非独立的字符是不是一个完整的字，不是连原来前导字符也截取掉
     $r_len = strlen(rtrim($str, "\x80..\xBF"));
     if ($r_len == 0 || ord($str{$r_len - 1}) < 127) {
         return sub_str($str, 0, $r_len);

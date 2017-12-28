@@ -99,7 +99,7 @@ class AopClient {
 			$res = openssl_get_privatekey($priKey);
 		}
 
-		($res) or die('您使用的私钥格式错误，请检查RSA私钥配置'); 
+		($res) or die('您使用的私钥格式错误，请检查RSA私钥配置');
 
 		if ("RSA2" == $signType) {
 			openssl_sign($data, $sign, $res, OPENSSL_ALGO_SHA256);
@@ -123,7 +123,7 @@ class AopClient {
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
 		$postBodyString = "";
-		$encodeArray = Array();
+		$encodeArray = [];
 		$postMultipart = false;
 
 
@@ -153,10 +153,10 @@ class AopClient {
 
 		if ($postMultipart) {
 
-			$headers = array('content-type: multipart/form-data;charset=' . $this->postCharset . ';boundary=' . $this->getMillisecond());
+			$headers = ['content-type: multipart/form-data;charset=' . $this->postCharset . ';boundary=' . $this->getMillisecond()];
 		} else {
 
-			$headers = array('content-type: application/x-www-form-urlencoded;charset=' . $this->postCharset);
+			$headers = ['content-type: application/x-www-form-urlencoded;charset=' . $this->postCharset];
 		}
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
@@ -190,7 +190,7 @@ class AopClient {
 		$logger = new LtLogger;
 		$logger->conf["log_file"] = rtrim(AOP_SDK_WORK_DIR, '\\/') . '/' . "logs/aop_comm_err_" . $this->appId . "_" . date("Y-m-d") . ".log";
 		$logger->conf["separator"] = "^_^";
-		$logData = array(
+		$logData = [
 			date("Y-m-d H:i:s"),
 			$apiName,
 			$this->appId,
@@ -200,7 +200,7 @@ class AopClient {
 			$requestUrl,
 			$errorCode,
 			str_replace("\n", "", $responseTxt)
-		);
+		];
 		$logger->log($logData);
 	}
 
@@ -216,7 +216,7 @@ class AopClient {
 
 		$params['app_id'] = $this->appId;
 		$params['method'] = $request->getApiMethodName();
-		$params['format'] = $this->format; 
+		$params['format'] = $this->format;
 		$params['sign_type'] = $this->signType;
 		$params['timestamp'] = date("Y-m-d H:i:s");
 		$params['alipay_sdk'] = $this->alipaySdkVersion;
@@ -334,10 +334,10 @@ class AopClient {
 	}
 
 	/**
-     * 建立请求，以表单HTML形式构造（默认）
-     * @param $para_temp 请求参数数组
-     * @return 提交表单HTML文本
-     */
+	 * 建立请求，以表单HTML形式构造（默认）
+	 * @param $para_temp 请求参数数组
+	 * @return 提交表单HTML文本
+	 */
 	protected function buildRequestForm($para_temp) {
 		
 		$sHtml = "<form id='alipaysubmit' name='alipaysubmit' action='".$this->gatewayUrl."?charset=".trim($this->postCharset)."' method='POST'>";
@@ -602,7 +602,7 @@ class AopClient {
 			$res = openssl_get_publickey($pubKey);
 		}
 
-		($res) or die('支付宝RSA公钥错误。请检查公钥文件格式是否正确');  
+		($res) or die('支付宝RSA公钥错误。请检查公钥文件格式是否正确');
 
 		//调用openssl内置方法验签，返回bool值
 
@@ -668,7 +668,7 @@ class AopClient {
 		$res = openssl_get_publickey($pubKey);
 		$blocks = $this->splitCN($data, 0, 30, $charset);
 		$chrtext  = null;
-		$encodes  = array();
+		$encodes  = [];
 		foreach ($blocks as $n => $block) {
 			if (!openssl_public_encrypt($block, $chrtext , $res)) {
 				echo "<br/>" . openssl_error_string() . "<br/>";
@@ -699,7 +699,7 @@ class AopClient {
 
 	function splitCN($cont, $n = 0, $subnum, $charset) {
 		//$len = strlen($cont) / 3;
-		$arrr = array();
+		$arrr = [];
 		for ($i = $n; $i < strlen($cont); $i += $subnum) {
 			$res = $this->subCNchar($cont, $i, $subnum, $charset);
 			if (!empty ($res)) {

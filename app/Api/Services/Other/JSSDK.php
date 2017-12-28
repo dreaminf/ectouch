@@ -4,7 +4,6 @@
 namespace App\Services\Other;
 
 use Cache;
-use Log;
 
 class JSSDK {
   private $appId;
@@ -31,15 +30,15 @@ class JSSDK {
 
     $signature = sha1($string);
 
-    $signPackage = array(
+    $signPackage = [
       "app_id"     => $this->appId,
       "nonceStr"  => $nonceStr,
       "timestamp" => $timestamp,
       "url"       => $url,
       "signature" => $signature,
       "rawString" => $string
-    );
-    return $signPackage; 
+    ];
+    return $signPackage;
   }
 
   private function createNonceStr($length = 16) {

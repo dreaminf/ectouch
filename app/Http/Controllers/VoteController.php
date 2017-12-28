@@ -80,13 +80,13 @@ class VoteController extends BaseController
             "VALUES ('$vote_id', '$ip_address', " . gmtime() . ")";
         $res = $GLOBALS['db']->query($sql);
 
-        // 更新投票主题的数量 
+        // 更新投票主题的数量
         $sql = "UPDATE " . $GLOBALS['ecs']->table('vote') . " SET " .
             "vote_count = vote_count + 1 " .
             "WHERE vote_id = '$vote_id'";
         $GLOBALS['db']->query($sql);
 
-        // 更新投票选项的数量 
+        // 更新投票选项的数量
         $sql = "UPDATE " . $GLOBALS['ecs']->table('vote_option') . " SET " .
             "option_count = option_count + 1 " .
             "WHERE " . db_create_in($option_id, 'option_id');

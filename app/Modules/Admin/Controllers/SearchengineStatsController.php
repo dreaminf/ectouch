@@ -13,14 +13,14 @@ class SearchengineStatsController extends BaseController
     {
         load_lang('statistic', 'admin');
 
-        // act操作项的初始化 
+        // act操作项的初始化
         $_REQUEST['act'] = ($_REQUEST['act'] == 'list') ? 'view' : $_REQUEST['act'];
 
         if ($_REQUEST['act'] == 'view') {
             admin_priv('client_flow_stats');
 
-            // 时间参数 
-            // TODO: 时间需要改 
+            // 时间参数
+            // TODO: 时间需要改
             if (isset($_POST) && !empty($_POST)) {
                 $start_date = $_POST['start_date'];
                 $end_date = $_POST['end_date'];
@@ -28,9 +28,9 @@ class SearchengineStatsController extends BaseController
                 $start_date = local_date('Y-m-d', strtotime('-1 week'));
                 $end_date = local_date('Y-m-d');
             }
-            // ------------------------------------- 
-            /* --综合流量
-            // ------------------------------------- 
+            /**
+             * 综合流量
+             */
             $max = 0;
             $general_xml = "<chart caption='{$GLOBALS['_LANG']['tab_keywords']}' shownames='1' showvalues='0' decimals='0' numberPrefix='' outCnvBaseFontSize='12' baseFontSize='12'>";
             $sql = "SELECT keyword, count, searchengine " .
@@ -76,7 +76,7 @@ class SearchengineStatsController extends BaseController
 
             $general_xml .= '</chart>';
 
-            // 模板赋值 
+            // 模板赋值
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['searchengine_stats']);
             $this->smarty->assign('general_data', $general_xml);
 
@@ -95,7 +95,7 @@ class SearchengineStatsController extends BaseController
             }
             $this->smarty->assign('searchengines', $searchengines);
 
-            // 显示日期 
+            // 显示日期
             $this->smarty->assign('start_date', $start_date);
             $this->smarty->assign('end_date', $end_date);
 
@@ -103,7 +103,7 @@ class SearchengineStatsController extends BaseController
             $this->smarty->assign('action_link', ['text' => $GLOBALS['_LANG']['down_search_stats'], 'href' => 'searchengine_stats.php?act=download&start_date=' . $start_date . '&end_date=' . $end_date . '&filename=' . $filename]);
 
             $this->smarty->assign('lang', $GLOBALS['_LANG']);
-            // 显示页面 
+            // 显示页面
 
             return $this->smarty->display('searchengine_stats.htm');
         }

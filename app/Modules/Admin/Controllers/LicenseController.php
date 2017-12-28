@@ -12,7 +12,7 @@ class LicenseController extends BaseController
     public function actionIndex()
     {
         if ($_REQUEST['act'] == 'list_edit') {
-            // 检查权限 
+            // 检查权限
             admin_priv('shop_authorized');
 
             include_once(ROOT_PATH . 'includes/lib_license.php');
@@ -35,7 +35,7 @@ class LicenseController extends BaseController
          * 证书下载
          */
         if ($_REQUEST['act'] == 'download') {
-            // 检查权限 
+            // 检查权限
             admin_priv('shop_authorized');
 
             include_once(ROOT_PATH . 'includes/lib_license.php');
@@ -46,7 +46,7 @@ class LicenseController extends BaseController
                 $links[] = ['text' => $GLOBALS['_LANG']['back'], 'href' => 'license.php?act=list_edit'];
                 return sys_msg($GLOBALS['_LANG']['no_license_down'], 0, $links);
             }
-            // 文件下载 
+            // 文件下载
             ecs_header("Content-Type:text/plain");
             ecs_header("Accept-Ranges:bytes");
             ecs_header("Content-Disposition: attachment; filename=CERTIFICATE.CER");
@@ -57,11 +57,11 @@ class LicenseController extends BaseController
          * 证书上传
          */
         if ($_REQUEST['act'] == 'upload') {
-            // 检查权限 
+            // 检查权限
             admin_priv('shop_authorized');
 
-            // 接收上传文件 
-            // 取出证书内容 
+            // 接收上传文件
+            // 取出证书内容
             $license_arr = [];
             if (isset($_FILES['license']['error']) && $_FILES['license']['error'] == 0 && preg_match('/CER$/i', $_FILES['license']['name'])) {
                 if (file_exists($_FILES['license']['tmp_name']) && is_readable($_FILES['license']['tmp_name'])) {
@@ -77,7 +77,7 @@ class LicenseController extends BaseController
                 }
             }
 
-            // 恢复证书 
+            // 恢复证书
             if (count($license_arr) != 2 || $license_arr[0] == '' || $license_arr[1] == '') {
                 $links[] = ['text' => $GLOBALS['_LANG']['back'], 'href' => 'license.php?act=list_edit'];
                 return sys_msg($GLOBALS['_LANG']['fail_license'], 1, $links);
@@ -112,7 +112,7 @@ class LicenseController extends BaseController
          * 证书删除
          */
         if ($_REQUEST['act'] == 'del') {
-            // 检查权限 
+            // 检查权限
             admin_priv('shop_authorized');
 
             $sql = "UPDATE " . $this->ecs->table('shop_config') . "

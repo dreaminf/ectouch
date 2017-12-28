@@ -159,10 +159,10 @@ class GoodsAutoController extends BaseController
             $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('goods') . " g" . $where;
             $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-            // 分页大小 
+            // 分页大小
             $filter = page_and_size($filter);
 
-            // 查询 
+            // 查询
             $sql = "SELECT g.*,a.starttime,a.endtime FROM " . $GLOBALS['ecs']->table('goods') . " g LEFT JOIN " . $GLOBALS['ecs']->table('auto_manage') . " a ON g.goods_id = a.item_id AND a.type='goods'" . $where .
                 " ORDER by goods_id, " . $filter['sort_by'] . ' ' . $filter['sort_order'] .
                 " LIMIT " . $filter['start'] . ",$filter[page_size]";

@@ -5,11 +5,7 @@ use App\Libraries\Transport;
 
 /**
  * 获得网店 license 信息
- *
- * @access  public
- * @param   integer $size
- *
- * @return  array
+ * @return array
  */
 function get_shop_license()
 {
@@ -53,7 +49,7 @@ function make_shop_ac($post_params, $token)
 }
 
 /**
- * 功能：与 ECShop 交换数据
+ * 功能：交换数据
  *
  * @param   array $certi 登录参数
  * @param   array $license 网店license信息
@@ -123,7 +119,7 @@ function license_login($certi_added = '')
 {
     // 登录信息配置
     $certi['certi_app'] = ''; // 证书方法
-    $certi['app_id'] = 'ecshop_b2c'; // 说明客户端来源
+    $certi['app_id'] = 'ectouch_b2c'; // 说明客户端来源
     $certi['app_instance_id'] = ''; // 应用服务ID
     $certi['version'] = LICENSE_VERSION; // license接口版本号
     $certi['shop_version'] = VERSION . '#' . RELEASE; // 网店软件版本号

@@ -20,14 +20,14 @@ class MessageController extends BaseController
         if ($action == 'act_add_message') {
             load_helper('clips');
 
-            // 验证码防止灌水刷屏 
+            // 验证码防止灌水刷屏
             if ((intval($GLOBALS['_CFG']['captcha']) & CAPTCHA_MESSAGE) && gd_version() > 0) {
                 $validator = new Captcha();
                 if (!$validator->check_word($_POST['captcha'])) {
                     return show_message($GLOBALS['_LANG']['invalid_captcha']);
                 }
             } else {
-                // 没有验证码时，用时间来限制机器人发帖或恶意发评论 
+                // 没有验证码时，用时间来限制机器人发帖或恶意发评论
                 if (!session()->has('send_time')) {
                     session(['send_time' =>  0]);
                 }
@@ -94,7 +94,7 @@ class MessageController extends BaseController
             $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('feedback') . " WHERE `msg_area`='1' AND `msg_status` = '1' ";
             $record_count += $this->db->getOne($sql);
 
-            // 获取留言的数量 
+            // 获取留言的数量
             $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
             $pagesize = get_library_number('message_list', 'message_board');
             $pager = get_pager('message.php', [], $record_count, $page, $pagesize);
@@ -119,7 +119,7 @@ class MessageController extends BaseController
      */
     private function get_msg_list($num, $start)
     {
-        // 获取留言数据 
+        // 获取留言数据
         $msg = [];
 
         $sql = "(SELECT 'comment' AS tablename,   comment_id AS ID, content AS msg_content, null AS msg_title, add_time AS msg_time, id_value AS id_value, comment_rank AS comment_rank, null AS message_img, user_name AS user_name, '6' AS msg_type ";

@@ -26,7 +26,7 @@ class SearchController extends BaseController
             if ($string !== false) {
                 $string = unserialize($string);
                 if ($string !== false) {
-                    // 用户在重定向的情况下当作一次访问 
+                    // 用户在重定向的情况下当作一次访问
                     if (!empty($string['search_encode_time'])) {
                         if (time() > $string['search_encode_time'] + 2) {
                             define('INGORE_VISIT_STATS', true);
@@ -86,7 +86,7 @@ class SearchController extends BaseController
 
         $action = '';
         if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'form') {
-            // 要显示高级搜索栏 
+            // 要显示高级搜索栏
             $adv_value['keywords'] = htmlspecialchars(stripcslashes($_REQUEST['keywords']));
             $adv_value['brand'] = $_REQUEST['brand'];
             $adv_value['min_price'] = $_REQUEST['min_price'];
@@ -95,7 +95,7 @@ class SearchController extends BaseController
 
             $attributes = $this->get_seachable_attributes($_REQUEST['goods_type']);
 
-            // 将提交数据重新赋值 
+            // 将提交数据重新赋值
             foreach ($attributes['attr'] as $key => $val) {
                 if (!empty($_REQUEST['attr'][$val['id']])) {
                     if ($val['type'] == 2) {
@@ -121,25 +121,25 @@ class SearchController extends BaseController
             $action = 'form';
         }
 
-        // 初始化搜索条件 
+        // 初始化搜索条件
         $keywords = '';
         $tag_where = '';
         if (!empty($_REQUEST['keywords'])) {
             $arr = [];
             if (stristr($_REQUEST['keywords'], ' AND ') !== false) {
-                // 检查关键字中是否有AND，如果存在就是并 
+                // 检查关键字中是否有AND，如果存在就是并
                 $arr = explode('AND', $_REQUEST['keywords']);
                 $operator = " AND ";
             } elseif (stristr($_REQUEST['keywords'], ' OR ') !== false) {
-                // 检查关键字中是否有OR，如果存在就是或 
+                // 检查关键字中是否有OR，如果存在就是或
                 $arr = explode('OR', $_REQUEST['keywords']);
                 $operator = " OR ";
             } elseif (stristr($_REQUEST['keywords'], ' + ') !== false) {
-                // 检查关键字中是否有加号，如果存在就是或 
+                // 检查关键字中是否有加号，如果存在就是或
                 $arr = explode('+', $_REQUEST['keywords']);
                 $operator = " OR ";
             } else {
-                // 检查关键字中是否有空格，如果存在就是并 
+                // 检查关键字中是否有空格，如果存在就是并
                 $arr = explode(' ', $_REQUEST['keywords']);
                 $operator = " AND ";
             }
@@ -180,7 +180,7 @@ class SearchController extends BaseController
         $min_price = $_REQUEST['min_price'] != 0 ? " AND g.shop_price >= '$_REQUEST[min_price]'" : '';
         $max_price = $_REQUEST['max_price'] != 0 || $_REQUEST['min_price'] < 0 ? " AND g.shop_price <= '$_REQUEST[max_price]'" : '';
 
-        // 排序、显示方式以及类型 
+        // 排序、显示方式以及类型
         $default_display_type = $GLOBALS['_CFG']['show_order_type'] == '0' ? 'list' : ($GLOBALS['_CFG']['show_order_type'] == '1' ? 'grid' : 'text');
         $default_sort_order_method = $GLOBALS['_CFG']['sort_order_method'] == '0' ? 'DESC' : 'ASC';
         $default_sort_order_type = $GLOBALS['_CFG']['sort_order_type'] == '0' ? 'goods_id' : ($GLOBALS['_CFG']['sort_order_type'] == '1' ? 'shop_price' : 'last_update');
@@ -259,7 +259,7 @@ class SearchController extends BaseController
                             $attr_url .= "&amp;attr[$key][to]=$val[to]";
                         }
                     } else {
-                        // 处理选购中心过来的链接 
+                        // 处理选购中心过来的链接
                         $sql .= isset($_REQUEST['pickout']) ? " AND attr_id = '$key' AND attr_value = '" . $val . "' " : " AND attr_id = '$key' AND attr_value LIKE '%" . mysql_like_quote($val) . "%' ";
                         $attr_url .= "&amp;attr[$key]=$val";
                         $attr_arg["attr[$key]"] = $val;
@@ -269,7 +269,7 @@ class SearchController extends BaseController
                 }
             }
 
-            // 如果检索条件都是无效的，就不用检索 
+            // 如果检索条件都是无效的，就不用检索
             if ($attr_num > 0) {
                 $sql .= " GROUP BY goods_id HAVING num = '$attr_num'";
 
@@ -281,7 +281,7 @@ class SearchController extends BaseController
                 }
             }
         } elseif (isset($_REQUEST['pickout'])) {
-            // 从选购中心进入的链接 
+            // 从选购中心进入的链接
             $sql = "SELECT DISTINCT(goods_id) FROM " . $this->ecs->table('goods_attr');
             $col = $this->db->getCol($sql);
             //如果商店没有设置商品属性,那么此检索条件是无效的
@@ -290,7 +290,7 @@ class SearchController extends BaseController
             }
         }
 
-        // 获得符合条件的商品总数 
+        // 获得符合条件的商品总数
         $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('goods') . " AS g " .
             "WHERE g.is_delete = 0 AND g.is_on_sale = 1 AND g.is_alone_sale = 1 $attr_in " .
             "AND (( 1 " . $categories . $keywords . $brand . $min_price . $max_price . $intro . $outstock . " ) " . $tag_where . " )";
@@ -301,7 +301,7 @@ class SearchController extends BaseController
             $page = $max_page;
         }
 
-        // 查询商品 
+        // 查询商品
         $sql = "SELECT g.goods_id, g.goods_name, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, " .
             "IFNULL(mp.user_price, g.shop_price * '". session('discount') ."') AS shop_price, " .
             "g.promote_price, g.promote_start_date, g.promote_end_date, g.goods_thumb, g.goods_img, g.goods_brief, g.goods_type " .
@@ -321,8 +321,8 @@ class SearchController extends BaseController
                 $promote_price = 0;
             }
 
-            // 处理商品水印图片 
-            // 处理商品水印图片 
+            // 处理商品水印图片
+            // 处理商品水印图片
             $watermark_img = '';
 
             if ($promote_price != 0) {
@@ -369,7 +369,7 @@ class SearchController extends BaseController
         $this->smarty->assign('max_price', $max_price);
         $this->smarty->assign('outstock', $_REQUEST['outstock']);
 
-        // 分页 
+        // 分页
         $url_format = "search.php?category=$category&amp;keywords=" . urlencode(stripslashes($_REQUEST['keywords'])) . "&amp;brand=" . $_REQUEST['brand'] . "&amp;action=" . $action . "&amp;goods_type=" . $_REQUEST['goods_type'] . "&amp;sc_ds=" . $_REQUEST['sc_ds'];
         if (!empty($intromode)) {
             $url_format .= "&amp;intro=" . $intromode;
@@ -448,13 +448,13 @@ class SearchController extends BaseController
             'attr' => []
         ];
 
-        // 获得可用的商品类型 
+        // 获得可用的商品类型
         $sql = "SELECT t.cat_id, cat_name FROM " . $GLOBALS['ecs']->table('goods_type') . " AS t, " .
             $GLOBALS['ecs']->table('attribute') . " AS a" .
             " WHERE t.cat_id = a.cat_id AND t.enabled = 1 AND a.attr_index > 0 ";
         $cat = $GLOBALS['db']->getAll($sql);
 
-        // 获取可以检索的属性 
+        // 获取可以检索的属性
         if (!empty($cat)) {
             foreach ($cat as $val) {
                 $attributes['cate'][$val['cat_id']] = $val['cat_name'];

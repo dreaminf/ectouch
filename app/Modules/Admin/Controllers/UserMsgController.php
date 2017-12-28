@@ -13,7 +13,7 @@ class UserMsgController extends BaseController
 {
     public function actionIndex()
     {
-        // 权限判断 
+        // 权限判断
         admin_priv('feedback_priv');
         /*初始化数据交换对象 */
         $exc = new Exchange($this->ecs->table("feedback"), $this->db, 'msg_id', 'msg_title');
@@ -26,7 +26,7 @@ class UserMsgController extends BaseController
             $order_id = empty($_GET['order_id']) ? 0 : intval($_GET['order_id']);
             $order_sn = $this->db->getOne("SELECT order_sn FROM " . $this->ecs->table('order_info') . " WHERE order_id = '$order_id'");
 
-            // 获取关于订单所有信息 
+            // 获取关于订单所有信息
             $sql = "SELECT msg_id, user_name, msg_title, msg_type, msg_time, msg_content" .
                 " FROM " . $this->ecs->table('feedback') .
                 " WHERE user_id ='$user_id' AND order_id = '$order_id'";
@@ -79,20 +79,20 @@ class UserMsgController extends BaseController
          */
         if ($_REQUEST['act'] == 'check') {
             if ($_REQUEST['check'] == 'allow') {
-                // 允许留言显示 
+                // 允许留言显示
                 $sql = "UPDATE " . $this->ecs->table('feedback') . " SET msg_status = 1 WHERE msg_id = '$_REQUEST[id]'";
                 $this->db->query($sql);
 
-                // 清除缓存 
+                // 清除缓存
                 clear_cache_files();
 
                 return redirect("user_msg.php?act=view&id=$_REQUEST[id]");
             } else {
-                // 禁止留言显示 
+                // 禁止留言显示
                 $sql = "UPDATE " . $this->ecs->table('feedback') . " SET msg_status = 0 WHERE msg_id = '$_REQUEST[id]'";
                 $this->db->query($sql);
 
-                // 清除缓存 
+                // 清除缓存
                 clear_cache_files();
 
                 return redirect("user_msg.php?act=view&id=$_REQUEST[id]");
@@ -141,13 +141,13 @@ class UserMsgController extends BaseController
         if ($_REQUEST['act'] == 'remove') {
             $msg_id = intval($_REQUEST['id']);
 
-            // 检查权限 
+            // 检查权限
             check_authz_json('feedback_priv');
 
             $msg_title = $exc->get_name($msg_id);
             $img = $exc->get_name($msg_id, 'message_img');
             if ($exc->drop($msg_id)) {
-                // 删除图片 
+                // 删除图片
                 if (!empty($img)) {
                     @unlink(ROOT_PATH . DATA_DIR . '/feedbackimg/' . $img);
                 }
@@ -195,7 +195,7 @@ class UserMsgController extends BaseController
                 $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'user_msg.php?act=list_all'];
                 return sys_msg(sprintf($GLOBALS['_LANG']['batch_drop_success'], count($_POST['checkboxes'])), 0, $link);
             } else {
-                // 提示信息 
+                // 提示信息
                 $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'user_msg.php?act=list_all'];
                 return sys_msg($GLOBALS['_LANG']['no_select_comment'], 0, $link);
             }
@@ -226,7 +226,7 @@ class UserMsgController extends BaseController
                 $this->db->query($sql);
             }
 
-            // 邮件通知处理流程 
+            // 邮件通知处理流程
             if (!empty($_POST['send_email_notice']) or isset($_POST['remail'])) {
                 //获取邮件中的必要内容
                 $sql = 'SELECT user_name, user_email, msg_title, msg_content ' .
@@ -234,7 +234,7 @@ class UserMsgController extends BaseController
                     " WHERE msg_id ='$_REQUEST[msg_id]'";
                 $message_info = $this->db->getRow($sql);
 
-                // 设置留言回复模板所需要的内容信息 
+                // 设置留言回复模板所需要的内容信息
                 $template = get_mail_template('user_message');
                 $message_content = $message_info['msg_title'] . "\r\n" . $message_info['msg_content'];
 
@@ -246,7 +246,7 @@ class UserMsgController extends BaseController
 
                 $content = $this->smarty->fetch('str:' . $template['template_content']);
 
-                // 发送邮件 
+                // 发送邮件
                 if (send_mail($message_info['user_name'], $message_info['user_email'], $template['template_subject'], $content, $template['is_html'])) {
                     $send_ok = 0;
                 } else {
@@ -261,12 +261,12 @@ class UserMsgController extends BaseController
          * 删除会员上传的文件
          */
         if ($_REQUEST['act'] == 'drop_file') {
-            // 删除上传的文件 
+            // 删除上传的文件
             $file = $_GET['file'];
             $file = str_replace('/', '', $file);
             @unlink('../' . DATA_DIR . '/feedbackimg/' . $file);
 
-            // 更新数据库 
+            // 更新数据库
             $this->db->query("UPDATE " . $this->ecs->table('feedback') . " SET message_img = '' WHERE msg_id = '$_GET[id]'");
 
             return redirect("user_msg.php?act=view&id=" . $_GET['id']);
@@ -278,7 +278,7 @@ class UserMsgController extends BaseController
      */
     private function msg_list()
     {
-        // 过滤条件 
+        // 过滤条件
         $filter['keywords'] = empty($_REQUEST['keywords']) ? '' : trim($_REQUEST['keywords']);
         if (isset($_REQUEST['is_ajax']) && $_REQUEST['is_ajax'] == 1) {
             $filter['keywords'] = json_str_iconv($filter['keywords']);
@@ -299,7 +299,7 @@ class UserMsgController extends BaseController
             " WHERE parent_id = '0' " . $where;
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-        // 分页大小 
+        // 分页大小
         $filter = page_and_size($filter);
 
         $sql = "SELECT f.msg_id, f.user_name, f.msg_title, f.msg_type, f.order_id, f.msg_status, f.msg_time, f.msg_area, COUNT(r.msg_id) AS reply " .

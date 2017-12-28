@@ -2,32 +2,32 @@
 
 namespace App\Plugins\Payment;
 
-// 模块的基本信息 
+// 模块的基本信息
 if (isset($set_modules) && $set_modules == true) {
     $i = isset($modules) ? count($modules) : 0;
 
-    // 代码 
+    // 代码
     $modules[$i]['code']    = basename(__FILE__, '.php');
 
-    // 描述对应的语言项 
+    // 描述对应的语言项
     $modules[$i]['desc']    = 'wxpay_desc';
 
-    // 是否支持货到付款 
+    // 是否支持货到付款
     $modules[$i]['is_cod']  = '0';
 
-    // 是否支持在线支付 
+    // 是否支持在线支付
     $modules[$i]['is_online']  = '1';
 
-    // 作者 
+    // 作者
     $modules[$i]['author']  = 'ECTouch Team';
 
-    // 网址 
+    // 网址
     $modules[$i]['website'] = 'http://www.tenpay.com';
 
-    // 版本号 
+    // 版本号
     $modules[$i]['version'] = '2.0.0';
 
-    // 配置信息 
+    // 配置信息
     $modules[$i]['config']  = [
         ['name' => 'tenpay_account',   'type' => 'text', 'value' => ''],
         ['name' => 'tenpay_key',       'type' => 'text', 'value' => ''],
@@ -68,20 +68,20 @@ class Wxpay
     {
         $cmd_no = '1';
 
-        // 获得订单的流水号，补零到10位 
+        // 获得订单的流水号，补零到10位
         $sp_billno = $order['order_sn'];
 
-        // 交易日期 
+        // 交易日期
         $today = date('Ymd');
 
-        // 将商户号+年月日+流水号 
+        // 将商户号+年月日+流水号
         $bill_no = str_pad($order['log_id'], 10, 0, STR_PAD_LEFT);
         $transaction_id = $payment['tenpay_account'].$today.$bill_no;
 
-        // 银行类型:支持纯网关和财付通 
+        // 银行类型:支持纯网关和财付通
         $bank_type = '0';
 
-        // 订单描述，用订单号替代 
+        // 订单描述，用订单号替代
         if (!empty($order['order_id'])) {
             //$desc = get_goods_name_by_id($order['order_id']);
             $desc = $order['order_sn'];
@@ -90,31 +90,31 @@ class Wxpay
             $desc = $GLOBALS['_LANG']['account_voucher'];
             $attach = 'voucher';
         }
-        // 编码标准 
+        // 编码标准
         if (!defined('CHARSET') || CHARSET == 'utf-8') {
             $desc = ecs_iconv('utf-8', 'gbk', $desc);
         }
 
-        // 返回的路径 
+        // 返回的路径
         $return_url = return_url('tenpay');
 
-        // 总金额 
+        // 总金额
         $total_fee = floatval($order['order_amount']) * 100;
 
-        // 货币类型 
+        // 货币类型
         $fee_type = '1';
 
-        // 财付通风险防范参数 
+        // 财付通风险防范参数
         $spbill_create_ip = $_SERVER['REMOTE_ADDR'];
 
-        // 数字签名 
+        // 数字签名
         $sign_text = "cmdno=" . $cmd_no . "&date=" . $today . "&bargainor_id=" . $payment['tenpay_account'] .
           "&transaction_id=" . $transaction_id . "&sp_billno=" . $sp_billno .
           "&total_fee=" . $total_fee . "&fee_type=" . $fee_type . "&return_url=" . $return_url .
           "&attach=" . $attach . "&spbill_create_ip=" . $spbill_create_ip . "&key=" . $payment['tenpay_key'];
         $sign = strtoupper(md5($sign_text));
 
-        // 交易参数 
+        // 交易参数
         $parameter = [
             'cmdno'             => $cmd_no,                     // 业务代码, 财付通支付支付接口填  1
             'date'              => $today,                      // 商户日期：如20051212
@@ -173,17 +173,17 @@ class Wxpay
             $log_id = get_order_id_by_sn($sp_billno);
         }
 
-        // 如果pay_result大于0则表示支付失败 
+        // 如果pay_result大于0则表示支付失败
         if ($pay_result > 0) {
             return false;
         }
 
-        // 检查支付的金额是否相符 
+        // 检查支付的金额是否相符
         if (!check_money($log_id, $total_fee / 100)) {
             return false;
         }
 
-        // 检查数字签名是否正确 
+        // 检查数字签名是否正确
         $sign_text  = "cmdno=" . $cmd_no . "&pay_result=" . $pay_result .
                           "&date=" . $bill_date . "&transaction_id=" . $transaction_id .
                             "&sp_billno=" . $sp_billno . "&total_fee=" . $total_fee .
@@ -193,7 +193,7 @@ class Wxpay
         if ($sign_md5 != $sign) {
             return false;
         } else {
-            // 改变订单状态 
+            // 改变订单状态
             order_paid($log_id);
             return true;
         }

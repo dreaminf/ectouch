@@ -5,11 +5,11 @@ namespace App\Services\Payment\Alipay;
 
 class AlipayRSA {
 /**
-     * RSA签名
-     * @param $data 待签名数据
-     * @param $private_key_path 商户私钥文件路径
-     * return 签名结果
-     */
+ * RSA签名
+ * @param $data 待签名数据
+ * @param $private_key_path 商户私钥文件路径
+ * return 签名结果
+ */
     public static function rsaSign($data, $private_key) {
         $res = openssl_get_privatekey($private_key);
         openssl_sign($data, $sign, $res);

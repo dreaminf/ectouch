@@ -46,7 +46,7 @@ $_LANG['new_table_pre'] = '新表前缀';
 $_LANG['use_new_pre'] = '使用新表前缀';
 $_LANG['notice_use_new_pre'] = '只有在恢复全部备份时才可以选择“是”，否则没有备份的表将无法使用。<br />您也可以手动修改 data/config.php 中的 $prefix 变量来决定使用哪个表前缀';$_LANG['upload_and_exe'] = '上传并执行sql文件';
 
-// 提示信息 
+// 提示信息
 $_LANG['fail_get_tables'] = '获取备份数据表失败';
 $_LANG['fail_open_file'] = '文件打开失败';
 $_LANG['fail_remove'] = '文件删除失败';
@@ -69,7 +69,7 @@ $_LANG['fail_import'] = '数据导入失败';
 $_LANG['no_file'] = '文件不存在';
 $_LANG['not_support_zip_format'] = '服务器不支持zip格式，请将文件解压后再上传';
 
-// js 
+// js
 $_LANG['js_languages']['remove_confirm'] = '你确认要删除该备份吗？';
 $_LANG['js_languages']['lang_remove'] = '移除';
 $_LANG['js_languages']['lang_restore'] = '恢复备份';
@@ -77,7 +77,7 @@ $_LANG['js_languages']['lang_download'] = '下载';
 $_LANG['js_languages']['sql_name_not_null'] = '文件名不能为空';
 $_LANG['js_languages']['vol_size_not_null'] = '请填入备份大小';
 
-// 数据备份 
+// 数据备份
 $_LANG['backup_title'] = '数据文件 %s 成功创建，程序将自动继续。';
 $_LANG['backup_notice'] = '如果您的浏览器没有自动跳转，请点击这里';
 $_LANG['backup_success'] = '备份成功';

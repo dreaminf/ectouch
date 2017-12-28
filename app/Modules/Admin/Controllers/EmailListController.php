@@ -116,10 +116,10 @@ class EmailListController extends BaseController
             $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('email_list');
             $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-            // 分页大小 
+            // 分页大小
             $filter = page_and_size($filter);
 
-            // 查询 
+            // 查询
 
             $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('email_list') .
                 " ORDER BY " . $filter['sort_by'] . ' ' . $filter['sort_order'] .

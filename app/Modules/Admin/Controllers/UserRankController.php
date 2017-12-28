@@ -76,27 +76,27 @@ class UserRankController extends BaseController
             $_POST['min_points'] = empty($_POST['min_points']) ? 0 : intval($_POST['min_points']);
             $_POST['max_points'] = empty($_POST['max_points']) ? 0 : intval($_POST['max_points']);
 
-            // 检查是否存在重名的会员等级 
+            // 检查是否存在重名的会员等级
             if (!$exc->is_only('rank_name', trim($_POST['rank_name']))) {
                 return sys_msg(sprintf($GLOBALS['_LANG']['rank_name_exists'], trim($_POST['rank_name'])), 1);
             }
 
-            // 非特殊会员组检查积分的上下限是否合理 
+            // 非特殊会员组检查积分的上下限是否合理
             if ($_POST['min_points'] >= $_POST['max_points'] && $special_rank == 0) {
                 return sys_msg($GLOBALS['_LANG']['js_languages']['integral_max_small'], 1);
             }
 
-            // 特殊等级会员组不判断积分限制 
+            // 特殊等级会员组不判断积分限制
             if ($special_rank == 0) {
-                // 检查下限制有无重复 
+                // 检查下限制有无重复
                 if (!$exc->is_only('min_points', intval($_POST['min_points']))) {
                     return sys_msg(sprintf($GLOBALS['_LANG']['integral_min_exists'], intval($_POST['min_points'])));
                 }
             }
 
-            // 特殊等级会员组不判断积分限制 
+            // 特殊等级会员组不判断积分限制
             if ($special_rank == 0) {
-                // 检查上限有无重复 
+                // 检查上限有无重复
                 if (!$exc->is_only('max_points', intval($_POST['max_points']))) {
                     return sys_msg(sprintf($GLOBALS['_LANG']['integral_max_exists'], intval($_POST['max_points'])));
                 }
@@ -109,7 +109,7 @@ class UserRankController extends BaseController
                 "'$_POST[discount]', '$special_rank', '" . intval($_POST['show_price']) . "')";
             $this->db->query($sql);
 
-            // 管理员日志 
+            // 管理员日志
             admin_log(trim($_POST['rank_name']), 'add', 'user_rank');
             clear_cache_files();
 
@@ -127,7 +127,7 @@ class UserRankController extends BaseController
             $rank_id = intval($_GET['id']);
 
             if ($exc->drop($rank_id)) {
-                // 更新会员表的等级字段 
+                // 更新会员表的等级字段
                 $exc_user->edit("user_rank = 0", $rank_id);
 
                 $rank_name = $exc->get_name($rank_id);
@@ -148,7 +148,7 @@ class UserRankController extends BaseController
             check_authz_json('user_rank');
             if ($exc->is_only('rank_name', $val, $id)) {
                 if ($exc->edit("rank_name = '$val'", $id)) {
-                    // 管理员日志 
+                    // 管理员日志
                     admin_log($val, 'edit', 'user_rank');
                     clear_cache_files();
                     return make_json_result(stripcslashes($val));

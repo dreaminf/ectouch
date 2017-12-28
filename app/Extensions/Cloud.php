@@ -18,7 +18,7 @@ class Cloud {
     //错误信息
     private $error = '出现未知错误 Cloud ！';
     //需要发送的数据
-    private $data = array();
+    private $data = [];
     //接口
     private $act = NULL;
     private $token = NULL;
@@ -68,7 +68,7 @@ class Cloud {
         } else {
             $data = $this->data;
             //重置，以便下一次服务请求
-            $this->data = array();
+            $this->data = [];
         }
         $this->act = $act;
         return $this->run($data);
@@ -95,14 +95,14 @@ class Cloud {
      * @return type
      */
     private function run($data) {
-        $fields = array(
+        $fields = [
             'data' => json_encode($data),
             'version' => VERSION,
             'release' => RELEASE,
             'act' => $this->act,
             'identity' => $data['appid'],
             'token' => $this->token,
-        );
+        ];
         //请求
         $status = Http::doPost(self::serverHot, $fields);
         if (false == $status) {
@@ -119,7 +119,7 @@ class Cloud {
      */
     private function returnResolve($data) {
         if (empty($data)) {
-            return array();
+            return [];
         }
         $data = json_decode(base64_decode($data), true);
         if (!is_array($data) || !isset($data['status'])) {

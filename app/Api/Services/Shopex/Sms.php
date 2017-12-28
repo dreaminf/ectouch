@@ -28,12 +28,12 @@ class Sms
         $template = env('SMS_TEMPLATE', '#CODE# 短信验证码有效期30分钟，请尽快进行验证。');
 
         //发送短信参数
-        $param = array(
+        $param = [
            'act' => 'ecmobile_send_sms',//固定方法
            'phone' => $mobile,//电话号码
            'content' => str_replace('#CODE#', $code, $template), //短信内容
            'return_data' => 'json',//返回类型
-        );
+        ];
 
         $ac = self::get_ac($param,$token);//验证签名
 

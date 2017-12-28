@@ -17,17 +17,17 @@ class MailTemplateController extends BaseController
          * 模版列表
          */
         if ($_REQUEST['act'] == 'list') {
-            // 包含插件语言项 
+            // 包含插件语言项
             $sql = "SELECT code FROM " . $this->ecs->table('plugins');
             $rs = $this->db->query($sql);
             foreach ($rs as $row) {
-                // 取得语言项 
+                // 取得语言项
                 if (file_exists('../plugins/' . $row['code'] . '/languages/common_' . $GLOBALS['_CFG']['lang'] . '.php')) {
                     include_once(ROOT_PATH . 'plugins/' . $row['code'] . '/languages/common_' . $GLOBALS['_CFG']['lang'] . '.php');
                 }
             }
 
-            // 获得所有邮件模板 
+            // 获得所有邮件模板
             $sql = "SELECT template_id, template_code FROM " . $this->ecs->table('mail_templates') . " WHERE  type = 'template'";
             $res = $this->db->query($sql);
             $cur = null;
@@ -45,7 +45,7 @@ class MailTemplateController extends BaseController
 
             $content = $this->load_template($cur);
 
-            // 创建 html editor 
+            // 创建 html editor
             create_html_editor('content', $content['template_content']);
 
             $this->smarty->assign('tpl', $cur);
@@ -64,17 +64,17 @@ class MailTemplateController extends BaseController
             $tpl = intval($_GET['tpl']);
             $mail_type = isset($_GET['mail_type']) ? $_GET['mail_type'] : -1;
 
-            // 包含插件语言项 
+            // 包含插件语言项
             $sql = "SELECT code FROM " . $this->ecs->table('plugins');
             $rs = $this->db->query($sql);
             foreach ($rs as $row) {
-                // 取得语言项 
+                // 取得语言项
                 if (file_exists('../plugins/' . $row['code'] . '/languages/common_' . $GLOBALS['_CFG']['lang'] . '.php')) {
                     include_once(ROOT_PATH . 'plugins/' . $row['code'] . '/languages/common_' . $GLOBALS['_CFG']['lang'] . '.php');
                 }
             }
 
-            // 获得所有邮件模板 
+            // 获得所有邮件模板
             $sql = "SELECT template_id, template_code FROM " . $this->ecs->table('mail_templates') . " WHERE  type = 'template'";
             $res = $this->db->query($sql);
 
@@ -88,7 +88,7 @@ class MailTemplateController extends BaseController
             $content = $this->load_template($tpl);
 
             if (($mail_type == -1 && $content['is_html'] == 1) || $mail_type == 1) {
-                // 创建 html editor 
+                // 创建 html editor
                 create_html_editor('content', $content['template_content']);
                 $content['is_html'] = 1;
             } elseif ($mail_type == 0) {

@@ -29,7 +29,7 @@ $_LANG['add_continue'] = '继续添加配送区域';
 $_LANG['back_list'] = '返回列表页';
 $_LANG['empty_regions'] = '当前区域下没有任何关联地区';
 
-// 提示信息 
+// 提示信息
 $_LANG['repeat_area_name'] = '已经存在一个同名的配送区域。';
 $_LANG['not_find_plugin'] = '没有找到指定的配送方式的插件。';
 $_LANG['remove_confirm'] = '您确定要删除选定的配送区域吗？';
@@ -39,7 +39,7 @@ $_LANG['add_area_success'] = '添加配送区域成功。';
 $_LANG['edit_area_success'] = '编辑配送区域成功。';
 $_LANG['disable_shipping_success'] = '指定的配送方式已经从该配送区域中移除。';
 
-// 需要用到的JS语言项 
+// 需要用到的JS语言项
 $_LANG['js_languages']['no_area_name'] = '配送区域名称不能为空。';
 $_LANG['js_languages']['del_shipping_area'] = '请先删除该配送区域，然后重新添加。';
 $_LANG['js_languages']['invalid_free_mondy'] = '免费额度不能为空且必须是一个整数。';

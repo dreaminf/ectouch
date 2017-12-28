@@ -19,7 +19,7 @@ class Banner extends BaseModel
 
     private static function get_flash_xml($file)
     {
-        $flashdb = array();
+        $flashdb = [];
 
         // 兼容v2.7.0及以前版本
         if (!preg_match_all('/item_url="([^"]+)"\slink="([^"]+)"\stext="([^"]*)"\ssort="([^"]*)"/', $file, $t, PREG_SET_ORDER)) {
@@ -29,7 +29,7 @@ class Banner extends BaseModel
         if (!empty($t)) {
             foreach ($t as $key => $val) {
                 $val[4] = isset($val[4]) ? $val[4] : 0;
-                $flashdb[] = array('id' => $key, 'photo' => formatPhoto($val[1]), 'link' => $val[2], 'title' => $val[3], 'sort' => $val[4]);
+                $flashdb[] = ['id' => $key, 'photo' => formatPhoto($val[1]), 'link' => $val[2], 'title' => $val[3], 'sort' => $val[4]];
             }
         }
 

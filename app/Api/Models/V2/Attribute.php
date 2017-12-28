@@ -40,7 +40,7 @@ class Attribute extends BaseModel
             ->orderBy('attribute.attr_id', $sort)
             ->get(['attribute.attr_type', 'goods_attr.attr_value', 'goods_attr.goods_attr_id']);
 
-        $return_arr = array();
+        $return_arr = [];
         foreach ($row as $value) {
             $return_arr['sort'][] = $value['goods_attr_id'];
 
@@ -117,7 +117,7 @@ class Attribute extends BaseModel
             ->orderBy('attribute.attr_id', $sort)
             ->get(['attribute.attr_type', 'goods_attr.attr_value', 'goods_attr.goods_attr_id']);
 
-        $return_arr = array();
+        $return_arr = [];
 
         foreach ($row as $value) {
             if ($value['goods_attr_id']) {

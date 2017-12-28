@@ -17,7 +17,7 @@ class UsersOrderController extends BaseController
         $this->smarty->assign('lang', $GLOBALS['_LANG']);
 
         if (isset($_REQUEST['act']) && ($_REQUEST['act'] == 'query' || $_REQUEST['act'] == 'download')) {
-            // 检查权限 
+            // 检查权限
             check_authz_json('client_flow_stats');
             if (strstr($_REQUEST['start_date'], '-') === false) {
                 $_REQUEST['start_date'] = local_date('Y-m-d', $_REQUEST['start_date']);
@@ -53,9 +53,9 @@ class UsersOrderController extends BaseController
             return make_json_result($this->smarty->fetch('users_order.htm'), '', ['filter' => $user_orderinfo['filter'], 'page_count' => $user_orderinfo['page_count']]);
 
         } else {
-            // 权限判断 
+            // 权限判断
             admin_priv('client_flow_stats');
-            // 时间参数 
+            // 时间参数
             if (!isset($_REQUEST['start_date'])) {
                 $start_date = local_strtotime('-7 days');
             }
@@ -63,10 +63,10 @@ class UsersOrderController extends BaseController
                 $end_date = local_strtotime('today');
             }
 
-            // 取得会员排行数据 
+            // 取得会员排行数据
             $user_orderinfo = $this->get_user_orderinfo();
 
-            // 赋值到模板 
+            // 赋值到模板
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['report_users']);
             $this->smarty->assign('action_link', ['text' => $GLOBALS['_LANG']['download_amount_sort'],
                 'href' => "#download"]);
@@ -107,10 +107,10 @@ class UsersOrderController extends BaseController
 
         $sql = "SELECT count(distinct(u.user_id)) FROM " . $this->ecs->table('users') . " AS u, " . $this->ecs->table('order_info') . " AS o " . $where;
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
-        // 分页大小 
+        // 分页大小
         $filter = page_and_size($filter);
 
-        // 计算订单各种费用之和的语句 
+        // 计算订单各种费用之和的语句
         $total_fee = " SUM(" . order_amount_field() . ") AS turnover ";
 
         $sql = "SELECT u.user_id, u.user_name, COUNT(*) AS order_num, " . $total_fee .

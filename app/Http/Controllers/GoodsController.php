@@ -63,7 +63,7 @@ class GoodsController extends BaseController
                 $GLOBALS['smarty']->caching = false;
                 $GLOBALS['smarty']->force_compile = true;
 
-                // 商品购买记录 
+                // 商品购买记录
                 $sql = 'SELECT u.user_name, og.goods_number, oi.add_time, IF(oi.order_status IN (2, 3, 4), 0, 1) AS order_status ' .
                     'FROM ' . $this->ecs->table('order_info') . ' AS oi LEFT JOIN ' . $this->ecs->table('users') . ' AS u ON oi.user_id = u.user_id, ' . $this->ecs->table('order_goods') . ' AS og ' .
                     'WHERE oi.order_id = og.order_id AND ' . time() . ' - oi.add_time < 2592000 AND og.goods_id = ' . $goods_id . ' ORDER BY oi.add_time DESC LIMIT ' . (($page > 1) ? ($page - 1) : 0) * 5 . ',5';
@@ -79,7 +79,7 @@ class GoodsController extends BaseController
                 $count = $this->db->getOne($sql);
 
 
-                // 商品购买记录分页样式 
+                // 商品购买记录分页样式
                 $pager = [];
                 $pager['page'] = $page;
                 $pager['size'] = $size = 5;
@@ -116,11 +116,11 @@ class GoodsController extends BaseController
             $this->smarty->assign('promotion', get_promotion_info($goods_id));//促销信息
             $this->smarty->assign('promotion_info', get_promotion_info());
 
-            // 获得商品的信息 
+            // 获得商品的信息
             $goods = get_goods_info($goods_id);
 
             if ($goods === false) {
-                // 如果没有找到任何记录则跳回到首页 
+                // 如果没有找到任何记录则跳回到首页
                 return redirect('/');
             } else {
                 if ($goods['brand_id'] > 0) {
@@ -132,7 +132,7 @@ class GoodsController extends BaseController
 
                 $goods['goods_style_name'] = add_style($goods['goods_name'], $goods['goods_name_style']);
 
-                // 购买该商品可以得到多少钱的红包 
+                // 购买该商品可以得到多少钱的红包
                 if ($goods['bonus_type_id'] > 0) {
                     $time = gmtime();
                     $sql = "SELECT type_money FROM " . $this->ecs->table('bonus_type') .
@@ -151,7 +151,7 @@ class GoodsController extends BaseController
                 $this->smarty->assign('promote_end_time', $goods['gmt_end_time']);
                 $this->smarty->assign('categories', get_categories_tree($goods['cat_id']));  // 分类树
 
-                // meta 
+                // meta
                 $this->smarty->assign('keywords', htmlspecialchars($goods['keywords']));
                 $this->smarty->assign('description', htmlspecialchars($goods['goods_brief']));
 
@@ -162,7 +162,7 @@ class GoodsController extends BaseController
 
                 assign_template('c', $catlist);
 
-                // 上一个商品下一个商品 
+                // 上一个商品下一个商品
                 $prev_gid = $this->db->getOne("SELECT goods_id FROM " . $this->ecs->table('goods') . " WHERE cat_id=" . $goods['cat_id'] . " AND goods_id > " . $goods['goods_id'] . " AND is_on_sale = 1 AND is_alone_sale = 1 AND is_delete = 0 LIMIT 1");
                 if (!empty($prev_gid)) {
                     $prev_good['url'] = build_uri('goods', ['gid' => $prev_gid], $goods['goods_name']);
@@ -177,7 +177,7 @@ class GoodsController extends BaseController
 
                 $position = assign_ur_here($goods['cat_id'], $goods['goods_name']);
 
-                // current position 
+                // current position
                 $this->smarty->assign('page_title', $position['title']);                    // 页面标题
                 $this->smarty->assign('ur_here', $position['ur_here']);                  // 当前位置
 
@@ -208,7 +208,7 @@ class GoodsController extends BaseController
             }
         }
 
-        // 记录浏览历史 
+        // 记录浏览历史
         $history = request()->cookie('history');
         if (!empty($history)) {
             $history = explode(',', $history);
@@ -225,7 +225,7 @@ class GoodsController extends BaseController
             \Cookie::queue('history', $goods_id, 3600 * 24 * 30);
         }
 
-        // 更新点击次数 
+        // 更新点击次数
         $this->db->query('UPDATE ' . $this->ecs->table('goods') . " SET click_count = click_count + 1 WHERE goods_id = '$_REQUEST[id]'");
 
         $this->smarty->assign('now_time', gmtime());           // 当前系统时间
@@ -384,7 +384,7 @@ class GoodsController extends BaseController
      */
     private function get_goods_rank($goods_id)
     {
-        // 统计时间段 
+        // 统计时间段
         $period = intval($GLOBALS['_CFG']['top10_time']);
         if ($period == 1) { // 一年
             $ext = " AND o.add_time > '" . local_strtotime('-1 years') . "'";
@@ -398,7 +398,7 @@ class GoodsController extends BaseController
             $ext = '';
         }
 
-        // 查询该商品销量 
+        // 查询该商品销量
         $sql = 'SELECT IFNULL(SUM(g.goods_number), 0) ' .
             'FROM ' . $GLOBALS['ecs']->table('order_info') . ' AS o, ' .
             $GLOBALS['ecs']->table('order_goods') . ' AS g ' .
@@ -410,7 +410,7 @@ class GoodsController extends BaseController
         $sales_count = $GLOBALS['db']->getOne($sql);
 
         if ($sales_count > 0) {
-            // 只有在商品销售量大于0时才去计算该商品的排行 
+            // 只有在商品销售量大于0时才去计算该商品的排行
             $sql = 'SELECT DISTINCT SUM(goods_number) AS num ' .
                 'FROM ' . $GLOBALS['ecs']->table('order_info') . ' AS o, ' .
                 $GLOBALS['ecs']->table('order_goods') . ' AS g ' .
@@ -501,7 +501,7 @@ class GoodsController extends BaseController
                 $subtotal += $val['rank_price'] * $val['goods_number'];
             }
 
-            // 取商品属性 
+            // 取商品属性
             $sql = "SELECT ga.goods_attr_id, ga.attr_value
                 FROM " . $GLOBALS['ecs']->table('goods_attr') . " AS ga, " . $GLOBALS['ecs']->table('attribute') . " AS a
                 WHERE a.attr_id = ga.attr_id
@@ -514,7 +514,7 @@ class GoodsController extends BaseController
                 $_goods_attr[$value['goods_attr_id']] = $value['attr_value'];
             }
 
-            // 处理货品 
+            // 处理货品
             $format = '[%s]';
             foreach ($goods_res as $key => $val) {
                 if ($val['goods_attr'] != '') {

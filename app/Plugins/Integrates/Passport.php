@@ -2,23 +2,23 @@
 
 namespace App\Plugins\Integrates;
 
-// 模块的基本信息 
+// 模块的基本信息
 if (isset($set_modules) && $set_modules == true) {
     $i = (isset($modules)) ? count($modules) : 0;
 
-    // 会员数据整合插件的代码必须和文件名保持一致 
+    // 会员数据整合插件的代码必须和文件名保持一致
     $modules[$i]['code'] = 'passport';
 
-    // 被整合的第三方程序的名称 
+    // 被整合的第三方程序的名称
     $modules[$i]['name'] = 'ECTouch';
 
-    // 被整合的第三方程序的版本 
+    // 被整合的第三方程序的版本
     $modules[$i]['version'] = '3.0';
 
-    // 插件的作者 
+    // 插件的作者
     $modules[$i]['author'] = 'ECTouch R&D TEAM';
 
-    // 插件作者的官方网站 
+    // 插件作者的官方网站
     $modules[$i]['website'] = 'https://www.ectouch.cn';
 
     return;
@@ -90,17 +90,17 @@ class Passport extends Integrate
                     return $row['user_id'];
                 }
             } else {
-                // 如果salt存在，使用salt方式加密验证，验证通过洗白用户密码 
+                // 如果salt存在，使用salt方式加密验证，验证通过洗白用户密码
                 $encrypt_type = substr($row['salt'], 0, 1);
                 $encrypt_salt = substr($row['salt'], 1);
 
-                // 计算加密后密码 
+                // 计算加密后密码
                 $encrypt_password = '';
                 switch ($encrypt_type) {
                     case ENCRYPT_ZC:
                         $encrypt_password = md5($encrypt_salt . $password);
                         break;
-                    // 如果还有其他加密方式添加到这里  
+                    // 如果还有其他加密方式添加到这里
                     //case other :
                     //  ----------------------------------
                     //  break;

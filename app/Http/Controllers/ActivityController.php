@@ -20,7 +20,7 @@ class ActivityController extends BaseController
         $this->smarty->assign('page_title', $position['title']);    // 页面标题
         $this->smarty->assign('ur_here', $position['ur_here']);  // 当前位置
 
-        // 取得用户等级 
+        // 取得用户等级
         $user_rank_list = [];
         $user_rank_list[0] = $GLOBALS['_LANG']['not_user'];
         $sql = "SELECT rank_id, rank_name FROM " . $this->ecs->table('user_rank');

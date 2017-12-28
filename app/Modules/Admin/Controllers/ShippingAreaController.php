@@ -55,7 +55,7 @@ class ShippingAreaController extends BaseController
             $fields[$count]['value'] = "0";
             $fields[$count]['label'] = $GLOBALS['_LANG']["free_money"];
 
-            // 如果支持货到付款，则允许设置货到付款支付费用 
+            // 如果支持货到付款，则允许设置货到付款支付费用
             if ($modules[0]['cod']) {
                 $count++;
                 $fields[$count]['name'] = "pay_fee";
@@ -79,7 +79,7 @@ class ShippingAreaController extends BaseController
         if ($_REQUEST['act'] == 'insert') {
             admin_priv('shiparea_manage');
 
-            // 检查同类型的配送方式下有没有重名的配送区域 
+            // 检查同类型的配送方式下有没有重名的配送区域
             $sql = "SELECT COUNT(*) FROM " . $this->ecs->table("shipping_area") .
                 " WHERE shipping_id='$_POST[shipping]' AND shipping_area_name='$_POST[shipping_area_name]'";
             if ($this->db->getOne($sql) > 0) {
@@ -108,7 +108,7 @@ class ShippingAreaController extends BaseController
                 $count++;
                 $config[$count]['name'] = 'fee_compute_mode';
                 $config[$count]['value'] = empty($_POST['fee_compute_mode']) ? '' : $_POST['fee_compute_mode'];
-                // 如果支持货到付款，则允许设置货到付款支付费用 
+                // 如果支持货到付款，则允许设置货到付款支付费用
                 if ($modules[0]['cod']) {
                     $count++;
                     $config[$count]['name'] = 'pay_fee';
@@ -124,7 +124,7 @@ class ShippingAreaController extends BaseController
 
                 $new_id = $this->db->insert_Id();
 
-                // 添加选定的城市和地区 
+                // 添加选定的城市和地区
                 if (isset($_POST['regions']) && is_array($_POST['regions'])) {
                     foreach ($_POST['regions'] as $key => $val) {
                         $sql = "INSERT INTO " . $this->ecs->table('area_region') . " (shipping_area_id, region_id) VALUES ('$new_id', '$val')";
@@ -156,13 +156,13 @@ class ShippingAreaController extends BaseController
             include_once(ROOT_PATH . 'includes/modules/shipping/' . $row['shipping_code'] . '.php');
 
             $fields = unserialize($row['configure']);
-            // 如果配送方式支持货到付款并且没有设置货到付款支付费用，则加入货到付款费用 
+            // 如果配送方式支持货到付款并且没有设置货到付款支付费用，则加入货到付款费用
             if ($row['support_cod'] && $fields[count($fields) - 1]['name'] != 'pay_fee') {
                 $fields[] = ['name' => 'pay_fee', 'value' => 0];
             }
 
             foreach ($fields as $key => $val) {
-                // 替换更改的语言项 
+                // 替换更改的语言项
                 if ($val['name'] == 'basic_fee') {
                     $val['name'] = 'base_fee';
                 }
@@ -192,7 +192,7 @@ class ShippingAreaController extends BaseController
                 array_unshift($fields, $field);
             }
 
-            // 获得该区域下的所有地区 
+            // 获得该区域下的所有地区
             $regions = [];
 
             $sql = "SELECT a.region_id, r.region_name " .
@@ -218,7 +218,7 @@ class ShippingAreaController extends BaseController
         if ($_REQUEST['act'] == 'update') {
             admin_priv('shiparea_manage');
 
-            // 检查同类型的配送方式下有没有重名的配送区域 
+            // 检查同类型的配送方式下有没有重名的配送区域
             $sql = "SELECT COUNT(*) FROM " . $this->ecs->table("shipping_area") .
                 " WHERE shipping_id='$_POST[shipping]' AND " .
                 "shipping_area_name='$_POST[shipping_area_name]' AND " .
@@ -263,7 +263,7 @@ class ShippingAreaController extends BaseController
 
                 admin_log($_POST['shipping_area_name'], 'edit', 'shipping_area');
 
-                // 过滤掉重复的region 
+                // 过滤掉重复的region
                 $selected_regions = [];
                 if (isset($_POST['regions'])) {
                     foreach ($_POST['regions'] as $region_id) {
@@ -290,10 +290,10 @@ class ShippingAreaController extends BaseController
                     }
                 }
 
-                // 清除原有的城市和地区 
+                // 清除原有的城市和地区
                 $this->db->query("DELETE FROM " . $this->ecs->table("area_region") . " WHERE shipping_area_id='$_POST[id]'");
 
-                // 添加选定的城市和地区 
+                // 添加选定的城市和地区
                 foreach ($selected_regions as $key => $val) {
                     $sql = "INSERT INTO " . $this->ecs->table('area_region') . " (shipping_area_id, region_id) VALUES ('$_POST[id]', '$val')";
                     $this->db->query($sql);
@@ -318,10 +318,10 @@ class ShippingAreaController extends BaseController
                     $i++;
                 }
 
-                // 记录管理员操作 
+                // 记录管理员操作
                 admin_log('', 'batch_remove', 'shipping_area');
             }
-            // 返回 
+            // 返回
             $links[0] = ['href' => 'shipping_area.php?act=list&shipping=' . intval($_REQUEST['shipping']), 'text' => $GLOBALS['_LANG']['go_back']];
             return sys_msg($GLOBALS['_LANG']['remove_success'], 0, $links);
         }
@@ -330,28 +330,28 @@ class ShippingAreaController extends BaseController
          * 编辑配送区域名称
          */
         if ($_REQUEST['act'] == 'edit_area') {
-            // 检查权限 
+            // 检查权限
             check_authz_json('shiparea_manage');
 
-            // 取得参数 
+            // 取得参数
             $id = intval($_POST['id']);
             $val = json_str_iconv(trim($_POST['val']));
 
-            // 取得该区域所属的配送id 
+            // 取得该区域所属的配送id
             $shipping_id = $exc->get_name($id, 'shipping_id');
 
-            // 检查是否有重复的配送区域名称 
+            // 检查是否有重复的配送区域名称
             if (!$exc->is_only('shipping_area_name', $val, $id, "shipping_id = '$shipping_id'")) {
                 return make_json_error($GLOBALS['_LANG']['repeat_area_name']);
             }
 
-            // 更新名称 
+            // 更新名称
             $exc->edit("shipping_area_name = '$val'", $id);
 
-            // 记录日志 
+            // 记录日志
             admin_log($val, 'edit', 'shipping_area');
 
-            // 返回 
+            // 返回
             return make_json_result(stripcslashes($val));
         }
 

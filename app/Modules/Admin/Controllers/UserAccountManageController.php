@@ -16,10 +16,10 @@ class UserAccountManageController extends BaseController
 
         $this->smarty->assign('lang', $GLOBALS['_LANG']);
 
-        // 权限判断 
+        // 权限判断
         admin_priv('user_account_manage');
 
-        // 时间参数 
+        // 时间参数
         $start_date = $end_date = '';
         if (isset($_POST) && !empty($_POST)) {
             $start_date = local_strtotime($_POST['start_date']);
@@ -54,7 +54,7 @@ class UserAccountManageController extends BaseController
             $account['surplus'] = price_format($money_list['surplus']);   //交易使用余额
             $account['integral_money'] = price_format($money_list['integral_money']);   //积分使用余额
 
-            // 赋值到模板 
+            // 赋值到模板
             $this->smarty->assign('account', $account);
             $this->smarty->assign('start_date', local_date('Y-m-d', $start_date));
             $this->smarty->assign('end_date', local_date('Y-m-d', $end_date));
@@ -66,7 +66,7 @@ class UserAccountManageController extends BaseController
         if ($_REQUEST['act'] == 'surplus') {
             $order_list = $this->order_list();
 
-            // 赋值到模板 
+            // 赋值到模板
             $this->smarty->assign('order_list', $order_list['order_list']);
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['order_by_surplus']);
             $this->smarty->assign('filter', $order_list['filter']);
@@ -125,7 +125,7 @@ class UserAccountManageController extends BaseController
         $result = get_filter();
 
         if ($result === false) {
-            // 过滤条件 
+            // 过滤条件
             $filter['keywords'] = empty($_REQUEST['keywords']) ? '' : trim($_REQUEST['keywords']);
             if (isset($_REQUEST['is_ajax']) && $_REQUEST['is_ajax'] == 1) {
                 $filter['keywords'] = json_str_iconv($filter['keywords']);
@@ -143,7 +143,7 @@ class UserAccountManageController extends BaseController
             $ex_where .= " AND o.user_id = u.user_id AND (o.surplus != 0 OR integral_money != 0) AND `add_time` >= " . $start_date . " AND `add_time` < " . ($end_date + 86400);
             $filter['record_count'] = $GLOBALS['db']->getOne("SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info') . " AS o, " . $GLOBALS['ecs']->table('users') . " AS u " . $ex_where);
 
-            // 分页大小 
+            // 分页大小
             $filter = page_and_size($filter);
 
             $sql = "SELECT o.order_id, o.order_sn, u.user_name, o.surplus, o.integral_money, o.add_time FROM " .

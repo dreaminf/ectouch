@@ -116,7 +116,7 @@ HTML;
     public function getSignCertId()
     {
         return $this->getCertIdPfx($this->config['signCertPath']);
-    }  
+    }
      
     /**
      * 签名数据
@@ -237,7 +237,7 @@ HTML;
         if($this->getCertIdCer($this->config['verifyCertPath']) != $this->params['certId']) {
             throw new \InvalidArgumentException('Verify sign cert is incorrect');
         }
-        return file_get_contents($this->config['verifyCertPath']);     
+        return file_get_contents($this->config['verifyCertPath']);
     }
      
     /**

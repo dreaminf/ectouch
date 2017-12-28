@@ -38,8 +38,8 @@ class QiNiu
     }
 
     public static function urlsafe_base64_encode($str){
-        $find = array("+","/");
-        $replace = array("-", "_");
+        $find = ["+","/"];
+        $replace = ["-", "_"];
         return str_replace($find, $replace, base64_encode($str));
     }
 

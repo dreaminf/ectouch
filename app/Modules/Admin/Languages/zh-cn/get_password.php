@@ -4,7 +4,7 @@
  *  管理中心管理员密码取回文件
  */
 
-// 字段信息 
+// 字段信息
 $_LANG['user_name'] = '管理员用户名';
 $_LANG['email'] = 'Email地址';
 $_LANG['label_captcha'] = '验证码';
@@ -17,7 +17,7 @@ $_LANG['admin_login'] = '登录首页';
 
 $_LANG['login_now'] = '立即登录';
 
-// 提示信息 
+// 提示信息
 $_LANG['js_languages']['user_name_empty'] = '管理员用户名不能为空!';
 $_LANG['js_languages']['email_empty'] = 'Email地址不能为空!';
 $_LANG['js_languages']['email_error'] = 'Email地址格式不正确!';

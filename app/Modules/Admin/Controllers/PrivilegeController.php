@@ -25,7 +25,7 @@ class PrivilegeController extends BaseController
          * 退出登录
          */
         if ($_REQUEST['act'] == 'logout') {
-            // 清除cookie 
+            // 清除cookie
             \Cookie::queue('cp_admin_id', null);
             \Cookie::queue('cp_admin_pass', null);
 
@@ -55,7 +55,7 @@ class PrivilegeController extends BaseController
          */
         if ($_REQUEST['act'] == 'signin') {
             if (intval($GLOBALS['_CFG']['captcha']) & CAPTCHA_ADMIN) {
-                // 检查验证码是否正确 
+                // 检查验证码是否正确
                 $validator = new Captcha();
                 if (!empty($_POST['captcha']) && !$validator->check_word($_POST['captcha'])) {
                     return sys_msg($GLOBALS['_LANG']['captcha_error'], 1);
@@ -68,12 +68,12 @@ class PrivilegeController extends BaseController
             $sql = "SELECT `ec_salt` FROM " . $this->ecs->table('admin_user') . "WHERE user_name = '" . $_POST['username'] . "'";
             $ec_salt = $this->db->getOne($sql);
             if (!empty($ec_salt)) {
-                // 检查密码是否正确 
+                // 检查密码是否正确
                 $sql = "SELECT user_id, user_name, password, last_login, action_list, last_login,suppliers_id,ec_salt" .
                     " FROM " . $this->ecs->table('admin_user') .
                     " WHERE user_name = '" . $_POST['username'] . "' AND password = '" . md5(md5($_POST['password']) . $ec_salt) . "'";
             } else {
-                // 检查密码是否正确 
+                // 检查密码是否正确
                 $sql = "SELECT user_id, user_name, password, last_login, action_list, last_login,suppliers_id,ec_salt" .
                     " FROM " . $this->ecs->table('admin_user') .
                     " WHERE user_name = '" . $_POST['username'] . "' AND password = '" . md5($_POST['password']) . "'";
@@ -127,13 +127,13 @@ class PrivilegeController extends BaseController
          * 管理员列表页面
          */
         if ($_REQUEST['act'] == 'list') {
-            // 模板赋值 
+            // 模板赋值
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['admin_list']);
             $this->smarty->assign('action_link', ['href' => 'privilege.php?act=add', 'text' => $GLOBALS['_LANG']['admin_add']]);
             $this->smarty->assign('full_page', 1);
             $this->smarty->assign('admin_list', $this->get_admin_userlist());
 
-            // 显示页面 
+            // 显示页面
 
             return $this->smarty->display('privilege_list.htm');
         }
@@ -151,17 +151,17 @@ class PrivilegeController extends BaseController
          * 添加管理员页面
          */
         if ($_REQUEST['act'] == 'add') {
-            // 检查权限 
+            // 检查权限
             admin_priv('admin_manage');
 
-            // 模板赋值 
+            // 模板赋值
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['admin_add']);
             $this->smarty->assign('action_link', ['href' => 'privilege.php?act=list', 'text' => $GLOBALS['_LANG']['admin_list']]);
             $this->smarty->assign('form_act', 'insert');
             $this->smarty->assign('action', 'add');
             $this->smarty->assign('select_role', $this->get_role_list());
 
-            // 显示页面 
+            // 显示页面
 
             return $this->smarty->display('privilege_info.htm');
         }
@@ -174,7 +174,7 @@ class PrivilegeController extends BaseController
             if ($_POST['token'] != $GLOBALS['_CFG']['token']) {
                 return sys_msg('add_error', 1);
             }
-            // 判断管理员是否已经存在 
+            // 判断管理员是否已经存在
             if (!empty($_POST['user_name'])) {
                 $is_only = $exc->is_only('user_name', $_POST['user_name']);
 
@@ -183,7 +183,7 @@ class PrivilegeController extends BaseController
                 }
             }
 
-            // Email地址是否有重复 
+            // Email地址是否有重复
             if (!empty($_POST['email'])) {
                 $is_only = $exc->is_only('email', stripslashes($_POST['email']));
 
@@ -192,7 +192,7 @@ class PrivilegeController extends BaseController
                 }
             }
 
-            // 获取添加日期及密码 
+            // 获取添加日期及密码
             $add_time = gmtime();
 
             $password = md5($_POST['password']);
@@ -213,7 +213,7 @@ class PrivilegeController extends BaseController
                 "VALUES ('" . trim($_POST['user_name']) . "', '" . trim($_POST['email']) . "', '$password', '$add_time', '$row[nav_list]', '$action_list', '$role_id')";
 
             $this->db->query($sql);
-            // 转入权限分配列表 
+            // 转入权限分配列表
             $new_id = $this->db->Insert_ID();
 
             /*添加链接*/
@@ -225,7 +225,7 @@ class PrivilegeController extends BaseController
 
             return sys_msg($GLOBALS['_LANG']['add'] . "&nbsp;" . $_POST['user_name'] . "&nbsp;" . $GLOBALS['_LANG']['action_succeed'], 0, $link);
 
-            // 记录管理员操作 
+            // 记录管理员操作
             admin_log($_POST['user_name'], 'add', 'privilege');
         }
 
@@ -233,7 +233,7 @@ class PrivilegeController extends BaseController
          * 编辑管理员信息
          */
         if ($_REQUEST['act'] == 'edit') {
-            // 不能编辑demo这个管理员 
+            // 不能编辑demo这个管理员
             if (session('admin_name') == 'demo') {
                 $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'privilege.php?act=list'];
                 return sys_msg($GLOBALS['_LANG']['edit_admininfo_cannot'], 0, $link);
@@ -241,32 +241,32 @@ class PrivilegeController extends BaseController
 
             $_REQUEST['id'] = !empty($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
 
-            // 查看是否有权限编辑其他管理员的信息 
+            // 查看是否有权限编辑其他管理员的信息
             if (session('admin_id') != $_REQUEST['id']) {
                 admin_priv('admin_manage');
             }
 
-            // 获取管理员信息 
+            // 获取管理员信息
             $sql = "SELECT user_id, user_name, email, password, agency_id, role_id FROM " . $this->ecs->table('admin_user') .
                 " WHERE user_id = '" . $_REQUEST['id'] . "'";
             $user_info = $this->db->getRow($sql);
 
 
-            // 取得该管理员负责的办事处名称 
+            // 取得该管理员负责的办事处名称
             if ($user_info['agency_id'] > 0) {
                 $sql = "SELECT agency_name FROM " . $this->ecs->table('agency') . " WHERE agency_id = '$user_info[agency_id]'";
                 $user_info['agency_name'] = $this->db->getOne($sql);
             }
 
-            // 模板赋值 
+            // 模板赋值
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['admin_edit']);
             $this->smarty->assign('action_link', ['text' => $GLOBALS['_LANG']['admin_list'], 'href' => 'privilege.php?act=list']);
             $this->smarty->assign('user', $user_info);
 
-            // 获得该管理员的权限 
+            // 获得该管理员的权限
             $priv_str = $this->db->getOne("SELECT action_list FROM " . $this->ecs->table('admin_user') . " WHERE user_id = '$_GET[id]'");
 
-            // 如果被编辑的管理员拥有了all这个权限，将不能编辑 
+            // 如果被编辑的管理员拥有了all这个权限，将不能编辑
             if ($priv_str != 'all') {
                 $this->smarty->assign('select_role', $this->get_role_list());
             }
@@ -280,7 +280,7 @@ class PrivilegeController extends BaseController
          * 更新管理员信息
          */
         if ($_REQUEST['act'] == 'update' || $_REQUEST['act'] == 'update_self') {
-            // 变量初始化 
+            // 变量初始化
             $admin_id = !empty($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
             $admin_name = !empty($_REQUEST['user_name']) ? trim($_REQUEST['user_name']) : '';
             $admin_email = !empty($_REQUEST['email']) ? trim($_REQUEST['email']) : '';
@@ -290,7 +290,7 @@ class PrivilegeController extends BaseController
                 return sys_msg('update_error', 1);
             }
             if ($_REQUEST['act'] == 'update') {
-                // 查看是否有权限编辑其他管理员的信息 
+                // 查看是否有权限编辑其他管理员的信息
                 if (session('admin_id') != $_REQUEST['id']) {
                     admin_priv('admin_manage');
                 }
@@ -301,7 +301,7 @@ class PrivilegeController extends BaseController
                 $admin_id = session('admin_id');
                 $g_link = 'privilege.php?act=modif';
             }
-            // 判断管理员是否已经存在 
+            // 判断管理员是否已经存在
             if (!empty($admin_name)) {
                 $is_only = $exc->num('user_name', $admin_name, $admin_id);
                 if ($is_only == 1) {
@@ -309,7 +309,7 @@ class PrivilegeController extends BaseController
                 }
             }
 
-            // Email地址是否有重复 
+            // Email地址是否有重复
             if (!empty($admin_email)) {
                 $is_only = $exc->num('email', $admin_email, $admin_id);
 
@@ -322,7 +322,7 @@ class PrivilegeController extends BaseController
             $pwd_modified = false;
 
             if (!empty($_POST['new_password'])) {
-                // 查询旧密码并与输入的旧密码比较是否相同 
+                // 查询旧密码并与输入的旧密码比较是否相同
                 $sql = "SELECT password FROM " . $this->ecs->table('admin_user') . " WHERE user_id = '$admin_id'";
                 $old_password = $this->db->getOne($sql);
                 $sql = "SELECT ec_salt FROM " . $this->ecs->table('admin_user') . " WHERE user_id = '$admin_id'";
@@ -337,7 +337,7 @@ class PrivilegeController extends BaseController
                     return sys_msg($GLOBALS['_LANG']['pwd_error'], 0, $link);
                 }
 
-                // 比较新密码和确认密码是否相同 
+                // 比较新密码和确认密码是否相同
                 if ($_POST['new_password'] <> $_POST['pwd_confirm']) {
                     $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
                     return sys_msg($GLOBALS['_LANG']['js_languages']['password_error'], 0, $link);
@@ -376,10 +376,10 @@ class PrivilegeController extends BaseController
             }
 
             $this->db->query($sql);
-            // 记录管理员操作 
+            // 记录管理员操作
             admin_log($_POST['user_name'], 'edit', 'privilege');
 
-            // 如果修改了密码，则需要将session中该管理员的数据清空 
+            // 如果修改了密码，则需要将session中该管理员的数据清空
             if ($pwd_modified && $_REQUEST['act'] == 'update_self') {
                 $this->delete_spec_admin_session(session('admin_id'));
                 $msg = $GLOBALS['_LANG']['edit_password_succeed'];
@@ -387,7 +387,7 @@ class PrivilegeController extends BaseController
                 $msg = $GLOBALS['_LANG']['edit_profile_succeed'];
             }
 
-            // 提示信息 
+            // 提示信息
             $link[] = ['text' => strpos($g_link, 'list') ? $GLOBALS['_LANG']['back_admin_list'] : $GLOBALS['_LANG']['modif_info'], 'href' => $g_link];
             return sys_msg("$msg<script>parent.document.getElementById('header-frame').contentWindow.document.location.reload();</script>", 0, $link);
         }
@@ -396,7 +396,7 @@ class PrivilegeController extends BaseController
          * 编辑个人资料
          */
         if ($_REQUEST['act'] == 'modif') {
-            // 不能编辑demo这个管理员 
+            // 不能编辑demo这个管理员
             if (session('admin_name') == 'demo') {
                 $link[] = ['text' => $GLOBALS['_LANG']['back_admin_list'], 'href' => 'privilege.php?act=list'];
                 return sys_msg($GLOBALS['_LANG']['edit_admininfo_cannot'], 0, $link);
@@ -407,16 +407,16 @@ class PrivilegeController extends BaseController
             $modules = $GLOBALS['modules'];
             $purview = $GLOBALS['purview'];
 
-            // 包含插件菜单语言项 
+            // 包含插件菜单语言项
             $sql = "SELECT code FROM " . $this->ecs->table('plugins');
             $rs = $this->db->query($sql);
             foreach ($rs as $row) {
-                // 取得语言项 
+                // 取得语言项
                 if (file_exists(ROOT_PATH . 'plugins/' . $row['code'] . '/languages/common_' . $GLOBALS['_CFG']['lang'] . '.php')) {
                     include_once(ROOT_PATH . 'plugins/' . $row['code'] . '/languages/common_' . $GLOBALS['_CFG']['lang'] . '.php');
                 }
 
-                // 插件的菜单项 
+                // 插件的菜单项
                 if (file_exists(ROOT_PATH . 'plugins/' . $row['code'] . '/languages/inc_menu.php')) {
                     include_once(ROOT_PATH . 'plugins/' . $row['code'] . '/languages/inc_menu.php');
                 }
@@ -445,12 +445,12 @@ class PrivilegeController extends BaseController
                 }
             }
 
-            // 获得当前管理员数据信息 
+            // 获得当前管理员数据信息
             $sql = "SELECT user_id, user_name, email, nav_list " .
                 "FROM " . $this->ecs->table('admin_user') . " WHERE user_id = '" . session('admin_id') . "'";
             $user_info = $this->db->getRow($sql);
 
-            // 获取导航条 
+            // 获取导航条
             $nav_arr = (trim($user_info['nav_list']) == '') ? [] : explode(",", $user_info['nav_list']);
             $nav_lst = [];
             foreach ($nav_arr as $val) {
@@ -458,7 +458,7 @@ class PrivilegeController extends BaseController
                 $nav_lst[$arr[1]] = $arr[0];
             }
 
-            // 模板赋值 
+            // 模板赋值
             $this->smarty->assign('lang', $GLOBALS['_LANG']);
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['modif_info']);
             $this->smarty->assign('action_link', ['text' => $GLOBALS['_LANG']['admin_list'], 'href' => 'privilege.php?act=list']);
@@ -483,16 +483,16 @@ class PrivilegeController extends BaseController
                 admin_priv('all');
             }
 
-            // 获得该管理员的权限 
+            // 获得该管理员的权限
             $priv_str = $this->db->getOne("SELECT action_list FROM " . $this->ecs->table('admin_user') . " WHERE user_id = '$_GET[id]'");
 
-            // 如果被编辑的管理员拥有了all这个权限，将不能编辑 
+            // 如果被编辑的管理员拥有了all这个权限，将不能编辑
             if ($priv_str == 'all') {
                 $link[] = ['text' => $GLOBALS['_LANG']['back_admin_list'], 'href' => 'privilege.php?act=list'];
                 return sys_msg($GLOBALS['_LANG']['edit_admininfo_cannot'], 0, $link);
             }
 
-            // 获取权限的分组数据 
+            // 获取权限的分组数据
             $sql_query = "SELECT action_id, parent_id, action_code,relevance FROM " . $this->ecs->table('admin_action') .
                 " WHERE parent_id = 0";
             $res = $this->db->query($sql_query);
@@ -500,7 +500,7 @@ class PrivilegeController extends BaseController
                 $priv_arr[$rows['action_id']] = $rows;
             }
 
-            // 按权限组查询底级的权限名称 
+            // 按权限组查询底级的权限名称
             $sql = "SELECT action_id, parent_id, action_code,relevance FROM " . $this->ecs->table('admin_action') .
                 " WHERE parent_id " . db_create_in(array_keys($priv_arr));
             $result = $this->db->query($sql);
@@ -517,7 +517,7 @@ class PrivilegeController extends BaseController
                 }
             }
 
-            // 赋值 
+            // 赋值
             $this->smarty->assign('lang', $GLOBALS['_LANG']);
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['allot_priv'] . ' [ ' . $_GET['user'] . ' ] ');
             $this->smarty->assign('action_link', ['href' => 'privilege.php?act=list', 'text' => $GLOBALS['_LANG']['admin_list']]);
@@ -536,24 +536,24 @@ class PrivilegeController extends BaseController
             if ($_POST['token'] != $GLOBALS['_CFG']['token']) {
                 return sys_msg('update_allot_error', 1);
             }
-            // 取得当前管理员用户名 
+            // 取得当前管理员用户名
             $admin_name = $this->db->getOne("SELECT user_name FROM " . $this->ecs->table('admin_user') . " WHERE user_id = '$_POST[id]'");
 
-            // 更新管理员的权限 
+            // 更新管理员的权限
             $act_list = @join(",", $_POST['action_code']);
             $sql = "UPDATE " . $this->ecs->table('admin_user') . " SET action_list = '$act_list', role_id = '' " .
                 "WHERE user_id = '$_POST[id]'";
 
             $this->db->query($sql);
-            // 动态更新管理员的SESSION 
+            // 动态更新管理员的SESSION
             if (session("admin_id") == $_POST['id']) {
                 session(["action_list" =>  $act_list]);
             }
 
-            // 记录管理员操作 
+            // 记录管理员操作
             admin_log(addslashes($admin_name), 'edit', 'privilege');
 
-            // 提示信息 
+            // 提示信息
             $link[] = ['text' => $GLOBALS['_LANG']['back_admin_list'], 'href' => 'privilege.php?act=list'];
             return sys_msg($GLOBALS['_LANG']['edit'] . "&nbsp;" . $admin_name . "&nbsp;" . $GLOBALS['_LANG']['action_succeed'], 0, $link);
         }
@@ -566,20 +566,20 @@ class PrivilegeController extends BaseController
 
             $id = intval($_GET['id']);
 
-            // 获得管理员用户名 
+            // 获得管理员用户名
             $admin_name = $this->db->getOne('SELECT user_name FROM ' . $this->ecs->table('admin_user') . " WHERE user_id='$id'");
 
-            // demo这个管理员不允许删除 
+            // demo这个管理员不允许删除
             if ($admin_name == 'demo') {
                 return make_json_error($GLOBALS['_LANG']['edit_remove_cannot']);
             }
 
-            // ID为1的不允许删除 
+            // ID为1的不允许删除
             if ($id == 1) {
                 return make_json_error($GLOBALS['_LANG']['remove_cannot']);
             }
 
-            // 管理员不能删除自己 
+            // 管理员不能删除自己
             if ($id == session('admin_id')) {
                 return make_json_error($GLOBALS['_LANG']['remove_self_cannot']);
             }
@@ -598,7 +598,7 @@ class PrivilegeController extends BaseController
         }
     }
 
-    // 获取管理员列表 
+    // 获取管理员列表
     private function get_admin_userlist()
     {
         $list = [];
@@ -623,7 +623,7 @@ class PrivilegeController extends BaseController
         }
     }
 
-    // 清除购物车中过期的数据 
+    // 清除购物车中过期的数据
     private function clear_cart()
     {
         // 删除cart中无效的数据
@@ -631,7 +631,7 @@ class PrivilegeController extends BaseController
         $GLOBALS['db']->query($sql);
     }
 
-    // 获取角色列表 
+    // 获取角色列表
     private function get_role_list()
     {
         $list = [];

@@ -486,7 +486,7 @@ class Goods extends BaseModel
      *
      * @return  商品最终购买价格
      */
-    public static function get_final_price($goods_id, $goods_num = '1', $is_spec_price = false, $property = array())
+    public static function get_final_price($goods_id, $goods_num = '1', $is_spec_price = false, $property = [])
     {
         $final_price = '0'; //商品最终购买价格
         $volume_price = '0'; //商品优惠价格
@@ -563,7 +563,7 @@ class Goods extends BaseModel
      */
     public static function get_volume_price_list($goods_id, $price_type = '1')
     {
-        $volume_price = array();
+        $volume_price = [];
         $temp_index = '0';
 
         // $sql = "SELECT `volume_number` , `volume_price`".
@@ -576,7 +576,7 @@ class Goods extends BaseModel
         $res = VolumePrice::where('goods_id', $goods_id)->where('price_type', $price_type)->orderBy('volume_number')->get();
 
         foreach ($res as $k => $v) {
-            $volume_price[$temp_index] = array();
+            $volume_price[$temp_index] = [];
             $volume_price[$temp_index]['number'] = $v['volume_number'];
             $volume_price[$temp_index]['price'] = $v['volume_price'];
             $volume_price[$temp_index]['format_price'] = self::price_format($v['volume_price']);
@@ -714,7 +714,7 @@ class Goods extends BaseModel
             $product_info = Products::get_products_info($product, $property);
         }
         if (empty($product_info)) {
-            $product_info = json_encode(array('product_number' => '', 'product_id' => 0));
+            $product_info = json_encode(['product_number' => '', 'product_id' => 0]);
             $product_info = json_decode($product_info);
         }
         /* 检查：库存 */
@@ -760,7 +760,7 @@ class Goods extends BaseModel
 
         $user_id = Token::authorization();
 
-        $order = array(
+        $order = [
             'shipping_id' => intval($shipping),
             'pay_id' => intval(0),
             'pack_id' => isset($_POST['pack']) ? intval($_POST['pack']) : 0,//包装id
@@ -783,7 +783,7 @@ class Goods extends BaseModel
             'shipping_status' => Order::SS_UNSHIPPED,
             'pay_status' => Order::PS_UNPAYED,
             'agency_id' => 0,//办事处的id
-        );
+        ];
 
         /* 扩展信息 */
         $order['extension_code'] = '';

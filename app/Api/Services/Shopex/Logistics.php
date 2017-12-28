@@ -1,7 +1,6 @@
 <?php 
 namespace App\Services\Shopex;
 
-use Log;
 use App\Api\Models\V2\ShopConfig;
 
 class Logistics
@@ -19,11 +18,11 @@ class Logistics
         $token = $certificate['token'];
 
         //获取物流信息参数
-        $param = array(
+        $param = [
             'act' => 'ecmobile_get_logistics_info',//固定方法
             'order_sn' => $order_sn,//订单号
             'return_data' => 'json',//返回类型
-        );
+        ];
 
         $ac = self::get_ac($param,$token);//验证签名
 

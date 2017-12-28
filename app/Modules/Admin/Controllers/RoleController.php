@@ -13,21 +13,21 @@ class RoleController extends BaseController
 {
     public function actionIndex()
     {
-        // act操作项的初始化 
+        // act操作项的初始化
         if (empty($_REQUEST['act'])) {
             $_REQUEST['act'] = 'login';
         } else {
             $_REQUEST['act'] = trim($_REQUEST['act']);
         }
 
-        // 初始化 $exc 对象 
+        // 初始化 $exc 对象
         $exc = new Exchange($this->ecs->table("role"), $this->db, 'role_id', 'role_name');
 
         /**
          * 退出登录
          */
         if ($_REQUEST['act'] == 'logout') {
-            // 清除cookie 
+            // 清除cookie
             \Cookie::queue('cp_admin_id', null);
             \Cookie::queue('cp_admin_pass', null);
 
@@ -56,7 +56,7 @@ class RoleController extends BaseController
          * 角色列表页面
          */
         if ($_REQUEST['act'] == 'list') {
-            // 模板赋值 
+            // 模板赋值
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['admin_role']);
             $this->smarty->assign('action_link', ['href' => 'role.php?act=add', 'text' => $GLOBALS['_LANG']['admin_add_role']]);
             $this->smarty->assign('full_page', 1);
@@ -78,13 +78,13 @@ class RoleController extends BaseController
          * 添加角色页面
          */
         if ($_REQUEST['act'] == 'add') {
-            // 检查权限 
+            // 检查权限
             admin_priv('admin_manage');
             include_once(ROOT_PATH . 'languages/' . $GLOBALS['_CFG']['lang'] . '/admin/priv_action.php');
 
             $priv_str = '';
 
-            // 获取权限的分组数据 
+            // 获取权限的分组数据
             $sql_query = "SELECT action_id, parent_id, action_code, relevance FROM " . $this->ecs->table('admin_action') .
                 " WHERE parent_id = 0";
             $res = $this->db->query($sql_query);
@@ -92,7 +92,7 @@ class RoleController extends BaseController
                 $priv_arr[$rows['action_id']] = $rows;
             }
 
-            // 按权限组查询底级的权限名称 
+            // 按权限组查询底级的权限名称
             $sql = "SELECT action_id, parent_id, action_code, relevance FROM " . $this->ecs->table('admin_action') .
                 " WHERE parent_id " . db_create_in(array_keys($priv_arr));
             $result = $this->db->query($sql);
@@ -109,7 +109,7 @@ class RoleController extends BaseController
                 }
             }
 
-            // 模板赋值 
+            // 模板赋值
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['admin_add_role']);
             $this->smarty->assign('action_link', ['href' => 'role.php?act=list', 'text' => $GLOBALS['_LANG']['admin_list_role']]);
             $this->smarty->assign('form_act', 'insert');
@@ -130,7 +130,7 @@ class RoleController extends BaseController
                 "VALUES ('" . trim($_POST['user_name']) . "','$act_list','" . trim($_POST['role_describe']) . "')";
 
             $this->db->query($sql);
-            // 转入权限分配列表 
+            // 转入权限分配列表
             $new_id = $this->db->Insert_ID();
 
             /*添加链接*/
@@ -140,7 +140,7 @@ class RoleController extends BaseController
 
             return sys_msg($GLOBALS['_LANG']['add'] . "&nbsp;" . $_POST['user_name'] . "&nbsp;" . $GLOBALS['_LANG']['action_succeed'], 0, $link);
 
-            // 记录管理员操作 
+            // 记录管理员操作
             admin_log($_POST['user_name'], 'add', 'role');
         }
 
@@ -150,20 +150,20 @@ class RoleController extends BaseController
         if ($_REQUEST['act'] == 'edit') {
             include_once(ROOT_PATH . 'languages/' . $GLOBALS['_CFG']['lang'] . '/admin/priv_action.php');
             $_REQUEST['id'] = !empty($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
-            // 获得该管理员的权限 
+            // 获得该管理员的权限
             $priv_str = $this->db->getOne("SELECT action_list FROM " . $this->ecs->table('role') . " WHERE role_id = '$_GET[id]'");
 
-            // 查看是否有权限编辑其他管理员的信息 
+            // 查看是否有权限编辑其他管理员的信息
             if (session('admin_id') != $_REQUEST['id']) {
                 admin_priv('admin_manage');
             }
 
-            // 获取角色信息 
+            // 获取角色信息
             $sql = "SELECT role_id, role_name, role_describe FROM " . $this->ecs->table('role') .
                 " WHERE role_id = '" . $_REQUEST['id'] . "'";
             $user_info = $this->db->getRow($sql);
 
-            // 获取权限的分组数据 
+            // 获取权限的分组数据
             $sql_query = "SELECT action_id, parent_id, action_code,relevance FROM " . $this->ecs->table('admin_action') .
                 " WHERE parent_id = 0";
             $res = $this->db->query($sql_query);
@@ -171,7 +171,7 @@ class RoleController extends BaseController
                 $priv_arr[$rows['action_id']] = $rows;
             }
 
-            // 按权限组查询底级的权限名称 
+            // 按权限组查询底级的权限名称
             $sql = "SELECT action_id, parent_id, action_code,relevance FROM " . $this->ecs->table('admin_action') .
                 " WHERE parent_id " . db_create_in(array_keys($priv_arr));
             $result = $this->db->query($sql);
@@ -188,7 +188,7 @@ class RoleController extends BaseController
                 }
             }
 
-            // 模板赋值 
+            // 模板赋值
             $this->smarty->assign('user', $user_info);
             $this->smarty->assign('form_act', 'update');
             $this->smarty->assign('action', 'edit');
@@ -205,7 +205,7 @@ class RoleController extends BaseController
          * 更新角色信息
          */
         if ($_REQUEST['act'] == 'update') {
-            // 更新管理员的权限 
+            // 更新管理员的权限
             $act_list = @join(",", $_POST['action_code']);
             $sql = "UPDATE " . $this->ecs->table('role') . " SET action_list = '$act_list', role_name = '" . $_POST['user_name'] . "', role_describe = '" . $_POST['role_describe'] . " ' " .
                 "WHERE role_id = '$_POST[id]'";
@@ -213,7 +213,7 @@ class RoleController extends BaseController
             $user_sql = "UPDATE " . $this->ecs->table('admin_user') . " SET action_list = '$act_list' " .
                 "WHERE role_id = '$_POST[id]'";
             $this->db->query($user_sql);
-            // 提示信息 
+            // 提示信息
             $link[] = ['text' => $GLOBALS['_LANG']['back_admin_list'], 'href' => 'role.php?act=list'];
             return sys_msg($GLOBALS['_LANG']['edit'] . "&nbsp;" . $_POST['user_name'] . "&nbsp;" . $GLOBALS['_LANG']['action_succeed'], 0, $link);
         }
@@ -238,7 +238,7 @@ class RoleController extends BaseController
         }
     }
 
-    // 获取角色列表 
+    // 获取角色列表
     private function get_role_list()
     {
         $list = [];

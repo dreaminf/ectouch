@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?=$goods['name']?></title>
+    <title><?php echo $goods['name']?></title>
     <!-- Bootstrap core CSS -->
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 
@@ -25,7 +25,7 @@
   <body>
     <!-- Begin page content -->
     <div class="container">
-      <p class="lead"><?=$goods['goods_desc']?></p>
+      <p class="lead"><?php echo $goods['goods_desc']?></p>
     </div>
   </body>
 </html>

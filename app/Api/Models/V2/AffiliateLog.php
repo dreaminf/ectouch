@@ -16,7 +16,7 @@ class AffiliateLog extends BaseModel
 
     protected $guarded = [];
 
-    // AFFILIATE_STSTUA 
+    // AFFILIATE_STSTUA
     const SIGNUP = 0;   //  注册分成
     const ORDER = 1;    //  订单分成
 
@@ -146,7 +146,7 @@ class AffiliateLog extends BaseModel
 
         $separate_by = $affiliate['config']['separate_by'];
 
-        $data = $aff_db = array();
+        $data = $aff_db = [];
 
         $all_amount = 0;
 
@@ -259,7 +259,7 @@ class AffiliateLog extends BaseModel
     {
         $affiliate = self::getAffiliateConfig();
 
-        empty($affiliate) && $affiliate = array();
+        empty($affiliate) && $affiliate = [];
 
         $separate_by = $affiliate['config']['separate_by'];
 

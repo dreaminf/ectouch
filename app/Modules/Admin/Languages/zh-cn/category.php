@@ -4,7 +4,7 @@
  *  商品分类管理语言文件
  */
 
-// 商品分类字段信息 
+// 商品分类字段信息
 $_LANG['cat_id'] = '编号';
 $_LANG['cat_name'] = '分类名称';
 $_LANG['isleaf'] = '不允许';
@@ -38,7 +38,7 @@ $_LANG['continue_add'] = '继续添加分类';
 
 $_LANG['notice_style'] = '您可以为每一个商品分类指定一个样式表文件。例如文件存放在 themes 目录下则输入：themes/style.css';
 
-// 操作提示信息 
+// 操作提示信息
 $_LANG['catname_empty'] = '分类名称不能为空!';
 $_LANG['catname_exist'] = '已存在相同的分类名称!';
 $_LANG["parent_isleaf"] = '所选分类不能是末级分类!';

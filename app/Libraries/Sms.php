@@ -66,11 +66,11 @@ class Sms
      */
     public function __construct()
     {
-        // 由于要包含init.php，所以这两个对象一定是存在的，因此直接赋值 
+        // 由于要包含init.php，所以这两个对象一定是存在的，因此直接赋值
         $this->db = $GLOBALS['db'];
         $this->ecs = $GLOBALS['ecs'];
 
-        // 此处最好不要从$GLOBALS数组里引用，防止出错 
+        // 此处最好不要从$GLOBALS数组里引用，防止出错
         $this->t = new Transport(-1, -1, -1, false);
         $this->json = new Json();
     }
@@ -84,7 +84,7 @@ class Sms
     public function send($phones, $msg, $send_date = '', $send_num = 1, $sms_type = '', $version = '1.0')
     {
 
-        // 检查发送信息的合法性 
+        // 检查发送信息的合法性
         $contents = $this->get_contents($phones, $msg);
 
         if (!$contents) {
@@ -103,7 +103,7 @@ class Sms
                 return false;
             }
         }
-        // 获取API URL 
+        // 获取API URL
         $sms_url = $this->get_url('send');
 
         if (!$sms_url) {
@@ -131,7 +131,7 @@ class Sms
                 $send_str['certi_ac'] = $this->make_shop_ac($send_str, SOURCE_TOKEN);
                 $sms_url = $this->get_url('send');
                 $arr = json_decode($send_str['contents'], true);
-                // 发送HTTP请求 
+                // 发送HTTP请求
                 $response = $this->t->request($sms_url, $send_str, 'POST');
                 $result = $this->json->decode($response['body'], true);
                 sleep(1);
@@ -156,7 +156,7 @@ class Sms
             $send_str['certi_ac'] = $this->make_shop_ac($send_str, SOURCE_TOKEN);
             $sms_url = $this->get_url('send');
             $arr = json_decode($send_str['contents'], true);
-            // 发送HTTP请求 
+            // 发送HTTP请求
             $response = $this->t->request($sms_url, $send_str, 'POST');
             $result = $this->json->decode($response['body'], true);
         }
@@ -203,13 +203,13 @@ class Sms
 
     public function get_site_info()
     {
-        // 获得当前处于会话状态的管理员的邮箱 
+        // 获得当前处于会话状态的管理员的邮箱
         $email = $this->get_admin_email();
         $email = $email ? $email : '';
-        // 获得当前网店的域名 
+        // 获得当前网店的域名
         $domain = $this->ecs->get_domain();
         $domain = $domain ? $domain : '';
-        // 赋给smarty模板 
+        // 赋给smarty模板
         $sms_site_info['email'] = $email;
         $sms_site_info['domain'] = $domain;
 

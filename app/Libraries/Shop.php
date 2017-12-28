@@ -56,16 +56,16 @@ class Shop
      */
     public function get_domain()
     {
-        // 协议 
+        // 协议
         $protocol = $this->http();
 
-        // 域名或IP地址 
+        // 域名或IP地址
         if (isset($_SERVER['HTTP_X_FORWARDED_HOST'])) {
             $host = $_SERVER['HTTP_X_FORWARDED_HOST'];
         } elseif (isset($_SERVER['HTTP_HOST'])) {
             $host = $_SERVER['HTTP_HOST'];
         } else {
-            // 端口 
+            // 端口
             if (isset($_SERVER['SERVER_PORT'])) {
                 $port = ':' . $_SERVER['SERVER_PORT'];
 

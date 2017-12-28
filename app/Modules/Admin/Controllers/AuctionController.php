@@ -21,10 +21,10 @@ class AuctionController extends BaseController
          * 活动列表页
          */
         if ($_REQUEST['act'] == 'list') {
-            // 检查权限 
+            // 检查权限
             admin_priv('auction');
 
-            // 模板赋值 
+            // 模板赋值
             $this->smarty->assign('full_page', 1);
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['auction_list']);
             $this->smarty->assign('action_link', ['href' => 'auction.php?act=add', 'text' => $GLOBALS['_LANG']['add_auction']]);
@@ -39,7 +39,7 @@ class AuctionController extends BaseController
             $sort_flag = sort_flag($list['filter']);
             $this->smarty->assign($sort_flag['tag'], $sort_flag['img']);
 
-            // 显示商品列表页面 
+            // 显示商品列表页面
 
             return $this->smarty->display('auction_list.htm');
         }
@@ -79,10 +79,10 @@ class AuctionController extends BaseController
             $name = $auction['act_name'];
             $exc->drop($id);
 
-            // 记日志 
+            // 记日志
             admin_log($name, 'remove', 'auction');
 
-            // 清除缓存 
+            // 清除缓存
             clear_cache_files();
 
             $url = 'auction.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
@@ -94,31 +94,31 @@ class AuctionController extends BaseController
          * 批量操作
          */
         if ($_REQUEST['act'] == 'batch') {
-            // 取得要操作的记录编号 
+            // 取得要操作的记录编号
             if (empty($_POST['checkboxes'])) {
                 return sys_msg($GLOBALS['_LANG']['no_record_selected']);
             } else {
-                // 检查权限 
+                // 检查权限
                 admin_priv('auction');
 
                 $ids = $_POST['checkboxes'];
 
                 if (isset($_POST['drop'])) {
-                    // 查询哪些拍卖活动已经有人出价 
+                    // 查询哪些拍卖活动已经有人出价
                     $sql = "SELECT DISTINCT act_id FROM " . $this->ecs->table('auction_log') .
                         " WHERE act_id " . db_create_in($ids);
                     $ids = array_diff($ids, $this->db->getCol($sql));
                     if (!empty($ids)) {
-                        // 删除记录 
+                        // 删除记录
                         $sql = "DELETE FROM " . $this->ecs->table('goods_activity') .
                             " WHERE act_id " . db_create_in($ids) .
                             " AND act_type = '" . GAT_AUCTION . "'";
                         $this->db->query($sql);
 
-                        // 记日志 
+                        // 记日志
                         admin_log('', 'batch_remove', 'auction');
 
-                        // 清除缓存 
+                        // 清除缓存
                         clear_cache_files();
                     }
                     $links[] = ['text' => $GLOBALS['_LANG']['back_auction_list'], 'href' => 'auction.php?act=list&' . list_link_postfix()];
@@ -131,10 +131,10 @@ class AuctionController extends BaseController
          * 查看出价记录
          */
         if ($_REQUEST['act'] == 'view_log') {
-            // 检查权限 
+            // 检查权限
             admin_priv('auction');
 
-            // 参数 
+            // 参数
             if (empty($_GET['id'])) {
                 return sys_msg('invalid param');
             }
@@ -145,10 +145,10 @@ class AuctionController extends BaseController
             }
             $this->smarty->assign('auction', auction_info($id));
 
-            // 出价记录 
+            // 出价记录
             $this->smarty->assign('auction_log', auction_log($id));
 
-            // 模板赋值 
+            // 模板赋值
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['auction_log']);
             $this->smarty->assign('action_link', ['href' => 'auction.php?act=list&' . list_link_postfix(), 'text' => $GLOBALS['_LANG']['auction_list']]);
 
@@ -159,14 +159,14 @@ class AuctionController extends BaseController
          * 添加、编辑
          */
         if ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit') {
-            // 检查权限 
+            // 检查权限
             admin_priv('auction');
 
-            // 是否添加 
+            // 是否添加
             $is_add = $_REQUEST['act'] == 'add';
             $this->smarty->assign('form_action', $is_add ? 'insert' : 'update');
 
-            // 初始化、取得拍卖活动信息 
+            // 初始化、取得拍卖活动信息
             if ($is_add) {
                 $auction = [
                     'act_id' => 0,
@@ -196,13 +196,13 @@ class AuctionController extends BaseController
             }
             $this->smarty->assign('auction', $auction);
 
-            // 赋值时间控件的语言 
+            // 赋值时间控件的语言
             $this->smarty->assign('cfg_lang', $GLOBALS['_CFG']['lang']);
 
-            // 商品货品表 
+            // 商品货品表
             $this->smarty->assign('good_products_select', get_good_products_select($auction['goods_id']));
 
-            // 显示模板 
+            // 显示模板
             if ($is_add) {
                 $this->smarty->assign('ur_here', $GLOBALS['_LANG']['add_auction']);
             } else {
@@ -217,13 +217,13 @@ class AuctionController extends BaseController
          * 添加、编辑后提交
          */
         if ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update') {
-            // 检查权限 
+            // 检查权限
             admin_priv('auction');
 
-            // 是否添加 
+            // 是否添加
             $is_add = $_REQUEST['act'] == 'insert';
 
-            // 检查是否选择了商品 
+            // 检查是否选择了商品
             $goods_id = intval($_POST['goods_id']);
             if ($goods_id <= 0) {
                 return sys_msg($GLOBALS['_LANG']['pls_select_goods']);
@@ -235,7 +235,7 @@ class AuctionController extends BaseController
             }
             $goods_name = $row['goods_name'];
 
-            // 提交值 
+            // 提交值
             $auction = [
                 'act_id' => intval($_POST['id']),
                 'act_name' => empty($_POST['act_name']) ? $goods_name : sub_str($_POST['act_name'], 255, false),
@@ -255,7 +255,7 @@ class AuctionController extends BaseController
                 ])
             ];
 
-            // 保存数据 
+            // 保存数据
             if ($is_add) {
                 $auction['is_finished'] = 0;
                 $this->db->autoExecute($this->ecs->table('goods_activity'), $auction, 'INSERT');
@@ -264,17 +264,17 @@ class AuctionController extends BaseController
                 $this->db->autoExecute($this->ecs->table('goods_activity'), $auction, 'UPDATE', "act_id = '$auction[act_id]'");
             }
 
-            // 记日志 
+            // 记日志
             if ($is_add) {
                 admin_log($auction['act_name'], 'add', 'auction');
             } else {
                 admin_log($auction['act_name'], 'edit', 'auction');
             }
 
-            // 清除缓存 
+            // 清除缓存
             clear_cache_files();
 
-            // 提示信息 
+            // 提示信息
             if ($is_add) {
                 $links = [
                     ['href' => 'auction.php?act=add', 'text' => $GLOBALS['_LANG']['continue_add_auction']],
@@ -293,10 +293,10 @@ class AuctionController extends BaseController
          * 处理冻结资金
          */
         if ($_REQUEST['act'] == 'settle_money') {
-            // 检查权限 
+            // 检查权限
             admin_priv('auction');
 
-            // 检查参数 
+            // 检查参数
             if (empty($_POST['id'])) {
                 return sys_msg('invalid param');
             }
@@ -312,25 +312,25 @@ class AuctionController extends BaseController
                 return sys_msg($GLOBALS['_LANG']['no_deposit']);
             }
 
-            // 处理保证金 
+            // 处理保证金
             $exc->edit("is_finished = 2", $id); // 修改状态
             if (isset($_POST['unfreeze'])) {
-                // 解冻 
+                // 解冻
                 log_account_change($auction['last_bid']['bid_user'], $auction['deposit'],
                     (-1) * $auction['deposit'], 0, 0, sprintf($GLOBALS['_LANG']['unfreeze_auction_deposit'], $auction['act_name']));
             } else {
-                // 扣除 
+                // 扣除
                 log_account_change($auction['last_bid']['bid_user'], 0,
                     (-1) * $auction['deposit'], 0, 0, sprintf($GLOBALS['_LANG']['deduct_auction_deposit'], $auction['act_name']));
             }
 
-            // 记日志 
+            // 记日志
             admin_log($auction['act_name'], 'edit', 'auction');
 
-            // 清除缓存 
+            // 清除缓存
             clear_cache_files();
 
-            // 提示信息 
+            // 提示信息
             return sys_msg($GLOBALS['_LANG']['settle_deposit_ok']);
         }
 
@@ -376,7 +376,7 @@ class AuctionController extends BaseController
     {
         $result = get_filter();
         if ($result === false) {
-            // 过滤条件 
+            // 过滤条件
             $filter['keyword'] = empty($_REQUEST['keyword']) ? '' : trim($_REQUEST['keyword']);
             if (isset($_REQUEST['is_ajax']) && $_REQUEST['is_ajax'] == 1) {
                 $filter['keyword'] = json_str_iconv($filter['keyword']);
@@ -398,10 +398,10 @@ class AuctionController extends BaseController
                 " WHERE act_type = '" . GAT_AUCTION . "' $where";
             $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-            // 分页大小 
+            // 分页大小
             $filter = page_and_size($filter);
 
-            // 查询 
+            // 查询
             $sql = "SELECT * " .
                 "FROM " . $GLOBALS['ecs']->table('goods_activity') .
                 " WHERE act_type = '" . GAT_AUCTION . "' $where " .

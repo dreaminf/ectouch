@@ -6,37 +6,37 @@ namespace App\Plugins\Shipping;
  * 到付运费插件 FPD(freight payable at destination)
  */
 
-// 模块的基本信息 
+// 模块的基本信息
 if (isset($set_modules) && $set_modules == true) {
     $i = (isset($modules)) ? count($modules) : 0;
 
-    // 配送方式插件的代码必须和文件名保持一致 
+    // 配送方式插件的代码必须和文件名保持一致
     $modules[$i]['code']    = 'fpd';
 
     $modules[$i]['version'] = '1.0.0';
 
-    // 配送方式的描述 
+    // 配送方式的描述
     $modules[$i]['desc']    = 'fpd_desc';
 
-    // 配送方式是否支持货到付款 
+    // 配送方式是否支持货到付款
     $modules[$i]['cod']     = false;
 
-    // 插件的作者 
+    // 插件的作者
     $modules[$i]['author']  = 'ECTouch Team';
 
-    // 插件作者的官方网站 
+    // 插件作者的官方网站
     $modules[$i]['website'] = 'http://www.ectouch.cn';
 
-    // 配送接口需要的参数 
+    // 配送接口需要的参数
     $modules[$i]['configure'] = [];
 
-    // 模式编辑器 
+    // 模式编辑器
     $modules[$i]['print_model'] = 2;
 
-    // 打印单背景 
+    // 打印单背景
     $modules[$i]['print_bg'] = '';
 
-   // 打印快递单标签位置信息 
+   // 打印快递单标签位置信息
     $modules[$i]['config_lable'] = '';
 
     return;

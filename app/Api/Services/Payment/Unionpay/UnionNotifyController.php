@@ -10,17 +10,7 @@ namespace App\Services\Payment\Unionpay;
 
 // use \Input;
 // use \Message;
-use DB;
-use Log;
-use Request;
 use Config;
-use Response;
-use ResponseHandler;
-use RequestHandler;
-use App\Http\Requests;
-use Illuminate\Validation\Validator;
-use App\Api\Controllers\Controller;
-use \Illuminate\Database\Eloquent\Collection as Collection;
 use \Trade;
 use \Callback;
 use \Payment;

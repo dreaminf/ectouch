@@ -53,7 +53,7 @@ class AccountLogController extends BaseController
          * 排序、分页、查询
          */
         if ($_REQUEST['act'] == 'query') {
-            // 检查参数 
+            // 检查参数
             $user_id = empty($_REQUEST['user_id']) ? 0 : intval($_REQUEST['user_id']);
             if ($user_id <= 0) {
                 return sys_msg('invalid param');
@@ -87,9 +87,9 @@ class AccountLogController extends BaseController
          * 调节帐户
          */
         if ($_REQUEST['act'] == 'add') {
-            // 检查权限 
+            // 检查权限
             admin_priv('account_manage');
-            // 检查参数 
+            // 检查参数
             $user_id = empty($_REQUEST['user_id']) ? 0 : intval($_REQUEST['user_id']);
             if ($user_id <= 0) {
                 return sys_msg('invalid param');
@@ -100,7 +100,7 @@ class AccountLogController extends BaseController
             }
             $this->smarty->assign('user', $user);
 
-            // 显示模板 
+            // 显示模板
             $this->smarty->assign('ur_here', $GLOBALS['_LANG']['add_account']);
             $this->smarty->assign('action_link', ['href' => 'account_log.php?act=list&user_id=' . $user_id, 'text' => $GLOBALS['_LANG']['account_list']]);
 
@@ -111,14 +111,14 @@ class AccountLogController extends BaseController
          * 提交添加、编辑办事处
          */
         if ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update') {
-            // 检查权限 
+            // 检查权限
             admin_priv('account_manage');
             $token = trim($_POST['token']);
             if ($token != $GLOBALS['_CFG']['token']) {
                 return sys_msg($GLOBALS['_LANG']['no_account_change'], 1);
             }
 
-            // 检查参数 
+            // 检查参数
             $user_id = empty($_REQUEST['user_id']) ? 0 : intval($_REQUEST['user_id']);
             if ($user_id <= 0) {
                 return sys_msg('invalid param');
@@ -128,7 +128,7 @@ class AccountLogController extends BaseController
                 return sys_msg($GLOBALS['_LANG']['user_not_exist']);
             }
 
-            // 提交值 
+            // 提交值
             $change_desc = sub_str($_POST['change_desc'], 255, false);
             $user_money = floatval($_POST['add_sub_user_money']) * abs(floatval($_POST['user_money']));
             $frozen_money = floatval($_POST['add_sub_frozen_money']) * abs(floatval($_POST['frozen_money']));
@@ -139,10 +139,10 @@ class AccountLogController extends BaseController
                 return sys_msg($GLOBALS['_LANG']['no_account_change']);
             }
 
-            // 保存 
+            // 保存
             log_account_change($user_id, $user_money, $frozen_money, $rank_points, $pay_points, $change_desc, ACT_ADJUSTING);
 
-            // 提示信息 
+            // 提示信息
             $links = [
                 ['href' => 'account_log.php?act=list&user_id=' . $user_id, 'text' => $GLOBALS['_LANG']['account_list']]
             ];
@@ -159,24 +159,24 @@ class AccountLogController extends BaseController
      */
     private function get_accountlist($user_id, $account_type = '')
     {
-        // 检查参数 
+        // 检查参数
         $where = " WHERE user_id = '$user_id' ";
         if (in_array($account_type, ['user_money', 'frozen_money', 'rank_points', 'pay_points'])) {
             $where .= " AND $account_type <> 0 ";
         }
 
-        // 初始化分页参数 
+        // 初始化分页参数
         $filter = [
             'user_id' => $user_id,
             'account_type' => $account_type
         ];
 
-        // 查询记录总数，计算分页数 
+        // 查询记录总数，计算分页数
         $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('account_log') . $where;
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
         $filter = page_and_size($filter);
 
-        // 查询记录 
+        // 查询记录
         $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('account_log') . $where .
             " ORDER BY log_id DESC";
         $res = $GLOBALS['db']->selectLimit($sql, $filter['page_size'], $filter['start']);
