@@ -260,7 +260,7 @@ class AuctionController extends BaseController
             }
 
             // 跳转到活动详情页
-            return redirect("/auction.php?act=view&id=$id");
+            return redirect("auction.php?act=view&id=$id");
         }
 
         /**
@@ -361,7 +361,7 @@ class AuctionController extends BaseController
             session(['extension_id' =>  $id]);
 
             // 进入收货人页面
-            return redirect("/flow.php?step=consignee");
+            return redirect("flow.php?step=consignee");
         }
     }
 

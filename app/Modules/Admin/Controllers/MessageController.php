@@ -273,7 +273,7 @@ class MessageController extends BaseController
 
             $url = 'message.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-            return redirect($url);
+            return $this->redirect($url);
         }
     }
 

@@ -166,14 +166,14 @@ class CloudController extends BaseController
             if (!empty($_GET['link'])) {
                 $url = parse_url($_GET['link']);
                 if (!empty($url['host'])) {
-                    return redirect($url['scheme'] . "://" . $url['host'] . $url['path'] . "?" . $url['query'] . $query);
+                    return $this->redirect($url['scheme'] . "://" . $url['host'] . $url['path'] . "?" . $url['query'] . $query);
                 }
             }
 
             foreach ($must as $v) {
                 $query .= '&' . $v . '=' . $data[$v];
             }
-            return redirect("http://cloud.ecmoban.com/api.php?act=" . $act . $query);
+            return $this->redirect("http://cloud.ecmoban.com/api.php?act=" . $act . $query);
         }
     }
 }

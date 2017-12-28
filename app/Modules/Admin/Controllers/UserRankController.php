@@ -137,7 +137,7 @@ class UserRankController extends BaseController
 
             $url = 'user_rank.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-            return redirect($url);
+            return $this->redirect($url);
         }
         /*
          *  编辑会员等级名称

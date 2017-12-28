@@ -256,7 +256,7 @@ class SnatchController extends BaseController
             session(['extension_id' =>  $id]);
 
             // 进入收货人页面
-            return redirect("/flow.php?step=consignee");
+            return redirect("flow.php?step=consignee");
         }
     }
 

@@ -28,7 +28,7 @@ class GetPasswordController extends BaseController
                 $adminid = !empty($_GET['uid']) ? intval($_GET['uid']) : 0;
 
                 if ($adminid == 0 || empty($code)) {
-                    return redirect("privilege.php?act=login");
+                    return $this->redirect("privilege.php?act=login");
                 }
 
                 // 以用户的原密码，与code的值匹配
@@ -66,7 +66,7 @@ class GetPasswordController extends BaseController
                 $admin_email = !empty($_POST['email']) ? trim($_POST['email']) : '';
 
                 if (empty($admin_username) || empty($admin_email)) {
-                    return redirect("privilege.php?act=login");
+                    return $this->redirect("privilege.php?act=login");
                 }
 
                 // 管理员用户名和邮件地址是否匹配，并取得原密码
@@ -117,7 +117,7 @@ class GetPasswordController extends BaseController
                 $code = isset($_POST['code']) ? trim($_POST['code']) : '';
 
                 if (empty($new_password) || empty($code) || $adminid == 0) {
-                    return redirect("privilege.php?act=login");
+                    return $this->redirect("privilege.php?act=login");
                 }
 
                 // 以用户的原密码，与code的值匹配

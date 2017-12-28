@@ -22,7 +22,7 @@ class IndexController extends BaseController
             // 强制访问index.php，避免url异常
             $absolute_url = request()->fullUrl();
             if (stripos($absolute_url, 'index.php') === false) {
-                return redirect('index.php');
+                return $this->redirect('index.php');
             }
 
             load_helper(['menu', 'priv'], 'admin');
@@ -115,7 +115,7 @@ class IndexController extends BaseController
             //寮€搴楀悜瀵肩?涓€姝
             if (session()->has('shop_guide') && session('shop_guide') === true) {
                 session(['shop_guide' =>  null]);
-                return redirect("index.php?act=first");
+                return $this->redirect("index.php?act=first");
             }
 
             $gd = gd_version();

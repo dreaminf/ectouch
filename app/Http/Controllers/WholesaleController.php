@@ -249,7 +249,7 @@ class WholesaleController extends BaseController
             unset($goods_attr, $attr_id, $goods_list, $wholesale, $goods_attr_name);
 
             // 刷新页面
-            return redirect("/wholesale.php");
+            return redirect("wholesale.php");
         }
 
         /**
@@ -257,12 +257,12 @@ class WholesaleController extends BaseController
          */
         if ($_REQUEST['act'] == 'drop_goods') {
             $key = intval($_REQUEST['key']);
-            if (session('?wholesale_goods.' . $key)) {
+            if (session()->has('wholesale_goods.' . $key)) {
                 session(['wholesale_goods.' . $key =>  null]);
             }
 
             // 刷新页面
-            return redirect("/wholesale.php");
+            return redirect("wholesale.php");
         }
 
         /**

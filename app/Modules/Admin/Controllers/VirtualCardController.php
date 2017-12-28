@@ -368,7 +368,7 @@ class VirtualCardController extends BaseController
 
                 $url = 'virtual_card.php?act=query_card&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-                return redirect($url);
+                return $this->redirect($url);
             } else {
                 return make_json_error($this->db->error());
             }

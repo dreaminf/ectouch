@@ -141,7 +141,7 @@ class FlowController extends BaseController
             if (!cart_goods_exists($goods_id, [])) {
                 addto_cart($goods_id);
             }
-            return redirect("/flow.php");
+            return redirect("flow.php");
         }
 
         if ($_REQUEST['step'] == 'login') {
@@ -194,7 +194,7 @@ class FlowController extends BaseController
                         // 检查购物车中是否有商品 没有商品则跳转到首页
                         $sql = "SELECT COUNT(*) FROM " . $this->ecs->table('cart') . " WHERE session_id = '" . SESS_ID . "' ";
                         if ($this->db->getOne($sql) > 0) {
-                            return redirect("/flow.php?step=checkout");
+                            return redirect("flow.php?step=checkout");
                         } else {
                             return redirect('/');
                         }
@@ -217,7 +217,7 @@ class FlowController extends BaseController
 
                     if (register(trim($_POST['username']), trim($_POST['password']), trim($_POST['email']))) {
                         // 用户注册成功
-                        return redirect("/flow.php?step=consignee");
+                        return redirect("flow.php?step=consignee");
                     } else {
                         return $this->err->show();
                     }
@@ -319,7 +319,7 @@ class FlowController extends BaseController
                 // 保存到session
                 session(['flow_consignee' =>  stripslashes_deep($consignee)]);
 
-                return redirect("/flow.php?step=checkout");
+                return redirect("flow.php?step=checkout");
             }
         }
 
@@ -332,7 +332,7 @@ class FlowController extends BaseController
             $consignee_id = intval($_GET['id']);
 
             if (drop_consignee($consignee_id)) {
-                return redirect("/flow.php?step=consignee");
+                return redirect("flow.php?step=consignee");
             } else {
                 return show_message($GLOBALS['_LANG']['not_fount_consignee']);
             }
@@ -373,7 +373,7 @@ class FlowController extends BaseController
              */
             if (empty(session('direct_shopping')) && session('user_id') == 0) {
                 // 用户没有登录且没有选定匿名购物，转向到登录页面
-                return redirect("/flow.php?step=login");
+                return redirect("flow.php?step=login");
             }
 
             $consignee = get_consignee(session('user_id'));
@@ -381,7 +381,7 @@ class FlowController extends BaseController
             // 检查收货人信息是否完整
             if (!check_consignee_info($consignee, $flow_type)) {
                 // 如果不完整则转向到收货人信息填写界面
-                return redirect("/flow.php?step=consignee");
+                return redirect("flow.php?step=consignee");
             }
 
             session(['flow_consignee' =>  $consignee]);
@@ -1140,7 +1140,7 @@ class FlowController extends BaseController
              */
             if (empty(session('direct_shopping')) && session('user_id') == 0) {
                 // 用户没有登录且没有选定匿名购物，转向到登录页面
-                return redirect("/flow.php?step=login");
+                return redirect("flow.php?step=login");
             }
 
             $consignee = get_consignee(session('user_id'));
@@ -1148,7 +1148,7 @@ class FlowController extends BaseController
             // 检查收货人信息是否完整
             if (!check_consignee_info($consignee, $flow_type)) {
                 // 如果不完整则转向到收货人信息填写界面
-                return redirect("/flow.php?step=consignee");
+                return redirect("flow.php?step=consignee");
             }
 
             $_POST['how_oos'] = isset($_POST['how_oos']) ? intval($_POST['how_oos']) : 0;
@@ -1540,7 +1540,7 @@ class FlowController extends BaseController
             $rec_id = intval($_GET['id']);
             $this->flow_drop_cart_goods($rec_id);
 
-            return redirect("/flow.php");
+            return redirect("flow.php");
         } // 把优惠活动加入购物车
 
         if ($_REQUEST['step'] == 'add_favourable') {
@@ -1600,7 +1600,7 @@ class FlowController extends BaseController
             }
 
             // 刷新购物车
-            return redirect("/flow.php");
+            return redirect("flow.php");
         }
 
         if ($_REQUEST['step'] == 'clear') {
@@ -1623,7 +1623,7 @@ class FlowController extends BaseController
                 }
                 $this->flow_drop_cart_goods($rec_id);
             }
-            return redirect("/flow.php");
+            return redirect("flow.php");
         } // 验证红包序列号
 
         if ($_REQUEST['step'] == 'validate_bonus') {
@@ -1756,7 +1756,7 @@ class FlowController extends BaseController
 
             // 如果是一步购物，跳到结算中心
             if ($GLOBALS['_CFG']['one_step_buy'] == '1') {
-                return redirect("/flow.php?step=checkout");
+                return redirect("flow.php?step=checkout");
             }
 
             // 取得商品列表，计算合计

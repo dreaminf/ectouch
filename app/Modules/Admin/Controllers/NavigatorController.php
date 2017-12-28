@@ -189,7 +189,7 @@ class NavigatorController extends BaseController
             $sql = " DELETE FROM " . $GLOBALS['ecs']->table('nav') . " WHERE id='$id' LIMIT 1";
             $this->db->query($sql);
             clear_cache_files();
-            return redirect("navigator.php?act=list");
+            return $this->redirect("navigator.php?act=list");
         }
 
         /**

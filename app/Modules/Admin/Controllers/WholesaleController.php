@@ -82,7 +82,7 @@ class WholesaleController extends BaseController
 
             $url = 'wholesale.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-            return redirect($url);
+            return $this->redirect($url);
         }
 
         /**

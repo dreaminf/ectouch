@@ -61,9 +61,8 @@ class BaseController extends Controller
             // TODO : 登录部分准备拿出去做，到时候把以下操作一起挪过去
             if ($_REQUEST['act'] == 'captcha') {
                 $img = new Captcha(public_path('data/captcha/'));
-                @ob_end_clean(); //清除之前出现的多余输入
-                $img->generate_image();
-                exit;
+                ob_end_clean(); // 清除之前出现的多余输入
+                return $img->generate_image();
             }
 
             load_lang(['common', 'log_action', PHP_SELF], 'admin');
@@ -106,7 +105,7 @@ class BaseController extends Controller
                         if (!empty($_REQUEST['is_ajax'])) {
                             return make_json_error($GLOBALS['_LANG']['priv_error']);
                         } else {
-                            redirect('privilege.php?act=login');
+                            $this->redirect('privilege.php?act=login');
                         }
                     } else {
                         // 检查密码是否正确
@@ -125,7 +124,7 @@ class BaseController extends Controller
                             if (!empty($_REQUEST['is_ajax'])) {
                                 return make_json_error($GLOBALS['_LANG']['priv_error']);
                             } else {
-                                redirect('privilege.php?act=login');
+                                return $this->redirect('privilege.php?act=login');
                             }
                         }
                     }
@@ -133,7 +132,7 @@ class BaseController extends Controller
                     if (!empty($_REQUEST['is_ajax'])) {
                         return make_json_error($GLOBALS['_LANG']['priv_error']);
                     } else {
-                        redirect('privilege.php?act=login');
+                        return $this->redirect('privilege.php?act=login');
                     }
                 }
             }

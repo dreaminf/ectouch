@@ -216,7 +216,7 @@ class ShophelpController extends BaseController
 
             $url = 'shophelp.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-            return redirect($url);
+            return $this->redirect($url);
         }
 
         /**
@@ -238,7 +238,7 @@ class ShophelpController extends BaseController
 
             $url = 'shophelp.php?act=query_art&cat=' . $cat_id . '&' . str_replace('act=remove_art', '', $_SERVER['QUERY_STRING']);
 
-            return redirect($url);
+            return $this->redirect($url);
         }
 
         /**
@@ -258,13 +258,13 @@ class ShophelpController extends BaseController
 
                     admin_log($cat_name, 'add', 'shophelpcat');
 
-                    return redirect("shophelp.php?act=query");
+                    return $this->redirect("shophelp.php?act=query");
                 }
             } else {
                 return make_json_error($GLOBALS['_LANG']['js_languages']['no_catname']);
             }
 
-            return redirect("shophelp.php?act=list_cat");
+            return $this->redirect("shophelp.php?act=list_cat");
         }
 
         /**

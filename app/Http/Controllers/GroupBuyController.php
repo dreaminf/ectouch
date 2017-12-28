@@ -250,7 +250,7 @@ class GroupBuyController extends BaseController
             session(['extension_id' =>  $group_buy_id]);
 
             // 进入收货人页面
-            return redirect("/flow.php?step=consignee");
+            return redirect("flow.php?step=consignee");
         }
     }
 

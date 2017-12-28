@@ -149,7 +149,7 @@ class RegFieldsController extends BaseController
 
             $url = 'reg_fields.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-            return redirect($url);
+            return $this->redirect($url);
         }
 
         /*

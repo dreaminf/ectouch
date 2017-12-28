@@ -155,7 +155,7 @@ class PackageController extends BaseController
 
             $url = 'package.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-            return redirect($url);
+            return $this->redirect($url);
         }
 
         /**

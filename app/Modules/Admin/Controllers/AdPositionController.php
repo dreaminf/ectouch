@@ -264,7 +264,7 @@ class AdPositionController extends BaseController
 
             $url = 'ad_position.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-            return redirect($url);
+            return $this->redirect($url);
         }
     }
 

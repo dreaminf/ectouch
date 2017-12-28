@@ -200,7 +200,7 @@ class GoodsTypeController extends BaseController
 
                 $url = 'goods_type.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-                return redirect($url);
+                return $this->redirect($url);
             } else {
                 return make_json_error($GLOBALS['_LANG']['remove_failed']);
             }

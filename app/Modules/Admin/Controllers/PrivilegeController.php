@@ -117,7 +117,7 @@ class PrivilegeController extends BaseController
                 // 清除购物车中过期的数据
                 $this->clear_cart();
 
-                return redirect("index.php");
+                return $this->redirect("index.php");
             } else {
                 return sys_msg($GLOBALS['_LANG']['login_faild'], 1);
             }
@@ -593,7 +593,7 @@ class PrivilegeController extends BaseController
 
             $url = 'privilege.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-            return redirect($url);
+            return $this->redirect($url);
             exit;
         }
     }

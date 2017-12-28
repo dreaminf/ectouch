@@ -97,8 +97,8 @@ class Captcha
      */
     public function check_word($word)
     {
-        $recorded = session('?'.$this->session_word) ? base64_decode(session($this->session_word)) : '';
-        $given = $this->encrypts_word(strtoupper($word));
+        $recorded = session()->has($this->session_word) ? base64_decode(session($this->session_word)) : '';
+        $given = $this->encrypts_word($word);
 
         return (preg_match("/$given/", $recorded));
     }
@@ -192,7 +192,7 @@ class Captcha
      */
     private function encrypts_word($word)
     {
-        return substr(md5($word), 1, 10);
+        return substr(md5(strtoupper($word)), 1, 10);
     }
 
     /**
@@ -204,7 +204,7 @@ class Captcha
      */
     private function record_word($word)
     {
-        session([$this->session_word =>  base64_encode($this->encrypts_word($word))]);
+        session([$this->session_word => base64_encode($this->encrypts_word($word))]);
     }
 
     /**

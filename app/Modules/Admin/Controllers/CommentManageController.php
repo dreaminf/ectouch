@@ -181,7 +181,7 @@ class CommentManageController extends BaseController
             // 记录管理员操作
             admin_log(addslashes($GLOBALS['_LANG']['reply']), 'edit', 'users_comment');
 
-            return redirect("comment_manage.php?act=reply&id=$_REQUEST[comment_id]&send_ok=$send_ok");
+            return $this->redirect("comment_manage.php?act=reply&id=$_REQUEST[comment_id]&send_ok=$send_ok");
         }
 
         /**
@@ -198,7 +198,7 @@ class CommentManageController extends BaseController
                 // 清除缓存
                 clear_cache_files();
 
-                return redirect("comment_manage.php?act=reply&id=$_REQUEST[id]");
+                return $this->redirect("comment_manage.php?act=reply&id=$_REQUEST[id]");
             } else {
                 // 禁止评论显示
                 $sql = "UPDATE " . $this->ecs->table('comment') . " SET status = 0 WHERE comment_id = '$_REQUEST[id]'";
@@ -207,7 +207,7 @@ class CommentManageController extends BaseController
                 // 清除缓存
                 clear_cache_files();
 
-                return redirect("comment_manage.php?act=reply&id=$_REQUEST[id]");
+                return $this->redirect("comment_manage.php?act=reply&id=$_REQUEST[id]");
             }
         }
 
@@ -229,7 +229,7 @@ class CommentManageController extends BaseController
 
             $url = 'comment_manage.php?act=query&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
 
-            return redirect($url);
+            return $this->redirect($url);
         }
 
         /**
