@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use app\models\Article;
+use App\Models\Article;
 use App\Contracts\Repositories\ArticleInterface;
 
 /**

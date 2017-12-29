@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2017/12/29
- * Time: 9:40
- */
 
 namespace App\Repositories;
-
 
 class OrderRepository
 {

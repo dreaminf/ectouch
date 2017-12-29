@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class AdminUser
  */
-class AdminUser extends Model
+class AdminUser extends Authenticatable
 {
+    use Notifiable;
+
     protected $table = 'admin_user';
 
     protected $primaryKey = 'user_id';
