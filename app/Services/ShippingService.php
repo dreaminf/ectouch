@@ -5,6 +5,49 @@ namespace App\Services;
 class ShippingService
 {
     /**
+     * 获得配送区域中指定的配送方式的配送费用的计算参数
+     *
+     * @access  public
+     * @param   int $area_id 配送区域ID
+     *
+     * @return array;
+     */
+    function get_shipping_config($area_id)
+    {
+        // 获得配置信息
+        $sql = 'SELECT configure FROM ' . $GLOBALS['ecs']->table('shipping_area') . " WHERE shipping_area_id = '$area_id'";
+        $cfg = $GLOBALS['db']->getOne($sql);
+
+        if ($cfg) {
+            // 拆分成配置信息的数组
+            $arr = unserialize($cfg);
+        } else {
+            $arr = [];
+        }
+
+        return $arr;
+    }
+
+    /**
+     * 获取配送插件的实例
+     * @param   int $shipping_id 配送插件ID
+     * @return  object     配送插件对象实例
+     */
+    function &get_shipping_object($shipping_id)
+    {
+        $shipping = shipping_info($shipping_id);
+        if (!$shipping) {
+            $object = new stdClass();
+            return $object;
+        }
+
+        $shippingClass = 'App\\Plugins\\Shipping\\' . camel_case($shipping['shipping_code'], true);
+        $object = new $shippingClass();
+
+        return $object;
+    }
+
+    /**
      * 取得已安装的配送方式
      * @return  array   已安装的配送方式
      */

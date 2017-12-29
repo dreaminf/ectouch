@@ -147,3 +147,16 @@ function local_getdate($timestamp = null)
 
     return getdate($local_time);
 }
+
+/**
+ * 将一个本地时间戳转成GMT时间戳
+ *
+ * @access  public
+ * @param   int $time
+ *
+ * @return int      $gmt_time;
+ */
+function time2gmt($time)
+{
+    return strtotime(gmdate('Y-m-d H:i:s', $time));
+}
