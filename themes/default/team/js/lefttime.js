@@ -41,8 +41,8 @@ function showtime()
   }
   else
   {
-    dateLeft = parseInt(ts / 86400);
-    ts = ts - dateLeft * 86400;
+    // dateLeft = parseInt(ts / 86400);
+    // ts = ts - dateLeft * 86400;
     hourLeft = parseInt(ts / 3600);
     ts = ts - hourLeft * 3600;
     minuteLeft = parseInt(ts / 60);
