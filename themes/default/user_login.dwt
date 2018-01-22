@@ -57,10 +57,10 @@
 </div>
 
 </div>
-<script type="text/javascript" src="__TPL__/team/layer/m/layer.m.js"></script>
-<script type="text/javascript" src="__TPL__/statics/js/validform.js"></script>
 <!-- #BeginLibraryItem "/library/page_footer.lbi" -->
 <!-- #EndLibraryItem -->
+<script type="text/javascript" src="__TPL__/team/layer/m/layer.m.js"></script>
+<script type="text/javascript" src="__TPL__/statics/js/validform.js"></script>
 <!-- #BeginLibraryItem "/library/new_search.lbi" -->
 <!-- #EndLibraryItem -->
 
