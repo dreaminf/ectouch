@@ -46,7 +46,7 @@ class ExchangeController extends CommonController {
         $count = model('Exchange')->get_exchange_goods_count($this->children, $this->integral_min, $this->integral_max);
         $this->pageLimit(url('index', array('sort' => $this->sort, 'order' => $this->order)), $this->size);
         $this->assign('goods_list', $goods_list);
-        if(!empty($this->pageShow($count))){
+        if($this->pageShow($count) > 0){
             $this->assign('pager', $this->pageShow($count));
         }
         $this->display('exchange_list.dwt');
