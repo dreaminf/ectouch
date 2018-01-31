@@ -1608,7 +1608,7 @@ class WechatController extends AdminController
                 $article[0]['thumb_media_id'] = $rs['media_id'];
                 $article[0]['author'] = $article_info['author'];
                 $article[0]['title'] = $article_info['title'];
-                $article[$key]['content_source_url'] = empty($article_info['link']) ? __HOST__ . url('article/wechat_news_info', array('id'=>$article_info['id'])) : strip_tags(html_out($article_info['link']));
+                $article[0]['content_source_url'] = empty($article_info['link']) ? __HOST__ . url('article/wechat_news_info', array('id'=>$article_info['id'])) : strip_tags(html_out($article_info['link']));
                 $article[0]['content'] = $this->uploadMassMessageContentImg($article_info['content']);
                 $article[0]['digest'] = $article_info['digest'];
                 $article[0]['show_cover_pic'] = $article_info['is_show'];
@@ -1704,7 +1704,7 @@ class WechatController extends AdminController
         if (count($match[1]) > 0) {
             foreach ($match[1] as $img) {
                 if (strtolower(substr($img, 0, 4)) != 'http') {
-                    $filename = dirname(ROOT_PATH)  . $img;   
+                    $filename = IS_ECSHOP ?  dirname(ROOT_PATH)  . $img : rtrim(ROOT_PATH, '/') . $img ;  
                     $rs = $this->weObj->uploadImg(array('media' => realpath_wechat($filename)), 'image');
                     if (!empty($rs)) {
                         $replace = $rs['url'];// http://mmbiz.qpic.cn/mmbiz/gLO17UPS6FS2xsypf378iaNhWacZ1G1UplZYWEYfwvuU6Ont96b1roYs CNFwaRrSaKTPCUdBK9DgEHicsKwWCBRQ/0
