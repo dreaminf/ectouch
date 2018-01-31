@@ -1704,7 +1704,7 @@ class WechatController extends AdminController
         if (count($match[1]) > 0) {
             foreach ($match[1] as $img) {
                 if (strtolower(substr($img, 0, 4)) != 'http') {
-                    $filename = dirname(ROOT_PATH)  . $img;   
+                    $filename = IS_ECSHOP ?  dirname(ROOT_PATH)  . $img : rtrim(ROOT_PATH, '/') . $img ;   
                     $rs = $this->weObj->uploadImg(array('media' => realpath_wechat($filename)), 'image');
                     if (!empty($rs)) {
                         $replace = $rs['url'];// http://mmbiz.qpic.cn/mmbiz/gLO17UPS6FS2xsypf378iaNhWacZ1G1UplZYWEYfwvuU6Ont96b1roYs CNFwaRrSaKTPCUdBK9DgEHicsKwWCBRQ/0
