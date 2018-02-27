@@ -74,13 +74,13 @@
     <ul>
         <li></li>
         <li>
-            <a href="{:url('store/index', array('type' => 'new'))}">
+            <a href="{:url('store/index', array('type' => 'new', 'drp_id' => $this->_var['drp_info']['drp_id']))}">
                 <h3>{$news_goods_num}</h3>
                 <h4>上新</h4>
             </a>
         </li>
         <li>
-            <a href="{:url('store/index', array('type' => 'promotion'))}">
+            <a href="{:url('store/index', array('type' => 'promotion', 'drp_id' => $this->_var['drp_info']['drp_id']))}">
                 <h3>{$promotion_goods_num}</h3>
                 <h4>促销</h4>
             </a>
@@ -132,7 +132,7 @@
 <!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <script type="text/javascript">
-get_asynclist('index.php?m=default&c=store&a=ajax_goods&type={$type}&drp_id={$this->_var[drp_info][drp_id]}' , '__TPL__/images/loader.gif');
+get_asynclist('index.php?m=default&c=store&a=ajax_goods&type={$type}' , '__TPL__/images/loader.gif');
 </script>
 <script type="text/javascript" src="__TPL__/statics/js/jquery.lazyload.min.js"></script>
 <script>
