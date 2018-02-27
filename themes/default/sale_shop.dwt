@@ -132,7 +132,7 @@
 <!-- #BeginLibraryItem "/library/new_search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 <script type="text/javascript">
-get_asynclist('index.php?m=default&c=store&a=ajax_goods&type={$type}' , '__TPL__/images/loader.gif');
+get_asynclist('index.php?m=default&c=store&a=ajax_goods&type={$type}&drp_id={$drp_info[drp_id]}' , '__TPL__/images/loader.gif');
 </script>
 <script type="text/javascript" src="__TPL__/statics/js/jquery.lazyload.min.js"></script>
 <script>
