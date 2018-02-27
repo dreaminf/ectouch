@@ -21,6 +21,12 @@ class StoreController extends CommonController {
      * 首页信息
      */
     public function index() {
+        //促销或者新品
+        if($_GET['type']){
+            $this->assign('type', $_GET['type']);
+        }else{
+            $this->assign('type', 'all_drp');
+        }
         $drp_shop = $this->check();
         $this->assign('drp_info', $drp_shop);
         $this->assign('news_goods_num',model('Index')->get_pro_goods('new'));
