@@ -54,6 +54,34 @@ class StoreController extends CommonController {
     }
 
     /**
+     * ajax获取商品
+     */
+    public function ajax_goods() {
+        if (IS_AJAX) {
+            $type = I('get.type');
+            $id = I('get.id');
+            $start = $_POST['last'];
+            $limit = $_POST['amount'];
+            $goods_list = model('Index')->goods_list($type, $limit, $start);       
+            $list = array();
+            // 商品列表
+            if ($goods_list) {
+                foreach ($goods_list as $key => $value) {
+                    $value['iteration'] = $key + 1;
+                    $this->assign('fx_goods', $value);
+                    $list [] = array(
+                        'single_item' => ECTouch::view()->fetch('library/asynclist_index.lbi')
+                    );
+                }
+            }
+            echo json_encode($list);
+            exit();
+        } else {
+            $this->redirect(url('index'));
+        }
+    }
+
+    /**
      * 检测店铺权限
      */
     private function check(){
