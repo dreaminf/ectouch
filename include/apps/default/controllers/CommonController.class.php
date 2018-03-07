@@ -359,9 +359,16 @@ class CommonController extends BaseController
                 foreach ($res as $key => $value) {
                     $config[$value['name']] = $value['value'];
                 }
-                $back_url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : __HOST__ . $_SERVER['REQUEST_URI'];
-                $url = url('oauth/index', array('type' => 'weixin', 'back_url' => $back_url));
-                $this->redirect($url);
+                $HTTP_REFERER = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+   
+                //判断链接是否来自公众号文章、阅读原文
+                if(isset($HTTP_REFERER)  && !empty($HTTP_REFERER) && strpos($HTTP_REFERER, 'mp.weixinbridge.com/mp/wapredirect?url') !== false) {
+                    $param = get_url_query($HTTP_REFERER);
+                }
+                $HTTP_REFERER = (isset($param) && !empty($param['url'])) ? $param['url'] : $HTTP_REFERER;
+                $back_url = (isset($HTTP_REFERER) && !empty($HTTP_REFERER)) ? $HTTP_REFERER : __HOST__ . $_SERVER['REQUEST_URI'];
+                $url = url('oauth/index', array('type' => 'weixin', 'back_url' => $back_url));               
+                $this->redirect($url); 
             }
         }
     }

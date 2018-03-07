@@ -1717,3 +1717,27 @@ function update_wechat_unionid($info, $wechat_id = 0)
         }
     }
 }
+
+/**
+ * 获得URL参数
+ * @param string $url URL表达式，格式：'http://www.a.com/index.php?参数1=值1&参数2=值2...'
+ *  或 参数1=值1&参数2=值2...
+ * @return array
+ */
+function get_url_query($url = '')
+{
+    // 解析URL
+    $info = parse_url($url);
+    // 判断参数 是否为url 或 path
+    if (false == strpos($url, '?')) {
+        if (isset($info['path'])) {
+            // 解析地址里面path参数
+            parse_str($info['path'], $params);
+        }
+    } elseif (isset($info['query'])) {
+        // 解析地址里面query参数
+        parse_str($info['query'], $params);
+    }
+
+    return $params;
+}
