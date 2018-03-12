@@ -208,6 +208,7 @@
 		
 		// 计算选中商品价格数量
 		$(".js-ect-select").click(function() {
+		var rec = $(this).find('label').attr("rec-id");
 		var id='';
 		$("label").each(function (){
 			if($(this).hasClass("rec-active")){
@@ -220,9 +221,12 @@
 		 $.ajax({
 			type: "POST",
 			url: "index.php?m=default&c=flow&a=cart_label_count",
-			data: {rec_id:id},
+			data: {rec_id:id ,rec:rec},
 			dataType:"json",
-			success: function(data){			
+			success: function(data){
+			if(data.error == 2){
+				location.href = 'index.php?c=flow&a=cart';
+			}			
 			document.getElementById('total_number').innerHTML = data.cart_number;//更新数量
 			document.getElementById('goods_subtotal').innerHTML =data.content;//更新小计	
 			}});

@@ -415,14 +415,44 @@ class FlowController extends CommonController {
      * label选中价格 
      */
     public function cart_label_count(){
-        $rec_id  = I('rec_id','');          
-        if($rec_id) {       
+        $rec_id  = I('rec_id','');
+        $rec = I('rec','');
+
+        //不能单独勾选赠品
+        if($rec){
+            $sql = "select goods_id from ". $this->model->pre ."cart as c left join ". $this->model->pre ."favourable_activity as fa on c.is_gift = fa.act_id  where c.rec_id = '$rec' and c.is_gift > 0  and c.is_selected = 1 and fa.act_type = 0";             
+            $res = $this->model->query($sql);
+
+            if(!empty($res)){              
+                model('Flow')->del_gift_goods();
+                $result['error'] = 2;
+                die(json_encode($result));
+            }              
+        }
+       
+        if($rec_id) { 
+            //查询当前用户的购物车中是否有赠品
+            $sql = "select goods_id from ". $this->model->pre ."cart where session_id = '". SESS_ID . "' " ." and is_gift > 0";             
+            $res = $this->model->query($sql);
+
+            $favourable = 0;
+            if(!empty($res)) {
+
+                $sql = "SELECT goods_id FROM ". $this->model->pre ."cart where session_id = '". SESS_ID . "' " ." and rec_id = '$rec' and is_selected = 1 and is_gift = 0";
+                $res1 = $this->model->query($sql);
+                if(!empty($res1)){
+
+                    $favourable = 1;
+                }
+            }
+
             $sql = "UPDATE " . $this->model->pre . "cart SET is_selected = 1" .
                                 " WHERE session_id = '" . SESS_ID . "' " .
                                 " AND parent_id = 0 and rec_id in ($rec_id)" .
                                 " AND extension_code <> 'package_buy' " .
                                 "AND rec_type = 'CART_GENERAL_GOODS'";
-             $this->model->query($sql);
+            $this->model->query($sql);                                    
+       
              
             $sql = "SELECT rec_id FROM " . $this->model->pre . "cart WHERE rec_id not in ($rec_id) and session_id = '" . SESS_ID . "'";
             $res = $this->model->query($sql);
@@ -459,7 +489,11 @@ class FlowController extends CommonController {
         }
         $result['content'] = price_format($count_price);
         $result['cart_number'] = $num;
-
+        if($favourable == 1){
+            model('Flow')->del_gift_goods();
+            $result['error'] = 2;
+            die(json_encode($result));
+        }
         die(json_encode($result));
     }
 
@@ -1019,7 +1053,9 @@ class FlowController extends CommonController {
         } elseif ($favourable ['act_type'] == FAT_PRICE) {
             model('Flow')->add_favourable_to_cart($act_id, $favourable ['act_name'], $favourable ['act_type_ext']);
         }
-
+      
+        //主产品更新为勾选
+         model('Flow')->update_goods_info();
         /* 刷新购物车 */
         ecs_header("Location: " . url('flow/index') . "\n");
     }

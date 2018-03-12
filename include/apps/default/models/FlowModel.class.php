@@ -334,7 +334,7 @@ class FlowModel extends BaseModel {
      *        	赠品价格
      */
     function add_gift_to_cart($act_id, $id, $price) {
-        $sql = "INSERT INTO " . $this->pre . "cart (" . "user_id, session_id, goods_id, goods_sn, goods_name, market_price, goods_price, " . "goods_number, is_real, extension_code, parent_id, is_gift, rec_type ) " . "SELECT '$_SESSION[user_id]', '" . SESS_ID . "', goods_id, goods_sn, goods_name, market_price, " . "'$price', 1, is_real, extension_code, 0, '$act_id', '" . CART_GENERAL_GOODS . "' " . "FROM " . $this->pre . "goods WHERE goods_id = '$id'";
+        $sql = "INSERT INTO " . $this->pre . "cart (" . "user_id, session_id, goods_id, goods_sn, goods_name, market_price, goods_price, " . "goods_number, is_real, extension_code, parent_id, is_gift, rec_type, is_selected ) " . "SELECT '$_SESSION[user_id]', '" . SESS_ID . "', goods_id, goods_sn, goods_name, market_price, " . "'$price', 1, is_real, extension_code, 0, '$act_id', '" . CART_GENERAL_GOODS . "' ,1 " . "FROM " . $this->pre . "goods WHERE goods_id = '$id'";
         $this->query($sql);
     }
 
@@ -498,7 +498,21 @@ class FlowModel extends BaseModel {
              $this->model->table('goods')->data($data1)->where($where1)->update();  
          }
      }
-     
 
+     function get_gift_info($rec_id) {
+        $sql = "select goods_id from ".$this->pre."cart where rec_id = '$rec_id' and session_id = '".SESS_ID."'";
+        $res = $this->row($sql);
+        $goods_id = $res['goods_id'];
+     }
 
+     function del_gift_goods() {
+        $sql = "DELETE FROM ".$this->pre."cart where  is_gift > 0 and session_id = '".SESS_ID."'";
+        $res = $this->query($sql);
+     }
+
+     function update_goods_info() {
+
+        $sql = "UPDATE ".$this->pre."cart set is_selected = 1 where  is_gift = 0 and session_id = '".SESS_ID."'";
+        $this->query($sql);
+     }
 }
