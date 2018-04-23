@@ -275,6 +275,13 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     $act_range = intval($_POST['act_range']);
     $act_range_ext = isset($_POST['act_range_ext']) && !empty($_POST['act_range_ext']) ? implode(",", $_POST['act_range_ext']) : '';
 
+    //全部商品
+    $act_range_all_goods = get_all_goods($act_id, $_POST['act_type']);
+    if ($act_range_all_goods == 1)
+    {
+        sys_msg($_LANG['lab_act_range_desc'][4], 1);
+    }
+
     // 按分类优惠活动包含的所有商品
     $act_range_ext_cat = get_act_range_ext(FAR_CATEGORY, $act_id);
     $goods_list_cat = get_range_goods(FAR_CATEGORY, $act_range_ext_cat, 'cat_id');
@@ -294,8 +301,8 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
             if($act_id){
                 $where .= " AND act_id <> '$act_id'";
             }
-            $sql = "SELECT COUNT(*) FROM ".$GLOBALS['ecs']->table('favourable_activity'). " WHERE  start_time <= '$now' AND end_time >= '$now' $where";
-                $num = $GLOBALS['db']->getOne($sql);
+            $sql = "SELECT COUNT(*) FROM ".$GLOBALS['ecs']->table('favourable_activity'). " WHERE  end_time >= '$now' AND act_range = 0  $where";
+            $num = $GLOBALS['db']->getOne($sql);
             if ($num)
             {
                 sys_msg($_LANG['lab_act_range_desc'][3], 1);
@@ -683,6 +690,25 @@ function get_array_keys_cat($cat_id = 0, $type = 0, $table = 'category'){
             $arr[] = $val['cat_id'];
     }
     return $arr;   
+}
+
+/**
+*获取全部商品的优惠活动与现在添加/编辑的优惠活动是否冲突
+**/
+function get_all_goods($act_id, $act_type){
+    $now = gmtime();
+    $sql = "SELECT act_type, act_id  FROM ".$GLOBALS['ecs']->table('favourable_activity')." WHERE act_range = 0 and end_time >= '$now' and  act_id <> '$act_id'";       
+    $res = $GLOBALS['db']->getRow($sql);
+
+    if($res['act_type']){
+        $result = $res['act_type'] == $act_type ? 1 : 0;
+        if($result == 1){
+            return 1;
+        }else{
+            return false;
+        }
+    }
+    return false;
 }
 
 ?>

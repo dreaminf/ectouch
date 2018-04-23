@@ -91,4 +91,5 @@ $_LANG['lab_act_range_desc'][0] = '商品已经参与其他优惠活动';
 $_LANG['lab_act_range_desc'][1] = '分类商品已经参与其他优惠活动';
 $_LANG['lab_act_range_desc'][2] = '品牌商品已经参与其他优惠活动';
 $_LANG['lab_act_range_desc'][3] = '不可重复设置全部商品参与其他优惠活动';
+$_LANG['lab_act_range_desc'][4] = '同一商品不可重复参加同一种优惠方式的优惠活动';
 ?>
