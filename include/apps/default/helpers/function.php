@@ -1705,20 +1705,35 @@ function update_wechat_unionid($info, $wechat_id = 0)
     if (!empty($info['unionid'])) {
         // 兼容查询用户openid
         $where = array('openid' => $info['openid'], 'wechat_id' => $wechat_id);
-        $res = M()->table('wechat_user')->field('unionid, ect_uid')->where($where)->find();
+        $res = M()->table('wechat_user')->field('unionid')->where($where)->find();
         if (empty($res['unionid'])) {
             M()->table('wechat_user')->data($data)->where($where)->update();
-            if (!empty($res['ect_uid'])) {
-                // 更新社会化登录用户信息
-                $connect_userinfo = model('Users')->get_connect_user($info['unionid']);
-                if (empty($connect_userinfo)) {
-                    M()->table('connect_user')->data(array('open_id' => $info['unionid']))->where(array('open_id' => $info['openid']))->update();
-                }
-                $info['user_id'] = $res['ect_uid'];
-                model('Users')->update_connnect_user($info, 'wechat');
+        }
+    }
+}
+/**
+*获取微信登录安装插件是否自动微信授权登陆
+*@return
+**/
+function get_auto_login(){
+    $where['from'] = 'weixin';
+    $res = M()->table('touch_auth')->field('auth_config')->where($where)->getOne();
+    $res = unserialize($res);
+
+    $result = '';
+    if(!empty($res)) {
+        foreach ($res as $key => $value) {
+            if($value['name'] == 'auto_login'){
+                //找到符合条件的数组键值
+                $k = $key;
+                break;
             }
         }
     }
+    
+
+    $result = $res[$k]['value'];
+    return $result; 
 }
 
 /**

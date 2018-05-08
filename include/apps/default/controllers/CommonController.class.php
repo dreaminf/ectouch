@@ -40,6 +40,9 @@ class CommonController extends BaseController
 
         $this->wechat_init();
 
+        //开启的登录插件
+        $this->ectouch_auth();
+
         $this->assign('shop_url', dirname(__URL__));
 
         /* 语言包 */
@@ -211,6 +214,18 @@ class CommonController extends BaseController
      */
     protected function wechat_init()
     {
+        //兼容session丢失用户
+        $_SESSION['unionid'] = $_SESSION['unionid'] ? $_SESSION['unionid'] : ($_COOKIE['unionid'] ? $_COOKIE['unionid'] : '');
+
+        // 是否开启微信自动授权登录
+        $res = get_auto_login();
+        $this->assign('auto_login', $res);
+  
+        //用户是否已注册账号并绑定粉丝信息
+        if($_SESSION['user_id'] && $_SESSION['unionid']){
+          $this->assign('user_auto_login', 1);  
+        }
+        
         // 微信oauth处理
         $this->init_oauth();
 
@@ -367,6 +382,23 @@ class CommonController extends BaseController
                 $this->redirect($url); 
             }
         }
+    }
+
+    /**
+    * 已安装的登录插件（除微信登录插件）
+    **/
+    public function ectouch_auth() {
+        $sql = "SELECT `auth_config`, `from` FROM " . $this->model->pre . "touch_auth WHERE `from` != 'weixin' ";
+        $auth_config = $this->model->query($sql);
+        
+        $res = array();
+        if(!empty($auth_config)) {
+            foreach ($auth_config as $key=>$value) {
+                $res[$value['from']] = $value['from'];
+            }
+        }
+       
+        $this->assign('ectouch_auth', $res);
     }
 }
 

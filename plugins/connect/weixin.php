@@ -53,6 +53,7 @@ if (isset($set_modules) && $set_modules == TRUE) {
         array('type' => 'text', 'name' => 'app_id', 'value' => ''),
         array('type' => 'text', 'name' => 'app_secret', 'value' => ''),
         array('type' => 'text', 'name' => 'token', 'value' => ''),
+        array('type' => 'select', 'name' => 'auto_login', 'value' => ''),
     );
     return;
 }
@@ -110,7 +111,8 @@ class weixin {
                 $_SESSION['headimgurl'] = $userinfo['headimgurl'];
 
                 $data = array(
-                    'openid' => $userinfo['unionid'],
+                    'unionid' => $userinfo['unionid'],
+                    'openid' => $userinfo['openid'],
                     'nickname' => $userinfo['nickname'],
                     'sex' => $userinfo['sex'],
                     'headimgurl' => $userinfo['headimgurl'],

@@ -85,17 +85,17 @@
 	</a>
 
 	{if $is_wechat == 1}
-	<a href="{:url('user/account_relation')}">
+	<!-- <a href="{:url('user/account_relation')}">
 		<div class="s-user-top">
 			<div class="dis-box s-xian-box s-user-top-1">
 				<h3 class="box-flex text-all-span my-u-title-size">账号关联</h3>
 				<span class="t-jiantou"><i class="iconfont icon-jiantou tf-180 jian-top"></i></span>
 			</div>
 		</div>
-	</a>
+	</a> -->
 	{/if}
 
-	{if $is_not_wechat}
+	{if $auto_login && !$user_auto_login}
 	<a href="{:url('user/logout')}">
 		<div class="s-user-top">
 			<div class="dis-box s-user-top-1">

@@ -74,6 +74,9 @@ class AuthorizationController extends AdminController {
                 $info['config'][$key] = $value + array(
                     'label' => L($value ['name']),
                 );
+                if ($info['config'][$key]['type'] == 'select') {
+                    $info['config'][$key]['range'] = L($value ['name'].'_range');
+                }
             }
         }
         $this->assign('data', $data);
@@ -127,6 +130,9 @@ class AuthorizationController extends AdminController {
                 $info['config'][$key] = $value + array(
                     'label' => L($value ['name']),
                 );
+                if ($info['config'][$key]['type'] == 'select') {
+                    $info['config'][$key]['range'] = L($value ['name'].'_range');
+                }
             }
         }
         // 循环配置插件中所有属性

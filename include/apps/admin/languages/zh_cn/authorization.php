@@ -46,3 +46,7 @@ $_LANG['once'] = '立即申请';
 $_LANG['batch_create'] = '批量生成';
 $_LANG['warning'] = '提示:批量生成调用代码并复制到您的模版文件应用处';
 $_LANG['warning2'] = '提示：代码已经生成成功,请先复制此 {insert_scripts files="website.js"} 段代码到您的模版头部';
+
+$_LANG['auto_login'] = '是否自动登录';
+$_LANG['auto_login_range'][0] = '是';
+$_LANG['auto_login_range'][1] = '否';
