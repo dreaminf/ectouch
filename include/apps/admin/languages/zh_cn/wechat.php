@@ -165,3 +165,15 @@ $_LANG['template_id'] = '模板ID';
 $_LANG['template_code'] = '模板编号';
 $_LANG['template_content'] = '模板内容';
 $_LANG['template_remark'] = '备注';
+
+//小程序
+$_LANG['mini_program'] = '小程序账号';
+$_LANG['mini_program_appid'] = '小程序Appid';
+$_LANG['mini_program_secret'] = '小程序Secret';
+$_LANG['mini_program_shop_url'] = '商城URL';
+$_LANG['mini_program_mch_id'] = '小程序微信支付商户号';
+$_LANG['mini_program_mch_key'] = '小程序微信支付秘钥';
+
+$_LANG['mini_program_help1'] = '请填写已绑定小程序的微信支付商户号';
+$_LANG['mini_program_help2'] = '请填写已绑定小程序的微信支付秘钥';
+$_LANG['mini_program_help3'] = '例如: https://shop.ectouch.cn/ectouch/wyx/';

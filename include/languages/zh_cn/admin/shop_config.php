@@ -166,6 +166,9 @@ $_LANG['cfg_name']['related_goods_number'] = '关联商品显示数量';
 $_LANG['cfg_name']['visit_stats'] = '站点访问统计';
 $_LANG['cfg_name']['help_open'] = '用户帮助是否打开';
 
+$_LANG['cfg_name']['mini_program_exit'] = '是否购买ECTouch小程序并使用';
+
+
 $_LANG['cfg_desc']['smtp'] = '设置邮件服务器基本参数';
 $_LANG['cfg_desc']['market_price_rate'] = '输入商品售价时将自动根据该比例计算市场价格';
 $_LANG['cfg_desc']['rewrite'] = 'URL重写是一种搜索引擎优化技术，可以将动态的地址模拟成静态的HTML文件。需要Apache的支持。';
@@ -444,6 +447,8 @@ $_LANG['cfg_name']['recommend_order'] = '推荐商品排序';
 $_LANG['cfg_desc']['recommend_order'] = '推荐排序适合少量推荐，随机显示大量推荐';
 $_LANG['cfg_range']['recommend_order'][0] = '推荐排序';
 $_LANG['cfg_range']['recommend_order'][1] = '随机显示';
+$_LANG['cfg_range']['mini_program_exit']['0'] = '无';
+$_LANG['cfg_range']['mini_program_exit']['1'] = '已购买并使用';
 
 $_LANG['invoice_type'] = '类型';
 $_LANG['invoice_rate'] = '税率（％）';

@@ -104,6 +104,21 @@ if ($_REQUEST['act'] == '')
         }
     }
 
+    //未开启使用小程序隐藏小程序配置菜单栏
+    if($GLOBALS['_CFG']['mini_program_exit'] == 0){
+        foreach($menus as $key => $val){          
+            if($val['label'] == $_LANG['12_menu_wechat']){
+
+                $children = $val['children'];             
+                foreach ($children as $k => $vo) {
+                    if($vo['label'] == $_LANG['13_mini_program']){
+                        unset($menus[$key]['children'][$k]);
+                    }
+                }
+            }
+        }        
+    }
+
     $smarty->assign('menus',     $menus);
     $smarty->assign('no_help',   $_LANG['no_help']);
     $smarty->assign('help_lang', $_CFG['lang']);

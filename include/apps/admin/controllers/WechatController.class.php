@@ -2388,5 +2388,28 @@ class WechatController extends AdminController
             }
         }
     }
+    /**
+    *小程序配置
+    **/
+    public function mini_program(){
+        if(IS_POST){
+            $config = isset($_POST['data']) ? json_encode($_POST['data']) : '';
+            $res = $this->model->table('config')->find();
+            
+            $data = array();
+            $data['config'] = $config;
+            //是否已存在小程序配置
+            if($res){
+                $this->model->table('config')->data($data)->where(array('id' => 1))->update();
+            }else{
+                $this->model->table('config')->data($data)->insert();
+            }                 
+        }
+        $res = $this->model->table('config')->find();
+        $res_config = !empty($res['config']) ? json_decode($res['config'], true) : '';
+     
+        $this->assign('data', $res_config);
+        $this->display();
+    }
 
 }
