@@ -3727,7 +3727,7 @@ INSERT INTO `ecs_shop_config` (`id`, `parent_id`, `code`, `type`, `store_range`,
 (901, 9, 'wap_config', 'select', '1,0', '', '0', '1'),
 (902, 9, 'wap_logo', 'file', '', '../data/attached/images/', '', '1'),
 (903, 2, 'message_check', 'select', '1,0', '', '1', '1'),
-(904, 2, 'mini_program_exit', 'select', '1,0', '', '1', '1'),
+(904, 2, 'mini_program_exit', 'hidden', '1,0', '', '0', '1'),
 (NULL,'1','sender_name','text','','','','');
 --
 -- user_rank
