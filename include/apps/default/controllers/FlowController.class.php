@@ -1109,7 +1109,7 @@ class FlowController extends CommonController {
             'how_oos' => isset($oos) ? addslashes("$oos") : '',
             'need_insure' => isset($_POST ['need_insure']) ? intval($_POST ['need_insure']) : 0,
             'user_id' => $_SESSION ['user_id'],
-            'add_time' => time(),
+            'add_time' => gmtime(),
             'order_status' => OS_UNCONFIRMED,
             'shipping_status' => SS_UNSHIPPED,
             'pay_status' => PS_UNPAYED,
@@ -2280,7 +2280,7 @@ class FlowController extends CommonController {
                 'FROM ' . $this->model->pre . 'goods_attr' . ' AS g ' .
                 'LEFT JOIN ' . $this->model->pre . 'attribute' . ' AS a ON a.attr_id = g.attr_id ' .
                 "WHERE a.attr_type != 0 AND g.goods_id = '" . $goods->goods_id . "' " .
-                'ORDER BY a.sort_order, g.attr_price, g.goods_attr_id';
+                'ORDER BY g.goods_attr_id ASC';
 
             $res = $this->model->query($sql);
 
