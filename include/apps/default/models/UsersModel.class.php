@@ -98,7 +98,7 @@ class UsersModel extends BaseModel {
                 $sql = 'UPDATE ' . $this->pre . 'wechat_user SET ect_uid = ' . $_SESSION['user_id'] . ' WHERE unionid = ' .$_SESSION['unionid'];
                 //插入connect_user表
                 $res['user_id'] = $_SESSION['user_id'];
-                $this->update_connnect_user($res, 'user_login') 
+                $this->update_connnect_user($res, 'user_login'); 
             }
         }
     }
@@ -2570,6 +2570,25 @@ class UsersModel extends BaseModel {
             } else {
                 // 更新记录
                 $this->model->table('wechat_user')->data($data)->where($where)->update();
+            }
+        }
+    }
+
+    /**
+    *同步sina/qq老会员
+    **/
+    public function get_old_outh_user_info($data, $type){
+        $aite_id = $type.'_'.$data['unionid'];
+        $where = array('aite_id' => $aite_id);
+        //用户是否用sina/qq产生过会员
+        $res = $this->model->table('touch_user_info')->field('user_id')->where($where)->find();
+        if($res){
+            $where = array('user_id' => $res['user_id']);
+            $ress = $this->model->table('connect_user')->field('id')->where($where)->find();
+            if(!$ress){
+                $data['user_id'] = $res['user_id'];
+                $type = $type == 'qq' ? $type : 'weibo';
+                model('Users')->update_connnect_user($data, $type); 
             }
         }
     }
