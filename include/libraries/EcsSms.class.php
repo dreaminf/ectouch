@@ -4,91 +4,35 @@
 defined('IN_ECTOUCH') or die('Deny Access');
 
 /* 短信模块主类 */
-class EcsSms {
-
-    var $sms_name = NULL; //用户名
-    var $sms_password = NULL; //密码
-
-    function __construct() {
-        /* 直接赋值 */
-        $this->sms_name = C('sms_ecmoban_user');
-        $this->sms_password = C('sms_ecmoban_password');
-    }
-
+class EcsSms
+{   
     // 发送短消息
-    function send($phones, $msg, $send_date = '', $send_num = 1, $sms_type = '', $version = '1.0', &$sms_error = '') {
-        //function send($phones, $msg, &$sms_error = '') {
-        /* 检查发送信息的合法性 */
+    public function send($phones, $msg, $send_date = '', $send_num = 1, $sms_type = '', $version = '1.0', $sms_code)
+    {
+
         $contents = $this->get_contents($phones, $msg);
+
         if (!$contents) {
             return false;
         }
 
-        /* 获取API URL */
-        $sms_url = "http://106.ihuyi.com/webservice/sms.php?method=Submit";
-
-        if (count($contents) > 1) {
-            foreach ($contents as $key => $val) {
-                $post_data = "account=" . $this->sms_name . "&password=" . md5($this->sms_password) . "&mobile=" . $val['phones'] . "&content=" . rawurlencode($val['content']); //密码可以使用明文密码或使用32位MD5加密
-
-                //$get = $this->Post($post_data, $sms_url);
-                $get = Http::doPost($sms_url, $post_data);
-                $gets = $this->xml_to_array($get);
-                sleep(1);
-            }
-        } else {
-            $post_data = "account=" . $this->sms_name . "&password=" . md5($this->sms_password) . "&mobile=" . $contents[0]['phones'] . "&content=" . rawurlencode($contents[0]['content']); //密码可以使用明文密码或使用32位MD5加密
-            //$get = $this->Post($post_data, $sms_url);
-            $get = Http::doPost($sms_url, $post_data);
-            $gets = $this->xml_to_array($get);
+        include_once(ROOT_PATH . 'plugins/sms/'.$sms_code.'.php');
+        if($sms_code == 'hywx'){
+            $smsment = new hywx();
+            return $smsment->send($phones, $msg);
         }
-
-        //print_r($gets);exit; //开启调试模式
-        if ($gets['SubmitResult']['code'] == 2) {
-            return true;
-        } else {
-            $sms_error = $gets['SubmitResult']['msg'];
-            //$this->logResult($sms_error);
-            return $sms_error;
-        }
+        else
+        {
+            $smsment = new ecmoban();
+            return $smsment->send($phones, $msg);
+        }        
     }
-
-    function Post($curlPost, $url) {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HEADER, false);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_NOBODY, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $curlPost);
-        $return_str = curl_exec($curl);
-        curl_close($curl);
-        return $return_str;
-    }
-
-    function xml_to_array($xml) {
-        $reg = "/<(\w+)[^>]*>([\\x00-\\xFF]*)<\\/\\1>/";
-        if (preg_match_all($reg, $xml, $matches)) {
-            $count = count($matches[0]);
-            for ($i = 0; $i < $count; $i++) {
-                $subxml = $matches[2][$i];
-                $key = $matches[1][$i];
-                if (preg_match($reg, $subxml)) {
-                    $arr[$key] = $this->xml_to_array($subxml);
-                } else {
-                    $arr[$key] = $subxml;
-                }
-            }
-        }
-        return $arr;
-    }
-
     //检查手机号和发送的内容并生成生成短信队列
     function get_contents($phones, $msg) {
         if (empty($phones) || empty($msg)) {
             return false;
         }
-        //$msg.='【'. $GLOBALS['_CFG']['shop_name'].'】'; //by wanganlin delete
+
         $phone_key = 0;
         $i = 0;
         $phones = explode(',', $phones);
@@ -154,17 +98,5 @@ class EcsSms {
     // 检测手机号码是否正确
     function is_moblie($moblie) {
         return preg_match("/^13[0-9]{9}|15[012356789][0-9]{8}|18[0-9]{9}|14[579][0-9]{8}|17[0-9]{9}$/", $moblie);
-    }
-
-    //打印日志
-    function logResult($word = '') {
-        $fp = fopen(ROOT_PATH . "data/smserrlog.txt", "a");
-        flock($fp, LOCK_EX);
-        fwrite($fp, "执行日期：" . strftime("%Y%m%d%H%M%S", time()) . "\n" . $word . "\n");
-        flock($fp, LOCK_UN);
-        fclose($fp);
-    }
-
+    }    
 }
-
-?>

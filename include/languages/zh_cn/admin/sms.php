@@ -163,7 +163,17 @@ $_LANG['edited'] = '修改为';
 $_LANG['edit'] = '修改';
 $_LANG['set_default_sign'] = '设置成默认签名';
 
+$_LANG ['sms'] = '短信方式';
+$_LANG ['sms_name'] = '短信方式名称';
+$_LANG ['sms_desc'] = '短信方式描述';
+$_LANG ['version'] = '插件版本';
+$_LANG ['short_pay_fee'] = '费用';
+$_LANG ['sms_author'] = '插件作者';
+$_LANG ['sms_is_cod'] = '货到付款';
+$_LANG ['sms_is_online'] = '在线短信';
 
+$_LANG ['name_is_null'] = '您没有输入短信方式名称';
+$_LANG ['name_exists'] = '该短信方式名称已存在';
 
 
 

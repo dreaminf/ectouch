@@ -897,7 +897,7 @@ elseif ($_REQUEST['act'] == 'delivery_ship')
             include_once(BASE_PATH . 'classes/sms.php');
             $sms = new sms();
             $sms->send($order['mobile'], sprintf($GLOBALS['_LANG']['order_shipped_sms'], $order['order_sn'],
-                local_date($GLOBALS['_LANG']['sms_time_format']), $GLOBALS['_CFG']['shop_name']), 0);
+                local_date($GLOBALS['_LANG']['sms_time_format']), $GLOBALS['_CFG']['shop_name']),  '', 1, '','1.0' , get_default_smsment());
         }
     }
 

@@ -327,10 +327,12 @@ class MY_FlowController extends FlowController {
         }
 
         /* 如果需要，发短信 */
-        if (C('sms_order_placed') == '1' && C('sms_shop_mobile') != '') {
+        //已配置的短信商家手机号
+        $sms_mobile = get_sms_config(get_default_smsment(), 'mobile');
+        if (C('sms_order_placed') == '1' && $sms_mobile != '') {
             $sms = new EcsSms();
             $msg = $order ['pay_status'] == PS_UNPAYED ? L('order_placed_sms') : L('order_placed_sms') . '[' . L('sms_paid') . ']';
-            $sms->send(C('sms_shop_mobile'), sprintf($msg, $order ['consignee'], $order ['mobile']), '', 13, 1);
+            $sms->send($sms_mobile, sprintf($msg, $order ['consignee'], $order ['mobile']), '', 1, '','1.0' , get_default_smsment());
         }
         /* 如果需要，微信通知订单提交成功 */
         $message_status = M()->table('drp_config')->field('value')->where('keyword = "msg_open"')->getOne();
@@ -392,55 +394,6 @@ class MY_FlowController extends FlowController {
             }
 
         }
-
-            // 模版信息设置
-            // $data['openid'] = '';
-            // $data['open_id'] = 'OPENTM206547887';
-            // $data['url'] = 'http://'.$_SERVER['HTTP_HOST'].url('sale/order_detail',array('order_id'=>$new_order_id));
-            // $data['first'] = '下线会员卖出商品';  // 简介
-            // $data['keyword1'] = $order ['order_sn'];  // 订单编号
-            // $data['keyword2'] = $this->model->table('order_goods')->field('goods_name')->where("order_id ='".$new_order_id."'")->getOne();  // 商品名称
-            // $data['keyword3'] = local_date('Y-m-d H:i:s',($order ['add_time'])); // 下单时间
-            // $data['keyword4'] = price_format($order ['goods_amount']);  // 下单金额
-            // $data['keyword5'] = '';  // 分销商名称
-
-            // // 获取订单所属店铺信息
-            // $drp_id = M()->table('drp_order_info')->field('drp_id')->where('order_id = ' . $new_order_id)->getOne();
-            // if($drp_id){
-            //     // 本店用户id
-            //     $user_id = M()->table('drp_shop')->field('user_id')->where('id = ' . $drp_id)->getOne();
-            //     if($user_id){
-            //         // 获取openid 和 微信昵称
-            //         $userInfo = M()->table('wechat_user')->field('openid,nickname')->where('ect_uid = ' . $user_id)->find();
-            //         $data['openid'] = $userInfo['openid'];
-            //         $data['keyword5'] = $userInfo['nickname'];
-            //         if($data['openid']){
-            //             sendTemplateMessage($data);
-            //         }
-            //         // 一级用户id
-            //         $parent_id1 = M()->table('users')->field('parent_id')->where('user_id = ' . $user_id)->getOne();
-            //         if($parent_id1){
-            //             // 获取openid 和 微信昵称
-            //             $userInfo = M()->table('wechat_user')->field('openid,nickname')->where('ect_uid = ' . $parent_id1)->find();
-            //             $data['openid'] = $userInfo['openid'];
-            //             $data['keyword5'] = $userInfo['nickname'];
-            //             if($data['openid']){
-            //                 sendTemplateMessage($data);
-            //             }
-            //             // 二级用户id
-            //             $parent_id2 = M()->table('users')->field('parent_id')->where('user_id = ' . $parent_id1)->getOne();
-            //             if($parent_id2) {
-            //                 // 获取openid 和 微信昵称
-            //                 $userInfo = M()->table('wechat_user')->field('openid,nickname')->where('ect_uid = ' . $parent_id2)->find();
-            //                 $data['openid'] = $userInfo['openid'];
-            //                 $data['keyword5'] = $userInfo['nickname'];
-            //                 if($data['openid']){
-            //                     sendTemplateMessage($data);
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
 
         /* 如果订单金额为0 处理虚拟卡 */
         if ($order ['order_amount'] <= 0) {

@@ -74,6 +74,7 @@ $_LANG['template_manage'] = '模板管理';
 $_LANG['agency_manage'] = '办事处管理';
 $_LANG['suppliers_manage'] = '供货商管理';
 $_LANG['role_manage'] = '角色管理';
+$_LANG['sms'] = '短信方式管理';
 
 //系统设置部分权限
 $_LANG['shop_config'] = '商店设置';
