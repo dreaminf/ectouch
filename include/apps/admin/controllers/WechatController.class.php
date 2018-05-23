@@ -2398,6 +2398,7 @@ class WechatController extends AdminController
             
             $data = array();
             $data['config'] = $config;
+            $data['status'] = 1;
             //是否已存在小程序配置
             if($res){
                 $this->model->table('config')->data($data)->where(array('id' => 1))->update();

@@ -181,7 +181,7 @@ class FlowController extends CommonController {
                    " AND user_rank = ".$_SESSION['user_rank'];
             $res = $this->model->query($sql);
             $mp = $res[0]["user_price"];
-            $sql = "SELECT a.attr_id, a.attr_name, a.attr_type, " . "g.goods_attr_id, g.attr_value, g.attr_price " . 'FROM ' . $this->model->pre . 'goods_attr AS g ' . 'LEFT JOIN ' . $this->model->pre . 'attribute AS a ON a.attr_id = g.attr_id ' . "WHERE a.attr_type != 0 AND g.goods_id = '" . $goods->goods_id . "' " . 'ORDER BY a.sort_order, g.attr_price, g.goods_attr_id';
+            $sql = "SELECT a.attr_id, a.attr_name, a.attr_type, " . "g.goods_attr_id, g.attr_value, g.attr_price " . 'FROM ' . $this->model->pre . 'goods_attr AS g ' . 'LEFT JOIN ' . $this->model->pre . 'attribute AS a ON a.attr_id = g.attr_id ' . "WHERE a.attr_type != 0 AND g.goods_id = '" . $goods->goods_id . "' " . 'ORDER BY g.goods_attr_id ASC';
             $res = $this->model->query($sql);
             if (!empty($res)) {
                 $spe_arr = array();
@@ -211,7 +211,7 @@ class FlowController extends CommonController {
                 $result ['goods_name'] = $goods_name;
                 $result ['goods_thumb'] = $goods_thumb;
                 $result ['goods_number'] = $goods_number;
-                $result ['shop_price'] = $shop_price;
+                $result ['shop_price'] = price_format($shop_price, false);
                 die(json_encode($result));
             }
         }
