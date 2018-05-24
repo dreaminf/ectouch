@@ -490,7 +490,7 @@ class SaleController extends CommonController {
     public function goods_detai(){
         $order_id = I('order_id') > 0 ? I('order_id') :'';
         $where = 'd.order_id = '.$order_id;
-        $user_id = I('user_id') > 0 ? I('user_id') : $_SESSION['user_id'];
+        $user_id = $_SESSION['user_id'];
         $orders = model('Sale')->get_sale_goods_detai($where, $user_id);
         if($orders){
             foreach($orders as $key=>$val){
@@ -501,7 +501,7 @@ class SaleController extends CommonController {
                 }
             }
         }
-		$this->assign('title', '订单详情');
+        $this->assign('title', '订单详情');
         $this->assign('orders_list', $orders);
         $this->display('sale_goods_detail.dwt');
     }
@@ -936,18 +936,18 @@ class SaleController extends CommonController {
      */
     public function order_detail() {
         $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
-
         if ($order_id == 0) {
             ECTouch::err()->show(L('back_home_lnk'), './');
             exit();
         }
+        $user_id = $_SESSION['user_id'];
         $where = 'd.order_id = '.$order_id;
-        $orders = model('Sale')->get_sale_orders($where,1,0,0);
+        $orders = model('Sale')->get_sale_orders($where,1,0,$user_id);
         if($orders){
             foreach($orders as $key=>$val){
                 foreach($val['goods'] as $k=>$v){
-                    $orders[$key]['goods'][$k]['profit'] = model('Sale')->get_drp_profit($v['goods_id']);
-                    $orders[$key]['goods'][$k]['profit_money'] = $v['touch_sale']*$orders[$key]['goods'][$k]['profit']['profit1'] /100;
+                    $orders[$key]['goods'][$k]['profit'] = model('Sale')->get_drp_order_profit($order_id,$v['goods_id']);
+                    $orders[$key]['goods'][$k]['profit_money'] = $v['touch_sale']*$orders[$key]['goods'][$k]['profit'] /100;
                     $orders[$key]['sum']+=$orders[$key]['goods'][$k]['profit_money']*$v['goods_number'];
                 }
             }
